@@ -49,6 +49,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'redirect_controller';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+
+$valid_lang_arr = $this->config->item("valid_lang");
+
+foreach ($valid_lang_arr as $value) {
+	$regex = $value . "_(:any)";
+	$segment_path = "(:any)/(:any)/(:any)/(:any)/(:any)";
+	$segment_path_value = "$2/$3/$4/$5/$6";
+	$segment_path_arr = explode('/', $segment_path);
+	for ($segment_count = 0, $len = count($segment_path_arr); $segment_count < $len; $segment_count++) {
+		$inside_regex = $regex . "/" . substr($segment_path, 0, (strlen($segment_path) - ($segment_count * 7)));
+		$index_segment_path_value = substr($segment_path_value, 0, (strlen($segment_path_value) - ($segment_count * 3)));
+		$route[$inside_regex] = $index_segment_path_value;
+	}
+	$route[$regex] = "redirect_controller";
+}
+
