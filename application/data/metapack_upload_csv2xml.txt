@@ -1,0 +1,7 @@
+#Table name
+mp_upload
+
+#Input column name	Output column name
+1	so_shipment
+34	courier_id
+37	tracking_no

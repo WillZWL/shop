@@ -1,0 +1,65 @@
+[:dear:] [:forename:],
+
+[:thank_you_1:] [:site_name:]!
+
+[:thank_you_2:] [:site_name:] [:delivery_days:] [:thank_you_3:]
+
+[:thank_you_4:]
+
+[:thank_you_5:]
+
+[:order_summary:]
+
+[:order_number:]:
+[:client_id:]-[:so_no:]
+
+[:order_date:]:
+[:order_create_date:]
+
+[:ship_to:]:
+[:delivery_name:]
+[:delivery_address:]
+
+[:bill_to:]:
+[:billing_name:]
+[:billing_address:]
+
+[:coupon_code_used:]:
+[:promotion_code:]
+
+[:payment_method:]:
+[:payment_gateway:]
+
+[:text_order_details:]
+[:so_items_text:]
+
+
+[:text_delivery:]: [:currency_id:] [:delivery_charge:]
+[:text_processing_fee:]: [:currency_id:] [:processing_fee:]
+[:text_grand_total:]: [:currency_id:] [:amount:]
+
+
+[:sale_conditions:]
+[:sale_cond_content_1:] 
+[:sale_cond_content_2_1:] [:sale_cond_content_2_2:] 
+[:sale_cond_content_3:] 
+
+[:sale_cond_bank_name:] 
+[:sale_cond_bank_beneficiary:] 
+[:sale_cond_bank_comments:] 
+[:sale_cond_bank_account:]
+[:sale_cond_bank_swift:] 
+
+[:sale_cond_content_4_1:] [:sale_cond_content_4_2:] 
+[:sale_cond_content_5:]
+
+
+[:content_1:] http://[:site_url:]/[:lang_country_pair:]/contact#enquiry_box_anchor.
+
+[:best_regards:]
+
+Agatha Stevens
+
+[:customer_care_specialist:]
+[:site_name:]
+[:site_url:]

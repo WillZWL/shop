@@ -1,0 +1,53 @@
+Cher [:forename:],
+
+Merci pour votre achat sur [:site_name:]!
+
+Nous voudrions confirmer que votre paiement a été accepté et votre commande a été activée.
+
+Veuillez noter que votre numéro de commande est [:so_no:]. Vous pouvez à tout moment accéder à la page de 'Mon compte' via notre site pour vérifier les détails de votre commande à votre convenance.
+
+Par commodité, vos informations de connexion sont:
+
+Email: [:email:]
+Mot de passe: [:password:]
+
+Résumé de votre commande :
+
+Numéro de commande :
+[:so_no:]
+
+Date de commande :
+[:order_create_date:]
+
+Coordonnées de facturation :
+[:billing_name:]
+[:billing_address:]
+
+Coordonnées de livraison :
+[:delivery_name:]
+[:delivery_address_text:]
+
+Produit(s) acheté(s):
+[:so_items_text:]
+
+Livraison: [:currency_id:] [:delivery_charge:]
+Total Final: [:currency_id:] [:amount:]
+
+Votre commande est maintenant finalisée. Nous vous serons reconnaissants si vous pouvez prendre un instant pour répondre à quelques questions sur vos expériences d’achat avec nous, afin que nouspuissions améliorer notre service pour mieux nous adapter à vos besoins.
+
+Tous nos clients fidèles participants à ce sondage ont la chance de gagner des prix intéressants dans notre tirage au sort chaque mois.
+
+Cliquer ici pour commencer la questionnaire
+http://vista-survey.com/survey/v2/survey2.dsb?ID=1536253776
+
+Merci encore pour votre achat sur notre boutique ChatandVision. Votre achat est apprécié et nous nous ferons un plaisir de vous servir de nouveau. Au cas où vous auriez la moindre question, n'hésitez pas à visiter notre F.A.Q ou à nous contacter à [:from_email:] pour davantage de détails.
+
+Sincères salutations,
+
+Martine Leroy
+
+Agent au Service Client
+
+[:site_name:] Ltd.
+"Skype's Global Partner Merchant"
+www.chatandvision.com

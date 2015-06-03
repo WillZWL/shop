@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding="utf-8"?>
+<offers_update partner_id="87B13D72-9938-9549-39B7-BC3FF73CDA84" shop_id="8AE9B7F0-F319-82B2-C90D-2218884F4E01" token="490BB66D-EB43-0FD8-AB19-8330B054F1DD" xmlns='http://www.fnac.com/schemas/mp-dialog.xsd'>
+  <!-- offre success-->
+  <offer>
+    <product_reference type='Ean'>7321950286485</product_reference>
+    <offer_reference type='SellerSku'>0011_7321950286485</offer_reference>
+    <price>34</price>
+    <product_state>11</product_state>
+    <quantity>50</quantity>
+    <description>Produit mis à jour avec API</description>
+    <internal_comment>Mon commentaire interne</internal_comment>
+    <showcase>1</showcase>
+  </offer>
+  <offer>
+    <product_reference type='FnacId'>2632694</product_reference>
+    <offer_reference type='SellerSku'>3AAA-4A7-2EC</offer_reference>
+    <price>0.99</price>
+    <product_state>11</product_state>
+    <quantity>50</quantity>
+    <description>Produit mis à jour avec API</description>
+    <internal_comment>Mon commentaire interne</internal_comment>
+    <showcase>2</showcase>
+  </offer>
+  <offer>
+    <product_reference type='FnacId'>2631363</product_reference>
+    <offer_reference type='SellerSku'>3790-51D-9C4</offer_reference>
+    <price>20.5</price>
+    <product_state>1</product_state>
+    <quantity>50</quantity>
+    <description>Produit mis à jour avec API</description>
+    <internal_comment>Mon commentaire interne</internal_comment>
+    <showcase>3</showcase>
+  </offer>
+</offers_update>

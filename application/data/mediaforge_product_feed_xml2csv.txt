@@ -1,0 +1,35 @@
+#Table name
+data
+
+#Input column name	Output column name
+prod_id	ProductID
+prod_name	ProductName
+sku	SKU
+cat_name	primary_cat
+empty_field	sec_cat
+product_url	url
+image_url	image_url
+empty_field	buy_url
+short_desc	short_desc
+detail_desc	long_desc
+discount	discount
+disc_type	discounttype
+sale_price	saleprice
+price	retailprice
+empty_field	begin_date
+empty_field	end_date
+brand_name	brand
+shipping_fee	shipping
+delete_flag	deleteflag
+empty_field	keywords
+all_flag	isall
+mpn	mpn
+manufacturer	man_name
+shipping_info	shipping info
+stock_status	availabiliy
+upc	upc
+empty_field	classID
+prod_link_flag	isprodlink
+storefront_flag	isstorefront
+merc_flag	ismerch
+currency	currency

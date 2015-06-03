@@ -1,0 +1,22 @@
+[:dear:] [:forename:],
+
+[:paragraph_1:]
+
+[:paragraph_2:]
+	- [:document_1:]
+	- [:document_2:]
+
+[:paragraph_3_1:]http://[:site_url:]/[:lang_country_pair:]/contact/show_enquiry/GENERAL[:paragraph_3_2:]
+
+[:paragraph_4:]
+
+[:paragraph_5:]
+
+[:best_regards:]
+
+
+[:sender_name:]
+
+[:customer_care_specialist:]
+[:site_name:]
+[:site_url:]

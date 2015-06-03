@@ -1,0 +1,27 @@
+#Table name
+data
+
+#Input column name	Output column name
+index_no	index_no
+product_line	product_line
+row_no	row_no
+master_sku	master_sku
+dispatch_date	dispatch_date
+currency_id	currency_id
+report_pmgw	report_pmgw
+product_code	product_code
+qty	qty
+unit_price	unit_price
+txn_time	txn_time
+so_no	so_no
+txn_id	txn_id
+customer_email	customer_email
+gateway_id	gateway_id
+flex_batch_id	flex_batch_id
+tran_type	tran_type
+contain_size	contain_size
+sm_code	sm_code
+remark	remark
+parent_so_no	aps
+reason	reason
+

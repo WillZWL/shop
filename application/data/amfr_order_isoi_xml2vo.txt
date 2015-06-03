@@ -1,0 +1,6 @@
+#Table name
+interface_so_item
+#Input column name	Output column name
+sku	prod_sku
+order_qty	qty
+price	amount

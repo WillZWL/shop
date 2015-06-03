@@ -1,0 +1,259 @@
+/* Default style */
+#sitenav
+{
+color:#111;
+font-family:Arial,Helvetica,sans-serif;
+font-size:11px;
+position:relative;
+z-index:11;
+}
+
+#sitenav a
+{
+text-decoration:none;
+}
+
+#sitenav ul,#sitenav ul li
+{
+list-style:none;
+margin:0;
+padding:0;
+text-align:left;
+}
+
+#sitenav ul.nav-container h1 a, #sitenav ul.nav-container h1 a:link, #sitenav ul.nav-container h1 a:visited, #sitenav ul.nav-container h1 a:hover, #sitenav ul.nav-container h1 a:active
+{
+border-right:none;
+display:block;
+height:29px;
+font-size:15px;
+line-height:29px;
+padding-left:17px;
+color:#fff;
+font-weight:bold;
+width:auto;
+}
+
+#sitenav ul.nav-container li.nav:hover a.cat, #sitenav ul.nav-container li.nav a.cat:hover
+{
+background-color:#fff;
+border:solid 1px #e7e7e7;
+border-width:1px 1px 0px 1px;
+color:#c00;
+}
+
+#sitenav ul.nav-container li:hover a
+{
+color:#c00;
+}
+
+#sitenav .nav:hover .menu *
+{
+background:#fff!important;
+color:#000;
+}
+
+#sitenav .nav ul a,#sitenav ul .nav ul a:link,#sitenav .nav ul a:visited
+{
+color:#000;
+padding:0;
+text-align:left!important;
+text-decoration:none;
+}
+
+#sitenav .nav a:hover, #sitenav .nav a:active
+{
+color:#c00!important;
+}
+
+#sitenav .nav .menu ul ul
+{
+background:transparent;
+height:auto;
+padding-bottom:10px;
+padding-left:7px;
+}
+
+#sitenav .nav .menu ul li
+{
+border:none;
+}
+
+#sitenav .nav .menu_links ul li
+{
+border-bottom:solid 1px #fff;
+font-weight:normal;
+}
+
+#sitenav .nav .menu_links .menu ul>li
+{
+border:none;
+}
+
+#sitenav .nav .menu ul li,#sitenav .nav .menu ul li a,#sitenav ul.nav-container h3
+{
+background:transparent;
+font-size:11px;
+padding:2px 0 0 0;
+line-height:1em;
+width:auto;
+height:auto;
+}
+
+#sitenav .nav .menu li a
+{
+background-image:none;
+}
+
+#sitenav .menu a:link,#sitenav .menu a:visited
+{
+color:#000;
+display:block;
+text-decoration:none;
+text-indent:0;
+}
+
+#sitenav .nav .menu ul li
+{
+padding-bottom:0;
+margin-top:-3px;
+}
+
+#sitenav .nav .menu ul li a
+{
+padding-bottom:3px;
+}
+
+#sitenav .nav .menu ul li a:hover
+{
+background-color:#eee!important;
+}
+
+#sitenav div,#sitenav ul,#sitenav ol,#sitenav li,#sitenav h1,#sitenav h2,#sitenav h3
+{
+margin:0;
+padding:0;
+}
+
+#sitenav ul,#sitenav ol
+{
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+}
+
+#sitenav h1,#sitenav h2,#sitenav h3,#sitenav h4,#sitenav h5,#sitenav h6
+{
+font-size:1em;
+}
+
+#sitenav .nav:hover .menu
+{
+padding:0 6px 6px 0;
+top:29px;
+left:0px;
+z-index:4;
+}
+
+#sitenav ul.nav-container h3
+{
+padding-left:0;
+}
+
+
+/*--------------- Customer style START ---------------*/
+
+/* Menu bar width and style */
+#sitenav ul.nav-container
+{
+background:#fff;
+float:left;
+height:29px;
+left:0;
+margin:0;
+position:relative;
+width:930px;
+z-index:1;
+}
+/* Column width and style*/
+#sitenav ul.nav-container li.nav
+{
+display:inline;
+float:left;
+clear:none;
+height:29px;
+padding:0;
+cursor:pointer;
+width:185px;
+margin-right:1px;
+background:#c00;
+}
+
+#sitenav ul.nav-container li.nav:hover
+{
+background-position:100% 0;
+color:#c00;
+position:relative;
+width:185px;
+}
+
+/* Menu and menu links total width and style */
+#sitenav .nav .menu_links
+{
+background:#fff;
+float:left;
+clear:left;
+padding-top:12px;
+border:solid 1px #e7e7e7;
+border-width:0px 1px 1px 1px;
+width:557px;
+line-height:25px;
+}
+
+#sitenav .nav .menu
+{
+padding:0 0 0 1px;
+position:absolute;
+white-space:normal!important;
+width:557px;
+z-index:8;
+top:-9999px;
+left:-9999px;
+}
+
+/* Menu items length and the style */
+#sitenav .nav .menu ul
+{
+background:#fff;
+float:left;
+clear:none;
+padding-left:15px;
+width:162px;
+text-align:left;
+padding-bottom:12px;
+}
+
+/*Invisible the menu items*/
+#sitenav ul li ul
+{
+	display:none;
+}
+
+
+/*Visible the menu items when hover*/
+#sitenav ul li:hover ul {
+	display:block;
+}
+
+
+/*Specify column position and width when hover */
+#sitenav #n2:hover .menu, #sitenav #n3:hover .menu, #sitenav #n4:hover .menu
+{
+	left:-186px;
+}
+
+#sitenav #n5.nav .menu, #sitenav #n5.nav .menu_links{
+	width:185px;
+}
+
+/*--------------- Customer style END ---------------*/

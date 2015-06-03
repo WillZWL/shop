@@ -1,0 +1,20 @@
+#Table name
+data
+
+#Input column name	Output column name
+sku	Unique Merchant SKU
+name	Product Name
+product_url	Product URL
+image_url	Image URL
+price	Current Price
+cat_name	Category
+stock_status	Stock Availability
+shipping_rate	Shipping Rate
+mpn	MPN
+ean	EAN
+prod_condition	Condition
+brand_name	Brand / Manufacturer
+detail_desc	Product Description
+stock_desc	Stock Description
+merc_type	Merchandising Type
+is_bundle	Bundle

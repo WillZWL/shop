@@ -1,0 +1,25 @@
+#Table name
+interface_so
+
+#Input column name	Output column name
+sku	sku
+price	amount
+platform_order_id	platform_order_id
+client_name	bill_name
+send_to_addr1	bill_address
+send_to_addr2	+bill_address
+send_to_addr3	+bill_address
+send_to_postal_code	bill_postcode
+send_to_city	bill_city
+send_to_state	bill_state
+send_to_country	bill_country_id
+delivery_charge	delivery_charge
+send_to_name	delivery_name
+send_to_addr1	delivery_address,bill_address
+send_to_addr2	+delivery_address,+bill_address
+send_to_addr3	+delivery_address,+bill_address
+send_to_city	delivery_city,bill_city
+send_to_state	delivery_state,bill_state
+send_to_postal_code	delivery_postcode,bill_postcode
+send_to_country	delivery_country_id,bill_country_id
+order_date	order_create_date

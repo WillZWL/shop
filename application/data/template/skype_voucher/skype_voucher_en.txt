@@ -1,0 +1,58 @@
+Dear [:forename:],
+
+Thank you for shopping with [:site_name:]!
+
+We can now confirm that payment has been approved and your order can now be processed.
+
+Your order number is [:so_no:] and it is expected to be delivered within [:delivery_days:] working days,though we will endeavor to have this delivered to you sooner. For your convenience, you may log into the 'My Account' page via our storefront at any time to check the status of your order.
+
+For your convenience, your login details are as follows:
+
+[:email:]
+[:password:]
+
+Purchase Summary:
+
+Order No:
+[:so_no:]
+
+Order Date:
+[:order_create_date:]
+
+Billing Information:
+[:billing_name:]
+[:billing_address:]
+
+Delivery Information:
+[:delivery_name:]
+[:delivery_address_text:]
+
+Product(s) Purchased:
+[:so_items_text:]
+
+Delivery Fee: [:currency_id:] [:delivery_charge:]
+Total Paid: [:currency_id:] [:amount:]
+
+Once your order has been dispatched, we will send you a Shipping Confirmation to your registered e-mail address.
+
+While we are processing your order, we would appreciate if you could take a moment to answer a few questions about your initial experiences with us, so that we may improve our service to better meet your needs.
+
+All our loyal customers who participate in this survey will be eligible for some great prizes in our Monthly Prize Draw.
+
+To start the survey, please visit http://vista-survey.com/survey/v2/survey2.dsb?ID=1536253776
+
+Your Skype Voucher Code: [:voucher_code:]
+
+At ChatandVision, we work continuously with our partners for the best possible customer promotions. This month's offer: "Up to 60 Minutes Free Credit from Skype". Please visit http://Skype.com/voucher to redeem your free calling minutes!
+
+Once again, thank you for shopping with us here at ChatandVision. Your business is appreciated, and we look forward to serving you again in the future. In the event of any queries, please do not hesitate to visit our F.A.Q page or e-mail us at [:from_email:] for further assistance.
+
+Best regards,
+
+Cythia Appleby
+
+Customer Care Officer
+
+[:site_name:] Ltd.
+"Skype's Global Merchant Partner"
+www.chatandvision.com

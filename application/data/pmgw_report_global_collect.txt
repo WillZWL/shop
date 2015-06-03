@@ -1,0 +1,26 @@
+#Table name
+Pmgw_report_global_collect_dto
+
+#Input column name	Output column name
+Merchant ID	merchant_id
+Contract ID	contract_id
+Order ID	so_no
+Effort ID	effort_id
+Type	type
+Merchant Reference	txn_id
+Payment Reference	payment_reference
+CustomerID	customer_id
+StatusID	status_id
+Status Description	status_description
+Payment Product ID	payment_product_id
+Payment Product Description	payment_product_description
+Order Currency Code	currency_id
+Order Amount	amount
+Request Currency Code	request_currency_code
+Request Amount	request_amount
+Paid Currency	paid_currency
+Paid Amount	paid_amount
+Received Date	date
+Status Date	txn_time
+RejectionCode	rejection_code
+Remarks	remarks

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<offers_query_response status="OK" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd">
+  <page>1</page>
+  <total_paging>3913</total_paging>
+  <nb_total_result>39125</nb_total_result>
+  <nb_total_per_page>10</nb_total_per_page>
+  <offer>
+    <product_name><![CDATA[Rayman Prod Prsente : The Lapins Cretins Show ( Jeux Vido  ) - Jeu - Nintendo Wii]]></product_name>
+    <product_fnac_id>2462171</product_fnac_id>
+    <offer_fnac_id>059437E8-4DAF-B705-F81A-50A1BA170639</offer_fnac_id>
+    <offer_seller_id></offer_seller_id>
+    <product_state>11</product_state>
+    <price>249.7</price>
+    <quantity>1</quantity>
+    <description><![CDATA[Neuf sous blister..]]></description>
+    <product_url><![CDATA[http://www4.dev2.fnac.dev/marketplace/articleoffers.aspx?prid=2478922&ref=Fnac.com]]></product_url>
+    <image><![CDATA[http://multimedia.fnac.com/multimedia/images_produits/grandes/0/1/0/9782742765010.gif]]></image>
+    <nb_messages>1</nb_messages>
+    <showcase>9</showcase>
+  </offer>
+</offers_query_response>

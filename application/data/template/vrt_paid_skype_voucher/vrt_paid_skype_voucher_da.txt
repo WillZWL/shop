@@ -1,0 +1,61 @@
+Kære [:forename:],
+
+Tak for din bestilling hos [:site_name:]!
+
+Vi kan nu bekræfte, at betalingen er blevet godkendt, og din bestilling er nu klar til brug.
+
+Bemærk venligst, at dit ordrenummer er [:so_no:]. Du kan altid logge ind på 'Min konto' via forsiden på vores netbutik, når du ønsker det og kontrollere din bestillingsstatus.
+
+For en god ordens skyld er dine login oplysninger følgende:
+
+[:email:]
+[:password:]
+
+Prosimy również o zapoznanie się z podanymi poniżej szczegółami zamówienia:
+
+Bestillingsoversigt:
+
+Bestillingsnummer:
+[:so_no:]
+
+Købsdato:
+[:order_create_date:]
+
+Betalingsinformation:
+[:billing_name:]
+[:billing_address:]
+
+Leveringsinformation:
+[:delivery_name:]
+[:delivery_address_text:]
+
+Produkt(er) købt:
+[:so_items_text:]
+
+Forsendelse: [:currency_id:] [:delivery_charge:]
+Samlet Total: [:currency_id:] [:amount:]
+
+Når du modtager den ordrebekræftelses-e-mail, bedes du venligst bemærke, at du ikke under nogen omstændigheder vil kunne få refusion for den software du har købt. Alle salg på [:site_name:] er endelige.
+
+Din bestilling er nu færdig, og vi vil sætte pris på, om du ville bruge et øjeblik, til at besvare et par spørgsmål om dine første oplevelser hos os, så vi kan forbedre vores service, for bedre at kunne opfylde dine behov.
+
+Alle vore loyale kunder, der deltager i denne undersøgelse, vil være kvalificerede til at deltage i vores månedlige lodtrækning om store præmier.
+
+Klik her for at starte undersøgelsen.
+http://vista-survey.com/survey/v2/survey2.dsb?ID=1536253776
+
+Din Skype Værdikuponskode: [:voucher_code:]
+
+Hos [:site_name:] arbejder vi hele tiden sammen med vores partnere for at få de bedste kundereklamer. Denne måneds tilbud: ”Op til 60 Minutters Gratis Kredit fra Skype”. Klik her http://Skype.com/voucher for at indløse dine gratis opkaldsminutter!
+
+Endnu engang, tak for din bestilling hos Chat and Vision. Vi værdsætter din bestilling og ser frem til, at betjene dig igen i fremtiden. Har du forespørgsler, er du velkommen til at besøge vores F.A.Q side eller sende en E-mail til: [:from_email:], for yderligere hjælp.
+
+Venlig Hilsen
+
+Kara Hensen
+
+Kunderserviceafdelingen
+
+[:site_name:] Ltd.
+"Skype's Global Merchant Partner"
+www.chatandvision.com

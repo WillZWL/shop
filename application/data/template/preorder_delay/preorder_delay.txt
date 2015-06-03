@@ -1,0 +1,17 @@
+[:dear:] [:forename:],
+
+[:thank_you_1:] [:so_items_pre_order:]
+
+[:content_1:] [:expect_delivery_date:] [:content_1_1:]
+
+[:content_2:]
+
+[:content_3:]
+
+[:content_4:]
+
+
+[:best_regards:]
+[:customer_care_name:]
+[:customer_care_specialist:]
+[:site_name:]

@@ -1,0 +1,11 @@
+#Table name
+Pmgw_report_adyen_dto
+
+#Input column name	Output column name
+Psp Reference	txn_id
+Merchant Reference	so_no
+Record Type	type
+Booking Date	date
+Captured (PC)	amount
+Payment Currency	currency_id
+Commission (SC)	commission

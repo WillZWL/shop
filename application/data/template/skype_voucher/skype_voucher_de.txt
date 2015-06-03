@@ -1,0 +1,49 @@
+Sehr geehrte/r Herr oder Frau [:forename:],
+
+Vielen Dank dass Sie bei [:site_name:] eingekauft haben!
+
+Wir bestaetigen mit dieser email den Erhalt Ihrer Zahlung.
+
+Ihre Bestellnummer ist [:so_no:] und die Sendung wird gewoehnlich in [:delivery_days:] Werktagen ausgeliefert, wobei wir jedoch annehmen dass dies eher geschehen wird. Sie koennen sich via unserer Webseite in Ihr Konto einloggen unter "Mein Account" um den Status Ihrer Bestellung herauszufinden.
+
+Bitte finden Sie hier Ihre Log-In details:
+
+[:email:]
+[:password:]
+
+Zusammenfassung der Bestellung:
+
+Bestellnummer:
+[:so_no:]
+
+Rechnungsadresse:
+[:billing_name:]
+[:billing_address:]
+
+Lieferadresse:
+[:delivery_name:]
+[:delivery_address_text:]
+
+Bestellte(s) Produkt(e):
+[:so_items_text:]
+
+Delivery Fee: [:currency_id:] [:delivery_charge:]
+Total Paid: [:currency_id:] [:amount:]
+
+Sobald die Sendung abgeschickt wurde, werden wir Ihnen eine Bestaetigungsemail mit Sendungsnummer zukommen lassen.
+
+Ihr Skype Gutschein Code: [:voucher_code:]
+
+ChatandVision arbeitet kontinuierlich mit unseren Partnern zusammen um unseren Kunden die besten Promotionen anbieten zu koennen. Diesen Monat bieten wir: "Bis zu 60 Minuten gratis Skype Kredit". Bitte hier klicken http://Skype.com/voucher um Ihre gratis Minuten einzuloesen!
+
+Wir freuen uns auf Ihre Nachricht und bedanken uns erneut fuer Ihren Einkauf. Sollten Sie weitere Hilfe benoetigen, schauen Sie bitte auf unsere F.A.Q. Seite oder kontaktieren Sie uns gerne jederzeit unter [:from_email:].
+
+Mit freundlichen Gruessen,
+
+Susanne Bilz
+
+Kundenbetreuerin
+
+[:site_name:] Ltd.
+"Skype's Global Merchant Partner"
+www.chatandvision.com

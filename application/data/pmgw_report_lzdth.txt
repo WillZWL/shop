@@ -1,0 +1,8 @@
+#Table name
+Pmgw_report_lzdth_dto
+
+#Input column name	Output column name
+Date	date
+Transaction Type	type
+Amount	amount
+Order No	txn_id

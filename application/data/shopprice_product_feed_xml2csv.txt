@@ -1,0 +1,13 @@
+#Table name
+data
+
+#Input column name	Output column name
+prod_id	Product ID
+model	Product Model
+prod_name	Product Name
+product_url	Product URL
+price	Product Price
+detail_desc	Product Description
+brand_name	Manufacturer Name
+cat_name	Category Name
+image_url	Image URL

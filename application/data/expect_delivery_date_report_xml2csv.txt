@@ -1,0 +1,22 @@
+#Table name
+data
+
+#Input column name	Output column name
+so_no	SO Number
+platform_id 	Platform
+payment_gateway 	Payment Gateway ID
+platform_order_id 	Platform Order ID
+ebay_id 	eBay ID
+transaction_no	Transaction Number
+order_amount 	Order Amount
+create_date 	Create Date
+edd 	EDD
+client_name	Client Name
+client_email 	Client Email
+contact_no 	Contact Number
+shipped_on	Shipped On
+order_status 	Order Status
+hold_status 	Hold Status
+refund_status 	Refund Status
+priority_score 	Priority Score
+modify_by	Modify By

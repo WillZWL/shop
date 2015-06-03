@@ -1,0 +1,26 @@
+#Table name
+product
+
+#Input column name	Output column name
+product_number	product_number
+manufacturer_name	manufacturer_name
+product_name	product_name
+description	description
+category	category
+availability	availability
+availability_url_main	availability_url_main
+regular_price	regular_price
+sales_price	sales_price
+buy_url	buy_url
+large_image_url	large_image_url
+model_number	model_number
+ean	ean
+brand	brand
+currency	currency
+keywords	keywords
+shipping_cost	shipping_cost
+spec	spec
+europrice	europrice
+small_image_url	small_image_url
+medium_image_url	medium_image_url
+normal_image_url	normal_image_url

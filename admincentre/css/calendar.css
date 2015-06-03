@@ -1,0 +1,15 @@
+#calendar { border: 1px solid #D9D9D4; background: #F5F5F0; margin-bottom: 0.8em;}
+#calendar *, #calendar_year *, #calendar_month * {font-size: 9pt;}
+#calendar td { padding: 2px; font-weight: bold;}
+#calendar_week td { height: 2em; line-height: 2em; border-bottom: 1px solid #D9D9D4;}
+#hourminute td {padding: 4px 2px; border-top: 1px solid #D9D9D4;}
+.calendar_expire, .calendar_expire a:link, .calendar_expire a:visited {	color: #cccccc; font-weight: normal; }
+.calendar_default, .calendar_default a:link, .calendar_default a:visited { color: #535353;}
+.calendar_checked, .calendar_checked a:link, .calendar_checked a:visited { color: #FF3A00; font-weight: bold;}
+td.calendar_checked, span.calendar_checked{ background: #D9D9D4;}
+.calendar_today, .calendar_today a:link, .calendar_today a:visited { color: #000080; font-weight: bold; }
+#calendar_header td{ width: 30px; height: 20px; border-bottom: 1px solid #D9D9D4; font-weight: normal; }
+#calendar_year { display: none;	line-height: 150%; background: #F5F5F0; position: absolute; z-index: 10; }
+#calendar_year .col { float: left; background: #F5F5F0; margin-left: 1px; border: 1px solid #D9D9D4; padding: 4px; }
+#calendar_month { display: none; background: #F5F5F0; line-height: 150%; border: 1px solid #DDD; padding: 4px; position: absolute; z-index: 11; }
+#calendar_year a:hover, #calendar_month a:hover, .day:hover {background: #ffff80; display:inline-block; width:100%}

@@ -1,0 +1,7 @@
+#Table name
+sourcing_list
+
+#Input column name	Output column name
+0	item_sku
+1	sourced_qty
+2	comments

@@ -1,0 +1,18 @@
+#Table name
+Product_cost
+
+#Input column name	Output column name
+empty_field	empty_field
+ean	ean
+brand_name	brand_name
+model	model
+prod_name	prod_name
+sku	sku
+url	url
+image	image
+price	price
+detail_desc	detail_desc
+cat_name	cat_name
+quantity	quantity
+delivery_charge	delivery_charge
+delivery_time	delivery_time

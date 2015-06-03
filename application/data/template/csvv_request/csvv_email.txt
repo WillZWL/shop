@@ -1,0 +1,26 @@
+[:dear:] [:forename:],
+
+[:thank_you_1:] [:site_name:]!
+
+[:order_detail:]:
+
+[:item_list:]
+
+[:content_1:] [:order_create_date:], [:content_2:].
+
+[:content_3:]
+
+[:content_4:]
+
+[:closing_1:]
+
+
+[:best_regards:],
+
+[:customer_care_name:]
+
+[:customer_care_specialist:]
+
+[:site_name:]
+
+[:site_url:]

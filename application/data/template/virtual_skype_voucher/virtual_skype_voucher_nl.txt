@@ -1,0 +1,57 @@
+Beste [:forename:],
+
+Bedankt voor uw aankoop bij [:site_name:]!
+
+We kunnen nu bevestigen dat de betaling is goedgekeurd en uw bestelling is nu beschikbaar voor gebruik.
+
+Noteer alstublieft dat uw bestellingsnummer [:so_no:] is. U kunt op elk gewenst moment inloggen op de 'Mijn Account' pagina via onze winkelpagina om uw bestelling te bekijken.
+
+Ter referentie hierbij uw inloggegevens:
+
+[:email:]
+[:password:]
+
+Omschrijving aankoop:
+
+Bestellingnummer:
+[:so_no:]
+
+Datum bestelling:
+[:order_create_date:]
+
+Factuurgegevens: 
+[:billing_name:]
+[:billing_address:]
+
+Leveringsinformatie:
+[:delivery_name:]
+[:delivery_address_text:]
+
+Aangekocht(e) Product(en):
+[:so_items_text:]
+
+Delivery Fee: [:currency_id:] [:delivery_charge:]
+Total Paid: [:currency_id:] [:amount:]
+
+Uw bestelling is nu compleet en we zouden het waarderen als U even de tijd kan nemen om een paar vragen over uw eerste ervaringen met ons. Op die manier kunnen we verbeteren en nog meer aan uw behoeften kunnen voldoen.
+
+Al onze trouwe klanten die deelnemen aan deze enquête zullen in aanmerking komen voor een aantal mooie prijzen in onze maandelijkse loterij.
+
+Klik hier om de enquête te starten.
+http://vista-survey.com/survey/v2/survey2.dsb?ID=1536253776
+
+Uw Skype Vouchercode: [:voucher_code:]
+
+Bij ChatandVision werken we met onze partners constant aan de best mogelijke aanbiedingen voor klanten. De aanbieding van deze maand is: "Tot wel 60 Minuten Gratis Belkrediet van Skype".  Klik hier http://Skype.com/voucher om uw gratis belminuten te incasseren!
+
+Nogmaals bedankt voor uw aankoop bij ChatandVision. Wij waarderen uw klandizie en we hopen u binnenkort weer van dienst te mogen zijn. Indien u vragen heeft, aarzel dan niet om onze FAQ-pagina te bekijken, of via e-mail [:from_email:] contact met ons op te nemen voor verdere ondersteuning.
+
+Met vriendelijke groet, 
+
+Saskia Baas
+
+Klantenservice.
+
+[:site_name:] Ltd.
+"Skype's Global Merchant Partner"
+www.chatandvision.com

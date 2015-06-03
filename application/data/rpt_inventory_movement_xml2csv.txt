@@ -1,0 +1,20 @@
+#Table name
+data
+
+#Input column name	Output column name
+ship_ref	ship_ref
+log_sku	log_sku
+sku	sku
+source_region_id	source_region_id
+qty	qty
+type	type
+from_location	from_location
+to_location	to_location
+description	description
+reason	reason
+create_at	create_at
+create_by	create_by
+create_on	create_on
+modify_at	modify_at
+modify_by	modify_by
+modify_on	modify_on

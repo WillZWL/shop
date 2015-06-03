@@ -1,0 +1,59 @@
+/*
+Copyright (c) 2005-2008, Guru Sistemas and/or Gustavo Adolfo Arcila Trujillo
+All rights reserved.
+www.gurusistemas.com
+
+phpMyDataGrid Professional IS NOT FREE and may not be re-sold as a single library.
+
+If you want to use phpMyDataGrid Professional on any of your projects, you Must purchase a license.
+
+You can buy the full source code or encoded version at http://www.gurusistemas.com/phpmydatagrid/
+also can try the donationware version, which can be downloaded from http://www.gurusistemas.com/indexdatagrid.php
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS  "AS IS"  AND ANY EXPRESS  OR  IMPLIED WARRANTIES, INCLUDING, 
+BUT NOT LIMITED TO,  THE IMPLIED WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT
+SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,  INDIRECT,  INCIDENTAL, SPECIAL, EXEMPLARY,  OR CONSEQUENTIAL 
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF  USE, DATA, OR PROFITS;  OR BUSINESS 
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+
+For more info, samples, tips, screenshots, help, contact, support, please visit phpMyDataGrid site  
+http://www.gurusistemas.com/phpmydatagrid/
+*/
+body{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	margin-top: 0px;
+	margin-left: 0px;
+}
+.dgTable{
+	background-color:#FFFFFF;
+}
+.dgTitles{
+	font-size:98%;
+	font-weight:bold;
+	border:1px solid #000000;
+}
+.dgHeader{
+	font-size:110%;
+	font-weight:bold;
+	border:solid 1px #000000;
+	height:30px;
+}
+.dgFooter{
+	font-size:9px;
+	background-color:#FFFFFF;
+	color:#000000;
+}
+.dgRownorm{
+	font-size:100%;
+	border:1px solid #bfcacd;
+	border-left-color:#ffffff;
+	border-top-style:none;
+}
+.dgRowalt{
+	font-size:100%;
+	border:1px solid #bfcacd;
+	border-left-color:#ffffff;
+	border-top-style:none;
+}

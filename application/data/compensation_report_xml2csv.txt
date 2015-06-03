@@ -1,0 +1,14 @@
+#Table name
+data
+
+#Input column name	Output column name
+platform_id	Platform ID
+so_no	SO Number
+prod_name	Product Name
+item_sku	SKU
+request_date	Request Date
+request_by	Request By
+approval_date	Approval date
+approved_by	Approved By
+reason	Reason For Order
+

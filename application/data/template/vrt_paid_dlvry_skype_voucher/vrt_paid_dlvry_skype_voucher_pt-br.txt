@@ -1,0 +1,54 @@
+Prezado(a) [:forename:],
+
+Obrigado por fazer compras com [:site_name:]!
+
+Podemos agora confirmar que o pagamento foi aprovado e que seu pedido agora pode ser processado.
+
+O número de seu pedido é [:so_no:], e ele deverá ser entregue no prazo de [:delivery_days:] dias úteis; no entanto, nos esforçaremos para que ele seja entregue a você mais rapidamente. Para sua comodidade, você poderá entrar na página "Minha Conta" através de nossa loja, a qualquer momento,  a fim de verificar o status do seu pedido.
+
+Para sua conveniência, os seus dados de login são os seguintes:
+
+[:email:]
+[:password:]
+
+Também para sua referência, por favor, reveja os detalhes de seu pedido abaixo.
+
+Resumo da Compra:
+
+Pedido n.º:
+[:so_no:]
+
+Data da compra:
+[:order_create_date:]
+
+Informações de cobrança:
+[:billing_name:]
+[:billing_address:]
+
+Informações de entrega:
+[:delivery_name:]
+[:delivery_address_text:]
+
+Produto(s) comprado(s):
+[:so_items_text:]
+
+Custo de entrega: [:currency_id:] [:delivery_charge:]
+Total geral: [:currency_id:] [:amount:]
+
+Ao receber este e-mail de confirmação do pedido, note que não serão feitas devoluções em quaisquer circunstâncias relativamente à compra do software. Todas as vendas de software em [:site_name:] são definitivas.
+
+Uma vez que seu pedido seja enviado, nós enviaremos uma Confirmação de Envio a você em seu endereço de e-mail registrado.
+
+Código do seu voucher da Skype: [:voucher_code:]
+
+Na [:site_name:], trabalhamos continuamente junto aos nossos parceiros para oferecer as melhores promoções possíveis aos clientes. Oferta do mês: "Até 60 minutos de crédito gratuito da Skype". Clique http://Skype.com/voucher para resgatar os seus minutos de chamadas gratuitas!
+
+Mais uma vez, obrigado por comprar conosco no [:site_name:]. Apreciamos sua preferência,  e estamos ansiosos para atendê-lo novamente no futuro. Em caso de dúvidas, por favor, não hesite em visitar a nossa página de perguntas e respostas ou envie um e-mail para [:from_email:] para maior assistência.
+
+Atenciosamente,
+
+Equipe de atendimento
+
+[:site_name:] Ltd.
+"Skype's Global Merchant Partner"
+www.chatandvision.com

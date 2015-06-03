@@ -1,0 +1,17 @@
+#Table name
+data
+
+#Input column name	Output column name
+item_sku1	SKU
+prod_name1	Product Name
+cnty_name1	Country of Sales
+sales_count1	No. Of Sales
+refund_qty1	No. of Refunds
+net_sales1	Net Sales (Sales - Refunds)
+refund_rate1	Refund Rate
+spacing	spacing
+sales_count2	No. Of Sales
+refund_qty2	No. of Refunds
+net_sales2	Net Sales (Sales - Refunds)
+refund_rate2	Refund Rate
+sales_diff	Sales Differnce (%)

@@ -1,0 +1,25 @@
+[:dear:] [:forename:],
+
+[:paragraph_1:] [:site_name:].
+
+[:paragraph_2:] http://[:site_url:]/[:lang_country_pair:]/contact#enquiry_box_anchor [:paragraph_2_3:] [:local_phone_number:].
+
+[:paragraph_3:]
+
+[:paragraph_4:]
+1. [:paragraph_4_1:]
+2. [:paragraph_4_2:]
+3. [:paragraph_4_3:]
+4. [:paragraph_4_4:]
+5. [:paragraph_4_5:]
+
+[:paragraph_5:]
+
+[:best_regards:],
+
+Stephanie Meyer
+
+[:customer_care_specialist:]
+
+[:site_name:] Ltd.
+www.valuebasket.com

@@ -1,0 +1,1 @@
+No Acknowledge feed was generated and fed to Ixtens for [:platform:] on [:time:][:reason:]

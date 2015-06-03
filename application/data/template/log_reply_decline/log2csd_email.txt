@@ -1,0 +1,1 @@
+Hi [:name:],<br><br>This is to get back to you on your request dated [:create_date:] for holding order [:client_id:]-[:so_no:] with [:reason:] as the reason.<br><br>We are sorry to tell you that we need to turn down your request. Should you need further information please kindly contact us.<br><br>Best Regards,<br>Purelygadgets' Logistics Team

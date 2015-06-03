@@ -1,0 +1,15 @@
+[:dear:] [:forename:],
+
+[:paragraph_1:]
+
+[:paragraph_2:]
+
+[:paragraph_3:]
+
+[:best_regards:]
+
+[:sender_name:]
+
+[:customer_care_specialist:]
+[:site_name:]
+[:site_url:]

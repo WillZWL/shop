@@ -1,0 +1,22 @@
+#Table name
+data
+
+#Input column name	Output column name
+biz_type	Business Type
+platform_id	Platform ID
+pmgw_name	Payment Gateway
+bill_country_id	Billing Country ID
+client_id	Original Order Number
+so_no	SO Number
+prod_name	Product Name
+cat_name	Category Name
+item_sku	SKU
+dispatch_date	Dispatch Date
+order_create_date	Order Date
+amount	Order Amount
+delivery_type_id	Delivery
+currency_id	Currency ID
+request_by	Request By
+approval_date	Approval date
+approved_by	Approved By
+reason	Reason For Order

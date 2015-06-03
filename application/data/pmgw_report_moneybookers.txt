@@ -1,0 +1,18 @@
+#Table name
+Pmgw_report_moneybookers_dto
+
+#Input column name	Output column name
+0	txn_id
+1	txn_time
+2	type
+3	transaction_detail
+4	amount_debit
+5	amount_credit
+6	status
+7	balance
+8	reference
+9	order_amount_ref
+10	currency_id
+11	so_no
+12	original_order_txn_id
+13	payment_type

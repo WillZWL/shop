@@ -1,0 +1,12 @@
+#Table name
+Pmgw_report_trademe_dto
+
+#Input column name	Output column name
+Date	date
+Description	description
+Money In	money_in
+Money Out	money_out
+Balance	balance
+5	auction
+6	purchase
+SKU	sku

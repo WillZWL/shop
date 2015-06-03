@@ -1,0 +1,1 @@
+Hi Logistic Team,<br><br>We are requesting to put order [:client_id:]-[:so_no:] on hold because of [:reason:] on [:create_date:].<br><br>.Please kindly review and let me know if the request can be further processed.<br><br>Should you have any question, please kindly let me know.<br><br>Best Regards,<br>[:name:]<br>CS Team

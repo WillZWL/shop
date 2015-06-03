@@ -1,0 +1,58 @@
+Kjære [:forename:],
+
+Tack för att du handlat hos [:site_name:]!
+
+Vi kan nå bekrefte at din betaling har blitt godkjent og at din bestilling nå er tilgjengelig.
+
+Vennligst bemerk at din bestillingsnummer er [:so_no:]. For enkelhets skyld, kan du logge deg inn på "Min konto" siden via utstillingsvinduet vår til enhver tid for å sjekke status på din bestilling.
+
+For enkelhets skyld, dine innloggingsdetaljer er som følger:
+
+[:email:]
+[:password:]
+
+Også for referanse, vennligst gjennomgå detaljene i bestillingen din nedenfor.
+
+Innkjøpssammendrag:
+
+Bestillingsnummer:
+[:so_no:]
+
+Kjøpsdato:
+[:order_create_date:]
+
+Faktureringsinformasjon:
+[:billing_name:]
+[:billing_address:]
+
+Levering Informasjon:
+[:delivery_name:]
+[:delivery_address_text:]
+
+Kjøpte produkt(er):
+[:so_items_text:]
+
+Leveringskostnad: [:currency_id:] [:delivery_charge:]
+Sluttsum: [:currency_id:] [:amount:]
+
+Vennligst merk at det gis ingen refusjon på noen som helst måte etter at du har mottatt en e-post med kvittering for kjøpet av programvaren. Alle salg for programvare hos [:site_name:] er ikke refunderbare.
+
+Du har nå fullført ditt ordre. Vi setter pris på det dersom du tar tid til å svare på noen spørsmål angående dine første opplevelser med oss slik at vi kan forbedre vår service til å møte dine behov.
+
+Alle våre lojale kunder som deltar i denne spørreundersøkelsen vil få muligheten til å delta i vår månedlige premieutdeling.
+
+Klikk her for å begynne spørreundersøkelsen.
+http://vista-survey.com/survey/v2/survey2.dsb?ID=1536253776
+
+Din Skype kupong code: [:voucher_code:]
+
+Hos [:site_name:], arbeider vi kontinuerlig med våre partnere for å skaffe kundene best mulig tilbud. Denne måneden er tilbudet: "Opp til 60 Minutter Gratis Ringetid fra Skype". Klikk http://Skype.com/voucher å løse inn gratis ringeminutter!
+
+Igjen, takk for at du handler hos oss her på Chat og Vision din interesse er verdsatt, og vi ser frem til å tjene deg igjen i fremtiden. Ved spørsmål, ikke nøl med å besøke vår FAQ side eller e-mail oss på  [:from_email:] for ytterligere assistanse.
+
+Beste hilsen,
+
+Kundeservice Team
+[:site_name:] Ltd.
+"Skype's Global Merchant Partner"
+www.chatandvision.com

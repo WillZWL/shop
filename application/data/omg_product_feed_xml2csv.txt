@@ -1,0 +1,24 @@
+#Table name
+data
+
+#Input column name	Output column name
+sku	ProductSKU
+prod_name	ProductName
+detail_desc	ProductDescription
+prod_url	ProductLink
+rrp	WasPrice
+price	ProductPrice
+currency	ProductCurrency
+active	Active
+image_url	ProductImageURLLarge
+can_aggregate	CanAggregate
+category	CategoryName
+brand_name	Manufacturer
+mpn	ModelNo
+free_shipping	FreeShipping
+warranty	Warranty
+delivery_time	DeliveryTime
+delivery_cost	DeliveryCost
+stock_status	StockStatus
+discount	Discount
+condition	Condition

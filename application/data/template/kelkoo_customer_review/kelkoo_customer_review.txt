@@ -1,0 +1,21 @@
+[:dear:] [:forename:],
+
+[:paragraph_1:] [:FR_BE_site_name:]!
+
+[:paragraph_2:] http://[:site_url:]/contact [:paragraph_2_3:] [:local_phone_number:].
+
+[:paragraph_3:]
+
+[:paragraph_4:]
+
+[:paragraph_5:]
+
+[:paragraph_6:]
+
+[:best_regards:],
+
+[:customer_care_name:]
+
+[:customer_care_specialist:]
+
+[:site_url:]

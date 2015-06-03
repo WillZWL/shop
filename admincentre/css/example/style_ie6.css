@@ -1,0 +1,21 @@
+/*Visible the menu items when hover (IE <= 6) */
+#sitenav ul li a:hover ul{
+	display:block;
+}
+#sitenav ul li a:hover .menu{
+	top:29px;
+	left:-1px;
+}
+
+/*Specify column position and width when hover (IE <= 6) */
+#sitenav ul #n3 a:hover .menu{
+	left:185px;
+}
+
+#sitenav ul #n4 a:hover .menu{
+	left:371px;
+}
+
+#sitenav ul #n5 a:hover .menu{
+	left:743px;
+}

@@ -1,0 +1,26 @@
+#Table name
+data
+
+#input column name	Output column name
+item_no	S/N
+	Last Name	.
+	Middle Name
+delivery_name	First Name
+delivery_address1	Address 1
+delivery_address2	Address 2
+delivery_city	City
+delivery_state	State
+delivery_postcode	Postcode
+country_name	Country
+tel	Contact No
+	Tracking Number
+so_no	Cust Reference No
+prod_weight	Weight per Article (gm)
+	Declared Currency	USD  United States Dollar
+declared_value	Declared Value
+	Item Description	Mobile accessory
+	HS code	
+	Insured (Yes/No)	No
+	Insured currency
+	Insured value
+	To be selected for Registered and Standards (CN22)	Gift

@@ -1,0 +1,639 @@
+﻿/*    
+Copyright (c) 2005-20011, Guru Sistemas and/or Gustavo Adolfo Arcila Trujillo
+All rights reserved.
+www.gurusistemas.com
+
+phpMyDataGrid professional and evolution ARE NOT FREE and may not be re-sold as a single library.
+
+If you want to use phpMyDataGrid Professional or evolution on any of your projects, you Must purchase a license.
+
+You can buy the full source code or encoded version at http://www.gurusistemas.com/
+also can try the free version, which can be downloaded from http://www.gurusistemas.com/indexdatagrid.php
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS  "AS IS"  AND ANY EXPRESS  OR  IMPLIED WARRANTIES, INCLUDING, 
+BUT NOT LIMITED TO,  THE IMPLIED WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT
+SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,  INDIRECT,  INCIDENTAL, SPECIAL, EXEMPLARY,  OR CONSEQUENTIAL 
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF  USE, DATA, OR PROFITS;  OR BUSINESS 
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+
+For more info, samples, tips, screenshots, help, contact, support, please visit phpMyDataGrid site  
+http://www.gurusistemas.com/
+*/
+																																 /* 
+--------------------------------------------------------------------------------------------------------------------------------
+	es: Todas las propiedades para el manejo de fondos, colores y bordes. 
+	en: All the properties for background, color and borders 
+-------------------------------------------------------------------------------------------------------------------------------- */
+
+/* 
+	es: Tabla del grid
+	en: DataGrid Table
+*/
+
+.dgTable td{
+	overflow:hidden;
+}
+
+.dgTable 
+	{ 
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 11px;
+	}
+
+.dgHeader, .dg_dataTable .editTitle	/* Titulo del grid *//* DataGrid Title */
+	{ 
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 11px;
+		background: url(../images/bck_title.gif) repeat-x 0 -1px;
+		border: 1px solid #ccc;
+		font-weight:bold;
+		display:block;
+	}
+
+.dgTable .dgToolbar	/* Toolbar */
+	{
+		background: #F0F0F0 url(../images/bck_toolbar.gif) repeat-x top;
+		border: 1px solid #ccc;
+		font-weight:normal;
+	}
+
+.dgTable .dgToolbar div.btnseparator	/* Separador de la barra de iconos *//* Toolbar Separator */
+	{
+		border-left: 1px solid #ccc;
+		border-right: 1px solid #fff;
+	}
+
+.dgTable .dgTitles /* Titulo de cada columna *//* column titles */
+	{
+		background: #fafafa url(../images/bck_column_names.gif) repeat-x bottom;
+		border-left: 1px solid #fff;
+		border-right: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
+		border-top:0px;
+		/* added by teik to align header checkbox*/
+		padding-left: 4px;	
+		padding-right: 4px;
+	}
+
+.dgTable .dgTitles .ordered /* Titulo de cada columna ordenada *//* ordered column titles */
+	{
+		background: #CBD8D1 url(../images/bck_column_ordered.gif) repeat-x top;
+	}
+
+.dgTable .SelectLines
+	{
+		border:1px solid #ccc; 
+		font-size:12px;
+	}
+
+.dgTable .dgSelectpages, .dgTable .dgSelectnormal 
+	{
+		border:1px solid #ccc; 
+		font-size:10px;
+	}
+
+.dgSearchDivInline, .dgExportDivInline	/* Barra de búsqueda y exportación en línea */
+	{
+		margin: 5px 0 3px 5px;
+		line-height:30px;
+		height:30px;
+	}
+
+.dgRowsnormTR /* Color de las filas *//* Rows Color */
+	{
+		background:#fff; 
+	}
+
+.dgRowsaltTR /* Color alterno de las filas *//* Alternate Rows Color */
+	{
+		background:#eee;
+	}
+
+.dgRowsnormTR:hover, .dgRowsaltTR:hover /* Colores de las filas *//* Rows Colors */
+	{
+		background: #d9ebf5;
+	}
+
+.dgSelRow /* Color de las filas seleccionadas *//* Selected rows color */
+	{
+		background-color:#E3EAED;
+	}
+
+.dgSelRowDetails /* Color de las filas seleccionadas en mantenimientos maestro detalle *//* Selected rows color in master details maintenance */
+	{
+		background-color:#FF6;
+	}
+
+.dgRowalt div input, .dgRownorm div input /* Cuadros de lectura de datos *//* Input fields */
+	{
+		font-size:12px;
+		border:1px solid #ccc;
+		background:#eee;
+		color:#900;
+	}
+
+.dgInnerDiv .dg_dataTable thead tr th
+	{
+		background:#999;
+		padding:10px 0 10px 0;
+	}
+
+.dgInnerDiv .dg_dataTable tfoot tr th
+	{
+		background:#333;
+		color:#FFF;
+	}
+
+.dgInnerDiv .dg_dataTable tbody tr td.dgAddInputs input, .dgInnerDiv .dg_dataTable tbody tr td.dgAddInputs textarea
+	{
+		font-family: Arial, Helvetica, sans-serif;
+		font-size:11px;
+	}
+
+/* Ventana indicadora de procesos AJAX */
+/* Floating AJAX loading Window */
+.dgAjax
+	{
+		font-family:Verdana, Arial, Helvetica, sans-serif;
+		font-size:12px;
+		font-weight:bold;
+		background-color:#FFFFE1; 
+		border-style: dotted; 
+		border-width: 2px; 
+		padding: 4px;
+	}
+
+/* Loading en toolbar */
+/* Toolbar loading */
+.dgToolbar .dgAjax{
+	font-family:inherit;
+	font-size:inherit;
+	background:none;
+	border:none;
+}
+
+/* Ventanas flotantes de búsqueda y exportación */
+/* Floating search and export windows */
+.dgSearchDiv 
+	{
+		background:#666 url(../images/bck-windows.gif) repeat-x;
+		border:1px solid #000;
+	}
+
+.dgInnerDiv 
+	{
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 11px;
+		background:#F5F5F5;
+	}
+	
+.dgSearchTit 
+	{
+		font-family:Arial, Helvetica, sans-serif;
+		color:#FFF;
+		font-weight:bold;
+	}
+
+.dgPagRow
+	{
+		background:#EFEFEF;
+		border-top:solid 5px #C0C0C0;
+		font-size:9px;
+	}
+
+/* celdas de total */ /* Total cells */
+.dgRowsTot
+	{
+		border-top:10px solid #CCC;
+		background:#efefef;
+	}
+
+.dgTable .dgToolbar div a.fbutton:hover
+	{
+		border: 1px solid #ccc;
+	}
+								
+/* Mensajes de ayuda al usuario *//* Input help Message */
+.dgMsgInput{color:#00F;}
+
+/* Error al validar un campo *//* A field do not pass the validation */
+.dgErrorInput{color:#F00;}
+								
+																																 /* 
+--------------------------------------------------------------------------------------------------------------------------------
+	es: Por favor no modifique características importantes a partir de este punto a no ser que usted sepa lo que esté haciendo 
+	en: Please do not modify the definitions below unless you know what you are doing 
+-------------------------------------------------------------------------------------------------------------------------------- */
+
+.dgTable img
+	{
+		border:0;
+	}
+
+/* 
+	es: Titulo del Grid 
+	en: DataGrid title
+*/
+.dgHeader, .dg_dataTable .editTitle
+	{ 
+		border-top: 0px;
+		overflow: hidden;
+		white-space: nowrap;
+		line-height:28px; 
+		text-align:left; 
+		padding-left:5px;
+	}
+
+/* Toolbar */
+.dgTable .dgToolbar
+	{
+		line-height:26px;
+		overflow: hidden;
+		text-align:left;
+		padding:3px 0 0px 0px;
+	}
+
+.dgTable .dgToolbar div.btnseparator
+	{
+		float: left;
+		height: 22px;
+		margin: 1px 1px 1px 2px;
+	}
+
+.SelectLines, .dgLinks, .dgBold, .dgSelectpages, .toolbarItem
+	{
+		line-height: 22px;
+		margin: 1px 5px 1px 5px;
+	}
+
+.dgToolbar .SelectLines, .dgToolbar .dgLinks, .dgToolbar .dgBold, .dgToolbar .dgSelectpages, .dgToolbar .toolbarItem
+	{
+		float: left;
+		line-height: 22px;
+		margin: 1px 5px 1px 5px;
+	}
+
+.dgTable .dgToolbar .dgInputPage
+	{
+		float:left;
+	}
+	
+.dgTable .dgInputPage
+	{
+		height:18px;
+		padding:1px;
+		margin: 1px 5px 1px 5px;
+		width:30px;
+		border:1px solid #ccc; 
+	}
+	
+.dgTable .dgToolbar div a.fbutton
+	{
+		line-height:25px;
+		float: left;
+		display: block;
+		cursor: pointer;
+		padding: 1px;
+		text-decoration:none;
+		color:#000;
+	}
+
+.dgTable .dgToolbar div label, .dgTable .dgToolbar div select
+	{
+		margin:0px 5px;
+		float:left;
+	}
+
+.dgTable .dgToolbar div select
+	{
+		margin:4px 5px 0px 5px;
+		font-size:10px;
+	}
+
+.dgTable .dgToolbar div a.fbutton img
+	{
+		padding-top:3px;
+	}
+	
+.dgTable .dgToolbar div a.fbutton div
+	{
+		padding: 0px 1px;
+	}
+	
+.dgTable .dgToolbar div a.fbutton span
+	{
+		/*fixes the 1 pixel shifting problem when hovering over buttons */
+		/*height: 22px;*/
+		float: left;
+		display: block;
+		padding-left: 3px;
+	}
+
+.dgTable .dgToolbar div a.fbutton:hover
+	{
+		/*height: 22px;*/
+		padding: 0px;
+	}
+
+.dgTable .dgToolbar div a.fbutton:hover div
+	{
+		/*fixes the 1 pixel shifting problem when hovering over buttons */
+		padding: 0px 1px;
+		border-left: 1px solid #fff;
+		border-top: 1px solid #fff;
+		border-right: 1px solid #eee;
+		border-bottom: 1px solid #eee;
+	}		
+	
+/* Ttulo de cada columna *//* Column Titles */
+.dgTable .dgTitles
+	{
+		overflow: hidden;
+		font-weight:bold;
+	}
+
+.dgTable .dgTitles:hover
+	{ 
+		border-bottom:1px solid #ffc83c; 
+	}
+
+.dgTable .dgTitles .titleContainer
+	{
+		width:100%;
+		min-height:25px;
+		height:25px; 
+		border-collapse:collapse;
+	}
+
+.dgTable .dgTitles .titleContainer .dgArrows
+	{
+		width:10px; 
+	}
+
+.dgTable .dgTitles .titleContainer .up 
+	{
+		vertical-align:bottom; 
+		padding-bottom:1px;
+	}
+	
+.dgTable .dgTitles .titleContainer .dn 
+	{
+		vertical-align:top; 
+		padding-top:1px;
+	}
+
+.dgSearchDivInline, .dgExportDivInline
+	{
+		display:none;
+		width:100%;
+		overflow: hidden;
+		text-align:left;
+		font-weight:normal;
+	}
+
+.dgExportDivInline
+	{
+		vertical-align:middle;
+		clear:both;
+		height:28px;
+	}
+
+.dgRownorm, .dgRowalt
+	{ 
+		padding:5px;
+	}
+	
+/* estilo para cada uno de los div's que se encuentran en las celdas de la tabla */
+/* Style for each div inside table cells */
+.dgRownorm div, .dgRowalt div
+	{ 
+		display:block;
+		height:100%; 
+		width:100%;
+		overflow:hidden;
+	}
+
+.dgRowalt div input, .dgRownorm div input
+	{
+		width:100%;
+		padding:3px;
+	}
+	
+.pointer
+	{
+		cursor:pointer;
+	}
+
+.dgImgLink
+	{
+		padding:2px;
+		cursor:pointer;
+	}
+
+.imgSearch
+	{
+		line-height:28px;
+		margin-left:10px;
+	}
+
+.exportBtn
+	{
+		border:1px solid #666;
+	}
+
+td.dgError
+	{
+		padding:10px;
+		background:#EFEFEF;
+		text-align:center;
+		font-weight:bold;
+		font-style:italic;
+	}
+	
+/* Estilo para tabla de adicion/edicion/visualizacion de datos */
+/* Styling for add/edit/view */
+.dgInnerDiv
+	{
+		width:100%;
+	}
+
+.dgInnerDiv .dg_dataTable
+	{
+		width:100%;
+		border-collapse:collapse;
+	}
+
+.dgInnerDiv .dg_dataTable thead tr th
+	{
+		text-align:center;
+		padding:10px 0 10px 0;
+	}
+
+.dgInnerDiv .dg_dataTable tfoot tr th
+	{
+		text-align:left;
+		padding:10px 0 10px 0;
+	}
+
+.dgInnerDiv .dg_dataTable tfoot tr th .edtBtns
+	{
+		padding:15px 0 0 0;
+		text-align:center;
+		width:100%;
+	}
+	
+.dgInnerDiv .dg_dataTable tbody tr td.dgAddNames
+	{
+		text-align:right;
+		font-weight:bold;
+		padding:5px 8px 2px 0;
+		vertical-align:top;
+		width:200px;
+	}
+
+.dgInnerDiv .dg_dataTable tbody tr td.dgAddInputs
+	{
+		text-align:left;
+		padding:5px 0 5px 8px;
+	}
+
+.dgInnerDiv .dg_dataTable tbody tr td.dgAddInputs input, .dgInnerDiv .dg_dataTable tbody tr td.dgAddInputs textarea
+	{
+		padding:2px;
+	}
+
+/* Error messages */
+/* Mensajes de error */
+.dgError{
+	margin:50px 30px 0px 30px;
+	background-color:#EFEFEF;
+	border:none;
+	padding:10px;
+	font-weight:bold;
+	text-align:center;
+	color:#666;
+}
+
+/* Ventanas flotantes de búsqueda y exportación */
+/* Floating search and export windows */
+.dgSearchDiv 
+	{
+		position:fixed;
+		top: 0; left:0;
+		width:300px; 
+		height:150px;
+		z-index: 10000; 
+		display: none; 
+		opacity: 0; -moz-opacity: 0; -khtml-opacity: 0;
+	}
+
+.dgInnerDiv 
+	{
+		margin:28px 3px 0 3px;
+		height:118px;
+		width:98%;
+	}
+	
+.dgSearchTit 
+	{
+		width:250px; 
+		font-weight:bold;
+		cursor:move;
+		float:left;
+	}
+
+.dgSearchTit img
+	{
+		margin:3px 3px 0 3px;
+	}
+
+/* Ventana flotante de exportacion */
+/* Floating export window */
+.DG_xportDIV
+	{
+		height:247px;
+	}
+	
+.DG_subdivxport
+	{
+		height:215px;
+	}
+
+/* Botones de exportación en ventana flotante */
+/* Buttons in the export floating window */
+.dgRadioBg
+	{	
+		padding:15px; 
+	}
+	
+.dgRadioBg img
+	{ 
+		margin-left:4px; 
+	}
+
+
+/* linea de paginacion */
+/* Pagination line */
+.dgImgPags
+	{
+		cursor:pointer;
+		padding:0px;
+	}
+
+/* celdas de total */
+/* Total cell */
+.dgRowsTot
+	{
+		padding:5px 0;
+	}
+
+/* Manejo de capas *//* Layers Management */
+.opaque
+	{
+		height: auto;
+		width : 600px;
+		display: block; 
+		opacity: 100;
+		-moz-opacity: 100;
+		-khtml-opacity: 100;
+	}
+
+.dgAddDiv
+	{
+		position:fixed;
+		top: 0%; left: 0%;
+		width: 110%; height: 110%;
+		z-index:101;
+		background-color: #03153B;
+		opacity:.5;
+		-moz-opacity: 0.5; 
+		-khtml-opacity: 0.5;
+	}
+
+.opaque .dgSearchTit 
+	{
+		width:560px;
+	}
+
+.dg_node{
+    display:block;
+    width:50%;
+    margin-left:50%;
+    height: 50%;
+    border-left: 1px dotted #111;
+    border-bottom: 1px dotted #111;
+}
+
+.titleContainer td a{
+    color:#222;
+    outline: none;
+}
+
+.orderedDatanorm{
+    background: #fff;
+}
+
+.orderedDataalt{
+    background: #efefef;
+}

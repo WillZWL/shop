@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orders_update_response status="ERROR">
+  <order>
+    <status>FATAL</status>
+    <order_id>0FA37EH42D4VU</order_id>
+    <state>Received</state>
+    <error severity="ERROR" code="ERR_003">Order status is not valid for action accept_order</error>
+    <order_detail>
+      <order_detail_id>1</order_detail_id>
+      <status>FATAL</status>
+    </order_detail>
+    <order_detail>
+      <order_detail_id>2</order_detail_id>
+      <status>FATAL</status>
+    </order_detail>
+  </order>
+  <order>
+    <status>OK</status>
+    <order_id>12G9QNCXXCE86</order_id>
+    <state>Shipped</state>
+    <order_detail>
+      <order_detail_id>1</order_detail_id>
+      <status>OK</status>
+      <state>Shipped</state>
+    </order_detail>
+  </order>
+  <order>
+    <status>FATAL</status>
+    <order_id>0FNWG5OUB05N6</order_id>
+    <state>Created</state>
+    <error severity="FATAL" code="ERR_001">shop id is not the same for the order and the request</error>
+    <order_detail>
+      <order_detail_id>1</order_detail_id>
+      <status>FATAL</status>
+    </order_detail>
+  </order>
+  <order>
+    <status>FATAL</status>
+    <order_id>0MVLLTF3ZHPTM</order_id>
+    <state>Received</state>
+    <error severity="ERROR" code="ERR_002">Order status is not valid for action confirm_to_send</error>
+    <order_detail>
+      <order_detail_id>1</order_detail_id>
+      <status>FATAL</status>
+    </order_detail>
+  </order>
+  <order>
+    <status>FATAL</status>
+    <order_id>0FT7GVTT1UI2I</order_id>
+    <state>Received</state>
+    <error severity="ERROR" code="ERR_002">Order status is not valid for action confirm_to_send</error>
+    <order_detail>
+      <order_detail_id>1</order_detail_id>
+      <status>FATAL</status>
+    </order_detail>
+  </order>
+  <order>
+    <status>OK</status>
+    <order_id>0FTAGAE32QICK</order_id>
+    <state>Shipped</state>
+    <order_detail>
+      <order_detail_id>1</order_detail_id>
+      <status>OK</status>
+      <state>Shipped</state>
+    </order_detail>
+  </order>
+</orders_update_response>

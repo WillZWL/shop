@@ -1,0 +1,53 @@
+Estimado/a  [:forename:],
+
+Obrigado por fazer compras na [:site_name:]!
+
+Podemos agora confirmar que o pagamento foi aprovado e a sua encomenda pode agora ser processada.
+
+O seu número de encomenda é [:so_no:] a qual deverá chegar dentro de [:delivery_days:] dias úteis, embora tentemos entregá-la mais cedo. Para sua comodidade, pode iniciar sessão na página "Minha Conta" através da nossa loja a qualquer momento para verificar o estado da sua encomenda
+
+Para sua comodidade, os seus dados de inicio de sessão são os seguintes: 
+
+[:email:]
+[:password:]
+
+Resumo da Compra:
+
+Número de encomenda:
+[:so_no:]
+
+Data de encomenda: 
+[:order_create_date:]
+
+Informações de faturamento:
+[:billing_name:]
+[:billing_address:]
+
+Informações sobre entrega:
+[:delivery_name:]
+[:delivery_address_text:]
+
+Produto(s) Adquirido(s):
+[:so_items_text:]
+
+Entrega: [:currency_id:] [:delivery_charge:]
+Total geral: [:currency_id:] [:amount:]
+
+Seu pedido esta completo agora e nós apreciaríamos se você pudesse reservar um tempo para  responder algumas questões sobre suas experiências iniciais conosco, para que possamos melhorar nosso serviço para satisfazer as suas necessidades da melhor forma possível.
+
+Todos os nossos fiéis clientes  que participaram dessa pesquisa estarão elegíveis para alguns grandes prêmios no nosso  Premio de Loteria Mensal.
+
+Clique aqui para começar a pesquisa.
+http://vista-survey.com/survey/v2/survey2.dsb?ID=1536253776
+
+Mais uma vez, obrigado por fazer compras connosco na ChatandVision. O seu negócio é apreciado e estamos ansiosos por servi-lo novamente no futuro próximo. Caso surja qualquer questão, não hesite em visitar a nossa página de F.A.Q ou enviar-nos um e-mail para [:from_email:] para obter mais assistência.
+
+Atenciosamente,
+
+Fátima Alvares
+
+Equipe de Atendimento ao Cliente.
+
+[:site_name:] Ltd.
+"Skype's Global Partner Merchant"
+www.chatandvision.com

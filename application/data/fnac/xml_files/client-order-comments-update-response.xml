@@ -1,0 +1,6 @@
+<client_order_comments_update_response status="ERROR">
+<comment status="OK" id="B5F116B3-839D-44E3-994A-BB7C65F20530"/>
+<comment status="ERROR" id="5F027ACF-32A6-779A-FD24-526F58DCF1B7">
+  <error severity="ERROR" code="ERR_128">[ClientOrderComment Update] Comment not found</error>
+</comment>
+</client_order_comments_update_response>

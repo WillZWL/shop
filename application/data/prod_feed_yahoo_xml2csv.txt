@@ -1,0 +1,13 @@
+#Table name
+Product_cost
+
+#Input column name	Output column name
+price	price
+sub_cat_name	sub_cat_name
+ean	ean
+content_prod_name	content_prod_name
+cat_name	cat_name
+url	url
+delivery_cost	delivery_cost
+website_status	website_status
+detail_desc	detail_desc

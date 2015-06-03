@@ -1,0 +1,14 @@
+#Table name
+interface_client
+
+#Input column name	Output column name
+send_to_addr1	address_1
+send_to_addr2	address_2
+send_to_addr3	address_3
+send_to_city	city
+send_to_state	state
+send_to_postal_code	postcode
+send_to_country	country_id
+send_to_phone	tel
+email	email
+client_name	forename

@@ -1,0 +1,3 @@
+Amazon FR Feed Generator has found the following sku# having profit margin less than the minimum level:<br><br>
+
+[:msg:]

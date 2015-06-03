@@ -1,0 +1,110 @@
+/*
+Copyright (c) 2005-2008, Guru Sistemas and/or Gustavo Adolfo Arcila Trujillo
+All rights reserved.
+www.gurusistemas.com
+
+phpMyDataGrid Professional IS NOT FREE and may not be re-sold as a single library.
+
+If you want to use phpMyDataGrid Professional on any of your projects, you Must purchase a license.
+
+You can buy the full source code or encoded version at http://www.gurusistemas.com/phpmydatagrid/
+also can try the donationware version, which can be downloaded from http://www.gurusistemas.com/indexdatagrid.php
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS  "AS IS"  AND ANY EXPRESS  OR  IMPLIED WARRANTIES, INCLUDING, 
+BUT NOT LIMITED TO,  THE IMPLIED WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT
+SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,  INDIRECT,  INCIDENTAL, SPECIAL, EXEMPLARY,  OR CONSEQUENTIAL 
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF  USE, DATA, OR PROFITS;  OR BUSINESS 
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+
+For more info, samples, tips, screenshots, help, contact, support, please visit phpMyDataGrid site  
+http://www.gurusistemas.com/phpmydatagrid/
+*/
+
+#tableCalendar {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:10px;
+	background:#AAA;
+	border-spacing:2px;
+	margin:0px auto 0px;
+	border:2px solid #AAA;
+	width:175px;
+}
+
+#tableCalendar .calHeader {
+	font-size:1em;
+	text-align:center;
+	padding:3px;
+	background:#CCC;
+}
+
+#tableCalendar .calHeader a{
+	color:#000;
+	font-size:13px;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+#tableCalendar .dayTitles {
+	padding:3px;
+	background:#333;
+	color:#fff;
+}
+
+#tableCalendar .dayTitles, .todayCell, .dayCell, .nodayCell{
+	text-align:center;
+	padding:2px;
+}
+
+#tableCalendar .todayCell {
+	background:#666;
+	color:#FFF;
+}
+
+#tableCalendar .dayCell  {
+	background:#CCC;
+}
+
+#tableCalendar .closeCell  {
+	background:url(../images/bck_column_customize.gif) repeat-x;
+	text-align:right;
+}
+
+#tableCalendar .closeCell span{
+	float:left;
+	font-weight:bold;
+	font-size:12px;
+	padding:3px 0 0 3px;
+}
+
+#tableCalendar .closeCell a {
+	color:#333;
+	font-weight:bold;
+	text-decoration:none;
+	font-variant:small-caps;
+}
+
+#tableCalendar .nodayCell  {
+	background:#DDD;
+	color:#AAA;
+}
+
+#tableCalendar  #calMonth, #calYear {
+	border:1px solid #ccc;
+	padding:1px; 
+}
+
+#tableCalendar #calMonth{
+	font-size:9px;
+	width:90px;
+}
+
+#tableCalendar #calYear{
+	font-size:9px;
+	width:50px;
+}
+
+#tableCalendar .todayCell:hover, #tableCalendar .dayCell:hover{
+	background:#FFF;
+	color:#666;
+}

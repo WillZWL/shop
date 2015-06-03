@@ -1,0 +1,22 @@
+/*Visible the menu items when hover (IE <= 6) */
+#sitenav ul.nav-container h1 a
+{
+	line-height: 21px;
+}
+
+#sitenav ul li a:hover ul{
+	display:block;
+}
+#sitenav ul li a:hover .menu, #sitenav ul li a:hover iframe{
+/*	top:31px;*/
+	top:30px;
+	left:0px;
+}
+
+/* Column adjust */
+#sitenav ul.nav-container h1 a span
+{
+	line-height:8px;
+}
+/*Specify column position and width when hover (IE <= 6)*/
+[:n_adj_ie_str:]

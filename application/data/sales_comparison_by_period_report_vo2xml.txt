@@ -1,0 +1,17 @@
+#Table name
+data
+
+#Input column name	Output column name
+item_sku1	item_sku1
+prod_name1	prod_name1
+cnty_name1	cnty_name1
+sales_count1	sales_count1
+refund_qty1	refund_qty1
+net_sales1	net_sales1
+refund_rate1	refund_rate1
+spacing	spacing
+sales_count2	sales_count2
+refund_qty2	refund_qty2
+net_sales2	net_sales2
+refund_rate2	refund_rate2
+sales_diff	sales_diff

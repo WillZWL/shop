@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<auth xmlns='http://www.fnac.com/schemas/mp-dialog.xsd'>
+    <partner_id>87B13D72-9938-9549-39B7-BC3FF73CDA84</partner_id>
+    <shop_id>859A6B21-6916-58FB-8B71-88EAD9A6A1F0</shop_id>
+    <key>880DF287-9C46-59FE-14F4-6CB717C967C9</key>
+</auth>

@@ -1,0 +1,10 @@
+#Table name
+supplier_shipment
+
+#Input column name	Output column name
+shipment_id	SHIPMENTID
+sku	SKU
+prod_name	PRODUCTNAME
+qty	QTY
+courier	DELIVERYCOURIER
+tracking_no	TRACKINGNUMBER

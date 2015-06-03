@@ -1,0 +1,7 @@
+#Table name
+interface_so_shipment
+
+#Input column name	Output column name
+tracking_no	tracking_no
+courier_id	courier_id
+so_shipment	sh_no

@@ -1,0 +1,51 @@
+[:forename:] 께,
+
+저희 [:site_name:] 과의 쇼핑에 감사 드립니다.
+
+이제 고객님 지불이 승인되었고 주문하신 것을 사용하실 수 있습니다.
+
+귀하의 주문 번호, [:so_no:] 를 기록해 주시기 바랍니다. 주문 상황은 언제든 웹 페이지의 “내 계좌”에 로그인 해 확인하실 수 있습니다.
+
+고객님의 로그인 정보는 다음과 같습니다.
+
+[:email:]
+[:password:]
+
+구매 내역 요약:
+
+주문 번호:
+[:so_no:]
+
+구입 일자:
+[:order_create_date:]
+
+결제 정보:
+[:billing_name:]
+[:billing_address:]
+
+배송 정보:
+[:delivery_name:]
+[:delivery_address_text:]
+
+구입 제품:
+[:so_items_text:]
+
+배송 가격: [:currency_id:] [:delivery_charge:]
+총합계: [:currency_id:] [:amount:]
+
+주문이 완료되었습니다. 잠시 시간을 내시어 우리 서비스에 대한 질문 몇 개에 답해 주시면 감사하겠습니다.  우리가 더 좋은 서비스를 해 드리는 데 도움이 될 것입니다.
+
+이 조사에 참여해 주신 모든 고객님들께서는 매달 추첨을 통해 상품을 받으실 수 있습니다. 
+
+여기를 클릭하셔서 조사에 응해 주십시오.
+http://vista-survey.com/survey/v2/survey2.dsb?ID=1536253776
+
+다시한번 ChatandVision 과의 쇼핑에 감사 드리며 빠른 시일 내에 고객님과의 재 만남을 기다립니다. 문의사항이 있으시면 FAQ란을 참조하시거나 [:from_email:] 으로 이메일 보내주시기 바랍니다.
+
+감사합니다.
+
+고객 서비스 팀
+
+[:site_name:] Ltd.
+"Skype's Global Partner Merchant"
+www.chatandvision.com

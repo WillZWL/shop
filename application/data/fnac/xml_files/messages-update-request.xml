@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages_update token="00000FFF-00FF-0000-FFFF-00F0F00FF000" shop_id="BBBFA40E-3A94-2EE1-762A-2858EDE4F9BB" partner_id="17B13D72-9938-9549-39B7-BC3FF73CDA84" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd">
+
+  <!-- Message state action -->
+  <message action="mark_as_read" id="4AA817E9-8DA0-1F8D-51D8-71CABD83D4A6"/>
+  <message action="mark_as_unread" id="4AA817E9-8DA0-1F8D-51D8-71CABD83D4A6"/>
+  <message action="mark_as_read_and_archive" id="4AA817E9-8DA0-1F8D-51D8-71CABD83D4A6"/>
+  <message action="archive" id="4AA817E9-8DA0-1F8D-51D8-71CABD83D4A6"/>  -->
+
+  <!-- Message OK -> TYPE ORDER  -> TO ALL -->
+  <message action="reply" id="4AA817E9-8DA0-1F8D-51D8-71CABD83D4A6">
+    <message_to>ALL</message_to>
+    <message_subject>product_information</message_subject>
+    <message_description><![CDATA[ADD MESSAGE TO ORDER]]></message_description>
+    <message_type>ORDER</message_type>
+  </message>
+
+  <!-- Message OK -> TYPE ORDER  -> TO CLIENT -->
+  <message action="reply" id="4AA817E9-8DA0-1F8D-51D8-71CABD83D4A6">
+    <message_to>CLIENT</message_to>
+    <message_subject>product_information</message_subject>
+    <message_description><![CDATA[ADD MESSAGE TO ORDER]]></message_description>
+    <message_type>ORDER</message_type>
+  </message>
+
+  <!-- Message OK -> TYPE ORDER  -> TO CALLCENTER -->
+  <message action="reply" id="4AA817E9-8DA0-1F8D-51D8-71CABD83D4A6">
+    <message_to>CALLCENTER</message_to>
+    <message_subject>product_information</message_subject>
+    <message_description><![CDATA[ADD MESSAGE TO ORDER]]></message_description>
+    <message_type>ORDER</message_type>
+  </message>
+
+  <!-- Message OK -> TYPE OFFER -->
+  <message action="reply" id="4B0E14C2-3C3A-DFDD-DB3F-89EA2ADE41EE">
+    <message_subject>product_information</message_subject>
+    <message_description><![CDATA[oui et en plus elle est consentante :)]]> </message_description>
+    <message_type>OFFER</message_type>
+  </message>
+
+</messages_update>

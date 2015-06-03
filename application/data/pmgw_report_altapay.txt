@@ -1,0 +1,10 @@
+#Table name
+Pmgw_report_altapay_dto
+
+#Input column name	Output column name
+Order id	so_no
+Payment id	txn_id
+Amount	amount
+Status	type
+Date	date
+Currency	currency_id

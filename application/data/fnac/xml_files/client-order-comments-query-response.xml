@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<client_order_comments_query_response status="OK" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd">
+  <page>1</page>
+  <total_paging>1</total_paging>
+  <nb_total_per_page>150000</nb_total_per_page>
+  <nb_total_result>8</nb_total_result>
+
+  <client_order_comment>
+    <rate>4</rate>
+    <order_fnac_id>777-DF21-DF55-SDRR-S5SDF5</order_fnac_id>    <client_order_comment_id>2855A3B0-1B24-BF3D-8C3F-9D0E58355252</client_order_comment_id>
+    <client_name>Gwenael P.</client_name>
+    <comment><![CDATA[Le colis était abimé et l'envoi pas super rapide.]]></comment>
+    <reply><![CDATA[Nous ne sommes pas responsable du délai de la poste , ni des inconvénients dûs au transport.]]></reply>
+    <is_received>1</is_received>
+    <is_fast></is_fast>
+    <is_well_packed>1</is_well_packed>
+    <is_good_shape></is_good_shape>
+    <created_at>2010-01-27T14:18:03+01:00</created_at>
+  </client_order_comment>
+</client_order_comments_query_response>

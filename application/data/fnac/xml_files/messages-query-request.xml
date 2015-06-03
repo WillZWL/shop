@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<messages_query partner_id="17B13D72-9938-9549-39B7-BC3FF73CDA84" shop_id="BBBFA40E-3A94-2EE1-762A-2858EDE4F9BB" token="3D776EAB-24B8-1BB8-4843-D5C806BDBF95" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd">
+  <paging>1</paging>
+    <date type="CreatedAt">
+    <min>2009-01-28T10:10:23+01:00</min>
+    <max>2010-01-28T10:10:23+01:00</max >
+  </date>
+  <message_type>ORDER</message_type>
+  <message_state>READ</message_state>
+  <message_archived>FALSE</message_archived>
+  <message_id>48FEF079-E8FA-E3CB-6A79-E11C1F7FDEAB</message_id>
+  <order_fnac_id>08AHJ4PAV6MAS</order_fnac_id>
+  <offer_fnac_id>D18D4AB0-55FC-D9A4-C531-ECDC04607E37</offer_fnac_id>
+  <offer_seller_id>MY_SKU</offer_seller_id>
+</messages_query>

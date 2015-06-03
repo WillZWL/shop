@@ -1,0 +1,41 @@
+ol.dgTabs{
+    height: 2em;
+    list-style: none;
+    margin: 15px 0 0 0;
+    padding: 0;
+}
+
+ol.dgTabs li {
+    background: #bdf;
+    float: left;
+    margin: 0 1px 0 0;
+    padding-left: 10px;
+}
+
+ol.dgTabs a {
+    color: #008;
+    display: block;
+    float: left;
+    height: 2em;
+    line-height: 2em;
+    padding-right: 10px;
+    text-decoration: none;
+}
+
+ol.dgTabs li.current {
+    background-color: #48f;
+    background-position: 0 -60px;
+}
+
+ol.dgTabs li.current a {
+    background-position: 100% -60px;
+    color: #fff;
+    font-weight: bold;
+}
+
+div.dgTabsContent {
+    border: #48f solid 1px;
+    clear: left;
+    padding: 1em;
+    margin-bottom:15px;
+}

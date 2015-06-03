@@ -1,0 +1,11 @@
+#Table name
+data
+
+#Input column name	Output column name
+sku	SKU
+empt	FulfillmentServiceLevel
+empty	Locale
+ship_option	ShipOption
+do_not_ship	DoNotShip
+type	Type
+shipping_charge	ShipAmount

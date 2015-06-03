@@ -1,0 +1,54 @@
+Kære [:forename:],
+
+Tak for din bestilling hos [:site_name:]!
+
+We can now confirm that payment has been approved and your order can now be processed.
+
+Dit bestillingsnummer er: [:so_no:], og den forventede leveringstid er indenfor [:delivery_days:] arbejdsdage, dog vil vi forsøge, at få den leveret til dig hurtigere. Du kan altid logge ind på ´Min konto` via forsiden på vores netbutik, når du ønsker det og kontrollere din bestillingsstatus.
+
+For en god ordens skyld er dine login oplysninger følgende:
+
+[:email:]
+[:password:]
+
+Prosimy również o zapoznanie się z podanymi poniżej szczegółami zamówienia:
+
+Bestillingsoversigt:
+
+Bestillingsnummer:
+[:so_no:]
+
+Købsdato:
+[:order_create_date:]
+
+Betalingsinformation:
+[:billing_name:]
+[:billing_address:]
+
+Leveringsinformation:
+[:delivery_name:]
+[:delivery_address_text:]
+
+Produkt(er) købt:
+[:so_items_text:]
+
+Forsendelse: [:currency_id:] [:delivery_charge:]
+Samlet Total: [:currency_id:] [:amount:]
+
+Når din bestilling er blevet afsendt, vil vi sende dig en bekræftelse for afsendelsen til din registrerede E-mail adresse.
+
+Din Skype Værdikuponskode: [:voucher_code:]
+
+Hos ChatandVision arbejder vi hele tiden sammen med vores partnere for at få de bedste kundereklamer. Denne måneds tilbud: ”Op til 60 Minutters Gratis Kredit fra Skype”. Klik her http://Skype.com/voucher for at indløse dine gratis opkaldsminutter!
+
+Endnu engang, tak for din bestilling hos ChatandVision. Vi værdsætter din bestilling og ser frem til, at betjene dig igen i fremtiden. Har du forespørgsler, er du velkommen til at besøge vores F.A.Q side eller sende en E-mail til: [:from_email:], for yderligere hjælp.
+
+Venlig Hilsen
+
+Kara Hensen
+
+Kunderserviceafdelingen
+
+[:site_name:] Ltd.
+"Skype's Global Merchant Partner"
+www.chatandvision.com

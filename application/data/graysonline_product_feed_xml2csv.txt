@@ -1,0 +1,15 @@
+#Table name
+data
+
+#Input column name	Output column name
+ext_sku	Master SKU
+prod_name	Product Name
+detail_desc	Description
+specification	Specification
+cat_name	Category
+sub_cat_name	Sub-Category
+cost	Cost (AUD)
+suggested_selling_price	Suggested Selling Price (AUD)
+image_url	Image URL
+shipping	Shipping
+sourcing_status	Sourcing Status

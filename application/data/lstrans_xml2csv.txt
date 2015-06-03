@@ -1,0 +1,16 @@
+#Table name
+Product_cost
+
+#Input column name	Output column name
+so_no	so_no
+conv_site_ref	ls_site_id
+ls_time_entered	ls_time_entered
+pay_date	pay_date
+item_sku	item_sku
+qty	qty
+amount	amount
+currency_id	currency_id
+email	email
+payment	payment
+delivery_postcode	delivery_postcode
+prod_name	prod_name

@@ -1,0 +1,6 @@
+#Table name
+import_finance_dispatch_dto
+
+#Input column name	Output column name
+0	so_no
+1	finance_dispatch_date

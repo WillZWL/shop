@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="auth">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="token" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="header">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="information" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="information">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="header" />
+        <xs:element ref="auth" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="token">
+	<xs:simpleType>
+  		<xs:restriction base="xs:string">
+    		<xs:pattern value="[a-zA-Z0-9]{8}"/>
+  		</xs:restriction>
+	</xs:simpleType>
+  </xs:element>
+
+</xs:schema>

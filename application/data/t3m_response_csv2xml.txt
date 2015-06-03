@@ -1,0 +1,8 @@
+#Table name
+t3m_resp
+
+#Input column name	Output column name
+0	order_number
+1	temp1
+2	score
+3	action

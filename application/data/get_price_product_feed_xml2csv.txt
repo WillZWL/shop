@@ -1,0 +1,17 @@
+#Table name
+data
+
+#Input column name	Output column name
+prod_name	Product Name
+mpn	MPN
+sku	SKU
+prod_id	Product ID
+detail_desc	Short Description
+cat_name	Category Name
+brand_name	Brand Name
+model	Model
+image_url	Image Link
+product_url	Product URL
+price	Price
+shipment_cost	Shipment Costs
+upc	UPC

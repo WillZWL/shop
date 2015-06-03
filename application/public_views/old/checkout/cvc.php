@@ -1,0 +1,1 @@
+For security purposes, CVC number (the 3 digits security code of your credit card) will be required during payment. CVC number is found on the backside of the credit card. It's the last 3 digits placed after the credit card number.

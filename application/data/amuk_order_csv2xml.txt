@@ -1,0 +1,26 @@
+#Table name
+amuk_order
+
+#Input column name	Output column name
+0	platform_order_id
+1	order_date
+2	email
+3	client_name
+4	client_phone
+5	order_item_code
+6	sku
+7	prod_name
+8	order_qty
+9	price
+11	delivery_charge
+15	commission
+16	shipping_method
+17	send_to_name
+18	send_to_addr1
+19	send_to_addr2
+20	send_to_addr3
+21	send_to_city
+22	send_to_state
+23	send_to_postal_code
+24	send_to_country
+25	send_to_phone

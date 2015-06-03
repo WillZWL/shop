@@ -1,0 +1,8 @@
+#Table name
+data
+
+#Input column name	Output column name
+rank	Rank
+reason	Refund Reason
+percentage	Percentage
+products	Products
