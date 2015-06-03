@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 if ( ! defined('ENTRYPOINT') OR (defined('ENTRYPOINT') && (ENTRYPOINT !== 'ADMINCENTRE'))) {
 	$hook['pre_system'][] = array(
 			'class' 	=> 'Country_selection',
-			'function'	=> 'redirect_domain',
+			'function'	=> 'redirect_url',
 			'filename'	=> 'Country_selection.php',
 			'filepath'	=> 'hooks'
 		);

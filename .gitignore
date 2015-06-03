@@ -1,5 +1,8 @@
 *.sublime-workspace
 .DS_Store
 ._.DS_Stroe
-/vendor/
 .idea
+/application/composer.lock
+/application/vendor
+/application/config/development
+/public_html/GeoLite2-City.mmdb

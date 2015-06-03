@@ -5,12 +5,34 @@ use GeoIp2\Database\Reader;
 
 class Country_selection
 {
+	private $sub_domain = '';
+	private $base_domain = '';
+	private $domain_suffix = '';
 	private $country_code = '';
 	private $lang = '';
 
 	public function __construct()
 	{
+		$this->set_domain_component();
+		// var_dump($_SERVER);die;
 	}
+
+	public function set_domain_component()
+	{
+		$this->base_domain = config_item('base_domain');
+
+		if ($this->base_domain) {
+			$pos = stripos($_SERVER['HTTP_HOST'], $this->base_domain);
+			if ($pos !== FALSE) {
+				$this->sub_domain = substr($_SERVER['HTTP_HOST'], 0, $pos);
+				$this->domain_suffix = substr($_SERVER['HTTP_HOST'], $pos+strlen($this->base_domain));
+			}
+		} else {
+			// TODO
+			// not set base domain
+		}
+	}
+
 
 	public function get_country_code()
 	{
@@ -23,13 +45,15 @@ class Country_selection
 		return $country_code;
 	}
 
-	public function get_country_code_by_ip2country_provider()
+	public function get_country_code_by_ip2country_provider($ip = '')
 	{
 		$country_code = '';
 
-		$reader = new Reader('/vagrant_data/GeoLite2-City.mmdb');
 		try {
-			$record = $reader->city('192.168.0.1');
+			$reader = new Reader(config_item('maxmind_db_path'));
+
+			$ip = $ip ? $ip : $_SERVER['REMOTE_ADDR'];
+			$record = $reader->city($ip);
 			$country_code = $record->country->isoCode;
 			$reader->close();
 		} catch (Exception $e) {
@@ -50,51 +74,51 @@ class Country_selection
 
 		switch ($country_code) {
 			case 'AU':
-				$domain = 'vb.com.au';
+				$this->domain_suffix = '.com.au';
 				break;
 			case 'NZ':
-				$domain = 'vb.co.nz';
+				$this->domain_suffix = '.co.nz';
 				break;
 			case 'SG':
-				$domain = 'vb.com.sg';
+				$this->domain_suffix = '.com.sg';
 				break;
 			case 'FR':
-				$domain = 'vb.fr';
+				$this->domain_suffix = '.fr';
 				break;
 			case 'MX':
-				$domain = 'vb.com.mx';
+				$this->domain_suffix = '.com.mx';
 				break;
 			case 'NL':
-				$domain = 'vb.nl';
+				$this->domain_suffix = '.nl';
 				break;
 			case 'PH':
-				$domain = 'vb.com.ph';
+				$this->domain_suffix = '.com.ph';
 				break;
 			case 'BE':
-				$domain = 'vb.be';
+				$this->domain_suffix = '.be';
 				break;
 			case 'IT':
-				$domain = 'vb.it';
+				$this->domain_suffix = '.it';
 				break;
 			case 'RU':
-				$domain = 'vb.ru';
+				$this->domain_suffix = '.ru';
 				break;
 			case 'PT':
-				$domain = 'vb.pt';
+				$this->domain_suffix = '.pt';
 				break;
 			case 'PL':
-				$domain = 'vb.pl';
+				$this->domain_suffix = '.pl';
 				break;
 
 			default:
-				$domain = 'vb.com';
+				$this->domain_suffix = '.com';
 				break;
 		}
 
-		return $domain;
+		return $this->sub_domain . $this->base_domain . $this->domain_suffix;
 	}
 
-	public function redirect_domain()
+	public function redirect_url()
 	{
 		$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https://" : "http://";
 
@@ -105,9 +129,7 @@ class Country_selection
 			header("Location: ". $protocol.$rewrite_domain.$_SERVER['REQUEST_URI']);
 			exit;
 		}
-
 	}
-
 
 	public function validate_country_code($country_code)
 	{
@@ -118,15 +140,4 @@ class Country_selection
 		}
 	}
 
-	public function get_domain_suffix()
-	{
-		$pos = strrpos($_SERVER['HTTP_HOST'], '.');
-		if ($pos === FALSE) {
-			$domain_suffix = '.com';
-		} else {
-			$domain_suffix = substr($_SERVER['HTTP_HOST'], $pos);
-		}
-
-		return $domain_suffix;
-	}
 }
