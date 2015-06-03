@@ -5,6 +5,8 @@ use GeoIp2\Database\Reader;
 
 class Country_selection
 {
+	private $domain = '';
+	private $port = '';
 	private $sub_domain = '';
 	private $base_domain = '';
 	private $domain_suffix = '';
@@ -13,19 +15,20 @@ class Country_selection
 
 	public function __construct()
 	{
-		$this->set_domain_component();
+		list($this->domain, $this->port) = explode(':', $_SERVER['HTTP_HOST']);
+		$this->set_domain_component($this->domain);
 		// var_dump($_SERVER);die;
 	}
 
-	public function set_domain_component()
+	public function set_domain_component($domain)
 	{
 		$this->base_domain = config_item('base_domain');
 
 		if ($this->base_domain) {
-			$pos = stripos($_SERVER['HTTP_HOST'], $this->base_domain);
+			$pos = stripos($this->domain, $this->base_domain);
 			if ($pos !== FALSE) {
-				$this->sub_domain = substr($_SERVER['HTTP_HOST'], 0, $pos);
-				$this->domain_suffix = substr($_SERVER['HTTP_HOST'], $pos+strlen($this->base_domain));
+				$this->sub_domain = substr($this->domain, 0, $pos);
+				$this->domain_suffix = substr($this->domain, $pos+strlen($this->base_domain));
 			}
 		} else {
 			// TODO
@@ -120,13 +123,20 @@ class Country_selection
 
 	public function redirect_url()
 	{
-		$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https://" : "http://";
-
-		$current_domain = $_SERVER['HTTP_HOST'];
+		$current_domain = $this->domain;
 		$rewrite_domain = $this->get_rewrite_domain_by_country();
 
+
 		if ($current_domain != $rewrite_domain) {
-			header("Location: ". $protocol.$rewrite_domain.$_SERVER['REQUEST_URI']);
+			$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https://" : "http://";
+
+			if ($_SERVER['SERVER_PORT'] != '80') {
+				$new_url = $protocol . $rewrite_domain . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['REQUEST_URI'];
+			} else {
+				$new_url = $protocol . $rewrite_domain . $_SERVER['REQUEST_URI'];
+			}
+
+			header("Location: " . $new_url);
 			exit;
 		}
 	}

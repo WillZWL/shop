@@ -13,7 +13,6 @@ class Redirect_controller extends CI_Controller
 		$this->load->library('service/user_service');
 	}
 
-
 	public function index()
 	{
 		define('SITE_NAME', $this->context_config_service->value_of("site_name"));
@@ -40,17 +39,10 @@ class Redirect_controller extends CI_Controller
 					$data[$key] .= "<tr><td class='admin_menu'>" . "<a href='" . base_url() . $app_obj->get_url() . "' onClick=\"Pop('" . base_url() . $app_obj->get_url() . "','" . $app_obj->get_id() . "');\" target='" . $app_obj->get_id() . "' class='admin_menu'>" . $app_obj->get_app_name() . "</a>" . "</td></tr>";
 				}
 			}
-			if ($domain == 'admvb.com') {
-				$this->load->view("menu.php", $data);
-			} elseif (($domain == 'merchantdev.eservicesgroup.com') || ($domain == 'merchant.eservicesgroup.com')) {
-				redirect(base_url()."marketing/product_merchant");
-			}
+
+			$this->load->view("menu.php", $data);
 		} else {
-			if ($domain == 'admvb.com') {
-				$this->load->view("login.php");
-			} elseif (($domain == 'merchantdev.eservicesgroup.com') || ($domain == 'merchant.eservicesgroup.com')) {
-				$this->load->view("dispatcher_login.php");
-			}
+			$this->load->view("login.php");
 		}
 	}
 }
