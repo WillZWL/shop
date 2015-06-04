@@ -18,7 +18,6 @@ class Redirect_controller extends CI_Controller
 		define('SITE_NAME', $this->context_config_service->value_of("site_name"));
 		define('SITE_NAME_CAP', strtoupper($this->context_config_service->value_of("site_name")));
 		define('LOGO_FILE_PATH', "/images/".$this->context_config_service->value_of("logo_file_name"));
-		$domain = $_SERVER['HTTP_HOST'];
 		if ($this->authentication_service->check_authed()) {
 			$data = array();
 			$menu_name = array("master_cfg_menu" => 1
