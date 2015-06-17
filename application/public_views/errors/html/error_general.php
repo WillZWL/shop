@@ -53,7 +53,6 @@
 				</div>
 
 				<div class="clear"></div>
-				<?php include_once(VIEWPATH . "template/menu/" . $lang_id . "/menu_" . strtolower(PLATFORMID) . ".html")?>
 
 			</div>
 				<div style="height:29px;">

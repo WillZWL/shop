@@ -285,7 +285,7 @@ switch (ENVIRONMENT)
 
 
 define('CTRLPATH', APPPATH.'public_controllers/');
-define('VIEWPATH', APPPATH.'public_views/');
+define('VIEWPATH', FCPATH.'themes/');
 define('ENTRYPOINT', 'PUBLIC');
 define('PLATFORM_TYPE', 'WEBSITE');
 session_start();
