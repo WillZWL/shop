@@ -44,16 +44,14 @@ class Class_factory_service extends Base_service
 	{
 		include_once(APPPATH."libraries/service/Selling_platform_service.php");
 		$sp_srv = new Selling_platform_service();
-		if ($sp_obj = $sp_srv->get(array("id"=>$platform_id)))
-		{
+		if ($sp_obj = $sp_srv->get(array("id" => $platform_id))) {
 			$paltform_type = $sp_obj->get_type();
 
-			$p_srv_name = "price_".strtolower($paltform_type)."_service";
+			$p_srv_name = "Price_".strtolower($paltform_type)."_service";
 
 			$p_srv_path = APPPATH."libraries/service/".$p_srv_name.".php";
 
-			if(!is_file($p_srv_path))
-			{
+			if ( ! is_file($p_srv_path)) {
 				return FALSE;
 			}
 
@@ -64,6 +62,3 @@ class Class_factory_service extends Base_service
 		}
 	}
 }
-
-/* End of file Platform_factory_service.php */
-/* Location: ./aopp/libraries/service/Platform_factory_service.php */

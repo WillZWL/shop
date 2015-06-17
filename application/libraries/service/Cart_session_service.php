@@ -51,22 +51,17 @@ class Cart_session_service extends Base_service
 
 	public function add($sku, $qty, $platform = NULL)
 	{
-		if (is_null($platform))
-		{
-			$platform = defined(PLATFORMID)?PLATFORMID:"WSUS";
+		if (is_null($platform)) {
+			$platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
 		}
 
-		$qty = $qty*1;
+		$qty = (int)$qty;
 
-		if($qty <= 0)
-		{
+		if ($qty <= 0) {
 			$this->remove($sku, $platform);
-		}
-		elseif($prod_list = $this->prod_svc->get_dao()->get_bundle_components_overview(array("vpi.prod_sku"=>$sku, "vpo.platform_id"=>$platform, "p.status"=>2, "p.website_status <>"=>'O')))
-		{
+		} elseif ($prod_list = $this->prod_svc->get_dao()->get_bundle_components_overview(array("vpi.prod_sku"=>$sku, "vpo.platform_id"=>$platform, "p.status"=>2, "p.website_status <>"=>'O'))) {
 			$success = 1;
-			foreach ($prod_list as $prod)
-			{
+			foreach ($prod_list as $prod) {
 				$ws_qty = $prod->get_website_quantity();
 				$ws_status = $prod->get_website_status();
 				$status = $prod->get_prod_status();
@@ -75,22 +70,19 @@ class Cart_session_service extends Base_service
 				$expect_delivery_date = $prod->get_expected_delivery_date();
 				$warranty_in_month = $prod->get_warranty_in_month();
 
-				if (!($ws_qty != "O" && $status == '2' && $listing_status == 'L' && $ws_qty > 0 && ($price*1 > 0 || $this->prod_svc->is_trial_software($prod->get_sku()))))
-				{
+				if (!($ws_qty != "O" && $status == '2' && $listing_status == 'L' && $ws_qty > 0 && ($price * 1 > 0 || $this->prod_svc->is_trial_software($prod->get_sku())))) {
 					$this->remove($sku, $platform);
 					$success = 0;
 					break;
-				}
-				elseif (!isset($max_qty) || $ws_qty < $max_qty)
-				{
+				} elseif (!isset($max_qty) || $ws_qty < $max_qty) {
 					$max_qty = $ws_qty;
 				}
 			}
 
-			if ($success)
-			{
+			if ($success) {
 				$this->put_cart_sku($platform, $sku, $qty > $max_qty?$max_qty:$qty, $ws_status, $expect_delivery_date, $warranty_in_month);
 				$this->set_cart_cookie($platform);
+
 				return TRUE;
 			}
 		}
@@ -100,7 +92,7 @@ class Cart_session_service extends Base_service
 	public function put_cart_sku($platform, $sku, $qty, $website_status = null, $expect_delivery_date, $warranty_in_month)
 	{
 		$_SESSION["cart"][$platform][$sku] = $this->cart_format($platform, $sku, $qty, $website_status, $expect_delivery_date, $warranty_in_month);
-//		var_dump($_SESSION["cart"][$platform]);
+		// var_dump($_SESSION["cart"][$platform]);
 	}
 
 	public function cart_format($platform, $sku, $qty, $website_status = null, $expect_delivery_date, $warranty_in_month)
@@ -120,7 +112,7 @@ class Cart_session_service extends Base_service
 
 		$prod = $this->prod_svc->get_dao()->get(array("sku"=>$sku));
 
-		if($prod)
+		if ($prod)
 		{
 			$_SESSION["cart"][$platform][$sku] = array("qty"=>$qty,"price"=>$price);
 			return TRUE;
@@ -143,11 +135,11 @@ class Cart_session_service extends Base_service
 		{
 			$qty = $qty*1;
 
-			if($qty <= 0)
+			if ($qty <= 0)
 			{
 				$this->remove($sku, $platform);
 			}
-			elseif($prod_list = $this->prod_svc->get_dao()->get_bundle_components_overview(array("vpi.prod_sku"=>$sku, "vpo.platform_id"=>$platform, "p.status"=>2, "p.website_status <>"=>'O')))
+			elseif ($prod_list = $this->prod_svc->get_dao()->get_bundle_components_overview(array("vpi.prod_sku"=>$sku, "vpo.platform_id"=>$platform, "p.status"=>2, "p.website_status <>"=>'O')))
 			{
 				$success = 1;
 				foreach ($prod_list as $prod)
@@ -194,9 +186,9 @@ class Cart_session_service extends Base_service
 
 		$prod = $this->prod_svc->get_dao()->get(array("sku"=>$sku));
 
-		if($prod)
+		if ($prod)
 		{
-			if($qty == 0)
+			if ($qty == 0)
 			{
 				$this->remove($sku, $platform);
 			}
@@ -246,7 +238,7 @@ class Cart_session_service extends Base_service
 
         if ($_SESSION["cart"])
         {
-            foreach($_SESSION["cart"][$platform] as $key => $item)
+            foreach ($_SESSION["cart"][$platform] as $key => $item)
             {
                 if ($item_list != "")
                     $item_list .= ",";
@@ -268,15 +260,15 @@ class Cart_session_service extends Base_service
                 }
 				else
 				    $converted_ref_amount = $reference_value[PLATFORMCURR];
-// it contains battery, further check, if there is any sku in the cart other than the battery sku
+				// it contains battery, further check, if there is any sku in the cart other than the battery sku
                 foreach ($cart_sku_list as $sku)
                 {
-                    if(!in_array($sku, $battery_sku_list))
+                    if (!in_array($sku, $battery_sku_list))
                     {
-//final check the amount
+						//final check the amount
                         if ($total_amount >= $converted_ref_amount)
                         {
-//cart contain SKU other than battery and total amount >= 100USD
+							//cart contain SKU other than battery and total amount >= 100USD
                             return false;
                         }
                         else
@@ -322,60 +314,54 @@ class Cart_session_service extends Base_service
 	public function is_allow_to_add($sku, $qty, $platform = NULL)
 	{
 		$product_obj = $this->prod_svc->get_dao()->get(array("sku" => $sku));
-		if (!$product_obj)
-			return self::UNKNOWN_ITEM_STATUS;
-//we don't check "out of stock item", it suppose not to be added
-		$website_status = $product_obj->get_website_status();
-//		var_dump($website_status);
-//		exit;
-		if(count($_SESSION["cart"][$platform]) == 0)
-		{
-//no item in cart
-			if ($website_status == 'I')
-				return self::ALLOW_AND_IS_NORMAL_ITEM;
-			else if ($website_status == 'P')
-				return self::ALLOW_AND_IS_PREORDER;
-			else if ($website_status == 'A')
-				return self::ALLOW_AND_IS_ARRIVING;
+		if ( ! $product_obj) {
 			return self::UNKNOWN_ITEM_STATUS;
 		}
-		else
-		{
-			foreach($_SESSION["cart"][$platform] as $key => $value)
-			{
-				if ($sku != $key)
+
+		//we don't check "out of stock item", it suppose not to be added
+		$website_status = $product_obj->get_website_status();
+		if (count($_SESSION["cart"][$platform]) == 0) {
+			//no item in cart
+			if ($website_status == 'I') {
+				return self::ALLOW_AND_IS_NORMAL_ITEM;
+			} elseif ($website_status == 'P') {
+				return self::ALLOW_AND_IS_PREORDER;
+			} elseif ($website_status == 'A') {
+				return self::ALLOW_AND_IS_ARRIVING;
+			}
+
+			return self::UNKNOWN_ITEM_STATUS;
+		} else {
+			foreach ($_SESSION["cart"][$platform] as $key => $value) {
+				if ($sku != $key) {
 					continue;
-				else
-				{
-					if ($website_status == "P")
+				} else {
+					if ($website_status == "P") {
 						return self::SAME_PREORDER_ITEM;
-					else if ($website_status == "A")
+					} elseif ($website_status == "A") {
 						return self::SAME_ARRIVING_ITEM;
-					else if ($website_status == "I")
+					} elseif ($website_status == "I") {
 						return self::SAME_NORMAL_ITEM;
+					}
 				}
 			}
-			foreach($_SESSION["cart"][$platform] as $key => $value)
-			{
+			foreach ($_SESSION["cart"][$platform] as $key => $value) {
 				$stored_website_status = $value["website_status"];
-//				var_dump($stored_website_status);
-//				var_dump($website_status);
+				// var_dump($stored_website_status);
+				// var_dump($website_status);
 				if (($stored_website_status == "I")
 					&& (($website_status == "P") || ($website_status == "A")))
 				{
 					return self::NOT_ALLOW_PREORDER_ARRIVING_ITEM_AFTER_NORMAL_ITEM;
-				}
-				else if ((($stored_website_status == "P") || ($stored_website_status == "A"))
+				} elseif ((($stored_website_status == "P") || ($stored_website_status == "A"))
 						&& ($website_status == "I"))
 				{
 					return self::NOT_ALLOW_NORMAL_ITEM_AFTER_PREORDER_ARRIVING_ITEM;
-				}
-				else if ((($stored_website_status == "P") && ($website_status == "P"))
+				} elseif ((($stored_website_status == "P") && ($website_status == "P"))
 						|| (($stored_website_status == "P") && ($website_status == "A")))
 				{
 					return self::DIFFERENT_PREORDER_ITEM;
-				}
-				else if ((($stored_website_status == "A") && ($website_status == "A"))
+				} elseif ((($stored_website_status == "A") && ($website_status == "A"))
 						|| (($stored_website_status == "A") && ($website_status == "P")))
 				{
 					return self::DIFFERENT_ARRIVING_ITEM;
@@ -416,7 +402,7 @@ class Cart_session_service extends Base_service
 	{
 		include_once(APPPATH . "hooks/country_selection.php");
 		$country_selection = new Country_selection();
-//	set the cart cookie, to rebuild cart if domain changes
+		//	set the cart cookie, to rebuild cart if domain changes
 		$country_selection->set_cart_cookie(base64_encode(serialize($_SESSION["cart"][$platform])));
 	}
 
@@ -432,7 +418,7 @@ class Cart_session_service extends Base_service
 
 		foreach ($cart_list as $sku=>$value)
 		{
-			if(is_array($value))
+			if (is_array($value))
 			{
 				$qty = $value["qty"];
 				$website_status = $value["website_status"];
@@ -442,7 +428,7 @@ class Cart_session_service extends Base_service
 				$qty = $value;
 			}
 			$need_adj = 0;
-			if($prod_list = $this->prod_svc->get_dao()->get_bundle_components_overview(array("vpi.prod_sku"=>$sku, "vpo.platform_id"=>$platform, "p.status"=>2, "p.website_status <>"=>'O')))
+			if ($prod_list = $this->prod_svc->get_dao()->get_bundle_components_overview(array("vpi.prod_sku"=>$sku, "vpo.platform_id"=>$platform, "p.status"=>2, "p.website_status <>"=>'O')))
 			{
 
 				foreach ($prod_list as $prod)
@@ -491,7 +477,7 @@ class Cart_session_service extends Base_service
 					$need_remove = 1;
 				}
 
-				if($need_remove)
+				if ($need_remove)
 				{
 					$where2["p.sku"] = $sku;
 					$where2["pc.lang_id"] = get_lang_id();
@@ -503,7 +489,7 @@ class Cart_session_service extends Base_service
 			}
 			else
 			{
-				if(is_array($value))
+				if (is_array($value))
 				{
 					$new_cart[$sku] = $value;
 				}
@@ -518,20 +504,17 @@ class Cart_session_service extends Base_service
 
 	public function get_detail($platform = NULL, $get_dc=1, $get_detail=0, $get_weight=0, $special=0, $vat_exempt=0, $free_delivery=0, $customised_dc=0, $promotion_code="",$need_vat=0, $delivery_country=NULL)
 	{
-		if (is_null($platform))
-		{
-			$platform = defined(PLATFORMID)?PLATFORMID:"WSUS";
+		if (is_null($platform)) {
+			$platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
 		}
 
 		include_once(APPPATH."libraries/service/Class_factory_service.php");
 		$cf_srv = new Class_factory_service();
-		if (!($price_srv = $cf_srv->get_platform_price_service($platform)))
-		{
+		if ( ! ($price_srv = $cf_srv->get_platform_price_service($platform))) {
 			return FALSE;
 		}
 
-		if ($promotion_code == "" && $_SESSION["promotion_code"])
-		{
+		if ($promotion_code == "" && $_SESSION["promotion_code"]) {
 			$promotion_code = $_SESSION["promotion_code"];
 		}
 
@@ -539,89 +522,61 @@ class Cart_session_service extends Base_service
 		$total_cost = $total = 0;
 		$weight = 0;
 		$bundle_discount_list = $item_sku = array();
-		if(count($_SESSION["cart"][$platform]))
-		{
-			if ($_SESSION["cart_from_url"][$platform])
-			{
+		if (count($_SESSION["cart"][$platform])) {
+			if ($_SESSION["cart_from_url"][$platform]) {
 				$bundle_discount_list = $this->prod_svc->get_bd_dao()->check_bundle_discount(array_keys($_SESSION["cart_from_url"][$platform]));
 			}
 
 			$i = 0;
 
-			foreach($_SESSION["cart"][$platform] as $key=>$value)
-			{
-				if(is_array($value))
-				{
-					$qty = $value["qty"];
-				}
-				else
-				{
-					$qty = $value;
-					$soi_website_status = "";
-					$so_expect_delivery_date = "";
-				}
+			foreach ($_SESSION["cart"][$platform] as $key => $value) {
+				$qty = $value["qty"];
+
 				$subcost = 0;
 				$subtotal = 0;
 				$subvat = 0;
 				$pobj = $price_srv->get_dao()->get_list_with_bundle_checking($key, $platform, "Product_cost_dto", $special, get_lang_id());
 
-				// Get the product details
-				//$prod = $this->prod_svc->get_dao()->get(array("sku"=>$key));
-				// Tommy: no use
-				//$prod_dto = $this->prod_svc->get_detail_w_name($key, $platform);
 				$fdl = 0;
-//				var_dump($pobj);
 				$pobj_count = 0;
-				if ($pobj)
-				{
+				if ($pobj) {
 					$item_sku[$key] = $qty;
 
-					foreach($pobj as $o)
-					{
-//						$p_svc = $price_srv->get_price_service_from_dto($o);
+					foreach ($pobj as $o) {
+						// $p_svc = $price_srv->get_price_service_from_dto($o);
 
 						$sku = $o->get_sku();
 						$name = $o->get_bundle_name();
 						$bundle_discount = 0;
 
-						if(is_array($value))
-						{
+						if (is_array($value)) {
 							$cur_price = $value["price"];
 							$o->set_price($cur_price);
 							$pqty = $value["qty"];
-						}
-						else
-						{
+						} else {
 							$pqty = $value;
 						}
-//						$price_srv->calc_freight_cost($o, $p_svc, ($currency_id = $o->get_platform_currency_id()));
+						// $price_srv->calc_freight_cost($o, $p_svc, ($currency_id = $o->get_platform_currency_id()));
 						$price_srv->calc_logistic_cost($o);
 						$price_srv->calculate_profit($o);
 
 						$weight += $pqty * $o->get_prod_weight();
 
-						if ($o->get_sku() == $key && $bundle_discount_list[$key])
-						{
+						if ($o->get_sku() == $key && $bundle_discount_list[$key]) {
 							$bundle_discount = $bundle_discount_list[$key]*1;
 							$item_price = number_format(random_markup($o->get_price()) * (100 - $bundle_discount) / 100, 2, ".", "");
 							$cur_cost = $o->get_cost();
 							$subcost += $cur_cost;
-						}
-						else
-						{
-							if (($item_price = $price_srv->get_item_price($o)) !== FALSE)
-							{
+						} else {
+							if (($item_price = $price_srv->get_item_price($o)) !== FALSE) {
 								$cur_cost = $o->get_cost();
 								$subcost += $cur_cost;
-							}
-							else
-							{
+							} else {
 								return FALSE;
 							}
 						}
 
-						if (!$special)
-						{
+						if (!$special) {
 							$cur_price = $item_price;
 						}
 
@@ -629,50 +584,37 @@ class Cart_session_service extends Base_service
 						$subvat += ($cur_vat = $o->get_vat() * (100 - $o->get_discount()) / 100);
 
 						$fdl = $o->get_free_delivery_limit();
-						if ($get_detail)
-						{
-							if($ret["detail"][$i][$sku])
-							{
+						if ($get_detail) {
+							if ($ret["detail"][$i][$sku]) {
 								//modify by thomas, reserve for multiple product of same sku on bundle
 								$pqty = $ret["detail"][$i][$sku]["qty"] + $pqty;
 							}
-							if($vat_exempt == 0)
-							{
+							if ($vat_exempt == 0) {
 								$ret["detail"][$i][$sku] = array("sku"=>$sku, "qty"=>$pqty,"name"=>$o->get_prod_name(),"price"=>$cur_price, "discount"=>$bundle_discount?$bundle_discount:$o->get_discount(), "total"=>$cur_price*$pqty, "vat_total"=>$cur_vat*$pqty, "cost"=>$cur_cost*$pqty, "product_cost_obj"=>$o);
-							}
-							else
-							{
+							} else {
 								$ret["detail"][$i][$sku] = array("sku"=>$sku, "qty"=>$pqty,"name"=>$o->get_prod_name(),"price"=>$cur_price - $cur_vat, "discount"=>$bundle_discount?$bundle_discount:$o->get_discount(), "total"=>($cur_price - $cur_vat)*$pqty, "vat_total"=>0, "cost"=>$cur_cost*$pqty - $cur_vat*$pqty, "product_cost_obj"=>$o);
 							}
 						}
 					}
-					if(is_array($value))
-					{
+					if (is_array($value)) {
 						$qty = $value["qty"];
-					}
-					else
-					{
+					} else {
 						$qty = $value;
 					}
 
 					// $o->get_component_order() > -1 is bundle
-					if (($components = $o->get_component_order()) > -1)
-					{
-						if (!isset($round_up))
-						{
+					if (($components = $o->get_component_order()) > -1) {
+						if (!isset($round_up)) {
 							$round_up = $this->curr_svc->round_up_of($currency_id);
 						}
 						$new_subtotal = price_round_up($subtotal, $round_up);
 						$subtotal_diff = $new_subtotal - $subtotal;
-						if ($subtotal_diff)
-						{
+						if ($subtotal_diff) {
 							$subtotal = $new_subtotal;
-							if ($get_detail)
-							{
+							if ($get_detail) {
 								$ar_adj_price = average_divide($subtotal_diff, $components+1);
 								$adj_count = 0;
-								foreach ($ret["detail"][$i] as $sku=>$data)
-								{
+								foreach ($ret["detail"][$i] as $sku=>$data) {
 									$cur_adj_price = $adj_count == 0?$ar_adj_price["first"]:$ar_adj_price["rest"];
 									$ret["detail"][$i][$sku]["price"] += $cur_adj_price;
 									$ret["detail"][$i][$sku]["total"] += $cur_adj_price * $qty;
@@ -686,67 +628,73 @@ class Cart_session_service extends Base_service
 					$rscost = $qty * $subcost;
 					$total += $rstotal;
 
-					//exit;
-
-					//Tommy: prod_info no use
-	/*				$ret["cart"][$i] = array("sku"=>$key, "image"=>$o->get_image(),
-						"qty"=>$value,"name"=>$name,"price"=>$subtotal,"total"=>$rstotal, "cost"=>$rscost,
-						"vat_total"=>$subvat * $value,
-						'prod_info'=>$prod_dto, "product_cost_obj"=>$o);*/
-
-					if($vat_exempt == 0)
-					{
-						$ret["cart"][$i] = array("sku"=>$key, "image"=>$o->get_image(),
-						"qty"=>$qty,"name"=>$name,"price"=>$subtotal,"total"=>$rstotal, "cost"=>$rscost,
-						"vat_total"=>$subvat * $qty, "product_cost_obj"=>$o, "website_status" => $value["website_status"]);
-					}
-					else
-					{
-							$ret["cart"][$i] = array("sku"=>$key, "image"=>$o->get_image(),
-							"qty"=>$qty,"name"=>$name,"price"=>$subtotal - $subvat,"total"=>$rstotal - $subvat * $qty, "cost"=>$rscost - $subvat * $qty,
-							"vat_total"=>0, "product_cost_obj"=>$o);
+					if ($vat_exempt == 0) {
+						$ret["cart"][$i] = array(
+							"sku" => $key,
+							"image" => $o->get_image(),
+							"qty" => $qty,
+							"name" => $name,
+							"price" => $subtotal,
+							"total" => $rstotal,
+							"cost" => $rscost,
+							"vat_total" => $subvat * $qty,
+							"product_cost_obj" => $o,
+							"website_status" => $value["website_status"]
+						);
+					} else {
+							$ret["cart"][$i] = array(
+								"sku" => $key,
+								"image" => $o->get_image(),
+								"qty" => $qty,
+								"name" => $name,
+								"price" => $subtotal - $subvat,
+								"total" => $rstotal - $subvat * $qty,
+								"cost" => $rscost - $subvat * $qty,
+								"vat_total" => 0,
+								"product_cost_obj" => $o
+							);
 					}
 
 					$i++;
 					$pobj_count++;
 				}
-				if ($pobj_count == 0 && $special)
-				{
-					if ($prod_price_obj = $this->prod_svc->get_dao()->get_product_with_price($key, $platform))
-					{
+				if ($pobj_count == 0 && $special) {
+					if ($prod_price_obj = $this->prod_svc->get_dao()->get_product_with_price($key, $platform)) {
 						$rstotal = $prod_price_obj->get_price()* $value;
 						$total += $rstotal;
-						$ret["cart"][$i] = array("sku"=>$key, "image"=>$prod_price_obj->get_image(),
-												"qty"=>$value,"name"=>$prod_price_obj->get_name(),"price"=>$prod_price_obj->get_price(),"total"=>$rstotal, "cost"=>0,
-												"vat_total"=>0, "product_cost_obj"=>$o);
+						$ret["cart"][$i] = array(
+								"sku" => $key,
+								"image" => $prod_price_obj->get_image(),
+								"qty" => $value,
+								"name" => $prod_price_obj->get_name(),
+								"price" => $prod_price_obj->get_price(),
+								"total" => $rstotal,
+								"cost" => 0,
+								"vat_total" => 0,
+								"product_cost_obj" => $o
+							);
 						$i++;
 					}
 				}
 			}
 
-			if ($this->get_del_country_id() == "")
-			{
-				$this->set_del_country_id($_SESSION["client"]["del_country_id"]?$_SESSION["client"]["del_country_id"]:PLATFORMCOUNTRYID);
+			if ($this->get_del_country_id() == "") {
+				$this->set_del_country_id($_SESSION["client"]["del_country_id"] ? $_SESSION["client"]["del_country_id"] : PLATFORMCOUNTRYID);
 			}
 
-			if ($this->get_del_state() == "")
-			{
+			if ($this->get_del_state() == "") {
 				$this->set_del_state($_SESSION["client"]["del_state"]);
 			}
 
-			if ($this->get_del_postcode() == "")
-			{
+			if ($this->get_del_postcode() == "") {
 				$this->set_del_postcode($_SESSION["client"]["del_postcode"]);
 			}
 
-			if (is_null($this->get_email()) && $_SESSION["client"]["email"])
-			{
+			if (is_null($this->get_email()) && $_SESSION["client"]["email"]) {
 				$this->set_email($_SESSION["client"]["email"]);
 			}
 
-			if ($promotion_code)
-			{
-
+			if ($promotion_code) {
 				$this->promo_cd_svc->promo_code = $promotion_code;
 				$this->promo_cd_svc->platform_id = $platform;
 				$this->promo_cd_svc->amount = $total;
@@ -756,25 +704,20 @@ class Cart_session_service extends Base_service
 				$this->promo_cd_svc->set_delivery_mode(is_null($this->get_delivery_mode())?$this->del_svc->get_default_delivery():$this->get_delivery_mode());
 
 				$ret["promo"] = $this->promo_cd_svc->check_promotion_code();
-				if ($ret["promo"]["disc_amount"] && $get_detail)
-				{
+				if ($ret["promo"]["disc_amount"] && $get_detail) {
 					$this->amend_cart_detail($ret["detail"], $ret["cart"], $ret["promo"]["disc_item_list"]?$ret["promo"]["disc_item_list"]:$item_sku, $ret["promo"]);
 				}
 
-				if ($ret["promo"]["free_delivery"])
-				{
+				if ($ret["promo"]["free_delivery"]) {
 					$free_delivery = 1;
 					$free_delivery_mode = $ret["promo"]["promotion_code_obj"]->get_disc_level_value();
 					$this->del_svc->set_promotion_disc_level_value($ret["promo"]["promotion_code_obj"]->get_disc_level_value());
-				}
-				elseif ($ret["promo"]["free_item"])
-				{
+				} elseif ($ret["promo"]["free_item"]) {
 					$ret["cart"][$i] = $ret["promo"]["free_item"];
 					$free_sku = $ret["promo"]["free_item"]["sku"];
 					$free_qty = $ret["promo"]["free_item"]["qty"];
 					$free_pobj = $price_srv->get_dao()->get_list_with_bundle_checking($free_sku, $platform, "Product_cost_dto", 0, get_lang_id());
-					foreach($free_pobj as $free_o)
-					{
+					foreach ($free_pobj as $free_o) {
 						$p_svc = $price_srv->get_price_service_from_dto($free_o);
 						$price_srv->calc_logistic_cost($free_o);
 						$price_srv->calculate_profit($free_o);
@@ -785,12 +728,9 @@ class Cart_session_service extends Base_service
 				}
 
 				// recalculate the cost after promotion code applied
-				if($ret['cart'] && $ret['promo']['valid'])
-				{
-					foreach($ret['cart'] as $key=>$val)
-					{
-						if($val)
-						{
+				if ($ret['cart'] && $ret['promo']['valid']) {
+					foreach ($ret['cart'] as $key=>$val) {
+						if ($val) {
 							$new_price = ($val['total'])/$val['qty'];
 							$val['product_cost_obj']->set_price($new_price);
 							$p_svc = $price_srv->get_price_service_from_dto($val['product_cost_obj']);
@@ -799,12 +739,9 @@ class Cart_session_service extends Base_service
 
 							$ret['cart'][$key]['price'] = $ret['cart'][$key]['price'];
 							$ret['cart'][$key]['cost'] = $val['product_cost_obj']->get_cost()*$val['qty'];
-							if($vat_exempt == 0)
-							{
+							if ($vat_exempt == 0) {
 								$ret['cart'][$key]['vat_total'] = $val['product_cost_obj']->get_vat()*$val['qty'];
-							}
-							else
-							{
+							} else {
 								$ret['cart'][$key]['vat_total'] = 0;
 							}
 						}
@@ -812,14 +749,10 @@ class Cart_session_service extends Base_service
 				}
 
 				// recalculate the cost after promotion code applied
-				if($ret['detail'] && $ret['promo']['valid'])
-				{
-					foreach($ret['detail'] as $key=>$obj)
-					{
-						if($obj)
-						{
-							foreach($obj as $sku=>$val)
-							{
+				if ($ret['detail'] && $ret['promo']['valid']) {
+					foreach ($ret['detail'] as $key=>$obj) {
+						if ($obj) {
+							foreach ($obj as $sku=>$val) {
 								$new_price = $val['total']/$val['qty'];
 								$val['product_cost_obj']->set_price($new_price);
 								$p_svc = $price_srv->get_price_service_from_dto($val['product_cost_obj']);
@@ -827,12 +760,9 @@ class Cart_session_service extends Base_service
 								$price_srv->calculate_profit($val['product_cost_obj']);
 								//$ret['detail'][$key][$sku]['price'] = $new_price;
 								$ret['detail'][$key][$sku]['cost'] = $ret['detail'][$key][$sku]['product_cost_obj']->get_cost()*$ret['detail'][$key][$sku]['qty'];
-								if($vat_exempt == 0)
-								{
+								if ($vat_exempt == 0) {
 									$ret['detail'][$key][$sku]['vat_total'] = $val['product_cost_obj']->get_vat()*$val['qty'];
-								}
-								else
-								{
+								} else {
 									$ret['detail'][$key][$sku]['vat_total'] = 0;
 								}
 							}
@@ -841,12 +771,10 @@ class Cart_session_service extends Base_service
 				}
 			}
 			$over_free_delivery_limit = FALSE;
-			if($total - $ret["promo"]["disc_amount"] > $fdl)
-			{
+			if ($total - $ret["promo"]["disc_amount"] > $fdl) {
 				$over_free_delivery_limit = TRUE;
 			}
-			if ($get_dc)
-			{
+			if ($get_dc) {
 				$this->del_svc->item_list = $item_sku;
 				$this->del_svc->platform_id = $platform;
 				$this->del_svc->delivery_country_id = $this->get_del_country_id();
@@ -869,133 +797,32 @@ class Cart_session_service extends Base_service
 				$ret["dc_default"] = $dc["dc_default"];
 				$this->set_delivery_charge($this->del_svc->get_delivery_charge());
 			}
-			if ($get_weight)
-			{
+			if ($get_weight) {
 				$ret["weight"] = $weight;
 			}
 
-			if (is_null($delivery_country))
-			{
-				if (defined('PLATFORMCOUNTRYID'))
-				{
+			if (is_null($delivery_country)) {
+				if (defined('PLATFORMCOUNTRYID')) {
 					$delivery_country = PLATFORMCOUNTRYID;
-				}
-				else
-				{
+				} else {
 					$delivery_country = '';
 				}
 			}
 
 			// SBF #3249, Comment out this GST function (#2236)
-			for($i=0; $i<count($ret['cart']); $i++)
-			{
+			for($i = 0; $i < count($ret['cart']); $i++) {
 				$ret['cart'][$i]['gst'] = 0;
 			}
 
-			if ($ret['detail'])
-			{
-				for($i=0; $i<count($ret['detail']); $i++)
-				{
-					if ($ret['detail'][$i])
-					{
-						foreach($ret['detail'][$i] as $sku=>$val)
-						{
+			if ($ret['detail']) {
+				for($i = 0; $i < count($ret['detail']); $i++) {
+					if ($ret['detail'][$i]) {
+						foreach ($ret['detail'][$i] as $sku => $val) {
 							$ret['detail'][$i][$sku]['gst'] = 0;
 						}
 					}
 				}
 			}
-
-			/*
-				$gst_order = FALSE;
-				if ($delivery_country == 'NZ')
-				{
-					$total = 0;
-					foreach($ret['cart'] as $key=>$val)
-					{
-						if($val)
-						{
-							$total += $val['total'];
-						}
-					}
-
-					if (isset($ret['dc_default']))
-					{
-						$total += $ret['dc_default']['charge'] * 1;
-					}
-
-					if ($ret['promo']['valid'] && isset($ret['promo']['disc_amount']))
-					{
-						$total -= $ret['promo']['disc_amount'];
-					}
-
-					if ($total >= 400)
-					{
-						$gst_order = TRUE;
-					}
-				}
-
-				for($i=0; $i<count($ret['cart']); $i++)
-				{
-					$gst = 0;
-					if ($gst_order)
-					{
-						if ($ret['cart'][$i]['price'] >= 400)
-						{
-							$price = round($ret['cart'][$i]['price'] / 1.15, 2);
-							$gst = ($ret['cart'][$i]['price'] - $price) * $ret['cart'][$i]['qty'];
-							$ret['cart'][$i]['price'] = $price;
-							$ret['cart'][$i]['total'] = $price * $ret['cart'][$i]['qty'];
-							if ($ret['promo']['valid'])
-							{
-									$ret['cart'][$i]['total'] = $ret['cart'][$i]['total'] - $ret['detail'][$i][$ret['cart'][$i]['sku']]["promo_disc_amt"];
-							}
-						}
-						else
-						{
-							$gst = number_format(($ret['cart'][$i]['price'] * 0.15) * $ret['cart'][$i]['qty'], 2, '.', '');
-						}
-					}
-
-					$ret['cart'][$i]['gst'] = $gst;
-				}
-
-				if ($ret['detail'])
-				{
-					for($i=0; $i<count($ret['detail']); $i++)
-					{
-						if ($ret['detail'][$i])
-						{
-							foreach($ret['detail'][$i] as $sku=>$val)
-							{
-								$gst = 0;
-
-								if ($gst_order)
-								{
-									if ($ret['detail'][$i][$sku]['price'] >= 400)
-									{
-										$price = round($ret['detail'][$i][$sku]['price'] / 1.15, 2);
-										$gst = ($ret['detail'][$i][$sku]['price'] - $price) * $ret['detail'][$i][$sku]['qty'];
-										$ret['detail'][$i][$sku]['price'] = $price;
-										$ret['detail'][$i][$sku]['total'] = $price * $ret['detail'][$i][$sku]['qty'];
-										if ($ret['promo']['valid'])
-										{
-											$ret['detail'][$i][$sku]['total'] -= $ret['detail'][$i][$sku]["promo_disc_amt"];
-										}
-									}
-									else
-									{
-										$gst = number_format(($ret['detail'][$i][$sku]['price'] * 0.15) * $ret['detail'][$i][$sku]['qty'], 2, '.', '');
-									}
-								}
-
-								$ret['detail'][$i][$sku]['gst'] = $gst;
-							}
-						}
-					}
-				}
-			*/
-			// End of SBF #3249, Comment out this GST function (#2236)
 		}
 		return $ret;
 	}
@@ -1015,18 +842,18 @@ class Cart_session_service extends Base_service
 		$total = 0;
 		$count = 0;
 		if (isset($_SESSION['cart'][$platform]) && count($_SESSION["cart"][$platform])) {
-			foreach($_SESSION["cart"][$platform] as $key=>$val)
+			foreach ($_SESSION["cart"][$platform] as $key=>$val)
 			{
 				$subtotal = 0;
 				$subvat = 0;
 				$pobj = $price_srv->get_dao()->get_list_with_bundle_checking($key, $platform, "Product_cost_dto", 0, get_lang_id());
 				$fdl = 0;
-				foreach($pobj as $o)
+				foreach ($pobj as $o)
 				{
 					$name = $o->get_bundle_name();
 
 					$p_svc = $price_srv->get_price_service_from_dto($o);
-					if(is_array($val))
+					if (is_array($val))
 					{
 						//$platform_price_svc->set_price($value["price"]);
 						if (isset($val["price"]))
@@ -1049,7 +876,7 @@ class Cart_session_service extends Base_service
 				}
 
 				$count += $pqty;
-				if($o)
+				if ($o)
 				{
 					if (($components = $o->get_component_order()) > -1)
 					{

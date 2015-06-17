@@ -52,12 +52,9 @@ class Cart_session_model extends CI_Model
 
 	public function add($sku, $qty, $platform_id)
 	{
-		if (!isset($_SESSION["cart"][$platform_id][$sku]) || $_SESSION["cart"][$platform_id][$sku]<$qty)
-		{
+		if (!isset($_SESSION["cart"][$platform_id][$sku]) || $_SESSION["cart"][$platform_id][$sku] < $qty) {
 			return $this->cart_session_service->add($sku, $qty, $platform_id);
-		}
-		elseif (isset($_SESSION["cart"][$platform_id][$sku]))
-		{
+		} elseif (isset($_SESSION["cart"][$platform_id][$sku])) {
 			return TRUE;
 		}
 	}

@@ -5,137 +5,70 @@ DEFINE ('ALLOW_REDIRECT_DOMAIN', 1);
 
 Class Cart extends PUB_Controller
 {
-	public function Cart()
+	public function __construct()
 	{
-		parent::PUB_Controller();
+		parent::__construct();
 		$this->load->library('template');
-		$this->load->helper(array('url', 'tbswrapper'));
+		$this->load->helper('url');
 		$this->load->model('website/cart_session_model');
 		$this->load->model('marketing/upselling_model');
 		$this->load->library('service/affiliate_service');
 	}
 
-	public function add_item($sku = "")
+	public function ajax_add_item()
 	{
-		$this->add_item_qty($sku, 1);
-/*
+		$sku = $this->input->post('sku');
+		$qty = $this->input->post('qty') ? $this->input->post('qty') : 1;
+
+		if ( ! empty($sku)) {
+			$this->add_item_v2($sku, $qty);
+		}
+
+	}
+
+	public function add_item_v2($sku, $qty)
+	{
 		$data['data']['lang_text'] = $this->_get_language_file('', '', 'add_item_qty');
-		$listing_status = array("I"=>$data['data']['lang_text']['status_in_stock'], "O"=>$data['data']['lang_text']['status_out_stock'], "P"=>$data['data']['lang_text']['status_pre_order'], "A"=>$data['data']['lang_text']['status_arriving']);
+
+		$listing_status = array(
+			"I" => $data['data']['lang_text']['status_in_stock'],
+			"O" => $data['data']['lang_text']['status_out_stock'],
+			"P" => $data['data']['lang_text']['status_pre_order'],
+			"A" => $data['data']['lang_text']['status_arriving']
+		);
+
 		$this->affiliate_service->add_af_cookie($_GET);
 
-		if (empty($sku))
-		{
-			$sku = $_REQUEST["sku"];
-		}
-
-		if (!empty($sku))
-		{
-			$allow_result = $this->cart_session_model->cart_session_service->is_allow_to_add($sku, 1, PLATFORMID);
-			if ($allow_result <= Cart_session_service::DECISION_POINT)
-			{
-				if (!($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORMID)))
-				{
-					show_error("Product not found", "Product not found");
-				}
+		$allow_result = $this->cart_session_model->cart_session_service->is_allow_to_add($sku, $qty, PLATFORMID);
+		if ($allow_result <= Cart_session_service::DECISION_POINT) {
+			if (!empty($sku) || !empty($qty)) {
+				$chk_cart = $this->cart_session_model->add($sku, $qty, PLATFORMID);
 			}
-			else
-			{
-				print "not allow";
-				exit;
-			}
-		}
-		else
-		{
-			show_404();
-		}
-		$data["parent_sku"] = $sku;
-		if($warranty_list = $this->cart_session_model->get_warranty_list_by_sku($sku, PLATFORMID, get_lang_id()))
-		{
-			$i = 0;
-			foreach($warranty_list as $obj)
-			{
-				if($obj && $i <=3)
-				{
-					$warranty["sku"] = $obj->get_sku();
-					$warranty["prod_name"] = $obj->get_prod_name();
-					$warranty["listing_status"] = $obj->get_status();
-					$warranty["stock_status"] =  $obj->get_status() == 'I'?$obj->get_qty()." ".$listing_status[$obj->get_status()]:$listing_status[$obj->get_status()];
-					$warranty["stock_status_id"] = $obj->get_status();
-					$warranty["price"] = $obj->get_price();
-					$warranty["rrp_price"] = $obj->get_rrp_price();
-					$warranty["prod_url"] = $this->cart_session_model->get_prod_url($obj->get_sku());
-					$warranty["short_desc"] = $obj->get_short_desc();
-					$warranty["image_ext"] = $obj->get_image_ext();
-					$data["warranty"][] = $warranty;
-					$i++;
-				}
-			}
-		}
-		if ($ra_list = $this->cart_session_model->get_ra_prod_list($sku, PLATFORMID, get_lang_id()))
-		{
-			if(!$pc_obj = $this->cart_session_model->get_product_content(array("prod_sku"=>$sku, "lang_id"=>get_lang_id())))
-			{
-				$pc_obj = $this->cart_session_model->get_product_content(array("prod_sku"=>$sku, "lang_id"=>"en"));
-			}
-			if($pc_obj)
-			{
-				$data["prod_name"] = $pc_obj->get_prod_name();
+		} else {
+			if ($quiet_return) {
+				return false;
 			}
 
-			if($ra_list['ra_sub_cat_list'])
-			{
-				foreach($ra_list['ra_sub_cat_list'] AS $key=>$arr)
-				{
-					$ra_scat[$key]["scat_id"] = $arr["sub_cat_id"];
-					$ra_scat[$key]["name"] = $arr["sub_cat_name"];
-				}
-				$data["ra_scat"] = $ra_scat;
-			}
-			if($ra_list['ra_list'])
-			{
-				foreach($ra_list['ra_list'] AS $scat_id=>$scat_arr)
-				{
-					foreach($scat_arr AS $key=>$obj)
-					{
-						if($key <=7)
-						{
-							$ra_scat_item[$scat_id][$key]["sku"] = $obj->get_sku();
-							$ra_scat_item[$scat_id][$key]["prod_name"] = $obj->get_prod_name();
-							$ra_scat_item[$scat_id][$key]["listing_status"] = $obj->get_status();
-							$ra_scat_item[$scat_id][$key]["stock_status"] =  $obj->get_status() == 'I'?$obj->get_qty()." ".$listing_status[$obj->get_status()]:$listing_status[$obj->get_status()];
-							$ra_scat_item[$scat_id][$key]["stock_status_id"] = $obj->get_status();
-							$ra_scat_item[$scat_id][$key]["price"] = $obj->get_price();
-							$ra_scat_item[$scat_id][$key]["rrp_price"] = $obj->get_rrp_price();
-							$ra_scat_item[$scat_id][$key]["prod_url"] = $this->cart_session_model->get_prod_url($obj->get_sku());
-							$ra_scat_item[$scat_id][$key]["short_desc"] = $obj->get_short_desc();
-							$ra_scat_item[$scat_id][$key]["image_ext"] = $obj->get_image_ext();
-						}
-					}
-				}
-				$data["ra_scat_item"] = $ra_scat_item;
+			redirect(base_url() . "review_order?item_status=" . $allow_result . "&not_valid_sku=" . $sku);
+		}
+
+		if (($allow_result == Cart_session_service::ALLOW_AND_IS_PREORDER)
+			|| ($allow_result == Cart_session_service::ALLOW_AND_IS_ARRIVING)
+			|| ($allow_result == Cart_session_service::SAME_PREORDER_ITEM)
+			|| ($allow_result == Cart_session_service::SAME_ARRIVING_ITEM))
+		{
+			if ($quiet_return) {
+				return true;
 			}
 
-			if($ra_list["recommended"])
-			{
-				foreach($ra_list["recommended"] AS $key=>$obj)
-				{
-					if($key <=3)
-					{
-						$top_fav[$key]["sku"] = $obj->get_sku();
-						$top_fav[$key]["prod_name"] = $obj->get_prod_name();
-						$top_fav[$key]["listing_status"] = $obj->get_status();
-						$top_fav[$key]["stock_status"] =  $obj->get_status() == 'I'?$obj->get_qty()." ".$listing_status[$obj->get_status()]:$listing_status[$obj->get_status()];
-						$top_fav[$key]["stock_status_id"] = $obj->get_status();
-						$top_fav[$key]["price"] = $obj->get_price();
-						$top_fav[$key]["rrp_price"] = $obj->get_rrp_price();
-						$top_fav[$key]["prod_url"] = $this->cart_session_model->get_prod_url($obj->get_sku());
-						$top_fav[$key]["short_desc"] = $obj->get_short_desc();
-						$top_fav[$key]["image_ext"] = $obj->get_image_ext();
-					}
-				}
-				$data["top_fav"] = $top_fav;
-			}
+			redirect(base_url(). "review_order");
+		}
 
+		if ($quiet_return) {
+			return false;
+		}
+
+		if ($this->upselling_model->get_ra($data, $sku, PLATFORMID, get_lang_id(), $listing_status)) {
 			$this->template->add_title($data['data']['lang_text']['meta_title'].$data["prod_name"]. ' | ValueBasket');
 			$this->template->add_meta(array('name'=>'description','content'=>$data['data']['lang_text']['meta_desc']));
 			$this->template->add_meta(array('name'=>'keywords','content'=>$data['data']['lang_text']['meta_keyword']));
@@ -143,13 +76,20 @@ Class Cart extends PUB_Controller
 			$this->template->add_js("/resources/js/jquery.gritter.js");
 			$this->template->add_css("resources/css/jquery.gritter.css");
 			$this->template->add_js("/js/upselling.js", "import", TRUE);
-			$this->load_tpl('content', 'tbs_upselling', $data, TRUE);
-		}
-		else
-		{
+			$this->load_tpl('content', 'tbs_cart', $data, TRUE);
+		} else {
 			redirect(base_url()."review_order");
 		}
-*/
+	}
+
+	public function info()
+	{
+		$this->load->view('/default/cart/info');
+	}
+
+	public function add_item($sku = "")
+	{
+		$this->add_item_qty($sku, 1);
 	}
 
 	public function checkout_item($sku = "", $nextpage="checkout")
@@ -407,27 +347,24 @@ Class Cart extends PUB_Controller
 		$listing_status = array("I"=>$data['data']['lang_text']['status_in_stock'], "O"=>$data['data']['lang_text']['status_out_stock'], "P"=>$data['data']['lang_text']['status_pre_order'], "A"=>$data['data']['lang_text']['status_arriving']);
 		$this->affiliate_service->add_af_cookie($_GET);
 
-		if (empty($sku))
-		{
+		if (empty($sku)) {
 			$sku = $_REQUEST["sku"];
 		}
 
-		if (empty($qty))
-		{
+		if (empty($qty)) {
 			$qty = $_REQUEST["qty"];
 		}
 
-		$allow_result = $this->cart_session_model->cart_session_service->is_allow_to_add($sku, 1, PLATFORMID);
-		if ($allow_result <= Cart_session_service::DECISION_POINT)
-		{
-			if (!empty($sku) || !empty($qty))
-			{
+		$allow_result = $this->cart_session_model->cart_session_service->is_allow_to_add($sku, $qty, PLATFORMID);
+		if ($allow_result <= Cart_session_service::DECISION_POINT) {
+			if (!empty($sku) || !empty($qty)) {
 				$chk_cart = $this->cart_session_model->add($sku, $qty, PLATFORMID);
 			}
-		}
-		else
-		{
-			if ($quiet_return) return false;
+		} else {
+			if ($quiet_return) {
+				return false;
+			}
+
 			redirect(base_url() . "review_order?item_status=" . $allow_result . "&not_valid_sku=" . $sku);
 		}
 
@@ -436,14 +373,18 @@ Class Cart extends PUB_Controller
 			|| ($allow_result == Cart_session_service::SAME_PREORDER_ITEM)
 			|| ($allow_result == Cart_session_service::SAME_ARRIVING_ITEM))
 		{
-			if ($quiet_return) return true;
+			if ($quiet_return) {
+				return true;
+			}
+
 			redirect(base_url(). "review_order");
 		}
 
-		if ($quiet_return) return false;
+		if ($quiet_return) {
+			return false;
+		}
 
-		if ($this->upselling_model->get_ra($data, $sku, PLATFORMID, get_lang_id(), $listing_status))
-		{
+		if ($this->upselling_model->get_ra($data, $sku, PLATFORMID, get_lang_id(), $listing_status)) {
 			$this->template->add_title($data['data']['lang_text']['meta_title'].$data["prod_name"]. ' | ValueBasket');
 			$this->template->add_meta(array('name'=>'description','content'=>$data['data']['lang_text']['meta_desc']));
 			$this->template->add_meta(array('name'=>'keywords','content'=>$data['data']['lang_text']['meta_keyword']));
@@ -452,13 +393,8 @@ Class Cart extends PUB_Controller
 			$this->template->add_css("resources/css/jquery.gritter.css");
 			$this->template->add_js("/js/upselling.js", "import", TRUE);
 			$this->load_tpl('content', 'tbs_cart', $data, TRUE);
-		}
-		else
-		{
+		} else {
 			redirect(base_url()."review_order");
 		}
 	}
 }
-
-/* End of file cart.php */
-/* Location: ./app/public_controllers/cart.php */
