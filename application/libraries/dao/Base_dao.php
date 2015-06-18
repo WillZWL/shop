@@ -73,70 +73,52 @@ abstract class Base_dao
 
 	public function common_get_list($where = array(), $option = array(), $classname, $select = NULL)
 	{
-		if ($where)
-		{
+		if ($where) {
 			$this->db->where($where);
 		}
 
-		if (empty($option["num_rows"]))
-		{
-			if (isset($option["orderby"]))
-			{
+		if (empty($option["num_rows"])) {
+			if (isset($option["orderby"])) {
 				$this->db->order_by($option["orderby"]);
 			}
 
-			if (empty($option["limit"]))
-			{
+			if (empty($option["limit"])) {
 				$option["limit"] = $this->rows_limit;
-			}
-			elseif ($option["limit"] == -1)
-			{
+			} elseif ($option["limit"] == -1) {
 				$option["limit"] = "";
 			}
 
-			if (!isset($option["offset"]))
-			{
+			if (!isset($option["offset"])) {
 				$option["offset"] = 0;
 			}
 
-			if ($this->rows_limit != "")
-			{
+			if ($this->rows_limit != "") {
 				$this->db->limit($option["limit"], $option["offset"]);
 			}
 
 			$rs = array();
 
-			if ($select != NULL)
+			if ($select != NULL) {
 				$this->db->select($select, FALSE);
+			}
 
-			if ($query = $this->db->get())
-			{
-				foreach ($query->result($classname) as $obj)
-				{
+			if ($query = $this->db->get()) {
+				foreach ($query->result($classname) as $obj) {
 					$rs[] = $obj;
 				}
-				if ($option["limit"] == 1)
-				{
+				if ($option["limit"] == 1) {
 					return $rs[0];
-				}
-				else
-				{
-					if ($rs && empty($option["result_type"]) && empty($option["array_list"]))
-					{
+				} else {
+					if ($rs && empty($option["result_type"]) && empty($option["array_list"])) {
 						return (object) $rs;
-					}
-					else
-					{
+					} else {
 						return $rs;
 					}
 				}
 			}
-		}
-		else
-		{
+		} else {
 			$this->db->select('COUNT(*) AS total');
-			if ($query = $this->db->get())
-			{
+			if ($query = $this->db->get()) {
 				return $query->row()->total;
 			}
 		}

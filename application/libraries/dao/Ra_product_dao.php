@@ -40,7 +40,7 @@ class Ra_product_dao extends Base_dao
 		$select_str .= 'p.prod_grp_cd, p.name as prod_name, p.quantity, p.clearance, p.website_quantity, p.website_status, p.cat_id, p.sub_cat_id, p.sub_sub_cat_id, p.image, p.ean, p.mpn, p.upc, p.status as prod_status, p.display_quantity,';
 		$select_str .= 'ifnull(nullif(pc.prod_name, ""), ifnull(nullif(pc_en.prod_name, ""), p.name)) as content_prod_name';
 
-		$this->db->select($select_str);
+		$this->db->select($select_str, false);
 		$this->db->from('ra_product rap');
 		$this->db->join('ra_group_product ragp', 'ragp.ra_group_id = ragp.ra_group_id and ragp.ra_group_id in (rap.rcm_group_id_1, rap.rcm_group_id_2, rap.rcm_group_id_3, rap.rcm_group_id_4, rap.rcm_group_id_5, rap.rcm_group_id_6, rap.rcm_group_id_7, rap.rcm_group_id_8, rap.rcm_group_id_9, rap.rcm_group_id_10, rap.rcm_group_id_11, rap.rcm_group_id_12, rap.rcm_group_id_13, rap.rcm_group_id_14, rap.rcm_group_id_15, rap.rcm_group_id_16, rap.rcm_group_id_17, rap.rcm_group_id_18, rap.rcm_group_id_19, rap.rcm_group_id_20)', 'INNER');
 		$this->db->join('ra_group rag', 'ragp.ra_group_id = rag.group_id', 'INNER');
@@ -56,7 +56,7 @@ class Ra_product_dao extends Base_dao
 		if ($query = $this->db->get())
 		{
 			$ret = array();
-			foreach($query->result(array()) as $row)
+			foreach($query->result('array') as $row)
 			{
 				$ret[] = $row;
 			}

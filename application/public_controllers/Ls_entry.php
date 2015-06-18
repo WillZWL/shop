@@ -1,12 +1,10 @@
 <?php
 class Ls_entry extends PUB_Controller
 {
-	private $lang_id = "en";
-
-	public function Ls_entry()
+	public function __construct()
 	{
 		DEFINE("SKIPCUR", 1);
-		parent::PUB_Controller();
+		parent::__construct();
 		$this->load->helper('url');
 	}
 
@@ -38,11 +36,4 @@ class Ls_entry extends PUB_Controller
 		}
 	}
 
-	public function get_lang_id()
-	{
-		return $this->lang_id;
-	}
 }
-
-/* End of file checkout.php */
-/* Location: ./app/public_controllers/checkout.php */

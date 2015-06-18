@@ -37,12 +37,9 @@ class Category_extend_dao extends Base_dao
 	public function get_cat_ext_default_w_key_list($where = array(), $option = array())
 	{
 		$this->db->from('category AS c');
-		$this->db->join('language AS l', '1', 'INNER');
+		$this->db->join('language AS l', '1=1', 'INNER');
 		$this->db->join('category_extend AS ce', 'c.id = ce.cat_id AND ce.lang_id = l.id', 'LEFT');
 		$this->include_vo($this->get_vo_classname());
 		return $this->common_get_list($where, $option, $this->get_vo_classname(), 'c.id AS cat_id, l.id AS lang_id, COALESCE(ce.name, c.name) AS name');
 	}
 }
-
-/* End of file category_extend_dao.php */
-/* Location: ./system/application/libraries/dao/Category_extend_dao.php */

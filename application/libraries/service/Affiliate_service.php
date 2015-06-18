@@ -36,7 +36,7 @@ class Affiliate_service extends Base_service
 						$af_id = 'LSAU';
 						if($src['siteID'])
 						{
-							$site_id = mysql_escape_string($src['siteID']);
+							$site_id = mysql_real_escape_string($src['siteID']);
 							$this->_set_linkshare_tracking_cookie($site_id, $domain, $af_id);
 						}
 						break;
@@ -44,7 +44,7 @@ class Affiliate_service extends Base_service
 						$af_id = 'LSNZ';
 						if($src['siteID'])
 						{
-							$site_id = mysql_escape_string($src['siteID']);
+							$site_id = mysql_real_escape_string($src['siteID']);
 							$this->_set_linkshare_tracking_cookie($site_id, $domain, $af_id);
 						}
 						break;
@@ -62,7 +62,7 @@ class Affiliate_service extends Base_service
 			return;
 		}
 
-		if($affiliate = mysql_escape_string($affiliate))
+		if($affiliate)
 		{
 			setcookie("af", $affiliate, time()+ (60*60*24*30), "/", ".".$domain);
 			$_COOKIE["af"] = $affiliate;

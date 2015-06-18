@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 abstract class MY_Controller extends CI_Controller
 {
+	private $_lang_id="en";
+
 	abstract public function _get_app_id();
 
 	public function __construct($check_access_rights = TRUE)
@@ -19,6 +21,11 @@ abstract class MY_Controller extends CI_Controller
 				$feature_list = $this->authorization_service->set_application_feature_right($this->_get_app_id(), "");
 			}
 		}
+	}
+
+	public function get_lang_id()
+	{
+		return $this->_lang_id;
 	}
 
 	private function _check_authed()

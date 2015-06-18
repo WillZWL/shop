@@ -1,8 +1,9 @@
 <?php
 class PUB_Controller extends CI_Controller
 {
-	private $allow_referer_host = '/^http[s]?:\/\/shop\.skype\.com/';
+	private $lang_id = 'en';
 
+	private $allow_referer_host = '/^http[s]?:\/\/shop\.skype\.com/';
 	private $require_login = 0;
 	private $load_header = 1;
 	private $get_currency_list = 1;
@@ -140,37 +141,37 @@ class PUB_Controller extends CI_Controller
 
 	public function get_preload_data()
 	{
-		if ($this->load_header) {
-			include_once(APPPATH."libraries/service/Cart_session_service.php");
-			$cs_srv = new Cart_session_service();
-			include_once(APPPATH."libraries/service/Customer_service_info_service.php");
-			$csi_srv = new Customer_service_info_service();
-			include_once(APPPATH."libraries/service/Platform_biz_var_service.php");
-			$pbv_srv = new Platform_biz_var_service();
-			include_once(APPPATH."libraries/service/Country_service.php");
-			$country_srv = new Country_service();
+		// if ($this->load_header) {
+		// 	include_once(APPPATH."libraries/service/Cart_session_service.php");
+		// 	$cs_srv = new Cart_session_service();
+		// 	include_once(APPPATH."libraries/service/Customer_service_info_service.php");
+		// 	$csi_srv = new Customer_service_info_service();
+		// 	include_once(APPPATH."libraries/service/Platform_biz_var_service.php");
+		// 	$pbv_srv = new Platform_biz_var_service();
+		// 	include_once(APPPATH."libraries/service/Country_service.php");
+		// 	$country_srv = new Country_service();
 
-			$cs_phone = $csi_srv->get_short_text(PLATFORMID);
-			if (strpos($cs_phone, ") ") !== FALSE) {
-				$cs_phone_arr = explode(") ", $cs_phone);
-				$cs_phone = $cs_phone_arr[1];
-			}
-			$this->add_preload_data
-			(
-				array
-				(
-					"cs_phone_no"=>$cs_phone,
-					"cart_info"=>$cs_srv->get_detail(PLATFORMID),
-					"free_delivery_limit"=>$pbv_srv->get_free_delivery_limit(PLATFORMID),
-					"platform_list"=>$country_srv->get_all_available_country_w_correct_lang(get_lang_id()),
-					"controller_path"=> "/" . $this->router->directory . uri_string_without_lang_country($this->router),
-					"base_url"=>base_url(),
-					"cdn_url"=>base_cdn_url()
-				)
-			);
-		}
+		// 	$cs_phone = $csi_srv->get_short_text(PLATFORMID);
+		// 	if (strpos($cs_phone, ") ") !== FALSE) {
+		// 		$cs_phone_arr = explode(") ", $cs_phone);
+		// 		$cs_phone = $cs_phone_arr[1];
+		// 	}
+		// 	// $this->add_preload_data
+		// 	// (
+		// 	// 	array
+		// 	// 	(
+		// 	// 		"cs_phone_no"=>$cs_phone,
+		// 	// 		"cart_info"=>$cs_srv->get_detail(PLATFORMID),
+		// 	// 		"free_delivery_limit"=>$pbv_srv->get_free_delivery_limit(PLATFORMID),
+		// 	// 		"platform_list"=>$country_srv->get_all_available_country_w_correct_lang(get_lang_id()),
+		// 	// 		"controller_path"=> "/" . $this->router->directory . uri_string_without_lang_country($this->router),
+		// 	// 		"base_url"=>base_url(),
+		// 	// 		"cdn_url"=>base_cdn_url()
+		// 	// 	)
+		// 	// );
+		// }
 
-		return parent::get_preload_data();
+		// return parent::get_preload_data();
 	}
 
 	protected function is_allow_referer($url)
@@ -293,9 +294,9 @@ class PUB_Controller extends CI_Controller
 			}
 		}
 		$tracking_script = $this->auto_load_tracking($vars['tracking_data']);
-		$this->template->add_js($tracking_script, "print", false, "body");
-		$this->template->write_view($region, $view, $data, $overwrite);
-		$this->template->render();
+		// $this->template->add_js($tracking_script, "print", false, "body");
+		// $this->template->write_view($region, $view, $data, $overwrite);
+		// $this->template->render();
 	}
 
 	public function auto_load_tracking($data)
@@ -355,5 +356,11 @@ class PUB_Controller extends CI_Controller
 		}
 
 		$this->load->view($specific_template, $params, $return);
+	}
+
+
+	public function get_lang_id()
+	{
+		return $this->lang_id;
 	}
 }

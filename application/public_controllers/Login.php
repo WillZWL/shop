@@ -5,12 +5,10 @@ DEFINE ('ALLOW_REDIRECT_DOMAIN', 1);
 
 class Login extends PUB_Controller
 {
-	private $lang_id = "en";
-
-	public function Login()
+	public function __construct()
 	{
 		DEFINE("SKIPCUR", 1);
-		parent::PUB_Controller();
+		parent::__construct();
 		$this->load->helper(array('url', 'object', 'tbswrapper'));
 		$this->load->model('website/client_model');
 		$this->load->model('mastercfg/country_model');
@@ -177,11 +175,6 @@ class Login extends PUB_Controller
 		{
 			show_404();
 		}
-	}
-
-	public function get_lang_id()
-	{
-		return $this->lang_id;
 	}
 
 	public function _check_login($value)

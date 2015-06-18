@@ -1,12 +1,10 @@
 <?php
 class Logout extends PUB_Controller
 {
-	private $lang_id = "en";
-
-	public function Logout()
+	public function __construct()
 	{
 		DEFINE("SKIPCUR", 1);
-		parent::PUB_Controller();
+		parent::__construct();
 		$this->load->helper('url');
 	}
 
@@ -18,11 +16,4 @@ class Logout extends PUB_Controller
 		Redirect(base_url()."login");
 	}
 
-	public function get_lang_id()
-	{
-		return $this->lang_id;
-	}
 }
-
-/* End of file checkout.php */
-/* Location: ./app/public_controllers/checkout.php */

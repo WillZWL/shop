@@ -963,7 +963,7 @@
                                                                             <div class="right">
                                                                                 <div class="action">
                                                                                     <div class="cart">
-                                                                                        <button data-loading-text="Loading..." class="btn btn-primary" type="button" onclick="cart.addcart('51');">
+                                                                                        <button data-loading-text="Loading..." class="btn btn-primary" type="button" onclick="cart.addcart('10111-AA-BK');">
                                                                                             <i class="fa fa-shopping-cart"></i>
                                                                                         </button>
                                                                                     </div>

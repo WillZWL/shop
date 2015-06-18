@@ -60,6 +60,7 @@ class Cart_session_service extends Base_service
 		if ($qty <= 0) {
 			$this->remove($sku, $platform);
 		} elseif ($prod_list = $this->prod_svc->get_dao()->get_bundle_components_overview(array("vpi.prod_sku"=>$sku, "vpo.platform_id"=>$platform, "p.status"=>2, "p.website_status <>"=>'O'))) {
+			var_dump($prod_list);die;
 			$success = 1;
 			foreach ($prod_list as $prod) {
 				$ws_qty = $prod->get_website_quantity();
@@ -78,6 +79,7 @@ class Cart_session_service extends Base_service
 					$max_qty = $ws_qty;
 				}
 			}
+			var_dump($this->prod_svc->get_dao()->db->last_query());die;
 
 			if ($success) {
 				$this->put_cart_sku($platform, $sku, $qty > $max_qty?$max_qty:$qty, $ws_status, $expect_delivery_date, $warranty_in_month);
@@ -400,10 +402,9 @@ class Cart_session_service extends Base_service
 
 	public function set_cart_cookie($platform)
 	{
-		include_once(APPPATH . "hooks/country_selection.php");
-		$country_selection = new Country_selection();
-		//	set the cart cookie, to rebuild cart if domain changes
-		$country_selection->set_cart_cookie(base64_encode(serialize($_SESSION["cart"][$platform])));
+		set_cookie('chk_cart', base64_encode(serialize($_SESSION["cart"][$platform])), time()+86400, '.vb.com.sg', '/');
+		set_cookie('chk_cart', base64_encode(serialize($_SESSION["cart"][$platform])), time()+86400, '.vb.com', '/');
+		set_cookie('chk_cart', base64_encode(serialize($_SESSION["cart"][$platform])), time()+86400, '.vb.fr', '/');
 	}
 
 	public function check_cart($cart_list = array(), $platform = NULL, $lang_id = "en", $renew_cart = 0)
@@ -531,7 +532,6 @@ class Cart_session_service extends Base_service
 
 			foreach ($_SESSION["cart"][$platform] as $key => $value) {
 				$qty = $value["qty"];
-
 				$subcost = 0;
 				$subtotal = 0;
 				$subvat = 0;

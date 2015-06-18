@@ -2,7 +2,6 @@
 class All_orders extends MY_Controller
 {
 	private $_app_id="ORD0021";
-	private $_lang_id="en";
 
 	public function __construct()
 	{
@@ -79,8 +78,4 @@ class All_orders extends MY_Controller
 		return $this->_app_id;
 	}
 
-	public function get_lang_id()
-	{
-		return $this->_lang_id;
-	}
 }

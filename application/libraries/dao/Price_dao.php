@@ -91,7 +91,7 @@ class Price_dao extends Base_dao
 			{
 				$rs[] = $obj;
 			}
-			return empty($rs)?$rs:(object) $rs;
+			return empty($rs) ? $rs : (object)$rs;
 		}
 		else
 		{

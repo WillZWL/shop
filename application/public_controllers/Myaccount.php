@@ -11,7 +11,6 @@ if (in_array($GLOBALS["URI"]->segments[2], $ws_array))
 
 class Myaccount extends PUB_Controller
 {
-	private $lang_id = "en";
 	private $components_list;
 
 	public function Myaccount()
@@ -521,11 +520,6 @@ no one use rma_edit, so do not change to single template for all language.
 				";
 
 				echo $js;
-	}
-
-	public function get_lang_id()
-	{
-		return $this->lang_id;
 	}
 
 	function print_invoice($so_no = "")

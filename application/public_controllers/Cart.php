@@ -17,12 +17,14 @@ Class Cart extends PUB_Controller
 
 	public function ajax_add_item()
 	{
-		$sku = $this->input->post('sku');
-		$qty = $this->input->post('qty') ? $this->input->post('qty') : 1;
+		$sku = $this->input->get('sku');
+		$qty = $this->input->get('qty') ? $this->input->get('qty') : 1;
 
-		if ( ! empty($sku)) {
-			$this->add_item_v2($sku, $qty);
-		}
+		$this->add_item_qty($sku, $qty);
+
+		// if ( ! empty($sku)) {
+		// 	$this->add_item_v2($sku, $qty);
+		// }
 
 	}
 
@@ -384,17 +386,17 @@ Class Cart extends PUB_Controller
 			return false;
 		}
 
-		if ($this->upselling_model->get_ra($data, $sku, PLATFORMID, get_lang_id(), $listing_status)) {
-			$this->template->add_title($data['data']['lang_text']['meta_title'].$data["prod_name"]. ' | ValueBasket');
-			$this->template->add_meta(array('name'=>'description','content'=>$data['data']['lang_text']['meta_desc']));
-			$this->template->add_meta(array('name'=>'keywords','content'=>$data['data']['lang_text']['meta_keyword']));
-			$this->template->add_js("/js/common.js");
-			$this->template->add_js("/resources/js/jquery.gritter.js");
-			$this->template->add_css("resources/css/jquery.gritter.css");
-			$this->template->add_js("/js/upselling.js", "import", TRUE);
-			$this->load_tpl('content', 'tbs_cart', $data, TRUE);
+		if ($this->upselling_model->get_ra($data, $sku, PLATFORMID, $this->get_lang_id(), $listing_status)) {
+			// $this->template->add_title($data['data']['lang_text']['meta_title'].$data["prod_name"]. ' | ValueBasket');
+			// $this->template->add_meta(array('name'=>'description','content'=>$data['data']['lang_text']['meta_desc']));
+			// $this->template->add_meta(array('name'=>'keywords','content'=>$data['data']['lang_text']['meta_keyword']));
+			// $this->template->add_js("/js/common.js");
+			// $this->template->add_js("/resources/js/jquery.gritter.js");
+			// $this->template->add_css("resources/css/jquery.gritter.css");
+			// $this->template->add_js("/js/upselling.js", "import", TRUE);
+			// $this->load_tpl('content', 'tbs_cart', $data, TRUE);
 		} else {
-			redirect(base_url()."review_order");
+			// redirect(base_url()."review_order");
 		}
 	}
 }

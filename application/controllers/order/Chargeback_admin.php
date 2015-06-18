@@ -193,7 +193,6 @@ HTML;
 		{
         	if (!empty($v))
         	{
-				$v = mysql_escape_string($v);
 				$kk = substr($k, 4);
 	            switch ($kk)
 	            {

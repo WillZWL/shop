@@ -2,7 +2,6 @@
 class Email_referral_list_management extends MY_Controller
 {
 	private $_app_id="ORD0024";
-	private $_lang_id="en";
 
 	public function __construct()
 	{
@@ -108,12 +107,4 @@ class Email_referral_list_management extends MY_Controller
 	{
 		return $this->_app_id;
 	}
-
-	public function get_lang_id()
-	{
-		return $this->_lang_id;
-	}
 }
-
-/* End of file email_referral_list_management.php */
-/* Location: ./system/application/controllers/report/email_referral_list_management.php */

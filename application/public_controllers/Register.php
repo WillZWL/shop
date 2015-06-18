@@ -5,8 +5,6 @@ DEFINE ('ALLOW_REDIRECT_DOMAIN', 1);
 
 class Register extends PUB_Controller
 {
-	private $lang_id = "en";
-
 	public function Register()
 	{
 		parent::PUB_Controller();
@@ -120,11 +118,4 @@ class Register extends PUB_Controller
 		}
 	}
 
-	public function get_lang_id()
-	{
-		return $this->lang_id;
-	}
 }
-
-/* End of file checkout.php */
-/* Location: ./app/public_controllers/checkout.php */
