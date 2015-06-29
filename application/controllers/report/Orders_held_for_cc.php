@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cron_order_held_for_cc extends MY_Controller
 {
-    private $app_id="RPT0067";
+    private $app_id = "RPT0067";
 
     function __construct()
     {

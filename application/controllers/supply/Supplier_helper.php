@@ -1,7 +1,8 @@
 <?php
+
 class Supplier_helper extends MY_Controller
 {
-    private $app_id="SUP0001";
+    private $app_id = "SUP0001";
 
     public function __construct()
     {
@@ -16,24 +17,23 @@ class Supplier_helper extends MY_Controller
     public function js_supplist($active_only = 0)
     {
         $where = array();
-        if($active_only == 1)
+        if ($active_only == 1)
             $where["status"] = 1;
         header("Content-type: text/javascript; charset: UTF-8");
         header("Cache-Control: must-revalidate");
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->supplier_model->get_list("dao", $where, array("orderby"=>"name ASC", "limit"=>-1));
-        foreach ($objlist as $obj)
-        {
+        $objlist = $this->supplier_model->get_list("dao", $where, array("orderby" => "name ASC", "limit" => -1));
+        foreach ($objlist as $obj) {
             $sid = $obj->get_id();
             $name = str_replace("'", "\'", $obj->get_name());
             $sourcing_region = str_replace("'", "\'", $obj->get_sourcing_reg());
             $currency_id = str_replace("'", "\'", $obj->get_currency_id());
             $creditor = str_replace("'", "\'", $obj->get_creditor());
-            $slist[] = "'".$sid."':['".$name."', '".$currency_id."','".$sourcing_region."','".$creditor."']";
+            $slist[] = "'" . $sid . "':['" . $name . "', '" . $currency_id . "','" . $sourcing_region . "','" . $creditor . "']";
         }
-        $js = "supplist = {".implode(", ", $slist)."};";
+        $js = "supplist = {" . implode(", ", $slist) . "};";
         $js .= "
             function ChangeSupp(val, obj, span_obj)
             {
@@ -56,20 +56,20 @@ class Supplier_helper extends MY_Controller
         echo $js;
     }
 
-    public function js_currency(){
+    public function js_currency()
+    {
         header("Content-type: text/javascript; charset: UTF-8");
         header("Cache-Control: must-revalidate");
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->supplier_model->get_service_list("currency", array(), array("orderby"=>"id ASC"));
-        foreach ($objlist as $obj)
-        {
+        $objlist = $this->supplier_model->get_service_list("currency", array(), array("orderby" => "id ASC"));
+        foreach ($objlist as $obj) {
             $sid = $obj->get_id();
             $name = $obj->get_name();
-            $slist[] = "'".$sid."':'".$name."'";
+            $slist[] = "'" . $sid . "':'" . $name . "'";
         }
-        $js = "currencylist = {".implode(", ", $slist)."};";
+        $js = "currencylist = {" . implode(", ", $slist) . "};";
         $js .= "
             function ChangeCurr(val, obj)
             {
@@ -85,7 +85,8 @@ class Supplier_helper extends MY_Controller
         echo $js;
     }
 
-    public function _get_app_id(){
+    public function _get_app_id()
+    {
         return $this->app_id;
     }
 }

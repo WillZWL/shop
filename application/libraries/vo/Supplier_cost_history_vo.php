@@ -192,4 +192,5 @@ class Supplier_cost_history_vo extends Base_vo
     }
 
 }
+
 ?>

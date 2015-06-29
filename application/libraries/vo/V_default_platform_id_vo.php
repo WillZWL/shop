@@ -36,4 +36,5 @@ class V_default_platform_id_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -7,7 +7,7 @@ class Affiliate_sku_platform_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Affiliate_sku_platform_dao.php");
+        include_once(APPPATH . "libraries/dao/Affiliate_sku_platform_dao.php");
         $this->set_dao(new Affiliate_sku_platform_dao());
     }
 
@@ -31,7 +31,7 @@ class Affiliate_sku_platform_service extends Base_service
         return $this->get_dao()->get_feed_list($platform_id);
     }
 
-    public function get_feed_list_by_sku($sku, $platform_id, $status=0)
+    public function get_feed_list_by_sku($sku, $platform_id, $status = 0)
     {
         return $this->get_dao()->get_feed_list_by_sku($sku, $platform_id, $status);
     }

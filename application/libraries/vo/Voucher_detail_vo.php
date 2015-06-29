@@ -168,4 +168,5 @@ class Voucher_detail_vo extends Base_vo
     }
 
 }
+
 ?>

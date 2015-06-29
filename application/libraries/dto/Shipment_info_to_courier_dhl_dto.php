@@ -59,20 +59,14 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         parent::__construct();
     }
 
-    public function set_currency_id($value)
-    {
-        $this->currency_id = $value;
-        return $this;
-    }
-
     public function get_currency_id()
     {
         return $this->currency_id;
     }
 
-    public function set_order_cost($value)
+    public function set_currency_id($value)
     {
-        $this->order_cost = $value;
+        $this->currency_id = $value;
         return $this;
     }
 
@@ -81,9 +75,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->order_cost;
     }
 
-    public function set_added_service($value)
+    public function set_order_cost($value)
     {
-        $this->added_service = $value;
+        $this->order_cost = $value;
         return $this;
     }
 
@@ -92,9 +86,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->added_service;
     }
 
-    public function set_tel($value)
+    public function set_added_service($value)
     {
-        $this->tel = $value;
+        $this->added_service = $value;
         return $this;
     }
 
@@ -103,9 +97,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->tel;
     }
 
-    public function set_delivery_name($value)
+    public function set_tel($value)
     {
-        $this->delivery_name = $value;
+        $this->tel = $value;
         return $this;
     }
 
@@ -114,9 +108,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->delivery_name;
     }
 
-    public function set_delivery_company($value)
+    public function set_delivery_name($value)
     {
-        $this->delivery_company = $value;
+        $this->delivery_name = $value;
         return $this;
     }
 
@@ -125,10 +119,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->delivery_company;
     }
 
-
-    public function set_delivery_address($value)
+    public function set_delivery_company($value)
     {
-        $this->delivery_address = $value;
+        $this->delivery_company = $value;
         return $this;
     }
 
@@ -137,9 +130,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->delivery_address;
     }
 
-    public function set_delivery_address1($value)
+    public function set_delivery_address($value)
     {
-        $this->delivery_address1 = $value;
+        $this->delivery_address = $value;
         return $this;
     }
 
@@ -148,10 +141,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->delivery_address1;
     }
 
-
-    public function set_delivery_address2($value)
+    public function set_delivery_address1($value)
     {
-        $this->delivery_address2 = $value;
+        $this->delivery_address1 = $value;
         return $this;
     }
 
@@ -160,9 +152,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->delivery_address2;
     }
 
-    public function set_delivery_address3($value)
+    public function set_delivery_address2($value)
     {
-        $this->delivery_address3 = $value;
+        $this->delivery_address2 = $value;
         return $this;
     }
 
@@ -171,9 +163,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->delivery_address3;
     }
 
-    public function set_delivery_postcode($value)
+    public function set_delivery_address3($value)
     {
-        $this->delivery_postcode = $value;
+        $this->delivery_address3 = $value;
         return $this;
     }
 
@@ -182,9 +174,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->delivery_postcode;
     }
 
-    public function set_delivery_city($value)
+    public function set_delivery_postcode($value)
     {
-        $this->delivery_city = $value;
+        $this->delivery_postcode = $value;
         return $this;
     }
 
@@ -193,9 +185,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->delivery_city;
     }
 
-    public function set_delivery_state($value)
+    public function set_delivery_city($value)
     {
-        $this->delivery_state = $value;
+        $this->delivery_city = $value;
         return $this;
     }
 
@@ -204,9 +196,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->delivery_state;
     }
 
-    public function set_delivery_country_id($value)
+    public function set_delivery_state($value)
     {
-        $this->delivery_country_id = $value;
+        $this->delivery_state = $value;
         return $this;
     }
 
@@ -215,9 +207,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->delivery_country_id;
     }
 
-    public function set_qty($value)
+    public function set_delivery_country_id($value)
     {
-        $this->qty = $value;
+        $this->delivery_country_id = $value;
         return $this;
     }
 
@@ -226,9 +218,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->qty;
     }
 
-    public function set_prod_weight($value)
+    public function set_qty($value)
     {
-        $this->prod_weight = $value;
+        $this->qty = $value;
         return $this;
     }
 
@@ -237,9 +229,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->prod_weight;
     }
 
-    public function set_amount($value)
+    public function set_prod_weight($value)
     {
-        $this->amount = $value;
+        $this->prod_weight = $value;
         return $this;
     }
 
@@ -248,9 +240,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->amount;
     }
 
-    public function set_rate($value)
+    public function set_amount($value)
     {
-        $this->rate = $value;
+        $this->amount = $value;
         return $this;
     }
 
@@ -259,9 +251,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->rate;
     }
 
-    public function set_cc_desc($value)
+    public function set_rate($value)
     {
-        $this->cc_desc = $value;
+        $this->rate = $value;
         return $this;
     }
 
@@ -270,9 +262,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->cc_desc;
     }
 
-    public function set_cc_code($value)
+    public function set_cc_desc($value)
     {
-        $this->cc_code = $value;
+        $this->cc_desc = $value;
         return $this;
     }
 
@@ -281,9 +273,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->cc_code;
     }
 
-    public function set_so_no($value)
+    public function set_cc_code($value)
     {
-        $this->so_no = $value;
+        $this->cc_code = $value;
         return $this;
     }
 
@@ -292,9 +284,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->so_no;
     }
 
-    public function set_price($value)
+    public function set_so_no($value)
     {
-        $this->price = $value;
+        $this->so_no = $value;
         return $this;
     }
 
@@ -303,9 +295,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->price;
     }
 
-    public function set_free_delivery_limit($value)
+    public function set_price($value)
     {
-        $this->free_delivery_limit = $value;
+        $this->price = $value;
         return $this;
     }
 
@@ -314,9 +306,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->free_delivery_limit;
     }
 
-    public function set_delivery_charge($value)
+    public function set_free_delivery_limit($value)
     {
-        $this->delivery_charge = $value;
+        $this->free_delivery_limit = $value;
         return $this;
     }
 
@@ -325,9 +317,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->delivery_charge;
     }
 
-    public function set_platform_id($value)
+    public function set_delivery_charge($value)
     {
-        $this->platform_id = $value;
+        $this->delivery_charge = $value;
         return $this;
     }
 
@@ -336,9 +328,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->platform_id;
     }
 
-    public function set_declared_pcent($value)
+    public function set_platform_id($value)
     {
-        $this->declared_pcent = $value;
+        $this->platform_id = $value;
         return $this;
     }
 
@@ -347,9 +339,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->declared_pcent;
     }
 
-    public function set_declared_value($value)
+    public function set_declared_pcent($value)
     {
-        $this->declared_value = $value;
+        $this->declared_pcent = $value;
         return $this;
     }
 
@@ -358,9 +350,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->declared_value;
     }
 
-    public function set_prod_sku($value)
+    public function set_declared_value($value)
     {
-        $this->prod_sku = $value;
+        $this->declared_value = $value;
         return $this;
     }
 
@@ -369,9 +361,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->prod_sku;
     }
 
-    public function set_mawb($value)
+    public function set_prod_sku($value)
     {
-        $this->mawb = $value;
+        $this->prod_sku = $value;
         return $this;
     }
 
@@ -380,9 +372,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->mawb;
     }
 
-    public function set_client_email($value)
+    public function set_mawb($value)
     {
-        $this->client_email = $value;
+        $this->mawb = $value;
         return $this;
     }
 
@@ -391,10 +383,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->client_email;
     }
 
-
-    public function set_delivery_country_id_2($value)
+    public function set_client_email($value)
     {
-        $this->delivery_country_id_2 = $value;
+        $this->client_email = $value;
         return $this;
     }
 
@@ -403,9 +394,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->delivery_country_id_2;
     }
 
-    public function set_shipping_date($value)
+    public function set_delivery_country_id_2($value)
     {
-        $this->shipping_date = $value;
+        $this->delivery_country_id_2 = $value;
         return $this;
     }
 
@@ -414,9 +405,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->shipping_date;
     }
 
-    public function set_category_name($value)
+    public function set_shipping_date($value)
     {
-        $this->category_name = $value;
+        $this->shipping_date = $value;
         return $this;
     }
 
@@ -425,10 +416,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->category_name;
     }
 
-
-    public function set_item_no($value)
+    public function set_category_name($value)
     {
-        $this->item_no = $value;
+        $this->category_name = $value;
         return $this;
     }
 
@@ -437,9 +427,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->item_no;
     }
 
-    public function set_country_name($value)
+    public function set_item_no($value)
     {
-        $this->country_name = $value;
+        $this->item_no = $value;
         return $this;
     }
 
@@ -448,9 +438,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->country_name;
     }
 
-    public function set_cat_name($value)
+    public function set_country_name($value)
     {
-        $this->cat_name = $value;
+        $this->country_name = $value;
         return $this;
     }
 
@@ -459,9 +449,9 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->cat_name;
     }
 
-    public function set_subcat($value)
+    public function set_cat_name($value)
     {
-        $this->subcat = $value;
+        $this->cat_name = $value;
         return $this;
     }
 
@@ -470,15 +460,21 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
         return $this->subcat;
     }
 
-    public function set_subsubcat($value)
+    public function set_subcat($value)
     {
-        $this->subsubcat = $value;
+        $this->subcat = $value;
         return $this;
     }
 
     public function get_subsubcat()
     {
         return $this->subsubcat;
+    }
+
+    public function set_subsubcat($value)
+    {
+        $this->subsubcat = $value;
+        return $this;
     }
 }
 

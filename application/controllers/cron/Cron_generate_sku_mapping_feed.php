@@ -1,7 +1,8 @@
 <?php
+
 class Cron_generate_sku_mapping_feed extends MY_Controller
 {
-    private $app_id="CRN0004";
+    private $app_id = "CRN0004";
 
     function __construct()
     {

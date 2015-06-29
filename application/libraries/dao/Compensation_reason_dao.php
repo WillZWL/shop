@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Compensation_reason_dao extends Base_dao
 {
-    private $table_name="compensation_reason";
-    private $vo_classname="Compensation_reason_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "compensation_reason";
+    private $vo_classname = "Compensation_reason_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

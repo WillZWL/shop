@@ -130,4 +130,5 @@ class Fraudulent_order_vo extends Base_vo
     }
 
 }
+
 ?>

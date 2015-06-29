@@ -4,13 +4,9 @@ include_once "base_vo.php";
 class Integrated_order_fulfillment_vo extends Base_vo
 {
 
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $so_no;
 
     //class variable
-    private $so_no;
     private $line_no;
     private $sku = '';
     private $platform_id;
@@ -33,14 +29,20 @@ class Integrated_order_fulfillment_vo extends Base_vo
     private $delivery_postcode;
     private $rec_courier;
     private $split_so_group;
-
-    //primary key
     private $primary_key = array("so_no", "line_no", "sku");
 
-    //auo increment
+    //primary key
     private $increment_field = "";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_so_no()
     {
         return $this->so_no;

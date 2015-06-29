@@ -1,4 +1,5 @@
 <?php
+
 class Cart_session_model extends CI_Model
 {
     public function __construct()
@@ -20,8 +21,7 @@ class Cart_session_model extends CI_Model
 
     public function get($platform = NULL)
     {
-        if (is_null($platform))
-        {
+        if (is_null($platform)) {
             $platform = PLATFORMID;
         }
         return $this->cart_session_service->get($platform);
@@ -34,17 +34,15 @@ class Cart_session_model extends CI_Model
 
     public function get_cart($platform = NULL)
     {
-        if (is_null($platform))
-        {
-            $platform = defined(PLATFORMID)?PLATFORMID:"WSUS";
+        if (is_null($platform)) {
+            $platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
         }
         return $this->cart_session_service->get_cart($platform);
     }
 
     public function remove($sku, $platform = NULL)
     {
-        if (is_null($platform))
-        {
+        if (is_null($platform)) {
             $platform = PLATFORMID;
         }
         return $this->cart_session_service->remove($sku, $platform);
@@ -84,15 +82,14 @@ class Cart_session_model extends CI_Model
 
         $option["array_list"] = 1;
         $data = array();
-        if ($ra_list = $this->ra_product_service->get_ra_product_w_group_name($where, $option, $lang_id))
-        {
+        if ($ra_list = $this->ra_product_service->get_ra_product_w_group_name($where, $option, $lang_id)) {
             $data['ra_list'] = $ra_list['ra_list'];
             $data['ra_group_list'] = $ra_list['ra_group_list'];
         }
 
-        if (($prod = $this->product_service->get(array("sku"=>$sku))) &&
-            ($recommended = $this->best_seller_service->get_ra_bs_list($prod->get_sub_cat_id(), $platform_id, $lang_id, 8, TRUE)))
-        {
+        if (($prod = $this->product_service->get(array("sku" => $sku))) &&
+            ($recommended = $this->best_seller_service->get_ra_bs_list($prod->get_sub_cat_id(), $platform_id, $lang_id, 8, TRUE))
+        ) {
             $data["recommended"] = $recommended;
         }
         return $data;
@@ -108,4 +105,5 @@ class Cart_session_model extends CI_Model
         return $this->product_model->get_product_content($where);
     }
 }
+
 ?>

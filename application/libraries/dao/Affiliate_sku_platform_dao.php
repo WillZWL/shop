@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Affiliate_sku_platform_dao extends Base_dao
 {
-    private $table_name="affiliate_sku_platform";
-    private $vo_classname="affiliate_sku_platform_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "affiliate_sku_platform";
+    private $vo_classname = "affiliate_sku_platform_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -40,8 +40,7 @@ class Affiliate_sku_platform_dao extends Base_dao
             select distinct affiliate_id from affiliate_sku_platform #where platform_id = ?
         ";
         $result = $this->db->query($query, $data);
-        foreach ($result->result_array() as $row)
-        {
+        foreach ($result->result_array() as $row) {
             $rs[] = $row["affiliate_id"];
         }
 
@@ -55,8 +54,7 @@ class Affiliate_sku_platform_dao extends Base_dao
             select sku, platform_id, status from affiliate_sku_platform where affiliate_id = ?
         ";
         $result = $this->db->query($query, $data);
-        foreach ($result->result_array() as $row)
-        {
+        foreach ($result->result_array() as $row) {
             $rs[$row["platform_id"]][$row["sku"]] = $row["status"];
         }
 
@@ -74,10 +72,8 @@ class Affiliate_sku_platform_dao extends Base_dao
                     AND status = ?";
         $result = $this->db->query($query, $data);
 
-        if($result->num_rows() >0)
-        {
-            foreach ($result->result_array() as $row)
-            {
+        if ($result->num_rows() > 0) {
+            foreach ($result->result_array() as $row) {
                 return $row["affiliate_list"];
             }
         }
@@ -101,8 +97,7 @@ class Affiliate_sku_platform_dao extends Base_dao
             order by chk desc, id asc
         ";
         $result = $this->db->query($query, $data);
-        foreach ($result->result_array() as $row)
-        {
+        foreach ($result->result_array() as $row) {
             if ($row["status"] == null) $row["status"] = 0;
             $rs[] = $row;
         }

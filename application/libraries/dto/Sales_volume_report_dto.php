@@ -1,4 +1,4 @@
-<?defined('BASEPATH') OR exit('No direct script access allowed');
+<? defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
@@ -16,14 +16,14 @@ class Sales_volume_report_dto extends Base_dto
     private $sub_cat_cat_name;
     private $sku_create_on;
 
-/*
- si.so_no orderNo,
- so.platform_id Platform,
- so.create_on orderCreateDate,
- si.prod_sku VBSKU,
- si.qty Qty,
- sm.ext_sku masterSKU,
- pr.`name` productName */
+    /*
+     si.so_no orderNo,
+     so.platform_id Platform,
+     so.create_on orderCreateDate,
+     si.prod_sku VBSKU,
+     si.qty Qty,
+     sm.ext_sku masterSKU,
+     pr.`name` productName */
 
     public function __construct()
     {
@@ -99,6 +99,7 @@ class Sales_volume_report_dto extends Base_dto
     {
         $this->cat_name = $value;
     }
+
     public function get_sub_cat_name()
     {
         return $this->sub_cat_name;
@@ -106,8 +107,9 @@ class Sales_volume_report_dto extends Base_dto
 
     public function set_sub_cat_name($value)
     {
-        $this->sub_cat_name= $value;
+        $this->sub_cat_name = $value;
     }
+
     public function get_sub_sub_cat_name()
     {
         return $this->sub_sub_cat_name;

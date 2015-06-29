@@ -20,80 +20,69 @@ class Clearance extends PUB_Controller
 
     public function index()
     {
-        $data["brandlist"] = $this->category_model->get_display_list($catid,"brand");
+        $data["brandlist"] = $this->category_model->get_display_list($catid, "brand");
         $data["best_seller"] = $bs;
         $data["latest_arrival"] = $la;
         $data["top_deals"] = $td;
 
-        if($this->input->get("cat") != "")
-        {
+        if ($this->input->get("cat") != "") {
             $where["cat"] = $this->input->get("cat");
         }
 
-        if($this->input->get("scat") != "")
-        {
+        if ($this->input->get("scat") != "") {
             $where["scat"] = $this->input->get("scat");
         }
 
-        if($this->input->get("cat") != "")
-        {
+        if ($this->input->get("cat") != "") {
             $where["scat"] = $this->input->get("scat");
         }
 
-        if($this->input->get("brand") != "")
-        {
+        if ($this->input->get("brand") != "") {
             $where["brand"] = $this->input->get("brand");
         }
 
-        if($this->input->get("colour") != "")
-        {
+        if ($this->input->get("colour") != "") {
             $where["colour"] = $this->input->get("colour");
         }
 
         $page = $this->input->get('page') * 1;
 
-        if($page <= 0)
-        {
+        if ($page <= 0) {
             $page = 1;
         }
 
         $option["page"] = $page - 1;
 
-        if($this->input->get('displayqty') * 1 > 0)
-        {
+        if ($this->input->get('displayqty') * 1 > 0) {
             $option["limit"] = $this->input->get('displayqty') * 1;
-        }
-        else
-        {
+        } else {
             $option["limit"] = 10;
         }
 
-        switch($this->input->get('sort'))
-        {
+        switch ($this->input->get('sort')) {
             case 'price':
                 $option["sort"] = "pr.price";
                 $option["order"] = $this->input->get('order');
                 break;
 
-                case 'colour':
+            case 'colour':
                 $option["sort"] = 'p.colour_id';
                 $option["order"] = $this->input->get('order');
                 break;
 
-                default:
+            default:
                 break;
         }
 
         $data["prodcnt"] = $prodnum = $this->product_model->get_clearance_list_cnt($where);
-        if($page  > ceil($prodnum / $option["limit"]))
-        {
+        if ($page > ceil($prodnum / $option["limit"])) {
             $page = ceil($prodnum / $option["limit"]) - 1;
             $option["page"] = $page;
         }
 
         $data["page"] = $page;
         $data["rpp"] = $option["limit"];
-        $data["prodlist"] = $prodlist = $this->product_model->get_clearance_list($where,$option);
+        $data["prodlist"] = $prodlist = $this->product_model->get_clearance_list($where, $option);
         $data["colour_list"] = $this->category_model->get_colour_code();
         $this->load_view('clearance.php', $data);
     }

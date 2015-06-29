@@ -1,4 +1,5 @@
 <?php
+
 class Cron_gen_home_best_seller_grid extends MY_Controller
 {
 

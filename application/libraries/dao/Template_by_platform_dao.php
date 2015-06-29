@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Template_by_platform_dao extends Base_dao
 {
-    private $table_name="template_by_platform";
-    private $vo_class_name="Template_by_platform_vo";
-    private $seq_name="Template_by_platform";
-    private $seq_mapping_field="id";
+    private $table_name = "template_by_platform";
+    private $vo_class_name = "Template_by_platform_vo";
+    private $seq_name = "Template_by_platform";
+    private $seq_mapping_field = "id";
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class Template_by_platform_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_tpl_w_msg($where="")
+    public function get_tpl_w_msg($where = "")
     {
         return $this->get($where, "Tpl_msg_w_att_dto");
     }

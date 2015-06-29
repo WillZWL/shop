@@ -7,6 +7,9 @@ class Product_service extends Base_service
 {
     const PRODUCT_STATUS_CHANGED = 1;
     const PRODUCT_EXPECT_DELIVERY_CHANGED = 2;
+    public $copyEnLang = array();
+    public $forcingEnFields = array("ru" => array("prod_name")
+    , "pl" => array("prod_name"));
     private $pc_dao;
     private $pcext_dao;
     private $serv;
@@ -14,119 +17,51 @@ class Product_service extends Base_service
     private $new_prod_obj;
     private $map_dao;
     private $_osd_lang_list = array("NA" => 0, "FR" => 1, "ES" => 2, "RU" => 3, "PL" => 4, "IT" => 5);
-    public $copyEnLang = array();
-    public $forcingEnFields = array("ru" => array("prod_name")
-                                    , "pl" => array("prod_name"));
 
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Product_dao.php");
+        include_once(APPPATH . "libraries/dao/Product_dao.php");
         $this->set_dao(new Product_dao());
-        include_once(APPPATH."libraries/dao/Product_content_dao.php");
+        include_once(APPPATH . "libraries/dao/Product_content_dao.php");
         $this->set_pc_dao(new Product_content_dao());
-        include_once(APPPATH."libraries/dao/Product_content_extend_dao.php");
+        include_once(APPPATH . "libraries/dao/Product_content_extend_dao.php");
         $this->set_pcext_dao(new Product_content_extend_dao());
-        include_once(APPPATH."libraries/dao/Product_image_dao.php");
+        include_once(APPPATH . "libraries/dao/Product_image_dao.php");
         $this->set_pi_dao(new Product_image_dao());
-        include_once(APPPATH."libraries/dao/Product_video_dao.php");
+        include_once(APPPATH . "libraries/dao/Product_video_dao.php");
         $this->set_pv_dao(new Product_video_dao());
-        include_once(APPPATH."libraries/dao/Product_banner_dao.php");
+        include_once(APPPATH . "libraries/dao/Product_banner_dao.php");
         $this->set_pb_dao(new Product_banner_dao());
-        include_once(APPPATH."libraries/dao/Product_keyword_dao.php");
+        include_once(APPPATH . "libraries/dao/Product_keyword_dao.php");
         $this->set_pk_dao(new Product_keyword_dao());
-        include_once(APPPATH."libraries/dao/Product_type_dao.php");
+        include_once(APPPATH . "libraries/dao/Product_type_dao.php");
         $this->set_pt_dao(new Product_type_dao());
-        include_once(APPPATH."libraries/dao/Category_dao.php");
+        include_once(APPPATH . "libraries/dao/Category_dao.php");
         $this->set_cat_dao(new Category_dao());
-        include_once(APPPATH."libraries/dao/Bundle_dao.php");
+        include_once(APPPATH . "libraries/dao/Bundle_dao.php");
         $this->set_bd_dao(new Bundle_dao());
-        include_once(APPPATH."libraries/dao/Software_licence_dao.php");
+        include_once(APPPATH . "libraries/dao/Software_licence_dao.php");
         $this->set_licence_dao(new Software_licence_dao());
-        include_once(APPPATH."libraries/dao/Sourcing_list_dao.php");
+        include_once(APPPATH . "libraries/dao/Sourcing_list_dao.php");
         $this->set_sl_dao(new Sourcing_list_dao());
         include_once(APPPATH . 'libraries/service/Class_factory_service.php');
         $this->set_class_factory_service(new Class_factory_service());
-        include_once(APPPATH."libraries/dao/Mapping_dao.php");
+        include_once(APPPATH . "libraries/dao/Mapping_dao.php");
         $this->set_map_dao(new Mapping_dao());
-        include_once(APPPATH."libraries/dao/Sku_mapping_dao.php");
+        include_once(APPPATH . "libraries/dao/Sku_mapping_dao.php");
         $this->set_sku_map_dao(new Sku_mapping_dao());
-        include_once(APPPATH."libraries/dao/Category_mapping_dao.php");
+        include_once(APPPATH . "libraries/dao/Category_mapping_dao.php");
         $this->set_cat_map_dao(new Category_mapping_dao());
-        include_once(APPPATH."libraries/dao/Colour_dao.php");
+        include_once(APPPATH . "libraries/dao/Colour_dao.php");
         $this->set_colour_dao(new Colour_dao());
-        include_once(APPPATH."libraries/dao/Colour_extend_dao.php");
+        include_once(APPPATH . "libraries/dao/Colour_extend_dao.php");
         $this->set_colour_ext_dao(new Colour_extend_dao());
-        include_once(APPPATH."libraries/dao/Brand_dao.php");
+        include_once(APPPATH . "libraries/dao/Brand_dao.php");
         $this->set_brand_dao(new Brand_dao());
         include_once(APPPATH . 'libraries/service/Translate_service.php');
         $this->set_translate_service(new Translate_service());
 
-    }
-
-    public function get_pc_dao()
-    {
-        return $this->pc_dao;
-    }
-
-    public function set_pc_dao(Base_dao $dao)
-    {
-        $this->pc_dao = $dao;
-    }
-
-    public function get_pk_dao()
-    {
-        return $this->pk_dao;
-    }
-
-    public function set_pk_dao(Base_dao $dao)
-    {
-        $this->pk_dao = $dao;
-    }
-
-    public function get_pt_dao()
-    {
-        return $this->pt_dao;
-    }
-
-    public function set_pt_dao(Base_dao $dao)
-    {
-        $this->pt_dao = $dao;
-    }
-
-    public function get_pv_dao()
-    {
-        return $this->pv_dao;
-    }
-
-    public function set_pv_dao(Base_dao $dao)
-    {
-        $this->pv_dao = $dao;
-    }
-
-    public function get_pb_dao()
-    {
-        return $this->pb_dao;
-    }
-
-    public function set_pb_dao(Base_dao $dao)
-    {
-        $this->pb_dao = $dao;
-    }
-
-    public function get_pcext_dao()
-    {
-        return $this->pcext_dao;
-    }
-
-    public function set_pcext_dao(Base_dao $dao)
-    {
-        $this->pcext_dao = $dao;
-    }
-
-    public function get_pi_dao()
-    {
-        return $this->pi_dao;
     }
 
     public function set_pi_dao(Base_dao $dao)
@@ -134,34 +69,79 @@ class Product_service extends Base_service
         $this->pi_dao = $dao;
     }
 
-    public function set_class_factory_service($serv)
+    public function set_pv_dao(Base_dao $dao)
     {
-        $this->class_factory_service = $serv;
+        $this->pv_dao = $dao;
     }
 
-    public function get_class_factory_service()
+    public function set_pb_dao(Base_dao $dao)
     {
-        return $this->class_factory_service;
+        $this->pb_dao = $dao;
     }
 
-    public function set_translate_service($serv)
+    public function set_pk_dao(Base_dao $dao)
     {
-        $this->translate_service = $serv;
+        $this->pk_dao = $dao;
     }
 
-    public function get_translate_service()
+    public function set_pt_dao(Base_dao $dao)
     {
-        return $this->translate_service;
-    }
-
-    public function get_cat_dao()
-    {
-        return $this->cat_dao;
+        $this->pt_dao = $dao;
     }
 
     public function set_cat_dao(Base_dao $dao)
     {
         $this->cat_dao = $dao;
+    }
+
+    public function set_bd_dao(Base_dao $dao)
+    {
+        $this->bd_dao = $dao;
+    }
+
+    public function set_licence_dao(Base_dao $dao)
+    {
+        $this->licence_dao = $dao;
+    }
+
+    public function set_sl_dao(Base_dao $dao)
+    {
+        $this->sl_dao = $dao;
+    }
+
+    public function set_class_factory_service($serv)
+    {
+        $this->class_factory_service = $serv;
+    }
+
+    public function set_sku_map_dao(Base_dao $dao)
+    {
+        $this->sku_map_dao = $dao;
+    }
+
+    public function set_cat_map_dao(Base_dao $dao)
+    {
+        $this->cat_map_dao = $dao;
+    }
+
+    public function set_colour_dao(Base_dao $dao)
+    {
+        $this->colour_dao = $dao;
+    }
+
+    public function set_colour_ext_dao(Base_dao $dao)
+    {
+        $this->colour_ext_dao = $dao;
+    }
+
+    public function set_brand_dao(Base_dao $dao)
+    {
+        $this->brand_dao = $dao;
+    }
+
+    public function set_translate_service($serv)
+    {
+        $this->translate_service = $serv;
     }
 
     public function get_map_dao()
@@ -179,39 +159,9 @@ class Product_service extends Base_service
         return $this->cat_map_dao;
     }
 
-    public function set_cat_map_dao(Base_dao $dao)
-    {
-        $this->cat_map_dao = $dao;
-    }
-
-    public function get_sku_map_dao()
-    {
-        return $this->sku_map_dao;
-    }
-
-    public function set_sku_map_dao(Base_dao $dao)
-    {
-        $this->sku_map_dao = $dao;
-    }
-
-    public function get_sl_dao()
-    {
-        return $this->sl_dao;
-    }
-
-    public function set_sl_dao(Base_dao $dao)
-    {
-        $this->sl_dao = $dao;
-    }
-
     public function get_licence_dao()
     {
         return $this->licence_dao;
-    }
-
-    public function set_licence_dao(Base_dao $dao)
-    {
-        $this->licence_dao = $dao;
     }
 
     public function get_bd_dao()
@@ -219,44 +169,14 @@ class Product_service extends Base_service
         return $this->bd_dao;
     }
 
-    public function set_bd_dao(Base_dao $dao)
-    {
-        $this->bd_dao = $dao;
-    }
-
-    public function get_brand_dao()
-    {
-        return $this->brand_dao;
-    }
-
-    public function set_brand_dao(Base_dao $dao)
-    {
-        $this->brand_dao = $dao;
-    }
-
-    public function get_colour_dao()
-    {
-        return $this->colour_dao;
-    }
-
-    public function set_colour_dao(Base_dao $dao)
-    {
-        $this->colour_dao = $dao;
-    }
-
-    public function get_colour_ext_dao()
-    {
-        return $this->colour_ext_dao;
-    }
-
-    public function set_colour_ext_dao(Base_dao $dao)
-    {
-        $this->colour_ext_dao = $dao;
-    }
-
     public function pi_seq_next_val()
     {
         return $this->get_pi_dao()->seq_next_val();
+    }
+
+    public function get_pi_dao()
+    {
+        return $this->pi_dao;
     }
 
     public function pb_seq_next_val()
@@ -264,14 +184,16 @@ class Product_service extends Base_service
         return $this->get_pb_dao()->seq_next_val();
     }
 
-    public function alert_user($alert_type, $sku, $status=array(), $expected_delivery_date=array())
+    public function get_pb_dao()
     {
-        if ($alert_type == self::PRODUCT_STATUS_CHANGED)
-        {
+        return $this->pb_dao;
+    }
+
+    public function alert_user($alert_type, $sku, $status = array(), $expected_delivery_date = array())
+    {
+        if ($alert_type == self::PRODUCT_STATUS_CHANGED) {
             $subject = "[VB] Product status change alert, " . $sku;
-        }
-        else if ($alert_type == self::PRODUCT_EXPECT_DELIVERY_CHANGED)
-        {
+        } else if ($alert_type == self::PRODUCT_EXPECT_DELIVERY_CHANGED) {
             $subject = "[VB] Product expected delivery date change alert SKU-" . $sku;
         }
         $content = "SKU:" . $sku . "<br><br>";
@@ -285,39 +207,36 @@ class Product_service extends Base_service
         mail("product-status-alert@valuebasket.com", $subject, $content, $headers);
     }
 
-    public function get_list_by_brand_cat($catid="", $brand="", $where=array(), $option=array())
+    public function get_list_by_brand_cat($catid = "", $brand = "", $where = array(), $option = array())
     {
-        if($catid == "" || $brand == "")
-        {
+        if ($catid == "" || $brand == "") {
             return NULL;
-        }
-        else
-        {
-            $catobj = $this->get_cat_dao()->get(array("id"=>$catid));
-            if(empty($catobj))
-            {
+        } else {
+            $catobj = $this->get_cat_dao()->get(array("id" => $catid));
+            if (empty($catobj)) {
                 return NULL;
             }
 
-            return $this->get_dao()->get_product_brand_cat($catobj->get_level(),$catid,$brand,$where,$option);
+            return $this->get_dao()->get_product_brand_cat($catobj->get_level(), $catid, $brand, $where, $option);
         }
     }
 
-    public function get_list_by_brand_cat_cnt($catid="", $brand="",$where=array())
+    public function get_cat_dao()
     {
-        if($catid == "" || $brand == "")
-        {
+        return $this->cat_dao;
+    }
+
+    public function get_list_by_brand_cat_cnt($catid = "", $brand = "", $where = array())
+    {
+        if ($catid == "" || $brand == "") {
             return NULL;
-        }
-        else
-        {
-            $catobj = $this->get_cat_dao()->get(array("id"=>$catid));
-            if(empty($catobj))
-            {
+        } else {
+            $catobj = $this->get_cat_dao()->get(array("id" => $catid));
+            if (empty($catobj)) {
                 return NULL;
             }
 
-            return $this->get_dao()->get_product_brand_cat($catobj->get_level(),$catid,$brand,$where,array("num_row"=>1));
+            return $this->get_dao()->get_product_brand_cat($catobj->get_level(), $catid, $brand, $where, array("num_row" => 1));
         }
     }
 
@@ -331,56 +250,48 @@ class Product_service extends Base_service
         return $this->get_dao()->get_prod_list_for_website($where, $option);
     }
 
-    public function get_website_list_cnt($where=array())
+    public function get_website_list_cnt($where = array())
     {
-        return $this->get_dao()->get_prod_list_for_website($where, array("num_row"=>1));
+        return $this->get_dao()->get_prod_list_for_website($where, array("num_row" => 1));
     }
 
-    public function get_clearance_list($where=array(), $option=array())
+    public function get_clearance_list($where = array(), $option = array())
     {
         return $this->get_dao()->get_clearance_list($where, $option);
     }
 
-    public function get_clearance_list_cnt($where=array())
+    public function get_clearance_list_cnt($where = array())
     {
-        return $this->get_dao()->get_clearance_list($where, array("num_row"=>1));
+        return $this->get_dao()->get_clearance_list($where, array("num_row" => 1));
     }
 
-    public function get_sorucing_list($where=array(), $option=array(), $gen_csv=0)
+    public function get_sorucing_list($where = array(), $option = array(), $gen_csv = 0)
     {
         $rs = $this->get_sl_dao()->get_sorucing_list($where, $option);
-        if (!$option["num_rows"] && $rs)
-        {
+        if (!$option["num_rows"] && $rs) {
             $ar_rs["objlist"] = $rs;
-            foreach ($rs as $obj)
-            {
+            foreach ($rs as $obj) {
                 unset($cur_pq);
                 $pq_list = explode("||", $obj->get_platform_qty());
-                foreach ($pq_list as $pq)
-                {
+                foreach ($pq_list as $pq) {
                     list($platform, $qty) = explode("::", $pq);
                     $ar_rs["platform"][$platform] = $platform;
                     $cur_pq->$platform = $qty;
                 }
                 $obj->set_platform_qty($cur_pq);
             }
-            if (!$gen_csv)
-            {
+            if (!$gen_csv) {
                 return $ar_rs;
-            }
-            else
-            {
-                include_once(APPPATH."libraries/service/Data_exchange_service.php");
+            } else {
+                include_once(APPPATH . "libraries/service/Data_exchange_service.php");
                 $dex = new Data_exchange_service();
                 $mapping2["container"] = $mapping["container"] = "sourcing_list";
                 $mapping2["mapping"]["MASTER_SKU"] = $mapping["mapping"]["master_sku"] = "MASTER_SKU";
                 $mapping2["mapping"]["SKU"] = $mapping["mapping"]["item_sku"] = "SKU";
                 $mapping2["mapping"]["Product_Name"] = $mapping["mapping"]["prod_name"] = "Product_Name";
-                if ($ar_rs["platform"])
-                {
-                    foreach ($ar_rs["platform"] as $pf)
-                    {
-                        $mapping["mapping"]["platform_qty->".$pf] = $pf;
+                if ($ar_rs["platform"]) {
+                    foreach ($ar_rs["platform"] as $pf) {
+                        $mapping["mapping"]["platform_qty->" . $pf] = $pf;
                         $mapping2["mapping"][$pf] = $pf;
                     }
                 }
@@ -390,14 +301,11 @@ class Product_service extends Base_service
                 $mapping2["mapping"]["Prioritized_QTY"] = $mapping["mapping"]["prioritized_qty"] = "Prioritized_QTY";
                 $mapping2["mapping"]["Clearance"] = $mapping["mapping"]["clearance"] = "Clearance";
                 $mapping2["mapping"]["Comments"] = $mapping["mapping"]["comments"] = "Comments";
-                if ($gen_csv == 1)
-                {
+                if ($gen_csv == 1) {
                     $obj_dto = new Vo_to_xml($rs, $mapping);
                     $out_csv = new Xml_to_csv('', $mapping2);
                     echo $dex->convert($obj_dto, $out_csv);
-                }
-                else
-                {
+                } else {
 // gen_csv == 2 is xml
                     $xml_mapping["container"] = "items";
                     $xml_mapping["mapping"]["item_sku"] = "SKU";
@@ -410,56 +318,53 @@ class Product_service extends Base_service
                     echo $obj_dto->in_convert(true);
                 }
             }
-        }
-        else
-        {
+        } else {
             return $rs;
         }
     }
 
+    public function get_sl_dao()
+    {
+        return $this->sl_dao;
+    }
+
     public function import_sorucing_list($list_date, $csv_file)
     {
-        include_once(APPPATH."libraries/service/Data_exchange_service.php");
+        include_once(APPPATH . "libraries/service/Data_exchange_service.php");
         $dex = new Data_exchange_service();
-        $obj_csv = new Csv_to_xml($csv_file, APPPATH.'data/sourcing_list_csv2xml.txt');
+        $obj_csv = new Csv_to_xml($csv_file, APPPATH . 'data/sourcing_list_csv2xml.txt');
         $out_vo = new Xml_to_vo();
         $output = $dex->convert($obj_csv, $out_vo);
         $result = "";
         $failed = 0;
-        foreach ($output as $obj)
-        {
+        foreach ($output as $obj) {
             $cur_sku = $obj->get_item_sku();
-            $old_obj = $this->get_sl_dao()->get(array("list_date"=>$list_date, "item_sku"=>$cur_sku));
+            $old_obj = $this->get_sl_dao()->get(array("list_date" => $list_date, "item_sku" => $cur_sku));
             $old_obj->set_sourced_qty($obj->get_sourced_qty());
             $old_obj->set_comments($obj->get_comments());
-            if ($this->get_sl_dao()->update($old_obj))
-            {
+            if ($this->get_sl_dao()->update($old_obj)) {
                 $cur_status = 1;
-            }
-            else
-            {
+            } else {
                 $cur_status = 0;
                 $failed = 1;
             }
             $result .= "{$cur_sku} -> {$cur_status}\\n";
         }
-        return $failed?$result:"";
+        return $failed ? $result : "";
     }
 
-    public function get_list_by_keyword($keyword, $page_no=0, $row_limit=20,
-        $platform_id='WSGB', $lang_id='en',
-        $classname='website_prod_search_info_dto')
+    public function get_list_by_keyword($keyword, $page_no = 0, $row_limit = 20,
+                                        $platform_id = 'WSGB', $lang_id = 'en',
+                                        $classname = 'website_prod_search_info_dto')
     {
         $prod_result = $this->get_dao()->get_list_by_keyword($keyword, $page_no,
             $row_limit, $platform_id, $lang_id, $classname);
 
-        if ($prod_result)
-        {
+        if ($prod_result) {
             $prod_list = $prod_result['prodlist'];
             $price_serv = $this->get_class_factory_service()->get_price_service($platform_id);
 
-            foreach ($prod_list as $dto)
-            {
+            foreach ($prod_list as $dto) {
                 $dto->set_price($price_serv->get_price($dto->get_sku()));
             }
         }
@@ -467,42 +372,42 @@ class Product_service extends Base_service
         return $prod_result;
     }
 
-    public function update_prod_status($sku, $need_update=0)
+    public function get_class_factory_service()
     {
-        $prod_obj = $this->get_dao->get(array("sku"=>$sku));
+        return $this->class_factory_service;
+    }
+
+    public function update_prod_status($sku, $need_update = 0)
+    {
+        $prod_obj = $this->get_dao->get(array("sku" => $sku));
         $this->update_prod_obj_status("", $prod_obj, $need_update);
     }
 
-    public function update_prod_obj_status($old_prod="", $new_prod="", $need_update=1)
+    public function update_prod_obj_status($old_prod = "", $new_prod = "", $need_update = 1)
     {
         $update_product = $update_bundle = 0;
 
-        if ($new_prod)
-        {
+        if ($new_prod) {
             $website_status = $new_prod->get_website_status();
             $website_qty = $new_prod->get_website_qty();
             $status = $new_prod->get_status();
         }
 
-        if ($old_prod)
-        {
+        if ($old_prod) {
             $o_website_status = $old_prod->get_website_status();
             $o_website_qty = $old_prod->get_website_qty();
             $o_status = $old_prod->get_status();
         }
 
-        if ($website_status == "I" && $website_qty == 0)
-        {
+        if ($website_status == "I" && $website_qty == 0) {
             $new_prod->set_website_status("O");
             $update_product = 1;
             $update_bundle = 1;
         }
-        if ($need_update || $update_product)
-        {
+        if ($need_update || $update_product) {
             $this->get_dao()->update($new_prod);
         }
-        if ($update_bundle || $status == "0" || $website_status != "I")
-        {
+        if ($update_bundle || $status == "0" || $website_status != "I") {
             $this->update_bundle_status($obj);
         }
     }
@@ -513,100 +418,105 @@ class Product_service extends Base_service
         $status = $obj->get_status();
     }
 
-    public function get_detail_w_name($sku, $platform_id='WSGB', $lang_id='en',
-        $classname='website_prod_search_info_dto')
+    public function get_detail_w_name($sku, $platform_id = 'WSGB', $lang_id = 'en',
+                                      $classname = 'website_prod_search_info_dto')
     {
         return $this->get_dao()->get_detail_w_name($sku, $platform_id, $lang_id, $classname);
     }
 
     public function get_best_seller_list_by_cat($filter_column = '',
-        $cat_id = 0, $day_count = 0, $limit = 0, $platform="", $is_skype_certified = "")
+                                                $cat_id = 0, $day_count = 0, $limit = 0, $platform = "", $is_skype_certified = "")
     {
         return $this->get_dao()->get_best_seller_list_by_cat($filter_column,
             $cat_id, $day_count, $limit, $platform, $is_skype_certified);
     }
 
     public function get_pick_of_the_day_list_by_cat($filter_column = '',
-        $cat_id = 0, $day_count = 0, $limit = 0, $platform="")
+                                                    $cat_id = 0, $day_count = 0, $limit = 0, $platform = "")
     {
         return $this->get_dao()->get_pick_of_the_day_list_by_cat($filter_column,
             $cat_id, $day_count, $limit, $platform);
     }
 
     public function get_latest_arrivals_list_by_cat($filter_column = '',
-        $cat_id = 0, $day_count = 0, $limit = 0, $platform="")
+                                                    $cat_id = 0, $day_count = 0, $limit = 0, $platform = "")
     {
         return $this->get_dao()->get_latest_arrivals_list_by_cat($filter_column,
             $cat_id, $day_count, $limit, $platform);
     }
 
     public function get_best_selling_video_list($filter_column = '',
-        $cat_id = 0, $day_count = 0, $limit = 0, $platform="", $type="", $src="")
+                                                $cat_id = 0, $day_count = 0, $limit = 0, $platform = "", $type = "", $src = "")
     {
         return $this->get_pv_dao()->get_best_selling_video_list($filter_column,
             $cat_id, $day_count, $limit, $platform, $type, $src);
     }
 
+    public function get_pv_dao()
+    {
+        return $this->pv_dao;
+    }
+
     public function get_best_selling_video_list_by_cat($filter_column = '',
-        $cat_id = 0, $day_count = 0, $limit = 0, $platform="", $type="", $src="")
+                                                       $cat_id = 0, $day_count = 0, $limit = 0, $platform = "", $type = "", $src = "")
     {
         return $this->get_pv_dao()->get_best_selling_video_list_by_cat($filter_column,
             $cat_id, $day_count, $limit, $platform, $type, $src);
     }
 
-    public function get_listed_product_list($platform_id = 'WSGB', $classname='Website_prod_info_dto')
+    public function get_listed_product_list($platform_id = 'WSGB', $classname = 'Website_prod_info_dto')
     {
         return $this->get_dao()->get_listed_product_list($platform_id, $classname);
     }
 
-    public function get_product_w_price_info($platform_id = 'WEBGB', $sku = "", $classname='Website_prod_info_dto')
+    public function get_product_w_price_info($platform_id = 'WEBGB', $sku = "", $classname = 'Website_prod_info_dto')
     {
         // $this->get_dao()->get_listed_product_list($platform_id);
         return $this->get_dao()->get_product_w_price_info($platform_id, $sku, $classname);
     }
 
     public function get_top_deal_list_by_cat($filter_column = '',
-        $cat_id = 0, $limit = 0, $platform)
+                                             $cat_id = 0, $limit = 0, $platform)
     {
         return $this->get_dao()->get_top_deal_list_by_cat($filter_column, $cat_id, $limit, $platform);
     }
 
-    public function get_list_having_price($where=array(), $option=array())
+    public function get_list_having_price($where = array(), $option = array())
     {
         return $this->get_dao()->get_list_having_price($where, $option);
     }
 
-    public function get_listed_video_list($where=array(), $option=array())
+    public function get_listed_video_list($where = array(), $option = array())
     {
         return $this->get_dao()->get_listed_video_list($where, $option);
     }
 
-    public function get_video_detail($where=array(), $option=array())
+    public function get_video_detail($where = array(), $option = array())
     {
         return $this->get_dao()->get_video_detail($where, $option);
     }
 
-    public function get_product_w_margin_req_update($where=array(), $classname='Website_prod_info_dto')
+    public function get_product_w_margin_req_update($where = array(), $classname = 'Website_prod_info_dto')
     {
         return $this->get_dao()->get_product_w_margin_req_update($where, $classname);
     }
 
-    public function get_new_product_for_report($start_time='',
-        $end_time='', $platform_id='WSGB', $classname='Product_cost_change_dto')
+    public function get_new_product_for_report($start_time = '',
+                                               $end_time = '', $platform_id = 'WSGB', $classname = 'Product_cost_change_dto')
     {
-        return $this->get_dao()-> get_new_product_for_report($start_time,
-                    $end_time, $platform_id, $classname);
+        return $this->get_dao()->get_new_product_for_report($start_time,
+            $end_time, $platform_id, $classname);
     }
 
     public function get_product_shipping_override_info($platform_id,
-        $dto_class)
+                                                       $dto_class)
     {
         return $this->get_dao()->get_product_shipping_override_info($platform_id,
             $dto_class);
 
     }
 
-    public function gen_display_quantity($platform="WEBHK")
+    public function gen_display_quantity($platform = "WEBHK")
     {
         /*
             reference:
@@ -616,53 +526,38 @@ class Product_service extends Base_service
 
             key of factor = category ID of the product
         */
-        $factor = array("1"=>array("1"=>0.6,"2"=>0.8,"3"=>0.8,"4"=>0.6,"5"=>0.6,"6"=>0.6,"7"=>0.6),
-                        "2"=>array("1"=>0.9,"2"=>0.8,"3"=>0.6,"4"=>0.4,"5"=>0.4,"6"=>0.4,"7"=>0.4),
-                        "3"=>array("1"=>1,"2"=>0.8,"3"=>0.6,"4"=>0.4,"5"=>0.4,"6"=>0.4,"7"=>0.4),
-                        "4"=>array("1"=>0.5,"2"=>0.7,"3"=>0.7,"4"=>0.6,"5"=>0.6,"6"=>0.6,"7"=>0.6),
-                        "5"=>array("1"=>0.4,"2"=>0.4,"3"=>0.4,"4"=>0.5,"5"=>0.5,"6"=>0.5,"7"=>0.5),
-                        "6"=>array("1"=>0.5,"2"=>0.6,"3"=>0.5,"4"=>0.5,"5"=>0.5,"6"=>0.5,"7"=>0.5)
-                    );
-        $minqty = array("1"=>20,"2"=>12,"3"=>8,"4"=>4,"5"=>3,"6"=>2,"7"=>2);
-        $maxqty = array("1"=>70,"2"=>32,"3"=>22,"4"=>19,"5"=>14,"6"=>9,"7"=>5);
-        $prod_list = $this->get_dao()->get_product_overview(array("website_status <> "=>'O',"platform_id"=>$platform,"website_quantity >"=>'0',"listing_status"=>"L"), array("limit"=>-1));
-        foreach($prod_list as $item)
-        {
-            $prod_obj = $this->get_dao()->get(array("sku"=>$item->get_sku()));
-            if($prod_obj && $prod_obj->get_display_quantity() == 0)
-            {
+        $factor = array("1" => array("1" => 0.6, "2" => 0.8, "3" => 0.8, "4" => 0.6, "5" => 0.6, "6" => 0.6, "7" => 0.6),
+            "2" => array("1" => 0.9, "2" => 0.8, "3" => 0.6, "4" => 0.4, "5" => 0.4, "6" => 0.4, "7" => 0.4),
+            "3" => array("1" => 1, "2" => 0.8, "3" => 0.6, "4" => 0.4, "5" => 0.4, "6" => 0.4, "7" => 0.4),
+            "4" => array("1" => 0.5, "2" => 0.7, "3" => 0.7, "4" => 0.6, "5" => 0.6, "6" => 0.6, "7" => 0.6),
+            "5" => array("1" => 0.4, "2" => 0.4, "3" => 0.4, "4" => 0.5, "5" => 0.5, "6" => 0.5, "7" => 0.5),
+            "6" => array("1" => 0.5, "2" => 0.6, "3" => 0.5, "4" => 0.5, "5" => 0.5, "6" => 0.5, "7" => 0.5)
+        );
+        $minqty = array("1" => 20, "2" => 12, "3" => 8, "4" => 4, "5" => 3, "6" => 2, "7" => 2);
+        $maxqty = array("1" => 70, "2" => 32, "3" => 22, "4" => 19, "5" => 14, "6" => 9, "7" => 5);
+        $prod_list = $this->get_dao()->get_product_overview(array("website_status <> " => 'O', "platform_id" => $platform, "website_quantity >" => '0', "listing_status" => "L"), array("limit" => -1));
+        foreach ($prod_list as $item) {
+            $prod_obj = $this->get_dao()->get(array("sku" => $item->get_sku()));
+            if ($prod_obj && $prod_obj->get_display_quantity() == 0) {
                 $price = $item->get_price();
                 $cat_id = $prod_obj->get_cat_id();
-                if($price < 70)
-                {
+                if ($price < 70) {
                     $index = 1;
-                }
-                else if($price >= 70 && $price < 200)
-                {
+                } else if ($price >= 70 && $price < 200) {
                     $index = 2;
-                }
-                else if($price >= 200 && $price < 500)
-                {
+                } else if ($price >= 200 && $price < 500) {
                     $index = 3;
-                }
-                else if($price >= 500 && $price < 700)
-                {
+                } else if ($price >= 500 && $price < 700) {
                     $index = 4;
-                }
-                else if($price >= 700 && $price < 1000)
-                {
+                } else if ($price >= 700 && $price < 1000) {
                     $index = 5;
-                }
-                else if($price >= 1000 && $price < 2000)
-                {
+                } else if ($price >= 1000 && $price < 2000) {
                     $index = 6;
-                }
-                else
-                {
+                } else {
                     $index = 7;
                 }
 
-                $dqty = rand($minqty[$index],$maxqty[$index]);
+                $dqty = rand($minqty[$index], $maxqty[$index]);
                 $this_factor = $factor[$cat_id][$index];
                 $prod_obj->set_display_quantity(round($this_factor * $dqty));
                 $this->get_dao()->update($prod_obj);
@@ -670,62 +565,50 @@ class Product_service extends Base_service
         }
 
         $bundle_list = $this->get_dao()->get_bundle_win_min_dcnt();
-        foreach($bundle_list as $bundle)
-        {
-            $bprod = $this->get_dao()->get(array("sku"=>$bundle["sku"]));
-            if($bprod)
-            {
+        foreach ($bundle_list as $bundle) {
+            $bprod = $this->get_dao()->get(array("sku" => $bundle["sku"]));
+            if ($bprod) {
                 $bprod->set_display_quantity($bundle["qty"]);
                 $this->get_dao()->update($bprod);
             }
         }
-        return ;
+        return;
     }
 
-    public function get_skype_page_info($clist, $platform="", $lang_id="")
+    public function get_skype_page_info($clist, $platform = "", $lang_id = "")
     {
         $ret = array();
-        if($clist)
-        {
-            foreach($clist as $cart)
-            {
+        if ($clist) {
+            foreach ($clist as $cart) {
                 $sku = $cart["sku"];
-                if ($prod_list = $this->get_dao()->get_bundle_components_overview(array("vpi.prod_sku"=>$sku, "vpo.platform_id"=>$platform), array("cart"=>1, "language"=>$lang_id)))
-                {
+                if ($prod_list = $this->get_dao()->get_bundle_components_overview(array("vpi.prod_sku" => $sku, "vpo.platform_id" => $platform), array("cart" => 1, "language" => $lang_id))) {
                     $website_status = "I";
                     $sourcing_status = "A";
                     $listing_status = "L";
 
-                    foreach ($prod_list as $obj)
-                    {
+                    foreach ($prod_list as $obj) {
                         $d_qty = $obj->get_display_quantity();
                         $ws_qty = $obj->get_website_quantity();
                         $ws_status = $obj->get_website_status();
                         $src_status = $obj->get_sourcing_status();
                         $lst_status = $obj->get_listing_status();
 
-                        if ($obj->get_component_order() < 1)
-                        {
+                        if ($obj->get_component_order() < 1) {
                             $ret[$sku] = $obj;
                         }
-                        if (!isset($max_d_qty) || $d_qty < $max_d_qty)
-                        {
+                        if (!isset($max_d_qty) || $d_qty < $max_d_qty) {
                             $max_d_qty = $d_qty;
                         }
-                        if (!isset($max_ws_qty) || $ws_qty < $max_ws_qty)
-                        {
+                        if (!isset($max_ws_qty) || $ws_qty < $max_ws_qty) {
                             $max_ws_qty = $ws_qty;
                         }
-                        if ($ws_status != "I")
-                        {
+                        if ($ws_status != "I") {
                             $website_status = $ws_status;
                         }
-                        if ($src_status == "O")
-                        {
+                        if ($src_status == "O") {
                             $sourcing_status = $src_status;
                         }
-                        if ($lst_status != "L")
-                        {
+                        if ($lst_status != "L") {
                             $listing_status = $lst_status;
                         }
                     }
@@ -743,15 +626,13 @@ class Product_service extends Base_service
 
     public function get_product_info($sku, $platform_id, $lang_id)
     {
-        if ($prod_list = $this->get_dao()->get_bundle_components_overview(array("vpi.prod_sku"=>$sku, "vpo.platform_id"=>$platform_id), array("cart"=>1, "language"=>$lang_id, "orderby"=>"component_order")))
-        {
+        if ($prod_list = $this->get_dao()->get_bundle_components_overview(array("vpi.prod_sku" => $sku, "vpo.platform_id" => $platform_id), array("cart" => 1, "language" => $lang_id, "orderby" => "component_order"))) {
             $website_status = "I";
             $sourcing_status = "A";
             $listing_status = "L";
             $subtotal = 0;
 
-            foreach ($prod_list as $obj)
-            {
+            foreach ($prod_list as $obj) {
                 $d_qty = $obj->get_display_quantity();
                 $ws_qty = $obj->get_website_quantity();
                 $ws_status = $obj->get_website_status();
@@ -759,45 +640,36 @@ class Product_service extends Base_service
                 $lst_status = $obj->get_listing_status();
                 $subtotal += ROUND($obj->get_price() * (100 - $obj->get_discount()) / 100, 2);
 
-                if ($obj->get_component_order() < 1)
-                {
+                if ($obj->get_component_order() < 1) {
                     $ret = $obj;
                 }
-                if (!isset($max_d_qty) || $d_qty < $max_d_qty)
-                {
+                if (!isset($max_d_qty) || $d_qty < $max_d_qty) {
                     $max_d_qty = $d_qty;
                 }
-                if (!isset($max_ws_qty) || $ws_qty < $max_ws_qty)
-                {
+                if (!isset($max_ws_qty) || $ws_qty < $max_ws_qty) {
                     $max_ws_qty = $ws_qty;
                 }
-                if ($ws_status != "I")
-                {
+                if ($ws_status != "I") {
                     $website_status = $ws_status;
                 }
-                if ($src_status == "O")
-                {
+                if ($src_status == "O") {
                     $sourcing_status = $src_status;
                 }
-                if ($lst_status != "L")
-                {
+                if ($lst_status != "L") {
                     $listing_status = $lst_status;
                 }
             }
 
             // $ret->get_component_order() > -1 is bundle
-            if (($components = $ret->get_component_order()) > -1)
-            {
+            if (($components = $ret->get_component_order()) > -1) {
                 include_once "currency_service.php";
                 $curr_srv = new Currency_service();
-                if (!isset($round_up))
-                {
+                if (!isset($round_up)) {
                     $round_up = $curr_srv->round_up_of($ret->get_platform_currency_id());
                 }
                 $new_subtotal = price_round_up($subtotal, $round_up);
                 $subtotal_diff = $new_subtotal - $subtotal;
-                if ($subtotal_diff)
-                {
+                if ($subtotal_diff) {
                     $subtotal = $new_subtotal;
                 }
             }
@@ -817,24 +689,18 @@ class Product_service extends Base_service
     public function check_all_virtual($item_list = array())
     {
         $all_virtual_valid = 1;
-        if ($item_list)
-        {
-            foreach ($item_list as $sku=>$qty)
-            {
-                if ($sku_list = $this->get_dao()->get_item_contain($sku))
-                {
-                    foreach ($sku_list as $chk_sku)
-                    {
-                        if (!$this->get_pt_dao()->get_num_rows(array("sku"=>$chk_sku, "type_id"=>"VIRTUAL")))
-                        {
+        if ($item_list) {
+            foreach ($item_list as $sku => $qty) {
+                if ($sku_list = $this->get_dao()->get_item_contain($sku)) {
+                    foreach ($sku_list as $chk_sku) {
+                        if (!$this->get_pt_dao()->get_num_rows(array("sku" => $chk_sku, "type_id" => "VIRTUAL"))) {
                             $all_virtual_valid = 0;
                             break;
                         }
                     }
                 }
 
-                if (!$all_virtual_valid)
-                {
+                if (!$all_virtual_valid) {
                     break;
                 }
             }
@@ -842,26 +708,25 @@ class Product_service extends Base_service
         return $all_virtual_valid;
     }
 
+    public function get_pt_dao()
+    {
+        return $this->pt_dao;
+    }
+
     public function check_all_trial($item_list = array())
     {
         $all_trial_valid = 1;
-        if ($item_list)
-        {
-            foreach ($item_list as $sku=>$qty)
-            {
-                if ($sku_list = $this->get_dao()->get_item_contain($sku))
-                {
-                    foreach ($sku_list as $chk_sku)
-                    {
-                        if (!$this->get_pt_dao()->get_num_rows(array("sku"=>$chk_sku, "type_id"=>"TRIAL")))
-                        {
+        if ($item_list) {
+            foreach ($item_list as $sku => $qty) {
+                if ($sku_list = $this->get_dao()->get_item_contain($sku)) {
+                    foreach ($sku_list as $chk_sku) {
+                        if (!$this->get_pt_dao()->get_num_rows(array("sku" => $chk_sku, "type_id" => "TRIAL"))) {
                             $all_trial_valid = 0;
                             break;
                         }
                     }
                 }
-                if (!$all_trial_valid)
-                {
+                if (!$all_trial_valid) {
                     break;
                 }
             }
@@ -871,15 +736,25 @@ class Product_service extends Base_service
 
     public function get_content($sku, $lang_id = "en")
     {
-        return $this->get_pc_dao()->get_content_w_default(array("p.sku"=>$sku, "l.id"=>$lang_id));
+        return $this->get_pc_dao()->get_content_w_default(array("p.sku" => $sku, "l.id" => $lang_id));
     }
 
-    public function get_prod_image_list($where=array(), $option=array())
+    public function get_pc_dao()
+    {
+        return $this->pc_dao;
+    }
+
+    public function set_pc_dao(Base_dao $dao)
+    {
+        $this->pc_dao = $dao;
+    }
+
+    public function get_prod_image_list($where = array(), $option = array())
     {
         return $this->get_pi_dao()->get_list($where, $option);
     }
 
-    public function get_prod_image($where=array())
+    public function get_prod_image($where = array())
     {
         return $this->get_pi_dao()->get($where);
     }
@@ -894,12 +769,12 @@ class Product_service extends Base_service
         return $this->get_pi_dao()->insert($obj);
     }
 
-    public function get_prod_banner($where=array())
+    public function get_prod_banner($where = array())
     {
         return $this->get_pb_dao()->get($where);
     }
 
-    public function get_prod_banner_list($where=array(), $option=array())
+    public function get_prod_banner_list($where = array(), $option = array())
     {
         return $this->get_pb_dao()->get_list($where, $option);
     }
@@ -914,38 +789,38 @@ class Product_service extends Base_service
         return $this->get_pb_dao()->insert($obj);
     }
 
-    public function get_video_list($where=array(), $option=array())
+    public function get_video_list($where = array(), $option = array())
     {
         return $this->get_pv_dao()->get_list($where, $option);
     }
 
-    public function get_video_list_w_country($sku="", $country_arr=array())
+    public function get_video_list_w_country($sku = "", $country_arr = array())
     {
         return $this->get_pv_dao()->get_video_list_w_country($sku, $country_arr);
     }
 
-    public function get_video_num_rows($where=array(), $option=array())
+    public function get_video_num_rows($where = array(), $option = array())
     {
         return $this->get_pv_dao()->get_num_rows($where, $option);
     }
 
-    public function get_video_num_rows_w_country($sku="", $country_arr=array())
+    public function get_video_num_rows_w_country($sku = "", $country_arr = array())
     {
         $num_rows = TRUE;
         return $this->get_pv_dao()->get_video_list_w_country($sku, $country_arr, $num_rows);
     }
 
-    public function del_product_video($where=array(), $option=array())
+    public function del_product_video($where = array(), $option = array())
     {
         return $this->get_pv_dao()->q_delete($where);
     }
 
-    public function get_display_video_list($where=array(), $option=array())
+    public function get_display_video_list($where = array(), $option = array())
     {
         return $this->get_pv_dao()->get_display_video_list($where, $option);
     }
 
-    public function get_product_banner($sku="", $display_id="", $position_id="", $lang_id="en")
+    public function get_product_banner($sku = "", $display_id = "", $position_id = "", $lang_id = "en")
     {
         return $this->get_pb_dao()->get_product_banner($sku, $display_id, $position_id, $lang_id);
     }
@@ -967,12 +842,12 @@ class Product_service extends Base_service
 
     public function get_admin_product_feed_dto($where = array(), $option = array())
     {
-        return $this->get_dao()->get_admin_product_feed_dto($where, array('limit'=>-1, 'platform_type'=> $option['platform_type']));
+        return $this->get_dao()->get_admin_product_feed_dto($where, array('limit' => -1, 'platform_type' => $option['platform_type']));
     }
 
     public function get_reevoo_product_feed_dto($country_id = NULL)
     {
-        return $this->get_dao()->get_reevoo_product_feed_dto('Reevoo_product_feed_dto',$country_id);
+        return $this->get_dao()->get_reevoo_product_feed_dto('Reevoo_product_feed_dto', $country_id);
     }
 
     public function get_googlebase_product_feed_dto($platform_id = "WEBGB", $where = array())
@@ -1157,8 +1032,7 @@ class Product_service extends Base_service
 
     public function get_product_type($arr = '')
     {
-        if (empty($arr))
-        {
+        if (empty($arr)) {
             return NULL;
         }
 
@@ -1167,8 +1041,7 @@ class Product_service extends Base_service
 
     public function get_website_product_info($sku = "", $platform_id = "WEBHK", $lang_id = "en")
     {
-        if(empty($sku))
-        {
+        if (empty($sku)) {
             return false;
         }
         return $this->get_dao()->get_website_product_info($sku, $platform_id, $lang_id);
@@ -1189,7 +1062,6 @@ class Product_service extends Base_service
         return $this->get_dao()->get_home_latest_arrival_grid_info($platform_id);
     }
 
-    #SBF2682
     public function get_clearance_product_gird_info($platform_id = "WEBHK")
     {
         return $this->get_dao()->get_clearance_product_gird_info($platform_id);
@@ -1200,9 +1072,19 @@ class Product_service extends Base_service
         return $this->get_pk_dao()->get_product_keyword_arraylist($sku, $platform_id);
     }
 
+    public function get_pk_dao()
+    {
+        return $this->pk_dao;
+    }
+
     public function get_master_sku($where = array())
     {
         return $this->get_sku_map_dao()->get($where);
+    }
+
+    public function get_sku_map_dao()
+    {
+        return $this->sku_map_dao;
     }
 
     public function get_fnac_additem_info($where = array(), $option = array())
@@ -1210,7 +1092,7 @@ class Product_service extends Base_service
         return $this->get_dao()->get_fnac_additem_info($where, $option);
     }
 
-    public function get_fnac_item_list($platform_id = "FNACES", $where=array(), $option=array())
+    public function get_fnac_item_list($platform_id = "FNACES", $where = array(), $option = array())
     {
         return $this->get_dao()->get_fnac_item_list($platform_id, $where, $option);
     }
@@ -1220,6 +1102,8 @@ class Product_service extends Base_service
         return $this->get_dao()->get_sub_cat_margin($where);
     }
 
+    #SBF2682
+
     public function get_ebay_auction_info($platform_id = array(), $sku = array())
     {
         return $this->get_dao()->get_ebay_auction_info($platform_id, $sku);
@@ -1227,56 +1111,45 @@ class Product_service extends Base_service
 
     public function translate_product_content($sku = "", $lang_id = "en", &$translated_product_name, $skipKeywords = false)
     {
-        if($sku)
-        {
+        if ($sku) {
             $forcingEnFields = array();
             $translate_arr = array();
             $pc_action = "update";
-            if(!$new_pc_obj = $this->get_pc_dao()->get(array("prod_sku"=>$sku, "lang_id"=>$lang_id)))
-            {
+            if (!$new_pc_obj = $this->get_pc_dao()->get(array("prod_sku" => $sku, "lang_id" => $lang_id))) {
                 $pc_action = "insert";
                 $new_pc_obj = $this->get_pc_dao()->get();
                 $new_pc_obj->set_prod_sku($sku);
                 $new_pc_obj->set_lang_id($lang_id);
             }
 
-            if($pc_obj = $this->get_pc_dao()->get(array("prod_sku"=>$sku, "lang_id"=>"en")))
-            {
-                if (in_array($lang_id, $this->copyEnLang))
-                {
+            if ($pc_obj = $this->get_pc_dao()->get(array("prod_sku" => $sku, "lang_id" => "en"))) {
+                if (in_array($lang_id, $this->copyEnLang)) {
                     $pc_obj->set_lang_id("pl");
                     $this->get_pc_dao()->$pc_action($pc_obj);
-                }
-                else
-                {
+                } else {
                     $translate_arr = array(
-                                            "prod_name" => $pc_obj->get_prod_name(),
-                                            "short_desc" => $pc_obj->get_short_desc(),
-                                            "detail_desc" => $pc_obj->get_detail_desc(),
-                                            "contents" => $pc_obj->get_contents(),
-                                            // "keywords" => $pc_obj->get_keywords(),
-                                            // "model_1" => $pc_obj->get_model_1(),
-                                            // "model_2" => $pc_obj->get_model_2(),
-                                            "model_3" => $pc_obj->get_model_3(),
-                                            "model_4" => $pc_obj->get_model_4(),
-                                            "model_5" => $pc_obj->get_model_5(),
-                                            "extra_info" => $pc_obj->get_extra_info(),
-                                            "website_status_short_text" => $pc_obj->get_website_status_short_text(),
-                                            "website_status_long_text" => $pc_obj->get_website_status_long_text()
-                                        );
+                        "prod_name" => $pc_obj->get_prod_name(),
+                        "short_desc" => $pc_obj->get_short_desc(),
+                        "detail_desc" => $pc_obj->get_detail_desc(),
+                        "contents" => $pc_obj->get_contents(),
+                        // "keywords" => $pc_obj->get_keywords(),
+                        // "model_1" => $pc_obj->get_model_1(),
+                        // "model_2" => $pc_obj->get_model_2(),
+                        "model_3" => $pc_obj->get_model_3(),
+                        "model_4" => $pc_obj->get_model_4(),
+                        "model_5" => $pc_obj->get_model_5(),
+                        "extra_info" => $pc_obj->get_extra_info(),
+                        "website_status_short_text" => $pc_obj->get_website_status_short_text(),
+                        "website_status_long_text" => $pc_obj->get_website_status_long_text()
+                    );
 
-                    foreach($translate_arr as $key=>$source_text)
-                    {
-                        if(!empty($source_text))
-                        {
+                    foreach ($translate_arr as $key => $source_text) {
+                        if (!empty($source_text)) {
                             $new_lang_text = "";
 
-                            try
-                            {
+                            try {
                                 $this->get_translate_service()->translate(nl2br($source_text), $new_lang_text, "en", $lang_id);
-                            }
-                            catch(Exception $ex)
-                            {
+                            } catch (Exception $ex) {
                                 $new_lang_text = "";
                                 mail("bd_product_team@eservicesgroup.com", "Translation error sku=" . $sku . "[" . $key . "]", $ex->getMessage(), 'From: website@valuebasket.com');
                             }
@@ -1285,7 +1158,7 @@ class Product_service extends Base_service
                             switch ($key) {
                                 case 'prod_name':
                                     if ($new_pc_obj->get_prod_name_original() != 1) {
-                                        if($lang_id == "pl" || $lang_id == "ru" || $lang_id == "it"){
+                                        if ($lang_id == "pl" || $lang_id == "ru" || $lang_id == "it") {
                                             if ($new_pc_obj->{"get_{$key}"}() == null) {
                                                 $new_pc_obj->{"set_{$key}"}($source_text);
                                             }
@@ -1326,22 +1199,18 @@ class Product_service extends Base_service
 
                     # don't translate model_1 and model_2, but need them to be in adwords generation
                     $non_translate_arr = array(
-                                            "model_1" => $pc_obj->get_model_1(),
-                                            "model_2" => $pc_obj->get_model_2()
-                                            );
+                        "model_1" => $pc_obj->get_model_1(),
+                        "model_2" => $pc_obj->get_model_2()
+                    );
 
-                    foreach($non_translate_arr as $key=>$source_text)
-                    {
-                        if(!empty($source_text))
-                        {
+                    foreach ($non_translate_arr as $key => $source_text) {
+                        if (!empty($source_text)) {
                             $new_pc_obj->{"set_{$key}"}($source_text);
                         }
                     }
 
-                    if (!$skipKeywords)
-                    {
-                        if ($lang_id !== 'en')
-                        {
+                    if (!$skipKeywords) {
+                        if ($lang_id !== 'en') {
                             #SBF #3041 generate list of non-English keywords according to input
                             $attributes_arr = array();
                             $attributes_arr["model_1"] = $new_pc_obj->get_model_1();
@@ -1351,25 +1220,19 @@ class Product_service extends Base_service
                             $attributes_arr["model_5"] = $new_pc_obj->get_model_5();
                             $attributes_arr["series"] = $new_pc_obj->get_series();
 
-                            $product_obj = $this->get_dao()->get(array("sku"=>$sku));
+                            $product_obj = $this->get_dao()->get(array("sku" => $sku));
                             $attributes_arr["brand_id"] = $product_obj->get_brand_id();
                             $attributes_arr["colour_id"] = $product_obj->get_colour_id();
 
                             $gen_ret = $this->generate_keywords($sku, $attributes_arr, $lang_id);
-                            if($gen_ret["status"] === TRUE)
-                            {
+                            if ($gen_ret["status"] === TRUE) {
                                 $new_pc_obj->set_keywords($gen_ret["keywords"]);
-                            }
-                            else
-                            {
+                            } else {
                                 mail("bd_product_team@eservicesgroup.com", "Translation error sku=" . $sku, $gen_ret["error_msg"], 'From: website@valuebasket.com');
                             }
                         }
-                    }
-                    else
-                    {
-                        if ($new_pc_obj->get_model_1() == null)
-                        {
+                    } else {
+                        if ($new_pc_obj->get_model_1() == null) {
                             $new_pc_obj->set_model_1(" ");
                         }
                     }
@@ -1379,41 +1242,31 @@ class Product_service extends Base_service
 
             $translate_arr = array();
             $pcex_action = "update";
-            if(!$new_pcex_obj = $this->get_pcext_dao()->get(array("prod_sku"=>$sku, "lang_id"=>$lang_id)))
-            {
+            if (!$new_pcex_obj = $this->get_pcext_dao()->get(array("prod_sku" => $sku, "lang_id" => $lang_id))) {
                 $pcex_action = "insert";
                 $new_pcex_obj = $this->get_pcext_dao()->get();
                 $new_pcex_obj->set_prod_sku($sku);
                 $new_pcex_obj->set_lang_id($lang_id);
             }
 
-            if($pcex_obj = $this->get_pcext_dao()->get(array("prod_sku"=>$sku, "lang_id"=>"en")))
-            {
-                if (in_array($lang_id, $this->copyEnLang))
-                {
+            if ($pcex_obj = $this->get_pcext_dao()->get(array("prod_sku" => $sku, "lang_id" => "en"))) {
+                if (in_array($lang_id, $this->copyEnLang)) {
                     $pcex_obj->set_lang_id("pl");
                     $this->get_pcext_dao()->$pcex_action($pcex_obj);
-                }
-                else
-                {
+                } else {
                     $translate_arr = array(
-                                            "feature" => $pcex_obj->get_feature(),
-                                            "specification" => $pcex_obj->get_specification(),
-                                            "requirement" => $pcex_obj->get_requirement(),
-                                            "instruction" => $pcex_obj->get_instruction(),
-                                        );
+                        "feature" => $pcex_obj->get_feature(),
+                        "specification" => $pcex_obj->get_specification(),
+                        "requirement" => $pcex_obj->get_requirement(),
+                        "instruction" => $pcex_obj->get_instruction(),
+                    );
 
-                    foreach($translate_arr as $key=>$source_text)
-                    {
-                        if(!empty($source_text))
-                        {
+                    foreach ($translate_arr as $key => $source_text) {
+                        if (!empty($source_text)) {
                             $new_lang_text = "";
-                            try
-                            {
+                            try {
                                 $this->get_translate_service()->translate(nl2br($source_text), $new_lang_text, "en", $lang_id);
-                            }
-                            catch(Exception $ex)
-                            {
+                            } catch (Exception $ex) {
                                 $new_lang_text = "";
                                 mail("bd_product_team@eservicesgroup.com", "Translation error sku=" . $sku . "[" . $key . "]", $ex->getMessage(), 'From: website@valuebasket.com');
                             }
@@ -1440,19 +1293,16 @@ class Product_service extends Base_service
                 }
             }
 
-            if($keyword_list = $this->get_pk_dao()->get_list(array("sku"=>$sku, "lang_id"=>"en")))
-            {
-                if($new_pc_obj->get_keywords_original() != 1){
+            if ($keyword_list = $this->get_pk_dao()->get_list(array("sku" => $sku, "lang_id" => "en"))) {
+                if ($new_pc_obj->get_keywords_original() != 1) {
                     $pk_vo = $this->get_pk_dao()->get();
-                    $this->get_pk_dao()->q_delete(array("sku"=>$sku, "lang_id"=>$lang_id));
+                    $this->get_pk_dao()->q_delete(array("sku" => $sku, "lang_id" => $lang_id));
 
-                    if($pc_lang_obj = $this->get_pc_dao()->get(array("prod_sku"=>$sku, "lang_id"=>$lang_id)))
-                    {
+                    if ($pc_lang_obj = $this->get_pc_dao()->get(array("prod_sku" => $sku, "lang_id" => $lang_id))) {
                         # SBF#3041 keywords already assembled in product_content.keywords,
                         # we don't want to mess the algo up with bing translate
                         $keywords_arr = explode("\n", $pc_lang_obj->get_keywords());
-                        foreach ($keywords_arr as $keywords)
-                        {
+                        foreach ($keywords_arr as $keywords) {
                             $pk_obj = clone $pk_vo;
                             $pk_obj->set_sku($sku);
                             $pk_obj->set_lang_id($lang_id);
@@ -1492,46 +1342,137 @@ class Product_service extends Base_service
         }
     }
 
+    public function get_translate_service()
+    {
+        return $this->translate_service;
+    }
+
+    public function generate_keywords($sku, $attributes_arr = array(), $lang_id = 'en')
+    {
+        #SBF 3041 piece attributes together to form keywords
+        $keywords = $model = array();
+        $generated_keywords = $error_msg = "";
+        $status = FALSE;
+
+        if ($sku && $attributes_arr["model_1"]) {
+            $model[] = trim($attributes_arr["model_1"]);
+            # model_2 to model_5 optional, so put into array only if filled
+            if ($attributes_arr["model_2"]) $model[] = trim($attributes_arr["model_2"]);
+            if ($attributes_arr["model_3"]) $model[] = trim($attributes_arr["model_3"]);
+            if ($attributes_arr["model_4"]) $model[] = trim($attributes_arr["model_4"]);
+            if ($attributes_arr["model_5"]) $model[] = trim($attributes_arr["model_5"]);
+            if ($attributes_arr["series"]) $series = trim($attributes_arr["series"]);
+            $brand_name = $this->get_brand_dao()->get(array("id" => $attributes_arr["brand_id"]))->get_brand_name();
+
+            $colour_name = NULL;
+            if ($attributes_arr['colour_id'] !== "NA") {
+                if ($lang_id == 'en') {
+                    $colour_name = $this->get_colour_dao()->get(array("id" => $attributes_arr['colour_id']))->get_name();
+                } else {
+                    if ($colour_ext_obj = $this->get_colour_ext_dao()->get(array("colour_id" => $attributes_arr['colour_id'], "lang_id" => $lang_id))) {
+                        $colour_name = $colour_ext_obj->get_name();
+                    } else {
+                        $_SESSION["NOTICE"] = "WARNING: Language <$lang_id> does not have translation for colour id <{$attributes_arr['colour_id']}>. Please check and re-translate.";
+                    }
+                }
+            }
+
+            foreach ($model as $key => $model_name) {
+                $keywords[] = "$brand_name $model_name";
+                // $keywords[] = "[$brand_name $model_name]";
+                // $keywords[] = "\"$brand_name $model_name\"";
+                // $keywords[] = "+$brand_name +$model_name";
+
+                if ($series) {
+                    $keywords[] = "$brand_name $series $model_name";
+                    // $keywords[] = "[$brand_name $series $model_name]";
+                    // $keywords[] = "\"$brand_name $series $model_name\"";
+                    // $keywords[] = "+$brand_name +$series +$model_name";
+
+                    if ($colour_name) {
+                        $keywords[] = "$brand_name $series $model_name $colour_name";
+                        // $keywords[] = "[$brand_name $series $model_name $colour_name]";
+                        // $keywords[] = "\"$brand_name $series $model_name $colour_name\"";
+                        // $keywords[] = "+$brand_name +$series +$model_name +$colour_name";
+                    }
+                }
+
+                if (!$series && $colour_name) {
+                    $keywords[] = "$brand_name $model_name $colour_name";
+                    // $keywords[] = "[$brand_name $model_name $colour_name]";
+                    // $keywords[] = "\"$brand_name $model_name $colour_name\"";
+                    // $keywords[] = "+$brand_name +$model_name +$colour_name";
+                }
+            }
+
+            if ($generated_keywords = implode("\n", $keywords)) {
+                $status = TRUE;
+            } else {
+                $error_msg = __FILE__ . " - Line " . __LINE__ . " - Error generating Related Keywords for SKU<$sku> - lang_id <$lang_id>.";
+            }
+        } else {
+            $error_msg = __FILE__ . " - Line " . __LINE__ . " - Error generating keywords for lang_id <$lang_id> -
+                        The following cannot be empty: \nSKU: $sku \nmodel_1: {$attributes_arr['model_1']}";
+        }
+
+        $gen_ret = array("status" => $status, "keywords" => $generated_keywords, "error_msg" => $error_msg);
+        return $gen_ret;
+    }
+
+    public function get_brand_dao()
+    {
+        return $this->brand_dao;
+    }
+
+    public function get_colour_dao()
+    {
+        return $this->colour_dao;
+    }
+
+    public function get_colour_ext_dao()
+    {
+        return $this->colour_ext_dao;
+    }
+
+    public function get_pcext_dao()
+    {
+        return $this->pcext_dao;
+    }
+
+    public function set_pcext_dao(Base_dao $dao)
+    {
+        $this->pcext_dao = $dao;
+    }
+
     public function translate_product_enhance_content($sku = "", $lang_id = "en")
     {
 //      $forcingEnFields = array("ru" => array("prod_name"));
-        if($sku)
-        {
+        if ($sku) {
             $translate_arr = array();
             $pcex_action = "update";
-            if(!$new_pcex_obj = $this->get_pcext_dao()->get(array("prod_sku"=>$sku, "lang_id"=>$lang_id)))
-            {
+            if (!$new_pcex_obj = $this->get_pcext_dao()->get(array("prod_sku" => $sku, "lang_id" => $lang_id))) {
                 $pcex_action = "insert";
                 $new_pcex_obj = $this->get_pcext_dao()->get();
                 $new_pcex_obj->set_prod_sku($sku);
                 $new_pcex_obj->set_lang_id($lang_id);
             }
 
-            if($pcex_obj = $this->get_pcext_dao()->get(array("prod_sku"=>$sku, "lang_id"=>"en")))
-            {
-                if (in_array($lang_id, $this->copyEnLang))
-                {
+            if ($pcex_obj = $this->get_pcext_dao()->get(array("prod_sku" => $sku, "lang_id" => "en"))) {
+                if (in_array($lang_id, $this->copyEnLang)) {
                     $pcex_obj->set_lang_id("pl");
                     $this->get_pcext_dao()->$pcex_action($pcex_obj);
-                }
-                else
-                {
+                } else {
                     $translate_arr = array(
-                                            "enhanced_listing" => $pcex_obj->get_enhanced_listing()
-                                        );
+                        "enhanced_listing" => $pcex_obj->get_enhanced_listing()
+                    );
 
-                    foreach($translate_arr as $key=>$source_text)
-                    {
-                        if(!empty($source_text))
-                        {
+                    foreach ($translate_arr as $key => $source_text) {
+                        if (!empty($source_text)) {
                             $new_lang_text = "";
 
-                            try
-                            {
+                            try {
                                 $this->get_translate_service()->translate(nl2br($source_text), $new_lang_text, "en", $lang_id);
-                            }
-                            catch(Exception $ex)
-                            {
+                            } catch (Exception $ex) {
                                 $new_lang_text = "";
                                 mail("bd_product_team@eservicesgroup.com", "Translation error sku=" . $sku . "[" . $key . "]", $ex->getMessage(), 'From: website@valuebasket.com');
                             }
@@ -1615,116 +1556,25 @@ class Product_service extends Base_service
         }
     }
 
-    public function generate_keywords($sku, $attributes_arr=array(), $lang_id = 'en')
-    {
-        #SBF 3041 piece attributes together to form keywords
-        $keywords = $model = array();
-        $generated_keywords = $error_msg = "";
-        $status = FALSE;
-
-        if($sku && $attributes_arr["model_1"])
-        {
-            $model[] = trim($attributes_arr["model_1"]);
-            # model_2 to model_5 optional, so put into array only if filled
-            if($attributes_arr["model_2"]) $model[] = trim($attributes_arr["model_2"]);
-            if($attributes_arr["model_3"]) $model[] = trim($attributes_arr["model_3"]);
-            if($attributes_arr["model_4"]) $model[] = trim($attributes_arr["model_4"]);
-            if($attributes_arr["model_5"]) $model[] = trim($attributes_arr["model_5"]);
-            if($attributes_arr["series"]) $series = trim($attributes_arr["series"]);
-            $brand_name = $this->get_brand_dao()->get(array("id"=>$attributes_arr["brand_id"]))->get_brand_name();
-
-            $colour_name = NULL;
-            if($attributes_arr['colour_id'] !== "NA")
-            {
-                if($lang_id == 'en')
-                {
-                    $colour_name = $this->get_colour_dao()->get(array("id"=>$attributes_arr['colour_id']))->get_name();
-                }
-                else
-                {
-                    if($colour_ext_obj = $this->get_colour_ext_dao()->get(array("colour_id"=>$attributes_arr['colour_id'], "lang_id"=>$lang_id)))
-                    {
-                        $colour_name = $colour_ext_obj->get_name();
-                    }
-                    else
-                    {
-                        $_SESSION["NOTICE"] = "WARNING: Language <$lang_id> does not have translation for colour id <{$attributes_arr['colour_id']}>. Please check and re-translate.";
-                    }
-                }
-            }
-
-            foreach ($model as $key => $model_name)
-            {
-                $keywords[] = "$brand_name $model_name";
-                // $keywords[] = "[$brand_name $model_name]";
-                // $keywords[] = "\"$brand_name $model_name\"";
-                // $keywords[] = "+$brand_name +$model_name";
-
-                if($series)
-                {
-                    $keywords[] = "$brand_name $series $model_name";
-                    // $keywords[] = "[$brand_name $series $model_name]";
-                    // $keywords[] = "\"$brand_name $series $model_name\"";
-                    // $keywords[] = "+$brand_name +$series +$model_name";
-
-                    if($colour_name)
-                    {
-                        $keywords[] = "$brand_name $series $model_name $colour_name";
-                        // $keywords[] = "[$brand_name $series $model_name $colour_name]";
-                        // $keywords[] = "\"$brand_name $series $model_name $colour_name\"";
-                        // $keywords[] = "+$brand_name +$series +$model_name +$colour_name";
-                    }
-                }
-
-                if (!$series && $colour_name)
-                {
-                    $keywords[] = "$brand_name $model_name $colour_name";
-                    // $keywords[] = "[$brand_name $model_name $colour_name]";
-                    // $keywords[] = "\"$brand_name $model_name $colour_name\"";
-                    // $keywords[] = "+$brand_name +$model_name +$colour_name";
-                }
-            }
-
-            if($generated_keywords = implode("\n", $keywords))
-            {
-                $status = TRUE;
-            }
-            else
-            {
-                $error_msg = __FILE__." - Line ".__LINE__." - Error generating Related Keywords for SKU<$sku> - lang_id <$lang_id>.";
-            }
-        }
-        else
-        {
-            $error_msg = __FILE__." - Line ".__LINE__." - Error generating keywords for lang_id <$lang_id> -
-                        The following cannot be empty: \nSKU: $sku \nmodel_1: {$attributes_arr['model_1']}";
-        }
-
-        $gen_ret = array("status"=>$status, "keywords"=>$generated_keywords, "error_msg"=>$error_msg);
-        return $gen_ret;
-    }
-
-    public function update_series($sku, $series="")
+    public function update_series($sku, $series = "")
     {
         #SBF 3041 update series in tb product_content for all languages - don't translate
         $pc_dao = $this->get_pc_dao();
-        $pc_list = $pc_dao->get_list(array("prod_sku"=>$sku));
+        $pc_list = $pc_dao->get_list(array("prod_sku" => $sku));
         $error_msg = "";
 
-        foreach ($pc_list as $pc_obj)
-        {
+        foreach ($pc_list as $pc_obj) {
             $lang_id = $pc_obj->get_lang_id();
             $pc_obj->set_series($series);
             $ret = $pc_dao->update($pc_obj);
 
-            if($ret === FALSE)
-            {
+            if ($ret === FALSE) {
                 $error_msg = "ERROR: Cannot update series <$series> for lang_id <$lang_id>.
-                                DB ERROR MSG: ".$pc_dao->db->_error_message();
+                                DB ERROR MSG: " . $pc_dao->db->_error_message();
             }
         }
 
-        if($error_msg)
+        if ($error_msg)
             return $error_msg;
         else
             return TRUE;
@@ -1739,7 +1589,7 @@ class Product_service extends Base_service
     {
 
         $query =
-        "
+            "
 select
     DISTINCT so.so_no, so.platform_id
 from so
@@ -1770,10 +1620,9 @@ order by so.platform_id, so.so_no
         ";
 
         $result = $this->db->query($query);
-        if ($result)
-        {
+        if ($result) {
             foreach ($result->result_array() as $obj)
-                $rs[] = $obj["platform_id"]." => ".$obj["so_no"];
+                $rs[] = $obj["platform_id"] . " => " . $obj["so_no"];
 
             return $rs;
         }
@@ -1788,7 +1637,7 @@ order by so.platform_id, so.so_no
         $sku_string = "'$sku_string'";
 
         $query =
-        "
+            "
             select
                 s.ext_sku
             from product p
@@ -1814,12 +1663,12 @@ order by so.platform_id, so.so_no
 
     public function get_product_category_report($where, $option)
     {
-        include_once(APPPATH."libraries/service/Data_exchange_service.php");
+        include_once(APPPATH . "libraries/service/Data_exchange_service.php");
         $dex = new Data_exchange_service();
 
         $report_list = $this->get_dao()->get_product_category_list($where, $option);
-        $out_xml = new Vo_to_xml($report_list, APPPATH.'data/product_category_report_vo2xml.txt');
-        $out_csv = new Xml_to_csv("", APPPATH.'data/product_category_report_xml2csv.txt', TRUE, ',');
+        $out_xml = new Vo_to_xml($report_list, APPPATH . 'data/product_category_report_vo2xml.txt');
+        $out_csv = new Xml_to_csv("", APPPATH . 'data/product_category_report_xml2csv.txt', TRUE, ',');
 
         return $dex->convert($out_xml, $out_csv);
     }

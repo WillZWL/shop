@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cron_website_bank_transfer extends MY_Controller
 {
-    private $app_id="CRN0021";
+    private $app_id = "CRN0021";
 
     function __construct()
     {

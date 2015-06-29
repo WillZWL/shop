@@ -1,9 +1,10 @@
 <?php
+
 class Rma extends MY_Controller
 {
 
-    private $app_id="ORD0003";
-    private $lang_id="en";
+    private $app_id = "ORD0003";
+    private $lang_id = "en";
 
 
     public function __construct()
@@ -19,43 +20,35 @@ class Rma extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id()."00";
+        $sub_app_id = $this->_get_app_id() . "00";
 
-        $_SESSION["LISTPAGE"] = base_url()."order/rma/?".$_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = base_url() . "order/rma/?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
         $option = array();
 
-        if ($this->input->get("id"))
-        {
+        if ($this->input->get("id")) {
             $where["id"] = $this->input->get("id");
         }
-        if ($this->input->get("so_no"))
-        {
+        if ($this->input->get("so_no")) {
             $where["so_no"] = $this->input->get("so_no");
         }
-        if ($this->input->get("client_id"))
-        {
+        if ($this->input->get("client_id")) {
             $where["client_id"] = $this->input->get("client_id");
         }
-        if ($this->input->get("product_returned"))
-        {
-            $where["product_returned LIKE"] = "%".$this->input->get("product_returned")."%";
+        if ($this->input->get("product_returned")) {
+            $where["product_returned LIKE"] = "%" . $this->input->get("product_returned") . "%";
         }
-        if ($this->input->get("category"))
-        {
+        if ($this->input->get("category")) {
             $where["category"] = $this->input->get("category");
         }
-        if ($this->input->get("reason"))
-        {
+        if ($this->input->get("reason")) {
             $where["reason"] = $this->input->get("reason");
         }
-        if ($this->input->get("action_request"))
-        {
+        if ($this->input->get("action_request")) {
             $where["action_request"] = $this->input->get("action_request");
         }
-        if ($this->input->get("status"))
-        {
+        if ($this->input->get("status")) {
             $where["status"] = $this->input->get("status");
         }
         $sort = $this->input->get("sort");
@@ -65,8 +58,7 @@ class Rma extends MY_Controller
 
         $pconfig['base_url'] = $_SESSION["LISTPAGE"];
         $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"])
-        {
+        if ($option["limit"]) {
             $option["offset"] = $this->input->get("per_page");
         }
 
@@ -76,12 +68,12 @@ class Rma extends MY_Controller
         if (empty($order))
             $order = "desc";
 
-        $option["orderby"] = $sort." ".$order;
+        $option["orderby"] = $sort . " " . $order;
 
         $data["objlist"] = $this->so_model->get_list("rma_dao", $where, $option);
         $pconfig['total_rows'] = $this->so_model->get_num_rows("rma_dao", $where);
 
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
         $this->pagination_service->set_show_count_tag(TRUE);
@@ -89,129 +81,110 @@ class Rma extends MY_Controller
 
         $data["notice"] = notice($lang);
 
-        $data["sortimg"][$sort] = "<img src='".base_url()."images/".$order.".gif'>";
-        $data["xsort"][$sort] = $order=="asc"?"desc":"asc";
+        $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
+        $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
         $data["searchdisplay"] = "";
         $this->load->view('order/rma/rma_index_v', $data);
     }
 
-    public function view($id="")
+    public function _get_app_id()
     {
-        if ($id)
-        {
-            $sub_app_id = $this->_get_app_id()."01";
+        return $this->app_id;
+    }
 
-            $data["rma_obj"] = $this->so_model->get("rma_dao", array("id"=>$id));
-            if($data["rma_obj"])
-            {
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
+    }
+
+    public function view($id = "")
+    {
+        if ($id) {
+            $sub_app_id = $this->_get_app_id() . "01";
+
+            $data["rma_obj"] = $this->so_model->get("rma_dao", array("id" => $id));
+            if ($data["rma_obj"]) {
                 $rma_so_no_arr = explode("-", $data["rma_obj"]->get_so_no());
-                if(count($rma_so_no_arr)>1)
-                {
+                if (count($rma_so_no_arr) > 1) {
                     $so_no = $rma_so_no_arr[1];
-                }
-                else
-                {
+                } else {
                     $so_no = $data["rma_obj"]->get_so_no();
                 }
             }
             $data["rma_obj"]->set_so_no($so_no);
-            $data["client_obj"] = $this->so_model->get("client_dao", array("id"=>$data["rma_obj"]->get_client_id()));
-            $data["so_obj"] = $this->so_model->get("dao", array("so_no"=>$so_no));
-            $data["rma_notes_obj"] = $this->so_model->get_list("rma_notes_dao", array("rma_id"=>$id, "so_no"=>$data["rma_obj"]->get_so_no()), array("orderby"=>"create_on desc"));
-            $data["rma_history_obj"] = $this->so_model->get_list("rma_history_dao", array("rma_id"=>$id, "so_no"=>$data["rma_obj"]->get_so_no()), array("orderby"=>"id desc"));
+            $data["client_obj"] = $this->so_model->get("client_dao", array("id" => $data["rma_obj"]->get_client_id()));
+            $data["so_obj"] = $this->so_model->get("dao", array("so_no" => $so_no));
+            $data["rma_notes_obj"] = $this->so_model->get_list("rma_notes_dao", array("rma_id" => $id, "so_no" => $data["rma_obj"]->get_so_no()), array("orderby" => "create_on desc"));
+            $data["rma_history_obj"] = $this->so_model->get_list("rma_history_dao", array("rma_id" => $id, "so_no" => $data["rma_obj"]->get_so_no()), array("orderby" => "id desc"));
 
-            include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
             $data["notice"] = notice($lang);
 
             $this->load->view('order/rma/rma_detail_v', $data);
-        }
-        else
-        {
-            redirect(base_url()."order/rma/");
+        } else {
+            redirect(base_url() . "order/rma/");
         }
     }
 
     public function add_note($id = "")
     {
-        if($rma_obj = $this->so_model->get("rma_dao", array("id"=>$id)))
-        {
-            if($rma_obj)
-            {
+        if ($rma_obj = $this->so_model->get("rma_dao", array("id" => $id))) {
+            if ($rma_obj) {
                 $rma_so_no_arr = explode("-", $rma_obj->get_so_no());
-                if(count($rma_so_no_arr)>1)
-                {
+                if (count($rma_so_no_arr) > 1) {
                     $so_no = $rma_so_no_arr[1];
-                }
-                else
-                {
+                } else {
                     $so_no = $rma_obj->get_so_no();
                 }
             }
 
-            if($this->input->post("addnote"))
-            {
+            if ($this->input->post("addnote")) {
                 $rma_notes_obj = $this->so_model->get_rma_notes_vo($so_no);
                 $rma_notes_obj->set_rma_id($id);
                 $rma_notes_obj->set_so_no($so_no);
                 $rma_notes_obj->set_note($this->input->post("note"));
                 $rma_notes_obj->set_status(1);
-                if($this->so_model->insert_rma_notes($rma_notes_obj))
-                {
-                    redirect(base_url()."order/rma/view/".$id);
-                }
-                else
-                {
+                if ($this->so_model->insert_rma_notes($rma_notes_obj)) {
+                    redirect(base_url() . "order/rma/view/" . $id);
+                } else {
                     $_SESSION["NOTICE"] = "Failed to insert RMA notes";
-                    redirect(base_url()."order/rma/view/".$id);
+                    redirect(base_url() . "order/rma/view/" . $id);
                 }
             }
-        }
-        else
-        {
+        } else {
             $_SESSION["NOTICE"] = "RMA not found";
-            redirect(base_url()."order/rma/");
+            redirect(base_url() . "order/rma/");
         }
     }
 
     public function update_rma_status($id = "")
     {
-        if($rma_obj = $this->so_model->get("rma_dao", array("id"=>$id)))
-        {
-            if($rma_obj)
-            {
+        if ($rma_obj = $this->so_model->get("rma_dao", array("id" => $id))) {
+            if ($rma_obj) {
                 $rma_so_no_arr = explode("-", $rma_obj->get_so_no());
-                if(count($rma_so_no_arr)>1)
-                {
+                if (count($rma_so_no_arr) > 1) {
                     $so_no = $rma_so_no_arr[1];
-                }
-                else
-                {
+                } else {
                     $so_no = $rma_obj->get_so_no();
                 }
             }
 
-            if($this->input->post("update_status"))
-            {
+            if ($this->input->post("update_status")) {
                 $rma_history_obj = $this->so_model->get_rma_history_vo($so_no);
                 $rma_history_obj->set_rma_id($id);
                 $rma_history_obj->set_so_no($so_no);
                 $rma_history_obj->set_status($this->input->post("rma_status"));
-                if($this->so_model->insert_rma_history($rma_history_obj))
-                {
-                    redirect(base_url()."order/rma/view/".$id);
-                }
-                else
-                {
+                if ($this->so_model->insert_rma_history($rma_history_obj)) {
+                    redirect(base_url() . "order/rma/view/" . $id);
+                } else {
                     $_SESSION["NOTICE"] = "Failed to update RMA history";
-                    redirect(base_url()."order/rma/view/".$id);
+                    redirect(base_url() . "order/rma/view/" . $id);
                 }
             }
-        }
-        else
-        {
+        } else {
             $_SESSION["NOTICE"] = "RMA not found";
-            redirect(base_url()."order/rma/");
+            redirect(base_url() . "order/rma/");
         }
     }
 
@@ -225,12 +198,11 @@ class Rma extends MY_Controller
 
         $sell_to_list = $this->country_model->get_sell_to_list();
         $carr = array();
-        foreach($sell_to_list as $country)
-        {
-            $carr[] = "'".$country->get_id()."':['".strtolower(substr($country->get_fc_id(),0,2))."','".$country->get_name()."']";
+        foreach ($sell_to_list as $country) {
+            $carr[] = "'" . $country->get_id() . "':['" . strtolower(substr($country->get_fc_id(), 0, 2)) . "','" . $country->get_name() . "']";
         }
 
-        $js = "var rmacountrylist = {".implode(",",$carr)."}";
+        $js = "var rmacountrylist = {" . implode(",", $carr) . "}";
         unset($carr);
         $js .= "
 
@@ -276,46 +248,28 @@ class Rma extends MY_Controller
                 }
                 ";
 
-                echo $js;
+        echo $js;
     }
 
-
-    public function delete($id="")
+    public function delete($id = "")
     {
-        if (($rma_vo = $this->rma_model->get_rma(array("id"=>$id))) === FALSE)
-        {
+        if (($rma_vo = $this->rma_model->get_rma(array("id" => $id))) === FALSE) {
             $_SESSION["NOTICE"] = "submit_error";
-        }
-        else {
-            if (empty($rma_vo))
-            {
+        } else {
+            if (empty($rma_vo)) {
                 $_SESSION["NOTICE"] = "rma_not_found";
-            }
-            else
-            {
-                if (!$this->rma_model->inactive_rma($rma_vo))
-                {
+            } else {
+                if (!$this->rma_model->inactive_rma($rma_vo)) {
                     $_SESSION["NOTICE"] = "submit_error";
                 }
             }
         }
-        if (isset($_SESSION["LISTPAGE"]))
-        {
+        if (isset($_SESSION["LISTPAGE"])) {
             redirect($_SESSION["LISTPAGE"]);
-        }
-        else
-        {
+        } else {
             redirect(current_url());
         }
 
-    }
-
-    public function _get_app_id(){
-        return $this->app_id;
-    }
-
-    public function _get_lang_id(){
-        return $this->lang_id;
     }
 }
 

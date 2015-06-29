@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Flex_refund_dao extends Base_dao
 {
-    private $table_name="flex_refund";
-    private $vo_class_name="Flex_refund_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "flex_refund";
+    private $vo_class_name = "Flex_refund_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -44,8 +44,7 @@ class Flex_refund_dao extends Base_dao
                     GROUP BY status
                 )a";
 
-        if($query = $this->db->query($sql))
-        {
+        if ($query = $this->db->query($sql)) {
             return $query->row()->total;
         }
     }

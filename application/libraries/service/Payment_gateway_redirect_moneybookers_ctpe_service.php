@@ -16,33 +16,30 @@ class Payment_gateway_redirect_moneybookers_ctpe_service extends Payment_gateway
         parent::__construct($debug);
         $this->customized_css = "https://{$_SERVER['HTTP_HOST']}/css/moneybookers_ctpe.css";
         $this->customized_javascript = "https://{$_SERVER['HTTP_HOST']}/js/moneybookers_ctpe.js";
-        if ($this->debug)
-        {
+        if ($this->debug) {
             $this->_ctpe_integrator = new Ctpe_integrator(
-                                Ctpe_integrator::CTPE_TEST_PAYMENT_SERVER,
-                                Ctpe_integrator::CTPE_ACTION_PAGE,
-                                Ctpe_integrator::CTPE_TEST_SECURITY_SENDER,
-                                Ctpe_integrator::CTPE_TEST_TRANSACTION_CHANNEL,
-                                Ctpe_integrator::CTPE_TEST_USER_LOGIN_ID,
-                                Ctpe_integrator::CTPE_TEST_USER_PASSWORD,
-                                Ctpe_integrator::CTPE_TEST_SECURITY_TOKEN,
-                                Ctpe_integrator::CTPE_TEST_TRANSACTION_MODE,
-                                "SYNC"
-                                );
-        }
-        else
-        {
+                Ctpe_integrator::CTPE_TEST_PAYMENT_SERVER,
+                Ctpe_integrator::CTPE_ACTION_PAGE,
+                Ctpe_integrator::CTPE_TEST_SECURITY_SENDER,
+                Ctpe_integrator::CTPE_TEST_TRANSACTION_CHANNEL,
+                Ctpe_integrator::CTPE_TEST_USER_LOGIN_ID,
+                Ctpe_integrator::CTPE_TEST_USER_PASSWORD,
+                Ctpe_integrator::CTPE_TEST_SECURITY_TOKEN,
+                Ctpe_integrator::CTPE_TEST_TRANSACTION_MODE,
+                "SYNC"
+            );
+        } else {
             $this->_ctpe_integrator = new Ctpe_integrator(
-                                Ctpe_integrator::CTPE_PAYMENT_SERVER,
-                                Ctpe_integrator::CTPE_ACTION_PAGE,
-                                Ctpe_integrator::CTPE_SECURITY_SENDER,
-                                Ctpe_integrator::CTPE_TRANSACTION_CHANNEL,
-                                Ctpe_integrator::CTPE_USER_LOGIN_ID,
-                                Ctpe_integrator::CTPE_USER_PASSWORD,
-                                Ctpe_integrator::CTPE_SECURITY_TOKEN,
-                                Ctpe_integrator::CTPE_TRANSACTION_MODE,
-                                "SYNC"
-                                );
+                Ctpe_integrator::CTPE_PAYMENT_SERVER,
+                Ctpe_integrator::CTPE_ACTION_PAGE,
+                Ctpe_integrator::CTPE_SECURITY_SENDER,
+                Ctpe_integrator::CTPE_TRANSACTION_CHANNEL,
+                Ctpe_integrator::CTPE_USER_LOGIN_ID,
+                Ctpe_integrator::CTPE_USER_PASSWORD,
+                Ctpe_integrator::CTPE_SECURITY_TOKEN,
+                Ctpe_integrator::CTPE_TRANSACTION_MODE,
+                "SYNC"
+            );
         }
     }
 
@@ -73,28 +70,24 @@ class Payment_gateway_redirect_moneybookers_ctpe_service extends Payment_gateway
     public function get_redirect_url($request_data, &$response_data)
     {
         $trycount = 0;
-        do
-        {
+        do {
             $output = $this->_ctpe_integrator->commitPOSTPayment();
             $trycount++;
-        }while (($trycount < 2) && ((!$output) || (empty($output))));
+        } while (($trycount < 2) && ((!$output) || (empty($output))));
         $response_data = $this->array_implode('=', ',', $output);
         $processingResult = $output["POST.VALIDATION"];
         $redirectUrl = $output["FRONTEND.REDIRECT_URL"];
-        if ($processingResult == "ACK")
-        {
+        if ($processingResult == "ACK") {
             if (strstr($redirectUrl, "http"))  // redirect url is returned ==> everything ok
             {
                 return $redirectUrl;
             }
         }
-        if (empty($processingResult) || ($processingResult== ""))
-        {
+        if (empty($processingResult) || ($processingResult == "")) {
 //log the error
             $response_data = $this->array_implode('=', ',', $this->_ctpe_integrator->error) . " info:" . $this->array_implode('=', ',', $this->_ctpe_integrator->info);
             return $this->keep_error_message("request timeout, please try again");
-        }
-        else
+        } else
             return $this->keep_error_message($processingResult);
     }
 
@@ -109,41 +102,35 @@ class Payment_gateway_redirect_moneybookers_ctpe_service extends Payment_gateway
         $data_to_pmgw = $request_xml;
 
         $trycount = 0;
-        do
-        {
+        do {
             $output = $this->_ctpe_integrator->queryToCtpe($request_xml);
             $trycount++;
-        }while (($trycount < 2) && ((!$output) || (empty($output))));
+        } while (($trycount < 2) && ((!$output) || (empty($output))));
 
 //      print $output;
-        if ($output)
-        {
+        if ($output) {
             $simpleXml = new SimpleXMLElement($output);
         }
-        $number_of_result = (string) $simpleXml->Result['count'];
+        $number_of_result = (string)$simpleXml->Result['count'];
         $data_from_pmgw = $output;
 
-        for ($i=0;$i<$number_of_result;$i++)
-        {
-            if ((string) $simpleXml->Result->Transaction[$i]["source"] == "SYSTEM")
-            {
-                if (((string) $simpleXml->Result->Transaction[$i]->Processing->Result == "ACK")
+        for ($i = 0; $i < $number_of_result; $i++) {
+            if ((string)$simpleXml->Result->Transaction[$i]["source"] == "SYSTEM") {
+                if (((string)$simpleXml->Result->Transaction[$i]->Processing->Result == "ACK")
                     &&
-                        ((((string) $simpleXml->Result->Transaction[$i]->Processing->Status['code'] == "00")
-                            &&((string) $simpleXml->Result->Transaction[$i]->Processing->Reason['code'] == "00"))
+                    ((((string)$simpleXml->Result->Transaction[$i]->Processing->Status['code'] == "00")
+                            && ((string)$simpleXml->Result->Transaction[$i]->Processing->Reason['code'] == "00"))
                         ||
-                        (((string) $simpleXml->Result->Transaction[$i]->Processing->Status['code'] == "90")
-                            &&((string) $simpleXml->Result->Transaction[$i]->Processing->Reason['code'] == "00")))
-                    )
-                {
-                    $this->_pmgw_return_code = (string) $simpleXml->Result->Transaction[$i]->Processing->Return["code"];
+                        (((string)$simpleXml->Result->Transaction[$i]->Processing->Status['code'] == "90")
+                            && ((string)$simpleXml->Result->Transaction[$i]->Processing->Reason['code'] == "00")))
+                ) {
+                    $this->_pmgw_return_code = (string)$simpleXml->Result->Transaction[$i]->Processing->Return["code"];
 //input more data into dtabase, success payment
-                    $this->socc_add(array("card_last4" => ltrim((string) $simpleXml->Result->Transaction[$i]->Account->Number, "*")
-                                            , "card_exp_month" => (string) $simpleXml->Result->Transaction[$i]->Account->Expiry['month']
-                                            , "card_exp_year" => (string) $simpleXml->Result->Transaction[$i]->Account->Expiry['year']));
+                    $this->socc_add(array("card_last4" => ltrim((string)$simpleXml->Result->Transaction[$i]->Account->Number, "*")
+                    , "card_exp_month" => (string)$simpleXml->Result->Transaction[$i]->Account->Expiry['month']
+                    , "card_exp_year" => (string)$simpleXml->Result->Transaction[$i]->Account->Expiry['year']));
                     return Payment_gateway_redirect_service::PAYMENT_STATUS_SUCCESS;
-                }
-                else
+                } else
                     return Payment_gateway_redirect_service::PAYMENT_STATUS_FAIL;
             }
         }
@@ -163,30 +150,31 @@ class Payment_gateway_redirect_moneybookers_ctpe_service extends Payment_gateway
         $data_from_pmgw = $this->array_implode('=', ',', $general_data);
         $sor_data = null;
 
-        if ($result)
-        {
+        if ($result) {
             $sops_data = array();
             $sops_data['risk_ref1'] = $general_data['PROCESSING_RISK_SCORE'];
             $sops_data['remark'] = $general_data['PROCESSING_RETURN_CODE'] . "|" . $general_data['PROCESSING_CODE'];
             $sops_data['pay_date'] = $general_data['PROCESSING_TIMESTAMP'];
             $so_data['txn_id'] = $general_data['IDENTIFICATION_UNIQUEID'];
 
-            if (($result == "NOK") && ($user_cancel_payment == "true"))
-            {
+            if (($result == "NOK") && ($user_cancel_payment == "true")) {
                 return Payment_gateway_redirect_service::PAYMENT_STATUS_CANCEL;
-            }
-            else if (strstr($result, "ACK"))
-            {
+            } else if (strstr($result, "ACK")) {
                 $data_to_pmgw = $this->_get_successful_page_with_so_no($so_number);
                 return Payment_gateway_redirect_service::PAYMENT_STATUS_SUCCESS;
-            }
-            else
-            {
+            } else {
                 return Payment_gateway_redirect_service::PAYMENT_STATUS_FAIL;
             }
         }
 
         return Payment_gateway_redirect_service::PAYMENT_STATUS_FAIL;
+    }
+
+    private function _get_successful_page_with_so_no($so_number)
+    {
+        $debug_string = ($this->debug) ? "?debug=1" : "";
+        $url = $this->successful_page . $so_number . $debug_string;
+        return $url;
     }
 
     public function process_success_action()
@@ -216,10 +204,10 @@ class Payment_gateway_redirect_moneybookers_ctpe_service extends Payment_gateway
             || ($this->_pmgw_return_code == "000.400.020")
             || ($this->_pmgw_return_code == "000.400.030")
             || ($this->_pmgw_return_code == "000.400.040")
-            || ($this->_pmgw_return_code == "000.400.050"))
+            || ($this->_pmgw_return_code == "000.400.050")
+        )
             return true;
-        else
-        {
+        else {
             return false;
         }
     }
@@ -227,12 +215,6 @@ class Payment_gateway_redirect_moneybookers_ctpe_service extends Payment_gateway
     public function get_technical_support_email()
     {
         return "oswald@eservicesgroup.net";
-    }
-    private function _get_successful_page_with_so_no($so_number)
-    {
-        $debug_string = ($this->debug) ? "?debug=1" : "";
-        $url = $this->successful_page . $so_number . $debug_string;
-        return $url;
     }
 }
 

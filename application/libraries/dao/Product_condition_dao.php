@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Product_condition_dao extends Base_dao
 {
-    private $table_name="product_condition";
-    private $vo_classname="Product_condition_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "product_condition";
+    private $vo_classname = "Product_condition_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

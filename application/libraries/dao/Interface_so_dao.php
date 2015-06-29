@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Interface_so_dao extends Base_dao
 {
-    private $table_name="interface_so";
-    private $vo_class_name="Interface_so_vo";
-    private $seq_name="int_customer_order";
-    private $seq_mapping_field="so_no";
+    private $table_name = "interface_so";
+    private $vo_class_name = "Interface_so_vo";
+    private $seq_name = "int_customer_order";
+    private $seq_mapping_field = "so_no";
 
     public function __construct()
     {
@@ -37,15 +37,14 @@ class Interface_so_dao extends Base_dao
 
     public function get_not_complete($batch_id)
     {
-        $sql =  "
+        $sql = "
                 SELECT COUNT(*) AS total
                 FROM interface_so
                 WHERE batch_id = ?
                 AND batch_status <> 'S'
                 ";
 
-        if ($query = $this->db->query($sql, $batch_id))
-        {
+        if ($query = $this->db->query($sql, $batch_id)) {
             return $query->row()->total;
         }
         return TRUE;

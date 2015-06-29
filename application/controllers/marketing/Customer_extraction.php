@@ -1,4 +1,5 @@
 <?php
+
 class Customer_extraction extends MY_Controller
 {
     private $app_id = "MKT0039";
@@ -9,7 +10,7 @@ class Customer_extraction extends MY_Controller
         parent::__construct();
 
         $this->load->model('marketing/customer_extraction_model');
-        $this->load->helper(array('url','notice','object','operator'));
+        $this->load->helper(array('url', 'notice', 'object', 'operator'));
         $this->load->library('input');
         $this->load->library('service/log_service');
         $this->load->library('service/context_config_service');
@@ -17,18 +18,10 @@ class Customer_extraction extends MY_Controller
         $this->title = 'Customer Data Extraction';
     }
 
-    private function _load_parent_lang()
-    {
-        $sub_app_id = $this->_get_app_id()."00";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-
-        return $lang;
-    }
-
     public function index()
     {
-        $sub_app_id = $this->_get_app_id()."00";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        $sub_app_id = $this->_get_app_id() . "00";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
 
         $_SESSION["notice"] = "";
         $_SESSION["CURRPAGE"] = $_SERVER['REQUEST_URI'];
@@ -40,23 +33,19 @@ class Customer_extraction extends MY_Controller
         $data['joined_cat_list'] = $this->input->post('joined_cat_list');
 
         $plat_list = $data['joined_plat_list'];
-        $plat_arr = $this->customer_extraction_model->get_platform_list(array(), array("orderby"=>"id"));
+        $plat_arr = $this->customer_extraction_model->get_platform_list(array(), array("orderby" => "id"));
 
         $cat_list = $data['joined_cat_list'];
         $cat_arr = $this->customer_extraction_model->get_combined_cat_list(array(), array());
 
-        if($plat_list)
-        {
-            foreach($plat_list as $v)
-            {
+        if ($plat_list) {
+            foreach ($plat_list as $v) {
                 unset ($plat_arr[array_search($v, $plat_arr)]);
             }
         }
 
-        if($cat_list)
-        {
-            foreach($cat_list as $v)
-            {
+        if ($cat_list) {
+            foreach ($cat_list as $v) {
                 unset ($cat_arr[array_search($v, $cat_arr)]);
             }
         }
@@ -66,15 +55,14 @@ class Customer_extraction extends MY_Controller
         $data['end_date'] = $this->input->post('end_date');
 
         $data['platform_in'] = $plat_arr;
-        $data['platform_ex'] = $this->customer_extraction_model->get_platform_ex($plat_list,$plat_arr);
+        $data['platform_ex'] = $this->customer_extraction_model->get_platform_ex($plat_list, $plat_arr);
 
         $data['category_in'] = $cat_arr;
-        $data['category_ex'] = $this->customer_extraction_model->get_category_ex($cat_arr,$cat_list);
+        $data['category_ex'] = $this->customer_extraction_model->get_category_ex($cat_arr, $cat_list);
 
         $data['notice'] = notice($lang);
 
-        if($this->input->post('posted'))
-        {
+        if ($this->input->post('posted')) {
             $record['plat_box'] = $this->input->post('plat_box');
             $record['period_box'] = $this->input->post('period_box');
             $record['freq_box'] = $this->input->post('freq_box');
@@ -84,34 +72,26 @@ class Customer_extraction extends MY_Controller
             $record['end_date'] = $this->input->post('end_date');
             $record['currency'] = $this->input->post('currency');
 
-            if($record['freq_box'])
-            {
+            if ($record['freq_box']) {
                 fetch_operator($freq, "frequency", $this->input->post('frequency'));
-                foreach ($freq as $k=>$v)
-                {
-                    if($k == 'frequency')
-                    {
-                        $record['frequency'] = $k.">=".$v;
-                    }
-                    else
-                    {
-                        $record['frequency'] = $k." ".$v;
+                foreach ($freq as $k => $v) {
+                    if ($k == 'frequency') {
+                        $record['frequency'] = $k . ">=" . $v;
+                    } else {
+                        $record['frequency'] = $k . " " . $v;
                     }
                 }
             }
 
             $currency = $this->input->post('currency');
 
-            if($record['order_box'])
-            {
+            if ($record['order_box']) {
                 fetch_operator($value, "order_value", $this->input->post('order_value'));
-                foreach ($value as $k=>$v)
-                {
-                    if($k == 'order_value')
-                    {
-                        $record['order_value'] = $k.">=".$v;
+                foreach ($value as $k => $v) {
+                    if ($k == 'order_value') {
+                        $record['order_value'] = $k . ">=" . $v;
                     } else {
-                        $record['order_value'] = $k." ".$v;
+                        $record['order_value'] = $k . " " . $v;
                     }
                 }
             }
@@ -122,11 +102,11 @@ class Customer_extraction extends MY_Controller
             $this->generate_csv($record);
 
         }
-        if($this->input->post('posted') != TRUE)
-        {
-            $this->load->view('marketing/customer_extraction/customer_extraction_view',$data);
+        if ($this->input->post('posted') != TRUE) {
+            $this->load->view('marketing/customer_extraction/customer_extraction_view', $data);
         }
     }
+
     public function generate_csv($record)
     {
         $data['lang'] = $this->_load_parent_lang();
@@ -134,6 +114,14 @@ class Customer_extraction extends MY_Controller
         $data['filename'] = 'customers.csv';
 
         $this->load->view('output_csv.php', $data);
+    }
+
+    private function _load_parent_lang()
+    {
+        $sub_app_id = $this->_get_app_id() . "00";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+
+        return $lang;
     }
 
     public function _get_app_id()
@@ -146,4 +134,5 @@ class Customer_extraction extends MY_Controller
         return $this->lang_id;
     }
 }
+
 ?>

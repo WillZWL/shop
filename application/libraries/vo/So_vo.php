@@ -698,4 +698,5 @@ class So_vo extends Base_vo
     }
 
 }
+
 ?>

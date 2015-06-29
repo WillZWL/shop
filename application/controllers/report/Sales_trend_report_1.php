@@ -14,17 +14,29 @@ class Sales_trend_report_1 extends gridpage
     {
         extract($this->var);
 
-        for ($i = 0; $i <= 6; $i++)
-        {
-            switch ($i)
-            {
-                case 0: $x = 6; break;
-                case 1: $x = 8; break;
-                case 2: $x = 9; break;
-                case 3: $x = 39; break;
-                case 4: $x = 51; break;
-                case 5: $x = 52; break;
-                case 6: $x = 1; break;
+        for ($i = 0; $i <= 6; $i++) {
+            switch ($i) {
+                case 0:
+                    $x = 6;
+                    break;
+                case 1:
+                    $x = 8;
+                    break;
+                case 2:
+                    $x = 9;
+                    break;
+                case 3:
+                    $x = 39;
+                    break;
+                case 4:
+                    $x = 51;
+                    break;
+                case 5:
+                    $x = 52;
+                    break;
+                case 6:
+                    $x = 1;
+                    break;
             }
             $_POST["tfa_$x"] = $this->import_param("tfa_$x");
         }
@@ -38,6 +50,57 @@ class Sales_trend_report_1 extends gridpage
         $this->execute(true);
     }
 
+    function create_criteria_from_post()
+    {
+        $where = $on = $sku = "";
+        foreach ($_POST as $k => $v) {
+            if (!empty($v)) {
+                $kk = substr($k, 4);
+                switch ($kk) {
+                    // platforms
+                    case 1:
+                        if (is_array($v) && count($v) > 0) {
+                            $where .= " AND pbv.selling_platform_id IN ('" . implode("','", $v) . "')";
+                        }
+                        break;
+
+                    // local sku
+                    case 6:
+                        $on .= " and sm.sku = '$v' ";
+                        $sku .= " and sm.sku = '$v' ";
+                        break;
+
+                    case 8:
+                        $v = str_replace(" ", "%", $v);
+                        $on .= " and si.prod_name like '%$v%' ";
+                        break;
+                    case 9:
+                        $on .= " and pp.clearance = '$v' ";
+                        break;
+
+                    // master sku
+                    case 39:
+                        $on .= " and sm.ext_sku = '$v' ";
+                        break;
+                    case 51:
+                        $d = date_parse($v);
+                        $dd = "{$d["year"]}-{$d["month"]}-{$d["day"]}";
+                        $on .= " and so.order_create_date >= '$dd' ";
+                        break;
+                    case 52:
+                        $d = date_parse($v);
+                        $dd = "{$d["year"]}-{$d["month"]}-{$d["day"]}";
+                        $on .= " and so.order_create_date <= '$dd' ";
+                        break;
+                }
+            }
+        }
+
+        $this->var['where'] = $where;
+        $this->var['on'] = $on;
+        $this->var['sku'] = $sku;
+    }
+
     function setup_columns()
     {
         extract($this->var);
@@ -47,24 +110,24 @@ class Sales_trend_report_1 extends gridpage
         $objGrid->orderby("items", "desc");
 
         #sbf 3762 remove buttons
-        $objGrid->buttons(false,false,false,false,-1);
+        $objGrid->buttons(false, false, false, false, -1);
 
         $link = array(
             "1 == 1" => "<a href='/managesku?f=vendorid&match=exact&s=['id']'>['items']</a>"
         );
 
         // $objGrid->FormatColumn("prod_sku","Local SKU",               "0", "50", 0, "1", "right", "text");
-        $objGrid->FormatColumn("platform_id","Platform",                "0", "50", 1, "1", "center", "text");
-        $objGrid->FormatColumn("Competitor","Competitor",               "0", "50", 1, "5", "right", "text");
-        $objGrid->FormatColumn("_shipping_cost","Comp. Shipping Cost",  "0", "50", 1, "1", "right", "text");
-        $objGrid->FormatColumn("CompetitorPrice","Theirs",              "0", "50", 1, "1", "left", "text");
-        $objGrid->FormatColumn("OurPrice","Ours",                       "0", "50", 1, "1", "left", "text");
-        $objGrid->FormatColumn("Difference","Diff.",                    "0", "50", 1, "1", "left", "text");
-        $objGrid->FormatColumn("_margin","Margin",                      "0", "50", 1, "1", "center", "text");
-        $objGrid->FormatColumn("_supplier_cost","Supplier Cost1",       "0", "50", 0, "1", "center", "text");
-        $objGrid->FormatColumn("listing_status","Status",               "0", "50", 1, "1", "center", "text");
-        $objGrid->FormatColumn("OnlineOrders","Online",                 "0", "50", 1, "1", "center", "text");
-        $objGrid->FormatColumn("OfflineOrders","Offline",               "0", "50", 1, "200", "center", "text");
+        $objGrid->FormatColumn("platform_id", "Platform", "0", "50", 1, "1", "center", "text");
+        $objGrid->FormatColumn("Competitor", "Competitor", "0", "50", 1, "5", "right", "text");
+        $objGrid->FormatColumn("_shipping_cost", "Comp. Shipping Cost", "0", "50", 1, "1", "right", "text");
+        $objGrid->FormatColumn("CompetitorPrice", "Theirs", "0", "50", 1, "1", "left", "text");
+        $objGrid->FormatColumn("OurPrice", "Ours", "0", "50", 1, "1", "left", "text");
+        $objGrid->FormatColumn("Difference", "Diff.", "0", "50", 1, "1", "left", "text");
+        $objGrid->FormatColumn("_margin", "Margin", "0", "50", 1, "1", "center", "text");
+        $objGrid->FormatColumn("_supplier_cost", "Supplier Cost1", "0", "50", 0, "1", "center", "text");
+        $objGrid->FormatColumn("listing_status", "Status", "0", "50", 1, "1", "center", "text");
+        $objGrid->FormatColumn("OnlineOrders", "Online", "0", "50", 1, "1", "center", "text");
+        $objGrid->FormatColumn("OfflineOrders", "Offline", "0", "50", 1, "200", "center", "text");
         #$objGrid->FormatColumn("prod_name","Name",                     "0", "50", 0, "600", "left", "text");
 
         // $objGrid->FormatColumn("listing_status","Status",            "0", "50", 0, "1", "right", "text");
@@ -87,7 +150,7 @@ class Sales_trend_report_1 extends gridpage
         // needs a huge nested subquery for competitors to get the lowest price AND not mess up the so count
         // - otherwise it will mess with the group by clause unintentionally (no. of competitors x qty = inflated so count)
         $query =
-        "
+            "
             select
                 sum(if(so.biz_type IN ('ONLINE', 'MOBILE', 'QOO10', 'EBAY'), IFNULL(qty,0), 0)) OnlineOrders,
                 sum(if(so.biz_type = 'OFFLINE', IFNULL(qty,0), 0)) OfflineOrders,
@@ -152,57 +215,12 @@ class Sales_trend_report_1 extends gridpage
         $objGrid->sqlstatement($query, $count);
     }
 
-    function create_criteria_from_post()
-    {
-        $where = $on = $sku = "";
-        foreach ($_POST as $k=>$v)
-        {
-            if (!empty($v))
-            {
-                $kk = substr($k, 4);
-                switch ($kk)
-                {
-                    // platforms
-                    case 1:
-                        if (is_array($v) &&count($v) > 0) {
-                            $where .= " AND pbv.selling_platform_id IN ('" . implode("','", $v) . "')";
-                        }
-                        break;
-
-                    // local sku
-                    case 6:     $on .= " and sm.sku = '$v' ";
-                                $sku .= " and sm.sku = '$v' ";              break;
-
-                    case 8:     $v = str_replace(" ", "%", $v);
-                                $on .= " and si.prod_name like '%$v%' ";            break;
-                    case 9:     $on .= " and pp.clearance = '$v' ";             break;
-
-                    // master sku
-                    case 39:    $on .= " and sm.ext_sku = '$v' ";               break;
-                    case 51:
-                                $d = date_parse($v);
-                                $dd = "{$d["year"]}-{$d["month"]}-{$d["day"]}";
-                                $on .= " and so.order_create_date >= '$dd' ";               break;
-                    case 52:
-                                $d = date_parse($v);
-                                $dd = "{$d["year"]}-{$d["month"]}-{$d["day"]}";
-                                $on .= " and so.order_create_date <= '$dd' ";               break;
-                }
-            }
-        }
-
-        $this->var['where'] = $where;
-        $this->var['on'] = $on;
-        $this->var['sku'] = $sku;
-    }
-
     function ajax_handler()
     {
         extract($this->var);
 
         $param = explode(";", $objGrid->getAjaxID());
-        switch ($param[0])
-        {
+        switch ($param[0]) {
             case "clone":
                 #echo "<script>alert('$table')</script>";
                 // $strSQL = sprintf("INSERT INTO $table (skugroupid) values ($parentid)");
@@ -218,8 +236,7 @@ class Sales_trend_report_1 extends gridpage
 
         $this->var["executeaftergrid"] = $executeaftergrid;
 
-        switch ($objGrid->getAjaxID())
-        {
+        switch ($objGrid->getAjaxID()) {
             case DG_IsDelete: // case 3:    // Delete Rowa / Borrar Registro
                 break;
 
@@ -227,24 +244,19 @@ class Sales_trend_report_1 extends gridpage
                 // echo "<script>alert('$query');</script>";
                 // echo "<script>DG_Do('','&e_id={$objGrid->gridid}');</script>";
 
-                $data                           = $objGrid->getEditedData();
+                $data = $objGrid->getEditedData();
 
                 $t1 = floatval($data["data"]);
                 $t2 = floatval(substr($data["data"], 3));
 
-                if ($t1 != 0)
-                {
-                    $_SESSION["supplier_cost"]     = $t1;
+                if ($t1 != 0) {
+                    $_SESSION["supplier_cost"] = $t1;
                     $_SESSION["supplier_currency"] = "HKD";
-                }
-                else
-                    if ($t2 != 0)
-                    {
-                        $_SESSION["supplier_cost"]     = $t2;
+                } else
+                    if ($t2 != 0) {
+                        $_SESSION["supplier_cost"] = $t2;
                         $_SESSION["supplier_currency"] = substr($data["data"], 0, 3);
                     }
-
-
 
 
                 // list($value, $keyValue) = explode(".-.", $objGrid->dgrtd);
@@ -273,10 +285,10 @@ class Sales_trend_report_1 extends gridpage
         extract($this->var);
 
         // http://admincentre.valuebasket.com/marketing/pricing_tool_website/get_profit_margin_json/WEBGB/11774-AA-BK/189.08/120
-        include_once APPPATH."libraries/service/price_website_service.php";
-        include_once APPPATH."libraries/service/price_ebay_service.php";
-        include_once APPPATH."libraries/service/price_qoo10_service.php";
-        include_once APPPATH."libraries/service/exchange_rate_service.php";
+        include_once APPPATH . "libraries/service/price_website_service.php";
+        include_once APPPATH . "libraries/service/price_ebay_service.php";
+        include_once APPPATH . "libraries/service/price_qoo10_service.php";
+        include_once APPPATH . "libraries/service/exchange_rate_service.php";
 
         $ps["website"] = new price_website_service();
         $ps["ebay"] = new price_ebay_service();
@@ -288,11 +300,9 @@ class Sales_trend_report_1 extends gridpage
         $supplier_cost = -1;
         if ($_SESSION["supplier_cost"]) $supplier_cost = $_SESSION["supplier_cost"];
 
-        foreach($arrData as $key=>$row)
-        {
+        foreach ($arrData as $key => $row) {
             $sc = -1;
-            if ($supplier_cost != -1)
-            {
+            if ($supplier_cost != -1) {
                 // $r = $e->get_exchange_rate($_SESSION["supplier_currency"], $row["currency_id"]);
                 $r = $e->get_exchange_rate($_SESSION["supplier_currency"], $row["currency_id"]);
                 $sc = $supplier_cost * $r->get_rate();
@@ -310,8 +320,8 @@ class Sales_trend_report_1 extends gridpage
             if (substr($row["platform_id"], 0, 5) == "QOO10")
                 $json = $ps["qoo10"]->get_profit_margin_json($row["platform_id"], $parentid, $row["OurPrice"], $sc);
 
-            $d                     = json_decode($json, true);
-            $row["_margin"]        = $d["get_margin"];
+            $d = json_decode($json, true);
+            $row["_margin"] = $d["get_margin"];
             // $row["_shipping_cost"] = $d["get_logistic_cost"];
             $row["_supplier_cost"] = $d["get_supplier_cost"];
             // var_dump($_SESSION["supplier_currency"]); die();

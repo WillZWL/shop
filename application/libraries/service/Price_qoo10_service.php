@@ -7,6 +7,15 @@ class Price_qoo10_service extends Price_service
 {
     private $wms_wh_srv;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->set_tool_path('marketing/pricing_tool_' . strtolower(PLATFORM_TYPE));
+
+        include_once(APPPATH . "libraries/service/Wms_warehouse_service.php");
+        $this->set_wms_wh_srv(new Wms_warehouse_service());
+    }
+
     public function get_pricing_tool_info($platform_id = "", $sku = "")
     {
         $ret = parent::get_pricing_tool_info($platform_id, $sku);
@@ -15,17 +24,9 @@ class Price_qoo10_service extends Price_service
 
     }
 
-    private function determine_commission_percent($price)
-    {
-        $percent = 0.10;
-        if ($price >= 200 && $price <= 500) $percent = 0.09;
-        if ($price > 500) $percent = 0.08;
-
-        return $percent;
-    }
-
 
     // SBF#2558 we override this function to specially calculate the way qoo10 structures their commission charges
+
     public function calc_commission($dto = NULL)
     {
         $this->init_dto($dto);
@@ -35,17 +36,17 @@ class Price_qoo10_service extends Price_service
         # if above 500, use 8%
 
         $percent = $this->determine_commission_percent($dto->get_price());
-        $dto->set_platform_commission($percent*100); #this is to allow header to reflect accurate percentage
+        $dto->set_platform_commission($percent * 100); #this is to allow header to reflect accurate percentage
         $dto->set_sales_commission(number_format(($dto->get_price() + $dto->get_delivery_charge()) * $percent, 2, ".", ""));
     }
 
-    public function __construct()
+    private function determine_commission_percent($price)
     {
-        parent::__construct();
-        $this->set_tool_path('marketing/pricing_tool_'.strtolower(PLATFORM_TYPE));
+        $percent = 0.10;
+        if ($price >= 200 && $price <= 500) $percent = 0.09;
+        if ($price > 500) $percent = 0.08;
 
-        include_once(APPPATH."libraries/service/Wms_warehouse_service.php");
-        $this->set_wms_wh_srv(new Wms_warehouse_service());
+        return $percent;
     }
 
     // public function get_wms_wh_srv()

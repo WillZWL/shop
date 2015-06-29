@@ -168,4 +168,5 @@ class Pmgw_card_vo extends Base_vo
     }
 
 }
+
 ?>

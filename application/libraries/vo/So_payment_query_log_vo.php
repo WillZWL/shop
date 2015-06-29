@@ -144,4 +144,5 @@ class So_payment_query_log_vo extends Base_vo
     }
 
 }
+
 ?>

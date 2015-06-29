@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Refund_dao extends Base_dao
 {
-    private $table_name="refund";
-    private $vo_class_name="Refund_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "refund";
+    private $vo_class_name = "Refund_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,97 +35,78 @@ class Refund_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_refund_list($where=array(), $option=array(), $classname="Refund_so_dto")
+    public function get_refund_list($where = array(), $option = array(), $classname = "Refund_so_dto")
     {
-        if(!isset($where["rstatus"]) || $where["rstatus"] == "")
-        {
+        if (!isset($where["rstatus"]) || $where["rstatus"] == "") {
             return false;
         }
 
         $this->db->from("refund r");
 
-        $this->db->join("so s","r.so_no = s.so_no","INNER");
+        $this->db->join("so s", "r.so_no = s.so_no", "INNER");
 
-        $this->db->join("refund_reason rr","rr.id = r.reason","LEFT");
-        $this->db->join("so_payment_status sops","s.so_no = sops.so_no","LEFT");
-        $this->db->join("payment_gateway pg","sops.payment_gateway_id = pg.id","LEFT");
-        $this->db->join("so_refund_score sors","sors.so_no = r.so_no", "LEFT");
+        $this->db->join("refund_reason rr", "rr.id = r.reason", "LEFT");
+        $this->db->join("so_payment_status sops", "s.so_no = sops.so_no", "LEFT");
+        $this->db->join("payment_gateway pg", "sops.payment_gateway_id = pg.id", "LEFT");
+        $this->db->join("so_refund_score sors", "sors.so_no = r.so_no", "LEFT");
 
 
         $ri_join = "ri.refund_id = r.id AND ";
 
-        if($where["check_cb"] != "")
-        {
-            if (is_array($where["rstatus"]))
-            {
-                $ri_join .= "( ri.status in ('".implode("','", $where["rstatus"])."') OR (ri.status = 'N' AND ri.refund_type='C')) ";
+        if ($where["check_cb"] != "") {
+            if (is_array($where["rstatus"])) {
+                $ri_join .= "( ri.status in ('" . implode("','", $where["rstatus"]) . "') OR (ri.status = 'N' AND ri.refund_type='C')) ";
+            } else {
+                $ri_join .= "( ri.status = '" . $where["rstatus"] . "' OR (ri.status = 'N' AND ri.refund_type='C')) ";
             }
-            else
-            {
-                $ri_join .= "( ri.status = '".$where["rstatus"]."' OR (ri.status = 'N' AND ri.refund_type='C')) ";
-            }
-        }
-        else
-        {
-            if (is_array($where["rstatus"]))
-            {
-                $ri_join .= "ri.status in ('".implode("','", $where["rstatus"])."') ";
-            }
-            else
-            {
-                $ri_join .= "ri.status = '".$where["rstatus"]."' ";
+        } else {
+            if (is_array($where["rstatus"])) {
+                $ri_join .= "ri.status in ('" . implode("','", $where["rstatus"]) . "') ";
+            } else {
+                $ri_join .= "ri.status = '" . $where["rstatus"] . "' ";
             }
         }
 
-        $this->db->join("refund_item ri",$ri_join, 'INNER');
+        $this->db->join("refund_item ri", $ri_join, 'INNER');
 
-        $this->db->where("r.status","I");
+        $this->db->where("r.status", "I");
 
-        if($where["refund_type"] != "" )
-        {
-            $this->db->where("ri.refund_type",$where["refund_type"]);
+        if ($where["refund_type"] != "") {
+            $this->db->where("ri.refund_type", $where["refund_type"]);
         }
 
-        if($where["rid"] != "")
-        {
-            $this->db->where("r.id",$where["rid"]);
+        if ($where["rid"] != "") {
+            $this->db->where("r.id", $where["rid"]);
         }
 
-        if($where["so"] != "")
-        {
-            $this->db->where("r.so_no LIKE", "%".$where["so"]."%");
+        if ($where["so"] != "") {
+            $this->db->where("r.so_no LIKE", "%" . $where["so"] . "%");
         }
 
-        if($where["platform_order_id"] != "")
-        {
+        if ($where["platform_order_id"] != "") {
             $this->db->where("s.platform_order_id", $where["platform_order_id"]);
         }
 
-        if($where["platform_id"] != "")
-        {
-            $this->db->where("s.platform_id",$where["platform_id"]);
+        if ($where["platform_id"] != "") {
+            $this->db->where("s.platform_id", $where["platform_id"]);
         }
 
-        if($where["payment_gateway"] != "")
-        {
+        if ($where["payment_gateway"] != "") {
             $this->db->where("pg.name", $where["payment_gateway"]);
         }
 
-        if($where["txn_id"] != "")
-        {
-            $this->db->where("s.txn_id",$where["txn_id"]);
+        if ($where["txn_id"] != "") {
+            $this->db->where("s.txn_id", $where["txn_id"]);
         }
 
-        if($option["create"] == 1)
-        {
+        if ($option["create"] == 1) {
             $this->db->where("(s.refund_status = 0 OR s.refund_status = 4)");
         }
 
         $this->db->where("(s.hold_status != 15)");
 
         $pack_date_select_str = '';
-        if(isset($option["need_pack_date"]) && $option["need_pack_date"])
-        {
+        if (isset($option["need_pack_date"]) && $option["need_pack_date"]) {
             $join_sql = "(SELECT a.so_no, b.create_on as pack_date
                           FROM so_allocate a
                           JOIN so_shipment b
@@ -135,8 +116,7 @@ class Refund_dao extends Base_dao
             $pack_date_select_str = ', soa.pack_date';
         }
 
-        if($option["num_row"] == "")
-        {
+        if ($option["num_row"] == "") {
             $this->db->groupby("r.id");
 
             $this->db->select
@@ -161,63 +141,50 @@ class Refund_dao extends Base_dao
 
             $this->include_dto($classname);
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if($query = $this->db->get())
-            {
-                foreach($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
 
                 return $rs;
             }
-        }
-        else
-        {
+        } else {
             $this->db->select("COUNT(DISTINCT r.id) as total");
 
-            if($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
         return FALSE;
     }
 
-    public function check_complete($refundid="")
+    public function check_complete($refundid = "")
     {
-        if($refundid == "")
-        {
+        if ($refundid == "") {
             return FALSE;
         }
 
-        $sql =  "SELECT count(ri.line_no) as total, IFNULL(rip.completed ,0) as complete
+        $sql = "SELECT count(ri.line_no) as total, IFNULL(rip.completed ,0) as complete
                  FROM refund_item ri
                  LEFT JOIN (SELECT refund_id, count(line_no) as completed
                           FROM refund_item
@@ -227,9 +194,8 @@ class Refund_dao extends Base_dao
                  WHERE ri.refund_id = ?
                  GROUP BY ri.refund_id";
 
-        if($query = $this->db->query($sql, $refundid))
-        {
-            return array("total"=>$query->row()->total, "completed"=>$query->row()->complete);
+        if ($query = $this->db->query($sql, $refundid)) {
+            return array("total" => $query->row()->total, "completed" => $query->row()->complete);
         }
         return FALSE;
     }
@@ -237,8 +203,8 @@ class Refund_dao extends Base_dao
     public function get_refund_info_by_period($where = array(), $classname = '')
     {
         if (empty($where['period_start'])
-            || empty($where['period_end']))
-        {
+            || empty($where['period_end'])
+        ) {
             return FALSE; // period is compulsory
         }
 
@@ -264,8 +230,7 @@ class Refund_dao extends Base_dao
 
         $resultset = $this->db->query($sql, $data);
 
-        foreach ($resultset->result() as $row)
-        {
+        foreach ($resultset->result() as $row) {
             $rs[] = $row;
         }
 
@@ -303,7 +268,7 @@ class Refund_dao extends Base_dao
         return $this->common_get_list($where, $option, $classname, "r.id refund_id, so.biz_type, so.platform_id, pmgw.name pmgw_name, so.bill_country_id, so.txn_id, so.client_id, so.so_no, p.name prod_name, cat.name cat_name, soid.item_sku, so.dispatch_date, so.order_create_date, so.amount, so.delivery_type_id, r.create_on request_date, if(rh.app_status = 'A', rh.modify_on, null)approve_date, if(rh.app_status = 'A' AND rh.status = 'C', rh.modify_on, null) refund_date, ri.refund_type, so.currency_id, ri.refund_amount, r.create_by request_by, rr.reason_cat, rr.description, rh.notes, rh.status refund_status, cs_approval_date, cs_approved_by");
     }
 
-    public function get_refund_amount_by_pmgw_currency($where=array(), $option=array(), $classname="refund_amount_by_pmgw_currency_dto")
+    public function get_refund_amount_by_pmgw_currency($where = array(), $option = array(), $classname = "refund_amount_by_pmgw_currency_dto")
     {
         $this->db->from('refund r');
         $this->db->join('so', 'so.so_no = r.so_no', 'inner');
@@ -325,8 +290,7 @@ class Refund_dao extends Base_dao
         $this->db->where($where);
         $this->db->group_by(array('so.currency_id', 'pmgw.id', 'rr.description'));
 
-        if (isset($option['orderby']))
-        {
+        if (isset($option['orderby'])) {
             $this->db->order_by($option['orderby']);
         }
 
@@ -334,10 +298,8 @@ class Refund_dao extends Base_dao
 
         $rs = array();
         $this->include_dto($classname);
-        if($query = $this->db->get())
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->get()) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
@@ -347,7 +309,7 @@ class Refund_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_refund_amount_by_pmgw_currency_with_eur_country($where=array(), $option=array(), $classname="refund_amount_by_pmgw_currency_dto")
+    public function get_refund_amount_by_pmgw_currency_with_eur_country($where = array(), $option = array(), $classname = "refund_amount_by_pmgw_currency_dto")
     {
         $this->db->from('refund r');
         $this->db->join('so', 'so.so_no = r.so_no', 'inner');
@@ -370,8 +332,7 @@ class Refund_dao extends Base_dao
         $this->db->where($where);
         $this->db->group_by(array('so.currency_id', 'pmgw.id', 'pbv.platform_country_id', 'rr.description'));
 
-        if (isset($option['orderby']))
-        {
+        if (isset($option['orderby'])) {
             $this->db->order_by($option['orderby']);
         }
 
@@ -385,10 +346,8 @@ class Refund_dao extends Base_dao
         $this->db->get();
         echo "<pre>"; var_dump($this->db->last_query()); var_dump($this->db->_error_message());die();*/
 
-        if($query = $this->db->get())
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->get()) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
@@ -398,7 +357,7 @@ class Refund_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_refund_reason_top5($where=array(), $option=array(), $classname="Refund_reason_report_top5_reasons_dto")
+    public function get_refund_reason_top5($where = array(), $option = array(), $classname = "Refund_reason_report_top5_reasons_dto")
     {
         /*
         select R2.id, R2.description as reason, COUNT(*) as frequency
@@ -415,17 +374,15 @@ class Refund_dao extends Base_dao
         $this->db->join('so S', 'S.so_no = R1.so_no', 'inner');
         $this->db->where($where);
         $this->db->group_by(array('R2.id'));
-        $this->db->order_by("frequency","desc");
+        $this->db->order_by("frequency", "desc");
         $this->db->limit(5, 0);
 
         $this->db->select('R2.id, R2.description as reason, COUNT(*) as frequency');
 
         $rs = array();
         $this->include_dto($classname);
-        if($query = $this->db->get())
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->get()) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
@@ -435,7 +392,7 @@ class Refund_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_refund_reason_num_rows($where=array(), $option=array(), $classname="Refund_reason_report_num_rows_dto")
+    public function get_refund_reason_num_rows($where = array(), $option = array(), $classname = "Refund_reason_report_num_rows_dto")
     {
         /*
         select COUNT(*) as num_rows
@@ -453,10 +410,8 @@ class Refund_dao extends Base_dao
 
         $rs = array();
         $this->include_dto($classname);
-        if($query = $this->db->get())
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->get()) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
@@ -466,7 +421,7 @@ class Refund_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_refund_reason_top5_products($where=array(), $option=array(), $classname="Refund_reason_report_top5_products_dto")
+    public function get_refund_reason_top5_products($where = array(), $option = array(), $classname = "Refund_reason_report_top5_products_dto")
     {
         /*
         select D.prod_sku, P.name as item_name, count(*) as frequency
@@ -490,17 +445,15 @@ class Refund_dao extends Base_dao
         $this->db->join('product P', 'D.prod_sku = P.sku', 'inner');
         $this->db->where($where);
         $this->db->group_by(array('D.prod_sku'));
-        $this->db->order_by("frequency","desc");
+        $this->db->order_by("frequency", "desc");
         $this->db->limit(5, 0);
 
         $this->db->select('D.prod_sku, P.name as item_name, count(*) as frequency');
 
         $rs = array();
         $this->include_dto($classname);
-        if($query = $this->db->get())
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->get()) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 

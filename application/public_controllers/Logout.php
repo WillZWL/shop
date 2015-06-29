@@ -1,4 +1,5 @@
 <?php
+
 class Logout extends PUB_Controller
 {
     public function __construct()
@@ -13,7 +14,7 @@ class Logout extends PUB_Controller
         unset($_SESSION["client"]);
         unset($_SESSION["NOTICE"]);
         //redirect($this->input->get("back")?urldecode($this->input->get("back")):base_url());
-        Redirect(base_url()."login");
+        Redirect(base_url() . "login");
     }
 
 }

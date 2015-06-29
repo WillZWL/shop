@@ -132,4 +132,5 @@ class Colour_vo extends Base_vo
     }
 
 }
+
 ?>

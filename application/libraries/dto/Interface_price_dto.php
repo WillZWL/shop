@@ -248,4 +248,5 @@ class Interface_price_dto extends Base_dto
     }
 
 }
+
 ?>

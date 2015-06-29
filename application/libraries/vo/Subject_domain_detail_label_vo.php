@@ -156,4 +156,5 @@ class Subject_domain_detail_label_vo extends Base_vo
     }
 
 }
+
 ?>

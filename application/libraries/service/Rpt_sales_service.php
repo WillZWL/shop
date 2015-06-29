@@ -13,24 +13,13 @@ class Rpt_sales_service extends Report_service
         parent::__construct();
         $this->load->model('marketing/pricing_tool_model');
 
-        include_once(APPPATH."libraries/service/So_service.php");
+        include_once(APPPATH . "libraries/service/So_service.php");
         $this->set_so_service(new So_service());
-        include_once(APPPATH."libraries/service/Refund_service.php");
+        include_once(APPPATH . "libraries/service/Refund_service.php");
         $this->set_refund_service(new Refund_service());
-        include_once(APPPATH."libraries/service/Db_text_lookup_service.php");
+        include_once(APPPATH . "libraries/service/Db_text_lookup_service.php");
         $this->set_db_text_lookup_service(new Db_text_lookup_service());
         $this->set_output_delimiter(',');
-    }
-
-    public function set_so_service($value)
-    {
-        $this->so_service = $value;
-        return $this;
-    }
-
-    public function get_so_service()
-    {
-        return $this->so_service;
     }
 
     public function set_refund_service($value)
@@ -39,71 +28,87 @@ class Rpt_sales_service extends Report_service
         return $this;
     }
 
-    public function get_refund_service()
-    {
-        return $this->refund_service;
-    }
-
     public function set_db_text_lookup_service($value)
     {
         $this->db_text_lookup_service = $value;
         return $this;
     }
 
-    public function get_db_text_lookup_service()
+    public function get_refund_service()
     {
-        return $this->db_text_lookup_service;
+        return $this->refund_service;
+    }
+
+    public function get_csv($from_date, $to_date)
+    {
+        $arr = $this->get_data($from_date, $to_date);
+        return $this->convert($arr);
+    }
+
+    public function get_data($from_date = '', $to_date = '', $where = array(), $is_light_version = false)
+    {
+        $arr = $this->get_so_service()->get_confirmed_so($where, $from_date, $to_date, $is_light_version);
+//      error_log($this->get_so_service()->get_dao()->db->last_query());
+        $data = $this->process_data_row($arr, $is_light_version);
+
+        return $data;
+    }
+
+    public function get_so_service()
+    {
+        return $this->so_service;
+    }
+
+    public function set_so_service($value)
+    {
+        $this->so_service = $value;
+        return $this;
     }
 
     public function process_data_row($arr, $is_light_version = false)
     {
         $new_list = array();
-        if($arr)
-        {
+        if ($arr) {
             $last_so_no = "";
-            foreach($arr as $row)
-            {
+            foreach ($arr as $row) {
                 if (!isset($this->pricing_tool_model[$row["type"]]))
                     $this->pricing_tool_model[$row["type"]] = new pricing_tool_model($row["type"]);
 
-                $amount =  ($row['soid_amount'] + $row["soid_gst_total"]);
+                $amount = ($row['soid_amount'] + $row["soid_gst_total"]);
                 // $json = $this->pricing_tool_model[$row["type"]]->price_service->get_profit_margin_json($row["platform_id"], $row["sku"], $amount / $row["qty"]);
                 // $jj = json_decode($json, true);
 
-                if (1 == 1)
-                {
+                if (1 == 1) {
                     // order amount
-                    if($row['refund_status'] == 'C')
-                        $row['actual_order_amount'] = $row['so_amount'] - $row['total_refund_amount']*1;
+                    if ($row['refund_status'] == 'C')
+                        $row['actual_order_amount'] = $row['so_amount'] - $row['total_refund_amount'] * 1;
                     else
                         $row['actual_order_amount'] = $row['so_amount'];
 
                     // fee
                     $row['fee'] = $row['actual_order_amount'] * $row['payment_charge_percent'] / 100;
-                    $row['fee'] = number_format($row['fee'],2,'.','');
+                    $row['fee'] = number_format($row['fee'], 2, '.', '');
 
                     // receivable
-                    if($row['refund_status'] == 'C')
+                    if ($row['refund_status'] == 'C')
                         $row['receivable'] = 0;
                     else
                         $row['receivable'] = $row['actual_order_amount'] - $row['fee'];
 
                     $row['profit'] = $row["profit"] * $row["qty"];
-                    $row['cost']   = $row["cost"] * $row["qty"];
+                    $row['cost'] = $row["cost"] * $row["qty"];
                     $row['amount'] = $amount;
 
                     $row['profit_usd'] = $row['profit'] * $row['rate'];
-                    $row['profit_usd'] = number_format($row['profit_usd'],2,'.','');
+                    $row['profit_usd'] = number_format($row['profit_usd'], 2, '.', '');
 
                     $row['amount_usd'] = $row['amount'] * $row['rate'];
-                    $row['amount_usd'] = number_format($row['amount_usd'],2,'.','');
+                    $row['amount_usd'] = number_format($row['amount_usd'], 2, '.', '');
                 }
 
-                if($row["payment_status"] !== "")
-                {
+                if ($row["payment_status"] !== "") {
                     # display payment status
-                    switch (strtoupper($row["payment_status"]))
-                    {
+                    switch (strtoupper($row["payment_status"])) {
                         case 'N':
                             $row["payment_status"] = 'New';
                             break;
@@ -133,8 +138,7 @@ class Rpt_sales_service extends Report_service
 
                 $last_so_no = $row['so_no'];
 
-                if($is_light_version)
-                {
+                if ($is_light_version) {
                     $row = array_slice($row, 0, 26);
                 }
 
@@ -146,33 +150,15 @@ class Rpt_sales_service extends Report_service
         return $new_list;
     }
 
-    public function get_data($from_date='', $to_date='', $where = array(), $is_light_version = false)
-    {
-        $arr = $this->get_so_service()->get_confirmed_so($where, $from_date, $to_date, $is_light_version);
-//      error_log($this->get_so_service()->get_dao()->db->last_query());
-        $data = $this->process_data_row($arr, $is_light_version);
-
-        return $data;
-    }
-
-    public function get_csv($from_date, $to_date)
-    {
-        $arr = $this->get_data($from_date, $to_date);
-        return $this->convert($arr);
-    }
-
     public function get_header($is_light_version_sales_rpt = false)
     {
-        if($is_light_version_sales_rpt)
-        {
-            return  "Platform,Payment Gateway,Payment Date,Payment Status,Business Type,"
-                .   "Special Order Creation Reason,Line No,Platform Order Number,Split Parent SO,Affiliate,"
-                .   "Category Name,Sub-category Name,Brand Name,Product Name,SKU,Quantity,"
-                .   "Order Create Date,Currency,Amount,Fee,Receivable Amount,VAT,Profit,Margin,Unit Price,Cost,"
-                .   "Promotion Code";
-        }
-        else
-        {
+        if ($is_light_version_sales_rpt) {
+            return "Platform,Payment Gateway,Payment Date,Payment Status,Business Type,"
+            . "Special Order Creation Reason,Line No,Platform Order Number,Split Parent SO,Affiliate,"
+            . "Category Name,Sub-category Name,Brand Name,Product Name,SKU,Quantity,"
+            . "Order Create Date,Currency,Amount,Fee,Receivable Amount,VAT,Profit,Margin,Unit Price,Cost,"
+            . "Promotion Code";
+        } else {
             return 'Platform,Payment Gateway,Payment Date,Payment Status,Business Type,Special Order Creation Reason,Transaction ID,SO Number,Split Parent SO,Line No, '
             . 'Platform Order Number,Affiliate,Warehouse id,Category Name,Sub-category Name,Brand Name,'
             . 'Product Name,SKU,Master SKU,Current Supplier,Quantity,Dispatch Date,'
@@ -184,17 +170,15 @@ class Rpt_sales_service extends Report_service
 
     }
 
-    public function get_split_order_csv($from_date="", $to_date="", $where=array(), $option=array())
+    public function get_split_order_csv($from_date = "", $to_date = "", $where = array(), $option = array())
     {
-        if($this->check_date($from_date) === false)
-        {
+        if ($this->check_date($from_date) === false) {
             $ret["status"] = false;
-            $ret["message"] =  "Start date in wrong format. Must be YYYY-MM-DD.";
+            $ret["message"] = "Start date in wrong format. Must be YYYY-MM-DD.";
             return $ret;
         }
 
-        if($this->check_date($to_date) === false)
-        {
+        if ($this->check_date($to_date) === false) {
             $ret["status"] = false;
             $ret["message"] = "End date in wrong format. Must be YYYY-MM-DD.";
             return $ret;
@@ -203,20 +187,14 @@ class Rpt_sales_service extends Report_service
         $to_date = $to_date . " 23:59:59";
         $data = $this->get_so_service()->get_split_so_report($where, $option, $from_date, $to_date);
 
-        if($data === FALSE)
-        {
+        if ($data === FALSE) {
             $ret["status"] = false;
             $ret["message"] = "Cannot retrieve report. DB error: {$this->get_so_service()->db->_error_message()}";
             return $ret;
-        }
-        else
-        {
-            if($data)
-            {
-                foreach ($data as $key => $arr)
-                {
-                    if($key==0)
-                    {
+        } else {
+            if ($data) {
+                foreach ($data as $key => $arr) {
+                    if ($key == 0) {
                         $new_list[] = $this->get_header_from_array($arr);
                     }
                     $arr["order_status"] = $this->get_db_text_lookup_service()->so_status($arr["order_status"]);
@@ -229,9 +207,7 @@ class Rpt_sales_service extends Report_service
                 $ret["status"] = true;
                 $ret["data"] = $new_list;
                 return $ret;
-            }
-            else
-            {
+            } else {
                 $ret["status"] = false;
                 $ret["message"] = "No data available.";
                 return $ret;
@@ -240,29 +216,29 @@ class Rpt_sales_service extends Report_service
 
     }
 
+    private function check_date($date)
+    {
+        if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private function get_header_from_array($array = array())
     {
         $ret = array();
-        if(is_array($array))
-        {
-            foreach ($array as $key => $value)
-            {
+        if (is_array($array)) {
+            foreach ($array as $key => $value) {
                 $ret[$key] = $key;
             }
         }
         return $ret;
     }
 
-    private function check_date($date)
+    public function get_db_text_lookup_service()
     {
-        if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$date))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return $this->db_text_lookup_service;
     }
 
     protected function get_default_vo2xml_mapping()

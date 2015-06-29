@@ -19,12 +19,9 @@ class Expect_delivery_date_service extends Base_service
 
     public function send_report($type)
     {
-        if ($type == self::ORDER_TYPE_ALERT1)
-        {
+        if ($type == self::ORDER_TYPE_ALERT1) {
             $this->send_not_chasing_order_report();
-        }
-        else if ($type == self::ORDER_TYPE_ALERT2)
-        {
+        } else if ($type == self::ORDER_TYPE_ALERT2) {
             $this->send_not_chasing_order_report_alert2();
         }
     }
@@ -45,35 +42,41 @@ class Expect_delivery_date_service extends Base_service
 
         $csv = $this->gen_csv($orderList);
 
-        $title = "Project Expect Delivery Date alert #1" ;
+        $title = "Project Expect Delivery Date alert #1";
         $message = "Project Expect Delivery Date alert #1";
         $filename = 'expect_delivery_date_not_chasing_' . date('Ymd') . '.csv';
 
         $this->_email_report($csv, $title, $message, $filename, "projectexpect_delivery_date-alert1@valuebasket.com", "projectexpect_delivery_date-alert1@supportsave.com");
     }
 
-    public function send_not_chasing_order_report_alert2()
+    public function get_so_dao()
     {
-        $where = array();
-        $where["so.status"] = 3;
-        $where["so.biz_type"] = "ONLINE";
-        $where["(so.cs_customer_query & 1) = 0"] = null;
-        $where["so.refund_status"] = 0;
-        $where["so.hold_status"] = 0;
-        $where["SUBDATE(so.expect_delivery_date, '1 DAY') ="] = date("Y-m-d");
+        return $this->so_dao;
+    }
 
-        $option = array("group_by" => "so.so_no");
+    public function set_so_dao($value)
+    {
+        $this->so_dao = $value;
+    }
 
-        $orderList = $this->get_so_dao()->send_not_chasing_order_report_alert2($where, $option);
-//      print $this->get_so_dao()->db->last_query();
+    private function gen_csv($data = array())
+    {
+        $csv = "";
+        if (!empty($data)) {
+            foreach ($data as $key => $value) {
+                if ($key == 0) {
+                    foreach ($value as $label => $v) {
+                        $csv .= "$label,";
+                    }
 
-        $csv = $this->gen_csv($orderList);
+                    $csv .= "\n";
+                }
 
-        $title = "Project Expect Delivery Date alert #2" ;
-        $message = "Project Expect Delivery Date alert #2";
-        $filename = 'expect_delivery_date_not_chasing_2_' . date('Ymd') . '.csv';
-
-        $this->_email_report($csv, $title, $message, $filename, "projectexpect_delivery_date-alert1@valuebasket.com", "projectexpect_delivery_date-alert1@supportsave.com");
+                $csv .= implode(",", $value);
+                $csv .= "\n";
+            }
+        }
+        return $csv;
     }
 
     private function _email_report($csv = "", $title = "", $message = "", $filename, $email1, $email2 = null)
@@ -96,38 +99,28 @@ class Expect_delivery_date_service extends Base_service
         $result = $phpmail->Send();
     }
 
-    private function gen_csv($data=array())
+    public function send_not_chasing_order_report_alert2()
     {
-        $csv = "";
-        if(!empty($data))
-        {
-            foreach ($data as $key => $value)
-            {
-                if($key==0)
-                {
-                    foreach ($value as $label => $v)
-                    {
-                        $csv .= "$label,";
-                    }
+        $where = array();
+        $where["so.status"] = 3;
+        $where["so.biz_type"] = "ONLINE";
+        $where["(so.cs_customer_query & 1) = 0"] = null;
+        $where["so.refund_status"] = 0;
+        $where["so.hold_status"] = 0;
+        $where["SUBDATE(so.expect_delivery_date, '1 DAY') ="] = date("Y-m-d");
 
-                    $csv .= "\n";
-                }
+        $option = array("group_by" => "so.so_no");
 
-                $csv .= implode(",", $value);
-                $csv .= "\n";
-            }
-        }
-        return $csv;
-    }
+        $orderList = $this->get_so_dao()->send_not_chasing_order_report_alert2($where, $option);
+//      print $this->get_so_dao()->db->last_query();
 
-    public function get_so_dao()
-    {
-        return $this->so_dao;
-    }
+        $csv = $this->gen_csv($orderList);
 
-    public function set_so_dao($value)
-    {
-        $this->so_dao = $value;
+        $title = "Project Expect Delivery Date alert #2";
+        $message = "Project Expect Delivery Date alert #2";
+        $filename = 'expect_delivery_date_not_chasing_2_' . date('Ymd') . '.csv';
+
+        $this->_email_report($csv, $title, $message, $filename, "projectexpect_delivery_date-alert1@valuebasket.com", "projectexpect_delivery_date-alert1@supportsave.com");
     }
 }
 

@@ -14,17 +14,13 @@ class Price_skype_service extends Price_service
     // temporary change Feature #338 GE phone special commission
     public function init_dto(&$dto)
     {
-        if (is_null($dto))
-        {
+        if (is_null($dto)) {
             $dto = $this->get_dto();
-        }
-        else
-        {
+        } else {
             $this->set_dto($dto);
         }
 
-        if($dto->get_sku() == "10429-US-NA" || $dto->get_sku() == "10429-EU-NA" || $dto->get_sku() == "10429-UK-NA")
-        {
+        if ($dto->get_sku() == "10429-US-NA" || $dto->get_sku() == "10429-EU-NA" || $dto->get_sku() == "10429-UK-NA") {
             $dto->set_platform_commission("8.00");
         }
     }

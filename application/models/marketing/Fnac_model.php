@@ -1,4 +1,5 @@
 <?php
+
 class Fnac_model extends CI_Model
 {
 
@@ -8,7 +9,7 @@ class Fnac_model extends CI_Model
         $this->load->library('service/fnac_service');
     }
 
-    public function cron_retrieve_new_order($country_id="ES", $start_time = "", $end_time = "", $debug = 0, $enable_log = 0)
+    public function cron_retrieve_new_order($country_id = "ES", $start_time = "", $end_time = "", $debug = 0, $enable_log = 0)
     {
         $this->fnac_service->set_debug($debug);
         $this->fnac_service->set_enable_log($enable_log);
@@ -24,7 +25,7 @@ class Fnac_model extends CI_Model
         return $this->fnac_service->cron_update_payment_status($country_id);
     }
 
-    public function acknowledge_order($country_id="ES", $fnac_order_id_list = "")
+    public function acknowledge_order($country_id = "ES", $fnac_order_id_list = "")
     {
         return $this->fnac_service->acknowledge_order($country_id, $fnac_order_id_list);
     }

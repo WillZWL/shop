@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Delivery_surcharge_dao extends Base_dao
 {
-    private $table_name="delivery_surcharge";
-    private $vo_class_name="delivery_surcharge_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "delivery_surcharge";
+    private $vo_class_name = "delivery_surcharge_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

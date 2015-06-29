@@ -4,6 +4,7 @@ include_once "Base_dto.php";
 
 class Price_panda_product_feed_dto extends Base_dto
 {
+    public $delivery_time;
     private $platform_id;
     private $sku;
     private $prod_name;
@@ -15,7 +16,6 @@ class Price_panda_product_feed_dto extends Base_dto
     private $detail_desc;
     private $ean;
     private $create_on;
-    public  $delivery_time;
 
     public function __construct()
     {

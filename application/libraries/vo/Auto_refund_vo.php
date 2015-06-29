@@ -4,13 +4,9 @@ include_once "base_vo.php";
 class Auto_refund_vo extends Base_vo
 {
 
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $refund_id;
 
     //class variable
-    private $refund_id;
     private $so_no;
     private $payment_gateway_id;
     private $action;
@@ -23,14 +19,20 @@ class Auto_refund_vo extends Base_vo
     private $modify_on;
     private $modify_at;
     private $modify_by;
-
-    //primary key
     private $primary_key = array("refund_id");
 
-    //auo increment
+    //primary key
     private $increment_field = "";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_refund_id()
     {
         return $this->refund_id;

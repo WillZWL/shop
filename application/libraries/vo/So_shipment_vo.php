@@ -156,4 +156,5 @@ class So_shipment_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -251,4 +251,5 @@ class So_item_vo extends Base_vo
         return $this;
     }
 }
+
 ?>

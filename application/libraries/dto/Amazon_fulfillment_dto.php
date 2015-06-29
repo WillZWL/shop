@@ -1,23 +1,23 @@
-<?defined('BASEPATH') OR exit('No direct script access allowed');
+<? defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
 class Amazon_fulfillment_dto extends Base_dto
 {
-    private $so_no=" ";
-    private $platform_order_id=" ";
-    private $prod_sku=" ";
-    private $ext_item_cd=" ";
+    private $so_no = " ";
+    private $platform_order_id = " ";
+    private $prod_sku = " ";
+    private $ext_item_cd = " ";
     private $qty = -1;
-    private $courier_id=" ";
+    private $courier_id = " ";
     private $reserve1 = " ";
     private $reserve2 = " ";
     private $reserve3 = " ";
     private $reserve4 = " ";
-    private $shipdate=" ";
+    private $shipdate = " ";
     private $carriercode = "OTHER";
     private $shippingmethod = "International";
-    private $tracking_no=" ";
+    private $tracking_no = " ";
 
     public function __construct()
     {
@@ -26,7 +26,7 @@ class Amazon_fulfillment_dto extends Base_dto
 
     public function get_tracking_no()
     {
-        return $this->tracking_no?$this->tracking_no:" ";
+        return $this->tracking_no ? $this->tracking_no : " ";
     }
 
     public function set_tracking_no($value)
@@ -86,7 +86,7 @@ class Amazon_fulfillment_dto extends Base_dto
 
     public function get_shipdate()
     {
-        return date("Y-m-d H:i:s",strtotime($this->shipdate));
+        return date("Y-m-d H:i:s", strtotime($this->shipdate));
     }
 
     public function set_shipdate($value)
@@ -164,4 +164,5 @@ class Amazon_fulfillment_dto extends Base_dto
         $this->so_no = $value;
     }
 }
+
 ?>

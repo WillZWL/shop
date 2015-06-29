@@ -144,4 +144,5 @@ class Product_note_vo extends Base_vo
     }
 
 }
+
 ?>

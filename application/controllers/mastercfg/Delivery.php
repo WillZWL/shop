@@ -1,9 +1,10 @@
 <?php
+
 class Delivery extends MY_Controller
 {
 
-    private $app_id="MST0013";
-    private $lang_id="en";
+    private $app_id = "MST0013";
+    private $lang_id = "en";
 
     private $default_delivery;
 
@@ -18,10 +19,9 @@ class Delivery extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id()."00";
+        $sub_app_id = $this->_get_app_id() . "00";
 
-        if($this->input->post('posted'))
-        {
+        if ($this->input->post('posted')) {
             $vo["func_opt"] = $this->delivery_service->get_func_opt_srv()->get();
             $data["func_opt_list"] = unserialize($_SESSION["func_opt_list"]);
             $this->delivery_model->check_serialize('func_opt_list', $data);
@@ -30,8 +30,7 @@ class Delivery extends MY_Controller
             $data["del_opt_list"] = unserialize($_SESSION["del_opt_list"]);
             $this->delivery_model->check_serialize('del_opt_list', $data);
 
-            if ($this->delivery_model->update_content($vo, $data))
-            {
+            if ($this->delivery_model->update_content($vo, $data)) {
                 unset($_SESSION["func_opt_list"]);
                 unset($_SESSION["del_opt_list"]);
                 redirect($this->_get_ru());
@@ -42,40 +41,12 @@ class Delivery extends MY_Controller
         $this->delivery_model->check_serialize('del_opt_list', $data);
 
 
-        $data["lang_list"] = $this->language_service->get_list(array("status"=>1), array("limit"=>-1));
+        $data["lang_list"] = $this->language_service->get_list(array("status" => 1), array("limit" => -1));
         $data["delivery_type_list"] = $this->delivery_service->get_delivery_type_list();
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
-        $this->load->view('mastercfg/delivery/delivery_index_v',$data);
-    }
-
-    public function region()
-    {
-        $sub_app_id = $this->_get_app_id()."01";
-
-        if($this->input->post('posted'))
-        {
-            $vo = $this->delivery_service->get();
-            $data["delivery_list"] = unserialize($_SESSION["delivery_list"]);
-            $this->delivery_model->check_serialize('delivery_list', $data);
-            if ($this->delivery_model->update_delivery($vo, $data))
-            {
-                unset($_SESSION["delivery_list"]);
-                redirect($this->_get_ru());
-            }
-        }
-
-
-        $this->delivery_model->check_serialize('delivery_list', $data);
-
-        $data["delivery_type_list"] = $this->delivery_service->get_delivery_type_list();
-        $data["country_list"] = $this->country_service->get_country_name_list_w_key(array(), array("limit"=>-1));
-        $data["default_delivery"] = $this->default_delivery;
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-        $data["lang"] = $lang;
-        $data["notice"] = notice($lang);
-        $this->load->view('mastercfg/delivery/delivery_region_v',$data);
+        $this->load->view('mastercfg/delivery/delivery_index_v', $data);
     }
 
     public function _get_app_id()
@@ -86,6 +57,32 @@ class Delivery extends MY_Controller
     public function _get_lang_id()
     {
         return $this->lang_id;
+    }
+
+    public function region()
+    {
+        $sub_app_id = $this->_get_app_id() . "01";
+
+        if ($this->input->post('posted')) {
+            $vo = $this->delivery_service->get();
+            $data["delivery_list"] = unserialize($_SESSION["delivery_list"]);
+            $this->delivery_model->check_serialize('delivery_list', $data);
+            if ($this->delivery_model->update_delivery($vo, $data)) {
+                unset($_SESSION["delivery_list"]);
+                redirect($this->_get_ru());
+            }
+        }
+
+
+        $this->delivery_model->check_serialize('delivery_list', $data);
+
+        $data["delivery_type_list"] = $this->delivery_service->get_delivery_type_list();
+        $data["country_list"] = $this->country_service->get_country_name_list_w_key(array(), array("limit" => -1));
+        $data["default_delivery"] = $this->default_delivery;
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        $data["lang"] = $lang;
+        $data["notice"] = notice($lang);
+        $this->load->view('mastercfg/delivery/delivery_region_v', $data);
     }
 }
 

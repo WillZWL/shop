@@ -183,7 +183,7 @@ class Delay_report_item_list_dto extends Base_dto
         $this->refund_type = $value;
     }
 
-public function get_refund_status()
+    public function get_refund_status()
     {
         return $this->refund_status;
     }
@@ -193,7 +193,7 @@ public function get_refund_status()
         $this->refund_status = $value;
     }
 
-public function get_refund_qty()
+    public function get_refund_qty()
     {
         return $this->refund_qty;
     }
@@ -204,7 +204,7 @@ public function get_refund_qty()
     }
 
 
-public function get_refund_amount()
+    public function get_refund_amount()
     {
         return $this->refund_amount;
     }

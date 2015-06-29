@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Display_category_banner_dao extends Base_dao
 {
-    private $table_name="display_category_banner";
-    private $vo_classname="Display_category_banner_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "display_category_banner";
+    private $vo_classname = "Display_category_banner_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -34,7 +34,7 @@ class Display_category_banner_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_list_with_name($level="1",$parent="0",$classname="Banner_cat_list_dto")
+    public function get_list_with_name($level = "1", $parent = "0", $classname = "Banner_cat_list_dto")
     {
         $sql = "SELECT c.id, c.name, c.level, IFNULL(pv.pv_cnt,0) AS pv_cnt, IFNULL(pb.pb_cnt,0) AS pb_cnt, IFNULL(stat.status,0) AS status, IFNULL(s.ttl,0) as count_row
                 FROM category c
@@ -69,10 +69,8 @@ class Display_category_banner_dao extends Base_dao
 
         $rs = array();
 
-        if($query = $this->db->query($sql))
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
@@ -82,16 +80,13 @@ class Display_category_banner_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_db_w_graphic($catid, $banner_type, $display_id, $position_id, $slide_id, $country_id, $lang_id, $usage, $backup_image = "" , $classname="Banner_w_graphic_dto")
+    public function get_db_w_graphic($catid, $banner_type, $display_id, $position_id, $slide_id, $country_id, $lang_id, $usage, $backup_image = "", $classname = "Banner_w_graphic_dto")
     {
-        if($country_id)
-        {
-            if($banner_type == "F")
-            {
-                if($backup_image)
-                {
+        if ($country_id) {
+            if ($banner_type == "F") {
+                if ($backup_image) {
                     $sql =
-                    '
+                        '
                         SELECT db.*, g.id AS graphic_id, g.type AS graphic_type, g.location AS graphic_location, g.file AS graphic_file, dbc.banner_type
                         FROM display_category_banner db
                         LEFT JOIN display_banner_config dbc
@@ -100,11 +95,9 @@ class Display_category_banner_dao extends Base_dao
                             ON (db.image_id = g.id) AND g.status = 1
                         WHERE db.catid = ? AND db.display_id = ? AND db.position_id = ? AND db.slide_id = ? AND db.lang_id = ? AND db.usage = ? AND db.country_id = ?
                     ';
-                }
-                else
-                {
+                } else {
                     $sql =
-                    '
+                        '
                         SELECT db.*, g.id AS graphic_id, g.type AS graphic_type, g.location AS graphic_location, g.file AS graphic_file, dbc.banner_type
                         FROM display_category_banner db
                         LEFT JOIN display_banner_config dbc
@@ -115,11 +108,9 @@ class Display_category_banner_dao extends Base_dao
                     ';
 
                 }
-            }
-            else
-            {
+            } else {
                 $sql =
-                '
+                    '
                     SELECT db.*, g.id AS graphic_id, g.type AS graphic_type, g.location AS graphic_location, g.file AS graphic_file, dbc.banner_type
                     FROM display_category_banner db
                     LEFT JOIN display_banner_config dbc
@@ -129,15 +120,11 @@ class Display_category_banner_dao extends Base_dao
                     WHERE db.catid = ? AND db.display_id = ? AND db.position_id = ? AND db.slide_id = ? AND db.lang_id = ? AND db.usage = ?  AND db.country_id = ?
                 ';
             }
-        }
-        else
-        {
-            if($banner_type == "F")
-            {
-                if($backup_image)
-                {
+        } else {
+            if ($banner_type == "F") {
+                if ($backup_image) {
                     $sql =
-                    '
+                        '
                         SELECT db.*, g.id AS graphic_id, g.type AS graphic_type, g.location AS graphic_location, g.file AS graphic_file, dbc.banner_type
                         FROM display_category_banner db
                         LEFT JOIN display_banner_config dbc
@@ -146,11 +133,9 @@ class Display_category_banner_dao extends Base_dao
                             ON (db.image_id = g.id AND g.status = 1)
                         WHERE db.catid = ? AND db.display_id = ? AND db.position_id = ? AND db.slide_id = ? AND db.lang_id = ? AND db.usage = ?  AND db.country_id IS NULL
                     ';
-                }
-                else
-                {
+                } else {
                     $sql =
-                    '
+                        '
                         SELECT db.*, g.id AS graphic_id, g.type AS graphic_type, g.location AS graphic_location, g.file AS graphic_file, dbc.banner_type
                         FROM display_category_banner db
                         LEFT JOIN display_banner_config dbc
@@ -160,11 +145,9 @@ class Display_category_banner_dao extends Base_dao
                         WHERE db.catid = ? AND db.display_id = ? AND db.position_id = ? AND db.slide_id = ? AND db.lang_id = ? AND db.usage = ?  AND db.country_id IS NULL
                     ';
                 }
-            }
-            else
-            {
+            } else {
                 $sql =
-                '
+                    '
                     SELECT db.*, g.id AS graphic_id, g.type AS graphic_type, g.location AS graphic_location, g.file AS graphic_file, dbc.banner_type
                     FROM display_category_banner db
                     LEFT JOIN display_banner_config dbc
@@ -178,8 +161,7 @@ class Display_category_banner_dao extends Base_dao
         $this->include_dto($classname);
 
 
-        if ($query = $this->db->query($sql, array($banner_type, $catid, $display_id, $position_id, $slide_id, $lang_id, $usage, $country_id)))
-        {
+        if ($query = $this->db->query($sql, array($banner_type, $catid, $display_id, $position_id, $slide_id, $lang_id, $usage, $country_id))) {
             $rs = $query->result($classname);
             return $rs[0];
         }

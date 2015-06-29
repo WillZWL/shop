@@ -4,13 +4,9 @@ include_once "base_vo.php";
 class So_priority_score_history_vo extends Base_vo
 {
 
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $id;
 
     //class variable
-    private $id;
     private $so_no;
     private $score;
     private $create_on = '0000-00-00 00:00:00';
@@ -19,14 +15,20 @@ class So_priority_score_history_vo extends Base_vo
     private $modify_on;
     private $modify_at;
     private $modify_by;
-
-    //primary key
     private $primary_key = array("id");
 
-    //auo increment
+    //primary key
     private $increment_field = "id";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_id()
     {
         return $this->id;

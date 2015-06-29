@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Platform_pmgw_dao extends Base_dao
 {
-    private $table_name="platform_pmgw";
-    private $vo_class_name="Platform_pmgw_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "platform_pmgw";
+    private $vo_class_name = "Platform_pmgw_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

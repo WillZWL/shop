@@ -1,9 +1,10 @@
 <?php
+
 class Stock_valuation extends MY_Controller
 {
 
-    private $app_id="RPT0001";
-    private $lang_id="en";
+    private $app_id = "RPT0001";
+    private $lang_id = "en";
 
 
     public function __construct()
@@ -15,19 +16,10 @@ class Stock_valuation extends MY_Controller
         $this->load->library('service/context_config_service');
     }
 
-    private function _load_parent_lang()
-    {
-        $sub_app_id = $this->_get_app_id()."00";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-
-        return $lang;
-    }
-
     public function query()
     {
         $data['lang'] = $this->_load_parent_lang();
-        if($this->input->post('is_query'))
-        {
+        if ($this->input->post('is_query')) {
             $sku = $this->input->post('sku');
             $prod_name = $this->input->post('name');
 
@@ -36,6 +28,24 @@ class Stock_valuation extends MY_Controller
 
             $this->load->view('output_csv.php', $data);
         }
+    }
+
+    private function _load_parent_lang()
+    {
+        $sub_app_id = $this->_get_app_id() . "00";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+
+        return $lang;
+    }
+
+    public function _get_app_id()
+    {
+        return $this->app_id;
+    }
+
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
     }
 
     public function index()
@@ -103,18 +113,6 @@ class Stock_valuation extends MY_Controller
 //          }
 //          $this->load->view('supply/purchaser/purchaser_left_v', $data);
 //      }
-    }
-
-
-
-    public function _get_app_id()
-    {
-        return $this->app_id;
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
     }
 }
 

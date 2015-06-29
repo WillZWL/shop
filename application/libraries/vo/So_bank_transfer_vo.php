@@ -215,4 +215,5 @@ class So_bank_transfer_vo extends Base_vo
     }
 
 }
+
 ?>

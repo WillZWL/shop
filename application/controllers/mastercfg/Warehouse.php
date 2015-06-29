@@ -13,17 +13,16 @@ class Warehouse extends MY_Controller
 
     public function js_warehouse()
     {
-        $warehouse_list = $this->warehouse_model->get_warehouse_list(array(),array("order by"=>"id asc"));
+        $warehouse_list = $this->warehouse_model->get_warehouse_list(array(), array("order by" => "id asc"));
         $js_array .= 'warehouse = {';
         $size = 0;
-        foreach($warehouse_list as $key=>$obj)
-        {
+        foreach ($warehouse_list as $key => $obj) {
             $size++;
-            $js_array .= "'".($key+1)."':['".$obj->get_id()."','".htmlentities(addslashes($obj->get_name()))."'],";
+            $js_array .= "'" . ($key + 1) . "':['" . $obj->get_id() . "','" . htmlentities(addslashes($obj->get_name())) . "'],";
         }
-        $js_array = ereg_replace(",$","};",$js_array);
+        $js_array = ereg_replace(",$", "};", $js_array);
 
-        $js_array .= "\n\n".'warehouse_count = '.$size.';'."\n\n";
+        $js_array .= "\n\n" . 'warehouse_count = ' . $size . ';' . "\n\n";
         echo $js_array;
     }
 
@@ -34,14 +33,13 @@ class Warehouse extends MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->warehouse_model->get_warehouse_list(array(),array("order by"=>"id asc", "limit"=>-1));
-        foreach ($objlist as $obj)
-        {
+        $objlist = $this->warehouse_model->get_warehouse_list(array(), array("order by" => "id asc", "limit" => -1));
+        foreach ($objlist as $obj) {
             $sid = str_replace("'", "\'", $obj->get_id());
             $name = str_replace("'", "\'", $obj->get_name());
-            $slist[] = "'".$sid."':'".$name."'";
+            $slist[] = "'" . $sid . "':'" . $name . "'";
         }
-        $js = "whlist = {".implode(", ", $slist)."};";
+        $js = "whlist = {" . implode(", ", $slist) . "};";
         $js .= "
             function InitWH(obj)
             {
@@ -52,7 +50,8 @@ class Warehouse extends MY_Controller
         echo $js;
     }
 
-    public function _get_app_id(){
+    public function _get_app_id()
+    {
         return $this->app_id;
     }
 

@@ -19,12 +19,9 @@ Class Forget_password extends PUB_Controller
         $no_user = $this->input->get('no_user');
         $data["back"] = $this->input->get("back");
 
-        if (empty($email))
-        {
+        if (empty($email)) {
             $data['no_user'] = 1;
-        }
-        else
-        {
+        } else {
             $data['no_user'] = abs($this->client_model->forget_password($email) - 1);
         }
 

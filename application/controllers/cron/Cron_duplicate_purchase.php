@@ -19,11 +19,11 @@ class Cron_duplicate_purchase extends MY_Controller
         $subject = "[VB] Duplicate Purchase Notification";
 
 
-        $iCounter            = 0;
-        $arrBGColor          = array('#FF9966', '#FFCC66');
+        $iCounter = 0;
+        $arrBGColor = array('#FF9966', '#FFCC66');
 
-        $arrAmountFilter     = array('gbp'=>100, 'eur'=>110, 'usd'=>150, 'aud'=>100);
-        $arrFirstRecord      = array('', '');
+        $arrAmountFilter = array('gbp' => 100, 'eur' => 110, 'usd' => 150, 'aud' => 100);
+        $arrFirstRecord = array('', '');
 
         $result = $this->so_service->get_dao()->get_duplicate_purchase();
 
@@ -32,27 +32,20 @@ class Cron_duplicate_purchase extends MY_Controller
         $arrRecordDetail = array();
 
         echo '<table border=1><tr bgcolor="#aaaaaa"><td>Client ID</td><td>Product Name</td><td>Order Number</td><td>Currency</td><td>Product Unit Price</td></tr>' . "\r\n";
-        foreach ($result as $resultRow)
-        {
-            if (array_key_exists(strtolower($resultRow['currency_id']), $arrAmountFilter))
-            {
-                if ($resultRow['unit_price'] < $arrAmountFilter[strtolower($resultRow['currency_id'])])
-                {
+        foreach ($result as $resultRow) {
+            if (array_key_exists(strtolower($resultRow['currency_id']), $arrAmountFilter)) {
+                if ($resultRow['unit_price'] < $arrAmountFilter[strtolower($resultRow['currency_id'])]) {
                     continue;
                 }
             }
 
-            if (($resultRow['client_id'] == $arrFirstRecord[0]) && ($resultRow['prod_sku'] == $arrFirstRecord[1]))
-            {
+            if (($resultRow['client_id'] == $arrFirstRecord[0]) && ($resultRow['prod_sku'] == $arrFirstRecord[1])) {
                 $iCurrentRecord = count($arrRecordDetail);
                 $arrRecordDetail[$iCurrentRecord][0] = $resultRow['so_no'];
                 $arrRecordDetail[$iCurrentRecord][1] = $resultRow['currency_id'];
                 $arrRecordDetail[$iCurrentRecord][2] = $resultRow['unit_price'];
-            }
-            else
-            {
-                if ($arrFirstRecord[0] != '')
-                {
+            } else {
+                if ($arrFirstRecord[0] != '') {
                     echo $this->generateOneSetOrder($arrFirstRecord, $arrRecordDetail, $arrBGColor[($iCounter++) % 2]);
                 }
 
@@ -66,8 +59,7 @@ class Cron_duplicate_purchase extends MY_Controller
             }
         }
 
-        if (count($arrRecordDetail) > 1)
-        {
+        if (count($arrRecordDetail) > 1) {
             echo $this->generateOneSetOrder($arrFirstRecord, $arrRecordDetail, $arrBGColor[($iCounter++) % 2]);
         }
 
@@ -89,12 +81,11 @@ class Cron_duplicate_purchase extends MY_Controller
         $rowSpan = count($arrRecordDetail);
 
         $result = '';
-        $result .= '<tr bgcolor="'.$bgColor.'"><td rowspan='.$rowSpan.'>'.$arrFirstRecord[0].'</td><td rowspan='.$rowSpan.'>'.$arrFirstRecord[1].'</td>';
-        $result .= '<td>'.$arrRecordDetail[0][0].'</td><td>'.$arrRecordDetail[0][1].'</td><td>'.$arrRecordDetail[0][2].'</td></tr>' . "\r\n";
+        $result .= '<tr bgcolor="' . $bgColor . '"><td rowspan=' . $rowSpan . '>' . $arrFirstRecord[0] . '</td><td rowspan=' . $rowSpan . '>' . $arrFirstRecord[1] . '</td>';
+        $result .= '<td>' . $arrRecordDetail[0][0] . '</td><td>' . $arrRecordDetail[0][1] . '</td><td>' . $arrRecordDetail[0][2] . '</td></tr>' . "\r\n";
 
-        for ($i = 1; $i < $rowSpan; $i++)
-        {
-            $result .= '<tr bgcolor="'.$bgColor.'"><td>'.$arrRecordDetail[$i][0].'</td><td>'.$arrRecordDetail[$i][1].'</td><td>'.$arrRecordDetail[$i][2].'</td></tr>' . "\r\n";
+        for ($i = 1; $i < $rowSpan; $i++) {
+            $result .= '<tr bgcolor="' . $bgColor . '"><td>' . $arrRecordDetail[$i][0] . '</td><td>' . $arrRecordDetail[$i][1] . '</td><td>' . $arrRecordDetail[$i][2] . '</td></tr>' . "\r\n";
         }
         $result .= "\r\n";
 

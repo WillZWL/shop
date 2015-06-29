@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Supplier_region_dao extends Base_dao
 {
-    private $table_name="supplier_region";
-    private $vo_class_name="Supplier_region_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "supplier_region";
+    private $vo_class_name = "Supplier_region_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

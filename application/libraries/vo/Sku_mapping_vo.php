@@ -144,4 +144,5 @@ class Sku_mapping_vo extends Base_vo
     }
 
 }
+
 ?>

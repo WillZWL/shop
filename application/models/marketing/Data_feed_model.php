@@ -1,4 +1,5 @@
 <?php
+
 class Data_feed_model extends CI_Model
 {
     public function __construct()
@@ -90,8 +91,7 @@ class Data_feed_model extends CI_Model
 
     public function gen_shopbot_product_feed($platform_id = "WEBAU")
     {
-        switch($platform_id)
-        {
+        switch ($platform_id) {
             case "WEBAU":
                 $this->shopbot_product_feed_service->gen_data_feed();
                 break;
@@ -260,7 +260,7 @@ class Data_feed_model extends CI_Model
         $this->supplier_service->download_supplier_status_csv();
     }
 
-    public function download_supplier_cost_csv($platform_id='')
+    public function download_supplier_cost_csv($platform_id = '')
     {
         $this->supplier_service->download_supplier_cost_csv($platform_id);
     }
@@ -270,4 +270,5 @@ class Data_feed_model extends CI_Model
         $this->data_feed_model->dhl_shipment_tracking_feed_service->gen_dhl_shipment_tracking_feed();
     }
 }
+
 ?>

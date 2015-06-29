@@ -41,7 +41,7 @@ class Competitor_map_vo extends Base_vo
     public function set_id($value)
     {
         $this->id = $value;
-    return $this;
+        return $this;
     }
 
     public function get_ext_sku()
@@ -98,6 +98,7 @@ class Competitor_map_vo extends Base_vo
         $this->last_price = $value;
         return $this;
     }
+
     public function get_now_price()
     {
         return $this->now_price;
@@ -271,4 +272,5 @@ class Competitor_map_vo extends Base_vo
         return $this->increment_field;
     }
 }
+
 ?>

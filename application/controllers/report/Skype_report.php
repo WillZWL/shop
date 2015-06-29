@@ -2,8 +2,8 @@
 
 class Skype_report extends MY_Controller
 {
-    private $app_id="RPT0012";
-    private $lang_id="en";
+    private $app_id = "RPT0012";
+    private $lang_id = "en";
     private $model;
     private $export_filename;
 
@@ -17,57 +17,36 @@ class Skype_report extends MY_Controller
         $this->_set_export_filename('skype_report.xls');
     }
 
-    private function _load_parent_lang()
-    {
-        $sub_app_id = $this->_get_app_id()."00";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-
-        return $lang;
-    }
-
     public function query()
     {
-        if($_POST["post"])
-        {
+        if ($_POST["post"]) {
             $start_date = $_POST["start_date"];
             $end_date = $_POST["end_date"];
-            if(trim($_POST["sku"]) != "")
-            {
-                if($_POST["inclusion"]["sku"])
-                {
+            if (trim($_POST["sku"]) != "") {
+                if ($_POST["inclusion"]["sku"]) {
                     $where["sku"] = " IN ('";
-                }
-                else
-                {
+                } else {
                     $where["sku"] = " NOT IN ('";
                 }
-                $where["sku"] .= implode("','", array_map('trim',explode(",",$_POST["sku"])));
+                $where["sku"] .= implode("','", array_map('trim', explode(",", $_POST["sku"])));
                 $where["sku"] .= "') ";
             }
-            if(trim($_POST["conv_site_id"]) != "")
-            {
-                if($_POST["inclusion"]["conv_site_id"])
-                {
+            if (trim($_POST["conv_site_id"]) != "") {
+                if ($_POST["inclusion"]["conv_site_id"]) {
                     $where["conv_site_id"] = " IN ('";
-                }
-                else
-                {
+                } else {
                     $where["conv_site_id"] = " NOT IN ('";
                 }
-                $where["conv_site_id"] .= implode("','", array_map('trim',explode(",",$_POST["conv_site_id"])));
+                $where["conv_site_id"] .= implode("','", array_map('trim', explode(",", $_POST["conv_site_id"])));
                 $where["conv_site_id"] .= "') ";
             }
-            if(trim($_POST["promotion_code"]) != "")
-            {
-                if($_POST["inclusion"]["promotion_code"])
-                {
+            if (trim($_POST["promotion_code"]) != "") {
+                if ($_POST["inclusion"]["promotion_code"]) {
                     $where["promotion_code"] = " IN ('";
-                }
-                else
-                {
+                } else {
                     $where["promotion_code"] = " NOT IN ('";
                 }
-                $where["promotion_code"] .= implode("','", array_map('trim',explode(",",$_POST["promotion_code"])));
+                $where["promotion_code"] .= implode("','", array_map('trim', explode(",", $_POST["promotion_code"])));
                 $where["promotion_code"] .= "') ";
             }
 
@@ -76,6 +55,26 @@ class Skype_report extends MY_Controller
             $data['filename'] = $this->_get_export_filename();
             $this->load->view('output_csv.php', $data);
         }
+    }
+
+    public function _get_model()
+    {
+        return $this->model;
+    }
+
+    public function _set_model($value)
+    {
+        $this->model = $value;
+    }
+
+    public function _get_export_filename()
+    {
+        return $this->export_filename;
+    }
+
+    public function _set_export_filename($value)
+    {
+        $this->export_filename = $value;
     }
 
     public function index()
@@ -87,9 +86,12 @@ class Skype_report extends MY_Controller
         $this->load->view('report/skype_report', $data);
     }
 
-    public function _set_app_id($value)
+    private function _load_parent_lang()
     {
-        $this->app_id = $value;
+        $sub_app_id = $this->_get_app_id() . "00";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+
+        return $lang;
     }
 
     public function _get_app_id()
@@ -97,29 +99,14 @@ class Skype_report extends MY_Controller
         return $this->app_id;
     }
 
+    public function _set_app_id($value)
+    {
+        $this->app_id = $value;
+    }
+
     public function _get_lang_id()
     {
         return $this->lang_id;
-    }
-
-    public function _set_model($value)
-    {
-        $this->model = $value;
-    }
-
-    public function _get_model()
-    {
-        return $this->model;
-    }
-
-    public function _set_export_filename($value)
-    {
-        $this->export_filename = $value;
-    }
-
-    public function _get_export_filename()
-    {
-        return $this->export_filename;
     }
 }
 

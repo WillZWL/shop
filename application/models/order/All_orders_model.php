@@ -35,9 +35,9 @@ class All_orders_model extends CI_Model
 //ship service level $data["del_opt_list"] = end($this->delivery_option_service->get_list_w_key(array("lang_id"=>"en")));
 //if not (paypalorder)
 //{
-    //fraud_result = risk_spec2
-    //avs result = so_payment_status.risk_ref1
- //+ risk_ref.risk_ref_desc
+        //fraud_result = risk_spec2
+        //avs result = so_payment_status.risk_ref1
+        //+ risk_ref.risk_ref_desc
 //}
 //else
 //{
@@ -64,7 +64,7 @@ class All_orders_model extends CI_Model
         return "Order_screening_" . $start_date . "-" . $end_date . ".csv";
     }
 
-    public function get_pmgw_list($where=array(), $option=array())
+    public function get_pmgw_list($where = array(), $option = array())
     {
         return $this->payment_gateway_service->get_list($where, $option);
     }

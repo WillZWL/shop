@@ -1,7 +1,8 @@
 <?php
+
 class Cron_send_email extends MY_Controller
 {
-    private $app_id="CRN0003";
+    private $app_id = "CRN0003";
 
     function __construct()
     {
@@ -12,12 +13,9 @@ class Cron_send_email extends MY_Controller
 
     function send_customer_review_email()
     {
-        if($obj_list = $this->feedback_email_service->get_automated_feedback_email_content())
-        {
-            foreach($obj_list as $obj)
-            {
-                if($ret = $this->feedback_email_service->required_feedback_email($obj))
-                {
+        if ($obj_list = $this->feedback_email_service->get_automated_feedback_email_content()) {
+            foreach ($obj_list as $obj) {
+                if ($ret = $this->feedback_email_service->required_feedback_email($obj)) {
                     $this->feedback_email_service->fire_feedback_email($obj);
                 }
             }
@@ -27,14 +25,13 @@ class Cron_send_email extends MY_Controller
     // SBF#1895
     function send_rma_email($past_day = 7)
     {
-        if($obj_list = $this->feedback_email_service->get_rma_customer_email_address($past_day))
-        {
+        if ($obj_list = $this->feedback_email_service->get_rma_customer_email_address($past_day)) {
             // var_dump("HELLO");
             include_once(BASEPATH . "plugins/phpmailer/phpmailer_pi.php");
             $phpmail = new phpmailer();
             $phpmail->IsSMTP();
             $phpmail->From = "Admin <admin@valuebasket.net>";
-            $phpmail->Subject = "List of customers with RMA within the ".intval($past_day)." days";
+            $phpmail->Subject = "List of customers with RMA within the " . intval($past_day) . " days";
 
             // public function AddStringAttachment($string, $filename, $encoding = 'base64', $type = 'application/octet-stream') {
             $csv = "";
@@ -66,9 +63,8 @@ class Cron_send_email extends MY_Controller
 
     public function wow_email_list_data()
     {
-        if($data = $this->rpt_wow_email_service->get_data())
-        {
-            mail('ray@eservicesgroup.net, logistics@valuebasket.com', "[VB] Wow Email list today - ".date("Y-m-d"), $data);
+        if ($data = $this->rpt_wow_email_service->get_data()) {
+            mail('ray@eservicesgroup.net, logistics@valuebasket.com', "[VB] Wow Email list today - " . date("Y-m-d"), $data);
         }
     }
 }

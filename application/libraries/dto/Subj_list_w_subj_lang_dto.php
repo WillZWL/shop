@@ -94,4 +94,5 @@ class Subj_list_w_subj_lang_dto extends Base_dto
         $this->subkey_value_w_lang = $value;
     }
 }
+
 ?>

@@ -9,7 +9,7 @@ class User_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/User_dao.php");
+        include_once(APPPATH . "libraries/dao/User_dao.php");
         $this->set_dao(new User_dao());
     }
 
@@ -29,12 +29,12 @@ class User_service extends Base_service
         return $this->get_dao()->is_allowed_to_cancel_order_by_role($_SESSION["user"]["id"]);
     }
 
-    public function menu_item($user_id="", $classname="")
+    public function menu_item($user_id = "", $classname = "")
     {
         return $this->get_dao()->get_menu_item($user_id, $classname);
     }
 
-    public function app_rights($user_id="", $app_id="", $classname="")
+    public function app_rights($user_id = "", $app_id = "", $classname = "")
     {
         return $this->get_dao()->get_app_rights($user_id, $app_id, $classname);
     }
@@ -44,10 +44,10 @@ class User_service extends Base_service
         return $this->get_dao()->check_access($user_id, $app_id, $rights);
     }
 
-    public function get_list_w_roles($where=array(), $option=array())
+    public function get_list_w_roles($where = array(), $option = array())
     {
         $data["userlist"] = $this->get_dao()->get_list_w_roles($where, $option, "User_w_roles_dto");
-        $data["total"] = $this->get_dao()->get_list_w_roles($where, array("num_rows"=>1));
+        $data["total"] = $this->get_dao()->get_list_w_roles($where, array("num_rows" => 1));
         return $data;
     }
 

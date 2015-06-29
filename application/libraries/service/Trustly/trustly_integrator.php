@@ -24,16 +24,13 @@ class Trustly_integrator
     public function Trustly_integrator($debug = 0)
     {
         $this->debug = $debug;
-        if ($this->debug)
-        {
+        if ($this->debug) {
             $this->_username = self::TRUSTLY_PAYMENT_TEST_USERNAME;
             $this->_password = self::TRUSTLY_PAYMENT_TEST_PASSWORD;
             $this->_server = self::TRUSTLY_PAYMENT_TEST_SERVER;
             $this->_vb_private_key = self::TRUSTLY_PAYMENT_TEST_PRIVATE_KEY;
             $this->_trustly_public_key = self::TRUSTLY_PAYMENT_TEST_PUBLIC_KEY;
-        }
-        else
-        {
+        } else {
             $this->_username = self::TRUSTLY_PAYMENT_USERNAME;
             $this->_password = self::TRUSTLY_PAYMENT_PASSWORD;
             $this->_server = self::TRUSTLY_PAYMENT_SERVER;
@@ -46,7 +43,7 @@ class Trustly_integrator
     {
         $method = "Refund";
         $uuid = $this->generate_uuid($params["orderId"], 'f');
-        $dataRequest = array (
+        $dataRequest = array(
             "Username" => $this->_username,
             "Password" => $this->_password,
             "OrderID" => $params["trustly_order_id"],
@@ -57,88 +54,11 @@ class Trustly_integrator
         return $this->_get_request_json($method, $uuid, $dataRequest);
     }
 
-    public function form_payment_array($params)
-    {
-        $method = "Deposit";
-
-        $uuid = $this->generate_uuid($params["orderId"]);
-        $dataRequest = array (
-            "Username" => $this->_username,
-            "Password" => $this->_password,
-            "NotificationURL" => $params["notificationUrl"],
-            "EndUserID" => $params["clientId"],
-            "MessageID" => $params["orderId"],
-            "Attributes" => array (
-                "Locale" => $params["language"] . "_" . $params["countryId"],
-                "Amount" => $params["totalAmount"],
-                "Currency" => $params["currency"],
-                "Country" => $params["countryId"],
-                "IP" => $_SERVER["REMOTE_ADDR"],
-                "SuccessURL" => $params["successUrl"],
-                "FailURL" => $params["failUrl"],
-                "URLTarget" => "_top",
-                "FirstName" => $params["firstName"],
-                "LastName" => $params["lastName"],
-                "MobilePhone" => $params["tel"]
-            )
-        );
-
-        return $this->_get_request_json($method, $uuid, $dataRequest);
-/*
-        $signature = $this->getSignature($method, $params["uuid"], $dataRequest, $this->_vb_private_key);
-
-        if ($signature)
-        {
-            $trustlyRequest = array (
-                "method" => $method,
-                "params" => array (
-                    "Signature" => $signature,
-                    "UUID" => $params["uuid"],
-                    "Data" => $dataRequest,
-                ),
-                "version" => "1.1",
-            );
-            return json_encode($trustlyRequest);
-        }
-        else
-        {
-            return false;
-        }
-*/
-    }
-
-    public function get_submit_result($server_result)
-    {
-        return json_decode($server_result);
-    }
-
-    public function send_data_to_trustly($data, &$server_result, &$server_error, &$server_info)
-    {
-        $ch = curl_init("https://" . $this->_server);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
-        curl_setopt($ch, CURLOPT_FORBID_REUSE, TRUE);
-        curl_setopt($ch, CURLOPT_FRESH_CONNECT, TRUE);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30); 
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, Array("Content-Type: application/json", "Content-Length: " . strlen($data)));
-
-        $server_result = curl_exec($ch);
-        $server_error = curl_error($ch);
-        $server_info = curl_getinfo($ch);
-        curl_close($ch);
-
-        //return $server_result;
-        return json_decode($server_result, true);
-    }
-
-/**************************
-**  The type parameter will be
-**  d = Deposit
-**  f = Refund
-***************************/
+    /**************************
+     **  The type parameter will be
+     **  d = Deposit
+     **  f = Refund
+     ***************************/
     public function generate_uuid($so_no, $type = 'd')
     {
         $random_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
@@ -165,22 +85,134 @@ class Trustly_integrator
         return substr($random_uuid, 0, (strlen($random_uuid) - $so_no_len - 1)) . $type . $so_no;
     }
 
-    public function getSignature($method, $uuid, $data, $key) 
+    private function _get_request_json($method, $uuid, $dataRequest)
     {
-        if (!$merchant_key = openssl_get_privatekey("file://" . self::KEY_STORE_PATH . $key))
-        {
+        $signature = $this->getSignature($method, $uuid, $dataRequest, $this->_vb_private_key);
+
+        if ($signature) {
+            $trustlyRequest = array(
+                "method" => $method,
+                "params" => array(
+                    "Signature" => $signature,
+                    "UUID" => $uuid,
+                    "Data" => $dataRequest,
+                ),
+                "version" => "1.1",
+            );
+            return json_encode($trustlyRequest);
+        } else {
             return false;
         }
-        
+    }
+
+    public function getSignature($method, $uuid, $data, $key)
+    {
+        if (!$merchant_key = openssl_get_privatekey("file://" . self::KEY_STORE_PATH . $key)) {
+            return false;
+        }
+
         $plaintext = $method . $uuid . $this->_serialize_data($data);
         openssl_sign($plaintext, $signature, $merchant_key);
         return base64_encode($signature);
     }
 
-    public function verifySignature($method, $uuid, $data, $signature_from_trustly) 
+    private function _serialize_data($object)
     {
-        if (!$trustly_public_key = openssl_get_publickey("file://" . self::KEY_STORE_PATH . $this->_trustly_public_key))
-        {
+        $serialized = '';
+        if (is_array($object)) {
+            ksort($object);
+            foreach ($object as $key => $value) {
+                if (is_numeric($key)) {
+                    $serialized .= $this->_serialize_data($value);
+                } else {
+                    $serialized .= $key . $this->_serialize_data($value);
+                }
+            }
+        } else
+            return $object;
+        return $serialized;
+    }
+
+    public function form_payment_array($params)
+    {
+        $method = "Deposit";
+
+        $uuid = $this->generate_uuid($params["orderId"]);
+        $dataRequest = array(
+            "Username" => $this->_username,
+            "Password" => $this->_password,
+            "NotificationURL" => $params["notificationUrl"],
+            "EndUserID" => $params["clientId"],
+            "MessageID" => $params["orderId"],
+            "Attributes" => array(
+                "Locale" => $params["language"] . "_" . $params["countryId"],
+                "Amount" => $params["totalAmount"],
+                "Currency" => $params["currency"],
+                "Country" => $params["countryId"],
+                "IP" => $_SERVER["REMOTE_ADDR"],
+                "SuccessURL" => $params["successUrl"],
+                "FailURL" => $params["failUrl"],
+                "URLTarget" => "_top",
+                "FirstName" => $params["firstName"],
+                "LastName" => $params["lastName"],
+                "MobilePhone" => $params["tel"]
+            )
+        );
+
+        return $this->_get_request_json($method, $uuid, $dataRequest);
+        /*
+                $signature = $this->getSignature($method, $params["uuid"], $dataRequest, $this->_vb_private_key);
+
+                if ($signature)
+                {
+                    $trustlyRequest = array (
+                        "method" => $method,
+                        "params" => array (
+                            "Signature" => $signature,
+                            "UUID" => $params["uuid"],
+                            "Data" => $dataRequest,
+                        ),
+                        "version" => "1.1",
+                    );
+                    return json_encode($trustlyRequest);
+                }
+                else
+                {
+                    return false;
+                }
+        */
+    }
+
+    public function get_submit_result($server_result)
+    {
+        return json_decode($server_result);
+    }
+
+    public function send_data_to_trustly($data, &$server_result, &$server_error, &$server_info)
+    {
+        $ch = curl_init("https://" . $this->_server);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_FORBID_REUSE, TRUE);
+        curl_setopt($ch, CURLOPT_FRESH_CONNECT, TRUE);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, Array("Content-Type: application/json", "Content-Length: " . strlen($data)));
+
+        $server_result = curl_exec($ch);
+        $server_error = curl_error($ch);
+        $server_info = curl_getinfo($ch);
+        curl_close($ch);
+
+        //return $server_result;
+        return json_decode($server_result, true);
+    }
+
+    public function verifySignature($method, $uuid, $data, $signature_from_trustly)
+    {
+        if (!$trustly_public_key = openssl_get_publickey("file://" . self::KEY_STORE_PATH . $this->_trustly_public_key)) {
             error_log(__METHOD__ . __LINE__);
             return false;
         }
@@ -191,14 +223,14 @@ class Trustly_integrator
 
     public function send_notification_response($method, $uuid, $status = "OK")
     {
-        $data = array (
+        $data = array(
             "status" => $status,
         );
 
         $signature = $this->getSignature($method, $uuid, $data, $this->_vb_private_key);
 
-        $trustlyRequest = array (
-            "result" => array (
+        $trustlyRequest = array(
+            "result" => array(
                 "signature" => $signature,
                 "uuid" => $uuid,
                 "data" => $data,
@@ -214,54 +246,8 @@ class Trustly_integrator
         return $response;
     }
 
-    private function _serialize_data($object) 
-    {
-        $serialized = '';
-        if(is_array($object)) 
-        {
-            ksort($object);
-            foreach($object as $key => $value) 
-            {
-                if(is_numeric($key)) 
-                {
-                    $serialized .= $this->_serialize_data($value);
-                }
-                else
-                {
-                    $serialized .= $key . $this->_serialize_data($value);
-                }
-            }
-        }
-        else
-            return $object;
-        return $serialized;
-    }
-    
     public function setServer($server)
     {
         $this->_server = $server;
-    }
-    
-    private function _get_request_json($method, $uuid, $dataRequest)
-    {
-        $signature = $this->getSignature($method, $uuid, $dataRequest, $this->_vb_private_key);
-
-        if ($signature)
-        {
-            $trustlyRequest = array (
-                "method" => $method,
-                "params" => array (
-                    "Signature" => $signature,
-                    "UUID" => $uuid,
-                    "Data" => $dataRequest,
-                ),
-                "version" => "1.1",
-            );
-            return json_encode($trustlyRequest);
-        }
-        else
-        {
-            return false;
-        }
     }
 }

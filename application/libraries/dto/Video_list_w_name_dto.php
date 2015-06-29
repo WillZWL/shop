@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class Video_list_w_name_dto extends Base_dto {
+class Video_list_w_name_dto extends Base_dto
+{
 
     //class variable
     private $id;
@@ -269,24 +270,24 @@ class Video_list_w_name_dto extends Base_dto {
         $this->prod_status = $value;
     }
 
-    public function set_website_quantity($value)
-    {
-        $this->website_quantity = $value;
-    }
-
     public function get_website_quantity()
     {
         return $this->website_quantity;
     }
 
-    public function set_quantity($value)
+    public function set_website_quantity($value)
     {
-        $this->quantity = $value;
+        $this->website_quantity = $value;
     }
 
     public function get_quantity()
     {
         return $this->quantity;
+    }
+
+    public function set_quantity($value)
+    {
+        $this->quantity = $value;
     }
 
     public function get_create_on()

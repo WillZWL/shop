@@ -1,4 +1,4 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 include_once "Base_service.php";
 
@@ -12,9 +12,9 @@ class Ip_service extends Base_service
     function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/service/Ip2country_service.php");
+        include_once(APPPATH . "libraries/service/Ip2country_service.php");
         $this->set_ip2country_srv(new Ip2country_service());
-        include_once(APPPATH."libraries/service/Ipligence_service.php");
+        include_once(APPPATH . "libraries/service/Ipligence_service.php");
         $this->set_ipligence_srv(new Ipligence_service());
     }
 
@@ -22,17 +22,13 @@ class Ip_service extends Base_service
     {
         $ip2country = $this->get_ip2country_srv()->get_info_by_ip($ip);
 
-        if ($ip2country == FALSE || $ip2country["country_id"] == "ZZ")
-        {
-            if ($obj = $this->get_ipligence_srv()->get_info_by_ip($ip))
-            {
+        if ($ip2country == FALSE || $ip2country["country_id"] == "ZZ") {
+            if ($obj = $this->get_ipligence_srv()->get_info_by_ip($ip)) {
                 return $obj->get_country_code();
             }
 
             return FALSE;
-        }
-        else
-        {
+        } else {
             return $ip2country["country_id"];
         }
     }

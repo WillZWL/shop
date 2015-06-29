@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Display_banner_model extends CI_Model
 {
     public function __construct()
@@ -46,7 +47,7 @@ class Display_banner_model extends CI_Model
         return $this->display_banner_service->get_display_banner_list($where, $option);
     }
 
-    public function get_db_w_graphic($banner_type, $display_id, $position_id, $slide_id, $country_id, $lang_id, $usage, $backup_image="")
+    public function get_db_w_graphic($banner_type, $display_id, $position_id, $slide_id, $country_id, $lang_id, $usage, $backup_image = "")
     {
         return $this->display_banner_service->get_db_w_graphic($banner_type, $display_id, $position_id, $slide_id, $country_id, $lang_id, $usage, $backup_image);
     }

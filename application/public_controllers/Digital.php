@@ -12,15 +12,14 @@ class Digital extends PUB_Controller
     }
 
 #   SBF #4444 - TradeTracker Redirect
-    public function index($country="BE")
+    public function index($country = "BE")
     {
 
         // session_start();
 
         $subdomain = (substr($_SERVER['HTTP_HOST'], 0, 3));  # for easier debugging in dev
-        $afid = "TT".$country;
-        switch (strtoupper($country))
-        {
+        $afid = "TT" . $country;
+        switch (strtoupper($country)) {
             case "BE":
                 // $defaultUrl = "http://$subdomain.valuebasket.be/fr_BE";
                 $domainName = "valuebasket.be";
@@ -35,16 +34,13 @@ class Digital extends PUB_Controller
         $canRedirect = true;
 
         // Set parameters.
-        if (isset($_GET['campaignID']))
-        {
+        if (isset($_GET['campaignID'])) {
             $campaignID = $_GET['campaignID'];
             $materialID = isset($_GET['materialID']) ? $_GET['materialID'] : '';
             $affiliateID = isset($_GET['affiliateID']) ? $_GET['affiliateID'] : '';
             $redirectURL = isset($_GET['redirectURL']) ? $_GET['redirectURL'] : '';
             $reference = '';
-        }
-        else if (isset($_GET['tt']))
-        {
+        } else if (isset($_GET['tt'])) {
             $trackingData = explode('_', $_GET['tt']);
 
             $campaignID = isset($trackingData[0]) ? $trackingData[0] : '';
@@ -53,12 +49,10 @@ class Digital extends PUB_Controller
             $reference = isset($trackingData[3]) ? $trackingData[3] : '';
 
             $redirectURL = isset($_GET['r']) ? $_GET['r'] : '';
-        }
-        else
+        } else
             $canRedirect = false;
 
-        if ($canRedirect)
-        {
+        if ($canRedirect) {
             // Calculate MD5 checksum.
             $checkSum = md5('CHK_' . $campaignID . '::' . $materialID . '::' . $affiliateID . '::' . $reference);
 

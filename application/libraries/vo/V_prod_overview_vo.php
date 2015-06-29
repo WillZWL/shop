@@ -672,4 +672,5 @@ class V_prod_overview_vo extends Base_vo
     }
 
 }
+
 ?>

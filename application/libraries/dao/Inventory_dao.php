@@ -5,17 +5,17 @@ include_once 'Base_dao.php';
 
 class Inventory_dao extends Base_dao
 {
-    private $table_name="inventory";
-    private $vo_class_name="Inventory_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "inventory";
+    private $vo_class_name = "Inventory_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function get_batch_inventory_list($where=array(), $option=array(), $classname="Inventory_vo")
+    public function get_batch_inventory_list($where = array(), $option = array(), $classname = "Inventory_vo")
     {
 
         $this->db->select('inv.*');
@@ -25,33 +25,25 @@ class Inventory_dao extends Base_dao
 
         $option["limit"] = -1;
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
 
             $this->include_vo($classname);
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
@@ -59,21 +51,16 @@ class Inventory_dao extends Base_dao
 
             $this->db->select('inv.*');
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
 
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -100,10 +87,9 @@ class Inventory_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_inventory_list($where=array())
+    public function get_inventory_list($where = array())
     {
-        if($where["sku"] == "")
-        {
+        if ($where["sku"] == "") {
             return FALSE;
         }
 
@@ -114,12 +100,10 @@ class Inventory_dao extends Base_dao
 
         $this->include_vo();
 
-        $rs =array();
+        $rs = array();
 
-        if($query = $this->db->query($sql, array($where["sku"])))
-        {
-            foreach($query->result($$this->get_vo_classname()) as $obj)
-            {
+        if ($query = $this->db->query($sql, array($where["sku"]))) {
+            foreach ($query->result($$this->get_vo_classname()) as $obj) {
                 $rs[] = $obj;
             }
             return $rs;
@@ -127,65 +111,51 @@ class Inventory_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_list_w_prod_name($where=array(), $option=array(), $classname="Inv_list_w_prod_name_dto")
+    public function get_list_w_prod_name($where = array(), $option = array(), $classname = "Inv_list_w_prod_name_dto")
     {
 
         $this->db->from('inventory AS i');
         $this->db->join('product AS p', 'p.sku = i.prod_sku', 'LEFT');
 
-        if ($where)
-        {
+        if ($where) {
             $this->db->where($where);
         }
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
             $this->include_dto($classname);
 
             $this->db->select('i.*, p.name AS prod_name', FALSE);
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
 
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -193,34 +163,28 @@ class Inventory_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_stock_valuation($where=array(), $classname='stock_valuation_dto')
+    public function get_stock_valuation($where = array(), $classname = 'stock_valuation_dto')
     {
-        $table_alias = array('inventory'=>'inv', 'product'=>'p', 'category'=>'c',
-            'sub_category'=>'sc');
+        $table_alias = array('inventory' => 'inv', 'product' => 'p', 'category' => 'c',
+            'sub_category' => 'sc');
 
         $replace_arr = array('GBP');
 
         include_once APPPATH . "helpers/string_helper.php";
 
-        if (is_array($where) && count($where) > 0)
-        {
+        if (is_array($where) && count($where) > 0) {
             $new_where = replace_db_alias($where, $table_alias);
             $where_clause = ' WHERE';
             $count = 0;
 
-            foreach ($new_where as $key=>$value)
-            {
-                if ($count++ > 0)
-                {
+            foreach ($new_where as $key => $value) {
+                if ($count++ > 0) {
                     $where_clause = ' AND';
                 }
 
-                if ($this->db->_has_operator($key))
-                {
+                if ($this->db->_has_operator($key)) {
                     $where_clause .= " $key ?";
-                }
-                else
-                {
+                } else {
                     $where_clause .= " $key = ?";
                 }
 
@@ -283,17 +247,13 @@ class Inventory_dao extends Base_dao
         $this->include_dto($classname);
         $result_arr = array();
 
-        foreach ($result->result("object", $classname) as $obj)
-        {
+        foreach ($result->result("object", $classname) as $obj) {
             array_push($result_arr, $obj);
         }
 
-        if ($result_arr)
-        {
+        if ($result_arr) {
             return $result_arr;
-        }
-        else
-        {
+        } else {
             return array();
         }
     }
@@ -310,12 +270,9 @@ class Inventory_dao extends Base_dao
                 WHERE inv.prod_sku = ?
                 AND c.id = ?
                 ";
-        if ($query = $this->db->query($sql, array($sku, $country_id)))
-        {
+        if ($query = $this->db->query($sql, array($sku, $country_id))) {
             return $query->row()->total;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
@@ -340,12 +297,9 @@ class Inventory_dao extends Base_dao
                     AND so.refund_status = 0
                 ";
 
-        if ($query = $this->db->query($sql, array($country_id, $sku)))
-        {
+        if ($query = $this->db->query($sql, array($country_id, $sku))) {
             return $query->row()->outstanding_qty;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
@@ -353,7 +307,7 @@ class Inventory_dao extends Base_dao
     public function set_surplus_quantity($sku, $qty)
     {
         $sql =
-        "
+            "
             update `inventory` i
             inner join `sku_mapping` m on m.sku = i.prod_sku and m.status = 1 and ext_sys = 'wms'
                 set surplus_qty = ?

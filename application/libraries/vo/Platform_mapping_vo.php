@@ -156,4 +156,5 @@ class Platform_mapping_vo extends Base_vo
     }
 
 }
+
 ?>

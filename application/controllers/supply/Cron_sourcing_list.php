@@ -1,9 +1,10 @@
 <?php
+
 class Cron_sourcing_list extends MY_Controller
 {
 
-    private $app_id="SUP0003";
-    private $lang_id="en";
+    private $app_id = "SUP0003";
+    private $lang_id = "en";
 
 
     public function __construct()
@@ -13,32 +14,34 @@ class Cron_sourcing_list extends MY_Controller
         $this->load->model('order/so_model');
         $this->load->model('marketing/product_model');
         $this->load->model('supply/supplier_model');
-        include_once(APPPATH."libraries/service/Context_config_service.php");
+        include_once(APPPATH . "libraries/service/Context_config_service.php");
         $this->set_config_srv(new Context_config_service());
+    }
+
+    public function set_config_srv(Base_service $srv)
+    {
+        $this->config_srv = $srv;
     }
 
     public function index()
     {
         $src_list = $this->so_model->so_service->get_soid_dao()->get_gen_sourcing_list_with_priority();
-        if ($src_list)
-        {
+        if ($src_list) {
             $sl_vo = $this->product_model->product_service->get_sl_dao()->get();
             $cur_date = date("Y-m-d");
-            foreach ($src_list as $obj)
-            {
+            foreach ($src_list as $obj) {
                 $sl_obj = clone $sl_vo;
                 set_value($sl_obj, $obj);
                 $sl_obj->set_list_date($cur_date);
-                $sl_obj->set_required_qty($obj->get_required_qty()-$obj->get_inventory());
-/*set prioritized qty = required qty in 2012-05-17, requested by Fiona*/
-/*
-                $prioritized = $obj->get_prioritized_qty();
-                if (!empty($prioritized))
-                    $sl_obj->set_prioritized_qty($obj->get_prioritized_qty() - $obj->get_inventory());
-*/
+                $sl_obj->set_required_qty($obj->get_required_qty() - $obj->get_inventory());
+                /*set prioritized qty = required qty in 2012-05-17, requested by Fiona*/
+                /*
+                                $prioritized = $obj->get_prioritized_qty();
+                                if (!empty($prioritized))
+                                    $sl_obj->set_prioritized_qty($obj->get_prioritized_qty() - $obj->get_inventory());
+                */
                 $sl_obj->set_prioritized_qty($obj->get_required_qty() - $obj->get_inventory());
-                if ($this->product_model->product_service->get_sl_dao()->insert($sl_obj) === FALSE)
-                {
+                if ($this->product_model->product_service->get_sl_dao()->insert($sl_obj) === FALSE) {
                     echo $this->db->last_query();
                     echo "\n";
                     echo $this->db->_error_message();
@@ -51,57 +54,44 @@ class Cron_sourcing_list extends MY_Controller
 
     public function cps_sourcing_list()
     {
-        $where = array ("item_sku not in ('16908-AA-NA', '14651-AA-NA')" => null);
+        $where = array("item_sku not in ('16908-AA-NA', '14651-AA-NA')" => null);
         $src_list = $this->so_model->so_service->get_soid_dao()->get_cps_sourcing_list($where);
-        if ($src_list)
-        {
+        if ($src_list) {
             # before create sourcing list, set all previous requests to status = 0
             $status = $this->supplier_model->inactive_cpssl_status();
             $cpssl_vo = $this->supplier_model->get("cpssl_dao");
             $cur_date = date("Y-m-d");
             $ts = date("Y-m-d_His");
-            foreach ($src_list as $obj)
-            {
+            foreach ($src_list as $obj) {
                 $cpssl_obj = clone $cpssl_vo;
                 $cpssl_obj->set_list_date($cur_date);
                 $obj->set_required_qty($obj->get_required_qty() - $obj->get_inventory());
                 set_value($cpssl_obj, $obj);
                 $cpssl_obj->set_status(1);
-                if($obj->get_inventory() == 0)
-                {
+                if ($obj->get_inventory() == 0) {
                     $cpssl_obj->set_required_info($obj->get_order_info());
-                }
-                else
-                {
+                } else {
                     $required_info = $result = array();
                     $prioritized_order = $this->sort_order($obj->get_order_info());
                     $inv = $obj->get_inventory();
-                    foreach($prioritized_order AS $so_no=>$qty)
-                    {
-                        if($inv > 0 && $inv >= $qty)
-                        {
+                    foreach ($prioritized_order AS $so_no => $qty) {
+                        if ($inv > 0 && $inv >= $qty) {
                             $inv = $inv - $qty;
                             $required_info[$so_no] = 0;
-                        }
-                        else
-                        {
+                        } else {
                             $required_info[$so_no] = $qty;
                         }
                     }
-                    if($inv > 0)
-                    {
-                        foreach($required_info AS $so_no => $qty)
-                        {
-                            if($inv > 0 && $qty > 0)
-                            {
+                    if ($inv > 0) {
+                        foreach ($required_info AS $so_no => $qty) {
+                            if ($inv > 0 && $qty > 0) {
                                 $required_info[$so_no] = $qty - $inv;
                             }
                         }
                     }
 
-                    foreach($required_info AS $so_no => $qty)
-                    {
-                        $result[$so_no] = $so_no."::".$required_info[$so_no];
+                    foreach ($required_info AS $so_no => $qty) {
+                        $result[$so_no] = $so_no . "::" . $required_info[$so_no];
                     }
                     $info = implode("||", $result);
                     $cpssl_obj->set_required_info($info);
@@ -127,55 +117,37 @@ class Cron_sourcing_list extends MY_Controller
     {
         $order = $temp = $result = array();
 
-        $order_info = explode("||",$order_info);
-        if($order_info)
-        {
-            foreach($order_info AS $info)
-            {
+        $order_info = explode("||", $order_info);
+        if ($order_info) {
+            foreach ($order_info AS $info) {
                 $temp = explode("::", $info);
                 $list[$temp[0]] = $temp[1];
                 $order[$temp[0]] = $this->so_model->get_priority_score($temp[0]);
             }
             arsort($order);
-            foreach($order AS $so_no=>$score)
-            {
+            foreach ($order AS $so_no => $score) {
                 $result[$so_no] = $list[$so_no];
             }
         }
         return $result;
     }
 
-    public function _get_app_id()
-    {
-        return $this->app_id;
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
-    }
-
-    public function gen_cps_sourcing_xml($list_date, $timestamp="")
+    public function gen_cps_sourcing_xml($list_date, $timestamp = "")
     {
         define('DATAPATH', $this->get_config_srv()->value_of("data_path"));
-        if($timestamp=="")
+        if ($timestamp == "")
             $timestamp = $list_date;
 
-        $cps_sourcing_list = $this->supplier_model->get_list("cpssl_dao", array("list_date"=>$list_date, "status"=>1), array("limit"=>-1));
-        if($cps_sourcing_list)
-        {
+        $cps_sourcing_list = $this->supplier_model->get_list("cpssl_dao", array("list_date" => $list_date, "status" => 1), array("limit" => -1));
+        if ($cps_sourcing_list) {
             $cps_list = null;#array();
-            foreach($cps_sourcing_list AS $obj)
-            {
-                if($obj->get_required_qty() > 0)
-                {
-                    $required_info = explode("||",$obj->get_required_info());
-                    foreach($required_info AS $info)
-                    {
+            foreach ($cps_sourcing_list AS $obj) {
+                if ($obj->get_required_qty() > 0) {
+                    $required_info = explode("||", $obj->get_required_info());
+                    foreach ($required_info AS $info) {
                         list($so_no, $qty) = explode("::", $info);
-                        if($qty > 0)
-                        {
-                            $cps_list[$so_no]["information"][] = array("sku"=>$obj->get_item_sku(), "qty"=>$qty,'avg_cost'=>$obj->get_avg_cost());
+                        if ($qty > 0) {
+                            $cps_list[$so_no]["information"][] = array("sku" => $obj->get_item_sku(), "qty" => $qty, 'avg_cost' => $obj->get_avg_cost());
                         }
                     }
                 }
@@ -183,7 +155,7 @@ class Cron_sourcing_list extends MY_Controller
 
 
             $so_no_array = null;
-            foreach ($cps_list as $so_no=>$value)
+            foreach ($cps_list as $so_no => $value)
                 $so_no_array[] = $so_no;
 
             $list = $this->so_model->get_so_priority_score_info($so_no_array);
@@ -200,28 +172,27 @@ class Cron_sourcing_list extends MY_Controller
             $content .= '<?xml version="1.0"?>' . "\n";
             $content .= '<orders>' . "\n";
             // foreach($cps_list AS $so_no=>$information)
-            foreach($list AS $k=>$data)
-            {
+            foreach ($list AS $k => $data) {
                 $so_no = $data["so_no"];
 
-                $so = $this->so_model->get("dao", array("so_no"=>$so_no));
+                $so = $this->so_model->get("dao", array("so_no" => $so_no));
                 if ($starttime == -1) $starttime = time();
 
                 $delivery_country_id = $data["delivery_country_id"];
                 $information = $cps_list[$so_no];
                 $priority_score = $this->so_model->get_priority_score($so_no, array($data["order_create_date"], $data["biz_type"], $data["conv_site_id"], $data["order_margin"]));
 
-                echo "\r\n" . (time() - $starttime). " sec(s) #{$count}: SO#$so_no @ $priority_score";
+                echo "\r\n" . (time() - $starttime) . " sec(s) #{$count}: SO#$so_no @ $priority_score";
                 $count++;
 
                 $content .= '<order>' . "\n";
                 $content .= '<bundle/>' . "\n";
                 $content .= "<retailer_order_reference>$so_no</retailer_order_reference>\n";
                 $content .= "<purchased_date>{$data["order_create_date"]}</purchased_date>\n";
-                $content .= "<name>".htmlspecialchars($so->get_delivery_name())."</name>\n";
-                $content .= "<address>".htmlspecialchars($so->get_delivery_address())."</address>\n";
+                $content .= "<name>" . htmlspecialchars($so->get_delivery_name()) . "</name>\n";
+                $content .= "<address>" . htmlspecialchars($so->get_delivery_address()) . "</address>\n";
                 $content .= "<postcode>{$so->get_delivery_postcode()}</postcode>\n";
-                $content .= "<city>".htmlspecialchars($so->get_delivery_city())."</city>\n";
+                $content .= "<city>" . htmlspecialchars($so->get_delivery_city()) . "</city>\n";
                 $content .= "<state>{$so->get_delivery_state()}</state>\n";
                 $content .= "<country>{$delivery_country_id}</country>\n";
                 $content .= "<score>$priority_score</score>\n";
@@ -232,9 +203,8 @@ class Cron_sourcing_list extends MY_Controller
                 $content .= "</amount>\n";
                 $content .= "<skus>\n";
                 $master_sku = "";
-                foreach($information["information"] AS $prod_arr)
-                {
-                    $is_clearance = $this->get_product_clearance($prod_arr["sku"])?"TRUE":"FALSE";
+                foreach ($information["information"] AS $prod_arr) {
+                    $is_clearance = $this->get_product_clearance($prod_arr["sku"]) ? "TRUE" : "FALSE";
                     $content .= "<sku>\n";
                     $content .= "   <price></price>\n";
                     $content .= "   <retailer_sku>{$prod_arr["sku"]}</retailer_sku>\n";
@@ -251,47 +221,21 @@ class Cron_sourcing_list extends MY_Controller
             }
             $content .= '</orders>' . "\n";
 
-            if($content)
-            {
-                if(fwrite($fp, $content))
-                {
-                    if (!copy($filepath.$filename, $filepath.$default_name))
-                    {
+            if ($content) {
+                if (fwrite($fp, $content)) {
+                    if (!copy($filepath . $filename, $filepath . $default_name)) {
                         $subject = "<DO NOT REPLY> Fails to create Default CPS Sourcing List";
-                        $message ="FILE: ".__FILE__."<br>
-                                     LINE: ".__LINE__;
+                        $message = "FILE: " . __FILE__ . "<br>
+                                     LINE: " . __LINE__;
                         $this->error_handler($subject, $message);
                     }
-                }
-                else
-                {
+                } else {
                     $subject = "<DO NOT REPLY> Fails to create Daily CPS Sourcing List";
-                    $message ="FILE: ".__FILE__."<br>
-                                 LINE: ".__LINE__;
+                    $message = "FILE: " . __FILE__ . "<br>
+                                 LINE: " . __LINE__;
                     $this->error_handler($subject, $message);
                 }
             }
-        }
-    }
-
-    public function get_master_sku($sku)
-    {
-        return $this->supplier_model->get_master_sku(array("sku"=>$sku, "ext_sys"=>"WMS", "status"=>1));
-    }
-
-    public function error_handler($subject = '', $msg = '', $is_dead = false)
-    {
-        //echo $msg;
-        $subject = $subject?$subject:'CPS Sourcing List Error';
-
-        if ($subject)
-        {
-            mail($this->get_contact_email(), $subject, $msg, 'From: thomas@eservicesgroup.net');
-        }
-
-        if ($is_dead)
-        {
-            exit;
         }
     }
 
@@ -300,9 +244,38 @@ class Cron_sourcing_list extends MY_Controller
         return $this->config_srv;
     }
 
-    public function set_config_srv(Base_service $srv)
+    public function get_product_clearance($sku)
     {
-        $this->config_srv = $srv;
+        return $this->so_model->get_product_clearance($sku);
+    }
+
+    public function get_master_sku($sku)
+    {
+        return $this->supplier_model->get_master_sku(array("sku" => $sku, "ext_sys" => "WMS", "status" => 1));
+    }
+
+    public function error_handler($subject = '', $msg = '', $is_dead = false)
+    {
+        //echo $msg;
+        $subject = $subject ? $subject : 'CPS Sourcing List Error';
+
+        if ($subject) {
+            mail($this->get_contact_email(), $subject, $msg, 'From: thomas@eservicesgroup.net');
+        }
+
+        if ($is_dead) {
+            exit;
+        }
+    }
+
+    public function _get_app_id()
+    {
+        return $this->app_id;
+    }
+
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
     }
 
     public function retrieve_xml()
@@ -317,11 +290,6 @@ class Cron_sourcing_list extends MY_Controller
     public function get_score($so_no)
     {
         var_dump($this->so_model->get_priority_score($so_no));
-    }
-
-    public function get_product_clearance($sku)
-    {
-        return $this->so_model->get_product_clearance($sku);
     }
 }
 

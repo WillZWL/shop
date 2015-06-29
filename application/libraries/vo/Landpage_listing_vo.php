@@ -168,4 +168,5 @@ class Landpage_listing_vo extends Base_vo
     }
 
 }
+
 ?>

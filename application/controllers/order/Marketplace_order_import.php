@@ -1,9 +1,10 @@
 <?php
+
 class Marketplace_order_import extends MY_Controller
 {
 
-    private $app_id="ORD0030";
-    private $lang_id="en";
+    private $app_id = "ORD0030";
+    private $lang_id = "en";
 
 
     public function __construct()
@@ -17,20 +18,16 @@ class Marketplace_order_import extends MY_Controller
         $this->load->library('encrypt');
     }
 
-    public function index($marketplace="")
+    public function index($marketplace = "")
     {
         $platform_id_list = array();
-        if($marketplace)
-        {
-            $platform_list = $this->platform_biz_var_service->get_list_w_platform_name(array("s.type"=>$marketplace));
-            if($platform_list)
-            {
+        if ($marketplace) {
+            $platform_list = $this->platform_biz_var_service->get_list_w_platform_name(array("s.type" => $marketplace));
+            if ($platform_list) {
 
 
                 $data["platform_action_html"] = $this->get_marketplace_html($marketplace, $platform_list);
-            }
-            else
-            {
+            } else {
                 $data["error_message"] = "No platform_ids found for this marketplace.";
             }
         }
@@ -50,10 +47,8 @@ class Marketplace_order_import extends MY_Controller
     private function get_marketplace_html($marketplace, $platform_list)
     {
         $html = '';
-        if($platform_list)
-        {
-            foreach ($platform_list as $key => $obj)
-            {
+        if ($platform_list) {
+            foreach ($platform_list as $key => $obj) {
                 $platformid_option .= <<<html
                     <option value='{$obj->get_selling_platform_id()}' >{$obj->get_selling_platform_id()}</option>
 html;
@@ -66,8 +61,7 @@ html;
         }
 
         $base_url = base_url();
-        if(strtoupper($marketplace) == "RAKUTEN")
-        {
+        if (strtoupper($marketplace) == "RAKUTEN") {
             $nowdate = date("Y-m-d");
             $html = <<<html
                     <tr>
@@ -115,9 +109,7 @@ html;
                         </td>
                     <tr>
 html;
-        }
-        elseif(strtoupper($marketplace) == "QOO10")
-        {
+        } elseif (strtoupper($marketplace) == "QOO10") {
             $html = <<<html
                     <tr>
                         <td>Choose Country</td>
@@ -145,9 +137,7 @@ html;
                         </td>
                     <tr>
 html;
-        }
-        elseif(strtoupper($marketplace) == "FNAC")
-        {
+        } elseif (strtoupper($marketplace) == "FNAC") {
             $curr_time = mktime();
             $start_time = date("Y-m-d", $curr_time - 3600 * 24 * 14);
             $end_time = date("Y-m-d", $curr_time + 24 * 60 * 60);
@@ -194,11 +184,13 @@ html;
         return $html;
     }
 
-    public function _get_app_id(){
+    public function _get_app_id()
+    {
         return $this->app_id;
     }
 
-    public function _get_lang_id(){
+    public function _get_lang_id()
+    {
         return $this->lang_id;
     }
 }

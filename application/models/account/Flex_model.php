@@ -1,4 +1,5 @@
 <?php
+
 class Flex_model extends CI_Model
 {
     public function __construct()
@@ -29,7 +30,7 @@ class Flex_model extends CI_Model
 
     public function process_report($pmgw, $filename)
     {
-        $pmgw_service = $pmgw."_pmgw_report_service";
+        $pmgw_service = $pmgw . "_pmgw_report_service";
         return $this->$pmgw_service->process_report($filename);
     }
 
@@ -53,7 +54,7 @@ class Flex_model extends CI_Model
         return $this->flex_service->get_flex_batch_num_rows($where);
     }
 
-    public function get_sales_invoice($start_date, $end_date, $folder_name="",$gen_exception_only, $ignore_status)
+    public function get_sales_invoice($start_date, $end_date, $folder_name = "", $gen_exception_only, $ignore_status)
     {
         return $this->flex_service->get_sales_invoice($start_date, $end_date, $folder_name, $gen_exception_only, $ignore_status);
     }
@@ -68,7 +69,7 @@ class Flex_model extends CI_Model
         return $this->flex_service->reverse_refund_invoice_status($date);
     }
 
-    public function get_refund_invoice($start_date, $end_date, $type = "R", $folder_name="")
+    public function get_refund_invoice($start_date, $end_date, $type = "R", $folder_name = "")
     {
         return $this->flex_service->get_refund_invoice($start_date, $end_date, $type, $folder_name);
     }
@@ -118,4 +119,5 @@ class Flex_model extends CI_Model
         return $this->flex_service->platfrom_order_insert_flex_ria($gateway_id, $so_no);
     }
 }
+
 ?>

@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Ra_product_dao extends Base_dao
 {
-    private $table_name="ra_product";
-    private $vo_classname="Ra_product_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "ra_product";
+    private $vo_classname = "Ra_product_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -36,7 +36,7 @@ class Ra_product_dao extends Base_dao
 
     public function get_ra_product_w_group_name($where = array(), $option = array(), $lang_id = "en")
     {
-        $select_str  = 'rap.sku, ragp.ra_group_id, rgc.group_display_name as group_name, ragp.sku as ra_sku, pbv.selling_platform_id as platform_id, pbv.platform_currency_id, pr.price, pr.default_shiptype as shiptype, pr.listing_status,';
+        $select_str = 'rap.sku, ragp.ra_group_id, rgc.group_display_name as group_name, ragp.sku as ra_sku, pbv.selling_platform_id as platform_id, pbv.platform_currency_id, pr.price, pr.default_shiptype as shiptype, pr.listing_status,';
         $select_str .= 'p.prod_grp_cd, p.name as prod_name, p.quantity, p.clearance, p.website_quantity, p.website_status, p.cat_id, p.sub_cat_id, p.sub_sub_cat_id, p.image, p.ean, p.mpn, p.upc, p.status as prod_status, p.display_quantity,';
         $select_str .= 'ifnull(nullif(pc.prod_name, ""), ifnull(nullif(pc_en.prod_name, ""), p.name)) as content_prod_name';
 
@@ -49,15 +49,13 @@ class Ra_product_dao extends Base_dao
         $this->db->join('platform_biz_var pbv', 'pr.platform_id = pbv.selling_platform_id', 'INNER');
         $this->db->join('product_content pc', 'p.sku = pc.prod_sku and pbv.language_id = pc.lang_id', 'LEFT');
         $this->db->join('product_content pc_en', 'p.sku = pc_en.prod_sku and pc_en.lang_id = "en"', 'LEFT');
-        $this->db->join('ra_group_content AS rgc', 'rag.group_id = rgc.group_id and rgc.lang_id = "'.$lang_id.'"', 'LEFT');
+        $this->db->join('ra_group_content AS rgc', 'rag.group_id = rgc.group_id and rgc.lang_id = "' . $lang_id . '"', 'LEFT');
         $this->db->order_by('price asc');
         $this->db->where($where);
 
-        if ($query = $this->db->get())
-        {
+        if ($query = $this->db->get()) {
             $ret = array();
-            foreach($query->result('array') as $row)
-            {
+            foreach ($query->result('array') as $row) {
                 $ret[] = $row;
             }
 
@@ -82,11 +80,9 @@ class Ra_product_dao extends Base_dao
 
         $query = $this->db->get();
         // var_dump($this->db->last_query());
-        if($query)
-        {
+        if ($query) {
             $ret = array();
-            foreach ($query->result(array()) as $row)
-            {
+            foreach ($query->result(array()) as $row) {
                 $ret[] = $row;
             }
 

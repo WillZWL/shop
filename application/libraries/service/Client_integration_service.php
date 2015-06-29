@@ -4,33 +4,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Client_integration_service
 {
     private $notification_email = "itsupport@eservicesgroup.net";
+
     public function __construct()
     {
         $CI =& get_instance();
         $CI->load->helper('url', 'string', 'object');
-        $this->input=$CI->input;
+        $this->input = $CI->input;
         // $this->load->helper(array('url', 'object','string'));
 
-        include_once (APPPATH."libraries/dao/Interface_client_dao.php");
+        include_once(APPPATH . "libraries/dao/Interface_client_dao.php");
         $this->set_ic_dao(new Interface_client_dao());
-        include_once (APPPATH."libraries/dao/Client_dao.php");
+        include_once(APPPATH . "libraries/dao/Client_dao.php");
         $this->set_client_dao(new Client_dao());
-    }
-
-
-    public function get_ic_dao()
-    {
-        return $this->ic_dao;
     }
 
     public function set_ic_dao(Base_dao $dao)
     {
         $this->ic_dao = $dao;
-    }
-
-    public function get_client_dao()
-    {
-        return $this->client_dao;
     }
 
     public function set_client_dao(Base_dao $dao)
@@ -40,26 +30,21 @@ class Client_integration_service
 
     public function get_client_id_by_email($client_email)
     {
-        $obj = get_client_vo(array("email"=>$client_email));
+        $obj = get_client_vo(array("email" => $client_email));
         return $obj->get_id();
     }
 
     public function get_client_vo_by_id($client_id)
     {
-        return get_client_vo(array("id"=>$client_id));
+        return get_client_vo(array("id" => $client_id));
     }
-
-
 
     public function create_client($batch_id)
     {
-        if (!$batch_id)
-        {
+        if (!$batch_id) {
             $error_msg = 'Function create_client(): $batch_id cannot be empty.';
             throw new Exception($error_msg);
-        }
-        else
-        {
+        } else {
             $batch_error = 0;
 
             $interface_client_obj = $this->get_ic_dao()->get();
@@ -96,18 +81,14 @@ class Client_integration_service
             // insert into db interface_client
             $interface_client_vo = $this->get_ic_dao()->insert($interface_client_obj);
 
-            if ($interface_client_vo === FALSE)
-            {
-                $error_msg = "Error Table: Interface_client\nError Msg: ".$this->get_ic_dao()->db->_error_message()."\nError SQL:".$this->get_ic_dao()->db->_error_message()."\n".$this->get_ic_dao()->db->last_query();
+            if ($interface_client_vo === FALSE) {
+                $error_msg = "Error Table: Interface_client\nError Msg: " . $this->get_ic_dao()->db->_error_message() . "\nError SQL:" . $this->get_ic_dao()->db->_error_message() . "\n" . $this->get_ic_dao()->db->last_query();
                 $batch_error = 1;
-            }
-            else
-            {
+            } else {
                 return $interface_client_vo;
             }
 
-            if($batch_error)
-            {
+            if ($batch_error) {
                 $platform_id = $this->platform_id;
                 $website = $this->website;
                 $this->send_notification_email("BE", $platform_id, $website, $error_msg);
@@ -116,29 +97,38 @@ class Client_integration_service
         }
     }
 
-    public function get_interface_client_vo($client_trans_id, $batch_id="")
+    public function get_ic_dao()
     {
-        if (!$client_trans_id)
-        {
+        return $this->ic_dao;
+    }
+
+    private function send_notification_email($pending_action, $platform_id, $website, $error_msg = "")
+    {
+        switch ($pending_action) {
+            case "BE":
+                $message = $error_msg;
+                $title = "[$platform_id - $website] commit_platform_batch problems - BATCH_ERROR";
+                break;
+        }
+        mail($this->notification_email, $title, $message);
+
+    }
+
+    public function get_interface_client_vo($client_trans_id, $batch_id = "")
+    {
+        if (!$client_trans_id) {
             $error_msg = 'Function get_interface_client_vo(): $client_trans_id cannot be empty.';
             throw new Exception($error_msg);
-        }
-        elseif ($client_trans_id && !$batch_id)
-        {
-            $interface_client_vo = $this->get_ic_dao()->get(array("trans_id"=>$client_trans_id));
-        }
-        elseif ($client_trans_id && $batch_id)
-        {
-            $interface_client_vo = $this->get_ic_dao()->get(array("batch_id"=>$batch_id, "trans_id"=>$client_trans_id));
+        } elseif ($client_trans_id && !$batch_id) {
+            $interface_client_vo = $this->get_ic_dao()->get(array("trans_id" => $client_trans_id));
+        } elseif ($client_trans_id && $batch_id) {
+            $interface_client_vo = $this->get_ic_dao()->get(array("batch_id" => $batch_id, "trans_id" => $client_trans_id));
         }
 
-        if($interface_client_vo)
-        {
+        if ($interface_client_vo) {
             return $interface_client_vo;
-        }
-        else
-        {
-            $error_msg = 'Function get_interface_client_vo(): '."\nError Table: interface_client. client does not exist. \nBatch_id: $batch_id \nClient's trans_id: $client_trans_id";
+        } else {
+            $error_msg = 'Function get_interface_client_vo(): ' . "\nError Table: interface_client. client does not exist. \nBatch_id: $batch_id \nClient's trans_id: $client_trans_id";
             throw new Exception($error_msg);
         }
 
@@ -151,38 +141,32 @@ class Client_integration_service
         $ic_dao = $this->get_ic_dao();
         $c_vo = $c_dao->get();
 
-        $ic_obj = $ic_dao->get(array("batch_id"=>$batch_id, "trans_id"=>$iso_obj->get_client_trans_id())); // trans_id
+        $ic_obj = $ic_dao->get(array("batch_id" => $batch_id, "trans_id" => $iso_obj->get_client_trans_id())); // trans_id
 
         //start_transaction
         $c_dao->trans_start();
 
         //client
-        $c_obj = $c_dao->get(array("email"=>$ic_obj->get_email()));
-        if($c_obj)
-        {
+        $c_obj = $c_dao->get(array("email" => $ic_obj->get_email()));
+        if ($c_obj) {
             set_value($c_obj, $ic_obj);
             $c_ret = $c_dao->update($c_obj);
-        }
-        else
-        {
+        } else {
             $c_obj = clone $c_vo;
             set_value($c_obj, $ic_obj);
             $c_ret = $c_dao->insert($c_obj);
         }
 
-        if($c_ret !== FALSE)
-        {
+        if ($c_ret !== FALSE) {
             $commit_client["iso_batch_status"] = TRUE;
             $commit_client["failed_reason"] = "";
             $commit_client["c_dao"] = $c_dao;
             $commit_client["ic_dao"] = $ic_dao;
             $commit_client["ic_obj"] = $ic_obj;
             $commit_client["c_obj"] = $c_obj;
-        }
-        else
-        {
+        } else {
             $commit_client["iso_batch_status"] = FALSE;
-            $commit_client["failed_reason"]  = __LINE__. "client: ".$c_dao->db->_error_message();
+            $commit_client["failed_reason"] = __LINE__ . "client: " . $c_dao->db->_error_message();
             $commit_client["c_dao"] = $c_dao;
             $commit_client["ic_dao"] = $ic_dao;
             $commit_client["ic_obj"] = $ic_obj;
@@ -191,33 +175,32 @@ class Client_integration_service
         return $commit_client;
     }
 
+    public function get_client_dao()
+    {
+        return $this->client_dao;
+    }
+
     public function update_interface_client($c_obj, $ic_obj)
     {
-        if (!$c_obj || !$ic_obj)
-        {
+        if (!$c_obj || !$ic_obj) {
             $error_msg = 'Function update_interface_client(): $c_obj and $ic_obj cannot be empty.';
             throw new Exception($error_msg);
-        }
-        else
-        {
+        } else {
             $ic_dao = $this->get_ic_dao();
             $client_id = $c_obj->get_id();
 
             // ic_list contains a list of interface_client records without client_id
             // this loop is to set the client_id into all these records
-            if ($ic_dao->update_client_id_to_interface($ic_obj->get_batch_id(), $ic_obj->get_email(), $client_id))
-            {
+            if ($ic_dao->update_client_id_to_interface($ic_obj->get_batch_id(), $ic_obj->get_email(), $client_id)) {
                 $update_interface_client["iso_batch_status"] = TRUE;
                 $update_interface_client["failed_reason"] = "";
                 $update_interface_client["ic_dao"] = $ic_dao;
                 $update_interface_client["ic_obj"] = $ic_obj;
-            }
-            else
-            {
+            } else {
                 $update_interface_client["iso_batch_status"] = FALSE;
                 $update_interface_client["ic_dao"] = $ic_dao;
                 $update_interface_client["ic_obj"] = $ic_obj;
-                $update_interface_client["failed_reason"] = __LINE__. "Interface_client: ".$ic_dao->db->_error_message();
+                $update_interface_client["failed_reason"] = __LINE__ . "Interface_client: " . $ic_dao->db->_error_message();
             }
 
             return $update_interface_client;
@@ -227,57 +210,43 @@ class Client_integration_service
     public function execute_client_trans($c_dao, $trans_type)
     {
         // this function sets the type of transation so info can be written into db
-        if (!$c_dao || !$trans_type)
-        {
+        if (!$c_dao || !$trans_type) {
             $error_msg = 'Function execute_client_trans(): $c_dao and $trans_type cannot be empty.';
             throw new Exception($error_msg);
-        }
-        elseif($trans_type == "rollback")
-        {
+        } elseif ($trans_type == "rollback") {
             $c_dao->trans_rollback();
-        }
-        elseif($trans_type == "complete")
-        {
+        } elseif ($trans_type == "complete") {
             $c_dao->trans_complete();
-        }
-        else
-        {
+        } else {
             $error_msg = 'Function execute_client_trans(): $trans_type not recognised.';
             throw new Exception($error_msg);
         }
     }
 
-
     public function set_platform_id($platform_id)
     {
-        if (!$platform_id)
-        {
+        if (!$platform_id) {
             $error_msg = 'Function set_platform_id(): $platform_id cannot be empty.';
             throw new Exception($error_msg);
-        }
-        else
-        {
+        } else {
             $this->platform_id = strtoupper($platform_id);
-        }
-    }
-
-    public function set_website($website)
-    {
-        if (!$website)
-        {
-            $error_msg = 'Function set_website(): $website cannot be empty.';
-            throw new Exception($error_msg);
-        }
-        else
-        {
-            $this->website = strtoupper($website);
         }
     }
 
 
 // ================================= FILL IN CLIENT'S INFO ===================================================
 
-    public function set_ext_client_id($ext_client_id="")
+    public function set_website($website)
+    {
+        if (!$website) {
+            $error_msg = 'Function set_website(): $website cannot be empty.';
+            throw new Exception($error_msg);
+        } else {
+            $this->website = strtoupper($website);
+        }
+    }
+
+    public function set_ext_client_id($ext_client_id = "")
     {
         # this is the client_id generated by respective platform (e.g. Qoo10)
         # if platform does not supply own client_id, use email
@@ -286,60 +255,50 @@ class Client_integration_service
 
     public function set_client_name($forename, $title = "", $surname = "")
     {
-        if (!$forename)
-        {
+        if (!$forename) {
             $error_msg = 'Function set_client_name(): $forename cannot be empty.';
             throw new Exception($error_msg);
         }
 
-        $client_name["title"]       = $title;
-        $client_name["forename"]    = $forename;
-        $client_name["surname"]     = $surname;
+        $client_name["title"] = $title;
+        $client_name["forename"] = $forename;
+        $client_name["surname"] = $surname;
 
         $this->client_name = $client_name;
 
     }
 
-    public function set_client_tel($tel, $country_code="", $area_code="")
+    public function set_client_tel($tel, $country_code = "", $area_code = "")
     {
-        if (!$tel)
-        {
+        if (!$tel) {
             $error_msg = 'Function set_client_tel(): $tel cannot be empty.';
             throw new Exception($error_msg);
-        }
-        else
-        {
-            $this->client_tel = trim($country_code.$area_code.$tel);
+        } else {
+            $this->client_tel = trim($country_code . $area_code . $tel);
         }
     }
 
     public function set_client_mobile($mobile = "")
     {
-            $this->client_mobile = $mobile;
+        $this->client_mobile = $mobile;
     }
 
     public function set_client_email($client_email)
     {
-        if (!$client_email)
-        {
+        if (!$client_email) {
             $error_msg = 'Function set_client_email(): $client_email cannot be empty';
             throw new Exception($error_msg);
-        }
-        else
-        {
+        } else {
             $this->client_email = $client_email;
         }
     }
 
-    public function set_client_address($country_id, $postcode, $address_1, $address_2="", $address_3="", $city="", $state="")
+    public function set_client_address($country_id, $postcode, $address_1, $address_2 = "", $address_3 = "", $city = "", $state = "")
     {
-        if (!$country_id || !$postcode || !$address_1)
-        {
+        if (!$country_id || !$postcode || !$address_1) {
             $error_msg = 'Function set_client_address(): $country_id, $postcode and $address_1 cannot be empty';
             throw new Exception($error_msg);
-        }
-        else
-        {
+        } else {
             $client_addresss["address_1"] = $address_1;
             $client_addresss["address_2"] = $address_2;
             $client_addresss["address_3"] = $address_3;
@@ -351,48 +310,39 @@ class Client_integration_service
         }
     }
 
+
+// ================================= FILL IN DELIVERY INFO ===================================================
+
     public function set_password($password)
     {
-        include_once(BASEPATH."libraries/Encrypt.php");
+        include_once(BASEPATH . "libraries/Encrypt.php");
         $encrypt = new CI_Encrypt();
 
-        if (!$password)
-        {
+        if (!$password) {
             $error_msg = 'Function set_password(): $password cannot be empty.';
             throw new Exception($error_msg);
-        }
-        else
-        {
+        } else {
             $this->password = ($encrypt->encode($password));
         }
     }
 
-
-// ================================= FILL IN DELIVERY INFO ===================================================
-
     public function set_del_name($del_name)
     {
-        if (!$del_name)
-        {
+        if (!$del_name) {
             $error_msg = 'Function set_del_name(): $del_name cannot be empty.';
             throw new Exception($error_msg);
-        }
-        else
-        {
+        } else {
             $this->del_name = $del_name;
         }
     }
 
-    public function set_del_tel($tel, $country_code="", $area_code="")
+    public function set_del_tel($tel, $country_code = "", $area_code = "")
     {
-        if (!$tel)
-        {
+        if (!$tel) {
             $error_msg = 'Function set_del_tel(): $tel cannot be empty.';
             throw new Exception($error_msg);
-        }
-        else
-        {
-            $this->del_tel = trim($country_code.$area_code.$tel);
+        } else {
+            $this->del_tel = trim($country_code . $area_code . $tel);
         }
     }
 
@@ -402,15 +352,12 @@ class Client_integration_service
         $this->del_mobile = $mobile;
     }
 
-    public function set_del_address($country_id, $postcode, $address_1, $address_2="", $address_3="", $city="", $state="")
+    public function set_del_address($country_id, $postcode, $address_1, $address_2 = "", $address_3 = "", $city = "", $state = "")
     {
-        if (!$country_id || !$postcode || !$address_1)
-        {
+        if (!$country_id || !$postcode || !$address_1) {
             $error_msg = "Function set_del_address() - one of the following is empty: \n country_id: $country_id; \npostcode: $postcode; \naddress_1: $address_1.";
             throw new Exception($error_msg);
-        }
-        else
-        {
+        } else {
             $del_address["address_1"] = $address_1;
             $del_address["address_2"] = $address_2;
             $del_address["address_3"] = $address_3;
@@ -422,28 +369,12 @@ class Client_integration_service
         }
     }
 
-    public function set_del_company($company_name = "")
-    {
-        $this->del_company = $company_name;
-    }
-
-
-
 
 // ===========================================
 
-
-    private function send_notification_email($pending_action, $platform_id, $website, $error_msg = "")
+    public function set_del_company($company_name = "")
     {
-        switch ($pending_action)
-        {
-            case "BE":
-                $message = $error_msg;
-                $title = "[$platform_id - $website] commit_platform_batch problems - BATCH_ERROR";
-                break;
-        }
-        mail($this->notification_email, $title, $message);
-
+        $this->del_company = $company_name;
     }
 
     // private function is_valid_contact_number($country_code="", $area_code="", $tel="")

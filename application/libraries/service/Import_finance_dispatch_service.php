@@ -14,12 +14,16 @@ class Import_finance_dispatch_service extends Import_info_service
         $this->set_so_service(new So_service());
     }
 
+    public function set_so_service($serv)
+    {
+        $this->so_service = $serv;
+    }
+
     public function validate_import_data($data)
     {
         $result = array();
         $i = 0;
-        foreach($data as $row)
-        {
+        foreach ($data as $row) {
             $column = 0;
             $so_no = trim($row->get_so_no());
             if ((is_null($so_no)) || ($so_no == ""))
@@ -44,33 +48,25 @@ class Import_finance_dispatch_service extends Import_info_service
         $where = array("batch_id" => $batch_id, "status" => "R");
         $process_list = $this->get_import_interface_info_dao()->get_list($where, $option);
 
-        foreach($process_list as $data)
-        {
+        foreach ($process_list as $data) {
             $so_obj = $so_srv->get_dao()->get(array("so_no" => trim($data->get_so_no())));
-            if ($so_obj)
-            {
-                if ((!$is_reprocess) && ($so_obj->get_finance_dispatch_date() != '') and (!is_null($so_obj->get_finance_dispatch_date())))
-                {
+            if ($so_obj) {
+                if ((!$is_reprocess) && ($so_obj->get_finance_dispatch_date() != '') and (!is_null($so_obj->get_finance_dispatch_date()))) {
                     $data->set_failed_reason("Dispatch Date uploaded before:" . $so_obj->get_finance_dispatch_date());
                     $data->set_status("F");
                     $error_occur = true;
-                }
-                else
-                {
+                } else {
                     $so_obj->set_finance_dispatch_date(trim($data->get_finance_dispatch_date()));
                     $result = $so_srv->get_dao()->update($so_obj);
                     if ($result !== FALSE)
                         $data->set_status("S");
-                    else
-                    {
+                    else {
                         $data->set_failed_reason("Cannot update so" . $so_srv->get_dao()->db->_error_message());
                         $data->set_status("F");
                         $error_occur = true;
                     }
                 }
-            }
-            else
-            {
+            } else {
                 $data->set_failed_reason("Cannot find this order number");
                 $data->set_status("F");
                 $error_occur = true;
@@ -78,6 +74,11 @@ class Import_finance_dispatch_service extends Import_info_service
             $this->get_import_interface_info_dao()->update($data);
         }
         return $error_occur;
+    }
+
+    public function get_so_service()
+    {
+        return $this->so_service;
     }
 
     public function get_function_name()
@@ -103,16 +104,6 @@ class Import_finance_dispatch_service extends Import_info_service
     public function get_check_quote()
     {
         return false;
-    }
-
-    public function set_so_service($serv)
-    {
-        $this->so_service = $serv;
-    }
-
-    public function get_so_service()
-    {
-        return $this->so_service;
     }
 
 }

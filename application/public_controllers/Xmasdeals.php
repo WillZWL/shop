@@ -16,7 +16,7 @@ class Xmasdeals extends PUB_Controller
 
     public function index()
     {
-        $this->load_view("xmasdeals.php",$data);
+        $this->load_view("xmasdeals.php", $data);
     }
 
     public function _get_lang_id()

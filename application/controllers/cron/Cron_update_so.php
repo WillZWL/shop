@@ -1,7 +1,8 @@
 <?php
+
 class Cron_update_so extends MY_Controller
 {
-    private $app_id="CRN0033";
+    private $app_id = "CRN0033";
 
     public function __construct()
     {

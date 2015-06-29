@@ -16,8 +16,8 @@
 ?>
 <?php
 
-require_once(ClickTale_Root."/ClickTale.CachingProviders/ClickTale.CacheProvider.BaseCacheProvider.php");
-require_once(ClickTale_Root."/ClickTale.Settings.php");
+require_once(ClickTale_Root . "/ClickTale.CachingProviders/ClickTale.CacheProvider.BaseCacheProvider.php");
+require_once(ClickTale_Root . "/ClickTale.Settings.php");
 
 class ClickTale_CacheProvider_APC extends ClickTale_CacheProvider_BaseCacheProvider
 {
@@ -31,8 +31,8 @@ class ClickTale_CacheProvider_APC extends ClickTale_CacheProvider_BaseCacheProvi
         else
             apc_store($key, $value);
     }
-    
-    // Returns FALSE if key does not exist. 
+
+    // Returns FALSE if key does not exist.
     public function pull($key, $config)
     {
         $deleteAfterPull = $config["DeleteAfterPull"];
@@ -42,12 +42,12 @@ class ClickTale_CacheProvider_APC extends ClickTale_CacheProvider_BaseCacheProvi
             $this->remove($key, $config);
         return $value;
     }
-    
+
     public function remove($key, $config)
     {
         apc_delete($key);
     }
-    
+
     public function exists($key, $config)
     {
         if (apc_fetch($key) != false)
@@ -55,27 +55,27 @@ class ClickTale_CacheProvider_APC extends ClickTale_CacheProvider_BaseCacheProvi
         else
             return false;
     }
-    
-    public function is_config_valid($config)
-    {
-        $valid = extension_loaded("apc");
-        return $valid;
-    }
-    
+
     public function config_validation($config)
     {
-        if($this->is_config_valid($config)) {
+        if ($this->is_config_valid($config)) {
             return array(
                 "Your configuration seem to be valid"
             );
         } else {
             return array(
-                "PHP integration module seems to be mis-copnfigured or the ".
+                "PHP integration module seems to be mis-copnfigured or the " .
                 "APC extension is not operational"
             );
         }
     }
-    
+
+    public function is_config_valid($config)
+    {
+        $valid = extension_loaded("apc");
+        return $valid;
+    }
+
 }
 
 ?>

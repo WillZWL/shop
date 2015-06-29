@@ -13,19 +13,14 @@ class Connection_service extends Base_service
         parent::__construct();
     }
 
-    public function set_remote_site($value)
-    {
-        $this->remote_site = $value;
-    }
-
     public function get_remote_site()
     {
         return $this->remote_site;
     }
 
-    public function set_timeout($value)
+    public function set_remote_site($value)
     {
-        $this->timeout = $value;
+        $this->remote_site = $value;
     }
 
     public function get_timeout()
@@ -33,14 +28,20 @@ class Connection_service extends Base_service
         return $this->timeout;
     }
 
-    public function set_port($value)
+    public function set_timeout($value)
     {
-        $this->port = $value;
+        $this->timeout = $value;
     }
 
     public function get_port()
     {
         return $this->port;
     }
+
+    public function set_port($value)
+    {
+        $this->port = $value;
+    }
 }
+
 ?>

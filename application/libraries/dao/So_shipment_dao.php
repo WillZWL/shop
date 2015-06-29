@@ -5,12 +5,17 @@ include_once 'Base_dao.php';
 
 class So_shipment_dao extends Base_dao
 {
-    private $table_name="so_shipment";
-    private $vo_class_name="So_shipment_vo";
-    private $seq_name="customer_shipment";
-    private $seq_mapping_field="sh_no";
+    private $table_name = "so_shipment";
+    private $vo_class_name = "So_shipment_vo";
+    private $seq_name = "customer_shipment";
+    private $seq_mapping_field = "sh_no";
 
-    public function get_tracking_info_list($where=array(), $option=array(), $classname="So_shipment_vo")
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function get_tracking_info_list($where = array(), $option = array(), $classname = "So_shipment_vo")
     {
         $this->db->select('so.*');
         $this->db->from('so_shipment AS so');
@@ -19,33 +24,25 @@ class So_shipment_dao extends Base_dao
 
         $option["limit"] = -1;
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
 
             $this->include_vo($classname);
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
@@ -53,30 +50,20 @@ class So_shipment_dao extends Base_dao
 
             $this->db->select('so.*');
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
 
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
         return FALSE;
-    }
-
-    public function __construct()
-    {
-        parent::__construct();
     }
 
     public function get_vo_classname()
@@ -99,31 +86,25 @@ class So_shipment_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_shn_list($type, $service="")
+    public function get_shn_list($type, $service = "")
     {
-        if(!in_array($type,array("object","array")))
-        {
+        if (!in_array($type, array("object", "array"))) {
             return FALSE;
         }
 
         $where = array();
-        if($service != "")
-        {
-            $where["courier_id LIKE"] = $service.'%';
+        if ($service != "") {
+            $where["courier_id LIKE"] = $service . '%';
         }
 
         $option["limit"] = -1;
         $list = $this->get_list($where, $option);
 
-        if($type == "object")
-        {
+        if ($type == "object") {
             return $list;
-        }
-        else
-        {
+        } else {
             $ret = array();
-            foreach($list as $obj)
-            {
+            foreach ($list as $obj) {
                 $ret[$obj->get_sh_no()] = 1;
             }
             unset($list);
@@ -131,73 +112,59 @@ class So_shipment_dao extends Base_dao
         }
     }
 
-    public function get_shipped_list($where=array(), $option=array(), $classname="Soid_prodname_dto")
+    public function get_shipped_list($where = array(), $option = array(), $classname = "Soid_prodname_dto")
     {
 
         $this->db->select('sosh.sh_no, soal.so_no, soal.line_no, soal.item_sku, soal.qty, sosh.tracking_no, sosh.create_on AS dispatch_date');
 
         $this->db->from('so_allocate AS soal');
         $this->db->join('so_shipment AS sosh', 'soal.sh_no = sosh.sh_no', 'INNER');
-        $this->db->where(array('soal.status'=>3));
+        $this->db->where(array('soal.status' => 3));
 
-        if ($where)
-        {
+        if ($where) {
             $this->db->where($where);
         }
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
             $this->include_dto($classname);
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
+                $option["limit"] = "";
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            elseif ($option["limit"] == -1)
-            {
-                $option["limit"] = "";
-            }
-
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
 
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
         return FALSE;
     }
 
-    public function get_shipping_info($where=array(), $option=array(), $classname="So_shipment_vo")
+    public function get_shipping_info($where = array(), $option = array(), $classname = "So_shipment_vo")
     {
 
         $this->db->select('sosh.*');
@@ -207,52 +174,39 @@ class So_shipment_dao extends Base_dao
 
         $option["limit"] = -1;
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
 
             $this->include_vo($classname);
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs = $obj;
-                    return (object) $rs;
+                    return (object)$rs;
                 }
             }
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -261,8 +215,7 @@ class So_shipment_dao extends Base_dao
 
     public function get_shipped_summary($start_date, $end_date)
     {
-        if ($start_date == $end_date)
-        {
+        if ($start_date == $end_date) {
             $start_date .= " 00:00:00";
             $end_date .= " 23:59:59";
         }
@@ -282,8 +235,7 @@ class So_shipment_dao extends Base_dao
         // $result = $this->db->query($sql, array($past_day));
         $result = $this->db->query($sql, array($start_date, $end_date));
         if ($result == null) $rs = array();
-        foreach ($result->result() as $row)
-        {
+        foreach ($result->result() as $row) {
             $rs[] = $row;
         }
         return $rs;
@@ -306,10 +258,8 @@ class So_shipment_dao extends Base_dao
 
         $rs = array();
 
-        if ($query = $this->db->query($sql))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
         }

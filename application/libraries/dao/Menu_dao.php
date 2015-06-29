@@ -3,32 +3,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once 'Base_dao.php';
 
-class Menu_dao extends Base_dao {
-    private $table_name="menu";
-    private $vo_class_name="menu_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+class Menu_dao extends Base_dao
+{
+    private $table_name = "menu";
+    private $vo_class_name = "menu_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function get_vo_classname(){
-        return $this->vo_class_name;
-    }
-
-    public function get_table_name(){
+    public function get_table_name()
+    {
         return $this->table_name;
     }
 
-    public function get_seq_name(){
+    public function get_seq_name()
+    {
         return $this->seq_name;
     }
-    public function get_seq_mapping_field(){
+
+    public function get_seq_mapping_field()
+    {
         return $this->seq_mapping_field;
     }
 
-    public function get_fm_list_w_name($lang_id, $where=array(), $option=array())
+    public function get_fm_list_w_name($lang_id, $where = array(), $option = array())
     {
         // if current language's name missing use default 'en'
 
@@ -38,57 +40,44 @@ class Menu_dao extends Base_dao {
 
         $this->db->where($where);
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
             $this->include_vo();
 
             $this->db->select('m.menu_id, m.menu_type, m.parent_id, m.level, m.menu_item_id, m.code, IFNULL(fo.text,fo_def.text) name, m.link_type, m.link, m.priority, m.status, fo.create_on, fo.create_at, fo.create_by, fo.modify_on, fo.modify_at, fo.modify_by');
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($this->get_vo_classname()) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($this->get_vo_classname()) as $obj) {
                     $rs[] = $obj;
                 }
 
-                if($rs)
-                {
-                    return (object) $rs;
+                if ($rs) {
+                    return (object)$rs;
                 }
                 return FALSE;
             }
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -96,63 +85,55 @@ class Menu_dao extends Base_dao {
         return FALSE;
     }
 
-    public function get_list_w_name($where=array(), $option=array())
+    public function get_vo_classname()
+    {
+        return $this->vo_class_name;
+    }
+
+    public function get_list_w_name($where = array(), $option = array())
     {
         $this->db->from('menu AS m');
         $this->db->join('func_option AS fo', 'm.menu_item_id = fo.func_id', 'INNER');
         $this->db->where($where);
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
             $this->include_vo();
 
             $this->db->select('m.menu_id, m.menu_type, m.parent_id, m.level, m.menu_item_id, m.code, fo.text name, m.link_type, m.link, m.priority, m.status, fo.create_on, fo.create_at, fo.create_by, fo.modify_on, fo.modify_at, fo.modify_by');
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($this->get_vo_classname()) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($this->get_vo_classname()) as $obj) {
                     $rs[] = $obj;
                 }
 
-                if($rs)
-                {
-                    return (object) $rs;
+                if ($rs) {
+                    return (object)$rs;
                 }
                 return FALSE;
             }
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }

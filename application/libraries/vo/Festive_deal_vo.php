@@ -192,4 +192,5 @@ class Festive_deal_vo extends Base_vo
     }
 
 }
+
 ?>

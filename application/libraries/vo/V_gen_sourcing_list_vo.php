@@ -60,4 +60,5 @@ class V_gen_sourcing_list_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -1,4 +1,4 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 include_once 'Base_dao.php';
 
@@ -12,11 +12,6 @@ class Category_extend_dao extends Base_dao
     public function __construct()
     {
         parent::__construct();
-    }
-
-    public function get_vo_classname()
-    {
-        return $this->vo_class_name;
     }
 
     public function get_table_name()
@@ -41,5 +36,10 @@ class Category_extend_dao extends Base_dao
         $this->db->join('category_extend AS ce', 'c.id = ce.cat_id AND ce.lang_id = l.id', 'LEFT');
         $this->include_vo($this->get_vo_classname());
         return $this->common_get_list($where, $option, $this->get_vo_classname(), 'c.id AS cat_id, l.id AS lang_id, COALESCE(ce.name, c.name) AS name');
+    }
+
+    public function get_vo_classname()
+    {
+        return $this->vo_class_name;
     }
 }

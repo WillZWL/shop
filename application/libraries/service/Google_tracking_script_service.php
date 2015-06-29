@@ -6,69 +6,11 @@ include_once "multipage_tracking_script_service.php";
 #SBF#2096
 class Google_tracking_script_service extends Multipage_tracking_script_service
 {
-    private function test()
-    {
-        $a = new Tradedoubler_tracking_script_service();
-        $a->set_country_id("FR");
-
-        echo $a->get_fixed_code();
-        echo "***************************************************\r\n";
-        echo $a->get_variable_code("homepage");
-
-        $param["id"] = "1234-AA-NA";
-        $param["price"] = "999.87";
-        $param["currency"] = "SGD";
-        $param["name"] = "my phone";
-        $param_list[] = $param;
-        $param_list[] = $param;
-        // echo $a->get_variable_code("category", $param_list);
-
-        $param["productId"] = "1234-AA-NA";
-        $param["category"] = "phone";
-        $param["brand"] = "nokia";
-        $param["productName"] = "my phone";
-        $param["productDescription"] = "very power phone";
-        $param["price"] = "998.81";
-        $param["currency"] = "SGD";
-        $param["url"] = "http://www.google.com";
-        $param["imageUrl"] = "http://www.google.com/logo.png";
-        // echo $a->get_variable_code("product", $param);
-
-        $param_list = null;
-        $param["id"] = "1234-AA-NA";
-        $param["price"] = "999.87";
-        $param["currency"] = "SGD";
-        $param["name"] = "my phone";
-        $param["qty"] = "9";
-        $param_list[] = $param;
-        $param_list[] = $param;
-        // echo $a->get_variable_code("basket", $param_list);
-
-        $param_list = null;
-        $product_list = null;
-        $param["id"] = "1234-AA-NA";
-        $param["price"] = "999.87";
-        $param["currency"] = "SGD";
-        $param["name"] = "my phone";
-        $param["qty"] = "9";
-        $product_list[] = $param;
-        $product_list[] = $param;
-        $param_list["product_list"] = $product_list;
-        $param_list["order_id"] = "5678";
-        $param_list["order_value"] = "999.11";
-        $param_list["currency"] = "USD";
-
-        echo $a->get_variable_code("payment_success", $param_list);
-
-        die();
-    }
-
     public function get_fixed_code()
     {
         $id = "";
         $ret_code = "";
-        switch($this->get_country_id())
-        {
+        switch ($this->get_country_id()) {
             case "AU":
                 $id = "998162196";
                 $label = "UyGqCKzhwAQQlP762wM";
@@ -97,8 +39,7 @@ class Google_tracking_script_service extends Multipage_tracking_script_service
                 break;
         }
 
-        if ($id != "")
-        {
+        if ($id != "") {
             // this portion appears in all pages
             $ret_code = <<<javascript
 <div style="display:none">
@@ -129,17 +70,25 @@ javascript;
     public function get_variable_code($page_type, $param)
     {
         $ret_code = "";
-        switch($this->get_country_id())
-        {
+        switch ($this->get_country_id()) {
             #2096 - implements AU only
             case "AU":
-                switch ($page_type)
-                {
-                    case "home_page":           return $this->home_page($param);    break;
-                    case "category_page":       return $this->category_page($param);    break;
-                    case "product_page":        return $this->product_page($param);     break;
-                    case "cart_page":           return $this->cart_page($param);    break;
-                    case "payment_success":     return $this->payment_success_code($param);     break;
+                switch ($page_type) {
+                    case "home_page":
+                        return $this->home_page($param);
+                        break;
+                    case "category_page":
+                        return $this->category_page($param);
+                        break;
+                    case "product_page":
+                        return $this->product_page($param);
+                        break;
+                    case "cart_page":
+                        return $this->cart_page($param);
+                        break;
+                    case "payment_success":
+                        return $this->payment_success_code($param);
+                        break;
                 }
                 break;
         }
@@ -228,6 +177,63 @@ javascript;
             </script>
 javascript;
         return $ret_code;
+    }
+
+    private function test()
+    {
+        $a = new Tradedoubler_tracking_script_service();
+        $a->set_country_id("FR");
+
+        echo $a->get_fixed_code();
+        echo "***************************************************\r\n";
+        echo $a->get_variable_code("homepage");
+
+        $param["id"] = "1234-AA-NA";
+        $param["price"] = "999.87";
+        $param["currency"] = "SGD";
+        $param["name"] = "my phone";
+        $param_list[] = $param;
+        $param_list[] = $param;
+        // echo $a->get_variable_code("category", $param_list);
+
+        $param["productId"] = "1234-AA-NA";
+        $param["category"] = "phone";
+        $param["brand"] = "nokia";
+        $param["productName"] = "my phone";
+        $param["productDescription"] = "very power phone";
+        $param["price"] = "998.81";
+        $param["currency"] = "SGD";
+        $param["url"] = "http://www.google.com";
+        $param["imageUrl"] = "http://www.google.com/logo.png";
+        // echo $a->get_variable_code("product", $param);
+
+        $param_list = null;
+        $param["id"] = "1234-AA-NA";
+        $param["price"] = "999.87";
+        $param["currency"] = "SGD";
+        $param["name"] = "my phone";
+        $param["qty"] = "9";
+        $param_list[] = $param;
+        $param_list[] = $param;
+        // echo $a->get_variable_code("basket", $param_list);
+
+        $param_list = null;
+        $product_list = null;
+        $param["id"] = "1234-AA-NA";
+        $param["price"] = "999.87";
+        $param["currency"] = "SGD";
+        $param["name"] = "my phone";
+        $param["qty"] = "9";
+        $product_list[] = $param;
+        $product_list[] = $param;
+        $param_list["product_list"] = $product_list;
+        $param_list["order_id"] = "5678";
+        $param_list["order_value"] = "999.11";
+        $param_list["currency"] = "USD";
+
+        echo $a->get_variable_code("payment_success", $param_list);
+
+        die();
     }
 
 }

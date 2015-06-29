@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Temp_barcode_mapping_dao extends Base_dao
 {
-    private $table_name="temp_barcode_mapping";
-    private $vo_classname="Temp_barcode_mapping_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "temp_barcode_mapping";
+    private $vo_classname = "Temp_barcode_mapping_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -43,12 +43,9 @@ class Temp_barcode_mapping_dao extends Base_dao
                 WHERE map.sku = ?
                 LIMIT 1";
 
-        if($query = $this->db->query($sql, $sku))
-        {
-            foreach($query->result() as $row)
-            {
-                switch($country_id)
-                {
+        if ($query = $this->db->query($sql, $sku)) {
+            foreach ($query->result() as $row) {
+                switch ($country_id) {
                     case 'US':
                     case 'AU':
                         $ean = $row->ean_us;
@@ -59,7 +56,7 @@ class Temp_barcode_mapping_dao extends Base_dao
                 $upc = $row->upc;
                 $mpn = $row->mpn;
 
-                $res = array("ean"=>$ean, "mpn"=>$mpn, "upc"=>$upc);
+                $res = array("ean" => $ean, "mpn" => $mpn, "upc" => $upc);
             }
             return $res;
         }

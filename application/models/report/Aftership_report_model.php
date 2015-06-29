@@ -10,22 +10,21 @@ class Aftership_report_model extends Sales_report_model
         parent::__construct();
     }
 
+    public function get_data($start_date, $end_date, $where = array())
+    {
+        return $this->get_report_service()->get_data($start_date, $end_date, $where = array());
+    }
+
     public function get_report_service()
     {
         $this->load->library('service/rpt_aftership_service');
         return $this->rpt_aftership_service;
     }
 
-    public function get_data($start_date, $end_date, $where = array())
-    {
-        return $this->get_report_service()->get_data($start_date, $end_date, $where = array());
-    }
-
     public function get_aftership_report_for_ftp($start_date, $end_date, $where = array())
     {
         return $this->get_report_service()->get_aftership_report_for_ftp($start_date, $end_date, $where);
     }
-
 
 
 }

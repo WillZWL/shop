@@ -144,4 +144,5 @@ class Exchange_rate_approval_vo extends Base_vo
     }
 
 }
+
 ?>

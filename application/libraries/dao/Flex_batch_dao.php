@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Flex_batch_dao extends Base_dao
 {
-    private $table_name="flex_batch";
-    private $vo_class_name="Flex_batch_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "flex_batch";
+    private $vo_class_name = "Flex_batch_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

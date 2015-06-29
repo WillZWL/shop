@@ -228,4 +228,5 @@ class Ra_prod_cat_vo extends Base_vo
     }
 
 }
+
 ?>

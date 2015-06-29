@@ -1,6 +1,6 @@
 <?php
 
-include_once(APPPATH."libraries/service/Atom_tracking_script_service.php");
+include_once(APPPATH . "libraries/service/Atom_tracking_script_service.php");
 
 class Facebook_tracking_script_service extends Atom_tracking_script_service
 {
@@ -43,13 +43,10 @@ class Facebook_tracking_script_service extends Atom_tracking_script_service
     public function get_specific_code($page = array(), $var = array())
     {
         $pixel_id = $this->_get_pixel_id(PLATFORMCOUNTRYID);
-        if ($pixel_id == "")
-        {
+        if ($pixel_id == "") {
 //get the pixel id again by affiliate id
-            if ($var['affiliate_name'])
-            {
-                if (strlen($var['affiliate_name']) > 2)
-                {
+            if ($var['affiliate_name']) {
+                if (strlen($var['affiliate_name']) > 2) {
                     if (substr($var['affiliate_name'], 0, 2) == "FB")
                         $pixel_id = $this->_get_pixel_id(substr($var['affiliate_name'], -2));
                 }
@@ -57,16 +54,15 @@ class Facebook_tracking_script_service extends Atom_tracking_script_service
         }
         $facebook_script = "";
 
-        if ($this->is_payment_success_page($page))
-        {
+        if ($this->is_payment_success_page($page)) {
             if (in_array($var['affiliate_name'], $this->_af_list)
-                && ($pixel_id != ""))
-            {
+                && ($pixel_id != "")
+            ) {
                 $currency_id = $var['so']->get_currency_id();
 //              $amount = $this->convert_amount($var['total_amount'], $currency_id, self::FB_ACCOUNT_CURRENCY);
                 $amount = $var['total_amount'];
 
-$facebook_script = <<< facebook_script_end
+                $facebook_script = <<< facebook_script_end
 <script type="text/javascript">
 var fb_param = {};
 fb_param.pixel_id = '{$pixel_id}';
@@ -87,15 +83,9 @@ facebook_script_end;
         return $facebook_script;
     }
 
-    public function get_all_page_code($page = array(), $var = array())
-    {
-        return "";
-    }
-
     private function _get_pixel_id($countryId)
     {
-        switch ($countryId)
-        {
+        switch ($countryId) {
             case "SG":
             case "MY":
             case "NZ":
@@ -113,5 +103,10 @@ facebook_script_end;
             default:
                 return "";
         }
+    }
+
+    public function get_all_page_code($page = array(), $var = array())
+    {
+        return "";
     }
 }

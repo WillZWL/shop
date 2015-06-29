@@ -31,7 +31,7 @@ class Payment_gateway_redirect_website_bank_transfer_service extends Payment_gat
         return "";
     }
 
-    public function get_redirect_url($request_data="", &$response_data)
+    public function get_redirect_url($request_data = "", &$response_data)
     {
         return base_url() . "checkout_redirect_method/order_acknowledge_frame";
     }
@@ -80,6 +80,7 @@ class Payment_gateway_redirect_website_bank_transfer_service extends Payment_gat
     {
         return "oswald@eservicesgroup.net";
     }
+
     private function _get_successful_page_with_so_no($so_number)
     {
         $debug_string = ($this->debug) ? "?debug=1" : "";

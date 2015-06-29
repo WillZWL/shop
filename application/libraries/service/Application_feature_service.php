@@ -7,7 +7,7 @@ class Application_feature_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Application_feature_dao.php");
+        include_once(APPPATH . "libraries/dao/Application_feature_dao.php");
         $this->set_dao(new Application_feature_dao());
     }
 

@@ -97,4 +97,5 @@ class Preorder_list_dto extends Base_dto
         $this->multiple_items_count = $value;
     }
 }
+
 ?>

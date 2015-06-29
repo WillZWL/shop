@@ -130,4 +130,5 @@ class Email_referral_list_vo extends Base_vo
     }
 
 }
+
 ?>

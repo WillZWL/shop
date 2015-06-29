@@ -7,21 +7,17 @@ class Criteo_product_feed_service extends Data_feed_service
 {
     protected $id = "Criteo Product Feed";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::Data_feed_service();
-        include_once APPPATH."libraries/service/Price_website_service.php";
+        include_once APPPATH . "libraries/service/Price_website_service.php";
         $this->set_price_srv(new Price_website_service());
-        include_once APPPATH."libraries/service/Product_service.php";
+        include_once APPPATH . "libraries/service/Product_service.php";
         $this->set_product_srv(new Product_service());
-        include_once APPPATH."libraries/service/Price_service.php";
+        include_once APPPATH . "libraries/service/Price_service.php";
         $this->set_price_srv(new Price_service());
 
         $this->set_output_delimiter(',');
-    }
-
-    public function get_price_srv()
-    {
-        return $this->price_srv;
     }
 
     public function set_price_srv(Base_service $srv)
@@ -29,28 +25,38 @@ class Criteo_product_feed_service extends Data_feed_service
         $this->price_srv = $srv;
     }
 
-    public function get_product_srv()
-    {
-        return $this->product_srv;
-    }
-
     public function set_product_srv(Base_service $srv)
     {
         $this->product_srv = $srv;
+    }
+
+    public function get_price_srv()
+    {
+        return $this->price_srv;
+    }
+
+    public function get_product_srv()
+    {
+        return $this->product_srv;
     }
 
     public function gen_data_feed()
     {
         define('DATAPATH', $this->get_config_srv()->value_of("data_path"));
 
-        if($filename = $this->get_data_feed())
-        {
-            if(!copy(DATAPATH . 'feeds/criteo/' . $filename, DATAPATH . 'feeds/criteo/ftp/criteo_product_feed.xml'))
-            {
+        if ($filename = $this->get_data_feed()) {
+            if (!copy(DATAPATH . 'feeds/criteo/' . $filename, DATAPATH . 'feeds/criteo/ftp/criteo_product_feed.xml')) {
                 $this->log_error_message("File path not valid");
             }
             //$this->ftp_feeds(DATAPATH . 'feeds/criteo/' . $filename, "/vb_data_feed.xml", $this->get_ftp_name());
         }
+    }
+
+    public function get_data_feed()
+    {
+        $filename = $this->get_data_list();
+
+        return $filename;
     }
 
     protected function get_data_list($where = array(), $option = array())
@@ -59,40 +65,32 @@ class Criteo_product_feed_service extends Data_feed_service
         $fp = fopen(DATAPATH . 'feeds/criteo/' . $filename, 'w');
 
         set_time_limit(300);
-        $num_rows = $this->get_prod_srv()->get_criteo_product_feed_product_feed_dto(array(), array("num_rows"=>1));
+        $num_rows = $this->get_prod_srv()->get_criteo_product_feed_product_feed_dto(array(), array("num_rows" => 1));
         $offset = 0;
         $arr = array();
 
-        if($num_rows > 0)
-        {
-            $total = ceil($num_rows/5000);
+        if ($num_rows > 0) {
+            $total = ceil($num_rows / 5000);
         }
         $content = '';
         $content .= '<?xml version="1.0"?>' . "\n";
         $content .= '<products>' . "\n";
 
-        for($i=0; $i < $total; $i++)
-        {
-            if($arr = $this->get_prod_srv()->get_criteo_product_feed_product_feed_dto(array(), $option = array("orderby"=>"pr.sku", "offset"=>$i*5000, "limit"=>5000)))
-            {
+        for ($i = 0; $i < $total; $i++) {
+            if ($arr = $this->get_prod_srv()->get_criteo_product_feed_product_feed_dto(array(), $option = array("orderby" => "pr.sku", "offset" => $i * 5000, "limit" => 5000))) {
                 $data = array();
-                foreach ($arr as $product_info_dto)
-                {
+                foreach ($arr as $product_info_dto) {
                     $data = $this->process_data_row($product_info_dto);
                     $content .= $this->gen_xml($data);
 
                     $data = array();
-                    if($content)
-                    {
-                        if(fwrite($fp, $content))
-                        {
+                    if ($content) {
+                        if (fwrite($fp, $content)) {
                             $content = "";
-                        }
-                        else
-                        {
+                        } else {
                             $subject = "<DO NOT REPLY> Fails to create CRITEO Product Feed File";
-                            $message ="FILE: ".__FILE__."<br>
-                                         LINE: ".__LINE__;
+                            $message = "FILE: " . __FILE__ . "<br>
+                                         LINE: " . __LINE__;
                             $this->error_handler($subject, $message);
                         }
                     }
@@ -105,49 +103,34 @@ class Criteo_product_feed_service extends Data_feed_service
         return $filename;
     }
 
-    public function get_data_feed()
-    {
-        $filename = $this->get_data_list();
-
-        return $filename;
-    }
-
     public function process_data_row($data = NULL)
     {
-        if (!is_object($data))
-        {
+        if (!is_object($data)) {
             return NULL;
         }
 
-        if($data instanceof Criteo_product_feed_dto)
-        {
+        if ($data instanceof Criteo_product_feed_dto) {
             // product image
             $website_domain = $this->get_config_srv()->value_of("website_domain");
             $default_image_path = $this->get_config_srv()->value_of("prod_img_path");
-            $image_file_large = $data->get_sku()."_l.".$data->get_image();
-            $image_file_small = $data->get_sku()."_m.".$data->get_image();
+            $image_file_large = $data->get_sku() . "_l." . $data->get_image();
+            $image_file_small = $data->get_sku() . "_m." . $data->get_image();
 
-            if(!$data->get_image() || !file_exists($default_image_path.$image_file_large))
-            {
-                $data->set_image_url_large($website_domain.$default_image_path."imageunavailable_l.jpg");
-            }
-            else
-            {
-                $data->set_image_url_large($website_domain.$default_image_path.$image_file_large);
+            if (!$data->get_image() || !file_exists($default_image_path . $image_file_large)) {
+                $data->set_image_url_large($website_domain . $default_image_path . "imageunavailable_l.jpg");
+            } else {
+                $data->set_image_url_large($website_domain . $default_image_path . $image_file_large);
             }
 
-            if(!$data->get_image() || !file_exists($default_image_path.$image_file_small))
-            {
-                $data->set_image_url_small($website_domain.$default_image_path."imageunavailable_m.jpg");
-            }
-            else
-            {
-                $data->set_image_url_small($website_domain.$default_image_path.$image_file_small);
+            if (!$data->get_image() || !file_exists($default_image_path . $image_file_small)) {
+                $data->set_image_url_small($website_domain . $default_image_path . "imageunavailable_m.jpg");
+            } else {
+                $data->set_image_url_small($website_domain . $default_image_path . $image_file_small);
             }
 
             // product url
             $prod_name = str_replace(array(" ", "/", "."), "-", $data->get_prod_name());
-            $prod_url = $website_domain."GB/".$prod_name."/mainproduct/view/".$data->get_sku();
+            $prod_url = $website_domain . "GB/" . $prod_name . "/mainproduct/view/" . $data->get_sku();
             $data->set_prod_url($prod_url);
 
             // discount percentage 12% as defined by BD
@@ -172,20 +155,25 @@ class Criteo_product_feed_service extends Data_feed_service
         $xml_content = '';
 
         $xml_content .= '<product id="' . $data->get_sku() . '">' . "\n";
-        $xml_content .= '<name><![CDATA[' . strip_invalid_xml(htmlspecialchars(trim($data->get_prod_name()))) .  ']]></name>' . "\n";
-        $xml_content .= '<producturl><![CDATA[' . $data->get_prod_url() .  ']]></producturl>' . "\n";
-        $xml_content .= '<smallimage><![CDATA[' . $data->get_image_url_small() .  ']]></smallimage>' . "\n";
-        $xml_content .= '<categoryid1><![CDATA[' . strip_invalid_xml(htmlspecialchars(trim($data->get_cat_name()))) .  ']]></categoryid1>' . "\n";
-        $xml_content .= '<description><![CDATA[' . strip_invalid_xml(htmlspecialchars(trim($data->get_short_desc()))) .  ']]></description>' . "\n";
+        $xml_content .= '<name><![CDATA[' . strip_invalid_xml(htmlspecialchars(trim($data->get_prod_name()))) . ']]></name>' . "\n";
+        $xml_content .= '<producturl><![CDATA[' . $data->get_prod_url() . ']]></producturl>' . "\n";
+        $xml_content .= '<smallimage><![CDATA[' . $data->get_image_url_small() . ']]></smallimage>' . "\n";
+        $xml_content .= '<categoryid1><![CDATA[' . strip_invalid_xml(htmlspecialchars(trim($data->get_cat_name()))) . ']]></categoryid1>' . "\n";
+        $xml_content .= '<description><![CDATA[' . strip_invalid_xml(htmlspecialchars(trim($data->get_short_desc()))) . ']]></description>' . "\n";
         $xml_content .= '<instock>' . $data->get_availability() . '</instock>' . "\n";
-        $xml_content .= '<price>' . $data->get_price() .  '</price>' . "\n";
-        $xml_content .= '<bigimage><![CDATA[' . $data->get_image_url_large() .  ']]></bigimage>' . "\n";
-        $xml_content .= '<retailprice>' . $data->get_rrp() .  '</retailprice>' . "\n";
-        $xml_content .= '<discount>' . $data->get_discount() .  '</discount>' . "\n";
-        $xml_content .= '<categoryid2><![CDATA[' . strip_invalid_xml(htmlspecialchars(trim($data->get_sub_cat_name()))) .  ']]></categoryid2>' . "\n";
+        $xml_content .= '<price>' . $data->get_price() . '</price>' . "\n";
+        $xml_content .= '<bigimage><![CDATA[' . $data->get_image_url_large() . ']]></bigimage>' . "\n";
+        $xml_content .= '<retailprice>' . $data->get_rrp() . '</retailprice>' . "\n";
+        $xml_content .= '<discount>' . $data->get_discount() . '</discount>' . "\n";
+        $xml_content .= '<categoryid2><![CDATA[' . strip_invalid_xml(htmlspecialchars(trim($data->get_sub_cat_name()))) . ']]></categoryid2>' . "\n";
         $xml_content .= '</product>' . "\n";
 
         return $xml_content;
+    }
+
+    public function get_contact_email()
+    {
+        return 'thomas@eservicesgroup.net';
     }
 
     protected function get_default_vo2xml_mapping()
@@ -196,11 +184,6 @@ class Criteo_product_feed_service extends Data_feed_service
     protected function get_default_xml2csv_mapping()
     {
         return APPPATH . 'data/criteo_product_feed_xml2csv.txt';
-    }
-
-    public function get_contact_email()
-    {
-        return 'thomas@eservicesgroup.net';
     }
 
     protected function get_ftp_name()

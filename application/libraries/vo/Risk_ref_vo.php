@@ -144,4 +144,5 @@ class Risk_ref_vo extends Base_vo
     }
 
 }
+
 ?>

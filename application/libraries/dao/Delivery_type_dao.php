@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Delivery_type_dao extends Base_dao
 {
-    private $table_name="delivery_type";
-    private $vo_class_name="Delivery_type_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "delivery_type";
+    private $vo_class_name = "Delivery_type_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

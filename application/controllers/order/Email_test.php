@@ -1,22 +1,23 @@
 <?php
+
 class Email_test extends MY_Controller
 {
 
-    private $app_id="ORD0025";
-    private $lang_id="en";
+    private $app_id = "ORD0025";
+    private $lang_id = "en";
 
-/* ===================================
-    READ ME
-    * remember to set role_rights for users to view
-    * $var is extra parameters for flexible usage in future
-    * $success: (payment) 1 = success, 0 = fail
-    * $pagetype: file name where the ultimate fire email event is found, e.g. in pmgw.php -> fire_success_event(),
+    /* ===================================
+        READ ME
+        * remember to set role_rights for users to view
+        * $var is extra parameters for flexible usage in future
+        * $success: (payment) 1 = success, 0 = fail
+        * $pagetype: file name where the ultimate fire email event is found, e.g. in pmgw.php -> fire_success_event(),
 
-                To add in more case "$pagetype" for your testing, go to the page calling the function that triggers your email,
-                and add in $get_email_html parameter,
-                refer to pmgw.php: fire_success_event() and fire_fail_event()
+                    To add in more case "$pagetype" for your testing, go to the page calling the function that triggers your email,
+                    and add in $get_email_html parameter,
+                    refer to pmgw.php: fire_success_event() and fire_fail_event()
 
-=================================== */
+    =================================== */
 
     public function __construct()
     {
@@ -30,12 +31,10 @@ class Email_test extends MY_Controller
 
     }
 
-    public function index($success="", $pagetype="", $so_no = "", $var = "")
+    public function index($success = "", $pagetype = "", $so_no = "", $var = "")
     {
-        if($success != "" || $pagetype != "" || $so_no="")
-        {
-            switch ($pagetype)
-            {
+        if ($success != "" || $pagetype != "" || $so_no = "") {
+            switch ($pagetype) {
                 case 'pmgw':
                     $this->get_pmgw_email($success, $so_no, $var);
                     break;
@@ -53,9 +52,7 @@ class Email_test extends MY_Controller
                     echo 'Please enter valid $pagetype';
                     break;
             }
-        }
-        else
-        {
+        } else {
             echo "INVALID URL. Please ensure your url has the following parameters:
                     <br>http://admindev.valuebasket.com/order/email_test/index/[payment_result]/[page_type]/[so_no]
                     <br><br><b>[payment_result]</b> - fail = 0, success = 1
@@ -68,50 +65,38 @@ class Email_test extends MY_Controller
 
     private function get_pmgw_email($success, $so_no, $var = 0)
     {
-        if ($success == 1)
-        {
-            if ($so_obj = $this->so_service->get(array("so_no"=>$so_no)))
-            {
+        if ($success == 1) {
+            if ($so_obj = $this->so_service->get(array("so_no" => $so_no))) {
                 $this->pmgw->so = $so_obj;
             }
 
             $email_msg = $this->pmgw->fire_success_event($var, TRUE);
-        }
-        elseif ($success == 0)
-        {
-            if ($so_obj = $this->so_service->get(array("so_no"=>$so_no)))
-            {
+        } elseif ($success == 0) {
+            if ($so_obj = $this->so_service->get(array("so_no" => $so_no))) {
                 $this->pmgw->so = $so_obj;
                 $email_msg = $this->pmgw->fire_fail_event(TRUE);
             }
         }
 
-        if($email_msg)
-        {
+        if ($email_msg) {
             echo $email_msg;
-        }
-        else
-        {
+        } else {
             echo "Problem getting email msg.";
         }
     }
 
     private function get_pmgw_wbtrans_email($success, $so_no, $var = "acknowledge_order")
     {
-        switch ($success)
-        {
+        switch ($success) {
             case 1:
                 # $var -> "acknowledge_order", "reminder_no_payment", "reminder_partial_payment"
 
-                if ($so_obj = $this->so_service->get(array("so_no"=>$so_no)))
-                {
+                if ($so_obj = $this->so_service->get(array("so_no" => $so_no))) {
                     $this->pmgw->so = $so_obj;
                 }
 
-                if($so_bank_transfer_list = $this->so_bank_transfer_dao->get_so_bank_transfer_list(array("so.so_no"=>$so_no)))
-                {
-                    foreach ($so_bank_transfer_list as $so_bank_transfer_obj)
-                    {
+                if ($so_bank_transfer_list = $this->so_bank_transfer_dao->get_so_bank_transfer_list(array("so.so_no" => $so_no))) {
+                    foreach ($so_bank_transfer_list as $so_bank_transfer_obj) {
                         $this->pmgw->so_bank_transfer_obj = $so_bank_transfer_obj;
                     }
                 }
@@ -123,8 +108,7 @@ class Email_test extends MY_Controller
             case 0:
                 # cancel order email
                 # $var -> "unpaid",
-                if ($so_obj = $this->so_service->get(array("so_no"=>$so_no)))
-                {
+                if ($so_obj = $this->so_service->get(array("so_no" => $so_no))) {
                     $this->pmgw->so = $so_obj;
                 }
 
@@ -138,33 +122,25 @@ class Email_test extends MY_Controller
         }
 
 
-        if($email_msg)
-        {
+        if ($email_msg) {
             echo $email_msg;
-        }
-        else
-        {
+        } else {
             echo "Problem getting email msg.";
         }
     }
 
-    private function get_dispatch_email($so_no, $var="")
+    private function get_dispatch_email($so_no, $var = "")
     {
-        if ($so_obj = $this->so_service->get(array("so_no"=>$so_no)))
-        {
-            $so_allocate_obj = $this->so_allocate_dao->get(array("so_no"=>$so_no));
-            if($sh_no = $so_allocate_obj->get_sh_no())
-            {
+        if ($so_obj = $this->so_service->get(array("so_no" => $so_no))) {
+            $so_allocate_obj = $this->so_allocate_dao->get(array("so_no" => $so_no));
+            if ($sh_no = $so_allocate_obj->get_sh_no()) {
                 $email_msg = $this->so_service->fire_dispatch($so_obj, $sh_no, TRUE);
             }
             // var_dump($sh_no);die();
         }
-        if($email_msg)
-        {
+        if ($email_msg) {
             echo $email_msg;
-        }
-        else
-        {
+        } else {
             echo "Problem getting email msg.";
         }
     }
@@ -178,7 +154,6 @@ class Email_test extends MY_Controller
     {
         return $this->lang_id;
     }
-
 
 
 }

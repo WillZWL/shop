@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Voucher_detail_dao extends Base_dao
 {
-    private $table_name="voucher_detail";
-    private $vo_classname="Voucher_detail_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "voucher_detail";
+    private $vo_classname = "Voucher_detail_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

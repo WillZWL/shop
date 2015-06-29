@@ -15,4 +15,5 @@ class Wms_slow_moving_report_service extends Wms_connection_service
         return $this->get_xml($this->get_config()->value_of('wms_slow_moving_report_url'), $post_data);
     }
 }
+
 ?>

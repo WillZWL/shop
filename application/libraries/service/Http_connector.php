@@ -68,12 +68,9 @@ class Http_connector extends Connector
     {
 
         $content = "";
-        try
-        {
-            $content =  $this->hcs->get_content();
-        }
-        catch (Exception $e)
-        {
+        try {
+            $content = $this->hcs->get_content();
+        } catch (Exception $e) {
             $this->logheader["type"] = $this->loglevel["ERROR"];
             $this->logheader["user"] = $_SESSION["user"]["id"];
             $this->logheader["userip"] = $_SERVER["REMOTE_ADDR"];
@@ -86,4 +83,5 @@ class Http_connector extends Connector
         return $content;
     }
 }
+
 ?>

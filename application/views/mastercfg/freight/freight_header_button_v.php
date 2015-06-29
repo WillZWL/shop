@@ -1,17 +1,17 @@
-    <tr>
-        <td colspan="2" class="title2" style="line-height:30px;padding-bottom:4px;">
-            <input type="button" value="<?=$lang["freight_cat"]?>" onClick="Redirect('<?=base_url()?>mastercfg/freight')">
-            <!--<input type="button" value="<?=$lang["weight_cat"]?>" onClick="Redirect('<?=base_url()?>mastercfg/freight/index/weight')">-->
+<tr>
+    <td colspan="2" class="title2" style="line-height:30px;padding-bottom:4px;">
+        <input type="button" value="<?= $lang["freight_cat"] ?>"
+               onClick="Redirect('<?= base_url() ?>mastercfg/freight')">
+        <!--<input type="button" value="<?= $lang["weight_cat"] ?>" onClick="Redirect('<?= base_url() ?>mastercfg/freight/index/weight')">-->
+        <?php
+        if ($origin_country_list) {
+            foreach ($origin_country_list AS $key => $value) {
+                ?>
+                <input type="button" value="<?= $lang['freight_cost'] ?>(<?= $value ?>)"
+                       onClick="Redirect('<?= base_url() ?>mastercfg/freight/view/<?= $value ?>')">
             <?php
-                if($origin_country_list)
-                {
-                    foreach($origin_country_list AS $key=>$value)
-                    {
-            ?>
-                <input type="button" value="<?=$lang['freight_cost']?>(<?=$value?>)" onClick="Redirect('<?=base_url()?>mastercfg/freight/view/<?=$value?>')">
-            <?php
-                    }
-                }
+            }
+        }
         /*
                 //$cost_courier = "AMUK_Std";
                 if ($courierlist)
@@ -37,7 +37,7 @@
                     }
                 }
                 */
-            ?>
-            <?=$str?>
-        </td>
-    </tr>
+        ?>
+        <?= $str ?>
+    </td>
+</tr>

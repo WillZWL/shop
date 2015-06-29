@@ -22,7 +22,6 @@ class Pmgw_report_worldpay_dto extends Base_dto
     private $date;
 
 
-
     public function get_full_so_no()
     {
         return $this->full_so_no;

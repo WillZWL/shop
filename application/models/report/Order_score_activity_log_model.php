@@ -1,5 +1,7 @@
 <?php
-class Order_score_activity_log_model extends CI_Model{
+
+class Order_score_activity_log_model extends CI_Model
+{
 
     public function __construct()
     {

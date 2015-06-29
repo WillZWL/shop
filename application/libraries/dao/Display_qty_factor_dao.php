@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Display_qty_factor_dao extends Base_dao
 {
-    private $table_name="display_qty_factor";
-    private $vo_classname="Display_qty_factor_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "display_qty_factor";
+    private $vo_classname = "Display_qty_factor_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

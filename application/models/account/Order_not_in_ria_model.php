@@ -1,4 +1,5 @@
 <?php
+
 class Order_not_in_ria_model extends CI_Model
 {
     public function __construct()
@@ -17,4 +18,5 @@ class Order_not_in_ria_model extends CI_Model
         return $this->rpt_order_not_in_ria_report_service->get_obj_list($where, $option);
     }
 }
+
 ?>

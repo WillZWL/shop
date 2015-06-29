@@ -1,4 +1,5 @@
 <?php
+
 class Ra_product_model extends CI_Model
 {
     public function __construct()
@@ -15,7 +16,7 @@ class Ra_product_model extends CI_Model
         $this->ra_product_service->get_dao()->include_vo();
     }
 
-    public function get_product($where=array())
+    public function get_product($where = array())
     {
         return $this->product_service->get($where);
     }
@@ -35,16 +36,14 @@ class Ra_product_model extends CI_Model
         return $this->ra_product_service->get_dao()->update($data);
     }
 
-    public function get_ra_product_obj($sku='')
+    public function get_ra_product_obj($sku = '')
     {
-        if($sku <> '')
-        {
-            return $this->ra_product_service->get_dao()->get(array('sku'=>$sku));
-        }
-        else
-        {
+        if ($sku <> '') {
+            return $this->ra_product_service->get_dao()->get(array('sku' => $sku));
+        } else {
             return $this->ra_product_service->get_dao()->get();
         }
     }
 }
+
 ?>

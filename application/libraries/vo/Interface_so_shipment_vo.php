@@ -192,4 +192,5 @@ class Interface_so_shipment_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -10,16 +10,16 @@ class Category_banner_model extends CI_Model
         $this->load->library('service/country_service');
         $this->load->library('service/language_service');
         $this->load->library('service/category_service');
-        $this->load->helper(array('url','notice','image'));
+        $this->load->helper(array('url', 'notice', 'image'));
         $this->load->library('upload');
     }
 
-    public function get_country_list($where,$option)
+    public function get_country_list($where, $option)
     {
         return $this->country_service->get_list($where, $option);
     }
 
-    public function get_language_list($where,$option)
+    public function get_language_list($where, $option)
     {
         return $this->language_service->get_list($where, $option);
     }
@@ -34,17 +34,17 @@ class Category_banner_model extends CI_Model
         return $this->language_service->get($where);
     }
 
-    public function get_sub_cat_list($where=array(), $option=array())
+    public function get_sub_cat_list($where = array(), $option = array())
     {
         return $this->category_service->get_list($where, $option);
     }
 
     public function edit()
     {
-        return ;
+        return;
     }
 
-    public function get_cat_ban($where=array())
+    public function get_cat_ban($where = array())
     {
         return $this->category_service->get_cat_ban($where);
     }
@@ -74,16 +74,13 @@ class Category_banner_model extends CI_Model
         $config['is_image'] = $info['is_image'];
         $this->upload->initialize($config);
 
-        if($this->upload->do_upload($info['name']))
-        {
+        if ($this->upload->do_upload($info['name'])) {
             $res = $this->upload->data();
             $ext = substr($res["file_ext"], 1);
 
             return $ext;
-        }
-        else
-        {
-            $_SESSION["NOTICE"] = "upload_error : ".$this->upload->display_errors();
+        } else {
+            $_SESSION["NOTICE"] = "upload_error : " . $this->upload->display_errors();
         }
     }
 

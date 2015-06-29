@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Ftp_info_dao extends Base_dao
 {
-    private $table_name="ftp_info";
-    private $vo_class_name="Ftp_info_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "ftp_info";
+    private $vo_class_name = "Ftp_info_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

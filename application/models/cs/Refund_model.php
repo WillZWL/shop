@@ -10,10 +10,9 @@ class Refund_model extends CI_Model
         $this->load->library('service/so_service');
     }
 
-    public function get_reason($where=array())
+    public function get_reason($where = array())
     {
-        if(empty($where))
-        {
+        if (empty($where)) {
             return $this->refund_service->get_reason_dao()->get();
         }
 
@@ -22,8 +21,8 @@ class Refund_model extends CI_Model
 
     public function get_reason_list($where, $option)
     {
-        return array("reason_list"=>$this->refund_service->get_reason_dao()->get_list($where, $option),
-                     "cnt"=>$this->refund_service->get_reason_dao()->get_num_rows($where));
+        return array("reason_list" => $this->refund_service->get_reason_dao()->get_list($where, $option),
+            "cnt" => $this->refund_service->get_reason_dao()->get_num_rows($where));
     }
 
     public function add_reason($obj)
@@ -38,13 +37,13 @@ class Refund_model extends CI_Model
 
     public function __autoload_reason()
     {
-        include_once APPPATH."libraries/vo/refund_reason_vo.php";
+        include_once APPPATH . "libraries/vo/refund_reason_vo.php";
     }
 
-    public function get_order_list($where=array(), $option=array())
+    public function get_order_list($where = array(), $option = array())
     {
-        return array("list"=>$this->so_service->get_refundable_list($where, $option),
-                     "total"=>$this->so_service->get_refundable_list($where, array("num_row"=>1,"create"=>$option["create"])));
+        return array("list" => $this->so_service->get_refundable_list($where, $option),
+            "total" => $this->so_service->get_refundable_list($where, array("num_row" => 1, "create" => $option["create"])));
     }
 
     public function get_history_list($where)
@@ -52,9 +51,9 @@ class Refund_model extends CI_Model
         return $this->refund_service->get_history_dao()->get_history_list($where);
     }
 
-    public function get_item_list($where=array())
+    public function get_item_list($where = array())
     {
-        return $this->so_service->get_soid_dao()->get_list_w_prodname($where, array("sortby"=>"line_no ASC"));
+        return $this->so_service->get_soid_dao()->get_list_w_prodname($where, array("sortby" => "line_no ASC"));
     }
 
     public function is_cod_order($so_no)
@@ -77,51 +76,42 @@ class Refund_model extends CI_Model
         return $this->so_service->get_dao()->update($obj);
     }
 
-    public function get_refund_so_list($where=array(), $option=array())
+    public function get_refund_so_list($where = array(), $option = array())
     {
-        return array("list"=>$this->refund_service->get_dao()->get_refund_list($where,$option),
-                     "total"=>$this->refund_service->get_dao()->get_refund_list($where,array("num_row"=>1)));
+        return array("list" => $this->refund_service->get_dao()->get_refund_list($where, $option),
+            "total" => $this->refund_service->get_dao()->get_refund_list($where, array("num_row" => 1)));
     }
 
-    public function get_refund($where=array())
+    public function get_refund($where = array())
     {
-        if(empty($where))
-        {
+        if (empty($where)) {
             return $this->refund_service->get_dao()->get();
-        }
-        else
-        {
+        } else {
             return $this->refund_service->get_dao()->get($where);
         }
     }
 
-    public function get_refund_item($where=array())
+    public function get_refund_item($where = array())
     {
-        if(empty($where))
-        {
+        if (empty($where)) {
             return $this->refund_service->get_ritem_dao()->get();
-        }
-        else
-        {
+        } else {
             return $this->refund_service->get_ritem_dao()->get($where);
         }
     }
 
-    public function get_refund_history($where=array())
+    public function get_refund_history($where = array())
     {
-        if(empty($where))
-        {
+        if (empty($where)) {
             return $this->refund_service->get_history_dao()->get();
-        }
-        else
-        {
+        } else {
             return $this->refund_service->get_history_dao()->get($where);
         }
     }
 
-    public function get_refund_item_list($where=array(),$option=array())
+    public function get_refund_item_list($where = array(), $option = array())
     {
-        return $this->refund_service->get_ritem_dao()->get_list_w_name($where,$option);
+        return $this->refund_service->get_ritem_dao()->get_list_w_name($where, $option);
     }
 
     public function insert_refund_item($obj)
@@ -154,17 +144,17 @@ class Refund_model extends CI_Model
         return $this->refund_service->get_dao()->update($obj);
     }
 
-    public function check_action($refundid="", $action="", $auto_refund=false)
+    public function check_action($refundid = "", $action = "", $auto_refund = false)
     {
         return $this->refund_service->check_action($refundid, $action, $auto_refund);
     }
 
     public function check_complete($refundid = "")
     {
-        return  $this->refund_service->get_dao()->check_complete($refundid);
+        return $this->refund_service->get_dao()->check_complete($refundid);
     }
 
-    public function fire_email($rid,$status, $result)
+    public function fire_email($rid, $status, $result)
     {
         return $this->refund_service->fire_email($rid, $status, $result);
     }
@@ -180,4 +170,5 @@ class Refund_model extends CI_Model
     }
 
 }
+
 ?>

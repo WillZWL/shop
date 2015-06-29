@@ -15,10 +15,10 @@ class Checkout_redirect_moneybookers_ctpe_model extends Checkout_redirect_model
     {
         $this->pmgw_redirect_service = new Payment_gateway_redirect_moneybookers_ctpe_service($this->debug);
     }
-/*
-    public function process_payment_status($general_data = array(), $get_data = array())
-    {
-        return $this->pmgw_redirect_service->process_payment_status($general_data, $get_data);
-    }
-*/
+    /*
+        public function process_payment_status($general_data = array(), $get_data = array())
+        {
+            return $this->pmgw_redirect_service->process_payment_status($general_data, $get_data);
+        }
+    */
 }

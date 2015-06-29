@@ -96,4 +96,5 @@ class Ipligence_vo extends Base_vo
     }
 
 }
+
 ?>

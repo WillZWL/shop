@@ -76,6 +76,7 @@ class Shopping_com_product_feed_dto extends Base_dto
     {
         $this->price = $value;
     }
+
     public function get_cat_name()
     {
         return $this->cat_name;

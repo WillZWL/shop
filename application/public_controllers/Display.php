@@ -9,30 +9,19 @@ class Display extends PUB_Controller
     {
         parent::PUB_Controller();
         $this->load->library('template');
-        $this->load->helper(array('url','directory','datetime','tbswrapper'));
+        $this->load->helper(array('url', 'directory', 'datetime', 'tbswrapper'));
         $this->load->model("website/home_model");
         $this->load->library('service/affiliate_service');
         $this->load->library('service/ip2country_service');
         $this->load->library('service/deliverytime_service');
     }
 
-    private function _is_special_promotion($page)
-    {
-        if (($page != "audio-visual")
-            && ($page != "drone"))
-            return false;
-        else
-            return true;
-    }
-
     public function promotions($page = '')
     {
-        if (!$this->_is_special_promotion($page))
-        {
+        if (!$this->_is_special_promotion($page)) {
             show_404();
         }
-        if ($this->_is_special_promotion($page))
-        {
+        if ($this->_is_special_promotion($page)) {
             $this->template->add_js('/resources/js/jquery.cookie.js');
             $this->template->add_js('/resources/js/tree.jquery.js');
             $this->template->add_js('/resources/js/jquery.nivo.slider.js');
@@ -47,24 +36,27 @@ class Display extends PUB_Controller
         $this->load_tpl('content', 'tbs_promotions', $data, TRUE);
     }
 
+    private function _is_special_promotion($page)
+    {
+        if (($page != "audio-visual")
+            && ($page != "drone")
+        )
+            return false;
+        else
+            return true;
+    }
+
     public function view($page = '')
     {
         { # SBF#3114
             $ip = '';
-            if ($_SERVER['REMOTE_ADDR'] AND $_SERVER['HTTP_CLIENT_IP'])
-            {
+            if ($_SERVER['REMOTE_ADDR'] AND $_SERVER['HTTP_CLIENT_IP']) {
                 $ip = $_SERVER['HTTP_CLIENT_IP'];
-            }
-            elseif ($_SERVER['REMOTE_ADDR'])
-            {
+            } elseif ($_SERVER['REMOTE_ADDR']) {
                 $ip = $_SERVER['REMOTE_ADDR'];
-            }
-            elseif ($_SERVER['HTTP_CLIENT_IP'])
-            {
+            } elseif ($_SERVER['HTTP_CLIENT_IP']) {
                 $ip = $_SERVER['HTTP_CLIENT_IP'];
-            }
-            elseif ($_SERVER['HTTP_X_FORWARDED_FOR'])
-            {
+            } elseif ($_SERVER['HTTP_X_FORWARDED_FOR']) {
                 $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
             }
 
@@ -75,20 +67,17 @@ class Display extends PUB_Controller
                 $data["actual_country_id"] = $ret["country_id"];
         }
 
-        if(empty($page))
-        {
+        if (empty($page)) {
             show_404();
         }
 
         $this->_init_meta_content($page);
-        $this->template->add_link("rel='canonical' href='".base_url()."/display/view/$page'");  # SEO
+        $this->template->add_link("rel='canonical' href='" . base_url() . "/display/view/$page'");  # SEO
 
         #SBF #2441
-        if ($page == 'bulk_sales')
-        {
+        if ($page == 'bulk_sales') {
             $bulk_sales_country = 'AU|BE|FI|FR|GB|HK|IE|MY|NZ|PH|SG|ES|US|MT|CH|';
-            if (strpos($bulk_sales_country, PLATFORMCOUNTRYID) === FALSE)
-            {
+            if (strpos($bulk_sales_country, PLATFORMCOUNTRYID) === FALSE) {
                 redirect(base_url());
             }
         }
@@ -96,16 +85,13 @@ class Display extends PUB_Controller
         // echo '<pre>Dumping $_POST<br>'; var_dump($_POST); echo "</pre>";
         #var_dump(PLATFORMCOUNTRYID);
 
-        if ($page == "newsletter_thank_you")
-        {
-            if (isset($_POST['subscribe-email']))
-            {
+        if ($page == "newsletter_thank_you") {
+            if (isset($_POST['subscribe-email'])) {
                 $email = urlencode($_POST['subscribe-email']);
 
                 $currency = PLATFORMCURR;
                 $url = "";
-                switch (PLATFORMCOUNTRYID)
-                {
+                switch (PLATFORMCOUNTRYID) {
                     case "ES": # SBF#2119
                         $url = "http://p6trc.emv2.com/D2UTF8?emv_tag=1651E8080005CD12&emv_ref=EdX7CqkmjTao8SA9MOPvpMvWLkl7aaXD8jjde6xFLMHbKxw&EMAIL_FIELD=$email&SOURCE_FIELD=WEBFORM&LANGUAGE_ID_FIELD=ES&CURRENCY_FIELD=EUR";
                         break;
@@ -156,16 +142,14 @@ class Display extends PUB_Controller
                 }
 
                 $use_curl = true;
-                if ($use_curl)
-                {
+                if ($use_curl) {
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $url);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                     curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
                     curl_exec($ch);
                     curl_close($ch);
-                }
-                else
+                } else
                     file_get_contents($url);
 
 // echo '<pre>Dumping EV URL<br>'; var_dump($url); echo "</pre>";
@@ -174,26 +158,21 @@ class Display extends PUB_Controller
 #               header("Location: /display/view/$page");
 #               die();
             }
-        }
-        elseif ($page == "bulk_sales")
-        {
+        } elseif ($page == "bulk_sales") {
             $this->template->add_js('/js/checkform.js');
         }
 
         #SBF #4020 - get time frames for default scenario
         $data["ship_days"] = $data["del_days"] = "";
-        if($delivery_obj = $this->deliverytime_service->get_deliverytime_obj(PLATFORMCOUNTRYID, 1))
-        {
-            $data["ship_days"] = $delivery_obj->get_ship_min_day()." - ".$delivery_obj->get_ship_max_day();
-            $data["del_days"] = $delivery_obj->get_del_min_day()." - ".$delivery_obj->get_del_max_day();
+        if ($delivery_obj = $this->deliverytime_service->get_deliverytime_obj(PLATFORMCOUNTRYID, 1)) {
+            $data["ship_days"] = $delivery_obj->get_ship_min_day() . " - " . $delivery_obj->get_ship_max_day();
+            $data["del_days"] = $delivery_obj->get_del_min_day() . " - " . $delivery_obj->get_del_max_day();
         }
 
         // if cannot get delivery obj info, go back to original hard coded days
         $data["lang_id"] = $lang_id = $_SESSION["lang_id"];
-        if(!$data["ship_days"])
-        {
-            switch ($lang_id)
-            {
+        if (!$data["ship_days"]) {
+            switch ($lang_id) {
                 case 'en':
                 case 'fr':
                 case 'it':
@@ -213,10 +192,8 @@ class Display extends PUB_Controller
                     break;
             }
         }
-        if(!$data["del_days"])
-        {
-            switch ($lang_id)
-            {
+        if (!$data["del_days"]) {
+            switch ($lang_id) {
                 case 'en':
                 case 'es':
                 case 'fr':
@@ -243,35 +220,34 @@ class Display extends PUB_Controller
     {
         $data['data']['lang_text'] = $this->_get_language_file();
 
-        switch($page)
-        {
+        switch ($page) {
             case 'newsletter_thank_you':
-                $meta_title = $data['data']['lang_text']['meta_title_newsletter'].' | ValueBasket';
+                $meta_title = $data['data']['lang_text']['meta_title_newsletter'] . ' | ValueBasket';
                 #$meta_desc = $data['data']['lang_text']['meta_description_default'];
                 #$meta_keyword = $data['data']['lang_text']['meta_keyword_shipping'];
                 break;
             case 'shipping':
-                $meta_title = $data['data']['lang_text']['meta_title_shipping'].' | ValueBasket';
+                $meta_title = $data['data']['lang_text']['meta_title_shipping'] . ' | ValueBasket';
                 $meta_desc = $data['data']['lang_text']['meta_description_shipping'];
                 $meta_keyword = $data['data']['lang_text']['meta_keyword_shipping'];
                 break;
             case 'about_us':
-                $meta_title = $data['data']['lang_text']['meta_title_about_us'].' | ValueBasket';
+                $meta_title = $data['data']['lang_text']['meta_title_about_us'] . ' | ValueBasket';
                 $meta_desc = $data['data']['lang_text']['meta_description_about_us'];
                 $meta_keyword = $data['data']['lang_text']['meta_keyword_about_us'];
                 break;
             case 'conditions_of_use':
-                $meta_title = $data['data']['lang_text']['meta_title_condition'].' | ValueBasket';
+                $meta_title = $data['data']['lang_text']['meta_title_condition'] . ' | ValueBasket';
                 $meta_desc = $data['data']['lang_text']['meta_description_condition'];
                 $meta_keyword = $data['data']['lang_text']['meta_keyword_condition'];
                 break;
             case 'privacy_policy':
-                $meta_title = $data['data']['lang_text']['meta_title_privacy'].' | ValueBasket';
+                $meta_title = $data['data']['lang_text']['meta_title_privacy'] . ' | ValueBasket';
                 $meta_desc = $data['data']['lang_text']['meta_description_privacy'];
                 $meta_keyword = $data['data']['lang_text']['meta_keyword_privacy'];
                 break;
             case 'faq':
-                $meta_title = $data['data']['lang_text']['meta_title_faq'].' | ValueBasket';
+                $meta_title = $data['data']['lang_text']['meta_title_faq'] . ' | ValueBasket';
                 $meta_desc = $data['data']['lang_text']['meta_description_faq'];
                 $meta_keyword = $data['data']['lang_text']['meta_keyword_faq'];
                 break;
@@ -279,8 +255,9 @@ class Display extends PUB_Controller
                 return false;
         }
         $this->template->add_title($meta_title);
-        $this->template->add_meta(array('name'=>'description','content'=>$meta_desc));
-        $this->template->add_meta(array('name'=>'keywords','content'=>$meta_keyword));
+        $this->template->add_meta(array('name' => 'description', 'content' => $meta_desc));
+        $this->template->add_meta(array('name' => 'keywords', 'content' => $meta_keyword));
     }
 }
+
 ?>

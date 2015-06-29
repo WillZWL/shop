@@ -57,25 +57,19 @@ class Ftp_connector extends Connector
     public function connect($passive = true)
     {
         $conn_id = FALSE;
-        try
-        {
-            if(!$passive)
-            {
+        try {
+            if (!$passive) {
                 $this->fcs->set_is_passive($passive);
             }
-            if($this->fcs->get_timeout() == "")
-            {
+            if ($this->fcs->get_timeout() == "") {
                 $this->fcs->set_timeout(90);
             }
-            if($this->fcs->get_port() == "")
-            {
+            if ($this->fcs->get_port() == "") {
                 $this->fcs->set_port(21);
             }
             $conn_id = $this->fcs->connect();
             $conn_id = TRUE;
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $this->logheader["type"] = $this->loglevel["ERROR"];
             $this->logheader["user"] = $_SESSION["user"]["id"];
             $this->logheader["userip"] = $_SERVER["REMOTE_ADDR"];
@@ -92,12 +86,9 @@ class Ftp_connector extends Connector
     public function login()
     {
         $login = FALSE;
-        try
-        {
+        try {
             $login = $this->fcs->login();
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $this->logheader["type"] = $this->loglevel["ERROR"];
             $this->logheader["user"] = $_SESSION["user"]["id"];
             $this->logheader["userip"] = $_SERVER["REMOTE_ADDR"];
@@ -112,12 +103,9 @@ class Ftp_connector extends Connector
     public function ftplist($remotepath)
     {
         $list = FALSE;
-        try
-        {
+        try {
             $list = $this->fcs->listfile($remotepath);
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $this->logheader["type"] = $this->loglevel["ERROR"];
             $this->logheader["user"] = $_SESSION["user"]["id"];
             $this->logheader["userip"] = $_SERVER["REMOTE_ADDR"];
@@ -133,12 +121,9 @@ class Ftp_connector extends Connector
     public function getfile($localfile, $remotefile)
     {
         $getfile = FALSE;
-        try
-        {
+        try {
             $getfile = $this->fcs->getfile($localfile, $remotefile);
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $this->logheader["type"] = $this->loglevel["ERROR"];
             $this->logheader["user"] = $_SESSION["user"]["id"];
             $this->logheader["userip"] = $_SERVER["REMOTE_ADDR"];
@@ -154,12 +139,9 @@ class Ftp_connector extends Connector
     public function putfile($localfile, $remotefile)
     {
         $putfile = FALSE;
-        try
-        {
+        try {
             $putfile = $this->fcs->putfile($localfile, $remotefile);
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $this->logheader["type"] = $this->loglevel["ERROR"];
             $this->logheader["user"] = $_SESSION["user"]["id"];
             $this->logheader["userip"] = $_SERVER["REMOTE_ADDR"];
@@ -175,12 +157,9 @@ class Ftp_connector extends Connector
     public function delfile($remotefile)
     {
         $delfile = FALSE;
-        try
-        {
+        try {
             $delfile = $this->fcs->remove($remotefile);
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $this->logheader["type"] = $this->loglevel["ERROR"];
             $this->logheader["user"] = $_SESSION["user"]["id"];
             $this->logheader["userip"] = $_SERVER["REMOTE_ADDR"];
@@ -193,15 +172,12 @@ class Ftp_connector extends Connector
         return $delfile;
     }
 
-    public function renamefile($oldname,$newname)
+    public function renamefile($oldname, $newname)
     {
         $renamefile = FALSE;
-        try
-        {
-            $renamefile = $this->fcs->renamefile($oldname,$newname);
-        }
-        catch(Exception $e)
-        {
+        try {
+            $renamefile = $this->fcs->renamefile($oldname, $newname);
+        } catch (Exception $e) {
             $this->logheader["type"] = $this->loglevel["ERROR"];
             $this->logheader["user"] = $_SESSION["user"]["id"];
             $this->logheader["userip"] = $_SERVER["REMOTE_ADDR"];
@@ -221,12 +197,9 @@ class Ftp_connector extends Connector
 
     public function close()
     {
-        try
-        {
+        try {
             $rs = $this->fcs->quit();
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $this->logheader["type"] = $this->loglevel["ERROR"];
             $this->logheader["user"] = $_SESSION["user"]["id"];
             $this->logheader["userip"] = $_SERVER["REMOTE_ADDR"];

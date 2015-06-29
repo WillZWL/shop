@@ -23,104 +23,153 @@ class Pmgw_bibit_service extends Pmgw_voucher
     public function init($vars)
     {
         $pbv_srv = $this->get_pbv_srv();
-        $platform_obj = $pbv_srv->get_dao()->get(array("selling_platform_id"=>$vars["platform_id"]));
+        $platform_obj = $pbv_srv->get_dao()->get(array("selling_platform_id" => $vars["platform_id"]));
         $vars["currency_id"] = $platform_obj->get_platform_currency_id();
         $so_srv = $this->get_so_srv();
         $so_obj = $so_srv->cart_to_so($vars);
-        if ($so_obj === FALSE)
-        {
+        if ($so_obj === FALSE) {
             return FALSE;
         }
         $this->so = $so_obj;
         $vars["so_no"] = $this->so->get_so_no();
         $vars["amount"] = $this->so->get_amount();
         $this->payment_info = array(
-                                "cardtype" => $vars["cardtype"],
-                                "totalamount" => $vars["amount"],
-                                "curr" => $vars["currency_id"],
-                                "ordernumber" => $vars["so_no"],
-                                "holdername" => $vars["holdername"],
-                                "cardnum" => $vars["cardnum"],
-                                "start_month" => $vars["start_month"],
-                                "start_year" => $vars["start_year"],
-                                "exp_month" => $vars["exp_month"],
-                                "exp_year" => $vars["exp_year"],
-                                "issuenum" => $vars["inum"],
-                                "cvc" => $vars["cvc"],
-                                "pares" => $vars["pares"],
-                                "echodata" => $vars["echodata"],
-                                "ordercontent" => $vars["ordercontent"],
-                                "review" => $vars["review"]
-                            );
+            "cardtype" => $vars["cardtype"],
+            "totalamount" => $vars["amount"],
+            "curr" => $vars["currency_id"],
+            "ordernumber" => $vars["so_no"],
+            "holdername" => $vars["holdername"],
+            "cardnum" => $vars["cardnum"],
+            "start_month" => $vars["start_month"],
+            "start_year" => $vars["start_year"],
+            "exp_month" => $vars["exp_month"],
+            "exp_year" => $vars["exp_year"],
+            "issuenum" => $vars["inum"],
+            "cvc" => $vars["cvc"],
+            "pares" => $vars["pares"],
+            "echodata" => $vars["echodata"],
+            "ordercontent" => $vars["ordercontent"],
+            "review" => $vars["review"]
+        );
         $this->reply_info = array(
-                                "currentTag" => "",
-                                "cc_result" => "",
-                                "refuse_code" => "",
-                                "refuse_desc" => "",
-                                "error_code" => "",
-                                "error_desc" => "",
-                                "cvs_desc" => "",
-                                "avs_desc" => "",
-                                "riskscore" => "",
-                                "check_3d" => "",
-                                "parequest" => "",
-                                "issuerurl" => "",
-                                "echodata" => "",
-                                "order_cancelled" => ""
-                            );
+            "currentTag" => "",
+            "cc_result" => "",
+            "refuse_code" => "",
+            "refuse_desc" => "",
+            "error_code" => "",
+            "error_desc" => "",
+            "cvs_desc" => "",
+            "avs_desc" => "",
+            "riskscore" => "",
+            "check_3d" => "",
+            "parequest" => "",
+            "issuerurl" => "",
+            "echodata" => "",
+            "order_cancelled" => ""
+        );
 //      $this->logheader["message"] = var_export($this->payment_info, true);
 //      $this->logger->write_log($this->logheader);
 
-        $client = $this->get_client_srv()->get(array("id"=>$this->so->get_client_id()));
+        $client = $this->get_client_srv()->get(array("id" => $this->so->get_client_id()));
 
         $tel = "";
-        if ($client->get_tel_1())
-        {
+        if ($client->get_tel_1()) {
             $tel .= $client->get_tel_1();
         }
 
-        if ($client->get_tel_2())
-        {
-            $tel .= "-".$client->get_tel_2();
+        if ($client->get_tel_2()) {
+            $tel .= "-" . $client->get_tel_2();
         }
 
-        if ($client->get_tel_3())
-        {
-            $tel .= "-".$client->get_tel_3();
+        if ($client->get_tel_3()) {
+            $tel .= "-" . $client->get_tel_3();
         }
 
 
         $this->shopper_info = array(
-                            "ip" => $_SERVER['REMOTE_ADDR'],
-                            "sid" => session_id(),
-                            "acceptheader" => $_SERVER['HTTP_ACCEPT'],
-                            "useragentheader" => $_SERVER['HTTP_USER_AGENT'],
-                            "email" => $client->get_email(),
-                            "firstname" => $client->get_forename(),
-                            "lastname" => $client->get_surname(),
-                            "street" => $client->get_address_1()." ".$client->get_address_2()." ".$client->get_address_3(),
-                            "postcode" => $client->get_postcode(),
-                            "city" => $client->get_city(),
-                            "telephone" => $tel,
-                            "countrycode" => $client->get_country_id()
-                        );
+            "ip" => $_SERVER['REMOTE_ADDR'],
+            "sid" => session_id(),
+            "acceptheader" => $_SERVER['HTTP_ACCEPT'],
+            "useragentheader" => $_SERVER['HTTP_USER_AGENT'],
+            "email" => $client->get_email(),
+            "firstname" => $client->get_forename(),
+            "lastname" => $client->get_surname(),
+            "street" => $client->get_address_1() . " " . $client->get_address_2() . " " . $client->get_address_3(),
+            "postcode" => $client->get_postcode(),
+            "city" => $client->get_city(),
+            "telephone" => $tel,
+            "countrycode" => $client->get_country_id()
+        );
     }
 
-    public function checkout($debug=0)
+    public function response($vars, $debug)
     {
-        if ($debug && !$this->get_config()->value_of("payment_debug_allow"))
-        {
+        $this->payment_info = unserialize(base64_decode($vars['MD']));
+
+//      $this->logheader["message"] = var_export($this->payment_info, true);
+//      $this->logger->write_log($this->logheader);
+
+        $so_srv = $this->get_so_srv();
+        if ($this->so = $so_srv->get(array("so_no" => $this->payment_info['ordernumber']))) {
+            $this->payment_info['pares'] = $vars['PaRes'];
+
+//          $this->logheader["message"] = var_export($this->payment_info, true);
+//          $this->logger->write_log($this->logheader);
+
+            $client = $this->get_client_srv()->get(array("id" => $this->so->get_client_id()));
+
+            $tel = "";
+            if ($client->get_tel_1()) {
+                $tel .= $client->get_tel_1();
+            }
+
+            if ($client->get_tel_2()) {
+                $tel .= "-" . $client->get_tel_2();
+            }
+
+            if ($client->get_tel_3()) {
+                $tel .= "-" . $client->get_tel_3();
+            }
+
+            $this->shopper_info = array(
+                "ip" => $_SERVER['REMOTE_ADDR'],
+                "sid" => session_id(),
+                "acceptheader" => $_SERVER['HTTP_ACCEPT'],
+                "useragentheader" => $_SERVER['HTTP_USER_AGENT'],
+                "email" => $client->get_email(),
+                "firstname" => $client->get_forename(),
+                "lastname" => $client->get_surname(),
+                "street" => $client->get_address_1() . " " . $client->get_address_2() . " " . $client->get_address_3(),
+                "postcode" => $client->get_postcode(),
+                "city" => $client->get_city(),
+                "telephone" => $tel,
+                "countrycode" => $client->get_country_id()
+            );
+//          $this->logheader["message"] = var_export($this->shopper_info, true);
+//          $this->logger->write_log($this->logheader);
+
+            $this->checkout($debug);
+
+        } else {
+            $_SESSION["NOTICE"] = "Error!";
+            redirect(base_url() . "checkout/index/" . $debug);
+        }
+    }
+
+    public function checkout($debug = 0)
+    {
+        if ($debug && !$this->get_config()->value_of("payment_debug_allow")) {
             $debug = 0;
         }
 
-        include_once(APPPATH.'libraries/service/Bibit/direct_bibit.lib.php');
-        include_once(APPPATH.'libraries/service/Bibit/direct_bibit.func.php');
+        include_once(APPPATH . 'libraries/service/Bibit/direct_bibit.lib.php');
+        include_once(APPPATH . 'libraries/service/Bibit/direct_bibit.func.php');
 
-        include_once(BASEPATH."libraries/Encrypt.php");
+        include_once(BASEPATH . "libraries/Encrypt.php");
         $encrypt = new CI_Encrypt();
 //      $http = $this->get_http();
-        $fi_name = $debug?"BIBIT_PG_TEST":"BIBIT_PG";
-        $http_obj = $this->get_hi_dao()->get(array("name"=>$fi_name));
+        $fi_name = $debug ? "BIBIT_PG_TEST" : "BIBIT_PG";
+        $http_obj = $this->get_hi_dao()->get(array("name" => $fi_name));
 //      $http->set_remote_site("https://".$http_obj->get_username().":".$encrypt->decode($http_obj->get_password())."@".$http_obj->get_server()."/jsp/merchant/xml/paymentService.jsp");
 //      $http->set_cookie("/tmp/bibitcookie/".$this->payment_info['ordernumber']);
 
@@ -128,14 +177,14 @@ class Pmgw_bibit_service extends Pmgw_voucher
         $_bibit->merchantCode = $http_obj->get_username();
         $_bibit->merchantPassword = $encrypt->decode($http_obj->get_password());
 
-        $_bibit->cookie = "/tmp/bibitcookie/".$this->payment_info['ordernumber'];
-        $_bibit->url = "https://".$http_obj->get_username().":".$encrypt->decode($http_obj->get_password())."@".$http_obj->get_server()."/jsp/merchant/xml/paymentService.jsp";
+        $_bibit->cookie = "/tmp/bibitcookie/" . $this->payment_info['ordernumber'];
+        $_bibit->url = "https://" . $http_obj->get_username() . ":" . $encrypt->decode($http_obj->get_password()) . "@" . $http_obj->get_server() . "/jsp/merchant/xml/paymentService.jsp";
 
 //      $_bibit->Bibitstart($debug);
-        $_bibit->orderId = $_SESSION["client"]["id"]."-".$this->payment_info['ordernumber'];
-        $_bibit->totalammount = 100*$this->payment_info['totalamount'];
+        $_bibit->orderId = $_SESSION["client"]["id"] . "-" . $this->payment_info['ordernumber'];
+        $_bibit->totalammount = 100 * $this->payment_info['totalamount'];
         $_bibit->currcode = $this->payment_info['curr'];
-        $_bibit->description = $this->payment_info['ordernumber']." - ".$this->shopper_info["email"];
+        $_bibit->description = $this->payment_info['ordernumber'] . " - " . $this->shopper_info["email"];
         $_bibit->StartXML();
         $_bibit->FillPaymentFormXML($this->payment_info["ordercontent"]);
         $_bibit->FillExtPaymentXML($this->payment_info);
@@ -167,77 +216,68 @@ class Pmgw_bibit_service extends Pmgw_voucher
 //      $this->logheader["message"] = var_export($this->reply_info, true);
 //      $this->logger->write_log($this->logheader);
 
-        if($this->reply_info['check_3d']==true)
-        {
-            $this->payment_info['echodata']=$this->reply_info['echodata'];
-<html>
-<head>
-<title>Redirecting to 3D-secure verification page</title>
-</head>
-<body OnLoad="redirect23d()">
-Redirecting to the 3D-Secure verification site of your card issuer ...
-<form name='form_3d' method="POST" action="<?=$this->reply_info['issuerurl'];?>">
-<input type='hidden' name="PaReq" value="<?=$this->reply_info['parequest'];?>" />
-<input type='hidden' name="TermUrl" value="<?=str_replace('http://', 'https://', base_url())?>checkout/response/bibit/<?=$debug?>" />
-<input type='hidden' name="MD" value="<?=base64_encode(serialize($this->payment_info));?>" />
-<input type='submit' name="Proceed 3D verification" value='Continue'/>
-</form>
-<script language="javascript">
+        if ($this->reply_info['check_3d'] == true) {
+            $this->payment_info['echodata'] = $this->reply_info['echodata'];
+            <
+            html >
+<head >
+<title > Redirecting to 3D - secure verification page </title >
+</head >
+<body OnLoad = "redirect23d()" >
+                Redirecting to the 3D - Secure verification site of your card issuer ...
+<form name = 'form_3d' method = "POST" action = "<?=$this->reply_info['issuerurl'];?>" >
+<input type = 'hidden' name = "PaReq" value = "<?=$this->reply_info['parequest'];?>" />
+<input type = 'hidden' name = "TermUrl" value = "<?=str_replace('http://', 'https://', base_url())?>checkout/response/bibit/<?=$debug?>" />
+<input type = 'hidden' name = "MD" value = "<?=base64_encode(serialize($this->payment_info));?>" />
+<input type = 'submit' name = "Proceed 3D verification" value = 'Continue' />
+</form >
+<script language = "javascript" >
 <!--
 function redirect23d()
 {
-    document.form_3d.submit();
+    document . form_3d . submit();
 }
 // -->
-</script>
-</body>
-</html>
+</script >
+</body >
+</html >
 <?php
             exit;
         }
         $this->replyHandler_uk();
 
 
-        $bibit_status = $this->error_type=='0'?"S":"F";
-        $paid_order = $paid_order = strpos($this->remark, "Order has already been paid")!==FALSE;
+        $bibit_status = $this->error_type == '0' ? "S" : "F";
+        $paid_order = $paid_order = strpos($this->remark, "Order has already been paid") !== FALSE;
 //      $this->logheader["message"] = var_export($this->error_type, true);
 //      $this->logger->write_log($this->logheader);
         $so_srv = $this->get_so_srv();
         $sops_dao = $so_srv->get_sops_dao();
-        $ps_obj = $sops_dao->get(array("so_no"=>$this->payment_info["ordernumber"]));
+        $ps_obj = $sops_dao->get(array("so_no" => $this->payment_info["ordernumber"]));
 //      $this->logheader["message"] = var_export($this->payment_info, true);
 //      $this->logger->write_log($this->logheader);
-        if (!$paid_order)
-        {
+        if (!$paid_order) {
             $ps_obj->set_payment_status($bibit_status);
         }
-        $ps_obj->set_remark($ps_obj->get_remark().$this->remark);
-        if ($bibit_status == "S")
-        {
+        $ps_obj->set_remark($ps_obj->get_remark() . $this->remark);
+        if ($bibit_status == "S") {
             $ps_obj->set_pay_date(date("Y-m-d H:i:s"));
         }
 
         $sops_dao->update($ps_obj);
 
-        if ($this->cancel_order == true)
-        {
-            if ($this->reply_info['cc_result']== 'CANCELLED')
-            {
-                $this->remark = "[ByBibit] ".$this->remark;
-            }
-            else
-            {
+        if ($this->cancel_order == true) {
+            if ($this->reply_info['cc_result'] == 'CANCELLED') {
+                $this->remark = "[ByBibit] " . $this->remark;
+            } else {
                 $_bibit->CancelOrderXML();
                 $_bibit->xml = utf8_encode($_bibit->xml);
                 $bibitResult = $_bibit->CreateConnection();
                 $this->reply_info = ParseXML_new($bibitResult, $this->reply_info);
-                if ($reply_info['order_cancelled'] == $this->payment_info["ordernumber"])
-                {
-                    $this->remark = "[TOBECANCELLED] ".$this->remark;
-                }
-                else
-                {
-                    $this->remark = "[FAILTOCANCEL] ".$this->remark;
+                if ($reply_info['order_cancelled'] == $this->payment_info["ordernumber"]) {
+                    $this->remark = "[TOBECANCELLED] " . $this->remark;
+                } else {
+                    $this->remark = "[FAILTOCANCEL] " . $this->remark;
                     //fire_event();
                 }
             }
@@ -245,27 +285,22 @@ function redirect23d()
             $sops_dao->update($ps_obj);
         }
 
-        if ($bibit_status == "S")
-        {
+        if ($bibit_status == "S") {
             $pbv_srv = $this->get_pbv_srv();
-            $platform_obj = $pbv_srv->get_dao()->get(array("selling_platform_id"=>$this->so->get_platform_id()));
-            $this->so->set_expect_delivery_date(date("Y-m-d H:i:s", time()+$platform_obj->get_latency_in_stock()*86400));
+            $platform_obj = $pbv_srv->get_dao()->get(array("selling_platform_id" => $this->so->get_platform_id()));
+            $this->so->set_expect_delivery_date(date("Y-m-d H:i:s", time() + $platform_obj->get_latency_in_stock() * 86400));
             $this->so->set_status(2);
-        }
-        else
-        {
+        } else {
             $this->so->set_status(0);
         }
 
-        if (!$paid_order)
-        {
+        if (!$paid_order) {
             $so_srv->get_dao()->update($this->so);
         }
 
-        if ($bibit_status == "S")
-        {
+        if ($bibit_status == "S") {
             //Add card info to so_credit_chk
-            include_once(BASEPATH."libraries/Encrypt.php");
+            include_once(BASEPATH . "libraries/Encrypt.php");
             $encrypt = new CI_Encrypt();
             $socc_vo = $so_srv->get_socc_dao()->get();
             $socc_vo->set_so_no($this->payment_info["ordernumber"]);
@@ -282,14 +317,13 @@ function redirect23d()
             $so_srv->get_socc_dao()->insert($socc_vo);
 
             // Tracking
-            $origin_website = isset($_COOKIE['originw'])?$_COOKIE['originw']:($_COOKIE["LS_siteID"] != ''?13:11);
+            $origin_website = isset($_COOKIE['originw']) ? $_COOKIE['originw'] : ($_COOKIE["LS_siteID"] != '' ? 13 : 11);
             $soext_vo = $so_srv->get_soext_dao()->get();
             $soext_vo->set_so_no($this->payment_info["ordernumber"]);
             $soext_vo->set_conv_site_id($origin_website);
             $soext_vo->set_conv_status(1);
 
-            if($_COOKIE["LS_siteID"] != '' && $_COOKIE["LS_siteID"] !='siteID')
-            {
+            if ($_COOKIE["LS_siteID"] != '' && $_COOKIE["LS_siteID"] != 'siteID') {
                 $soext_vo->set_conv_site_ref($_COOKIE["LS_siteID"]);
                 $soext_vo->set_ls_time_entered($_COOKIE["LS_timeEntered"]);
                 // Insert ls_transaction
@@ -298,8 +332,7 @@ function redirect23d()
 
             $so_srv->get_soext_dao()->insert($soext_vo);
 
-            if ($promo_code = $this->so->get_promotion_code())
-            {
+            if ($promo_code = $this->so->get_promotion_code()) {
                 $this->update_promo($promo_code);
             }
 
@@ -310,127 +343,56 @@ function redirect23d()
             unset($_SESSION["cart_from_url"]);
             unset($_SESSION["promotion_code"]);
             $_SESSION["pmgw_message"] = $this->display_message;
-            redirect(base_url()."checkout/payment_result/1/{$this->payment_info["ordernumber"]}?review=".$this->payment_info["review"]);
-        }
-        else
-        {
+            redirect(base_url() . "checkout/payment_result/1/{$this->payment_info["ordernumber"]}?review=" . $this->payment_info["review"]);
+        } else {
             $_SESSION["pmgw_message"] = $this->display_message;
-            redirect(base_url()."checkout/payment_result/0");
+            redirect(base_url() . "checkout/payment_result/0");
         }
 
-    }
-
-    public function response($vars, $debug)
-    {
-        $this->payment_info = unserialize(base64_decode($vars['MD']));
-
-//      $this->logheader["message"] = var_export($this->payment_info, true);
-//      $this->logger->write_log($this->logheader);
-
-        $so_srv = $this->get_so_srv();
-        if ($this->so = $so_srv->get(array("so_no"=>$this->payment_info['ordernumber'])))
-        {
-            $this->payment_info['pares'] = $vars['PaRes'];
-
-//          $this->logheader["message"] = var_export($this->payment_info, true);
-//          $this->logger->write_log($this->logheader);
-
-            $client = $this->get_client_srv()->get(array("id"=>$this->so->get_client_id()));
-
-            $tel = "";
-            if ($client->get_tel_1())
-            {
-                $tel .= $client->get_tel_1();
-            }
-
-            if ($client->get_tel_2())
-            {
-                $tel .= "-".$client->get_tel_2();
-            }
-
-            if ($client->get_tel_3())
-            {
-                $tel .= "-".$client->get_tel_3();
-            }
-
-            $this->shopper_info = array(
-                                "ip" => $_SERVER['REMOTE_ADDR'],
-                                "sid" => session_id(),
-                                "acceptheader" => $_SERVER['HTTP_ACCEPT'],
-                                "useragentheader" => $_SERVER['HTTP_USER_AGENT'],
-                                "email" => $client->get_email(),
-                                "firstname" => $client->get_forename(),
-                                "lastname" => $client->get_surname(),
-                                "street" => $client->get_address_1()." ".$client->get_address_2()." ".$client->get_address_3(),
-                                "postcode" => $client->get_postcode(),
-                                "city" => $client->get_city(),
-                                "telephone" => $tel,
-                                "countrycode" => $client->get_country_id()
-                            );
-//          $this->logheader["message"] = var_export($this->shopper_info, true);
-//          $this->logger->write_log($this->logheader);
-
-            $this->checkout($debug);
-
-        }
-
-        else
-        {
-            $_SESSION["NOTICE"] = "Error!";
-            redirect(base_url()."checkout/index/".$debug);
-        }
     }
 
     public function replyHandler_uk()
     {
-        include_once(APPPATH.'data/payment_result.php');
-        switch ($this->reply_info['cc_result'])
-        {
+        include_once(APPPATH . 'data/payment_result.php');
+        switch ($this->reply_info['cc_result']) {
             case "REFUSED":
-                $this->remark .= $this->reply_info['cc_result'].":[CODE".$this->reply_info['refuse_code']."]".$this->reply_info['refuse_desc'];
+                $this->remark .= $this->reply_info['cc_result'] . ":[CODE" . $this->reply_info['refuse_code'] . "]" . $this->reply_info['refuse_desc'];
                 $this->error_type = '1';
                 $this->display_message = $result["display"]["ps"]["REFUSED"];
                 break;
             case "ERROR":
-                $this->remark .= $this->reply_info['cc_result'].":[CODE".$this->reply_info['error_code']."]".$this->reply_info['error_desc'];
+                $this->remark .= $this->reply_info['cc_result'] . ":[CODE" . $this->reply_info['error_code'] . "]" . $this->reply_info['error_desc'];
                 $this->error_type = '1';
                 $this->display_message = $result["display"]["ps"]["ERROR"];
                 break;
             case 'CANCELLED':
-                $this->remark .= $this->reply_info['cc_result'].". CVC:".$this->reply_info['cvc_desc']." AVS:".$this->reply_info['avs_desc']." Riskscore:".$this->reply_info['riskscore']."[".$this->risk_threshold_uk."]";
+                $this->remark .= $this->reply_info['cc_result'] . ". CVC:" . $this->reply_info['cvc_desc'] . " AVS:" . $this->reply_info['avs_desc'] . " Riskscore:" . $this->reply_info['riskscore'] . "[" . $this->risk_threshold_uk . "]";
                 $this->error_type = '1';
                 $this->display_message = $result["display"]["ps"]["CANCELLED"];
-                if($this->reply_info['avs_desc']=='FAILED' || $this->reply_info['avs_desc']=='PARTIAL APPROVED') $this->error_type = '2';
+                if ($this->reply_info['avs_desc'] == 'FAILED' || $this->reply_info['avs_desc'] == 'PARTIAL APPROVED') $this->error_type = '2';
                 $this->cancel_order = true;
                 break;
             case 'AUTHORISED':
-                $this->remark .= $this->reply_info['cc_result'].". CVC:".$this->reply_info['cvc_desc']." AVS:".$this->reply_info['avs_desc']." Riskscore:".$this->reply_info['riskscore']."[".$this->risk_threshold_uk."]";
-                if($this->reply_info['cvc_desc']!='APPROVED')
-                {
+                $this->remark .= $this->reply_info['cc_result'] . ". CVC:" . $this->reply_info['cvc_desc'] . " AVS:" . $this->reply_info['avs_desc'] . " Riskscore:" . $this->reply_info['riskscore'] . "[" . $this->risk_threshold_uk . "]";
+                if ($this->reply_info['cvc_desc'] != 'APPROVED') {
                     $this->error_type = '1';
                     $this->display_message = $result["display"]["ps"]["CANCELLED"];
                     $this->cancel_order = true;
-                }
-                elseif($this->reply_info['avs_desc']!='APPROVED' && $this->reply_info['avs_desc']!='PARTIAL APPROVED')
-                {
+                } elseif ($this->reply_info['avs_desc'] != 'APPROVED' && $this->reply_info['avs_desc'] != 'PARTIAL APPROVED') {
                     $this->error_type = '2';
                     $this->display_message = $result["display"]["ps"]["CANCELLED"];
                     $this->cancel_order = true;
-                }
-                elseif($this->reply_info['riskscore']>=$this->risk_threshold_uk)
-                {
+                } elseif ($this->reply_info['riskscore'] >= $this->risk_threshold_uk) {
                     $this->error_type = '1';
                     $this->display_message = $result["display"]["ps"]["CANCELLED"];
                     $this->cancel_order = true;
-                }
-                else
-                {
+                } else {
                     $this->cancel_order = false;
                     $this->display_message = $result["display"]["ps"]["AUTHORISED"];
                 }
                 break;
             default:
-                $this->remark .= "Unknow reply from bibit:".$this->reply_info['cc_result'];
+                $this->remark .= "Unknow reply from bibit:" . $this->reply_info['cc_result'];
                 $this->error_type = '1';
                 $this->display_message = $result["display"]["ps"]["DEFAULT"];
                 break;

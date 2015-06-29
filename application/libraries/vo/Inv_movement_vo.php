@@ -204,4 +204,5 @@ class Inv_movement_vo extends Base_vo
     }
 
 }
+
 ?>

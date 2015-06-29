@@ -8,7 +8,7 @@ class Temp_barcode_mapping_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Temp_barcode_mapping_dao.php");
+        include_once(APPPATH . "libraries/dao/Temp_barcode_mapping_dao.php");
         $this->set_dao(new Temp_barcode_mapping_dao());
     }
 

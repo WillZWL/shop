@@ -11,20 +11,9 @@ class Rpt_product_hscode_report_service extends Report_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/service/So_service.php");
+        include_once(APPPATH . "libraries/service/So_service.php");
         $this->set_so_service(new So_service());
         $this->set_output_delimiter(',');
-    }
-
-    public function set_so_service($value)
-    {
-        $this->so_service = $value;
-        return $this;
-    }
-
-    public function get_so_service()
-    {
-        return $this->so_service;
     }
 
     public function get_csv($where = array())
@@ -32,6 +21,17 @@ class Rpt_product_hscode_report_service extends Report_service
         set_time_limit(300);
         $arr = $this->get_so_service()->get_dao()->get_product_hscode_report($where, $option);
         return $this->convert($arr);
+    }
+
+    public function get_so_service()
+    {
+        return $this->so_service;
+    }
+
+    public function set_so_service($value)
+    {
+        $this->so_service = $value;
+        return $this;
     }
 
     public function get_obj_list($where = array(), $option = array())

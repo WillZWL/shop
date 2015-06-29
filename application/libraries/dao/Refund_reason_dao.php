@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Refund_reason_dao extends Base_dao
 {
-    private $table_name="refund_reason";
-    private $vo_class_name="Refund_reason_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "refund_reason";
+    private $vo_class_name = "Refund_reason_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

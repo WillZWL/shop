@@ -61,4 +61,5 @@ class Menu_list_w_lang_dto extends Base_dto
         $this->parent_cat_id = $value;
     }
 }
+
 ?>

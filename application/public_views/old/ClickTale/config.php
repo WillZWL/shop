@@ -30,7 +30,7 @@ $config['CacheProvider'] = "FileSystem";
 
 // The path(relative to ClickTale root directory) of the file that
 // contains clicktale scripts.
-$config['ScriptsFile'] = ClickTale_Root.ClickTale_DS."ClickTaleScripts.xml";
+$config['ScriptsFile'] = ClickTale_Root . ClickTale_DS . "ClickTaleScripts.xml";
 
 // When used with some CacheProviders, this will improve performance.
 $config['CacheScriptsFile'] = true;

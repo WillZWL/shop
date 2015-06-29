@@ -2,8 +2,8 @@
 
 class Sales_volume_report extends MY_Controller
 {
-    private $app_id="RPT0068";
-    private $lang_id="en";
+    private $app_id = "RPT0068";
+    private $lang_id = "en";
 
     public function __construct()
     {
@@ -15,11 +15,9 @@ class Sales_volume_report extends MY_Controller
         $this->_set_export_filename('sales_volume_report_model.csv');
     }
 
-    private function _load_parent_lang()
+    public function _set_export_filename($value)
     {
-        $sub_app_id = $this->_get_app_id()."00";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-        return $lang;
+        $this->export_filename = $value;
     }
 
     public function index()
@@ -31,32 +29,11 @@ class Sales_volume_report extends MY_Controller
         $this->load->view('report/sales_volume_report_v', $data);
     }
 
-    public function query()
+    private function _load_parent_lang()
     {
-
-        $data['lang'] = $this->_load_parent_lang();
-        if($this->input->post('is_query'))
-        {
-            $order_status = $this->input->post('order_status');
-            $option['status'] = $order_status;
-            $start_date = date('Y-m-d 00:00:00', strtotime($this->input->post('start_date')));
-            $end_date = date('Y-m-d 23:59:59', strtotime($this->input->post('end_date')));
-            $where['so.create_on >='] = $start_date;
-            $where['so.create_on <='] = $end_date;
-            $data['output'] = $this->sales_volume_report_model->get_csv($where,$option);
-            $data['filename'] = 'Product_Sales_Volume_'.date('Ymd', strtotime($start_date)).'_'.date('Ymd', strtotime($end_date)).'.csv';
-            $this->load->view('output_csv.php', $data);
-        }
-    }
-
-    public function _set_export_filename($value)
-    {
-        $this->export_filename = $value;
-    }
-
-    public function _get_export_filename()
-    {
-        return $this->export_filename;
+        $sub_app_id = $this->_get_app_id() . "00";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        return $lang;
     }
 
     public function _get_app_id()
@@ -67,6 +44,28 @@ class Sales_volume_report extends MY_Controller
     public function _get_lang_id()
     {
         return $this->lang_id;
+    }
+
+    public function query()
+    {
+
+        $data['lang'] = $this->_load_parent_lang();
+        if ($this->input->post('is_query')) {
+            $order_status = $this->input->post('order_status');
+            $option['status'] = $order_status;
+            $start_date = date('Y-m-d 00:00:00', strtotime($this->input->post('start_date')));
+            $end_date = date('Y-m-d 23:59:59', strtotime($this->input->post('end_date')));
+            $where['so.create_on >='] = $start_date;
+            $where['so.create_on <='] = $end_date;
+            $data['output'] = $this->sales_volume_report_model->get_csv($where, $option);
+            $data['filename'] = 'Product_Sales_Volume_' . date('Ymd', strtotime($start_date)) . '_' . date('Ymd', strtotime($end_date)) . '.csv';
+            $this->load->view('output_csv.php', $data);
+        }
+    }
+
+    public function _get_export_filename()
+    {
+        return $this->export_filename;
     }
 }
 

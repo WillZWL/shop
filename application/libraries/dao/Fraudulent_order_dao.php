@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Fraudulent_order_dao extends Base_dao
 {
-    private $table_name="fraudulent_order";
-    private $vo_class_name="Fraudulent_order_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "fraudulent_order";
+    private $vo_class_name = "Fraudulent_order_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -89,8 +89,7 @@ class Fraudulent_order_dao extends Base_dao
                 ON rr.id = temp_rf.reason
         ";
 //one refuned order can get more than one record in the refund table, so select the lastest one
-        if ($where == '')
-        {
+        if ($where == '') {
             $sql .= " WHERE so.order_create_date >= '$start_date 00:00:00' and so.order_create_date <= '$end_date 23:59:59'
                      ORDER BY so.so_no";
         } else {
@@ -102,20 +101,18 @@ class Fraudulent_order_dao extends Base_dao
         $this->include_dto($classname);
         $result = $this->db->query($sql);
         //var_dump($this->db->last_query());die();
-        if(!$result)
-        {
+        if (!$result) {
             return FALSE;
         }
 
-        foreach($result->result("object", $classname) as $row)
-        {
+        foreach ($result->result("object", $classname) as $row) {
             $rs[] = $row;
         }
         return $rs;
     }
 
 
-    public function get_all_email_referral_list($where = '', $option= '', $classname = 'email_referral_w_client_dto')
+    public function get_all_email_referral_list($where = '', $option = '', $classname = 'email_referral_w_client_dto')
     {
         $this->db->from("email_referral_list erl");
         $this->db->join("client as c", "c.email = erl.email", "LEFT");

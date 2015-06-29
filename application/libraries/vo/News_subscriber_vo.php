@@ -120,4 +120,5 @@ class News_subscriber_vo extends Base_vo
     }
 
 }
+
 ?>

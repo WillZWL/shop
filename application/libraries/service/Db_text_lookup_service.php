@@ -19,8 +19,7 @@ class Db_text_lookup_service
 
     public function so_payment_status_payment_status($input)
     {
-        switch (strtoupper($input))
-        {
+        switch (strtoupper($input)) {
             case 'N':
                 $text = 'New';
                 break;
@@ -51,8 +50,7 @@ class Db_text_lookup_service
 
     public function so_payment_status_pending_action($input)
     {
-        switch (strtoupper($input))
-        {
+        switch (strtoupper($input)) {
             case 'C':
                 $text = "Cancel Payment";
                 break;
@@ -79,12 +77,12 @@ class Db_text_lookup_service
         }
         return $text;
     }
+
     public function so_status($input)
     {
         // On backend, 2 = Paid, 3 = Credit Checked.
         // $text here corresponds to dropdown on Order Quick Search
-        switch ($input)
-        {
+        switch ($input) {
             case '0':
                 $text = 'Inactive';
                 break;
@@ -117,8 +115,7 @@ class Db_text_lookup_service
 
     public function so_refund_status($input)
     {
-        switch ($input)
-        {
+        switch ($input) {
             case '0':
                 $text = 'No';
                 break;
@@ -145,8 +142,7 @@ class Db_text_lookup_service
 
     public function so_hold_status($input)
     {
-        switch ($input)
-        {
+        switch ($input) {
             case '0':
                 $text = "No";
                 break;

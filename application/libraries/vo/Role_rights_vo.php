@@ -120,4 +120,5 @@ class Role_rights_vo extends Base_vo
     }
 
 }
+
 ?>

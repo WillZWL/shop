@@ -26,32 +26,25 @@ class Httpconnection_service extends Connection_service
 
         //use curl
         $ch = curl_init($this->get_remote_site());
-        if(!$ch)
-        {
+        if (!$ch) {
             throw new exception('Cannot Allocate Resource for Client URL');
             $ret = false;
-        }
-        else
-        {
+        } else {
             $port = $this->get_port();
-            if($port)
-            {
+            if ($port) {
                 curl_setopt($ch, $port);
             }
 
-            if ($cookie = $this->get_cookie())
-            {
-                curl_setopt($ch, file_exists($cookie)?CURLOPT_COOKIEFILE:CURLOPT_COOKIEJAR, $cookie);
+            if ($cookie = $this->get_cookie()) {
+                curl_setopt($ch, file_exists($cookie) ? CURLOPT_COOKIEFILE : CURLOPT_COOKIEJAR, $cookie);
             }
 
-            if ($postfields = $this->get_postfields())
-            {
-                curl_setopt($ch, CURLOPT_POST,1);
+            if ($postfields = $this->get_postfields()) {
+                curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
             }
 
-            if ($httpheader = $this->get_httpheader())
-            {
+            if ($httpheader = $this->get_httpheader()) {
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $httpheader);
             }
 
@@ -65,29 +58,12 @@ class Httpconnection_service extends Connection_service
 
             $content = curl_exec($ch);
             curl_close($ch);
-            if($content === FALSE)
-            {
-                throw new Exception('Connection fail while connecting to '.$this->get_remote_site().' on port '.$this->get_port());
+            if ($content === FALSE) {
+                throw new Exception('Connection fail while connecting to ' . $this->get_remote_site() . ' on port ' . $this->get_port());
             }
             $ret = $content;
         }
         return $ret;
-    }
-
-
-    public function set_noprogress($value)
-    {
-        $this->noprogress = $value;
-    }
-
-    public function get_noprogress()
-    {
-        return $this->noprogress;
-    }
-
-    public function set_cookie($value)
-    {
-        $this->cookie = $value;
     }
 
     public function get_cookie()
@@ -95,9 +71,9 @@ class Httpconnection_service extends Connection_service
         return $this->cookie;
     }
 
-    public function set_postfields($value)
+    public function set_cookie($value)
     {
-        $this->postfields = $value;
+        $this->cookie = $value;
     }
 
     public function get_postfields()
@@ -105,14 +81,14 @@ class Httpconnection_service extends Connection_service
         return $this->postfields;
     }
 
-    public function set_failonerror($value)
+    public function set_postfields($value)
     {
-        $this->failonerror = $value;
+        $this->postfields = $value;
     }
 
-    public function get_failonerror()
+    public function get_httpheader()
     {
-        return $this->failonerror;
+        return $this->httpheader;
     }
 
     public function set_httpheader($value)
@@ -120,9 +96,25 @@ class Httpconnection_service extends Connection_service
         $this->httpheader = $value;
     }
 
-    public function get_httpheader()
+    public function get_failonerror()
     {
-        return $this->httpheader;
+        return $this->failonerror;
+    }
+
+    public function set_failonerror($value)
+    {
+        $this->failonerror = $value;
+    }
+
+    public function get_noprogress()
+    {
+        return $this->noprogress;
+    }
+
+    public function set_noprogress($value)
+    {
+        $this->noprogress = $value;
     }
 }
+
 ?>

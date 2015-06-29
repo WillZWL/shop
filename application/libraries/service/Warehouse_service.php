@@ -11,7 +11,7 @@ class Warehouse_service extends Base_service
         parent::__construct();
         $CI =& get_instance();
         $this->load = $CI->load;
-        include_once(APPPATH."libraries/dao/Warehouse_dao.php");
+        include_once(APPPATH . "libraries/dao/Warehouse_dao.php");
         $this->set_dao(new Warehouse_dao());
     }
 

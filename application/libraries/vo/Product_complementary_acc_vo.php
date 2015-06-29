@@ -156,4 +156,5 @@ class Product_complementary_acc_vo extends Base_vo
     }
 
 }
+
 ?>

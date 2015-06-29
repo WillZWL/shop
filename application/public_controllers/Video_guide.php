@@ -28,13 +28,11 @@ class Video_guide extends PUB_Controller
     {
         $this->affiliate_service->add_af_cookie($_GET);
 
-        if(!$this->input->get('limit'))
-        {
-            redirect(base_url()."video_guide/?limit=6&page=1");
+        if (!$this->input->get('limit')) {
+            redirect(base_url() . "video_guide/?limit=6&page=1");
         }
 
-        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)
-        {
+        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) {
 
             $secure_connection = true;
         }
@@ -45,11 +43,10 @@ class Video_guide extends PUB_Controller
 
         $where["video_src"] = $src;
 
-        $data["cat"] = $this->category_model->get_list(array("level"=>"1", "id >"=>"0"));
+        $data["cat"] = $this->category_model->get_list(array("level" => "1", "id >" => "0"));
 
-        foreach($data["cat"] as $k=>$v)
-        {
-            $data["subcat"][$v->get_id()] = $this->category_model->get_display_list($v->get_id(),"cat","",PLATFORMID);
+        foreach ($data["cat"] as $k => $v) {
+            $data["subcat"][$v->get_id()] = $this->category_model->get_display_list($v->get_id(), "cat", "", PLATFORMID);
         }
 
         /*
@@ -83,10 +80,8 @@ class Video_guide extends PUB_Controller
         $data['best_selling_guide_video'] = $this->get_best_selling_videos('G');
         $data['best_selling_review_video'] = $this->get_best_selling_videos('R');
 
-        if($data['best_selling_review_video'])
-        {
-            if(!$data['review_prod_cont_obj'] = $this->product_model->product_service->get_content($data['best_selling_review_video'][0]->get_sku(), get_lang_id()))
-            {
+        if ($data['best_selling_review_video']) {
+            if (!$data['review_prod_cont_obj'] = $this->product_model->product_service->get_content($data['best_selling_review_video'][0]->get_sku(), get_lang_id())) {
                 $data['review_prod_cont_obj'] = $this->product_model->product_service->get_content($data['best_selling_review_video'][0]->get_sku(), 'en');
             }
         }
@@ -98,8 +93,7 @@ class Video_guide extends PUB_Controller
         $where["sub_cat_id"] = $this->input->get('scat');
         $where["brand"] = $this->input->get('brand');
 
-        switch ($this->input->get('sort'))
-        {
+        switch ($this->input->get('sort')) {
             case "pricelow":
                 $option['orderby'] = 'IF(pr2.price>0, pr2.price, pr.price*ex.rate) ASC';
                 break;
@@ -123,8 +117,7 @@ class Video_guide extends PUB_Controller
                 $option['orderby'] = 'pv.create_on DESC';
         }
 
-        switch ($this->input->get('filter'))
-        {
+        switch ($this->input->get('filter')) {
             case "all":
                 break;
             case "skypecert":
@@ -139,11 +132,10 @@ class Video_guide extends PUB_Controller
             default:
         }
 
-        if(!($where['limit'] = $data['limit'] = $this->input->get('limit')))
-        {
+        if (!($where['limit'] = $data['limit'] = $this->input->get('limit'))) {
             $where['limit'] = $data['limit'] = 6;
         }
-        $data['offset'] = $where['offset'] = $this->input->get('limit')*($this->input->get('page')-1);
+        $data['offset'] = $where['offset'] = $this->input->get('limit') * ($this->input->get('page') - 1);
         $data["page"] = $this->input->get("page");
 
         $data["display_list"] = $this->product_model->get_display_video_list($where, $option);
@@ -158,14 +150,72 @@ class Video_guide extends PUB_Controller
         //$this->load_view('video_guide.php', $data);
     }
 
+    public function get_latest_videos($video_type = "")
+    {
+        $src = 'Y';
+
+        if ($mlist = $this->latest_video_model->get_list_w_name(0, 'M', 'LV', $video_type, PLATFORMID, $src)) {
+            foreach ($mlist as $marr) {
+                $rlist[] = $marr->get_ref_id();
+            }
+        }
+        $rlist = array();
+
+        if ($alist = $this->latest_video_model->get_list_w_name(0, 'A', 'LV', $video_type, PLATFORMID, $src)) {
+            foreach ($alist as $aarr) {
+                if (!in_array($aarr->get_ref_id(), $rlist)) {
+                    $mlist[] = $aarr;
+                    $rlist[] = $aarr->get_ref_id();
+                } else {
+                    continue;
+                }
+            }
+        }
+        return $mlist;
+    }
+
+    public function get_best_selling_videos($video_type = '')
+    {
+        $src = 'Y';
+
+        $rlist = array();
+        if ($mlist = $this->best_selling_video_model->get_list_w_name(0, 'M', 'BV', $video_type, PLATFORMID, $src)) {
+            foreach ($mlist as $marr) {
+                $rlist[] = $marr->get_ref_id();
+            }
+        }
+
+        if ($alist = $this->best_selling_video_model->get_list_w_name(0, 'A', 'BV', $video_type, PLATFORMID, $src)) {
+            foreach ($alist as $aarr) {
+                if (!in_array($aarr->get_ref_id(), $rlist)) {
+                    $mlist[] = $aarr;
+                    $rlist[] = $aarr->get_ref_id();
+                } else {
+                    continue;
+                }
+            }
+        }
+
+        if ($alist = $this->get_latest_videos($video_type)) {
+            foreach ($alist as $aarr) {
+                if (!in_array($aarr->get_ref_id(), $rlist)) {
+                    $mlist[] = $aarr;
+                    $rlist[] = $aarr->get_ref_id();
+                } else {
+                    continue;
+                }
+            }
+        }
+        return $mlist;
+    }
+
     public function gen_select_menu_items()
     {
         $where["platform_id"] = PLATFORMID;
         $where['limit'] = NULL;
         $where['offset'] = NULL;
 
-        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)
-        {
+        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) {
 
             $secure_connection = true;
         }
@@ -177,10 +227,8 @@ class Video_guide extends PUB_Controller
         $option['groupby'] = 'cat_name';
         $cat_list = $this->product_model->get_display_video_list($where, $option);
 
-        if($cat_list)
-        {
-            foreach ($cat_list as $k=>$v)
-            {
+        if ($cat_list) {
+            foreach ($cat_list as $k => $v) {
                 $data['cat_list'][$v->get_cat_id()] = $v->get_count();
             }
         }
@@ -188,10 +236,8 @@ class Video_guide extends PUB_Controller
         $option['groupby'] = 'sub_cat_name';
         $sub_cat_list = $this->product_model->get_display_video_list($where, $option);
 
-        if($sub_cat_list)
-        {
-            foreach ($sub_cat_list as $k=>$v)
-            {
+        if ($sub_cat_list) {
+            foreach ($sub_cat_list as $k => $v) {
                 $data['sub_cat_list'][$v->get_sub_cat_id()] = $v->get_count();
             }
         }
@@ -199,92 +245,12 @@ class Video_guide extends PUB_Controller
         $option['groupby'] = 'brand_name';
         $brand_list = $this->product_model->get_display_video_list($where, $option);
 
-        if($brand_list)
-        {
-            foreach ($brand_list as $k=>$v)
-            {
+        if ($brand_list) {
+            foreach ($brand_list as $k => $v) {
                 $data['brand_list'][$v->get_cat_id()][$v->get_sub_cat_id()][$v->get_brand_name()] = $v->get_count();
             }
         }
         return $data;
-    }
-
-    public function get_latest_videos($video_type="")
-    {
-        $src = 'Y';
-
-        if($mlist = $this->latest_video_model->get_list_w_name(0,'M','LV',$video_type,PLATFORMID,$src))
-        {
-            foreach($mlist as $marr)
-            {
-                $rlist[] = $marr->get_ref_id();
-            }
-        }
-        $rlist = array();
-
-        if($alist = $this->latest_video_model->get_list_w_name(0,'A','LV',$video_type,PLATFORMID,$src))
-        {
-            foreach($alist as $aarr)
-            {
-                if(!in_array($aarr->get_ref_id(),$rlist))
-                {
-                    $mlist[] = $aarr;
-                    $rlist[] = $aarr->get_ref_id();
-                }
-                else
-                {
-                    continue;
-                }
-            }
-        }
-        return $mlist;
-    }
-
-    public function get_best_selling_videos($video_type='')
-    {
-        $src = 'Y';
-
-        $rlist = array();
-        if($mlist = $this->best_selling_video_model->get_list_w_name(0,'M','BV',$video_type,PLATFORMID,$src))
-        {
-            foreach($mlist as $marr)
-            {
-                $rlist[] = $marr->get_ref_id();
-            }
-        }
-
-        if($alist = $this->best_selling_video_model->get_list_w_name(0,'A','BV',$video_type,PLATFORMID,$src))
-        {
-            foreach($alist as $aarr)
-            {
-                if(!in_array($aarr->get_ref_id(),$rlist))
-                {
-                    $mlist[] = $aarr;
-                    $rlist[] = $aarr->get_ref_id();
-                }
-                else
-                {
-                    continue;
-                }
-            }
-        }
-
-        if($alist = $this->get_latest_videos($video_type))
-        {
-            foreach($alist as $aarr)
-            {
-                if(!in_array($aarr->get_ref_id(),$rlist))
-                {
-                    $mlist[] = $aarr;
-                    $rlist[] = $aarr->get_ref_id();
-                }
-                else
-                {
-                    continue;
-                }
-            }
-        }
-        return $mlist;
     }
 }
 

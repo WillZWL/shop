@@ -204,4 +204,5 @@ class Template_by_platform_vo extends Base_vo
     }
 
 }
+
 ?>

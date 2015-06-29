@@ -144,4 +144,5 @@ class Rma_history_vo extends Base_vo
     }
 
 }
+
 ?>

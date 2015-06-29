@@ -9,7 +9,7 @@ class Selector extends PUB_Controller
     {
         parent::PUB_Controller();
         $this->load->library('template');
-        $this->load->helper(array('url','directory','datetime','tbswrapper'));
+        $this->load->helper(array('url', 'directory', 'datetime', 'tbswrapper'));
         $this->load->model("website/home_model");
         $this->load->library('service/affiliate_service');
     }

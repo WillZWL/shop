@@ -1,4 +1,5 @@
 <?php
+
 class Compensation_model extends CI_Model
 {
 
@@ -11,10 +12,10 @@ class Compensation_model extends CI_Model
         $this->load->library('service/compensation_reason_service');
     }
 
-    public function get_orders_eligible_for_compensation($where=array(), $option=array())
+    public function get_orders_eligible_for_compensation($where = array(), $option = array())
     {
-        return array("list"=>$this->get_compensation_order_list($where, $option),
-                     "total"=>$this->get_compensation_order_num_rows($where, $option));
+        return array("list" => $this->get_compensation_order_list($where, $option),
+            "total" => $this->get_compensation_order_num_rows($where, $option));
     }
 
     public function get_compensation_order_list($where = array(), $option = array())
@@ -39,9 +40,9 @@ class Compensation_model extends CI_Model
         return $this->so_service->get_dao()->update($obj);
     }
 
-    public function get_item_list($where=array())
+    public function get_item_list($where = array())
     {
-        return $this->so_service->get_soid_dao()->get_list_w_prodname($where, array("sortby"=>"line_no ASC"));
+        return $this->so_service->get_soid_dao()->get_list_w_prodname($where, array("sortby" => "line_no ASC"));
     }
 
     public function get_reason($where = array())
@@ -101,8 +102,8 @@ class Compensation_model extends CI_Model
 
     public function get_request_compensation_so($where = array(), $option = array())
     {
-        return array("list"=>$this->get_request_compensation_so_list($where, $option),
-             "total"=>$this->get_request_compensation_so_num_rows($where, $option));
+        return array("list" => $this->get_request_compensation_so_list($where, $option),
+            "total" => $this->get_request_compensation_so_num_rows($where, $option));
     }
 
     public function get_request_compensation_so_list($where = array(), $option = array())
@@ -147,4 +148,5 @@ class Compensation_model extends CI_Model
         return $this->compensation_reason_service->get($where);
     }
 }
+
 ?>

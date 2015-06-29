@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Entity_dao extends Base_dao
 {
-    private $table_name="entity";
-    private $vo_classname="Entity_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "entity";
+    private $vo_classname = "Entity_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

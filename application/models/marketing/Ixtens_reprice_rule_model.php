@@ -24,12 +24,12 @@ class Ixtens_reprice_rule_model extends CI_Model
         return $this->ixten_reprice_rule_service->q_delete($obj);
     }
 
-    public function get($where=array())
+    public function get($where = array())
     {
         return $this->ixten_reprice_rule_service->get($where);
     }
 
-    public function get_list($where=array(), $option=array())
+    public function get_list($where = array(), $option = array())
     {
         return $this->ixten_reprice_rule_service->get_list($where, $option);
     }
@@ -41,7 +41,8 @@ class Ixtens_reprice_rule_model extends CI_Model
 
     public function get_amazon_platform_list()
     {
-        return $this->selling_platform_service->get_list(array("type"=>"AMAZON"));
+        return $this->selling_platform_service->get_list(array("type" => "AMAZON"));
     }
 }
+
 ?>

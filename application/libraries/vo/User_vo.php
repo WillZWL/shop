@@ -168,4 +168,5 @@ class User_vo extends Base_vo
     }
 
 }
+
 ?>

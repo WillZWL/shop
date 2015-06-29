@@ -97,33 +97,29 @@ tradedoubler_code;
     public function get_variable_code($page_type, $product_list, $param)
     {
         $ret_code = "";
-        switch($this->get_country_id())
-        {
+        switch ($this->get_country_id()) {
             case "FR":
-                switch ($page_type)
-                {
-                    case "homepage":        return $this->tradedoubler_homepage_code();                             break;
-                    case "category":        return $this->tradedoubler_category_code($product_list);                break;
-                    case "product":         return $this->tradedoubler_product_code($param);                        break;
-                    case "basket":          return $this->tradedoubler_basket_code($product_list);                  break;
-                    case "payment_success": return $this->tradedoubler_payment_success_code($product_list,$param);  break;
+                switch ($page_type) {
+                    case "homepage":
+                        return $this->tradedoubler_homepage_code();
+                        break;
+                    case "category":
+                        return $this->tradedoubler_category_code($product_list);
+                        break;
+                    case "product":
+                        return $this->tradedoubler_product_code($param);
+                        break;
+                    case "basket":
+                        return $this->tradedoubler_basket_code($product_list);
+                        break;
+                    case "payment_success":
+                        return $this->tradedoubler_payment_success_code($product_list, $param);
+                        break;
                 }
                 break;
             default:
                 return "";
         }
-    }
-
-    private function tradedoubler_encode($array)
-    {
-        // encode product list array into string format for javascript
-        $ret_code = "";
-
-        foreach ($array as $key=>$value)
-            $ret_code .= "$key:\"$value\",";
-
-        $ret_code = rtrim($ret_code, ",");
-        return "\r\n{" . $ret_code . "}";
     }
 
     private function tradedoubler_homepage_code()
@@ -141,24 +137,22 @@ javascript;
         return $ret_code;
     }
 
-    #test url http://dev.valuebasket.fr/fr_FR/Canon-Lenses/cat/view/146
     private function tradedoubler_category_code($product_list)
     {
-            // $param_list["id"] = "";
-            // $param_list["price"] = "";
-            // $param_list["currency"] = "";
-            // $param_list["name"] = "";
-            // $prod_list[] = $param_list;
+        // $param_list["id"] = "";
+        // $param_list["price"] = "";
+        // $param_list["currency"] = "";
+        // $param_list["name"] = "";
+        // $prod_list[] = $param_list;
 
-        foreach ($product_list as $key=>$value)
-        {
+        foreach ($product_list as $key => $value) {
             $json[] = $this->json_encode_no_quote($value);
         }
 
         $product_list = implode(",", $json);
 
-            // {id: "[product-id1]", price:"[price1]", currency:"[currency1]", name:"[product-name1]"},
-            // {id: "[product-id2]", price:"[price2]", currency:"[currency2]", name:"[product-name2]"}
+        // {id: "[product-id1]", price:"[price1]", currency:"[currency1]", name:"[product-name1]"},
+        // {id: "[product-id2]", price:"[price2]", currency:"[currency2]", name:"[product-name2]"}
 
         // this is meant for our category page located at
         // http://dev.valuebasket.fr/fr_FR/Mobile-Phones/cat/view/4
@@ -175,6 +169,8 @@ javascript;
 javascript;
         return $ret_code;
     }
+
+    #test url http://dev.valuebasket.fr/fr_FR/Canon-Lenses/cat/view/146
 
     private function tradedoubler_product_code($param)
     {
@@ -207,15 +203,14 @@ javascript;
         // $param["name"] = "";
         // $param["qty"] = "";
         // $param_list[] = $param;
-        if($product_list)
-        {
-            foreach ($product_list as $key=>$value)
-            {
+        if ($product_list) {
+            foreach ($product_list as $key => $value) {
                 $json[] = $this->json_encode_no_quote($value);
             }
             $product_list = implode(",", $json);
+        } else {
+            $product_list = "";
         }
-        else {$product_list = "";}
 
         $ret_code = <<<javascript
             <script type="text/javascript">
@@ -231,15 +226,13 @@ javascript;
         return $ret_code;
     }
 
-    #test url https://dev.valuebasket.fr/fr_FR/checkout/payment_result/1/133578?debug=1
     private function tradedoubler_payment_success_code($product_list, $param)
     {
         // product list js format:
         // {id: "[product-id1]", price:"[price1]", currency:"[currency1]", name:"[product-name1]", qty:"[quantity1]"},
         // {id: "[product-id2]", price:"[price2]", currency:"[currency2]", name:"[product-name1]", qty:"[quantity2]"},
 
-        foreach ($product_list as $key=>$value)
-        {
+        foreach ($product_list as $key => $value) {
             $json[] = $this->json_encode_no_quote($value);
         }
         $product_list = implode(",", $json);
@@ -259,6 +252,20 @@ javascript;
             </script>
 javascript;
         return $ret_code;
+    }
+
+    #test url https://dev.valuebasket.fr/fr_FR/checkout/payment_result/1/133578?debug=1
+
+    private function tradedoubler_encode($array)
+    {
+        // encode product list array into string format for javascript
+        $ret_code = "";
+
+        foreach ($array as $key => $value)
+            $ret_code .= "$key:\"$value\",";
+
+        $ret_code = rtrim($ret_code, ",");
+        return "\r\n{" . $ret_code . "}";
     }
 
 }

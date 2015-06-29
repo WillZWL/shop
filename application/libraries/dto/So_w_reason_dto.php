@@ -138,4 +138,5 @@ class So_w_reason_dto extends Base_dto
         return $this;
     }
 }
+
 ?>

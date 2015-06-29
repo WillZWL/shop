@@ -10,19 +10,14 @@ class Product_shipping_override_dto extends Base_dto
     private $type;
     private $shipping_charge;
 
-    public function set_platform_id($value)
-    {
-        $this->platform_id = $value;
-    }
-
     public function get_platform_id()
     {
         return $this->platform_id;
     }
 
-    public function set_sku($value)
+    public function set_platform_id($value)
     {
-        $this->sku = $value;
+        $this->platform_id = $value;
     }
 
     public function get_sku()
@@ -30,9 +25,9 @@ class Product_shipping_override_dto extends Base_dto
         return $this->sku;
     }
 
-    public function set_ship_option($value)
+    public function set_sku($value)
     {
-        $this->ship_option = $value;
+        $this->sku = $value;
     }
 
     public function get_ship_option()
@@ -40,9 +35,9 @@ class Product_shipping_override_dto extends Base_dto
         return $this->ship_option;
     }
 
-    public function set_do_not_ship($value)
+    public function set_ship_option($value)
     {
-        $this->do_not_ship = $value;
+        $this->ship_option = $value;
     }
 
     public function get_do_not_ship()
@@ -50,9 +45,9 @@ class Product_shipping_override_dto extends Base_dto
         return $this->do_not_ship;
     }
 
-    public function set_type($value)
+    public function set_do_not_ship($value)
     {
-        $this->type = $value;
+        $this->do_not_ship = $value;
     }
 
     public function get_type()
@@ -60,14 +55,19 @@ class Product_shipping_override_dto extends Base_dto
         return $this->type;
     }
 
-    public function set_shipping_charge($value)
+    public function set_type($value)
     {
-        $this->shipping_charge = $value;
+        $this->type = $value;
     }
 
     public function get_shipping_charge()
     {
         return $this->shipping_charge;
+    }
+
+    public function set_shipping_charge($value)
+    {
+        $this->shipping_charge = $value;
     }
 }
 

@@ -143,4 +143,5 @@ class Flex_gateway_mapping_vo extends Base_vo
     }
 
 }
+
 ?>

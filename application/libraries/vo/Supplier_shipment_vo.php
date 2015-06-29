@@ -180,4 +180,5 @@ class Supplier_shipment_vo extends Base_vo
     }
 
 }
+
 ?>

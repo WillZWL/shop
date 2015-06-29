@@ -24,37 +24,34 @@ class Customer_extraction_service extends Base_service
         $this->pagination_service = $CI->pagination_service;
     }
 
-    public function get_platform_ex($full_list,$input)
+    public function get_platform_ex($full_list, $input)
     {
         $rtn = $full_list;
 
-        foreach($input as $key=>$value)
-        {
+        foreach ($input as $key => $value) {
             unset($rtn[$key]);
         }
 
         return $rtn;
     }
 
-    public function get_platform_list($where=array(), $option=array())
+    public function get_platform_list($where = array(), $option = array())
     {
         $rtn = array();
         $option["limit"] = -1;
         $obj_array = $this->selling_platform_dao->get_list($where, $option);
-        foreach ($obj_array as $obj)
-        {
+        foreach ($obj_array as $obj) {
             $rtn[$obj->get_id()] = $obj->get_name();
         }
 
         return $rtn;
     }
 
-    public function get_category_ex($full_list,$input)
+    public function get_category_ex($full_list, $input)
     {
         $rtn = $full_list;
-        if($input){
-            foreach($input as $key=>$value)
-            {
+        if ($input) {
+            foreach ($input as $key => $value) {
                 unset($rtn[$key]);
             }
         }
@@ -62,26 +59,24 @@ class Customer_extraction_service extends Base_service
         return $rtn;
     }
 
-    public function get_combined_cat_list($where=array(), $option=array())
+    public function get_combined_cat_list($where = array(), $option = array())
     {
         $rtn = array();
         $option["limit"] = -1;
         $obj_array = $this->category_dao->get_combined_cat_list($where, $option);
-        foreach ($obj_array as $obj)
-        {
+        foreach ($obj_array as $obj) {
             $rtn[$obj->get_id()] = $obj->get_name();
         }
 
         return $rtn;
     }
 
-    public function get_exchange_rate($where=array(), $option=array())
+    public function get_exchange_rate($where = array(), $option = array())
     {
         $rtn = array();
         $option["limit"] = -1;
         $obj_array = $this->exchange_rate_dao->get_list($where, $option);
-        foreach ($obj_array as $obj)
-        {
+        foreach ($obj_array as $obj) {
             $rtn[$obj->get_from_currency_id()] = $obj->get_rate();
         }
 

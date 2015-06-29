@@ -154,14 +154,14 @@ class Pmgw_report_trademe_dto extends Base_dto
         $this->so_no = $value;
     }
 
-    public function set_currency_id($value)
-    {
-        $this->currency_id = $value;
-    }
-
     public function get_currency_id()
     {
         return $this->currency_id;
+    }
+
+    public function set_currency_id($value)
+    {
+        $this->currency_id = $value;
     }
 }
 /* End of file pmgw_report_trademe_dto.php */

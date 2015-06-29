@@ -168,4 +168,5 @@ class Domain_platform_vo extends Base_vo
     }
 
 }
+
 ?>

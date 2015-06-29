@@ -25,4 +25,5 @@ class Faq extends PUB_Controller
         echo $this->kayako_service->access_help_desk_website('/Knowledgebase/List');
     }
 }
+
 ?>

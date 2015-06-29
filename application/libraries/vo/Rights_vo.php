@@ -144,4 +144,5 @@ class Rights_vo extends Base_vo
     }
 
 }
+
 ?>

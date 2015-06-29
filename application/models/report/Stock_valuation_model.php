@@ -1,5 +1,7 @@
 <?php
-class Stock_valuation_model extends CI_Model{
+
+class Stock_valuation_model extends CI_Model
+{
 
     public function __construct()
     {

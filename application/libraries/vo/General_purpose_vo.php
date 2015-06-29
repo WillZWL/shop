@@ -144,4 +144,5 @@ class General_purpose_vo extends Base_vo
     }
 
 }
+
 ?>

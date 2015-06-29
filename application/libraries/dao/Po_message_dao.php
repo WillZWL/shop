@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Po_message_dao extends Base_dao
 {
-    private $table_name="po_message";
-    private $vo_class_name="Po_message_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "po_message";
+    private $vo_class_name = "Po_message_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -36,4 +36,5 @@ class Po_message_dao extends Base_dao
     }
 
 }
+
 ?>

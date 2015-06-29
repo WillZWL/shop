@@ -1,5 +1,7 @@
 <?php
-class Marketing_report_model extends CI_Model{
+
+class Marketing_report_model extends CI_Model
+{
 
     public function __construct()
     {
@@ -17,22 +19,14 @@ class Marketing_report_model extends CI_Model{
         $status_chg = array();
         $new_item = array();
 
-        foreach ($arr as $obj)
-        {
-            if ($obj->get_is_new())
-            {
+        foreach ($arr as $obj) {
+            if ($obj->get_is_new()) {
                 $new_item[] = $obj;
-            }
-            else if ($obj->get_cost_diff() == 0)
-            {
+            } else if ($obj->get_cost_diff() == 0) {
                 $status_chg[] = $obj;
-            }
-            else if ($obj->get_cost_diff() > 0)
-            {
+            } else if ($obj->get_cost_diff() > 0) {
                 $cost_inc[] = $obj;
-            }
-            else if ($obj->get_cost_diff() < 0)
-            {
+            } else if ($obj->get_cost_diff() < 0) {
                 $cost_dec[] = $obj;
             }
             /*else

@@ -28,14 +28,13 @@ class Db_cache_service extends Base_service
         include_once(APPPATH . 'libraries/service/Product_service.php');
         $prod_serv = new Product_service();
 
-        $cache_data =  $cache_serv->get_xml_skype_feed($data);
+        $cache_data = $cache_serv->get_xml_skype_feed($data);
 
-        if ($cache_data)
-        {
+        if ($cache_data) {
             $sku = explode('/', $data['sku']);
 
             // Collect the quantity of the item
-            $prod_obj = $prod_serv->get(array('sku'=>$sku[0]));
+            $prod_obj = $prod_serv->get(array('sku' => $sku[0]));
 
             // Special code to include dto.  It is not a proper way
             $prod_serv->get_dao()->include_dto('Product_cost_dto');

@@ -36,66 +36,80 @@ class Tag_product_feed_dto extends Base_dto
     {
         return $this->platform_id;
     }
-    public function get_sku()
-    {
-        return $this->sku;
-    }
-    public function get_prod_name()
-    {
-        return $this->prod_name;
-    }
-    public function get_detail_desc()
-    {
-        return $this->detail_desc;
-    }
-    public function get_cat_id()
-    {
-        return $this->cat_id;
-    }
-    public function get_cat_name()
-    {
-        return $this->cat_name;
-    }
-    public function get_product_url()
-    {
-        return $this->product_url;
-    }
-    public function get_image_url()
-    {
-        return $this->image_url;
-    }
 
     public function set_platform_id($value)
     {
         $this->platform_id = $value;
     }
+
+    public function get_sku()
+    {
+        return $this->sku;
+    }
+
     public function set_sku($value)
     {
         $this->sku = $value;
     }
+
+    public function get_prod_name()
+    {
+        return $this->prod_name;
+    }
+
     public function set_prod_name($value)
     {
         $this->prod_name = $value;
     }
-    public function set_detail_desc($value)
+
+    public function get_detail_desc()
     {
-        $this->detail_desc = $value;
+        return $this->detail_desc;
     }
+
+    public function get_cat_id()
+    {
+        return $this->cat_id;
+    }
+
     public function set_cat_id($value)
     {
         $this->cat_id = $value;
     }
+
+    public function get_cat_name()
+    {
+        return $this->cat_name;
+    }
+
     public function set_cat_name($value)
     {
         $this->cat_name = $value;
     }
+
+    public function get_product_url()
+    {
+        return $this->product_url;
+    }
+
     public function set_product_url($value)
     {
         $this->product_url = $value;
     }
+
+    public function get_image_url()
+    {
+        return $this->image_url;
+    }
+
     public function set_image_url($value)
     {
         $this->image_url = $value;
+    }
+
+    public function set_detail_desc($value)
+    {
+        $this->detail_desc = $value;
     }
 
 }

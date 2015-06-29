@@ -1,4 +1,5 @@
 <?php
+
 class Inventory_adjustment_model extends CI_Model
 {
     public function __construct()

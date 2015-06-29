@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Transmission_log_dao extends Base_dao
 {
-    private $table_name="transmission_log";
-    private $vo_class_name="Transmission_log_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "transmission_log";
+    private $vo_class_name = "Transmission_log_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

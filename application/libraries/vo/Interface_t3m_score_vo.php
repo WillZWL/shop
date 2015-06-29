@@ -180,4 +180,5 @@ class Interface_t3m_score_vo extends Base_vo
     }
 
 }
+
 ?>

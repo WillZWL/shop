@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Delivery_time_dao extends Base_dao
 {
-    private $table_name="delivery_time";
-    private $vo_class_name="Delivery_time_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "delivery_time";
+    private $vo_class_name = "Delivery_time_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class Delivery_time_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_deliverytime_list($where=array())
+    public function get_deliverytime_list($where = array())
     {
         $dto = "delivery_time_list_dto";
         $this->include_dto($dto);
@@ -52,13 +52,11 @@ class Delivery_time_dao extends Base_dao
         $this->db->order_by("lookds.id ASC");
 
         $rs = array();
-        if ($query = $this->db->get())
-        {
-            foreach ($query->result($dto) as $obj)
-            {
+        if ($query = $this->db->get()) {
+            foreach ($query->result($dto) as $obj) {
                 $rs[] = $obj;
             }
-            return (object) $rs;
+            return (object)$rs;
         }
 
         return FALSE;
@@ -82,11 +80,9 @@ class Delivery_time_dao extends Base_dao
         $this->db->order_by("lookds.id ASC");
         $this->db->limit(1);
 
-        if ($query = $this->db->get())
-        {
-            foreach ($query->result($dto) as $obj)
-            {
-                return (object) $obj;
+        if ($query = $this->db->get()) {
+            foreach ($query->result($dto) as $obj) {
+                return (object)$obj;
             }
         }
 
@@ -99,13 +95,11 @@ class Delivery_time_dao extends Base_dao
         $this->db->where("status = 1");
         $rs = array();
 
-        if ($query = $this->db->get())
-        {
-            foreach ($query->result() as $row)
-            {
+        if ($query = $this->db->get()) {
+            foreach ($query->result() as $row) {
                 $rs[] = $row;
             }
-            return (object) $rs;
+            return (object)$rs;
         }
 
         return FALSE;
@@ -116,23 +110,20 @@ class Delivery_time_dao extends Base_dao
     public function bulk_update_delivery_scenario_by_platform($platform_id, $scenarioid, $sku_list)
     {
         $ts = date("Y-m-d H:i:s");
-        $ip = $_SERVER["REMOTE_ADDR"]?$_SERVER["REMOTE_ADDR"]:"127.0.0.1";
-        $id = empty($_SESSION["user"]["id"])?"system":$_SESSION["user"]["id"];
+        $ip = $_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "127.0.0.1";
+        $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
 
         $this->db->trans_start();
         $where["platform_id"] = $platform_id;
         $where["sku IN ($sku_list)"] = null;
         $this->db->where($where);
-        $this->db->update('price', array("delivery_scenarioid"=>$scenarioid, "modify_on"=>$ts, "modify_at"=>$ip, "modify_by"=>$id));
+        $this->db->update('price', array("delivery_scenarioid" => $scenarioid, "modify_on" => $ts, "modify_at" => $ip, "modify_by" => $id));
         $this->db->trans_complete();
 
-        if ($this->db->trans_status() !== FALSE)
-        {
+        if ($this->db->trans_status() !== FALSE) {
             $affected = $this->db->affected_rows();
             return $affected;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
 

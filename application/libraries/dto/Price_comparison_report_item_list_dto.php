@@ -23,7 +23,7 @@ class price_comparison_report_item_list_dto extends Base_dto
 
     public function get_name()
     {
-        $f_name = str_replace(',',' ',$this->name);
+        $f_name = str_replace(',', ' ', $this->name);
         return $f_name;
     }
 

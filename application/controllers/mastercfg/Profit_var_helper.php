@@ -1,7 +1,8 @@
 <?php
+
 class Profit_var_helper extends MY_Controller
 {
-    private $app_id="MST0004";
+    private $app_id = "MST0004";
 
     public function __construct()
     {
@@ -19,13 +20,12 @@ class Profit_var_helper extends MY_Controller
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
         $objlist = $this->profit_var_model->get_selling_platform_list();
-        foreach ($objlist as $obj)
-        {
+        foreach ($objlist as $obj) {
             $sid = str_replace("'", "\'", $obj->get_id());
             $name = str_replace("'", "\'", $obj->get_name());
-            $slist[] = "'".$sid."':'".$name."'";
+            $slist[] = "'" . $sid . "':'" . $name . "'";
         }
-        $js = "platformlist = {".implode(", ", $slist)."};";
+        $js = "platformlist = {" . implode(", ", $slist) . "};";
         $js .= "
             function InitPlatform(obj)
             {
@@ -36,7 +36,8 @@ class Profit_var_helper extends MY_Controller
         echo $js;
     }
 
-    public function _get_app_id(){
+    public function _get_app_id()
+    {
         return $this->app_id;
     }
 }

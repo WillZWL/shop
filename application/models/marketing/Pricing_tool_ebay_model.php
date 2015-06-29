@@ -20,9 +20,9 @@ class Pricing_tool_ebay_model extends Pricing_tool_model
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $js =   "var listing_fee = ". json_encode($this->price_service->get_listing_fee()) .";
-                var ar_commission = ". json_encode($this->price_service->get_ar_commission()) .";
-                var paypal_fee_adj = ". $this->price_service->get_paypal_fee_adj() .";
+        $js = "var listing_fee = " . json_encode($this->price_service->get_listing_fee()) . ";
+                var ar_commission = " . json_encode($this->price_service->get_ar_commission()) . ";
+                var paypal_fee_adj = " . $this->price_service->get_paypal_fee_adj() . ";
 
                 function rePrice(platform)
                 {

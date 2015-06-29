@@ -20,6 +20,14 @@ class Payment_gateway_redirect_manual_bank_transfer_service extends Payment_gate
         return "";
     }
 
+    public function checkout($vars)
+    {
+        $this->send_email_notification_to_sale($vars);
+        $this->unset_variable();
+        $this->get_so_srv()->get_cart_srv()->set_cart_cookie(PLATFORMID);
+        print $this->get_redirect_url(null, $response_data);
+    }
+
     public function send_email_notification_to_sale($vars)
     {
         $product_list = "";
@@ -42,31 +50,27 @@ class Payment_gateway_redirect_manual_bank_transfer_service extends Payment_gate
         $cart_list = $this->get_so_srv()->get_cart_srv()->get_detail(PLATFORMID);
         $amount = 0;
         $csv_item = "";
-        foreach ($cart_list["cart"] as $line_no=>$soi)
-        {
-            $product_list .= "SKU:" .  $soi["sku"] . "x" . $soi["qty"] . " (" . $soi["name"] . ") - " . $soi["total"] . "<br>";
+        foreach ($cart_list["cart"] as $line_no => $soi) {
+            $product_list .= "SKU:" . $soi["sku"] . "x" . $soi["qty"] . " (" . $soi["name"] . ") - " . $soi["total"] . "<br>";
             $amount += ($soi["total"] + $soi["gst"]);
             if ($csv_item != "")
                 $csv_item .= "<br>;;;;;;;;;";
             $csv_item .= ";" . $soi["sku"] . ";" . $soi["qty"] . ";" . $soi["name"] . ";" . $soi["total"];
         }
-            $csv = $unique_number
-                     . ";" . $vars["email"]
-                     . ";" . $del_name
-                     . ";" . $vars["del_company"]
-                     . ";" . $del_address
-                     . ";" . $vars["del_city"]
-                     . ";" . $vars["del_postcode"]
-                     . ";" . $vars["del_country_id"]
-                     . ";" . $tel
-                     . ";" . $amount . $csv_item;
+        $csv = $unique_number
+            . ";" . $vars["email"]
+            . ";" . $del_name
+            . ";" . $vars["del_company"]
+            . ";" . $del_address
+            . ";" . $vars["del_city"]
+            . ";" . $vars["del_postcode"]
+            . ";" . $vars["del_country_id"]
+            . ";" . $tel
+            . ";" . $amount . $csv_item;
 
-        if ($_COOKIE["af"])
-        {
+        if ($_COOKIE["af"]) {
             $af_info = " [AF=" . $_COOKIE["af"] . "]";
-        }
-        else
-        {
+        } else {
             $af_info = "";
         }
         $subject = "[VB] " . PLATFORMID . " sales order - " . $unique_number . $af_info;
@@ -97,14 +101,6 @@ class Payment_gateway_redirect_manual_bank_transfer_service extends Payment_gate
     public function get_unique_order_number()
     {
         return "P" . (microtime(true) * 10000);
-    }
-
-    public function checkout($vars)
-    {
-        $this->send_email_notification_to_sale($vars);
-        $this->unset_variable();
-        $this->get_so_srv()->get_cart_srv()->set_cart_cookie(PLATFORMID);
-        print $this->get_redirect_url(null, $response_data);
     }
 
     public function get_redirect_url($request_data, &$response_data)

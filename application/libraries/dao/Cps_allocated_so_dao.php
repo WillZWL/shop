@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Cps_allocated_so_dao extends Base_dao
 {
-    private $table_name="cps_allocated_so";
-    private $vo_classname="Cps_allocated_so_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "cps_allocated_so";
+    private $vo_classname = "Cps_allocated_so_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

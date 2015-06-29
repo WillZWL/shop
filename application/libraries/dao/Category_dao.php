@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Category_dao extends Base_dao
 {
-    private $table_name="category";
-    private $vo_classname="Category_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "category";
+    private $vo_classname = "Category_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -49,37 +49,31 @@ class Category_dao extends Base_dao
                      ON b.parent_cat_id = a.id
                 WHERE a.level = ?
                 AND a.id <> \'0\'';
-        if($id != "")
-        {
-            $sql .= ' AND a.parent_cat_id = \''.$id.'\' ';
+        if ($id != "") {
+            $sql .= ' AND a.parent_cat_id = \'' . $id . '\' ';
         }
-        $sql.= 'ORDER BY a.name';
+        $sql .= 'ORDER BY a.name';
 
         $rs = array();
 
-        if ($query = $this->db->query($sql, array($this_level+1,$this_level)))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, array($this_level + 1, $this_level))) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
-            return (object) $rs;
-        }
-        else
-        {
+            return (object)$rs;
+        } else {
             echo mysql_error();
             return FALSE;
         }
     }
 
-    public function get_item_with_pop_child_count($this_level, $id, $classname, $order="priority")
+    public function get_item_with_pop_child_count($this_level, $id, $classname, $order = "priority")
     {
         $this->include_dto($classname);
 
         $_order = $order;
-        if (strpos($order, ".") < 0)
-        {
+        if (strpos($order, ".") < 0) {
             $_order = "a." . $_order;
         }
 
@@ -96,40 +90,32 @@ class Category_dao extends Base_dao
                 AND a.id <> \'0\'
                 AND a.status = 1
                 AND b.num_of_record > 0
-                AND b.num_of_record IS NOT NULL';
-                ;
-        if($id != "")
-        {
-            $sql .= ' AND a.parent_cat_id = \''.$id.'\' ';
+                AND b.num_of_record IS NOT NULL';;
+        if ($id != "") {
+            $sql .= ' AND a.parent_cat_id = \'' . $id . '\' ';
         }
-        $sql.= 'ORDER BY ' . $_order;
+        $sql .= 'ORDER BY ' . $_order;
 
         $rs = array();
 
-        if ($query = $this->db->query($sql, array($this_level+1,$this_level)))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, array($this_level + 1, $this_level))) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
-            return (object) $rs;
-        }
-        else
-        {
+            return (object)$rs;
+        } else {
             echo mysql_error();
             return FALSE;
         }
     }
 
 
-
     public function get_parent($level, $id, $classname)
     {
         $this->include_dto($classname);
-        if($level == 3)
-        {
-            $sql .='SELECT v.*, c.name as sub_cat_name, cc.name as cat_name
+        if ($level == 3) {
+            $sql .= 'SELECT v.*, c.name as sub_cat_name, cc.name as cat_name
                     FROM v_sub_sub_category v
                     JOIN category c
                         ON v.sub_cat_id = c.id
@@ -137,33 +123,25 @@ class Category_dao extends Base_dao
                         ON v.cat_id = cc.id
                     WHERE sub_sub_cat_id = ?
                     LIMIT 1';
-        }
-        else if($level == 2)
-        {
-            $sql .='SELECT v.*, c.name as cat_name
+        } else if ($level == 2) {
+            $sql .= 'SELECT v.*, c.name as cat_name
                     FROM v_sub_category v
                     JOIN category c
                         ON v.cat_id = c.id
                     WHERE sub_cat_id = ?
                     LIMIT 1';
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
 
         $rs = array();
 
-        if ($query = $this->db->query($sql, array($id)))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, array($id))) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
             return $rs[0];
-        }
-        else
-        {
+        } else {
             echo mysql_error();
             return FALSE;
         }
@@ -181,8 +159,7 @@ class Category_dao extends Base_dao
 
         $result = $this->db->query($sql);
 
-        if (!$result)
-        {
+        if (!$result) {
             return FALSE;
         }
 
@@ -194,7 +171,7 @@ class Category_dao extends Base_dao
     {
         $this->db->select('DISTINCT c.id AS cat_id, sc.id AS sub_cat_id, ssc.id AS sub_sub_cat_id', FALSE);
         $this->db->from('product AS p');
-        $this->db->join('price AS pr', 'pr.sku = p.sku AND pr.platform_id = "'.$platform_id.'" AND pr.listing_status = "L"');
+        $this->db->join('price AS pr', 'pr.sku = p.sku AND pr.platform_id = "' . $platform_id . '" AND pr.listing_status = "L"');
         $this->db->join('platform_biz_var AS pbv', 'pbv.selling_platform_id = pr.platform_id');
         $this->db->join('category AS c', 'c.id = p.cat_id AND c.id > 0 AND c.status = 1');
         $this->db->join('category AS sc', 'sc.id = p.sub_cat_id AND sc.id > 0 AND sc.status = 1');
@@ -204,8 +181,7 @@ class Category_dao extends Base_dao
 
         $result = $this->db->get();
 
-        if (!$result)
-        {
+        if (!$result) {
             return FALSE;
         }
 
@@ -224,7 +200,7 @@ class Category_dao extends Base_dao
                 WHERE ssc.status = 1
                 ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
-$sql = 'SELECT DISTINCT ssc.id sub_sub_cat_id, ssc.name sub_sub_cat_name, sc.id sub_cat_id, sc.name sub_cat_name, c.id cat_id, c.name cat_name FROM category ssc
+        $sql = 'SELECT DISTINCT ssc.id sub_sub_cat_id, ssc.name sub_sub_cat_name, sc.id sub_cat_id, sc.name sub_cat_name, c.id cat_id, c.name cat_name FROM category ssc
 #JOIN product p ON (p.sub_cat_id = ssc.id AND p.status = 2)
 JOIN category sc ON (ssc.parent_cat_id = sc.id AND sc.status = 1)
 JOIN category c ON (sc.parent_cat_id = c.id AND c.status = 1)
@@ -233,53 +209,45 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
         $result = $this->db->query($sql);
 
-        if (!$result)
-        {
+        if (!$result) {
             return FALSE;
         }
 
         return $result->result_array();
     }
 
-    public function get_list_index($where=array(), $option=array(), $classname="")
+    public function get_list_index($where = array(), $option = array(), $classname = "")
     {
 
         $this->db->from('category');
 
-        if (!empty($where["name"]))
-        {
+        if (!empty($where["name"])) {
             $this->db->like('name', $where["name"]);
         }
 
-        if (!empty($where["description"]))
-        {
+        if (!empty($where["description"])) {
             $this->db->like('description', $where["description"]);
         }
 
-        if (!empty($where["parent_cat_id"]))
-        {
-            $this->db->where('parent_cat_id',$where['parent_cat_id']);
+        if (!empty($where["parent_cat_id"])) {
+            $this->db->where('parent_cat_id', $where['parent_cat_id']);
         }
 
-        if (!empty($where["level"]))
-        {
+        if (!empty($where["level"])) {
             $this->db->like('level', $where["level"]);
         }
 
-        if ($where["status"] != "")
-        {
+        if ($where["status"] != "") {
             $this->db->where('status', $where["status"]);
         }
 
-        $this->db->where('id >',0);
+        $this->db->where('id >', 0);
 
-        if (empty($option["orderby"]))
-        {
+        if (empty($option["orderby"])) {
             $option["orderby"] = "id ASC";
         }
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
 
             $this->include_vo();
 
@@ -287,49 +255,36 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
             $this->db->order_by($option["orderby"]);
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
 
-                foreach ($query->result($classname) as $obj)
-                {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
-            }
-            else
-            {
+                return (object)$rs;
+            } else {
                 echo mysql_error();
             }
 
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -337,10 +292,9 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
         return FALSE;
     }
 
-    public function get_prod_cat($sku,$classname="Prod_cat_ws_dto")
+    public function get_prod_cat($sku, $classname = "Prod_cat_ws_dto")
     {
-        if($sku == "")
-        {
+        if ($sku == "") {
             return FALSE;
         }
 
@@ -348,17 +302,17 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
         $this->db->join("(SELECT id, name
                           FROM category
-                          WHERE level='1') AS c","c.id = p.cat_id","INNER");
+                          WHERE level='1') AS c", "c.id = p.cat_id", "INNER");
 
         $this->db->join("(SELECT id, name
                           FROM category
-                          WHERE level='2') AS sc","sc.id = p.sub_cat_id","INNER");
+                          WHERE level='2') AS sc", "sc.id = p.sub_cat_id", "INNER");
 
         $this->db->join("(SELECT id, name
                           FROM category
-                          WHERE level='3') AS ssc","ssc.id = p.sub_sub_cat_id","INNER");
+                          WHERE level='3') AS ssc", "ssc.id = p.sub_sub_cat_id", "INNER");
 
-        $this->db->where(array("p.sku"=>$sku));
+        $this->db->where(array("p.sku" => $sku));
 
         $this->db->select("p.sku, c.id as cat_id, c.name as cat_name, sc.id as scat_id, sc.name as scat_name, ssc.id as sscat_id, ssc.name as sscat_name");
 
@@ -366,10 +320,8 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
         $this->include_dto($classname);
 
-        if($query = $this->db->get())
-        {
-            foreach($query->result($classname) as $temp)
-            {
+        if ($query = $this->db->get()) {
+            foreach ($query->result($classname) as $temp) {
                 $obj = $temp;
             }
 
@@ -377,7 +329,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
         }
     }
 
-    public function retrieve_brandlist_for_cat($catid, $brand="",$platform_id="WEBGB",$classname="Brand_name_item_cnt_dto")
+    public function retrieve_brandlist_for_cat($catid, $brand = "", $platform_id = "WEBGB", $classname = "Brand_name_item_cnt_dto")
     {
         $sql = "SELECT p.brand_id, b.brand_name, count(p.sku) as total
             FROM product p
@@ -395,21 +347,18 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
             AND (pr2.price OR pr.price) > 0
             AND p.status = '2'";
 
-        if($brand != "")
-        {
+        if ($brand != "") {
             $sql .= " AND p.brand_id='$brand' ";
         }
-        $sql.= "GROUP BY p.brand_id
+        $sql .= "GROUP BY p.brand_id
                 ORDER BY brand_name";
 
         $this->include_dto($classname);
 
         $rs = array();
 
-        if($query = $this->db->query($sql,$catid))
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, $catid)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
@@ -419,7 +368,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
     }
 
-    public function retrieve_catlist_for_scat($catid,$brand="",$platform_id="WEBGB",$classname="Cat_name_item_cnt_dto")
+    public function retrieve_catlist_for_scat($catid, $brand = "", $platform_id = "WEBGB", $classname = "Cat_name_item_cnt_dto")
     {
         $sql = "SELECT cat.id, cat.name, s.total
                 FROM category cat
@@ -436,8 +385,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
                     WHERE (pr2.listing_status = 'L')
                     AND (pr2.price OR pr.price) > 0
                     AND p.status = '2'";
-        if($brand != "")
-        {
+        if ($brand != "") {
             $sql .= " AND p.brand_id='$brand' ";
         }
 
@@ -452,10 +400,8 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
         $rs = array();
 
-        if($query = $this->db->query($sql,$catid))
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, $catid)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
@@ -464,7 +410,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
         return FALSE;
     }
 
-    public function retrieve_brandlist_for_scat($catid, $brand="",$platform_id="WEBGB",$classname="Brand_name_item_cnt_dto")
+    public function retrieve_brandlist_for_scat($catid, $brand = "", $platform_id = "WEBGB", $classname = "Brand_name_item_cnt_dto")
     {
         $sql = "SELECT p.brand_id,b.brand_name, count(p.sku) as total
                 FROM product p
@@ -481,10 +427,9 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
                 AND (pr2.listing_status = 'L')
                 AND (pr2.price OR pr.price) > 0
                 AND p.status = '2'";
-                if($brand != "")
-                {
-                        $sql .= " AND p.brand_id='$brand' ";
-                }
+        if ($brand != "") {
+            $sql .= " AND p.brand_id='$brand' ";
+        }
 
         $sql .= "       GROUP BY brand_id
                         ORDER BY brand_name";
@@ -494,10 +439,8 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
         $rs = array();
 
-        if($query = $this->db->query($sql,$catid))
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, $catid)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
@@ -508,7 +451,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
     }
 
 
-    public function retrieve_catlist_for_sscat($catid, $brand="",$platform_id="WEBGB",$classname="Cat_name_item_cnt_dto")
+    public function retrieve_catlist_for_sscat($catid, $brand = "", $platform_id = "WEBGB", $classname = "Cat_name_item_cnt_dto")
     {
         $sql = "SELECT cat.id, cat.name, s.total
                 FROM category cat
@@ -524,10 +467,9 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
                           WHERE (pr2.listing_status = 'L')
                           AND (pr2.price OR pr.price) > 0
                           AND p.status = '2'";
-                if($brand != "")
-                {
-                        $sql .= "         AND p.brand_id='$brand' ";
-                }
+        if ($brand != "") {
+            $sql .= "         AND p.brand_id='$brand' ";
+        }
         $sql .= "             GROUP BY sub_sub_cat_id) AS s
                         ON s.sub_sub_cat_id = cat.id
                 WHERE cat.level = '3'
@@ -535,15 +477,12 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
                 AND cat.status = '1'";
 
 
-
         $this->include_dto($classname);
 
         $rs = array();
 
-        if($query = $this->db->query($sql,$catid))
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, $catid)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
@@ -552,7 +491,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
         return FALSE;
     }
 
-    public function retrieve_brandlist_for_sscat($catid, $brand="", $platform_id="WEBGB", $classname="Brand_name_item_cnt_dto")
+    public function retrieve_brandlist_for_sscat($catid, $brand = "", $platform_id = "WEBGB", $classname = "Brand_name_item_cnt_dto")
     {
         $sql = "SELECT  p.brand_id,b.brand_name, count(p.sku) as total
                 FROM product p
@@ -569,9 +508,8 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
                 AND (pr2.listing_status = 'L')
                 AND (pr2.price OR pr.price) > 0
                 AND p.status = '2'";
-        if($brand != "")
-        {
-            $sql.=" AND p.brand_id = '$brand' ";
+        if ($brand != "") {
+            $sql .= " AND p.brand_id = '$brand' ";
         }
         $sql .= "   GROUP BY brand_id
                     ORDER BY brand_name";
@@ -581,10 +519,8 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
         $rs = array();
 
-        if($query = $this->db->query($sql,$catid))
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, $catid)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
@@ -593,7 +529,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
         return FALSE;
     }
 
-    public function retrieve_pricelist_for_cat($catid, $brand="", $platform_id="WEBGB", $min_price="", $max_price="", $classname="")
+    public function retrieve_pricelist_for_cat($catid, $brand = "", $platform_id = "WEBGB", $min_price = "", $max_price = "", $classname = "")
     {
         $sql = "SELECT count(p.sku) as total
             FROM product p
@@ -614,19 +550,17 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
             AND p.status = '2'
             AND (ROUND(IF(pr2.price>0, pr2.price, pr.price*ex.rate),2) > $min_price)";
 
-        if($max_price != "")
-        {
+        if ($max_price != "") {
             $sql .= " AND (ROUND(IF(pr2.price>0, pr2.price, pr.price*ex.rate),2) <= $max_price)";
         }
 
-        if($query = $this->db->query($sql,$catid))
-        {
+        if ($query = $this->db->query($sql, $catid)) {
             return $query->row()->total;
         }
         return FALSE;
     }
 
-    public function retrieve_pricelist_for_scat($catid, $brand="", $platform_id="WEBGB", $min_price="", $max_price="", $classname="")
+    public function retrieve_pricelist_for_scat($catid, $brand = "", $platform_id = "WEBGB", $min_price = "", $max_price = "", $classname = "")
     {
         $sql = "SELECT count(p.sku) as total
                 FROM product p
@@ -647,19 +581,17 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
                 AND p.status = '2'
                 AND (ROUND(IF(pr2.price>0, pr2.price, pr.price*ex.rate),2) > $min_price)";
 
-        if($max_price != "")
-        {
+        if ($max_price != "") {
             $sql .= " AND (ROUND(IF(pr2.price>0, pr2.price, pr.price*ex.rate),2) <= $max_price)";
         }
 
-        if($query = $this->db->query($sql,$catid))
-        {
+        if ($query = $this->db->query($sql, $catid)) {
             return $query->row()->total;
         }
         return FALSE;
     }
 
-    public function retrieve_pricelist_for_sscat($catid, $brand="", $platform_id="WEBGB", $min_price="", $max_price="", $classname="")
+    public function retrieve_pricelist_for_sscat($catid, $brand = "", $platform_id = "WEBGB", $min_price = "", $max_price = "", $classname = "")
     {
         $sql = "SELECT count(p.sku) as total
                 FROM product p
@@ -680,21 +612,18 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
                 AND p.status = '2'
                 AND (ROUND(IF(pr2.price>0, pr2.price, pr.price*ex.rate),2) > $min_price)";
 
-        if($max_price != "")
-        {
+        if ($max_price != "") {
             $sql .= " AND (ROUND(IF(pr2.price>0, pr2.price, pr.price*ex.rate),2) <= $max_price)";
         }
 
-        if($query = $this->db->query($sql,$catid))
-        {
+        if ($query = $this->db->query($sql, $catid)) {
             return $query->row()->total;
         }
         return FALSE;
     }
 
 
-
-    public function get_child_w_count($level='1', $id='0', $status='1', $classname="Cat_name_item_cnt_dto")
+    public function get_child_w_count($level = '1', $id = '0', $status = '1', $classname = "Cat_name_item_cnt_dto")
     {
         $sql = "SELECT c.id, c.name, IFNULL(s.ttl,0) as total
                 FROM category c
@@ -712,10 +641,8 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
         $rs = array();
 
-        if($query = $this->db->query($sql,array($level,$id)))
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, array($level, $id))) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
             return $rs;
@@ -723,7 +650,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
         return FALSE;
     }
 
-    public function get_combined_cat_list($where=array(), $option=array(), $classname="Cat_sub_cat_id_dto")
+    public function get_combined_cat_list($where = array(), $option = array(), $classname = "Cat_sub_cat_id_dto")
     {
         $sql = "SELECT sc.id, CONCAT(c.name,' -> ',sc.name) as name
                 FROM category as c
@@ -739,10 +666,8 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
         $rs = array();
 
-        if($query = $this->db->query($sql))
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
             return $rs;
@@ -750,7 +675,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
         return FALSE;
     }
 
-    public function get_favourite_category($limit=1, $platform)
+    public function get_favourite_category($limit = 1, $platform)
     {
         $sql = "SELECT c.id, SUM(so_item.amount) ttl_sales
                 FROM category c
@@ -768,13 +693,11 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
                 ORDER BY ttl_sales DESC, c.id
                 LIMIT $limit";
 
-        $rs=array();
+        $rs = array();
 
-        if($query = $this->db->query($sql))
-        {
-            foreach($query->result("array") AS $arr)
-            {
-                $rs[]=$arr;
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result("array") AS $arr) {
+                $rs[] = $arr;
             }
             return $rs;
         }
@@ -792,10 +715,8 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
                 ORDER BY c.level, ISNULL(c.priority), c.priority, c.id
                 ";
 
-        if($query = $this->db->query($sql, $lang_id))
-        {
-            foreach ($query->result_array() as $k=>$v)
-            {
+        if ($query = $this->db->query($sql, $lang_id)) {
+            foreach ($query->result_array() as $k => $v) {
                 $data["list"][$v["level"]][$v["parent_cat_id"]][] = $v;
                 $data["allcat"][$v["parent_cat_id"]][] = $v;
             }
@@ -804,7 +725,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
         return FALSE;
     }
 
-    public function get_menu_list_w_platform_id($lang_id, $platform_id, $classname="Menu_list_w_lang_dto")
+    public function get_menu_list_w_platform_id($lang_id, $platform_id, $classname = "Menu_list_w_lang_dto")
     {
         $sql = "SELECT c.id, IFNULL(ce.name,c.name) name, ce.lang_id, c.level, c.parent_cat_id
                 FROM category as c
@@ -849,10 +770,8 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
         $this->include_dto($classname);
 
-        if($query = $this->db->query($sql, $lang_id))
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, $lang_id)) {
+            foreach ($query->result($classname) as $obj) {
                 $data["list"][$obj->get_level()][$obj->get_parent_cat_id()][] = $obj;
                 $data["allcat"][$obj->get_parent_cat_id()][] = $obj;
             }
@@ -862,7 +781,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
         return FALSE;
     }
 
-    public function get_menu_list_w_lang($lang_id , $classname="Menu_list_w_lang_dto")
+    public function get_menu_list_w_lang($lang_id, $classname = "Menu_list_w_lang_dto")
     {
         $sql = "
                 SELECT c.id, IFNULL(ce.name,c.name) name, ce.lang_id, c.level, c.parent_cat_id
@@ -875,10 +794,8 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
         $this->include_dto($classname);
 
-        if($query = $this->db->query($sql, $lang_id))
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, $lang_id)) {
+            foreach ($query->result($classname) as $obj) {
                 $data["list"][$obj->get_level()][$obj->get_parent_cat_id()][] = $obj;
                 $data["allcat"][$obj->get_parent_cat_id()][] = $obj;
             }
@@ -888,7 +805,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
         return FALSE;
     }
 
-    public function get_best_selling_cat($platform="WEBGB", $lang_id="en", $classname="Best_selling_cat_dto")
+    public function get_best_selling_cat($platform = "WEBGB", $lang_id = "en", $classname = "Best_selling_cat_dto")
     {
         // return bestselling category within last 2 weeks
         $sql = "SELECT cat.id, cat.name, cat.parent_cat_id, cat.level, cat.add_colour_name, cat.priority,
@@ -914,8 +831,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
         $result = $this->db->query($sql);
 
-        if (!$result)
-        {
+        if (!$result) {
             return FALSE;
         }
 
@@ -923,8 +839,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
         $result_arr = array();
 
-        foreach ($result->result("object", $classname) as $obj)
-        {
+        foreach ($result->result("object", $classname) as $obj) {
             array_push($result_arr, $obj);
         }
 
@@ -941,30 +856,25 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
         $this->db->join("category_extend AS scex", "scex.cat_id = sc.id", "LEFT");
         $this->db->join("category_extend AS sscex", "sscex.cat_id = ssc.id", "LEFT");
 
-        if($option['groupby'])
-        {
+        if ($option['groupby']) {
             $this->db->group_by($option['groupby']);
         }
-        if($option['orderby'])
-        {
+        if ($option['orderby']) {
             $this->db->order_by($option['orderby']);
         }
 
         $this->db->where($where);
 
-        if($query = $this->db->get())
-        {
+        if ($query = $this->db->get()) {
             $ret = array();
             $array = $query->result_array();
-            foreach($array as $row)
-            {
-                switch($level)
-                {
+            foreach ($array as $row) {
+                switch ($level) {
                     case 1:
-                        $ret[] = array("id"=>$row["sub_cat_id"], "name"=>$row["sub_cat_name"], "total"=>$row['total']);
+                        $ret[] = array("id" => $row["sub_cat_id"], "name" => $row["sub_cat_name"], "total" => $row['total']);
                         break;
                     case 2:
-                        $ret[] = array("id"=>$row["sub_sub_cat_id"], "name"=>$row["sub_sub_cat_name"], "total"=>$row['total']);
+                        $ret[] = array("id" => $row["sub_sub_cat_id"], "name" => $row["sub_sub_cat_name"], "total" => $row['total']);
                         break;
                 }
             }
@@ -976,18 +886,16 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
     public function get_parent_cat_id($cat_id)
     {
-        if(empty($cat_id))
-        {
+        if (empty($cat_id)) {
             return false;
         }
 
         $this->db->select('parent.id');
         $this->db->from('category AS cat');
         $this->db->join('category AS parent', 'cat.parent_cat_id = parent.id', 'INNER');
-        $this->db->where(array('cat.id'=>$cat_id));
+        $this->db->where(array('cat.id' => $cat_id));
 
-        if($query = $this->db->get())
-        {
+        if ($query = $this->db->get()) {
             return $query->row()->id;
         }
     }

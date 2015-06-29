@@ -216,4 +216,5 @@ class Customer_service_info_vo extends Base_vo
     }
 
 }
+
 ?>

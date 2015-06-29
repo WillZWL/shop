@@ -5,20 +5,20 @@ class Chargeback_vo extends Base_vo
 {
 
     //class variable
-    $id;
-    $so_no;
-    $chargeback_status_id;
-    $chargeback_reason_id;
-    $chargeback_reason;
-    $chargeback_remark_id;
-    $chargeback_remark;
-    $document;
-    $create_on = '0000-00-00 00:00:00';
-    $create_at;
-    $create_by;
-    $modify_on;
-    $modify_at;
-    $modify_by;
+$id;
+$so_no;
+$chargeback_status_id;
+$chargeback_reason_id;
+$chargeback_reason;
+$chargeback_remark_id;
+$chargeback_remark;
+$document;
+$create_on = '0000-00-00 00:00:00';
+$create_at;
+$create_by;
+$modify_on;
+$modify_at;
+$modify_by;
 
     //primary key
     private $primary_key = array("id");
@@ -193,4 +193,5 @@ class Chargeback_vo extends Base_vo
     }
 
 }
+
 ?>

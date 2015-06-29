@@ -8,7 +8,7 @@ class Colour_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Colour_dao.php");
+        include_once(APPPATH . "libraries/dao/Colour_dao.php");
         $this->set_dao(new Colour_dao());
     }
 
@@ -22,19 +22,16 @@ class Colour_service extends Base_service
         return $this->get_dao()->update($obj);
     }
 
-    public function get($where=array())
+    public function get($where = array())
     {
-        if(!count($where))
-        {
+        if (!count($where)) {
             return $this->get_dao()->get();
-        }
-        else
-        {
+        } else {
             return $this->get_dao()->get($where);
         }
     }
 
-    public function get_list($where=array(),$option=array())
+    public function get_list($where = array(), $option = array())
     {
         return $this->get_dao()->get_list_index($where, $option);
     }

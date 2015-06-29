@@ -88,7 +88,7 @@ class Purchaser_feed_dto extends Base_dto
 
     public function get_title()
     {
-        return $this->title==""?"Mr":$this->title;
+        return $this->title == "" ? "Mr" : $this->title;
     }
 
     public function set_title($value)

@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Integrated_order_fulfillment_dao extends Base_dao
 {
-    private $table_name="integrated_order_fulfillment";
-    private $vo_classname="Integrated_order_fulfillment_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "integrated_order_fulfillment";
+    private $vo_classname = "Integrated_order_fulfillment_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

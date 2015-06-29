@@ -10,19 +10,16 @@ class On_sale_service extends Landpage_listing_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/service/Product_service.php");
+        include_once(APPPATH . "libraries/service/Product_service.php");
         $this->product_service = new Product_service();
     }
 
-    public function get_count($catid="", $mode="", $platform="")
+    public function get_count($catid = "", $mode = "", $platform = "")
     {
-        if($catid === "")
-        {
+        if ($catid === "") {
             return FALSE;
-        }
-        else
-        {
-            return $this->get_dao()->get_num_rows(array("catid"=>$catid,"type"=>$this->get_type(),"mode"=>$mode, "platform_id"=>$platform));
+        } else {
+            return $this->get_dao()->get_num_rows(array("catid" => $catid, "type" => $this->get_type(), "mode" => $mode, "platform_id" => $platform));
         }
     }
 
@@ -31,15 +28,12 @@ class On_sale_service extends Landpage_listing_service
         return $this->type;
     }
 
-    public function get_on_sale($catid="", $rank="", $platform="")
+    public function get_on_sale($catid = "", $rank = "", $platform = "")
     {
-        if($catid === "")
-        {
+        if ($catid === "") {
             return $this->get_dao()->get();
-        }
-        else
-        {
-            $obj =  $this->get_dao()->get_item_by_rank($catid, $this->get_type(), $rank, $platform, "Product_list_w_name_dto");
+        } else {
+            $obj = $this->get_dao()->get_item_by_rank($catid, $this->get_type(), $rank, $platform, "Product_list_w_name_dto");
             return $obj;
         }
     }
@@ -54,22 +48,17 @@ class On_sale_service extends Landpage_listing_service
         return $this->get_dao()->update($obj);
     }
 
-    public function get_product_list($where=array(), $option=array())
+    public function get_product_list($where = array(), $option = array())
     {
         return $this->product_service->get_dao()->get_list_w_name($where, $option, "Product_list_w_name_dto");
     }
 
-    public function get_product_list_total($where=array(),$option = array("num_rows"=>1))
+    public function get_product_list_total($where = array(), $option = array("num_rows" => 1))
     {
         return $this->product_service->get_dao()->get_list_w_name($where, $option, "Product_list_w_name_dto");
     }
 
-    public function get_list_w_name($catid, $mode="M", $type="CL", $platform, $rtype="object")
-    {
-        return $this->get_dao()->get_list_w_pname($catid,$mode,$type,$platform,"on_sale_prodname_dto",$rtype);
-    }
-
-    public function delete_cl($where=array())
+    public function delete_cl($where = array())
     {
         return $this->get_dao()->q_delete($where);
     }
@@ -84,34 +73,26 @@ class On_sale_service extends Landpage_listing_service
         $this->get_dao()->trans_complete();
     }
 
-    public function display_list($catid="")
+    public function display_list($catid = "")
     {
-        if($catid == "")
-        {
+        if ($catid == "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             $ret = array();
             $added = array();
-            if($manual = $this->get_list_w_name($catid, "M", $this->get_type(), PLATFORMID))
-            {
-                foreach($manual as $obj)
-                {
-                    $ret[] = array("prodid"=>$obj->get_selection(),"name"=>$obj->get_name(),"image"=>$obj->get_image(),"price"=>$obj->get_price(),"website_status"=>$obj->get_website_status(),"qty"=>$obj->get_quantity(),"web_qty"=>$obj->get_website_quantity());
+            if ($manual = $this->get_list_w_name($catid, "M", $this->get_type(), PLATFORMID)) {
+                foreach ($manual as $obj) {
+                    $ret[] = array("prodid" => $obj->get_selection(), "name" => $obj->get_name(), "image" => $obj->get_image(), "price" => $obj->get_price(), "website_status" => $obj->get_website_status(), "qty" => $obj->get_quantity(), "web_qty" => $obj->get_website_quantity());
                     $added[] = $obj->get_selection();
                 }
             }
 
             $cnt = count($added);
 
-            if($auto = $this->get_list_w_name($catid, "A", $this->get_type(), PLATFORMID))
-            {
-                foreach($auto as $obj)
-                {
-                    if($cnt < $this->get_limit() && !in_array($obj->get_selection,$added))
-                    {
-                        $ret[] = array("prodid"=>$obj->get_selection(),"name"=>$obj->get_name(),"image"=>$obj->get_image(),"price"=>$obj->get_price(),"website_status"=>$obj->get_website_status(),"qty"=>$obj->get_quantity(),"web_qty"=>$obj->get_website_quantity());
+            if ($auto = $this->get_list_w_name($catid, "A", $this->get_type(), PLATFORMID)) {
+                foreach ($auto as $obj) {
+                    if ($cnt < $this->get_limit() && !in_array($obj->get_selection, $added)) {
+                        $ret[] = array("prodid" => $obj->get_selection(), "name" => $obj->get_name(), "image" => $obj->get_image(), "price" => $obj->get_price(), "website_status" => $obj->get_website_status(), "qty" => $obj->get_quantity(), "web_qty" => $obj->get_website_quantity());
                         $cnt++;
                     }
                 }
@@ -121,31 +102,36 @@ class On_sale_service extends Landpage_listing_service
         }
     }
 
-    public function get_home_latest_arrivals($platform="")
+    public function get_list_w_name($catid, $mode = "M", $type = "CL", $platform, $rtype = "object")
+    {
+        return $this->get_dao()->get_list_w_pname($catid, $mode, $type, $platform, "on_sale_prodname_dto", $rtype);
+    }
+
+    public function get_home_latest_arrivals($platform = "")
     {
         return $this->product_service->get_latest_arrivals_list_by_cat('', 0, 30, $this->get_limit(), $platform);
-    }
-
-    protected function _get_product_list_for_home()
-    {
-        return $this->product_service->get_list_having_price(
-                        array('product.status'=>2, 'product.website_status'=>'I',
-                            'product.website_quantity >'=>0, 'price.platform_id'=>'WSGB'),
-                        array('orderby'=>'p.create_on DESC', 'limit'=>$this->get_limit()));
-    }
-
-    protected function _get_product_list($filter_column = '', $cat_id = '', $platform_id = '')
-    {
-        return $this->product_service->get_list_having_price(
-                        array('product.status'=>2, 'product.website_status'=>'I',
-                            'product.website_quantity >'=>0, 'price.platform_id'=>"$platform_id", 'product.'.$filter_column=>$cat_id),
-                        array('orderby'=>'p.create_on DESC', 'limit'=>$this->get_limit()));
-
     }
 
     public function get_home_latest_arrival_grid_info($platform_id = "")
     {
         return $this->product_service->get_home_latest_arrival_grid_info($platform_id);
+    }
+
+    protected function _get_product_list_for_home()
+    {
+        return $this->product_service->get_list_having_price(
+            array('product.status' => 2, 'product.website_status' => 'I',
+                'product.website_quantity >' => 0, 'price.platform_id' => 'WSGB'),
+            array('orderby' => 'p.create_on DESC', 'limit' => $this->get_limit()));
+    }
+
+    protected function _get_product_list($filter_column = '', $cat_id = '', $platform_id = '')
+    {
+        return $this->product_service->get_list_having_price(
+            array('product.status' => 2, 'product.website_status' => 'I',
+                'product.website_quantity >' => 0, 'price.platform_id' => "$platform_id", 'product.' . $filter_column => $cat_id),
+            array('orderby' => 'p.create_on DESC', 'limit' => $this->get_limit()));
+
     }
 }
 

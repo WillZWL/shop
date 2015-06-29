@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class So_item_detail_licence_dao extends Base_dao
 {
-    private $table_name="so_item_detail_licence";
-    private $vo_classname="So_item_detail_licence_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "so_item_detail_licence";
+    private $vo_classname = "So_item_detail_licence_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

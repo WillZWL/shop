@@ -1,4 +1,5 @@
 <?php
+
 class ClickTale extends PUB_Controller
 {
     public function ClickTale()

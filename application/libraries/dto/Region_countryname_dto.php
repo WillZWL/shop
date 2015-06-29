@@ -54,4 +54,5 @@ class Region_countryname_dto extends base_dto
         $this->region_name = $value;
     }
 }
+
 ?>

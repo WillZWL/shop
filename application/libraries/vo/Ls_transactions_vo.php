@@ -192,4 +192,5 @@ class Ls_transactions_vo extends Base_vo
     }
 
 }
+
 ?>

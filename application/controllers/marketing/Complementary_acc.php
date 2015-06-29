@@ -1,4 +1,5 @@
 <?php
+
 class Complementary_acc extends MY_Controller
 {
 
@@ -9,7 +10,7 @@ class Complementary_acc extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->helper(array('url','notice','image'));
+        $this->load->helper(array('url', 'notice', 'image'));
         $this->load->library('input');
         // $this->load->model($this->tool_path.'_'.strtolower(PLATFORM_TYPE).'_model', 'pricing_tool_model');
         $this->load->model('marketing/product_model');
@@ -33,29 +34,37 @@ class Complementary_acc extends MY_Controller
     public function index()
     {
         $data = array();
-        include_once APPPATH."language/".$this->_get_app_id()."00_".$this->_get_lang_id().".php";
+        include_once APPPATH . "language/" . $this->_get_app_id() . "00_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
-        $this->load->view("/marketing/complementary_acc/complementary_acc_index",$data);
+        $this->load->view("/marketing/complementary_acc/complementary_acc_index", $data);
+    }
+
+    public function _get_app_id()
+    {
+        return $this->app_id;
+
+    }
+
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
     }
 
     public function plist()
     {
         $where = array();
         $option = array();
-        $sub_app_id = $this->_get_app_id()."02";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        $sub_app_id = $this->_get_app_id() . "02";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
-        if (($sku = $this->input->get("sku")) != "" || ($prod_name = $this->input->get("name")) != "")
-        {
+        if (($sku = $this->input->get("sku")) != "" || ($prod_name = $this->input->get("name")) != "") {
             $data["search"] = 1;
-            if ($sku != "")
-            {
+            if ($sku != "") {
                 $where["sku"] = $sku;
             }
 
-            if ($prod_name != "")
-            {
+            if ($prod_name != "") {
                 $where["name"] = $prod_name;
             }
 
@@ -64,11 +73,10 @@ class Complementary_acc extends MY_Controller
 
             $limit = '20';
 
-            $pconfig['base_url'] = current_url()."?".$_SERVER['QUERY_STRING'];
+            $pconfig['base_url'] = current_url() . "?" . $_SERVER['QUERY_STRING'];
             $option["limit"] = $pconfig['per_page'] = $limit;
 
-            if ($option["limit"])
-            {
+            if ($option["limit"]) {
                 $option["offset"] = $this->input->get("per_page");
             }
 
@@ -78,7 +86,7 @@ class Complementary_acc extends MY_Controller
             if (empty($order))
                 $order = "asc";
 
-            $option["orderby"] = $sort." ".$order;
+            $option["orderby"] = $sort . " " . $order;
             $option["exclude_bundle"] = 1;
             $option["exclude_complementary_acc"] = 1;
             $data["objlist"] = $this->product_model->get_product_list($where, $option);
@@ -90,17 +98,16 @@ class Complementary_acc extends MY_Controller
 
             $data["notice"] = notice($lang);
 
-            $data["sortimg"][$sort] = "<img src='".base_url()."images/".$order.".gif'>";
-            $data["xsort"][$sort] = $order=="asc"?"desc":"asc";
+            $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
+            $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
         }
 
         $this->load->view('marketing/complementary_acc/complementary_acc_list', $data);
     }
 
-    public function view($sku="")
+    public function view($sku = "")
     {
-        if($sku == "")
-        {
+        if ($sku == "") {
             exit;
         }
 
@@ -110,15 +117,13 @@ class Complementary_acc extends MY_Controller
         define('IMG_PH', $this->context_config_service->value_of("prod_img_path"));
         $country_list = (array)$this->country_service->get_sell_country_list();
 
-        if($this->input->post('posted'))
-        {
+        if ($this->input->post('posted')) {
             $action = "";
 
             $action = $this->input->post("action");
             $info = $prod_arr = array();
 
-            if($action == "insert")
-            {
+            if ($action == "insert") {
                 // POST data in array new_acc_sku[$ctry_id] format
                 $info = $this->input->post("new_acc_sku");
                 $prod_arr["ctry_id"] = $ctry_id = key($info);
@@ -126,72 +131,52 @@ class Complementary_acc extends MY_Controller
                 $prod_arr["mainprod_sku"] = $sku;
 
                 $ret = $this->insert_complementary_acc($prod_arr);
-                if($ret["status"] === false)
-                {
+                if ($ret["status"] === false) {
                     $_SESSION["NOTICE"] = $ret["message"];
-                    Redirect(base_url()."/marketing/complementary_acc/view/".$sku);
-                }
-                else
-                {
+                    Redirect(base_url() . "/marketing/complementary_acc/view/" . $sku);
+                } else {
                     $_SESSION["NOTICE"] = "$action success.";
                 }
-            }
-            elseif($action == "update")
-            {
+            } elseif ($action == "update") {
                 $success = true;
                 $message = "";
-                foreach ($this->input->post("info") as $ca_sku => $v)
-                {
+                foreach ($this->input->post("info") as $ca_sku => $v) {
                     $prod_arr["mainprod_sku"] = $sku;
                     $prod_arr["ca_sku"] = $ca_sku;
                     $prod_arr["ctry_id"] = $v["ctry_id"];
                     $prod_arr["castatus"] = $v["status"];
                     $ret = $this->update_complementary_acc($prod_arr);
 
-                    if($ret["status"] === false)
-                    {
+                    if ($ret["status"] === false) {
                         // compile all error messages
                         $success = false;
-                        $message .= $ret["message"]."\n";
+                        $message .= $ret["message"] . "\n";
                     }
                 }
 
-                if($success === false)
-                {
+                if ($success === false) {
                     $_SESSION["NOTICE"] = $message;
-                    Redirect(base_url()."/marketing/complementary_acc/view/".$sku);
-                }
-                else
-                {
+                    Redirect(base_url() . "/marketing/complementary_acc/view/" . $sku);
+                } else {
                     $_SESSION["NOTICE"] = "$action success.";
                 }
-            }
-            elseif($action == "bulk_update")
-            {
+            } elseif ($action == "bulk_update") {
                 $ret = $this->bulk_update_status($sku, $_POST);
 
-                if($ret["status"] === false)
-                {
+                if ($ret["status"] === false) {
                     $_SESSION["NOTICE"] = $ret["message"];
-                    Redirect(base_url()."/marketing/complementary_acc/view/".$sku);
-                }
-                else
-                {
+                    Redirect(base_url() . "/marketing/complementary_acc/view/" . $sku);
+                } else {
                     # if any existing mapping has changed status, inform user
                     $reset_alert = $ret["message"];
                     $_SESSION["NOTICE"] = "$action success. \n$reset_alert";
                 }
-            }
-            elseif ($action == "bulk_insert")
-            {
+            } elseif ($action == "bulk_insert") {
                 $ret = $this->bulk_insert_complementary_acc($sku, $_POST["new_acc_sku"]["bulk"], $country_list);
-                if($ret['status'] === false)
-                {
+                if ($ret['status'] === false) {
                     $_SESSION["NOTICE"] = $ret["message"];
-                    Redirect(base_url()."/marketing/complementary_acc/view/".$sku);
-                }
-                else
-                {
+                    Redirect(base_url() . "/marketing/complementary_acc/view/" . $sku);
+                } else {
                     # if any existing mapping has changed status, inform user
                     $reset_alert = $ret["message"];
 
@@ -199,7 +184,7 @@ class Complementary_acc extends MY_Controller
                 }
             }
         }
-        include_once APPPATH."language/".$this->_get_app_id()."01_".$this->_get_lang_id().".php";
+        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["canedit"] = 1;
         $data["value"] = $sku;
@@ -208,22 +193,18 @@ class Complementary_acc extends MY_Controller
 
         // main product data and its mapped accessory for each country
         $proddata = array();
-        if($sku != "")
-        {
+        if ($sku != "") {
             $objcount = 0;
-            $data["mainprod"] = $this->product_model->get("product", array("sku"=>$sku));
-            $mapping_obj = $this->product_service->get_master_sku(array('sku'=>$sku, 'ext_sys'=>'WMS', 'status'=>1));
-            if($mapping_obj && trim($mapping_obj->get_ext_sku()) != "")
-            {
+            $data["mainprod"] = $this->product_model->get("product", array("sku" => $sku));
+            $mapping_obj = $this->product_service->get_master_sku(array('sku' => $sku, 'ext_sys' => 'WMS', 'status' => 1));
+            if ($mapping_obj && trim($mapping_obj->get_ext_sku()) != "") {
                 $data['master_sku'] = $mapping_obj->get_ext_sku();
             }
 
-            if ($country_list)
-            {
+            if ($country_list) {
                 $ca_country_list = array();
 
-                foreach($country_list as $country_obj)
-                {
+                foreach ($country_list as $country_obj) {
                     $country_id = $country_obj->get_id();
                     $proddata[$country_id]["ctryobj"] = $country_obj;
 
@@ -231,10 +212,8 @@ class Complementary_acc extends MY_Controller
                     $where["dest_country_id"] = $country_id;
                     $where["mainprod_sku"] = $sku;
 
-                    if($map_acc_list = $this->product_complementary_acc_dao->get_mapped_acc_list_w_name($where, $option, false))
-                    {
-                        foreach ($map_acc_list as $ca_obj)
-                        {
+                    if ($map_acc_list = $this->product_complementary_acc_dao->get_mapped_acc_list_w_name($where, $option, false)) {
+                        foreach ($map_acc_list as $ca_obj) {
                             # gather CA list by CA SKU for mass update by countries (list of unique accessory skus)
                             $ca_country_list[$ca_obj->get_accessory_sku()]["ca_obj"] = $ca_obj;
                             $ca_country_list[$ca_obj->get_accessory_sku()]["country_list"] .= "$country_id,";
@@ -251,95 +230,37 @@ class Complementary_acc extends MY_Controller
             $data["objcount"] = $objcount;
             $data["sku"] = $sku;
         }
-        $this->load->view("marketing/complementary_acc/complementary_acc_view",$data);
+        $this->load->view("marketing/complementary_acc/complementary_acc_view", $data);
     }
 
-    public function map_cat($ctry_id="")
+    private function insert_complementary_acc($prod_arr = array())
     {
-        $data = $where = $option = array();
-        $data["prompt_notice"] = 0;
-        $data["website_link"] = $this->context_config_service->value_of("website_domain");
-        define('IMG_PH', $this->context_config_service->value_of("prod_img_path"));
+        $ret = array();
+        $ret["status"] = false;
 
-        if($ctry_id)
-        {
-            $data["country"] = $ctry_id;
-        }
+        if ($prod_arr) {
+            $pca_dao = $this->product_complementary_acc_dao;
+            $pca_obj = $pca_dao->get();
+            $ctry_id = $prod_arr["ctry_id"];
+            $ca_sku = strtoupper($prod_arr["ca_sku"]);
+            # check if it's an accessory
+            $check_ca = $this->complementary_acc_model->check_cat($ca_sku, true);
 
-        if($this->input->post('posted'))
-        {
-            if($cat_id = $this->input->post('cat_id'))
-            {
-                $where["cat_id"] = $cat_id;
-            }
+            if ($check_ca["status"] === true) {
+                $mainprod_sku = strtoupper($prod_arr["mainprod_sku"]);
 
-            if($sub_cat_id = $this->input->post("sub_cat_id"))
-            {
-                $where["sub_cat_id"] = $sub_cat_id;
-            }
-            if($sub_sub_cat_id = $this->input->post("sub_sub_cat_id"))
-            {
-                $where["sub_sub_cat_id"] = $sub_sub_cat_id;
-            }
-            $option["limit"] = -1;
+                $pca_obj->set_status(1);
+                $pca_obj->set_mainprod_sku($mainprod_sku);
+                $pca_obj->set_accessory_sku($ca_sku);
+                $pca_obj->set_dest_country_id($ctry_id);
 
-            $info = $this->input->post("new_acc_sku");
-            $ca_sku = $info[$ctry_id];
-            if($objlist = (array)$this->product_model->get_product_list($where, $option))
-            {
-                $ret = $this->add_ca_by_cat($objlist, $ca_sku, $ctry_id);
-
-                if($ret["status"] === false)
-                {
-                    $_SESSION["NOTICE"] = $ret["message"];
-                    Redirect(base_url()."/marketing/complementary_acc/map_cat/".$ctry_id);
+                if (($pca_dao->insert($pca_obj)) === false) {
+                    $ret["message"] = "Line: " . __LINE__ . " Insert failed (mainprod:$mainprod_sku || ca:$ca_sku || ctry:$ctry_id)\n" . $this->db->_error_message();
+                } else {
+                    $ret["status"] = true;
                 }
-                else
-                {
-                    $_SESSION["NOTICE"] = "Insert success";
-                }
-            }
-        }
-
-        include_once APPPATH."language/".$this->_get_app_id()."01_".$this->_get_lang_id().".php";
-        $data["lang"] = $lang;
-        $data["canedit"] = 1;
-        $data["value"] = $sku;
-        $data["target"] = $this->input->get('target');
-        $data["notice"] = notice($lang);
-
-        $data["country_list"] = $this->country_service->get_sell_country_list();
-        $this->load->view("marketing/complementary_acc/complementary_acc_mapcat_view",$data);
-    }
-
-    private function add_ca_by_cat($mainprodlist=array(), $ca_sku="", $dest_country_id="")
-    {
-        # pass in the whole product list by cat/subcat/subsubcat to map new complementary accessory
-        $map_acc_list = $where = $prod_arr = $ret = array();
-        $success = true;
-        $message = "";
-        if($mainprodlist && $ca_sku && $dest_country_id)
-        {
-            foreach ($mainprodlist as $prodobj)
-            {
-                $mainprod_sku = $prodobj->get_sku();
-                $where["pca.mainprod_sku"] = $prod_arr["mainprod_sku"] = $mainprod_sku;
-                $where["pca.accessory_sku"] = $prod_arr["ca_sku"] = $ca_sku;
-                $where["pca.dest_country_id"] = $prod_arr["ctry_id"] = $dest_country_id;
-                $option["limit"] = 1;
-                $map_acc = (array)$this->product_complementary_acc_dao->get_mapped_acc_list_w_name($where, $option);
-                if(empty($map_acc))
-                {
-                    # only insert if mapping of (mainprod_sku - accessory_sku - dest_country_id) doesn't exist
-                    $ret = $this->insert_complementary_acc($prod_arr);
-
-                    if($ret["status"] === false)
-                    {
-                        $success = false;
-                        $message .= $ret["message"] . "\n";
-                    }
-                }
-            }
+            } else
+                $ret["message"] = $check_ca["message"];
         }
 
         return $ret;
@@ -349,23 +270,18 @@ class Complementary_acc extends MY_Controller
     {
         $ret = array();
         $ret["status"] = false;
-        if($prod_arr)
-        {
+        if ($prod_arr) {
             $mainprod_sku = $prod_arr["mainprod_sku"];
             $ca_sku = $prod_arr["ca_sku"];
             $ctry_id = $prod_arr["ctry_id"];
             $castatus = $prod_arr["castatus"];
 
             $pca_dao = $this->product_complementary_acc_dao;
-            if($pca_obj = $pca_dao->get(array("mainprod_sku"=>$mainprod_sku, "accessory_sku"=>$ca_sku, "dest_country_id"=>$ctry_id)))
-            {
+            if ($pca_obj = $pca_dao->get(array("mainprod_sku" => $mainprod_sku, "accessory_sku" => $ca_sku, "dest_country_id" => $ctry_id))) {
                 $pca_obj->set_status($castatus);
-                if(($pca_dao->update($pca_obj)) === false)
-                {
-                    $ret["message"] = "Line: ".__LINE__." Updated failed (mainprod:$mainprod_sku || ca:$ca_sku || ctry:$ctry_id)\n".$this->db->_error_message();
-                }
-                else
-                {
+                if (($pca_dao->update($pca_obj)) === false) {
+                    $ret["message"] = "Line: " . __LINE__ . " Updated failed (mainprod:$mainprod_sku || ca:$ca_sku || ctry:$ctry_id)\n" . $this->db->_error_message();
+                } else {
                     $ret["status"] = true;
                 }
             }
@@ -380,61 +296,45 @@ class Complementary_acc extends MY_Controller
         $ret["status"] = true;
         $pca_dao = $this->product_complementary_acc_dao;
 
-        if($postarray)
-        {
-            foreach ($postarray['status'] as $selected_ca => $status)
-            {
-                if($status != "")
-                {
-                    $ca_sku         = strtoupper($selected_ca);
-                    $mainprod_sku   = strtoupper($mainprod_sku);
-                    $country_arr    = explode(',', trim($postarray["country_list"][$selected_ca], ','));
-                    $action         = $postarray["action"];
-                    $posted         = $postarray["posted"];
+        if ($postarray) {
+            foreach ($postarray['status'] as $selected_ca => $status) {
+                if ($status != "") {
+                    $ca_sku = strtoupper($selected_ca);
+                    $mainprod_sku = strtoupper($mainprod_sku);
+                    $country_arr = explode(',', trim($postarray["country_list"][$selected_ca], ','));
+                    $action = $postarray["action"];
+                    $posted = $postarray["posted"];
                     // $status      = $postarray["status"];
-                    if($status == "")
-                    {
+                    if ($status == "") {
                         $status = 1;
                     }
-                    if(is_array($country_arr))
-                    {
-                        foreach ($country_arr as $ctry_id)
-                        {
+                    if (is_array($country_arr)) {
+                        foreach ($country_arr as $ctry_id) {
                             # get existing mapping. if no mapping exists for the country, ignore
-                            if($pca_obj = $pca_dao->get(array("mainprod_sku"=>$mainprod_sku, "accessory_sku"=>$ca_sku, "dest_country_id"=>$ctry_id)))
-                            {
+                            if ($pca_obj = $pca_dao->get(array("mainprod_sku" => $mainprod_sku, "accessory_sku" => $ca_sku, "dest_country_id" => $ctry_id))) {
                                 $old_status = $pca_obj->get_status();
-                                if($old_status != $status)
-                                {
+                                if ($old_status != $status) {
                                     $pca_obj->set_status($status);
-                                    if(($pca_dao->update($pca_obj)) === false)
-                                    {
-                                        $ret["message"] .= "Line: ".__LINE__." Update failed (mainprod:$mainprod_sku || ca:$ca_sku || ctry:$ctry_id)\n".$this->db->_error_message();
+                                    if (($pca_dao->update($pca_obj)) === false) {
+                                        $ret["message"] .= "Line: " . __LINE__ . " Update failed (mainprod:$mainprod_sku || ca:$ca_sku || ctry:$ctry_id)\n" . $this->db->_error_message();
                                         $ret["status"] = false;
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         # compile alert message if changed from Inactive to Active
-                                        if($old_status == 0 && $status == 1)
-                                        {
+                                        if ($old_status == 0 && $status == 1) {
                                             $ret["message"] .= "$ca_sku - $ctry_id reset to Active! \n";
                                         }
 
                                     }
                                 }
-                            }
-                            else
-                            {
-                                $ret["message"] .= "Line: ".__LINE__." Bulk update failed. No mapping exists for (mainprod_sku:$mainprod_sku || ca:$ca_sku || ctry:$ctry_id)\n";
+                            } else {
+                                $ret["message"] .= "Line: " . __LINE__ . " Bulk update failed. No mapping exists for (mainprod_sku:$mainprod_sku || ca:$ca_sku || ctry:$ctry_id)\n";
                             }
                         }
                     }
                 }
             }
-        }
-        else
-        {
-            $ret["message"] = "Line: ".__LINE__." Bulk update failed. No post info";
+        } else {
+            $ret["message"] = "Line: " . __LINE__ . " Bulk update failed. No post info";
         }
 
         return $ret;
@@ -446,56 +346,44 @@ class Complementary_acc extends MY_Controller
         $ret = array();
         $ret["status"] = true;
         $pca_dao = $this->product_complementary_acc_dao;
-        $mainprod_sku   = strtoupper($mainprod_sku);
-        $ca_sku         = strtoupper($ca_sku);
+        $mainprod_sku = strtoupper($mainprod_sku);
+        $ca_sku = strtoupper($ca_sku);
 
         # check if it's an accessory
         $check_ca = $this->complementary_acc_model->check_cat($ca_sku, true);
 
-        if($check_ca["status"] === true)
-        {
-            foreach ($country_list as $key => $ctryobj)
-            {
+        if ($check_ca["status"] === true) {
+            foreach ($country_list as $key => $ctryobj) {
                 $ctry_id = $ctryobj->get_id();
                 $pca_vo = $pca_dao->get();
 
-                if(! $pca_obj = $pca_dao->get(array("mainprod_sku"=>$mainprod_sku, "accessory_sku"=>$ca_sku, "dest_country_id"=>$ctry_id)))
-                {
+                if (!$pca_obj = $pca_dao->get(array("mainprod_sku" => $mainprod_sku, "accessory_sku" => $ca_sku, "dest_country_id" => $ctry_id))) {
                     $pca_vo->set_mainprod_sku($mainprod_sku);
                     $pca_vo->set_accessory_sku($ca_sku);
                     $pca_vo->set_dest_country_id($ctry_id);
                     $pca_vo->set_status(1);
 
-                    if(($pca_dao->insert($pca_vo)) === false)
-                    {
-                        $ret["message"] .= "Line: ".__LINE__." Bulk insert failed (mainprod:$mainprod_sku || ca:$ca_sku || ctry:$ctry_id)\n".$pca_dao->db->_error_message();
+                    if (($pca_dao->insert($pca_vo)) === false) {
+                        $ret["message"] .= "Line: " . __LINE__ . " Bulk insert failed (mainprod:$mainprod_sku || ca:$ca_sku || ctry:$ctry_id)\n" . $pca_dao->db->_error_message();
                         $ret["status"] = false;
                     }
-                }
-                else
-                {
+                } else {
                     $dest_country_id = $pca_obj->get_dest_country_id();
                     $status = $pca_obj->get_status();
 
-                    if($status == 0)
-                    {
+                    if ($status == 0) {
                         # if current status is 0, set it back to 1 with alert
                         $pca_obj->set_status(1);
-                        if(($pca_dao->update($pca_obj)) === false)
-                        {
-                            $ret["message"] .= "Line: ".__LINE__." Bulk update failed (mainprod:$mainprod_sku || ca:$ca_sku || ctry:$ctry_id)\n".$this->db->_error_message();
+                        if (($pca_dao->update($pca_obj)) === false) {
+                            $ret["message"] .= "Line: " . __LINE__ . " Bulk update failed (mainprod:$mainprod_sku || ca:$ca_sku || ctry:$ctry_id)\n" . $this->db->_error_message();
                             $ret["status"] = false;
-                        }
-                        else
-                        {
+                        } else {
                             $ret["message"] .= "$dest_country_id reset to Active! \n";
                         }
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             $ret["status"] = false;
             $ret["message"] = $check_ca["message"];
         }
@@ -503,40 +391,79 @@ class Complementary_acc extends MY_Controller
         return $ret;
     }
 
-    private function insert_complementary_acc($prod_arr = array())
+    public function map_cat($ctry_id = "")
     {
-        $ret = array();
-        $ret["status"] = false;
+        $data = $where = $option = array();
+        $data["prompt_notice"] = 0;
+        $data["website_link"] = $this->context_config_service->value_of("website_domain");
+        define('IMG_PH', $this->context_config_service->value_of("prod_img_path"));
 
-        if($prod_arr)
-        {
-            $pca_dao = $this->product_complementary_acc_dao;
-            $pca_obj = $pca_dao->get();
-            $ctry_id = $prod_arr["ctry_id"];
-            $ca_sku = strtoupper($prod_arr["ca_sku"]);
-            # check if it's an accessory
-            $check_ca = $this->complementary_acc_model->check_cat($ca_sku, true);
+        if ($ctry_id) {
+            $data["country"] = $ctry_id;
+        }
 
-            if($check_ca["status"] === true)
-            {
-                $mainprod_sku = strtoupper($prod_arr["mainprod_sku"]);
+        if ($this->input->post('posted')) {
+            if ($cat_id = $this->input->post('cat_id')) {
+                $where["cat_id"] = $cat_id;
+            }
 
-                $pca_obj->set_status(1);
-                $pca_obj->set_mainprod_sku($mainprod_sku);
-                $pca_obj->set_accessory_sku($ca_sku);
-                $pca_obj->set_dest_country_id($ctry_id);
+            if ($sub_cat_id = $this->input->post("sub_cat_id")) {
+                $where["sub_cat_id"] = $sub_cat_id;
+            }
+            if ($sub_sub_cat_id = $this->input->post("sub_sub_cat_id")) {
+                $where["sub_sub_cat_id"] = $sub_sub_cat_id;
+            }
+            $option["limit"] = -1;
 
-                if(($pca_dao->insert($pca_obj)) === false)
-                {
-                    $ret["message"] = "Line: ".__LINE__." Insert failed (mainprod:$mainprod_sku || ca:$ca_sku || ctry:$ctry_id)\n".$this->db->_error_message();
-                }
-                else
-                {
-                    $ret["status"] = true;
+            $info = $this->input->post("new_acc_sku");
+            $ca_sku = $info[$ctry_id];
+            if ($objlist = (array)$this->product_model->get_product_list($where, $option)) {
+                $ret = $this->add_ca_by_cat($objlist, $ca_sku, $ctry_id);
+
+                if ($ret["status"] === false) {
+                    $_SESSION["NOTICE"] = $ret["message"];
+                    Redirect(base_url() . "/marketing/complementary_acc/map_cat/" . $ctry_id);
+                } else {
+                    $_SESSION["NOTICE"] = "Insert success";
                 }
             }
-            else
-                $ret["message"] = $check_ca["message"];
+        }
+
+        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        $data["lang"] = $lang;
+        $data["canedit"] = 1;
+        $data["value"] = $sku;
+        $data["target"] = $this->input->get('target');
+        $data["notice"] = notice($lang);
+
+        $data["country_list"] = $this->country_service->get_sell_country_list();
+        $this->load->view("marketing/complementary_acc/complementary_acc_mapcat_view", $data);
+    }
+
+    private function add_ca_by_cat($mainprodlist = array(), $ca_sku = "", $dest_country_id = "")
+    {
+        # pass in the whole product list by cat/subcat/subsubcat to map new complementary accessory
+        $map_acc_list = $where = $prod_arr = $ret = array();
+        $success = true;
+        $message = "";
+        if ($mainprodlist && $ca_sku && $dest_country_id) {
+            foreach ($mainprodlist as $prodobj) {
+                $mainprod_sku = $prodobj->get_sku();
+                $where["pca.mainprod_sku"] = $prod_arr["mainprod_sku"] = $mainprod_sku;
+                $where["pca.accessory_sku"] = $prod_arr["ca_sku"] = $ca_sku;
+                $where["pca.dest_country_id"] = $prod_arr["ctry_id"] = $dest_country_id;
+                $option["limit"] = 1;
+                $map_acc = (array)$this->product_complementary_acc_dao->get_mapped_acc_list_w_name($where, $option);
+                if (empty($map_acc)) {
+                    # only insert if mapping of (mainprod_sku - accessory_sku - dest_country_id) doesn't exist
+                    $ret = $this->insert_complementary_acc($prod_arr);
+
+                    if ($ret["status"] === false) {
+                        $success = false;
+                        $message .= $ret["message"] . "\n";
+                    }
+                }
+            }
         }
 
         return $ret;
@@ -545,21 +472,17 @@ class Complementary_acc extends MY_Controller
     public function showdata()
     {
         // search for complementary accessories by sku or name
-        $datatable ="<ul style=\"list-style-type:none;padding:10px;\"><li style=\"color:white;\">No data suggestion</li>";
-        if($_GET)
-        {
-            if($_GET["q"])
-            {
+        $datatable = "<ul style=\"list-style-type:none;padding:10px;\"><li style=\"color:white;\">No data suggestion</li>";
+        if ($_GET) {
+            if ($_GET["q"]) {
                 $like["p.name"] = "%{$_GET["q"]}%";
                 $like['p.sku'] = "%{$_GET["q"]}%";
                 $option["limit"] = 50;
                 $all_ca_list = $this->product_complementary_acc_dao->get_all_accessory($where, $option, $like);
                 $arr = (array)$all_ca_list;
-                if(!empty($arr))
-                {
+                if (!empty($arr)) {
                     $datatable = "<ul style=\"list-style-type:none;padding:10px;\">";
-                    foreach ($all_ca_list as $key => $value)
-                    {
+                    foreach ($all_ca_list as $key => $value) {
                         $datatable .= <<<HTML
                                 <li>
                                     <a href="#" onclick="selected('{$_GET["ctry"]}', '{$value->get_accessory_sku()}');return false;"
@@ -636,16 +559,6 @@ javascript;
 
         echo $js;
 
-    }
-    public function _get_app_id()
-    {
-        return $this->app_id;
-
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
     }
 }
 

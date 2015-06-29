@@ -1,4 +1,5 @@
 <?php
+
 class Courier_model extends CI_Model
 {
     public function __construct()
@@ -8,14 +9,14 @@ class Courier_model extends CI_Model
         $this->load->library('service/currency_service');
     }
 
-    public function get_courier_list($where=array(), $option=array())
+    public function get_courier_list($where = array(), $option = array())
     {
         $data["courierlist"] = $this->courier_service->get_list($where, $option);
         $data["total"] = $this->courier_service->get_num_rows($where);
         return $data;
     }
 
-    public function get_courier($where=array())
+    public function get_courier($where = array())
     {
         return $this->courier_service->get($where);
     }
@@ -35,7 +36,7 @@ class Courier_model extends CI_Model
         return $this->courier_service->insert($obj);
     }
 
-    public function get_currency_list($where=array())
+    public function get_currency_list($where = array())
     {
         return $this->currency_service->get_list($where, $option);
     }

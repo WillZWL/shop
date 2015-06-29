@@ -10,7 +10,7 @@ class Rpt_inventory_movement_service extends Report_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/service/Inv_movement_service.php");
+        include_once(APPPATH . "libraries/service/Inv_movement_service.php");
         $this->set_invm_service(new Inv_movement_service());
         $this->set_output_delimiter(',');
     }
@@ -21,37 +21,34 @@ class Rpt_inventory_movement_service extends Report_service
         return $this;
     }
 
-    public function get_invm_service()
+    public function get_csv($sku, $start_date, $end_date)
     {
-        return $this->invm_service;
+        $arr = $this->get_data($sku, $start_date, $end_date);
+        return $this->convert($arr);
     }
 
-    public function get_data($sku,$start_date, $end_date)
+    public function get_data($sku, $start_date, $end_date)
     {
         $where = array();
 
-        if (!empty($sku))
-        {
+        if (!empty($sku)) {
             $where['sku'] = $sku;
         }
 
-        if (!empty($start_date))
-        {
+        if (!empty($start_date)) {
             $where['start_date'] = $start_date;
         }
 
-        if (!empty($end_date))
-        {
+        if (!empty($end_date)) {
             $where['end_date'] = $end_date;
         }
 
         return $this->get_invm_service()->get_inventory_movement($where);
     }
 
-    public function get_csv($sku,$start_date, $end_date)
+    public function get_invm_service()
     {
-        $arr = $this->get_data($sku,$start_date, $end_date);
-        return $this->convert($arr);
+        return $this->invm_service;
     }
 
     protected function get_default_vo2xml_mapping()

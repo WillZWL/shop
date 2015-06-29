@@ -168,4 +168,5 @@ class Ftp_info_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -15,10 +15,10 @@
  */
 ?>
 <?php
-    if(function_exists("ClickTale_DebugBuffers")) {
-        ClickTale_DebugBuffers();
-    }
-    // most of the time, output buffers are flushed automatically, uncomment the
-    // following if you experience problems
-    //while (@ob_end_flush());
+if (function_exists("ClickTale_DebugBuffers")) {
+    ClickTale_DebugBuffers();
+}
+// most of the time, output buffers are flushed automatically, uncomment the
+// following if you experience problems
+//while (@ob_end_flush());
 ?>

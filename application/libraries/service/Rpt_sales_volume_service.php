@@ -10,14 +10,17 @@ class Rpt_sales_volume_service extends Report_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/service/So_service.php");
+        include_once(APPPATH . "libraries/service/So_service.php");
         $this->set_so_service(new So_service());
         $this->set_output_delimiter(',');
     }
 
-    public function set_so_service($value)
+    public function get_data($where = array(), $option = array())
     {
-        return $this->so_service = $value;
+        $arr = $this->get_so_service()->get_sales_volume_so($where, $option);
+        $header = $this->get_header();
+        $data = $this->convert($arr, '');
+        return $data;
     }
 
     public function get_so_service()
@@ -25,12 +28,9 @@ class Rpt_sales_volume_service extends Report_service
         return $this->so_service;
     }
 
-    public function get_data($where = array(),$option = array())
+    public function set_so_service($value)
     {
-        $arr = $this->get_so_service()->get_sales_volume_so($where,$option);
-        $header = $this->get_header();
-        $data = $this->convert($arr,'');
-        return $data;
+        return $this->so_service = $value;
     }
 
     public function get_header()

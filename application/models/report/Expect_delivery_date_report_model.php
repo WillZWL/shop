@@ -1,4 +1,5 @@
 <?php
+
 class Expect_delivery_date_report_model extends CI_Model
 {
     public function __construct()

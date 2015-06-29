@@ -60,14 +60,14 @@ class Voucher_w_detail_dto extends Base_dto
         $this->party = $value;
     }
 
-    public function set_expire_date($value)
-    {
-        $this->expire_date = $value;
-    }
-
     public function get_expire_date()
     {
         return $this->expire_date;
+    }
+
+    public function set_expire_date($value)
+    {
+        $this->expire_date = $value;
     }
 
     public function get_code()

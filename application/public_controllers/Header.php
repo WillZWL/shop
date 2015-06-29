@@ -1,4 +1,5 @@
 <?php
+
 class Header extends PUB_Controller
 {
 
@@ -19,7 +20,7 @@ class Header extends PUB_Controller
         include_once(APPPATH . "language/WEB" . str_pad($data['display_id'], 6, '0', STR_PAD_LEFT) . "_" . get_lang_id() . ".php");
         $data["lang"] = $lang;
 
-        $this->load_view('banner/lytebox_'.$publish_key, $data);
+        $this->load_view('banner/lytebox_' . $publish_key, $data);
     }
 }
 

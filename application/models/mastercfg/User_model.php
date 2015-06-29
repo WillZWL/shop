@@ -10,22 +10,22 @@ class User_model extends CI_Model
         $this->load->library('service/User_role_service');
     }
 
-    public function get_list_w_roles($where=array(), $option=array())
+    public function get_list_w_roles($where = array(), $option = array())
     {
         return $this->user_service->get_list_w_roles($where, $option);
     }
 
-    public function get_user($where=array())
+    public function get_user($where = array())
     {
         return $this->user_service->get($where);
     }
 
-    public function get_user_role($where=array())
+    public function get_user_role($where = array())
     {
         return $this->user_role_service->get($where);
     }
 
-    public function get_user_role_list($where=array())
+    public function get_user_role_list($where = array())
     {
         return $this->user_role_service->get_list($where);
     }
@@ -50,7 +50,7 @@ class User_model extends CI_Model
         return $this->user_role_service->include_vo();
     }
 
-    public function get_role_list($where=array())
+    public function get_role_list($where = array())
     {
         return $this->role_service->get_list();
     }
@@ -60,7 +60,8 @@ class User_model extends CI_Model
         return $this->user_service->insert($obj);
     }
 
-    public function add_user_role(Base_vo $obj){
+    public function add_user_role(Base_vo $obj)
+    {
         return $this->user_role_service->insert($obj);
     }
 

@@ -19,6 +19,14 @@ class Pmgw_report_inpendium_dto extends Base_dto
     private $internal_txn_id;
     private $ref_txn_id;
     private $so_no;
+    private $payment_type;
+    private $short_id;
+    private $unique_id;
+    private $request_timestamp;
+    private $transaction_id;
+    private $status_code;
+    private $debit;
+    private $credit;
 
     public function get_date()
     {
@@ -130,7 +138,6 @@ class Pmgw_report_inpendium_dto extends Base_dto
         $this->internal_txn_id = $value;
     }
 
-
     public function get_ref_txn_id()
     {
         return $this->ref_txn_id;
@@ -150,15 +157,6 @@ class Pmgw_report_inpendium_dto extends Base_dto
     {
         $this->so_no = $value;
     }
-
-    private $payment_type;
-    private $short_id;
-    private $unique_id;
-    private $request_timestamp;
-    private $transaction_id;
-    private $status_code;
-    private $debit;
-    private $credit;
 
     public function get_payment_type()
     {

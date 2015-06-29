@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Colour_extend_dao extends Base_dao
 {
-    private $table_name="colour_extend";
-    private $vo_class_name="Colour_extend_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "colour_extend";
+    private $vo_class_name = "Colour_extend_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

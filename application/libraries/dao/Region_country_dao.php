@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Region_country_dao extends base_dao
 {
-    private $table_name="region_country";
-    private $vo_classname="Region_country_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "region_country";
+    private $vo_classname = "Region_country_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -45,16 +45,12 @@ class Region_country_dao extends base_dao
                 ORDER BY c.name ASC';
 
         $rs = array();
-        if ($query = $this->db->query($sql, $regionid))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, $regionid)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
-            return (object) $rs;
-        }
-        else
-        {
+            return (object)$rs;
+        } else {
             echo mysql_error();
             return FALSE;
         }

@@ -91,6 +91,7 @@ class Product_hscode_report_dto extends Base_dto
     {
         $this->request_date = $value;
     }
+
     public function get_approved_by()
     {
         return $this->approved_by;

@@ -159,26 +159,22 @@ class So_last_order_w_client_dto extends Base_dto
         return $this;
     }
 
+    public function get_delivery_forename()
+    {
+        return $this->get_delivery_name_segment(0);
+    }
+
     public function get_delivery_name_segment($index)
     {
-        if ($this->delivery_name)
-        {
+        if ($this->delivery_name) {
             $name_segment = explode(" ", $this->delivery_name);
-            if (($index == 0) && (sizeof($name_segment) > 0))
-            {
+            if (($index == 0) && (sizeof($name_segment) > 0)) {
                 return $name_segment[0];
-            }
-            else if (($index == 1) && (sizeof($name_segment) > 1))
-            {
+            } else if (($index == 1) && (sizeof($name_segment) > 1)) {
                 return $name_segment[1];
             }
         }
         return "";
-    }
-
-    public function get_delivery_forename()
-    {
-        return $this->get_delivery_name_segment(0);
     }
 
     public function get_delivery_surname()
@@ -208,30 +204,24 @@ class So_last_order_w_client_dto extends Base_dto
         return $this;
     }
 
+    public function get_delivery_address_1()
+    {
+        return $this->get_delivery_address_segment(0);
+    }
+
     public function get_delivery_address_segment($index)
     {
-        if ($this->delivery_address)
-        {
+        if ($this->delivery_address) {
             $address_segment = explode("|", $this->delivery_address);
-            if (($index == 0) && (sizeof($address_segment) > 0))
-            {
+            if (($index == 0) && (sizeof($address_segment) > 0)) {
                 return $address_segment[0];
-            }
-            else if (($index == 1) && (sizeof($address_segment) > 1))
-            {
+            } else if (($index == 1) && (sizeof($address_segment) > 1)) {
                 return $address_segment[1];
-            }
-            else if (($index == 2) && (sizeof($address_segment) > 2))
-            {
+            } else if (($index == 2) && (sizeof($address_segment) > 2)) {
                 return $address_segment[2];
             }
         }
         return "";
-    }
-
-    public function get_delivery_address_1()
-    {
-        return $this->get_delivery_address_segment(0);
     }
 
     public function get_delivery_address_2()

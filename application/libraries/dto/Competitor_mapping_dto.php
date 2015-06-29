@@ -40,7 +40,7 @@ class Competitor_mapping_dto extends Base_dto
         parent::__construct();
     }
 
-        public function get_competitor_id()
+    public function get_competitor_id()
     {
         return $this->competitor_id;
     }

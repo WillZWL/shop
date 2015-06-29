@@ -31,16 +31,13 @@ class Altapay_integrator
     {
         $this->debug = $debug;
 
-        if ($this->debug)
-        {
+        if ($this->debug) {
             $this->_server = self::PAYMENT_SERVER_DEBUG;
             $this->_login = self::GATEWAY_LOGIN_DEBUG;
             $this->_password = self::GATEWAY_PASSWORD_DEBUG;
             $this->_terminal = self::GATEWAY_TERMINAL_DEBUG;
             $this->_sharedSecret = self::VERIFY_SECRET_WORD_DEBUG;
-        }
-        else
-        {
+        } else {
             $this->_server = self::PAYMENT_SERVER;
             $this->_login = self::GATEWAY_LOGIN;
             $this->_password = self::GATEWAY_PASSWORD;
@@ -49,20 +46,9 @@ class Altapay_integrator
         }
     }
 
-    private function _selectTerminal($currency)
-    {
-        if (!$this->debug)
-            $this->_terminal = self::GATEWAY_TERMINAL . " " . $currency;
-    }
-
     public function submitCreatePaymentRequest($data)
     {
         return $this->_connect($data, self::API_CREATE_PAYMENT);
-    }
-
-    public function submitCreateQueryPaymentRequest($data)
-    {
-        return $this->_connect($data, self::API_QUERY_PAYMENT);
     }
 
     public function _connect($data, $api)
@@ -82,12 +68,17 @@ class Altapay_integrator
         $this->_curlError = curl_error($ch);
         $this->_curlInfo = curl_getinfo($ch);
         curl_close($ch);
-/*
-        var_dump($this->_curlResult);
-        var_dump($this->_curlError);
-        var_dump($this->_curlInfo);
-*/
+        /*
+                var_dump($this->_curlResult);
+                var_dump($this->_curlError);
+                var_dump($this->_curlInfo);
+        */
         return array("error" => $this->_curlError, "info" => $this->_curlInfo, "result" => $this->_curlResult);
+    }
+
+    public function submitCreateQueryPaymentRequest($data)
+    {
+        return $this->_connect($data, self::API_QUERY_PAYMENT);
     }
 
     public function form_transaction_query($input_params, $currency = "EUR")
@@ -97,6 +88,12 @@ class Altapay_integrator
         $request["shop_orderid"] = $input_params["so_no"];
         $request["terminal"] = $this->_terminal;
         return $request;
+    }
+
+    private function _selectTerminal($currency)
+    {
+        if (!$this->debug)
+            $this->_terminal = self::GATEWAY_TERMINAL . " " . $currency;
     }
 
     public function form_payment_request($soObj, $clientObj, $processPaymentUrl)
@@ -111,24 +108,23 @@ class Altapay_integrator
 //        $request["language"] = "en";
         $request["type"] = "paymentAndCapture";
 
-        if ($clientObj)
-        {
+        if ($clientObj) {
             $request["customer_info"] = array();
             $request["customer_info"]["billing_city"] = $clientObj->get_city();
             $request["customer_info"]["billing_region"] = null;
             $request["customer_info"]["billing_postal"] = $clientObj->get_postcode();
             $request["customer_info"]["billing_country"] = $clientObj->get_country_id();
-            
+
             $request["customer_info"]["email"] = $clientObj->get_email();
-            $request["customer_info"]["customer_phone"] = (($clientObj->get_tel_1())?$clientObj->get_tel_1():"") . (($clientObj->get_tel_2())?$clientObj->get_tel_2():"") . (($clientObj->get_tel_3())?$clientObj->get_tel_3():"");
+            $request["customer_info"]["customer_phone"] = (($clientObj->get_tel_1()) ? $clientObj->get_tel_1() : "") . (($clientObj->get_tel_2()) ? $clientObj->get_tel_2() : "") . (($clientObj->get_tel_3()) ? $clientObj->get_tel_3() : "");
             $request["customer_info"]["billing_firstname"] = $clientObj->get_forename();
             $request["customer_info"]["billing_lastname"] = $clientObj->get_surname();
-            $request["customer_info"]["billing_address"] = str_replace("|" ,  " ", $soObj->get_bill_address());
-            
+            $request["customer_info"]["billing_address"] = str_replace("|", " ", $soObj->get_bill_address());
+
             $delivery_name = explode(" ", $soObj->get_delivery_name());
             $request["customer_info"]["shipping_firstname"] = $delivery_name[0];
-            $request["customer_info"]["shipping_lastname"] = ((sizeof($delivery_name) > 1)?$delivery_name[1]:"");
-            $request["customer_info"]["shipping_address"] = str_replace("|" ,  " ", $soObj->get_delivery_address());
+            $request["customer_info"]["shipping_lastname"] = ((sizeof($delivery_name) > 1) ? $delivery_name[1] : "");
+            $request["customer_info"]["shipping_address"] = str_replace("|", " ", $soObj->get_delivery_address());
             $request["customer_info"]["shipping_city"] = $soObj->get_delivery_city();
             $request["customer_info"]["shipping_region"] = null;
             $request["customer_info"]["shipping_postal"] = $soObj->get_delivery_postcode();
@@ -151,13 +147,12 @@ class Altapay_integrator
 
     public function calculateChecksum(Array $inputData)
     {
-       $inputData['secret'] = $this->_sharedSecret;       
-       ksort($inputData);
-       $data = array();
-       foreach($inputData as $name => $value)
-       {
-          $data[] = $name . "=" . $value;
-       }
-       return md5(join(',', $data));
+        $inputData['secret'] = $this->_sharedSecret;
+        ksort($inputData);
+        $data = array();
+        foreach ($inputData as $name => $value) {
+            $data[] = $name . "=" . $value;
+        }
+        return md5(join(',', $data));
     }
 }

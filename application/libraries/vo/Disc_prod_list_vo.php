@@ -120,4 +120,5 @@ class Disc_prod_list_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cron_surplus_report extends MY_Controller
 {
-    private $app_id="CRN0019";
+    private $app_id = "CRN0019";
     private $notification_email = "itsupport@eservicesgroup.net";
 
     function __construct()
@@ -28,8 +28,7 @@ class Cron_surplus_report extends MY_Controller
         $phpmail->AddAddress("celine@eservicesgroup.com");
 
         $phpmail->Subject = "VB Unmapped Surplus Report";
-        if(file_exists($filepath))
-        {
+        if (file_exists($filepath)) {
             $phpmail->IsHTML(false);
             $phpmail->Body = "Attached: List of surplus not mapped on VB.";
             $phpmail->AddAttachment($filepath, "unmapped_surplus_report_{$timestamp}.csv");
@@ -38,11 +37,9 @@ class Cron_surplus_report extends MY_Controller
             header("Cache-Control: no-store, no-cache");
             header("Content-Disposition: attachment; filename=\"unmapped_surplus_report_{$timestamp}.csv\"");
             echo $csv;
-        }
-        else
-        {
+        } else {
             $phpmail->AddAddress("itsupport@eservicesgroup.net");
-            $text = "Could not retrive file - $filepath\n".__FILE__." LINE: ".__LINE__;
+            $text = "Could not retrive file - $filepath\n" . __FILE__ . " LINE: " . __LINE__;
             $phpmail->Body = $text;
             $result = $phpmail->Send();
         }
@@ -64,8 +61,7 @@ class Cron_surplus_report extends MY_Controller
         $phpmail->AddAddress("celine@eservicesgroup.com");
 
         $phpmail->Subject = "VB Unlisted Platforms Surplus Report";
-        if(file_exists($filepath))
-        {
+        if (file_exists($filepath)) {
             $phpmail->IsHTML(false);
             $phpmail->Body = "Attached: Platforms which surplus SKUs are not listed on.";
             $phpmail->AddAttachment($filepath, "unlisted_surplus_report_{$timestamp}.csv");
@@ -74,10 +70,8 @@ class Cron_surplus_report extends MY_Controller
             header("Cache-Control: no-store, no-cache");
             header("Content-Disposition: attachment; filename=\"unlisted_surplus_report_{$timestamp}.csv\"");
             echo $csv;
-        }
-        else
-        {
-            $text = "Could not retrive file - $filepath\r\nOccurred at ".__FILE__." LINE: ".__LINE__;
+        } else {
+            $text = "Could not retrive file - $filepath\r\nOccurred at " . __FILE__ . " LINE: " . __LINE__;
             $phpmail->AddAddress("itsupport@eservicesgroup.net");
             $phpmail->Body = $text;
             $result = $phpmail->Send();

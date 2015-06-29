@@ -13,20 +13,14 @@ Class So_w_payment_dto extends Base_dto
     private $card_type;
     private $fail_reason;
 
-    public function set_order_create_date($value)
-    {
-        $this->order_create_date = $value;
-        return $this;
-    }
-
     public function get_order_create_date()
     {
         return $this->order_create_date;
     }
 
-    public function set_platform_id($value)
+    public function set_order_create_date($value)
     {
-        $this->platform_id = $value;
+        $this->order_create_date = $value;
         return $this;
     }
 
@@ -35,9 +29,9 @@ Class So_w_payment_dto extends Base_dto
         return $this->platform_id;
     }
 
-    public function set_bill_country_id($value)
+    public function set_platform_id($value)
     {
-        $this->bill_country_id = $value;
+        $this->platform_id = $value;
         return $this;
     }
 
@@ -46,9 +40,9 @@ Class So_w_payment_dto extends Base_dto
         return $this->bill_country_id;
     }
 
-    public function set_delivery_country_id($value)
+    public function set_bill_country_id($value)
     {
-        $this->delivery_country_id = $value;
+        $this->bill_country_id = $value;
         return $this;
     }
 
@@ -57,9 +51,9 @@ Class So_w_payment_dto extends Base_dto
         return $this->delivery_country_id;
     }
 
-    public function set_country_by_ip($value)
+    public function set_delivery_country_id($value)
     {
-        $this->country_by_ip = $value;
+        $this->delivery_country_id = $value;
         return $this;
     }
 
@@ -68,9 +62,9 @@ Class So_w_payment_dto extends Base_dto
         return $this->country_by_ip;
     }
 
-    public function set_so_no($value)
+    public function set_country_by_ip($value)
     {
-        $this->so_no = $value;
+        $this->country_by_ip = $value;
         return $this;
     }
 
@@ -79,9 +73,9 @@ Class So_w_payment_dto extends Base_dto
         return $this->so_no;
     }
 
-    public function set_amount($value)
+    public function set_so_no($value)
     {
-        $this->amount = $value;
+        $this->so_no = $value;
         return $this;
     }
 
@@ -90,9 +84,9 @@ Class So_w_payment_dto extends Base_dto
         return $this->amount;
     }
 
-    public function set_card_type($value)
+    public function set_amount($value)
     {
-        $this->card_type = $value;
+        $this->amount = $value;
         return $this;
     }
 
@@ -101,16 +95,22 @@ Class So_w_payment_dto extends Base_dto
         return $this->card_type;
     }
 
-    public function set_fail_reason($value)
+    public function set_card_type($value)
     {
-        $this->fail_reason = $value;
+        $this->card_type = $value;
         return $this;
     }
 
     public function get_fail_reason()
     {
         preg_match('/(.* mismatch)|failed_reason:(.*)/', $this->fail_reason, $matches);
-        return $matches[1].$matches[2];
+        return $matches[1] . $matches[2];
+    }
+
+    public function set_fail_reason($value)
+    {
+        $this->fail_reason = $value;
+        return $this;
     }
 }
 

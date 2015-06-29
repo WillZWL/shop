@@ -288,4 +288,5 @@ class Sourcing_list_dto extends Base_dto
         $this->clearance = $value;
     }
 }
+
 ?>

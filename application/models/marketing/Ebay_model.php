@@ -1,4 +1,5 @@
 <?php
+
 class Ebay_model extends CI_Model
 {
 

@@ -144,4 +144,5 @@ class Payment_gateway_vo extends Base_vo
     }
 
 }
+
 ?>

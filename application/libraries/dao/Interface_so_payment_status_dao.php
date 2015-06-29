@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Interface_so_payment_status_dao extends Base_dao
 {
-    private $table_name="interface_so_payment_status";
-    private $vo_class_name="Interface_so_payment_status_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "interface_so_payment_status";
+    private $vo_class_name = "Interface_so_payment_status_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

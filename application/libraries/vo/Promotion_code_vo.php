@@ -468,4 +468,5 @@ class Promotion_code_vo extends Base_vo
     }
 
 }
+
 ?>

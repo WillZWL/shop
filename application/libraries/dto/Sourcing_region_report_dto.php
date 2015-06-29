@@ -121,4 +121,5 @@ class Sourcing_region_report_dto extends Base_dto
         $this->profit = $value;
     }
 }
+
 ?>

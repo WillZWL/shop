@@ -1,4 +1,5 @@
 <?php
+
 class Home_model extends CI_Model
 {
     public function __construct()
@@ -30,15 +31,12 @@ class Home_model extends CI_Model
         $pop_sub_cat_limit = 6;
         $pop_brand_limit = 6;
 
-        for ($row_count = 0; $row_count < $row_limit; $row_count++)
-        {
+        for ($row_count = 0; $row_count < $row_limit; $row_count++) {
             $str .= '
                 <tr>';
 
-            for ($col_count = 0; $col_count < $col_limit; $col_count++)
-            {
-                if ($col_count > 0)
-                {
+            for ($col_count = 0; $col_count < $col_limit; $col_count++) {
+                if ($col_count > 0) {
                     $str .= '
                     <td width="8">&nbsp;</td>';
                 }
@@ -53,8 +51,7 @@ class Home_model extends CI_Model
                 $item = current($cat_list);
                 next($cat_list);
 
-                if (!($item === FALSE))
-                {
+                if (!($item === FALSE)) {
                     $str .= '<a href="' . str_replace(" ", "-", parse_url_char($item["category"]->get_name())) . '/cat/?catid=' . $item["category"]->get_id() . '">';
                     $str .= $item["category"]->get_name();
                     $str .= '</a>';
@@ -68,8 +65,7 @@ class Home_model extends CI_Model
 
                 $pos = $row_count * 3 + $col_count;
 
-                if (!($item === FALSE))
-                {
+                if (!($item === FALSE)) {
                     $str .= '
                                     <a href="<?php echo base_url() . str_replace(\' \', \'-\', parse_url_char($best_seller[' . $pos
                         . '][\'product\'][\'name\']));?>/mainproduct/view/'
@@ -87,11 +83,9 @@ class Home_model extends CI_Model
                                     <b style="font-size:12px;color:#FF6600">Popular Categories</b><br>
                                         ';
 
-                if (!($item === FALSE) && $item["pop_sub_cat_list"])
-                {
+                if (!($item === FALSE) && $item["pop_sub_cat_list"]) {
                     for ($pop_sub_cat_count = 0; $pop_sub_cat_count < $pop_sub_cat_limit
-                        && !(($cur_sub_cat = current($item["pop_sub_cat_list"])) === FALSE); $pop_sub_cat_count++)
-                    {
+                    && !(($cur_sub_cat = current($item["pop_sub_cat_list"])) === FALSE); $pop_sub_cat_count++) {
                         $str .= '<a href="'
                             . str_replace(" ", "-", parse_url_char($cur_sub_cat->get_name())) . '/cat/?catid=' . $cur_sub_cat->get_id() . '">';
                         $str .= $cur_sub_cat->get_name();
@@ -105,13 +99,10 @@ class Home_model extends CI_Model
                                         ';
 
 
-                if (!($item === FALSE) && $item["pop_brand_list"])
-                {
+                if (!($item === FALSE) && $item["pop_brand_list"]) {
                     for ($pop_brand_count = 0; $pop_brand_count < $pop_brand_limit
-                        && !(($cur_brand = current($item["pop_brand_list"])) === FALSE); $pop_brand_count++)
-                    {
-                        if ($pop_brand_count > 0)
-                        {
+                    && !(($cur_brand = current($item["pop_brand_list"])) === FALSE); $pop_brand_count++) {
+                        if ($pop_brand_count > 0) {
                             $str .= ":";
                         }
                         $str .= '<a href="'
@@ -128,10 +119,9 @@ class Home_model extends CI_Model
                                 <tr>
                                     <td width="152" height="36" align="left" valign="bottom" style="padding-left:6px;padding-bottom:6px">';
 
-                if (!($item === FALSE))
-                {
+                if (!($item === FALSE)) {
                     $str .= '
-                                        <del>Previous Price &pound;<?php echo $best_seller['. $pos
+                                        <del>Previous Price &pound;<?php echo $best_seller[' . $pos
                         . '][\'product\'][\'rrp\'];?></del><br>
                                         <b style="font-size:18px;color:#FF6600">&pound;<?php echo $best_seller[' . $pos
                         . '][\'product\'][\'price\'];?></b>';
@@ -162,12 +152,10 @@ class Home_model extends CI_Model
     public function gen_footer_cat_menu()
     {
         $lang_list = $this->language_service->get_list();
-        foreach($lang_list as $lang_obj)
-        {
+        foreach ($lang_list as $lang_obj) {
             $lang_id = $lang_obj->get_id();
 
-            if(!$list = $this->website_service->get_footer_menu_list($lang_id))
-            {
+            if (!$list = $this->website_service->get_footer_menu_list($lang_id)) {
                 $list = $this->website_service->get_footer_menu_list('en');
             }
 
@@ -176,32 +164,29 @@ class Home_model extends CI_Model
             $str .= "<table width='1020' border='0' align='center' cellpadding='0' cellspacing='0'>
                         <tr>";
             $width = floor(100 / count($list["menu_list"]));
-            foreach($list["menu_list"] as $menu_header)
-            {
+            foreach ($list["menu_list"] as $menu_header) {
                 $count++;
                 $str .= "<td width='<?=$width?>%' valign='top'>
                         <table width='100%' border='0' cellspacing='5' cellpadding='0'>
                         <tr>
-                            <td><font face='Arial, Helvetica, sans-serif' color='#00aff0' size='-1'><strong>".$menu_header->get_name()."</strong></font><br />
+                            <td><font face='Arial, Helvetica, sans-serif' color='#00aff0' size='-1'><strong>" . $menu_header->get_name() . "</strong></font><br />
                                 <br style='line-height:4px' />
                                 <font face='Arial, Helvetica, sans-serif' color='#666666' size='-1'>";
-                foreach($list['menu_item_list'][$menu_header->get_menu_id()] as $menu_item)
-                {
-                    $str .= "<a href='".$menu_item->get_link()."'>".$menu_item->get_name()."</a><br>";
+                foreach ($list['menu_item_list'][$menu_header->get_menu_id()] as $menu_item) {
+                    $str .= "<a href='" . $menu_item->get_link() . "'>" . $menu_item->get_name() . "</a><br>";
                 }
                 $str .= "   </font></td>
                         </tr>
                         </table>
                         </td>";
 
-                if($count != sizeof($list['menu_list']))
-                {
+                if ($count != sizeof($list['menu_list'])) {
                     $str .= "<td width='2'><img src='/images/01index_98.gif' width='2' height='100' /></td>";
                 }
             }
             $str .= "</tr></table>";
 
-            $menu_file = "../app/public_views/footer_menu_".$lang_obj->get_id().".html";
+            $menu_file = "../app/public_views/footer_menu_" . $lang_obj->get_id() . ".html";
             file_put_contents($menu_file, $str);
             chown($menu_file, "apache");
             chgrp($menu_file, "users");
@@ -211,12 +196,11 @@ class Home_model extends CI_Model
 
     public function gen_select_country_grid()
     {
-        $platform_list = $this->platform_biz_var_service->get_list_w_country_name(array("s.type"=>"WEBSITE", "s.status"=>1, "pbv.language_id"=>"en", "c.allow_sell"=>1), array("orderby"=>"c.name"));
+        $platform_list = $this->platform_biz_var_service->get_list_w_country_name(array("s.type" => "WEBSITE", "s.status" => 1, "pbv.language_id" => "en", "c.allow_sell" => 1), array("orderby" => "c.name"));
 
-        foreach($platform_list as $obj)
-        {
+        foreach ($platform_list as $obj) {
             $cur_country_id = $obj->get_platform_country_id();
-            $option_str .= '<option<?=PLATFORMCOUNTRYID=="'.$cur_country_id.'"?" SELECTED":""?> value="'.$cur_country_id.'"><?="'.$obj->get_platform_country().'"?></option>
+            $option_str .= '<option<?=PLATFORMCOUNTRYID=="' . $cur_country_id . '"?" SELECTED":""?> value="' . $cur_country_id . '"><?="' . $obj->get_platform_country() . '"?></option>
                     ';
             $platform_currency[$cur_country_id] = $obj->get_platform_currency_id();
         }
@@ -255,7 +239,7 @@ class Home_model extends CI_Model
                                             }
                                                                                 <form name="fm_custom_country" id="fm_custom_country" method="post">
                                             <select name="custom_country_id" id="custom_country_id" onChange=\'<?=$on_change?>\'>
-                                            '.$option_str.'
+                                            ' . $option_str . '
                                             </select><br />
                                         </form>
                                     </td>
@@ -277,7 +261,7 @@ class Home_model extends CI_Model
 
     public function get_contact_page_content()
     {
-        return $this->customer_service_info_service->get(array("platform_id"=>PLATFORMID));
+        return $this->customer_service_info_service->get(array("platform_id" => PLATFORMID));
     }
 
     public function get_cat_url($cat_id, $relative_path = FALSE)

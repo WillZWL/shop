@@ -8,7 +8,7 @@ class Customer_service_info_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Customer_service_info_dao.php");
+        include_once(APPPATH . "libraries/dao/Customer_service_info_dao.php");
         $this->set_dao(new Customer_service_info_dao());
     }
 

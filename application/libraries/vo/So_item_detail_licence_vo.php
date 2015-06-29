@@ -156,4 +156,5 @@ class So_item_detail_licence_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -5,32 +5,37 @@ include_once 'Base_dao.php';
 
 class Product_note_dao extends Base_dao
 {
-    private $table_name="product_note";
-    private $vo_class_name="Product_note_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "product_note";
+    private $vo_class_name = "Product_note_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function get_vo_classname(){
+    public function get_vo_classname()
+    {
         return $this->vo_class_name;
     }
 
-    public function get_table_name(){
+    public function get_table_name()
+    {
         return $this->table_name;
     }
 
-    public function get_seq_name(){
+    public function get_seq_name()
+    {
         return $this->seq_name;
     }
 
-    public function get_seq_mapping_field(){
+    public function get_seq_mapping_field()
+    {
         return $this->seq_mapping_field;
     }
 
-    public function get_note_with_author_name($platform="", $sku, $type, $classname="Product_note_user_dto")
+    public function get_note_with_author_name($platform = "", $sku, $type, $classname = "Product_note_user_dto")
     {
         $this->include_dto($classname);
 
@@ -44,10 +49,9 @@ class Product_note_dao extends Base_dao
                     WHERE sku = ?
                     AND type = ?
                 ";
-        $where= array($sku, $type);
+        $where = array($sku, $type);
 
-        if ($platform != "")
-        {
+        if ($platform != "") {
             $sql .= "   AND platform_id = ?";
             $where[] = $platform;
         }
@@ -58,16 +62,12 @@ class Product_note_dao extends Base_dao
                 ORDER BY create_on ASC
                 ";
         $rs = array();
-        if ($query = $this->db->query($sql, $where))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, $where)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
-            return (object) $rs;
-        }
-        else
-        {
+            return (object)$rs;
+        } else {
             return FALSE;
         }
     }

@@ -60,4 +60,5 @@ class V_default_converted_price_vo extends Base_vo
     }
 
 }
+
 ?>

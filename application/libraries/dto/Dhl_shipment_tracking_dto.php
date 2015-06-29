@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class Dhl_shipment_tracking_dto extends Base_dto {
+class Dhl_shipment_tracking_dto extends Base_dto
+{
 
     //class variable
     private $sh_no;
@@ -173,8 +174,6 @@ class Dhl_shipment_tracking_dto extends Base_dto {
     {
         $this->delivery_state = $value;
     }
-
-
 
 
 }

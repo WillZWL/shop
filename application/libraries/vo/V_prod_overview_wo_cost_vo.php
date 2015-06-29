@@ -396,4 +396,5 @@ class V_prod_overview_wo_cost_vo extends Base_vo
     }
 
 }
+
 ?>

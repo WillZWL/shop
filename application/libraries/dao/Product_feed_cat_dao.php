@@ -7,8 +7,8 @@ Class Product_feed_cat_dao extends Base_dao
 {
     private $table_name = "product_feed_cat";
     private $vo_class_name = "Product_feed_cat_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

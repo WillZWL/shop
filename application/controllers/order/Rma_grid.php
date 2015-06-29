@@ -2,18 +2,18 @@
 
 class rma_grid extends gridbase
 {
-    protected $app_id="ORD0028";
-    private $lang_id="en";
+    protected $app_id = "ORD0028";
+    private $lang_id = "en";
 
-/*
-    private $from_mail = "Admin <admin@valuebasket.net>";
+    /*
+        private $from_mail = "Admin <admin@valuebasket.net>";
 
-    //for multiple mail
-    // array("name" => "mail")
-    private $to_mail = array("RMA@eservicesgroup.net" , "csmanager@eservicesgroup.net");
-    private $cc_mail = array("jesslyn@eservicesgroup.net" , "ping@eservicesgroup.net");
+        //for multiple mail
+        // array("name" => "mail")
+        private $to_mail = array("RMA@eservicesgroup.net" , "csmanager@eservicesgroup.net");
+        private $cc_mail = array("jesslyn@eservicesgroup.net" , "ping@eservicesgroup.net");
 
-*/
+    */
     function __construct()
     {
         global $_dbprefix;
@@ -27,33 +27,33 @@ class rma_grid extends gridbase
         $objGrid->keyfield("id");
         $objGrid->searchby("id");
 
-        $objGrid->buttons(false,true,false,false,-1,"");
+        $objGrid->buttons(false, true, false, false, -1, "");
 
 
         $otheroptions = array(
-                "1==1" =>
+            "1==1" =>
                 "<a href='javascript:DG_Do(\"rma_email;['id']\")'>Email</a>",
-            );
+        );
 
-        $objGrid->keyfield ("id");
+        $objGrid->keyfield("id");
         $objGrid->searchby("id");
-        $objGrid->orderby("id" , "desc");
+        $objGrid->orderby("id", "desc");
 
-        $objGrid->FormatColumn("id","ID",                                   "0", "20", 1, "1", "right", "text");
-        $objGrid->FormatColumn("saleorderno" , "Order No",                  "0", "50", 0, "10", "right", "text");
-        $objGrid->FormatColumn("receiveddate","Received Date",              "0", "50", 0, "5", "left", "date:ymd:-");
-        $objGrid->FormatColumn("unit" , "Unit" ,                            "0" , "50", 0 , "10", "left" , "text");
-        $objGrid->FormatColumn("awb","Tracking No. from returns",           "0", "50", 0, "5", "left", "text");
-        $objGrid->FormatColumn("firstname" , "First Name",                  "0", "50", 0, "10", "left", "text");
-        $objGrid->FormatColumn("surname" , "Sur Name" ,                     "0", "50", 0, "10", "left", "text");
+        $objGrid->FormatColumn("id", "ID", "0", "20", 1, "1", "right", "text");
+        $objGrid->FormatColumn("saleorderno", "Order No", "0", "50", 0, "10", "right", "text");
+        $objGrid->FormatColumn("receiveddate", "Received Date", "0", "50", 0, "5", "left", "date:ymd:-");
+        $objGrid->FormatColumn("unit", "Unit", "0", "50", 0, "10", "left", "text");
+        $objGrid->FormatColumn("awb", "Tracking No. from returns", "0", "50", 0, "5", "left", "text");
+        $objGrid->FormatColumn("firstname", "First Name", "0", "50", 0, "10", "left", "text");
+        $objGrid->FormatColumn("surname", "Sur Name", "0", "50", 0, "10", "left", "text");
 
-        $objGrid->FormatColumn("model","Model",                             "0", "50", 0, "10", "left", "text");
-        $objGrid->FormatColumn("reasonforreturn","Reason for return",       "0", "50", 0, "10", "left", "text");
+        $objGrid->FormatColumn("model", "Model", "0", "50", 0, "10", "left", "text");
+        $objGrid->FormatColumn("reasonforreturn", "Reason for return", "0", "50", 0, "10", "left", "text");
 
         //drop down box
-        $objGrid->FormatColumn("actionid","Action Requested",               "0", "50", 0, "5", "left", "selected:select id, name from order_rma_lookup_action_request");
-        $objGrid->FormatColumn("descriptionoffault","Description of fault", "0", "50", 2, "10", "left", "text");
-        $objGrid->FormatColumn("email" , "Email" ,                          "0" ,"50", 0, "50", "left", $otheroptions );
+        $objGrid->FormatColumn("actionid", "Action Requested", "0", "50", 0, "5", "left", "selected:select id, name from order_rma_lookup_action_request");
+        $objGrid->FormatColumn("descriptionoffault", "Description of fault", "0", "50", 2, "10", "left", "text");
+        $objGrid->FormatColumn("email", "Email", "0", "50", 0, "50", "left", $otheroptions);
 
         $objGrid->chField("email", "X-N-", true);
     }
@@ -68,8 +68,7 @@ class rma_grid extends gridbase
         extract($this->var);
 
         $param = explode(";", $objGrid->getAjaxID());
-        switch ($param[0])
-        {
+        switch ($param[0]) {
             case "add":
                 $now = date('Y-m-d');
                 $strSQL = sprintf("
@@ -83,14 +82,13 @@ class rma_grid extends gridbase
             case "rma_email":
 
 
-                if(isset($param[1])){
+                if (isset($param[1])) {
 
                     $rma_id = $param[1];
 
                     //send email
                     $this->notify_rma_mail($rma_id);
-                }
-                else{
+                } else {
                     //missing id for rma
                 }
 
@@ -99,8 +97,7 @@ class rma_grid extends gridbase
                 break;
         }
 
-        switch ($objGrid->getAjaxID())
-        {
+        switch ($objGrid->getAjaxID()) {
             case DG_IsDelete: // case 3:    // Delete Rowa / Borrar Registro
                 break;
 
@@ -109,12 +106,6 @@ class rma_grid extends gridbase
         }
     }
 
-    function process_row_data($arrData = array())
-    {
-        return $arrData;
-    }
-
-    //for sending email
     public function notify_rma_mail($rma_id)
     {
         // {$_SESSION["user"]["email"]}
@@ -161,7 +152,10 @@ class rma_grid extends gridbase
         // error_log($subject);
     }
 
-    public function get_rma_message($rma_id){
+    //for sending email
+
+    public function get_rma_message($rma_id)
+    {
         //connect to the model and get message
         //how to connect model
         extract($this->var);
@@ -175,7 +169,7 @@ class rma_grid extends gridbase
 
         $subject = "RMA for sales order " . $rmaData["saleorderno"];
 
-        $message =<<<email
+        $message = <<<email
 Hi,
 
 Please note that there will be a new process for RMA from Singapore Returns Collection Point (RCP).
@@ -200,19 +194,20 @@ Reason for return : {$rmaData['reasonforreturn']}
 System generated.
 email;
 
-    // $message = str_ireplace("\r\n", '\r\n', $message);
+        // $message = str_ireplace("\r\n", '\r\n', $message);
         $csvPath = $this->export_csv($rmaData);
-        return array("subject" => $subject , "message" => $message , "csvPath" => $csvPath) ;
+        return array("subject" => $subject, "message" => $message, "csvPath" => $csvPath);
     }
 
-    public function export_csv($rmaData){
+    public function export_csv($rmaData)
+    {
         $path = "rmexport_{$rmaData["saleorderno"]}.csv";
 
-        $list = array (
+        $list = array(
             array("RMA No / Order No", "Recieved Date", "Unit",
-                    "Tracking No. from returns" , "First Name" , "Sur Name" , "Model" , "Reason for return"),
-            array("{$rmaData["saleorderno"]}", $rmaData["receiveddate"] , $rmaData["unit"],
-                    $rmaData["awb"] , $rmaData["firstname"] , $rmaData["surname"] , $rmaData["model"] , $rmaData["reasonforreturn"])
+                "Tracking No. from returns", "First Name", "Sur Name", "Model", "Reason for return"),
+            array("{$rmaData["saleorderno"]}", $rmaData["receiveddate"], $rmaData["unit"],
+                $rmaData["awb"], $rmaData["firstname"], $rmaData["surname"], $rmaData["model"], $rmaData["reasonforreturn"])
         );
 
         $fp = fopen($path, 'w');
@@ -224,5 +219,10 @@ email;
         fclose($fp);
 
         return $path;
+    }
+
+    function process_row_data($arrData = array())
+    {
+        return $arrData;
     }
 }

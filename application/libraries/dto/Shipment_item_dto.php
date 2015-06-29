@@ -43,6 +43,11 @@ class Shipment_item_dto extends Base_dto
         return $this->sku;
     }
 
+    public function set_sku($value)
+    {
+        $this->sku = $value;
+    }
+
     public function get_to_location()
     {
         return $this->to_location;
@@ -51,11 +56,6 @@ class Shipment_item_dto extends Base_dto
     public function set_to_location($value)
     {
         $this->to_location = $value;
-    }
-
-    public function set_sku($value)
-    {
-        $this->sku = $value;
     }
 
     public function get_line_number()

@@ -5,11 +5,12 @@ include_once 'Base_dao.php';
 
 class Bundle_dao extends Base_dao
 {
-    private $table_name="bundle";
-    private $vo_class_name="Bundle_vo";
-    private $seq_name="product";
-    private $seq_mapping_field="sku";
-    private $website_status_priority = array('I'=>0, 'IS'=>10, 'P'=>20, 'O'=>99);
+    private $table_name = "bundle";
+    private $vo_class_name = "Bundle_vo";
+    private $seq_name = "product";
+    private $seq_mapping_field = "sku";
+    private $website_status_priority = array('I' => 0, 'IS' => 10, 'P' => 20, 'O' => 99);
+
     //private $website_status_priority_flip;
 
     public function __construct()
@@ -38,12 +39,7 @@ class Bundle_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_website_status_priority($data)
-    {
-        return $this->website_status_priority[$data];
-    }
-
-    public function get_list_w_name($where=array(), $option=array(), $classname="")
+    public function get_list_w_name($where = array(), $option = array(), $classname = "")
     {
 
         $this->db->from('v_bundle AS vb');
@@ -54,53 +50,43 @@ class Bundle_dao extends Base_dao
         $this->db->join('category AS ssc', 'p.sub_sub_cat_id = ssc.id', 'LEFT');
         $this->db->join('brand AS b', 'p.brand_id = b.id', 'LEFT');
 
-        if ($where["prod_grp_cd"] != "")
-        {
+        if ($where["prod_grp_cd"] != "") {
             $this->db->like('p.prod_grp_cd', $where["prod_grp_cd"]);
         }
 
-        if ($where["sku"] != "")
-        {
+        if ($where["sku"] != "") {
             $this->db->like('p.sku', $where["sku"]);
         }
 
-        if ($where["name"] != "")
-        {
+        if ($where["name"] != "") {
             $this->db->like('vb.bundle_name', $where["name"]);
         }
 
-        if ($where["colour"] != "")
-        {
+        if ($where["colour"] != "") {
             $this->db->like('cl.name', $where["colour"]);
         }
 
-        if ($where["category"] != "")
-        {
+        if ($where["category"] != "") {
             $this->db->like('c.name', $where["category"]);
         }
 
-        if ($where["sub_cat"] != "")
-        {
+        if ($where["sub_cat"] != "") {
             $this->db->like('sc.name', $where["sub_cat"]);
         }
 
-        if ($where["sub_sub_cat"] != "")
-        {
+        if ($where["sub_sub_cat"] != "") {
             $this->db->like('ssc.name', $where["sub_sub_cat"]);
         }
 
-        if ($where["brand"] != "")
-        {
+        if ($where["brand"] != "") {
             $this->db->like('b.brand_name', $where["brand"]);
         }
 
-        if ($where["components"] != "")
-        {
+        if ($where["components"] != "") {
             $this->db->like('vb.components', $where["components"]);
         }
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
 
             $this->include_dto($classname);
 
@@ -108,43 +94,32 @@ class Bundle_dao extends Base_dao
 
             $this->db->order_by($option["orderby"]);
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
 
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -152,83 +127,65 @@ class Bundle_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_bundle_list($where=array(), $option=array(), $classname="")
+    public function get_bundle_list($where = array(), $option = array(), $classname = "")
     {
 
         $this->db->from('v_bundle_list');
 
-        if ($where["prod_sku"] != "")
-        {
+        if ($where["prod_sku"] != "") {
             $this->db->where('prod_sku', $where["prod_sku"]);
         }
 
-        if ($where["component_sku"] != "")
-        {
+        if ($where["component_sku"] != "") {
             $this->db->where('component_sku', $where["component_sku"]);
         }
 
-        if ($where["component_order"] != "")
-        {
+        if ($where["component_order"] != "") {
             $this->db->where('component_order', $where["component_order"]);
         }
 
-        if ($where["components"] != "")
-        {
+        if ($where["components"] != "") {
             $this->db->where('components', $where["components"]);
         }
 
-        if ($where["bundle_name"] != "")
-        {
+        if ($where["bundle_name"] != "") {
             $this->db->like('bundle_name', $where["bundle_name"]);
         }
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
 
             $this->include_dto($classname);
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
 
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -238,8 +195,7 @@ class Bundle_dao extends Base_dao
 
     public function get_avail_prod_bundle_list($sku, $platform_id = 'WSGB', $lang_id = 'en')
     {
-        if (empty($sku))
-        {
+        if (empty($sku)) {
             return array();
         }
         /*
@@ -302,8 +258,7 @@ class Bundle_dao extends Base_dao
         $result = $this->db->query($sql, array($sku, $platform_id, $sku, $platform_id));
         $bundle_list = array();
 
-        if (!$result)
-        {
+        if (!$result) {
             return $bundle_list;
         }
 
@@ -319,18 +274,15 @@ class Bundle_dao extends Base_dao
         $min_website_qty = 0;
         $website_status = $this->get_website_status_priority('I');
 
-        for ($i = 0; $i < $result_rows; $i++)
-        {
-            if ($temp_prod_bundle_dto->get_prod_sku() != $result_arr[$i]['prod_sku'])
-            {
+        for ($i = 0; $i < $result_rows; $i++) {
+            if ($temp_prod_bundle_dto->get_prod_sku() != $result_arr[$i]['prod_sku']) {
                 $temp_prod_bundle_dto = new prod_bundle_dto();
                 $temp_prod_bundle_dto->set_prod_sku($result_arr[$i]['prod_sku']);
                 $temp_prod_bundle_dto->set_main_prod_sku($sku);
                 $temp_prod_bundle_dto->set_bundle_name($result_arr[$i]['bundle_name']);
                 //$temp_prod_bundle_dto->set_name($result_arr[$i]['name']);
 
-                if ($temp_prod_bundle_dto->get_prod_sku() != '')
-                {
+                if ($temp_prod_bundle_dto->get_prod_sku() != '') {
                     $bundle_list[$bundle_count++] = $temp_prod_bundle_dto;
                 }
 
@@ -341,19 +293,15 @@ class Bundle_dao extends Base_dao
                 $temp_prod_bundle_dto->set_website_status($result_arr[$i]['website_status']);
 
                 $temparr = array();
-            }
-            else
-            {
+            } else {
                 $temparr = $temp_prod_bundle_dto->get_component_sku_list();
 
-                if ($min_website_qty > $result_arr[$i]['website_quantity'])
-                {
+                if ($min_website_qty > $result_arr[$i]['website_quantity']) {
                     $min_website_qty = $result_arr[$i]['website_quantity'];
                     $temp_prod_bundle_dto->set_website_quantity($min_website_qty);
                 }
 
-                if ($website_status < $this->get_website_status_priority($result_arr[$i]['website_status']))
-                {
+                if ($website_status < $this->get_website_status_priority($result_arr[$i]['website_status'])) {
                     $website_status = $this->get_website_status_priority($result_arr[$i]['website_status']);
                     $temp_prod_bundle_dto->set_website_status($result_arr[$i]['website_status']);
                 }
@@ -371,9 +319,14 @@ class Bundle_dao extends Base_dao
         return $bundle_list;
     }
 
+    public function get_website_status_priority($data)
+    {
+        return $this->website_status_priority[$data];
+    }
+
     public function check_bundle_discount($sku_list = array())
     {
-        $sql  = "
+        $sql = "
                 SELECT b.component_sku AS sku, c.bundle_discount
                 FROM bundle AS b
                 INNER JOIN
@@ -384,7 +337,7 @@ class Bundle_dao extends Base_dao
                     (
                         SELECT prod_sku, component_sku
                         FROM bundle
-                        WHERE component_sku IN ('".implode("', '", $sku_list)."')
+                        WHERE component_sku IN ('" . implode("', '", $sku_list) . "')
                     ) AS bc
                     ON b.prod_sku = bc.prod_sku AND b.component_sku = bc.component_sku
                     GROUP BY b.prod_sku
@@ -398,46 +351,36 @@ class Bundle_dao extends Base_dao
                 GROUP BY b.component_sku
                 ";
 
-        if ($query = $this->db->query($sql))
-        {
+        if ($query = $this->db->query($sql)) {
             $data = array();
-            if ($query->num_rows() > 0)
-            {
-                foreach ($query->result() as $row)
-                {
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $row) {
                     $data[$row->sku] = $row->bundle_discount;
                 }
             }
             return $data;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
     public function get_bundle_component_sku($bundle_sku)
     {
-        $sql  = "
+        $sql = "
                 SELECT components
                 FROM v_bundle
                 WHERE bundle_sku = ?
                 ";
 
-        if ($query = $this->db->query($sql, array($bundle_sku)))
-        {
+        if ($query = $this->db->query($sql, array($bundle_sku))) {
             $data = array();
-            if ($query->num_rows() > 0)
-            {
-                foreach ($query->result() as $row)
-                {
-                    $data = explode(",",$row->components);
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $row) {
+                    $data = explode(",", $row->components);
                 }
             }
             return $data;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }

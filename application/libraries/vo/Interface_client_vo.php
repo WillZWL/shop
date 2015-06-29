@@ -564,4 +564,5 @@ class Interface_client_vo extends Base_vo
     }
 
 }
+
 ?>

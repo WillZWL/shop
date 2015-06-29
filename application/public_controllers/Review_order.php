@@ -1,4 +1,5 @@
 <?php
+
 class Review_order extends PUB_Controller
 {
 
@@ -12,6 +13,17 @@ class Review_order extends PUB_Controller
         $this->load->library('service/complementary_acc_service');
         $this->load->library('service/affiliate_service');
         $this->load->library('service/tradedoubler_tracking_script_service');
+    }
+
+    /*************************************
+     *   we don't use remove.ini, because there is no template file, use index.ini directly instead
+     ***************************************/
+    public function remove($sku = "")
+    {
+        if ($sku != "") {
+            $this->cart_session_model->remove($sku, PLATFORMID);
+        }
+        $this->index();
     }
 
     public function index()
@@ -33,14 +45,14 @@ class Review_order extends PUB_Controller
                 if (($item_status == Cart_session_service::NOT_ALLOW_PREORDER_ARRIVING_ITEM_AFTER_NORMAL_ITEM)
                     || ($item_status == Cart_session_service::NOT_ALLOW_NORMAL_ITEM_AFTER_PREORDER_ARRIVING_ITEM)
                     || ($item_status == Cart_session_service::DIFFERENT_PREORDER_ITEM)
-                    || ($item_status == Cart_session_service::DIFFERENT_ARRIVING_ITEM))
-                {
+                    || ($item_status == Cart_session_service::DIFFERENT_ARRIVING_ITEM)
+                ) {
                     $need_restriction_message = true;
                 }
             }
         }
 
-        if ( ! $need_restriction_message) {
+        if (!$need_restriction_message) {
             $data['data']['lang_text']['restriction'] = "";
         }
 
@@ -68,14 +80,14 @@ class Review_order extends PUB_Controller
         $data["allow_bulk_sales"] = array();
 
         $index = 0;
-        foreach($result["cart"] AS $key=>$val) {
+        foreach ($result["cart"] AS $key => $val) {
 
             #sbf #3746 don't show if it's a complementary accessory
             $is_complementary_acc = $this->complementary_acc_service->check_cat($val["sku"], true);
-            if($is_complementary_acc["status"] !== true) {
-                if($key < 2) {
-                    $i =$key+1;
-                    $criteo_tag .= '&i'.$i.'='.$val["sku"].'&p'.$i.'='.$val["price"].'&q'.$i.'='.$val["qty"];
+            if ($is_complementary_acc["status"] !== true) {
+                if ($key < 2) {
+                    $i = $key + 1;
+                    $criteo_tag .= '&i' . $i . '=' . $val["sku"] . '&p' . $i . '=' . $val["price"] . '&q' . $i . '=' . $val["qty"];
                 }
 
                 $item_total += $val["total"];
@@ -86,18 +98,18 @@ class Review_order extends PUB_Controller
                 $data["cart"][$val["sku"]][$index]["qty"] = $val["qty"];
 
                 if ($val['promo'] != 1) {
-                    $data["cart"][$val["sku"]][$index]["increase_url"] = base_url()."review_order/update/".$val["sku"]."/".($val["qty"]+1);
-                    $data["cart"][$val["sku"]][$index]["remove_url"] = base_url()."review_order/remove/".$val["sku"];
+                    $data["cart"][$val["sku"]][$index]["increase_url"] = base_url() . "review_order/update/" . $val["sku"] . "/" . ($val["qty"] + 1);
+                    $data["cart"][$val["sku"]][$index]["remove_url"] = base_url() . "review_order/remove/" . $val["sku"];
                 }
 
-                if($val["qty"]-1 > 0 && ($val['promo'] != 1)) {
-                    $data["cart"][$val["sku"]][$index]["decrease_url"] = base_url()."review_order/update/".$val["sku"]."/".($val["qty"]-1);
+                if ($val["qty"] - 1 > 0 && ($val['promo'] != 1)) {
+                    $data["cart"][$val["sku"]][$index]["decrease_url"] = base_url() . "review_order/update/" . $val["sku"] . "/" . ($val["qty"] - 1);
                 }
                 $data["cart"][$val["sku"]][$index]["sub_total"] = platform_curr_format(PLATFORMID, $val["total"]);
                 $data["cart"][$val["sku"]][$index]["prod_url"] = $this->cart_session_model->get_prod_url($val["sku"]);
 
                 $index++;
-    #           SBF #2441 Pop-up for contact us if bulk sales criteria met
+                #           SBF #2441 Pop-up for contact us if bulk sales criteria met
                 if ($val["qty"] >= 10 && $val["total"] >= 5000) {
                     $data["allow_bulk_sales"][] = '1';  #meets bulk sale criteria - show popup to contact us
                 } else {
@@ -109,8 +121,8 @@ class Review_order extends PUB_Controller
         $data["delivery_charge"] = platform_curr_format(PLATFORMID, $result["dc_default"]["charge"]);
         $data["item_amount"] = platform_curr_format(PLATFORMID, $item_total);
         $data["gst_total"] = platform_curr_format(PLATFORMID, $gst_total);
-        $total = $item_total - $result["dc_default"]["charge"]*1;
-        if($result['promo']['disc_amount']) {
+        $total = $item_total - $result["dc_default"]["charge"] * 1;
+        if ($result['promo']['disc_amount']) {
             $total = $item_total - $result['promo']['disc_amount'];
         }
         $data["total"] = platform_curr_format(PLATFORMID, $total + $gst_total);
@@ -121,10 +133,10 @@ class Review_order extends PUB_Controller
         //$rs = $cart_srv->check_cart($cart_list, PLATFORMID, get_lang_id(), isset($_COOKIE["renew_cart"]) && $_COOKIE["renew_cart"]);
         // var_dump($cart_list);
         //atom tracking info
-        foreach($result["cart"] as $key=>$cart_obj) {
+        foreach ($result["cart"] as $key => $cart_obj) {
             #sbf #3746 don't show if it's a complementary accessory
             $is_complementary_acc = $this->complementary_acc_service->check_cat($cart_obj["sku"], true);
-            if($is_complementary_acc["status"] !== true) {
+            if ($is_complementary_acc["status"] !== true) {
                 $tracking_list["sku"] = $cart_obj["sku"];
                 $tracking_list["unit_price"] = $cart_obj["price"];
                 $tracking_list["currency"] = $cart_obj["product_cost_obj"]->get_platform_currency_id();
@@ -140,23 +152,23 @@ class Review_order extends PUB_Controller
 #        SBF #2284 Tradedoubler variable js portion
         $this->tradedoubler_tracking_script_service->set_country_id(PLATFORMCOUNTRYID);
         $param_list = array();
-        foreach($result["cart"] as $key=>$cart_obj) {
+        foreach ($result["cart"] as $key => $cart_obj) {
             #sbf #3746 don't show if it's a complementary accessory
             $is_complementary_acc = $this->complementary_acc_service->check_cat($cart_obj["sku"], true);
-            if($is_complementary_acc["status"] !== true) {
-                $param_list["id"]       = $cart_obj["sku"];
-                $param_list["price"]    = $cart_obj["price"];
+            if ($is_complementary_acc["status"] !== true) {
+                $param_list["id"] = $cart_obj["sku"];
+                $param_list["price"] = $cart_obj["price"];
                 $param_list["currency"] = array_shift(array_keys($_SESSION["CURRENCY"]));
-                $param_list["name"]     = $cart_obj["name"];
-                $param_list["qty"]      = $cart_obj["qty"];
-                $product_list[]        = $param_list;
+                $param_list["name"] = $cart_obj["name"];
+                $param_list["qty"] = $cart_obj["qty"];
+                $product_list[] = $param_list;
             }
         }
         $td_variable_code = $this->tradedoubler_tracking_script_service->get_variable_code("basket", $product_list, "");
 
         // meta info
         $enable_mediaforge_country = array('GB', 'AU', 'FR', 'ES');
-        if(in_array(PLATFORMCOUNTRYID, $enable_mediaforge_country)) {
+        if (in_array(PLATFORMCOUNTRYID, $enable_mediaforge_country)) {
 #           mediaforge - added by SBF#1902
             $enable_mediaforge = true;
             if ($enable_mediaforge) {
@@ -170,33 +182,19 @@ class Review_order extends PUB_Controller
         $data["show_battery_message_w_amount"] = $this->cart_session_model->cart_session_service->check_battery_inside_cart_valid_or_not($total, PLATFORMID);
         // $this->load_tpl('content', 'tbs_review_order', $data, TRUE, TRUE);
     }
-/*************************************
-*   we don't use remove.ini, because there is no template file, use index.ini directly instead
-***************************************/
-    public function remove($sku = "")
-    {
-        if($sku != "")
-        {
-            $this->cart_session_model->remove($sku, PLATFORMID);
-        }
-        $this->index();
-    }
-/*************************************
-*   we don't use update.ini, because there is no template file, use index.ini directly instead
-***************************************/
-    public function update($sku ="", $qty="")
+
+    /*************************************
+     *   we don't use update.ini, because there is no template file, use index.ini directly instead
+     ***************************************/
+    public function update($sku = "", $qty = "")
     {
         $allow_result = $this->cart_session_model->cart_session_service->is_allow_to_add($sku, 1, PLATFORMID);
-        if ($allow_result <= Cart_session_service::DECISION_POINT)
-        {
-            if($sku != "" && $qty != "")
-            {
+        if ($allow_result <= Cart_session_service::DECISION_POINT) {
+            if ($sku != "" && $qty != "") {
                 $this->cart_session_model->update($sku, $qty, PLATFORMID);
             }
             $this->index();
-        }
-        else
-        {
+        } else {
             redirect(base_url() . "review_order?item_status=" . $allow_result . "&not_valid_sku=" . $sku);
         }
     }

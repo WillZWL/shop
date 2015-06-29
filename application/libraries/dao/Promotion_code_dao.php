@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Promotion_code_dao extends Base_dao
 {
-    private $table_name="promotion_code";
-    private $vo_class_name="Promotion_code_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "promotion_code";
+    private $vo_class_name = "Promotion_code_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

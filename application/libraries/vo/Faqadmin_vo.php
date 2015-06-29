@@ -120,4 +120,5 @@ class Faqadmin_vo extends Base_vo
     }
 
 }
+
 ?>

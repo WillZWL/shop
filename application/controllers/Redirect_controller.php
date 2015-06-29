@@ -17,20 +17,20 @@ class Redirect_controller extends CI_Controller
     {
         define('SITE_NAME', $this->context_config_service->value_of("site_name"));
         define('SITE_NAME_CAP', strtoupper($this->context_config_service->value_of("site_name")));
-        define('LOGO_FILE_PATH', "/images/".$this->context_config_service->value_of("logo_file_name"));
+        define('LOGO_FILE_PATH', "/images/" . $this->context_config_service->value_of("logo_file_name"));
         if ($this->authentication_service->check_authed()) {
             $data = array();
             $menu_name = array("master_cfg_menu" => 1
-                                , "order_menu" => 2
-                                , "compliance_menu" => 3
-                                , "marketing_menu" => 4
-                                , "integration_menu" => 5
-                                , "report_menu" => 6
-                                , "supply_menu" => 7
-                                , "customer_service_menu" => 8
-                                , "finance_menu" => 9
-                                , "competitor_analysis" => 10
-                                );
+            , "order_menu" => 2
+            , "compliance_menu" => 3
+            , "marketing_menu" => 4
+            , "integration_menu" => 5
+            , "report_menu" => 6
+            , "supply_menu" => 7
+            , "customer_service_menu" => 8
+            , "finance_menu" => 9
+            , "competitor_analysis" => 10
+            );
             foreach ($menu_name as $key => $value) {
                 $data[$key] = "";
                 $result = $this->user_service->get_menu_by_group($value);

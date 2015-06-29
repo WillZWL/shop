@@ -1,5 +1,6 @@
 <?php
 include_once "Base_report.php";
+
 class Special_order_report extends Base_report
 {
     private $app_id = "RPT0029";
@@ -9,7 +10,7 @@ class Special_order_report extends Base_report
     {
         parent::__construct();
         $this->load->model('report/special_order_report_model');
-        $this->load->helper(array('url','notice'));
+        $this->load->helper(array('url', 'notice'));
 //      $this->load->library('input');
 //      $this->load->library('service/context_config_service');
         $this->load->library('template');
@@ -27,17 +28,13 @@ class Special_order_report extends Base_report
 
     public function export_csv()
     {
-        if($this->input->post('is_query'))
-        {
+        if ($this->input->post('is_query')) {
             $data["posted"] = 1;
-            if($_POST["check"]["order_create"])
-            {
-                if($_POST["start_date"]["order_create"])
-                {
+            if ($_POST["check"]["order_create"]) {
+                if ($_POST["start_date"]["order_create"]) {
                     $where["so.order_create_date >="] = $_POST["start_date"]["order_create"] . " 00:00:00";
                 }
-                if($_POST["end_date"]["order_create"])
-                {
+                if ($_POST["end_date"]["order_create"]) {
                     $where["so.order_create_date <="] = $_POST["end_date"]["order_create"] . " 23:59:59";
                 }
             }

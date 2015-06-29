@@ -1,7 +1,8 @@
 <?php
+
 class Cron_refund_rates_rpt extends MY_Controller
 {
-    private $app_id="CRN0010";
+    private $app_id = "CRN0010";
 
     function __construct()
     {

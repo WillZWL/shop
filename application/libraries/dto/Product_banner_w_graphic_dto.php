@@ -30,14 +30,14 @@ class Product_banner_w_graphic_dto extends Base_dto
     private $graphic_location;
     private $graphic_file;
 
-    public function set_sku($value)
-    {
-        $this->sku = $value;
-    }
-
     public function get_sku()
     {
         return $this->sku;
+    }
+
+    public function set_sku($value)
+    {
+        $this->sku = $value;
     }
 
     public function get_display_id()

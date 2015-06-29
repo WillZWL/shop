@@ -132,4 +132,5 @@ class Fulfillment_centre_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
 
-$config['template.site_path']	= FCPATH;
+$config['template.site_path'] = FCPATH;
 
 $config['template.theme_paths'] = array('themes');
 

@@ -420,4 +420,5 @@ class V_product_w_bundle_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -180,4 +180,5 @@ class Promotion_text_vo extends Base_vo
     }
 
 }
+
 ?>

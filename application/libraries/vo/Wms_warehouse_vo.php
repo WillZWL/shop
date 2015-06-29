@@ -71,4 +71,5 @@ class Wms_warehouse_vo extends Base_vo
         return $this->increment_field;
     }
 }
+
 ?>

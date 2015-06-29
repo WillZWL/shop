@@ -14,19 +14,14 @@ class Dispatch_list_dto extends Shipment_info_to_courier_dto
         parent::Shipment_info_to_courier_dto();
     }
 
-    public function set_warehouse_id($value)
-    {
-        $this->warehouse_id = $value;
-    }
-
     public function get_warehouse_id()
     {
         return $this->warehouse_id;
     }
 
-    public function set_bin($value)
+    public function set_warehouse_id($value)
     {
-        $this->bin = $value;
+        $this->warehouse_id = $value;
     }
 
     public function get_bin()
@@ -34,9 +29,9 @@ class Dispatch_list_dto extends Shipment_info_to_courier_dto
         return $this->bin;
     }
 
-    public function set_empty($value)
+    public function set_bin($value)
     {
-        $this->empty = "";
+        $this->bin = $value;
     }
 
     public function get_empty()
@@ -44,9 +39,9 @@ class Dispatch_list_dto extends Shipment_info_to_courier_dto
         return "";
     }
 
-    public function set_no_info($value)
+    public function set_empty($value)
     {
-        $this->no_info = $value;
+        $this->empty = "";
     }
 
     public function get_no_info()
@@ -54,10 +49,14 @@ class Dispatch_list_dto extends Shipment_info_to_courier_dto
         return "no info";
     }
 
+    public function set_no_info($value)
+    {
+        $this->no_info = $value;
+    }
+
     public function get_order_create_date()
     {
-        if (!empty($this->order_create_date) && (!is_null($this->order_create_date)))
-        {
+        if (!empty($this->order_create_date) && (!is_null($this->order_create_date))) {
             $result = explode(" ", $this->order_create_date);
             return $result[0];
         }

@@ -3,29 +3,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once 'Base_dao.php';
 
-class Wms_inventory_dao extends Base_dao {
-    private $table_name="wms_inventory";
-    private $vo_class_name="Wms_inventory_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+class Wms_inventory_dao extends Base_dao
+{
+    private $table_name = "wms_inventory";
+    private $vo_class_name = "Wms_inventory_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function get_vo_classname(){
+    public function get_vo_classname()
+    {
         return $this->vo_class_name;
     }
 
-    public function get_table_name(){
-        return $this->table_name;
-    }
-
-    public function get_seq_name(){
+    public function get_seq_name()
+    {
         return $this->seq_name;
     }
 
-    public function get_seq_mapping_field(){
+    public function get_seq_mapping_field()
+    {
         return $this->seq_mapping_field;
     }
 
@@ -34,28 +35,27 @@ class Wms_inventory_dao extends Base_dao {
         return $this->db->empty_table($this->get_table_name());
     }
 
+    public function get_table_name()
+    {
+        return $this->table_name;
+    }
+
     public function renew_inventory($inv = array())
     {
-        if (sizeof($inv) > 0)
-        {
+        if (sizeof($inv) > 0) {
             $data = array();
-            foreach ($inv as $warehouse_id=>$master_sku_list)
-            {
-                foreach($master_sku_list as $master_sku=>$qty)
-                {
+            foreach ($inv as $warehouse_id => $master_sku_list) {
+                foreach ($master_sku_list as $master_sku => $qty) {
                     $data[] = "('" . $warehouse_id . "','" . $master_sku . "'," . $qty['inventory'] . "," . $qty['git'] . ")";
                 }
             }
             $sql = 'insert into ' . $this->get_table_name() . ' (warehouse_id, master_sku, inventory, git) values ' . implode(',', $data) . ';';
 
             $this->db->trans_start();
-            if ($this->db->query($sql))
-            {
+            if ($this->db->query($sql)) {
                 $this->db->trans_complete();
                 return TRUE;
-            }
-            else
-            {
+            } else {
                 $this->db->trans_rollback();
                 return FALSE;
             }
@@ -64,10 +64,9 @@ class Wms_inventory_dao extends Base_dao {
         return TRUE;
     }
 
-    public function get_inventory_list($where=array())
+    public function get_inventory_list($where = array())
     {
-        if($where["sku"] == "")
-        {
+        if ($where["sku"] == "") {
             return FALSE;
         }
 
@@ -83,11 +82,9 @@ class Wms_inventory_dao extends Base_dao {
 
         $this->include_vo();
 
-        $rs =array();
-        if($query = $this->db->query($sql, array($where["sku"])))
-        {
-            foreach($query->result($$this->get_vo_classname()) as $obj)
-            {
+        $rs = array();
+        if ($query = $this->db->query($sql, array($where["sku"]))) {
+            foreach ($query->result($$this->get_vo_classname()) as $obj) {
                 $rs[] = $obj;
             }
             return $rs;

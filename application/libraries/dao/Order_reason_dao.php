@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Order_reason_dao extends Base_dao
 {
-    private $table_name="order_reason";
-    private $vo_classname="Order_reason_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "order_reason";
+    private $vo_classname = "Order_reason_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

@@ -95,19 +95,21 @@ class Admin_product_feed_dto extends Base_dto
     private $webpt_margin;
 
 
-public function __construct()
-{
-    parent::__construct();
-}
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function get_cat()
-{
-    return $this->cat;
-}
+    {
+        return $this->cat;
+    }
 
     public function set_cat($value)
     {
-        $this->cat=$value;
+        $this->cat = $value;
     }
+
     public function get_sub_cat()
     {
         return $this->sub_cat;
@@ -115,8 +117,9 @@ public function __construct()
 
     public function set_sub_cat($value)
     {
-        $this->sub_cat=$value;
+        $this->sub_cat = $value;
     }
+
     public function get_sub_sub_cat()
     {
         return $this->sub_sub_cat;
@@ -126,6 +129,7 @@ public function __construct()
     {
         return $this->sub_sub_cat;
     }
+
     public function get_product_name()
     {
         return $this->product_name;
@@ -133,8 +137,9 @@ public function __construct()
 
     public function set_product_name($value)
     {
-        $this->product_name=$value;
+        $this->product_name = $value;
     }
+
     public function get_status()
     {
         return $this->status;
@@ -142,8 +147,9 @@ public function __construct()
 
     public function set_status($value)
     {
-        $this->status=$value;
+        $this->status = $value;
     }
+
     public function get_website_status()
     {
         return $this->website_status;
@@ -151,7 +157,7 @@ public function __construct()
 
     public function set_website_status($value)
     {
-        $this->website_status=$value;
+        $this->website_status = $value;
     }
 
     public function get_create_by()
@@ -161,8 +167,9 @@ public function __construct()
 
     public function set_create_by($value)
     {
-        $this->create_by=$value;
+        $this->create_by = $value;
     }
+
     public function get_create_on()
     {
         return $this->create_on;
@@ -170,8 +177,9 @@ public function __construct()
 
     public function set_create_on($value)
     {
-        $this->create_on=$value;
+        $this->create_on = $value;
     }
+
     public function get_modify_by()
     {
         return $this->modify_by;
@@ -179,8 +187,9 @@ public function __construct()
 
     public function set_modify_by($value)
     {
-        $this->modify_by=$value;
+        $this->modify_by = $value;
     }
+
     public function get_modify_on()
     {
         return $this->modify_on;
@@ -188,8 +197,9 @@ public function __construct()
 
     public function set_modify_on($value)
     {
-        $this->modify_on=$value;
+        $this->modify_on = $value;
     }
+
     public function get_master_sku()
     {
         return $this->master_sku;
@@ -197,8 +207,9 @@ public function __construct()
 
     public function set_master_sku($value)
     {
-        $this->master_sku=$value;
+        $this->master_sku = $value;
     }
+
     public function get_sku()
     {
         return $this->sku;
@@ -206,8 +217,9 @@ public function __construct()
 
     public function set_sku($value)
     {
-        $this->sku=$value;
+        $this->sku = $value;
     }
+
     public function get_website_display_name()
     {
         return $this->website_display_name;
@@ -215,7 +227,7 @@ public function __construct()
 
     public function set_website_display_name($value)
     {
-        $this->website_display_name=$value;
+        $this->website_display_name = $value;
     }
 
     public function get_youtube_id_1()
@@ -225,7 +237,7 @@ public function __construct()
 
     public function set_youtube_id_1($value)
     {
-        $this->youtube_id_1=$value;
+        $this->youtube_id_1 = $value;
     }
 
     public function get_youtube_caption_1()
@@ -235,7 +247,7 @@ public function __construct()
 
     public function set_youtube_caption_1($value)
     {
-        $this->youtube_caption_1=$value;
+        $this->youtube_caption_1 = $value;
     }
 
     public function get_youtube_id_2()
@@ -245,7 +257,7 @@ public function __construct()
 
     public function set_youtube_id_2($value)
     {
-        $this->youtube_id_2=$value;
+        $this->youtube_id_2 = $value;
     }
 
     public function get_youtube_caption_2()
@@ -255,7 +267,7 @@ public function __construct()
 
     public function set_youtube_caption_2($value)
     {
-        $this->youtube_caption_2=$value;
+        $this->youtube_caption_2 = $value;
     }
 
     public function get_price()

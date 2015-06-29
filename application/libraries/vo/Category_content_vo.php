@@ -180,4 +180,5 @@ class Category_content_vo extends Base_vo
     }
 
 }
+
 ?>

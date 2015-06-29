@@ -14,15 +14,15 @@ class Checkout_redirect_altapay_model extends Checkout_redirect_model
     {
         $this->pmgw_redirect_service = new Payment_gateway_redirect_altapay_service($this->debug);
     }
-/*
-    public function payment_verificaiton()
-    {
-        $this->pmgw_redirect_service->verify_orders();
-    }
+    /*
+        public function payment_verificaiton()
+        {
+            $this->pmgw_redirect_service->verify_orders();
+        }
 
-    public function payment_notification($input_data)
-    {
-        $this->pmgw_redirect_service->payment_notification($input_data);
-    }
-*/
+        public function payment_notification($input_data)
+        {
+            $this->pmgw_redirect_service->payment_notification($input_data);
+        }
+    */
 }

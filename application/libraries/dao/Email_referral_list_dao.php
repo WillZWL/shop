@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Email_referral_list_dao extends Base_dao
 {
-    private $table_name="email_referral_list";
-    private $vo_class_name="Email_referral_list_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "email_referral_list";
+    private $vo_class_name = "Email_referral_list_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class Email_referral_list_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_all_email_referral_list($where = '', $option= '', $classname = 'email_referral_w_client_dto')
+    public function get_all_email_referral_list($where = '', $option = '', $classname = 'email_referral_w_client_dto')
     {
         $this->db->from("email_referral_list erl");
         $this->db->join("client as c", "c.email = erl.email", "LEFT");

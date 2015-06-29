@@ -132,4 +132,5 @@ class Shiptype_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -3,33 +3,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once 'Base_dao.php';
 
-class Brand_dao extends Base_dao {
-    private $table_name="brand";
-    private $vo_class_name="Brand_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+class Brand_dao extends Base_dao
+{
+    private $table_name = "brand";
+    private $vo_class_name = "Brand_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function get_vo_classname(){
+    public function get_vo_classname()
+    {
         return $this->vo_class_name;
     }
 
-    public function get_table_name(){
+    public function get_table_name()
+    {
         return $this->table_name;
     }
 
-    public function get_seq_name(){
+    public function get_seq_name()
+    {
         return $this->seq_name;
     }
 
-    public function get_seq_mapping_field(){
+    public function get_seq_mapping_field()
+    {
         return $this->seq_mapping_field;
     }
 
-    public function get_brand_list_w_region($where=array(), $option=array(), $classname="Brand_w_region_dto")
+    public function get_brand_list_w_region($where = array(), $option = array(), $classname = "Brand_w_region_dto")
     {
 
         $this->db->from('brand AS b');
@@ -41,19 +47,16 @@ class Brand_dao extends Base_dao {
                     GROUP BY bn.id
                 ) AS srn', 'b.id = srn.id', 'LEFT');
 
-        if ($where)
-        {
+        if ($where) {
             $this->db->where($where);
         }
 
 
-        if (empty($option["orderby"]))
-        {
+        if (empty($option["orderby"])) {
             $option["orderby"] = "b.brand_name ASC";
         }
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
 
             $this->include_dto($classname);
 
@@ -61,42 +64,31 @@ class Brand_dao extends Base_dao {
 
             $this->db->order_by($option["orderby"]);
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -105,7 +97,7 @@ class Brand_dao extends Base_dao {
     }
 
 
-    public function get_brand_list_w_src_reg($where=array(), $option=array(), $classname="Brand_w_region_dto")
+    public function get_brand_list_w_src_reg($where = array(), $option = array(), $classname = "Brand_w_region_dto")
     {
 
         $this->db->from('brand AS b');
@@ -119,13 +111,11 @@ class Brand_dao extends Base_dao {
 
         $this->db->where($where);
 
-        if (empty($option["orderby"]))
-        {
+        if (empty($option["orderby"])) {
             $option["orderby"] = "b.brand_name ASC";
         }
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
 
             $this->include_dto($classname);
 
@@ -133,49 +123,35 @@ class Brand_dao extends Base_dao {
 
             $this->db->order_by($option["orderby"]);
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                if ($option["limit"] == 1)
-                {
+                if ($option["limit"] == 1) {
                     return $rs[0];
-                }
-                else
-                {
-                    return (object) $rs;
+                } else {
+                    return (object)$rs;
                 }
             }
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -185,8 +161,7 @@ class Brand_dao extends Base_dao {
 
     public function get_listed_brand_by_cat($cat_id = '')
     {
-        if (empty($cat_id))
-        {
+        if (empty($cat_id)) {
             return array();
         }
 
@@ -199,8 +174,7 @@ class Brand_dao extends Base_dao {
 
         $result = $this->db->query($sql, $cat_id);
 
-        if (!$result)
-        {
+        if (!$result) {
             return array();
         }
 
@@ -213,23 +187,19 @@ class Brand_dao extends Base_dao {
         $this->db->from("product AS p");
         $this->db->join("brand AS br", "br.id = p.brand_id", "INNER");
 
-        if($option['groupby'])
-        {
+        if ($option['groupby']) {
             $this->db->group_by($option['groupby']);
         }
-        if($option['orderby'])
-        {
+        if ($option['orderby']) {
             $this->db->order_by($option['orderby']);
         }
         $this->db->where($where);
 
-        if($query = $this->db->get())
-        {
+        if ($query = $this->db->get()) {
             $ret = array();
             $array = $query->result_array();
-            foreach($array as $row)
-            {
-                $ret[] = array("id"=>$row["id"], "name"=>$row["brand_name"], "total"=>$row['total']);
+            foreach ($array as $row) {
+                $ret[] = array("id" => $row["id"], "name" => $row["brand_name"], "total" => $row['total']);
             }
             return $ret;
         }

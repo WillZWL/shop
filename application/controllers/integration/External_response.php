@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 DEFINE ('ALLOW_REDIRECT_DOMAIN', 1);
+
 class External_response extends PUB_Controller
 {
     // this is for external parties

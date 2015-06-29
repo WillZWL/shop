@@ -132,4 +132,5 @@ class Courier_region_vo extends Base_vo
     }
 
 }
+
 ?>

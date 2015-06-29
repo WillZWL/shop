@@ -1,4 +1,5 @@
 <?php
+
 class Product_overview_model extends CI_Model
 {
     private $tool_path;
@@ -9,8 +10,7 @@ class Product_overview_model extends CI_Model
         $this->tool_path = $tool_path;
         $this->load->library('service/product_service');
         $this->load->library('service/price_extend_service');
-        if (is_null($platform_type) && defined('PLATFORM_TYPE'))
-        {
+        if (is_null($platform_type) && defined('PLATFORM_TYPE')) {
             $platform_type = PLATFORM_TYPE;
         }
         $this->init_price_service($platform_type);
@@ -18,77 +18,74 @@ class Product_overview_model extends CI_Model
 
     public function init_price_service($platform_type)
     {
-        if (is_null($platform_type))
-        {
-            include_once APPPATH."libraries/service/Price_service.php";
+        if (is_null($platform_type)) {
+            include_once APPPATH . "libraries/service/Price_service.php";
             $this->price_service = new Price_service();
-        }
-        else
-        {
-            $filename = "price_".strtolower($platform_type)."_service";
+        } else {
+            $filename = "price_" . strtolower($platform_type) . "_service";
             $classname = ucfirst($filename);
-            include_once APPPATH."libraries/service/{$filename}.php";
+            include_once APPPATH . "libraries/service/{$filename}.php";
             $this->price_service = new $classname();
         }
     }
 
-    public function get_product_list($where=array(), $option=array(), $lang=array())
+    public function get_product_list($where = array(), $option = array(), $lang = array())
     {
         return $this->price_service->get_product_overview_tr($where, $option, "Product_cost_dto", $lang);
     }
 
-    public function get_product_list_v2($where=array(), $option=array(), $lang=array())
+    public function get_product_list_v2($where = array(), $option = array(), $lang = array())
     {
         // optimized
         return $this->price_service->get_product_overview_tr_v2($where, $option, "Product_cost_dto", $lang);
     }
 
-    public function get_product_list_total($where=array(),$option=array())
+    public function get_product_list_total($where = array(), $option = array())
     {
-        return $this->price_service->get_product_overview($where, array_merge($option,array("num_rows"=>1)));
+        return $this->price_service->get_product_overview($where, array_merge($option, array("num_rows" => 1)));
     }
 
-    public function get_product_list_total_v2($where=array(),$option=array())
+    public function get_product_list_total_v2($where = array(), $option = array())
     {
         // optimized
-        return $this->price_service->get_product_overview_v2($where, array_merge($option,array("num_rows"=>1)));
+        return $this->price_service->get_product_overview_v2($where, array_merge($option, array("num_rows" => 1)));
     }
 
-    public function get_product_overview($where=array(),$option=array())
+    public function get_product_overview($where = array(), $option = array())
     {
-        return $this->price_service->get_product_overview($where, array_merge($option,array("limit"=>-1)));
+        return $this->price_service->get_product_overview($where, array_merge($option, array("limit" => -1)));
     }
 
-    public function get_product_overview_v2($where=array(),$option=array())
+    public function get_product_overview_v2($where = array(), $option = array())
     {
-        return $this->price_service->get_product_overview_v2($where, array_merge($option,array("limit"=>-1)));
+        return $this->price_service->get_product_overview_v2($where, array_merge($option, array("limit" => -1)));
     }
 
-    public function get_list($service, $where=array(), $option=array())
+    public function get_list($service, $where = array(), $option = array())
     {
-        $service = $service."_service";
+        $service = $service . "_service";
         return $this->$service->get_list($where, $option);
     }
 
-    public function get($service, $where=array())
+    public function get($service, $where = array())
     {
-        $service = $service."_service";
+        $service = $service . "_service";
         return $this->$service->get($where);
     }
 
-    public function get_price($where=array())
+    public function get_price($where = array())
     {
         return $this->price_service->get($where);
     }
 
-    public function get_price_ext($where=array())
+    public function get_price_ext($where = array())
     {
         return $this->price_extend_service->get($where);
     }
 
     public function update($service, $obj)
     {
-        $service = $service."_service";
+        $service = $service . "_service";
         return $this->$service->update($obj);
     }
 
@@ -104,19 +101,19 @@ class Product_overview_model extends CI_Model
 
     public function include_vo($service)
     {
-        $service = $service."_service";
+        $service = $service . "_service";
         return $this->$service->include_vo();
     }
 
     public function include_dto($service, $dto)
     {
-        $service = $service."_service";
+        $service = $service . "_service";
         return $this->$service->include_dto($dto);
     }
 
     public function add($service, $obj)
     {
-        $service = $service."_service";
+        $service = $service . "_service";
         return $this->$service->insert($obj);
     }
 
@@ -309,6 +306,7 @@ class Product_overview_model extends CI_Model
         echo $js;
     }
 }
+
 /* End of file brand_model.php */
 /* Location: ./system/application/models/brand_model.php */
 ?>

@@ -1,5 +1,6 @@
 <?php
-include_once (CTRLPATH . '../models/cache/cache_model.php');
+include_once(CTRLPATH . '../models/cache/cache_model.php');
+
 class Db_cache_model extends Cache_model
 {
     public function __construct()

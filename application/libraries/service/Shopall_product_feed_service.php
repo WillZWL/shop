@@ -17,22 +17,11 @@ class Shopall_product_feed_service extends Data_feed_service
         $this->set_output_delimiter("\t");
     }
 
-    public function get_price_srv()
-    {
-        return $this->price_srv;
-    }
-
-    public function set_price_srv(Base_service $srv)
-    {
-        $this->price_srv = $srv;
-    }
-
     public function gen_data_feed($platform_id, $explain_sku = "")
     {
         define('DATAPATH', $this->get_config_srv()->value_of("data_path"));
 
-        switch ($platform_id)
-        {
+        switch ($platform_id) {
             case 'WEBES':
                 $country_id = 'ES';
                 break;
@@ -47,43 +36,27 @@ class Shopall_product_feed_service extends Data_feed_service
         }
 
         $data_feed = $this->get_data_feed(TRUE, $platform_id, $explain_sku);
-        if($data_feed)
-        {
+        if ($data_feed) {
             $filename = 'valuebasket_shopall_' . "$platform_id" . '.txt';
             $remotefilename = strtolower('/valuebasket_shopall_' . "$country_id" . '.txt');
             $fp = fopen(DATAPATH . "feeds/shopall/$platform_id/" . $filename, 'w');
 
-            if(fwrite($fp, $data_feed))
-            {
-                $this->ftp_feeds(DATAPATH . "feeds/shopall/$platform_id/".$filename, $remotefilename, $this->get_ftp_name()."_$country_id");
+            if (fwrite($fp, $data_feed)) {
+                $this->ftp_feeds(DATAPATH . "feeds/shopall/$platform_id/" . $filename, $remotefilename, $this->get_ftp_name() . "_$country_id");
 
-                if ($explain_sku == "")
-                {
+                if ($explain_sku == "") {
                     header("Content-type: text/csv");
                     header("Cache-Control: no-store, no-cache");
                     header("Content-Disposition: attachment; filename=\"$filename\"");
                     echo $data_feed;
                 }
-            }
-            else
-            {
+            } else {
                 $subject = "<DO NOT REPLY> Fails to create Comparer Product Feed File";
-                $message ="FILE: ".__FILE__."<br>
-                             LINE: ".__LINE__;
+                $message = "FILE: " . __FILE__ . "<br>
+                             LINE: " . __LINE__;
                 $this->error_handler($subject, $message);
             }
         }
-    }
-
-    protected function get_data_list($where = array(), $option = array())
-    {
-        // return $this->get_prod_srv()->get_shopall_product_feed_dto(array(), array('limit'=>-1), "WEBES");
-        return "";
-    }
-
-    public function get_data_list_w_platform($where = array(), $option = array(), $platform_id = "WEBES")
-    {
-        return $this->get_prod_srv()->get_shopall_product_feed_dto(array(), array('limit'=>-1), $platform_id);
     }
 
     public function get_data_feed($first_line_headling = TRUE, $platform_id = "WEBES", $explain_sku)
@@ -95,8 +68,7 @@ class Shopall_product_feed_service extends Data_feed_service
         $affiliate_id = $this->get_affiliate_id_prefix() . $platform_id;
         $override = $this->affiliate_sku_platform_service->get_sku_feed_list($affiliate_id);
 
-        switch ($platform_id)
-        {
+        switch ($platform_id) {
             // country specific processing to be done here
             case "WEBES":
             case "WEBPT":
@@ -105,25 +77,25 @@ class Shopall_product_feed_service extends Data_feed_service
         }
     }
 
+    protected function get_affiliate_id_prefix()
+    {
+        return "SHA";
+    }
 
-    // SBF #3549 group 1 is ES, PT
     private function get_data_feed_group_1($first_line_headling = TRUE, $platform_id, $explain_sku, $override = null)
     {
         //this is grouped by business logic regarding price & margin
 
         $list = $this->get_data_list_w_platform(array(), array(), $platform_id);
 
-        if (!$list)
-        {
+        if (!$list) {
             return;
         }
 
         $new_list = array();
-        foreach ($list as $row)
-        {
+        foreach ($list as $row) {
             // $this->get_price_srv()->calculate_profit($row);
-            if($res = $this->process_data_row($row))
-            {
+            if ($res = $this->process_data_row($row)) {
                 $profit_margin = $this->get_margin($platform_id, $res->get_sku(), $res->get_price());
 
                 $selected = "not added to output";
@@ -133,16 +105,14 @@ class Shopall_product_feed_service extends Data_feed_service
                     (($res->get_price() >= 100) && ($res->get_price() < 400) && ($profit_margin >= 9)) ||
                     (($res->get_price() >= 400) && ($res->get_price() < 800) && ($profit_margin >= 8.5)) ||
                     (($res->get_price() >= 800) && ($res->get_price() < 1200) && ($profit_margin >= 8)) ||
-                    (($res->get_price() >= 1200) && ($profit_margin >= 7)))
-                {
+                    (($res->get_price() >= 1200) && ($profit_margin >= 7))
+                ) {
                     $add = true;
                     $selected = "added to output";
                 }
 
-                if ($override != null)
-                {
-                    switch($override[$row->get_platform_id()][$row->get_sku()])
-                    {
+                if ($override != null) {
+                    switch ($override[$row->get_platform_id()][$row->get_sku()]) {
                         case 1: # exclude
                             $add = false;
                             $selected = "always exclude";
@@ -155,17 +125,14 @@ class Shopall_product_feed_service extends Data_feed_service
                     }
                 }
 
-                if ($add)
-                {
+                if ($add) {
                     $rrp = $this->get_price_srv()->calc_website_product_rrp($res->get_price(), $res->get_fixed_rrp(), $res->get_rrp_factor());
                     $res->set_rrp($rrp);
                     $new_list[] = $res;
                 }
 
-                if ($explain_sku != "")
-                {
-                    if (strtoupper($res->get_sku()) == strtoupper($explain_sku))
-                    {
+                if ($explain_sku != "") {
+                    if (strtoupper($res->get_sku()) == strtoupper($explain_sku)) {
                         var_dump("$explain_sku $selected");
                         echo "<pre>";
                         var_dump($res);
@@ -177,12 +144,46 @@ class Shopall_product_feed_service extends Data_feed_service
         return $content;
     }
 
+    public function get_data_list_w_platform($where = array(), $option = array(), $platform_id = "WEBES")
+    {
+        return $this->get_prod_srv()->get_shopall_product_feed_dto(array(), array('limit' => -1), $platform_id);
+    }
+
     private function get_margin($country, $sku, $price)
     {
-        $json          = $this->price_srv->get_profit_margin_json($country, $sku, $price);
-        $arr           = json_decode($json, true);
+        $json = $this->price_srv->get_profit_margin_json($country, $sku, $price);
+        $arr = json_decode($json, true);
 
         return $arr["get_margin"];
+    }
+
+
+    // SBF #3549 group 1 is ES, PT
+
+    public function get_price_srv()
+    {
+        return $this->price_srv;
+    }
+
+    public function set_price_srv(Base_service $srv)
+    {
+        $this->price_srv = $srv;
+    }
+
+    protected function get_ftp_name()
+    {
+        return 'SHOPALL';
+    }
+
+    public function get_contact_email()
+    {
+        return 'shing-alert@eservicesgroup.com';
+    }
+
+    protected function get_data_list($where = array(), $option = array())
+    {
+        // return $this->get_prod_srv()->get_shopall_product_feed_dto(array(), array('limit'=>-1), "WEBES");
+        return "";
     }
 
     protected function get_default_vo2xml_mapping()
@@ -195,16 +196,6 @@ class Shopall_product_feed_service extends Data_feed_service
         return APPPATH . 'data/shopall_product_feed_xml2csv.txt';
     }
 
-    public function get_contact_email()
-    {
-        return 'shing-alert@eservicesgroup.com';
-    }
-
-    protected function get_ftp_name()
-    {
-        return 'SHOPALL';
-    }
-
     protected function get_sj_id()
     {
         return "SHOPALL_PRODUCT_FEED";
@@ -213,11 +204,6 @@ class Shopall_product_feed_service extends Data_feed_service
     protected function get_sj_name()
     {
         return "Shopall Product Feed Cron Time";
-    }
-
-    protected function get_affiliate_id_prefix()
-    {
-        return "SHA";
     }
 }
 

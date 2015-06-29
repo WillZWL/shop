@@ -240,4 +240,5 @@ class Interface_flex_refund_vo extends Base_vo
     }
 
 }
+
 ?>

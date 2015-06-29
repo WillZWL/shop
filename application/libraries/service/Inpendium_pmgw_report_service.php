@@ -27,12 +27,9 @@ class Inpendium_pmgw_report_service extends Pmgw_report_service
 
     public function is_ria_record($dto_obj)
     {
-        if (($dto_obj->get_payment_type() == "DB") && ($dto_obj->get_status_code() == "90"))
-        {
+        if (($dto_obj->get_payment_type() == "DB") && ($dto_obj->get_status_code() == "90")) {
             return TRUE;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
@@ -45,12 +42,9 @@ class Inpendium_pmgw_report_service extends Pmgw_report_service
     public function is_refund_record($dto_obj)
     {
         //error_log("refund");
-        if (($dto_obj->get_payment_type() == "RF") && ($dto_obj->get_status_code() == "90"))
-        {
+        if (($dto_obj->get_payment_type() == "RF") && ($dto_obj->get_status_code() == "90")) {
             return 'R';
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
@@ -71,6 +65,31 @@ class Inpendium_pmgw_report_service extends Pmgw_report_service
         return 'nero-alert@eservicesgroup.com';
     }
 
+    public function after_insert_all_interface($batch_id)
+    {
+        return FALSE;
+    }
+
+    public function valid_txn_id($interface_obj)
+    {
+        return true;
+    }
+
+    public function insert_so_fee_from_refund_record($batch_id, $status, $dto_obj)
+    {
+        return false;
+    }
+
+    public function insert_so_fee_from_ria_record($batch_id, $status, $dto_obj)
+    {
+        return false;
+    }
+
+    public function insert_so_fee_from_rolling_reserve_record($batch_id, $status, $dto_obj)
+    {
+        return false;
+    }
+
     protected function insert_interface_flex_ria($batch_id, $status, $dto_obj)
     {
         if ($dto_obj->get_credit())
@@ -79,6 +98,48 @@ class Inpendium_pmgw_report_service extends Pmgw_report_service
         $this->reform_data($dto_obj);
 
         $ifr_obj = $this->create_interface_flex_ria($batch_id, $status, $dto_obj, false);
+    }
+
+    public function reform_data($dto)
+    {
+        // txn_id is a string like 128702 or 128702-314628
+        $txn_id = $dto->get_transaction_id();
+        //var_dump($dto);die();
+        $temp_arr = explode("-", $txn_id);
+
+        if (array_key_exists(1, $temp_arr)) {
+            $so_no = $temp_arr[1];
+            $dto->set_so_no($so_no);
+        }
+
+        //as a fall back if cannot the the so_no from the report directly,
+
+        if (!$dto->get_so_no()) {
+            if ($txn_id = $dto->get_unique_id()) {
+                if ($so_obj = $this->get_so_dao()->get(array("trim(txn_id)" => $txn_id))) {
+                    $dto->set_so_no($so_obj->get_so_no());
+                }
+            }
+        }
+
+        $dto->set_txn_id($dto->get_unique_id());
+        $dto->set_internal_txn_id($dto->get_transaction_id());
+        $dto->set_ref_txn_id($dto->get_unique_id());
+
+        $date_w_time = trim($dto->get_request_timestamp());
+
+        //system php version not support DateTime::createFromFormat
+        //2013-10-31 18:21:27
+        //31-10-13 23:15
+        if (preg_match("/(([0-9]{2,4})-([0-9]{2})-([0-9]{2}))\s{1}((\d*)\:(\d*)(\:(\d*))*)*/", $date_w_time, $matches)) {
+            if (preg_match("/\d{4}/", $matches[2])) {
+                $value = $matches[1] . " " . $matches[5];
+            } elseif (preg_match("/\d{2}/", $matches[2])) {
+                $value = '20' . $matches[4] . '-' . $matches[3] . '-' . $matches[2] . " " . $matches[5];
+            }
+        }
+
+        $dto->set_date($value);
     }
 
     protected function insert_interface_flex_refund($batch_id, $status, $dto_obj)
@@ -103,82 +164,6 @@ class Inpendium_pmgw_report_service extends Pmgw_report_service
     protected function insert_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
     {
         return FALSE;
-    }
-
-
-    public function after_insert_all_interface($batch_id)
-    {
-        return FALSE;
-    }
-
-    public function valid_txn_id($interface_obj)
-    {
-        return true;
-    }
-
-    public function reform_data($dto)
-    {
-        // txn_id is a string like 128702 or 128702-314628
-        $txn_id = $dto->get_transaction_id();
-        //var_dump($dto);die();
-        $temp_arr = explode("-", $txn_id);
-
-        if(array_key_exists(1,$temp_arr))
-        {
-            $so_no = $temp_arr[1];
-            $dto->set_so_no($so_no);
-        }
-
-        //as a fall back if cannot the the so_no from the report directly,
-
-        if(!$dto->get_so_no())
-        {
-            if($txn_id = $dto->get_unique_id())
-            {
-                if($so_obj = $this->get_so_dao()->get(array("trim(txn_id)"=>$txn_id)))
-                {
-                    $dto->set_so_no($so_obj->get_so_no());
-                }
-            }
-        }
-
-        $dto->set_txn_id($dto->get_unique_id());
-        $dto->set_internal_txn_id($dto->get_transaction_id());
-        $dto->set_ref_txn_id($dto->get_unique_id());
-
-        $date_w_time = trim($dto->get_request_timestamp());
-
-        //system php version not support DateTime::createFromFormat
-        //2013-10-31 18:21:27
-        //31-10-13 23:15
-    if(preg_match("/(([0-9]{2,4})-([0-9]{2})-([0-9]{2}))\s{1}((\d*)\:(\d*)(\:(\d*))*)*/", $date_w_time, $matches))
-    {
-        if(preg_match("/\d{4}/", $matches[2]))
-        {
-            $value = $matches[1] . " " . $matches[5];
-        }
-        elseif(preg_match("/\d{2}/", $matches[2]))
-        {
-            $value = '20'.$matches[4] . '-' . $matches[3] . '-'. $matches[2] . " " . $matches[5];
-        }
-    }
-
-        $dto->set_date($value);
-    }
-
-    public function insert_so_fee_from_refund_record($batch_id, $status, $dto_obj)
-    {
-        return false;
-    }
-
-    public function insert_so_fee_from_ria_record($batch_id, $status, $dto_obj)
-    {
-        return false;
-    }
-
-    public function insert_so_fee_from_rolling_reserve_record($batch_id, $status, $dto_obj)
-    {
-        return false;
     }
 }
 

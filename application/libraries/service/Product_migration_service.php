@@ -11,16 +11,31 @@ class Product_migration_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Product_migrate_dao.php");
+        include_once(APPPATH . "libraries/dao/Product_migrate_dao.php");
         $this->set_dao(new Product_migrate_dao());
-        include_once(APPPATH."libraries/dao/Product_content_dao.php");
+        include_once(APPPATH . "libraries/dao/Product_content_dao.php");
         $this->set_pc_dao(new Product_content_dao());
-        include_once(APPPATH."libraries/dao/Category_dao.php");
+        include_once(APPPATH . "libraries/dao/Category_dao.php");
         $this->set_cat_dao(new Category_dao());
-        include_once(APPPATH."libraries/dao/Sourcing_list_dao.php");
+        include_once(APPPATH . "libraries/dao/Sourcing_list_dao.php");
         $this->set_sl_dao(new Sourcing_list_dao());
         include_once(APPPATH . 'libraries/service/Class_factory_service.php');
         $this->set_class_factory_service(new Class_factory_service());
+    }
+
+    public function set_cat_dao(Base_dao $dao)
+    {
+        $this->cat_dao = $dao;
+    }
+
+    public function set_sl_dao(Base_dao $dao)
+    {
+        $this->sl_dao = $dao;
+    }
+
+    public function set_class_factory_service($serv)
+    {
+        $this->class_factory_service = $serv;
     }
 
     public function get_pc_dao()
@@ -33,11 +48,6 @@ class Product_migration_service extends Base_service
         $this->pc_dao = $dao;
     }
 
-    public function set_class_factory_service($serv)
-    {
-        $this->class_factory_service = $serv;
-    }
-
     public function get_class_factory_service()
     {
         return $this->class_factory_service;
@@ -48,19 +58,9 @@ class Product_migration_service extends Base_service
         return $this->cat_dao;
     }
 
-    public function set_cat_dao(Base_dao $dao)
-    {
-        $this->cat_dao = $dao;
-    }
-
     public function get_sl_dao()
     {
         return $this->sl_dao;
-    }
-
-    public function set_sl_dao(Base_dao $dao)
-    {
-        $this->sl_dao = $dao;
     }
 
     public function migrate_image()
@@ -74,10 +74,9 @@ class Product_migration_service extends Base_service
         $img_size_list = array(200, 70, 40);
         $img_size_char_list = array('_l', '_m', '_s');
 
-        $count=0;
+        $count = 0;
 
-        foreach ($array as $row)
-        {
+        foreach ($array as $row) {
 //if ($count++ > 10) break;
 
             $file = $row['file'];
@@ -87,16 +86,11 @@ class Product_migration_service extends Base_service
             $real_file = '';
 
 
-            if (is_file($search_file))
-            {
+            if (is_file($search_file)) {
                 $real_file = $search_file;
-            }
-            else if (is_file($search_file2))
-            {
+            } else if (is_file($search_file2)) {
                 $real_file = $search_file2;
-            }
-            else
-            {
+            } else {
                 echo "$sku HAS NO IMAGE!!!! <BR>";
                 continue;
             }
@@ -106,8 +100,7 @@ class Product_migration_service extends Base_service
 
             $ext = strtolower(substr(strrchr($real_file, '.'), 1));
             $dest_file = $IMG_PH . $sku . '.' . $ext;
-            if (!copy($real_file, $dest_file))
-            {
+            if (!copy($real_file, $dest_file)) {
                 echo "$sku copy image fail! <BR>";
                 continue;
             }
@@ -116,36 +109,28 @@ class Product_migration_service extends Base_service
             $size = 40;
             $mid_char = 'x';
 
-            if ($pic_info[0] >= 400)
-            {
+            if ($pic_info[0] >= 400) {
                 $size = 400;
-            }
-            else if ($pic_info[0] >= 200)
-            {
+            } else if ($pic_info[0] >= 200) {
                 $size = 200;
-            }
-            else if ($pic_info[0] >= 70)
-            {
+            } else if ($pic_info[0] >= 70) {
                 $size = 70;
             }
 
-            watermark($IMG_PH.$sku.".".$ext, "/var/www/html/valuebasket.com/admincentre/images/watermark{$size}{$mid_char}{$size}.png", "M", "C", "", "#000000");
+            watermark($IMG_PH . $sku . "." . $ext, "/var/www/html/valuebasket.com/admincentre/images/watermark{$size}{$mid_char}{$size}.png", "M", "C", "", "#000000");
 
             $i = 0;
 
-            foreach ($img_size_list as $img_size)
-            {
-                if ($size > $img_size)
-                {
-                    thumbnail($IMG_PH.$sku.".".$ext, $img_size_list[$i], $img_size_list[$i], $IMG_PH.$sku.$img_size_char_list[$i].'.'.$ext);
+            foreach ($img_size_list as $img_size) {
+                if ($size > $img_size) {
+                    thumbnail($IMG_PH . $sku . "." . $ext, $img_size_list[$i], $img_size_list[$i], $IMG_PH . $sku . $img_size_char_list[$i] . '.' . $ext);
                 }
 
                 $i++;
             }
 
-            if ($size < 400)
-            {
-                @unlink($IMG_PH.$sku.".".$ext);
+            if ($size < 400) {
+                @unlink($IMG_PH . $sku . "." . $ext);
             }
 
             $this->get_dao()->update_image($sku, $ext);

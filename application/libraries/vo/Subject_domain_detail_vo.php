@@ -144,4 +144,5 @@ class Subject_domain_detail_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -10,7 +10,7 @@ class Rpt_dispatch_service extends Rpt_sales_service
         parent::Rpt_sales_service();
     }
 
-    public function get_data($from_date='', $to_date='', $where = array())
+    public function get_data($from_date = '', $to_date = '', $where = array())
     {
         /*
         if (check_finance_role())
@@ -30,8 +30,8 @@ class Rpt_dispatch_service extends Rpt_sales_service
         $dispatch_string = "so.finance_dispatch_date";
         $where['so.status >='] = 5;
 
-        $where[$dispatch_string." between '".$from_date."' and '". $to_date."'"] = null;
-        $arr = $this->get_so_service()->get_confirmed_so($where, $from_date, $to_date, $is_light_version = false, $dispatch_report=true);
+        $where[$dispatch_string . " between '" . $from_date . "' and '" . $to_date . "'"] = null;
+        $arr = $this->get_so_service()->get_confirmed_so($where, $from_date, $to_date, $is_light_version = false, $dispatch_report = true);
         $data = $this->process_data_row($arr);
 
         return $data;

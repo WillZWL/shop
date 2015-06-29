@@ -10,6 +10,48 @@ class Fnac_pmgw_report_service extends Pmgw_report_service
         parent::__construct();
     }
 
+    public function get_contact_email()
+    {
+        return 'handy.hon@eservicesgroup.com';
+    }
+
+    public function insert_so_fee_from_refund_record($batch_id, $status, $dto_obj)
+    {
+    }
+
+    public function insert_so_fee_from_ria_record($batch_id, $status, $dto_obj)
+    {
+    }
+
+    public function insert_so_fee_from_rolling_reserve_record($batch_id, $status, $dto_obj)
+    {
+    }
+
+    public function is_ria_include_so_fee()
+    {
+        return false;
+    }
+
+    public function is_refund_include_so_fee()
+    {
+        return false;
+    }
+
+    public function is_so_fee_record($dto_obj)
+    {
+        return false;
+    }
+
+    public function is_rolling_reserve_record($dto_obj)
+    {
+        return false;
+    }
+
+    public function is_gateway_fee_record($dto_obj)
+    {
+        return false;
+    }
+
     protected function insert_interface($batch_id, $dto_obj)
     {
         if ($this->is_ria_record($dto_obj)) {
@@ -19,16 +61,6 @@ class Fnac_pmgw_report_service extends Pmgw_report_service
         }
     }
 
-    public function get_contact_email()
-    {
-        return 'handy.hon@eservicesgroup.com';
-    }
-
-    protected function get_pmgw()
-    {
-        return "fnac";
-    }
-
     public function is_ria_record($dto_obj)
     {
         if ($dto_obj->get_type() == "Pedido") {
@@ -36,20 +68,6 @@ class Fnac_pmgw_report_service extends Pmgw_report_service
         }
 
         return false;
-    }
-
-    public function is_refund_record($dto_obj)
-    {
-        if ($dto_obj->get_type() == 'Reembolso') {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function is_ria_include_psp_fee()
-    {
-        return true;
     }
 
     protected function insert_interface_flex_ria($batch_id, $status, $dto_obj)
@@ -65,48 +83,29 @@ class Fnac_pmgw_report_service extends Pmgw_report_service
         $this->create_interface_flex_ria($batch_id, $status, $dto_obj, $include_psp_fee);
     }
 
-    protected function insert_interface_flex_so_fee($batch_id, $status, $dto_obj)
+    private function _set_format_data($dto_obj)
     {
-    }
+        $date = date("Y-m-d H:i:s", strtotime(str_replace('/', '-', $dto_obj->get_date())));
+        $dto_obj->set_date($date);
 
-    protected function insert_interface_flex_refund($batch_id, $status, $dto_obj)
-    {
-        $this->_set_format_data($dto_obj);
-
-        if ($this->is_ria_include_psp_fee()) {
-            $include_psp_fee = true;
-        } else {
-            $include_psp_fee = false;
+        if ($dto_obj->get_amount()) {
+            $dto_obj->set_amount(abs(ereg_replace(",", "", $dto_obj->get_amount())));
         }
 
-        $this->create_interface_flex_refund($batch_id, $status, $dto_obj, $include_psp_fee);
+        if ($dto_obj->get_commission()) {
+            $dto_obj->set_commission(ereg_replace(",", "", $dto_obj->get_commission()));
+        }
+
+        if (!$dto_obj->get_so_no() && $dto_obj->get_txn_id()) {
+            if ($so_obj = $this->get_so_obj(array("txn_id" => $dto_obj->get_txn_id()))) {
+                $dto_obj->set_so_no($so_obj->get_so_no());
+            }
+        }
     }
 
-    protected function insert_interface_flex_rolling_reserve($batch_id, $status, $dto_obj)
-    {
-
-    }
-
-    protected function insert_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
-    {
-        return $this->create_interface_flex_gateway_fee($batch_id, $status, $dto_obj);
-    }
-
-    protected function after_insert_all_interface($batch_id)
+    public function is_ria_include_psp_fee()
     {
         return true;
-    }
-
-    public function insert_so_fee_from_refund_record($batch_id, $status, $dto_obj)
-    {
-    }
-
-    public function insert_so_fee_from_ria_record($batch_id, $status, $dto_obj)
-    {
-    }
-
-    public function insert_so_fee_from_rolling_reserve_record($batch_id, $status, $dto_obj)
-    {
     }
 
     protected function create_interface_flex_ria($batch_id, $status, $dto_obj, $include_psp_fee = false)
@@ -141,6 +140,56 @@ class Fnac_pmgw_report_service extends Pmgw_report_service
         return $ifr_obj;
     }
 
+    protected function get_pmgw()
+    {
+        return "fnac";
+    }
+
+    protected function insert_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
+    {
+        return $this->create_interface_flex_gateway_fee($batch_id, $status, $dto_obj);
+    }
+
+    public function create_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
+    {
+        $ifgf_dao = $this->get_ifgf_dao();
+        $ifgf_obj = $ifgf_dao->get();
+
+        $ifgf_obj->set_flex_batch_id($batch_id);
+        $ifgf_obj->set_gateway_id($this->get_pmgw());
+        $ifgf_obj->set_txn_id($dto_obj->get_txn_id());
+        $ifgf_obj->set_txn_time($dto_obj->get_date());
+        $ifgf_obj->set_currency_id($dto_obj->get_currency_id());
+        $ifgf_obj->set_amount($dto_obj->get_commission()); // commission
+        $ifgf_obj->set_status($status);
+        $ifgf_obj->set_batch_status("N");
+        $result = $ifgf_dao->insert($ifgf_obj);
+
+        return $result;
+    }
+
+    public function is_refund_record($dto_obj)
+    {
+        if ($dto_obj->get_type() == 'Reembolso') {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function insert_interface_flex_refund($batch_id, $status, $dto_obj)
+    {
+        $this->_set_format_data($dto_obj);
+
+        if ($this->is_ria_include_psp_fee()) {
+            $include_psp_fee = true;
+        } else {
+            $include_psp_fee = false;
+        }
+
+        $this->create_interface_flex_refund($batch_id, $status, $dto_obj, $include_psp_fee);
+    }
+
     protected function create_interface_flex_refund($batch_id, $status, $dto_obj, $include_psp_fee = false)
     {
         $ifrf_dao = $this->get_ifrf_dao();
@@ -170,67 +219,18 @@ class Fnac_pmgw_report_service extends Pmgw_report_service
         }
     }
 
-    public function create_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
+    protected function insert_interface_flex_so_fee($batch_id, $status, $dto_obj)
     {
-        $ifgf_dao = $this->get_ifgf_dao();
-        $ifgf_obj = $ifgf_dao->get();
-
-        $ifgf_obj->set_flex_batch_id($batch_id);
-        $ifgf_obj->set_gateway_id($this->get_pmgw());
-        $ifgf_obj->set_txn_id($dto_obj->get_txn_id());
-        $ifgf_obj->set_txn_time($dto_obj->get_date());
-        $ifgf_obj->set_currency_id($dto_obj->get_currency_id());
-        $ifgf_obj->set_amount($dto_obj->get_commission()); // commission
-        $ifgf_obj->set_status($status);
-        $ifgf_obj->set_batch_status("N");
-        $result = $ifgf_dao->insert($ifgf_obj);
-
-        return $result;
     }
 
-    private function _set_format_data($dto_obj)
+    protected function insert_interface_flex_rolling_reserve($batch_id, $status, $dto_obj)
     {
-        $date = date("Y-m-d H:i:s", strtotime(str_replace('/', '-', $dto_obj->get_date())));
-        $dto_obj->set_date($date);
 
-        if ($dto_obj->get_amount()) {
-            $dto_obj->set_amount(abs(ereg_replace(",", "", $dto_obj->get_amount())));
-        }
-
-        if ($dto_obj->get_commission()) {
-            $dto_obj->set_commission(ereg_replace(",", "", $dto_obj->get_commission()));
-        }
-
-        if (!$dto_obj->get_so_no() && $dto_obj->get_txn_id()) {
-            if ($so_obj = $this->get_so_obj(array("txn_id" => $dto_obj->get_txn_id()))) {
-                $dto_obj->set_so_no($so_obj->get_so_no());
-            }
-        }
     }
 
-    public function is_ria_include_so_fee()
+    protected function after_insert_all_interface($batch_id)
     {
-        return false;
-    }
-
-    public function is_refund_include_so_fee()
-    {
-        return false;
-    }
-
-    public function is_so_fee_record($dto_obj)
-    {
-        return false;
-    }
-
-    public function is_rolling_reserve_record($dto_obj)
-    {
-        return false;
-    }
-
-    public function is_gateway_fee_record($dto_obj)
-    {
-        return false;
+        return true;
     }
 }
 

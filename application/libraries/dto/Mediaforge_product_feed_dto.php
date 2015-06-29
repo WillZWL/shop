@@ -387,5 +387,4 @@ class Mediaforge_product_feed_dto extends Base_dto
     }
 
 
-
 }

@@ -54,19 +54,14 @@ class Shipment_info_to_courier_dto extends Base_dto
         parent::__construct();
     }
 
-    public function set_platform_id($value)
-    {
-        $this->platform_id = $value;
-    }
-
     public function get_platform_id()
     {
         return $this->platform_id;
     }
 
-    public function set_sh_no($value)
+    public function set_platform_id($value)
     {
-        $this->sh_no = $value;
+        $this->platform_id = $value;
     }
 
     public function get_sh_no()
@@ -74,9 +69,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->sh_no;
     }
 
-    public function set_so_no($value)
+    public function set_sh_no($value)
     {
-        $this->so_no = $value;
+        $this->sh_no = $value;
     }
 
     public function get_so_no()
@@ -84,9 +79,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->so_no;
     }
 
-    public function set_platform_order_id($value)
+    public function set_so_no($value)
     {
-        $this->platform_order_id = $value;
+        $this->so_no = $value;
     }
 
     public function get_platform_order_id()
@@ -94,9 +89,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->platform_order_id;
     }
 
-    public function set_order_create_date($value)
+    public function set_platform_order_id($value)
     {
-        $this->order_create_date = $value;
+        $this->platform_order_id = $value;
     }
 
     public function get_order_create_date()
@@ -104,9 +99,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->order_create_date;
     }
 
-    public function set_bill_name($value)
+    public function set_order_create_date($value)
     {
-        $this->bill_name = $value;
+        $this->order_create_date = $value;
     }
 
     public function get_bill_name()
@@ -114,9 +109,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->bill_name;
     }
 
-    public function set_bill_company($value)
+    public function set_bill_name($value)
     {
-        $this->bill_company = $value;
+        $this->bill_name = $value;
     }
 
     public function get_bill_company()
@@ -124,9 +119,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->bill_company;
     }
 
-    public function set_bill_address($value)
+    public function set_bill_company($value)
     {
-        $this->bill_address = $value;
+        $this->bill_company = $value;
     }
 
     public function get_bill_address()
@@ -134,9 +129,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->bill_address;
     }
 
-    public function set_bill_postcode($value)
+    public function set_bill_address($value)
     {
-        $this->bill_postcode = $value;
+        $this->bill_address = $value;
     }
 
     public function get_bill_postcode()
@@ -144,9 +139,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->bill_postcode;
     }
 
-    public function set_bill_city($value)
+    public function set_bill_postcode($value)
     {
-        $this->bill_city = $value;
+        $this->bill_postcode = $value;
     }
 
     public function get_bill_city()
@@ -154,9 +149,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->bill_city;
     }
 
-    public function set_bill_state($value)
+    public function set_bill_city($value)
     {
-        $this->bill_state = $value;
+        $this->bill_city = $value;
     }
 
     public function get_bill_state()
@@ -164,9 +159,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->bill_state;
     }
 
-    public function set_bill_country_id($value)
+    public function set_bill_state($value)
     {
-        $this->bill_country_id = $value;
+        $this->bill_state = $value;
     }
 
     public function get_bill_country_id()
@@ -174,9 +169,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->bill_country_id;
     }
 
-    public function set_email($value)
+    public function set_bill_country_id($value)
     {
-        $this->email = $value;
+        $this->bill_country_id = $value;
     }
 
     public function get_email()
@@ -184,9 +179,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->email;
     }
 
-    public function set_tel($value)
+    public function set_email($value)
     {
-        $this->tel = $value;
+        $this->email = $value;
     }
 
     public function get_tel()
@@ -194,9 +189,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->tel;
     }
 
-    public function set_delivery_name($value)
+    public function set_tel($value)
     {
-        $this->delivery_name = $value;
+        $this->tel = $value;
     }
 
     public function get_delivery_name()
@@ -204,9 +199,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->delivery_name;
     }
 
-    public function set_delivery_company($value)
+    public function set_delivery_name($value)
     {
-        $this->delivery_company = $value;
+        $this->delivery_name = $value;
     }
 
     public function get_delivery_company()
@@ -214,9 +209,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->delivery_company;
     }
 
-    public function set_delivery_address($value)
+    public function set_delivery_company($value)
     {
-        $this->delivery_address = $value;
+        $this->delivery_company = $value;
     }
 
     public function get_delivery_address()
@@ -224,9 +219,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->delivery_address;
     }
 
-    public function set_delivery_postcode($value)
+    public function set_delivery_address($value)
     {
-        $this->delivery_postcode = $value;
+        $this->delivery_address = $value;
     }
 
     public function get_delivery_postcode()
@@ -234,9 +229,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->delivery_postcode;
     }
 
-    public function set_delivery_city($value)
+    public function set_delivery_postcode($value)
     {
-        $this->delivery_city = $value;
+        $this->delivery_postcode = $value;
     }
 
     public function get_delivery_city()
@@ -244,9 +239,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->delivery_city;
     }
 
-    public function set_delivery_state($value)
+    public function set_delivery_city($value)
     {
-        $this->delivery_state = $value;
+        $this->delivery_city = $value;
     }
 
     public function get_delivery_state()
@@ -254,9 +249,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->delivery_state;
     }
 
-    public function set_delivery_country_id($value)
+    public function set_delivery_state($value)
     {
-        $this->delivery_country_id = $value;
+        $this->delivery_state = $value;
     }
 
     public function get_delivery_country_id()
@@ -264,9 +259,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->delivery_country_id;
     }
 
-    public function set_line_no($value)
+    public function set_delivery_country_id($value)
     {
-        $this->line_no = $value;
+        $this->delivery_country_id = $value;
     }
 
     public function get_line_no()
@@ -274,9 +269,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->line_no;
     }
 
-    public function set_sku($value)
+    public function set_line_no($value)
     {
-        $this->sku = $value;
+        $this->line_no = $value;
     }
 
     public function get_sku()
@@ -284,9 +279,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->sku;
     }
 
-    public function set_prod_name($value)
+    public function set_sku($value)
     {
-        $this->prod_name = $value;
+        $this->sku = $value;
     }
 
     public function get_prod_name()
@@ -294,9 +289,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->prod_name;
     }
 
-    public function set_currency_id($value)
+    public function set_prod_name($value)
     {
-        $this->currency_id = $value;
+        $this->prod_name = $value;
     }
 
     public function get_currency_id()
@@ -304,9 +299,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->currency_id;
     }
 
-    public function set_unit_price($value)
+    public function set_currency_id($value)
     {
-        $this->unit_price = $value;
+        $this->currency_id = $value;
     }
 
     public function get_unit_price()
@@ -314,9 +309,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->unit_price;
     }
 
-    public function set_qty($value)
+    public function set_unit_price($value)
     {
-        $this->qty = $value;
+        $this->unit_price = $value;
     }
 
     public function get_qty()
@@ -324,9 +319,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->qty;
     }
 
-    public function set_delivery_charge($value)
+    public function set_qty($value)
     {
-        $this->delivery_charge = $value;
+        $this->qty = $value;
     }
 
     public function get_delivery_charge()
@@ -334,9 +329,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->delivery_charge;
     }
 
-    public function set_amount($value)
+    public function set_delivery_charge($value)
     {
-        $this->amount = $value;
+        $this->delivery_charge = $value;
     }
 
     public function get_amount()
@@ -344,9 +339,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->amount;
     }
 
-    public function set_delivery_type_id($value)
+    public function set_amount($value)
     {
-        $this->delivery_type_id = $value;
+        $this->amount = $value;
     }
 
     public function get_delivery_type_id()
@@ -354,9 +349,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->delivery_type_id;
     }
 
-    public function set_promotion_code($value)
+    public function set_delivery_type_id($value)
     {
-        $this->promotion_code = $value;
+        $this->delivery_type_id = $value;
     }
 
     public function get_promotion_code()
@@ -364,9 +359,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->promotion_code;
     }
 
-    public function set_bill_detail($value)
+    public function set_promotion_code($value)
     {
-        $this->bill_detail = $value;
+        $this->promotion_code = $value;
     }
 
     public function get_bill_detail()
@@ -374,9 +369,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->bill_detail;
     }
 
-    public function set_total_item_count($value)
+    public function set_bill_detail($value)
     {
-        $this->total_item_count = $value;
+        $this->bill_detail = $value;
     }
 
     public function get_total_item_count()
@@ -384,9 +379,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->total_item_count;
     }
 
-    public function set_item_no($value)
+    public function set_total_item_count($value)
     {
-        $this->item_no = $value;
+        $this->total_item_count = $value;
     }
 
     public function get_item_no()
@@ -394,9 +389,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->item_no;
     }
 
-    public function set_subtotal($value)
+    public function set_item_no($value)
     {
-        $this->subtotal = $value;
+        $this->item_no = $value;
     }
 
     public function get_subtotal()
@@ -404,9 +399,9 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->subtotal;
     }
 
-    public function set_ship_option($value)
+    public function set_subtotal($value)
     {
-        $this->ship_option = $value;
+        $this->subtotal = $value;
     }
 
     public function get_ship_option()
@@ -414,14 +409,19 @@ class Shipment_info_to_courier_dto extends Base_dto
         return $this->ship_option;
     }
 
-    public function set_actual_cost($value)
+    public function set_ship_option($value)
     {
-        $this->actual_cost = $value;
+        $this->ship_option = $value;
     }
 
     public function get_actual_cost()
     {
         return $this->actual_cost;
+    }
+
+    public function set_actual_cost($value)
+    {
+        $this->actual_cost = $value;
     }
 
     public function get_offline_fee()
@@ -495,4 +495,5 @@ class Shipment_info_to_courier_dto extends Base_dto
         $this->courier_id = $value;
     }
 }
+
 ?>

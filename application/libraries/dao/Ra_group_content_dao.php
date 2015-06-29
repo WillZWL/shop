@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Ra_group_content_dao extends Base_dao
 {
-    private $table_name="ra_group_content";
-    private $vo_classname="Ra_group_content_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "ra_group_content";
+    private $vo_classname = "Ra_group_content_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

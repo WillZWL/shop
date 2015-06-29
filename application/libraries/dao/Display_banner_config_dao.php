@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Display_banner_config_dao extends Base_dao
 {
-    private $table_name="display_banner_config";
-    private $vo_classname="Display_banner_config_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "display_banner_config";
+    private $vo_classname = "Display_banner_config_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -37,7 +37,7 @@ class Display_banner_config_dao extends Base_dao
     public function get_different_country_list($display_id, $lang_id)
     {
         $sql =
-        '
+            '
             SELECT DISTINCT dbc.country_id AS id, c.name
             FROM display_banner_config dbc
             JOIN country c
@@ -46,8 +46,7 @@ class Display_banner_config_dao extends Base_dao
         ';
 
         $resultp = $this->db->query($sql, array($display_id, $lang_id));
-        foreach ($resultp->result("") as $row)
-        {
+        foreach ($resultp->result("") as $row) {
             $rs[] = $row;
         }
         return $rs;

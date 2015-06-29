@@ -192,4 +192,5 @@ class Supplier_prod_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Ra_group_product_dao extends Base_dao
 {
-    private $table_name="ra_group_product";
-    private $vo_classname="Ra_group_product_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "ra_group_product";
+    private $vo_classname = "Ra_group_product_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -34,7 +34,7 @@ class Ra_group_product_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_item_w_name($group_id, $classname='Ra_group_product_w_prodname_dto')
+    public function get_item_w_name($group_id, $classname = 'Ra_group_product_w_prodname_dto')
     {
         $this->include_dto($classname);
 
@@ -47,13 +47,11 @@ class Ra_group_product_dao extends Base_dao
         $this->db->limit('', 0);
 
         $rs = array();
-        if ($query = $this->db->get())
-        {
-            foreach ($query->result('object', $classname) as $obj)
-            {
+        if ($query = $this->db->get()) {
+            foreach ($query->result('object', $classname) as $obj) {
                 $rs[] = $obj;
             }
-            return (object) $rs;
+            return (object)$rs;
         }
 
         return FALSE;

@@ -564,4 +564,5 @@ class V_prod_w_platform_biz_var_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -132,4 +132,5 @@ class Compensation_reason_vo extends Base_vo
     }
 
 }
+
 ?>

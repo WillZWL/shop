@@ -240,6 +240,7 @@ class Product_vo extends Base_vo
         $this->ex_demo = $value;
         return $this;
     }
+
     public function get_china_oem()
     {
         return $this->china_oem;
@@ -250,6 +251,7 @@ class Product_vo extends Base_vo
         $this->china_oem = $value;
         return $this;
     }
+
     public function get_rrp()
     {
         return $this->rrp;
@@ -514,4 +516,5 @@ class Product_vo extends Base_vo
     }
 
 }
+
 ?>

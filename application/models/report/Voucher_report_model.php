@@ -1,4 +1,5 @@
 <?php
+
 class Voucher_report_model extends CI_Model
 {
     public function __construct()
@@ -13,4 +14,5 @@ class Voucher_report_model extends CI_Model
     }
 
 }
+
 ?>

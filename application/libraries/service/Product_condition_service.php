@@ -8,7 +8,7 @@ class Product_condition_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Product_condition_dao.php");
+        include_once(APPPATH . "libraries/dao/Product_condition_dao.php");
         $this->set_dao(new Product_condition_dao());
     }
 }

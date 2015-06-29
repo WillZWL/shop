@@ -165,14 +165,14 @@ class Product_cost_dto extends Base_dto
         $this->vat_percent = $value;
     }
 
-    public function set_platform_id($value)
-    {
-        $this->platform_id = $value;
-    }
-
     public function get_platform_id()
     {
         return $this->platform_id;
+    }
+
+    public function set_platform_id($value)
+    {
+        $this->platform_id = $value;
     }
 
     public function get_duty()
@@ -924,6 +924,7 @@ class Product_cost_dto extends Base_dto
         $this->int_price = $value;
         return $this;
     }
+
     public function get_latency()
     {
         return $this->latency;

@@ -15,15 +15,15 @@ class Pricing_tool_amazon_model extends Pricing_tool_model
 
     public function get_amazon_condition_list()
     {
-        return $this->product_condition_service->get_list(array("type"=>"AMAZON"), array("limit"=>-1));
+        return $this->product_condition_service->get_list(array("type" => "AMAZON"), array("limit" => -1));
     }
 
-    public function get_list_w_subject($where=array(), $option=array())
+    public function get_list_w_subject($where = array(), $option = array())
     {
         return $this->subject_domain_service->get_list_w_subject($where, $option);
     }
 
-    public function get_ixten_reprice_rule_list($where=array(), $option=array())
+    public function get_ixten_reprice_rule_list($where = array(), $option = array())
     {
         return $this->ixten_reprice_rule_service->get_ixten_reprice_rule_list($where, $option);
     }
@@ -35,7 +35,7 @@ class Pricing_tool_amazon_model extends Pricing_tool_model
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-            $js ="  function rePrice(platform,typeInput)
+        $js = "  function rePrice(platform,typeInput)
                 {
                     var obj;
                     var type;

@@ -132,4 +132,5 @@ class Order_notes_vo extends Base_vo
     }
 
 }
+
 ?>

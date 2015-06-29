@@ -1,4 +1,5 @@
 <?php
+
 class Credit_check_model extends CI_Model
 {
     public function __construct()
@@ -10,39 +11,39 @@ class Credit_check_model extends CI_Model
         $this->load->library('service/quick_search_service');
     }
 
-    public function get_list($dao="dao", $where=array(), $option=array())
+    public function get_list($dao = "dao", $where = array(), $option = array())
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->get_list($where, $option);
     }
 
-    public function get_num_rows($dao="dao", $where=array())
+    public function get_num_rows($dao = "dao", $where = array())
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->get_num_rows($where);
     }
 
-    public function get($dao="dao", $where=array())
+    public function get($dao = "dao", $where = array())
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->get($where);
     }
 
-    public function update($dao="dao", $obj)
+    public function update($dao = "dao", $obj)
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->update($obj);
     }
 
-    public function add($dao="dao", $obj)
+    public function add($dao = "dao", $obj)
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->insert($obj);
     }
 
     public function include_vo($dao)
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->include_vo();
     }
 
@@ -71,19 +72,16 @@ class Credit_check_model extends CI_Model
         $this->refund_service->get_history_dao()->insert($obj);
     }
 
-    public function create_refund($so_no="")
+    public function create_refund($so_no = "")
     {
-        return $so_no==""?FALSE:$this->refund_service->create_refund($so_no);
+        return $so_no == "" ? FALSE : $this->refund_service->create_refund($so_no);
     }
 
-    public function create_refund_from_communication_center($so_no="", $refund_parameter=array())
+    public function create_refund_from_communication_center($so_no = "", $refund_parameter = array())
     {
-        if (($so_no == '') || (empty($refund_parameter)))
-        {
+        if (($so_no == '') || (empty($refund_parameter))) {
             return FALSE;
-        }
-        else
-        {
+        } else {
             return $this->refund_service->create_refund_from_communication_center($so_no, $refund_parameter);
         }
     }
@@ -98,27 +96,27 @@ class Credit_check_model extends CI_Model
         return $this->client_service->get_dao()->get($where);
     }
 
-    public function get_credit_check_list($where=array(),$option=array(),$type="")
+    public function get_credit_check_list($where = array(), $option = array(), $type = "")
     {
-        return $this->so_service->get_credit_check_list($where,$option,$type);
+        return $this->so_service->get_credit_check_list($where, $option, $type);
     }
 
-    public function get_credit_check_list_count($where=array(),$option=array(),$type="")
+    public function get_credit_check_list_count($where = array(), $option = array(), $type = "")
     {
-        return $this->so_service->get_dao()->get_credit_check_list($where, $option,$type);
+        return $this->so_service->get_dao()->get_credit_check_list($where, $option, $type);
     }
 
-    public function fire_cs_request($so_no="", $reason="")
+    public function fire_cs_request($so_no = "", $reason = "")
     {
-        $this->so_service->fire_cs_request($so_no,$reason);
+        $this->so_service->fire_cs_request($so_no, $reason);
     }
 
-    public function get_pmgw_card_list($where=array(), $option=array())
+    public function get_pmgw_card_list($where = array(), $option = array())
     {
-        return $this->quick_search_service->get_pmgw_card_dao()->get_list($where=array(), $option=array());
+        return $this->quick_search_service->get_pmgw_card_dao()->get_list($where = array(), $option = array());
     }
 
-    public function get_order_note($where=array(), $option=array())
+    public function get_order_note($where = array(), $option = array())
     {
         return $this->quick_search_service->get_order_note($where, $option);
     }

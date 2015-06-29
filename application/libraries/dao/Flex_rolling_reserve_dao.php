@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Flex_rolling_reserve_dao extends Base_dao
 {
-    private $table_name="flex_rolling_reserve";
-    private $vo_class_name="Flex_rolling_reserve_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "flex_rolling_reserve";
+    private $vo_class_name = "Flex_rolling_reserve_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

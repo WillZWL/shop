@@ -383,6 +383,6 @@ class Product_content_vo extends Base_vo
     }
 
 
-
 }
+
 ?>

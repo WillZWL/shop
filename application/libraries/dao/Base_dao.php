@@ -3,11 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 abstract class Base_dao
 {
-    abstract function get_vo_classname();
-    abstract function get_table_name();
-    abstract function get_seq_name();
-    abstract function get_seq_mapping_field();
-
     var $rows_limit;
     private $sequence_table;
 
@@ -43,7 +38,7 @@ abstract class Base_dao
         }
 
         $vo_classname = $this->get_vo_classname();
-        $vo_file = APPPATH."libraries/vo/".ucfirst($vo_classname).".php";
+        $vo_file = APPPATH . "libraries/vo/" . ucfirst($vo_classname) . ".php";
         if (file_exists($vo_file)) {
             include_once($vo_file);
             if ($query = $this->db->get_where($this->get_table_name(), $where, $option["limit"], $option["offset"])) {
@@ -58,7 +53,7 @@ abstract class Base_dao
                     return $rs[0];
                 } else {
                     if (empty($option["result_type"]) && empty($option["array_list"])) {
-                        return (object) $rs;
+                        return (object)$rs;
                     } else {
                         return $rs;
                     }
@@ -70,6 +65,10 @@ abstract class Base_dao
             return FALSE;
         }
     }
+
+    abstract function get_vo_classname();
+
+    abstract function get_table_name();
 
     public function common_get_list($where = array(), $option = array(), $classname, $select = NULL)
     {
@@ -110,7 +109,7 @@ abstract class Base_dao
                     return $rs[0];
                 } else {
                     if ($rs && empty($option["result_type"]) && empty($option["array_list"])) {
-                        return (object) $rs;
+                        return (object)$rs;
                     } else {
                         return $rs;
                     }
@@ -126,29 +125,23 @@ abstract class Base_dao
         return FALSE;
     }
 
-    public function get_num_rows($where=array())
+    public function get_num_rows($where = array())
     {
         $this->db->select('COUNT(*) AS total');
-        if ($query = $this->db->get_where($this->get_table_name(), $where))
-        {
+        if ($query = $this->db->get_where($this->get_table_name(), $where)) {
             return $query->row()->total;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
     public function get_db_time()
     {
-        $sql  = "SELECT NOW() AS dbtime";
+        $sql = "SELECT NOW() AS dbtime";
 
-        if ($query = $this->db->query($sql))
-        {
+        if ($query = $this->db->query($sql)) {
             return $query->row()->dbtime;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
@@ -164,7 +157,7 @@ abstract class Base_dao
 
         if ($rs_include) {
             if (empty($where)) {
-                @$obj= new $classname();
+                @$obj = new $classname();
                 if ($obj) {
                     return $obj;
                 } else {
@@ -190,47 +183,22 @@ abstract class Base_dao
 
     public function include_vo()
     {
-        $vo_file = APPPATH."libraries/vo/".ucfirst($this->get_vo_classname()).".php";
-        if (file_exists($vo_file))
-        {
+        $vo_file = APPPATH . "libraries/vo/" . ucfirst($this->get_vo_classname()) . ".php";
+        if (file_exists($vo_file)) {
             include_once($vo_file);
             return TRUE;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
     public function include_dto($dto_name)
     {
-        $file_path = APPPATH."libraries/dto/".ucfirst($dto_name).".php";
-        if(file_exists($file_path))
-        {
+        $file_path = APPPATH . "libraries/dto/" . ucfirst($dto_name) . ".php";
+        if (file_exists($file_path)) {
             include_once $file_path;
             return TRUE;
-        }
-        else
-        {
-            return FALSE;
-        }
-    }
-
-    public function seq_next_val()
-    {
-        include_once(APPPATH."libraries/service/Context_config_service.php");
-        $cconfig = new Context_config_service();
-        $this->sequence_table = $cconfig->value_of("sequence_table");
-
-        if ($this->get_seq_name() != "")
-        {
-            $this->db->where('seq_name', $this->get_seq_name());
-            $query = $this->db->get($this->sequence_table);
-            $row = $query->row();
-            return $row->value+$row->increment_level;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
@@ -238,19 +206,14 @@ abstract class Base_dao
     public function update_seq($new_value)
     {
         $this->db->where('seq_name', $this->get_seq_name());
-        if ($this->db->update($this->sequence_table, array('value'=>$new_value)))
-        {
+        if ($this->db->update($this->sequence_table, array('value' => $new_value))) {
             //Tommy added: commit
-            if ($this->db->trans_autocommit)
-            {
+            if ($this->db->trans_autocommit) {
                 $this->db->trans_commit();
             }
             return TRUE;
-        }
-        else
-        {
-            if ($this->db->trans_autocommit)
-            {
+        } else {
+            if ($this->db->trans_autocommit) {
                 $this->db->trans_rollback();
                 $this->db->trans_commit();
             }
@@ -258,15 +221,17 @@ abstract class Base_dao
         }
     }
 
-    public function insert($obj=NULL, $use_increment=TRUE)
+    abstract function get_seq_name();
+
+    public function insert($obj = NULL, $use_increment = TRUE)
     {
-        if ( ! empty($obj)) {
+        if (!empty($obj)) {
 
             $class_methods = get_class_methods($obj);
-            if ( ! empty($class_methods)) {
+            if (!empty($class_methods)) {
                 $ic_field = $obj->_get_increment_field();
                 if ($ic_field != "" && $use_increment) {
-                    call_user_func(array($obj, "set_".$ic_field), '');
+                    call_user_func(array($obj, "set_" . $ic_field), '');
                 }
 
                 $this->set_create($obj);
@@ -275,10 +240,10 @@ abstract class Base_dao
                 foreach ($class_methods as $fct_name) {
                     if (substr($fct_name, 0, 4) == "get_") {
                         $rsvalue = call_user_func(array($obj, $fct_name));
-                        $rskey = substr($fct_name,4);
-                        if ($rskey == $this->get_seq_mapping_field() && call_user_func(array($obj, "get_".$rskey)) == "" && ($new_value = $this->seq_next_val())) {
+                        $rskey = substr($fct_name, 4);
+                        if ($rskey == $this->get_seq_mapping_field() && call_user_func(array($obj, "get_" . $rskey)) == "" && ($new_value = $this->seq_next_val())) {
                             $rsvalue = $new_value;
-                            call_user_func(array($obj, "set_".$rskey), $rsvalue);
+                            call_user_func(array($obj, "set_" . $rskey), $rsvalue);
                         }
                         $this->db->set($rskey, $rsvalue);
                     }
@@ -286,14 +251,14 @@ abstract class Base_dao
 
 
                 if ($this->db->insert($this->get_table_name())) {
-                    if ($ic_field != "" && call_user_func(array($obj, "get_".$ic_field))==0) {
-                        call_user_func(array($obj, "set_".$ic_field), $this->db->insert_id());
+                    if ($ic_field != "" && call_user_func(array($obj, "get_" . $ic_field)) == 0) {
+                        call_user_func(array($obj, "set_" . $ic_field), $this->db->insert_id());
                     }
                     //Tommy commented: no use if have prefix / suffix
-/*                  if ($new_value)
-                    {
-                        $this->update_seq($new_value);
-                    }*/
+                    /*                  if ($new_value)
+                                        {
+                                            $this->update_seq($new_value);
+                                        }*/
                     return $obj;
                 } else {
                     return FALSE;
@@ -306,17 +271,48 @@ abstract class Base_dao
         }
     }
 
+    public function set_create(&$obj, $value = array())
+    {
+        $ts = date("Y-m-d H:i:s");
+        $ip = $_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "127.0.0.1";
+        $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
+        @call_user_func(array($obj, "set_create_on"), $ts);
+        @call_user_func(array($obj, "set_create_at"), $ip);
+        @call_user_func(array($obj, "set_create_by"), $id);
+        @call_user_func(array($obj, "set_modify_on"), $ts);
+        @call_user_func(array($obj, "set_modify_at"), $ip);
+        @call_user_func(array($obj, "set_modify_by"), $id);
+    }
+
+    abstract function get_seq_mapping_field();
+
+    public function seq_next_val()
+    {
+        include_once(APPPATH . "libraries/service/Context_config_service.php");
+        $cconfig = new Context_config_service();
+        $this->sequence_table = $cconfig->value_of("sequence_table");
+
+        if ($this->get_seq_name() != "") {
+            $this->db->where('seq_name', $this->get_seq_name());
+            $query = $this->db->get($this->sequence_table);
+            $row = $query->row();
+            return $row->value + $row->increment_level;
+        } else {
+            return FALSE;
+        }
+    }
+
     public function update($obj = NULL, $where = array())
     {
-        if ( ! empty($obj)) {
+        if (!empty($obj)) {
             $class_methods = get_class_methods($obj);
-            if ( ! empty($class_methods)) {
+            if (!empty($class_methods)) {
                 $this->set_modify($obj);
                 $primary_key = $obj->_get_primary_key();
                 foreach ($class_methods as $fct_name) {
                     if (substr($fct_name, 0, 4) == "get_") {
                         $rsvalue = call_user_func(array($obj, $fct_name));
-                        $rskey = substr($fct_name,4);
+                        $rskey = substr($fct_name, 4);
                         // Tommy: Should be always 1 on 1 update.
                         // if (empty($where) && in_array($rskey, $primary_key))
                         if (in_array($rskey, $primary_key)) {
@@ -345,32 +341,35 @@ abstract class Base_dao
         }
     }
 
+    public function set_modify(&$obj, $value = array())
+    {
+        $ts = date("Y-m-d H:i:s");
+        $ip = $_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "127.0.0.1";
+        $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
+        @call_user_func(array($obj, "set_modify_on"), $ts);
+        @call_user_func(array($obj, "set_modify_at"), $ip);
+        @call_user_func(array($obj, "set_modify_by"), $id);
+    }
+
     public function delete(Base_vo $obj)
     {
         $class_methods = get_class_methods($obj);
-        foreach ($class_methods as $fct_name)
-        {
+        foreach ($class_methods as $fct_name) {
 
-            if (substr($fct_name,0,4) == "get_")
-            {
+            if (substr($fct_name, 0, 4) == "get_") {
                 $rsvalue = call_user_func(array($obj, $fct_name));
-                $rskey = substr($fct_name,4);
+                $rskey = substr($fct_name, 4);
                 $this->db->where($rskey, $rsvalue);
             }
         }
-        if ($this->db->delete($this->get_table_name()))
-        {
+        if ($this->db->delete($this->get_table_name())) {
             $affected = $this->db->affected_rows();
-            if ($this->db->trans_autocommit)
-            {
+            if ($this->db->trans_autocommit) {
                 $this->db->trans_commit();
             }
             return $affected;
-        }
-        else
-        {
-            if ($this->db->trans_autocommit)
-            {
+        } else {
+            if ($this->db->trans_autocommit) {
                 $this->db->trans_rollback();
                 $this->db->trans_commit();
             }
@@ -378,145 +377,94 @@ abstract class Base_dao
         }
     }
 
-    public function q_delete($where=array())
+    public function q_delete($where = array())
     {
 
-        if (!empty($where))
-        {
+        if (!empty($where)) {
             $this->db->where($where);
             echo $this->db->query;
-            if ($this->db->delete($this->get_table_name()))
-            {
+            if ($this->db->delete($this->get_table_name())) {
                 $affected = $this->db->affected_rows();
-                if ($this->db->trans_autocommit)
-                {
+                if ($this->db->trans_autocommit) {
                     $this->db->trans_commit();
                 }
                 return $affected;
-            }
-            else
-            {
-                if ($this->db->trans_autocommit)
-                {
+            } else {
+                if ($this->db->trans_autocommit) {
                     $this->db->trans_rollback();
                     $this->db->trans_commit();
                 }
                 return FALSE;
             }
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
-    public function q_insert($data=array())
+    public function q_insert($data = array())
     {
-        if (!empty($data))
-        {
-            if ($this->db->insert($this->get_table_name(), $data))
-            {
-                if ($this->db->trans_autocommit)
-                {
+        if (!empty($data)) {
+            if ($this->db->insert($this->get_table_name(), $data)) {
+                if ($this->db->trans_autocommit) {
                     $this->db->trans_commit();
                 }
                 return $this->db->insert_id();
-            }
-            else
-            {
-                if ($this->db->trans_autocommit)
-                {
+            } else {
+                if ($this->db->trans_autocommit) {
                     $this->db->trans_rollback();
                     $this->db->trans_commit();
                 }
                 return FALSE;
             }
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
-    public function q_update($where=array(), $data=array())
+    public function q_update($where = array(), $data = array())
     {
-        if (!(empty($where) || empty($data)))
-        {
+        if (!(empty($where) || empty($data))) {
             $this->db->where($where);
-            if ($this->db->update($this->get_table_name(), $data))
-            {
+            if ($this->db->update($this->get_table_name(), $data)) {
                 $affected = $this->db->affected_rows();
-                if ($this->db->trans_autocommit)
-                {
+                if ($this->db->trans_autocommit) {
                     $this->db->trans_commit();
                 }
                 return $affected;
-            }
-            else
-            {
-                if ($this->db->trans_autocommit)
-                {
+            } else {
+                if ($this->db->trans_autocommit) {
                     $this->db->trans_rollback();
                     $this->db->trans_commit();
                 }
                 return FALSE;
             }
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
     public function get_max_modify($table_list)
     {
-        if (is_string($table_list))
-        {
+        if (is_string($table_list)) {
             $table_list = (array)$table_list;
         }
 
-        foreach ($table_list as $table)
-        {
+        foreach ($table_list as $table) {
             $max_str[] = "(SELECT MAX(modify_on) FROM {$table})";
         }
 
-        $sql = "SELECT GREATEST (".implode(",", $max_str).") AS last_modify";
+        $sql = "SELECT GREATEST (" . implode(",", $max_str) . ") AS last_modify";
 
-        if ($query = $this->db->query($sql))
-        {
+        if ($query = $this->db->query($sql)) {
             return $query->row()->last_modify;
         }
 
         return FALSE;
     }
 
-    public function set_create(&$obj, $value=array())
-    {
-        $ts = date("Y-m-d H:i:s");
-        $ip = $_SERVER["REMOTE_ADDR"]?$_SERVER["REMOTE_ADDR"]:"127.0.0.1";
-        $id = empty($_SESSION["user"]["id"])?"system":$_SESSION["user"]["id"];
-        @call_user_func(array($obj, "set_create_on"), $ts);
-        @call_user_func(array($obj, "set_create_at"), $ip);
-        @call_user_func(array($obj, "set_create_by"), $id);
-        @call_user_func(array($obj, "set_modify_on"), $ts);
-        @call_user_func(array($obj, "set_modify_at"), $ip);
-        @call_user_func(array($obj, "set_modify_by"), $id);
-    }
-
-    public function set_modify(&$obj, $value=array())
-    {
-        $ts = date("Y-m-d H:i:s");
-        $ip = $_SERVER["REMOTE_ADDR"]?$_SERVER["REMOTE_ADDR"]:"127.0.0.1";
-        $id = empty($_SESSION["user"]["id"])?"system":$_SESSION["user"]["id"];
-        @call_user_func(array($obj, "set_modify_on"), $ts);
-        @call_user_func(array($obj, "set_modify_at"), $ip);
-        @call_user_func(array($obj, "set_modify_by"), $id);
-    }
-
     public function trans_start()
     {
-        if (!$this->db->reged_function)
-        {
+        if (!$this->db->reged_function) {
             register_shutdown_function(array($this, "_fatal_handler"));
             $this->db->reged_function = 1;
         }
@@ -539,8 +487,7 @@ abstract class Base_dao
     public function _fatal_handler()
     {
         $e = error_get_last();
-        if ($e["type"] == 1)
-        {
+        if ($e["type"] == 1) {
             $this->db->trans_rollback();
         }
         exit;

@@ -25,14 +25,15 @@ class Payment_gateway_redirect_inpendium_ctpe_service extends Payment_gateway_re
     const CTPE_TEST_TRANSACTION_MODE = "INTEGRATOR_TEST";
     const CTPE_TRANSACTION_MODE = "LIVE";
     const CTPE_ACTION_PAGE = "/frontend/payment.prc";
-/*
-    public $credit_check_dm_amount = array ("AU" => 150,
-                                            "HK" => 1500,
-                                            "MY" => 380,
-                                            "NZ" => 300,
-                                            "SG" => 400,
-                                            "US" => 150);
-*/
+
+    /*
+        public $credit_check_dm_amount = array ("AU" => 150,
+                                                "HK" => 1500,
+                                                "MY" => 380,
+                                                "NZ" => 300,
+                                                "SG" => 400,
+                                                "US" => 150);
+    */
     public function __construct($debug)
     {
         parent::__construct($debug);
@@ -56,12 +57,9 @@ class Payment_gateway_redirect_inpendium_ctpe_service extends Payment_gateway_re
 
     public function get_query_server()
     {
-        if ($this->debug)
-        {
+        if ($this->debug) {
             return array("server" => self::CTPE_TEST_QUERY_SERVER, "path" => self::CTPE_QUERY_ACTION_PAGE);
-        }
-        else
-        {
+        } else {
             return array("server" => self::CTPE_QUERY_SERVER, "path" => self::CTPE_QUERY_ACTION_PAGE);
         }
     }
@@ -73,38 +71,29 @@ class Payment_gateway_redirect_inpendium_ctpe_service extends Payment_gateway_re
 
     public function get_ctpe_integrator($currency = null, $card_type = null)
     {
-        if ($this->debug)
-        {
+        if ($this->debug) {
             return array("server" => self::CTPE_TEST_PAYMENT_SERVER,
-                        "path" => self::CTPE_ACTION_PAGE,
-                        "sender" => self::CTPE_TEST_SECURITY_SENDER,
-                        "channel" => self::CTPE_TEST_TRANSACTION_CHANNEL,
-                        "userid" => self::CTPE_TEST_USER_LOGIN_ID,
-                        "userpwd" => self::CTPE_TEST_USER_PASSWORD,
-                        "token" => self::CTPE_TEST_SECURITY_TOKEN,
-                        "transaction_mode" => self::CTPE_TEST_TRANSACTION_MODE,
-                        "transaction_response" => "SYNC"
-                        );
-        }
-        else
-        {
+                "path" => self::CTPE_ACTION_PAGE,
+                "sender" => self::CTPE_TEST_SECURITY_SENDER,
+                "channel" => self::CTPE_TEST_TRANSACTION_CHANNEL,
+                "userid" => self::CTPE_TEST_USER_LOGIN_ID,
+                "userpwd" => self::CTPE_TEST_USER_PASSWORD,
+                "token" => self::CTPE_TEST_SECURITY_TOKEN,
+                "transaction_mode" => self::CTPE_TEST_TRANSACTION_MODE,
+                "transaction_response" => "SYNC"
+            );
+        } else {
             $channel = self::CTPE_TRANSACTION_CHANNEL;
             $threeDChannel = array("EUR", "GBP", "CHF", "AUD", "MYR", "USD", "NZD", "SGD", "HKD", "PLN");
-            if ($this->so)
-            {
+            if ($this->so) {
                 $checkCurrency = $this->so->get_currency_id();
-            }
-            else if ($currency != null)
-            {
+            } else if ($currency != null) {
                 $checkCurrency = $currency;
             }
 
-            if ($card_type == "SOFORT")
-            {
+            if ($card_type == "SOFORT") {
                 $channel = self::CTPE_TRANSACTION_SOFORT_CHANNEL;
-            }
-            else if (($this->so) || ($currency != null))
-            {
+            } else if (($this->so) || ($currency != null)) {
                 if (in_array($checkCurrency, $threeDChannel))
                     $channel = self::CTPE_TRANSACTION_3D_CHANNEL;
                 else
@@ -112,15 +101,15 @@ class Payment_gateway_redirect_inpendium_ctpe_service extends Payment_gateway_re
             }
 
             return array("server" => self::CTPE_PAYMENT_SERVER,
-                        "path" => self::CTPE_ACTION_PAGE,
-                        "sender" => self::CTPE_SECURITY_SENDER,
-                        "channel" => $channel,
-                        "userid" => self::CTPE_USER_LOGIN_ID,
-                        "userpwd" => self::CTPE_USER_PASSWORD,
-                        "token" => self::CTPE_SECURITY_TOKEN,
-                        "transaction_mode" => self::CTPE_TRANSACTION_MODE,
-                        "transaction_response" => "SYNC"
-                        );
+                "path" => self::CTPE_ACTION_PAGE,
+                "sender" => self::CTPE_SECURITY_SENDER,
+                "channel" => $channel,
+                "userid" => self::CTPE_USER_LOGIN_ID,
+                "userpwd" => self::CTPE_USER_PASSWORD,
+                "token" => self::CTPE_SECURITY_TOKEN,
+                "transaction_mode" => self::CTPE_TRANSACTION_MODE,
+                "transaction_response" => "SYNC"
+            );
         }
     }
 
@@ -142,4 +131,5 @@ class Payment_gateway_redirect_inpendium_ctpe_service extends Payment_gateway_re
         return "oswald-alert@eservicesgroup.com";
     }
 }
+
 ?>

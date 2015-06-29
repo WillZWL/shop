@@ -132,4 +132,5 @@ class Exchange_rate_vo extends Base_vo
     }
 
 }
+
 ?>

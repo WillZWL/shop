@@ -1,4 +1,5 @@
 <?php
+
 class Latest_video extends MY_Controller
 {
 
@@ -8,36 +9,32 @@ class Latest_video extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->helper(array('url','directory','notice'));
+        $this->load->helper(array('url', 'directory', 'notice'));
         $this->load->model('marketing/latest_video_model');
         $this->load->library('service/pagination_service');
     }
 
     public function main()
     {
-        if($this->input->get('level') == "" || $this->input->get('catid') == "")
-        {
+        if ($this->input->get('level') == "" || $this->input->get('catid') == "") {
             $this->index();
             exit;
         }
-        if($this->input->get('platform') && $this->input->get('type') && $this->input->get('src'))
-        {
+        if ($this->input->get('platform') && $this->input->get('type') && $this->input->get('src')) {
             $data["display"] = 1;
-        }
-        else
-        {
+        } else {
             $data["display"] = 0;
         }
 
-        $sub_app_id = $this->_get_app_id()."01";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        $sub_app_id = $this->_get_app_id() . "01";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         $data["catid"] = $this->input->get('catid');
         $data["level"] = $this->input->get('level');
         $data["platform"] = $this->input->get('platform');
         $data["type"] = $this->input->get('type');
         $data["src"] = $this->input->get('src');
-        $data["platform_id_list"] = $this->latest_video_model->get_platform_id_list(array(), array("orderby"=>"id ASC"));
+        $data["platform_id_list"] = $this->latest_video_model->get_platform_id_list(array(), array("orderby" => "id ASC"));
         $this->load->view('marketing/latest_video/lv_index', $data);
     }
 
@@ -46,7 +43,7 @@ class Latest_video extends MY_Controller
         $where = array();
         $option = array();
 
-        $_SESSION["LISTPAGE"] = base_url()."marketing/latest_video/?".$_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = base_url() . "marketing/latest_video/?" . $_SERVER['QUERY_STRING'];
 
         $where["name"] = $this->input->get("name");
         $where["description"] = $this->input->get("description");
@@ -60,30 +57,24 @@ class Latest_video extends MY_Controller
 
         $pconfig['base_url'] = $_SESSION["LISTPAGE"];
         $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"])
-        {
+        if ($option["limit"]) {
             $option["offset"] = $this->input->get("per_page");
         }
 
-        if (empty($sort))
-        {
+        if (empty($sort)) {
             $sort = "name";
         }
 
-        if (empty($order))
-        {
+        if (empty($order)) {
             $order = "asc";
         }
 
-        $option["orderby"] = $sort." ".$order;
+        $option["orderby"] = $sort . " " . $order;
 
-        $data = $this->latest_video_model->get_cat_list_index($where,$option);
-        if($data["list"] === FALSE)
-        {
+        $data = $this->latest_video_model->get_cat_list_index($where, $option);
+        if ($data["list"] === FALSE) {
             $_SESSION["NOTICE"] = "list_error";
-        }
-        else
-        {
+        } else {
             unset($_SESSION["NOTICE"]);
         }
         $pconfig['total_rows'] = $data['total'];
@@ -96,35 +87,42 @@ class Latest_video extends MY_Controller
         $data["updated"] = $this->input->get("updated");
 
         $data["showall"] = $this->input->get("showall");
-        $data["sortimg"][$sort] = "<img src='".base_url()."images/".$order.".gif'>";
-        $data["xsort"][$sort] = $order=="asc"?"desc":"asc";
-        $data["searchdisplay"] = ($where["name"]=="" && $where["description"]=="" && $where["level"]=="" && $where["status"]=="" && $where["manual"])?'style="display:none"':"";
+        $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
+        $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
+        $data["searchdisplay"] = ($where["name"] == "" && $where["description"] == "" && $where["level"] == "" && $where["status"] == "" && $where["manual"]) ? 'style="display:none"' : "";
 
-        $sub_app_id = $this->_get_app_id()."04";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        $sub_app_id = $this->_get_app_id() . "04";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
         $this->load->view('marketing/latest_video/lv_list_index', $data);
+    }
+
+    public function _get_app_id()
+    {
+        return $this->app_id;
+    }
+
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
     }
 
     public function view_left()
     {
         $where = array();
         $option = array();
-        $sub_app_id = $this->_get_app_id()."02";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        $sub_app_id = $this->_get_app_id() . "02";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
-        if (($sku = $this->input->get("sku")) != "" || ($prod_name = $this->input->get("name")) != "")
-        {
+        if (($sku = $this->input->get("sku")) != "" || ($prod_name = $this->input->get("name")) != "") {
             $data["search"] = 1;
-            if ($sku != "")
-            {
+            if ($sku != "") {
                 $where["sku"] = $sku;
             }
 
-            if ($prod_name != "")
-            {
+            if ($prod_name != "") {
                 $where["name"] = $prod_name;
             }
             $option["selling_platform"] = $this->input->get('platform');
@@ -133,25 +131,23 @@ class Latest_video extends MY_Controller
             $where["listing_status"] = "1";
 
             $where["weblist"] = "1";
-            switch($this->input->get('level'))
-            {
+            switch ($this->input->get('level')) {
                 case "1":
-                if($this->input->get('cat') != 0)
-                {
-                    $where["cat_id"] = $this->input->get('cat');
-                }
-                break;
+                    if ($this->input->get('cat') != 0) {
+                        $where["cat_id"] = $this->input->get('cat');
+                    }
+                    break;
 
                 case "2":
-                $where["sub_cat_id"] = $this->input->get('cat');
-                break;
+                    $where["sub_cat_id"] = $this->input->get('cat');
+                    break;
 
                 case "3":
-                $where["sub_sub_cat_id"] = $this->input->get('cat');
-                break;
+                    $where["sub_sub_cat_id"] = $this->input->get('cat');
+                    break;
 
                 default:
-                break;
+                    break;
             }
 
             $sort = $this->input->get("sort");
@@ -159,11 +155,10 @@ class Latest_video extends MY_Controller
 
             $limit = '20';
 
-            $pconfig['base_url'] = current_url()."?".$_SERVER['QUERY_STRING'];
+            $pconfig['base_url'] = current_url() . "?" . $_SERVER['QUERY_STRING'];
             $option["limit"] = $pconfig['per_page'] = $limit;
 
-            if ($option["limit"])
-            {
+            if ($option["limit"]) {
                 $option["offset"] = $this->input->get("per_page");
             }
 
@@ -173,7 +168,7 @@ class Latest_video extends MY_Controller
             if (empty($order))
                 $order = "asc";
 
-            $option["orderby"] = $sort." ".$order;
+            $option["orderby"] = $sort . " " . $order;
             $data["objlist"] = $this->latest_video_model->get_video_list($where, $option);
 
             $option = array();
@@ -187,18 +182,17 @@ class Latest_video extends MY_Controller
 
             $data["notice"] = notice($lang);
 
-            $data["sortimg"][$sort] = "<img src='".base_url()."images/".$order.".gif'>";
-            $data["xsort"][$sort] = $order=="asc"?"desc":"asc";
+            $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
+            $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
         }
-        $this->load->view('marketing/latest_video/lv_view_left',$data);
+        $this->load->view('marketing/latest_video/lv_view_left', $data);
     }
 
     public function view_right($catid, $platform_id, $type, $src)
     {
         $limit = $data["limit"] = $this->latest_video_model->get_list_limit();
 
-        if($catid == "")
-        {
+        if ($catid == "") {
             $this->index();
             exit;
         }
@@ -207,8 +201,7 @@ class Latest_video extends MY_Controller
         $data["video_type"] = $type;
         $data["video_src"] = $src;
 
-        if($this->input->post('posted'))
-        {
+        if ($this->input->post('posted')) {
             $err = 0;
 
             $input = $this->input->post('cat');
@@ -217,17 +210,14 @@ class Latest_video extends MY_Controller
 
             $this->latest_video_model->trans_start();
 
-            $ret = $this->latest_video_model->delete_bs(array("catid"=>$catid, "platform_id"=>$platform_id, "listing_type"=>"LV", "video_type"=>$type, "mode"=>"M", "src"=>$src));
+            $ret = $this->latest_video_model->delete_bs(array("catid" => $catid, "platform_id" => $platform_id, "listing_type" => "LV", "video_type" => $type, "mode" => "M", "src" => $src));
 
-            if($ret === FALSE)
-            {
+            if ($ret === FALSE) {
                 $_SESSION["NOTICE"] = "update_failed";
             }
 
-            foreach($input as $key=>$v)
-            {
-                if($v != "")
-                {
+            foreach ($input as $key => $v) {
+                if ($v != "") {
                     $action = "insert";
                     $obj = $this->latest_video_model->get_vo();
                     $obj->set_catid($catid);
@@ -242,67 +232,54 @@ class Latest_video extends MY_Controller
                     $obj->set_ref_id($v);
                     $ret = $this->latest_video_model->insert($obj);
 
-                    if($ret === FALSE)
-                    {
+                    if ($ret === FALSE) {
                         $_SESSION["NOTICE"] = "update_failed";
                         $err++;
                         break;
-                    }
-                    else
-                    {
-                            unset($_SESSION["NOTICE"]);
+                    } else {
+                        unset($_SESSION["NOTICE"]);
                     }
                 }
             }
-            if(!$err)
-            {
+            if (!$err) {
                 $this->latest_video_model->trans_complete();
             }
         }
 
-        $sub_app_id = $this->_get_app_id()."03";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        $sub_app_id = $this->_get_app_id() . "03";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
-        $count = $this->latest_video_model->get_count($catid,'M',$platform_id,$type,$src);
+        $count = $this->latest_video_model->get_count($catid, 'M', $platform_id, $type, $src);
         $cnt = 0;
 
-        if($count === FALSE)
-        {
+        if ($count === FALSE) {
             $this->index();
             exit;
         }
-        if(!$count)
-        {
-            for($i = 1; $i <= $limit; $i++)
-            {
-                $obj = $this->latest_video_model->get_latest_video($catid,$i,$type,$platform_id,$src);
+        if (!$count) {
+            for ($i = 1; $i <= $limit; $i++) {
+                $obj = $this->latest_video_model->get_latest_video($catid, $i, $type, $platform_id, $src);
                 //echo $this->db->last_query()."  ".$this->db->_error_message();
 
                 $sku[$i] = "";
                 $value[$i] = $lang["not_assigned"];
                 $name[$i] = $lang["not_assigned"];
             }
-        }
-        else
-        {
-            $list = $this->latest_video_model->get_list_w_name($catid,'M','LV',$type,$platform_id,$src);
+        } else {
+            $list = $this->latest_video_model->get_list_w_name($catid, 'M', 'LV', $type, $platform_id, $src);
             //echo $this->db->last_query();
 
-            for($i = 1; $i <=$limit ; $i++)
-            {
-                $obj = $this->latest_video_model->get_latest_video($catid,$i,$type,$platform_id,$src);
+            for ($i = 1; $i <= $limit; $i++) {
+                $obj = $this->latest_video_model->get_latest_video($catid, $i, $type, $platform_id, $src);
                 //echo $this->db->last_query();
                 //echo "   ".$this->latest_video_model->_error_message();
-                if(isset($list[$i]))
-                {
+                if (isset($list[$i])) {
                     $sku[$i] = $list[$i]->get_sku();
                     $name[$i] = $list[$i]->get_name();
                     $value[$i] = $list[$i]->get_ref_id();
                     $cnt++;
-                }
-                else
-                {
+                } else {
                     $sku[$i] = "";
                     $name[$i] = $lang["not_assigned"];
                     $value[$i] = $lang["not_assigned"];
@@ -310,20 +287,17 @@ class Latest_video extends MY_Controller
             }
         }
 
-        $count = $this->latest_video_model->get_count($catid,'A',$platform_id,$type,$src);
+        $count = $this->latest_video_model->get_count($catid, 'A', $platform_id, $type, $src);
         $acnt = 0;
 
-        if($count === FALSE)
-        {
+        if ($count === FALSE) {
             $this->index();
             exit;
         }
-        if(!$count)
-        {
-            for($i = 1; $i <= $limit; $i++)
-            {
+        if (!$count) {
+            for ($i = 1; $i <= $limit; $i++) {
 
-                $obj = $this->latest_video_model->get_latest_video($catid,$i,$type,$platform_id,$src);
+                $obj = $this->latest_video_model->get_latest_video($catid, $i, $type, $platform_id, $src);
                 //echo $this->db->last_query()."  ".$this->db->_error_message();
 
                 $asku[$i] = "";
@@ -331,25 +305,19 @@ class Latest_video extends MY_Controller
                 $avalue[$i] = $lang["not_assigned"];
 
             }
-        }
-        else
-        {
-            $list = $this->latest_video_model->get_list_w_name($catid,'A','LV',$type,$platform_id,$src);
+        } else {
+            $list = $this->latest_video_model->get_list_w_name($catid, 'A', 'LV', $type, $platform_id, $src);
             //echo $this->db->last_query();
-            for($i = 1; $i <=$limit ; $i++)
-            {
-                $obj = $this->latest_video_model->get_latest_video($catid,$i,$type,$platform_id,$src);
+            for ($i = 1; $i <= $limit; $i++) {
+                $obj = $this->latest_video_model->get_latest_video($catid, $i, $type, $platform_id, $src);
                 //echo $this->db->last_query();
                 //echo "   ".$this->latest_video_model->_error_message();
-                if(isset($list[$i]))
-                {
+                if (isset($list[$i])) {
                     $asku[$i] = $list[$i]->get_sku();
                     $aname[$i] = $list[$i]->get_name();
                     $avalue[$i] = $list[$i]->get_ref_id();
                     $acnt++;
-                }
-                else
-                {
+                } else {
                     $asku[$i] = "";
                     $aname[$i] = $lang["not_assigned"];
                     $avalue[$i] = $lang["not_assigned"];
@@ -368,12 +336,9 @@ class Latest_video extends MY_Controller
         $oname = $name;
         $ovalue = $value;
 
-        if($cnt < $limit)
-        {
-            foreach($avalue as $key=>$val)
-            {
-                if($cnt < $limit && !in_array($val,$ovalue))
-                {
+        if ($cnt < $limit) {
+            foreach ($avalue as $key => $val) {
+                if ($cnt < $limit && !in_array($val, $ovalue)) {
                     $ovalue[++$cnt] = $val;
                     $oname[$cnt] = $aname[$key];
                     $osku[$cnt] = $asku[$key];
@@ -386,17 +351,7 @@ class Latest_video extends MY_Controller
         $data["ovalue"] = $ovalue;
         $data["notice"] = notice($lang);
 
-        $this->load->view('marketing/latest_video/lv_view_right',$data);
-    }
-
-    public function _get_app_id()
-    {
-        return $this->app_id;
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
+        $this->load->view('marketing/latest_video/lv_view_right', $data);
     }
 
 }

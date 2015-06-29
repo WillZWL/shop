@@ -156,4 +156,5 @@ class Category_product_spec_vo extends Base_vo
     }
 
 }
+
 ?>

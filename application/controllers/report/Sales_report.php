@@ -2,8 +2,8 @@
 
 class Sales_report extends MY_Controller
 {
-    protected $app_id="RPT0002";
-    private $lang_id="en";
+    protected $app_id = "RPT0002";
+    private $lang_id = "en";
     private $model;
     private $export_filename;
 
@@ -21,19 +21,10 @@ class Sales_report extends MY_Controller
         $this->_set_export_filename('sales_report.csv');
     }
 
-    private function _load_parent_lang()
-    {
-        $sub_app_id = $this->_get_app_id()."00";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-
-        return $lang;
-    }
-
     public function query()
     {
         $data['lang'] = $this->_load_parent_lang();
-        if($this->input->post('is_query'))
-        {
+        if ($this->input->post('is_query')) {
             $from_year = $this->input->post('from_year');
             $from_month = $this->input->post('from_month');
             $from_day = $this->input->post('from_day');
@@ -57,8 +48,8 @@ class Sales_report extends MY_Controller
                 $where['so.delivery_country_id'] = $country_id;
             if ($payment_gateway != -1)
                 $where['sps.payment_gateway_id'] = $payment_gateway;
-            if ($is_china_oem != -1){
-                if($is_china_oem == 0 || $is_china_oem == 1){
+            if ($is_china_oem != -1) {
+                if ($is_china_oem == 0 || $is_china_oem == 1) {
                     $where['p.china_oem'] = $is_china_oem;
                 }
             }
@@ -77,15 +68,11 @@ class Sales_report extends MY_Controller
             $to_date = $to_year . '-' . $to_month . '-' . $to_day;
 
 
-
             $data['output'] = $this->_get_model()->get_csv($from_date, $to_date, $where, $is_sales_rpt, $is_light_version);
 
-            if($is_light_version)
-            {
+            if ($is_light_version) {
                 $data['filename'] = "light_sales_report.csv";
-            }
-            else
-            {
+            } else {
                 $data['filename'] = $this->_get_export_filename();
             }
 
@@ -94,13 +81,56 @@ class Sales_report extends MY_Controller
         }
     }
 
+    private function _load_parent_lang()
+    {
+        $sub_app_id = $this->_get_app_id() . "00";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+
+        return $lang;
+    }
+
+    public function _get_app_id()
+    {
+        return $this->app_id;
+    }
+
+    public function _set_app_id($value)
+    {
+        $this->app_id = $value;
+    }
+
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
+    }
+
+    public function _get_model()
+    {
+        return $this->model;
+    }
+
+    public function _set_model($value)
+    {
+        $this->model = $value;
+    }
+
+    public function _get_export_filename()
+    {
+        return $this->export_filename;
+    }
+
+    public function _set_export_filename($value)
+    {
+        $this->export_filename = $value;
+    }
+
     public function index()
     {
         $data['lang'] = $this->_load_parent_lang();
         $data['controller'] = strtolower(get_class($this));
-        $data['countrys'] = $this->country_service->get_dao()->get_list(array("allow_sell" => "1"), array("orderby" => "name", "limit"=>-1));
+        $data['countrys'] = $this->country_service->get_dao()->get_list(array("allow_sell" => "1"), array("orderby" => "name", "limit" => -1));
         $data['currencys'] = $this->country_service->get_sell_currency_list();
-        $data['gateways'] = $this->payment_gateway_service->get_list(array("status"=>1), array("limit"=>-1));
+        $data['gateways'] = $this->payment_gateway_service->get_list(array("status" => 1), array("limit" => -1));
 
 //      print $this->country_service->get_dao()->db->last_query();
 //      var_dump($data['currency']);
@@ -110,43 +140,35 @@ class Sales_report extends MY_Controller
     public function split_orders_report()
     {
         $data['lang'] = $this->_load_parent_lang();
-        $data["start_date"] = date('Y-m-d', strtotime(date('Y-m-d'). ' - 10 day'));
+        $data["start_date"] = date('Y-m-d', strtotime(date('Y-m-d') . ' - 10 day'));
         $data["end_date"] = date('Y-m-d');
         $data["notice"] = notice($data['lang']);
         $data["prompt_notice"] = 0;
 
-        if($this->input->post('is_query'))
-        {
+        if ($this->input->post('is_query')) {
             $ret = $this->query_split_order();
 
-            if($ret["status"] === FALSE)
-            {
+            if ($ret["status"] === FALSE) {
                 $_SESSION["NOTICE"] = $ret["message"];
-            }
-            else
-            {
-                if($ret["data"])
-                {
-                    $filename = "split_orders_report_".date('Ymd_His').".csv";
+            } else {
+                if ($ret["data"]) {
+                    $filename = "split_orders_report_" . date('Ymd_His') . ".csv";
                     $fp = fopen('php://output', 'w');
-                    header( 'Content-Type: text/csv' );
-                    header( 'Content-Disposition: attachment;filename='.$filename);
-                    foreach ($ret["data"] as $fields)
-                    {
+                    header('Content-Type: text/csv');
+                    header('Content-Disposition: attachment;filename=' . $filename);
+                    foreach ($ret["data"] as $fields) {
                         fputcsv($fp, $fields);
                     }
                     fclose($fp);
                     die();
 
-                }
-                else
-                {
+                } else {
                     $_SESSION["NOTICE"] = "Error getting data";
                 }
             }
 
             // if any errors, redirect back with notice
-            Redirect(base_url()."report/sales_report/split_orders_report");
+            Redirect(base_url() . "report/sales_report/split_orders_report");
         }
 
         $this->load->view('report/split_orders_report', $data);
@@ -156,8 +178,7 @@ class Sales_report extends MY_Controller
     {
         $data['lang'] = $this->_load_parent_lang();
         $ret["status"] = false;
-        if($this->input->post('is_query'))
-        {
+        if ($this->input->post('is_query')) {
             $from_date = $this->input->post("start_date");
             $to_date = $this->input->post("end_date");
 
@@ -166,42 +187,6 @@ class Sales_report extends MY_Controller
 
         }
         return $ret;
-    }
-
-
-    public function _set_app_id($value)
-    {
-        $this->app_id = $value;
-    }
-
-    public function _get_app_id()
-    {
-        return $this->app_id;
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
-    }
-
-    public function _set_model($value)
-    {
-        $this->model = $value;
-    }
-
-    public function _get_model()
-    {
-        return $this->model;
-    }
-
-    public function _set_export_filename($value)
-    {
-        $this->export_filename = $value;
-    }
-
-    public function _get_export_filename()
-    {
-        return $this->export_filename;
     }
 
     public function get_shipped_summary($start_date = "", $end_date = "")
@@ -223,17 +208,16 @@ class Sales_report extends MY_Controller
         $xml->description = "Shipped orders summary from $start_date_ok to $end_date_ok";
 
         $result = $this->so_shipment_service->get_dao()->get_shipped_summary($start_date_ok, $end_date_ok);
-        if ($result)
-        {
-            foreach ($result as $row)
-            {
+        if ($result) {
+            foreach ($result as $row) {
                 $sku = $xml->addChild("sku");
-                $sku->master_sku        = $row->master_sku;
-                $sku->total_quantity    = $row->total_quantity;
-                $sku->total_amount_hkd  = $row->total_amount_hkd;
+                $sku->master_sku = $row->master_sku;
+                $sku->total_quantity = $row->total_quantity;
+                $sku->total_amount_hkd = $row->total_amount_hkd;
             }
         }
-        header('Content-type: text/xml'); print($xml->asXML());
+        header('Content-type: text/xml');
+        print($xml->asXML());
     }
 
     public function get_sales_summary($start_date = "", $end_date = "")
@@ -255,17 +239,16 @@ class Sales_report extends MY_Controller
         $xml->description = "Sales orders summary from $start_date_ok to $end_date_ok";
 
         $result = $this->so_service->get_dao()->get_sales_summary($start_date_ok, $end_date_ok);
-        if ($result)
-        {
-            foreach ($result as $row)
-            {
+        if ($result) {
+            foreach ($result as $row) {
                 $sku = $xml->addChild("sku");
-                $sku->master_sku        = $row->master_sku;
-                $sku->total_quantity    = $row->total_quantity;
-                $sku->total_amount_hkd  = $row->total_amount_hkd;
+                $sku->master_sku = $row->master_sku;
+                $sku->total_quantity = $row->total_quantity;
+                $sku->total_amount_hkd = $row->total_amount_hkd;
             }
         }
-        header('Content-type: text/xml'); print($xml->asXML());
+        header('Content-type: text/xml');
+        print($xml->asXML());
     }
 
 }

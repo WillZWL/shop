@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Product_migrate_dao extends Base_dao
 {
-    private $table_name="product";
-    private $vo_class_name="Product_vo";
-    private $seq_name="product";
-    private $seq_mapping_field="sku";
+    private $table_name = "product";
+    private $vo_class_name = "Product_vo";
+    private $seq_name = "product";
+    private $seq_mapping_field = "sku";
 
     public function __construct()
     {

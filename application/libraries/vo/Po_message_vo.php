@@ -120,4 +120,5 @@ class Po_message_vo extends Base_vo
     }
 
 }
+
 ?>

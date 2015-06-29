@@ -15,19 +15,14 @@ class Prod_bundle_dto extends Base_dto
     // including sku, name, price, image, website_qty, website_status
     private $component_sku_list;
 
-    public function set_prod_sku($prod_sku)
-    {
-        $this->prod_sku = $prod_sku;
-    }
-
     public function get_prod_sku()
     {
         return $this->prod_sku;
     }
 
-    public function set_main_prod_sku($main_prod_sku)
+    public function set_prod_sku($prod_sku)
     {
-        $this->main_prod_sku = $main_prod_sku;
+        $this->prod_sku = $prod_sku;
     }
 
     public function get_main_prod_sku()
@@ -35,9 +30,9 @@ class Prod_bundle_dto extends Base_dto
         return $this->main_prod_sku;
     }
 
-    public function set_name($name)
+    public function set_main_prod_sku($main_prod_sku)
     {
-        $this->name = $name;
+        $this->main_prod_sku = $main_prod_sku;
     }
 
     public function get_name()
@@ -45,9 +40,9 @@ class Prod_bundle_dto extends Base_dto
         return $this->name;
     }
 
-    public function set_total_price($total_price)
+    public function set_name($name)
     {
-        $this->total_price = $total_price;
+        $this->name = $name;
     }
 
     public function get_total_price()
@@ -55,9 +50,9 @@ class Prod_bundle_dto extends Base_dto
         return $this->total_price;
     }
 
-    public function set_website_status($data)
+    public function set_total_price($total_price)
     {
-        $this->website_status = $data;
+        $this->total_price = $total_price;
     }
 
     public function get_website_status()
@@ -65,9 +60,9 @@ class Prod_bundle_dto extends Base_dto
         return $this->website_status;
     }
 
-    public function set_website_quantity($data)
+    public function set_website_status($data)
     {
-        $this->website_quantity = $data;
+        $this->website_status = $data;
     }
 
     public function get_website_quantity()
@@ -75,9 +70,9 @@ class Prod_bundle_dto extends Base_dto
         return $this->website_quantity;
     }
 
-    public function set_component_sku_list($component_sku_list)
+    public function set_website_quantity($data)
     {
-        $this->component_sku_list = $component_sku_list;
+        $this->website_quantity = $data;
     }
 
     public function get_component_sku_list()
@@ -85,14 +80,19 @@ class Prod_bundle_dto extends Base_dto
         return $this->component_sku_list;
     }
 
-    public function set_bundle_name($data)
+    public function set_component_sku_list($component_sku_list)
     {
-        $this->bundle_name = $data;
+        $this->component_sku_list = $component_sku_list;
     }
 
     public function get_bundle_name()
     {
         return $this->bundle_name;
+    }
+
+    public function set_bundle_name($data)
+    {
+        $this->bundle_name = $data;
     }
 }
 

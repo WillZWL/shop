@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Ra_prod_prod_dao extends Base_dao
 {
-    private $table_name="ra_prod_prod";
-    private $vo_classname="Ra_prod_prod_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "ra_prod_prod";
+    private $vo_classname = "Ra_prod_prod_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -37,42 +37,42 @@ class Ra_prod_prod_dao extends Base_dao
 
     public function get_avail_ra_list($sku)
     {
-/*      $sql =  "SELECT a.sku, p.sku ra_sku, p.name, p.website_status, p.image
-                    FROM
-                    (
-                        SELECT rpp.sku, rpp.rcm_prod_id_1 ra_prod_id
-                        FROM ra_prod_prod rpp
-                        WHERE rpp.sku = '" . $sku . "'
-                        UNION
-                        SELECT rpp.sku, rpp.rcm_prod_id_2
-                        FROM ra_prod_prod rpp
-                        WHERE rpp.sku = '" . $sku . "'
-                        UNION
-                        SELECT rpp.sku, rpp.rcm_prod_id_3
-                        FROM ra_prod_prod rpp
-                        WHERE rpp.sku = '" . $sku . "'
-                        UNION
-                        SELECT rpp.sku, rpp.rcm_prod_id_4
-                        FROM ra_prod_prod rpp
-                        WHERE rpp.sku = '" . $sku . "'
-                        UNION
-                        SELECT rpp.sku, rpp.rcm_prod_id_5
-                        FROM ra_prod_prod rpp
-                        WHERE rpp.sku = '" . $sku . "'
-                        UNION
-                        SELECT rpp.sku, rpp.rcm_prod_id_6
-                        FROM ra_prod_prod rpp
-                        WHERE rpp.sku = '" . $sku . "'
-                        UNION
-                        SELECT rpp.sku, rpp.rcm_prod_id_7
-                        FROM ra_prod_prod rpp
-                        WHERE rpp.sku = '" . $sku . "'
-                    ) a
-                    JOIN product p
-                        ON (p.sku = a.ra_prod_id AND p.website_status = 'I')
-                    WHERE a.ra_prod_id IS NOT NULL";*/
+        /*      $sql =  "SELECT a.sku, p.sku ra_sku, p.name, p.website_status, p.image
+                            FROM
+                            (
+                                SELECT rpp.sku, rpp.rcm_prod_id_1 ra_prod_id
+                                FROM ra_prod_prod rpp
+                                WHERE rpp.sku = '" . $sku . "'
+                                UNION
+                                SELECT rpp.sku, rpp.rcm_prod_id_2
+                                FROM ra_prod_prod rpp
+                                WHERE rpp.sku = '" . $sku . "'
+                                UNION
+                                SELECT rpp.sku, rpp.rcm_prod_id_3
+                                FROM ra_prod_prod rpp
+                                WHERE rpp.sku = '" . $sku . "'
+                                UNION
+                                SELECT rpp.sku, rpp.rcm_prod_id_4
+                                FROM ra_prod_prod rpp
+                                WHERE rpp.sku = '" . $sku . "'
+                                UNION
+                                SELECT rpp.sku, rpp.rcm_prod_id_5
+                                FROM ra_prod_prod rpp
+                                WHERE rpp.sku = '" . $sku . "'
+                                UNION
+                                SELECT rpp.sku, rpp.rcm_prod_id_6
+                                FROM ra_prod_prod rpp
+                                WHERE rpp.sku = '" . $sku . "'
+                                UNION
+                                SELECT rpp.sku, rpp.rcm_prod_id_7
+                                FROM ra_prod_prod rpp
+                                WHERE rpp.sku = '" . $sku . "'
+                            ) a
+                            JOIN product p
+                                ON (p.sku = a.ra_prod_id AND p.website_status = 'I')
+                            WHERE a.ra_prod_id IS NOT NULL";*/
 
-        $sql =  'SELECT a.sku, p.sku ra_sku, p.name, p.website_status, p.image,
+        $sql = 'SELECT a.sku, p.sku ra_sku, p.name, p.website_status, p.image,
                         p.website_quantity, p.quantity, c.name cat_name
                     FROM
                     (
@@ -127,7 +127,7 @@ class Ra_prod_prod_dao extends Base_dao
                     ORDER BY p.cat_id';
 
 
-        $result = $this->db->query($sql, array($sku,$sku,$sku,$sku,$sku,$sku,$sku,$sku,$sku,$sku,$sku,$sku,$sku,$sku,$sku,$sku,$sku));
+        $result = $this->db->query($sql, array($sku, $sku, $sku, $sku, $sku, $sku, $sku, $sku, $sku, $sku, $sku, $sku, $sku, $sku, $sku, $sku, $sku));
 
         return $result->result_array();
     }
@@ -136,7 +136,7 @@ class Ra_prod_prod_dao extends Base_dao
     {
         $select_str = "*";
         $this->db->from('v_prod_ra_prod_w_price');
-        include_once(APPPATH."libraries/vo/v_prod_ra_prod_w_price_vo.php");
+        include_once(APPPATH . "libraries/vo/v_prod_ra_prod_w_price_vo.php");
         return $this->common_get_list($where, $option, "V_prod_ra_prod_w_price_vo", $select_str);
     }
 
@@ -146,11 +146,9 @@ class Ra_prod_prod_dao extends Base_dao
         $this->db->from('v_prod_ra_prod_w_price');
         $this->db->order_by('price asc');
         $this->db->where($where);
-        if ($query = $this->db->get())
-        {
+        if ($query = $this->db->get()) {
             $ret = array();
-            foreach($query->result(array()) as $row)
-            {
+            foreach ($query->result(array()) as $row) {
                 $ret[] = $row;
             }
 
@@ -159,4 +157,5 @@ class Ra_prod_prod_dao extends Base_dao
         return false;
     }
 }
+
 ?>

@@ -4,8 +4,8 @@ include_once "supplier_helper.php";
 
 class Supplier extends Supplier_helper
 {
-    private $app_id="SUP0001";
-    private $lang_id="en";
+    private $app_id = "SUP0001";
+    private $lang_id = "en";
 
     public function __construct()
     {
@@ -13,47 +13,46 @@ class Supplier extends Supplier_helper
         $this->authorization_service->check_access_rights($this->_get_app_id(), "");
     }
 
+    public function _get_app_id()
+    {
+        return $this->app_id;
+    }
+
     public function index()
     {
-        $sub_app_id = $this->_get_app_id()."00";
+        $sub_app_id = $this->_get_app_id() . "00";
 
-        $_SESSION["LISTPAGE"] = base_url()."supply/supplier/?".$_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = base_url() . "supply/supplier/?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
         $option = array();
 
-        if ($this->input->get("id") != "")
-        {
+        if ($this->input->get("id") != "") {
             $where["id"] = $this->input->get("id");
             $submit_search = 1;
         }
 
-        if ($this->input->get("name") != "")
-        {
+        if ($this->input->get("name") != "") {
             $where["name"] = $this->input->get("name");
             $submit_search = 1;
         }
 
-        if ($this->input->get("currency_id") != "")
-        {
+        if ($this->input->get("currency_id") != "") {
             $where["currency_id"] = $this->input->get("currency_id");
             $submit_search = 1;
         }
 
-        if ($this->input->get("supplier_reg") != "")
-        {
+        if ($this->input->get("supplier_reg") != "") {
             $where["supplier_reg"] = $this->input->get("supplier_reg");
             $submit_search = 1;
         }
 
-        if ($this->input->get("sourcing_reg") != "")
-        {
+        if ($this->input->get("sourcing_reg") != "") {
             $where["sourcing_reg"] = $this->input->get("sourcing_reg");
             $submit_search = 1;
         }
 
-        if ($this->input->get("status") != "")
-        {
+        if ($this->input->get("status") != "") {
             $where["status"] = $this->input->get("status");
             $submit_search = 1;
         }
@@ -66,8 +65,7 @@ class Supplier extends Supplier_helper
         $pconfig['base_url'] = $_SESSION["LISTPAGE"];
         $option["limit"] = $pconfig['per_page'] = $limit;
 
-        if ($option["limit"])
-        {
+        if ($option["limit"]) {
             $option["offset"] = $this->input->get("per_page");
         }
 
@@ -77,12 +75,12 @@ class Supplier extends Supplier_helper
         if (empty($order))
             $order = "asc";
 
-        $option["orderby"] = $sort." ".$order;
+        $option["orderby"] = $sort . " " . $order;
 
         $data["objlist"] = $this->supplier_model->get_supplier_list($where, $option);
         $data["total"] = $this->supplier_model->get_supplier_list_total($where);
 
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
         $pconfig['total_rows'] = $data['total'];
@@ -91,22 +89,25 @@ class Supplier extends Supplier_helper
 
         $data["notice"] = notice($lang);
 
-        $data["sortimg"][$sort] = "<img src='".base_url()."images/".$order.".gif'>";
-        $data["xsort"][$sort] = $order=="asc"?"desc":"asc";
+        $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
+        $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
 //      $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
         $data["searchdisplay"] = "";
         $this->load->view('supply/supplier/supplier_index_v', $data);
     }
 
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
+    }
+
     public function add()
     {
 
-        $sub_app_id = $this->_get_app_id()."01";
+        $sub_app_id = $this->_get_app_id() . "01";
 
-        if ($this->input->post("posted"))
-        {
-            if (isset($_SESSION["supplier_vo"]))
-            {
+        if ($this->input->post("posted")) {
+            if (isset($_SESSION["supplier_vo"])) {
                 $this->supplier_model->include_vo("dao");
                 $data["supplier"] = unserialize($_SESSION["supplier_vo"]);
 
@@ -114,30 +115,23 @@ class Supplier extends Supplier_helper
                 set_value($data["supplier"], $_POST);
 
 
-                if ($new_obj = $this->supplier_model->add("dao", $data["supplier"]))
-                {
+                if ($new_obj = $this->supplier_model->add("dao", $data["supplier"])) {
                     unset($_SESSION["supplier_vo"]);
                     $id = $new_obj->get_id();
-                    redirect(base_url()."supply/supplier/view/".$id);
-                }
-                else
-                {
+                    redirect(base_url() . "supply/supplier/view/" . $id);
+                } else {
                     $_SESSION["NOTICE"] = "submit_error";
                 }
             }
         }
 
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
-        if (empty($data["supplier"]))
-        {
-            if (($data["supplier"] = $this->supplier_model->get("dao")) === FALSE)
-            {
+        if (empty($data["supplier"])) {
+            if (($data["supplier"] = $this->supplier_model->get("dao")) === FALSE) {
                 $_SESSION["NOTICE"] = "sql_error";
-            }
-            else
-            {
+            } else {
                 $_SESSION["supplier_vo"] = serialize($data["supplier"]);
             }
         }
@@ -146,48 +140,38 @@ class Supplier extends Supplier_helper
 
         $data["notice"] = notice($lang);
         $data["cmd"] = "add";
-        $this->load->view('supply/supplier/supplier_detail_v',$data);
+        $this->load->view('supply/supplier/supplier_detail_v', $data);
     }
 
-    public function view($id="", $isnote=0)
+    public function view($id = "", $isnote = 0)
     {
-        if ($id)
-        {
-            $sub_app_id = $this->_get_app_id()."02";
+        if ($id) {
+            $sub_app_id = $this->_get_app_id() . "02";
 
-            if ($this->input->post("posted"))
-            {
+            if ($this->input->post("posted")) {
 
-                if (isset($_SESSION["supplier_obj"][$id]))
-                {
+                if (isset($_SESSION["supplier_obj"][$id])) {
                     $this->supplier_model->include_vo("dao");
                     $data["supplier"] = unserialize($_SESSION["supplier_obj"][$id]);
 
                     set_value($data["supplier"], $_POST);
 
-                    if ($this->supplier_model->update("dao", $data["supplier"]))
-                    {
+                    if ($this->supplier_model->update("dao", $data["supplier"])) {
                         unset($_SESSION["supplier_obj"]);
-                        redirect(base_url()."supply/supplier/view/".$id.($isnote?"/1":""));
-                    }
-                    else
-                    {
+                        redirect(base_url() . "supply/supplier/view/" . $id . ($isnote ? "/1" : ""));
+                    } else {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
                 }
             }
 
-            include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
 
-            if (empty($data["supplier"]))
-            {
-                if (($data["supplier"] = $this->supplier_model->get("dao", array("id"=>$id))) === FALSE)
-                {
+            if (empty($data["supplier"])) {
+                if (($data["supplier"] = $this->supplier_model->get("dao", array("id" => $id))) === FALSE) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
-                }
-                else
-                {
+                } else {
                     $_SESSION["supplier_obj"][$id] = serialize($data["supplier"]);
                 }
             }
@@ -196,46 +180,29 @@ class Supplier extends Supplier_helper
 
             $data["notice"] = notice($lang);
             $data["cmd"] = "edit";
-            $this->load->view('supply/supplier/supplier_'.($isnote?"note":"detail").'_v',$data);
+            $this->load->view('supply/supplier/supplier_' . ($isnote ? "note" : "detail") . '_v', $data);
         }
     }
 
-    public function delete($id="")
+    public function delete($id = "")
     {
-        if (($supplier_vo = $this->supplier_model->get_supplier(array("id"=>$id))) === FALSE)
-        {
+        if (($supplier_vo = $this->supplier_model->get_supplier(array("id" => $id))) === FALSE) {
             $_SESSION["NOTICE"] = "submit_error";
-        }
-        else {
-            if (empty($supplier_vo))
-            {
+        } else {
+            if (empty($supplier_vo)) {
                 $_SESSION["NOTICE"] = "supplier_not_found";
-            }
-            else
-            {
-                if (!$this->supplier_model->inactive_supplier($supplier_vo))
-                {
+            } else {
+                if (!$this->supplier_model->inactive_supplier($supplier_vo)) {
                     $_SESSION["NOTICE"] = "submit_error";
                 }
             }
         }
-        if (isset($_SESSION["LISTPAGE"]))
-        {
+        if (isset($_SESSION["LISTPAGE"])) {
             redirect($_SESSION["LISTPAGE"]);
-        }
-        else
-        {
+        } else {
             redirect(current_url());
         }
 
-    }
-
-    public function _get_app_id(){
-        return $this->app_id;
-    }
-
-    public function _get_lang_id(){
-        return $this->lang_id;
     }
 }
 

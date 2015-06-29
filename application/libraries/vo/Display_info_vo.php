@@ -168,4 +168,5 @@ class Display_info_vo extends Base_vo
     }
 
 }
+
 ?>

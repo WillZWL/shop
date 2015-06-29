@@ -10,27 +10,23 @@ class Version extends MY_Controller
     {
         parent::__construct();
         $this->load->model("mastercfg/version_model");
-        $this->load->helper(array("url","notice"));
+        $this->load->helper(array("url", "notice"));
         $this->load->library("service/pagination_service");
-        $this->_set_lang_id(function_exists(get_lang_id)?get_lang_id():"en");
+        $this->_set_lang_id(function_exists(get_lang_id) ? get_lang_id() : "en");
     }
 
-    public function index($edit="",$eid="")
+    public function index($edit = "", $eid = "")
     {
-        $_SESSION["LISTPAGE"] = base_url()."mastercfg/version/?".$_SERVER["QUERY_STRING"];
-        $sub_app_id = $this->_get_app_id()."01";
+        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/version/?" . $_SERVER["QUERY_STRING"];
+        $sub_app_id = $this->_get_app_id() . "01";
 
-        if($this->input->post("posted"))
-        {
-            if($this->input->post('action') == "add")
-            {
+        if ($this->input->post("posted")) {
+            if ($this->input->post('action') == "add") {
                 $obj = $this->version_model->get();
                 $obj->set_id($this->input->post("id"));
                 $function = "insert";
-            }
-            else
-            {
-                $obj = $this->version_model->get(array("id"=>$this->input->post("id")));
+            } else {
+                $obj = $this->version_model->get(array("id" => $this->input->post("id")));
                 $function = "update";
             }
 
@@ -38,12 +34,9 @@ class Version extends MY_Controller
             $obj->set_status($this->input->post("status"));
 
             $ret = $this->version_model->$function($obj);
-            if($ret === FALSE)
-            {
-                $_SESSION["notice"] = __LINE__." : ".$this->db->_error_message();
-            }
-            else
-            {
+            if ($ret === FALSE) {
+                $_SESSION["notice"] = __LINE__ . " : " . $this->db->_error_message();
+            } else {
                 unset($_SESSION["notice"]);
             }
         }
@@ -51,18 +44,15 @@ class Version extends MY_Controller
         $where = array();
         $option = array();
 
-        if($this->input->get("id") != "")
-        {
-            $where['id LIKE'] = '%'.$this->input->get("id").'%';
+        if ($this->input->get("id") != "") {
+            $where['id LIKE'] = '%' . $this->input->get("id") . '%';
         }
 
-        if($this->input->get("desc") != "")
-        {
-            $where['desc LIKE'] = '%'.$this->input->get('desc').'%';
+        if ($this->input->get("desc") != "") {
+            $where['desc LIKE'] = '%' . $this->input->get('desc') . '%';
         }
 
-        if($this->input->get('status') != "")
-        {
+        if ($this->input->get('status') != "") {
             $where['status'] = $this->input->get('status');
         }
 
@@ -71,8 +61,7 @@ class Version extends MY_Controller
 
         $pconfig['base_url'] = $_SESSION["LISTPAGE"];
         $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"])
-        {
+        if ($option["limit"]) {
             $option["offset"] = $this->input->get("per_page");
         }
 
@@ -82,11 +71,11 @@ class Version extends MY_Controller
         if (empty($order))
             $order = "desc";
 
-        $option["orderby"] = $sort." ".$order;
+        $option["orderby"] = $sort . " " . $order;
 
-        $data = $this->version_model->get_list_w_cnt($where,$option);
+        $data = $this->version_model->get_list_w_cnt($where, $option);
 
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
         $pconfig['total_rows'] = $data['total'];
@@ -94,15 +83,15 @@ class Version extends MY_Controller
         $this->pagination_service->initialize($pconfig);
 
         $data["notice"] = notice($lang);
-        $data["sortimg"][$sort] = "<img src='".base_url()."images/".$order.".gif'>";
-        $data["xsort"][$sort] = $order=="asc"?"desc":"asc";
-        $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
+        $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
+        $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
+        $data["searchdisplay"] = ($submit_search) ? "" : 'style="display:none"';
         $data["searchdisplay"] = "";
 
         $data["eid"] = $eid;
         $data["edit"] = $edit;
 
-        $this->load->view("mastercfg/version/index_v",$data);
+        $this->load->view("mastercfg/version/index_v", $data);
     }
 
     public function _get_app_id()
@@ -110,14 +99,14 @@ class Version extends MY_Controller
         return $this->app_id;
     }
 
-    public function _set_lang_id($value)
-    {
-        $this->lang_id = $value;
-    }
-
     public function _get_lang_id()
     {
         return $this->lang_id;
+    }
+
+    public function _set_lang_id($value)
+    {
+        $this->lang_id = $value;
     }
 }
 

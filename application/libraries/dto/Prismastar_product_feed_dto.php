@@ -76,14 +76,14 @@ class Prismastar_product_feed_dto extends Base_dto
         $this->sku = $value;
     }
 
-    public function set_prod_grp_cd($value)
-    {
-        $this->prod_grp_cd = $value;
-    }
-
     public function get_prod_grp_cd()
     {
         return $this->prod_grp_cd;
+    }
+
+    public function set_prod_grp_cd($value)
+    {
+        $this->prod_grp_cd = $value;
     }
 
     public function get_version_id()

@@ -1,7 +1,8 @@
 <?php
+
 class Cron_wms_inventory extends MY_Controller
 {
-    private $app_id="CRN0001";
+    private $app_id = "CRN0001";
 
     function __construct()
     {

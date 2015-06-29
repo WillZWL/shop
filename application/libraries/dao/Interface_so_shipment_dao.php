@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 class Interface_so_shipment_dao extends Base_dao
 {
 
-    private $table_name="interface_so_shipment";
-    private $vo_classname="Interface_so_shipment_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "interface_so_shipment";
+    private $vo_classname = "Interface_so_shipment_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function Interface_so_shipment_dao()
     {
@@ -42,7 +42,7 @@ class Interface_so_shipment_dao extends Base_dao
 
     public function update_dpd_trackno($batch_id)
     {
-        $sql  = "CALL sp_dpd_update_trackno(?)";
+        $sql = "CALL sp_dpd_update_trackno(?)";
         $ret = $this->db->query($sql, $batch_id);
         return $ret;
     }

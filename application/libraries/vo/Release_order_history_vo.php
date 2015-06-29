@@ -132,4 +132,5 @@ class Release_order_history_vo extends Base_vo
     }
 
 }
+
 ?>

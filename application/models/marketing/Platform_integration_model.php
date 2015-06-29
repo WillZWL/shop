@@ -1,4 +1,5 @@
 <?php
+
 class Platform_integration_model extends CI_Model
 {
 
@@ -11,8 +12,7 @@ class Platform_integration_model extends CI_Model
     public function get_qoo10_orders($action, $country_id, $test)
     {
         $this->load->library('service/qoo10_service');
-        switch ($action)
-        {
+        switch ($action) {
             case 'import':
                 #cron job
                 $this->qoo10_service->import_orders($country_id, $test);
@@ -36,11 +36,10 @@ class Platform_integration_model extends CI_Model
 
     }
 
-    public function get_rakuten_orders($action, $country_id="ES", $value="", $test=FALSE)
+    public function get_rakuten_orders($action, $country_id = "ES", $value = "", $test = FALSE)
     {
         $this->load->library('service/rakuten_service');
-        switch ($action)
-        {
+        switch ($action) {
             // case 'import':
             //  #cron job
             //  $this->rakuten_service->import_orders($country_id, $value, $test);
@@ -94,11 +93,10 @@ class Platform_integration_model extends CI_Model
 
     }
 
-    public function get_client_delivery_contact($platform_id = "ES", $day_diff=0)
+    public function get_client_delivery_contact($platform_id = "ES", $day_diff = 0)
     {
         $this->order_email_service->gen_client_contact_delivery($platform_id, $day_diff);
     }
-
 
 
 }

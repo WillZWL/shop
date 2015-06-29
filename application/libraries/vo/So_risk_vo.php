@@ -4,13 +4,9 @@ include_once "base_vo.php";
 class So_risk_vo extends Base_vo
 {
 
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $so_no = '';
 
     //class variable
-    private $so_no = '';
     private $risk_requested = '0';
     private $risk_var1;
     private $risk_var2;
@@ -28,14 +24,20 @@ class So_risk_vo extends Base_vo
     private $modify_on;
     private $modify_at = '127.0.0.1';
     private $modify_by;
-
-    //primary key
     private $primary_key = array("so_no");
 
-    //auo increment
+    //primary key
     private $increment_field = "";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_so_no()
     {
         return $this->so_no;

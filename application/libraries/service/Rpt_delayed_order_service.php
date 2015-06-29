@@ -11,9 +11,19 @@ class Rpt_delayed_order_service extends Report_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/service/So_service.php");
+        include_once(APPPATH . "libraries/service/So_service.php");
         $this->set_so_service(new So_service());
         $this->set_output_delimiter(',');
+    }
+
+    public function get_delay_report_item_list($start_date, $end_date, $where, $option = array())
+    {
+        return $this->get_so_service()->get_dao()->get_delay_report_item_list($start_date, $end_date, $where, $option);
+    }
+
+    public function get_so_service()
+    {
+        return $this->so_service;
     }
 
     public function set_so_service($value)
@@ -22,36 +32,24 @@ class Rpt_delayed_order_service extends Report_service
         return $this;
     }
 
-    public function get_so_service()
+    public function get_csv($start_date, $end_date, $where)
     {
-        return $this->so_service;
+        $arr = $this->get_data($start_date, $end_date, $where);
+        return $this->convert($arr);
     }
 
     public function get_data($start_date, $end_date, $where)
     {
-        if (!empty($start_date))
-        {
+        if (!empty($start_date)) {
             $start_date .= " 00:00:00";
         }
 
-        if (!empty($end_date))
-        {
+        if (!empty($end_date)) {
             $end_date .= " 23:59:59";
         }
         //$where['(sops.payment_status = "N" OR sops.payment_status = "F")'] = null;
         //$option["limit"] = -1;
         return $this->get_so_service()->get_dao()->get_delay_report_item_list($start_date, $end_date, $where);
-    }
-
-    public function get_delay_report_item_list($start_date, $end_date, $where, $option=array())
-    {
-        return $this->get_so_service()->get_dao()->get_delay_report_item_list($start_date, $end_date, $where, $option);
-    }
-
-    public function get_csv($start_date, $end_date, $where)
-    {
-        $arr = $this->get_data($start_date, $end_date, $where);
-        return $this->convert($arr);
     }
 
     protected function get_default_vo2xml_mapping()

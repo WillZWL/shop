@@ -7,19 +7,35 @@ DEFINE("DHL_TRACKING_FILENAME", "520543_VB_Valuebasket_Ltd.txt");
 
 class Dhl_shipment_tracking_feed_service extends Data_feed_service
 {
-    public function __construct(){
+    public function __construct()
+    {
         parent::Data_feed_service();
-        include_once(APPPATH."libraries/service/External_category_service.php");
+        include_once(APPPATH . "libraries/service/External_category_service.php");
         $this->set_ext_cat_srv(new External_category_service());
 
-        include_once(APPPATH."libraries/service/So_shipment_service.php");
+        include_once(APPPATH . "libraries/service/So_shipment_service.php");
         $this->set_shipment_srv(new So_shipment_service());
 
-        include_once(APPPATH."libraries/service/Context_config_service.php");
+        include_once(APPPATH . "libraries/service/Context_config_service.php");
         $this->set_context_config_srv(new Context_config_service());
 
         $this->set_output_delimiter(chr(9));
         //$this->set_cat_hash_map();
+    }
+
+    public function set_ext_cat_srv(Base_service $srv)
+    {
+        $this->ext_cat_srv = $srv;
+    }
+
+    public function set_shipment_srv($val)
+    {
+        $this->shipment_srv = $val;
+    }
+
+    public function set_context_config_srv($val)
+    {
+        $this->context_config_srv = $val;
     }
 
     public function gen_dhl_shipment_tracking_feed()
@@ -30,44 +46,13 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
 
         $feed_content = $this->gen_dhl_tracking_file();
 
-            if($file_location = $this->save_feed($feed_content))
-            {
-                if(!empty($feed_content)){
-                    $remote_file_name = "520543_VB_Valuebasket_Ltd_".date("YmdHis").".txt";
-                    $this->ftp_feeds($file_location, "./SIE/".$remote_file_name, "DHL_TRACKING_FEED");
-                }
+        if ($file_location = $this->save_feed($feed_content)) {
+            if (!empty($feed_content)) {
+                $remote_file_name = "520543_VB_Valuebasket_Ltd_" . date("YmdHis") . ".txt";
+                $this->ftp_feeds($file_location, "./SIE/" . $remote_file_name, "DHL_TRACKING_FEED");
             }
-            else
-            {
-                mail("jerry.lim@eservicesgroup.com","dhl_tracking_feed","failed to upload $file_location to". DHL_TRACKING_FEED);
-            }
-    }
-
-    public function save_feed($feed_content)
-    {
-        DEFINE('DHL_TRACKING_FEED', $this->get_context_config_srv()->value_of("dhl_tracking_feed"));
-        DEFINE('DHL_TRACKING_FEED_HISTORY',DHL_TRACKING_FEED."/history");
-
-        $file_name = DHL_TRACKING_FILENAME;
-        $history_file_name = "dhl_tracking_no".date("Y-m-d_H:i:s").".txt";
-
-        if(file_exists(DHL_TRACKING_FEED))
-        {
-            if(FALSE === file_put_contents(DHL_TRACKING_FEED."/".$file_name, $feed_content))
-            {
-                mail("jerry.lim@eservicesgroup.com","dhl_tracking_feed","failed to upload $file_name to". DHL_TRACKING_FEED);
-                return false;
-            }
-            else
-            {
-                file_put_contents(DHL_TRACKING_FEED_HISTORY."/".$history_file_name, $feed_content);
-                return DHL_TRACKING_FEED."/".$file_name;
-            }
-        }
-        else
-        {
-            mail("jerry.lim@eservicesgroup.com","dhl_tracking_feed","Path No Exists: ". DHL_TRACKING_FEED);
-            return false;
+        } else {
+            mail("jerry.lim@eservicesgroup.com", "dhl_tracking_feed", "failed to upload $file_location to" . DHL_TRACKING_FEED);
         }
     }
 
@@ -78,20 +63,15 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
 
         $order_list = array();
         $feed_content = "";
-        if($obj_list = $this->get_shipment_srv()->get_dao()->gen_dhl_shipment_tracking_feed())
-        {
-            foreach($obj_list as $obj)
-            {
+        if ($obj_list = $this->get_shipment_srv()->get_dao()->gen_dhl_shipment_tracking_feed()) {
+            foreach ($obj_list as $obj) {
                 $so_no = $obj->get_so_no();
 
                 //this in_array function is used to filter out repeated order
                 //due to the Hs code
-                if(in_array($so_no, $order_list))
-                {
+                if (in_array($so_no, $order_list)) {
                     continue;
-                }
-                else
-                {
+                } else {
                     $order_list[] = $so_no;
 
                     $per_order = array();
@@ -100,32 +80,32 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
                     $delivery_address = $obj->get_delivery_address();
 
                     $address_fragments = explode("|", $delivery_address, 3);
-                    $final_address = preg_replace('/\s+/', ' ',implode(" ", $address_fragments));
+                    $final_address = preg_replace('/\s+/', ' ', implode(" ", $address_fragments));
 
                     $delivery_city = $obj->get_delivery_city();
                     $city_fragments = explode("|", $delivery_city);
-                    $final_city = preg_replace('/\s+/', ' ',implode(" ", $city_fragments));
+                    $final_city = preg_replace('/\s+/', ' ', implode(" ", $city_fragments));
 
                     $per_order['account_number'] = "520543";
                     $per_order['customer_ref'] = $tracking_no;
-                    $per_order['consignee_name'] = mb_substr($obj->get_delivery_name(),0, 30, "UTF-8");
+                    $per_order['consignee_name'] = mb_substr($obj->get_delivery_name(), 0, 30, "UTF-8");
                     //$per_order['consignee_address_1'] = mb_substr($final_address,0, 50, "UTF-8");
 
-                    $per_order['consignee_address_1'] = mb_substr($address_fragments[0],0, 50, "UTF-8");
-                    $per_order['consignee_address_2'] = mb_substr($address_fragments[1],0, 50, "UTF-8");
-                    $per_order['consignee_address_3'] = mb_substr($address_fragments[2],0, 50, "UTF-8");
+                    $per_order['consignee_address_1'] = mb_substr($address_fragments[0], 0, 50, "UTF-8");
+                    $per_order['consignee_address_2'] = mb_substr($address_fragments[1], 0, 50, "UTF-8");
+                    $per_order['consignee_address_3'] = mb_substr($address_fragments[2], 0, 50, "UTF-8");
 
-                    $per_order['consignee_city'] = mb_substr($final_city,0, 20, "UTF-8");
-                    $per_order['consignee_state'] = mb_substr($obj->get_delivery_state(),0, 20, "UTF-8");
-                    $per_order['consignee_postal_code'] = mb_substr($obj->get_delivery_postcode(),0, 10, "UTF-8");
+                    $per_order['consignee_city'] = mb_substr($final_city, 0, 20, "UTF-8");
+                    $per_order['consignee_state'] = mb_substr($obj->get_delivery_state(), 0, 20, "UTF-8");
+                    $per_order['consignee_postal_code'] = mb_substr($obj->get_delivery_postcode(), 0, 10, "UTF-8");
                     $per_order['consignee_phone'] = null;
                     $per_order['consignee_email'] = null;
-                    $per_order['consignee_country_code'] = mb_substr($obj->get_delivery_country_id(),0, 2, "UTF-8");
+                    $per_order['consignee_country_code'] = mb_substr($obj->get_delivery_country_id(), 0, 2, "UTF-8");
                     $per_order['consignee_country_name'] = null;
                     $per_order['country_of_origin'] = "HK";
-                    $per_order['generic_goods_description'] = mb_substr($obj->get_cc_desc(),0, 15, "UTF-8");
+                    $per_order['generic_goods_description'] = mb_substr($obj->get_cc_desc(), 0, 15, "UTF-8");
 
-                    $per_order['total_declared_value'] = $amount =  $obj->get_amount();
+                    $per_order['total_declared_value'] = $amount = $obj->get_amount();
                     $per_order['weight'] = null;
                     $per_order['future_use'] = null;
                     $per_order['item_quantity'] = null;
@@ -152,8 +132,7 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
                     $per_order['item_description_export'] = null;
                     $per_order['recipient_id_type'] = null;
 
-                    foreach($per_order as $k=>$v)
-                    {
+                    foreach ($per_order as $k => $v) {
                         //remove all pipe character in the filed and remove heading and trailing white space.
                         $per_order[$k] = strtoupper(trim(preg_replace('/\|/', ' ', $v)));
                     }
@@ -166,8 +145,7 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
                     //update the so_shipment to indicate that this shipment has already been included.
                     $sh_no = $obj->get_sh_no();
 
-                    if($so_sh_vo = $this->get_shipment_srv()->get_dao()->get(array("sh_no"=>$sh_no)))
-                    {
+                    if ($so_sh_vo = $this->get_shipment_srv()->get_dao()->get(array("sh_no" => $sh_no))) {
                         $so_sh_vo->set_courier_feed_sent(1);
                         $this->get_shipment_srv()->get_dao()->update($so_sh_vo);
                     }
@@ -179,35 +157,37 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
         return $feed_content;
     }
 
-
-
-    public function set_shipment_srv($val)
-    {
-        $this->shipment_srv = $val;
-    }
-
     public function get_shipment_srv()
     {
         return $this->shipment_srv;
     }
 
-
-    public function set_context_config_srv($val)
+    public function save_feed($feed_content)
     {
-        $this->context_config_srv = $val;
+        DEFINE('DHL_TRACKING_FEED', $this->get_context_config_srv()->value_of("dhl_tracking_feed"));
+        DEFINE('DHL_TRACKING_FEED_HISTORY', DHL_TRACKING_FEED . "/history");
+
+        $file_name = DHL_TRACKING_FILENAME;
+        $history_file_name = "dhl_tracking_no" . date("Y-m-d_H:i:s") . ".txt";
+
+        if (file_exists(DHL_TRACKING_FEED)) {
+            if (FALSE === file_put_contents(DHL_TRACKING_FEED . "/" . $file_name, $feed_content)) {
+                mail("jerry.lim@eservicesgroup.com", "dhl_tracking_feed", "failed to upload $file_name to" . DHL_TRACKING_FEED);
+                return false;
+            } else {
+                file_put_contents(DHL_TRACKING_FEED_HISTORY . "/" . $history_file_name, $feed_content);
+                return DHL_TRACKING_FEED . "/" . $file_name;
+            }
+        } else {
+            mail("jerry.lim@eservicesgroup.com", "dhl_tracking_feed", "Path No Exists: " . DHL_TRACKING_FEED);
+            return false;
+        }
     }
 
     public function get_context_config_srv()
     {
         return $this->context_config_srv;
     }
-
-
-
-
-
-
-
 
     public function gen_data_feed($platform_id, $shopping_api = false, $where = array())
     {
@@ -216,39 +196,36 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
         $this->set_googlebase_platform_id($platform_id);
 
         $data_feed = $this->get_data_feed($shopping_api, $where);
-        if($data_feed)
-        {
-            if(!$shopping_api)
-            {
-                foreach($data_feed as $id=>$data)
-                {
+        if ($data_feed) {
+            if (!$shopping_api) {
+                foreach ($data_feed as $id => $data) {
                     $filename = 'googlebase_product_feed_' . $id . '_' . date('Ymdhis');
                     $fp = fopen(DATAPATH . 'feeds/googlebase/' . $id . '/' . $filename . '.txt', 'w');
 
-                    if(fwrite($fp, $data))
-                    {
+                    if (fwrite($fp, $data)) {
                         header("Content-type: text/csv");
                         header("Cache-Control: no-store, no-cache");
                         header("Content-Disposition: attachment; filename=\"$filename\"");
                         echo $data;
 
                         $this->ftp_feeds(DATAPATH . 'feeds/googlebase/' . $id . '/' . $filename . '.txt', "/googlebasefeed_" . strtolower($id) . ".txt", $this->get_ftp_name($id));
-                    }
-                    else
-                    {
+                    } else {
                         $subject = "<DO NOT REPLY> Fails to create GoogleBase $id Product Feed File";
-                        $message ="FILE: ".__FILE__."<br>
-                                     LINE: ".__LINE__;
+                        $message = "FILE: " . __FILE__ . "<br>
+                                     LINE: " . __LINE__;
                         $this->error_handler($subject, $message);
                     }
                 }
-            }
-            else
-            {
+            } else {
                 return $data_feed;
             }
 
         }
+    }
+
+    public function set_googlebase_platform_id($val)
+    {
+        $this->googlebase_platform_id = $val;
     }
 
     public function get_data_feed($shopping_api = FALSE, $where = array())
@@ -264,23 +241,19 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
         $override = $this->affiliate_sku_platform_service->get_sku_feed_list($affiliate_id);
 
         $arr = $this->get_data_list($where);
-        if (!$arr)
-        {
+        if (!$arr) {
             return;
         }
 
         $new_list = array();
 
-        foreach ($arr as $row)
-        {
+        foreach ($arr as $row) {
             $res = $this->process_data_row($row);
             $add = true;
             $selected = "passed margin rules, so added";
 
-            if ($override != null)
-            {
-                switch($override[$row->get_platform_id()][$row->get_sku()])
-                {
+            if ($override != null) {
+                switch ($override[$row->get_platform_id()][$row->get_sku()]) {
                     case 1: # exclude
                         $add = false;
                         $selected = "always exclude";
@@ -297,22 +270,17 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
                 $new_list[] = $res;
         }
 
-        if($new_list)
-        {
-            foreach ($new_list as $obj)
-            {
+        if ($new_list) {
+            foreach ($new_list as $obj) {
                 $rs[$obj->get_platform_country_id()][] = $obj;
             }
 
-            if($shopping_api)
-            {
+            if ($shopping_api) {
                 return $rs;
             }
 
-            if($rs)
-            {
-                foreach($rs as $id=>$data_list)
-                {
+            if ($rs) {
+                foreach ($rs as $id => $data_list) {
                     $content[$id] = $this->convert($data_list);
                 }
             }
@@ -321,17 +289,29 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
         return $content;
     }
 
+    public function get_googlebase_platform_id()
+    {
+        return $this->googlebase_platform_id;
+    }
+
+    protected function get_affiliate_id_prefix()
+    {
+        // refer to affiliate table for more details
+        // SOME IDs have country suffix
+        // SOME don't have.. so take note when checking
+        return "GOO";
+    }
+
     protected function get_data_list($where = array(), $option = array())
     {
         return $this->get_prod_srv()->get_googlebase_product_feed_dto($this->get_googlebase_platform_id(), $where);
         // $this->get_prod_srv()->get_googlebase_product_feed_dto($this->get_googlebase_platform_id(), $where);
-         //var_dump($this->get_prod_srv()->get_dao()->db->last_query());die();
+        //var_dump($this->get_prod_srv()->get_dao()->db->last_query());die();
     }
 
     public function process_data_row($data = NULL)
     {
-        if (!is_object($data))
-        {
+        if (!is_object($data)) {
             return NULL;
         }
 
@@ -350,12 +330,9 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
         $data->set_image_url($image_url);
 
         // condition
-        if($data->get_ex_demo() == 0)
-        {
+        if ($data->get_ex_demo() == 0) {
             $data->set_condition("new");
-        }
-        else
-        {
+        } else {
             $data->set_condition("refurbished");
         }
 
@@ -369,13 +346,10 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
         $data->set_sale_price($price_w_curr);
 
         // colour
-        if($data->get_colour_id() == "NA")
-        {
+        if ($data->get_colour_id() == "NA") {
             $data->set_colour_name("");
             $data->set_item_group_id("");
-        }
-        else
-        {
+        } else {
             $data->set_item_group_id($data->get_prod_grp_cd());
         }
 
@@ -394,52 +368,6 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
         return $data;
     }
 
-    protected function get_url_extension($country_id)
-    {   #SBF2701
-        //return '.com';
-        switch (strtoupper($country_id))
-        {
-            case 'FR' : $result = '.fr'; break;
-            case 'ES' : $result = '.es'; break;
-            case 'AU' : $result = '.com.au'; break;
-            case 'IT' : $result = '.it'; break;
-            case 'BE' : $result = '.be'; break;
-            case 'SG' : $result = '.com.sg'; break;
-            default : $result = '.com';
-        }
-
-        return $result;
-    }
-
-    protected function get_affiliate_code($country_id)
-    {
-        #SBF2701
-        switch (strtoupper($country_id))
-        {
-            case 'FR' : $result = 'AF=GOOFR'; break;
-            case 'GB' : $result = 'AF=GOOGB'; break;
-            case 'AU' : $result = 'AF=GOOAU'; break;
-            case 'ES' : $result = 'AF=GOOES'; break;
-            case 'IT' : $result = 'AF=GOOIT'; break;
-            case 'BE' : $result = 'AF=GOOBE'; break;
-            case 'CH' : $result = 'AF=GOOCH'; break;
-            case 'NZ' : $result = 'AF=GOONZ'; break;
-            case 'SG' : $result = 'AF=GOOSG'; break;
-            case 'MY' : $result = 'AF=GOOMY'; break;
-            case 'IE' : $result = 'AF=GOOIE'; break;
-            case 'MT' : $result = 'AF=GOOMT'; break;
-            case 'PT' : $result = 'AF=GOOPT'; break;
-            case 'FI' : $result = 'AF=GOOFI'; break;
-            case 'PH' : $result = 'AF=GOOPH'; break;
-            case 'RU' : $result = 'AF=GOORU'; break;
-            case 'US' : $result = 'AF=GOOUS'; break;
-
-            default : $result = '';
-        }
-
-        return $result;
-    }
-
     protected function get_product_url($data)
     {   #SBF2701 replace double quot with '-'
         $prod_name = $data->get_prod_name();
@@ -450,22 +378,132 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
         $country_id = $data->get_platform_country_id();
         $language_id = $data->get_language_id();
         $af_code = $this->get_affiliate_code($country_id);
-        $product_url = "http://www.valuebasket" . $this->get_url_extension($country_id) . "/".$language_id."_".$country_id."/".$prod_name."/mainproduct/view/".$sku.($af_code == '' ? '' : '?'.$af_code);
+        $product_url = "http://www.valuebasket" . $this->get_url_extension($country_id) . "/" . $language_id . "_" . $country_id . "/" . $prod_name . "/mainproduct/view/" . $sku . ($af_code == '' ? '' : '?' . $af_code);
 
         return $product_url;
+    }
+
+    protected function get_affiliate_code($country_id)
+    {
+        #SBF2701
+        switch (strtoupper($country_id)) {
+            case 'FR' :
+                $result = 'AF=GOOFR';
+                break;
+            case 'GB' :
+                $result = 'AF=GOOGB';
+                break;
+            case 'AU' :
+                $result = 'AF=GOOAU';
+                break;
+            case 'ES' :
+                $result = 'AF=GOOES';
+                break;
+            case 'IT' :
+                $result = 'AF=GOOIT';
+                break;
+            case 'BE' :
+                $result = 'AF=GOOBE';
+                break;
+            case 'CH' :
+                $result = 'AF=GOOCH';
+                break;
+            case 'NZ' :
+                $result = 'AF=GOONZ';
+                break;
+            case 'SG' :
+                $result = 'AF=GOOSG';
+                break;
+            case 'MY' :
+                $result = 'AF=GOOMY';
+                break;
+            case 'IE' :
+                $result = 'AF=GOOIE';
+                break;
+            case 'MT' :
+                $result = 'AF=GOOMT';
+                break;
+            case 'PT' :
+                $result = 'AF=GOOPT';
+                break;
+            case 'FI' :
+                $result = 'AF=GOOFI';
+                break;
+            case 'PH' :
+                $result = 'AF=GOOPH';
+                break;
+            case 'RU' :
+                $result = 'AF=GOORU';
+                break;
+            case 'US' :
+                $result = 'AF=GOOUS';
+                break;
+
+            default :
+                $result = '';
+        }
+
+        return $result;
+    }
+
+    protected function get_url_extension($country_id)
+    {   #SBF2701
+        //return '.com';
+        switch (strtoupper($country_id)) {
+            case 'FR' :
+                $result = '.fr';
+                break;
+            case 'ES' :
+                $result = '.es';
+                break;
+            case 'AU' :
+                $result = '.com.au';
+                break;
+            case 'IT' :
+                $result = '.it';
+                break;
+            case 'BE' :
+                $result = '.be';
+                break;
+            case 'SG' :
+                $result = '.com.sg';
+                break;
+            default :
+                $result = '.com';
+        }
+
+        return $result;
     }
 
     protected function get_image_url($data)
     {
         $country_id = strtolower($data->get_platform_country_id());
-        define('IMG_PATH', "http://www.valuebasket" . $this->get_url_extension($country_id) . "/".$this->get_config_srv()->value_of("prod_img_path"));
-        if(file_exists("images/product/".$data->get_sku().".".$data->get_image()))
-        {
-            return IMG_PATH.$data->get_sku().".".$data->get_image();
+        define('IMG_PATH', "http://www.valuebasket" . $this->get_url_extension($country_id) . "/" . $this->get_config_srv()->value_of("prod_img_path"));
+        if (file_exists("images/product/" . $data->get_sku() . "." . $data->get_image())) {
+            return IMG_PATH . $data->get_sku() . "." . $data->get_image();
+        } else {
+            return IMG_PATH . "imageunavailable.jpg";
         }
-        else
-        {
-            return IMG_PATH."imageunavailable.jpg";
+    }
+
+    protected function get_availabilty($data)
+    {
+        $in_stock_text = "in stock";
+        $preorder_text = "preorder";
+        $out_of_stock_text = "out of stock";
+        $arriving_text = "available for order";
+
+        if ($data->get_website_status() == "I") {
+            if (min($data->get_website_quantity(), $data->get_display_quantity()) <= 0) {
+                return $out_of_stock_text;
+            }
+            return $in_stock_text;
+        } else if ($data->get_website_status() == "P") {
+            return $preorder_text;
+        } else if ($data->get_website_status() == "A") {
+            return $arriving_text;
+        } else {
+            return $out_of_stock_text;
         }
     }
 
@@ -478,47 +516,51 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
 
     protected function get_shipping_text($data)
     {
-        $shipping_text = $data->get_platform_country_id()."::Standard: 0.00 ".$data->get_platform_currency_id();
+        $shipping_text = $data->get_platform_country_id() . "::Standard: 0.00 " . $data->get_platform_currency_id();
 
         return $shipping_text;
     }
 
-    protected function get_availabilty($data)
+    protected function get_ftp_name($country = 'GB')
     {
-        $in_stock_text = "in stock";
-        $preorder_text = "preorder";
-        $out_of_stock_text = "out of stock";
-        $arriving_text = "available for order";
+        #SBF2701
+        //return 'GOOGLEBASE';
+        switch (strtoupper($country)) {
+            case 'FR' :
+                return 'GOOGLEBASE_FR';
+                break;
+            case 'AU' :
+                return 'GOOGLEBASE_AU';
+                break;
+            case 'ES' :
+                return 'GOOGLEBASE_ES';
+                break;
+            case 'IT' :
+                return 'GOOGLEBASE_IT';
+                break;
+            case 'BE' :
+                return 'GOOGLEBASE_BE';
+                break;
+            default :
+                return 'GOOGLEBASE';
+        }
+    }
 
-        if ($data->get_website_status() == "I")
-        {
-            if(min($data->get_website_quantity(), $data->get_display_quantity()) <= 0)
-            {
-                return $out_of_stock_text;
-            }
-            return $in_stock_text;
-        }
-        else if ($data->get_website_status() == "P")
-        {
-            return $preorder_text;
-        }
-        else if ($data->get_website_status() == "A")
-        {
-            return $arriving_text;
-        }
-        else
-        {
-            return $out_of_stock_text;
-        }
+    public function get_cat_hash_map()
+    {
+        return $this->cat_hash_map;
+    }
+
+    public function get_contact_email()
+    {
+        return 'nero@eservicesgroup.com';
     }
 
     protected function set_cat_hash_map()
     {
-        $ext_cat_list = $this->get_ext_cat_srv()->get_list(array("ext_party"=>"GOOGLEBASE", "status"=>1), array("limit"=>-1));
-        if($ext_cat_list)
-        {
-            foreach($ext_cat_list as $ext_cat_obj)
-            {
+        $ext_cat_list = $this->get_ext_cat_srv()->get_list(array("ext_party" => "GOOGLEBASE", "status" => 1), array("limit" => -1));
+        if ($ext_cat_list) {
+            foreach ($ext_cat_list as $ext_cat_obj) {
                 $rs[$ext_cat_obj->get_country_id()][$ext_cat_obj->get_id()] = $ext_cat_obj->get_ext_name();
             }
         }
@@ -526,9 +568,9 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
         $this->cat_hash_map = $rs;
     }
 
-    public function get_cat_hash_map()
+    public function get_ext_cat_srv()
     {
-        return $this->cat_hash_map;
+        return $this->ext_cat_srv;
     }
 
     protected function get_default_vo2xml_mapping()
@@ -541,26 +583,6 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
         return APPPATH . 'data/googlebase_product_feed_vo2xml.txt';
     }
 
-    public function get_contact_email()
-    {
-        return 'nero@eservicesgroup.com';
-    }
-
-    protected function get_ftp_name($country='GB')
-    {
-        #SBF2701
-        //return 'GOOGLEBASE';
-        switch (strtoupper($country))
-        {
-            case 'FR' : return 'GOOGLEBASE_FR'; break;
-            case 'AU' : return 'GOOGLEBASE_AU'; break;
-            case 'ES' : return 'GOOGLEBASE_ES'; break;
-            case 'IT' : return 'GOOGLEBASE_IT'; break;
-            case 'BE' : return 'GOOGLEBASE_BE'; break;
-            default : return 'GOOGLEBASE';
-        }
-    }
-
     protected function get_sj_id()
     {
         return "GOOGLEBASE_PRODUCT_FEED";
@@ -569,34 +591,6 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
     protected function get_sj_name()
     {
         return "GOOGLEBASE Product Feed Cron Time";
-    }
-
-    public function get_ext_cat_srv()
-    {
-        return $this->ext_cat_srv;
-    }
-
-    public function set_ext_cat_srv(Base_service $srv)
-    {
-        $this->ext_cat_srv = $srv;
-    }
-
-    public function get_googlebase_platform_id()
-    {
-        return $this->googlebase_platform_id;
-    }
-
-    public function set_googlebase_platform_id($val)
-    {
-        $this->googlebase_platform_id = $val;
-    }
-
-    protected function get_affiliate_id_prefix()
-    {
-        // refer to affiliate table for more details
-        // SOME IDs have country suffix
-        // SOME don't have.. so take note when checking
-        return "GOO";
     }
 }
 

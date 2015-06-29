@@ -1,5 +1,7 @@
 <?php
-class Failed_transaction_model extends CI_Model{
+
+class Failed_transaction_model extends CI_Model
+{
 
     public function __construct()
     {

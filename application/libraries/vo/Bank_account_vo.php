@@ -156,4 +156,5 @@ class Bank_account_vo extends Base_vo
     }
 
 }
+
 ?>

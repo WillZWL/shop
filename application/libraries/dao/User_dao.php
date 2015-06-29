@@ -35,7 +35,7 @@ class User_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_menu_by_user_id($user_id, $app_group_id, $classname="Role_app_dto")
+    public function get_menu_by_user_id($user_id, $app_group_id, $classname = "Role_app_dto")
     {
         $this->include_dto($classname);
         $sql = "
@@ -49,33 +49,26 @@ class User_dao extends Base_dao
                     where
                     a.app_group_id = '" . $app_group_id . "' and a.status=1 and display_row=1 order by a.display_order;";
         $rs = array();
-        if ($query = $this->db->query($sql, $user_id))
-        {
+        if ($query = $this->db->query($sql, $user_id)) {
             // var_dump($this->db->last_query());
-            foreach ($query->result($classname) as $obj)
-            {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
-            return empty($rs)?$rs:(object) $rs;
-        }
-        else
-        {
+            return empty($rs) ? $rs : (object)$rs;
+        } else {
             return FALSE;
         }
     }
 
-    public function is_allowed_to_cancel_order_by_role($user_id, $classname="Role_app_dto")
+    public function is_allowed_to_cancel_order_by_role($user_id, $classname = "Role_app_dto")
     {
         $this->include_dto($classname);
         $sql = "
                     SELECT role_id FROM user_role WHERE user_id =? AND (role_id = 'admin' OR role_id = 'com_lead' OR role_id = 'com_man' OR role_id = 'com_staff')
                 ";
-        if ($query = $this->db->query($sql, $user_id))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
-                if($obj->get_role_id())
-                {
+        if ($query = $this->db->query($sql, $user_id)) {
+            foreach ($query->result($classname) as $obj) {
+                if ($obj->get_role_id()) {
                     return TRUE;
                 }
             }
@@ -84,12 +77,12 @@ class User_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_menu_item($user_id="", $classname="")
+    public function get_menu_item($user_id = "", $classname = "")
     {
 
         $this->include_dto($classname);
 
-        $sql  = "
+        $sql = "
                 SELECT DISTINCT a.id AS app_id, a.app_name, a.parent_app_id, a.description, a.display_order
                 FROM user_role ur
                 RIGHT JOIN role_rights rr
@@ -108,26 +101,22 @@ class User_dao extends Base_dao
                 ";
 
         $rs = array();
-        if ($query = $this->db->query($sql, $user_id))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, $user_id)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
-            return empty($rs)?$rs:(object) $rs;
-        }
-        else
-        {
+            return empty($rs) ? $rs : (object)$rs;
+        } else {
             return FALSE;
         }
     }
 
-    public function get_app_rights($user_id="", $app_id="", $classname="")
+    public function get_app_rights($user_id = "", $app_id = "", $classname = "")
     {
 
         $this->include_dto($classname);
 
-        $sql  = "
+        $sql = "
                 SELECT DISTINCT r.app_id, r.id AS rights_id, r.rights
                 FROM user_role ur
                 RIGHT JOIN role_rights rr
@@ -149,23 +138,19 @@ class User_dao extends Base_dao
                 ";
 
         $rs = array();
-        if ($query = $this->db->query($sql, array($user_id, $app_id, $app_id)))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, array($user_id, $app_id, $app_id))) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
-            return empty($rs)?$rs:(object) $rs;
-        }
-        else
-        {
+            return empty($rs) ? $rs : (object)$rs;
+        } else {
             return FALSE;
         }
     }
 
     public function check_access($user_id = "", $app_id = "", $rights = "")
     {
-        $sql  = "
+        $sql = "
                 SELECT
                     IF(COUNT(*)>0, 1, 0) AS access
                 FROM
@@ -191,13 +176,13 @@ class User_dao extends Base_dao
                 AND
                     a.id = ?";
         if ($rights == "") {
-            $sql  .= " AND r.rights = ''";
+            $sql .= " AND r.rights = ''";
             $binding = array($user_id, $app_id);
         } else {
-            $sql  .= " AND r.rights = ?";
+            $sql .= " AND r.rights = ?";
             $binding = array($user_id, $app_id, $rights);
         }
-        $sql  .= " AND r.status = 1
+        $sql .= " AND r.status = 1
                 AND a.status = 1
                 AND ro.status = 1
                 ORDER BY rights_id
@@ -210,7 +195,7 @@ class User_dao extends Base_dao
         }
     }
 
-    public function get_list_w_roles($where=array(), $option=array(), $classname="")
+    public function get_list_w_roles($where = array(), $option = array(), $classname = "")
     {
 
         $this->db->from('user AS u');
@@ -222,38 +207,31 @@ class User_dao extends Base_dao
                     GROUP BY us.id
                 ) AS rn', 'u.id = rn.id', 'LEFT');
 
-        if (!empty($where["id"]))
-        {
+        if (!empty($where["id"])) {
             $this->db->like('u.id', $where["id"]);
         }
 
-        if (!empty($where["username"]))
-        {
+        if (!empty($where["username"])) {
             $this->db->like('u.username', $where["username"]);
         }
 
-        if (!empty($where["email"]))
-        {
+        if (!empty($where["email"])) {
             $this->db->like('u.email', $where["email"]);
         }
 
-        if (isset($where["status"]) && is_integer($where["status"]))
-        {
+        if (isset($where["status"]) && is_integer($where["status"])) {
             $this->db->where('u.status', $where["status"]);
         }
 
-        if (!empty($where["roles"]))
-        {
+        if (!empty($where["roles"])) {
             $this->db->like('rn.roles', $where["roles"]);
         }
 
-        if (empty($option["orderby"]))
-        {
+        if (empty($option["orderby"])) {
             $option["orderby"] = "u.id ASC";
         }
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
 
             $this->include_dto($classname);
 
@@ -261,43 +239,32 @@ class User_dao extends Base_dao
 
             $this->db->order_by($option["orderby"]);
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
 
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }

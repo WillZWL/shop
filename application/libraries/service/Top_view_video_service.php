@@ -10,32 +10,26 @@ class Top_view_video_service extends Landpage_video_listing_service
     public function __construct()
     {
         parent::Landpage_video_listing_service();
-        include_once(APPPATH."libraries/service/Product_service.php");
+        include_once(APPPATH . "libraries/service/Product_service.php");
         $this->product_service = new Product_service();
     }
 
-    public function get_count($catid="", $mode="", $platform="", $type="", $src="")
+    public function get_count($catid = "", $mode = "", $platform = "", $type = "", $src = "")
     {
-        if($catid == "")
-        {
+        if ($catid == "") {
             return FALSE;
-        }
-        else
-        {
-            return $this->get_dao()->get_num_rows(array("catid"=>$catid,"listing_type"=>'TV',"mode"=>$mode, "platform_id"=>$platform, "video_type"=>$type, "src"=>$src));
+        } else {
+            return $this->get_dao()->get_num_rows(array("catid" => $catid, "listing_type" => 'TV', "mode" => $mode, "platform_id" => $platform, "video_type" => $type, "src" => $src));
         }
     }
 
-    public function get_top_view_video($catid="", $rank="", $v_type="", $platform="", $src="")
+    public function get_top_view_video($catid = "", $rank = "", $v_type = "", $platform = "", $src = "")
     {
-        if($catid === "")
-        {
+        if ($catid === "") {
             return $this->get_dao()->get();
-        }
-        else
-        {
+        } else {
             //$obj =  $this->get_dao()->get(array("catid"=>$catid,"type"=>'TV',"rank"=>$rank));
-            $obj =  $this->get_dao()->get_item_by_rank($catid, "TV", $v_type, $rank, $platform, $src, "Video_list_w_name_dto");
+            $obj = $this->get_dao()->get_item_by_rank($catid, "TV", $v_type, $rank, $platform, $src, "Video_list_w_name_dto");
 
             return $obj;
         }
@@ -51,22 +45,17 @@ class Top_view_video_service extends Landpage_video_listing_service
         return $this->get_dao()->update($obj);
     }
 
-    public function get_video_list($where=array(), $option=array())
+    public function get_video_list($where = array(), $option = array())
     {
         return $this->product_service->get_dao()->get_video_list_w_name($where, $option);
     }
 
-    public function get_video_list_total($where=array(),$option=array())
+    public function get_video_list_total($where = array(), $option = array())
     {
         return $this->product_service->get_dao()->get_video_list_w_name($where, $option);
     }
 
-    public function get_list_w_name($catid, $mode="M", $l_type="TV", $v_type="", $platform="", $src="", $rtype="object")
-    {
-        return $this->get_dao()->get_list_w_pname($catid, $mode, $l_type, $v_type, $platform, $src, $rtype, "top_view_video_prodname_dto");
-    }
-
-    public function delete_bs($where=array())
+    public function delete_bs($where = array())
     {
         return $this->get_dao()->q_delete($where);
     }
@@ -81,38 +70,30 @@ class Top_view_video_service extends Landpage_video_listing_service
         $this->get_dao()->trans_complete();
     }
 
-    public function display_list($catid="", $type="", $src="")
+    public function display_list($catid = "", $type = "", $src = "")
     {
-        if($catid == "")
-        {
+        if ($catid == "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             $manual = $this->get_list_w_name($catid, "M", "TV", $type, PLATFORMID, $src, 'object');
             $auto = $this->get_list_w_name($catid, "A", "TV", $type, PLATFORMID, $src, 'object');
 
             $ret = array();
             $added = array();
 
-            if ($manual)
-            {
-                foreach($manual as $obj)
-                {
-                    $ret[] = array("ref_id"=>$obj->get_ref_id(),"sku"=>$obj->get_sku(),"video_type"=>$obj->get_video_type(),"video_src"=>$obj->get_src(),"name"=>$obj->get_name(),"image"=>$obj->get_image(),"price"=>$obj->get_price(),"website_status"=>$obj->get_website_status(),"qty"=>$obj->get_quantity(),"web_qty"=>$obj->get_website_quantity());
+            if ($manual) {
+                foreach ($manual as $obj) {
+                    $ret[] = array("ref_id" => $obj->get_ref_id(), "sku" => $obj->get_sku(), "video_type" => $obj->get_video_type(), "video_src" => $obj->get_src(), "name" => $obj->get_name(), "image" => $obj->get_image(), "price" => $obj->get_price(), "website_status" => $obj->get_website_status(), "qty" => $obj->get_quantity(), "web_qty" => $obj->get_website_quantity());
                     $added[] = $obj->get_ref_id();
                 }
             }
 
             $cnt = count($added);
 
-            if ($auto)
-            {
-                foreach($auto as $obj)
-                {
-                    if($cnt < $this->get_limit() && !in_array($obj->get_ref_id(),$added))
-                    {
-                        $ret[] = array("ref_id"=>$obj->get_ref_id(),"sku"=>$obj->get_sku(),"video_type"=>$obj->get_video_type(),"video_src"=>$obj->get_src(),"name"=>$obj->get_name(),"image"=>$obj->get_image(),"price"=>$obj->get_price(),"website_status"=>$obj->get_website_status(),"qty"=>$obj->get_quantity(),"web_qty"=>$obj->get_website_quantity());
+            if ($auto) {
+                foreach ($auto as $obj) {
+                    if ($cnt < $this->get_limit() && !in_array($obj->get_ref_id(), $added)) {
+                        $ret[] = array("ref_id" => $obj->get_ref_id(), "sku" => $obj->get_sku(), "video_type" => $obj->get_video_type(), "video_src" => $obj->get_src(), "name" => $obj->get_name(), "image" => $obj->get_image(), "price" => $obj->get_price(), "website_status" => $obj->get_website_status(), "qty" => $obj->get_quantity(), "web_qty" => $obj->get_website_quantity());
                         $cnt++;
                     }
                 }
@@ -125,35 +106,32 @@ class Top_view_video_service extends Landpage_video_listing_service
         }
     }
 
-    public function vzaar_display_list($catid="", $type="")
+    public function get_list_w_name($catid, $mode = "M", $l_type = "TV", $v_type = "", $platform = "", $src = "", $rtype = "object")
     {
-        if($catid == "")
-        {
+        return $this->get_dao()->get_list_w_pname($catid, $mode, $l_type, $v_type, $platform, $src, $rtype, "top_view_video_prodname_dto");
+    }
+
+    public function vzaar_display_list($catid = "", $type = "")
+    {
+        if ($catid == "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             $ret = array();
             $added = array();
 
-            if ($manual = $this->get_list_w_name($catid, "M", "TV", $type, PLATFORMID, "V"))
-            {
-                foreach($manual as $obj)
-                {
-                    $ret[] = array("ref_id"=>$obj->get_ref_id(),"sku"=>$obj->get_sku(),"video_type"=>$obj->get_video_type(),"video_src"=>$obj->get_src(),"name"=>$obj->get_name(),"image"=>$obj->get_image(),"price"=>$obj->get_price(),"website_status"=>$obj->get_website_status(),"qty"=>$obj->get_quantity(),"web_qty"=>$obj->get_website_quantity());
+            if ($manual = $this->get_list_w_name($catid, "M", "TV", $type, PLATFORMID, "V")) {
+                foreach ($manual as $obj) {
+                    $ret[] = array("ref_id" => $obj->get_ref_id(), "sku" => $obj->get_sku(), "video_type" => $obj->get_video_type(), "video_src" => $obj->get_src(), "name" => $obj->get_name(), "image" => $obj->get_image(), "price" => $obj->get_price(), "website_status" => $obj->get_website_status(), "qty" => $obj->get_quantity(), "web_qty" => $obj->get_website_quantity());
                     $added[] = $obj->get_ref_id();
                 }
             }
 
             $cnt = count($added);
 
-            if ($auto = $this->get_list_w_name($catid, "A", "TV", $type, PLATFORMID, "V"))
-            {
-                foreach($auto as $obj)
-                {
-                    if($cnt < $this->get_limit() && !in_array($obj->get_ref_id(),$added))
-                    {
-                        $ret[] = array("ref_id"=>$obj->get_ref_id(),"sku"=>$obj->get_sku(),"video_type"=>$obj->get_video_type(),"video_src"=>$obj->get_src(),"name"=>$obj->get_name(),"image"=>$obj->get_image(),"price"=>$obj->get_price(),"website_status"=>$obj->get_website_status(),"qty"=>$obj->get_quantity(),"web_qty"=>$obj->get_website_quantity());
+            if ($auto = $this->get_list_w_name($catid, "A", "TV", $type, PLATFORMID, "V")) {
+                foreach ($auto as $obj) {
+                    if ($cnt < $this->get_limit() && !in_array($obj->get_ref_id(), $added)) {
+                        $ret[] = array("ref_id" => $obj->get_ref_id(), "sku" => $obj->get_sku(), "video_type" => $obj->get_video_type(), "video_src" => $obj->get_src(), "name" => $obj->get_name(), "image" => $obj->get_image(), "price" => $obj->get_price(), "website_status" => $obj->get_website_status(), "qty" => $obj->get_quantity(), "web_qty" => $obj->get_website_quantity());
                         $cnt++;
                     }
                 }
@@ -168,7 +146,7 @@ class Top_view_video_service extends Landpage_video_listing_service
         return $this->type;
     }
 
-    protected function _get_product_list_for_home($platform="")
+    protected function _get_product_list_for_home($platform = "")
     {
         return $this->product_service->get_top_view_video_list_by_cat('', 0, 30, $this->get_limit(), $platform);
     }
@@ -176,9 +154,9 @@ class Top_view_video_service extends Landpage_video_listing_service
     protected function _get_video_list($filter_column = '', $cat_id = '', $platform = '', $video_type = '')
     {
         return $this->product_service->get_listed_video_list(
-                        array('product.status'=>2, 'product.website_status'=>'I', '(pr.price OR pr2.price) >'=>'0', 'pr2.listing_status'=>'L',
-                            'product.website_quantity >'=>0, 'platform_biz_var.selling_platform_id'=>$platform, 'product_video.type'=>$video_type ,'product.'.$filter_column=>$cat_id),
-                        array('orderby'=>'pv.view_count DESC', 'limit'=>$this->get_limit()));
+            array('product.status' => 2, 'product.website_status' => 'I', '(pr.price OR pr2.price) >' => '0', 'pr2.listing_status' => 'L',
+                'product.website_quantity >' => 0, 'platform_biz_var.selling_platform_id' => $platform, 'product_video.type' => $video_type, 'product.' . $filter_column => $cat_id),
+            array('orderby' => 'pv.view_count DESC', 'limit' => $this->get_limit()));
     }
 }
 

@@ -1,4 +1,5 @@
 <?php
+
 class Paypal_ipn extends PUB_Controller
 {
 

@@ -15,16 +15,6 @@ class Currency_dao extends Base_dao
         parent::__construct();
     }
 
-    public function get_vo_classname()
-    {
-        return $this->vo_class_name;
-    }
-
-    public function get_table_name()
-    {
-        return $this->table_name;
-    }
-
     public function get_seq_name()
     {
         return $this->seq_name;
@@ -38,13 +28,11 @@ class Currency_dao extends Base_dao
     public function get_by_platform($platform)
     {
         $this->db->from('currency c');
-        $this->db->join('platform_biz_var pbv',"pbv.platform_currency_id = c.id AND pbv.selling_platform_id = '$platform'",'INNER');
+        $this->db->join('platform_biz_var pbv', "pbv.platform_currency_id = c.id AND pbv.selling_platform_id = '$platform'", 'INNER');
         $this->db->select('c.*');
-        if($query = $this->db->get())
-        {
+        if ($query = $this->db->get()) {
             $this->include_vo();
-            foreach($query->result("object",$this->get_vo_class_name()) as $obj)
-            {
+            foreach ($query->result("object", $this->get_vo_class_name()) as $obj) {
                 $tmp = $obj;
             }
 
@@ -62,8 +50,7 @@ class Currency_dao extends Base_dao
                     AND p.selling_platform_id = ?
                 LIMIT 1";
 
-        if($query = $this->db->query($sql, $platform))
-        {
+        if ($query = $this->db->query($sql, $platform)) {
             return $query->row()->sign;
         }
         return FALSE;
@@ -73,14 +60,16 @@ class Currency_dao extends Base_dao
     public function get_round_up($currency_id)
     {
         $this->db->select('round_up');
-        if ($query = $this->db->get_where($this->get_table_name(), array("id"=>$currency_id), 1))
-        {
+        if ($query = $this->db->get_where($this->get_table_name(), array("id" => $currency_id), 1)) {
             return $query->row()->round_up;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
+    }
+
+    public function get_table_name()
+    {
+        return $this->table_name;
     }
 
     public function get_active_currency_list()
@@ -101,12 +90,16 @@ class Currency_dao extends Base_dao
         $result_arr = array();
         $classname = $this->get_vo_classname();
 
-        foreach ($result->result($classname) as $obj)
-        {
+        foreach ($result->result($classname) as $obj) {
             array_push($result_arr, $obj);
         }
 
         return $result_arr;
+    }
+
+    public function get_vo_classname()
+    {
+        return $this->vo_class_name;
     }
 
 }

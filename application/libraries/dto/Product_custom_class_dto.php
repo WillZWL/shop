@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class Product_custom_class_dto extends Base_dto {
+class Product_custom_class_dto extends Base_dto
+{
 
     //class variable
     private $sku;

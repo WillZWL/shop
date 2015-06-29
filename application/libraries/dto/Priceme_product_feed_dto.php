@@ -204,7 +204,7 @@ class Priceme_product_feed_dto extends Base_dto
         $this->mpn = $value;
     }
 
-        public function get_stock_status()
+    public function get_stock_status()
     {
         return $this->stock_status;
     }
@@ -261,13 +261,13 @@ class Priceme_product_feed_dto extends Base_dto
 
     public function set_availability($value)
     {
-        $this->availability= $value;
+        $this->availability = $value;
     }
 
 
     // The below variables are needed for profit margin calculation (price_service->calculate_profit())
 
-        public function get_platform_id()
+    public function get_platform_id()
     {
         return $this->platform_id;
     }

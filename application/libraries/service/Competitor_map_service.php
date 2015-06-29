@@ -1,19 +1,15 @@
 <?php
 
 include_once "Base_service.php";
+
 class Competitor_map_service extends Base_service
 {
 
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Competitor_map_dao.php");
+        include_once(APPPATH . "libraries/dao/Competitor_map_dao.php");
         $this->set_dao(new Competitor_map_dao());
-    }
-
-    public function get_dao()
-    {
-        return $this->dao;
     }
 
     public function set_dao($value)
@@ -21,17 +17,22 @@ class Competitor_map_service extends Base_service
         $this->dao = $value;
     }
 
-    public function get($where=array())
+    public function get($where = array())
     {
         return $this->get_dao()->get($where);
     }
 
-    public function get_list($where=array(), $option=array())
+    public function get_dao()
+    {
+        return $this->dao;
+    }
+
+    public function get_list($where = array(), $option = array())
     {
         return $this->get_dao()->get_list($where, $option);
     }
 
-    public function get_active_mapped_list($country_id="", $master_sku="")
+    public function get_active_mapped_list($country_id = "", $master_sku = "")
     {
         return $this->get_dao()->get_active_mapped_list($country_id, $master_sku);
     }

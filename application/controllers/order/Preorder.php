@@ -3,8 +3,8 @@
 class Preorder extends MY_Controller
 {
     const PAGE_LIMIT = 100;
-    private $app_id="ORD0022";
-    private $lang_id="en";
+    private $app_id = "ORD0022";
+    private $lang_id = "en";
 
     public function __construct()
     {
@@ -35,10 +35,8 @@ class Preorder extends MY_Controller
             $order = "desc";
 
         $selected_order = $this->input->get_post('check');
-        if ($selected_order)
-        {
-            foreach ($selected_order as $so)
-            {
+        if ($selected_order) {
+            foreach ($selected_order as $so) {
                 $action = $this->input->get_post("order_action");
                 if ($action == "delay_email")
                     $this->preorder_model->so_service->fire_preorder_delay_email($so);
@@ -50,26 +48,22 @@ class Preorder extends MY_Controller
             redirect("order/preorder?" . $query_string);
         }
 
-        if ($search)
-        {
-            $_SESSION["LISTPAGE"] = base_url()."order/preorder/?" . $_SERVER['QUERY_STRING'];
-            if ($this->input->get_post("so_no") != "")
-            {
+        if ($search) {
+            $_SESSION["LISTPAGE"] = base_url() . "order/preorder/?" . $_SERVER['QUERY_STRING'];
+            if ($this->input->get_post("so_no") != "") {
                 $where["so.so_no"] = trim($this->input->get_post("so_no"));
             }
-            if ($this->input->get_post("prod_sku") != "")
-            {
+            if ($this->input->get_post("prod_sku") != "") {
                 $where["soi.prod_sku"] = trim($this->input->get_post("prod_sku"));
             }
-            $data["sortimg"][$sort] = "<img src='".base_url()."images/".$order.".gif'>";
-            $data["xsort"][$sort] = $order=="asc"?"desc":"asc";
+            $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
+            $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
         }
         $limit = self::PAGE_LIMIT;
         $pconfig['base_url'] = $_SESSION["LISTPAGE"];
         $option["limit"] = $pconfig['per_page'] = $limit;
 
-        if ($option["limit"])
-        {
+        if ($option["limit"]) {
             $option["offset"] = $this->input->get_post("per_page");
         }
 
@@ -82,7 +76,7 @@ class Preorder extends MY_Controller
 
 //      print $this->preorder_model->so_service->get_dao()->db->last_query();
 
-        include_once(APPPATH."language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
         $this->load->view('order/preorder/preorder_index', $data);

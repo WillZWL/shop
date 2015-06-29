@@ -1,4 +1,5 @@
 <?php
+
 class Client_model extends CI_Model
 {
     public function __construct()
@@ -42,4 +43,5 @@ class Client_model extends CI_Model
         $this->client_service->include_vo();
     }
 }
+
 ?>

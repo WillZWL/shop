@@ -37,7 +37,6 @@ class Pmgw_report_global_collect_dto extends Base_dto
     private $remarks;
 
 
-
     private $ref_txn_id;
 
     private $commission = 0.00;

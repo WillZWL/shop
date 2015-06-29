@@ -1,4 +1,5 @@
 <?php
+
 class Cron_generate_video_listing extends MY_Controller
 {
     function __construct()

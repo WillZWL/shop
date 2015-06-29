@@ -60,4 +60,5 @@ class V_bundle_vo extends Base_vo
     }
 
 }
+
 ?>

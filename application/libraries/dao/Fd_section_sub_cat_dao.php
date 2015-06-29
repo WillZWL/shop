@@ -5,32 +5,37 @@ include_once 'Base_dao.php';
 
 class Fd_section_sub_cat_dao extends Base_dao
 {
-    private $table_name="fd_section_sub_cat";
-    private $vo_class_name="Fd_section_sub_cat_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "fd_section_sub_cat";
+    private $vo_class_name = "Fd_section_sub_cat_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function get_vo_classname(){
+    public function get_vo_classname()
+    {
         return $this->vo_class_name;
     }
 
-    public function get_table_name(){
+    public function get_table_name()
+    {
         return $this->table_name;
     }
 
-    public function get_seq_name(){
+    public function get_seq_name()
+    {
         return $this->seq_name;
     }
 
-    public function get_seq_mapping_field(){
+    public function get_seq_mapping_field()
+    {
         return $this->seq_mapping_field;
     }
 
-    public function verify_festive_link_id($festive="", $link_id="")
+    public function verify_festive_link_id($festive = "", $link_id = "")
     {
         $time = date("Y-m-d H:i:s");
         $sql = "SELECT fdssc.*
@@ -50,11 +55,9 @@ class Fd_section_sub_cat_dao extends Base_dao
 
         $this->include_vo();
 
-        if($query = $this->db->query($sql,array($link_id,$festive,$time,$time)))
-        {
+        if ($query = $this->db->query($sql, array($link_id, $festive, $time, $time))) {
             $ret = array();
-            foreach($query->result($$this->get_vo_classname()) as $obj)
-            {
+            foreach ($query->result($$this->get_vo_classname()) as $obj) {
                 $ret[] = $obj;
             }
             return $ret;

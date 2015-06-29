@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class Banner_cat_list_dto extends Base_dto {
+class Banner_cat_list_dto extends Base_dto
+{
 
     //class variable
     private $id;

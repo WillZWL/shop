@@ -180,4 +180,5 @@ class Flex_gateway_fee_vo extends Base_vo
     }
 
 }
+
 ?>

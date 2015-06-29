@@ -15,7 +15,7 @@ class ext_category_mapping_vo extends Base_vo
     private $modify_on;
     private $modify_at;
     private $modify_by;
-    
+
     private $primary_key = array("id");
 
     //auo increment
@@ -43,7 +43,7 @@ class ext_category_mapping_vo extends Base_vo
         $this->ext_party = $value;
         return $this;
     }
-    
+
     public function get_category_id()
     {
         return $this->category_id;

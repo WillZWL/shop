@@ -9,8 +9,14 @@ class Rpt_wow_email_service extends Report_service
     {
         parent::__construct();
         $this->set_output_delimiter(',');
-        include_once(APPPATH."libraries/service/So_service.php");
+        include_once(APPPATH . "libraries/service/So_service.php");
         $this->set_so_service(new So_service());
+    }
+
+    public function set_so_service($value)
+    {
+        $this->so_service = $value;
+        return $this;
     }
 
     public function get_data()
@@ -23,9 +29,14 @@ class Rpt_wow_email_service extends Report_service
         $where["so.delivery_country_id"] = "GB";
         $where["so.status"] = 6;
         $arr = $this->so_service->get_wow_email_list_data($where, $option);
-        $data = $this->convert($arr)."\n";
+        $data = $this->convert($arr) . "\n";
 
         return $data;
+    }
+
+    public function get_so_service()
+    {
+        return $this->so_service;
     }
 
     protected function get_default_vo2xml_mapping()
@@ -36,17 +47,6 @@ class Rpt_wow_email_service extends Report_service
     protected function get_default_xml2csv_mapping()
     {
         return '';
-    }
-
-    public function set_so_service($value)
-    {
-        $this->so_service = $value;
-        return $this;
-    }
-
-    public function get_so_service()
-    {
-        return $this->so_service;
     }
 
 }

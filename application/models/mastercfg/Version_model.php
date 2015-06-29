@@ -11,24 +11,21 @@ class Version_model extends CI_Model
 
     public function get($where = "")
     {
-        if(!is_array($where))
-        {
+        if (!is_array($where)) {
             return $this->version_service->get_new();
-        }
-        else
-        {
+        } else {
             return $this->version_service->get($where);
         }
     }
 
-    public function get_list($where=array(), $option = array())
-    {
-        return $this->version_service->get_list($where, $option);
-    }
-
     public function get_list_w_cnt($where = array(), $option = array())
     {
-        return array("vlist"=>$this->get_list($where,$option), "total"=>$this->version_service->get_list_cnt($where));
+        return array("vlist" => $this->get_list($where, $option), "total" => $this->version_service->get_list_cnt($where));
+    }
+
+    public function get_list($where = array(), $option = array())
+    {
+        return $this->version_service->get_list($where, $option);
     }
 
     public function insert($obj)

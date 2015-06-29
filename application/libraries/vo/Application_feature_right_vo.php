@@ -4,13 +4,9 @@ include_once "base_vo.php";
 class Application_feature_right_vo extends Base_vo
 {
 
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $app_id;
 
     //class variable
-    private $app_id;
     private $app_feature_id;
     private $role_id;
     private $status = '0';
@@ -20,14 +16,20 @@ class Application_feature_right_vo extends Base_vo
     private $modify_on;
     private $modify_at;
     private $modify_by;
-
-    //primary key
     private $primary_key = array("app_id", "app_feature_id");
 
-    //auo increment
+    //primary key
     private $increment_field = "";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_app_id()
     {
         return $this->app_id;

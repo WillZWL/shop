@@ -15,18 +15,13 @@ class News_subscription extends PUB_Controller
 
     public function add($email = '')
     {
-        if (empty($email) || $email == '')
-        {
+        if (empty($email) || $email == '') {
             $email = $this->input->post('email');
 
-            if (empty($email))
-            {
-                if($this->input->post('redirect_url'))
-                {
+            if (empty($email)) {
+                if ($this->input->post('redirect_url')) {
                     redirect($this->input->post('redirect_url'));
-                }
-                else
-                {
+                } else {
                     redirect('');
                 }
             }
@@ -35,12 +30,9 @@ class News_subscription extends PUB_Controller
         $this->news_subscription_model->add_subscriber($email);
 
         //var_dump($_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']);
-        if($this->input->post('redirect_url'))
-        {
+        if ($this->input->post('redirect_url')) {
             redirect($this->input->post('redirect_url'));
-        }
-        else
-        {
+        } else {
             redirect('');
         }
     }

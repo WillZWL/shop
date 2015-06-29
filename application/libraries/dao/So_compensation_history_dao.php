@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class So_compensation_history_dao extends Base_dao
 {
-    private $table_name="so_compensation_history";
-    private $vo_classname="So_compensation_history_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "so_compensation_history";
+    private $vo_classname = "So_compensation_history_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -38,10 +38,9 @@ class So_compensation_history_dao extends Base_dao
     {
         $this->db->from("so_compensation_history cph");
         $this->db->join("user AS usr", "usr.id = cph.create_by");
-        $this->db->where(array("cph.compensation_id"=>$compensation_id, "cph.status"=>1));
+        $this->db->where(array("cph.compensation_id" => $compensation_id, "cph.status" => 1));
         $this->db->select("usr.email");
-        if ($query = $this->db->get())
-        {
+        if ($query = $this->db->get()) {
             return $query->row()->email;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 class Product_HS_code_model extends CI_Model
 {
     public function __construct()

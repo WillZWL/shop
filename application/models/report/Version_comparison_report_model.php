@@ -8,15 +8,15 @@ class Version_comparison_report_model extends CI_Model
         parent::__construct();
     }
 
+    public function get_csv()
+    {
+        return $this->get_report_service()->get_csv();
+    }
+
     public function get_report_service()
     {
         $this->load->library('service/rpt_version_comparison_service');
         return $this->rpt_version_comparison_service;
-    }
-
-    public function get_csv()
-    {
-        return $this->get_report_service()->get_csv();
     }
 }
 

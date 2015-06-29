@@ -10,9 +10,9 @@ class Price_rakuten_service extends Price_service
     public function __construct()
     {
         parent::__construct();
-        $this->set_tool_path('marketing/pricing_tool_'.strtolower(PLATFORM_TYPE));
+        $this->set_tool_path('marketing/pricing_tool_' . strtolower(PLATFORM_TYPE));
 
-        include_once(APPPATH."libraries/service/Wms_warehouse_service.php");
+        include_once(APPPATH . "libraries/service/Wms_warehouse_service.php");
         $this->set_wms_wh_srv(new Wms_warehouse_service());
     }
 
@@ -27,7 +27,7 @@ class Price_rakuten_service extends Price_service
     }
 
 
-    public function get_rrp_factor_by_sku($sku='')
+    public function get_rrp_factor_by_sku($sku = '')
     {
         $default_rrp_factor = 1.34;
         return $default_rrp_factor;

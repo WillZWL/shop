@@ -336,4 +336,5 @@ class Interface_so_payment_status_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -600,4 +600,5 @@ class V_prod_shiptype_vo extends Base_vo
     }
 
 }
+
 ?>

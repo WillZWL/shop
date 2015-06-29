@@ -9,12 +9,12 @@ class Release_order_report_model extends CI_Model
         $this->load->library('service/release_order_report_service');
     }
 
-    public function get_csv($where, $option=array())
+    public function get_csv($where, $option = array())
     {
         return $this->release_order_report_service->get_csv($where, $option);
     }
 
-    public function get_obj_list ($where, $option=array())
+    public function get_obj_list($where, $option = array())
     {
         return $this->release_order_report_service->get_obj_list($where, $option);
     }

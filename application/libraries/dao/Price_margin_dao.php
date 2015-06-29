@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Price_margin_dao extends Base_dao
 {
-    private $table_name="price_margin";
-    private $vo_class_name="Price_margin_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "price_margin";
+    private $vo_class_name = "Price_margin_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -42,25 +42,21 @@ class Price_margin_dao extends Base_dao
 
         $resultset = $this->db->get();
 
-        if ($resultset)
-        {
-            return $resultset->result('object','');
-        }
-        else
-        {
+        if ($resultset) {
+            return $resultset->result('object', '');
+        } else {
             return FALSE;
         }
     }
 
     public function replace($obj = NULL)
     {
-        if (!$obj)
-        {
+        if (!$obj) {
             return false; // Nothing can replace.
         }
 
         $id = "system";
-        if(isset($_SESSION["user"]["id"]))
+        if (isset($_SESSION["user"]["id"]))
             $id = $_SESSION["user"]["id"];
 
 
@@ -72,37 +68,34 @@ class Price_margin_dao extends Base_dao
                     ON DUPLICATE KEY UPDATE
                         profit = ?, margin = ?, modify_on = now(), modify_by = ?';
 
-/*      return $this->db->query($sql, array($obj->get_sku(), $obj->get_platform_id(),
-            $obj->get_shiptype(), $obj->get_profit(), $obj->get_margin(),
-            $_SERVER["SERVER_ADDR"], 'system', $_SERVER["SERVER_ADDR"], 'system',
-            $obj->get_shiptype(), $obj->get_profit(), $obj->get_margin()));*/
-         $this->db->query($sql,
-                            array($obj->get_sku(), $obj->get_platform_id(),
-                                    $obj->get_profit(), $obj->get_margin(),
-                                    'localhost', $id, 'localhost', $id,
-                                    $obj->get_profit(), $obj->get_margin(), $id)
-                                );
-          $this->db->trans_commit();
-          return;
+        /*      return $this->db->query($sql, array($obj->get_sku(), $obj->get_platform_id(),
+                    $obj->get_shiptype(), $obj->get_profit(), $obj->get_margin(),
+                    $_SERVER["SERVER_ADDR"], 'system', $_SERVER["SERVER_ADDR"], 'system',
+                    $obj->get_shiptype(), $obj->get_profit(), $obj->get_margin()));*/
+        $this->db->query($sql,
+            array($obj->get_sku(), $obj->get_platform_id(),
+                $obj->get_profit(), $obj->get_margin(),
+                'localhost', $id, 'localhost', $id,
+                $obj->get_profit(), $obj->get_margin(), $id)
+        );
+        $this->db->trans_commit();
+        return;
 
     }
 
-    public function get_cross_sell_product( $prod_info, $platform_id, $language_id, $price, $price_adjustment, $classname = 'cross_selling_product_dto')
+    public function get_cross_sell_product($prod_info, $platform_id, $language_id, $price, $price_adjustment, $classname = 'cross_selling_product_dto')
     {
-            $cat_id = $prod_info->get_cat_id();
-            $sub_cat_id = $prod_info->get_sub_cat_id();
-            $sub_sub_cat_id = $prod_info->get_sub_sub_cat_id();
+        $cat_id = $prod_info->get_cat_id();
+        $sub_cat_id = $prod_info->get_sub_cat_id();
+        $sub_sub_cat_id = $prod_info->get_sub_sub_cat_id();
 
-            if($cat_id == 2)
-            {
-                $cat_selection = " p.sub_sub_cat_id = {$sub_sub_cat_id} ";
-            }
-            else
-            {
-                $cat_selection = " p.sub_cat_id = {$sub_cat_id} ";
-            }
+        if ($cat_id == 2) {
+            $cat_selection = " p.sub_sub_cat_id = {$sub_sub_cat_id} ";
+        } else {
+            $cat_selection = " p.sub_cat_id = {$sub_cat_id} ";
+        }
 
-            $sku = $prod_info->get_sku();
+        $sku = $prod_info->get_sku();
 
         $sql = "SELECT
                     p.sku AS sku, pc.prod_name AS prod_name, price.price AS price, p.image AS image_ext, 10 AS rrp_price,
@@ -127,13 +120,11 @@ class Price_margin_dao extends Base_dao
                 LIMIT 3
                 ";
 
-        if($result = $this->db->query($sql))
-        {
+        if ($result = $this->db->query($sql)) {
             $this->include_dto($classname);
             $result_arr = array();
 
-            foreach($result->result("object", $classname) as $obj)
-            {
+            foreach ($result->result("object", $classname) as $obj) {
                 $result_arr[] = $obj;
             }
             return $result_arr;

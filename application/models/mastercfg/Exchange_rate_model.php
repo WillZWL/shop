@@ -10,63 +10,52 @@ class Exchange_rate_model extends CI_Model
         $this->load->library('service/currency_service');
     }
 
-    public function alter_exchange_rate($from,$to,$rate,$platform="")
+    public function alter_exchange_rate($from, $to, $rate, $platform = "")
     {
-        if($platform == "approval")
-        {
+        if ($platform == "approval") {
             $dao = "exchange_rate_approval_dao";
-        }
-        else
-        {
+        } else {
             $dao = "exchange_rate_dao";
         }
-        return $this->exchange_rate_service->alter_exchange_rate($from,$to,$rate,$dao);
+        return $this->exchange_rate_service->alter_exchange_rate($from, $to, $rate, $dao);
     }
 
-    public function get_exchange_rate($from="",$to="")
+    public function get_based_rate($base, $currency_list, $platform = "")
     {
-        return $this->exchange_rate_service->get_exchange_rate($from,$to);
-    }
-
-    public function get_based_rate($base, $currency_list, $platform="")
-    {
-        if($platform == "approval")
-        {
+        if ($platform == "approval") {
             $dao = "exchange_rate_approval_dao";
-        }
-        else
-        {
+        } else {
             $dao = "exchange_rate_dao";
         }
-        return $this->exchange_rate_service->get_based_rate($base,$currency_list,$dao);
+        return $this->exchange_rate_service->get_based_rate($base, $currency_list, $dao);
     }
 
     public function get_based_approval_rate($base, $currency_list)
     {
-        return $this->exchange_rate_service->get_based_approval_rate($base,$currency_list);
+        return $this->exchange_rate_service->get_based_approval_rate($base, $currency_list);
     }
 
-    public function get_currency_list($where=array(),$option=array())
+    public function get_currency_list($where = array(), $option = array())
     {
-        return $this->exchange_rate_service->get_currency_list($where,$option);
+        return $this->exchange_rate_service->get_currency_list($where, $option);
     }
 
-    public function get_active_currency_list($where=array(),$option=array())
+    public function get_active_currency_list($where = array(), $option = array())
     {
-        return $this->exchange_rate_service->get_active_currency_list($where,$option);
+        return $this->exchange_rate_service->get_active_currency_list($where, $option);
     }
 
-    public function get_active_currency_obj_list($where=array(),$option=array())
+    public function get_active_currency_obj_list($where = array(), $option = array())
     {
-        return $this->exchange_rate_service->get_active_currency_obj_list($where,$option);
+        return $this->exchange_rate_service->get_active_currency_obj_list($where, $option);
     }
 
-    public function get_currency_full_list($where=array(),$option=array())
+    public function get_currency_full_list($where = array(), $option = array())
     {
-        return $this->currency_service->get_list($where,$option);
+        return $this->currency_service->get_list($where, $option);
     }
 
-    public function get_exchange_rate_approval_list($where=array(), $option=array())
+    public function get_exchange_rate_approval_list($where = array(), $option = array())
     {
         return $this->exchange_rate_service->get_exchange_rate_approval_list($where, $option);
     }
@@ -91,7 +80,7 @@ class Exchange_rate_model extends CI_Model
         return $this->exchange_rate_service->update_exchange_rate_from_cv();
     }
 
-    public function compare_difference($from="", $to="", $rate="")
+    public function compare_difference($from = "", $to = "", $rate = "")
     {
         return $this->exchange_rate_service->compare_difference($from, $to, $rate);
     }
@@ -101,5 +90,11 @@ class Exchange_rate_model extends CI_Model
         $exchange_rate = $this->get_exchange_rate($from_currency, $to_currency);
         return $exchange_rate->get_rate() * $amount;
     }
+
+    public function get_exchange_rate($from = "", $to = "")
+    {
+        return $this->exchange_rate_service->get_exchange_rate($from, $to);
+    }
 }
+
 ?>

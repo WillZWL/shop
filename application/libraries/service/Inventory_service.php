@@ -10,9 +10,9 @@ class Inventory_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Inventory_dao.php");
+        include_once(APPPATH . "libraries/dao/Inventory_dao.php");
         $this->set_dao(new Inventory_dao());
-        include_once(APPPATH."libraries/dao/V_prod_inventory_dao.php");
+        include_once(APPPATH . "libraries/dao/V_prod_inventory_dao.php");
         $this->set_vpi_dao(new V_prod_inventory_dao());
     }
 
@@ -26,12 +26,12 @@ class Inventory_service extends Base_service
         $this->vpi_dao = $dao;
     }
 
-    public function get_inventory($where=array())
+    public function get_inventory($where = array())
     {
         return $this->get_dao()->get_inventory_list($where);
     }
 
-    public function get_stock_valuation($where=array())
+    public function get_stock_valuation($where = array())
     {
         return $this->get_dao()->get_stock_valuation($where);
     }

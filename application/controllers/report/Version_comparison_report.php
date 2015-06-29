@@ -2,8 +2,8 @@
 
 class Version_comparison_report extends MY_Controller
 {
-    private $app_id="RPT0018";
-    private $lang_id="en";
+    private $app_id = "RPT0018";
+    private $lang_id = "en";
     private $model;
     private $export_filename;
 
@@ -16,21 +16,12 @@ class Version_comparison_report extends MY_Controller
         $this->_set_export_filename('version_comparison_report.csv');
     }
 
-    private function _load_parent_lang()
-    {
-        $sub_app_id = $this->_get_app_id()."00";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-
-        return $lang;
-    }
-
     public function query()
     {
-        $sub_app_id = $this->_get_app_id()."00";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        $sub_app_id = $this->_get_app_id() . "00";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data['lang'] = $lang;
-        if($this->input->post('posted'))
-        {
+        if ($this->input->post('posted')) {
             $data['output'] = $this->version_comparison_report_model->get_csv();
             $data['filename'] = $this->_get_export_filename();
 
@@ -38,28 +29,9 @@ class Version_comparison_report extends MY_Controller
         }
     }
 
-    public function index()
+    public function _get_export_filename()
     {
-        $sub_app_id = $this->_get_app_id()."00";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-        $data['lang'] = $lang;
-
-        $this->load->view('report/version_comparison_report', $data);
-    }
-
-    public function _set_app_id($value)
-    {
-        $this->app_id = $value;
-    }
-
-    public function _get_app_id()
-    {
-        return $this->app_id;
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
+        return $this->export_filename;
     }
 
     public function _set_export_filename($value)
@@ -67,9 +39,36 @@ class Version_comparison_report extends MY_Controller
         $this->export_filename = $value;
     }
 
-    public function _get_export_filename()
+    public function index()
     {
-        return $this->export_filename;
+        $sub_app_id = $this->_get_app_id() . "00";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        $data['lang'] = $lang;
+
+        $this->load->view('report/version_comparison_report', $data);
+    }
+
+    private function _load_parent_lang()
+    {
+        $sub_app_id = $this->_get_app_id() . "00";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+
+        return $lang;
+    }
+
+    public function _get_app_id()
+    {
+        return $this->app_id;
+    }
+
+    public function _set_app_id($value)
+    {
+        $this->app_id = $value;
+    }
+
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
     }
 }
 

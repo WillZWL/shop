@@ -192,4 +192,5 @@ class Flex_so_fee_vo extends Base_vo
     }
 
 }
+
 ?>

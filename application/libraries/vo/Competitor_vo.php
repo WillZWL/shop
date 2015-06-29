@@ -144,4 +144,5 @@ class Competitor_vo extends Base_vo
 
 
 }
+
 ?>

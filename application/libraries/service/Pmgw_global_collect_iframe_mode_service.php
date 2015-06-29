@@ -13,7 +13,7 @@ class Pmgw_global_collect_iframe_mode_service extends Pmgw_global_collect_servic
         parent::Pmgw_global_collect_service();
         $CI =& get_instance();
         $CI->load->helper(array('url', 'string'));
-        $this->input=$CI->input;
+        $this->input = $CI->input;
     }
 
     public function redirect($url)
@@ -23,12 +23,12 @@ class Pmgw_global_collect_iframe_mode_service extends Pmgw_global_collect_servic
 
     public function redirect_success()
     {
-        echo "<script>parent.document.location.href='".base_url()."{$this->checkout_controller_name}/payment_result/1/{$this->so->get_so_no()}';</script>";
+        echo "<script>parent.document.location.href='" . base_url() . "{$this->checkout_controller_name}/payment_result/1/{$this->so->get_so_no()}';</script>";
     }
 
-    public function redirect_fail($so_no="")
+    public function redirect_fail($so_no = "")
     {
-        echo "<script>parent.document.location.href='".base_url()."{$this->checkout_controller_name}/payment_result/0/{$so_no}';</script>";
+        echo "<script>parent.document.location.href='" . base_url() . "{$this->checkout_controller_name}/payment_result/0/{$so_no}';</script>";
     }
 
 }

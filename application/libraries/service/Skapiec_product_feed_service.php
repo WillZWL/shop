@@ -24,6 +24,11 @@ class Skapiec_product_feed_service extends Data_feed_service
         $this->set_output_delimiter("\t");
     }
 
+    public function set_cat_mapping_dao(Base_dao $srv)
+    {
+        $this->cat_mapping_dao = $srv;
+    }
+
     public function get_price_srv()
     {
         return $this->price_srv;
@@ -42,16 +47,6 @@ class Skapiec_product_feed_service extends Data_feed_service
     public function set_cat_srv(Base_service $srv)
     {
         $this->cat_srv = $srv;
-    }
-
-    public function get_cat_mapping_dao()
-    {
-        return $this->cat_mapping_dao;
-    }
-
-    public function set_cat_mapping_dao(Base_dao $srv)
-    {
-        $this->cat_mapping_dao = $srv;
     }
 
     public function get_skapiec_xml($platform_id)
@@ -76,43 +71,28 @@ class Skapiec_product_feed_service extends Data_feed_service
         $platform_id = strtoupper($platform_id);
 
         $data_feed = $this->get_data_feed(TRUE, $platform_id, $explain_sku);
-        if($data_feed)
-        {
+        if ($data_feed) {
             $remotefilename = strtolower('/valuebasket_skapiec_' . "$platform_id" . '.xml');
             $fp = fopen(DATAPATH . "feeds/skapiec/ftp/$platform_id" . $remotefilename, 'w');
 
-            if(fwrite($fp, $data_feed))
-            {
+            if (fwrite($fp, $data_feed)) {
                 // {
                 //  $this->ftp_feeds(DATAPATH . 'feeds/skapiec/' . $filename, $remotefilename, $this->get_ftp_name() . "_$platform_id");
                 // }
 
-                if ($explain_sku == "")
-                {
+                if ($explain_sku == "") {
                     header("Content-type: text/xml");
                     header("Cache-Control: no-store, no-cache");
                     header("Content-Disposition: attachment; filename=\"$remotefilename\"");
                     echo $data_feed;
                 }
-            }
-            else
-            {
+            } else {
                 $subject = "Failed to create Skapiec Product Feed File";
-                $message ="FILE: ".__FILE__."<br>
-                             LINE: ".__LINE__;
+                $message = "FILE: " . __FILE__ . "<br>
+                             LINE: " . __LINE__;
                 mail($this->get_contact_email(), $subject, $message);
             }
         }
-    }
-
-    protected function get_data_list($where = array(), $option = array())
-    {
-        return "";
-    }
-
-    public function get_data_list_w_country($where = array(), $option = array(), $platform_id = "WEBPL")
-    {
-        return $this->get_prod_srv()->get_skapiec_product_feed_dto(array(), array('limit'=>-1), $platform_id);
     }
 
     public function get_data_feed($first_line_heading = TRUE, $platform_id = "WEBPL", $explain_sku)
@@ -125,8 +105,7 @@ class Skapiec_product_feed_service extends Data_feed_service
         $affiliate_id = $this->get_affiliate_id_prefix() . $country_id;
         $override = $this->affiliate_sku_platform_service->get_sku_feed_list($affiliate_id);
 
-        switch ($platform_id)
-        {
+        switch ($platform_id) {
             // country specific processing to be done here
             case "WEBPL":
                 return $this->get_data_feed_group_1($first_line_heading, $platform_id, $explain_sku, $override);
@@ -134,21 +113,23 @@ class Skapiec_product_feed_service extends Data_feed_service
         }
     }
 
+    protected function get_affiliate_id_prefix()
+    {
+        return "SKA";
+    }
+
     private function get_data_feed_group_1($first_line_heading = TRUE, $platform_id, $explain_sku, $override = null)
     {
         //this is grouped by business logic regarding price & margin
         $list = $this->get_data_list_w_country(array(), array(), $platform_id);
 
-        if (!$list)
-        {
+        if (!$list) {
             return;
         }
 
         $new_list = array();
-        foreach ($list as $row)
-        {
-            if($res = $this->process_data_row($row))
-            {
+        foreach ($list as $row) {
+            if ($res = $this->process_data_row($row)) {
                 // echo "<pre>"; var_dump($res);die();
                 $sku = $res->sku;
                 $price = $res->price;
@@ -160,16 +141,13 @@ class Skapiec_product_feed_service extends Data_feed_service
 
                 $selected = "not added to output";
                 $add = false;
-                if($margin > 7 && $profit > 60)
-                {
+                if ($margin > 7 && $profit > 60) {
                     $add = true;
                     $selected = "added to output";
                 }
 
-                if ($override != null)
-                {
-                    switch($override[$res->platform_id][$res->sku])
-                    {
+                if ($override != null) {
+                    switch ($override[$res->platform_id][$res->sku]) {
                         case 1: # exclude
                             $add = false;
                             $selected = "always exclude";
@@ -182,17 +160,14 @@ class Skapiec_product_feed_service extends Data_feed_service
                     }
                 }
 
-                if ($add)
-                {
+                if ($add) {
                     // $rrp = $this->get_price_srv()->calc_website_product_rrp($res->get_price(), $res->get_fixed_rrp(), $res->get_rrp_factor());
                     // $res->set_rrp($rrp);
                     $new_list[] = $res;
                 }
 
-                if ($explain_sku != "")
-                {
-                    if (strtoupper($res->sku) == strtoupper($explain_sku))
-                    {
+                if ($explain_sku != "") {
+                    if (strtoupper($res->sku) == strtoupper($explain_sku)) {
                         var_dump("$explain_sku $selected");
                         echo "<pre>";
                         var_dump($res);
@@ -205,8 +180,20 @@ class Skapiec_product_feed_service extends Data_feed_service
         return $content;
     }
 
+    public function get_data_list_w_country($where = array(), $option = array(), $platform_id = "WEBPL")
+    {
+        return $this->get_prod_srv()->get_skapiec_product_feed_dto(array(), array('limit' => -1), $platform_id);
+    }
 
-    private function convert_to_xml($list = array(), $platform_id="WEBPL")
+    private function get_margin($platform_id, $sku, $price)
+    {
+        $json = $this->price_srv->get_profit_margin_json($platform_id, $sku, $price);
+        $arr = json_decode($json, true);
+
+        return $arr;
+    }
+
+    private function convert_to_xml($list = array(), $platform_id = "WEBPL")
     {
         // sbf #4462
         $dom = new DOMDocument('1.0');
@@ -221,124 +208,121 @@ class Skapiec_product_feed_service extends Data_feed_service
 
         $offers = $dom->createElement('offers');
         $offers = $dom->appendChild($offers);
-            $xmlns = $dom->createAttribute("xmlns:xsi");
-            $offers->appendChild($xmlns);
-            $text = $dom->createTextNode("http://www.w3.org/2001/XMLSchema-instance");
-            $xmlns->appendChild($text);
+        $xmlns = $dom->createAttribute("xmlns:xsi");
+        $offers->appendChild($xmlns);
+        $text = $dom->createTextNode("http://www.w3.org/2001/XMLSchema-instance");
+        $xmlns->appendChild($text);
 
-            $version = $dom->createAttribute("version");
-            $offers->appendChild($version);
-            $text = $dom->createTextNode("1");
-            $version->appendChild($text);
+        $version = $dom->createAttribute("version");
+        $offers->appendChild($version);
+        $text = $dom->createTextNode("1");
+        $version->appendChild($text);
 
-        if($list)
-        {
-            foreach ($list as $obj)
-            {
+        if ($list) {
+            foreach ($list as $obj) {
                 $avail_option = $this->get_avail_option($obj->delivery_scenarioid);
 
                 // ceneo's own category -- SKAPIEC is using Ceneo feed
                 $ceneo_cat = "";
-                if($obj->sub_cat_id != "")
-                {
-                    if(! ($ceneo_cat = $this->get_cat_mapping_dao()->get_external_catmapping("CENEO", 2, $obj->sub_cat_id, $lang_id, $country_id)->ext_name))
+                if ($obj->sub_cat_id != "") {
+                    if (!($ceneo_cat = $this->get_cat_mapping_dao()->get_external_catmapping("CENEO", 2, $obj->sub_cat_id, $lang_id, $country_id)->ext_name))
                         $ceneo_cat = "";
                 }
 
                 $group = $dom->createElement('group');
                 $offers->appendChild($group);
-                    $name = $dom->createAttribute("name");
-                    $group->appendChild($name);
-                    $text = $dom->createTextNode("other");
-                    $name->appendChild($text);
+                $name = $dom->createAttribute("name");
+                $group->appendChild($name);
+                $text = $dom->createTextNode("other");
+                $name->appendChild($text);
 
-                    $offer = $dom->createElement('o');
-                    $group->appendChild($offer);
-                        $id = $dom->createAttribute("id");
-                        $offer->appendChild($id);
-                        $text = $dom->createTextNode($obj->sku);
-                        $id->appendChild($text);
+                $offer = $dom->createElement('o');
+                $group->appendChild($offer);
+                $id = $dom->createAttribute("id");
+                $offer->appendChild($id);
+                $text = $dom->createTextNode($obj->sku);
+                $id->appendChild($text);
 
-                        $url = $dom->createAttribute("url");
-                        $offer->appendChild($url);
-                        $text = $dom->createTextNode($obj->prod_url);
-                        $url->appendChild($text);
+                $url = $dom->createAttribute("url");
+                $offer->appendChild($url);
+                $text = $dom->createTextNode($obj->prod_url);
+                $url->appendChild($text);
 
-                        $price = $dom->createAttribute("price");
-                        $offer->appendChild($price);
-                        $text = $dom->createTextNode($obj->price);
-                        $price->appendChild($text);
+                $price = $dom->createAttribute("price");
+                $offer->appendChild($price);
+                $text = $dom->createTextNode($obj->price);
+                $price->appendChild($text);
 
-                        $avail = $dom->createAttribute("avail");
-                        $offer->appendChild($avail);
-                        $text = $dom->createTextNode($avail_option);
-                        $avail->appendChild($text);
+                $avail = $dom->createAttribute("avail");
+                $offer->appendChild($avail);
+                $text = $dom->createTextNode($avail_option);
+                $avail->appendChild($text);
 
-                        $basket = $dom->createAttribute("basket");
-                        $offer->appendChild($basket);
-                        $text = $dom->createTextNode(0);
-                        $basket->appendChild($text);
+                $basket = $dom->createAttribute("basket");
+                $offer->appendChild($basket);
+                $text = $dom->createTextNode(0);
+                $basket->appendChild($text);
 
-                        $stock = $dom->createAttribute("stock");
-                        $offer->appendChild($stock);
-                        $text = $dom->createTextNode($obj->website_quantity);
-                        $stock->appendChild($text);
+                $stock = $dom->createAttribute("stock");
+                $offer->appendChild($stock);
+                $text = $dom->createTextNode($obj->website_quantity);
+                $stock->appendChild($text);
 
-                        $cat = $dom->createElement("cat");
-                        $offer->appendChild($cat);
-                            // $catcdata = $dom->ownerDocument->createCDATASection($ceneo_cat);
-                            // $cat->appendChild($catcdata);
-                            $text = $cat->appendChild(new DOMCdataSection($ceneo_cat));
+                $cat = $dom->createElement("cat");
+                $offer->appendChild($cat);
+                // $catcdata = $dom->ownerDocument->createCDATASection($ceneo_cat);
+                // $cat->appendChild($catcdata);
+                $text = $cat->appendChild(new DOMCdataSection($ceneo_cat));
 
-                        $name = $dom->createElement("name");
-                        $offer->appendChild($name);
-                            $text = $name->appendChild(new DOMCdataSection($obj->prod_name));
+                $name = $dom->createElement("name");
+                $offer->appendChild($name);
+                $text = $name->appendChild(new DOMCdataSection($obj->prod_name));
 
-                        $imgs = $dom->createElement('imgs');
-                        $offer->appendChild($imgs);
-                            $main = $dom->createElement("main");
-                            $imgs->appendChild($main);
-                                $mainurl = $dom->createAttribute("url");
-                                $main->appendChild($mainurl);
-                                $text = $dom->createTextNode($obj->image_url);
-                                $mainurl->appendChild($text);
-                            $img = $dom->createElement("i");
-                            $imgs->appendChild($img);
-                                $smallimgurl = $dom->createAttribute("url");
-                                $img->appendChild($smallimgurl);
-                                $text = $dom->createTextNode($obj->image_url);
-                                $smallimgurl->appendChild($text);
+                $imgs = $dom->createElement('imgs');
+                $offer->appendChild($imgs);
+                $main = $dom->createElement("main");
+                $imgs->appendChild($main);
+                $mainurl = $dom->createAttribute("url");
+                $main->appendChild($mainurl);
+                $text = $dom->createTextNode($obj->image_url);
+                $mainurl->appendChild($text);
+                $img = $dom->createElement("i");
+                $imgs->appendChild($img);
+                $smallimgurl = $dom->createAttribute("url");
+                $img->appendChild($smallimgurl);
+                $text = $dom->createTextNode($obj->image_url);
+                $smallimgurl->appendChild($text);
 
-                        # temporarily don't show desc
-                        // $desc = $dom->createElement("desc");
-                        // $offer->appendChild($desc);
-                        //  $text = $desc->appendChild(new DOMCdataSection($obj->detail_desc));
+                # temporarily don't show desc
+                // $desc = $dom->createElement("desc");
+                // $offer->appendChild($desc);
+                //  $text = $desc->appendChild(new DOMCdataSection($obj->detail_desc));
 
-                        $attrs = $dom->createElement('attrs');
-                        $offer->appendChild($attrs);
-                            $attribute = $dom->createElement('a');
-                            $attrs->appendChild($attribute);
-                                $name = $dom->createAttribute("name");
-                                $attribute->appendChild($name);
-                                $text = $dom->createTextNode("Manufacturer");
-                                $name->appendChild($text);
-                                $text = $attribute->appendChild(new DOMCdataSection($obj->brand_name));
+                $attrs = $dom->createElement('attrs');
+                $offer->appendChild($attrs);
+                $attribute = $dom->createElement('a');
+                $attrs->appendChild($attribute);
+                $name = $dom->createAttribute("name");
+                $attribute->appendChild($name);
+                $text = $dom->createTextNode("Manufacturer");
+                $name->appendChild($text);
+                $text = $attribute->appendChild(new DOMCdataSection($obj->brand_name));
 
-                            $attribute = $dom->createElement('a');
-                            $attrs->appendChild($attribute);
-                                $name = $dom->createAttribute("name");
-                                $attribute->appendChild($name);
-                                $text = $dom->createTextNode("Manufacturer’s code");
-                                $name->appendChild($text);
-                                $text = $attribute->appendChild(new DOMCdataSection($obj->mpn));
+                $attribute = $dom->createElement('a');
+                $attrs->appendChild($attribute);
+                $name = $dom->createAttribute("name");
+                $attribute->appendChild($name);
+                $text = $dom->createTextNode("Manufacturer’s code");
+                $name->appendChild($text);
+                $text = $attribute->appendChild(new DOMCdataSection($obj->mpn));
 
-                            // $attribute = $dom->createElement('a');
-                            // $attrs->appendChild($attribute);
-                            //  $name = $dom->createAttribute("name");
-                            //  $attribute->appendChild($name);
-                            //  $text = $dom->createTextNode("EAN");
-                            //  $name->appendChild($text);
-                            //  $text = $attribute->appendChild(new DOMCdataSection($obj->sku));
+                // $attribute = $dom->createElement('a');
+                // $attrs->appendChild($attribute);
+                //  $name = $dom->createAttribute("name");
+                //  $attribute->appendChild($name);
+                //  $text = $dom->createTextNode("EAN");
+                //  $name->appendChild($text);
+                //  $text = $attribute->appendChild(new DOMCdataSection($obj->sku));
 
                 // echo "<pre>"; var_dump($obj); die();
             }
@@ -350,10 +334,9 @@ class Skapiec_product_feed_service extends Data_feed_service
         return $xml;
     }
 
-    private function get_avail_option($delivery_scenarioid="")
+    private function get_avail_option($delivery_scenarioid = "")
     {
-        switch ($delivery_scenarioid)
-        {
+        switch ($delivery_scenarioid) {
             case 1:
             case 2:
             case 5:
@@ -376,12 +359,19 @@ class Skapiec_product_feed_service extends Data_feed_service
         return $avail;
     }
 
-    private function get_margin($platform_id, $sku, $price)
+    public function get_cat_mapping_dao()
     {
-        $json          = $this->price_srv->get_profit_margin_json($platform_id, $sku, $price);
-        $arr           = json_decode($json, true);
+        return $this->cat_mapping_dao;
+    }
 
-        return $arr;
+    public function get_contact_email()
+    {
+        return 'itsupport@eservicesgroup.net';
+    }
+
+    protected function get_data_list($where = array(), $option = array())
+    {
+        return "";
     }
 
     protected function get_default_vo2xml_mapping()
@@ -392,11 +382,6 @@ class Skapiec_product_feed_service extends Data_feed_service
     protected function get_default_xml2csv_mapping()
     {
         return APPPATH . 'data/skapiec_product_feed_xml2csv.txt';
-    }
-
-    public function get_contact_email()
-    {
-        return 'itsupport@eservicesgroup.net';
     }
 
     protected function get_ftp_name()
@@ -412,11 +397,6 @@ class Skapiec_product_feed_service extends Data_feed_service
     protected function get_sj_name()
     {
         return "Skapiec Product Feed Cron Time";
-    }
-
-    protected function get_affiliate_id_prefix()
-    {
-        return "SKA";
     }
 }
 

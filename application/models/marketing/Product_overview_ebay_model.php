@@ -21,9 +21,9 @@ class Product_overview_ebay_model extends Product_overview_model
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
         $js = "
-            var listing_fee = ". json_encode($this->price_service->get_listing_fee()) .";
-            var ar_commission = ". json_encode($this->price_service->get_ar_commission()) .";
-            var paypal_fee_adj = ". $this->price_service->get_paypal_fee_adj() .";
+            var listing_fee = " . json_encode($this->price_service->get_listing_fee()) . ";
+            var ar_commission = " . json_encode($this->price_service->get_ar_commission()) . ";
+            var paypal_fee_adj = " . $this->price_service->get_paypal_fee_adj() . ";
 
             function CalcProfit(platform,sku, price)
             {

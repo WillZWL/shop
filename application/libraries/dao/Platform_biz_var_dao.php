@@ -58,13 +58,11 @@ class Platform_biz_var_dao extends Base_dao
                 WHERE type = ? AND s.status = 1
                 ORDER BY pr.listing_status = 'L' DESC, s.id ASC";
 
-        if($result = $this->db->query($sql, array($sku, $platform_type)))
-        {
+        if ($result = $this->db->query($sql, array($sku, $platform_type))) {
             $this->include_dto($classname);
             $result_arr = array();
 
-            foreach ($result->result("object", $classname) as $obj)
-            {
+            foreach ($result->result("object", $classname) as $obj) {
                 $result_arr[] = $obj;
             }
             return $result_arr;
@@ -90,11 +88,9 @@ class Platform_biz_var_dao extends Base_dao
                 INNER JOIN country c
                     ON c.id = pbv.dest_country
                 ";
-        if($query = $this->db->query($sql))
-        {
-            foreach($query->result() as $row)
-            {
-                $res[] = array("country_id"=>$row->country_id, "country_name"=>$row->country_name, "currency_id"=>$row->platform_currency_id);
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result() as $row) {
+                $res[] = array("country_id" => $row->country_id, "country_name" => $row->country_name, "currency_id" => $row->platform_currency_id);
             }
             return $res;
         }
@@ -110,11 +106,9 @@ class Platform_biz_var_dao extends Base_dao
                 JOIN country c
                     ON c.id = pbv.dest_country
                 ";
-        if($query = $this->db->query($sql))
-        {
-            foreach($query->result() as $row)
-            {
-                $res[$row->type][] = array("country_id"=>$row->country_id, "country_name"=>$row->country_name, "currency_id"=>$row->platform_currency_id);
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result() as $row) {
+                $res[$row->type][] = array("country_id" => $row->country_id, "country_name" => $row->country_name, "currency_id" => $row->platform_currency_id);
             }
             return $res;
         }
@@ -127,8 +121,7 @@ class Platform_biz_var_dao extends Base_dao
                 FROM platform_biz_var
                 WHERE selling_platform_id = ?";
 
-        if($query = $this->db->query($sql, array($platform_id)))
-        {
+        if ($query = $this->db->query($sql, array($platform_id))) {
             return $query->row()->free_delivery_limit;
         }
     }

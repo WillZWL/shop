@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Refund_history_dao extends Base_dao
 {
-    private $table_name="refund_history";
-    private $vo_class_name="Refund_history_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "refund_history";
+    private $vo_class_name = "Refund_history_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class Refund_history_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_history_list($where = array(), $classname="Refund_hist_uname_dto")
+    public function get_history_list($where = array(), $classname = "Refund_hist_uname_dto")
     {
         $sql = "SELECT h.*, s.reason, u.username, rr.description, rr.reason_cat
                 FROM refund_history h
@@ -49,9 +49,8 @@ class Refund_history_dao extends Base_dao
                     ON u.id = h.create_by
                 JOIN refund_reason rr
                     ON rr.id = s.reason";
-        if($where["refund_id"] != NULL)
-        {
-            $sql .= " WHERE h.refund_id = '".$where["refund_id"]."'";
+        if ($where["refund_id"] != NULL) {
+            $sql .= " WHERE h.refund_id = '" . $where["refund_id"] . "'";
         }
         $sql .= " ORDER BY h.create_on ASC";
 
@@ -59,15 +58,13 @@ class Refund_history_dao extends Base_dao
 
         $rs = array();
 
-        if($query = $this->db->query($sql, $where["so_no"]))
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, $where["so_no"])) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
             return $rs;
         }
-        echo $this->db->last_query()." ".$this->db->_error_message();
+        echo $this->db->last_query() . " " . $this->db->_error_message();
         return FALSE;
     }
 }

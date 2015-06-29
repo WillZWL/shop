@@ -4,6 +4,7 @@
 interface Actable_service
 {
     public function init();
+
     public function run($dto);
 }
 

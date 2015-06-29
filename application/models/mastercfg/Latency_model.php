@@ -19,7 +19,7 @@ class Latency_model extends CI_Model
         return $this->platform_biz_var_service->get_currency_list();
     }
 
-    public function get_platform_biz_var($id="")
+    public function get_platform_biz_var($id = "")
     {
         return $this->platform_biz_var_service->get_platform_biz_var($id);
     }
@@ -41,7 +41,7 @@ class Latency_model extends CI_Model
 
     public function check_platform($id)
     {
-        return $this->selling_platform_service->get_dao()->get(array("id"=>$id));
+        return $this->selling_platform_service->get_dao()->get(array("id" => $id));
     }
 }
 

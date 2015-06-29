@@ -1,4 +1,5 @@
 <?php
+
 class Checkout_facebook_model extends Checkout_model
 {
     public function __construct()
@@ -25,26 +26,21 @@ class Checkout_facebook_model extends Checkout_model
 
         $js = "";
 
-        if ($objlist = $this->country_credit_card_service->get_country_pmgw_card_list(array("pc.status"=>1, "ccc.status"=>1, "pg.status"=>1, "pp.platform_id"=>PLATFORMID, "pp.status"=>1), array("orderby"=>"priority","limit"=>-1)))
-        {
-            foreach ($objlist as $obj)
-            {
+        if ($objlist = $this->country_credit_card_service->get_country_pmgw_card_list(array("pc.status" => 1, "ccc.status" => 1, "pg.status" => 1, "pp.platform_id" => PLATFORMID, "pp.status" => 1), array("orderby" => "priority", "limit" => -1))) {
+            foreach ($objlist as $obj) {
                 $country_id = $obj->get_country_id();
                 $code = $obj->get_code();
                 $card_name = str_replace("'", "\'", $obj->get_card_name());
                 $card_image = str_replace("'", "\'", $obj->get_card_image());
-                $ar_slist[$country_id][] = "'".$code."':['".$card_name."','".$card_image."']";
+                $ar_slist[$country_id][] = "'" . $code . "':['" . $card_name . "','" . $card_image . "']";
             }
 
-            foreach ($ar_slist as $cid=>$jscard)
-            {
-                $slist[] = "'".$cid."': {".(implode(", ", $jscard))."}";
+            foreach ($ar_slist as $cid => $jscard) {
+                $slist[] = "'" . $cid . "': {" . (implode(", ", $jscard)) . "}";
             }
 
-            $js = "cardlist = {".@implode(", ", $slist)."};";
-        }
-        else
-        {
+            $js = "cardlist = {" . @implode(", ", $slist) . "};";
+        } else {
             $js = "cardlist = new Array();";
         }
 
@@ -147,21 +143,19 @@ class Checkout_facebook_model extends Checkout_model
         }";
     }
 
-    public function check_state($country_id="", $type="", $cur_value="")
+    public function check_state($country_id = "", $type = "", $cur_value = "")
     {
-        if ($country_id)
-        {
-            $data["prefix"] = $prefix = $type=="del"?"del_":"";
+        if ($country_id) {
+            $data["prefix"] = $prefix = $type == "del" ? "del_" : "";
             $target_id = "div_{$prefix}state";
             $data['display_id'] = 10;
             include_once(APPPATH . "language/WEB" . str_pad($data['display_id'], 6, '0', STR_PAD_LEFT) . "_" . get_lang_id() . ".php");
             $data["lang"] = $lang;
             $data["type"] = $type;
             $data["cur_value"] = $cur_value;
-            $data["state_list"] = $this->country_service->get_country_state_srv()->get_list(array("country_id"=>$country_id, "status"=>1), array("limit"=>-1, "array_list"=>1));
+            $data["state_list"] = $this->country_service->get_country_state_srv()->get_list(array("country_id" => $country_id, "status" => 1), array("limit" => -1, "array_list" => 1));
 
-            if (!$this->objResponse)
-            {
+            if (!$this->objResponse) {
                 $this->load->library('xajax');
                 $this->objResponse = new xajaxResponse();
             }
@@ -176,8 +170,7 @@ class Checkout_facebook_model extends Checkout_model
             /*
             run javascript
             */
-            if (!$data["state_list"])
-            {
+            if (!$data["state_list"]) {
                 $this->objResponse->script("ChgStateLength('{$country_id}', document.fm_pmgw.{$prefix}state);");
             }
 
@@ -185,33 +178,27 @@ class Checkout_facebook_model extends Checkout_model
         }
     }
 
-    public function check_surcharge($values="", $old_surcharge = 0, $amount = 0)
+    public function check_surcharge($values = "", $old_surcharge = 0, $amount = 0)
     {
-        if (!$this->objResponse)
-        {
+        if (!$this->objResponse) {
             $this->load->library('xajax');
             $this->objResponse = new xajaxResponse();
         }
 
-        if ($values["del_state"] || $values["del_postcode"])
-        {
+        if ($values["del_state"] || $values["del_postcode"]) {
             $this->cart_session_service->del_svc->delivery_country_id = $values["del_country_id"];
             $this->cart_session_service->del_svc->delivery_state = $values["del_state"];
             $this->cart_session_service->del_svc->delivery_postcode = $values["del_postcode"];
 
             $this->cart_session_service->del_svc->item_list = $_SESSION["cart"][PLATFORMID];
-            if (($rs = $this->cart_session_service->del_svc->get_del_surcharge(TRUE)) && $rs["surcharge"])
-            {
+            if (($rs = $this->cart_session_service->del_svc->get_del_surcharge(TRUE)) && $rs["surcharge"]) {
                 $code_type = strtolower($rs["code_type"]);
 
-                if ($rs["code_type"] == "ST")
-                {
+                if ($rs["code_type"] == "ST") {
                     $code_type_o = "pc";
                     $code_lang = "state";
                     $rs_value = $values["del_state"];
-                }
-                else
-                {
+                } else {
                     $code_type_o = "st";
                     $code_lang = "postcode";
                     $rs_value = $values["del_postcode"];
@@ -227,8 +214,8 @@ class Checkout_facebook_model extends Checkout_model
                 $this->objResponse->assign("span_{$code_type_o}_surcharge", "innerHTML", "");
                 $this->objResponse->script("
                                         document.getElementById('lbl_surcharge').innerHTML='{$lang["surcharge"]}';
-                                        document.getElementById('span_surcharge').innerHTML='".platform_curr_format(PLATFORMID, $rs["surcharge"])."';
-                                        document.getElementById('span_total_plus_surcharge').innerHTML='".platform_curr_format(PLATFORMID, $amount - $old_surcharge + $rs["surcharge"])."';
+                                        document.getElementById('span_surcharge').innerHTML='" . platform_curr_format(PLATFORMID, $rs["surcharge"]) . "';
+                                        document.getElementById('span_total_plus_surcharge').innerHTML='" . platform_curr_format(PLATFORMID, $amount - $old_surcharge + $rs["surcharge"]) . "';
                                         ");
                 return $this->objResponse;
             }
@@ -259,8 +246,7 @@ class Checkout_facebook_model extends Checkout_model
         $this->xajax->getJavascript(base_url());
         $this->xajax->register(XAJAX_FUNCTION, array('check_state', &$ctrl, '_check_state'));
         $this->xajax->register(XAJAX_FUNCTION, array('check_surcharge', &$ctrl, '_check_surcharge'));
-        if ($platform_type == "WEBSITE")
-        {
+        if ($platform_type == "WEBSITE") {
             $this->xajax->register(XAJAX_FUNCTION, array('check_email_exists', &$ctrl, '_check_email_exists'));
         }
         $this->xajax->processRequest();
@@ -268,7 +254,7 @@ class Checkout_facebook_model extends Checkout_model
 
     public function psform_content()
     {
-        include_once(BASEPATH."libraries/Encrypt.php");
+        include_once(BASEPATH . "libraries/Encrypt.php");
         $encrypt = new CI_Encrypt();
 
         $data["p_enc"] = $encrypt->encode(PLATFORMID);
@@ -282,4 +268,5 @@ class Checkout_facebook_model extends Checkout_model
         return $data;
     }
 }
+
 ?>

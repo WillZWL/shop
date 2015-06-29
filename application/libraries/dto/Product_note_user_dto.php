@@ -19,7 +19,7 @@ class Product_note_user_dto extends Base_dto
         parent::__construct();
     }
 
-        public function get_sku()
+    public function get_sku()
     {
         return $this->sku;
     }

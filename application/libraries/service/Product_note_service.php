@@ -11,13 +11,13 @@ class Product_note_service extends Base_service
         parent::__construct();
         $CI =& get_instance();
         $this->load = $CI->load;
-        include_once(APPPATH."libraries/dao/Product_note_dao.php");
+        include_once(APPPATH . "libraries/dao/Product_note_dao.php");
         $this->set_dao(new Product_note_dao());
     }
 
-    public function get_note_by_sku($sku='')
+    public function get_note_by_sku($sku = '')
     {
-        $obj = $this->get_dao()->get_list(array('sku'=>$sku, 'type'=>'S'), array('order_by'=>'modify_on DESC', 'limit'=>1));
+        $obj = $this->get_dao()->get_list(array('sku' => $sku, 'type' => 'S'), array('order_by' => 'modify_on DESC', 'limit' => 1));
 
         return $obj;
     }

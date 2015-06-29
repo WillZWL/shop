@@ -19,4 +19,5 @@ class Sli extends PUB_Controller
         $this->load_tpl('content', 'tbs_sli', "", TRUE);
     }
 }
+
 ?>

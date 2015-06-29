@@ -1,4 +1,5 @@
 <?php
+
 /*
   wpf-integrator.php version 0.8
 
@@ -67,28 +68,28 @@ class Ctpe_integrator
 
         $strXML = "<?xml version='1.0' ?>\n";
         $strXML .= "<Request version=\"" . Ctpe_integrator::CTPE_QUERY_REQUEST_VERSION . "\">\n";
-            $strXML .= "<Header>\n";
-            $strXML .= "<Security sender=\"{$this->params['security.sender']}\" />\n";
-            $strXML .= "</Header>\n";
-            $strXML .= "<Query mode=\"{$this->params['transaction.mode']}\" level=\"CHANNEL\" entity=\"{$this->params['transaction.channel']}\" type=\"STANDARD\">\n";
-                $strXML .= "<User login=\"{$userLogin}\" pwd=\"{$password}\" />\n";
-                $strXML .= "<Identification>\n";
-                    $strXML .= "<TransactionID>" . $request_params['transaction_id'] . "</TransactionID>\n";
-                $strXML .= "</Identification>\n";
-            $strXML .= "</Query>\n";
+        $strXML .= "<Header>\n";
+        $strXML .= "<Security sender=\"{$this->params['security.sender']}\" />\n";
+        $strXML .= "</Header>\n";
+        $strXML .= "<Query mode=\"{$this->params['transaction.mode']}\" level=\"CHANNEL\" entity=\"{$this->params['transaction.channel']}\" type=\"STANDARD\">\n";
+        $strXML .= "<User login=\"{$userLogin}\" pwd=\"{$password}\" />\n";
+        $strXML .= "<Identification>\n";
+        $strXML .= "<TransactionID>" . $request_params['transaction_id'] . "</TransactionID>\n";
+        $strXML .= "</Identification>\n";
+        $strXML .= "</Query>\n";
         $strXML .= "</Request>\n";
         return $strXML;
-/*
-        $this->sendToCTPE($this->server, $this->path, $strXML);
-        if ($this->resultURL)
-        {
-            return $this->resultURL;
-        }
-        else
-        {
-            return false;
-        }
-*/
+        /*
+                $this->sendToCTPE($this->server, $this->path, $strXML);
+                if ($this->resultURL)
+                {
+                    return $this->resultURL;
+                }
+                else
+                {
+                    return false;
+                }
+        */
     }
 
     function setServer($server, $path)
@@ -122,9 +123,139 @@ class Ctpe_integrator
         curl_close($cpt);
         return $this->resultURL;
     }
-/*
-  using HTTP/POST send message to ctpe server
-*/
+
+    /*
+      using HTTP/POST send message to ctpe server
+    */
+
+    function setPaymentInformation($payment_amount, $payment_usage, $identification_transactionid, $payment_currency)
+    {
+        $this->params["presentation.amount"] = $payment_amount;
+        $this->params["presentation.usage"] = $payment_usage;
+        $this->params["identification.transactionID"] = $identification_transactionid;
+        $this->params["presentation.currency"] = $payment_currency;
+    }
+
+    function setPaymentCode($payment_code)
+    {
+        $this->params["payment.code"] = $payment_code;
+    }
+
+    function setPaymentMethod($card_type)
+    {
+        $method = "";
+        $subtypes = "";
+//set card type
+        if (($card_type == "VISADEBIT")
+            || ($card_type == "VISAELECTRON")
+            || ($card_type == "MAESTRO")
+            || ($card_type == "DEBIT")
+        ) {
+            $method = "DC";
+        } else if (($card_type == "MASTER")
+            || ($card_type == "VISA")
+            || ($card_type == "CREDIT")
+        ) {
+            $method = "CC";
+        }
+
+//set brand
+        if ($card_type == "CREDIT")
+            $subtypes = "VISA,MASTER";
+        else if ($card_type == "DEBIT")
+            $subtypes = "VISADEBIT,VISAELECTRON,MAESTRO";
+        else if ($card_type == "VISADEBIT")
+            $subtypes = "VISADEBIT";
+        else if ($card_type == "VISAELECTRON")
+            $subtypes = "VISAELECTRON";
+        else if ($card_type == "MAESTRO")
+            $subtypes = "MAESTRO";
+        else if ($card_type == "VISA")
+            $subtypes = "VISA";
+        else if ($card_type == "MASTER")
+            $subtypes = "MASTER";
+
+        if (($subtypes != "") && ($method != "")) {
+            if ($method != "") {
+                $this->params["FRONTEND.PM.DEFAULT_DISABLE_ALL"] = "true";
+                $this->params["FRONTEND.PM.1.METHOD"] = $method;
+                $this->params["FRONTEND.PM.1.ENABLED"] = "true";
+                $this->params["FRONTEND.PM.1.SUBTYPES"] = $subtypes;
+            }
+        }
+    }
+
+    function setCustomerContact($contact_email, $contact_mobile, $contact_phone, $contact_ip)
+    {
+        $this->params["contact.email"] = $contact_email;
+        $this->params["contact.mobile"] = $contact_mobile;
+        $this->params["contact.ip"] = $contact_ip;
+        $this->params["contact.phone"] = $contact_phone;
+    }
+
+    function setCustomerAddress($address_street, $address_zip, $address_city, $address_state, $address_country)
+    {
+        $this->params["address.street"] = $address_street;
+        $this->params["address.zip"] = $address_zip;
+        $this->params["address.city"] = $address_city;
+        $this->params["address.state"] = $address_state;
+        $this->params["address.country"] = $address_country;
+    }
+
+    function setCustomerName($name_salutation, $name_title, $name_give, $name_family, $name_company)
+    {
+        $this->params["name.salutation"] = $name_salutation;
+        $this->params["name.title"] = $name_title;
+        $this->params["name.given"] = $name_give;
+        $this->params["name.family"] = $name_family;
+        $this->params["name.company"] = $name_company;
+    }
+
+    function setWPFparams($frontend_enabled, $frontend_popup, $frontend_mode, $frontend_lang, $frontend_response_url, $frontend_banner = null)
+    {
+//      $this->wpf=$frontend_enabled;
+        $this->params["FRONTEND.ENABLED"] = $frontend_enabled;
+        $this->params["FRONTEND.POPUP"] = $frontend_popup;
+        $this->params["FRONTEND.MODE"] = $frontend_mode;
+        $this->params["FRONTEND.LANGUAGE"] = $frontend_lang;
+        $this->params["FRONTEND.RESPONSE_URL"] = $frontend_response_url;
+        if ($frontend_banner != null) {
+            $this->params["FRONTEND.BANNER.1.LINK"] = $frontend_banner;
+            $this->params["FRONTEND.BANNER.1.AREA"] = "TOP";
+            $this->params["FRONTEND.BANNER.1.HEIGHT"] = 72;
+        }
+    }
+
+    function setUiCustomization($cssPath, $javascriptPath = null)
+    {
+        if ($cssPath != null)
+            $this->params["FRONTEND.CSS_PATH"] = $cssPath;
+        if ($javascriptPath != null)
+            $this->params["FRONTEND.JSCRIPT_PATH"] = $javascriptPath;
+    }
+
+    function commitPOSTPayment()
+    {
+        foreach (array_keys($this->params) AS $key) {
+            $$key .= $this->params[$key];
+            $$key = urlencode($$key);
+            $$key .= "&";
+            $var = strtoupper($key);
+            $value = $$key;
+            $result .= "$var=$value";
+        }
+//      print $result;
+        $strPOST = stripslashes($result);
+        $this->sendToCtpe($strPOST);
+
+//      print $this->resultURL;
+        if ($this->resultURL) {
+            return $this->parserResult($this->resultURL);
+        } else {
+            return false;
+        }
+    }
+
     function sendToCtpe($postdata)
     {
 //      var_dump($postdata);
@@ -151,166 +282,30 @@ class Ctpe_integrator
         return $this->resultURL;
     }
 
-    function setPaymentInformation($payment_amount,$payment_usage,$identification_transactionid,$payment_currency)
-    {
-        $this->params["presentation.amount"]=$payment_amount;
-        $this->params["presentation.usage"]=$payment_usage;
-        $this->params["identification.transactionID"]=$identification_transactionid;
-        $this->params["presentation.currency"]=$payment_currency;
-    }
-
-    function setPaymentCode($payment_code)
-    {
-        $this->params["payment.code"]=$payment_code;
-    }
-
-    function setPaymentMethod($card_type)
-    {
-        $method = "";
-        $subtypes = "";
-//set card type
-        if (($card_type == "VISADEBIT")
-            || ($card_type == "VISAELECTRON")
-            || ($card_type == "MAESTRO")
-            || ($card_type == "DEBIT"))
-        {
-            $method = "DC";
-        }
-        else if (($card_type == "MASTER")
-                || ($card_type == "VISA")
-                || ($card_type == "CREDIT"))
-        {
-            $method = "CC";
-        }
-
-//set brand
-        if ($card_type == "CREDIT")
-            $subtypes = "VISA,MASTER";
-        else if ($card_type == "DEBIT")
-            $subtypes = "VISADEBIT,VISAELECTRON,MAESTRO";
-        else if ($card_type == "VISADEBIT")
-            $subtypes = "VISADEBIT";
-        else if ($card_type == "VISAELECTRON")
-            $subtypes = "VISAELECTRON";
-        else if ($card_type == "MAESTRO")
-            $subtypes = "MAESTRO";
-        else if ($card_type == "VISA")
-            $subtypes = "VISA";
-        else if ($card_type == "MASTER")
-            $subtypes = "MASTER";
-
-        if (($subtypes != "") && ($method != ""))
-        {
-            if ($method != "")
-            {
-                $this->params["FRONTEND.PM.DEFAULT_DISABLE_ALL"] = "true";
-                $this->params["FRONTEND.PM.1.METHOD"] = $method;
-                $this->params["FRONTEND.PM.1.ENABLED"] = "true";
-                $this->params["FRONTEND.PM.1.SUBTYPES"] = $subtypes;
-            }
-        }
-    }
-
-    function setCustomerContact($contact_email,$contact_mobile,$contact_phone,$contact_ip)
-    {
-        $this->params["contact.email"]=$contact_email;
-        $this->params["contact.mobile"]=$contact_mobile;
-        $this->params["contact.ip"]=$contact_ip;
-        $this->params["contact.phone"]=$contact_phone;
-    }
-
-    function setCustomerAddress($address_street,$address_zip,$address_city,$address_state,$address_country)
-    {
-        $this->params["address.street"]=$address_street;
-        $this->params["address.zip"]=$address_zip;
-        $this->params["address.city"]=$address_city;
-        $this->params["address.state"]=$address_state;
-        $this->params["address.country"]=$address_country;
-    }
-
-    function setCustomerName($name_salutation,$name_title,$name_give,$name_family,$name_company)
-    {
-        $this->params["name.salutation"]=$name_salutation;
-        $this->params["name.title"]=$name_title;
-        $this->params["name.given"]=$name_give;
-        $this->params["name.family"]=$name_family;
-        $this->params["name.company"]=$name_company;
-    }
-
-    function setWPFparams($frontend_enabled,$frontend_popup,$frontend_mode,$frontend_lang,$frontend_response_url,$frontend_banner=null)
-    {
-//      $this->wpf=$frontend_enabled;
-        $this->params["FRONTEND.ENABLED"]=$frontend_enabled;
-        $this->params["FRONTEND.POPUP"]=$frontend_popup;
-        $this->params["FRONTEND.MODE"]=$frontend_mode;
-        $this->params["FRONTEND.LANGUAGE"]=$frontend_lang;
-        $this->params["FRONTEND.RESPONSE_URL"]=$frontend_response_url;
-        if ($frontend_banner != null)
-        {
-            $this->params["FRONTEND.BANNER.1.LINK"]=$frontend_banner;
-            $this->params["FRONTEND.BANNER.1.AREA"]="TOP";
-            $this->params["FRONTEND.BANNER.1.HEIGHT"]=72;
-        }
-    }
-
-    function setUiCustomization($cssPath, $javascriptPath = null)
-    {
-        if ($cssPath != null)
-            $this->params["FRONTEND.CSS_PATH"] = $cssPath;
-        if ($javascriptPath != null)
-            $this->params["FRONTEND.JSCRIPT_PATH"] = $javascriptPath;
-    }
-
-    function commitPOSTPayment()
-    {
-        foreach (array_keys($this->params) AS $key)
-        {
-            $$key .= $this->params[$key];
-            $$key = urlencode($$key);
-            $$key .= "&";
-            $var = strtoupper($key);
-            $value = $$key;
-            $result .= "$var=$value";
-        }
-//      print $result;
-        $strPOST = stripslashes($result);
-        $this->sendToCtpe($strPOST);
-
-//      print $this->resultURL;
-        if ($this->resultURL)
-        {
-            return $this->parserResult($this->resultURL);
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     /*
       Parse POST message returned by CTPE server.
     */
+
     function parserResult($resultURL)
     {
-        $r_arr=explode("&",$resultURL);
+        $r_arr = explode("&", $resultURL);
 
 //      $this->wpf=strtolower($this->wpf);
 
-        foreach($r_arr AS $buf)
-        {
-            $temp=urldecode($buf);
-            $temp=split("=",$temp,2);
+        foreach ($r_arr AS $buf) {
+            $temp = urldecode($buf);
+            $temp = split("=", $temp, 2);
 
-            $postatt=$temp[0];
-            $postvar=$temp[1];
+            $postatt = $temp[0];
+            $postvar = $temp[1];
 
-            $returnvalue[$postatt]=$postvar;
+            $returnvalue[$postatt] = $postvar;
         }
-        return($returnvalue);
+        return ($returnvalue);
         /*
            uncomment the following line for debug output (whole XML)
          */
         //print "<br>$resultXML";
     }
 
-  }
+}

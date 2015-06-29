@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Landpage_video_listing_dao extends Base_dao
 {
-    private $table_name="landpage_video_listing";
-    private $vo_class_name="Landpage_video_listing_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "landpage_video_listing";
+    private $vo_class_name = "Landpage_video_listing_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -34,73 +34,70 @@ class Landpage_video_listing_dao extends Base_dao
     {
         return $this->seq_mapping_field;
     }
-/*
-    public function get_item_list($catid,$type,$classname)
-    {
-        if($catid === "")
+    /*
+        public function get_item_list($catid,$type,$classname)
         {
-            return FALSE;
-        }
-        else
-        {
-            //$limit = $rank - 1;
-            */
-            /*$sql = "SELECT ll.rank,ll.selection, p.name,
-                        concat('/images/product/', ll.selection, '.', p.image) image_file,
-                        pr.price, ROUND(pr.price / 0.80, 2) rrp,
-                        p.website_status, p.website_quantity, p.quantity
-                    FROM landpage_listing ll
-                    JOIN product p
-                        ON p.sku = ll.selection AND p.website_status = 'I'
-                    JOIN price pr
-                        ON p.sku = pr.sku AND pr.platform_id = 'WSGB' AND pr.listing_status = 'l'
-                    WHERE ll.catid = '$catid'
-                    AND ll.type = '$type'
-                    ORDER BY ll.rank";*/
-/*
-                    $sql = "SELECT ll.rank,ll.selection, p.name,
-                        p.image image_file,
-                        pr.price, ROUND(pr.price / 0.80, 2) rrp,
-                        p.website_status, p.website_quantity, p.quantity
-                    FROM landpage_listing ll
-                    JOIN product p
-                        ON p.sku = ll.selection AND p.website_status = 'I'
-                    JOIN price pr
-                        ON p.sku = pr.sku AND pr.platform_id = 'WSGB' AND pr.listing_status = 'l' and price.pr > 0
-                    WHERE ll.catid = '$catid'
-                    AND ll.type = '$type'
-                    ORDER BY ll.rank";
-
-            if ($limit > 1)
+            if($catid === "")
             {
-                $sql .= " LIMIT $limit";
-            }
-
-            $this->include_dto($classname);
-
-            if ($query = $this->db->query($sql))
-            {
-                //return $query->row("0", "array");
-                $result_arr = $query->result_array();
-
-                return $result_arr;
+                return FALSE;
             }
             else
             {
-                echo mysql_error();
-                return FALSE;
+                //$limit = $rank - 1;
+                */
+    /*$sql = "SELECT ll.rank,ll.selection, p.name,
+                concat('/images/product/', ll.selection, '.', p.image) image_file,
+                pr.price, ROUND(pr.price / 0.80, 2) rrp,
+                p.website_status, p.website_quantity, p.quantity
+            FROM landpage_listing ll
+            JOIN product p
+                ON p.sku = ll.selection AND p.website_status = 'I'
+            JOIN price pr
+                ON p.sku = pr.sku AND pr.platform_id = 'WSGB' AND pr.listing_status = 'l'
+            WHERE ll.catid = '$catid'
+            AND ll.type = '$type'
+            ORDER BY ll.rank";*/
+    /*
+                        $sql = "SELECT ll.rank,ll.selection, p.name,
+                            p.image image_file,
+                            pr.price, ROUND(pr.price / 0.80, 2) rrp,
+                            p.website_status, p.website_quantity, p.quantity
+                        FROM landpage_listing ll
+                        JOIN product p
+                            ON p.sku = ll.selection AND p.website_status = 'I'
+                        JOIN price pr
+                            ON p.sku = pr.sku AND pr.platform_id = 'WSGB' AND pr.listing_status = 'l' and price.pr > 0
+                        WHERE ll.catid = '$catid'
+                        AND ll.type = '$type'
+                        ORDER BY ll.rank";
+
+                if ($limit > 1)
+                {
+                    $sql .= " LIMIT $limit";
+                }
+
+                $this->include_dto($classname);
+
+                if ($query = $this->db->query($sql))
+                {
+                    //return $query->row("0", "array");
+                    $result_arr = $query->result_array();
+
+                    return $result_arr;
+                }
+                else
+                {
+                    echo mysql_error();
+                    return FALSE;
+                }
             }
         }
-    }
-*/
-    public function get_item_by_rank($catid,$l_type,$v_type,$rank,$platform,$src,$classname)
+    */
+    public function get_item_by_rank($catid, $l_type, $v_type, $rank, $platform, $src, $classname)
     {
-        if($catid === "")
-        {
+        if ($catid === "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             $limit = $rank - 1;
 
             $sql = "SELECT ll.rank, ll.ref_id, ll.video_type, ll.sku, p.name,
@@ -125,12 +122,9 @@ class Landpage_video_listing_dao extends Base_dao
 
             $this->include_dto($classname);
 
-            if ($query = $this->db->query($sql))
-            {
+            if ($query = $this->db->query($sql)) {
                 return $query->row("0", "array");
-            }
-            else
-            {
+            } else {
                 echo mysql_error();
                 return FALSE;
             }
@@ -138,21 +132,16 @@ class Landpage_video_listing_dao extends Base_dao
         }
     }
 
-    public function get_list_w_pname($catid, $mode, $l_type, $v_type, $platform, $src, $rtype="object", $classname)
+    public function get_list_w_pname($catid, $mode, $l_type, $v_type, $platform, $src, $rtype = "object", $classname)
     {
-        if($catid === "")
-        {
+        if ($catid === "") {
             return FALSE;
-        }
-        else
-        {
-            if ($catid !== 0)
-            {
+        } else {
+            if ($catid !== 0) {
                 $cat_filter_str = " ll.catid = $catid AND";
             }
 
-            if($v_type != "")
-            {
+            if ($v_type != "") {
                 $v_type_filter_str = " AND ll.video_type = '$v_type' ";
             }
 
@@ -180,97 +169,74 @@ class Landpage_video_listing_dao extends Base_dao
                     ORDER BY ll.rank";
 
             $rs = array();
-            if ($query = $this->db->query($sql, array($platform, $mode, $l_type, $platform, $src)))
-            {
-                if($rtype == "object")
-                {
+            if ($query = $this->db->query($sql, array($platform, $mode, $l_type, $platform, $src))) {
+                if ($rtype == "object") {
                     $this->include_dto($classname);
-                    foreach ($query->result($classname) as $obj)
-                    {
+                    foreach ($query->result($classname) as $obj) {
                         $rs[] = $obj;
                     }
                     return $rs;
-                }
-                else
-                {
-                    foreach($query->result_array() as $arr)
-                    {
+                } else {
+                    foreach ($query->result_array() as $arr) {
                         $rs[] = $arr;
                     }
                     return $rs;
                 }
-            }
-            else
-            {
+            } else {
                 echo mysql_error();
                 return FALSE;
             }
         }
     }
 
-    public function get_index_list($where=array(), $option=array(), $type, $classname="Cat_stat_dto")
+    public function get_index_list($where = array(), $option = array(), $type, $classname = "Cat_stat_dto")
     {
         $this->db->from('category p');
 
-        $this->db->join("(SELECT catid, count(ref_id) as cnt FROM landpage_video_listing WHERE listing_type='".$type."' AND mode='M' GROUP BY catid) AS s","s.catid = p.id","LEFT");
+        $this->db->join("(SELECT catid, count(ref_id) as cnt FROM landpage_video_listing WHERE listing_type='" . $type . "' AND mode='M' GROUP BY catid) AS s", "s.catid = p.id", "LEFT");
 
-        if($where["name"]!=  "")
-        {
+        if ($where["name"] != "") {
             $this->db->like("p.name ", $where["name"]);
         }
 
-        if($where["description"]!=  "")
-        {
+        if ($where["description"] != "") {
             $this->db->like("p.description ", $where["description"]);
         }
 
-        if($where["level"] != "")
-        {
+        if ($where["level"] != "") {
             $this->db->where("p.level", $where["level"]);
         }
 
-        if($where["status"] != "")
-        {
+        if ($where["status"] != "") {
             $this->db->where("p.status", $where["status"]);
         }
 
         //$this->db->where("p.id <>","0");
 
-        if($where["manual"] != "")
-        {
-            if($where["manual"] == "Y")
-            {
-                $this->db->where("s.cnt >",0);
-            }
-            else
-            {
+        if ($where["manual"] != "") {
+            if ($where["manual"] == "Y") {
+                $this->db->where("s.cnt >", 0);
+            } else {
                 $this->db->where("s.cnt IS NULL OR s.cnt = '0'");
             }
         }
 
-        if(empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
             $this->db->select("p.id, p.name, p.description, p.level, p.status, s.cnt");
 
             $this->db->order_by($option["orderby"]);
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
@@ -279,46 +245,38 @@ class Landpage_video_listing_dao extends Base_dao
 
             $rs = array();
 
-            if($query = $this->db->get())
-            {
-                foreach($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
                 return $rs;
             }
 
             echo $this->db->_error_message();
-        }
-        else
-        {
+        } else {
             $this->db->select("COUNT(*) AS total");
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
         return FALSE;
     }
 
-    public function update_rank_w_video_list($cat_id='', $listing_type='',
-        $video_list=array(), $platform='', $video_type='', $mode='A')
+    public function update_rank_w_video_list($cat_id = '', $listing_type = '',
+                                             $video_list = array(), $platform = '', $video_type = '', $mode = 'A')
     {
-        if ($cat_id==='' || empty($listing_type) || empty($mode) || count($video_list)  <= 0|| empty($platform) || empty($video_type))
-        {
+        if ($cat_id === '' || empty($listing_type) || empty($mode) || count($video_list) <= 0 || empty($platform) || empty($video_type)) {
             return FALSE;
         }
-        $result = $this->q_delete(array('catid'=>$cat_id, 'listing_type'=>$listing_type, 'mode'=>$mode, 'platform_id'=>$platform, 'video_type'=>$video_type));
+        $result = $this->q_delete(array('catid' => $cat_id, 'listing_type' => $listing_type, 'mode' => $mode, 'platform_id' => $platform, 'video_type' => $video_type));
 
-        if ($result === FALSE)
-        {
+        if ($result === FALSE) {
             return FALSE;  // Deletion is fail.
         }
 
         $rank = 1;
 
-        foreach ($video_list as $video)
-        {
+        foreach ($video_list as $video) {
             $vo = $this->get();
 
             $vo->set_catid($cat_id);
@@ -333,11 +291,11 @@ class Landpage_video_listing_dao extends Base_dao
             $vo->set_src($video->get_src());
 
             $success = $this->insert($vo);
-            if (!$success)
-            {
+            if (!$success) {
                 $this->db->trans_rollback();
             }
         }
     }
 }
+
 ?>

@@ -144,4 +144,5 @@ class Event_vo extends Base_vo
     }
 
 }
+
 ?>

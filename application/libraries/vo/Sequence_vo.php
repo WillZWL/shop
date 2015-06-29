@@ -132,4 +132,5 @@ class Sequence_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -120,4 +120,5 @@ class Platform_region_vo extends Base_vo
     }
 
 }
+
 ?>

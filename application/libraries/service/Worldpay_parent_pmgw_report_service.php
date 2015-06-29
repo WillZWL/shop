@@ -199,12 +199,9 @@ abstract class Worldpay_parent_pmgw_report_service extends Pmgw_report_service
 
     public function is_ria_record($dto_obj)
     {
-        if($dto_obj->get_status() == "SETTLED")
-        {
+        if ($dto_obj->get_status() == "SETTLED") {
             return "RIA";
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
@@ -216,16 +213,11 @@ abstract class Worldpay_parent_pmgw_report_service extends Pmgw_report_service
 
     public function is_refund_record($dto_obj)
     {
-        if($dto_obj->get_status() == "REFUNDED")
-        {
+        if ($dto_obj->get_status() == "REFUNDED") {
             return "R";
-        }
-        elseif($dto_obj->get_status() == "CHARGED_BACK")
-        {
+        } elseif ($dto_obj->get_status() == "CHARGED_BACK") {
             return "CB";
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
@@ -245,37 +237,6 @@ abstract class Worldpay_parent_pmgw_report_service extends Pmgw_report_service
     {
         return 'nero-alert@eservicesgroup.com';
     }
-
-    protected function insert_interface_flex_ria($batch_id, $status, $dto_obj)
-    {
-        $this->reform_data($dto_obj);
-        $dto_obj->set_amount($dto_obj->get_amount() + $dto_obj->get_commission());
-        $ifr_obj = $this->create_interface_flex_ria($batch_id, $status, $dto_obj, true);
-    }
-
-    protected function insert_interface_flex_refund($batch_id, $status, $dto_obj)
-    {
-        $this->reform_data($dto_obj);
-        //var_dump($dto_obj); die();
-        //commission for a refund record is always 0, so no need to create fee
-        $this->create_interface_flex_refund($batch_id, $status, $dto_obj, false);
-    }
-
-    protected function insert_interface_flex_so_fee($batch_id, $status, $dto_obj)
-    {
-        return false;
-    }
-
-    protected function insert_interface_flex_rolling_reserve($batch_id, $status, $dto_obj)
-    {
-        return FALSE;
-    }
-
-    protected function insert_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
-    {
-        return FALSE;
-    }
-
 
     public function after_insert_all_interface($batch_id)
     {
@@ -302,26 +263,27 @@ abstract class Worldpay_parent_pmgw_report_service extends Pmgw_report_service
         return false;
     }
 
+    protected function insert_interface_flex_ria($batch_id, $status, $dto_obj)
+    {
+        $this->reform_data($dto_obj);
+        $dto_obj->set_amount($dto_obj->get_amount() + $dto_obj->get_commission());
+        $ifr_obj = $this->create_interface_flex_ria($batch_id, $status, $dto_obj, true);
+    }
+
     public function reform_data($dto_obj)
     {
         $date = date("Y-m-d H:i:s", strtotime(str_replace('/', '-', $dto_obj->get_txn_time())));
         $dto_obj->set_date($date);
 
-        if(strpos($dto_obj->get_full_so_no(), "-"))
-        {
-            list($client_id, $so_no) = explode("-",$dto_obj->get_full_so_no());
-        }
-        else
-        {
+        if (strpos($dto_obj->get_full_so_no(), "-")) {
+            list($client_id, $so_no) = explode("-", $dto_obj->get_full_so_no());
+        } else {
             $so_no = $dto_obj->get_full_so_no();
         }
 
-        if(preg_match("/\d{6}/", $so_no, $matches))
-        {
+        if (preg_match("/\d{6}/", $so_no, $matches)) {
             $dto_obj->set_so_no($matches[0]);
-        }
-        else
-        {
+        } else {
             $dto_obj->set_so_no($so_no);
         }
 
@@ -334,6 +296,29 @@ abstract class Worldpay_parent_pmgw_report_service extends Pmgw_report_service
         $dto_obj->set_amount(ereg_replace(",", "", $dto_obj->get_amount()));
         $dto_obj->set_commission(ereg_replace(",", "", $dto_obj->get_commission()));
 
+    }
+
+    protected function insert_interface_flex_refund($batch_id, $status, $dto_obj)
+    {
+        $this->reform_data($dto_obj);
+        //var_dump($dto_obj); die();
+        //commission for a refund record is always 0, so no need to create fee
+        $this->create_interface_flex_refund($batch_id, $status, $dto_obj, false);
+    }
+
+    protected function insert_interface_flex_so_fee($batch_id, $status, $dto_obj)
+    {
+        return false;
+    }
+
+    protected function insert_interface_flex_rolling_reserve($batch_id, $status, $dto_obj)
+    {
+        return FALSE;
+    }
+
+    protected function insert_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
+    {
+        return FALSE;
     }
 }
 

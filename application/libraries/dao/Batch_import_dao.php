@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Batch_import_dao extends Base_dao
 {
-    private $table_name="batch_import";
-    private $vo_classname="Batch_import_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "batch_import";
+    private $vo_classname = "Batch_import_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

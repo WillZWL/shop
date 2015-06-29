@@ -252,4 +252,5 @@ class Interface_price_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -198,4 +198,5 @@ class Refund_item_prod_dto extends Base_dto
         $this->name = $value;
     }
 }
+
 ?>

@@ -168,4 +168,5 @@ class Product_feed_vo extends Base_vo
     }
 
 }
+
 ?>

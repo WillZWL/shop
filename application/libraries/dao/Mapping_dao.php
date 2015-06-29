@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Mapping_dao extends Base_dao
 {
-    private $table_name="mapping";
-    private $vo_class_name="Mapping_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "mapping";
+    private $vo_class_name = "Mapping_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -30,7 +30,8 @@ class Mapping_dao extends Base_dao
         return $this->seq_name;
     }
 
-    public function get_seq_mapping_field(){
+    public function get_seq_mapping_field()
+    {
         return $this->seq_mapping_field;
     }
 }

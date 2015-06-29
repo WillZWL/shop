@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Landpage_listing_dao extends Base_dao
 {
-    private $table_name="landpage_listing";
-    private $vo_class_name="Landpage_listing_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "landpage_listing";
+    private $vo_class_name = "Landpage_listing_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,14 +35,11 @@ class Landpage_listing_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_item_list($catid,$type,$classname)
+    public function get_item_list($catid, $type, $classname)
     {
-        if($catid === "")
-        {
+        if ($catid === "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             //$limit = $rank - 1;
 
             /*$sql = "SELECT ll.rank,ll.selection, p.name,
@@ -58,7 +55,7 @@ class Landpage_listing_dao extends Base_dao
                     AND ll.type = '$type'
                     ORDER BY ll.rank";*/
 
-                    $sql = "SELECT ll.rank,ll.selection, p.name,
+            $sql = "SELECT ll.rank,ll.selection, p.name,
                         p.image image_file,
                         pr.price, ROUND(pr.price / 0.80, 2) rrp,
                         p.website_status, p.website_quantity, p.display_quantity, p.quantity
@@ -71,22 +68,18 @@ class Landpage_listing_dao extends Base_dao
                     AND ll.type = '$type'
                     ORDER BY ll.rank";
 
-            if ($limit > 1)
-            {
+            if ($limit > 1) {
                 $sql .= " LIMIT $limit";
             }
 
             $this->include_dto($classname);
 
-            if ($query = $this->db->query($sql))
-            {
+            if ($query = $this->db->query($sql)) {
                 //return $query->row("0", "array");
                 $result_arr = $query->result_array();
 
                 return $result_arr;
-            }
-            else
-            {
+            } else {
                 echo mysql_error();
                 return FALSE;
             }
@@ -99,36 +92,31 @@ class Landpage_listing_dao extends Base_dao
         $this->db->from('landpage_listing AS ll');
         $this->db->join('product as p', 'll.selection = p.sku', 'INNER');
         $where = array("ll.type" => $type,
-                        "ll.catid" => $catid,
-                        "ll.mode" => $mode,
-                        "ll.platform_id" => $platform);
+            "ll.catid" => $catid,
+            "ll.mode" => $mode,
+            "ll.platform_id" => $platform);
         $this->db->where($where);
         $this->db->order_by("ll.rank");
 //      $option = array("orderby" => "ll.rank", "limit" => -1);
 //      return $this->common_get_list($where, $option, $classname, $select_str);
-            $rs = array();
+        $rs = array();
 
-            $this->db->select($select);
-            $this->include_dto($classname);
-            if($query = $this->db->get())
-            {
-                foreach($query->result($classname) as $obj)
-                {
-                    $rs[] = $obj;
-                }
-                return $rs;
+        $this->db->select($select);
+        $this->include_dto($classname);
+        if ($query = $this->db->get()) {
+            foreach ($query->result($classname) as $obj) {
+                $rs[] = $obj;
             }
+            return $rs;
+        }
         return false;
     }
 
-    public function get_item_by_rank($catid,$type,$rank,$platform,$classname)
+    public function get_item_by_rank($catid, $type, $rank, $platform, $classname)
     {
-        if($catid === "")
-        {
+        if ($catid === "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             $limit = $rank - 1;
 
             $sql = "SELECT ll.rank,ll.selection, p.name,
@@ -148,12 +136,9 @@ class Landpage_listing_dao extends Base_dao
 
             $this->include_dto($classname);
 
-            if ($query = $this->db->query($sql))
-            {
+            if ($query = $this->db->query($sql)) {
                 return $query->row("0", "array");
-            }
-            else
-            {
+            } else {
                 echo mysql_error();
                 return FALSE;
             }
@@ -161,16 +146,12 @@ class Landpage_listing_dao extends Base_dao
         }
     }
 
-    public function get_list_w_pname($catid, $mode, $type, $platform, $classname, $rtype="object")
+    public function get_list_w_pname($catid, $mode, $type, $platform, $classname, $rtype = "object")
     {
-        if($catid === "")
-        {
+        if ($catid === "") {
             return FALSE;
-        }
-        else
-        {
-            if ($catid !== 0)
-            {
+        } else {
+            if ($catid !== 0) {
                 $cat_filter_str = " ll.catid = $catid AND";
             }
 
@@ -198,28 +179,20 @@ class Landpage_listing_dao extends Base_dao
                     ORDER BY ll.rank";
 
             $rs = array();
-            if ($query = $this->db->query($sql, array($platform, $mode, $type, $platform)))
-            {
-                if($rtype == "object")
-                {
+            if ($query = $this->db->query($sql, array($platform, $mode, $type, $platform))) {
+                if ($rtype == "object") {
                     $this->include_dto($classname);
-                    foreach ($query->result($classname) as $obj)
-                    {
+                    foreach ($query->result($classname) as $obj) {
                         $rs[$obj->get_rank()] = $obj;
                     }
                     return $rs;
-                }
-                else
-                {
-                    foreach($query->result_array() as $arr)
-                    {
+                } else {
+                    foreach ($query->result_array() as $arr) {
                         $rs[] = $arr;
                     }
                     return $rs;
                 }
-            }
-            else
-            {
+            } else {
                 echo mysql_error();
                 return FALSE;
             }
@@ -227,69 +200,54 @@ class Landpage_listing_dao extends Base_dao
         }
     }
 
-    public function get_index_list($where=array(), $option=array(), $type, $classname="Cat_stat_dto")
+    public function get_index_list($where = array(), $option = array(), $type, $classname = "Cat_stat_dto")
     {
         $this->db->from('category p');
 
-        $this->db->join("(SELECT catid, count(selection) as cnt FROM landpage_listing WHERE type='".$type."' GROUP BY catid) AS s","s.catid = p.id","LEFT");
+        $this->db->join("(SELECT catid, count(selection) as cnt FROM landpage_listing WHERE type='" . $type . "' GROUP BY catid) AS s", "s.catid = p.id", "LEFT");
 
-        if($where["name"]!=  "")
-        {
+        if ($where["name"] != "") {
             $this->db->like("p.name ", $where["name"]);
         }
 
-        if($where["description"]!=  "")
-        {
+        if ($where["description"] != "") {
             $this->db->like("p.description ", $where["description"]);
         }
 
-        if($where["level"] != "")
-        {
+        if ($where["level"] != "") {
             $this->db->where("p.level", $where["level"]);
         }
 
-        if($where["status"] != "")
-        {
+        if ($where["status"] != "") {
             $this->db->where("p.status", $where["status"]);
         }
 
         //$this->db->where("p.id <>","0");
 
-        if($where["manual"] != "")
-        {
-            if($where["manual"] == "Y")
-            {
-                $this->db->where("s.cnt >",0);
-            }
-            else
-            {
+        if ($where["manual"] != "") {
+            if ($where["manual"] == "Y") {
+                $this->db->where("s.cnt >", 0);
+            } else {
                 $this->db->where("s.cnt IS NULL OR s.cnt = '0'");
             }
         }
 
-        if(empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
             $this->db->select("p.id, p.name, p.description, p.level, p.status, s.cnt");
 
             $this->db->order_by($option["orderby"]);
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
@@ -298,47 +256,39 @@ class Landpage_listing_dao extends Base_dao
 
             $rs = array();
 
-            if($query = $this->db->get())
-            {
-                foreach($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
                 return $rs;
             }
 
             echo $this->db->_error_message();
-        }
-        else
-        {
+        } else {
             $this->db->select("COUNT(*) AS total");
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
         return FALSE;
     }
 
-    public function update_rank_w_prod_list($cat_id='', $type='',
-        $prod_list=array(), $platform="", $mode='A')
+    public function update_rank_w_prod_list($cat_id = '', $type = '',
+                                            $prod_list = array(), $platform = "", $mode = 'A')
     {
-        if ($cat_id==='' || empty($type) || empty($mode) || count($prod_list)  <= 0|| empty($platform))
-        {
+        if ($cat_id === '' || empty($type) || empty($mode) || count($prod_list) <= 0 || empty($platform)) {
             return FALSE;
         }
 
-        $result = $this->q_delete(array('catid'=>$cat_id, 'type'=>$type, 'mode'=>$mode, 'platform_id'=>$platform));
+        $result = $this->q_delete(array('catid' => $cat_id, 'type' => $type, 'mode' => $mode, 'platform_id' => $platform));
 
-        if ($result === FALSE)
-        {
+        if ($result === FALSE) {
             return FALSE;  // Deletion is fail.
         }
 
         $rank = 1;
 
-        foreach ($prod_list as $prod)
-        {
+        foreach ($prod_list as $prod) {
             $vo = $this->get();
 
             $vo->set_catid($cat_id);
@@ -349,8 +299,7 @@ class Landpage_listing_dao extends Base_dao
             $vo->set_selection($prod->get_sku());
 
             $success = $this->insert($vo);
-            if (!$success)
-            {
+            if (!$success) {
                 $this->db->trans_rollback();
             }
         }
@@ -363,17 +312,15 @@ class Landpage_listing_dao extends Base_dao
         $select_str = 'vpo.*, pc.prod_name AS content_prod_name, pc.extra_info, IF(vpi.component_order = -1, 0, 1) AS with_bundle';
 
         $this->db->from('landpage_listing AS ll');
-        if ($option["prod_type_id"])
-        {
+        if ($option["prod_type_id"]) {
             $this->db->join('product_type AS pt', 'll.selection = pt.sku', 'INNER');
             $where["pt.type_id"] = $option["prod_type_id"];
         }
         $this->db->join('v_prod_overview_wo_shiptype AS vpo', 'll.selection = vpo.sku AND ll.platform_id = vpo.platform_id', 'INNER');
-        $this->db->join('product_content AS pc', "pc.prod_sku = vpo.sku AND pc.lang_id='".($option["lang_id"]?$option["lang_id"]:"en")."'",'LEFT');
+        $this->db->join('product_content AS pc', "pc.prod_sku = vpo.sku AND pc.lang_id='" . ($option["lang_id"] ? $option["lang_id"] : "en") . "'", 'LEFT');
         $this->db->join('v_prod_items AS vpi', 'vpi.prod_sku = vpo.sku AND vpi.component_order < 1', 'INNER');
 
-        if ($option["groupby"])
-        {
+        if ($option["groupby"]) {
             $this->db->group_by($option["groupby"]);
         }
 
@@ -391,8 +338,7 @@ class Landpage_listing_dao extends Base_dao
         $this->db->join('platform_biz_var pbv', 'pr.platform_id = pbv.selling_platform_id', 'INNER');
         $this->db->join('product_content pc', 'pc.prod_sku = p.sku AND pc.lang_id = pbv.language_id', 'LEFT');
 
-        if ($option["groupby"])
-        {
+        if ($option["groupby"]) {
             $this->db->group_by($option["groupby"]);
         }
 

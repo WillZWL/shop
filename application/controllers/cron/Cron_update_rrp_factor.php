@@ -1,7 +1,8 @@
 <?php
+
 class Cron_update_rrp_factor extends MY_Controller
 {
-    private $app_id="CRN0015";
+    private $app_id = "CRN0015";
 
     function __construct()
     {

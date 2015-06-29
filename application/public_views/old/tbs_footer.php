@@ -1,55 +1,99 @@
 <?php
-include_once(APPPATH."helpers/string_helper.php");
+include_once(APPPATH . "helpers/string_helper.php");
 
 $this->tbswrapper->tbsLoadTemplate('resources/template/footer.html', '', '', $data['lang_text']);
-if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) 
-{
+if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) {
     $http = "https";
-}
-else
-{
+} else {
     $http = "http";
 }
 
 
+switch (strtolower(PLATFORMCOUNTRYID)) {
+    case 'au' :
+        $kayako_proactive_chat = 'EN';
+        $kayako_site_badge = 'EN';
+        break;
+    case 'be' :
+        $kayako_proactive_chat = '';
+        $kayako_site_badge = 'FR';
+        break;
+    case 'fi' :
+        $kayako_proactive_chat = '';
+        $kayako_site_badge = '';
+        break;
+    case 'fr' :
+        $kayako_proactive_chat = 'FR';
+        $kayako_site_badge = 'FR';
+        break;
+    case 'gb' :
+        $kayako_proactive_chat = 'EN';
+        $kayako_site_badge = 'EN';
+        break;
+    case 'hk' :
+        $kayako_proactive_chat = 'EN';
+        $kayako_site_badge = '';
+        break;
+    case 'ie' :
+        $kayako_proactive_chat = 'EN';
+        $kayako_site_badge = '';
+        break;
+    case 'it' :
+        $kayako_proactive_chat = '';
+        $kayako_site_badge = 'IT';
+        break;
+    case 'my' :
+        $kayako_proactive_chat = 'EN';
+        $kayako_site_badge = '';
+        break;
+    case 'nz' :
+        $kayako_proactive_chat = 'EN';
+        $kayako_site_badge = '';
+        break;
+    case 'sg' :
+        $kayako_proactive_chat = 'EN';
+        $kayako_site_badge = 'EN';
+        break;
+    case 'es' :
+        $kayako_proactive_chat = '';
+        $kayako_site_badge = 'ES';
+        break;
+    case 'us' :
+        $kayako_proactive_chat = 'EN';
+        $kayako_site_badge = '';
+        break;
+    case 'ph' :
+        $kayako_proactive_chat = '';
+        $kayako_site_badge = 'PH';
+        break;
+    case 'pl' :
+        $kayako_proactive_chat = '';
+        $kayako_site_badge = 'PL';
+        break;
+    case 'pt' :
+        $kayako_proactive_chat = '';
+        $kayako_site_badge = 'ES';
+        break;
+    case 'ru' :
+        $kayako_proactive_chat = '';
+        $kayako_site_badge = 'RU';
+        break;
 
-switch (strtolower(PLATFORMCOUNTRYID))
-{
-    case 'au' : $kayako_proactive_chat = 'EN'; $kayako_site_badge = 'EN'; break;
-    case 'be' : $kayako_proactive_chat = '';   $kayako_site_badge = 'FR'; break;
-    case 'fi' : $kayako_proactive_chat = '';   $kayako_site_badge = '';   break;
-    case 'fr' : $kayako_proactive_chat = 'FR'; $kayako_site_badge = 'FR'; break;
-    case 'gb' : $kayako_proactive_chat = 'EN'; $kayako_site_badge = 'EN'; break;
-    case 'hk' : $kayako_proactive_chat = 'EN'; $kayako_site_badge = '';   break;
-    case 'ie' : $kayako_proactive_chat = 'EN'; $kayako_site_badge = '';   break;
-    case 'it' : $kayako_proactive_chat = '';   $kayako_site_badge = 'IT'; break;
-    case 'my' : $kayako_proactive_chat = 'EN'; $kayako_site_badge = '';   break;
-    case 'nz' : $kayako_proactive_chat = 'EN'; $kayako_site_badge = '';   break;
-    case 'sg' : $kayako_proactive_chat = 'EN'; $kayako_site_badge = 'EN'; break;
-    case 'es' : $kayako_proactive_chat = '';   $kayako_site_badge = 'ES'; break;
-    case 'us' : $kayako_proactive_chat = 'EN'; $kayako_site_badge = '';   break;
-    case 'ph' : $kayako_proactive_chat = '';   $kayako_site_badge = 'PH'; break;
-    case 'pl' : $kayako_proactive_chat = '';   $kayako_site_badge = 'PL'; break;
-    case 'pt' : $kayako_proactive_chat = '';   $kayako_site_badge = 'ES'; break;
-    case 'ru' : $kayako_proactive_chat = '';   $kayako_site_badge = 'RU'; break;
-    
 
-    default   : $kayako_proactive_chat = ''; $kayako_site_badge = '';
+    default   :
+        $kayako_proactive_chat = '';
+        $kayako_site_badge = '';
 }
 
 $this->tbswrapper->tbsMergeField('kayako_proactive_chat', $kayako_proactive_chat);
 $this->tbswrapper->tbsMergeField('kayako_site_badge', $kayako_site_badge);
 
 
-
-$fdl_banner["url"] = base_url().'display/view/shipping';
-$support_banner["url"] = base_url().'contact';
-if($free_delivery_limit > 0)
-{
+$fdl_banner["url"] = base_url() . 'display/view/shipping';
+$support_banner["url"] = base_url() . 'contact';
+if ($free_delivery_limit > 0) {
     $fdl_banner["limit"] = $data['lang_text']['footer_text_for_order_above'] . " " . $PLATFORMCURRSIGN . " " . $free_delivery_limit;
-}
-else
-{
+} else {
     $fdl_banner["limit"] = $data['lang_text']['default_text_for_all_orders'] . "<sup>*</sup>";
 }
 //print strtolower(PLATFORMID);
@@ -61,14 +105,14 @@ $this->tbswrapper->tbsMergeField('support_banner', $support_banner);
 
 $capital_lang_id = strtoupper(get_lang_id());
 
-$sitemap = array("url"=>base_url(), "display_name"=>"Sitemap");
-$aboutus = array("url"=>base_url().'display/view/about_us', "display_name"=>$data['lang_text']['footer_text_about_us']);
-$terms = array("url"=>base_url().'display/view/conditions_of_use', "display_name"=>$data['lang_text']['footer_text_conditions_of_use']);
-$warranty_tc = array("url"=>base_url().'display/view/warranty_tc', "display_name"=>$data['lang_text']['footer_text_warranty_tc']);
-$affiliate = array("display_name"=>$data['lang_text']['footer_text_affiliate']);
-$policy = array("url"=>base_url().'display/view/privacy_policy', "display_name"=>$data['lang_text']['footer_text_privacy_policy']);
-$blog = array("url"=>'/blog', "display_name"=>$data['lang_text']['footer_text_blog']);
-$shipping = array("url"=>base_url().'display/view/shipping', "display_name"=>$data['lang_text']['default_menu_shipping']);
+$sitemap = array("url" => base_url(), "display_name" => "Sitemap");
+$aboutus = array("url" => base_url() . 'display/view/about_us', "display_name" => $data['lang_text']['footer_text_about_us']);
+$terms = array("url" => base_url() . 'display/view/conditions_of_use', "display_name" => $data['lang_text']['footer_text_conditions_of_use']);
+$warranty_tc = array("url" => base_url() . 'display/view/warranty_tc', "display_name" => $data['lang_text']['footer_text_warranty_tc']);
+$affiliate = array("display_name" => $data['lang_text']['footer_text_affiliate']);
+$policy = array("url" => base_url() . 'display/view/privacy_policy', "display_name" => $data['lang_text']['footer_text_privacy_policy']);
+$blog = array("url" => '/blog', "display_name" => $data['lang_text']['footer_text_blog']);
+$shipping = array("url" => base_url() . 'display/view/shipping', "display_name" => $data['lang_text']['default_menu_shipping']);
 
 $this->tbswrapper->tbsMergeField('base_url', base_url());
 $this->tbswrapper->tbsMergeField('site_url', site_url());
@@ -89,20 +133,16 @@ $this->tbswrapper->tbsMergeField('shipping', $shipping);
 $pf = array();
 $selected_country = "";
 $lang_country_pair = '';
-foreach($platform_list AS $key=>$obj)
-{
+foreach ($platform_list AS $key => $obj) {
     $pf[$key]['country_id'] = $obj->get_language_id() . '_' . $obj->get_id();
     $pf[$key]['country_name'] = $obj->get_name();
     $platform_currency[$obj->get_id()] = $obj->get_currency_id();
-    if($obj->get_id() == PLATFORMCOUNTRYID)
-    {
+    if ($obj->get_id() == PLATFORMCOUNTRYID) {
         $pf[$key]['selected'] = 'SELECTED';
         $selected_country = $obj->get_id();
         $lang_country_pair = $obj->get_language_id() . '_' . $obj->get_id();
-    }
-    else
-    {
-        
+    } else {
+
         $pf[$key]['selected'] = '';
     }
 }
@@ -113,23 +153,19 @@ $this->tbswrapper->tbsMergeField('lang_part', lang_part());
 
 $currency_str = json_encode($platform_currency);
 //$back_url = urlencode(str_replace(site_url(), site_url().$_SESSION["domain_platform"]["platform_country_id"].'/', current_url()).($_SERVER["QUERY_STRING"] ? "?".$_SERVER["QUERY_STRING"] : ""));
-$back_url = urlencode(base_url() . uri_string() . ($_SERVER["QUERY_STRING"] ? "?".$_SERVER["QUERY_STRING"] : ""));
-$this->tbswrapper->tbsMergeField('query_string', urlencode($_SERVER["QUERY_STRING"] ? "?".$_SERVER["QUERY_STRING"] : ""));
+$back_url = urlencode(base_url() . uri_string() . ($_SERVER["QUERY_STRING"] ? "?" . $_SERVER["QUERY_STRING"] : ""));
+$this->tbswrapper->tbsMergeField('query_string', urlencode($_SERVER["QUERY_STRING"] ? "?" . $_SERVER["QUERY_STRING"] : ""));
 $domain = check_domain();
 $chk_cart = '';
-if($_SESSION["cart"][PLATFORMID])
-{
+if ($_SESSION["cart"][PLATFORMID]) {
     $chk_cart = base64_encode(serialize($_SESSION["cart"][PLATFORMID]));
     $this->tbswrapper->tbsMergeField('chk_cart', $chk_cart);
     $this->tbswrapper->tbsMergeField('empty_cart', 2);
-}
-else
-{
+} else {
     $this->tbswrapper->tbsMergeField('empty_cart', 1);
 }
 
-if (PLATFORMCOUNTRYID == 'PH')
-{
+if (PLATFORMCOUNTRYID == 'PH') {
     // $money_back = "";
     // $warranty = "<span style='display:table-cell;'><a href='/hesk_ph/knowledgebase.php?article=20' title='' class='footer-banner_bank_transfer'>
     //          <ins>" . $data['lang_text']['footer_text_bank_transfer'] . "</ins>
@@ -140,9 +176,7 @@ if (PLATFORMCOUNTRYID == 'PH')
     $warranty_img = "{$http}://cdn.valuebasket.com/808AA1/vb/resources/images/footer-bank_transfer.jpg";
 
 
-}
-else
-{
+} else {
     // $money_back = "      <span style='display:table-cell;'>
     //      <a href='" . base_url() . "display/view/faq' title='' class='footer-banner-02'>
     //          <ins>" . $data['lang_text']['footer_text_money_back'] . "</ins>
@@ -161,16 +195,15 @@ else
 
 }
 
-$url["faq"] = base_url(). "display/view/faq";
+$url["faq"] = base_url() . "display/view/faq";
 
 
 $lang_part = lang_part();
 
 #SBF #3211
-switch (PLATFORMCOUNTRYID) 
-{
+switch (PLATFORMCOUNTRYID) {
     case 'PH':
-                $sign_up_bottom = <<<EOT
+        $sign_up_bottom = <<<EOT
         <table>
             <tbody>
             <tr>
@@ -199,7 +232,7 @@ switch (PLATFORMCOUNTRYID)
                                                 <td width="30%" style="padding:11px 0 5px 10px; text-align:center;color:#FFFFFF;">
                                                     <a href="{$fdl_banner["url"]}" style="color:#FFFFFF;"><img src='{$http}://cdn.valuebasket.com/808AA1/vb/resources/images/footer-free-delivery.png'>
                                                     </a>
-                                                </td>                                   
+                                                </td>
                                                 <td width="30%" style="padding:9px 0 5px; text-align:center;color:#FFFFFF;">
                                                     <a href="{$url["warranty"]}" style="color:#FFFFFF;">
                                                     <img src='{$http}://cdn.valuebasket.com/808AA1/vb/resources/images/footer-bank_transfer.png'>
@@ -212,9 +245,9 @@ switch (PLATFORMCOUNTRYID)
                                                     <font size="2">{$data["lang_text"]["footer_text_free_delivery"]}</font>
                                                     <br><font size="1">{$fdl_banner["limit"]}</font></a>
                                                 </td>
-                                                
+
                                                 <td width="30%" style="padding:0 9px 0; text-align:center;color:#FFFFFF;">
-                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">                                        
+                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">
                                                         <font size="2">{$data["lang_text"]["footer_text_bank_transfer"]}</font>
                                                         <br><font size="1">{$data["lang_text"]["footer_text_click_for_details"]}</font></a>
                                                 </td>
@@ -247,7 +280,7 @@ EOT;
                             <tr>
                                 <td align="center">
                                     <div class='text' align="center" style=" padding:0px 20px 0px 10px;">
-                                        <p>{$data['lang_text']['footer_newsletter_sign_up_SG']}</p>                         
+                                        <p>{$data['lang_text']['footer_newsletter_sign_up_SG']}</p>
                                         <form method='post' action='$lang_part/display/view/newsletter_thank_you' name='subscribe-bottom'>
                                             <fieldset>
                                                 <input type='text' onfocus=\"if (this.value == '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}') {this.value = '';}\" onblur=\"if (this.value == '') {this.value = '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}';}\" value='{$data['lang_text']['footer_newsletter_sign_up_placeholder']}' id='subscribe-email-bottom' name='subscribe-email'>
@@ -289,7 +322,7 @@ EOT;
                                                         <br><font size="1">{$money_back_detail}</font></a>
                                                 </td>
                                                 <td width="30%" style="padding:0 9px 0; text-align:center;color:#FFFFFF;">
-                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">                                        
+                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">
                                                         <font size="2">{$data["lang_text"]["footer_text_warranty"]}</font>
                                                         <br><font size="1">{$data["lang_text"]["footer_text_warranty_detail"]}</font></a>
                                                 </td>
@@ -299,7 +332,7 @@ EOT;
                                     </div>
                                 </td>
                             </tr>
-                        </table>                        
+                        </table>
                     </div>
                 </td>
             </tr>
@@ -307,7 +340,7 @@ EOT;
         </table>
 EOT;
         break;
-    
+
 
     case 'ES':
     case 'PT':
@@ -322,7 +355,7 @@ EOT;
                                 <td align="center">
                                     <div class='text' align="center" style=" padding:0px 20px 0px 10px;">
                                         <p>{$data['lang_text']['footer_newsletter_sign_up']}</p>
-                                        
+
                                         <form method='post' action='$lang_part/display/view/newsletter_thank_you' name='subscribe-bottom'>
                                             <fieldset>
                                                 <input type='text' onfocus=\"if (this.value == '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}') {this.value = '';}\" onblur=\"if (this.value == '') {this.value = '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}';}\" value='{$data['lang_text']['footer_newsletter_sign_up_placeholder']}' id='subscribe-email-bottom' name='subscribe-email'>
@@ -364,7 +397,7 @@ EOT;
                                                         <br><font size="1">{$money_back_detail}</font></a>
                                                 </td>
                                                 <td width="30%" style="padding:0 9px 0; text-align:center;color:#FFFFFF;">
-                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">                                        
+                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">
                                                         <font size="2">{$data["lang_text"]["footer_text_warranty"]}</font>
                                                         <br><font size="1">{$data["lang_text"]["footer_text_warranty_detail"]}</font></a>
                                                 </td>
@@ -372,9 +405,9 @@ EOT;
                                             </tbody>
                                         </table>
                                     </div>
-                                </td>   
+                                </td>
                             </tr>
-                        </table>                
+                        </table>
                     </div>
                 </td>
             </tr>
@@ -396,7 +429,7 @@ EOT;
                                 <td align="center">
                                     <div class='text' align="center" style=" padding:0px 20px 0px 10px;">
                                         <p>{$data['lang_text']['footer_newsletter_sign_up']}</p>
-                                        
+
                                         <form method='post' action='$lang_part/display/view/newsletter_thank_you' name='subscribe-bottom'>
                                             <fieldset>
                                                 <input type='text' onfocus=\"if (this.value == '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}') {this.value = '';}\" onblur=\"if (this.value == '') {this.value = '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}';}\" value='{$data['lang_text']['footer_newsletter_sign_up_placeholder']}' id='subscribe-email-bottom' name='subscribe-email'>
@@ -438,7 +471,7 @@ EOT;
                                                         <br><font size="1">{$money_back_detail}</font></a>
                                                 </td>
                                                 <td width="30%" style="padding:0 9px 0; text-align:center;color:#FFFFFF;">
-                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">                                        
+                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">
                                                         <font size="2">{$data["lang_text"]["footer_text_warranty"]}</font>
                                                         <br><font size="1">{$data["lang_text"]["footer_text_warranty_detail"]}</font></a>
                                                 </td>
@@ -456,8 +489,8 @@ EOT;
         </table>
 EOT;
         break;
-        
-        case 'RU':
+
+    case 'RU':
         $sign_up_bottom = <<<EOT
         <table>
             <tbody>
@@ -469,7 +502,7 @@ EOT;
                                 <td align="center">
                                     <div class='text' align="center" style=" padding:0px 20px 0px 10px;">
                                         <p>{$data['lang_text']['footer_newsletter_sign_up']}</p>
-                                        
+
                                         <form method='post' action='$lang_part/display/view/newsletter_thank_you' name='subscribe-bottom'>
                                             <fieldset>
                                                 <input type='text' onfocus=\"if (this.value == '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}') {this.value = '';}\" onblur=\"if (this.value == '') {this.value = '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}';}\" value='{$data['lang_text']['footer_newsletter_sign_up_placeholder']}' id='subscribe-email-bottom' name='subscribe-email'>
@@ -511,7 +544,7 @@ EOT;
                                                         <br><font size="1">{$money_back_detail}</font></a>
                                                 </td>
                                                 <td width="30%" style="padding:0 9px 0; text-align:center;color:#FFFFFF;">
-                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">                                        
+                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">
                                                         <font size="2">{$data["lang_text"]["footer_text_warranty"]}</font>
                                                         <br><font size="1">{$data["lang_text"]["footer_text_warranty_detail"]}</font></a>
                                                 </td>
@@ -529,8 +562,8 @@ EOT;
         </table>
 EOT;
         break;
-        
-        case 'MY':
+
+    case 'MY':
         $sign_up_bottom = <<<EOT
         <table>
             <tbody>
@@ -541,7 +574,7 @@ EOT;
                             <tr>
                                 <td align="center">
                                     <div class='text' align="center" style=" padding:0px 20px 0px 10px;">
-                                        <p>{$data['lang_text']['footer_newsletter_sign_up_MY']}</p>                         
+                                        <p>{$data['lang_text']['footer_newsletter_sign_up_MY']}</p>
                                         <form method='post' action='$lang_part/display/view/newsletter_thank_you' name='subscribe-bottom'>
                                             <fieldset>
                                                 <input type='text' onfocus=\"if (this.value == '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}') {this.value = '';}\" onblur=\"if (this.value == '') {this.value = '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}';}\" value='{$data['lang_text']['footer_newsletter_sign_up_placeholder']}' id='subscribe-email-bottom' name='subscribe-email'>
@@ -583,7 +616,7 @@ EOT;
                                                         <br><font size="1">{$money_back_detail}</font></a>
                                                 </td>
                                                 <td width="30%" style="padding:0 9px 0; text-align:center;color:#FFFFFF;">
-                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">                                        
+                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">
                                                         <font size="2">{$data["lang_text"]["footer_text_warranty"]}</font>
                                                         <br><font size="1">{$data["lang_text"]["footer_text_warranty_detail"]}</font></a>
                                                 </td>
@@ -593,7 +626,7 @@ EOT;
                                     </div>
                                 </td>
                             </tr>
-                        </table>                        
+                        </table>
                     </div>
                 </td>
             </tr>
@@ -601,9 +634,9 @@ EOT;
         </table>
 EOT;
         break;
-        
-        
-        case 'PL':
+
+
+    case 'PL':
         $sign_up_bottom = <<<EOT
         <table>
             <tbody>
@@ -615,7 +648,7 @@ EOT;
                                 <td align="center">
                                     <div class='text' align="center" style=" padding:0px 20px 0px 10px;">
                                         <p>{$data['lang_text']['footer_newsletter_sign_up']}</p>
-                                        
+
                                         <form method='post' action='$lang_part/display/view/newsletter_thank_you' name='subscribe-bottom'>
                                             <fieldset>
                                                 <input type='text' onfocus=\"if (this.value == '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}') {this.value = '';}\" onblur=\"if (this.value == '') {this.value = '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}';}\" value='{$data['lang_text']['footer_newsletter_sign_up_placeholder']}' id='subscribe-email-bottom' name='subscribe-email'>
@@ -657,7 +690,7 @@ EOT;
                                                         <br><font size="1">{$money_back_detail}</font></a>
                                                 </td>
                                                 <td width="30%" style="padding-left:9px; padding-right:5px; text-align:center;color:#FFFFFF;">
-                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">                                        
+                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">
                                                         <font size="2">{$data["lang_text"]["footer_text_warranty"]}</font>
                                                         <br><font size="1">{$data["lang_text"]["footer_text_warranty_detail"]}</font></a>
                                                 </td>
@@ -695,7 +728,7 @@ EOT;
                                 <td align="center">
                                     <div class='text' align="center" style="padding:0px 20px 0px 10px;">
                                         <p>{$data['lang_text']['footer_newsletter_sign_up']}</p>
-                                        
+
                                         <form method='post' action='$lang_part/display/view/newsletter_thank_you' name='subscribe-bottom'>
                                             <fieldset>
                                                 <input type='text' onfocus=\"if (this.value == '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}') {this.value = '';}\" onblur=\"if (this.value == '') {this.value = '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}';}\" value='{$data['lang_text']['footer_newsletter_sign_up_placeholder']}' id='subscribe-email-bottom' name='subscribe-email'>
@@ -737,7 +770,7 @@ EOT;
                                                         <br><font size="1">{$money_back_detail}</font></a>
                                                 </td>
                                                 <td width="30%" style="padding-left:9px; padding-right:5px; text-align:center;color:#FFFFFF;">
-                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">                                        
+                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">
                                                         <font size="2">{$data["lang_text"]["footer_text_warranty"]}</font>
                                                         <br><font size="1">{$data["lang_text"]["footer_text_warranty_detail"]}</font></a>
                                                 </td>
@@ -767,7 +800,7 @@ EOT;
                                 <td align="center">
                                     <div class='text' align="center" style=" padding:0px 20px 0px 10px;">
                                         <p>{$data['lang_text']['footer_newsletter_sign_up']}</p>
-                                        
+
                                         <form method='post' action='$lang_part/display/view/newsletter_thank_you' name='subscribe-bottom'>
                                             <fieldset>
                                                 <input type='text' onfocus=\"if (this.value == '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}') {this.value = '';}\" onblur=\"if (this.value == '') {this.value = '{$data['lang_text']['footer_newsletter_sign_up_placeholder']}';}\" value='{$data['lang_text']['footer_newsletter_sign_up_placeholder']}' id='subscribe-email-bottom' name='subscribe-email'>
@@ -809,7 +842,7 @@ EOT;
                                                         <br><font size="1">{$money_back_detail}</font></a>
                                                 </td>
                                                 <td width="30%" style="padding-left:9px; padding-right:5px; text-align:center;color:#FFFFFF;">
-                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">                                        
+                                                    <a href="{$url["warranty"]}" style="color:#FFFFFF;">
                                                         <font size="2">{$data["lang_text"]["footer_text_warranty"]}</font>
                                                         <br><font size="1">{$data["lang_text"]["footer_text_warranty_detail"]}</font></a>
                                                 </td>
@@ -868,36 +901,27 @@ $this->tbswrapper->tbsMergeField('money_back', $money_back);
 $this->tbswrapper->tbsMergeField('sign_up_bottom', $sign_up_bottom);
 $this->tbswrapper->tbsMergeField('white_space', $white_space);
 $this->tbswrapper->tbsMergeField('http', $http);
-if (get_lang_id() == "en")
-{
+if (get_lang_id() == "en") {
     $g_plus_link = $http . "://plus.google.com/104457367954785921390";
     $facebook_link = $http . "://www.facebook.com/ValueBasket";
     $youtube_link = $http . "://www.youtube.com/user/ValueBasketTV?feature=creators_cornier-%2F%2Fs.ytimg.com%2Fyt%2Fimg%2Fcreators_corner%2FYouTube%2Fyoutube_32x32.png";
     $twitter_link = $http . "://www.twitter.com/ValueBasket";
-}
-else if (get_lang_id() == "es")
-{
+} else if (get_lang_id() == "es") {
     $g_plus_link = "";
     $facebook_link = $http . "://www.facebook.com/valuebasketespana";
     $youtube_link = $http . "://www.youtube.com/user/ValueBasketTV?feature=creators_cornier-%2F%2Fs.ytimg.com%2Fyt%2Fimg%2Fcreators_corner%2FYouTube%2Fyoutube_32x32.png";
     $twitter_link = "";
-}
-else if (get_lang_id() == "it")
-{
+} else if (get_lang_id() == "it") {
     $g_plus_link = "";
     $facebook_link = $http . "://www.facebook.com/valuebasketit";
     $youtube_link = $http . "://www.youtube.com/user/ValueBasketTV?feature=creators_cornier-%2F%2Fs.ytimg.com%2Fyt%2Fimg%2Fcreators_corner%2FYouTube%2Fyoutube_32x32.png";
     $twitter_link = "";
-}
-else if (get_lang_id() == "pl")
-{
+} else if (get_lang_id() == "pl") {
     $g_plus_link = "";
     $facebook_link = $http . "://www.facebook.com/pages/valuebasketpl/1423772331250696?fref=nf";
     $youtube_link = $http . "://www.youtube.com/user/ValueBasketTV?feature=creators_cornier-%2F%2Fs.ytimg.com%2Fyt%2Fimg%2Fcreators_corner%2FYouTube%2Fyoutube_32x32.png";
     $twitter_link = "";
-}
-else
-{
+} else {
     $g_plus_link = "";
     $facebook_link = "";
     $youtube_link = $http . "://www.youtube.com/user/ValueBasketTV?feature=creators_cornier-%2F%2Fs.ytimg.com%2Fyt%2Fimg%2Fcreators_corner%2FYouTube%2Fyoutube_32x32.png";
@@ -908,17 +932,14 @@ $this->tbswrapper->tbsMergeField('facebook_icon', $facebook_link);
 $this->tbswrapper->tbsMergeField('youtube_icon', $youtube_link);
 $this->tbswrapper->tbsMergeField('twitter_icon', $twitter_link);
 
-if ($_SESSION['user_agent'] == 'mobile')
-{
+if ($_SESSION['user_agent'] == 'mobile') {
     if (isset($_SESSION['init_site_mode_session']) && ($_SESSION['init_site_mode_session'] === TRUE))
         $this->tbswrapper->tbsMergeField('init_site_mode_session', 'T');
     else
         $this->tbswrapper->tbsMergeField('init_site_mode_session', '');
 
-    $this->tbswrapper->tbsMergeField('mobile_url', $http.'://m.valuebasket.com' . ($lang_country_pair != '' ? '/' . $lang_country_pair : ''));
-}
-else
-{
+    $this->tbswrapper->tbsMergeField('mobile_url', $http . '://m.valuebasket.com' . ($lang_country_pair != '' ? '/' . $lang_country_pair : ''));
+} else {
     $this->tbswrapper->tbsMergeField('mobile_url', '');
     $this->tbswrapper->tbsMergeField('init_site_mode_session', '');
 }

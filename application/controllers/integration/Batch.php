@@ -1,4 +1,5 @@
 <?php
+
 class Batch extends MY_Controller
 {
 
@@ -10,12 +11,12 @@ class Batch extends MY_Controller
         $this->load->model('integration/batch_model');
     }
 
-    function ixtens_reprice($platform="AMUK")
+    function ixtens_reprice($platform = "AMUK")
     {
         $this->batch_model->batch_service->batch_ixtens_reprice($platform);
     }
 
-    function batch_get_amazon_order($platform="AMUK")
+    function batch_get_amazon_order($platform = "AMUK")
     {
         $this->batch_model->batch_service->batch_get_amazon_order($platform);
     }

@@ -11,15 +11,17 @@ class Rpt_sourcing_region_report_service extends Report_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/service/So_service.php");
+        include_once(APPPATH . "libraries/service/So_service.php");
         $this->set_so_service(new So_service());
         $this->set_output_delimiter(',');
     }
 
-    public function set_so_service($value)
+    public function get_csv($where = array())
     {
-        $this->so_service = $value;
-        return $this;
+        set_time_limit(300);
+        $arr = $this->get_so_service()->get_dao()->get_sourcing_region_report($where, array("limit" => -1));
+//print $this->get_so_service()->get_dao()->db->last_query();
+        return $this->convert($arr);
     }
 
     public function get_so_service()
@@ -27,12 +29,10 @@ class Rpt_sourcing_region_report_service extends Report_service
         return $this->so_service;
     }
 
-    public function get_csv($where = array())
+    public function set_so_service($value)
     {
-        set_time_limit(300);
-        $arr = $this->get_so_service()->get_dao()->get_sourcing_region_report($where, array("limit"=>-1));
-//print $this->get_so_service()->get_dao()->db->last_query();
-        return $this->convert($arr);
+        $this->so_service = $value;
+        return $this;
     }
 
     protected function get_default_vo2xml_mapping()

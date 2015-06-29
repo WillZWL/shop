@@ -8,31 +8,36 @@ class Website_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/service/Category_service.php");
+        include_once(APPPATH . "libraries/service/Category_service.php");
         $this->category_service = new Category_service();
-        include_once(APPPATH."libraries/service/Best_seller_service.php");
+        include_once(APPPATH . "libraries/service/Best_seller_service.php");
         $this->best_seller_service = new Best_seller_service();
-        include_once(APPPATH."libraries/service/Latest_arrivals_service.php");
+        include_once(APPPATH . "libraries/service/Latest_arrivals_service.php");
         $this->latest_arrivals_service = new Latest_arrivals_service();
-        include_once(APPPATH."libraries/service/Pick_of_the_day_service.php");
+        include_once(APPPATH . "libraries/service/Pick_of_the_day_service.php");
         $this->pick_of_the_day_service = new Pick_of_the_day_service();
-        include_once(APPPATH."libraries/service/Cart_session_service.php");
+        include_once(APPPATH . "libraries/service/Cart_session_service.php");
         $this->cart_session_service = new Cart_session_service();
-        include_once(APPPATH."libraries/service/Banner_service.php");
+        include_once(APPPATH . "libraries/service/Banner_service.php");
         $this->banner_service = new Banner_service();
-        include_once(APPPATH."libraries/service/Display_banner_service.php");
+        include_once(APPPATH . "libraries/service/Display_banner_service.php");
         $this->set_display_banner_service(new Display_banner_service());
-        include_once(APPPATH."libraries/service/Context_config_service.php");
+        include_once(APPPATH . "libraries/service/Context_config_service.php");
         $this->context_config_service = new Context_config_service();
-        include_once(APPPATH."libraries/service/Menu_service.php");
+        include_once(APPPATH . "libraries/service/Menu_service.php");
         $this->menu_service = new Menu_service();
-        include_once(APPPATH."libraries/service/Product_service.php");
+        include_once(APPPATH . "libraries/service/Product_service.php");
         $this->product_service = new Product_service();
-        include_once(APPPATH."libraries/service/Price_service.php");
+        include_once(APPPATH . "libraries/service/Price_service.php");
         $this->price_service = new Price_service();
-        include_once(APPPATH."libraries/service/Category_service.php");
+        include_once(APPPATH . "libraries/service/Category_service.php");
         $this->category_service = new Category_service();
 
+    }
+
+    public function set_display_banner_service($serv)
+    {
+        $this->display_banner_service = $serv;
     }
 
     public function get_home_content($lang_id = 'en')
@@ -91,31 +96,19 @@ class Website_service extends Base_service
         return $data;
     }
 
-
-    public function get_clearance_product_gird_info($platform_id = "")
+    public function get_latest_arrival_grid_info($platform_id = "")
     {
-        return $this->product_service->get_clearance_product_gird_info($platform_id);
+        return $this->latest_arrivals_service->get_home_latest_arrival_grid_info($platform_id);
     }
-
-
 
     public function get_best_seller_grid_info($platform_id = "")
     {
         return $this->best_seller_service->get_home_best_seller_grid_info($platform_id);
     }
 
-    public function get_latest_arrival_grid_info($platform_id = "")
+    public function get_clearance_product_gird_info($platform_id = "")
     {
-        return $this->latest_arrivals_service->get_home_latest_arrival_grid_info($platform_id);
-    }
-
-    public function get_home_category_list()
-    {
-        $where["level"] = "1";
-        $where["status"] = "1";
-        $where["id > "] = "0";
-        $option["orderby"] = "priority ASC";
-        return $this->category_service->get_dao()->get_list($where, $option, $this->category_service->get_dao()->get_vo_classname());
+        return $this->product_service->get_clearance_product_gird_info($platform_id);
     }
 
     public function get_footer_menu_list($lang_id = "en")
@@ -128,15 +121,11 @@ class Website_service extends Base_service
             $list = $this->menu_service->get_fm_list_w_name($lang_id, $where, $option);
         }
 
-        if ($list)
-        {
+        if ($list) {
             foreach ($list as $obj) {
-                if ($obj->get_level()==0)
-                {
+                if ($obj->get_level() == 0) {
                     $rs['menu_list'][$obj->get_menu_id()] = $obj;
-                }
-                else
-                {
+                } else {
                     $rs['menu_item_list'][$obj->get_parent_id()][$obj->get_menu_id()] = $obj;
                 }
             }
@@ -151,25 +140,21 @@ class Website_service extends Base_service
         $result = array();
         $count = 0;
 
-        foreach ($cat_list as $cat)
-        {
-            if ($count >= $total_grid_size)
-            {
+        foreach ($cat_list as $cat) {
+            if ($count >= $total_grid_size) {
                 break;
             }
 
             $result[$count]["category"] = $cat;
             $sub_cat_list = $this->category_service->get_item_with_pop_child_count(2, $cat->get_id());
 
-            if ($sub_cat_list)
-            {
+            if ($sub_cat_list) {
                 $result[$count]["pop_sub_cat_list"] = $sub_cat_list;
             }
 
             $brand_list = $this->category_service->get_display_list($cat->get_id(), "brand");
 
-            if ($brand_list)
-            {
+            if ($brand_list) {
                 $result[$count]["pop_brand_list"] = $brand_list;
             }
 
@@ -179,14 +164,18 @@ class Website_service extends Base_service
         return $result;
     }
 
+    public function get_home_category_list()
+    {
+        $where["level"] = "1";
+        $where["status"] = "1";
+        $where["id > "] = "0";
+        $option["orderby"] = "priority ASC";
+        return $this->category_service->get_dao()->get_list($where, $option, $this->category_service->get_dao()->get_vo_classname());
+    }
+
     public function get_display_banner_service()
     {
         return $this->display_banner_service;
-    }
-
-    public function set_display_banner_service($serv)
-    {
-        $this->display_banner_service = $serv;
     }
 
     public function get_display_service()
@@ -205,17 +194,13 @@ class Website_service extends Base_service
             return false;
         }
 
-        if ($cat_obj = $this->category_service->get($cat_id))
-        {
+        if ($cat_obj = $this->category_service->get($cat_id)) {
             $cat_name = str_replace(array(" ", "/", "."), "-", $cat_obj->get_name());
 
-            if ($relative_path)
-            {
-                return "/".$cat_name."/cat/view/".$cat_obj->get_id();
-            }
-            else
-            {
-                return base_url().$cat_name."/cat/view/".$cat_obj->get_id();
+            if ($relative_path) {
+                return "/" . $cat_name . "/cat/view/" . $cat_obj->get_id();
+            } else {
+                return base_url() . $cat_name . "/cat/view/" . $cat_obj->get_id();
             }
         }
 
@@ -228,17 +213,13 @@ class Website_service extends Base_service
             return false;
         }
 
-        if ($prod_obj = $this->product_service->get(array("sku"=>$sku)))
-        {
+        if ($prod_obj = $this->product_service->get(array("sku" => $sku))) {
             $prod_name = str_replace(array(" ", "/", "."), "-", $prod_obj->get_name());
 
-            if ($relative_path)
-            {
-                return "/".$prod_name."/mainproduct/view/".$prod_obj->get_sku();
-            }
-            else
-            {
-                return base_url().$prod_name."/mainproduct/view/".$prod_obj->get_sku();
+            if ($relative_path) {
+                return "/" . $prod_name . "/mainproduct/view/" . $prod_obj->get_sku();
+            } else {
+                return base_url() . $prod_name . "/mainproduct/view/" . $prod_obj->get_sku();
             }
         }
         return $sku;

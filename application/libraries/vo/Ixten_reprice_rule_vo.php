@@ -144,4 +144,5 @@ class Ixten_reprice_rule_vo extends Base_vo
     }
 
 }
+
 ?>

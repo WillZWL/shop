@@ -16,13 +16,38 @@
 ?>
 <?php
 
-require_once(ClickTale_Root."/ClickTale.inc.php");
+require_once(ClickTale_Root . "/ClickTale.inc.php");
 
 class ClickTale_Settings
 {
-    function __construct() 
+    public static $hadRuntimeError = false;
+    static private $instanceSettings = null;
+    public $CacheProvider;
+    public $ScriptsFile;
+    public $CacheScriptsFile;
+    public $MaxCachedSeconds;
+    public $LogPathMask;
+    public $DeleteAfterPull;
+    public $AllowDebug;
+    public $DisableCache;
+    public $DisableFilter;
+    public $DoNotProcessCookieName;
+    public $DoNotProcessCookieValue;
+    public $AllowedAddresses;
+    public $MaxFolderSize;
+    public $Version = "1.0.0.0b";
+    public $SystemTempDir;
+
+    public $UseStaticHash = false;
+    public $StaticHash = "test";
+
+    public $CacheFetchingUrl;
+
+    public $config;
+
+    function __construct()
     {
-        require(ClickTale_Root."/config.php");
+        require(ClickTale_Root . "/config.php");
         /// ====================================================
         /// Settings values
         /// ====================================================
@@ -47,48 +72,21 @@ class ClickTale_Settings
         ///
         /// ====================================================
         $this->SystemTempDir = $config['SystemTempDir'];
-        
+
         $this->config = $config;
     }
 
-    public static $hadRuntimeError = false;
-
-    public $CacheProvider;
-    public $ScriptsFile;
-    public $CacheScriptsFile;
-    public $MaxCachedSeconds;
-    public $LogPathMask;
-    public $DeleteAfterPull;
-    public $AllowDebug;
-    public $DisableCache;
-    public $DisableFilter;
-    public $DoNotProcessCookieName;
-    public $DoNotProcessCookieValue;
-    public $AllowedAddresses;
-    public $MaxFolderSize;
-    public $Version = "1.0.0.0b";
-    public $SystemTempDir;
-    
-    public $UseStaticHash = false;
-    public $StaticHash = "test";
-    
-    public $CacheFetchingUrl;
-    
-    public $config;
-    
-    static private $instanceSettings = null;
-        
     static public function Instance()
     {
-        // If there is not already an instance of this class, 
+        // If there is not already an instance of this class,
         //   instantiate one.
-        if (self::$instanceSettings == null){
+        if (self::$instanceSettings == null) {
             self::$instanceSettings = new ClickTale_Settings;
         }
- 
+
         return self::$instanceSettings;
     }
-    
+
     // Gets the default configuration based on the settings.
     public function getCacheProviderConfig()
     {
@@ -101,7 +99,7 @@ class ClickTale_Settings
             "MaxFolderSize" => $this->MaxFolderSize
         );
     }
-    
+
     /*
     function __get($id) { return $this->items[ $id ]; }
     */

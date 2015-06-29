@@ -203,4 +203,5 @@ class Country_rma_fc_dto extends Base_dto
         $this->rma_fc = $value;
     }
 }
+
 ?>

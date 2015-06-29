@@ -1,4 +1,5 @@
 <?php
+
 class Wms_slow_moving_report_model extends CI_Model
 {
     public function __construct()
@@ -22,4 +23,5 @@ class Wms_slow_moving_report_model extends CI_Model
         return $result;
     }
 }
+
 ?>

@@ -300,15 +300,16 @@ class Price_extend_vo extends Base_vo
         return $this->increment_field;
     }
 
+    public function get_handling_time()
+    {
+        return $this->handling_time;
+    }
+
     public function set_handling_time($value)
     {
         $this->handling_time = $value;
         return $this;
     }
-
-    public function get_handling_time()
-    {
-        return $this->handling_time;
-    }
 }
+
 ?>

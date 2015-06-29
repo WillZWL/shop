@@ -1,4 +1,5 @@
 <?php
+
 class Website_bank_transfer_report_model extends CI_Model
 {
     private $tool_path;
@@ -11,6 +12,6 @@ class Website_bank_transfer_report_model extends CI_Model
     }
 
 
-
 }
+
 ?>

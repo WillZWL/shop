@@ -144,4 +144,5 @@ class Product_condition_vo extends Base_vo
     }
 
 }
+
 ?>

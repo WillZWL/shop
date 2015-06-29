@@ -11,10 +11,15 @@ class Clwms_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/So_dao.php");
+        include_once(APPPATH . "libraries/dao/So_dao.php");
         $this->set_dao(new So_dao());
-        include_once(APPPATH."libraries/service/So_service.php");
+        include_once(APPPATH . "libraries/service/So_service.php");
         $this->set_so_service(new so_service());
+    }
+
+    public function set_so_service($value)
+    {
+        $this->so_service = $value;
     }
 
     public function get_sales_order($include_cc = 0)
@@ -30,18 +35,15 @@ class Clwms_service extends Base_service
 
         $so_list = $this->get_dao()->get_sales_order($where, $option);
 
-        if ($so_list !== FALSE)
-        {
+        if ($so_list !== FALSE) {
             $xml = array();
             $xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
             $xml[] = '<orders>';
 
             $current_so_no = '';
 
-            foreach ($so_list as $so)
-            {
-                if ($so["status"] == 2)
-                {
+            foreach ($so_list as $so) {
+                if ($so["status"] == 2) {
                     $refAmount = $so["amount"] * $so["rate"];
                     if (($refAmount >= 2000)
                         || ($so["sub_cat_id"] == 45)
@@ -49,19 +51,16 @@ class Clwms_service extends Base_service
                         || ($so["sub_cat_id"] == 47)
                         || ($so["sub_cat_id"] == 360)
                         || (!(($refAmount < 1000) && ($so["sub_cat_id"] != 52)))
-                        )
+                    )
                         continue;
                 }
-                if ($current_so_no != $so['so_no'])
-                {
-                    if ($current_so_no != '')
-                    {
+                if ($current_so_no != $so['so_no']) {
+                    if ($current_so_no != '') {
                         $xml[] = '</skus>';
                         $xml[] = '</order>';
                     }
                     $score = $so['score'];
-                    if (is_null($score))
-                    {
+                    if (is_null($score)) {
                         $score = $this->so_service->get_priority_score($so['so_no']);
                     }
                     $xml[] = '<order>';
@@ -83,14 +82,14 @@ class Clwms_service extends Base_service
                     $xml[] = '<total>' . $so['amount'] . '</total>';
                     $xml[] = '</amount>';
                     $xml[] = '<skus>';
-                    $current_so_no =  $so['so_no'];
+                    $current_so_no = $so['so_no'];
                 }
                 $xml[] = '<sku>';
                 $xml[] = '<price>' . $so['price'] . '</price>';
                 $xml[] = '<item_cost>' . ($so['item_unit_cost'] * $so['qty']) . '</item_cost>';
                 $xml[] = '<retailer_sku>' . $so['prod_sku'] . '</retailer_sku>';
                 $xml[] = '<master_sku>' . strtoupper($so['ext_sku']) . '</master_sku>';
-                $xml[] = '<merchant_sku>' .strtoupper($so['merchant_sku']) . '</merchant_sku>';
+                $xml[] = '<merchant_sku>' . strtoupper($so['merchant_sku']) . '</merchant_sku>';
                 $xml[] = '<quantity>' . $so['qty'] . '</quantity>';
                 $xml[] = '<is_clearance>' . (($so['clearance']) ? 'TRUE' : 'FALSE') . '</is_clearance>';
                 $xml[] = '<qtyallocated/>';
@@ -100,8 +99,7 @@ class Clwms_service extends Base_service
                 $xml[] = '<rec_courier>' . $so['rec_courier'] . '</rec_courier>';
                 $xml[] = '</sku>';
             }
-            if ($current_so_no != '')
-            {
+            if ($current_so_no != '') {
                 $xml[] = '</skus>';
                 $xml[] = '</order>';
             }
@@ -118,10 +116,5 @@ class Clwms_service extends Base_service
     public function get_so_service($value)
     {
         return $this->so_service;
-    }
-
-    public function set_so_service($value)
-    {
-        $this->so_service = $value;
     }
 }

@@ -120,4 +120,5 @@ class Rma_fc_vo extends Base_vo
     }
 
 }
+
 ?>

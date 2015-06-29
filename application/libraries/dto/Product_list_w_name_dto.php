@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class Product_list_w_name_dto extends Base_dto {
+class Product_list_w_name_dto extends Base_dto
+{
 
     //class variable
     private $sku;
@@ -172,19 +173,14 @@ class Product_list_w_name_dto extends Base_dto {
         $this->status = $value;
     }
 
-    public function set_website_quantity($value)
-    {
-        $this->website_quantity = $value;
-    }
-
     public function get_website_quantity()
     {
         return $this->website_quantity;
     }
 
-    public function set_quantity($value)
+    public function set_website_quantity($value)
     {
-        $this->quantity = $value;
+        $this->website_quantity = $value;
     }
 
     public function get_quantity()
@@ -192,14 +188,19 @@ class Product_list_w_name_dto extends Base_dto {
         return $this->quantity;
     }
 
-    public function set_master_sku($value)
+    public function set_quantity($value)
     {
-        $this->master_sku = $value;
+        $this->quantity = $value;
     }
 
     public function get_master_sku()
     {
         return $this->master_sku;
+    }
+
+    public function set_master_sku($value)
+    {
+        $this->master_sku = $value;
     }
 
     public function get_create_on()

@@ -132,4 +132,5 @@ class Fd_item_vo extends Base_vo
     }
 
 }
+
 ?>

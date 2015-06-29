@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Graphic_dao extends Base_dao
 {
-    private $table_name="graphic";
-    private $vo_classname="Graphic_vo";
-    private $seq_name="graphic";
-    private $seq_mapping_field="id";
+    private $table_name = "graphic";
+    private $vo_classname = "Graphic_vo";
+    private $seq_name = "graphic";
+    private $seq_mapping_field = "id";
 
     public function __construct()
     {

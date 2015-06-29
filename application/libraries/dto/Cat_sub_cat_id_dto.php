@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class Cat_sub_cat_id_dto extends Base_dto {
+class Cat_sub_cat_id_dto extends Base_dto
+{
 
     private $id;
     private $name;

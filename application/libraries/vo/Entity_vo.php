@@ -4,13 +4,9 @@ include_once "base_vo.php";
 class Entity_vo extends Base_vo
 {
 
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $entity_id;
 
     //class variable
-    private $entity_id;
     private $name;
     private $country_id;
     private $business_registration_no;
@@ -22,14 +18,20 @@ class Entity_vo extends Base_vo
     private $modify_on;
     private $modify_at;
     private $modify_by;
-
-    //primary key
     private $primary_key = array("entity_id");
 
-    //auo increment
+    //primary key
     private $increment_field = "entity_id";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_entity_id()
     {
         return $this->entity_id;

@@ -21,52 +21,46 @@
  */
 
 header("X-Robots-Tag: noindex, nofollow", true);
-if (!defined('ClickTale_Root'))
-{
+if (!defined('ClickTale_Root')) {
     $pathinfo = pathinfo(__FILE__);
     define ("ClickTale_Root", $pathinfo["dirname"]);
 }
 
-require_once(ClickTale_Root."/ClickTale.inc.php");
-require_once(ClickTale_Root."/ClickTale.CacheFactory.php");
-require_once(ClickTale_Root."/ClickTale.Settings.php");
-require_once(ClickTale_Root."/ClickTale.Logger.php");
+require_once(ClickTale_Root . "/ClickTale.inc.php");
+require_once(ClickTale_Root . "/ClickTale.CacheFactory.php");
+require_once(ClickTale_Root . "/ClickTale.Settings.php");
+require_once(ClickTale_Root . "/ClickTale.Logger.php");
 
 @$token = $_GET["t"];
 @$tok = substr($token, strlen($token) - 4);
-if ($token != "CacheTest" && ClickTale_IsAllowedIp() == false)
-{
-    $message = "Request from unauthorized ip: ".$_SERVER["REMOTE_ADDR"].", user agent: ".$_SERVER["HTTP_USER_AGENT"].".";
+if ($token != "CacheTest" && ClickTale_IsAllowedIp() == false) {
+    $message = "Request from unauthorized ip: " . $_SERVER["REMOTE_ADDR"] . ", user agent: " . $_SERVER["HTTP_USER_AGENT"] . ".";
     ClickTale_Logger::Write($message);
-    header("HTTP/1.0 403 ".$message);
+    header("HTTP/1.0 403 " . $message);
     header("X-ClickTale-Fetcher:no-store");
     die ("Request from unauthorized ip.");
 }
-  
-try
-{
+
+try {
     $cacheProvider = ClickTale_CacheFactory::DefaultCacheProvider();
-}
-catch (Exception $ex)
-{
+} catch (Exception $ex) {
     ClickTale_Logger::Write($ex->getMessage());
     header("X-ClickTale-Fetcher:no-store");
-    header("HTTP/1.0 500 ".$ex->getMessage());
+    header("HTTP/1.0 500 " . $ex->getMessage());
     die($ex->getMessage());
 }
 
 $config = ClickTale_Settings::Instance()->getCacheProviderConfig();
 
-if (!$cacheProvider->exists($token, $config))
-{
+if (!$cacheProvider->exists($token, $config)) {
     $message = "Request to '$tok' could not be retrieved";
     ClickTale_Logger::Write($message);
     header("X-ClickTale-Fetcher:no-store");
-    header("HTTP/1.0 404 "."Could not retrieve the cached page.");
+    header("HTTP/1.0 404 " . "Could not retrieve the cached page.");
     die ("Could not retrieve the cached page.");
 }
 $settings = ClickTale_Settings::Instance();
-if(!empty($settings->LogFetching)) {
+if (!empty($settings->LogFetching)) {
     ClickTale_Logger::Write("Cache for '$tok' was retrieved");
 }
 
@@ -75,6 +69,6 @@ $contents = ($cacheProvider->Pull($token, $config));
 
 $cacheProvider->refresh($token, $config);
 
- 
+
 print $contents;
 ?>

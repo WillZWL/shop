@@ -11,26 +11,15 @@ class Rpt_refund_report_service extends Report_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/service/Refund_service.php");
+        include_once(APPPATH . "libraries/service/Refund_service.php");
         $this->set_refund_service(new Refund_service());
-        include_once APPPATH."libraries/dao/Refund_history_dao.php";
+        include_once APPPATH . "libraries/dao/Refund_history_dao.php";
         $this->set_history_dao(new Refund_history_dao());
-        include_once(APPPATH."libraries/service/Price_service.php");
+        include_once(APPPATH . "libraries/service/Price_service.php");
         $this->set_price_service(new Price_service());
-        include_once(APPPATH."libraries/service/Country_service.php");
+        include_once(APPPATH . "libraries/service/Country_service.php");
         $this->set_country_service(new Country_service());
         $this->set_output_delimiter(',');
-    }
-
-    public function set_price_service($value)
-    {
-        $this->price_service = $value;
-        return $this;
-    }
-
-    public function get_price_service()
-    {
-        return $this->price_service;
     }
 
     public function set_refund_service($value)
@@ -39,20 +28,16 @@ class Rpt_refund_report_service extends Report_service
         return $this;
     }
 
-    public function get_refund_service()
-    {
-        return $this->refund_service;
-    }
-
     public function set_history_dao($value)
     {
         $this->history_dao = $value;
         return $this;
     }
 
-    public function get_history_dao()
+    public function set_price_service($value)
     {
-        return $this->history_dao;
+        $this->price_service = $value;
+        return $this;
     }
 
     public function set_country_service($value)
@@ -61,27 +46,22 @@ class Rpt_refund_report_service extends Report_service
         return $this;
     }
 
+    public function get_price_service()
+    {
+        return $this->price_service;
+    }
+
     public function get_country_service()
     {
         return $this->country_service;
     }
 
-    public function get_data($where)
-    {
-        set_time_limit(300);
-        $res = $this->get_refund_service()->get_dao()->get_refund_report_content($where, array("limit"=>-1));
-
-        return $res;
-    }
-
     public function get_csv($where)
     {
         $arr = $this->get_data($where);
-        foreach($arr as $obj)
-        {
+        foreach ($arr as $obj) {
             $refund_type = $obj->get_refund_type();
-            switch($refund_type)
-            {
+            switch ($refund_type) {
                 case "R":
                     $obj->set_refund_type("Refund");
                     break;
@@ -92,8 +72,7 @@ class Rpt_refund_report_service extends Report_service
             }
 
             $refund_status = $obj->get_refund_status();
-            switch($refund_status)
-            {
+            switch ($refund_status) {
                 case "N":
                     $obj->set_refund_status("NEW");
                     break;
@@ -114,10 +93,8 @@ class Rpt_refund_report_service extends Report_service
                 default:
             }
 
-            if($obj->get_reason_cat() == "O")
-            {
-                if($rh_obj = $this->get_history_dao()->get(array("refund_id"=>$obj->get_refund_id(), "status"=>"N")))
-                {
+            if ($obj->get_reason_cat() == "O") {
+                if ($rh_obj = $this->get_history_dao()->get(array("refund_id" => $obj->get_refund_id(), "status" => "N"))) {
                     $obj->set_description("Others: " . $rh_obj->get_notes());
                 }
             }
@@ -133,6 +110,24 @@ class Rpt_refund_report_service extends Report_service
             $obj->set_notes($refund_comment);
         }
         return $this->convert($arr);
+    }
+
+    public function get_data($where)
+    {
+        set_time_limit(300);
+        $res = $this->get_refund_service()->get_dao()->get_refund_report_content($where, array("limit" => -1));
+
+        return $res;
+    }
+
+    public function get_refund_service()
+    {
+        return $this->refund_service;
+    }
+
+    public function get_history_dao()
+    {
+        return $this->history_dao;
     }
 
     protected function get_default_vo2xml_mapping()

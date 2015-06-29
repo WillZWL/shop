@@ -9,7 +9,7 @@ class Pricing_tool_amfr extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->helper(array('url','notice','image'));
+        $this->load->helper(array('url', 'notice', 'image'));
         $this->load->library('input');
         $this->load->library('service/pagination_service');
         $this->load->model('marketing/pricing_tool_amfr_model');
@@ -19,31 +19,39 @@ class Pricing_tool_amfr extends MY_Controller
     public function index()
     {
         $data = array();
-        include_once APPPATH."language/".$this->_get_app_id()."00_".$this->_get_lang_id().".php";
+        include_once APPPATH . "language/" . $this->_get_app_id() . "00_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
-        $this->load->view("marketing/pricing_tool_amfr/pricing_tool_amfr_index",$data);
+        $this->load->view("marketing/pricing_tool_amfr/pricing_tool_amfr_index", $data);
+    }
+
+    public function _get_app_id()
+    {
+        return $this->app_id;
+
+    }
+
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
     }
 
     public function plist()
     {
         $where = array();
         $option = array();
-        $sub_app_id = $this->_get_app_id()."02";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        $sub_app_id = $this->_get_app_id() . "02";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
 
-        if (($sku = $this->input->get("sku")) != "" || ($prod_name = $this->input->get("name")) != "")
-        {
+        if (($sku = $this->input->get("sku")) != "" || ($prod_name = $this->input->get("name")) != "") {
 
             $data["search"] = 1;
-            if ($sku != "")
-            {
+            if ($sku != "") {
                 $where["sku"] = $sku;
             }
 
-            if ($prod_name != "")
-            {
+            if ($prod_name != "") {
                 $where["name"] = $prod_name;
             }
 
@@ -52,11 +60,10 @@ class Pricing_tool_amfr extends MY_Controller
 
             $limit = '20';
 
-            $pconfig['base_url'] = current_url()."?".$_SERVER['QUERY_STRING'];
+            $pconfig['base_url'] = current_url() . "?" . $_SERVER['QUERY_STRING'];
             $option["limit"] = $pconfig['per_page'] = $limit;
 
-            if ($option["limit"])
-            {
+            if ($option["limit"]) {
                 $option["offset"] = $this->input->get("per_page");
             }
 
@@ -66,7 +73,7 @@ class Pricing_tool_amfr extends MY_Controller
             if (empty($order))
                 $order = "asc";
 
-            $option["orderby"] = $sort." ".$order;
+            $option["orderby"] = $sort . " " . $order;
 
             $data["objlist"] = $this->pricing_tool_amfr_model->get_product_list($where, $option);
             $data["total"] = $this->pricing_tool_amfr_model->get_product_list_total($where);
@@ -77,23 +84,21 @@ class Pricing_tool_amfr extends MY_Controller
 
             $data["notice"] = notice($lang);
 
-            $data["sortimg"][$sort] = "<img src='".base_url()."images/".$order.".gif'>";
-            $data["xsort"][$sort] = $order=="asc"?"desc":"asc";
+            $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
+            $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
         }
 
         $this->load->view('marketing/pricing_tool_amfr/pricing_tool_amfr_list', $data);
     }
 
-    public function view($value="")
+    public function view($value = "")
     {
         $no_of_valid_supplier = $this->pricing_tool_model->check_valid_supplier_cost($value);
-        if($no_of_valid_supplier == 1)
-        {
+        if ($no_of_valid_supplier == 1) {
             $data = array();
             $data["valid_supplier"] = 1;
             define('IMG_PH', $this->context_config_service->value_of("prod_img_path"));
-            if($this->input->post('posted'))
-            {
+            if ($this->input->post('posted')) {
                 //print_r($_POST);
                 $this->pricing_tool_amfr_model->__autoload();
                 $price_obj = unserialize($_SESSION["price_obj"]);
@@ -109,44 +114,31 @@ class Pricing_tool_amfr extends MY_Controller
                 $price_obj->set_listing_status($this->input->post('listing_status'));
                 $dst = $this->input->post('default_shipping');
                 $price_obj->set_price($this->input->post("selling_price"));
-                if($this->input->post('allow_express'))
-                {
+                if ($this->input->post('allow_express')) {
                     $ae = 'Y';
-                }
-                else
-                {
+                } else {
                     $ae = 'N';
                 }
 
-                if($this->input->post('is_advertised'))
-                {
+                if ($this->input->post('is_advertised')) {
                     $ia = 'Y';
-                }
-                else
-                {
+                } else {
                     $ia = 'N';
                 }
                 $price_obj->set_allow_express($ae);
                 $price_obj->set_is_advertised($ia);
 
-                if($this->input->post('formtype') == "update")
-                {
+                if ($this->input->post('formtype') == "update") {
                     $ret = $this->pricing_tool_amfr_model->update($price_obj);
-                }
-                else
-                {
+                } else {
                     $ret = $this->pricing_tool_amfr_model->add($price_obj);
                 }
 
-                if($ret === FALSE)
-                {
+                if ($ret === FALSE) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
-                }
-                else
-                {
+                } else {
                     unset($_SESSION["price_obj"]);
-                    if($this->input->post('target') != "")
-                    {
+                    if ($this->input->post('target') != "") {
                         $data["prompt_notice"] = 1;
                     }
                 }
@@ -158,85 +150,71 @@ class Pricing_tool_amfr extends MY_Controller
                 $prod_obj->set_ean($this->input->post('ean'));
                 $prod_obj->set_clearance($this->input->post('clearance'));
                 $prod_obj->set_website_quantity($this->input->post('webqty'));
-                if($this->input->post('webqty') == 0)
-                {
+                if ($this->input->post('webqty') == 0) {
                     $prod_obj->set_website_status('O');
-                }
-                else
-                {
+                } else {
                     $prod_obj->set_website_status($this->input->post('status'));
                 }
 
                 $ret2 = $this->pricing_tool_amfr_model->update_product($prod_obj);
-                if($ret2 === FALSE)
-                {
+                if ($ret2 === FALSE) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
-                }
-                else
-                {
+                } else {
                     unset($_SESSION["prod_obj"]);
                 }
-                if(trim($this->input->post('m_note')) != "")
-                {
+                if (trim($this->input->post('m_note')) != "") {
                     $note_obj = $this->pricing_tool_amfr_model->get_note();
                     $note_obj->set_platform_id("AMFR");
                     $note_obj->set_sku($value);
                     $note_obj->set_type('M');
                     $note_obj->set_note($this->input->post('m_note'));
-                    if (!($ret3 = $this->pricing_tool_amfr_model->add_note($note_obj)))
-                    {
+                    if (!($ret3 = $this->pricing_tool_amfr_model->add_note($note_obj))) {
                         $_SESSION["NOTICE"] = "update_note_failed";
                     }
                 }
 
-                if(trim($this->input->post('s_note')) != "")
-                {
+                if (trim($this->input->post('s_note')) != "") {
                     $note_obj = $this->pricing_tool_amfr_model->get_note();
                     $note_obj->set_sku($value);
                     $note_obj->set_type('S');
                     $note_obj->set_note($this->input->post('s_note'));
-                    if (!($ret4 = $this->pricing_tool_amfr_model->add_note($note_obj)))
-                    {
+                    if (!($ret4 = $this->pricing_tool_amfr_model->add_note($note_obj))) {
                         $_SESSION["NOTICE"] = "update_note_failed";
                     }
                 }
 
-                Redirect(base_url()."marketing/pricing_tool_amfr/view/".$value);
+                Redirect(base_url() . "marketing/pricing_tool_amfr/view/" . $value);
             }
 
             $shiptype_list = $this->pricing_tool_amfr_model->get_shiptype_list();
-            $price_obj = $this->pricing_tool_amfr_model->get_price_obj(array("platform_id"=>"AMFR","sku"=>$value));
+            $price_obj = $this->pricing_tool_amfr_model->get_price_obj(array("platform_id" => "AMFR", "sku" => $value));
             $data["action"] = "update";
-            if(empty($price_obj))
-            {
+            if (empty($price_obj)) {
                 $price_obj = $this->pricing_tool_amfr_model->get_price_obj();
                 $data["action"] = "add";
             }
-            include_once APPPATH."language/".$this->_get_app_id()."01_".$this->_get_lang_id().".php";
+            include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
             $data["lang"] = $lang;
             $_SESSION["price_obj"] = serialize($price_obj);
             $data["canedit"] = 1;
             $data["value"] = $value;
             $data["price_obj"] = $price_obj;
-            $data["inv"] = $this->pricing_tool_amfr_model->get_inventory(array("sku"=>$value));
+            $data["inv"] = $this->pricing_tool_amfr_model->get_inventory(array("sku" => $value));
 
             $tmpx = $this->pricing_tool_amfr_model->get_quantity_in_orders($value);
 
-            foreach($tmpx as $key=>$val)
-            {
-                $data["qty_in_orders"] .= $lang["last"]." ".$key." ".$lang["days"]." : ".$val."<br>";
+            foreach ($tmpx as $key => $val) {
+                $data["qty_in_orders"] .= $lang["last"] . " " . $key . " " . $lang["days"] . " : " . $val . "<br>";
             }
 
-            $data["qty_in_orders"] = ereg_replace("<br>$","",$data["qty_in_orders"]);
+            $data["qty_in_orders"] = ereg_replace("<br>$", "", $data["qty_in_orders"]);
 
-            $product_cost_dto = $this->pricing_tool_amfr_model->get_product_cost_dto($value,"AMFR");
+            $product_cost_dto = $this->pricing_tool_amfr_model->get_product_cost_dto($value, "AMFR");
             $shiptype = array();
 
-            if($value != "")
-            {
+            if ($value != "") {
                 $data["objcount"] = 0;
-                foreach($product_cost_dto as $obj)
-                {
+                foreach ($product_cost_dto as $obj) {
                     $shiptype[] = $obj->get_shiptype();
                     $shiptype_name = $obj->get_shiptype_name();
                     $obj->set_price($price_obj->get_price());
@@ -244,20 +222,16 @@ class Pricing_tool_amfr extends MY_Controller
                     $this->pricing_tool_amfr_model->calc_profit_ps();
 
 
-                    if($shiptype_name != "PG")
-                    {
+                    if ($shiptype_name != "PG") {
                         $data["table_row"] .= $this->pricing_tool_amfr_model->get_table_row_ps($price_obj->get_default_shiptype());
-                    }
-                    else
-                    {
+                    } else {
                         $data["table_row"] .= $this->pricing_tool_amfr_model->get_table_row_ps_pg($price_obj->get_default_shiptype());
                     }
                     $data["objcount"]++;
                 }
 
-                $prod_obj =  $this->pricing_tool_amfr_model->get_prod($value);
-                if ($data["objcount"])
-                {
+                $prod_obj = $this->pricing_tool_amfr_model->get_prod($value);
+                if ($data["objcount"]) {
                     $data["table_header"] = $this->pricing_tool_amfr_model->get_table_header_ps();
                     //$data["js"] = $this->pricing_tool_amfr_model->get_js_ps();
                     $data["shiptype"] = $shiptype;
@@ -268,8 +242,7 @@ class Pricing_tool_amfr extends MY_Controller
                 }
             }
 
-            if($value != "")
-            {
+            if ($value != "") {
                 $data["supplier"] = $this->pricing_tool_amfr_model->get_current_supplier($value);
                 $fcat = $this->pricing_tool_amfr_model->get_freight_cat($prod_obj->get_freight_cat_id());
                 $data["freight_cat"] = $fcat->get_name();
@@ -282,7 +255,7 @@ class Pricing_tool_amfr extends MY_Controller
             $data["notice"] = notice($lang);
         }
 
-        $this->load->view("marketing/pricing_tool_amfr/pricing_tool_amfr_view",$data);
+        $this->load->view("marketing/pricing_tool_amfr/pricing_tool_amfr_view", $data);
 
     }
 
@@ -293,7 +266,7 @@ class Pricing_tool_amfr extends MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $js ="  function rePrice(typeInput)
+        $js = "  function rePrice(typeInput)
                 {
                     var obj;
                     var type;
@@ -374,17 +347,6 @@ class Pricing_tool_amfr extends MY_Controller
                     }
                 }";
         echo $js;
-    }
-
-    public function _get_app_id()
-    {
-        return $this->app_id;
-
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
     }
 }
 

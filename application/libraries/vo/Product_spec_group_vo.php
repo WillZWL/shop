@@ -180,4 +180,5 @@ class Product_spec_group_vo extends Base_vo
     }
 
 }
+
 ?>

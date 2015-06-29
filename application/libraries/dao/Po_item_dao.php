@@ -5,39 +5,41 @@ include_once 'Base_dao.php';
 
 Class Po_item_dao extends Base_dao
 {
-    private $table_name="po_item";
-    private $vo_class_name="Po_item_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "po_item";
+    private $vo_class_name = "Po_item_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function get_vo_classname(){
+    public function get_vo_classname()
+    {
         return $this->vo_class_name;
     }
 
-    public function get_table_name(){
+    public function get_table_name()
+    {
         return $this->table_name;
     }
 
-    public function get_seq_name(){
+    public function get_seq_name()
+    {
         return $this->seq_name;
     }
 
-    public function get_seq_mapping_field(){
+    public function get_seq_mapping_field()
+    {
         return $this->seq_mapping_field;
     }
 
-    public function get_item_w_name($po_number="",$classname="")
+    public function get_item_w_name($po_number = "", $classname = "")
     {
-        if($po_number == "")
-        {
+        if ($po_number == "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             $sql = 'SELECT p.line_number, p.sku, prod.name, p.order_qty, p.shipped_qty,p.unit_price, p.status, p.create_on,p.create_at,p.create_by,p.modify_on
                     FROM po_item p
                     JOIN product prod
@@ -49,16 +51,12 @@ Class Po_item_dao extends Base_dao
             $this->include_dto($classname);
             $rs = array();
 
-            if($query = $this->db->query($sql, $po_number))
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->query($sql, $po_number)) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
-            }
-            else
-            {
+                return (object)$rs;
+            } else {
                 return FALSE;
             }
         }
@@ -66,26 +64,19 @@ Class Po_item_dao extends Base_dao
 
     public function get_max_line_number($po_number)
     {
-        if($po_number == "")
-        {
+        if ($po_number == "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             $sql = "SELECT MAX(line_number) as maxline
                     FROM po_item
                     WHERE po_number = ?";
 
-            if($query = $this->db->query($sql,$po_number))
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->query($sql, $po_number)) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
                 return $rs[0]->maxline;
-            }
-            else
-            {
+            } else {
                 return FALSE;
             }
 
@@ -94,12 +85,9 @@ Class Po_item_dao extends Base_dao
 
     public function check_shipment_status($po_number)
     {
-        if($po_number == "")
-        {
+        if ($po_number == "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             $sql = "SELECT b.po_number, COUNT(b.line_number) as total, IFNULL(a.total,0) as completed, IFNULL(c.total,0) as in_progress
                     FROM po_item b
                     LEFT JOIN (SELECT po_number, COUNT(line_number) as total
@@ -118,22 +106,18 @@ Class Po_item_dao extends Base_dao
                     WHERE b.po_number = ?
                     LIMIT 1";
 
-            if($query = $this->db->query($sql,$po_number))
-            {
-                foreach($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->query($sql, $po_number)) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[0] = $obj;
                 }
-                return array("total"=>$rs[0]->total,"completed"=>$rs[0]->completed,"in_progress"=>$rs[0]->in_progress);
-            }
-            else
-            {
+                return array("total" => $rs[0]->total, "completed" => $rs[0]->completed, "in_progress" => $rs[0]->in_progress);
+            } else {
                 return FALSE;
             }
         }
     }
 
-    function get_outstanding($po_number,$line_number)
+    function get_outstanding($po_number, $line_number)
     {
         $sql = "SELECT poi.po_number, poi.line_number, (order_qty - shipped_qty) AS outstanding
                 FROM po_item poi
@@ -141,10 +125,8 @@ Class Po_item_dao extends Base_dao
                 LIMIT 1";
 
         $rs = array();
-        if($query = $this->db->query($sql, array($po_number, $line_number)))
-        {
-            foreach($query->result("object","") as $obj)
-            {
+        if ($query = $this->db->query($sql, array($po_number, $line_number))) {
+            foreach ($query->result("object", "") as $obj) {
                 $rs[0] = $obj;
             }
             return $rs[0]->outstanding;
@@ -154,8 +136,7 @@ Class Po_item_dao extends Base_dao
 
     function compare_qty($po_number = "")
     {
-        if($po_number == "")
-        {
+        if ($po_number == "") {
             return FALSE;
         }
 
@@ -164,9 +145,8 @@ Class Po_item_dao extends Base_dao
                 WHERE po_number = ?";
 
 
-        if($query = $this->db->query($sql,$po_number))
-        {
-            return ($query->row()->order_qty == $query->row()->shipped_qty?TRUE:FALSE);
+        if ($query = $this->db->query($sql, $po_number)) {
+            return ($query->row()->order_qty == $query->row()->shipped_qty ? TRUE : FALSE);
         }
 
         return FALSE;

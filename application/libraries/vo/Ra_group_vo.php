@@ -3,30 +3,32 @@ include_once "base_vo.php";
 
 class Ra_group_vo extends Base_vo
 {
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $group_id;
 
     //class variable
-    private $group_id;
     private $group_name;
     private $status = '1';
-    private $warranty =  '0';
+    private $warranty = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
     private $create_by;
     private $modify_on;
     private $modify_at;
     private $modify_by;
-
-    //primary key
     private $primary_key = array("group_id");
 
-    //auo increment
+    //primary key
     private $increment_field = "group_id";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_group_id()
     {
         return $this->group_id;

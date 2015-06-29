@@ -4,13 +4,9 @@ include_once "base_vo.php";
 class Batch_import_vo extends Base_vo
 {
 
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $batch_id;
 
     //class variable
-    private $batch_id;
     private $function_name;
     private $status;
     private $remark;
@@ -21,14 +17,20 @@ class Batch_import_vo extends Base_vo
     private $modify_on;
     private $modify_at;
     private $modify_by;
-
-    //primary key
     private $primary_key = array("batch_id");
 
-    //auo increment
+    //primary key
     private $increment_field = "batch_id";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_batch_id()
     {
         return $this->batch_id;

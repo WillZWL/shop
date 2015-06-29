@@ -180,4 +180,5 @@ class Interface_product_video_vo extends Base_vo
     }
 
 }
+
 ?>

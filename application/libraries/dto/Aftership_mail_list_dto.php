@@ -10,7 +10,7 @@ class Aftership_mail_list_dto extends Base_dto
     private $no_of_partial_shipment;
     private $courier_id;
     private $expect_ship_days;
-    private $expect_del_days ;
+    private $expect_del_days;
     private $dispatch_date;
     private $order_create_date;
     private $aftership_status;
@@ -154,4 +154,5 @@ class Aftership_mail_list_dto extends Base_dto
         $this->pay_date = $value;
     }
 }
+
 ?>

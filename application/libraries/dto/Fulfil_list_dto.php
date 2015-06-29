@@ -247,4 +247,5 @@ class Fulfil_list_dto extends Base_dto
     }
 
 }
+
 ?>

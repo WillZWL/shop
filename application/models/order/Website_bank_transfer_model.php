@@ -1,4 +1,5 @@
 <?php
+
 class Website_bank_transfer_model extends CI_Model
 {
     public function __construct()
@@ -11,7 +12,7 @@ class Website_bank_transfer_model extends CI_Model
 
     public function include_vo($dao)
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->include_vo();
     }
 

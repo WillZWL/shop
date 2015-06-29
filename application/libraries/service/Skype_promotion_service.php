@@ -14,17 +14,12 @@ class Skype_promotion_service extends Landpage_listing_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/service/Product_service.php");
+        include_once(APPPATH . "libraries/service/Product_service.php");
         $this->product_service = new Product_service();
-        include_once(APPPATH."libraries/service/Best_seller_service.php");
+        include_once(APPPATH . "libraries/service/Best_seller_service.php");
         $this->set_best_seller_service(new Best_seller_service());
-        include_once(APPPATH."libraries/service/Latest_arrivals_service.php");
+        include_once(APPPATH . "libraries/service/Latest_arrivals_service.php");
         $this->set_latest_arrivals_service(new Latest_arrivals_service());
-    }
-
-    public function set_best_seller_service($srv=NULL)
-    {
-        $this->best_seller_service = $srv;
     }
 
     public function get_best_seller_service()
@@ -32,9 +27,9 @@ class Skype_promotion_service extends Landpage_listing_service
         return $this->best_seller_service;
     }
 
-    public function set_latest_arrivals_service($srv=NULL)
+    public function set_best_seller_service($srv = NULL)
     {
-        $this->latest_arrivals_service = $srv;
+        $this->best_seller_service = $srv;
     }
 
     public function get_latest_arrivals_service()
@@ -42,27 +37,26 @@ class Skype_promotion_service extends Landpage_listing_service
         return $this->latest_arrivals_service;
     }
 
-    public function get_count($catid="", $mode="", $platform)
+    public function set_latest_arrivals_service($srv = NULL)
     {
-        if($catid == "")
-        {
+        $this->latest_arrivals_service = $srv;
+    }
+
+    public function get_count($catid = "", $mode = "", $platform)
+    {
+        if ($catid == "") {
             return FALSE;
-        }
-        else
-        {
-            return $this->get_dao()->get_num_rows(array("catid"=>$catid,"type"=>'SP',"mode"=>$mode, "platform_id"=>$platform));
+        } else {
+            return $this->get_dao()->get_num_rows(array("catid" => $catid, "type" => 'SP', "mode" => $mode, "platform_id" => $platform));
         }
     }
 
-    public function get_skype_promotion($catid="", $rank="", $platform="")
+    public function get_skype_promotion($catid = "", $rank = "", $platform = "")
     {
-        if($catid === "")
-        {
+        if ($catid === "") {
             return $this->get_dao()->get();
-        }
-        else
-        {
-            $obj =  $this->get_dao()->get_item_by_rank($catid, "SP", $rank, $platform, "Product_list_w_name_dto");
+        } else {
+            $obj = $this->get_dao()->get_item_by_rank($catid, "SP", $rank, $platform, "Product_list_w_name_dto");
 
             return $obj;
         }
@@ -84,13 +78,10 @@ class Skype_promotion_service extends Landpage_listing_service
     public function get_promotion_landing_prod_list_by_cat($cat_id, $platform_id, $lang_id = "en", $limit = 6)
     {
         $where["ll.type"] = 'SP';
-        if (is_array($cat_id))
-        {
+        if (is_array($cat_id)) {
             $in_str = implode(', ', $cat_id);
             $where["ll.catid IN ({$in_str})"] = NULL;
-        }
-        else
-        {
+        } else {
             $where["ll.catid"] = $cat_id;
         }
         $where["ll.platform_id"] = $platform_id;
@@ -115,22 +106,17 @@ class Skype_promotion_service extends Landpage_listing_service
         return $this->get_dao()->update($obj);
     }
 
-    public function get_product_list($where=array(), $option=array())
+    public function get_product_list($where = array(), $option = array())
     {
         return $this->product_service->get_dao()->get_list_w_name($where, $option, "Product_list_w_name_dto");
     }
 
-    public function get_product_list_total($where=array(),$option=array())
+    public function get_product_list_total($where = array(), $option = array())
     {
-        return $this->product_service->get_dao()->get_list_w_name($where, $option,  "Product_list_w_name_dto");
+        return $this->product_service->get_dao()->get_list_w_name($where, $option, "Product_list_w_name_dto");
     }
 
-    public function get_list_w_name($catid, $mode="M", $type="SP", $platform, $rtype="object")
-    {
-        return $this->get_dao()->get_list_w_pname($catid, $mode, $type, $platform, "Best_seller_prodname_dto",$rtype);
-    }
-
-    public function delete_sp($where=array())
+    public function delete_sp($where = array())
     {
         return $this->get_dao()->q_delete($where);
     }
@@ -145,35 +131,27 @@ class Skype_promotion_service extends Landpage_listing_service
         $this->get_dao()->trans_complete();
     }
 
-    public function display_list($catid="")
+    public function display_list($catid = "")
     {
-        if($catid == "")
-        {
+        if ($catid == "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             $ret = array();
             $added = array();
 
-            if($manual = $this->get_list_w_name($catid, "M", "SP", PLATFORMID))
-            {
-                foreach($manual as $obj)
-                {
-                    $ret[] = array("prodid"=>$obj->get_selection(),"name"=>$obj->get_name(),"image"=>$obj->get_image(),"price"=>$obj->get_price(),"website_status"=>$obj->get_website_status(),"qty"=>$obj->get_quantity(),"web_qty"=>$obj->get_website_quantity());
+            if ($manual = $this->get_list_w_name($catid, "M", "SP", PLATFORMID)) {
+                foreach ($manual as $obj) {
+                    $ret[] = array("prodid" => $obj->get_selection(), "name" => $obj->get_name(), "image" => $obj->get_image(), "price" => $obj->get_price(), "website_status" => $obj->get_website_status(), "qty" => $obj->get_quantity(), "web_qty" => $obj->get_website_quantity());
                     $added[] = $obj->get_selection();
                 }
             }
 
             $cnt = count($added);
 
-            if($auto = $this->get_list_w_name($catid, "A", "SP", PLATFORMID))
-            {
-                foreach($auto as $obj)
-                {
-                    if($cnt < $this->get_limit() && !in_array($obj->get_selection(),$added))
-                    {
-                        $ret[] = array("prodid"=>$obj->get_selection(),"name"=>$obj->get_name(),"image"=>$obj->get_image(),"price"=>$obj->get_price(),"website_status"=>$obj->get_website_status(),"qty"=>$obj->get_quantity(),"web_qty"=>$obj->get_website_quantity());
+            if ($auto = $this->get_list_w_name($catid, "A", "SP", PLATFORMID)) {
+                foreach ($auto as $obj) {
+                    if ($cnt < $this->get_limit() && !in_array($obj->get_selection(), $added)) {
+                        $ret[] = array("prodid" => $obj->get_selection(), "name" => $obj->get_name(), "image" => $obj->get_image(), "price" => $obj->get_price(), "website_status" => $obj->get_website_status(), "qty" => $obj->get_quantity(), "web_qty" => $obj->get_website_quantity());
                         $added[] = $obj->get_selection();
                         $cnt++;
                     }
@@ -184,48 +162,46 @@ class Skype_promotion_service extends Landpage_listing_service
         }
     }
 
+    public function get_list_w_name($catid, $mode = "M", $type = "SP", $platform, $rtype = "object")
+    {
+        return $this->get_dao()->get_list_w_pname($catid, $mode, $type, $platform, "Best_seller_prodname_dto", $rtype);
+    }
+
     public function get_type()
     {
         return $this->type;
     }
 
 
-    protected function _get_product_list_for_home($platform="")
+    protected function _get_product_list_for_home($platform = "")
     {
         return FALSE;
         //return $this->product_service->get_best_seller_list_by_cat('', 0, 30, $this->get_limit(), $platform);
     }
 
-    protected function _get_product_list($filter_column = '', $cat_id = '', $platform_id="")
+    protected function _get_product_list($filter_column = '', $cat_id = '', $platform_id = "")
     {
         $bs_list = $this->product_service->get_best_seller_list_by_cat($filter_column, $cat_id, 30, $this->get_limit(), $platform_id, 1);
 
         $la_list = $this->product_service->get_list_having_price(
-                        array('product.status'=>2, 'product.website_status'=>'I',
-                            'product.website_quantity >'=>0, 'price.platform_id'=>"$platform_id", 'product.'.$filter_column=>$cat_id, 'product_type.type_id'=>'SC'),
-                        array('orderby'=>'p.create_on DESC', 'limit'=>$this->get_limit()));
+            array('product.status' => 2, 'product.website_status' => 'I',
+                'product.website_quantity >' => 0, 'price.platform_id' => "$platform_id", 'product.' . $filter_column => $cat_id, 'product_type.type_id' => 'SC'),
+            array('orderby' => 'p.create_on DESC', 'limit' => $this->get_limit()));
 
         $res = $bs_list;
 
         $picked = 0;
-        foreach ($la_list as $la)
-        {
-            if($picked >= 10)
-            {
+        foreach ($la_list as $la) {
+            if ($picked >= 10) {
                 return $res;
-            }
-            else
-            {
+            } else {
                 $update = TRUE;
-                foreach ($res as $r)
-                {
-                    if($la->get_sku() == $r->get_sku())
-                    {
+                foreach ($res as $r) {
+                    if ($la->get_sku() == $r->get_sku()) {
                         $update = FALSE;
                     }
                 }
-                if($update)
-                {
+                if ($update) {
                     $res[] = $la;
                     $picked++;
                 }

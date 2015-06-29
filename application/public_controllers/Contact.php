@@ -11,9 +11,28 @@ class Contact extends PUB_Controller
     {
         parent::PUB_Controller();
         $this->load->library('template');
-        $this->load->helper(array('url','directory','tbswrapper'));
+        $this->load->helper(array('url', 'directory', 'tbswrapper'));
         $this->load->model("website/website_model");
         $this->data = array();
+    }
+
+    public function show_enquiry($enquiry_type = '', $question_id = '')
+    {
+
+        switch (strtoupper($enquiry_type)) {
+            case 'GENERAL' :
+                $this->data['show_enquiry'] = 'Client Support';
+                break;
+            case 'SALES' :
+                $this->data['show_enquiry'] = 'Pre-Sales';
+                break;
+            default :
+                $this->data['show_enquiry'] = 'Returns';
+        }
+
+        if (is_numeric($question_id)) $this->data['question_id'] = $question_id;
+
+        $this->index();
     }
 
     public function index()
@@ -29,15 +48,13 @@ class Contact extends PUB_Controller
 
         // moving towards a per country contact us page
         // $data['contact_info'] = $this->website_model->get_cs_contact_list_by_country(array("type"=>"WEBSITE", "lang_id"=> get_lang_id()));
-        $data['contact_info'] = $this->website_model->get_cs_contact_list_by_country(array("type"=>"WEBSITE", "platform_country_id"=>$countryid));
+        $data['contact_info'] = $this->website_model->get_cs_contact_list_by_country(array("type" => "WEBSITE", "platform_country_id" => $countryid));
 
         #SBF 2200 to get respective contact info from db according to browser lang
         $contact_info_list = $data['contact_info'];
-        foreach ($contact_info_list as $contact_info_row)
-        {
-            $trim_lang_id = substr(lang_part(), 0, stripos(lang_part(), "_") );
-            if ($contact_info_row["lang_id"] == $trim_lang_id)
-            {
+        foreach ($contact_info_list as $contact_info_row) {
+            $trim_lang_id = substr(lang_part(), 0, stripos(lang_part(), "_"));
+            if ($contact_info_row["lang_id"] == $trim_lang_id) {
                 $contact_info[] = $contact_info_row;
             }
         }
@@ -48,54 +65,29 @@ class Contact extends PUB_Controller
         $this->load_tpl('content', 'tbs_contact', $data, TRUE, TRUE);
     }
 
-
-    public function show_enquiry($enquiry_type='', $question_id='')
-    {
-
-        switch (strtoupper($enquiry_type))
-        {
-            case 'GENERAL' : $this->data['show_enquiry'] = 'Client Support'; break;
-            case 'SALES' : $this->data['show_enquiry'] = 'Pre-Sales'; break;
-            default : $this->data['show_enquiry'] = 'Returns';
-        }
-
-        if(is_numeric($question_id)) $this->data['question_id'] = $question_id;
-
-        $this->index();
-    }
-
     public function process_enquiry()
     {
         $data = array();
 
-        if ($this->input->post('enquiry_box'))
-        {
+        if ($this->input->post('enquiry_box')) {
             $result = $this->website_model->process_enquiry($this->input->post('enquiry_box'), $_POST, $_FILES, get_lang_id());
 
-            if (is_array($result))
-            {
+            if (is_array($result)) {
                 $data['enquiry_error'] = '';
                 $data['fullname'] = $result['fullname'];
                 $data['email'] = $result['email'];
                 $data['subject'] = $result['subject'];
                 $data['contents'] = $result['contents'];
 
-                if ($result['update_custom_field'] === TRUE)
-                {
+                if ($result['update_custom_field'] === TRUE) {
                     $data['custom_field_error'] = '';
-                }
-                else
-                {
+                } else {
                     $data['custom_field_error'] = $result['update_custom_field'];
                 }
-            }
-            else
-            {
+            } else {
                 $data['enquiry_error'] = $result;
             }
-        }
-        else
-        {
+        } else {
             $data['enquiry_error'] = 'Unknown enquiry box';
         }
 
@@ -114,14 +106,13 @@ class Contact extends PUB_Controller
         header($ExpStr);
 
         $js = '';
-        if (strtolower($enquiry_service) == 'kayako')
-        {
+        if (strtolower($enquiry_service) == 'kayako') {
             $title = array("Client Support" => $language['iframe_form_title_client_support'],
-                           "Pre-Sales"=>$language['iframe_form_title_pre_sales'],
-                           "Returns"=>$language['iframe_form_title_returns'],
-                           "GE PH"=>$language['iframe_field_title_ge_ph'],
-                           "Bulk"=>$language['iframe_field_title_bulk_sales']
-                          );
+                "Pre-Sales" => $language['iframe_form_title_pre_sales'],
+                "Returns" => $language['iframe_form_title_returns'],
+                "GE PH" => $language['iframe_field_title_ge_ph'],
+                "Bulk" => $language['iframe_field_title_bulk_sales']
+            );
             $js_enquiry = $this->website_model->get_js_kayako_enquiry_question($title, get_lang_id());
 
             $base_url = base_url();
@@ -344,4 +335,5 @@ webform_javascript;
         echo $js;
     }
 }
+
 ?>

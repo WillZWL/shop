@@ -180,4 +180,5 @@ class Interface_exchange_rate_vo extends Base_vo
     }
 
 }
+
 ?>

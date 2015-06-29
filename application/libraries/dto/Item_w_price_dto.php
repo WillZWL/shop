@@ -67,4 +67,5 @@ class Item_w_price_dto extends Base_dto
     }
 
 }
+
 ?>

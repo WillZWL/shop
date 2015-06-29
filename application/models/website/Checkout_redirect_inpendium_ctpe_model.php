@@ -19,10 +19,10 @@ class Checkout_redirect_inpendium_ctpe_model extends Checkout_redirect_model
     {
         $this->pmgw_redirect_service->verify_orders();
     }
-/*
-    public function process_payment_status($general_data = array(), $get_data = array())
-    {
-        return $this->pmgw_redirect_service->process_payment_status($general_data, $get_data);
-    }
-*/
+    /*
+        public function process_payment_status($general_data = array(), $get_data = array())
+        {
+            return $this->pmgw_redirect_service->process_payment_status($general_data, $get_data);
+        }
+    */
 }

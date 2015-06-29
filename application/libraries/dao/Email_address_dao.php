@@ -1,4 +1,4 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 include_once 'Base_dao.php';
 
@@ -41,10 +41,8 @@ class Email_address_dao extends Base_dao
         $this->db->where('func_id', $func_id);
         $this->db->limit(1);
 
-        if ($query = $this->db->get())
-        {
-            if ($query = $this->db->get())
-            {
+        if ($query = $this->db->get()) {
+            if ($query = $this->db->get()) {
                 return $query->row()->email;
             }
         }
@@ -58,13 +56,10 @@ class Email_address_dao extends Base_dao
         $this->db->from('email_address');
         $this->db->where('func_id', $func_id);
 
-        if ($query = $this->db->get())
-        {
+        if ($query = $this->db->get()) {
             $rs = array();
-            if ($query->num_rows() > 0)
-            {
-                foreach ($query->result() as $row)
-                {
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $row) {
                     $rs[] = $row->email;
                 }
             }

@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Customer_service_info_dao extends Base_dao
 {
-    private $table_name="customer_service_info";
-    private $vo_classname="Customer_service_info_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "customer_service_info";
+    private $vo_classname = "Customer_service_info_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -40,8 +40,7 @@ class Customer_service_info_dao extends Base_dao
                 FROM customer_service_info
                 WHERE platform_id = ?";
 
-        if($query = $this->db->query($sql, array($platform_id)))
-        {
+        if ($query = $this->db->query($sql, array($platform_id))) {
             return $query->row()->short_text;
         }
     }
@@ -55,21 +54,19 @@ class Customer_service_info_dao extends Base_dao
         $this->db->select("csi.short_text, c.name, csi.operating_hours, lang_id, pbv.platform_country_id");
         $this->db->where($where);
 
-        if($query = $this->db->get())
-        {
+        if ($query = $this->db->get()) {
             // var_dump($this->db->last_query()); die();
             $ret = array();
             $array = $query->result_array();
-            foreach($array as $row)
-            {
+            foreach ($array as $row) {
                 $image_src = "/images/icon-" . strtolower($row["platform_country_id"]) . ".png";
                 $ret[] = array
                 (
-                    "country_name"=>$row["name"],
-                    "contact_number"=>$row["short_text"],
-                    "operating_hours"=>$row["operating_hours"],
-                    "image_src"=>$image_src,
-                    "lang_id"=>$row["lang_id"]
+                    "country_name" => $row["name"],
+                    "contact_number" => $row["short_text"],
+                    "operating_hours" => $row["operating_hours"],
+                    "image_src" => $image_src,
+                    "lang_id" => $row["lang_id"]
                 );
                 // var_dump($image_src); die();
                 // var_dump($row["platform_country_id"]); die();

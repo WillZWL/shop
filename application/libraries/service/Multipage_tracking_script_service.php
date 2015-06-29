@@ -16,11 +16,16 @@ class Multipage_tracking_script_service extends Base_service
         return $this->country_id;
     }
 
+    public function set_country_id($value)
+    {
+        $this->country_id = $value;
+    }
+
     public function json_encode_no_quote($array)
     {
         $ret_code = "";
 
-        foreach ($array as $key=>$value) {
+        foreach ($array as $key => $value) {
             $ret_code .= "$key:\"$value\",\r\n";
         }
 
@@ -28,14 +33,11 @@ class Multipage_tracking_script_service extends Base_service
         return "{" . $ret_code . "}";
     }
 
-    public function set_country_id($value)
+    public function get_fixed_code()
     {
-        $this->country_id = $value;
     }
 
-    public function get_fixed_code()
-    {}
-
     public function get_variable_code($page_type, $param)
-    {}
+    {
+    }
 }

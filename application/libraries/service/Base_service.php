@@ -10,49 +10,40 @@ class Base_service
     {
     }
 
+    public function get_dao()
+    {
+        return $this->_dao;
+    }
+
     public function set_dao(Base_dao $dao)
     {
         $this->_dao = $dao;
         $this->db = $dao->db;
     }
 
-    public function get_dao()
-    {
-        return $this->_dao;
-    }
-
     public function get_list($where = array(), $option = array(), $classname = "")
     {
-        if ($this->_dao instanceof Base_dao)
-        {
+        if ($this->_dao instanceof Base_dao) {
             return $this->_dao->get_list($where, $option, $classname);
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
-    public function get_num_rows($where=array())
+    public function get_num_rows($where = array())
     {
-        if ($this->_dao instanceof Base_dao)
-        {
+        if ($this->_dao instanceof Base_dao) {
             return $this->_dao->get_num_rows($where);
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
     public function get_db_time()
     {
-        if ($this->_dao instanceof Base_dao)
-        {
+        if ($this->_dao instanceof Base_dao) {
             return $this->_dao->get_db_time($where);
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
@@ -75,7 +66,7 @@ class Base_service
         }
     }
 
-    public function update(Base_vo $obj, $where=array())
+    public function update(Base_vo $obj, $where = array())
     {
         if ($this->_dao instanceof Base_dao) {
             return $this->_dao->update($obj, $where);
@@ -93,75 +84,63 @@ class Base_service
         }
     }
 
-    public function q_delete($where=array())
+    public function q_delete($where = array())
     {
-        if ($this->_dao instanceof Base_dao)
-        {
+        if ($this->_dao instanceof Base_dao) {
             return $this->_dao->q_delete($where);
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
     public function get_max_modify($table_list)
     {
-        if ($this->_dao instanceof Base_dao)
-        {
+        if ($this->_dao instanceof Base_dao) {
             return $this->_dao->get_max_modify($table_list);
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
     public function include_vo()
     {
-        if ($this->_dao instanceof Base_dao)
-        {
+        if ($this->_dao instanceof Base_dao) {
             return $this->_dao->include_vo();
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
     public function include_dto($dto)
     {
-        if ($this->_dao instanceof Base_dao)
-        {
+        if ($this->_dao instanceof Base_dao) {
             return $this->_dao->include_dto($dto);
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
     public function get_email_address($func_id)
     {
-        include_once(APPPATH."libraries/dao/Email_address_dao.php");
+        include_once(APPPATH . "libraries/dao/Email_address_dao.php");
         $email_addr_dao = new Email_address_dao();
         return $email_addr_dao->get_email_address($func_id);
     }
 
     public function get_email_address_list($func_id, $type = "array")
     {
-        include_once(APPPATH."libraries/dao/Email_address_dao.php");
+        include_once(APPPATH . "libraries/dao/Email_address_dao.php");
         $email_addr_dao = new Email_address_dao();
         return $email_addr_dao->get_email_address_list($func_id, $type);
-    }
-
-    public function set_lang_id($lang_id = 'en')
-    {
-        $this->lang_id = $lang_id;
     }
 
     public function get_lang_id()
     {
         return $this->lang_id;
+    }
+
+    public function set_lang_id($lang_id = 'en')
+    {
+        $this->lang_id = $lang_id;
     }
 }

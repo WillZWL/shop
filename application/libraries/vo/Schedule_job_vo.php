@@ -144,4 +144,5 @@ class Schedule_job_vo extends Base_vo
     }
 
 }
+
 ?>

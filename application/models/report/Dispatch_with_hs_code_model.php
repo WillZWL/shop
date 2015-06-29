@@ -1,4 +1,5 @@
 <?php
+
 class Dispatch_with_hs_code_model extends CI_Model
 {
     public function __construct()

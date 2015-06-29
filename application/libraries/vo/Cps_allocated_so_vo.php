@@ -4,13 +4,9 @@ include_once "base_vo.php";
 class Cps_allocated_so_vo extends Base_vo
 {
 
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $date;
 
     //class variable
-    private $date;
     private $so_no;
     private $score;
     private $status = '1';
@@ -20,14 +16,20 @@ class Cps_allocated_so_vo extends Base_vo
     private $modify_on;
     private $modify_at;
     private $modify_by;
-
-    //primary key
     private $primary_key = array("date", "so_no");
 
-    //auo increment
+    //primary key
     private $increment_field = "";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_date()
     {
         return $this->date;

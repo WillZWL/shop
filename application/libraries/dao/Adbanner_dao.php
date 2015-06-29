@@ -5,10 +5,10 @@ include "base_dao.php";
 Class Adbanner_dao extends Base_dao
 {
 
-    private $table_name="adbanner";
-    private $vo_classname="Adbanner_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "adbanner";
+    private $vo_classname = "Adbanner_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -42,21 +42,17 @@ Class Adbanner_dao extends Base_dao
                 FROM category a
                 LEFT JOIN adbanner b
                     ON a.id = b.cat_id
-                WHERE a.id = \''.$where["cat_id"].'\'
+                WHERE a.id = \'' . $where["cat_id"] . '\'
                 ORDER BY a.id
                 LIMIT 1';
 
         $rs = array();
-        if ($query = $this->db->query($sql))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
             return $obj;
-        }
-        else
-        {
+        } else {
             echo mysql_error();
             return FALSE;
         }

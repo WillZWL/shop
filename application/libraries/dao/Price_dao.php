@@ -5,19 +5,14 @@ include_once 'Base_dao.php';
 
 class Price_dao extends Base_dao
 {
-    private $table_name="price";
-    private $vo_class_name="Price_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "price";
+    private $vo_class_name = "Price_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
         parent::__construct();
-    }
-
-    public function get_vo_classname()
-    {
-        return $this->vo_class_name;
     }
 
     public function get_table_name()
@@ -35,12 +30,12 @@ class Price_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_price_cost_dto($sku,$platform,$shiptype="",$classname="Product_cost_dto")
+    public function get_price_cost_dto($sku, $platform, $shiptype = "", $classname = "Product_cost_dto")
     {
         $this->include_dto($classname);
 
         $sql =
-        "
+            "
             SELECT *
             FROM v_prod_w_platform_biz_var
             WHERE sku = ?
@@ -48,22 +43,18 @@ class Price_dao extends Base_dao
         ";
 
         $rs = array();
-        if ($query = $this->db->query($sql, array($sku,$platform)))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, array($sku, $platform))) {
+            foreach ($query->result($classname) as $obj) {
                 // $rs[] = $obj;
             }
 
             return $obj;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
-    public function get_list_with_bundle_checking($sku, $platform='WSGB', $classname="Product_cost_dto", $special = 0, $lang_id = 'en')
+    public function get_list_with_bundle_checking($sku, $platform = 'WSGB', $classname = "Product_cost_dto", $special = 0, $lang_id = 'en')
     {
         $sql = "SELECT p.expected_delivery_date,COALESCE(pw.warranty_in_month, p.warranty_in_month) AS warranty_in_month, a.discount, COALESCE(pc.prod_name, p.name) AS bundle_name, a.component_order, b.*
                 FROM v_prod_items a
@@ -84,41 +75,34 @@ class Price_dao extends Base_dao
         $rs = array();
 
 
-        if($query = $this->db->query($sql, array($platform, $sku,$platform)))
-        {
+        if ($query = $this->db->query($sql, array($platform, $sku, $platform))) {
 
-            foreach($query->result($classname) as $obj)
-            {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
             return empty($rs) ? $rs : (object)$rs;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
 
-    public function get_items_w_price($where=array(), $classname="Item_w_price_dto")
+    public function get_items_w_price($where = array(), $classname = "Item_w_price_dto")
     {
         $this->db->from('v_prod_items AS vpi');
-        $this->db->join('price AS p','vpi.item_sku = p.sku','LEFT');
+        $this->db->join('price AS p', 'vpi.item_sku = p.sku', 'LEFT');
 
-        if ($where)
-        {
+        if ($where) {
             $this->db->where($where);
         }
 
         $rs = array();
 
-        if ($query = $this->db->get())
-        {
+        if ($query = $this->db->get()) {
             $this->include_dto($classname);
-            foreach ($query->result($classname) as $obj)
-            {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
-            return (object) $rs;
+            return (object)$rs;
         }
 
         return FALSE;
@@ -164,8 +148,7 @@ class Price_dao extends Base_dao
                     AND p.website_status = 'I'
                     AND p.sku = '$sku'";
         */
-        if($query = $this->db->query($sql))
-        {
+        if ($query = $this->db->query($sql)) {
             return $query->row()->website_display_price;
         }
 
@@ -174,7 +157,7 @@ class Price_dao extends Base_dao
 
     public function get_bundle_price($sku, $platform_id)
     {
-        $sql =  "SELECT ROUND(IFNULL(pr2.price, pr.price*ex.rate),2) website_display_price
+        $sql = "SELECT ROUND(IFNULL(pr2.price, pr.price*ex.rate),2) website_display_price
                 FROM product p
                 LEFT JOIN price pr
                     ON p.sku = pr.sku AND pr.platform_id = 'WEBGB' AND pr.listing_status = 'L'
@@ -190,15 +173,14 @@ class Price_dao extends Base_dao
                     AND p.website_status = 'I'
                     AND p.sku = '$sku'";
 
-        if($query = $this->db->query($sql))
-        {
+        if ($query = $this->db->query($sql)) {
             return $query->row()->website_display_price;
         }
 
         return FALSE;
     }
 
-    public function get_price_comparison_report_item_list($country_id, $classname="price_comparison_report_item_list_dto")
+    public function get_price_comparison_report_item_list($country_id, $classname = "price_comparison_report_item_list_dto")
     {
         $sql = "SELECT p.sku, p.name, c.name country, pr.platform_id website_platform, FORMAT(pr.price,2) website_price, pr2.platform_id skype_platform, FORMAT(pr2.price,2) skype_price
                 FROM product p
@@ -215,19 +197,15 @@ class Price_dao extends Base_dao
                 ";
 
         $rs = array();
-        if ($query = $this->db->query($sql))
-        {
+        if ($query = $this->db->query($sql)) {
             $this->include_dto($classname);
 
-            foreach ($query->result($classname) as $obj)
-            {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
             return $rs;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
@@ -253,11 +231,9 @@ ON c.id = pbv.platform_country_id";
 
         $this->include_dto($classname);
 
-        if($query = $this->db->query($sql))
-        {
+        if ($query = $this->db->query($sql)) {
             $ret = array();
-            foreach($query->result($classname) as $obj)
-            {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
@@ -266,21 +242,16 @@ ON c.id = pbv.platform_country_id";
         return FALSE;
     }
 
-    //By Thomas, Used in extracting product listing status, please don't add uncessary field
-    public function get_listing_info($sku = "", $platform_id = "", $lang_id="en", $option = array(), $classname="listing_info_dto")
+    public function get_listing_info($sku = "", $platform_id = "", $lang_id = "en", $option = array(), $classname = "listing_info_dto")
     {
-        if(empty($sku) || empty($platform_id))
-        {
+        if (empty($sku) || empty($platform_id)) {
             return FALSE;
         }
 
-        if(is_array($sku))
-        {
-            $sku = "'".implode("','", $sku)."'";
-        }
-        else
-        {
-            $sku = "'".$sku."'";
+        if (is_array($sku)) {
+            $sku = "'" . implode("','", $sku) . "'";
+        } else {
+            $sku = "'" . $sku . "'";
         }
 
         $sql =
@@ -299,53 +270,41 @@ ON c.id = pbv.platform_country_id";
 
         $this->include_dto($classname);
 
-        if (isset($option["orderby"]))
-        {
+        if (isset($option["orderby"])) {
             $this->db->order_by($option["orderby"]);
         }
 
-        if (empty($option["limit"]))
-        {
+        if (empty($option["limit"])) {
             $option["limit"] = $this->rows_limit;
-        }
-
-        elseif ($option["limit"] == -1)
-        {
+        } elseif ($option["limit"] == -1) {
             $option["limit"] = "";
         }
 
-        if (!isset($option["offset"]))
-        {
+        if (!isset($option["offset"])) {
             $option["offset"] = 0;
         }
 
-        if ($this->rows_limit != "")
-        {
+        if ($this->rows_limit != "") {
             $this->db->limit($option["limit"], $option["offset"]);
         }
 
         $rs = array();
-        if ($query = $this->db->query($sql, array($platform_id)))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, array($platform_id))) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
-            if(count($rs) > 1)
-            {
+            if (count($rs) > 1) {
                 return $rs;
-            }
-            else
-            {
+            } else {
                 return $obj;
             }
 
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
+
+    //By Thomas, Used in extracting product listing status, please don't add uncessary field
 
     public function get_platform_price_list($where = array(), $option = array())
     {
@@ -353,6 +312,11 @@ ON c.id = pbv.platform_country_id";
         $this->db->join('selling_platform AS sp', 'sp.id= p.platform_id', 'INNER');
         $this->include_vo($classname = $this->get_vo_classname());
         return $this->common_get_list($where, $option, $classname, 'p.*');
+    }
+
+    public function get_vo_classname()
+    {
+        return $this->vo_class_name;
     }
 
     public function update_rrp_factor()
@@ -367,18 +331,14 @@ ON c.id = pbv.platform_country_id";
 
         // Hard code to exclude the Warranty products (SBF #2338), and 11833-AA-NA, 11712-AA-BK(GB,FR,ES) requested by Chapman on 20130726
         $sql = 'SELECT sku FROM product where cat_id != 10 and sub_cat_id != 538 and sku not in ("11833-AA-NA", "11712-AA-BK", "13849-AA-NA", "12052-AA-NA", "12039-AA-NA", "11546-AA-SL", "10342-AA-NA", "11588-AA-BK", "11595-AA-NA", "10365-AA-NA", "12725-AA-NA", "11597-AA-NA", "11601-AA-NA", "11600-AA-NA", "11192-AA-NA", "12050-AA-NA", "12040-AA-NA", "11807-AA-BK", "11807-AA-BL", "13698-AA-BK", "13698-AA-PR", "13698-AA-RD", "13698-AA-WH", "10186-AA-NA", "13977-AA-BK", "13977-AA-RD", "13977-AA-SL", "13977-AA-WH", "13979-AA-NA", "10111-AA-BK", "13450-AA-BK", "10265-AA-NA", "12703-AA-BL", "12703-AA-PK", "12703-AA-SL", "12662-AA-NA", "14011-AA-BK") order by sku';
-        if($query = $this->db->query($sql))
-        {
-            foreach($query->result() as $row)
-            {
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result() as $row) {
                 $sku = $row->sku;
 
                 $change_value = mt_rand(-5, 5) / 100;
-                if ($change_value != 0)
-                {
+                if ($change_value != 0) {
                     $sql = 'update price set modify_at = "127.0.0.1", modify_by = "system", rrp_factor = least(greatest(rrp_factor + (' . $change_value . ' * 1), ' . $min_rrp_factor . '), ' . $max_rrp_factor . ') where sku = "' . $sku . '" and rrp_factor < 10';
-                    if (!$this->db->query($sql))
-                    {
+                    if (!$this->db->query($sql)) {
                         error_log(__FILE__ . '@' . __LINE__ . ':' . $this->db->_error_message());
                     }
                 }
@@ -391,7 +351,7 @@ ON c.id = pbv.platform_country_id";
     public function update_sku_price($platform_id = "", $local_sku = "", $price = "", $commit = false)
     {
         $sql =
-        "
+            "
             update price set
                 auto_price = 'N',
                 price      = ?

@@ -23,24 +23,21 @@ class Pricing_tool_amfr_model extends CI_Model
         $this->price_service->get_dao()->include_vo();
     }
 
-    public function get_product_list($where=array(), $option=array())
+    public function get_product_list($where = array(), $option = array())
     {
         return $this->product_service->get_dao()->get_list_w_name($where, $option, "Product_list_w_name_dto");
     }
 
-    public function get_product_list_total($where=array())
+    public function get_product_list_total($where = array())
     {
-        return $this->product_service->get_dao()->get_list_w_name($where, array("num_rows"=>1));
+        return $this->product_service->get_dao()->get_list_w_name($where, array("num_rows" => 1));
     }
 
-    public function get_prod($sku="")
+    public function get_prod($sku = "")
     {
-        if($sku != "")
-        {
-            return $this->product_service->get_dao()->get(array("sku"=>$sku));
-        }
-        else
-        {
+        if ($sku != "") {
+            return $this->product_service->get_dao()->get(array("sku" => $sku));
+        } else {
             return $this->product_service->get_dao()->get();
         }
     }
@@ -60,26 +57,23 @@ class Pricing_tool_amfr_model extends CI_Model
         return $this->price_service->get_dao()->update($obj);
     }
 
-    public function get_price_obj($where=array())
+    public function get_price_obj($where = array())
     {
-        if(empty($where))
-        {
+        if (empty($where)) {
             return $this->price_service->get_dao()->get();
-        }
-        else
-        {
+        } else {
             return $this->price_service->get_dao()->get($where);
         }
     }
 
-    public function get_shiptype_list($where=array())
+    public function get_shiptype_list($where = array())
     {
         return $this->shiptype_service->get_dao()->get_list($where);
     }
 
-    public function get_product_cost_dto($sku,$platform)
+    public function get_product_cost_dto($sku, $platform)
     {
-        return $this->price_service->get_dao()->get_price_cost_dto($sku,$platform);
+        return $this->price_service->get_dao()->get_price_cost_dto($sku, $platform);
     }
 
     public function set_dto_ps($dto)
@@ -122,20 +116,17 @@ class Pricing_tool_amfr_model extends CI_Model
         return $this->product_service->get_dao()->update($obj);
     }
 
-    public function get_currency_detail($id="")
+    public function get_currency_detail($id = "")
     {
-        return $this->currency_service->get_dao()->get(array("id"=>$id));
+        return $this->currency_service->get_dao()->get(array("id" => $id));
     }
 
-    public function get_note($sku="", $type="")
+    public function get_note($sku = "", $type = "")
     {
-        if($sku == "")
-        {
+        if ($sku == "") {
             return $this->product_note_service->get_dao()->get();
-        }
-        else
-        {
-            return $this->product_note_service->get_dao()->get_note_with_author_name($type=="M"?"AMFR":"",$sku, $type);
+        } else {
+            return $this->product_note_service->get_dao()->get_note_with_author_name($type == "M" ? "AMFR" : "", $sku, $type);
         }
     }
 
@@ -144,26 +135,27 @@ class Pricing_tool_amfr_model extends CI_Model
         return $this->product_note_service->get_dao()->insert($obj);
     }
 
-    public function get_inventory($where=array())
+    public function get_inventory($where = array())
     {
         return $this->inventory_service->get_inventory($where);
     }
 
-    public function get_quantity_in_orders($sku="")
+    public function get_quantity_in_orders($sku = "")
     {
-        $ret[7] = $this->so_service->get_dao()->get_quantity_in_orders($sku,7);
-        $ret[30] = $this->so_service->get_dao()->get_quantity_in_orders($sku,30);
+        $ret[7] = $this->so_service->get_dao()->get_quantity_in_orders($sku, 7);
+        $ret[30] = $this->so_service->get_dao()->get_quantity_in_orders($sku, 30);
         return $ret;
     }
 
-    public function get_current_supplier($sku="")
+    public function get_current_supplier($sku = "")
     {
         return $this->product_service->get_dao()->get_current_supplier($sku);
     }
 
-    public function get_freight_cat($id="")
+    public function get_freight_cat($id = "")
     {
-        return $this->freight_cat_service->get_dao()->get(array("id"=>$id));
+        return $this->freight_cat_service->get_dao()->get(array("id" => $id));
     }
 }
+
 ?>

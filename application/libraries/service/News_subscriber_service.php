@@ -12,14 +12,70 @@ class News_subscriber_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/News_subscriber_dao.php");
+        include_once(APPPATH . "libraries/dao/News_subscriber_dao.php");
         $this->set_dao(new News_subscriber_dao());
-        include_once(APPPATH."libraries/service/Validation_service.php");
+        include_once(APPPATH . "libraries/service/Validation_service.php");
         $this->set_v_srv(new Validation_service());
-        include_once(APPPATH."libraries/service/Event_service.php");
+        include_once(APPPATH . "libraries/service/Event_service.php");
         $this->set_e_srv(new Event_service());
-        include_once(APPPATH."libraries/service/Context_config_service.php");
+        include_once(APPPATH . "libraries/service/Context_config_service.php");
         $this->set_config(new Context_config_service());
+    }
+
+    public function add_subscriber($email = '')
+    {
+        $v_srv = $this->get_v_srv();
+        $v_rules[0] = array('not_empty', 'valid_email');
+        $v_srv->set_rules($v_rules);
+
+        $v_srv->set_data('trunks@trunks.com');
+
+        try {
+            $rs = $v_srv->run();
+        } catch (Exception $e) {
+            return FALSE;
+            //$e_srv->fire_event($func, $dto_obj);
+        }
+
+        $where = array('email' => $email);
+
+        $sb = $this->get_dao()->get($where);
+
+        if ($sb) {
+            $sb->set_status(1);
+            $this->get_dao()->update($sb);
+        } else {
+            $sb = new News_subscriber_vo();
+            $sb->set_email($email);
+            $sb->set_status(1);
+            $this->get_dao()->insert($sb);
+        }
+
+        $email_dto = $this->_get_email_dto();
+        $email_dto->set_event_id('news_subscription');
+        $email_dto->set_tpl_id('news_subscription');
+        $email_dto->set_mail_to($email);
+        $email_dto->set_mail_from('lindsay@valuebasket.com ');
+        $email_dto->set_replace(array('default_url' => $this->get_config()->value_of("default_url")));
+        $this->get_e_srv()->fire_event($email_dto);
+
+        return TRUE;
+    }
+
+    public function get_v_srv()
+    {
+        return $this->v_srv;
+    }
+
+    public function set_v_srv($vs)
+    {
+        $this->v_srv = $vs;
+    }
+
+    private function _get_email_dto()
+    {
+        include_once APPPATH . "libraries/dto/event_email_dto.php";
+        return new Event_email_dto();
     }
 
     public function get_config()
@@ -32,63 +88,6 @@ class News_subscriber_service extends Base_service
         $this->config = $value;
     }
 
-
-    public function add_subscriber($email = '')
-    {
-        $v_srv = $this->get_v_srv();
-        $v_rules[0] = array('not_empty', 'valid_email');
-        $v_srv->set_rules($v_rules);
-
-        $v_srv->set_data('trunks@trunks.com');
-
-        try
-        {
-            $rs = $v_srv->run();
-        }
-        catch(Exception $e)
-        {
-            return FALSE;
-            //$e_srv->fire_event($func, $dto_obj);
-        }
-
-        $where = array('email'=>$email);
-
-        $sb = $this->get_dao()->get($where);
-
-        if ($sb)
-        {
-            $sb->set_status(1);
-            $this->get_dao()->update($sb);
-        }
-        else
-        {
-            $sb = new News_subscriber_vo();
-            $sb->set_email($email);
-            $sb->set_status(1);
-            $this->get_dao()->insert($sb);
-        }
-
-        $email_dto = $this->_get_email_dto();
-        $email_dto->set_event_id('news_subscription');
-        $email_dto->set_tpl_id('news_subscription');
-        $email_dto->set_mail_to($email);
-        $email_dto->set_mail_from('lindsay@valuebasket.com ');
-        $email_dto->set_replace(array('default_url'=>$this->get_config()->value_of("default_url")));
-        $this->get_e_srv()->fire_event($email_dto);
-
-        return TRUE;
-    }
-
-    public function set_v_srv($vs)
-    {
-        $this->v_srv = $vs;
-    }
-
-    public function get_v_srv()
-    {
-        return $this->v_srv;
-    }
-
     public function get_e_srv()
     {
         return $this->e_srv;
@@ -97,12 +96,6 @@ class News_subscriber_service extends Base_service
     public function set_e_srv($value)
     {
         $this->e_srv = $value;
-    }
-
-    private function _get_email_dto()
-    {
-        include_once APPPATH."libraries/dto/event_email_dto.php";
-        return new Event_email_dto();
     }
 }
 

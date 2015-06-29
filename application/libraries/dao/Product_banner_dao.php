@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Product_banner_dao extends Base_dao
 {
-    private $table_name="product_banner";
-    private $vo_class_name="Product_banner_vo";
-    private $seq_name="product_banner";
-    private $seq_mapping_field="";
+    private $table_name = "product_banner";
+    private $vo_class_name = "Product_banner_vo";
+    private $seq_name = "product_banner";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class Product_banner_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_product_banner($sku="", $display_id="", $position_id="", $lang_id="en", $classname="Product_banner_w_graphic_dto")
+    public function get_product_banner($sku = "", $display_id = "", $position_id = "", $lang_id = "en", $classname = "Product_banner_w_graphic_dto")
     {
         $sql = "SELECT pb.sku, pb.display_id, pb.position_id, pb.image_id, pb.flash_id, pb.height, pb.width, pb.link_type, pb.link, pb.priority, pb.status,
                     pb.create_on, pb.create_at, pb.create_by, pb.modify_on, pb.modify_at, pb.modify_by, g.id graphic_id, g.type graphic_type,
@@ -54,16 +54,12 @@ class Product_banner_dao extends Base_dao
         $this->include_dto($classname);
 
         $rs = array();
-        if ($query = $this->db->query($sql))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
             return $rs;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
 

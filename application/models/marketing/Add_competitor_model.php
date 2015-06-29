@@ -10,4 +10,5 @@ class Add_competitor_model extends CI_Model
     }
 
 }
+
 ?>

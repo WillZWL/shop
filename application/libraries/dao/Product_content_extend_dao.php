@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Product_content_extend_dao extends Base_dao
 {
-    private $table_name="product_content_extend";
-    private $vo_class_name="Product_content_extend_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "product_content_extend";
+    private $vo_class_name = "Product_content_extend_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

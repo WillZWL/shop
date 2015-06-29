@@ -324,4 +324,5 @@ class Platform_biz_var_vo extends Base_vo
     }
 
 }
+
 ?>

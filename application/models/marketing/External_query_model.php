@@ -1,4 +1,5 @@
 <?php
+
 class External_query_model extends CI_Model
 {
     public function __construct()

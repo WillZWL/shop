@@ -1,7 +1,9 @@
 <?php
+
 class Cron_data_feed extends MY_Controller
 {
-    private $app_id="CRN0009";
+    private $app_id = "CRN0009";
+
     function __construct()
     {
         parent::__construct();
@@ -23,12 +25,12 @@ class Cron_data_feed extends MY_Controller
         $this->data_feed_model->gen_googlebase_product_feed($platform_id);
     }
 
-    public function gen_mediaforge_product_feed($platform_id="WEBFR", $explain_sku="")
+    public function gen_mediaforge_product_feed($platform_id = "WEBFR", $explain_sku = "")
     {
         $this->data_feed_model->gen_mediaforge_product_feed($platform_id, $explain_sku);
     }
 
-    public function gen_linkshare_product_feed($platform_id="WEBGB")
+    public function gen_linkshare_product_feed($platform_id = "WEBGB")
     {
         $this->data_feed_model->gen_linkshare_product_feed($platform_id);
     }
@@ -40,11 +42,11 @@ class Cron_data_feed extends MY_Controller
 
     public function gen_sli_product_feed($lang_id = 'en')
     {
-        $where = array("pbv.language_id"=>$lang_id, "pbv.platform_country_id != 'GB'"=>NULL);
+        $where = array("pbv.language_id" => $lang_id, "pbv.platform_country_id != 'GB'" => NULL);
         $this->data_feed_model->gen_sli_product_feed($where, $option, $lang_id);
     }
 
-    public function gen_searchspring_product_feed($platform_id='WEBGB')
+    public function gen_searchspring_product_feed($platform_id = 'WEBGB')
     {
         $this->data_feed_model->gen_searchspring_product_feed(strtoupper($platform_id));
     }
@@ -212,7 +214,7 @@ class Cron_data_feed extends MY_Controller
         $this->data_feed_model->download_supplier_status_csv();
     }
 
-    public function download_supplier_cost_csv($platform_id='')
+    public function download_supplier_cost_csv($platform_id = '')
     {
         $this->data_feed_model->download_supplier_cost_csv($platform_id);
     }

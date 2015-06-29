@@ -120,7 +120,7 @@ class Colour_extend_vo extends Base_vo
         return $this;
     }
 
-        public function _get_primary_key()
+    public function _get_primary_key()
     {
         return $this->primary_key;
     }
@@ -131,4 +131,5 @@ class Colour_extend_vo extends Base_vo
     }
 
 }
+
 ?>

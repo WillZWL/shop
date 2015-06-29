@@ -7,10 +7,10 @@ class Inventory_vo extends Base_vo
     //class variable
     private $warehouse_id = '';
     private $prod_sku;
-    private $inventory    = '0';
-    private $git          = '0';
-    private $surplus_qty  = '0';
-    private $create_on    = '0000-00-00 00:00:00';
+    private $inventory = '0';
+    private $git = '0';
+    private $surplus_qty = '0';
+    private $create_on = '0000-00-00 00:00:00';
     private $create_at;
     private $create_by;
     private $modify_on;

@@ -19,7 +19,7 @@ class Order_held_for_cc_service extends Base_service
 
     public function send_report($duration)
     {
-            $this->send_order_held_for_cc();
+        $this->send_order_held_for_cc();
     }
 
     public function send_order_held_for_cc()
@@ -31,7 +31,6 @@ class Order_held_for_cc_service extends Base_service
         $where["DATE(so.order_create_date) > '2014-06-01'"] = null;
 
 
-
         $option = array("group_by" => "so.so_no");
 
         $orderList = $this->get_so_dao()->order_held_for_cc_report($where, $option);
@@ -39,11 +38,41 @@ class Order_held_for_cc_service extends Base_service
 
         $csv = $this->gen_csv($orderList);
 
-        $title = "Order Held for CC" ;
+        $title = "Order Held for CC";
         $message = "Attached is your daily report for orders held for cc. Please follow up. Thanks";
         $filename = 'order_held_for_cc_' . date('Ymd') . '.csv';
 
         $this->_email_report($csv, $title, $message, $filename, "cs@eservicesgroup.net", "jerry.lim@eservicesgroup.com");
+    }
+
+    public function get_so_dao()
+    {
+        return $this->so_dao;
+    }
+
+    public function set_so_dao($value)
+    {
+        $this->so_dao = $value;
+    }
+
+    private function gen_csv($data = array())
+    {
+        $csv = "";
+        if (!empty($data)) {
+            foreach ($data as $key => $value) {
+                if ($key == 0) {
+                    foreach ($value as $label => $v) {
+                        $csv .= "$label,";
+                    }
+
+                    $csv .= "\n";
+                }
+
+                $csv .= implode(",", $value);
+                $csv .= "\n";
+            }
+        }
+        return $csv;
     }
 
     private function _email_report($csv = "", $title = "", $message = "", $filename, $email1, $email2 = null)
@@ -64,40 +93,6 @@ class Order_held_for_cc_service extends Base_service
         $phpmail->AddStringAttachment($csv, $filename, 'base64', 'text/csv');
 
         $result = $phpmail->Send();
-    }
-
-    private function gen_csv($data=array())
-    {
-        $csv = "";
-        if(!empty($data))
-        {
-            foreach ($data as $key => $value)
-            {
-                if($key==0)
-                {
-                    foreach ($value as $label => $v)
-                    {
-                        $csv .= "$label,";
-                    }
-
-                    $csv .= "\n";
-                }
-
-                $csv .= implode(",", $value);
-                $csv .= "\n";
-            }
-        }
-        return $csv;
-    }
-
-    public function get_so_dao()
-    {
-        return $this->so_dao;
-    }
-
-    public function set_so_dao($value)
-    {
-        $this->so_dao = $value;
     }
 }
 

@@ -216,4 +216,5 @@ class Refund_item_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -4,13 +4,9 @@ include_once "base_vo.php";
 class Order_reason_vo extends Base_vo
 {
 
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $reason_id;
 
     //class variable
-    private $reason_id;
     private $reason;
     private $reason_display_name;
     private $priority = '0';
@@ -24,14 +20,20 @@ class Order_reason_vo extends Base_vo
     private $modify_on;
     private $modify_at;
     private $modify_by;
-
-    //primary key
     private $primary_key = array("reason_id");
 
-    //auo increment
+    //primary key
     private $increment_field = "reason_id";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_reason_id()
     {
         return $this->reason_id;

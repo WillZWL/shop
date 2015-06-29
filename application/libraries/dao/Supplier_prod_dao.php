@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Supplier_prod_dao extends Base_dao
 {
-    private $table_name="supplier_prod";
-    private $vo_class_name="Supplier_prod_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "supplier_prod";
+    private $vo_class_name = "Supplier_prod_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,75 +35,58 @@ class Supplier_prod_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_supplier_prod_list_w_name($where=array(), $option=array(), $classname="Supplier_prod_w_name_dto")
+    public function get_supplier_prod_list_w_name($where = array(), $option = array(), $classname = "Supplier_prod_w_name_dto")
     {
 
         $this->db->from('supplier_prod AS sp');
         $this->db->join('(supplier AS s)', 'sp.supplier_id = s.id', 'LEFT');
 
-        if (isset($option["to_currency"]))
-        {
-            $this->db->join('exchange_rate er', 'sp.currency_id = er.from_currency_id AND er.to_currency_id = "'.$option["to_currency"].'"', 'LEFT');
+        if (isset($option["to_currency"])) {
+            $this->db->join('exchange_rate er', 'sp.currency_id = er.from_currency_id AND er.to_currency_id = "' . $option["to_currency"] . '"', 'LEFT');
         }
         $this->db->where("s.status = 1");
         $this->db->where($where);
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
 
             $this->include_dto($classname);
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if (isset($option["to_currency"]))
-            {
+            if (isset($option["to_currency"])) {
                 $this->db->select('sp.*, s.name AS supplier_name, s.origin_country, sp.cost*er.rate AS total_cost', FALSE);
-            }
-            else
-            {
+            } else {
                 $this->db->select('sp.*, s.name AS supplier_name, s.origin_country, sp.cost AS total_cost');
             }
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
 
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -111,8 +94,8 @@ class Supplier_prod_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_supplier_prod_history_for_report($start_time='',
-        $end_time='', $platform_id='WSGB', $classname='Product_cost_change_dto')
+    public function get_supplier_prod_history_for_report($start_time = '',
+                                                         $end_time = '', $platform_id = 'WSGB', $classname = 'Product_cost_change_dto')
     {
         $sql = "SELECT vpo.*, scha.cost * scha.rate - schb.cost * schb.rate cost_diff,
                     CASE schb.cost
@@ -150,8 +133,7 @@ class Supplier_prod_dao extends Base_dao
         include_once APPPATH . "helpers/object_helper.php";
         $dto = new $classname;
 
-        foreach ($array as $row)
-        {
+        foreach ($array as $row) {
             $obj = clone $dto;
             set_value($obj, $row);
             $result_arr[] = $obj;
@@ -165,12 +147,11 @@ class Supplier_prod_dao extends Base_dao
         $this->db->select('sch.currency_id, sch.cost');
         $this->db->join('sku_mapping map', "map.sku = sch.prod_sku AND map.ext_sys = 'WMS' AND map.status = 1", 'INNER');
         $this->db->from('supplier_cost_history sch');
-        $this->db->where(array('sch.order_default'=>1, 'map.ext_sku'=>$sku, "sch.modify_on <= '" . $date . " 00:00:00'"=>null));
+        $this->db->where(array('sch.order_default' => 1, 'map.ext_sku' => $sku, "sch.modify_on <= '" . $date . " 00:00:00'" => null));
         $this->db->orderby('sch.modify_on DESC');
         $this->db->limit(1);
 
-        if ($query = $this->db->get())
-        {
+        if ($query = $this->db->get()) {
             return (array)$query->row();
         }
 
@@ -182,11 +163,10 @@ class Supplier_prod_dao extends Base_dao
         $this->db->select('sp.currency_id, sp.cost');
         $this->db->join('sku_mapping map', "map.sku = sp.prod_sku AND map.ext_sys = 'WMS' AND map.status = 1", 'INNER');
         $this->db->from('supplier_prod sp');
-        $this->db->where(array('sp.order_default'=>1, 'map.ext_sku'=>$sku));
+        $this->db->where(array('sp.order_default' => 1, 'map.ext_sku' => $sku));
         $this->db->limit(1);
 
-        if ($query = $this->db->get())
-        {
+        if ($query = $this->db->get()) {
             return (array)$query->row();
         }
 

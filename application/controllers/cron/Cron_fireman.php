@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cron_fireman extends MY_Controller
 {
-    private $app_id="CRN0026";
+    private $app_id = "CRN0026";
 
     function __construct()
     {

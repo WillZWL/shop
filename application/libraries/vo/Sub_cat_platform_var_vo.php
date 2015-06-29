@@ -192,4 +192,5 @@ class Sub_cat_platform_var_vo extends Base_vo
     }
 
 }
+
 ?>

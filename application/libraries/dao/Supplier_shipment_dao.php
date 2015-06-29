@@ -5,40 +5,42 @@ include_once 'Base_dao.php';
 
 Class Supplier_shipment_dao extends Base_dao
 {
-    private $table_name="supplier_shipment";
-    private $vo_class_name="Supplier_shipment_vo";
-    private $seq_name="supplier_shipment";
-    private $seq_mapping_field="shipment_id";
+    private $table_name = "supplier_shipment";
+    private $vo_class_name = "Supplier_shipment_vo";
+    private $seq_name = "supplier_shipment";
+    private $seq_mapping_field = "shipment_id";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function get_vo_classname(){
+    public function get_vo_classname()
+    {
         return $this->vo_class_name;
     }
 
-    public function get_table_name(){
+    public function get_table_name()
+    {
         return $this->table_name;
     }
 
-    public function get_seq_name(){
+    public function get_seq_name()
+    {
         return $this->seq_name;
     }
 
-    public function get_seq_mapping_field(){
+    public function get_seq_mapping_field()
+    {
         return $this->seq_mapping_field;
     }
 
-    public function get_shipment_information_old($po_number="", $classname="Shipment_info_dto")
+    public function get_shipment_information_old($po_number = "", $classname = "Shipment_info_dto")
     {
 
-        if($po_number == "")
-        {
+        if ($po_number == "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             $sql = "SELECT v.sid,v.detail,s.status,s.reason_code as reason, s.remark
                     FROM supplier_shipment s
                     JOIN (SELECT pis.sid, pis.po_number, GROUP_CONCAT(CONCAT(poi.sku,'||',p.name,'||',CAST(pis.create_on as char),'||',CAST(pis.qty as char),'||',CAST(pis.received_qty as char),'||',pis.to_location,'||',pis.reason_code) ORDER BY pis.line_number SEPARATOR '::') as detail
@@ -56,31 +58,24 @@ Class Supplier_shipment_dao extends Base_dao
 
             $rs = array();
 
-            if($query = $this->db->query($sql, $po_number))
-            {
+            if ($query = $this->db->query($sql, $po_number)) {
 
-                foreach ($query->result($classname) as $obj)
-                {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
-            }
-            else
-            {
+                return (object)$rs;
+            } else {
                 return FALSE;
             }
         }
     }
 
-    public function get_shipment_information($po_number="", $classname="Shipment_info_dto")
+    public function get_shipment_information($po_number = "", $classname = "Shipment_info_dto")
     {
 
-        if($po_number == "")
-        {
+        if ($po_number == "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             $sql = "SELECT s.shipment_id as sid, s.status,s.reason_code as reason, s.remark, s.tracking_no, s.courier
                     FROM supplier_shipment s
                     WHERE s.shipment_id LIKE '$po_number%'";
@@ -89,24 +84,19 @@ Class Supplier_shipment_dao extends Base_dao
 
             $rs = array();
 
-            if($query = $this->db->query($sql, $po_number))
-            {
+            if ($query = $this->db->query($sql, $po_number)) {
 
-                foreach ($query->result($classname) as $obj)
-                {
+                foreach ($query->result($classname) as $obj) {
                     $tmp = $this->get_shipment_detail($obj->get_sid());
-                    if($tmp === FALSE)
-                    {
+                    if ($tmp === FALSE) {
                         return $tmp;
                     }
                     $obj->set_detail($tmp);
                     $rs[] = $obj;
                     unset($tmp);
                 }
-                return (object) $rs;
-            }
-            else
-            {
+                return (object)$rs;
+            } else {
                 return FALSE;
             }
         }
@@ -114,8 +104,7 @@ Class Supplier_shipment_dao extends Base_dao
 
     private function get_shipment_detail($shipment_id = "")
     {
-        if($shipment_id == "")
-        {
+        if ($shipment_id == "") {
             return FALSE;
         }
         $sql = "SELECT CONCAT(poi.sku,'||',p.name,'||',CAST(pis.create_on as char),'||',CAST(pis.qty as char),'||',CAST(pis.received_qty as char),'||',pis.to_location,'||',IFNULL(pis.reason_code,''),'||',IFNULL(u.username,''),'||',IFNULL(pis.modify_on,''))  as detail
@@ -130,20 +119,18 @@ Class Supplier_shipment_dao extends Base_dao
                 WHERE pis.sid = ?
                 ";
 
-        if($query = $this->db->query($sql, $shipment_id))
-        {
+        if ($query = $this->db->query($sql, $shipment_id)) {
             $tmp = array();
-            foreach($query->result("object") as $obj)
-            {
+            foreach ($query->result("object") as $obj) {
                 $tmp[] = $obj->detail;
             }
 
-            return implode("::",$tmp);
+            return implode("::", $tmp);
         }
         return FALSE;
     }
 
-    public function get_shipment_csv_info($shipment_id, $classname="Shipment_csv_dto")
+    public function get_shipment_csv_info($shipment_id, $classname = "Shipment_csv_dto")
     {
 
         $sql = "
@@ -162,16 +149,12 @@ Class Supplier_shipment_dao extends Base_dao
 
         $rs = array();
 
-        if($query = $this->db->query($sql, $shipment_id))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql, $shipment_id)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
-            return (object) $rs;
-        }
-        else
-        {
+            return (object)$rs;
+        } else {
             return FALSE;
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 class Pricing_tool_model extends CI_Model
 {
 
@@ -15,8 +16,7 @@ class Pricing_tool_model extends CI_Model
         $this->load->library('service/freight_cat_service');
         $this->load->library('service/platform_biz_var_service');
         $this->load->library('service/supplier_service');
-        if (is_null($platform_type) && defined('PLATFORM_TYPE'))
-        {
+        if (is_null($platform_type) && defined('PLATFORM_TYPE')) {
             $platform_type = PLATFORM_TYPE;
         }
         $this->init_price_service($platform_type);
@@ -24,16 +24,13 @@ class Pricing_tool_model extends CI_Model
 
     public function init_price_service($platform_type)
     {
-        if (is_null($platform_type))
-        {
-            include_once APPPATH."libraries/service/Price_service.php";
+        if (is_null($platform_type)) {
+            include_once APPPATH . "libraries/service/Price_service.php";
             $this->price_service = new Price_service();
-        }
-        else
-        {
-            $filename = "price_".strtolower($platform_type)."_service";
+        } else {
+            $filename = "price_" . strtolower($platform_type) . "_service";
             $classname = ucfirst($filename);
-            include_once APPPATH."libraries/service/{$classname}.php";
+            include_once APPPATH . "libraries/service/{$classname}.php";
             $this->price_service = new $classname();
         }
     }
@@ -43,25 +40,22 @@ class Pricing_tool_model extends CI_Model
         $this->price_service->get_dao()->include_vo();
     }
 
-    public function get_product_list($where=array(), $option=array())
+    public function get_product_list($where = array(), $option = array())
     {
         return $this->product_service->get_dao()->get_list_w_name($where, $option, "Product_list_w_name_dto");
     }
 
-    public function get_product_list_total($where=array(), $option=array())
+    public function get_product_list_total($where = array(), $option = array())
     {
         $option["num_rows"] = 1;
         return $this->product_service->get_dao()->get_list_w_name($where, $option);
     }
 
-    public function get_prod($sku="")
+    public function get_prod($sku = "")
     {
-        if($sku != "")
-        {
-            return $this->product_service->get_dao()->get(array("sku"=>$sku));
-        }
-        else
-        {
+        if ($sku != "") {
+            return $this->product_service->get_dao()->get(array("sku" => $sku));
+        } else {
             return $this->product_service->get_dao()->get();
         }
     }
@@ -81,14 +75,11 @@ class Pricing_tool_model extends CI_Model
         return $this->price_service->get_dao()->update($obj);
     }
 
-    public function get_price_obj($where=array())
+    public function get_price_obj($where = array())
     {
-        if(empty($where))
-        {
+        if (empty($where)) {
             return $this->price_service->get_dao()->get();
-        }
-        else
-        {
+        } else {
             return $this->price_service->get_dao()->get($where);
         }
     }
@@ -103,17 +94,22 @@ class Pricing_tool_model extends CI_Model
         return $this->shiptype_service->get_dao()->get_platform_shiptype_list($platform_type);
     }
 
-    public function get_product_cost_dto($sku,$platform)
+    public function get_product_cost_dto($sku, $platform)
     {
-        return $this->price_service->get_dao()->get_price_cost_dto($sku,$platform);
+        return $this->price_service->get_dao()->get_price_cost_dto($sku, $platform);
     }
 
-    public function get_currency($platform_id="")
+    public function get_currency($platform_id = "")
     {
-        $tmp =  $this->platform_biz_var_service->get_dao()->get(array("selling_platform_id"=>$platform_id));
+        $tmp = $this->platform_biz_var_service->get_dao()->get(array("selling_platform_id" => $platform_id));
         $ret = $this->get_currency_detail($tmp->get_platform_currency_id());
         unset($tmp);
         return $ret;
+    }
+
+    public function get_currency_detail($id = "")
+    {
+        return $this->currency_service->get_dao()->get(array("id" => $id));
     }
 
     public function update_product($obj)
@@ -121,20 +117,12 @@ class Pricing_tool_model extends CI_Model
         return $this->product_service->get_dao()->update($obj);
     }
 
-    public function get_currency_detail($id="")
+    public function get_note($sku = "", $type = "")
     {
-        return $this->currency_service->get_dao()->get(array("id"=>$id));
-    }
-
-    public function get_note($sku="", $type="")
-    {
-        if($sku == "")
-        {
+        if ($sku == "") {
             return $this->product_note_service->get_dao()->get();
-        }
-        else
-        {
-            return $this->product_note_service->get_dao()->get_note_with_author_name($type=="M"?"WSGB":"",$sku, $type);
+        } else {
+            return $this->product_note_service->get_dao()->get_note_with_author_name($type == "M" ? "WSGB" : "", $sku, $type);
         }
     }
 
@@ -143,34 +131,34 @@ class Pricing_tool_model extends CI_Model
         return $this->product_note_service->get_dao()->insert($obj);
     }
 
-    public function get_inventory($where=array())
+    public function get_inventory($where = array())
     {
         return $this->inventory_service->get_inventory($where);
     }
 
-    public function get_quantity_in_orders($sku="")
+    public function get_quantity_in_orders($sku = "")
     {
-        $ret[7] = $this->so_service->get_dao()->get_quantity_in_orders($sku,7);
-        $ret[30] = $this->so_service->get_dao()->get_quantity_in_orders($sku,30);
+        $ret[7] = $this->so_service->get_dao()->get_quantity_in_orders($sku, 7);
+        $ret[30] = $this->so_service->get_dao()->get_quantity_in_orders($sku, 30);
         return $ret;
     }
 
-    public function get_current_supplier($sku="")
+    public function get_current_supplier($sku = "")
     {
         return $this->product_service->get_dao()->get_current_supplier($sku);
     }
 
-    public function get_total_default_supplier($sku="")
+    public function get_total_default_supplier($sku = "")
     {
         return $this->product_service->get_dao()->get_total_default_supplier($sku);
     }
 
-    public function get_freight_cat($id="")
+    public function get_freight_cat($id = "")
     {
-        return $this->freight_cat_service->get_dao()->get(array("id"=>$id));
+        return $this->freight_cat_service->get_dao()->get(array("id" => $id));
     }
 
-    public function get_pricing_data($platform_id = "", $prod="", $app_id = null)
+    public function get_pricing_data($platform_id = "", $prod = "", $app_id = null)
     {
         return $this->price_service->get_pricing_tool_info($platform_id, $prod, $app_id);
     }
@@ -187,7 +175,7 @@ class Pricing_tool_model extends CI_Model
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $js =   "
+        $js = "
         var result_recv = false;
 
         function rePrice(platform, sku)

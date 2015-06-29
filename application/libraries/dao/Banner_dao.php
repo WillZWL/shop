@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Banner_dao extends Base_dao
 {
-    private $table_name="banner";
-    private $vo_classname="Banner_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "banner";
+    private $vo_classname = "Banner_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -34,29 +34,25 @@ class Banner_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function update_status($cat_id,$status)
+    public function update_status($cat_id, $status)
     {
-        if($cat_id == "" || !in_array($status,array("I","A")))
-        {
+        if ($cat_id == "" || !in_array($status, array("I", "A"))) {
             return FALSE;
-        }
-        else
-        {
+        } else {
             $sql = "UPDATE banner
                     SET status = '$status',
                     modify_on = NOW(),
-                    modify_at = '".$_SESSION["user"]["modify_at"]."',
-                    modify_by = '".$_SESSION["user"]["id"]."'
+                    modify_at = '" . $_SESSION["user"]["modify_at"] . "',
+                    modify_by = '" . $_SESSION["user"]["id"] . "'
                     WHERE cat_id = '$cat_id'";
-            if($query = $this->db->query($sql))
-            {
+            if ($query = $this->db->query($sql)) {
                 return $this->db->affected_rows();
             }
             return FALSE;
         }
     }
 
-    public function get_list_with_name($level="1",$parent="0",$classname="Banner_cat_list_dto")
+    public function get_list_with_name($level = "1", $parent = "0", $classname = "Banner_cat_list_dto")
     {
         $sql = "SELECT c.id, c.name, c.level, IFNULL(pv.pv_cnt,0) AS pv_cnt, IFNULL(pb.pb_cnt,0) AS pb_cnt, IFNULL(stat.status,0) AS status, IFNULL(s.ttl,0) as count_row
                 FROM category c
@@ -88,15 +84,12 @@ class Banner_dao extends Base_dao
                 ORDER BY c.name ASC";
 
 
-
         $this->include_dto($classname);
 
         $rs = array();
 
-        if($query = $this->db->query($sql))
-        {
-            foreach($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 

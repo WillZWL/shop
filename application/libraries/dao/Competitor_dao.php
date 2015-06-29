@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Competitor_dao extends Base_dao
 {
-    private $table_name="competitor";
-    private $vo_classname="Competitor_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "competitor";
+    private $vo_classname = "Competitor_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -34,22 +34,18 @@ class Competitor_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_list_index($where=array(), $option=array())
+    public function get_list_index($where = array(), $option = array())
     {
-        if(!isset($option["num_row"]))
-        {
+        if (!isset($option["num_row"])) {
             return $this->get_list($where, $option);
-        }
-        else
-        {
+        } else {
             $this->db->from('competitor');
 
             $this->db->where($where);
 
             $this->db->select("COUNT(*) as total");
 
-            if($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }

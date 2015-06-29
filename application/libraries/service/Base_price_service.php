@@ -16,11 +16,11 @@ abstract class Base_price_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once APPPATH."libraries/service/Freight_cat_service.php";
+        include_once APPPATH . "libraries/service/Freight_cat_service.php";
         $this->set_fcc_service(new Freight_cat_service());
-        include_once APPPATH."libraries/service/Weight_cat_service.php";
+        include_once APPPATH . "libraries/service/Weight_cat_service.php";
         $this->set_wcc_service(new Weight_cat_service());
-        include_once APPPATH."libraries/service/Region_service.php";
+        include_once APPPATH . "libraries/service/Region_service.php";
         $this->set_region_service(new Region_service());
     }
 
@@ -29,6 +29,36 @@ abstract class Base_price_service extends Base_service
     abstract public function get_wh_fc_cost();
 
     abstract public function get_fc_to_customer_cost();
+
+    public function get_platform_id()
+    {
+        return $this->platform_id;
+    }
+
+    public function set_platform_id($platform_id = "")
+    {
+        $this->platform_id = $platform_id;
+    }
+
+    public function get_platform_curr_id()
+    {
+        return $this->platform_curr_id;
+    }
+
+    public function set_platform_curr_id($platform_curr_id = "")
+    {
+        $this->platform_curr_id = $platform_curr_id;
+    }
+
+    public function get_fulfillment_centre_id()
+    {
+        return $this->fulfillment_centre_id;
+    }
+
+    public function set_fulfillment_centre_id($fulfillment_centre_id = "")
+    {
+        $this->fulfillment_centre_id = $fulfillment_centre_id;
+    }
 
     protected function get_dto()
     {
@@ -71,36 +101,6 @@ abstract class Base_price_service extends Base_service
     {
         $this->region_service = $svc;
         return;
-    }
-
-    public function get_platform_id()
-    {
-        return $this->platform_id;
-    }
-
-    public function set_platform_id($platform_id = "")
-    {
-        $this->platform_id = $platform_id;
-    }
-
-    public function get_platform_curr_id()
-    {
-        return $this->platform_curr_id;
-    }
-
-    public function set_platform_curr_id($platform_curr_id = "")
-    {
-        $this->platform_curr_id = $platform_curr_id;
-    }
-
-    public function get_fulfillment_centre_id()
-    {
-        return $this->fulfillment_centre_id;
-    }
-
-    public function set_fulfillment_centre_id($fulfillment_centre_id = "")
-    {
-        $this->fulfillment_centre_id = $fulfillment_centre_id;
     }
 }
 

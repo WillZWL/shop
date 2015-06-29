@@ -11,15 +11,16 @@ class Price_margin_model extends CI_Model
         $this->load->library('service/price_margin_service');
     }
 
-    public function refresh_all_platform_margin($platform_where=array())
+    public function refresh_all_platform_margin($platform_where = array())
     {
         return $this->price_margin_service->refresh_all_platform_margin($platform_where);
     }
 
     public function refresh_margin($platform_id = "")
     {
-        return $this->price_margin_service->refresh_margin($platform_id );
+        return $this->price_margin_service->refresh_margin($platform_id);
     }
 
 }
+
 ?>

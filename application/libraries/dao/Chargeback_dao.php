@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Chargeback_dao extends Base_dao
 {
-    private $table_name="chargeback_dao";
-    private $vo_classname="Chargeback_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "chargeback_dao";
+    private $vo_classname = "Chargeback_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -39,8 +39,7 @@ class Chargeback_dao extends Base_dao
         $sql = "select id, name, details from lookup_chargeback_reason lk_cb_reason";
         $query = $this->db->query($sql);
 
-        foreach($query->result() as $tmp)
-        {
+        foreach ($query->result() as $tmp) {
             $obj[] = $tmp;
         }
 
@@ -52,8 +51,7 @@ class Chargeback_dao extends Base_dao
         $sql = "select id, name, details from lookup_chargeback_status lk_cb_status";
         $query = $this->db->query($sql);
 
-        foreach($query->result() as $tmp)
-        {
+        foreach ($query->result() as $tmp) {
             $obj[] = $tmp;
         }
 
@@ -65,15 +63,14 @@ class Chargeback_dao extends Base_dao
         $sql = "select id, name, details from lookup_chargeback_remark lk_cb_remark";
         $query = $this->db->query($sql);
 
-        foreach($query->result() as $tmp)
-        {
+        foreach ($query->result() as $tmp) {
             $obj[] = $tmp;
         }
 
         return $obj;
     }
 
-    public function get_chargeback_data($filter=array())
+    public function get_chargeback_data($filter = array())
     {
         $rs = array();
         $classname = "Chargeback_orders_dto";
@@ -90,72 +87,55 @@ class Chargeback_dao extends Base_dao
         // $filter["so_no"]
         // $filter["currency_id"]
 
-        if(!empty($filter))
-        {
-            if($filter["platform_id"] != "")
-            {
+        if (!empty($filter)) {
+            if ($filter["platform_id"] != "") {
                 $where["s.platform_id"] = $filter["platform_id"];
             }
 
-            if($filter["payment_gateway_id"] != "")
-            {
+            if ($filter["payment_gateway_id"] != "") {
                 $where["sps.payment_gateway_id"] = $filter["payment_gateway_id"];
             }
 
-            if($filter["hold_reason"] != "")
-            {
+            if ($filter["hold_reason"] != "") {
                 $where["shr.reason"] = $filter["hold_reason"];
             }
 
-            if($filter["chargeback_reason"] != "")
-            {
+            if ($filter["chargeback_reason"] != "") {
                 $where["cb.chargeback_reason_id"] = $filter["chargeback_reason"];
             }
 
-            if($filter["chargeback_status"] != "")
-            {
+            if ($filter["chargeback_status"] != "") {
                 $where["cb.chargeback_status_id"] = $filter["chargeback_status"];
             }
 
-            if($filter["chargeback_remark"] != "")
-            {
+            if ($filter["chargeback_remark"] != "") {
                 $where["cb.chargeback_remark_id"] = $filter["chargeback_remark"];
             }
-            if($filter["so_no"] != "")
-            {
+            if ($filter["so_no"] != "") {
                 $where["s.so_no"] = $filter["so_no"];
             }
-            if($filter["currency_id"] != "")
-            {
+            if ($filter["currency_id"] != "") {
                 $where["s.currency_id"] = $filter["currency_id"];
             }
 
-            if($filter["order_start_date"] != "")
-            {
+            if ($filter["order_start_date"] != "") {
                 $order_start_date = "{$filter["order_start_date"]} 00:00:00";
-                if($filter["order_end_date"] != "")
-                {
+                if ($filter["order_end_date"] != "") {
                     $order_end_date = "{$filter["order_end_date"]} 23:59:59";
-                }
-                else
-                {
-                    $order_end_date = date('Y-m-d'). " 23:59:59";
+                } else {
+                    $order_end_date = date('Y-m-d') . " 23:59:59";
                 }
 
                 $where["s.create_on >= '$order_start_date' AND s.create_on <= '$order_end_date'"] = null;
             }
 
 
-            if($filter["chargeback_start_date"] != "")
-            {
+            if ($filter["chargeback_start_date"] != "") {
                 $chargeback_start_date = "{$filter["chargeback_start_date"]} 00:00:00";
-                if($filter["chargeback_end_date"] != "")
-                {
+                if ($filter["chargeback_end_date"] != "") {
                     $chargeback_end_date = "{$filter["chargeback_end_date"]} 23:59:59";
-                }
-                else
-                {
-                    $chargeback_end_date = date('Y-m-d'). " 23:59:59";
+                } else {
+                    $chargeback_end_date = date('Y-m-d') . " 23:59:59";
                 }
 
                 $where["cb.create_on >= '$chargeback_start_date' AND cb.create_on <= '$chargeback_end_date'"] = null;
@@ -236,7 +216,7 @@ class Chargeback_dao extends Base_dao
             $this->db->join("so_payment_status sps", "sps.so_no=s.so_no", "left");
             $this->db->join("so_item_detail sid", "sid.so_no=s.so_no", "left");
             $this->db->join("product p", "p.sku=sid.item_sku", "inner");
-            $this->db->join("category cat", "cat.id=p.cat_id" , "inner");
+            $this->db->join("category cat", "cat.id=p.cat_id", "inner");
             $this->db->join("client c", "c.id=s.client_id", "left");
             $this->db->join("so_credit_chk scc", "scc.so_no=s.so_no", "left");
             $this->db->join("refund r", "r.so_no=s.so_no", "left");
@@ -247,29 +227,23 @@ class Chargeback_dao extends Base_dao
             $this->db->join("lookup_chargeback_status lk_cb_status", "lk_cb_status.id = cb.chargeback_status_id", "left");
             $this->db->join("lookup_chargeback_reason lk_cb_reason", "lk_cb_reason.id = cb.chargeback_reason_id", "left");
             $this->db->join("lookup_chargeback_remark lk_cb_remark", "lk_cb_remark.id = cb.chargeback_remark_id", "left");
-            $this->db->group_by("s.so_no","sid.item_sku");
+            $this->db->group_by("s.so_no", "sid.item_sku");
 
             $current_so_number = "";
             $trace_back = $total_quantity = $i = 0;
 
-            if($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $row)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $row) {
                     // add up all the item qty for the same so_no
                     $rs[$i] = $row;
                     $rs[$i]->set_order_quantity($rs[$i]->get_item_quantity());
-                    if ($current_so_number == $row->get_so_no())
-                    {
+                    if ($current_so_number == $row->get_so_no()) {
                         $trace_back++;
                         $total_quantity += $rs[$i]->get_item_quantity();
-                        for ($j=($i - $trace_back);$j<=$i;$j++)
-                        {
+                        for ($j = ($i - $trace_back); $j <= $i; $j++) {
                             $rs[$j]->set_order_quantity($total_quantity);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         $trace_back = 0;
                         $total_quantity = $rs[$i]->get_item_quantity();
                     }
@@ -278,9 +252,7 @@ class Chargeback_dao extends Base_dao
                 }
             }
             return $rs;
-        }
-        else
-        {
+        } else {
             return $rs;
         }
     }

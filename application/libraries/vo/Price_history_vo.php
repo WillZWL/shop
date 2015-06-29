@@ -144,4 +144,5 @@ class Price_history_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class So_compensation_dao extends Base_dao
 {
-    private $table_name="so_compensation";
-    private $vo_classname="So_compensation_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "so_compensation";
+    private $vo_classname = "So_compensation_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -37,7 +37,7 @@ class So_compensation_dao extends Base_dao
     public function get_orders_eligible_for_compensation($where = array(), $option = array(), $classname = "Compensation_order_dto")
     {
         $this->db->from("so");
-        $this->db->where(array("so.status = 3"=>null, "so.refund_status"=>0, "so.hold_status"=>0));
+        $this->db->where(array("so.status = 3" => null, "so.refund_status" => 0, "so.hold_status" => 0));
         $this->include_dto($classname);
         return $this->common_get_list($where, $option, $classname, "so.*");
     }
@@ -57,7 +57,7 @@ class So_compensation_dao extends Base_dao
                             GROUP BY a.so_no
                          )cph", "so.so_no = cph.so_no AND cp.id = cph.compensation_id", "INNER");
         $this->db->join("product AS p", "p.sku = cp.item_sku", "INNER");
-        $this->db->where(array("so.hold_status"=>1, "cp.status"=>1));
+        $this->db->where(array("so.hold_status" => 1, "cp.status" => 1));
         $this->include_dto($classname);
         return $this->common_get_list($where, $option, $classname, "cp.id compensation_id, so.so_no, so.platform_id, cp.item_sku, p.name prod_name, cph.note, cph.create_on request_on");
     }
@@ -68,7 +68,7 @@ class So_compensation_dao extends Base_dao
         $this->db->join("so_compensation AS cp", "so.so_no = cp.so_no", "INNER");
         $this->db->join("product AS p", "p.sku = cp.item_sku", "INNER");
         $this->db->join("price AS pr", "pr.sku = p.sku and pr.platform_id=so.platform_id", "LEFT");
-        $this->db->where(array("cp.status"=>1));
+        $this->db->where(array("cp.status" => 1));
         $this->include_dto($classname);
         return $this->common_get_list($where, $option, $classname, "so.so_no, so.platform_id, cp.item_sku, p.name prod_name, so.currency_id, pr.price");
     }

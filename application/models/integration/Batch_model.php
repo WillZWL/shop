@@ -1,7 +1,10 @@
 <?php
-class Batch_model extends CI_Model{
 
-    function __construct(){
+class Batch_model extends CI_Model
+{
+
+    function __construct()
+    {
         parent::__construct();
         $this->load->library('service/batch_service');
         $this->load->library('service/batch_tracking_info_service');
@@ -13,7 +16,7 @@ class Batch_model extends CI_Model{
         $this->load->library('service/display_qty_service');
     }
 
-    public function get_ebay_order($ebay_account, $specified_file="")
+    public function get_ebay_order($ebay_account, $specified_file = "")
     {
         return $this->ebay_service->get_ebay_order($ebay_account, $specified_file);
     }

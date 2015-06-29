@@ -1,4 +1,5 @@
 <?php
+
 class Cron_generate_landpage_listing extends MY_Controller
 {
     function __construct()
@@ -22,9 +23,9 @@ class Cron_generate_landpage_listing extends MY_Controller
         //$this->gen_skype_promotion();
     }
 
-    function gen_top_deals()
+    function gen_latest_arrivals()
     {
-        $this->top_deals_model->gen_listing();
+        $this->latest_arrivals_model->gen_listing();
     }
 
     function gen_best_seller()
@@ -32,9 +33,9 @@ class Cron_generate_landpage_listing extends MY_Controller
         $this->best_seller_model->gen_listing();
     }
 
-    function gen_latest_arrivals()
+    function gen_top_deals()
     {
-        $this->latest_arrivals_model->gen_listing();
+        $this->top_deals_model->gen_listing();
     }
 
     function gen_pick_of_the_day()

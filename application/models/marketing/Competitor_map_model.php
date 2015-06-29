@@ -31,25 +31,22 @@ class Competitor_map_model extends CI_Model
         return $this->competitor_map_service->update($obj);
     }
 
-    public function get_product_list($where=array(), $option=array())
+    public function get_product_list($where = array(), $option = array())
     {
         return $this->product_service->get_dao()->get_list_w_name($where, $option, "Product_list_w_name_dto");
     }
 
-    public function get_product_list_total($where=array(), $option=array())
+    public function get_product_list_total($where = array(), $option = array())
     {
         $option["num_rows"] = 1;
         return $this->product_service->get_dao()->get_list_w_name($where, $option);
     }
 
-    public function get_prod($sku="")
+    public function get_prod($sku = "")
     {
-        if($sku != "")
-        {
-            return $this->product_service->get_dao()->get(array("sku"=>$sku));
-        }
-        else
-        {
+        if ($sku != "") {
+            return $this->product_service->get_dao()->get(array("sku" => $sku));
+        } else {
             return $this->product_service->get_dao()->get();
         }
     }
@@ -64,4 +61,5 @@ class Competitor_map_model extends CI_Model
         return $this->competitor_map_service->get_product_identifier_list_grouped_by_country($where);
     }
 }
+
 ?>

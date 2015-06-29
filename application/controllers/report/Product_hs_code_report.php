@@ -1,6 +1,7 @@
 <?php
 
 include_once "base_report.php";
+
 class product_hs_code_report extends Base_report
 {
     private $app_id = "RPT0050";
@@ -10,7 +11,7 @@ class product_hs_code_report extends Base_report
     {
         parent::__construct();
         $this->load->model('report/product_hs_code_model');
-        $this->load->helper(array('url','notice'));
+        $this->load->helper(array('url', 'notice'));
         $this->load->library('service/so_service');
         $this->load->library('service/price_service');
         $this->load->library('service/category_service');
@@ -22,11 +23,11 @@ class product_hs_code_report extends Base_report
     {
         $data["title"] = "Product HS Code Report";
 
-        $langfile = $this->_get_app_id()."01_".$this->_get_lang_id().".php";
-        include_once APPPATH."language/".$langfile;
+        $langfile = $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $langfile;
         $data["lang"] = $lang;
 
-        $data['catoption'] = $this->category_service->get_list_w_key(array('level'=>'1'),$option);
+        $data['catoption'] = $this->category_service->get_list_w_key(array('level' => '1'), $option);
 
         // echo "<pre>"; var_dump($data["catoption"]);die();
         //$catarr= array();
@@ -36,7 +37,17 @@ class product_hs_code_report extends Base_report
         // }
 
 
-        $this->load->view('report/product_hs_code_report',$data);
+        $this->load->view('report/product_hs_code_report', $data);
+    }
+
+    public function _get_app_id()
+    {
+        return $this->app_id;
+    }
+
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
     }
 
     public function export_csv()
@@ -52,12 +63,9 @@ class product_hs_code_report extends Base_report
         $refund_status_list[3] = "CS Approved";
         $refund_status_list[4] = "Refunded";
 
-        if (trim($this->input->post("cat_id")) == "")
-        {
+        if (trim($this->input->post("cat_id")) == "") {
             header("Location: /report/product_hs_code_report");
-        }
-        else
-        {
+        } else {
             // $sku_list = explode("\n", $this->input->post("sku_list"));
             // $newlist = '';
             // $cntlist = count($sku_list);
@@ -75,9 +83,8 @@ class product_hs_code_report extends Base_report
             $list = $this->so_service->get_dao()->get_product_hscode_report($this->input->post("cat_id"));
 
             $content = "MasterSKU,SKU,Product Name,Category, Subcategory,Sub_subcategory,Country ID,HS Code,HS Code Description,Duty Percent\r\n";
-            foreach ($list as $line)
-            {
-                if($line->sub_subcategory == 'Base'){
+            foreach ($list as $line) {
+                if ($line->sub_subcategory == 'Base') {
                     $line->sub_subcategory = '--------';
                 }
                 // $hold_status_id = $line->hold_status;
@@ -151,16 +158,6 @@ class product_hs_code_report extends Base_report
 // 298496
 // )
 
-    }
-
-    public function _get_app_id()
-    {
-        return $this->app_id;
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
     }
 }
 

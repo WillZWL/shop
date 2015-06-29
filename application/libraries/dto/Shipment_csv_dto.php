@@ -13,20 +13,14 @@ class Shipment_csv_dto extends Base_dto
     private $courier;
     private $tracking_no;
 
-    public function set_shipment_id($value)
-    {
-        $this->shipment_id = $value;
-        return $this;
-    }
-
     public function get_shipment_id()
     {
         return $this->shipment_id;
     }
 
-    public function set_sku($value)
+    public function set_shipment_id($value)
     {
-        $this->sku = $value;
+        $this->shipment_id = $value;
         return $this;
     }
 
@@ -35,9 +29,9 @@ class Shipment_csv_dto extends Base_dto
         return $this->sku;
     }
 
-    public function set_prod_name($value)
+    public function set_sku($value)
     {
-        $this->prod_name = $value;
+        $this->sku = $value;
         return $this;
     }
 
@@ -46,9 +40,9 @@ class Shipment_csv_dto extends Base_dto
         return $this->prod_name;
     }
 
-    public function set_qty($value)
+    public function set_prod_name($value)
     {
-        $this->qty = $value;
+        $this->prod_name = $value;
         return $this;
     }
 
@@ -57,9 +51,9 @@ class Shipment_csv_dto extends Base_dto
         return $this->qty;
     }
 
-    public function set_courier($value)
+    public function set_qty($value)
     {
-        $this->courier = $value;
+        $this->qty = $value;
         return $this;
     }
 
@@ -68,15 +62,21 @@ class Shipment_csv_dto extends Base_dto
         return $this->courier;
     }
 
-    public function set_tracking_no($value)
+    public function set_courier($value)
     {
-        $this->tracking_no = $value;
+        $this->courier = $value;
         return $this;
     }
 
     public function get_tracking_no()
     {
         return $this->tracking_no;
+    }
+
+    public function set_tracking_no($value)
+    {
+        $this->tracking_no = $value;
+        return $this;
     }
 }
 

@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Batch_dao extends Base_dao
 {
-    private $table_name="batch";
-    private $vo_class_name="Batch_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "batch";
+    private $vo_class_name = "Batch_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class Batch_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_batch_list($where=array(), $option=array(), $classname="Batch_dto")
+    public function get_batch_list($where = array(), $option = array(), $classname = "Batch_dto")
     {
 
         $this->db->from('batch AS b');
@@ -46,55 +46,42 @@ class Batch_dao extends Base_dao
 
         $this->db->where($where);
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
 
             $this->db->select('b.*, bd.duration');
 
             $this->include_dto($classname);
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
 
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -103,8 +90,7 @@ class Batch_dao extends Base_dao
 
     public function get_batch_status_for_order($batch_id = "")
     {
-        if($batch_id == "")
-        {
+        if ($batch_id == "") {
             return FALSE;
         }
 
@@ -121,10 +107,9 @@ class Batch_dao extends Base_dao
              LIMIT 1
             ";
 
-        if($query = $this->db->query($sql,array($batch_id,$batch_id)))
-        {
+        if ($query = $this->db->query($sql, array($batch_id, $batch_id))) {
 
-            return array("completed"=>$query->row()->complete,"total"=>$query->row()->total);
+            return array("completed" => $query->row()->complete, "total" => $query->row()->total);
         }
         return FALSE;
     }

@@ -11,7 +11,7 @@ class Chargeback_admin_grid extends gridbase
         $this->var["prefix_table_to_search_field"] = "t";
     }
 
-    function set_where ($where)
+    function set_where($where)
     {
         $this->var["where"] = $where;
         $_SESSION["where"] = $where;
@@ -22,28 +22,37 @@ class Chargeback_admin_grid extends gridbase
         extract($this->var);
 
         $querystring = "";
-        for ($i = 0; $i <= 6; $i++)
-        {
-            switch ($i)
-            {
-                case 0: $x = 6; break;
-                case 1: $x = 8; break;
-                case 2: $x = 9; break;
-                case 3: $x = 39; break;
-                case 4: $x = 51; break;
-                case 5: $x = 52; break;
-                case 6: $x = 1; break;
+        for ($i = 0; $i <= 6; $i++) {
+            switch ($i) {
+                case 0:
+                    $x = 6;
+                    break;
+                case 1:
+                    $x = 8;
+                    break;
+                case 2:
+                    $x = 9;
+                    break;
+                case 3:
+                    $x = 39;
+                    break;
+                case 4:
+                    $x = 51;
+                    break;
+                case 5:
+                    $x = 52;
+                    break;
+                case 6:
+                    $x = 1;
+                    break;
             }
             $t = $this->import_param("tfa_$x");
 
-            if (is_array($t))
-            {
-                foreach ($t as $k=>$v)
-                {
+            if (is_array($t)) {
+                foreach ($t as $k => $v) {
                     $querystring .= "&tfa_{$x}[]={$v}";
                 }
-            }
-            else
+            } else
                 $querystring .= "&tfa_$x={$t}";
         }
 
@@ -54,7 +63,7 @@ class Chargeback_admin_grid extends gridbase
         $objGrid->searchby("so_no");
         $objGrid->orderby("chargeback_status_id, id", "asc, desc");
 
-        $objGrid->buttons(false,true,false,false,-1,"");
+        $objGrid->buttons(false, true, false, false, -1, "");
 
         $link = array(
             "['so_no'] == ''" => "
@@ -98,22 +107,22 @@ class Chargeback_admin_grid extends gridbase
         // $objGrid->FormatColumn("OurPrice","Ours",                    "0", "50", 0, "1", "left", "text");
         // $objGrid->FormatColumn("Difference","Difference",            "0", "50", 0, "1", "left", "text");
 
-        $objGrid->FormatColumn("id","ID",                           "0", "50", 1, "1", "center", "text");
-        $objGrid->FormatColumn("action","CB#",                      "25", "0", 4, "1", "left", $link);
-        $objGrid->FormatColumn("so_no","SO#",                       "0", "50", 0, "1", "left", "text");
+        $objGrid->FormatColumn("id", "ID", "0", "50", 1, "1", "center", "text");
+        $objGrid->FormatColumn("action", "CB#", "25", "0", 4, "1", "left", $link);
+        $objGrid->FormatColumn("so_no", "SO#", "0", "50", 0, "1", "left", "text");
 
-        $objGrid->FormatColumn("currency_id","Currency",            "0", "50", 4, "1", "left", "text");
-        $objGrid->FormatColumn("amount","Order Amount",             "0", "50", 4, "1", "left", "text");
+        $objGrid->FormatColumn("currency_id", "Currency", "0", "50", 4, "1", "left", "text");
+        $objGrid->FormatColumn("amount", "Order Amount", "0", "50", 4, "1", "left", "text");
 
-        $objGrid->FormatColumn("chargeback_status_id","Status",     "0", "50", 0, "1", "left", "selected:select * from lookup_chargeback_status");
+        $objGrid->FormatColumn("chargeback_status_id", "Status", "0", "50", 0, "1", "left", "selected:select * from lookup_chargeback_status");
 
-        $objGrid->FormatColumn("chargeback_reason_id","Reason",     "0", "50", 0, "1", "left", "selected:select * from lookup_chargeback_reason");
-        $objGrid->FormatColumn("chargeback_reason","Reason",        "0", "50", 0, "30", "left", "text");
+        $objGrid->FormatColumn("chargeback_reason_id", "Reason", "0", "50", 0, "1", "left", "selected:select * from lookup_chargeback_reason");
+        $objGrid->FormatColumn("chargeback_reason", "Reason", "0", "50", 0, "30", "left", "text");
 
-        $objGrid->FormatColumn("chargeback_remark_id","Remarks",    "0", "50", 0, "20", "left", "selected:select * from lookup_chargeback_remark");
-        $objGrid->FormatColumn("chargeback_remark","Order Notes",   "0", "50", 0, "30", "left", "text");
-        $objGrid->FormatColumn("create_on","Create Date",           "0", "50", 1, "1", "left", "text");
-        $objGrid->FormatColumn("psp_gateway","PSP Gateway",         "0", "50", 4, "1", "center", "text");
+        $objGrid->FormatColumn("chargeback_remark_id", "Remarks", "0", "50", 0, "20", "left", "selected:select * from lookup_chargeback_remark");
+        $objGrid->FormatColumn("chargeback_remark", "Order Notes", "0", "50", 0, "30", "left", "text");
+        $objGrid->FormatColumn("create_on", "Create Date", "0", "50", 1, "1", "left", "text");
+        $objGrid->FormatColumn("psp_gateway", "PSP Gateway", "0", "50", 4, "1", "center", "text");
 
         { # file upload code
             $previewpath = "documents/";
@@ -126,50 +135,49 @@ class Chargeback_admin_grid extends gridbase
             $fileoptions = array
             (
                 "['document'] != ''" =>
-                "<a href='/uploaded_".$previewpath."['document']' target='_blank'>View</a>",
+                    "<a href='/uploaded_" . $previewpath . "['document']' target='_blank'>View</a>",
             );
 
-            $objGrid->setImageSize("document",16,16);
+            $objGrid->setImageSize("document", 16, 16);
             $objGrid->uploadDirectory = "$uploadpath";
             $objGrid->validImgExtensions = array();#array("pdf", "doc", "docx", "gif", "jpg", "jpeg", "png", "xls"); /* Allowed img extensions to upload */
 
-            $objGrid->FormatColumn("filename","POD",                    "0", "0", 4, "20", "left", $fileoptions);
-            $objGrid->FormatColumn("document","Attach files here",      "25", "0", 2, "30", "left", "image:$uploadpath%s");
+            $objGrid->FormatColumn("filename", "POD", "0", "0", 4, "20", "left", $fileoptions);
+            $objGrid->FormatColumn("document", "Attach files here", "25", "0", 2, "30", "left", "image:$uploadpath%s");
         }
 
         // $objGrid->chField("id","E-");
-        $objGrid->chField("so_no","E-");
-        $objGrid->chField("chargeback_reason_id","E-");
-        $objGrid->chField("chargeback_status_id","E-");
-        $objGrid->chField("chargeback_reason","E-");
-        $objGrid->chField("chargeback_remark_id","E-");
-        $objGrid->chField("chargeback_remark","E-");
-        $objGrid->chField("action","X-E-");
-        $objGrid->chField("document","E+RUM");
+        $objGrid->chField("so_no", "E-");
+        $objGrid->chField("chargeback_reason_id", "E-");
+        $objGrid->chField("chargeback_status_id", "E-");
+        $objGrid->chField("chargeback_reason", "E-");
+        $objGrid->chField("chargeback_remark_id", "E-");
+        $objGrid->chField("chargeback_remark", "E-");
+        $objGrid->chField("action", "X-E-");
+        $objGrid->chField("document", "E+RUM");
 
-        $objGrid->chField("filename","X-");
-        $objGrid->chField("currency_id","E-");
-        $objGrid->chField("amount","E-");
+        $objGrid->chField("filename", "X-");
+        $objGrid->chField("currency_id", "E-");
+        $objGrid->chField("amount", "E-");
 
-        $objGrid->chField("create_on","E-");
-        $objGrid->chField("psp_gateway","E-");
+        $objGrid->chField("create_on", "E-");
+        $objGrid->chField("psp_gateway", "E-");
 
         // russell doesn't want this behavior where closed chargebacks cannot be edited
         // $objGrid->conditionEdit = "['chargeback_status_id'] <= 2";
-        $objGrid->addCellStyle('purchaseorder_statusid',"['purchaseorder_statusid'] == 100", "redcell");
+        $objGrid->addCellStyle('purchaseorder_statusid', "['purchaseorder_statusid'] == 100", "redcell");
     }
 
 
     function ajax_handler()
     {
-        extract ($this->var);
+        extract($this->var);
 
         $userid = $_SESSION['user']['id'];
 
         $param = explode(";", $objGrid->getAjaxID());
         $date = date('Y-m-d H:i:s');
-        switch ($param[0])
-        {
+        switch ($param[0]) {
             case "add":
                 $strSQL = sprintf("INSERT INTO $table (`chargeback_reason`,`chargeback_status_id`, `create_on`, `create_by`, `modify_on`, `modify_by`) values ('Please enter a SO# and reason',1, '$date', '{$_SESSION["user"]["id"]}', '$date', '{$_SESSION["user"]["id"]}')");
                 // echo $strSQL; die();
@@ -201,15 +209,14 @@ class Chargeback_admin_grid extends gridbase
                 break;
         }
 
-        switch ($param[0])
-        {
+        switch ($param[0]) {
             case "StopPack":
             case "PODemail":
             case "MarkRefund":
 
                 $list = $objGrid->getCheckedBoxes();
-                foreach($list as $l)
-                    echo ("<script>alert('$l');</script>");
+                foreach ($list as $l)
+                    echo("<script>alert('$l');</script>");
 
                 $data = $objGrid->getEditedData();
 
@@ -226,8 +233,7 @@ SQL;
                 break;
         }
 
-        switch ($objGrid->getAjaxID())
-        {
+        switch ($objGrid->getAjaxID()) {
             case DG_IsDelete: // case 3:    // Delete Rowa / Borrar Registro
                 break;
 
@@ -254,10 +260,9 @@ SQL;
                 // foreach ($_POST as $k=>$v)
                 //  echo "<script>alert('$k is $v');</script>";
 
-                if (file_exists($uploadpath.$fqdn))
-                {
-                    if (!copy($uploadpath.$fqdn, $uploadpath.$newname))
-                    // if (file_exists($uploadpath.$newname))
+                if (file_exists($uploadpath . $fqdn)) {
+                    if (!copy($uploadpath . $fqdn, $uploadpath . $newname))
+                        // if (file_exists($uploadpath.$newname))
                         echo "<script>alert('file cannot be stored [$uploadpath.$newname]')</script>";
 
                     $_POST["dgFld" . "document"] = $newname;
@@ -285,8 +290,7 @@ SQL;
 
                     $this->set_note($msg, $data);
                     $this->send_poduploaded("", "compliance@eservicesgroup.net", $so_no);
-                }
-                else
+                } else
                     echo "<script>alert('Cannot find $fqdn as $newname');</script>";
 
                 // echo "<script>alert('DONE!');</script>";
@@ -299,8 +303,7 @@ SQL;
                 $query = "insert into chargeback_audit set remarks = '{$data["fieldname"]} changed', {$data["fieldname"]} = '{$data["data"]}', chargeback_id={$data["id"]}, modify_by = '{$_SESSION["user"]["id"]}'";
                 $objGrid->SQL_query($query);
 
-                switch ($data["fieldname"])
-                {
+                switch ($data["fieldname"]) {
 
                     case "remarks":
                         $sql = "update table set status = 0";
@@ -347,9 +350,103 @@ SQL;
         }
     }
 
+    function send_stoppack($from, $to, $so_no)
+    {
+        $subject = "[URGENT] VB $so_no stop pack";
+        $message = <<<template
+Dear Logistics Team,
+
+We have received chargeback for order $so_no, please stop the shipment to be sent out and let us know when it is back to stock.
+Thanks.
+
+$from
+Compliance Department
+template;
+
+        $this->sendmail($to, $subject, $message);
+    }
+
+    function sendmail($to, $subject, $message)
+    {
+        // {$_SESSION["user"]["email"]}
+        mail("$to, {$_SESSION["user"]["email"]}", $subject, $message);
+        // mail("tslau@eservicesgroup.net", $subject, $message);
+        error_log($subject);
+    }
+
+    function send_podemail($from, $to, $so_no)
+    {
+        $subject = "[URGENT] VB $so_no POD Needed";
+        $message = <<<template
+Dear Logistics Team,
+
+We have received chargeback for order $so_no, please upload the POD to http://admincentre.valuebasket.com/order/chargeback_admin
+Thanks.
+
+$from
+Compliance Department
+template;
+        $this->sendmail($to, $subject, $message);
+    }
+
+    function send_markrefund($from, $to, $so_no)
+    {
+        $subject = "[URGENT] VB $so_no mark as refunded";
+        $message = <<<template
+
+Dear Finance Team,
+
+We have received chargeback for order $so_no, please mark as refunded.
+Thanks.
+
+$from
+Compliance Department
+template;
+        $this->sendmail($to, $subject, $message);
+    }
+
+    private function set_note($message, $data = null)
+    {
+        extract($this->var);
+        include_once APPPATH . "libraries/service/order_notes_service.php";
+
+        if ($data == null) $data = $objGrid->getEditedData();
+
+        $query = "select so_no from $table where id={$data["id"]}";
+        $result = $objGrid->SQL_query($query);
+
+        if (isset($result[0]["so_no"])) {
+            $so_no = $result[0]["so_no"];
+            $order_notes_service = new Order_notes_service();
+            $note_obj = $order_notes_service->get();
+            $note_obj->set_so_no($so_no);
+            $note_obj->set_type("O");
+            $note_obj->set_note($message);
+
+            if ($order_notes_service->insert($note_obj) === FALSE) {
+                echo "<script>alert('Cannot notes to SO#{$so_no}. (Does SO# exists?)');</script>";
+            }
+        }
+    }
+
+    function send_poduploaded($from, $to, $so_no)
+    {
+        $subject = "POD uploaded for VB $so_no";
+        $message = <<<template
+Hi,
+
+A POD for order $so_no has been uploaded.
+Thanks.
+
+Sent by system
+template;
+
+        $this->sendmail($to, $subject, $message);
+    }
+
     public function record_click($message, $so_no)
     {
-        extract ($this->var);
+        extract($this->var);
 
         $query = "select id from chargeback where so_no = '{$so_no}'";
         $m = $objGrid->SQL_query($query);
@@ -359,38 +456,12 @@ SQL;
         $m = $objGrid->SQL_query($query);
     }
 
-    private function set_note($message, $data = null)
-    {
-        extract ($this->var);
-        include_once APPPATH."libraries/service/order_notes_service.php";
-
-        if ($data == null) $data = $objGrid->getEditedData();
-
-        $query = "select so_no from $table where id={$data["id"]}";
-        $result = $objGrid->SQL_query($query);
-
-        if (isset($result[0]["so_no"]))
-        {
-            $so_no = $result[0]["so_no"];
-            $order_notes_service = new Order_notes_service();
-            $note_obj = $order_notes_service->get();
-            $note_obj->set_so_no($so_no);
-            $note_obj->set_type("O");
-            $note_obj->set_note($message);
-
-            if ($order_notes_service->insert($note_obj) === FALSE)
-            {
-                echo "<script>alert('Cannot notes to SO#{$so_no}. (Does SO# exists?)');</script>";
-            }
-        }
-    }
-
     function execute_custom_sql()
     {
         extract($this->var);
 
         $query =
-        "
+            "
             select
                 t.*,
                 so.currency_id,
@@ -405,76 +476,6 @@ SQL;
         $objGrid->where($where);
         // var_dump($query . $where);
         $objGrid->sqlstatement($query);
-    }
-
-    function send_markrefund($from, $to, $so_no)
-    {
-        $subject = "[URGENT] VB $so_no mark as refunded";
-$message = <<<template
-
-Dear Finance Team,
-
-We have received chargeback for order $so_no, please mark as refunded.
-Thanks.
-
-$from
-Compliance Department
-template;
-        $this->sendmail($to, $subject, $message);
-    }
-
-    function send_podemail($from, $to, $so_no)
-    {
-        $subject = "[URGENT] VB $so_no POD Needed";
-$message = <<<template
-Dear Logistics Team,
-
-We have received chargeback for order $so_no, please upload the POD to http://admincentre.valuebasket.com/order/chargeback_admin
-Thanks.
-
-$from
-Compliance Department
-template;
-        $this->sendmail($to, $subject, $message);
-    }
-
-    function send_stoppack($from, $to, $so_no)
-    {
-        $subject = "[URGENT] VB $so_no stop pack";
-$message = <<<template
-Dear Logistics Team,
-
-We have received chargeback for order $so_no, please stop the shipment to be sent out and let us know when it is back to stock.
-Thanks.
-
-$from
-Compliance Department
-template;
-
-        $this->sendmail($to, $subject, $message);
-    }
-
-    function send_poduploaded($from, $to, $so_no)
-    {
-        $subject = "POD uploaded for VB $so_no";
-$message = <<<template
-Hi,
-
-A POD for order $so_no has been uploaded.
-Thanks.
-
-Sent by system
-template;
-
-        $this->sendmail($to, $subject, $message);
-    }
-
-    function sendmail($to, $subject, $message)
-    {
-        // {$_SESSION["user"]["email"]}
-        mail("$to, {$_SESSION["user"]["email"]}", $subject, $message);
-        // mail("tslau@eservicesgroup.net", $subject, $message);
-        error_log($subject);
     }
 
 }

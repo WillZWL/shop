@@ -156,4 +156,5 @@ class Price_margin_vo extends Base_vo
     }
 
 }
+
 ?>

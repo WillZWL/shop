@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Release_order_report_dao extends Base_dao
 {
-    private $table_name="release_order_history";
-    private $vo_class_name="release_order_history_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "release_order_history";
+    private $vo_class_name = "release_order_history_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class Release_order_report_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function order_release_activity_log($where, $option=array(), $classname = "order_release_activity_log_dto")
+    public function order_release_activity_log($where, $option = array(), $classname = "order_release_activity_log_dto")
     {
         $this->db->from("(select temp5.so_no, temp5.create_at, temp5.create_on, temp5.create_by, release_reason from release_order_history temp5
                 inner JOIN

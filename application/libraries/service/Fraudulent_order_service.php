@@ -8,7 +8,7 @@ class Fraudulent_order_service extends Report_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Fraudulent_order_dao.php");
+        include_once(APPPATH . "libraries/dao/Fraudulent_order_dao.php");
         $this->set_dao(new fraudulent_order_dao());
         $this->set_output_delimiter(',');
     }

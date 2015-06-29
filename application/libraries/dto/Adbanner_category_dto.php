@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class Adbanner_category_dto extends Base_dto {
+class Adbanner_category_dto extends Base_dto
+{
 
     //class variable
     private $name;

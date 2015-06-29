@@ -16,15 +16,16 @@
  * limitations under the License.
  */
 
- /**
-  * Used to create a Google Checkout result as a response to a
-  * merchant-calculations feedback structure, i.e shipping, tax, coupons and
-  * gift certificates.
-  *
-  * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_result <result>}
-  */
-  // refer to demo/responsehandlerdemo.php for usage of this code
-  class GoogleResult {
+/**
+ * Used to create a Google Checkout result as a response to a
+ * merchant-calculations feedback structure, i.e shipping, tax, coupons and
+ * gift certificates.
+ *
+ * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_result <result>}
+ */
+// refer to demo/responsehandlerdemo.php for usage of this code
+class GoogleResult
+{
     var $shipping_name;
     var $address_id;
     var $shippable;
@@ -39,66 +40,74 @@
      * @param integer $address_id the id of the anonymous address sent by
      *                           Google Checkout.
      */
-    function GoogleResult($address_id) {
-      $this->address_id = $address_id;
+    function GoogleResult($address_id)
+    {
+        $this->address_id = $address_id;
     }
 
-    function SetShippingDetails($name, $price, $shippable = "true") {
-      $this->shipping_name = $name;
-      $this->ship_price = $price;
-      $this->shippable = $shippable;
+    function SetShippingDetails($name, $price, $shippable = "true")
+    {
+        $this->shipping_name = $name;
+        $this->ship_price = $price;
+        $this->shippable = $shippable;
     }
 
-    function SetTaxDetails($amount) {
-      $this->tax_amount = $amount;
+    function SetTaxDetails($amount)
+    {
+        $this->tax_amount = $amount;
     }
 
-    function AddCoupons($coupon) {
-      $this->coupon_arr[] = $coupon;
+    function AddCoupons($coupon)
+    {
+        $this->coupon_arr[] = $coupon;
     }
 
-    function AddGiftCertificates($gift) {
-      $this->giftcert_arr[] = $gift;
+    function AddGiftCertificates($gift)
+    {
+        $this->giftcert_arr[] = $gift;
     }
-  }
+}
 
- /**
-  * This is a class used to return the results of coupons the buyer supplied in
-  * the order page.
-  *
-  * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_coupon-result <coupon-result>}
-  */
-  class GoogleCoupons {
+/**
+ * This is a class used to return the results of coupons the buyer supplied in
+ * the order page.
+ *
+ * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_coupon-result <coupon-result>}
+ */
+class GoogleCoupons
+{
     var $coupon_valid;
     var $coupon_code;
     var $coupon_amount;
     var $coupon_message;
 
-    function googlecoupons($valid, $code, $amount, $message) {
-      $this->coupon_valid = $valid;
-      $this->coupon_code = $code;
-      $this->coupon_amount = $amount;
-      $this->coupon_message = $message;
+    function googlecoupons($valid, $code, $amount, $message)
+    {
+        $this->coupon_valid = $valid;
+        $this->coupon_code = $code;
+        $this->coupon_amount = $amount;
+        $this->coupon_message = $message;
     }
-  }
+}
 
- /**
-  * This is a class used to return the results of gift certificates
-  * supplied by the buyer on the place order page
-  *
-  * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_gift-certificate-result} <gift-certificate-result>
-  */
-
-  class GoogleGiftcerts {
+/**
+ * This is a class used to return the results of gift certificates
+ * supplied by the buyer on the place order page
+ *
+ * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_gift-certificate-result} <gift-certificate-result>
+ */
+class GoogleGiftcerts
+{
     var $gift_valid;
     var $gift_code;
     var $gift_amount;
     var $gift_message;
 
-    function googlegiftcerts($valid, $code, $amount, $message) {
-      $this->gift_valid = $valid;
-      $this->gift_code = $code;
-      $this->gift_amount = $amount;
-      $this->gift_message = $message;
+    function googlegiftcerts($valid, $code, $amount, $message)
+    {
+        $this->gift_valid = $valid;
+        $this->gift_code = $code;
+        $this->gift_amount = $amount;
+        $this->gift_message = $message;
     }
-  }
+}

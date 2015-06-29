@@ -9,14 +9,14 @@ Class Event_dto extends Base_dto
     {
     }
 
-    public function set_event_id($data)
-    {
-        $this->event_id = $event_id;
-    }
-
     public function get_event_id()
     {
         return $this->event_id;
+    }
+
+    public function set_event_id($data)
+    {
+        $this->event_id = $event_id;
     }
 }
 

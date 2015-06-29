@@ -1,4 +1,5 @@
 <?php
+
 class Custom_class_model extends CI_Model
 {
     public function __construct()
@@ -11,39 +12,39 @@ class Custom_class_model extends CI_Model
         $this->load->library('service/custom_classification_mapping_service');
     }
 
-    public function get_country_list($where=array(), $option=array())
+    public function get_country_list($where = array(), $option = array())
     {
         return $this->country_service->get_list($where, $option);
     }
 
-    public function get_sub_cat_list($where=array(), $option=array())
+    public function get_sub_cat_list($where = array(), $option = array())
     {
         return $this->category_service->get_list($where, $option);
     }
 
-    public function get_custom_class_list($where=array(), $option=array())
+    public function get_custom_class_list($where = array(), $option = array())
     {
         return $this->custom_class_service->get_list($where, $option);
     }
 
-    public function get_region_list($where=array(), $option=array())
+    public function get_region_list($where = array(), $option = array())
     {
         return $this->region_service->get_list($where, $option);
     }
 
-    public function get_cc_list($where=array(), $option=array())
+    public function get_cc_list($where = array(), $option = array())
     {
         $data["cclist"] = $this->custom_class_service->get_list($where, $option);
         $data["total"] = $this->custom_class_service->get_num_rows($where);
         return $data;
     }
 
-    public function get_cc($where=array())
+    public function get_cc($where = array())
     {
         return $this->custom_class_service->get($where);
     }
 
-    public function get_cc_option($where=array())
+    public function get_cc_option($where = array())
     {
         return $this->custom_class_service->get_option($where);
     }
@@ -63,17 +64,17 @@ class Custom_class_model extends CI_Model
         return $this->custom_class_service->insert($obj);
     }
 
-    public function get_pcc($where=array())
+    public function get_pcc($where = array())
     {
         return $this->custom_class_service->get_pcc($where);
     }
 
-    public function get_pcc_list($where=array(), $option=array())
+    public function get_pcc_list($where = array(), $option = array())
     {
         return $this->custom_class_service->get_pcc_list($where, $option);
     }
 
-    public function get_full_pcc_by_sku($where=array(), $option=array())
+    public function get_full_pcc_by_sku($where = array(), $option = array())
     {
         return $this->custom_class_service->get_full_pcc_by_sku($where, $option);
     }
@@ -93,12 +94,12 @@ class Custom_class_model extends CI_Model
         return $this->custom_class_service->add_pcc($obj);
     }
 
-    public function get_ccm_list($where=array(), $option=array())
+    public function get_ccm_list($where = array(), $option = array())
     {
         return $this->custom_classification_mapping_service->get_ccm_list($where, $option);
     }
 
-    public function get_ccm($where=array())
+    public function get_ccm($where = array())
     {
         return $this->custom_classification_mapping_service->get_ccm($where);
     }

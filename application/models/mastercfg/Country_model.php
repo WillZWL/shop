@@ -14,46 +14,40 @@ class Country_model extends CI_Model
         return $this->country_service->get_dao()->get_all_available_country_w_correct_lang($lang_id);
     }
 
-    public function get($dao,$where="")
+    public function get($dao, $where = "")
     {
-        $method = "get_".$dao."_dao";
-        if(is_array($where))
-        {
+        $method = "get_" . $dao . "_dao";
+        if (is_array($where)) {
             return $this->country_service->$method()->get($where);
-        }
-        else
-        {
+        } else {
             return $this->country_service->$method()->get();
         }
     }
 
-    public function get_list($dao,$where=array(),$option=array())
+    public function get_list($dao, $where = array(), $option = array())
     {
-        $method = "get_".$dao."_dao";
-        if($option["num_rows"] == 1)
-        {
+        $method = "get_" . $dao . "_dao";
+        if ($option["num_rows"] == 1) {
             return $this->country_service->$method()->get_num_rows($where);
-        }
-        else
-        {
-            return $this->country_service->$method()->get_list($where,$option);
+        } else {
+            return $this->country_service->$method()->get_list($where, $option);
         }
     }
 
-    public function get_list_w_rma_fc($where=array(), $option=array())
+    public function get_list_w_rma_fc($where = array(), $option = array())
     {
-        return $this->country_service->get_dao()->get_list_w_rma_fc($where,$option);
+        return $this->country_service->get_dao()->get_list_w_rma_fc($where, $option);
     }
 
-    public function update($dao,$obj)
+    public function update($dao, $obj)
     {
-        $method = "get_".$dao."_dao";
+        $method = "get_" . $dao . "_dao";
         return $this->country_service->$method()->update($obj);
     }
 
-    public function insert($dao,$obj)
+    public function insert($dao, $obj)
     {
-        $method = "get_".$dao."_dao";
+        $method = "get_" . $dao . "_dao";
         return $this->country_service->$method()->insert($obj);
     }
 
@@ -61,14 +55,12 @@ class Country_model extends CI_Model
     {
         $where["l.id"] = $lang_id;
 
-        if ($front_end)
-        {
+        if ($front_end) {
             $where["c.status"] = 1;
             $where["c.allow_sell"] = 1;
         }
 
-        switch ($platform_restricted)
-        {
+        switch ($platform_restricted) {
             case "WSUS":
             case "WEBUS":
                 $where["c.id"] = PLATFORMCOUNTRYID;
@@ -81,10 +73,11 @@ class Country_model extends CI_Model
         return $this->country_service->get_country_ext_dao()->get_country_name_in_lang($where, $option);
     }
 
-    public function get_rma_fc_list($lang="en")
+    public function get_rma_fc_list($lang = "en")
     {
         return $this->country_service->get_dao()->get_rma_country_list($lang);
     }
 
 }
+
 ?>

@@ -337,4 +337,5 @@ class Interface_so_item_detail_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -11,19 +11,14 @@ class Pmgw_report_altapay_dto extends Base_dto
     private $amount;
     private $currency_id;
 
-    public function set_so_no($value)
-    {
-        $this->so_no = $value;
-    }
-
     public function get_so_no()
     {
         return $this->so_no;
     }
 
-    public function set_txn_id($value)
+    public function set_so_no($value)
     {
-        $this->txn_id = $value;
+        $this->so_no = $value;
     }
 
     public function get_txn_id()
@@ -31,9 +26,9 @@ class Pmgw_report_altapay_dto extends Base_dto
         return $this->txn_id;
     }
 
-    public function set_type($value)
+    public function set_txn_id($value)
     {
-        $this->type = $value;
+        $this->txn_id = $value;
     }
 
     public function get_type()
@@ -41,9 +36,9 @@ class Pmgw_report_altapay_dto extends Base_dto
         return $this->type;
     }
 
-    public function set_date($value)
+    public function set_type($value)
     {
-        $this->date = $value;
+        $this->type = $value;
     }
 
     public function get_date()
@@ -51,9 +46,9 @@ class Pmgw_report_altapay_dto extends Base_dto
         return $this->date;
     }
 
-    public function set_amount($value)
+    public function set_date($value)
     {
-        $this->amount = $value;
+        $this->date = $value;
     }
 
     public function get_amount()
@@ -61,13 +56,18 @@ class Pmgw_report_altapay_dto extends Base_dto
         return $this->amount;
     }
 
-    public function set_currency_id($value)
+    public function set_amount($value)
     {
-        $this->currency_id = $value;
+        $this->amount = $value;
     }
 
     public function get_currency_id()
     {
         return $this->currency_id;
+    }
+
+    public function set_currency_id($value)
+    {
+        $this->currency_id = $value;
     }
 }

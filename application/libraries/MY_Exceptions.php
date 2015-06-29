@@ -12,10 +12,8 @@ class MY_Exceptions extends CI_Exceptions
 
     function show_error($heading, $message, $template = 'error_general')
     {
-        if (file_exists(CTRLPATH . $this->error_controller.EXT))
-        {
-            if ( ! function_exists('base_url'))
-            {
+        if (file_exists(CTRLPATH . $this->error_controller . EXT)) {
+            if (!function_exists('base_url')) {
                 function base_url()
                 {
                     global $CFG;
@@ -23,11 +21,9 @@ class MY_Exceptions extends CI_Exceptions
                 }
             }
 
-            require_once BASEPATH.'helpers/url_helper.php';
+            require_once BASEPATH . 'helpers/url_helper.php';
             redirect(base_url() . $this->error_controller . '/' . $this->error_method_404);
-        }
-        else
-        {
+        } else {
             return parent::show_error($heading, $message, $template);
         }
     }

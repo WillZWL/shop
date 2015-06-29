@@ -18,7 +18,7 @@ abstract class Checkout_redirect_model extends Checkout_model implements Checkou
     public function __construct($debug = 0)
     {
         parent::Checkout_model();
-        include_once(APPPATH."libraries/service/Context_config_service.php");
+        include_once(APPPATH . "libraries/service/Context_config_service.php");
         $this->set_config(new Context_config_service());
         $system_debug_open = $this->get_config()->value_of("payment_debug_allow");
         if (($debug == 1) && ($system_debug_open))
@@ -27,12 +27,23 @@ abstract class Checkout_redirect_model extends Checkout_model implements Checkou
             $this->debug = 0;
         $this->set_pmgw_service($this->debug);
     }
-/***************************************
-*   we pass both post and get data, because in general
-*   we don't know exactly different payment gateway handling method
-*   general_data, normally will put $_POST
-*   get_data, normally will put $_GET
-****************************************/
+
+    public function get_config()
+    {
+        return $this->_config;
+    }
+
+    public function set_config($value)
+    {
+        $this->_config = $value;
+    }
+
+    /***************************************
+     *   we pass both post and get data, because in general
+     *   we don't know exactly different payment gateway handling method
+     *   general_data, normally will put $_POST
+     *   get_data, normally will put $_GET
+     ****************************************/
     public function process_payment_status_in_general($general_data = array(), $get_data = array())
     {
         return $this->pmgw_redirect_service->process_payment_status_in_general($general_data, $get_data);
@@ -47,15 +58,6 @@ abstract class Checkout_redirect_model extends Checkout_model implements Checkou
     {
         return $this->pmgw_redirect_service->query_payment_status_in_general($so_no);
     }
-
-    public function get_config()
-    {
-        return $this->_config;
-    }
-
-    public function set_config($value)
-    {
-        $this->_config = $value;
-    }
 }
+
 ?>

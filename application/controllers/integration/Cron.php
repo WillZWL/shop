@@ -1,7 +1,8 @@
 <?php
+
 class Cron extends MY_Controller
 {
-    private $app_id="INT0002";
+    private $app_id = "INT0002";
     private $valid_amazon_platform = array("AMUK", "AMFR", "AMDE", "AMUS");
 
     function __construct()
@@ -27,8 +28,7 @@ class Cron extends MY_Controller
 
         $result = $this->product_service->find_active_master_sku_from_list($inactive_list);
 
-        if ($result != null)
-        {
+        if ($result != null) {
             $sku_string = implode("\r\n", $result);
 
             $sku_string = "The following list of masters SKUs:\r\n" . $sku_string;
@@ -43,21 +43,18 @@ class Cron extends MY_Controller
     {
         # SBF#3478
 
-        $result  = $this->product_service->find_delayed_ebay_orders();
+        $result = $this->product_service->find_delayed_ebay_orders();
         $subject = "[VB] MarketPlace Delayed Order Notification (SBF#3478)";
         //$recp = "tslau@eservicesgroup.net";
         //$recp = "csmanager@eservicesgroup.net, fherlie@supportsave.com, dibbee@supportsave.com";
         $recp = "bd.platformteam@eservicesgroup.net, marketplace-cs@eservicesgroup.com,marketplace-cses@eservicesgroup.com";
 
-        if ($result != null)
-        {
+        if ($result != null) {
             $sku_string = implode("\r\n", $result);
 
             $sku_string = "The following list of SO #:\r\n" . $sku_string;
             mail($recp, $subject, "$sku_string");
-        }
-        else
-        {
+        } else {
             mail($recp, $subject, "Delayed orders to notify today");
         }
     }
@@ -71,57 +68,47 @@ class Cron extends MY_Controller
     function cron_inventory()
     {
         $batch_id = $this->batch_model->batch_inventory_service->cron_inventory();
-        if($batch_id != NULL)
-        {
-            if ($batch_id == 1)
-            {
+        if ($batch_id != NULL) {
+            if ($batch_id == 1) {
                 echo "Files already exists";
+            } else {
+                redirect(base_url() . "integration/integration/view/inventory/" . $batch_id);
             }
-            else
-            {
-                redirect(base_url()."integration/integration/view/inventory/".$batch_id);
-            }
-        }
-        else
-        {
+        } else {
             echo "No files in the folder!";
         }
     }
 
     function gen_amazon_prod_feed($platform = "AMUS")
     {
-        if(!in_array(strtoupper($platform), $this->valid_amazon_platform))
-    {
+        if (!in_array(strtoupper($platform), $this->valid_amazon_platform)) {
             return false;
-    }
+        }
 
         $this->batch_model->batch_service->generate_prod_feed(strtoupper($platform));
     }
 
     function gen_amazon_discfeed($platform = "AMUS")
     {
-        if(!in_array(strtoupper($platform), $this->valid_amazon_platform))
-    {
+        if (!in_array(strtoupper($platform), $this->valid_amazon_platform)) {
             return false;
-    }
+        }
 
         $this->batch_model->batch_service->get_discontinue_feed(strtoupper($platform));
     }
 
     function get_amazon_orders($platform = "AMUS")
     {
-        if(!in_array(strtoupper($platform), $this->valid_amazon_platform))
-    {
+        if (!in_array(strtoupper($platform), $this->valid_amazon_platform)) {
             return false;
-    }
+        }
 
         $this->batch_model->batch_service->cron_get_amazon_order(strtoupper($platform));
     }
 
     function get_fba_orders($platform = "AMUS")
     {
-        if(!in_array(strtoupper($platform), $this->valid_amazon_platform))
-        {
+        if (!in_array(strtoupper($platform), $this->valid_amazon_platform)) {
             return false;
         }
 
@@ -130,40 +117,36 @@ class Cron extends MY_Controller
 
     function manual_get_amazon_orders($platform = "AMUS")
     {
-        if(!in_array(strtoupper($platform), $this->valid_amazon_platform))
-    {
+        if (!in_array(strtoupper($platform), $this->valid_amazon_platform)) {
             return false;
-    }
+        }
 
         $this->batch_model->batch_get_amazon_order(strtoupper($platform));
     }
 
     function gen_amazon_ackfeed($platform = "AMUS")
     {
-        if(!in_array(strtoupper($platform), $this->valid_amazon_platform))
-    {
+        if (!in_array(strtoupper($platform), $this->valid_amazon_platform)) {
             return false;
-    }
+        }
 
         $this->batch_model->batch_service->gen_amazon_ackfeed(strtoupper($platform));
     }
 
     function gen_amazon_fulfillfeed($platform = "AMUS")
     {
-        if(!in_array(strtoupper($platform), $this->valid_amazon_platform))
-    {
+        if (!in_array(strtoupper($platform), $this->valid_amazon_platform)) {
             return false;
-    }
+        }
 
         $this->batch_model->batch_service->gen_amazon_fulfillfeed(strtoupper($platform));
     }
 
     function cron_ixtens_reprice($platform = "AMUS")
     {
-        if(!in_array(strtoupper($platform), $this->valid_amazon_platform))
-    {
+        if (!in_array(strtoupper($platform), $this->valid_amazon_platform)) {
             return false;
-    }
+        }
 
         $this->batch_model->batch_service->cron_ixtens_reprice(strtoupper($platform));
     }
@@ -195,22 +178,22 @@ class Cron extends MY_Controller
 
     function t3m_update($file)
     {
-            $this->batch_model->t3m_handle_service->updaterecord($file);
+        $this->batch_model->t3m_handle_service->updaterecord($file);
     }
 
     function t3m_response($file)
     {
-            $this->batch_model->t3m_handle_service->process_response($file);
+        $this->batch_model->t3m_handle_service->process_response($file);
     }
 
     function t3m_result()
     {
-            $this->batch_model->t3m_handle_service->t3m_result();
+        $this->batch_model->t3m_handle_service->t3m_result();
     }
 
     function gen_sli_feed()
     {
-            $this->batch_model->batch_service->generate_sli_prod_feed("file");
+        $this->batch_model->batch_service->generate_sli_prod_feed("file");
     }
 
     function gen_shipping_override_amuk()
@@ -228,7 +211,7 @@ class Cron extends MY_Controller
         $this->batch_model->display_qty_service->cron_drop_display_qty();
     }
 
-    function get_ebay_order($ebay_account, $specified_file="")
+    function get_ebay_order($ebay_account, $specified_file = "")
     {
         $this->batch_model->get_ebay_order($ebay_account, $specified_file);
     }

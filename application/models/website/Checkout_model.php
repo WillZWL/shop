@@ -1,4 +1,5 @@
 <?php
+
 class Checkout_model extends CI_Model
 {
     public function __construct()
@@ -22,15 +23,12 @@ class Checkout_model extends CI_Model
 
     public function check_promo()
     {
-        if ($_SESSION["promotion_code"])
-        {
+        if ($_SESSION["promotion_code"]) {
             $this->promotion_code_service->promo_code = $_SESSION["promotion_code"];
-            $this->promotion_code_service->country_id = $_SESSION["client"]["del_country_id"]?$_SESSION["client"]["del_country_id"]:PLATFORMCOUNTRYID;
+            $this->promotion_code_service->country_id = $_SESSION["client"]["del_country_id"] ? $_SESSION["client"]["del_country_id"] : PLATFORMCOUNTRYID;
             $this->promotion_code_service->email = $_SESSION["client"]["email"];
             return $this->promotion_code_service->check_del_country() && $this->promotion_code_service->check_email();
-        }
-        else
-        {
+        } else {
             return TRUE;
         }
     }
@@ -41,10 +39,8 @@ class Checkout_model extends CI_Model
         $where["status"] = 1;
 
         $data = array();
-        if ($obj_list = $this->payment_gateway_service->get_pp_dao()->get_list($where, array("limit"=>-1)))
-        {
-            foreach ($obj_list as $obj)
-            {
+        if ($obj_list = $this->payment_gateway_service->get_pp_dao()->get_list($where, array("limit" => -1))) {
+            foreach ($obj_list as $obj) {
                 $data[$obj->get_payment_gateway_id()] = $obj;
             }
         }
@@ -59,28 +55,23 @@ class Checkout_model extends CI_Model
         $amount = str_replace('_', '.', $amount);
         $js = "";
 
-        if ($objlist = $this->country_credit_card_service->get_country_pmgw_card_list(array("pc.status"=>1, "ccc.status"=>1, "pg.status"=>1, "pp.platform_id"=>PLATFORMID, "pp.status"=>1, "pp.sequence"=>$seq, "order_amount"=>$amount, "include_default"=>TRUE), array("orderby"=>"priority","limit"=>-1)))
-        {
-            foreach ($objlist as $obj)
-            {
+        if ($objlist = $this->country_credit_card_service->get_country_pmgw_card_list(array("pc.status" => 1, "ccc.status" => 1, "pg.status" => 1, "pp.platform_id" => PLATFORMID, "pp.status" => 1, "pp.sequence" => $seq, "order_amount" => $amount, "include_default" => TRUE), array("orderby" => "priority", "limit" => -1))) {
+            foreach ($objlist as $obj) {
                 $country_id = $obj->get_country_id();
                 $code = $obj->get_code();
                 $card_name = str_replace("'", "\'", $obj->get_card_name());
                 $card_image = str_replace("'", "\'", $obj->get_card_image());
                 $card_id = str_replace("'", "\'", $obj->get_card_id());
                 $payment_gateway_id = str_replace("'", "\'", $obj->get_payment_gateway_id());
-                $ar_slist[$country_id][] = "'".$code."':['".$card_name."','".$card_image."','".$card_id."','".$payment_gateway_id."']";
+                $ar_slist[$country_id][] = "'" . $code . "':['" . $card_name . "','" . $card_image . "','" . $card_id . "','" . $payment_gateway_id . "']";
             }
 
-            foreach ($ar_slist as $cid=>$jscard)
-            {
-                $slist[] = "'".$cid."': {".(implode(", ", $jscard))."}";
+            foreach ($ar_slist as $cid => $jscard) {
+                $slist[] = "'" . $cid . "': {" . (implode(", ", $jscard)) . "}";
             }
 
-            $js = "cardlist = {".@implode(", ", $slist)."};";
-        }
-        else
-        {
+            $js = "cardlist = {" . @implode(", ", $slist) . "};";
+        } else {
             $js = "cardlist = new Array();";
         }
 
@@ -339,40 +330,31 @@ class Checkout_model extends CI_Model
 
     public function index_content()
     {
-        if (isset($_POST["promotion_code"]))
-        {
-            if ($this->input->post("promotion_code"))
-            {
+        if (isset($_POST["promotion_code"])) {
+            if ($this->input->post("promotion_code")) {
                 $_SESSION["promotion_code"] = $_POST["promotion_code"];
                 $email = $this->input->post("email");
                 $_SESSION["POSTFORM"]["email"] = $email;
                 $this->cart_session_service->set_email($email);
-            }
-            else
-            {
+            } else {
                 unset($_SESSION["promotion_code"]);
             }
-        }
-        elseif (isset($_POST["del_country_id"]))
-        {
+        } elseif (isset($_POST["del_country_id"])) {
             $_SESSION["POSTFORM"] = $_POST;
         }
 
         $data = array();
         $this->cart_session_service->set_delivery_mode($_POST["delivery"]);
-        $this->cart_session_service->set_del_country_id($_SESSION["POSTFORM"]["del_country_id"]?$_SESSION["POSTFORM"]["del_country_id"]:PLATFORMCOUNTRYID);
-        $cart = $this->cart_session_service->get_detail(PLATFORMID,1,0,0,0,0,0,0,"",1);
+        $this->cart_session_service->set_del_country_id($_SESSION["POSTFORM"]["del_country_id"] ? $_SESSION["POSTFORM"]["del_country_id"] : PLATFORMCOUNTRYID);
+        $cart = $this->cart_session_service->get_detail(PLATFORMID, 1, 0, 0, 0, 0, 0, 0, "", 1);
         $this->cart_session_service->set_del_country_id("");
         $data["promo"] = $cart["promo"];
 
-        if (!$data["promo"]["valid"] || $data["promo"]["error"])
-        {
+        if (!$data["promo"]["valid"] || $data["promo"]["error"]) {
             unset($_SESSION["promotion_code"]);
         }
-        if ($data["promo"]["error"] == "FD")
-        {
-            if (!($data["text_delivery_display"] = $this->delivery_option_service->display_name_of($data["promo"]["error_code"], get_lang_id())))
-            {
+        if ($data["promo"]["error"] == "FD") {
+            if (!($data["text_delivery_display"] = $this->delivery_option_service->display_name_of($data["promo"]["error_code"], get_lang_id()))) {
                 $data["text_delivery_display"] = $this->delivery_option_service->display_name_of($data["promo"]["error_code"]);
             }
         }
@@ -381,29 +363,24 @@ class Checkout_model extends CI_Model
         $data["chk_cart"] = $cart["cart"];
         $data["dc"] = $cart["dc"];
         $data["dc_default"] = $cart["dc_default"];
-        $plist = $this->product_service->get_skype_page_info($data["chk_cart"],PLATFORMID, get_lang_id());
+        $plist = $this->product_service->get_skype_page_info($data["chk_cart"], PLATFORMID, get_lang_id());
         $data["cart_item"] = $plist;
         $clist = $this->cart_session_model->get_cart(PLATFORMID);
         $data["clist"] = $clist;
 
-        if ($data["cart_item"])
-        {
+        if ($data["cart_item"]) {
             $first_item = end($data["cart_item"]);
             $sub_cat_id = $first_item->get_sub_cat_id();
             $data["ra_list"] = $this->best_seller_model->best_seller_service->get_ra_bs_list($sub_cat_id, PLATFORMID, get_lang_id());
         }
-        if (!($data["text_working_days"] = $this->func_option_service->text_of('working_days', get_lang_id())))
-        {
-            $data["text_working_days"]= $this->func_option_service->text_of('working_days');
+        if (!($data["text_working_days"] = $this->func_option_service->text_of('working_days', get_lang_id()))) {
+            $data["text_working_days"] = $this->func_option_service->text_of('working_days');
         }
-        if ($data["dc"])
-        {
-            foreach ($data["dc"] as $courier_id=>$courier_detail)
-            {
+        if ($data["dc"]) {
+            foreach ($data["dc"] as $courier_id => $courier_detail) {
                 $courier_id = strtolower($courier_id);
-                if (!($data["text_free"][$courier_id] = $this->func_option_service->text_of('free_'.$courier_id, get_lang_id())))
-                {
-                    $data["text_free"][$courier_id] = $this->func_option_service->text_of('free_'.$courier_id);
+                if (!($data["text_free"][$courier_id] = $this->func_option_service->text_of('free_' . $courier_id, get_lang_id()))) {
+                    $data["text_free"][$courier_id] = $this->func_option_service->text_of('free_' . $courier_id);
                 }
             }
         }
@@ -411,21 +388,19 @@ class Checkout_model extends CI_Model
         return $data;
     }
 
-    public function check_state($country_id="", $type="", $cur_value="")
+    public function check_state($country_id = "", $type = "", $cur_value = "")
     {
-        if ($country_id)
-        {
-            $data["prefix"] = $prefix = $type=="del"?"del_":"";
+        if ($country_id) {
+            $data["prefix"] = $prefix = $type == "del" ? "del_" : "";
             $target_id = "div_{$prefix}state";
             $data['display_id'] = 10;
             include_once(APPPATH . "language/WEB" . str_pad($data['display_id'], 6, '0', STR_PAD_LEFT) . "_" . get_lang_id() . ".php");
             $data["lang"] = $lang;
             $data["type"] = $type;
             $data["cur_value"] = $cur_value;
-            $data["state_list"] = $this->country_service->get_country_state_srv()->get_list(array("country_id"=>$country_id, "status"=>1), array("limit"=>-1, "array_list"=>1));
+            $data["state_list"] = $this->country_service->get_country_state_srv()->get_list(array("country_id" => $country_id, "status" => 1), array("limit" => -1, "array_list" => 1));
 
-            if (!$this->objResponse)
-            {
+            if (!$this->objResponse) {
                 $this->load->library('xajax');
                 $this->objResponse = new xajaxResponse();
             }
@@ -440,8 +415,7 @@ class Checkout_model extends CI_Model
             /*
             run javascript
             */
-            if (!$data["state_list"])
-            {
+            if (!$data["state_list"]) {
                 $this->objResponse->script("ChgStateLength('{$country_id}', document.fm_pmgw.{$prefix}state);");
             }
 
@@ -449,34 +423,28 @@ class Checkout_model extends CI_Model
         }
     }
 
-    public function check_surcharge($values="", $old_surcharge = 0, $amount = 0)
+    public function check_surcharge($values = "", $old_surcharge = 0, $amount = 0)
     {
 
-        if (!$this->objResponse)
-        {
+        if (!$this->objResponse) {
             $this->load->library('xajax');
             $this->objResponse = new xajaxResponse();
         }
 
-        if ($values["del_state"] || $values["del_postcode"])
-        {
+        if ($values["del_state"] || $values["del_postcode"]) {
             $this->cart_session_service->del_svc->delivery_country_id = $values["del_country_id"];
             $this->cart_session_service->del_svc->delivery_state = $values["del_state"];
             $this->cart_session_service->del_svc->delivery_postcode = $values["del_postcode"];
 
             $this->cart_session_service->del_svc->item_list = $_SESSION["cart"][PLATFORMID];
-            if (($rs = $this->cart_session_service->del_svc->get_del_surcharge(TRUE)) && $rs["surcharge"])
-            {
+            if (($rs = $this->cart_session_service->del_svc->get_del_surcharge(TRUE)) && $rs["surcharge"]) {
                 $code_type = strtolower($rs["code_type"]);
 
-                if ($rs["code_type"] == "ST")
-                {
+                if ($rs["code_type"] == "ST") {
                     $code_type_o = "pc";
                     $code_lang = "state";
                     $rs_value = $values["del_state"];
-                }
-                else
-                {
+                } else {
                     $code_type_o = "st";
                     $code_lang = "postcode";
                     $rs_value = $values["del_postcode"];
@@ -492,8 +460,8 @@ class Checkout_model extends CI_Model
                 $this->objResponse->assign("span_{$code_type_o}_surcharge", "innerHTML", "");
                 $this->objResponse->script("
                                         top.document.getElementById('lbl_surcharge').innerHTML='{$lang["surcharge"]}';
-                                        top.document.getElementById('span_surcharge').innerHTML='".platform_curr_format(PLATFORMID, $rs["surcharge"])."';
-                                        top.document.getElementById('span_total').innerHTML='".platform_curr_format(PLATFORMID, $amount - $old_surcharge + $rs["surcharge"])."';
+                                        top.document.getElementById('span_surcharge').innerHTML='" . platform_curr_format(PLATFORMID, $rs["surcharge"]) . "';
+                                        top.document.getElementById('span_total').innerHTML='" . platform_curr_format(PLATFORMID, $amount - $old_surcharge + $rs["surcharge"]) . "';
                                         ");
                 return $this->objResponse;
             }
@@ -505,7 +473,7 @@ class Checkout_model extends CI_Model
         $this->objResponse->script("
                                     top.document.getElementById('span_surcharge').innerHTML='';
                                     top.document.getElementById('lbl_surcharge').innerHTML='';
-                                    top.document.getElementById('span_total').innerHTML='".platform_curr_format(PLATFORMID, $amount - $old_surcharge)."';
+                                    top.document.getElementById('span_total').innerHTML='" . platform_curr_format(PLATFORMID, $amount - $old_surcharge) . "';
                                     ");
         return $this->objResponse;
     }
@@ -524,8 +492,7 @@ class Checkout_model extends CI_Model
         $this->xajax->getJavascript(base_url());
         $this->xajax->register(XAJAX_FUNCTION, array('check_state', &$ctrl, '_check_state'));
         $this->xajax->register(XAJAX_FUNCTION, array('check_surcharge', &$ctrl, '_check_surcharge'));
-        if ($platform_type == "WEBSITE")
-        {
+        if ($platform_type == "WEBSITE") {
             $this->xajax->register(XAJAX_FUNCTION, array('check_email_exists', &$ctrl, '_check_email_exists'));
         }
         $this->xajax->processRequest();
@@ -538,7 +505,7 @@ class Checkout_model extends CI_Model
 
     public function psform_content()
     {
-        include_once(BASEPATH."libraries/Encrypt.php");
+        include_once(BASEPATH . "libraries/Encrypt.php");
         $encrypt = new CI_Encrypt();
         $data["p_enc"] = $encrypt->encode(PLATFORMID);
         $data["thiscountry"] = PLATFORMCOUNTRYID;
@@ -553,14 +520,12 @@ class Checkout_model extends CI_Model
 
     public function check_email_exists($email, $submit)
     {
-        if (!$this->objResponse)
-        {
+        if (!$this->objResponse) {
             $this->load->library('xajax');
             $this->objResponse = new xajaxResponse();
         }
 
-        if ($this->client_service->get(array("email"=>$email)))
-        {
+        if ($this->client_service->get(array("email" => $email))) {
             $data['display_id'] = 12;
             include(APPPATH . "language/WEB" . str_pad($data['display_id'], 6, '0', STR_PAD_LEFT) . "_" . get_lang_id() . ".php");
             $this->objResponse->alert($lang["email_exists"]);
@@ -569,9 +534,7 @@ class Checkout_model extends CI_Model
                                         top.document.fm_chk_login.email.focus();
                                         email_exists = 1;
                                     ");
-        }
-        elseif($submit)
-        {
+        } elseif ($submit) {
             $this->objResponse->script("if(CheckForm(document.fm_pmgw)){document.getElementById('a_check').onclick()}");
         }
         return $this->objResponse;
@@ -585,20 +548,17 @@ class Checkout_model extends CI_Model
 
     public function prepare_js_credit_card_parameter(&$data)
     {
-        $cart = $this->cart_session_service->get_detail(PLATFORMID,1,0,0,0,0,0,0,"",1);
+        $cart = $this->cart_session_service->get_detail(PLATFORMID, 1, 0, 0, 0, 0, 0, 0, "", 1);
 
         $ref_amount = 0;
-        for($j=0; $j<count($cart["cart"]); $j++)
-        {
+        for ($j = 0; $j < count($cart["cart"]); $j++) {
             $ref_amount += $cart["cart"][$j]["price"] * $cart["cart"][$j]["qty"];
         }
 
         $ref_amount += $cart['dc']['STD']['charge'];
 
-        if($_SESSION["promotion_code"])
-        {
-            if ($cart["promo"]["valid"] && isset($cart["promo"]["disc_amount"]))
-            {
+        if ($_SESSION["promotion_code"]) {
+            if ($cart["promo"]["valid"] && isset($cart["promo"]["disc_amount"])) {
                 $ref_amount -= $cart["promo"]["disc_amount"];
             }
         }
@@ -607,4 +567,5 @@ class Checkout_model extends CI_Model
         $data["platform_curr"] = PLATFORMCURR;
     }
 }
+
 ?>

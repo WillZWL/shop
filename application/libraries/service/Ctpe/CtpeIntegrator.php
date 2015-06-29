@@ -1,4 +1,5 @@
 <?php
+
 /*
   wpf-integrator.php version 0.8
 
@@ -54,26 +55,23 @@ class Ctpe_integrator
 
         $strXML = "<?xml version='1.0' ?>\n";
         $strXML .= "<Request version=\"" . Ctpe_integrator::CTPE_QUERY_REQUEST_VERSION . "\">\n";
-            $strXML .= "<Header>\n";
-            $strXML .= "<Security sender=\"{$this->params['security.sender']}\" />\n";
-            $strXML .= "</Header>\n";
-            $strXML .= "<Query mode=\"{$this->params['transaction.mode']}\" level=\"CHANNEL\" entity=\"{$this->params['transaction.channel']}\" type=\"STANDARD\">\n";
-                $strXML .= "<User login=\"{$userLogin}\" pwd=\"{$password}\" />\n";
-            if ($type == 'transaction')
-            {
+        $strXML .= "<Header>\n";
+        $strXML .= "<Security sender=\"{$this->params['security.sender']}\" />\n";
+        $strXML .= "</Header>\n";
+        $strXML .= "<Query mode=\"{$this->params['transaction.mode']}\" level=\"CHANNEL\" entity=\"{$this->params['transaction.channel']}\" type=\"STANDARD\">\n";
+        $strXML .= "<User login=\"{$userLogin}\" pwd=\"{$password}\" />\n";
+        if ($type == 'transaction') {
 //              $strXML .= "<TransactionType>RISKMANAGEMENT</TransactionType>\n";
-                $strXML .= "<Identification>\n";
-                    $strXML .= "<TransactionID>" . $request_params['transaction_id'] . "</TransactionID>\n";
-                $strXML .= "</Identification>\n";
-            }
-            else if ($type == 'confirmation')
-            {
-                $period_start = $request_params['start_date'];
-                $period_end = $request_params['end_date'];
-                $strXML .= "<Period from=\"{$period_start}\" to=\"{$period_end}\"/>\n";
-                $strXML .= "<Types><Type code=\"CF\"/></Types>\n";
-            }
-            $strXML .= "</Query>\n";
+            $strXML .= "<Identification>\n";
+            $strXML .= "<TransactionID>" . $request_params['transaction_id'] . "</TransactionID>\n";
+            $strXML .= "</Identification>\n";
+        } else if ($type == 'confirmation') {
+            $period_start = $request_params['start_date'];
+            $period_end = $request_params['end_date'];
+            $strXML .= "<Period from=\"{$period_start}\" to=\"{$period_end}\"/>\n";
+            $strXML .= "<Types><Type code=\"CF\"/></Types>\n";
+        }
+        $strXML .= "</Query>\n";
         $strXML .= "</Request>\n";
         return $strXML;
     }
@@ -109,34 +107,10 @@ class Ctpe_integrator
         curl_close($cpt);
         return $this->resultURL;
     }
-/*
-  using HTTP/POST send message to ctpe server
-*/
-    function sendToCtpe($postdata)
-    {
-//      var_dump($postdata);
-        $cpt = curl_init();
 
-        curl_setopt($cpt, CURLOPT_URL, "https://$this->server$this->path");
-        curl_setopt($cpt, CURLOPT_SSL_VERIFYHOST, 1);
-        curl_setopt($cpt, CURLOPT_USERAGENT, $this->user_agent);
-        curl_setopt($cpt, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($cpt, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($cpt, CURLOPT_CONNECTTIMEOUT, 35);
-        curl_setopt($cpt, CURLOPT_TIMEOUT, 50);
-
-        //curl_setopt($cpt, CURLOPT_SSL_VERIFYPEER, 1);
-
-        curl_setopt($cpt, CURLOPT_POST, 1);
-        curl_setopt($cpt, CURLOPT_POSTFIELDS, $postdata);
-
-        $this->resultURL = curl_exec($cpt);
-        $this->error = curl_error($cpt);
-        $this->info = curl_getinfo($cpt);
-
-        curl_close($cpt);
-        return $this->resultURL;
-    }
+    /*
+      using HTTP/POST send message to ctpe server
+    */
 
     function setPaymentInformation($payment_amount, $payment_usage, $identification_transactionid, $payment_currency)
     {
@@ -159,19 +133,16 @@ class Ctpe_integrator
 //hard code visadebit to visa credit, because bank treat it as the same thing
         if (($card_type == "VISAELECTRON")
             || ($card_type == "MAESTRO")
-            || ($card_type == "DEBIT"))
-        {
+            || ($card_type == "DEBIT")
+        ) {
             $method = "DC";
-        }
-        else if (($card_type == "MASTER")
-                || ($card_type == "VISA")
-                || ($card_type == "CREDIT")
-                || ($card_type == "VISADEBIT"))
-        {
+        } else if (($card_type == "MASTER")
+            || ($card_type == "VISA")
+            || ($card_type == "CREDIT")
+            || ($card_type == "VISADEBIT")
+        ) {
             $method = "CC";
-        }
-        else if ($card_type == "SOFORT")
-        {
+        } else if ($card_type == "SOFORT") {
             $method = "OT";
 //force to this sofort option only
             $this->params["payment.code"] = "OT.PA";
@@ -182,12 +153,10 @@ class Ctpe_integrator
             $subtypes = "VISA,MASTER";
 //      else if ($card_type == "DEBIT")
 //          $subtypes = "VISADEBIT,VISAELECTRON,MAESTRO";
-        else if ($card_type == "VISADEBIT")
-        {
+        else if ($card_type == "VISADEBIT") {
 //          $subtypes = "VISADEBIT";
             $subtypes = "VISA";
-        }
-        else if ($card_type == "VISAELECTRON")
+        } else if ($card_type == "VISAELECTRON")
             $subtypes = "VISAELECTRON";
         else if ($card_type == "MAESTRO")
             $subtypes = "MAESTRO";
@@ -196,10 +165,8 @@ class Ctpe_integrator
         else if ($card_type == "MASTER")
             $subtypes = "MASTER";
 
-        if (($subtypes != "") && ($method != ""))
-        {
-            if ($method != "")
-            {
+        if (($subtypes != "") && ($method != "")) {
+            if ($method != "") {
                 $this->params["FRONTEND.PM.DEFAULT_DISABLE_ALL"] = "true";
                 $this->params["FRONTEND.PM.1.METHOD"] = $method;
                 $this->params["FRONTEND.PM.1.ENABLED"] = "true";
@@ -239,7 +206,7 @@ class Ctpe_integrator
 //      $this->params["AUTHENTICATION.TYPE"] = "3DSecure";
     }
 
-    function setWPFparams($frontend_enabled, $frontend_popup, $frontend_mode, $frontend_lang, $frontend_response_url, $frontend_banner=null)
+    function setWPFparams($frontend_enabled, $frontend_popup, $frontend_mode, $frontend_lang, $frontend_response_url, $frontend_banner = null)
     {
 //      $this->wpf=$frontend_enabled;
         $this->params["FRONTEND.ENABLED"] = $frontend_enabled;
@@ -250,8 +217,7 @@ class Ctpe_integrator
         $this->params["FRONTEND.REDIRECT_TIME"] = 0;
         $this->params["RETURN_ACCOUNT.REDIRECT_TIME"] = true;
 
-        if ($frontend_banner != null)
-        {
+        if ($frontend_banner != null) {
             $this->params["FRONTEND.BANNER.1.LINK"] = $frontend_banner;
             $this->params["FRONTEND.BANNER.1.AREA"] = "TOP";
             $this->params["FRONTEND.BANNER.1.HEIGHT"] = 72;
@@ -268,8 +234,7 @@ class Ctpe_integrator
 
     function commitPOSTPayment()
     {
-        foreach (array_keys($this->params) AS $key)
-        {
+        foreach (array_keys($this->params) AS $key) {
             $$key .= $this->params[$key];
             $$key = urlencode($$key);
             $$key .= "&";
@@ -282,40 +247,63 @@ class Ctpe_integrator
         $this->sendToCtpe($strPOST);
 
 //      print $this->resultURL;
-        if ($this->resultURL)
-        {
+        if ($this->resultURL) {
             return $this->parserResult($this->resultURL);
-        }
-        else
-        {
+        } else {
             return false;
         }
+    }
+
+    function sendToCtpe($postdata)
+    {
+//      var_dump($postdata);
+        $cpt = curl_init();
+
+        curl_setopt($cpt, CURLOPT_URL, "https://$this->server$this->path");
+        curl_setopt($cpt, CURLOPT_SSL_VERIFYHOST, 1);
+        curl_setopt($cpt, CURLOPT_USERAGENT, $this->user_agent);
+        curl_setopt($cpt, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($cpt, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($cpt, CURLOPT_CONNECTTIMEOUT, 35);
+        curl_setopt($cpt, CURLOPT_TIMEOUT, 50);
+
+        //curl_setopt($cpt, CURLOPT_SSL_VERIFYPEER, 1);
+
+        curl_setopt($cpt, CURLOPT_POST, 1);
+        curl_setopt($cpt, CURLOPT_POSTFIELDS, $postdata);
+
+        $this->resultURL = curl_exec($cpt);
+        $this->error = curl_error($cpt);
+        $this->info = curl_getinfo($cpt);
+
+        curl_close($cpt);
+        return $this->resultURL;
     }
 
     /*
       Parse POST message returned by CTPE server.
     */
+
     function parserResult($resultURL)
     {
-        $r_arr=explode("&",$resultURL);
+        $r_arr = explode("&", $resultURL);
 
 //      $this->wpf=strtolower($this->wpf);
 
-        foreach($r_arr AS $buf)
-        {
-            $temp=urldecode($buf);
-            $temp=split("=",$temp,2);
+        foreach ($r_arr AS $buf) {
+            $temp = urldecode($buf);
+            $temp = split("=", $temp, 2);
 
-            $postatt=$temp[0];
-            $postvar=$temp[1];
+            $postatt = $temp[0];
+            $postvar = $temp[1];
 
-            $returnvalue[$postatt]=$postvar;
+            $returnvalue[$postatt] = $postvar;
         }
-        return($returnvalue);
+        return ($returnvalue);
         /*
            uncomment the following line for debug output (whole XML)
          */
         //print "<br>$resultXML";
     }
 
-  }
+}

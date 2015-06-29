@@ -6,11 +6,12 @@ include_once "Base_service.php";
 class Selling_platform_service extends Base_service
 {
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $CI =& get_instance();
         $this->load = $CI->load;
-        include_once(APPPATH."libraries/dao/Selling_platform_dao.php");
+        include_once(APPPATH . "libraries/dao/Selling_platform_dao.php");
         $this->set_dao(new Selling_platform_dao());
     }
 
@@ -39,7 +40,7 @@ class Selling_platform_service extends Base_service
         return $this->get_dao()->get_selling_platform_w_lang_id($where, $option);
     }
 
-    public function get_platform_list_w_allow_sell_country($type="")
+    public function get_platform_list_w_allow_sell_country($type = "")
     {
         return $this->get_dao()->get_platform_list_w_allow_sell_country($type);
     }

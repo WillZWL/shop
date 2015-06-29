@@ -4,13 +4,9 @@ include_once "base_vo.php";
 class So_refund_score_vo extends Base_vo
 {
 
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $so_no;
 
     //class variable
-    private $so_no;
     private $score;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
@@ -19,14 +15,20 @@ class So_refund_score_vo extends Base_vo
     private $modify_on;
     private $modify_at;
     private $modify_by;
-
-    //primary key
     private $primary_key = array("so_no");
 
-    //auo increment
+    //primary key
     private $increment_field = "";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_so_no()
     {
         return $this->so_no;

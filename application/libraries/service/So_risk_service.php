@@ -8,7 +8,7 @@ class So_risk_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/So_risk_dao.php");
+        include_once(APPPATH . "libraries/dao/So_risk_dao.php");
         $this->set_dao(new So_risk_dao());
     }
 }

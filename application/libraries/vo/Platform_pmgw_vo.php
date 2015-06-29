@@ -192,4 +192,5 @@ class Platform_pmgw_vo extends Base_vo
     }
 
 }
+
 ?>

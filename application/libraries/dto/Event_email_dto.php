@@ -115,26 +115,18 @@ class Event_email_dto extends Base_dto
         $this->_get_pdf_content_arr($this->lang_id);
     }
 
-    public function replace_ini_only($lang_id)
-    {
-        $this->_get_email_content_arr($lang_id);
-    }
-
     private function _get_email_content_arr($lang_id)
     {
         $data_arr = null;
 
         $language_path = $lang_id . "/" . $this->tpl_id . ".ini";
-        if (file_exists(APPPATH . "language/template_service/" . $language_path))
-        {
+        if (file_exists(APPPATH . "language/template_service/" . $language_path)) {
             $data_arr = parse_ini_file(APPPATH . "language/template_service/" . $language_path);
-            if ((isset($data_arr["email_from"])) && ($data_arr["email_from"] != ""))
-            {
+            if ((isset($data_arr["email_from"])) && ($data_arr["email_from"] != "")) {
                 $this->set_mail_from($data_arr["email_from"]);
             }
         }
-        if (!is_null($data_arr))
-        {
+        if (!is_null($data_arr)) {
             $this->replace = array_merge($this->replace, $data_arr);
 
             # uncomment this line if want to dump out email template
@@ -151,16 +143,19 @@ class Event_email_dto extends Base_dto
 
         # set your ini file name as [event_id]_pdf.ini
         $language_path = $lang_id . "/" . $this->tpl_id . "_pdf.ini";
-        if (file_exists(APPPATH . "language/template_service/" . $language_path))
-        {
+        if (file_exists(APPPATH . "language/template_service/" . $language_path)) {
             $data_arr = parse_ini_file(APPPATH . "language/template_service/" . $language_path);
         }
-        if (!is_null($data_arr))
-        {
+        if (!is_null($data_arr)) {
             $this->replace = array_merge($this->replace, $data_arr);
         }
 
         return $data_arr;
+    }
+
+    public function replace_ini_only($lang_id)
+    {
+        $this->_get_email_content_arr($lang_id);
     }
 }
 

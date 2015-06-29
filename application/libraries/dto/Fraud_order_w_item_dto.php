@@ -81,6 +81,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->id = $value;
         return $this;
     }
+
     public function get_so_no()
     {
         return $this->so_no;
@@ -91,6 +92,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->so_no = $value;
         return $this;
     }
+
     public function get_hold_date()
     {
         return $this->hold_date;
@@ -101,6 +103,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->hold_date = $value;
         return $this;
     }
+
     public function get_hold_staff()
     {
         return $this->hold_staff;
@@ -111,6 +114,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->hold_staff = $value;
         return $this;
     }
+
     public function get_order_create_date()
     {
         return $this->order_create_date;
@@ -121,6 +125,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->order_create_date = $value;
         return $this;
     }
+
     public function get_payment_gateway_id()
     {
         return $this->payment_gateway_id;
@@ -131,6 +136,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->payment_gateway_id = $value;
         return $this;
     }
+
     public function get_prod_name()
     {
         return $this->prod_name;
@@ -141,6 +147,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->prod_name = $value;
         return $this;
     }
+
     public function get_category()
     {
         return $this->category;
@@ -151,6 +158,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->category = $value;
         return $this;
     }
+
     public function get_currency_id()
     {
         return $this->currency_id;
@@ -161,6 +169,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->currency_id = $value;
         return $this;
     }
+
     public function get_item_price()
     {
         return $this->item_price;
@@ -171,6 +180,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->item_price = $value;
         return $this;
     }
+
     public function get_item_quantity()
     {
         return $this->item_quantity;
@@ -181,6 +191,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->item_quantity = $value;
         return $this;
     }
+
     public function get_order_total_item()
     {
         return $this->order_total_item;
@@ -191,6 +202,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->order_total_item = $value;
         return $this;
     }
+
     public function get_order_value()
     {
         return $this->order_value;
@@ -201,6 +213,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->order_value = $value;
         return $this;
     }
+
     public function get_forename()
     {
         return $this->forename;
@@ -211,6 +224,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->forename = $value;
         return $this;
     }
+
     public function get_surname()
     {
         return $this->surname;
@@ -221,6 +235,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->surname = $value;
         return $this;
     }
+
     public function get_client_id()
     {
         return $this->client_id;
@@ -231,6 +246,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->client_id = $value;
         return $this;
     }
+
     public function get_email()
     {
         return $this->email;
@@ -241,6 +257,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->email = $value;
         return $this;
     }
+
     public function get_bill_name()
     {
         return $this->bill_name;
@@ -251,6 +268,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->bill_name = $value;
         return $this;
     }
+
     public function get_bill_company()
     {
         return $this->bill_company;
@@ -261,6 +279,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->bill_company = $value;
         return $this;
     }
+
     public function get_bill_address1()
     {
         $bill_address_list = explode('|', $this->bill_address1);
@@ -272,6 +291,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->bill_address1 = $value;
         return $this;
     }
+
     public function get_bill_address2()
     {
         $bill_address_list = explode('|', $this->bill_address2);
@@ -283,6 +303,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->bill_address2 = $value;
         return $this;
     }
+
     public function get_bill_address3()
     {
         $bill_address_list = explode('|', $this->bill_address3);
@@ -294,6 +315,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->bill_address3 = $value;
         return $this;
     }
+
     public function get_bill_city()
     {
         return $this->bill_city;
@@ -304,6 +326,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->bill_city = $value;
         return $this;
     }
+
     public function get_bill_state()
     {
         return $this->bill_state;
@@ -314,6 +337,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->bill_state = $value;
         return $this;
     }
+
     public function get_bill_postcode()
     {
         return $this->bill_postcode;
@@ -324,6 +348,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->bill_postcode = $value;
         return $this;
     }
+
     public function get_bill_country_id()
     {
         return $this->bill_country_id;
@@ -334,6 +359,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->bill_country_id = $value;
         return $this;
     }
+
     public function get_delivery_name()
     {
         return $this->delivery_name;
@@ -344,6 +370,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->delivery_name = $value;
         return $this;
     }
+
     public function get_delivery_company()
     {
         return $this->delivery_company;
@@ -354,6 +381,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->delivery_company = $value;
         return $this;
     }
+
     public function get_delivery_address1()
     {
         $delivery_address_list = explode('|', $this->delivery_address1);
@@ -365,6 +393,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->delivery_address1 = $value;
         return $this;
     }
+
     public function get_delivery_address2()
     {
         $delivery_address_list = explode('|', $this->delivery_address2);
@@ -376,6 +405,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->delivery_address2 = $value;
         return $this;
     }
+
     public function get_delivery_address3()
     {
         $delivery_address_list = explode('|', $this->delivery_address3);
@@ -398,6 +428,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->delivery_state = $value;
         return $this;
     }
+
     public function get_delivery_postcode()
     {
         return $this->delivery_postcode;
@@ -408,6 +439,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->delivery_postcode = $value;
         return $this;
     }
+
     public function get_delivery_country_id()
     {
         return $this->delivery_country_id;
@@ -418,6 +450,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->delivery_country_id = $value;
         return $this;
     }
+
     public function get_password()
     {
         include_once(BASEPATH . 'libraries/Encrypt.php');
@@ -431,6 +464,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->password = $value;
         return $this;
     }
+
     public function get_tel_1()
     {
         return $this->tel_1;
@@ -441,6 +475,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->tel_1 = $value;
         return $this;
     }
+
     public function get_tel_2()
     {
         return $this->tel_2;
@@ -451,6 +486,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->tel_2 = $value;
         return $this;
     }
+
     public function get_tel_3()
     {
         return $this->tel_3;
@@ -461,6 +497,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->tel_3 = $value;
         return $this;
     }
+
     public function get_mobile()
     {
         return $this->mobile;
@@ -471,6 +508,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->mobile = $value;
         return $this;
     }
+
     public function get_platform_id()
     {
         return $this->platform_id;
@@ -481,6 +519,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->platform_id = $value;
         return $this;
     }
+
     public function get_card_id()
     {
         return $this->card_id;
@@ -491,6 +530,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->card_id = $value;
         return $this;
     }
+
     public function get_card_type()
     {
         return $this->card_type;
@@ -501,6 +541,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->card_type = $value;
         return $this;
     }
+
     public function get_risk_var1()
     {
         return $this->risk_var1;
@@ -511,6 +552,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->risk_var1 = $value;
         return $this;
     }
+
     public function get_risk_var2()
     {
         return $this->risk_var2;
@@ -521,6 +563,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->risk_var2 = $value;
         return $this;
     }
+
     public function get_risk_var3()
     {
         return $this->risk_var3;
@@ -531,6 +574,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->risk_var3 = $value;
         return $this;
     }
+
     public function get_risk_var4()
     {
         return $this->risk_var4;
@@ -541,6 +585,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->risk_var4 = $value;
         return $this;
     }
+
     public function get_risk_var5()
     {
         return $this->risk_var5;
@@ -551,6 +596,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->risk_var5 = $value;
         return $this;
     }
+
     public function get_risk_var6()
     {
         return $this->risk_var6;
@@ -561,6 +607,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->risk_var6 = $value;
         return $this;
     }
+
     public function get_risk_var7()
     {
         return $this->risk_var7;
@@ -571,6 +618,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->risk_var7 = $value;
         return $this;
     }
+
     public function get_risk_var8()
     {
         return $this->risk_var8;
@@ -581,6 +629,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->risk_var8 = $value;
         return $this;
     }
+
     public function get_risk_var9()
     {
         return $this->risk_var9;
@@ -591,6 +640,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->risk_var9 = $value;
         return $this;
     }
+
     public function get_risk_var10()
     {
         return $this->risk_var10;
@@ -601,6 +651,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->risk_var10 = $value;
         return $this;
     }
+
     public function get_card_bin()
     {
         return $this->card_bin;
@@ -611,6 +662,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->card_bin = $value;
         return $this;
     }
+
     public function get_verification_level()
     {
         return $this->verification_level;
@@ -621,6 +673,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->verification_level = $value;
         return $this;
     }
+
     public function get_fraud_result()
     {
         return $this->fraud_result;
@@ -631,6 +684,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->fraud_result = $value;
         return $this;
     }
+
     public function get_AVS_result()
     {
         return $this->AVS_result;
@@ -641,6 +695,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->AVS_result = $value;
         return $this;
     }
+
     public function get_protection_eligibility()
     {
         return $this->protection_eligibility;
@@ -651,6 +706,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->protection_eligibility = $value;
         return $this;
     }
+
     public function get_protection_eligibility_type()
     {
         return $this->protection_eligibility_type;
@@ -661,6 +717,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->protection_eligibility_type = $value;
         return $this;
     }
+
     public function get_address_status()
     {
         return $this->address_status;
@@ -671,6 +728,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->address_status = $value;
         return $this;
     }
+
     public function get_payer_status()
     {
         return $this->payer_status;
@@ -681,6 +739,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->payer_status = $value;
         return $this;
     }
+
     public function get_create_at()
     {
         return $this->create_at;
@@ -691,6 +750,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->create_at = $value;
         return $this;
     }
+
     public function get_dispatch_date()
     {
         return $this->dispatch_date;
@@ -701,6 +761,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->dispatch_date = $value;
         return $this;
     }
+
     public function get_refund_status()
     {
         return $this->refund_status;
@@ -711,6 +772,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->refund_status = $value;
         return $this;
     }
+
     public function get_refund_date()
     {
         return $this->refund_date;
@@ -721,6 +783,7 @@ class Fraud_order_w_item_dto extends Base_dto
         $this->refund_date = $value;
         return $this;
     }
+
     public function get_description()
     {
         return $this->description;

@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Display_banner_dao extends Base_dao
 {
-    private $table_name="display_banner";
-    private $vo_classname="Display_banner_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "display_banner";
+    private $vo_classname = "Display_banner_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -34,16 +34,13 @@ class Display_banner_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_db_w_graphic($banner_type, $display_id, $position_id, $slide_id, $country_id, $lang_id, $usage, $backup_image = "" , $classname="Display_banner_w_graphic_dto")
+    public function get_db_w_graphic($banner_type, $display_id, $position_id, $slide_id, $country_id, $lang_id, $usage, $backup_image = "", $classname = "Display_banner_w_graphic_dto")
     {
-        if($country_id)
-        {
-            if($banner_type == "F")
-            {
-                if($backup_image)
-                {
+        if ($country_id) {
+            if ($banner_type == "F") {
+                if ($backup_image) {
                     $sql =
-                    '
+                        '
                         SELECT db.*, g.id AS graphic_id, g.type AS graphic_type, g.location AS graphic_location, g.file AS graphic_file, dbc.banner_type
                         FROM display_banner db
                         LEFT JOIN display_banner_config dbc
@@ -52,11 +49,9 @@ class Display_banner_dao extends Base_dao
                             ON (db.image_id = g.id) AND g.status = 1
                         WHERE db.display_id = ? AND db.position_id = ? AND db.slide_id = ? AND db.lang_id = ? AND db.usage = ? AND db.country_id = ?
                     ';
-                }
-                else
-                {
+                } else {
                     $sql =
-                    '
+                        '
                         SELECT db.*, g.id AS graphic_id, g.type AS graphic_type, g.location AS graphic_location, g.file AS graphic_file, dbc.banner_type
                         FROM display_banner db
                         LEFT JOIN display_banner_config dbc
@@ -67,11 +62,9 @@ class Display_banner_dao extends Base_dao
                     ';
 
                 }
-            }
-            else
-            {
+            } else {
                 $sql =
-                '
+                    '
                     SELECT db.*, g.id AS graphic_id, g.type AS graphic_type, g.location AS graphic_location, g.file AS graphic_file, dbc.banner_type
                     FROM display_banner db
                     LEFT JOIN display_banner_config dbc
@@ -81,15 +74,11 @@ class Display_banner_dao extends Base_dao
                     WHERE db.display_id = ? AND db.position_id = ? AND db.slide_id = ? AND db.lang_id = ? AND db.usage = ?  AND db.country_id = ?
                 ';
             }
-        }
-        else
-        {
-            if($banner_type == "F")
-            {
-                if($backup_image)
-                {
+        } else {
+            if ($banner_type == "F") {
+                if ($backup_image) {
                     $sql =
-                    '
+                        '
                         SELECT db.*, g.id AS graphic_id, g.type AS graphic_type, g.location AS graphic_location, g.file AS graphic_file, dbc.banner_type
                         FROM display_banner db
                         LEFT JOIN display_banner_config dbc
@@ -98,11 +87,9 @@ class Display_banner_dao extends Base_dao
                             ON (db.image_id = g.id AND g.status = 1)
                         WHERE db.display_id = ? AND db.position_id = ? AND db.slide_id = ? AND db.lang_id = ? AND db.usage = ?  AND db.country_id IS NULL
                     ';
-                }
-                else
-                {
+                } else {
                     $sql =
-                    '
+                        '
                         SELECT db.*, g.id AS graphic_id, g.type AS graphic_type, g.location AS graphic_location, g.file AS graphic_file, dbc.banner_type
                         FROM display_banner db
                         LEFT JOIN display_banner_config dbc
@@ -112,11 +99,9 @@ class Display_banner_dao extends Base_dao
                         WHERE db.display_id = ? AND db.position_id = ? AND db.slide_id = ? AND db.lang_id = ? AND db.usage = ?  AND db.country_id IS NULL
                     ';
                 }
-            }
-            else
-            {
+            } else {
                 $sql =
-                '
+                    '
                     SELECT db.*, g.id AS graphic_id, g.type AS graphic_type, g.location AS graphic_location, g.file AS graphic_file, dbc.banner_type
                     FROM display_banner db
                     LEFT JOIN display_banner_config dbc
@@ -130,8 +115,7 @@ class Display_banner_dao extends Base_dao
         $this->include_dto($classname);
 
 
-        if ($query = $this->db->query($sql, array($banner_type, $display_id, $position_id, $slide_id, $lang_id, $usage, $country_id)))
-        {
+        if ($query = $this->db->query($sql, array($banner_type, $display_id, $position_id, $slide_id, $lang_id, $usage, $country_id))) {
             $rs = $query->result($classname);
             return $rs[0];
         }

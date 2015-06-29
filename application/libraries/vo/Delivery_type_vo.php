@@ -132,4 +132,5 @@ class Delivery_type_vo extends Base_vo
     }
 
 }
+
 ?>

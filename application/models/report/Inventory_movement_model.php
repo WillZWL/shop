@@ -1,5 +1,7 @@
 <?php
-class Inventory_movement_model extends CI_Model{
+
+class Inventory_movement_model extends CI_Model
+{
 
     public function __construct()
     {
@@ -7,9 +9,9 @@ class Inventory_movement_model extends CI_Model{
         $this->load->library('service/rpt_inventory_movement_service');
     }
 
-    public function get_csv($sku,$start_date, $end_date)
+    public function get_csv($sku, $start_date, $end_date)
     {
-        return $this->rpt_inventory_movement_service->get_csv($sku,$start_date, $end_date);
+        return $this->rpt_inventory_movement_service->get_csv($sku, $start_date, $end_date);
     }
 }
 

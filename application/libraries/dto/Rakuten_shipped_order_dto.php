@@ -111,4 +111,5 @@ class Rakuten_shipped_order_dto extends Base_dto
         $this->status = $value;
     }
 }
+
 ?>

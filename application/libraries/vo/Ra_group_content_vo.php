@@ -131,4 +131,5 @@ class Ra_group_content_vo extends Base_vo
         return $this->increment_field;
     }
 }
+
 ?>

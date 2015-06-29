@@ -10,7 +10,7 @@ class Mainproduct extends PUB_Controller
     {
         parent::PUB_Controller();
         $this->load->library('template');
-        $this->load->helper(array('url','image','tbswrapper'));
+        $this->load->helper(array('url', 'image', 'tbswrapper'));
         $this->load->model('website/website_model');
         $this->load->model('website/common_data_prepare_model');
         $this->load->model('marketing/product_model');
@@ -25,7 +25,7 @@ class Mainproduct extends PUB_Controller
         $this->load->library('service/deliverytime_service');
     }
 
-    public function view($sku="")
+    public function view($sku = "")
     {
         $index = strripos($sku, "-", -7);
         $sku = trim(substr($sku, $index), "- ");
@@ -34,8 +34,7 @@ class Mainproduct extends PUB_Controller
         $data = $this->common_data_prepare_model->get_data_array($this, array("sku" => $sku, "type" => "web"));
 
         if ($data) {
-            if ($this->upselling_model->get_ra($data, $sku, PLATFORMID, get_lang_id(), $listing_status))
-            {
+            if ($this->upselling_model->get_ra($data, $sku, PLATFORMID, get_lang_id(), $listing_status)) {
                 $this->template->add_js("/resources/js/jquery.gritter.js");
                 $this->template->add_js("/js/common.js");
                 $this->template->add_js("/js/upselling.js", "import", TRUE);
@@ -45,7 +44,7 @@ class Mainproduct extends PUB_Controller
             $this->template->add_js("/resources/js/jquery-ui.js");
             $this->template->add_css("resources/css/jquery-ui.css");
 
-            $this->template->add_link("rel='canonical' href='".base_url()."/mainproduct/view/$sku'");
+            $this->template->add_link("rel='canonical' href='" . base_url() . "/mainproduct/view/$sku'");
             $this->load_tpl('content', 'tbs_product', $data, TRUE);
 
         } else {

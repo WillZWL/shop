@@ -44,6 +44,7 @@ class Email_referral_w_client_dto extends Base_dto
         $this->client_id = $value;
         return $this;
     }
+
     public function get_email()
     {
         return $this->email;
@@ -85,8 +86,7 @@ class Email_referral_w_client_dto extends Base_dto
         $temp[] = $this->address_3;
         $temp = array_filter($temp);
         $addr_str = '';
-        foreach($temp as $addr)
-        {
+        foreach ($temp as $addr) {
             $addr_str .= $addr . ',';
         }
 

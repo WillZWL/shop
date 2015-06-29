@@ -204,4 +204,5 @@ class Flex_pmgw_transactions_vo extends Base_vo
     }
 
 }
+
 ?>

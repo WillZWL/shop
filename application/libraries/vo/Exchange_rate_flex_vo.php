@@ -144,4 +144,5 @@ class Exchange_rate_flex_vo extends Base_vo
     }
 
 }
+
 ?>

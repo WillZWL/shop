@@ -144,4 +144,5 @@ class Flex_batch_vo extends Base_vo
     }
 
 }
+
 ?>

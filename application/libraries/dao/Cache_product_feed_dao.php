@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Cache_product_feed_dao extends Base_dao
 {
-    private $table_name="cache_product_feed";
-    private $vo_class_name="Cache_product_feed_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "cache_product_feed";
+    private $vo_class_name = "Cache_product_feed_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -37,8 +37,7 @@ class Cache_product_feed_dao extends Base_dao
 
     public function save_xml_skype_feed($data = NULL)
     {
-        if (!is_array($data))
-        {
+        if (!is_array($data)) {
             return;
         }
 //print_r($this->db);
@@ -76,24 +75,19 @@ class Cache_product_feed_dao extends Base_dao
                 );";
 
         $input = array(
-                    $data['sku'], $data['platform_id'], $data['prod_name'],
-                    $data['prod_url'], $data['currency_id'], $data['price'],
-                    $data['promotion_price'], $data['bundle_price'],
-                    $data['shipping_cost'], $data['promo_text'],
-                    $data['listing_status'], $data['cache_time']
-                );
+            $data['sku'], $data['platform_id'], $data['prod_name'],
+            $data['prod_url'], $data['currency_id'], $data['price'],
+            $data['promotion_price'], $data['bundle_price'],
+            $data['shipping_cost'], $data['promo_text'],
+            $data['listing_status'], $data['cache_time']
+        );
 
-        if ($result = $this->db->query($sql, $input))
-        {
-            if ($this->db->trans_autocommit)
-            {
+        if ($result = $this->db->query($sql, $input)) {
+            if ($this->db->trans_autocommit) {
                 $this->db->trans_commit();
             }
-        }
-        else
-        {
-            if ($this->db->trans_autocommit)
-            {
+        } else {
+            if ($this->db->trans_autocommit) {
                 $this->db->trans_rollback();
                 $this->db->trans_commit();
             }
@@ -102,8 +96,7 @@ class Cache_product_feed_dao extends Base_dao
 
     public function get_xml_skype_feed($data = NULL)
     {
-        if (empty($data['sku']) || empty($data['platform_id']))
-        {
+        if (empty($data['sku']) || empty($data['platform_id'])) {
             return NULL;
         }
 
@@ -119,13 +112,12 @@ class Cache_product_feed_dao extends Base_dao
 
         $resultset = $this->db->query($sql, $input);
 
-        if (!$resultset)
-        {
+        if (!$resultset) {
             return NULL;
         }
 
-        $result = (array) $resultset->result();
-        return (array) $result[0];
+        $result = (array)$resultset->result();
+        return (array)$result[0];
     }
 }
 

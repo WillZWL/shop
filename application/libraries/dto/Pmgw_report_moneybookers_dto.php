@@ -192,6 +192,11 @@ class Pmgw_report_moneybookers_dto extends Base_dto
         return $this->original_order_txn_id;
     }
 
+    public function set_original_order_txn_id($value)
+    {
+        $this->original_order_txn_id = $value;
+    }
+
     public function get_ref_txn_id()
     {
         return $this->ref_txn_id;
@@ -202,19 +207,14 @@ class Pmgw_report_moneybookers_dto extends Base_dto
         $this->ref_txn_id = $value;
     }
 
-    public function set_original_order_txn_id($value)
+    public function get_payment_type()
     {
-        $this->original_order_txn_id = $value;
+        return $this->payment_type;
     }
 
     public function set_payment_type($value)
     {
         $this->payment_type = $value;
-    }
-
-    public function get_payment_type()
-    {
-        return $this->payment_type;
     }
 }
 /* End of file pmgw_report_moneybookers_dto.php */

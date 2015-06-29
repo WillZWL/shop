@@ -612,4 +612,5 @@ class Interface_so_vo extends Base_vo
     }
 
 }
+
 ?>

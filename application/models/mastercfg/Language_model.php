@@ -16,7 +16,7 @@ class Language_model extends CI_Model
 
     public function get_list()
     {
-        return $this->language_service->get_dao()->get_list(array("status"=>1),array("limit"=>-1));
+        return $this->language_service->get_dao()->get_list(array("status" => 1), array("limit" => -1));
     }
 
 }

@@ -12,8 +12,7 @@ class Global_collect_pmgw_report_service extends Pmgw_report_service
 
     public function is_ria_record($dto_obj)
     {
-        if (($dto_obj->get_status_id() >= 800) && ($dto_obj->get_status_id() <= 1050))
-        {
+        if (($dto_obj->get_status_id() >= 800) && ($dto_obj->get_status_id() <= 1050)) {
             return "RIA";
             //return true;
         }
@@ -22,12 +21,9 @@ class Global_collect_pmgw_report_service extends Pmgw_report_service
 
     public function is_refund_record($dto_obj)
     {
-        if (($dto_obj->get_status_description() == "REFUNDED"))
-        {
+        if (($dto_obj->get_status_description() == "REFUNDED")) {
             return "R";
-        }
-        elseif($dto_obj->get_status_description() == "CHARGED_BACK_BY_CONSUMER")
-        {
+        } elseif ($dto_obj->get_status_description() == "CHARGED_BACK_BY_CONSUMER") {
             return "CB";
         }
         return false;
@@ -53,54 +49,42 @@ class Global_collect_pmgw_report_service extends Pmgw_report_service
         return 'nero-alert@eservicesgroup.com';
     }
 
-    protected function get_pmgw()
+    public function valid_txn_id($interface_obj)
     {
-        return "global_collect";
+        $i_so_no = $interface_obj->get_so_no();
+        $i_txn_id = $interface_obj->get_txn_id();
+
+        if ($this->get_so_dao()->get(array("txn_id" => $i_txn_id))) {
+            return true;
+        } elseif ($this->get_so_dao()->get(array("so_no" => $i_so_no))) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
-    protected function insert_interface_flex_ria($batch_id, $status, $dto_obj)
-    {
-// insert interface_flex_ria
-        $date = date("Y-m-d H:i:s", strtotime(str_replace('/', '-', $dto_obj->get_date())));
-        $dto_obj->set_date($date);
-
-        if ($dto_obj->get_amount())
-            $dto_obj->set_amount(abs(ereg_replace(",", "", $dto_obj->get_amount())));
-
-        if($dto_obj->get_so_no())
-            $dto_obj->set_so_no($dto_obj->get_so_no());
-
-        $this->_set_format_object($dto_obj);
-
-        $this->create_interface_flex_ria($batch_id, $status, $dto_obj, $include_fsf=FALSE);
-    }
-
-    protected function insert_interface_flex_refund($batch_id, $status, $dto_obj)
-    {
-
-        //var_dump($dto_obj);die();
-        $date = date("Y-m-d H:i:s", strtotime(str_replace('/', '-', $dto_obj->get_txn_time())));
-        $dto_obj->set_date($date);
-
-        if($dto_obj->get_so_no())
-            $dto_obj->set_so_no($dto_obj->get_so_no());
-
-        $this->_set_format_object($dto_obj);
-
-        $this->create_interface_flex_refund($batch_id, $status, $dto_obj, $include_fsf=FALSE);
-    }
-
-    protected function insert_interface_flex_so_fee($batch_id, $status, $dto_obj)
+    public function is_ria_include_so_fee()
     {
         return false;
     }
 
-    protected function insert_interface_flex_rolling_reserve($batch_id, $status, $dto_obj)
+    public function is_refund_include_so_fee()
     {
         return false;
     }
 
-    protected function insert_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
+    public function insert_flex_so_fee()
+    {
+        return TRUE;
+    }
+
+    public function insert_so_fee_from_ria_record($batch_id, $status, $dto_obj)
+    {
+        return false;
+    }
+
+    public function insert_so_fee_from_rolling_reserve_record($batch_id, $status, $dto_obj)
     {
         return false;
     }
@@ -201,89 +185,96 @@ class Global_collect_pmgw_report_service extends Pmgw_report_service
     */
 
     //overwrite
-    public function valid_txn_id($interface_obj)
-    {
-        $i_so_no =  $interface_obj->get_so_no();
-        $i_txn_id = $interface_obj->get_txn_id();
-
-        if($this->get_so_dao()->get(array("txn_id"=>$i_txn_id)))
-        {
-            return true;
-        }
-        elseif($this->get_so_dao()->get(array("so_no"=>$i_so_no)))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-    }
-
-    //declare
-    public function is_ria_include_so_fee()
-    {
-        return false;
-    }
-    //declare
-    public function is_refund_include_so_fee()
-    {
-        return false;
-    }
-    //overwrite, no need insert so fee, but a false success signal
-    public function insert_flex_so_fee()
-    {
-        return TRUE;
-    }
-
-    public function insert_so_fee_from_ria_record($batch_id, $status, $dto_obj)
-    {
-        return false;
-    }
-
-    public function insert_so_fee_from_rolling_reserve_record($batch_id, $status, $dto_obj)
-    {
-        return false;
-    }
 
     public function insert_so_fee_from_refund_record($batch_id, $status, $dto_obj)
     {
         return false;
     }
 
+    //declare
+
     public function insert_flex_rolling_reserve()
     {
         return TRUE;
     }
+
+    //declare
 
     public function insert_flex_gateway_fee()
     {
         return TRUE;
     }
 
+    //overwrite, no need insert so fee, but a false success signal
+
     public function after_insert_all_interface($batch_id)
     {
         return TRUE;
     }
 
+    protected function get_pmgw()
+    {
+        return "global_collect";
+    }
+
+    protected function insert_interface_flex_ria($batch_id, $status, $dto_obj)
+    {
+// insert interface_flex_ria
+        $date = date("Y-m-d H:i:s", strtotime(str_replace('/', '-', $dto_obj->get_date())));
+        $dto_obj->set_date($date);
+
+        if ($dto_obj->get_amount())
+            $dto_obj->set_amount(abs(ereg_replace(",", "", $dto_obj->get_amount())));
+
+        if ($dto_obj->get_so_no())
+            $dto_obj->set_so_no($dto_obj->get_so_no());
+
+        $this->_set_format_object($dto_obj);
+
+        $this->create_interface_flex_ria($batch_id, $status, $dto_obj, $include_fsf = FALSE);
+    }
+
     private function _set_format_object($dto_obj)
     {
-        if(!$dto_obj->get_internal_txn_id())
-        {
-            if($payment_reference = $dto_obj->get_payment_reference())
-            {
+        if (!$dto_obj->get_internal_txn_id()) {
+            if ($payment_reference = $dto_obj->get_payment_reference()) {
                 $dto_obj->set_internal_txn_id($payment_reference);
-            }
-            elseif($txn_id = $dto_obj->get_txn_id())
-            {
+            } elseif ($txn_id = $dto_obj->get_txn_id()) {
                 $dto_obj->set_internal_txn_id($txn_id);
-            }
-            else
-            {
+            } else {
                 $dto_obj->set_internal_txn_id(" ");
             }
         }
+    }
+
+    protected function insert_interface_flex_refund($batch_id, $status, $dto_obj)
+    {
+
+        //var_dump($dto_obj);die();
+        $date = date("Y-m-d H:i:s", strtotime(str_replace('/', '-', $dto_obj->get_txn_time())));
+        $dto_obj->set_date($date);
+
+        if ($dto_obj->get_so_no())
+            $dto_obj->set_so_no($dto_obj->get_so_no());
+
+        $this->_set_format_object($dto_obj);
+
+        $this->create_interface_flex_refund($batch_id, $status, $dto_obj, $include_fsf = FALSE);
+    }
+
+    protected function insert_interface_flex_so_fee($batch_id, $status, $dto_obj)
+    {
+        return false;
+    }
+
+    protected function insert_interface_flex_rolling_reserve($batch_id, $status, $dto_obj)
+    {
+        return false;
+    }
+
+    protected function insert_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
+    {
+        return false;
     }
 
 }

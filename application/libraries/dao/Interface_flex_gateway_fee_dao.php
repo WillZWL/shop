@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Interface_flex_gateway_fee_dao extends Base_dao
 {
-    private $table_name="interface_flex_gateway_fee";
-    private $vo_classname="Interface_flex_gateway_fee_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "interface_flex_gateway_fee";
+    private $vo_classname = "Interface_flex_gateway_fee_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

@@ -192,4 +192,5 @@ class So_allocate_vo extends Base_vo
     }
 
 }
+
 ?>

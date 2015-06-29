@@ -11,8 +11,8 @@ class Sli_prod_feed_dto extends Base_dto
     private $category;
     private $website_status;
     private $availability_url;
-    private $status = array("I"=>"In Stock","O"=>"Out Of Stock","P"=>"Pre-order","A"=>"In-stock with Supplier");
-    private $status_img = array("I"=>"images/instock6.gif","O"=>"images/outofstock6.gif","P"=>"images/preorder6.gif","A"=>"images/1-3days6.gif");
+    private $status = array("I" => "In Stock", "O" => "Out Of Stock", "P" => "Pre-order", "A" => "In-stock with Supplier");
+    private $status_img = array("I" => "images/instock6.gif", "O" => "images/outofstock6.gif", "P" => "images/preorder6.gif", "A" => "images/1-3days6.gif");
     private $retail_price;
     private $priceGBP;
     private $link;
@@ -37,9 +37,9 @@ class Sli_prod_feed_dto extends Base_dto
         parent::__construct();
         $CI =& get_instance();
         $this->load = $CI->load;
-        include_once(APPPATH."libraries/service/Context_config_service.php");
+        include_once(APPPATH . "libraries/service/Context_config_service.php");
         $this->cfg = new Context_config_service();
-        $this->load->helper(array('url','image','string'));
+        $this->load->helper(array('url', 'image', 'string'));
     }
 
     public function get_mpn()
@@ -54,7 +54,7 @@ class Sli_prod_feed_dto extends Base_dto
 
     public function get_keywords()
     {
-        return str_replace(",","|",$this->keywords);
+        return str_replace(",", "|", $this->keywords);
     }
 
     public function set_keywords($value)
@@ -86,11 +86,10 @@ class Sli_prod_feed_dto extends Base_dto
     {
         $tmp = $this->status_img;
         $s = $this->website_status;
-        if($this->get_website_quantity() == 0)
-        {
+        if ($this->get_website_quantity() == 0) {
             $s = 'O';
         }
-        return $this->cfg->value_of('website_domain').$tmp[$s];
+        return $this->cfg->value_of('website_domain') . $tmp[$s];
     }
 
     public function set_availability_url($value)
@@ -98,14 +97,29 @@ class Sli_prod_feed_dto extends Base_dto
         $this->availability_url = $value;
     }
 
+    public function get_website_quantity()
+    {
+        return $this->website_quantity;
+    }
+
+    public function set_website_quantity($value)
+    {
+        $this->website_quantity = $value;
+    }
+
+    public function get_image_link()
+    {
+        return rtrim($this->cfg->value_of('website_domain'), "/") . get_image_file($this->image, "l", $this->sku);
+    }
+
     public function set_image_link($value)
     {
         $this->image_link = $value;
     }
 
-    public function get_image_link()
+    public function get_small_image_url()
     {
-        return rtrim($this->cfg->value_of('website_domain'),"/").get_image_file($this->image,"l",$this->sku);
+        return rtrim($this->cfg->value_of('website_domain'), "/") . get_image_file($this->image, "s", $this->sku);
     }
 
     public function set_small_image_url($value)
@@ -113,9 +127,9 @@ class Sli_prod_feed_dto extends Base_dto
         $this->small_image_url = $value;
     }
 
-    public function get_small_image_url()
+    public function get_medium_image_url()
     {
-        return rtrim($this->cfg->value_of('website_domain'),"/").get_image_file($this->image,"s",$this->sku);
+        return rtrim($this->cfg->value_of('website_domain'), "/") . get_image_file($this->image, "m", $this->sku);
     }
 
     public function set_medium_image_url($value)
@@ -123,19 +137,14 @@ class Sli_prod_feed_dto extends Base_dto
         $this->medium_image_url = $value;
     }
 
-    public function get_medium_image_url()
+    public function get_normal_image_url()
     {
-        return rtrim($this->cfg->value_of('website_domain'),"/").get_image_file($this->image,"m",$this->sku);
+        return rtrim($this->cfg->value_of('website_domain'), "/") . get_image_file($this->image, "l", $this->sku);
     }
 
     public function set_normal_image_url($value)
     {
         $this->normal_image_url = $value;
-    }
-
-    public function get_normal_image_url()
-    {
-        return rtrim($this->cfg->value_of('website_domain'),"/").get_image_file($this->image,"l",$this->sku);
     }
 
     public function get_image()
@@ -150,7 +159,7 @@ class Sli_prod_feed_dto extends Base_dto
 
     public function get_link()
     {
-        return $this->cfg->value_of('website_domain').urlencode(str_replace(' ',"-",parse_url_char($this->prod_name)))."/mainproduct/view/".$this->sku;
+        return $this->cfg->value_of('website_domain') . urlencode(str_replace(' ', "-", parse_url_char($this->prod_name))) . "/mainproduct/view/" . $this->sku;
         //return $this->link;
     }
 
@@ -193,8 +202,7 @@ class Sli_prod_feed_dto extends Base_dto
     {
         $tmp = $this->status;
         $s = $this->website_status;
-        if($this->get_website_quantity() == 0)
-        {
+        if ($this->get_website_quantity() == 0) {
 
             $s = 'O';
         }
@@ -205,16 +213,6 @@ class Sli_prod_feed_dto extends Base_dto
     public function set_website_status($value)
     {
         $this->website_status = $value;
-    }
-
-    public function get_website_quantity()
-    {
-        return $this->website_quantity;
-    }
-
-    public function set_website_quantity($value)
-    {
-        $this->website_quantity = $value;
     }
 
     public function get_retail_price()
@@ -250,15 +248,14 @@ class Sli_prod_feed_dto extends Base_dto
     public function get_detail_desc()
     {
         $result = $this->detail_desc;
-        $result = str_replace (array("'",",","|"),"",nl2br($this->detail_desc));
-        $result = str_replace (array("<br>","<br >","<BR >","<BR />","<br />","\r\n","\n","\t"),"-",$result);
-        $result = str_replace (array("<b>","</b>","<B>","</B>"),"",$result);
-        $result = str_replace (array(",","'","|"),"",$result);
+        $result = str_replace(array("'", ",", "|"), "", nl2br($this->detail_desc));
+        $result = str_replace(array("<br>", "<br >", "<BR >", "<BR />", "<br />", "\r\n", "\n", "\t"), "-", $result);
+        $result = str_replace(array("<b>", "</b>", "<B>", "</B>"), "", $result);
+        $result = str_replace(array(",", "'", "|"), "", $result);
         $result = strip_tags($result);
         $result = strip_invalid_xml($result);
-        if(strlen($result) > 1900)
-        {
-            $result = cutstr($result,1896,"....");
+        if (strlen($result) > 1900) {
+            $result = cutstr($result, 1896, "....");
         }
         return $result;
     }
@@ -271,15 +268,14 @@ class Sli_prod_feed_dto extends Base_dto
     public function get_short_desc()
     {
         $result = $this->short_desc;
-        $result = str_replace (array("'",",","|"),"",nl2br($this->short_desc));
-        $result = str_replace (array("<br>","<br >","<BR >","<BR />","<br />","\r\n","\n","\t"),"-",$result);
-        $result = str_replace (array("<b>","</b>","<B>","</B>"),"",$result);
-        $result = str_replace (array(",","'","|"),"",$result);
+        $result = str_replace(array("'", ",", "|"), "", nl2br($this->short_desc));
+        $result = str_replace(array("<br>", "<br >", "<BR >", "<BR />", "<br />", "\r\n", "\n", "\t"), "-", $result);
+        $result = str_replace(array("<b>", "</b>", "<B>", "</B>"), "", $result);
+        $result = str_replace(array(",", "'", "|"), "", $result);
         $result = strip_tags($result);
         $result = strip_invalid_xml($result);
-        if(strlen($result) > 200)
-        {
-            $result = cutstr($result,196,"....");
+        if (strlen($result) > 200) {
+            $result = cutstr($result, 196, "....");
         }
         return $result;
     }

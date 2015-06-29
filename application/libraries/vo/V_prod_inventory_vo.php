@@ -48,4 +48,5 @@ class V_prod_inventory_vo extends Base_vo
     }
 
 }
+
 ?>

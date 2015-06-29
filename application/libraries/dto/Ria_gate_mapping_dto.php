@@ -1,7 +1,8 @@
 <?php
+
 /**
-*
-*/
+ *
+ */
 class Ria_gate_mapping_dto extends Base_dto
 {
 

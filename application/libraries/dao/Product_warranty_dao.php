@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Product_warranty_dao extends Base_dao
 {
-    private $table_name="product_warranty";
-    private $vo_classname="Product_warranty_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "product_warranty";
+    private $vo_classname = "Product_warranty_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -39,15 +39,13 @@ class Product_warranty_dao extends Base_dao
         $this->db->from("product p");
         $this->db->join("product_warranty pw", "p.sku = pw.sku and pw.platform_id='{$platform_id}'", "LEFT");
         $this->db->select("COALESCE(pw.warranty_in_month, p.warranty_in_month)as warranty_in_month");
-        $this->db->where(array("p.sku"=>$sku));
+        $this->db->where(array("p.sku" => $sku));
         $this->db->limit(1);
 
         $classname = "Product_warranty_vo";
         $this->include_vo($classname);
-        if ($query = $this->db->get())
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->get()) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
             return $rs[0];

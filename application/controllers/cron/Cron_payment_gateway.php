@@ -1,7 +1,8 @@
 <?php
+
 class Cron_payment_gateway extends MY_Controller
 {
-    private $app_id="CRN0023";
+    private $app_id = "CRN0023";
 
     public function __construct()
     {

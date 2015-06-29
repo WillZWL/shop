@@ -219,12 +219,12 @@ class Omg_product_feed_dto extends Base_dto
         $this->currency = $value;
     }
 
-    public function get_can_aggregate ()
+    public function get_can_aggregate()
     {
         return $this->can_aggregate;
     }
 
-    public function set_can_aggregate ($value)
+    public function set_can_aggregate($value)
     {
         $this->can_aggregate = $value;
     }
@@ -246,7 +246,7 @@ class Omg_product_feed_dto extends Base_dto
 
     public function set_stock_status($value)
     {
-        $this->stock_status= $value;
+        $this->stock_status = $value;
     }
 
     public function get_discount()
@@ -256,7 +256,7 @@ class Omg_product_feed_dto extends Base_dto
 
     public function set_discount($value)
     {
-        $this->discount= $value;
+        $this->discount = $value;
     }
 
     public function get_empty_field()

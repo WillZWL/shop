@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Product_image_dao extends Base_dao
 {
-    private $table_name="product_image";
-    private $vo_class_name="Product_image_vo";
-    private $seq_name="product_image";
-    private $seq_mapping_field="id";
+    private $table_name = "product_image";
+    private $vo_class_name = "Product_image_vo";
+    private $seq_name = "product_image";
+    private $seq_mapping_field = "id";
 
     public function __construct()
     {

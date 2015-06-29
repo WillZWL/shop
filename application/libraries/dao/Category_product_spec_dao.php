@@ -3,33 +3,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once 'Base_dao.php';
 
-class Category_product_spec_dao extends Base_dao {
-    private $table_name="category_product_spec";
-    private $vo_class_name="category_product_spec_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+class Category_product_spec_dao extends Base_dao
+{
+    private $table_name = "category_product_spec";
+    private $vo_class_name = "category_product_spec_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function get_vo_classname(){
+    public function get_vo_classname()
+    {
         return $this->vo_class_name;
     }
 
-    public function get_table_name(){
+    public function get_table_name()
+    {
         return $this->table_name;
     }
 
-    public function get_seq_name(){
+    public function get_seq_name()
+    {
         return $this->seq_name;
     }
 
-    public function get_seq_mapping_field(){
+    public function get_seq_mapping_field()
+    {
         return $this->seq_mapping_field;
     }
 
-    public function get_full_cps_list($cat_id, $classname="Full_cps_with_cat_id_dto")
+    public function get_full_cps_list($cat_id, $classname = "Full_cps_with_cat_id_dto")
     {
         $sql =
             '
@@ -49,8 +55,7 @@ class Category_product_spec_dao extends Base_dao {
 
         $this->include_dto($classname);
 
-        if ($query = $this->db->query($sql, $cat_id))
-        {
+        if ($query = $this->db->query($sql, $cat_id)) {
             $rs = $query->result($classname);
             return $rs;
         }

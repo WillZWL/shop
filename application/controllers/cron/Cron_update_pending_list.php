@@ -1,7 +1,8 @@
 <?php
+
 class Cron_update_pending_list extends MY_Controller
 {
-    private $app_id="CRN0002";
+    private $app_id = "CRN0002";
 
     public function __construct()
     {
@@ -21,6 +22,7 @@ class Cron_update_pending_list extends MY_Controller
         $this->checkout_model = new Checkout_redirect_altapay_model($debug);
         $this->checkout_model->update_pending_list();
     }
+
     public function query_altapay($so_no, $debug = 0)
     {
         include_once(APPPATH . "models/website/checkout_redirect_altapay_model.php");

@@ -300,4 +300,5 @@ class So_credit_chk_vo extends Base_vo
     }
 
 }
+
 ?>

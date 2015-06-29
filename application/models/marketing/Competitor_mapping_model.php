@@ -1,4 +1,5 @@
 <?php
+
 class Competitor_mapping_model extends CI_Model
 {
 

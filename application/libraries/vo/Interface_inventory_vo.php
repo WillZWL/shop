@@ -180,4 +180,5 @@ class Interface_inventory_vo extends Base_vo
     }
 
 }
+
 ?>

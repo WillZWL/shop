@@ -552,4 +552,5 @@ class Client_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -4,6 +4,6 @@
     <title>Remove TBS</title>
 </head>
 <body>
-    Remove TBS, FIGHT.
+Remove TBS, FIGHT.
 </body>
 </html>

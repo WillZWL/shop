@@ -336,4 +336,5 @@ class Rma_vo extends Base_vo
     }
 
 }
+
 ?>

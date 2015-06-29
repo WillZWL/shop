@@ -192,4 +192,5 @@ class External_category_vo extends Base_vo
     }
 
 }
+
 ?>

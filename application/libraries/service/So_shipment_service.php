@@ -12,12 +12,12 @@ class So_shipment_service extends Base_service
     {
         parent::__construct();
 
-        include_once(APPPATH."libraries/dao/So_shipment_dao.php");
+        include_once(APPPATH . "libraries/dao/So_shipment_dao.php");
         $this->set_dao(new So_shipment_dao());
-        include_once(APPPATH."libraries/service/Context_config_service.php");
+        include_once(APPPATH . "libraries/service/Context_config_service.php");
         $this->set_config(new Context_config_service());
-        include_once(APPPATH."helpers/image_helper.php");
-        include_once(APPPATH."libraries/service/Data_exchange_service.php");
+        include_once(APPPATH . "helpers/image_helper.php");
+        include_once(APPPATH . "libraries/service/Data_exchange_service.php");
         $this->set_dex_service(new Data_exchange_service());
     }
 
@@ -31,14 +31,14 @@ class So_shipment_service extends Base_service
         $this->config = $value;
     }
 
-    public function set_dex_service($srv)
-    {
-        $this->dex_service = $srv;
-    }
-
     public function get_dex_service()
     {
         return $this->dex_service;
+    }
+
+    public function set_dex_service($srv)
+    {
+        $this->dex_service = $srv;
     }
 }
 

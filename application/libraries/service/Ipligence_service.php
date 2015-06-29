@@ -1,4 +1,4 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 include_once "Base_service.php";
 
@@ -8,7 +8,7 @@ class Ipligence_service extends Base_service
     function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Ipligence_dao.php");
+        include_once(APPPATH . "libraries/dao/Ipligence_dao.php");
         $this->set_dao(new Ipligence_dao());
     }
 

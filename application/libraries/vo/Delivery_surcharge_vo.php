@@ -180,4 +180,5 @@ class Delivery_surcharge_vo extends Base_vo
     }
 
 }
+
 ?>

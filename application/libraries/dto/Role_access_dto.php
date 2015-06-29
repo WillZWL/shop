@@ -3,13 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class Role_access_dto extends Base_dto {
+class Role_access_dto extends Base_dto
+{
 
     //class variable
     private $rights_id;
     private $rights;
 
-    function __construct(){
+    function __construct()
+    {
         parent::__construct();
     }
 

@@ -60,4 +60,5 @@ class V_o_qty_list_vo extends Base_vo
     }
 
 }
+
 ?>

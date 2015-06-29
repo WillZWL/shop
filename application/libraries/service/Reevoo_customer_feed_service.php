@@ -7,7 +7,8 @@ class Reevoo_customer_feed_service extends Data_feed_service
 {
     protected $id = "Reevoo Customer Feed";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::Data_feed_service();
         $this->set_output_delimiter(chr(9));
     }
@@ -31,31 +32,25 @@ class Reevoo_customer_feed_service extends Data_feed_service
         $filename = 'reevoo_customer_feed_' . date('Ymdhis');
         $fp = fopen(DATAPATH . 'feeds/reevoo/customer/' . $filename . '.txt', 'w');
 
-        if(fwrite($fp, $data_feed))
-        {
+        if (fwrite($fp, $data_feed)) {
             $this->ftp_feeds(DATAPATH . 'feeds/reevoo/customer/' . $filename . '.txt', "/partners/valuebasket/CustomerFeed.txt", $this->get_ftp_name());
 
-        }
-        else
-        {
+        } else {
             $subject = "<DO NOT REPLY> Fails to create Reevoo Customer Feed File";
-            $message ="FILE: ".__FILE__."<br>
-                         LINE: ".__LINE__;
+            $message = "FILE: " . __FILE__ . "<br>
+                         LINE: " . __LINE__;
             $this->error_handler($subject, $message);
         }
     }
 
-    protected function get_data_list($where = array(), $option = array())
+    protected function get_ftp_name()
     {
-        $last_access_time = $this->get_last_access_time();
-
-        return $this->get_so_srv()->get_reevoo_customer_feed_dto($last_access_time);
+        return 'REEVOO';
     }
 
     public function process_data_row($data = NULL)
     {
-        if (!is_object($data))
-        {
+        if (!is_object($data)) {
             return NULL;
         }
 
@@ -79,6 +74,42 @@ class Reevoo_customer_feed_service extends Data_feed_service
         return $data;
     }
 
+    function format_result($str)
+    {
+        $search = array(chr(9), chr(10), chr(13));
+        $replace = array(" ", " ", " ");
+        $str = str_replace($search, $replace, $str);
+        $str = trim($str);
+
+        return $str;
+    }
+
+    public function get_contact_email()
+    {
+        return 'itsupport@eservicesgroup.net';
+    }
+
+    protected function get_data_list($where = array(), $option = array())
+    {
+        $last_access_time = $this->get_last_access_time();
+
+        return $this->get_so_srv()->get_reevoo_customer_feed_dto($last_access_time);
+    }
+
+    protected function get_last_access_time()
+    {
+        $sj_obj = $this->get_sj_dao()->get(array("id" => $this->get_sj_id()));
+        if ($sj_obj) {
+            return $sj_obj->get_last_access_time();
+        }
+        return false;
+    }
+
+    protected function get_sj_id()
+    {
+        return "REEVOO_CUSTOMER_FEED";
+    }
+
     protected function get_default_vo2xml_mapping()
     {
         return '';
@@ -89,44 +120,9 @@ class Reevoo_customer_feed_service extends Data_feed_service
         return APPPATH . 'data/reevoo_customer_feed_vo2xml.txt';
     }
 
-    public function get_contact_email()
-    {
-        return 'itsupport@eservicesgroup.net';
-    }
-
-    protected function get_ftp_name()
-    {
-        return 'REEVOO';
-    }
-
-    protected function get_sj_id()
-    {
-        return "REEVOO_CUSTOMER_FEED";
-    }
-
     protected function get_sj_name()
     {
         return "REEVOO Customer Feed Cron Time";
-    }
-
-    protected function get_last_access_time()
-    {
-        $sj_obj = $this->get_sj_dao()->get(array("id"=>$this->get_sj_id()));
-        if($sj_obj)
-        {
-            return $sj_obj->get_last_access_time();
-        }
-        return false;
-    }
-
-    function format_result($str)
-    {
-        $search = array(chr(9), chr(10), chr(13));
-        $replace = array(" ", " ", " ");
-        $str = str_replace($search, $replace, $str);
-        $str = trim($str);
-
-        return $str;
     }
 
 }

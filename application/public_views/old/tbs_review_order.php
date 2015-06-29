@@ -2,18 +2,13 @@
 $this->load->helper('tbswrapper');
 $this->tbswrapper = new Tbswrapper();
 
-if(!$data["cart"])
-{
+if (!$data["cart"]) {
     $this->tbswrapper->tbsLoadTemplate('resources/template/review_order_no_prod.html', '', '', $data['lang_text']);
-}
-else
-{
+} else {
     $this->tbswrapper->tbsLoadTemplate('resources/template/review_order.html', '', '', $data['lang_text']);
 
-    if($data['cart'])
-    {
-        foreach($data['cart'] AS $sku_arr)
-        {
+    if ($data['cart']) {
+        foreach ($data['cart'] AS $sku_arr) {
             foreach ($sku_arr as $arr) {
                 $item[] = $arr;
             }
@@ -23,30 +18,23 @@ else
 // echo '<pre>';
 // print_r($item);die;
 
-    if($data['promo']["valid"] !== NULL)
-    {
-        if(!$data['promo']["valid"] || $data['promo']["error"])
-        {
+    if ($data['promo']["valid"] !== NULL) {
+        if (!$data['promo']["valid"] || $data['promo']["error"]) {
             $promo['msg'] = $data['lang_text']['promotion_code_invalid'];
             $promo['msg_color'] = "red";
-        }
-        else
-        {
+        } else {
             $promo['msg'] = $data['lang_text']['promotion_code_valid'];
             $promo['msg_color'] = "green";
         }
     }
 
-    if($_SESSION["promotion_code"])
-    {
+    if ($_SESSION["promotion_code"]) {
         $promo["code"] = $_SESSION["promotion_code"];
-        if ($data['promo']["valid"] && isset($data['promo']["disc_amount"]))
-        {
+        if ($data['promo']["valid"] && isset($data['promo']["disc_amount"])) {
             $promo_disc_amount = $data['promo']["disc_amount"];
         }
-        if($promo_disc_amount > 0)
-        {
-            $promo['disc_amount'] = "-".platform_curr_format(PLATFORMID, $promo_disc_amount);
+        if ($promo_disc_amount > 0) {
+            $promo['disc_amount'] = "-" . platform_curr_format(PLATFORMID, $promo_disc_amount);
         }
     }
     $this->tbswrapper->tbsMergeField('delivery_charge', $data["delivery_charge"]);
@@ -59,26 +47,19 @@ else
     $this->tbswrapper->tbsMergeField('promo', $promo);
 }
 
-if($data['need_gst_display'])
-{
+if ($data['need_gst_display']) {
     if ($data['gst_order'])
         $total_msg = $data['lang_text']['total_with_gst'];
     else
         $total_msg = $data['lang_text']['total_no_gst'];
-}
-else
-{
+} else {
     $total_msg = $data['lang_text']['total'];
 }
 
-if ($data["allow_bulk_sales"])
-{
-    if (in_array('1', $data["allow_bulk_sales"]))
-    {
+if ($data["allow_bulk_sales"]) {
+    if (in_array('1', $data["allow_bulk_sales"])) {
         $allow_bulk_sales_popup = '1';
-    }
-    else
-    {
+    } else {
         $allow_bulk_sales_popup = '0';
     }
 }

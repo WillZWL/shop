@@ -17,12 +17,10 @@ class Wms_inventory_model extends CI_Model
         $url = $this->context_config_service->value_of('wms_base_url') . $this->context_config_service->value_of('wms_retailer_inventory_url');
         $htaccess = $this->context_config_service->value_of('wms_htaccess_username') . ':' . $this->context_config_service->value_of('wms_htaccess_password');
 
-        if ($retailer_list = $this->wms_warehouse_service->get_retailer_list())
-        {
+        if ($retailer_list = $this->wms_warehouse_service->get_retailer_list()) {
             $counter = 0;
             $post_data = array();
-            foreach ($retailer_list as $retailer)
-            {
+            foreach ($retailer_list as $retailer) {
                 $post_data['retailer[' . $counter++ . ']'] = $retailer->get_warehouse_id();
             }
 
@@ -31,17 +29,12 @@ class Wms_inventory_model extends CI_Model
             $this->communication_framework_service->set_post_para($post_data);
             $this->communication_framework_service->call_remote_url();
 
-            if ($this->communication_framework_service->get_remote_result())
-            {
+            if ($this->communication_framework_service->get_remote_result()) {
                 $retailer_inv_xml = $this->communication_framework_service->get_remote_result_xml();
-            }
-            else
-            {
+            } else {
                 return FALSE;
             }
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
 
@@ -49,12 +42,10 @@ class Wms_inventory_model extends CI_Model
         $url = $this->context_config_service->value_of('wms_base_url') . $this->context_config_service->value_of('wms_warehouse_inventory_url');
         $this->communication_framework_service->clear_post_para();
 
-        if ($warehouse_list = $this->wms_warehouse_service->get_warehouse_list())
-        {
+        if ($warehouse_list = $this->wms_warehouse_service->get_warehouse_list()) {
             $counter = 0;
             $post_data = array();
-            foreach ($warehouse_list as $warehouse)
-            {
+            foreach ($warehouse_list as $warehouse) {
                 $post_data['warehouse_id[' . $counter++ . ']'] = $warehouse->get_warehouse_id();
             }
 
@@ -62,17 +53,12 @@ class Wms_inventory_model extends CI_Model
             $this->communication_framework_service->set_post_para($post_data);
             $this->communication_framework_service->call_remote_url();
 
-            if ($this->communication_framework_service->get_remote_result())
-            {
+            if ($this->communication_framework_service->get_remote_result()) {
                 $warehouse_inv_xml = $this->communication_framework_service->get_remote_result_xml();
-            }
-            else
-            {
+            } else {
                 return FALSE;
             }
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
 
@@ -80,13 +66,10 @@ class Wms_inventory_model extends CI_Model
         $this->wms_inventory_service->get_dao()->trans_start();
 
         $this->wms_inventory_service->empty_table();
-        if ($this->insert_inventory($retailer_inv_xml) && $this->insert_inventory($warehouse_inv_xml))
-        {
+        if ($this->insert_inventory($retailer_inv_xml) && $this->insert_inventory($warehouse_inv_xml)) {
             $this->wms_inventory_service->get_dao()->trans_complete();
             return TRUE;
-        }
-        else
-        {
+        } else {
             $this->wms_inventory_service->get_dao()->trans_rollback();
             return FALSE;
         }
@@ -96,39 +79,24 @@ class Wms_inventory_model extends CI_Model
     {
         $inv = array();
 
-        foreach ($xml_obj as $node)
-        {
-            if (strtolower($node->getName()) == 'warehouse_info')
-            {
-                foreach ($node->children() as $warehouse_info)
-                {
-                    if (strtolower($warehouse_info->getName()) == 'dest_wh_code')
-                    {
-                        $warehouse_id = (string) $warehouse_info;
+        foreach ($xml_obj as $node) {
+            if (strtolower($node->getName()) == 'warehouse_info') {
+                foreach ($node->children() as $warehouse_info) {
+                    if (strtolower($warehouse_info->getName()) == 'dest_wh_code') {
+                        $warehouse_id = (string)$warehouse_info;
                         $inv[$warehouse_id] = array();
-                    }
-                    elseif (strtolower($warehouse_info->getName()) == 'item')
-                    {
-                        foreach ($warehouse_info->children() as $item)
-                        {
-                            if (strtolower($item->getName()) == 'sku')
-                            {
-                                $sku = (string) $item;
+                    } elseif (strtolower($warehouse_info->getName()) == 'item') {
+                        foreach ($warehouse_info->children() as $item) {
+                            if (strtolower($item->getName()) == 'sku') {
+                                $sku = (string)$item;
                                 $inv[$warehouse_id][$sku] = array();
                                 $inv[$warehouse_id][$sku]['git'] = 0;
-                            }
-                            elseif(strtolower($item->getName()) == 'goods_in_warehouse')
-                            {
+                            } elseif (strtolower($item->getName()) == 'goods_in_warehouse') {
                                 $inv[$warehouse_id][$sku]['inventory'] = intval($item);
-                            }
-                            elseif(strtolower($item->getName()) == 'transit')
-                            {
-                                foreach ($item->children() as $transit)
-                                {
-                                    if (strtolower($transit->getName()) == 'goods_in_transit')
-                                    {
-                                        if ((string) $transit != '')
-                                        {
+                            } elseif (strtolower($item->getName()) == 'transit') {
+                                foreach ($item->children() as $transit) {
+                                    if (strtolower($transit->getName()) == 'goods_in_transit') {
+                                        if ((string)$transit != '') {
                                             $inv[$warehouse_id][$sku]['git'] += intval($transit);
                                         }
                                     }
@@ -140,12 +108,12 @@ class Wms_inventory_model extends CI_Model
             }
         }
 
-        if (sizeof($inv) > 0)
-        {
+        if (sizeof($inv) > 0) {
             return $this->wms_inventory_service->renew_inventory($inv);
         }
 
         return TRUE;
     }
 }
+
 ?>

@@ -156,4 +156,5 @@ class Freight_cat_charge_vo extends Base_vo
     }
 
 }
+
 ?>

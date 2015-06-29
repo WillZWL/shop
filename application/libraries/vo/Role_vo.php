@@ -144,4 +144,5 @@ class Role_vo extends Base_vo
     }
 
 }
+
 ?>

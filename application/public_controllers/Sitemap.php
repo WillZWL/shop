@@ -21,9 +21,8 @@ class Sitemap extends PUB_Controller
         $xmlstring = "";
 
         $filename = "web_sitemap_1d87bdf4_000.xml.gz";
-        $zh = gzopen("$filename",'r') or die("can't open: $php_errormsg");
-        while ($line = gzgets($zh,1024))
-        {
+        $zh = gzopen("$filename", 'r') or die("can't open: $php_errormsg");
+        while ($line = gzgets($zh, 1024)) {
             // $line is the next line of uncompressed data, up to 1024 bytes
             $xmlstring .= $line;
         }
@@ -33,8 +32,7 @@ class Sitemap extends PUB_Controller
         $src = simplexml_load_string($xmlstring);
 
         $i = 0;
-        foreach ($src->url as $url)
-        {
+        foreach ($src->url as $url) {
             $i++;
             $allow = true;
             $hreflang = false;
@@ -42,11 +40,11 @@ class Sitemap extends PUB_Controller
 
             $blockeditem = "/\/[a-z][a-z]_[A-Z][A-Z]($|\/)/";   # vb.com/en_SG/
             if (preg_match($blockeditem, $urlstring, $lang)) $hreflang = true;
-    #       if (!$hreflang)
-    #       {
-    #           $blockeditem = "/\/[a-z][a-z]_[A-Z][A-Z]$/";    # vb.com/en_SG
-    #           if (preg_match($blockeditem, $urlstring, $lang)) $hreflang = true;
-    #       }
+            #       if (!$hreflang)
+            #       {
+            #           $blockeditem = "/\/[a-z][a-z]_[A-Z][A-Z]$/";    # vb.com/en_SG
+            #           if (preg_match($blockeditem, $urlstring, $lang)) $hreflang = true;
+            #       }
 
             $blockeditem = "/.(gif|svgz|svg|jpeg|jpg|png|woff|eot|ico|ttf)$/i";
             if (preg_match($blockeditem, $urlstring)) $allow = false;
@@ -67,20 +65,17 @@ class Sitemap extends PUB_Controller
             if (preg_match($blockeditem, $urlstring)) $allow = false;
 
 
-
             $blockeditem = "/(^|\/)(mainproduct|display\/view)(\/|$)/i";
             if (preg_match($blockeditem, $urlstring)) $allow = false;
 
-            if (1 == 1)
-            {
+            if (1 == 1) {
                 $blockeditem = "/http:\/\/www.valuebasket.com/i";
                 $urlstring = preg_replace($blockeditem, "", $urlstring);
 
                 $langloc = "****************************";
                 $langloc = "en";    #default is english
-                if ($hreflang)
-                {
-                    $langloc = trim($lang[0],"/");
+                if ($hreflang) {
+                    $langloc = trim($lang[0], "/");
                     $langloc = substr($langloc, 0, 2);
 
                     $blockeditem = "/\/[a-z][a-z]_[A-Z][A-Z]($|\/)/";   # vb.com/en_SG/
@@ -88,14 +83,13 @@ class Sitemap extends PUB_Controller
                 }
             }
 
-            if ($allow)
-            {
-                $u["loc"]           = urldecode($url->loc);
-                $u["hash"]          = urldecode(trim($urlstring,"/"));
-                $u["lastmod"]       = $url->lastmod;
-                $u["changefreq"]    = $url->changefreq;
-                $u["priority"]      = $url->priority;
-                $u["hreflang"]      = $langloc;
+            if ($allow) {
+                $u["loc"] = urldecode($url->loc);
+                $u["hash"] = urldecode(trim($urlstring, "/"));
+                $u["lastmod"] = $url->lastmod;
+                $u["changefreq"] = $url->changefreq;
+                $u["priority"] = $url->priority;
+                $u["hreflang"] = $langloc;
 
                 $urllist[] = $u;
             }
@@ -104,8 +98,7 @@ class Sitemap extends PUB_Controller
         usort($urllist, array($this, 'cmp'));
 
         $i = 0;
-        foreach ($urllist as $urlstring)
-        {
+        foreach ($urllist as $urlstring) {
             $i++;
 
             #if ($prevhash != $urlstring['hash']) echo "<HR>";
@@ -119,23 +112,19 @@ class Sitemap extends PUB_Controller
         $humanxml = false;
 
         $dst = new SimpleXMLElement('<urlset/>');
-        if (!$humanxml)
-        {
-            $dst->addAttribute ("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
-            $dst->addAttribute ("xmlns:xmlns:xhtml", "http://www.w3.org/1999/xhtml");
+        if (!$humanxml) {
+            $dst->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
+            $dst->addAttribute("xmlns:xmlns:xhtml", "http://www.w3.org/1999/xhtml");
         }
 
         $mainhash = "";
-        foreach ($urllist as $key=>$urlstring)
-        {
-            if ($mainhash != $urlstring['hash'])
-            {
+        foreach ($urllist as $key => $urlstring) {
+            if ($mainhash != $urlstring['hash']) {
                 # add the parent
                 $mainloc = $urlstring['loc'];
                 $mainhash = $urlstring['hash'];
 
-                if ($urllist[$key + 1]["hash"] == $mainhash)
-                {
+                if ($urllist[$key + 1]["hash"] == $mainhash) {
                     # we have a child
                     $url = $dst->addChild("url");
                     $url->loc = $urlstring["loc"];
@@ -143,9 +132,7 @@ class Sitemap extends PUB_Controller
                     $url->changefreq = $urlstring["changefreq"];
                     $url->priority = $urlstring["priority"];
                 }
-            }
-            else
-            {
+            } else {
                 # add the equivalent (if any)
                 if (!$humanxml)
                     $xhtml = $url->addChild("xhtml:xhtml:link");
@@ -158,7 +145,9 @@ class Sitemap extends PUB_Controller
         }
 
         $xmlstring = $dst->asXML();
-        $fp = fopen ("sitemap.xml", "w+"); fwrite($fp, $xmlstring); fclose($fp);
+        $fp = fopen("sitemap.xml", "w+");
+        fwrite($fp, $xmlstring);
+        fclose($fp);
 
         #submit the sitemap to google
         file_get_contents("http://www.google.com/webmasters/tools/ping?sitemap=http://www.valuebasket.com/sitemap.xml");

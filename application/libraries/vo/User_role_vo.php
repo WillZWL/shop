@@ -120,4 +120,5 @@ class User_role_vo extends Base_vo
     }
 
 }
+
 ?>

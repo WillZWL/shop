@@ -3,29 +3,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once 'Base_dao.php';
 
-class Freight_cat_charge_dao extends Base_dao {
-    private $table_name="freight_cat_charge";
-    private $vo_class_name="Freight_cat_charge_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+class Freight_cat_charge_dao extends Base_dao
+{
+    private $table_name = "freight_cat_charge";
+    private $vo_class_name = "Freight_cat_charge_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function get_vo_classname(){
-        return $this->vo_class_name;
-    }
-
-    public function get_table_name(){
+    public function get_table_name()
+    {
         return $this->table_name;
     }
 
-    public function get_seq_name(){
+    public function get_seq_name()
+    {
         return $this->seq_name;
     }
 
-    public function get_seq_mapping_field(){
+    public function get_seq_mapping_field()
+    {
         return $this->seq_mapping_field;
     }
 
@@ -48,19 +49,20 @@ class Freight_cat_charge_dao extends Base_dao {
 
         $this->include_vo();
 
-        if ($query = $this->db->query($sql, array($fcat_id, $weight, $weight)))
-        {
+        if ($query = $this->db->query($sql, array($fcat_id, $weight, $weight))) {
             $rs = array();
-            foreach ($query->result($this->get_vo_classname()) as $obj)
-            {
+            foreach ($query->result($this->get_vo_classname()) as $obj) {
                 $rs[] = $obj;
             }
-            return (object) $rs;
-        }
-        else
-        {
+            return (object)$rs;
+        } else {
             return FALSE;
         }
+    }
+
+    public function get_vo_classname()
+    {
+        return $this->vo_class_name;
     }
 
     public function calc_logistic_cost($platform_id, $sku)
@@ -95,18 +97,14 @@ class Freight_cat_charge_dao extends Base_dao {
         LIMIT 1
 SQL;
 
-        if ($query = $this->db->query($sql, array($platform_id, $sku)))
-        {
+        if ($query = $this->db->query($sql, array($platform_id, $sku))) {
             $rs = array();
 
-            if($query->num_rows() != 1)
-            {
+            if ($query->num_rows() != 1) {
                 return FALSE;
             }
             return $query->row_array();
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }

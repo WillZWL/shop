@@ -132,4 +132,5 @@ class Order_status_history_vo extends Base_vo
     }
 
 }
+
 ?>

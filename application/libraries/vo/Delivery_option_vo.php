@@ -144,4 +144,5 @@ class Delivery_option_vo extends Base_vo
     }
 
 }
+
 ?>

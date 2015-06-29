@@ -1,4 +1,5 @@
 <?php
+
 class On_hold_admin_model extends CI_Model
 {
     public function __construct()
@@ -9,39 +10,39 @@ class On_hold_admin_model extends CI_Model
         $this->load->library('service/client_service');
     }
 
-    public function get_list($dao="dao", $where=array(), $option=array())
+    public function get_list($dao = "dao", $where = array(), $option = array())
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->get_list($where, $option);
     }
 
-    public function get_num_rows($dao="dao", $where=array())
+    public function get_num_rows($dao = "dao", $where = array())
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->get_num_rows($where);
     }
 
-    public function get($dao="dao", $where=array())
+    public function get($dao = "dao", $where = array())
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->get($where);
     }
 
-    public function update($dao="dao", $obj)
+    public function update($dao = "dao", $obj)
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->update($obj);
     }
 
-    public function add($dao="dao", $obj)
+    public function add($dao = "dao", $obj)
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->insert($obj);
     }
 
     public function include_vo($dao)
     {
-        $dao = "get_".$dao;
+        $dao = "get_" . $dao;
         return $this->so_service->$dao()->include_vo();
     }
 
@@ -70,9 +71,9 @@ class On_hold_admin_model extends CI_Model
         $this->refund_service->get_history_dao()->insert($obj);
     }
 
-    public function create_refund($so_no="")
+    public function create_refund($so_no = "")
     {
-        return $so_no==""?FALSE:$this->refund_service->create_refund($so_no);
+        return $so_no == "" ? FALSE : $this->refund_service->create_refund($so_no);
     }
 
     public function get_event_dto()
@@ -90,14 +91,14 @@ class On_hold_admin_model extends CI_Model
         return $this->so_service->check_if_packed($so_no);
     }
 
-    public function fire_log_email_event($so_no="", $template="", $option="")
+    public function fire_log_email_event($so_no = "", $template = "", $option = "")
     {
         return $this->so_service->fire_log_email_event($so_no, $template, $option);
     }
 
-    public function fire_cs2log_email($so_no="",$reason="",$user_info=array())
+    public function fire_cs2log_email($so_no = "", $reason = "", $user_info = array())
     {
-        $this->so_service->fire_cs2log_email($so_no,$reason,$user_info);
+        $this->so_service->fire_cs2log_email($so_no, $reason, $user_info);
     }
 }
 

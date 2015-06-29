@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class External_category_dao extends Base_dao
 {
-    private $table_name="external_category";
-    private $vo_classname="External_category_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "external_category";
+    private $vo_classname = "External_category_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

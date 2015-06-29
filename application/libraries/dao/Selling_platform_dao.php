@@ -15,20 +15,18 @@ class Selling_platform_dao extends Base_dao
         parent::__construct();
     }
 
-    public function get_vo_classname()
+    public function get_table_name()
     {
-        return $this->vo_class_name;
-    }
-
-    public function get_table_name(){
         return $this->table_name;
     }
 
-    public function get_seq_name(){
+    public function get_seq_name()
+    {
         return $this->seq_name;
     }
 
-    public function get_seq_mapping_field(){
+    public function get_seq_mapping_field()
+    {
         return $this->seq_mapping_field;
     }
 
@@ -38,57 +36,49 @@ class Selling_platform_dao extends Base_dao
         $this->db->join("platform_biz_var pbv", "sp.id = pbv.selling_platform_id", "INNER");
         $this->db->where($where);
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
             $this->include_vo();
             $this->db->select("sp.*");
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($this->get_vo_classname()) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($this->get_vo_classname()) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
 
         return FALSE;
+    }
+
+    public function get_vo_classname()
+    {
+        return $this->vo_class_name;
     }
 
     public function get_platform_list_w_country_id($country_id = "")
@@ -100,15 +90,13 @@ class Selling_platform_dao extends Base_dao
                 WHERE (sp.type = 'WEBSITE' OR sp.type = 'SKYPE') AND sp.status = 1
                     AND pbv.platform_country_id = ?";
 
-        if($result = $this->db->query($sql, $country_id))
-        {
+        if ($result = $this->db->query($sql, $country_id)) {
             $this->include_vo();
 
             $result_arr = array();
             $classname = $this->get_vo_classname();
 
-            foreach ($result->result("object", $classname) as $obj)
-            {
+            foreach ($result->result("object", $classname) as $obj) {
                 $result_arr[$obj->get_type()][] = $obj;
             }
             return $result_arr;
@@ -128,15 +116,13 @@ class Selling_platform_dao extends Base_dao
                     AND c.allow_sell = 1 AND c.status = 1
                     AND pbv.language_id = ?";
 
-        if($result = $this->db->query($sql, $lang_id))
-        {
+        if ($result = $this->db->query($sql, $lang_id)) {
             $this->include_vo();
 
             $result_arr = array();
             $classname = $this->get_vo_classname();
 
-            foreach ($result->result("object", $classname) as $obj)
-            {
+            foreach ($result->result("object", $classname) as $obj) {
                 $result_arr[$obj->get_type()][] = $obj;
             }
             return $result_arr;
@@ -151,15 +137,13 @@ class Selling_platform_dao extends Base_dao
                 WHERE status = 1
                 ORDER BY type";
 
-        if($result = $this->db->query($sql))
-        {
+        if ($result = $this->db->query($sql)) {
             $this->include_vo();
 
             $result_arr = array();
             $classname = $this->get_vo_classname();
 
-            foreach ($result->result("object", $classname) as $obj)
-            {
+            foreach ($result->result("object", $classname) as $obj) {
                 $result_arr[] = $obj->get_type();
             }
             return $result_arr;
@@ -167,7 +151,7 @@ class Selling_platform_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_selling_platform_w_lang_id($where = array(), $option = array(), $classname="selling_platform_w_lang_id_dto")
+    public function get_selling_platform_w_lang_id($where = array(), $option = array(), $classname = "selling_platform_w_lang_id_dto")
     {
         $this->db->from("selling_platform AS sp");
         $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = sp.id", "INNER");
@@ -175,11 +159,10 @@ class Selling_platform_dao extends Base_dao
         return $this->common_get_list($where, $option, $classname, "sp.*, pbv.language_id lang_id");
     }
 
-    public function get_platform_list_w_allow_sell_country($type="")
+    public function get_platform_list_w_allow_sell_country($type = "")
     {
         //Only those platform not started with WEB%
-        if (isset($type) && $type == "MARKETPLACE")
-        {
+        if (isset($type) && $type == "MARKETPLACE") {
             $sql = "SELECT sp.id AS platform_id, c.id AS country_id
                     FROM selling_platform sp
                     JOIN platform_biz_var pbv
@@ -188,11 +171,8 @@ class Selling_platform_dao extends Base_dao
                         ON c.id = pbv.platform_country_id
                     WHERE (sp.id NOT LIKE 'WEB%') AND sp.status = 1
                         AND c.allow_sell = 1 AND c.status = 1";
-        }
-
-        //Original query, still be used to retrieve the WEBSITE type
-        else
-        {
+        } //Original query, still be used to retrieve the WEBSITE type
+        else {
             $sql = "SELECT sp.id AS platform_id, c.id AS country_id
                     FROM selling_platform sp
                     JOIN platform_biz_var pbv
@@ -203,16 +183,14 @@ class Selling_platform_dao extends Base_dao
                         AND c.allow_sell = 1 AND c.status = 1";
         }
 
-        if($result = $this->db->query($sql, $type))
-        {
+        if ($result = $this->db->query($sql, $type)) {
             $this->include_vo();
 
             $result_arr = array();
             $classname = $this->get_vo_classname();
 
-            foreach ($result->result() as $row)
-            {
-                $result_arr[] = array("platform_id"=>$row->platform_id, "country_id"=>$row->country_id);
+            foreach ($result->result() as $row) {
+                $result_arr[] = array("platform_id" => $row->platform_id, "country_id" => $row->country_id);
             }
             return $result_arr;
         }

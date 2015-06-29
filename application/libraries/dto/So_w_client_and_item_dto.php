@@ -4,9 +4,9 @@ include_once 'Base_dto.php';
 class So_w_client_and_item_dto extends Base_dto
 {
 //class variable
+    public $so_item = array();
     protected $so_no;
     protected $fingerprintId;
-    public $so_item = array();
     protected $line_no;
     protected $prod_sku;
     protected $prod_name;
@@ -535,4 +535,5 @@ class So_w_client_and_item_dto extends Base_dto
         return $this;
     }
 }
+
 ?>

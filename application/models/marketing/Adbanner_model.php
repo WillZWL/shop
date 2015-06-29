@@ -9,7 +9,7 @@ class Adbanner_model extends CI_Model
         $this->load->library('service/adbanner_service');
     }
 
-    public function get_adbanner($value="")
+    public function get_adbanner($value = "")
     {
         return $this->adbanner_service->get($value);
     }

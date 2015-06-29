@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Flex_so_fee_dao extends Base_dao
 {
-    private $table_name="flex_so_fee";
-    private $vo_class_name="Flex_so_fee_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "flex_so_fee";
+    private $vo_class_name = "Flex_so_fee_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class Flex_so_fee_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_so_fee_invoice($where, $classname="so_fee_invoice_dto")
+    public function get_so_fee_invoice($where, $classname = "so_fee_invoice_dto")
     {
         $option['limit'] = -1;
         $this->db->from("flex_so_fee fsf");

@@ -58,15 +58,12 @@ class Yandex_integrator
     {
         $this->debug = $debug;
         $this->_data_path = $save_path;
-        if ($this->debug)
-        {
+        if ($this->debug) {
             $this->_shopId = self::DEBUG_SHOPID;
             $this->_scid = self::DEBUG_SCID;
             $this->_server = self::DEBUG_YANDEX_SERVER;
             $this->_apiServer = self::DEBUG_YANDEX_WS_SERVER;
-        }
-        else
-        {
+        } else {
             $this->_shopId = self::SHOPID;
             $this->_scid = self::SCID;
             $this->_server = self::YANDEX_SERVER;
@@ -97,13 +94,20 @@ class Yandex_integrator
         return $requestParameters;
     }
 
+    public function form_refund_request_and_save($requestParas)
+    {
+        $requestStr = $this->formRefundRequest($requestParas);
+        return $requestStr;
+//      return $this->_save_request_file($requestStr, $requestParas["so_no"]);
+    }
+
     public function formRefundRequest($requestParas)
     {
         $this->_requestType = self::API_TYPE_REFUND;
         $dateTime = date("c");
         $currency_id = $this->currecny_mapping[$requestParas["currency_id"]];
 
-$xmlString = <<<EOT
+        $xmlString = <<<EOT
 <?xml version='1.0' encoding='UTF-8'<returnPaymentRequest clientOrderId="{$requestParas["so_no"]}"
         requestDT="{$dateTime}"
         invoiceId="{$requestParas["transaction_id"]}"
@@ -117,80 +121,25 @@ EOT;
         return utf8_encode($xmlString);
     }
 
-    private function _save_request_file($refundRequestXml, $so_no)
-    {
-        $currentTime = date("YmdHis");
-        $filePath = $this->_data_path . "orders/yandex/" . $this->_requestType;
-        $filePath .= "/" . $currentTime . "_" . $so_no . ".txt";
-        $fileName = $currentTime . "_" . $so_no . ".txt";
-
-        $fh = fopen($filePath, "w");
-        fwrite($fh, $refundRequestXml);
-        fclose($fh);
-        return array("filePath" => $filePath, "fileName" => $fileName, "requestXml" => $refundRequestXml);
-    }
-
-    public function form_refund_request_and_save($requestParas)
-    {
-        $requestStr = $this->formRefundRequest($requestParas);
-        return $requestStr;
-//      return $this->_save_request_file($requestStr, $requestParas["so_no"]);
-    }
-
-    private function _create_signed_message($message)
-    {
-        $signedMessagePath = $this->_data_path . "orders/yandex/" . self::API_TYPE_REFUND_RESPONSE . "/" . $requestFileName;
-        $privateKeyPath = self::KEY_STORE_PATH . self::YANDEX_PAYMENT_PRIVATE_KEY;
-        $yandexCerPath = self::KEY_STORE_PATH . self::YANDEX_PROVIDED_CERT;
-
-        $descriptorspec = array( 0 => array("pipe", "r"),
-                                    1 => array("pipe", "w"),
-                                    2 => array("pipe", "w"));
-
-        $process = proc_open("openssl smime -sign -signer " . $yandexCerPath .
-                            " -inkey " . $privateKeyPath .
-                             " -nochain -nocerts -outform PEM -nodetach -passin pass:" . self::YANDEX_PRIVATE_KEY_PASS_PHRASE
-                             , $descriptorspec, $pipes);
-        if (is_resource($process))
-        {
-            fwrite($pipes[0], $message);
-            fclose($pipes[0]);
-
-            $pkcs7 = stream_get_contents($pipes[1]);
-            fclose($pipes[1]);
-            $resCode = proc_close($process);
-            if ($resCode != 0)
-            {
-                throw new Exception("OpenSSL call failed:" . $resCode . '\n' . $pkcs7);
-            }
-            return $pkcs7;
-        }
-        return false;
-    }
-
     public function submitRefund($refundRequestMessage)
     {
 //      $pkcs7SignResult = openssl_pkcs7_sign($requestPath, $signedMessagePath, $yandexCerPath, array($privateKeyPath, self::YANDEX_PRIVATE_KEY_PASS_PHRASE), array());
-        try
-        {
+        try {
             $pkcs7SignResult = $this->_create_signed_message($refundRequestMessage);
-        }
-        catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
             return false;
         }
 
-        if ($pkcs7SignResult)
-        {
+        if ($pkcs7SignResult) {
             $submitResult = $this->sendApiRquestToYandex($pkcs7SignResult);
             $responseXml = $submitResult["result"];
             $xmlResult = simplexml_load_string($responseXml);
 
-            $so_no = (string) $xmlResult["clientOrderId"];
-            $responseStatus = (string) $xmlResult["status"];
-            $responseError = (string) $xmlResult["error"];
-            $techMessage = (string) $xmlResult->techMessage;
+            $so_no = (string)$xmlResult["clientOrderId"];
+            $responseStatus = (string)$xmlResult["status"];
+            $responseError = (string)$xmlResult["error"];
+            $techMessage = (string)$xmlResult->techMessage;
 
             $response = array();
             $response["error"] = $responseError;
@@ -199,23 +148,46 @@ EOT;
 //          var_dump($responseError);
 //          var_dump($responseStatus);
 
-            if (($responseStatus == 0) && ($responseError == 0))
-            {
+            if (($responseStatus == 0) && ($responseError == 0)) {
                 $response["result"] = self::REFUND_STATUS_SUCCESS;
-            }
-            else if ($responseStatus == 1)
-            {
+            } else if ($responseStatus == 1) {
                 $response["result"] = self::REFUND_STATUS_REQUIRE_RETRY;
-            }
-            else
-            {
+            } else {
 //refund instruction fail with error
                 $response["result"] = self::REFUND_STATUS_ERROR;
             }
             return $response;
-        }
-        else
+        } else
             return FALSE;
+    }
+
+    private function _create_signed_message($message)
+    {
+        $signedMessagePath = $this->_data_path . "orders/yandex/" . self::API_TYPE_REFUND_RESPONSE . "/" . $requestFileName;
+        $privateKeyPath = self::KEY_STORE_PATH . self::YANDEX_PAYMENT_PRIVATE_KEY;
+        $yandexCerPath = self::KEY_STORE_PATH . self::YANDEX_PROVIDED_CERT;
+
+        $descriptorspec = array(0 => array("pipe", "r"),
+            1 => array("pipe", "w"),
+            2 => array("pipe", "w"));
+
+        $process = proc_open("openssl smime -sign -signer " . $yandexCerPath .
+            " -inkey " . $privateKeyPath .
+            " -nochain -nocerts -outform PEM -nodetach -passin pass:" . self::YANDEX_PRIVATE_KEY_PASS_PHRASE
+            , $descriptorspec, $pipes);
+        if (is_resource($process)) {
+            fwrite($pipes[0], $message);
+            fclose($pipes[0]);
+
+            $pkcs7 = stream_get_contents($pipes[1]);
+            fclose($pipes[1]);
+            $resCode = proc_close($process);
+            if ($resCode != 0) {
+                throw new Exception("OpenSSL call failed:" . $resCode . '\n' . $pkcs7);
+            }
+            return $pkcs7;
+        }
+        return false;
     }
 
     public function sendApiRquestToYandex($signedData)
@@ -238,22 +210,22 @@ EOT;
         curl_setopt($cpt, CURLOPT_SSLCERT, $yandexCerPath);
         curl_setopt($cpt, CURLOPT_SSLKEY, $ourPrivateKey);
         curl_setopt($cpt, CURLOPT_SSLKEYPASSWD, $privateKeyPassword);
-/*
-        curl_setopt($cpt, CURLOPT_FORBID_REUSE, TRUE);
-        curl_setopt($cpt, CURLOPT_FRESH_CONNECT, TRUE);
-        curl_setopt($cpt, CURLOPT_TIMEOUT, 30);
-        curl_setopt($cpt, CURLOPT_CONNECTTIMEOUT, 30);
-        curl_setopt($cpt, CURLOPT_MAXREDIRS, 5);
-*/
+        /*
+                curl_setopt($cpt, CURLOPT_FORBID_REUSE, TRUE);
+                curl_setopt($cpt, CURLOPT_FRESH_CONNECT, TRUE);
+                curl_setopt($cpt, CURLOPT_TIMEOUT, 30);
+                curl_setopt($cpt, CURLOPT_CONNECTTIMEOUT, 30);
+                curl_setopt($cpt, CURLOPT_MAXREDIRS, 5);
+        */
         $this->curlResult = curl_exec($cpt);
         $this->_curlError = curl_error($cpt);
         $this->_curlInfo = curl_getinfo($cpt);
 
-/*      var_dump($refundServerApi);
-        var_dump($this->curlResult);
-        var_dump($this->_curlError);
-        var_dump($this->_curlInfo);
-*/
+        /*      var_dump($refundServerApi);
+                var_dump($this->curlResult);
+                var_dump($this->_curlError);
+                var_dump($this->_curlInfo);
+        */
         curl_close($cpt);
         return array("result" => $this->curlResult, "error" => $this->_curlError, "info" => $this->_curlInfo);
     }
@@ -262,31 +234,6 @@ EOT;
     {
         $result = $this->sendToYandex($postData);
         return $result["redirectUrl"];
-    }
-
-    public function createCheckOrderReply($status = self::CHECK_ORDER_TECHNICAL_ERROR, $invoiceId, $type)
-    {
-        $dateTime = date("c");
-        if ($type == self::RESPONSE_MESSAGE_TYPE_AVISO)
-            $tag = "paymentAvisoResponse";
-        else
-            $tag = "checkOrderResponse";
-$xmlString = <<<EOT
-<?xml version="1.0" encoding="UTF-8"<{$tag} performedDatetime="{$dateTime}"
-                    code="{$status}" invoiceId="{$invoiceId}"
-                    shopId="{$this->_shopId}"
-EOT;
-        if ($status == self::CHECK_ORDER_FAIL_MD5)
-        {
-            $xmlString .= " message=\"Message Digest is wrong.\"";
-        }
-        elseif ($status == self::CHECK_ORDER_REJECT_PAYMENT)
-        {
-            $xmlString .= " message=\"Amount not correct.\"";
-        }
-        $xmlString .= " />";
-
-        return $xmlString;
     }
 
     public function sendToYandex($postData)
@@ -322,6 +269,28 @@ EOT;
         return array("redirectUrl" => $redirectUrl, "curlResult" => $this->curlResult);
     }
 
+    public function createCheckOrderReply($status = self::CHECK_ORDER_TECHNICAL_ERROR, $invoiceId, $type)
+    {
+        $dateTime = date("c");
+        if ($type == self::RESPONSE_MESSAGE_TYPE_AVISO)
+            $tag = "paymentAvisoResponse";
+        else
+            $tag = "checkOrderResponse";
+        $xmlString = <<<EOT
+<?xml version="1.0" encoding="UTF-8"<{$tag} performedDatetime="{$dateTime}"
+                    code="{$status}" invoiceId="{$invoiceId}"
+                    shopId="{$this->_shopId}"
+EOT;
+        if ($status == self::CHECK_ORDER_FAIL_MD5) {
+            $xmlString .= " message=\"Message Digest is wrong.\"";
+        } elseif ($status == self::CHECK_ORDER_REJECT_PAYMENT) {
+            $xmlString .= " message=\"Amount not correct.\"";
+        }
+        $xmlString .= " />";
+
+        return $xmlString;
+    }
+
     public function getCurlResult()
     {
         return $this->curlResult;
@@ -340,5 +309,18 @@ EOT;
     public function setDebug($value)
     {
         $this->debug = $value;
+    }
+
+    private function _save_request_file($refundRequestXml, $so_no)
+    {
+        $currentTime = date("YmdHis");
+        $filePath = $this->_data_path . "orders/yandex/" . $this->_requestType;
+        $filePath .= "/" . $currentTime . "_" . $so_no . ".txt";
+        $fileName = $currentTime . "_" . $so_no . ".txt";
+
+        $fh = fopen($filePath, "w");
+        fwrite($fh, $refundRequestXml);
+        fclose($fh);
+        return array("filePath" => $filePath, "fileName" => $fileName, "requestXml" => $refundRequestXml);
     }
 }

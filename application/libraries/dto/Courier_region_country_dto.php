@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class Courier_region_country_dto extends Base_dto {
+class Courier_region_country_dto extends Base_dto
+{
 
     //class variable
     private $courier_id;

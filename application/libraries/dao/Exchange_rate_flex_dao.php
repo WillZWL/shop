@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Exchange_rate_flex_dao extends Base_dao
 {
-    private $table_name="exchange_rate_flex";
-    private $vo_class_name="Exchange_rate_flex_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "exchange_rate_flex";
+    private $vo_class_name = "Exchange_rate_flex_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

@@ -23,7 +23,8 @@ class Product_feed_dto extends Product_cost_dto
     private $field_n = "N";
     private $extra = "";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::Product_cost_dto();
     }
 

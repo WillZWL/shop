@@ -52,14 +52,14 @@ class Refund_hist_uname_dto extends Base_dto
         $this->id = $value;
     }
 
-    public function set_name($value)
-    {
-        $this->username = $value;
-    }
-
     public function get_name()
     {
         return $this->username;
+    }
+
+    public function set_name($value)
+    {
+        $this->username = $value;
     }
 
     public function get_refund_id()
@@ -173,4 +173,5 @@ class Refund_hist_uname_dto extends Base_dto
         $this->modify_by = $value;
     }
 }
+
 ?>

@@ -1,9 +1,10 @@
 <?php
+
 class Product_overview_amuk extends MY_Controller
 {
 
-    private $app_id="MKT0010";
-    private $lang_id="en";
+    private $app_id = "MKT0010";
+    private $lang_id = "en";
 
 
     public function __construct()
@@ -15,27 +16,23 @@ class Product_overview_amuk extends MY_Controller
         $this->load->library('service/context_config_service');
     }
 
-    public function index($platform_id="AMUK")
+    public function index($platform_id = "AMUK")
     {
-        $sub_app_id = $this->_get_app_id()."00";
-        $_SESSION["LISTPAGE"] = base_url()."marketing/product_overview_amuk/?".$_SERVER['QUERY_STRING'];
-        switch ($platform_id)
-        {
-            default: $price_service = "amuk_price";
-                    break;
+        $sub_app_id = $this->_get_app_id() . "00";
+        $_SESSION["LISTPAGE"] = base_url() . "marketing/product_overview_amuk/?" . $_SERVER['QUERY_STRING'];
+        switch ($platform_id) {
+            default:
+                $price_service = "amuk_price";
+                break;
         }
 
-        if ($this->input->post("posted") && $_POST["check"])
-        {
+        if ($this->input->post("posted") && $_POST["check"]) {
             $rsresult = "";
             $shownotice = 0;
-            foreach ($_POST["check"] as $rssku)
-            {
+            foreach ($_POST["check"] as $rssku) {
                 $success = 0;
-                if (($price_obj = $this->product_overview_amuk_model->get_price($price_service, array("sku"=>$rssku, "platform_id"=>$platform_id)))!==FALSE)
-                {
-                    if (empty($price_obj))
-                    {
+                if (($price_obj = $this->product_overview_amuk_model->get_price($price_service, array("sku" => $rssku, "platform_id" => $platform_id))) !== FALSE) {
+                    if (empty($price_obj)) {
                         $price_obj = $this->product_overview_amuk_model->get_price($price_service);
                         set_value($price_obj, $_POST["price"][$rssku]);
                         $price_obj->set_sku($rssku);
@@ -47,50 +44,37 @@ class Product_overview_amuk extends MY_Controller
                         $price_obj->set_is_advertised('N');
                         $price_obj->set_max_order_qty(100);
                         $price_obj->set_auto_price('N');
-                        if ($this->product_overview_amuk_model->add_price($price_service, $price_obj))
-                        {
+                        if ($this->product_overview_amuk_model->add_price($price_service, $price_obj)) {
                             $success = 1;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         set_value($price_obj, $_POST["price"][$rssku]);
-                        if ($this->product_overview_amuk_model->update_price($price_service, $price_obj))
-                        {
+                        if ($this->product_overview_amuk_model->update_price($price_service, $price_obj)) {
                             $success = 1;
                         }
                     }
                 }
-                if ($success)
-                {
-                    if ($product_obj = $this->product_overview_amuk_model->get("product", array("sku"=>$rssku)))
-                    {
+                if ($success) {
+                    if ($product_obj = $this->product_overview_amuk_model->get("product", array("sku" => $rssku))) {
                         set_value($product_obj, $_POST["product"][$rssku]);
-                        if ($this->product_overview_amuk_model->update("product", $product_obj))
-                        {
+                        if ($this->product_overview_amuk_model->update("product", $product_obj)) {
                             $success = 1;
-                        }
-                        else
-                        {
+                        } else {
                             $success = 0;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         $success = 0;
                     }
                 }
-                if (!$success)
-                {
+                if (!$success) {
                     $shownotice = 1;
                 }
                 $rsresult .= "{$rssku} -> {$success}\\n";
             }
-            if ($shownotice)
-            {
+            if ($shownotice) {
                 $_SESSION["NOTICE"] = $rsresult;
             }
-            redirect(current_url()."?".$_SERVER['QUERY_STRING']);
+            redirect(current_url() . "?" . $_SERVER['QUERY_STRING']);
         }
 
         $where = array();
@@ -101,125 +85,104 @@ class Product_overview_amuk extends MY_Controller
         $where["platform_id"] = $platform_id;
         $option["inventory"] = 1;
 
-        if ($this->input->get("sku") != "")
-        {
-            $where["sku LIKE "] = "%".$this->input->get("sku")."%";
+        if ($this->input->get("sku") != "") {
+            $where["sku LIKE "] = "%" . $this->input->get("sku") . "%";
             $submit_search = 1;
         }
 
-        if ($this->input->get("platform_code") != "")
-        {
-            $where["platform_code LIKE "] = "%".$this->input->get("platform_code")."%";
+        if ($this->input->get("platform_code") != "") {
+            $where["platform_code LIKE "] = "%" . $this->input->get("platform_code") . "%";
             $submit_search = 1;
         }
 
-        if ($this->input->get("cat_id") != "")
-        {
+        if ($this->input->get("cat_id") != "") {
             $where["cat_id"] = $this->input->get("cat_id");
         }
 
-        if ($this->input->get("sub_cat_id") != "")
-        {
+        if ($this->input->get("sub_cat_id") != "") {
             $where["sub_cat_id"] = $this->input->get("sub_cat_id");
         }
 
-        if ($this->input->get("sub_sub_cat_id") != "")
-        {
+        if ($this->input->get("sub_sub_cat_id") != "") {
             $where["sub_sub_cat_id"] = $this->input->get("sub_sub_cat_id");
         }
 
-        if ($this->input->get("brand_id") != "")
-        {
+        if ($this->input->get("brand_id") != "") {
             $where["brand_id"] = $this->input->get("brand_id");
         }
 
-        if ($this->input->get("supplier_id") != "")
-        {
+        if ($this->input->get("supplier_id") != "") {
             $where["supplier_id"] = $this->input->get("supplier_id");
         }
 
-        if ($this->input->get("prod_name") != "")
-        {
-            $where["prod_name LIKE "] = "%".$this->input->get("prod_name")."%";
+        if ($this->input->get("prod_name") != "") {
+            $where["prod_name LIKE "] = "%" . $this->input->get("prod_name") . "%";
             $submit_search = 1;
         }
 
-        if ($this->input->get("clearance") != "")
-        {
+        if ($this->input->get("clearance") != "") {
             $where["clearance"] = $this->input->get("clearance");
             $submit_search = 1;
         }
 
-        if($this->input->get("listing_status") != "")
-        {
+        if ($this->input->get("listing_status") != "") {
             $where["listing_status"] = $this->input->get("listing_status");
             $submit_search = 1;
         }
 
-        if ($this->input->get("inventory") != "")
-        {
+        if ($this->input->get("inventory") != "") {
             fetch_operator($where, "inventory", $this->input->get("inventory"));
             $submit_search = 1;
         }
 
-        if ($this->input->get("website_quantity") != "")
-        {
+        if ($this->input->get("website_quantity") != "") {
             fetch_operator($where, "website_quantity", $this->input->get("website_quantity"));
             $submit_search = 1;
         }
 
-        if ($this->input->get("website_status") != "")
-        {
+        if ($this->input->get("website_status") != "") {
             $where["website_status"] = $this->input->get("website_status");
             $submit_search = 1;
         }
 
-        if ($this->input->get("sourcing_status") != "")
-        {
+        if ($this->input->get("sourcing_status") != "") {
             $where["sourcing_status"] = $this->input->get("sourcing_status");
             $submit_search = 1;
         }
 
-        if ($this->input->get("shiptype_name") != "")
-        {
+        if ($this->input->get("shiptype_name") != "") {
             $where["shiptype_name"] = $this->input->get("shiptype_name");
             $submit_search = 1;
         }
 
-        if ($this->input->get("latency") != "")
-        {
+        if ($this->input->get("latency") != "") {
             $where["latency"] = $this->input->get("latency");
             $submit_search = 1;
         }
 
-        if ($this->input->get("auto_price") != "")
-        {
+        if ($this->input->get("auto_price") != "") {
             $where["auto_price"] = $this->input->get("auto_price");
             $submit_search = 1;
         }
 
-        if ($this->input->get("purchaser_updated_date") != "")
-        {
+        if ($this->input->get("purchaser_updated_date") != "") {
             fetch_operator($where, "purchaser_updated_date", $this->input->get("purchaser_updated_date"));
             $submit_search = 1;
         }
 
-        if ($this->input->get("profit") != "")
-        {
+        if ($this->input->get("profit") != "") {
             fetch_operator($where, "profit", $this->input->get("profit"));
             $option["refresh_margin"] = 1;
             $submit_search = 1;
         }
 
-        if ($this->input->get("margin") != "")
-        {
+        if ($this->input->get("margin") != "") {
             fetch_operator($where, "margin", $this->input->get("margin"));
             $option["refresh_margin"] = 1;
             $submit_search = 1;
         }
 
-        if ($this->input->get("price") != "")
-        {
+        if ($this->input->get("price") != "") {
             fetch_operator($where, "price", $this->input->get("price"));
             $submit_search = 1;
         }
@@ -231,29 +194,26 @@ class Product_overview_amuk extends MY_Controller
 
         $pconfig['base_url'] = $_SESSION["LISTPAGE"];
         $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"])
-        {
+        if ($option["limit"]) {
             $option["offset"] = $this->input->get("per_page");
         }
 
         if (empty($sort))
             $sort = "prod_name";
 
-        if($sort == "margin" || $sort == "profit")
-        {
+        if ($sort == "margin" || $sort == "profit") {
             $option["refresh_margin"] = 1;
         }
 
         if (empty($order))
             $order = "asc";
 
-        $option["orderby"] = $sort." ".$order;
+        $option["orderby"] = $sort . " " . $order;
 
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
-        if ($this->input->get("search"))
-        {
+        if ($this->input->get("search")) {
             $data["objlist"] = $this->product_overview_amuk_model->get_product_list($where, $option, $lang);
             $data["total"] = $this->product_overview_amuk_model->get_product_list_total($where, $option);
         }
@@ -264,15 +224,25 @@ class Product_overview_amuk extends MY_Controller
 
         $data["notice"] = notice($lang);
 
-        $data["sortimg"][$sort] = "<img src='".base_url()."images/".$order.".gif'>";
-        $data["xsort"][$sort] = $order=="asc"?"desc":"asc";
+        $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
+        $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
 //      $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
         $data["searchdisplay"] = "";
         $this->load->view('marketing/product_overview_amuk/product_overview_v', $data);
     }
 
+    public function _get_app_id()
+    {
+        return $this->app_id;
+    }
 
-    public function js_overview(){
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
+    }
+
+    public function js_overview()
+    {
         header("Content-type: text/javascript; charset: UTF-8");
         header("Cache-Control: must-revalidate");
         $offset = 60 * 60 * 24;
@@ -325,14 +295,6 @@ class Product_overview_amuk extends MY_Controller
                 }
             }";
         echo $js;
-    }
-
-    public function _get_app_id(){
-        return $this->app_id;
-    }
-
-    public function _get_lang_id(){
-        return $this->lang_id;
     }
 }
 

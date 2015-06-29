@@ -1,15 +1,16 @@
 <?php
+
 abstract class MY_Controller extends CI_Controller
 {
 
-    public function __construct($check_access_rights=TRUE)
+    public function __construct($check_access_rights = TRUE)
     {
         parent::__construct();
         $this->load->library($this->_get_service());
         $this->load->helper("url");
         $_SESSION["CURRPAGE"] = $_SERVER['REQUEST_URI'];
-        $currsign = array("GBP"=>"£", "EUR"=>"€");
-        $this->add_preload_data(array("currsign"=>$currsign));
+        $currsign = array("GBP" => "£", "EUR" => "€");
+        $this->add_preload_data(array("currsign" => $currsign));
         if ($this->config->item('uri_protocol') != "CLI") {
             $this->_check_authed();
             $this->load->library('service/authorization_service');
@@ -21,7 +22,10 @@ abstract class MY_Controller extends CI_Controller
         }
     }
 
-    abstract public function _get_app_id();
+    function _get_service()
+    {
+        return "service/Authentication_service";
+    }
 
     private function _check_authed()
     {
@@ -31,20 +35,17 @@ abstract class MY_Controller extends CI_Controller
         }
     }
 
-    function _get_login_page()
-    {
-        return "?back=".urlencode($_SESSION["CURRPAGE"]);
-    }
-
     function _get_fail_msg()
     {
         return "Please login to the system first!";
     }
 
-    function _get_service()
+    function _get_login_page()
     {
-        return "service/Authentication_service";
+        return "?back=" . urlencode($_SESSION["CURRPAGE"]);
     }
+
+    abstract public function _get_app_id();
 
     function _get_ru()
     {
@@ -59,7 +60,7 @@ abstract class MY_Controller extends CI_Controller
 
 function _form_ru()
 {
-    include_once(BASEPATH."libraries/Encrypt.php");
+    include_once(BASEPATH . "libraries/Encrypt.php");
     $encrypt = new CI_Encrypt();
-    return "<input type='hidden' name='ru' value='".$encrypt->encode($_SESSION["CURRPAGE"])."'>";
+    return "<input type='hidden' name='ru' value='" . $encrypt->encode($_SESSION["CURRPAGE"]) . "'>";
 }

@@ -215,4 +215,5 @@ class Product_content_extend_vo extends Base_vo
         return $this;
     }
 }
+
 ?>

@@ -156,4 +156,5 @@ class Platform_courier_vo extends Base_vo
     }
 
 }
+
 ?>

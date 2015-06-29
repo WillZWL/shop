@@ -3,13 +3,9 @@ include_once "base_vo.php";
 
 class Ra_product_vo extends Base_vo
 {
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $sku;
 
     //class variable
-    private $sku;
     private $rcm_group_id_1;
     private $rcm_group_id_2;
     private $rcm_group_id_3;
@@ -36,14 +32,20 @@ class Ra_product_vo extends Base_vo
     private $modify_on;
     private $modify_at;
     private $modify_by;
-
-    //primary key
     private $primary_key = array("sku");
 
-    //auo increment
+    //primary key
     private $increment_field = "";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_sku()
     {
         return $this->sku;

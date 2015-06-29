@@ -132,4 +132,5 @@ class Platform_shiptype_vo extends Base_vo
     }
 
 }
+
 ?>

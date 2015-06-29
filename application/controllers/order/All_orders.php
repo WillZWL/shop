@@ -1,19 +1,20 @@
 <?php
+
 class All_orders extends MY_Controller
 {
-    private $_app_id="ORD0021";
+    private $_app_id = "ORD0021";
 
     public function __construct()
     {
         parent::__construct();
         $this->load->model('order/all_orders_model');
-/*
-        $this->load->helper(array('url', 'notice', 'object', 'operator'));
-        $this->load->library('service/pagination_service');
-        $this->load->library('service/event_service');
-        $this->load->library('service/delivery_option_service');
-        $this->load->library('encrypt');
-*/
+        /*
+                $this->load->helper(array('url', 'notice', 'object', 'operator'));
+                $this->load->library('service/pagination_service');
+                $this->load->library('service/event_service');
+                $this->load->library('service/delivery_option_service');
+                $this->load->library('encrypt');
+        */
     }
 
     public function index()
@@ -28,8 +29,7 @@ class All_orders extends MY_Controller
         $data["so_hold_reason_list"] = $this->all_orders_model->get_so_hold_reason_list();
         // echo "<pre>"; var_dump($data["currency_list"]);die();
 
-        if ($_POST["post"])
-        {
+        if ($_POST["post"]) {
             $order_type = trim($_POST["order_type"]);
             $psp_gateway = trim($_POST["psp_gateway"]);
             $hold_reason = trim($_POST["hold_reason"]);
@@ -37,8 +37,7 @@ class All_orders extends MY_Controller
             $start_date = trim($_POST["start_date"]);
             $end_date = trim($_POST["end_date"]);
             $so_number = trim($_POST["so_number"]);
-            if (!empty($so_number))
-            {
+            if (!empty($so_number)) {
                 $so_number = strtoupper($so_number);
             }
         }
@@ -55,18 +54,14 @@ class All_orders extends MY_Controller
         $data['select_currency'] = $currency;
 
 
-        if($_POST["exportSubmit"])
-        {
+        if ($_POST["exportSubmit"]) {
 //          $data['output'] = $this->all_orders_model->get_report_heading();
             $data['output'] = $this->all_orders_model->get_all_orders_export_report($start_date, $end_date, $so_number, $order_type, $psp_gateway, $hold_reason, $currency);
             $data['filename'] = $this->all_orders_model->get_export_filename($start_date, $end_date);
             $this->load->view('output_csv.php', $data);
-        }
-        else
-        {
+        } else {
             $data['heading'] = explode(",", $this->all_orders_model->get_report_heading());
-            if ($_POST["post"])
-            {
+            if ($_POST["post"]) {
                 $data['orders'] = $this->all_orders_model->get_all_orders_report($start_date, $end_date, $so_number, $order_type, $psp_gateway, $hold_reason, $currency);
             }
             $this->load->view('order/all_orders/index', $data);

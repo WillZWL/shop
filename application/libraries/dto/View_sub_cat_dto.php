@@ -26,7 +26,7 @@ class View_sub_cat_dto extends Base_dto
 
     public function set_sub_sub_cat_id($value)
     {
-        $this->sub_sub_cat_id =$value;
+        $this->sub_sub_cat_id = $value;
     }
 
     public function get_sub_cat_id()
@@ -36,7 +36,7 @@ class View_sub_cat_dto extends Base_dto
 
     public function set_sub_cat_id($value)
     {
-        $this->sub_cat_id =$value;
+        $this->sub_cat_id = $value;
     }
 
     public function get_cat_id()
@@ -46,7 +46,7 @@ class View_sub_cat_dto extends Base_dto
 
     public function set_cat_id($value)
     {
-        $this->cat_id =$value;
+        $this->cat_id = $value;
     }
 
     public function get_sub_cat_name()
@@ -56,7 +56,7 @@ class View_sub_cat_dto extends Base_dto
 
     public function set_sub_cat_name($value)
     {
-        $this->sub_cat_name =$value;
+        $this->sub_cat_name = $value;
     }
 
     public function get_cat_name()
@@ -66,7 +66,7 @@ class View_sub_cat_dto extends Base_dto
 
     public function set_cat_name($value)
     {
-        $this->cat_name =$value;
+        $this->cat_name = $value;
     }
 
     public function get_name()
@@ -76,7 +76,7 @@ class View_sub_cat_dto extends Base_dto
 
     public function set_name($value)
     {
-        $this->name =$value;
+        $this->name = $value;
     }
 
     public function get_description()

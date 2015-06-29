@@ -7,7 +7,8 @@ class Shop_deal_compare_com_au_product_feed_service extends My_shopping_com_au_p
 {
     protected $id = "ShopDealCompare.com.au Product Feed";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::My_shopping_com_au_product_feed_service();
     }
 
@@ -16,49 +17,36 @@ class Shop_deal_compare_com_au_product_feed_service extends My_shopping_com_au_p
         define('DATAPATH', $this->get_config_srv()->value_of("data_path"));
 
         $data_feed = $this->get_data_feed();
-        if($data_feed)
-        {
+        if ($data_feed) {
             $filename = 'shop_deal_compare_com_au_product_feed_' . date('Ymdhis') . '.csv';
             $fp = fopen(DATAPATH . 'feeds/shop_deal_compare_com_au/' . $filename, 'w');
 
-            if(fwrite($fp, $data_feed))
-            {
+            if (fwrite($fp, $data_feed)) {
                 $this->ftp_feeds(DATAPATH . 'feeds/shop_deal_compare_com_au/' . $filename, "/valuebasket.csv", $this->get_ftp_name());
-            }
-            else
-            {
+            } else {
                 $subject = "<DO NOT REPLY> Fails to create ShopDealCompare.com.au Product Feed File";
-                $message ="FILE: ".__FILE__."<br>
-                             LINE: ".__LINE__;
+                $message = "FILE: " . __FILE__ . "<br>
+                             LINE: " . __LINE__;
                 $this->error_handler($subject, $message);
             }
         }
     }
 
-    protected function get_data_list($where = array(), $option = array())
-    {
-        return $this->get_prod_srv()->get_my_shopping_com_au_product_feed_dto(array(), array("limit"=>-1));
-    }
-
     public function get_data_feed($first_line_headling = TRUE)
     {
         $arr = $this->get_data_list();
-        if (!$arr)
-        {
+        if (!$arr) {
             return;
         }
 
         $new_list = array();
 
-        foreach ($arr as $row)
-        {
+        foreach ($arr as $row) {
             $price_srv = $this->get_price_srv();
-            if ($prod_obj = $this->get_product_srv()->get_dao()->get_product_overview(array("sku"=>$row->get_sku(), "platform_id"=>"WEBAU"), array("limit"=>1)))
-            {
+            if ($prod_obj = $this->get_product_srv()->get_dao()->get_product_overview(array("sku" => $row->get_sku(), "platform_id" => "WEBAU"), array("limit" => 1))) {
                 $price_srv->calc_logistic_cost($prod_obj);
                 $price_srv->calculate_profit($prod_obj);
-                if($prod_obj->get_margin() >= 5)
-                {
+                if ($prod_obj->get_margin() >= 5) {
                     $new_list[] = $this->process_data_row($row);
                 }
             }
@@ -68,30 +56,33 @@ class Shop_deal_compare_com_au_product_feed_service extends My_shopping_com_au_p
         return $content;
     }
 
+    protected function get_data_list($where = array(), $option = array())
+    {
+        return $this->get_prod_srv()->get_my_shopping_com_au_product_feed_dto(array(), array("limit" => -1));
+    }
+
     public function process_data_row($data = NULL)
     {
-        if (!is_object($data))
-        {
+        if (!is_object($data)) {
             return NULL;
         }
 
         $search = array(chr(10), chr(13));
-        $replace = array( " ", " ");
+        $replace = array(" ", " ");
         $detail_desc = str_replace($search, $replace, $data->get_detail_desc());
         $detail_desc = trim($detail_desc);
         $data->set_detail_desc($detail_desc);
 
-        if(!$data->get_image_url() || !file_exists($this->get_config_srv()->value_of("prod_img_path").basename($data->get_image_url())))
-        {
+        if (!$data->get_image_url() || !file_exists($this->get_config_srv()->value_of("prod_img_path") . basename($data->get_image_url()))) {
             $data->set_image_url("http://www.valuebasket.com.au/images/product/imageunavailable.jpg");
         }
 
         return $data;
     }
 
-    protected function get_default_vo2xml_mapping()
+    protected function get_ftp_name()
     {
-        return '';
+        return 'SHOP_DEAL_COMPARE';
     }
 
     public function get_contact_email()
@@ -99,9 +90,9 @@ class Shop_deal_compare_com_au_product_feed_service extends My_shopping_com_au_p
         return 'oswald@eservicesgroup.net';
     }
 
-    protected function get_ftp_name()
+    protected function get_default_vo2xml_mapping()
     {
-        return 'SHOP_DEAL_COMPARE';
+        return '';
     }
 
     protected function get_sj_id()

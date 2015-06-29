@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Country_dao extends Base_dao
 {
-    private $table_name="country";
-    private $vo_classname="Country_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "country";
+    private $vo_classname = "Country_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -18,11 +18,6 @@ class Country_dao extends Base_dao
     public function get_table_name()
     {
         return $this->table_name;
-    }
-
-    public function get_vo_classname()
-    {
-        return $this->vo_classname;
     }
 
     public function get_seq_name()
@@ -35,7 +30,7 @@ class Country_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_list_lang($lang, $where=array(), $option=array(), $classname="Country_lang_name_dto")
+    public function get_list_lang($lang, $where = array(), $option = array(), $classname = "Country_lang_name_dto")
     {
         // Hardcoded to language_id = 'en' only
         $sql = "SELECT c.id, c.fc_id, IFNULL(ce.name, c.name) as name, l.name lang_name
@@ -49,12 +44,10 @@ class Country_dao extends Base_dao
                     AND c.language_id = 'en'
                 ORDER BY ce.name";
 
-        if(($query = $this->db->query($sql, $lang)) != FALSE)
-        {
+        if (($query = $this->db->query($sql, $lang)) != FALSE) {
             $this->include_dto($classname);
             $ret = array();
-            foreach($query->result($classname) as $obj)
-            {
+            foreach ($query->result($classname) as $obj) {
                 $ret[] = $obj;
             }
             return $ret;
@@ -64,7 +57,7 @@ class Country_dao extends Base_dao
 
     public function get_sell_currency_list()
     {
-        $sql  = "SELECT distinct currency_id
+        $sql = "SELECT distinct currency_id
                 FROM country AS c1
                 WHERE allow_sell = 1
                 ORDER BY currency_id";
@@ -73,50 +66,47 @@ class Country_dao extends Base_dao
 
         $rs = array();
 
-        if ($query = $this->db->query($sql))
-        {
-            foreach ($query->result($this->get_vo_classname()) as $obj)
-            {
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result($this->get_vo_classname()) as $obj) {
                 $rs[] = $obj;
             }
-            return (object) $rs;
+            return (object)$rs;
         }
 
         return FALSE;
     }
 
-    public function get_sell_country_list($detail=1)
+    public function get_vo_classname()
     {
-        $sql  = "
+        return $this->vo_classname;
+    }
+
+    public function get_sell_country_list($detail = 1)
+    {
+        $sql = "
                 SELECT *
                 FROM country AS c1
                 WHERE allow_sell = 1
                 ORDER BY id = 'US' DESC, name
                 ";
 
-        if ($detail)
-        {
+        if ($detail) {
 
             $this->include_vo();
 
             $rs = array();
 
-            if ($query = $this->db->query($sql))
-            {
-                foreach ($query->result($this->get_vo_classname()) as $obj)
-                {
+            if ($query = $this->db->query($sql)) {
+                foreach ($query->result($this->get_vo_classname()) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
-        }
-        else
-        {
+        } else {
             $sql = "
                     SELECT COUNT(*) AS total
-                    FROM (".$sql.") AS c";
-            if ($query = $this->db->query($sql))
-            {
+                    FROM (" . $sql . ") AS c";
+            if ($query = $this->db->query($sql)) {
                 return $query->row()->total;
             }
         }
@@ -124,38 +114,32 @@ class Country_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_full_country_list($detail=1)
+    public function get_full_country_list($detail = 1)
     {
-        $sql  = "
+        $sql = "
                 SELECT *
                 FROM country AS c1
                 WHERE status = 1
                 ORDER BY id = 'US' DESC, name
                 ";
 
-        if ($detail)
-        {
+        if ($detail) {
 
             $this->include_vo();
 
             $rs = array();
 
-            if ($query = $this->db->query($sql))
-            {
-                foreach ($query->result($this->get_vo_classname()) as $obj)
-                {
+            if ($query = $this->db->query($sql)) {
+                foreach ($query->result($this->get_vo_classname()) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
-        }
-        else
-        {
+        } else {
             $sql = "
                     SELECT COUNT(*) AS total
-                    FROM (".$sql.") AS c";
-            if ($query = $this->db->query($sql))
-            {
+                    FROM (" . $sql . ") AS c";
+            if ($query = $this->db->query($sql)) {
                 return $query->row()->total;
             }
         }
@@ -163,7 +147,7 @@ class Country_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_rma_country_list($lang="en")
+    public function get_rma_country_list($lang = "en")
     {
         $sql = "SELECT c.id, IFNULL(ce.name, c.name) AS name, rf.rma_fc AS fc_id
                 FROM country c
@@ -177,11 +161,9 @@ class Country_dao extends Base_dao
 
         $this->include_vo();
 
-        if($query = $this->db->query($sql, $lang))
-        {
+        if ($query = $this->db->query($sql, $lang)) {
             $ret = array();
-            foreach($query->result($this->get_vo_classname()) as $obj)
-            {
+            foreach ($query->result($this->get_vo_classname()) as $obj) {
                 $ret[] = $obj;
             }
 
@@ -191,57 +173,45 @@ class Country_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_list_w_rma_fc($where=array(), $option=array(), $classname="Country_rma_fc_dto")
+    public function get_list_w_rma_fc($where = array(), $option = array(), $classname = "Country_rma_fc_dto")
     {
         $this->db->from('country AS c');
-        $this->db->join('rma_fc r','r.cid = c.id','INNER');
+        $this->db->join('rma_fc r', 'r.cid = c.id', 'INNER');
         $this->db->where($where);
-        if(!isset($option["num_rows"]))
-        {
+        if (!isset($option["num_rows"])) {
 
             $this->db->select('c.*, r.rma_fc');
 
             $this->db->order_by($option["orderby"]);
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $this->include_dto($classname);
 
-            if($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 $rs = array();
-                foreach($query->result($classname) as $obj)
-                {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
 
                 return $rs;
             }
-        }
-        else
-        {
-            $this->db->select("COUNT(*) as total","FALSE");
+        } else {
+            $this->db->select("COUNT(*) as total", "FALSE");
 
-            if($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -257,8 +227,7 @@ class Country_dao extends Base_dao
                     ON c.id = platform_country_id
                 WHERE c.status = 1 AND c.allow_sell = 1 AND pbv.selling_platform_id = ?";
 
-        if(($query = $this->db->query($sql, $platform_id)) != FALSE)
-        {
+        if (($query = $this->db->query($sql, $platform_id)) != FALSE) {
             return $query->row()->id;
         }
 
@@ -278,15 +247,13 @@ class Country_dao extends Base_dao
                 GROUP BY c.id, c.id_3_digit, c.name, c.description, c.status, c.currency_id, pbv.language_id, c.fc_id, c.allow_sell
                 ORDER BY name ASC";
 
-        if($result = $this->db->query($sql))
-        {
+        if ($result = $this->db->query($sql)) {
             $this->include_vo();
 
             $result_arr = array();
             $classname = $this->get_vo_classname();
 
-            foreach ($result->result("object", $classname) as $obj)
-            {
+            foreach ($result->result("object", $classname) as $obj) {
                 $result_arr[] = $obj;
             }
             return $result_arr;
@@ -296,12 +263,10 @@ class Country_dao extends Base_dao
 
     public function is_available_country_id($country_id = null)
     {
-        if (!is_null($country_id))
-        {
+        if (!is_null($country_id)) {
             $sql = "SELECT c.id FROM country c WHERE c.status = 1 AND c.url_enable = 1 AND c.id = ?";
 
-            if(($query = $this->db->query($sql, $country_id)) != FALSE)
-            {
+            if (($query = $this->db->query($sql, $country_id)) != FALSE) {
                 return TRUE;
             }
 
@@ -315,15 +280,13 @@ class Country_dao extends Base_dao
         $sql = "select c.id, ce.name, c.currency_id, c.language_id from country_ext ce
                 inner join country c on c.id=ce.cid and c.status=1 and ce.lang_id='" . $lang_id . "' and c.allow_sell=1 order by ce.name";
 
-        if($result = $this->db->query($sql))
-        {
+        if ($result = $this->db->query($sql)) {
             $this->include_vo();
 
             $result_arr = array();
             $classname = $this->get_vo_classname();
 
-            foreach ($result->result("object", $classname) as $obj)
-            {
+            foreach ($result->result("object", $classname) as $obj) {
                 $result_arr[] = $obj;
             }
             return $result_arr;
@@ -339,8 +302,7 @@ class Country_dao extends Base_dao
         $sql = "select * from country_blocked_postal_code
         where country_id = ? and blocked_postal_code = ?";
 
-        if($result = $this->db->query($sql, array($country_code, $postal_code)))
-        {
+        if ($result = $this->db->query($sql, array($country_code, $postal_code))) {
             if ($result->num_rows > 0) return false; else return true;
         }
     }

@@ -53,24 +53,24 @@ class Reevoo_customer_feed_dto extends Base_dto
         $this->email = $value;
     }
 
-    public function set_purchase_date($value)
-    {
-        $this->purchase_date = $value;
-    }
-
     public function get_purchase_date()
     {
         return $this->purchase_date;
     }
 
-    public function set_dispatch_date($value)
+    public function set_purchase_date($value)
     {
-        $this->dispatch_date = $value;
+        $this->purchase_date = $value;
     }
 
     public function get_dispatch_date()
     {
         return $this->dispatch_date;
+    }
+
+    public function set_dispatch_date($value)
+    {
+        $this->dispatch_date = $value;
     }
 
     public function get_client_id()

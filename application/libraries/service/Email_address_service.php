@@ -9,7 +9,7 @@ class Email_address_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Email_address_dao.php");
+        include_once(APPPATH . "libraries/dao/Email_address_dao.php");
         $this->set_dao(new Email_address_dao());
     }
 

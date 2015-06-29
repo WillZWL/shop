@@ -8,17 +8,59 @@ class Linkshare_product_feed_service extends Data_feed_service
     private static $total;
     private $_platform_id;
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::Data_feed_service();
         $this->total = 0;
         $this->set_output_delimiter("|");
     }
 
+    public function gen_data_feed($platform_id)
+    {
+        if ($this->init($platform_id)) {
+            define('DATAPATH', $this->get_config_srv()->value_of("data_path"));
+            $data_feed = $this->get_data_feed(false, array("pr.platform_id" => $platform_id));
+            if ($data_feed) {
+                $filename = $this->filename_prefix . '_nmerchandis.txt';
+                $fp = fopen(DATAPATH . $this->file_path . $filename, 'w');
+
+                //$header = "HDR|".$this->filename_prefix."|VBltd|".date('Y-m-d/h:i:s')."\n";
+                $trailer = "TRL|" . $this->total . "\n";
+
+//              $header="ProductID|ProductName|SKU|primary_cat|sec_cat|url|image_url|buy_url|short_desc|long_desc|discount|discounttype|saleprice|retailprice|begindate|enddate|brand|shipping|deleteflag|keywords|isall|mpn|man_name|shipping info|availabiliy|UPC|classID|isprodlink|isstorefront|ismerch|currency"."\n";
+                $header = "";
+                $content = $data_feed . $trailer;
+                $content = utf8_encode($content);
+                if (fwrite($fp, $content)) {
+                    $this->ftp_feeds(DATAPATH . $this->file_path . $filename, "/$filename", $this->get_ftp_name());
+                    switch ($platform_id) {
+                        case "WEBAU":
+                            $this->ftp_feeds(DATAPATH . $this->file_path . $filename, "/$filename", "MEDIAFORGE_AU");
+                            break;
+                        case "WEBGB":
+                            $this->ftp_feeds(DATAPATH . $this->file_path . $filename, "/$filename", "MEDIAFORGE_GB");
+                            break;
+                    }
+
+                    // generates "Save File" pop-up for feed in browser
+                    header("Cache-Control: no-store, no-cache");
+                    header("Content-Disposition: attachment; filename=\"$filename\"");
+                    echo $content;
+
+                } else {
+                    $subject = "<DO NOT REPLY> Fails to create " . $this->id . " File";
+                    $message = "FILE: " . __FILE__ . "<br>
+                                 LINE: " . __LINE__;
+                    $this->error_handler($subject, $message);
+                }
+            }
+        }
+    }
+
     public function init($platform_id)
     {
         $this->_platform_id = $platform_id;
-        switch($platform_id)
-        {
+        switch ($platform_id) {
             case "WEBAU":
                 $this->id = "Linkshare AU Product Feed";
                 $this->filename_prefix = '37893';
@@ -47,88 +89,18 @@ class Linkshare_product_feed_service extends Data_feed_service
         }
     }
 
-    public function gen_data_feed($platform_id)
+    protected function get_ftp_name()
     {
-        if($this->init($platform_id))
-        {
-            define('DATAPATH', $this->get_config_srv()->value_of("data_path"));
-            $data_feed = $this->get_data_feed(false, array("pr.platform_id"=>$platform_id));
-            if($data_feed)
-            {
-                $filename = $this->filename_prefix.'_nmerchandis.txt';
-                $fp = fopen(DATAPATH . $this->file_path . $filename, 'w');
-
-                //$header = "HDR|".$this->filename_prefix."|VBltd|".date('Y-m-d/h:i:s')."\n";
-                $trailer = "TRL|".$this->total."\n";
-
-//              $header="ProductID|ProductName|SKU|primary_cat|sec_cat|url|image_url|buy_url|short_desc|long_desc|discount|discounttype|saleprice|retailprice|begindate|enddate|brand|shipping|deleteflag|keywords|isall|mpn|man_name|shipping info|availabiliy|UPC|classID|isprodlink|isstorefront|ismerch|currency"."\n";
-                $header = "";
-                $content = $data_feed.$trailer;
-                $content = utf8_encode($content);
-                if(fwrite($fp, $content))
-                {
-                        $this->ftp_feeds(DATAPATH . $this->file_path . $filename, "/$filename", $this->get_ftp_name());
-                        switch($platform_id)
-                        {
-                            case "WEBAU":
-                                $this->ftp_feeds(DATAPATH . $this->file_path . $filename, "/$filename", "MEDIAFORGE_AU");
-                                break;
-                            case "WEBGB":
-                                $this->ftp_feeds(DATAPATH . $this->file_path . $filename, "/$filename", "MEDIAFORGE_GB");
-                                break;
-                        }
-
-                // generates "Save File" pop-up for feed in browser
-                header("Cache-Control: no-store, no-cache");
-                header("Content-Disposition: attachment; filename=\"$filename\"");
-                echo $content;
-
-                }
-                else
-                {
-                    $subject = "<DO NOT REPLY> Fails to create ".$this->id." File";
-                    $message ="FILE: ".__FILE__."<br>
-                                 LINE: ".__LINE__;
-                    $this->error_handler($subject, $message);
-                }
-            }
-        }
-    }
-
-    protected function get_data_list($where = array(), $option = array())
-    {
-        switch ($this->_platform_id)
-        {
-            case "WEBAU": $affiliation_tag = "?AF=MFAU"; break;
-            case "WEBGB": $affiliation_tag = "?AF=MFUK"; break;
-            default: $affiliation_tag = ""; break;
-        }
-
-        if($this->_platform_id == 'WEBAU')
-        {
-            #SBF #3169 new shipping time frames
-            $obj_list = $this->get_prod_srv()->get_linkshare_product_feed_2_dto($where, $option);
-        }
-        else
-        {
-            $obj_list = $this->get_prod_srv()->get_linkshare_product_feed_dto($where, $option);
-        }
-        foreach($obj_list AS $obj)
-        {
-            $obj->set_product_url($this->base_url . $this->country_w_language."/". str_replace(array(" ", "/", "."),"-",$obj->get_prod_name()).'/mainproduct/view/'.$obj->get_sku().$affiliation_tag);
-        }
-        return $obj_list;
+        return $this->ftp_name;
     }
 
     public function process_data_row($data = NULL)
     {
-        if (!is_object($data))
-        {
+        if (!is_object($data)) {
             return NULL;
         }
 
-        if(!file_exists($this->get_config_srv()->value_of("prod_img_path").basename($data->get_image_url())))
-        {
+        if (!file_exists($this->get_config_srv()->value_of("prod_img_path") . basename($data->get_image_url()))) {
             $data->set_image_url("http://www.valuebasket.com/images/product/imageunavailable.jpg");
         }
 
@@ -153,11 +125,41 @@ class Linkshare_product_feed_service extends Data_feed_service
 
     protected function string_to_ascii($str)
     {
-        for($i=0; $i < strlen($str); $i++)
-        {
+        for ($i = 0; $i < strlen($str); $i++) {
             $new_str .= ord($str[$i]);
         }
         return $new_str;
+    }
+
+    public function get_contact_email()
+    {
+        return 'itsupport@eservicesgroup.net';
+    }
+
+    protected function get_data_list($where = array(), $option = array())
+    {
+        switch ($this->_platform_id) {
+            case "WEBAU":
+                $affiliation_tag = "?AF=MFAU";
+                break;
+            case "WEBGB":
+                $affiliation_tag = "?AF=MFUK";
+                break;
+            default:
+                $affiliation_tag = "";
+                break;
+        }
+
+        if ($this->_platform_id == 'WEBAU') {
+            #SBF #3169 new shipping time frames
+            $obj_list = $this->get_prod_srv()->get_linkshare_product_feed_2_dto($where, $option);
+        } else {
+            $obj_list = $this->get_prod_srv()->get_linkshare_product_feed_dto($where, $option);
+        }
+        foreach ($obj_list AS $obj) {
+            $obj->set_product_url($this->base_url . $this->country_w_language . "/" . str_replace(array(" ", "/", "."), "-", $obj->get_prod_name()) . '/mainproduct/view/' . $obj->get_sku() . $affiliation_tag);
+        }
+        return $obj_list;
     }
 
     protected function get_default_vo2xml_mapping()
@@ -168,16 +170,6 @@ class Linkshare_product_feed_service extends Data_feed_service
     protected function get_default_xml2csv_mapping()
     {
         return '';
-    }
-
-    public function get_contact_email()
-    {
-        return 'itsupport@eservicesgroup.net';
-    }
-
-    protected function get_ftp_name()
-    {
-        return $this->ftp_name;
     }
 
     protected function get_sj_id()

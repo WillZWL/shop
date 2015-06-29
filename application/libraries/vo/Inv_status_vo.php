@@ -180,4 +180,5 @@ class Inv_status_vo extends Base_vo
     }
 
 }
+
 ?>

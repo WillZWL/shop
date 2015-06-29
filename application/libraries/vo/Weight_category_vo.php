@@ -120,4 +120,5 @@ class Weight_category_vo extends Base_vo
     }
 
 }
+
 ?>

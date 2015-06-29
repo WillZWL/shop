@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class Freight_cat_w_region_dto extends Base_dto {
+class Freight_cat_w_region_dto extends Base_dto
+{
 
     //class variable
     private $cat_id;
@@ -17,7 +18,8 @@ class Freight_cat_w_region_dto extends Base_dto {
     private $modify_at;
     private $modify_by;
 
-    function __construct(){
+    function __construct()
+    {
         parent::__construct();
     }
 

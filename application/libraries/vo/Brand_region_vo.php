@@ -132,4 +132,5 @@ class Brand_region_vo extends Base_vo
     }
 
 }
+
 ?>

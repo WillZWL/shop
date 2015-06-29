@@ -4,13 +4,9 @@ include_once "base_vo.php";
 class Interface_finance_dispatch_vo extends Base_vo
 {
 
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $trans_id;
 
     //class variable
-    private $trans_id;
     private $batch_id;
     private $so_no;
     private $finance_dispatch_date;
@@ -22,14 +18,20 @@ class Interface_finance_dispatch_vo extends Base_vo
     private $modify_on;
     private $modify_at = '127.0.0.1';
     private $modify_by;
-
-    //primary key
     private $primary_key = array("trans_id");
 
-    //auo increment
+    //primary key
     private $increment_field = "trans_id";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_trans_id()
     {
         return $this->trans_id;

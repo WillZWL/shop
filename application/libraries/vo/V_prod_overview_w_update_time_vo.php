@@ -660,4 +660,5 @@ class V_prod_overview_w_update_time_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Delivery_dao extends Base_dao
 {
-    private $table_name="delivery";
-    private $vo_class_name="Delivery_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "delivery";
+    private $vo_class_name = "Delivery_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -44,83 +44,80 @@ class Delivery_dao extends Base_dao
                     AND d.country_id = ?
                 LIMIT 1
                 ";
-        if ($query = $this->db->query($sql, array($delivery_type_id, $country_id)))
-        {
+        if ($query = $this->db->query($sql, array($delivery_type_id, $country_id))) {
             return $query->row()->latency;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
-/*
-    public function get_list_w_country($where=array(), $option=array())
-    {
-
-        $this->db->from('delivery AS d');
-        $this->db->join('region AS r', 'd.region_id = r.id', 'INNER');
-        $this->db->join('region_country AS rc', 'r.id = rc.region_id', 'INNER');
-
-        if ($where)
-        {
-            $this->db->where($where);
-        }
-
-        if (empty($option["num_rows"]))
+    /*
+        public function get_list_w_country($where=array(), $option=array())
         {
 
-            $this->include_vo();
+            $this->db->from('delivery AS d');
+            $this->db->join('region AS r', 'd.region_id = r.id', 'INNER');
+            $this->db->join('region_country AS rc', 'r.id = rc.region_id', 'INNER');
 
-            $this->db->select('d.*');
-
-            if (isset($option["orderby"]))
+            if ($where)
             {
-                $this->db->order_by($option["orderby"]);
+                $this->db->where($where);
             }
 
-            if (empty($option["limit"]))
+            if (empty($option["num_rows"]))
             {
-                $option["limit"] = $this->rows_limit;
-            }
 
-            elseif ($option["limit"] == -1)
-            {
-                $option["limit"] = "";
-            }
+                $this->include_vo();
 
-            if (!isset($option["offset"]))
-            {
-                $option["offset"] = 0;
-            }
+                $this->db->select('d.*');
 
-            if ($this->rows_limit != "")
-            {
-                $this->db->limit($option["limit"], $option["offset"]);
-            }
-
-            $rs = array();
-
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($this->get_vo_classname()) as $obj)
+                if (isset($option["orderby"]))
                 {
-                    $rs[] = $obj;
+                    $this->db->order_by($option["orderby"]);
                 }
-                return $rs?($option["limit"] == 1?$rs[0]:(object)$rs):$rs;
-            }
-        }
-        else
-        {
-            $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
-                return $query->row()->total;
-            }
-        }
 
-        return FALSE;
-    }
-*/
+                if (empty($option["limit"]))
+                {
+                    $option["limit"] = $this->rows_limit;
+                }
+
+                elseif ($option["limit"] == -1)
+                {
+                    $option["limit"] = "";
+                }
+
+                if (!isset($option["offset"]))
+                {
+                    $option["offset"] = 0;
+                }
+
+                if ($this->rows_limit != "")
+                {
+                    $this->db->limit($option["limit"], $option["offset"]);
+                }
+
+                $rs = array();
+
+                if ($query = $this->db->get())
+                {
+                    foreach ($query->result($this->get_vo_classname()) as $obj)
+                    {
+                        $rs[] = $obj;
+                    }
+                    return $rs?($option["limit"] == 1?$rs[0]:(object)$rs):$rs;
+                }
+            }
+            else
+            {
+                $this->db->select('COUNT(*) AS total');
+                if ($query = $this->db->get())
+                {
+                    return $query->row()->total;
+                }
+            }
+
+            return FALSE;
+        }
+    */
 }
 
 /* End of file delivery_dao.php */

@@ -8,7 +8,7 @@ class Order_reason_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Order_reason_dao.php");
+        include_once(APPPATH . "libraries/dao/Order_reason_dao.php");
         $this->set_dao(new Order_reason_dao());
     }
 }

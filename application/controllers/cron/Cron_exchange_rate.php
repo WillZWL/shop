@@ -1,7 +1,8 @@
 <?php
+
 class Cron_exchange_rate extends MY_Controller
 {
-    private $app_id="CRN0006";
+    private $app_id = "CRN0006";
 
     function __construct()
     {

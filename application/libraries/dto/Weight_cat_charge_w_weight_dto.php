@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class Weight_cat_charge_w_weight_dto extends Base_dto {
+class Weight_cat_charge_w_weight_dto extends Base_dto
+{
 
     //class variable
     private $wcat_id;
@@ -13,7 +14,8 @@ class Weight_cat_charge_w_weight_dto extends Base_dto {
     private $currency_id;
     private $amount;
 
-    function __construct(){
+    function __construct()
+    {
         parent::__construct();
     }
 

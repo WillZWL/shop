@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Order_notes_dao extends Base_dao
 {
-    private $table_name="order_notes";
-    private $vo_class_name="Order_notes_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "order_notes";
+    private $vo_class_name = "Order_notes_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,11 +35,11 @@ class Order_notes_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_list_w_name($where,$classname="Order_note_username_dto")
+    public function get_list_w_name($where, $classname = "Order_note_username_dto")
     {
         $this->db->from('order_notes n');
 
-        $this->db->join('user u','u.id = n.create_by','LEFT');
+        $this->db->join('user u', 'u.id = n.create_by', 'LEFT');
 
         $this->db->where($where);
 
@@ -51,10 +51,8 @@ class Order_notes_dao extends Base_dao
 
         $rs = array();
 
-        if ($query = $this->db->get())
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->get()) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
             return $rs;
@@ -63,4 +61,5 @@ class Order_notes_dao extends Base_dao
 
     }
 }
+
 ?>

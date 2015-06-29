@@ -34,21 +34,19 @@ class Worldpay_integrator
     public $server_information;
 
 
-    public function Worldpay_integrator($server='', $merchant_code='', $password = '', $debug = 0)
+    public function Worldpay_integrator($server = '', $merchant_code = '', $password = '', $debug = 0)
     {
         $this->worldpay_config($server, $merchant_code, $password, $debug);
     }
 
     public function worldpay_config($server = '', $merchant_code = '', $password = '', $debug = 0)
     {
-        if (empty($server))
-        {
+        if (empty($server)) {
             if ($debug)
                 $this->server = Worldpay_integrator::WORLD_PAY_TEST_PAYMENT_SERVER;
             else
                 $this->server = Worldpay_integrator::WORLD_PAY_PAYMENT_SERVER;
-        }
-        else
+        } else
             $this->server = $server;
         $this->merchant_code = $merchant_code;
         $this->password = $password;
@@ -65,41 +63,6 @@ class Worldpay_integrator
         return $this->server;
     }
 
-    public function amount_conversion($input_amount, &$decimal)
-    {
-        $amount_conversion = $input_amount;
-        $dot_position = strrchr($input_amount, ".");
-        $total_string_length = strlen($input_amount);
-        if (!strrchr($input_amount, "."))
-        {
-            $decimal = 0;
-        }
-        else
-        {
-            $separatedNumber = explode(".", $input_amount);
-            if (sizeof($separatedNumber) > 2)
-            {
-//prevent hacking cookie, should be fraud order
-                $amount_conversion = "100000";
-                $decimal = 0;
-            }
-            else
-            {
-                $decimal = strlen($separatedNumber[1]);
-                if ($decimal == 1)
-                {
-                    $decimal = 2;
-                    $amount_conversion = $separatedNumber[0] . $separatedNumber[1] . '0';
-                }
-                else
-                {
-                    $amount_conversion = $separatedNumber[0] . $separatedNumber[1];
-                }
-            }
-        }
-        return $amount_conversion;
-    }
-
     public function form_query_xml()
     {
 
@@ -114,12 +77,9 @@ class Worldpay_integrator
         $discount = base64_decode($xmlInformation["discount"]);
         $costOfItems = base64_decode($xmlInformation["costOfItems"]);
 
-        if (trim($xmlInformation["postalCode"]) == '')
-        {
+        if (trim($xmlInformation["postalCode"]) == '') {
             $postalCode = 'NA';
-        }
-        else
-        {
+        } else {
             $postalCode = $xmlInformation["postalCode"];
         }
 
@@ -158,6 +118,32 @@ class Worldpay_integrator
 </paymentService>
 EOT;
         return utf8_encode($xmlString);
+    }
+
+    public function amount_conversion($input_amount, &$decimal)
+    {
+        $amount_conversion = $input_amount;
+        $dot_position = strrchr($input_amount, ".");
+        $total_string_length = strlen($input_amount);
+        if (!strrchr($input_amount, ".")) {
+            $decimal = 0;
+        } else {
+            $separatedNumber = explode(".", $input_amount);
+            if (sizeof($separatedNumber) > 2) {
+//prevent hacking cookie, should be fraud order
+                $amount_conversion = "100000";
+                $decimal = 0;
+            } else {
+                $decimal = strlen($separatedNumber[1]);
+                if ($decimal == 1) {
+                    $decimal = 2;
+                    $amount_conversion = $separatedNumber[0] . $separatedNumber[1] . '0';
+                } else {
+                    $amount_conversion = $separatedNumber[0] . $separatedNumber[1];
+                }
+            }
+        }
+        return $amount_conversion;
     }
 
     public function send_data_to_wp($data, $merchant_code = '', $password = '', &$server_result, &$server_error, &$server_info)

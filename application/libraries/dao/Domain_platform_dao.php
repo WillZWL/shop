@@ -41,7 +41,7 @@ class Domain_platform_dao extends Base_dao
             $this->include_dto($classname);
         }
 
-        $sql  = "
+        $sql = "
                 SELECT dp.*, pbv.platform_country_id, pbv.language_id, pbv.platform_currency_id, sp.type
                 FROM domain_platform AS dp
                 LEFT JOIN platform_biz_var AS pbv
@@ -55,25 +55,22 @@ class Domain_platform_dao extends Base_dao
                 ";
 
         $rs = array();
-        if ($query = $this->db->query($sql, array($_SERVER['HTTP_HOST'], $_SERVER['HTTP_HOST'], $_SERVER['HTTP_HOST'])))
-        {
-            if ($query->num_rows())
-            {
+        if ($query = $this->db->query($sql, array($_SERVER['HTTP_HOST'], $_SERVER['HTTP_HOST'], $_SERVER['HTTP_HOST']))) {
+            if ($query->num_rows()) {
                 return $query->row(0, $type, $classname);
             }
         }
         return FALSE;
     }
 
-    public function get_domain_platform_w_lang_override($platform_type, $type="object", $classname="Domain_platform_w_lang_dto")
+    public function get_domain_platform_w_lang_override($platform_type, $type = "object", $classname = "Domain_platform_w_lang_dto")
     {
 
-        if ($type == "object")
-        {
+        if ($type == "object") {
             $this->include_dto($classname);
         }
 
-        $sql  = "
+        $sql = "
                 SELECT dp.*, sp.id AS platform_id, npbv.platform_country_id, npbv.language_id, npbv.platform_currency_id, sp.type
                 FROM domain_platform AS dp
                 LEFT JOIN platform_biz_var AS pbv
@@ -87,10 +84,8 @@ class Domain_platform_dao extends Base_dao
                 ";
 
         $rs = array();
-        if ($query = $this->db->query($sql, array($platform_type, $_SERVER['HTTP_HOST'], $_SERVER['HTTP_HOST'], $_SERVER['HTTP_HOST'])))
-        {
-            if ($query->num_rows())
-            {
+        if ($query = $this->db->query($sql, array($platform_type, $_SERVER['HTTP_HOST'], $_SERVER['HTTP_HOST'], $_SERVER['HTTP_HOST']))) {
+            if ($query->num_rows()) {
                 return $query->row(0, $type, $classname);
             }
         }
@@ -105,7 +100,7 @@ class Domain_platform_dao extends Base_dao
             $this->include_dto($classname);
         }
 
-        $sql  = "
+        $sql = "
                 SELECT dp.*, pbv.platform_country_id, pbv.language_id, pbv.platform_currency_id, sp.type
                 FROM domain_platform AS dp
                 LEFT JOIN platform_biz_var AS pbv
@@ -121,25 +116,22 @@ class Domain_platform_dao extends Base_dao
                 ";
 
         $rs = array();
-        if ($query = $this->db->query($sql, array($country_id, $domain_type, $platform_type)))
-        {
-            if ($query->num_rows())
-            {
+        if ($query = $this->db->query($sql, array($country_id, $domain_type, $platform_type))) {
+            if ($query->num_rows()) {
                 return $query->row(0, $type, $classname);
             }
         }
         return FALSE;
     }
 
-    public function get_by_platform_id($platform_id, $domain_type, $type="object", $classname="Domain_platform_w_lang_dto")
+    public function get_by_platform_id($platform_id, $domain_type, $type = "object", $classname = "Domain_platform_w_lang_dto")
     {
 
-        if ($type == "object")
-        {
+        if ($type == "object") {
             $this->include_dto($classname);
         }
 
-        $sql  = "
+        $sql = "
                 SELECT dp.*, pbv.platform_country_id, pbv.language_id, pbv.platform_currency_id, sp.type
                 FROM domain_platform AS dp
                 LEFT JOIN platform_biz_var AS pbv
@@ -154,10 +146,8 @@ class Domain_platform_dao extends Base_dao
                 ";
 
         $rs = array();
-        if ($query = $this->db->query($sql, array($platform_id, $domain_type)))
-        {
-            if ($query->num_rows())
-            {
+        if ($query = $this->db->query($sql, array($platform_id, $domain_type))) {
+            if ($query->num_rows()) {
                 return $query->row(0, $type, $classname);
             }
         }

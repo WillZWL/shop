@@ -58,6 +58,7 @@ class Google_shopping_vo extends Base_vo
     {
         $this->price = $value;
     }
+
     public function get_api_request_result()
     {
         return $this->api_request_result;

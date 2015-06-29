@@ -25,10 +25,10 @@ class Checkout_redirect_yandex_model extends Checkout_redirect_model
         $this->pmgw_redirect_service->payment_notification($input_data);
     }
 
-/*
-    public function process_payment_status($general_data = array(), $get_data = array())
-    {
-        return $this->pmgw_redirect_service->process_payment_status($general_data, $get_data);
-    }
-*/
+    /*
+        public function process_payment_status($general_data = array(), $get_data = array())
+        {
+            return $this->pmgw_redirect_service->process_payment_status($general_data, $get_data);
+        }
+    */
 }

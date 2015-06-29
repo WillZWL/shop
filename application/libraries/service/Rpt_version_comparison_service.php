@@ -12,21 +12,11 @@ class Rpt_version_comparison_service extends Report_service
         parent::__construct();
         $CI =& get_instance();
         $this->load = $CI->load;
-        include_once(APPPATH."libraries/dao/Price_dao.php");
+        include_once(APPPATH . "libraries/dao/Price_dao.php");
         $this->set_price_dao(new Price_dao());
-        include_once(APPPATH."libraries/service/Data_exchange_service.php");
+        include_once(APPPATH . "libraries/service/Data_exchange_service.php");
         $this->set_dex_service(new Data_exchange_service());
         $this->set_output_delimiter(',');
-    }
-
-    public function get_price_dao()
-    {
-        return $this->price_dao;
-    }
-
-    public function set_price_dao(Base_dao $dao)
-    {
-        $this->price_dao = $dao;
     }
 
     public function set_dex_service($srv)
@@ -44,6 +34,16 @@ class Rpt_version_comparison_service extends Report_service
         $list = $this->get_price_dao()->get_version_copmarison_list();
 
         return $this->convert($list, true);
+    }
+
+    public function get_price_dao()
+    {
+        return $this->price_dao;
+    }
+
+    public function set_price_dao(Base_dao $dao)
+    {
+        $this->price_dao = $dao;
     }
 
     protected function get_default_vo2xml_mapping()

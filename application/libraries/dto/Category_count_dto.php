@@ -15,7 +15,7 @@ class Category_count_dto extends Base_dto
 
     public function set_id($value)
     {
-        $this->id =$value;
+        $this->id = $value;
     }
 
     public function get_name()

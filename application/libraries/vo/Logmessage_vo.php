@@ -156,4 +156,5 @@ class Logmessage_vo extends Base_vo
     }
 
 }
+
 ?>

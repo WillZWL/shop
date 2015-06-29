@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Country_state_dao extends Base_dao
 {
-    private $table_name="country_state";
-    private $vo_class_name="Country_state_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "country_state";
+    private $vo_class_name = "Country_state_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

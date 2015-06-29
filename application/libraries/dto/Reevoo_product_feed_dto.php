@@ -52,14 +52,14 @@ class Reevoo_product_feed_dto extends Base_dto
         $this->sku = $value;
     }
 
-    public function set_prod_name($value)
-    {
-        $this->prod_name = $value;
-    }
-
     public function get_prod_name()
     {
         return $this->prod_name;
+    }
+
+    public function set_prod_name($value)
+    {
+        $this->prod_name = $value;
     }
 
     public function get_image()

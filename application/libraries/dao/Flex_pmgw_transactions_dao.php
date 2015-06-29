@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Flex_pmgw_transactions_dao extends Base_dao
 {
-    private $table_name="flex_pmgw_transactions";
-    private $vo_classname="Flex_pmgw_transactions_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "flex_pmgw_transactions";
+    private $vo_classname = "Flex_pmgw_transactions_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

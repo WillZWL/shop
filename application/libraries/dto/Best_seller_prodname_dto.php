@@ -140,7 +140,6 @@ class Best_seller_prodname_dto extends Base_dto
     }
 
 
-
 }
 
 ?>

@@ -10,7 +10,7 @@ class Order_held_for_cc_model extends CI_Model
 
     public function send_report($duration)
     {
-            $this->order_held_for_cc_service->send_report($duration);
+        $this->order_held_for_cc_service->send_report($duration);
     }
 }
 

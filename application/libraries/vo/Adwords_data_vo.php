@@ -7,7 +7,7 @@ class Adwords_data_vo extends Base_vo
     private $platform_id;
     private $status;
     private $price;
-    private $api_request_result =1 ;
+    private $api_request_result = 1;
     private $comment = '';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;

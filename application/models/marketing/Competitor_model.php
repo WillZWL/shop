@@ -41,4 +41,5 @@ class Competitor_model extends CI_Model
     }
 
 }
+
 ?>

@@ -22,14 +22,13 @@ class Split_order_email_service extends Base_service
         $csv = $this->gen_csv($orderlist);
 
         $title = '[VB] Orders Available for Split';
-        $message = 'Orders Available for Split. Generated @ GMT+0 '.date("Y-m-d H:i:s");
+        $message = 'Orders Available for Split. Generated @ GMT+0 ' . date("Y-m-d H:i:s");
         $filename = 'orders_for_split_' . date('Ymd_His') . '.csv';
 
-        $email = array("ordermanagement@valuebasket.com","purchase@aln.hk");
+        $email = array("ordermanagement@valuebasket.com", "purchase@aln.hk");
         $this->_email_report($csv, $title, $message, $filename, $email);
 
-        if(isset($_GET["getfile"]))
-        {
+        if (isset($_GET["getfile"])) {
             header("Content-type: text/csv");
             header("Cache-Control: no-store, no-cache");
             header("Content-Disposition: attachment; filename=\"$filename\"");
@@ -38,48 +37,24 @@ class Split_order_email_service extends Base_service
 
     }
 
-    private function _email_report($csv = "", $title = "", $message = "", $filename, $email=array())
+    public function get_so_dao()
     {
-        include_once(BASEPATH . "plugins/phpmailer/phpmailer_pi.php");
-        $phpmail = new PHPMailer();
-        $phpmail->IsSMTP();
-        $phpmail->From = "Admin <admin@valuebasket.com>";
-
-        if($email)
-        {
-            foreach ($email as $add)
-            {
-                $phpmail->AddAddress($add);
-            }
-        }
-        else
-        {
-            $phpmail->AddAddress("itsupport@eservicesgroup.net");
-        }
-
-        $phpmail->Subject = $title;
-        $phpmail->IsHTML(false);
-        $phpmail->Body = $message;
-        $phpmail->AddStringAttachment($csv, $filename, 'base64', 'text/csv');
-
-        if(strpos($_SERVER["HTTP_HOST"], "admindev") === FALSE)
-            $result = $phpmail->Send();
-
-        return;
+        return $this->so_dao;
     }
 
-    private function gen_csv($data=array())
+    public function set_so_dao($value)
+    {
+        $this->so_dao = $value;
+    }
+
+    private function gen_csv($data = array())
     {
         $csv = "";
-        if(!empty($data))
-        {
+        if (!empty($data)) {
             $data = $this->process_data_row($data);
-            foreach ($data as $key => $value)
-            {
-                if($key==0)
-                {
-                    foreach ($value as $label => $v)
-                    {
+            foreach ($data as $key => $value) {
+                if ($key == 0) {
+                    foreach ($value as $label => $v) {
                         $csv .= '"' . "$label" . '",';
                     }
 
@@ -95,34 +70,32 @@ class Split_order_email_service extends Base_service
 
     private function process_data_row($arr = array())
     {
-        if(!empty($arr))
-        {
-            $so_status      = array(
-                                    0=>"inactive",
-                                    1=>"new",
-                                    2=>"paid",
-                                    3=>"credit_checked",
-                                    4=>"partial_allocated",
-                                    5=>"full_allocated",
-                                    6=>"shipped"
-                                );
-            $refund_status  = array(
-                                    0=>"no_refund",
-                                    1=>"requested",
-                                    2=>"logistic_approved",
-                                    3=>"cs_approved",
-                                    4=>"refunded"
-                                );
+        if (!empty($arr)) {
+            $so_status = array(
+                0 => "inactive",
+                1 => "new",
+                2 => "paid",
+                3 => "credit_checked",
+                4 => "partial_allocated",
+                5 => "full_allocated",
+                6 => "shipped"
+            );
+            $refund_status = array(
+                0 => "no_refund",
+                1 => "requested",
+                2 => "logistic_approved",
+                3 => "cs_approved",
+                4 => "refunded"
+            );
             $sourcing_status = array(
-                                    'A' => 'Readily Available',
-                                    'O' => 'Temp of Out Stock ',
-                                    'C' => 'Limited Stock',
-                                    'L' => 'Last Lot',
-                                    'D' => 'Discontinued',
-                                );
+                'A' => 'Readily Available',
+                'O' => 'Temp of Out Stock ',
+                'C' => 'Limited Stock',
+                'L' => 'Last Lot',
+                'D' => 'Discontinued',
+            );
 
-            foreach ($arr as $key => $value)
-            {
+            foreach ($arr as $key => $value) {
                 // if($value["status"] !== NULL)
                 // {
                 //  $value["status"] = $so_status[$value["status"]];    # e.g. $so_status[2] = "paid"
@@ -132,8 +105,7 @@ class Split_order_email_service extends Base_service
                 // {
                 //  $value["refund_status"] = $refund_status[$value["refund_status"]];
                 // }
-                if($value["sourcing_status"] !== NULL)
-                {
+                if ($value["sourcing_status"] !== NULL) {
                     $value["sourcing_status"] = $sourcing_status[$value["sourcing_status"]];
                 }
 
@@ -144,14 +116,30 @@ class Split_order_email_service extends Base_service
         return $new_arr;
     }
 
-    public function get_so_dao()
+    private function _email_report($csv = "", $title = "", $message = "", $filename, $email = array())
     {
-        return $this->so_dao;
-    }
+        include_once(BASEPATH . "plugins/phpmailer/phpmailer_pi.php");
+        $phpmail = new PHPMailer();
+        $phpmail->IsSMTP();
+        $phpmail->From = "Admin <admin@valuebasket.com>";
 
-    public function set_so_dao($value)
-    {
-        $this->so_dao = $value;
+        if ($email) {
+            foreach ($email as $add) {
+                $phpmail->AddAddress($add);
+            }
+        } else {
+            $phpmail->AddAddress("itsupport@eservicesgroup.net");
+        }
+
+        $phpmail->Subject = $title;
+        $phpmail->IsHTML(false);
+        $phpmail->Body = $message;
+        $phpmail->AddStringAttachment($csv, $filename, 'base64', 'text/csv');
+
+        if (strpos($_SERVER["HTTP_HOST"], "admindev") === FALSE)
+            $result = $phpmail->Send();
+
+        return;
     }
 }
 

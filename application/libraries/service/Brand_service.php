@@ -3,15 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_service.php";
 
-class Brand_service extends Base_service {
+class Brand_service extends Base_service
+{
 
     private $br_dao;
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Brand_dao.php");
+        include_once(APPPATH . "libraries/dao/Brand_dao.php");
         $this->set_dao(new Brand_dao());
-        include_once(APPPATH."libraries/dao/Brand_region_dao.php");
+        include_once(APPPATH . "libraries/dao/Brand_region_dao.php");
         $this->set_br_dao(new Brand_region_dao());
     }
 
@@ -25,10 +27,10 @@ class Brand_service extends Base_service {
         $this->br_dao = $dao;
     }
 
-    public function get_brand_list_w_region($where=array(), $option=array())
+    public function get_brand_list_w_region($where = array(), $option = array())
     {
         $data["brandlist"] = $this->get_dao()->get_brand_list_w_region($where, $option, "Brand_w_region_dto");
-        $data["total"] = $this->get_dao()->get_brand_list_w_region($where, array("num_rows"=>1));
+        $data["total"] = $this->get_dao()->get_brand_list_w_region($where, array("num_rows" => 1));
         return $data;
     }
 
@@ -37,14 +39,12 @@ class Brand_service extends Base_service {
         return $this->get_dao()->get_listed_brand_by_cat($cat_id);
     }
 
-    public function get_name_list_w_id_key($where=array(), $option=array())
+    public function get_name_list_w_id_key($where = array(), $option = array())
     {
         $option["result_type"] = "array";
         $rslist = array();
-        if ($ar_list = $this->get_list($where, $option))
-        {
-            foreach ($ar_list as $rsdata)
-            {
+        if ($ar_list = $this->get_list($where, $option)) {
+            foreach ($ar_list as $rsdata) {
                 $rslist[$rsdata["id"]] = $rsdata["brand_name"];
             }
         }

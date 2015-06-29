@@ -37,18 +37,16 @@ class Application_feature_dao extends Base_dao
     public function get_application_feature_access_right($where = array(), $option = array(), $classname = "application_feature_right_dto")
     {
         $role = "'no'";
-        if (isset($where['role_id']))
-        {
+        if (isset($where['role_id'])) {
             $role = "";
             $role_id_arr = $where['role_id'];
-            foreach ($role_id_arr as $single_role)
-            {
+            foreach ($role_id_arr as $single_role) {
                 $role .= "'" . $single_role . "',";
             }
             $role = substr($role, 0, (strlen($role) - 1));
         }
         $sql =
-        "select
+            "select
             af.*
         from
             application_feature_right afr
@@ -67,16 +65,12 @@ class Application_feature_dao extends Base_dao
 //      print $sql;
         $rs = array();
         $this->include_dto($classname);
-        if ($query = $this->db->query($sql))
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
-            return empty($rs)?$rs:(object) $rs;
-        }
-        else
-        {
+            return empty($rs) ? $rs : (object)$rs;
+        } else {
             return FALSE;
         }
     }

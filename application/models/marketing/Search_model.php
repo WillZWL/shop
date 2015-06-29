@@ -1,4 +1,5 @@
 <?php
+
 class Search_model extends CI_Model
 {
 
@@ -11,12 +12,12 @@ class Search_model extends CI_Model
         $this->load->library('service/product_service');
     }
 
-    public function get_product_search_list($where=array(), $option=array())
+    public function get_product_search_list($where = array(), $option = array())
     {
         return $this->product_search_service->get_product_search_list($where, $option);
     }
 
-    public function get_product_search_list_wo_keyword($where=array(), $option=array())
+    public function get_product_search_list_wo_keyword($where = array(), $option = array())
     {
         return $this->product_search_service->search_without_keyword($where, $option);
     }
@@ -31,7 +32,7 @@ class Search_model extends CI_Model
         return $this->display_category_banner_service->get_publish_banner($catid, $display_id, $position_id, $country_id, $lang_id, $usage = "PB");
     }
 
-    public function get_product_banner($sku="", $display_id="", $position_id="", $lang_id="en")
+    public function get_product_banner($sku = "", $display_id = "", $position_id = "", $lang_id = "en")
     {
         return $this->product_service->get_product_banner($sku, $display_id, $position_id, $lang_id);
     }
@@ -41,4 +42,5 @@ class Search_model extends CI_Model
         return $this->product_search_service->get_product_search_list_for_ss_live_price($platform_id, $sku, $with_rrp);
     }
 }
+
 ?>

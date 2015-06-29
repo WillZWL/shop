@@ -18,8 +18,7 @@ class Promotion_model extends CI_Model
 
     public function check_affiliate($affiliate)
     {
-        if ($this->affiliate_service->get(array("id"=>$affiliate)))
-        {
+        if ($this->affiliate_service->get(array("id" => $affiliate))) {
             $this->affiliate_service->add_af_cookie($affiliate);
             return TRUE;
         }
@@ -29,8 +28,7 @@ class Promotion_model extends CI_Model
     public function get_view_data($promotion)
     {
         $data = array();
-        switch ($promotion)
-        {
+        switch ($promotion) {
             case "skype-vouchers-60":
                 $data["popular"] = $this->product_service->get_product_info('10055-AA-NA', PLATFORMID, get_lang_id());
                 $data["cat_list"]["headsets"] = $this->skype_promotion_service->get_promotion_landing_prod_list_by_cat(3, PLATFORMID, get_lang_id());

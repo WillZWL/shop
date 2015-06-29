@@ -168,4 +168,5 @@ class Freight_category_vo extends Base_vo
     }
 
 }
+
 ?>

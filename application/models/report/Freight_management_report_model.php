@@ -27,7 +27,6 @@ class Freight_management_report_model extends CI_Model
     // }
 
 
-
 }
 
 /* End of file freight_management_report_model.php */

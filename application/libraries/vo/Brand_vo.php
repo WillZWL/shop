@@ -144,4 +144,5 @@ class Brand_vo extends Base_vo
     }
 
 }
+
 ?>

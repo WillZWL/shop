@@ -7,14 +7,6 @@ interface Cybersource_soap_interface
 
 class Cybersource_soap extends SoapClient
 {
-    private $_merchantAccount;
-    private $_cybersource_soap_interface_obj = null;
-
-    public function set_merchantId($merchantInfo = array())
-    {
-        $this->_merchantAccount = $merchantInfo;
-    }
-
     /**
      * XPaths that should be replaced in debug with '***'
      *
@@ -25,10 +17,17 @@ class Cybersource_soap extends SoapClient
         '//*[contains(name(),\'card\')]/*/text()',
         '//*[contains(name(),\'UsernameToken\')]/*/text()'
     );
+    private $_merchantAccount;
+    private $_cybersource_soap_interface_obj = null;
 
     public function __construct($wsdl, $options = array())
     {
         parent::__construct($wsdl, $options);
+    }
+
+    public function set_merchantId($merchantInfo = array())
+    {
+        $this->_merchantAccount = $merchantInfo;
     }
 
     public function addRequestListener($request_listener_obj)
@@ -49,7 +48,7 @@ class Cybersource_soap extends SoapClient
 
         $node = $requestDOM->importNode($soapHeaderDOM->firstChild, true);
         $requestDOM->firstChild->insertBefore(
-        $node, $requestDOM->firstChild->firstChild);
+            $node, $requestDOM->firstChild->firstChild);
 
         $request = $requestDOM->saveXML();
         $requestDOMXPath = new DOMXPath($requestDOM);
@@ -63,12 +62,9 @@ class Cybersource_soap extends SoapClient
         if ($this->_cybersource_soap_interface_obj != null)
             $this->_cybersource_soap_interface_obj->set_dm_request_data($request);
 //      var_dump($debugData);
-        try
-        {
+        try {
             $response = parent::__doRequest($request, $location, $action, $version, $oneWay);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $debugData['result'] = array('error' => $e->getMessage(), 'code' => $e->getCode());
             $response = "Exception" . $e->getMessage();
         }
@@ -79,4 +75,5 @@ class Cybersource_soap extends SoapClient
         return $response;
     }
 }
+
 ?>

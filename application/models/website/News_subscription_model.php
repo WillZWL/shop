@@ -1,4 +1,5 @@
 <?php
+
 class News_subscription_model extends CI_Model
 {
     public function __construct()

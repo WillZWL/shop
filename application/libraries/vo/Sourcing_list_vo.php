@@ -4,13 +4,9 @@ include_once "base_vo.php";
 class Sourcing_list_vo extends Base_vo
 {
 
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
+    private $list_date;
 
     //class variable
-    private $list_date;
     private $batch_no = '1';
     private $item_sku;
     private $platform_qty;
@@ -26,14 +22,20 @@ class Sourcing_list_vo extends Base_vo
     private $modify_on;
     private $modify_at = '127.0.0.1';
     private $modify_by;
-
-    //primary key
     private $primary_key = array("list_date", "batch_no", "item_sku");
 
-    //auo increment
+    //primary key
     private $increment_field = "";
 
+    //auo increment
+
+    public function __construct()
+    {
+        parent::Base_vo();
+    }
+
     //instance method
+
     public function get_list_date()
     {
         return $this->list_date;

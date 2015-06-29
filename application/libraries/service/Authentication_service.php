@@ -1,4 +1,4 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 include_once "Base_service.php";
 
@@ -13,10 +13,10 @@ class Authentication_service extends Base_service
 
     public function auth_user($user_id = "", $password = "", $salt = "")
     {
-        if ( ! ($user_id == "" && $password == "")) {
-            include_once(APPPATH."libraries/dao/User_dao.php");
+        if (!($user_id == "" && $password == "")) {
+            include_once(APPPATH . "libraries/dao/User_dao.php");
             $user_dao = new User_dao();
-            include_once(APPPATH."libraries/dao/Audit_log_dao.php");
+            include_once(APPPATH . "libraries/dao/Audit_log_dao.php");
             $audit_log_dao = new Audit_log_dao();
             $user_obj = $user_dao->get(array("id" => $user_id, "status" => 1));
             $_SESSION["vo"] = $user_obj;
@@ -24,7 +24,7 @@ class Authentication_service extends Base_service
             $audit_log_obj->set_user_id($user_id);
             $audit_log_obj->set_ip_address($_SERVER["REMOTE_ADDR"]);
             if (!empty($user_obj)) {
-                include_once(APPPATH."libraries/service/Context_config_service.php");
+                include_once(APPPATH . "libraries/service/Context_config_service.php");
                 $cconfig = new Context_config_service();
 
                 if ($user_obj->get_failed_attempt() >= $cconfig->value_of("max_failed_attempt")) {
@@ -38,7 +38,8 @@ class Authentication_service extends Base_service
 
                 if ((($salt != "") && (md5($user_obj->get_password() . $salt) == $password))
                     ||
-                    (($salt == "") && ($user_obj->get_password() == md5($password)))) {
+                    (($salt == "") && ($user_obj->get_password() == md5($password)))
+                ) {
                     $class_methods = get_class_methods($user_obj);
                     foreach ($class_methods as $fct_name) {
                         if (substr($fct_name, 0, 4) == "get_") {
@@ -77,6 +78,11 @@ class Authentication_service extends Base_service
         return FALSE;
     }
 
+    public function deauth_user()
+    {
+        session_destroy();
+    }
+
     public function check_authed()
     {
         if (isset($_SESSION["user"]["id"])) {
@@ -85,11 +91,6 @@ class Authentication_service extends Base_service
             }
         }
         return FALSE;
-    }
-
-    public function deauth_user()
-    {
-        session_destroy();
     }
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 class Product_model extends CI_Model
 {
 
@@ -35,84 +36,84 @@ class Product_model extends CI_Model
         return array(0, 6, 12, 18, 24, 36);
     }
 
-    public function get_product_list($where=array(), $option=array())
+    public function get_product_list($where = array(), $option = array())
     {
         return $this->product_service->get_dao()->get_list_w_name($where, $option, "Product_list_w_name_dto");
     }
 
-    public function get_product_list_total($where=array())
+    public function get_product_list_total($where = array())
     {
-        return $this->product_service->get_dao()->get_list_w_name($where, array("num_rows"=>1));
+        return $this->product_service->get_dao()->get_list_w_name($where, array("num_rows" => 1));
     }
 
-    public function get_list($service, $where=array(), $option=array())
+    public function get_list($service, $where = array(), $option = array())
     {
-        $service = $service."_service";
+        $service = $service . "_service";
         return $this->$service->get_list($where, $option);
     }
 
-    public function get_bundle_list($where=array(), $option=array())
+    public function get_bundle_list($where = array(), $option = array())
     {
         return $this->bundle_service->get_dao()->get_bundle_list($where, $option, "Bundle_list_dto");
     }
 
-    public function get($service, $where=array())
+    public function get($service, $where = array())
     {
-        $service = $service."_service";
+        $service = $service . "_service";
         return $this->$service->get_dao()->get($where);
     }
 
-    public function get_webpage($service,$where=array())
+    public function get_webpage($service, $where = array())
     {
         return $this->product_service->get_dao()->get_website_prod($where);
     }
 
-    public function get_supplier_prod($where=array())
+    public function get_supplier_prod($where = array())
     {
         return $this->supplier_service->get_sp_dao()->get($where);
     }
 
-    public function get_product_custom_classification($where=array())
+    public function get_product_custom_classification($where = array())
     {
         return $this->product_custom_classification_service->get($where);
     }
 
-    public function get_product_content($where=array())
+    public function get_product_content($where = array())
     {
         return $this->product_service->get_pc_dao()->get($where);
     }
 
-    public function get_product_content_extend($where=array())
+    public function get_product_content_extend($where = array())
     {
         return $this->product_service->get_pcext_dao()->get($where);
     }
 
-    public function get_category_mapping($where=array())
+    public function get_category_mapping($where = array())
     {
         return $this->product_service->get_cat_map_dao()->get($where);
     }
 
-    public function get_product_content_list($where=array(),$option=array())
+    public function get_product_content_list($where = array(), $option = array())
     {
         return $this->product_service->get_pc_dao()->get_list($where, $option);
     }
 
-    public function get_product_content_extend_list($where=array(), $option=array())
+    public function get_product_content_extend_list($where = array(), $option = array())
     {
         return $this->product_service->get_pcext_dao()->get_list($where, $option);
     }
 
-    public function get_category_mapping_list($where=array(),$option=array())
+    public function get_category_mapping_list($where = array(), $option = array())
     {
         return $this->product_service->get_cat_map_dao()->get_list($where, $option);
     }
 
-    public function get_product_keyword($where=array())
+    public function get_product_keyword($where = array())
     {
         return $this->product_service->get_pk_dao()->get($where);
     }
 
-    public function get_product_keyword_list($where=array(),$option=array())
+    public function get_product_keyword_list($where = array(), $option = array())
     {
         return $this->product_service->get_pk_dao()->get_list($where, $option);
     }
@@ -122,55 +123,55 @@ class Product_model extends CI_Model
         return $this->product_service->get_product_keyword_arraylist($sku, $platform_id);
     }
 
-    public function get_product_type($where=array())
+    public function get_product_type($where = array())
     {
         return $this->product_service->get_pt_dao()->get($where);
     }
 
-    public function get_product_type_list($where=array(),$option=array())
+    public function get_product_type_list($where = array(), $option = array())
     {
         return $this->product_service->get_pt_dao()->get_list($where, $option);
     }
 
     public function update($service, $obj)
     {
-        $service = $service."_service";
+        $service = $service . "_service";
         return $this->$service->update($obj);
     }
 
-    public function update_product_content($pc="")
+    public function update_product_content($pc = "")
     {
         return $this->product_service->get_pc_dao()->update($pc);
     }
 
-    public function del_product_content($where=array())
+    public function del_product_content($where = array())
     {
         return $this->product_service->get_pc_dao()->q_delete($where);
     }
 
-    public function del_product_keyword($where=array())
+    public function del_product_keyword($where = array())
     {
         return $this->product_service->get_pk_dao()->q_delete($where);
     }
 
-    public function del_product_type($where=array())
+    public function del_product_type($where = array())
     {
         return $this->product_service->get_pt_dao()->q_delete($where);
     }
 
-    public function update_product_content_extend($pc="")
+    public function update_product_content_extend($pc = "")
     {
         return $this->product_service->get_pcext_dao()->update($pc);
     }
 
-    public function del_product_content_extend($where=array())
+    public function del_product_content_extend($where = array())
     {
         return $this->product_service->get_pcext_dao()->q_delete($where);
     }
 
     public function include_vo($service)
     {
-        $service = $service."_service";
+        $service = $service . "_service";
         return $this->$service->include_vo();
     }
 
@@ -186,13 +187,13 @@ class Product_model extends CI_Model
 
     public function include_dto($service, $dto)
     {
-        $service = $service."_service";
+        $service = $service . "_service";
         return $this->$service->include_dto($dto);
     }
 
     public function add($service, $obj)
     {
-        $service = $service."_service";
+        $service = $service . "_service";
         return $this->$service->insert($obj);
     }
 
@@ -213,7 +214,7 @@ class Product_model extends CI_Model
 
     public function add_product_keyword($obj)
     {
-         $this->product_service->get_pk_dao()->insert($obj);
+        $this->product_service->get_pk_dao()->insert($obj);
     }
 
     public function add_product_type($obj)
@@ -251,17 +252,17 @@ class Product_model extends CI_Model
         return $this->product_service->get_dao()->update_seq($new_value);
     }
 
-    public function get_website_price($sku,$platform_id="WSGB")
+    public function get_website_price($sku, $platform_id = "WSGB")
     {
         return $this->price_service->get_website_price($sku, $platform_id);
     }
 
-    public function get_website_display_price($sku,$platform_id="WSGB")
+    public function get_website_display_price($sku, $platform_id = "WSGB")
     {
         return $this->price_service->get_website_display_price($sku, $platform_id);
     }
 
-    public function get_website_currency($platform="")
+    public function get_website_currency($platform = "")
     {
         return $this->currency_service->get_platform_currency($platform);
     }
@@ -271,43 +272,43 @@ class Product_model extends CI_Model
         return $this->category_service->get_dao()->get_prod_cat($sku);
     }
 
-    public function get_list_by_brand_cat($catid, $brand, $where=array(), $option=array())
+    public function get_list_by_brand_cat($catid, $brand, $where = array(), $option = array())
     {
-            return $this->product_service->get_list_by_brand_cat($catid, $brand, $where, $option);
-        }
+        return $this->product_service->get_list_by_brand_cat($catid, $brand, $where, $option);
+    }
 
-    public function get_list_by_brand_cat_cnt($catid, $brand, $where=array())
+    public function get_list_by_brand_cat_cnt($catid, $brand, $where = array())
     {
-            return $this->product_service->get_list_by_brand_cat_cnt($catid, $brand, $where);
-        }
+        return $this->product_service->get_list_by_brand_cat_cnt($catid, $brand, $where);
+    }
 
     public function get_brand($brand)
     {
-        return $this->brand_service->get_dao()->get(array("id"=>$brand));
+        return $this->brand_service->get_dao()->get(array("id" => $brand));
     }
 
-    public function get_prod_list($where=array(), $option=array())
+    public function get_prod_list($where = array(), $option = array())
     {
         return $this->product_service->get_website_list($where, $option);
     }
 
-    public function get_prod_list_cnt($where=array())
+    public function get_prod_list_cnt($where = array())
     {
         return $this->product_service->get_website_list_cnt($where);
     }
 
-    public function get_clearance_list($where=array(), $option=array())
+    public function get_clearance_list($where = array(), $option = array())
     {
-        return $this->product_service->get_clearance_list($where,$option);
+        return $this->product_service->get_clearance_list($where, $option);
     }
 
-    public function get_clearance_list_cnt($where=array())
+    public function get_clearance_list_cnt($where = array())
     {
         return $this->product_service->get_clearance_list_cnt($where);
     }
 
-    public function get_list_by_keyword($keyword, $page_no=0, $row_limit=20,
-        $platform_id='WSGB', $lang_id='en')
+    public function get_list_by_keyword($keyword, $page_no = 0, $row_limit = 20,
+                                        $platform_id = 'WSGB', $lang_id = 'en')
     {
         return $this->product_service->get_list_by_keyword($keyword, $page_no,
             $row_limit, $platform_id, $lang_id, 'website_prod_search_info_dto');
@@ -318,28 +319,24 @@ class Product_model extends CI_Model
         return $this->product_service->get_dao()->get_sli_webfeed($where);
     }
 
-    public function get_skype_feed($sku,$lang_id,$platform,$currency)
+    public function get_skype_feed($sku, $lang_id, $platform, $currency)
     {
-        return $this->product_service->get_dao()->get_skype_feed($sku,$lang_id,$platform,$currency,'TRIAL');
+        return $this->product_service->get_dao()->get_skype_feed($sku, $lang_id, $platform, $currency, 'TRIAL');
     }
 
-    public function get_skype_page_info($clist, $platform="", $lang_id="")
+    public function get_skype_page_info($clist, $platform = "", $lang_id = "")
     {
-        if($platform == "")
-        {
+        if ($platform == "") {
             return FALSE;
         }
-        return $this->product_service->get_skype_page_info($clist,$platform,$lang_id);
+        return $this->product_service->get_skype_page_info($clist, $platform, $lang_id);
     }
 
-    public function get_main_sku($sku="")
+    public function get_main_sku($sku = "")
     {
-        if($sku == "")
-        {
+        if ($sku == "") {
             return FALSE;
-        }
-        else
-        {
+        } else {
             return $this->bundle_service->get_main_sku($sku);
         }
     }
@@ -364,24 +361,16 @@ class Product_model extends CI_Model
         return $this->version_service->get_dao()->get_remain_version_list($prod_grp_cd);
     }
 
-    public function get_existing_proplist($type="",$where=array())
+    public function get_existing_proplist($type = "", $where = array())
     {
-        if($type == "")
-        {
+        if ($type == "") {
             return false;
-        }
-        else
-        {
-            if($type == "version")
-            {
+        } else {
+            if ($type == "version") {
                 return $this->product_service->get_dao()->get_existing_version($where);
-            }
-            else if ($type == "colour")
-            {
+            } else if ($type == "colour") {
                 return $this->product_service->get_dao()->get_existing_colour($where);
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
@@ -392,12 +381,12 @@ class Product_model extends CI_Model
         return $this->currency_service->get_dao()->get_sign($platform_id);
     }
 
-    public function get_prod_image_list($where=array(), $option=array())
+    public function get_prod_image_list($where = array(), $option = array())
     {
         return $this->product_service->get_prod_image_list($where, $option);
     }
 
-    public function get_prod_image($where=array())
+    public function get_prod_image($where = array())
     {
         return $this->product_service->get_prod_image($where);
     }
@@ -412,12 +401,12 @@ class Product_model extends CI_Model
         return $this->product_service->add_product_image($obj);
     }
 
-    public function get_prod_banner($where=array())
+    public function get_prod_banner($where = array())
     {
         return $this->product_service->get_prod_banner($where);
     }
 
-    public function get_prod_banner_list($where=array(), $option=array())
+    public function get_prod_banner_list($where = array(), $option = array())
     {
         return $this->product_service->get_prod_banner_list($where, $option);
     }
@@ -432,31 +421,31 @@ class Product_model extends CI_Model
         return $this->product_service->add_product_banner($obj);
     }
 
-    public function get_listed_video_list($where=array(), $option=array())
+    public function get_listed_video_list($where = array(), $option = array())
     {
         return $this->product_service->get_listed_video_list($where, $option);
     }
 
     public function get_best_selling_video_list($filter_column = '',
-        $cat_id = 0, $day_count = 0, $limit = 0, $platform="", $type="", $src="")
+                                                $cat_id = 0, $day_count = 0, $limit = 0, $platform = "", $type = "", $src = "")
     {
         return $this->product_service->get_best_selling_video_list($filter_column,
             $cat_id, $day_count, $limit, $platform, $type, $src);
     }
 
     public function get_best_selling_video_list_by_cat($filter_column = '',
-        $cat_id = 0, $day_count = 0, $limit = 0, $platform="", $type="", $src="")
+                                                       $cat_id = 0, $day_count = 0, $limit = 0, $platform = "", $type = "", $src = "")
     {
         return $this->product_service->get_best_selling_video_list_by_cat($filter_column,
             $cat_id, $day_count, $limit, $platform, $type, $src);
     }
 
-    public function get_display_video_list($where=array(), $option=array())
+    public function get_display_video_list($where = array(), $option = array())
     {
         return $this->product_service->get_display_video_list($where, $option);
     }
 
-    public function get_video_detail($where=array(), $option=array())
+    public function get_video_detail($where = array(), $option = array())
     {
         return $this->product_service->get_video_detail($where, $option);
     }
@@ -523,12 +512,10 @@ class Product_model extends CI_Model
 
     public function get_googlebase_cat_list_by_country()
     {
-        $ext_cat_list = $this->external_category_service->get_list(array("ext_party"=>"GOOGLEBASE", "status"=>1), array("limit"=>-1));
+        $ext_cat_list = $this->external_category_service->get_list(array("ext_party" => "GOOGLEBASE", "status" => 1), array("limit" => -1));
         $result = array();
-        if($ext_cat_list)
-        {
-            foreach($ext_cat_list as $ext_cat_obj)
-            {
+        if ($ext_cat_list) {
+            foreach ($ext_cat_list as $ext_cat_obj) {
                 $rs[$ext_cat_obj->get_country_id()][] = $ext_cat_obj;
             }
         }
@@ -547,17 +534,15 @@ class Product_model extends CI_Model
         //var_dump($ext_cat_list);
         //var_dump($this->category_mapping_service->get_dao()->db->last_query());
         $result = array();
-        if($ext_cat_list)
-        {
-            foreach($ext_cat_list as $ext_cat_obj)
-            {
+        if ($ext_cat_list) {
+            foreach ($ext_cat_list as $ext_cat_obj) {
                 $rs[$ext_cat_obj->get_country_id()] = $ext_cat_obj;
             }
         }
         return $rs;
     }
 
-    public function get_googlebase_cat($where=array())
+    public function get_googlebase_cat($where = array())
     {
         return $this->external_category_service->get($where);
     }

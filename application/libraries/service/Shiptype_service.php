@@ -11,7 +11,7 @@ class Shiptype_service extends Base_service
         parent::__construct();
         $CI =& get_instance();
         $this->load = $CI->load;
-        include_once(APPPATH."libraries/dao/Shiptype_dao.php");
+        include_once(APPPATH . "libraries/dao/Shiptype_dao.php");
         $this->set_dao(new Shiptype_dao());
     }
 

@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class Skype_report_dto extends Base_dto {
+class Skype_report_dto extends Base_dto
+{
 
     private $bill_country_id;
     private $period;

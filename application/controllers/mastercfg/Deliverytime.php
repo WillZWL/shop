@@ -1,9 +1,10 @@
 <?php
+
 class Deliverytime extends MY_Controller
 {
 
-    private $app_id="MST0018";
-    private $lang_id="en";
+    private $app_id = "MST0018";
+    private $lang_id = "en";
 
     private $default_delivery;
 
@@ -18,10 +19,9 @@ class Deliverytime extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id()."00";
+        $sub_app_id = $this->_get_app_id() . "00";
 
-        if($this->input->post('posted'))
-        {
+        if ($this->input->post('posted')) {
             $result = $this->update_form($_POST["postdata"]);
             $data["postdata"] = $_POST["postdata"];
             $_SESSION["NOTICE"] = $result["msg"];
@@ -32,17 +32,13 @@ class Deliverytime extends MY_Controller
         $del_list = $this->deliverytime_service->get_deliverytime_list();
 
         $del_list_by_country = array();
-        if($data["country_list"] && $del_list && $data["scenario_list"])
-        {
-            foreach ($data["country_list"] as $countryobj)
-            {
+        if ($data["country_list"] && $del_list && $data["scenario_list"]) {
+            foreach ($data["country_list"] as $countryobj) {
                 $countrycode = $countryobj->get_id();
-                foreach ($del_list as $delobj)
-                {
+                foreach ($del_list as $delobj) {
                     // consolidate delivery list by country & scenario id
                     $scenarioid = $delobj->get_scenarioid();
-                    if($delobj->get_country_id() == $countrycode)
-                    {
+                    if ($delobj->get_country_id() == $countrycode) {
                         $del_list_by_country[$countrycode][] = $delobj;
                     }
                 }
@@ -51,10 +47,15 @@ class Deliverytime extends MY_Controller
 
         $data["del_list_by_country"] = $del_list_by_country;
 
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
-        $this->load->view('mastercfg/deliverytime/deliverytime_index_v',$data);
+        $this->load->view('mastercfg/deliverytime/deliverytime_index_v', $data);
+    }
+
+    public function _get_app_id()
+    {
+        return $this->app_id;
     }
 
     private function update_form($postdata = array())
@@ -63,71 +64,60 @@ class Deliverytime extends MY_Controller
         $ret["status"] = FALSE;
         $deliverytime_dao = $this->deliverytime_service->get_dao();
 
-        if($postdata)
-        {
+        if ($postdata) {
             $success = 1;
             $error_msg = "The following could not be updated: ";
 
-            if($scenario_list = $this->deliverytime_service->get_delivery_scenario_list())
-            {
+            if ($scenario_list = $this->deliverytime_service->get_delivery_scenario_list()) {
                 // get scenario names and compile by scenarioid
-                foreach ($scenario_list as $obj)
-                {
+                foreach ($scenario_list as $obj) {
                     $scenario[$obj->id] = $obj->name;
                 }
             }
 
-            foreach ($postdata as $ctry_id => $value)
-            {
+            foreach ($postdata as $ctry_id => $value) {
                 $data_exists = false;
-                if(($check_empty = $this->check_empty_fields($value)) === false)
-                {
+                if (($check_empty = $this->check_empty_fields($value)) === false) {
                     $success = 0;
-                    $error_msg .= "\n".__LINE__." All scenarios of country<$ctry_id> must be filled.";
+                    $error_msg .= "\n" . __LINE__ . " All scenarios of country<$ctry_id> must be filled.";
                     continue;
                 }
 
-                foreach ($value as $scenarioid => $data)
-                {
+                foreach ($value as $scenarioid => $data) {
                     $ship_min_day = trim($data["ship_min_day"]);
                     $ship_max_day = trim($data["ship_max_day"]);
                     $del_min_day = trim($data["del_min_day"]);
                     $del_max_day = trim($data["del_max_day"]);
                     $margin = trim($data["margin"]);
 
-                    if(($ship_min_day == "" && $ship_max_day == "") && ($del_min_day == "" && $del_max_day == ""))
-                    {
+                    if (($ship_min_day == "" && $ship_max_day == "") && ($del_min_day == "" && $del_max_day == "")) {
                         // skip the loop if both min & max fields are empty for each country-scenario
                         continue;
                     }
 
-                    if(($ship_min_day && $ship_max_day == "") || ($ship_max_day && $ship_min_day == "") || ($ship_max_day < $ship_min_day))
-                    {
+                    if (($ship_min_day && $ship_max_day == "") || ($ship_max_day && $ship_min_day == "") || ($ship_max_day < $ship_min_day)) {
                         $success = 0;
-                        $error_msg .= "\n".__LINE__." Condition fail country<$ctry_id>, scenario<{$scenario[$scenarioid]}>. Min/Max Ship Day is empty or max smaller than min Ship Day.";
+                        $error_msg .= "\n" . __LINE__ . " Condition fail country<$ctry_id>, scenario<{$scenario[$scenarioid]}>. Min/Max Ship Day is empty or max smaller than min Ship Day.";
                         continue;
                     }
 
-                    if(($del_min_day && $del_max_day == "") || ($del_max_day && $del_min_day == "") || ($del_max_day < $del_min_day) )
-                    {
+                    if (($del_min_day && $del_max_day == "") || ($del_max_day && $del_min_day == "") || ($del_max_day < $del_min_day)) {
                         $success = 0;
-                        $error_msg .= "\n".__LINE__." Condition fail country<$ctry_id>, scenario<{$scenario[$scenarioid]}>. Min/Max Delivery Day is empty or max smaller than min Delivery Day.";
+                        $error_msg .= "\n" . __LINE__ . " Condition fail country<$ctry_id>, scenario<{$scenario[$scenarioid]}>. Min/Max Delivery Day is empty or max smaller than min Delivery Day.";
                         continue;
                     }
 
-                    if($ship_min_day > $del_min_day)
-                    {
+                    if ($ship_min_day > $del_min_day) {
                         // delivery days includes ship/dispatch days, so must always be > min_ship_day
                         // in the case of HK, ship days can be = delivery days
                         $success = 0;
-                        $error_msg .= "\n".__LINE__." Condition fail country<$ctry_id>, scenario<{$scenario[$scenarioid]}>. Min Delivery Day is smaller than min Ship Day.";
+                        $error_msg .= "\n" . __LINE__ . " Condition fail country<$ctry_id>, scenario<{$scenario[$scenarioid]}>. Min Delivery Day is smaller than min Ship Day.";
                         continue;
                     }
 
                     $where["scenarioid"] = $scenarioid;
                     $where["country_id"] = $ctry_id;
-                    if($deliverytime_obj = $deliverytime_dao->get($where))
-                    {
+                    if ($deliverytime_obj = $deliverytime_dao->get($where)) {
                         // If existing delivery_time exist, record previous numbers to send email
                         $old_ship_min = $deliverytime_obj->get_ship_min_day();
                         $old_ship_max = $deliverytime_obj->get_ship_max_day();
@@ -135,14 +125,13 @@ class Deliverytime extends MY_Controller
                         $old_del_max = $deliverytime_obj->get_del_max_day();
                         $old_margin = $deliverytime_obj->get_margin();
 
-                        if(
-                                $ship_min_day   != $old_ship_min ||
-                                $ship_max_day   != $old_ship_max ||
-                                $del_min_day    != $old_del_min ||
-                                $del_max_day    != $old_del_max ||
-                                $margin         != $old_margin
-                            )
-                        {
+                        if (
+                            $ship_min_day != $old_ship_min ||
+                            $ship_max_day != $old_ship_max ||
+                            $del_min_day != $old_del_min ||
+                            $del_max_day != $old_del_max ||
+                            $margin != $old_margin
+                        ) {
 
                             // only come in here if any data has changed
                             $deliverytime_obj->set_ship_min_day($ship_min_day);
@@ -151,29 +140,23 @@ class Deliverytime extends MY_Controller
                             $deliverytime_obj->set_del_max_day($del_max_day);
 
                             // only HighMargin scenario gets to update margin
-                            if($scenarioid == 5)
+                            if ($scenarioid == 5)
                                 $deliverytime_obj->set_margin($margin);
 
-                            if($deliverytime_dao->update($deliverytime_obj) === FALSE)
-                            {
+                            if ($deliverytime_dao->update($deliverytime_obj) === FALSE) {
                                 $success = 0;
-                                $error_msg .= "\n".__LINE__." Update fail country<$ctry_id>, scenario<{$scenario[$scenarioid]}>. DB Error: ".$this->db->_error_message();
-                            }
-                            else
-                            {
+                                $error_msg .= "\n" . __LINE__ . " Update fail country<$ctry_id>, scenario<{$scenario[$scenarioid]}>. DB Error: " . $this->db->_error_message();
+                            } else {
                                 // upadate success! compile list of changes.
                                 $margin_txt = "";
-                                if($scenarioid == 5)
-                                {
+                                if ($scenarioid == 5) {
                                     // if HighMargin, then add in changed margin
                                     $margin_txt = "\n  [Margin: OLD => $old_margin || NEW => $margin]. ";
                                 }
                                 $email_msg .= "\nUPDATED <$ctry_id>, scenario<{$scenario[$scenarioid]}>: \n  [Ship Days OLD => $old_ship_min - $old_ship_max || NEW => $ship_min_day - $ship_max_day]. \n  [Delivery Days OLD => $old_del_min - $old_del_max || NEW => $del_min_day - $del_max_day]. $margin_txt";
                             }
                         }
-                    }
-                    else
-                    {
+                    } else {
                         // no existing record; insert
                         $deliverytime_vo = $deliverytime_dao->get();
                         $deliverytime_vo->set_scenarioid($scenarioid);
@@ -185,17 +168,13 @@ class Deliverytime extends MY_Controller
                         $deliverytime_vo->set_margin($margin);
                         $deliverytime_vo->set_status(1);
 
-                        if($deliverytime_dao->insert($deliverytime_vo) === FALSE)
-                        {
+                        if ($deliverytime_dao->insert($deliverytime_vo) === FALSE) {
                             $success = 0;
-                            $error_msg .= "\n".__LINE__." Add fail country<$ctry_id>, scenario<{$scenario[$scenarioid]}>. DB Error: ".$this->db->_error_message();
-                        }
-                        else
-                        {
+                            $error_msg .= "\n" . __LINE__ . " Add fail country<$ctry_id>, scenario<{$scenario[$scenarioid]}>. DB Error: " . $this->db->_error_message();
+                        } else {
                             // insert success! compile list of changes.
                             $margin_txt = "";
-                            if($scenarioid == 5)
-                            {
+                            if ($scenarioid == 5) {
                                 // if HighMargin, then add in changed margin
                                 $margin_txt = "\n  [Margin (NEW => $margin)]. ";
                             }
@@ -205,32 +184,25 @@ class Deliverytime extends MY_Controller
                 }
             }
 
-            if($success == 0)
-            {
+            if ($success == 0) {
                 $ret["msg"] = $error_msg;
-            }
-            else
-            {
+            } else {
                 $ret["status"] = TRUE;
                 $ret["msg"] = "SUCCESS!";
             }
 
-            if($email_msg)
-            {
-                $email_msg = "Changes made to ship/delivery time frames: ".$email_msg;
+            if ($email_msg) {
+                $email_msg = "Changes made to ship/delivery time frames: " . $email_msg;
                 $this->send_notification_email("CHG", $email_msg);
             }
-        }
-        else
-        {
-            $ret["msg"] = "deliverytime LINE: ".__LINE__." postdata is empty.";
+        } else {
+            $ret["msg"] = "deliverytime LINE: " . __LINE__ . " postdata is empty.";
         }
 
         return $ret;
     }
 
-
-    private function check_empty_fields($value=array())
+    private function check_empty_fields($value = array())
     {
         /* =============================================================
             This function checks postdata to ensure that if one scenarioid
@@ -238,30 +210,24 @@ class Deliverytime extends MY_Controller
             be filled.
         ============================================================= */
 
-        if(is_array($value) && !empty($value))
-        {
-            foreach ($value as $scenarioid => $data)
-            {
-                if(
+        if (is_array($value) && !empty($value)) {
+            foreach ($value as $scenarioid => $data) {
+                if (
                     trim($data["ship_min_day"]) !== "" ||
                     trim($data["ship_max_day"]) !== "" ||
                     trim($data["del_min_day"]) !== "" ||
                     trim($data["del_max_day"]) !== "" ||
                     trim($data["margin"]) !== ""
-                    )
-                {
+                ) {
                     $data_exists = TRUE;
                 }
             }
 
             $success = true;
-            if($data_exists)
-            {
-                foreach ($value as $scenarioid => $data)
-                {
+            if ($data_exists) {
+                foreach ($value as $scenarioid => $data) {
                     // if any of the array is empty, then not success
-                    if(array_search('', $data) !== false)
-                    {
+                    if (array_search('', $data) !== false) {
                         $success = false;
                     }
                 }
@@ -272,34 +238,28 @@ class Deliverytime extends MY_Controller
         return false;
     }
 
-    private function send_notification_email($type, $msg="")
+    private function send_notification_email($type, $msg = "")
     {
         include_once(BASEPATH . "plugins/phpmailer/phpmailer_pi.php");
         $phpmail = new phpmailer();
         $phpmail->IsSMTP();
         $phpmail->From = "Admin <admin@valuebasket.net>";
 
-            switch ($type)
-            {
-                case "CHG":
-                    $message = $msg;
-                    $title = "NOTICE - Delivery time frames have been changed.";
-                    break;
-            }
+        switch ($type) {
+            case "CHG":
+                $message = $msg;
+                $title = "NOTICE - Delivery time frames have been changed.";
+                break;
+        }
 
-            $phpmail->AddAddress("csmanager@eservicesgroup.net");
-            $phpmail->AddAddress("itsupport@eservicesgroup.net");
-            $phpmail->Subject = "$title";
-            $phpmail->IsHTML(false);
-            $phpmail->Body = $message;
+        $phpmail->AddAddress("csmanager@eservicesgroup.net");
+        $phpmail->AddAddress("itsupport@eservicesgroup.net");
+        $phpmail->Subject = "$title";
+        $phpmail->IsHTML(false);
+        $phpmail->Body = $message;
 
-            if(strpos($_SERVER['HTTP_HOST'], 'dev') === FALSE)
-                $result = $phpmail->Send();
-    }
-
-    public function _get_app_id()
-    {
-        return $this->app_id;
+        if (strpos($_SERVER['HTTP_HOST'], 'dev') === FALSE)
+            $result = $phpmail->Send();
     }
 
     public function _get_lang_id()

@@ -168,4 +168,5 @@ class So_compensation_history_vo extends Base_vo
     }
 
 }
+
 ?>

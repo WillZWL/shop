@@ -8,7 +8,7 @@ class Version_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once APPPATH."libraries/dao/Version_dao.php";
+        include_once APPPATH . "libraries/dao/Version_dao.php";
         $this->set_dao(new Version_dao());
     }
 
@@ -32,12 +32,12 @@ class Version_service extends Base_service
         return $this->get_dao()->get();
     }
 
-    public function get_list($where=array(), $option=array())
+    public function get_list($where = array(), $option = array())
     {
         return $this->get_dao()->get_list($where, $option);
     }
 
-    public function get_list_cnt($where=array())
+    public function get_list_cnt($where = array())
     {
         return $this->get_dao()->get_list_cnt($where);
     }

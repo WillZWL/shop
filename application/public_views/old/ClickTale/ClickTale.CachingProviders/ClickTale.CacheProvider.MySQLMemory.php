@@ -16,59 +16,55 @@
 ?>
 <?php
 
-require_once(ClickTale_Root."/ClickTale.CachingProviders/ClickTale.CacheProvider.BaseCacheProvider.php");
-require_once(ClickTale_Root."/ClickTale.Settings.php");
-require_once(ClickTale_Root."/ClickTale.Logger.php");
+require_once(ClickTale_Root . "/ClickTale.CachingProviders/ClickTale.CacheProvider.BaseCacheProvider.php");
+require_once(ClickTale_Root . "/ClickTale.Settings.php");
+require_once(ClickTale_Root . "/ClickTale.Logger.php");
 
 class ClickTale_CacheProvider_MySQLMemory extends ClickTale_CacheProvider_BaseCacheProvider
 {
     private $was_init = false;
-    
+
     private $connection = null;
-    
+
     private $tablename = "";
-    
+
     private $block_size = 255;
-    
-    /**
-     * Splits a DB URI for it's components
-     * @return array Components for db connection
-     * @param array $config
-     */
-    protected function extract_db_config($config)
+
+    public function store($key, $value, $config)
     {
-        $parts = parse_url($config['CacheLocation']);
-        $db = substr($parts["path"], 1);
-        
-        list($db, $tablename) = split("\\.", substr($parts["path"], 1), 2);
-        return array(
-            "Host" => $parts["host"],
-            "Port" => $parts["port"],
-            "DatabaseName" => $db,
-            "Username" => $parts["user"],
-            "Password" => $parts["pass"],
-            "TableName" => $tablename
-        );
+        $this->start_connection($config);
+
+        if (!empty($config["MaxCachedSeconds"])) {
+            $this->clean($config);
+        }
+
+        $this->remove_exec($key, $config);
+        $result = $this->store_exec($key, $value, $config);
+
+        $this->end_connection();
+
+        return $result;
     }
-    
+
     /**
      * Returns the connection to the database
-     * @return 
+     * @return
      * @param array $config
      */
-    protected function start_connection($rawConfig) {
+    protected function start_connection($rawConfig)
+    {
         $config = $this->extract_db_config($rawConfig);
-        
+
         $this->tablename = $config["TableName"];
 
         $mysqli = mysqli_connect($config["Host"], $config["Username"], $config["Password"], $config["DatabaseName"], $config["Port"]);
-        if(!$mysqli) {
-            throw new Exception("Problem connecting to mysql database: ".mysqli_connect_error());
+        if (!$mysqli) {
+            throw new Exception("Problem connecting to mysql database: " . mysqli_connect_error());
         }
-        
+
         // create the table is we need to create it
-        if(!$this->was_init) {
-            
+        if (!$this->was_init) {
+
             $q = "
 CREATE TABLE IF NOT EXISTS `{$this->tablename}` (
   `cache_key` varchar(20) NOT NULL,
@@ -81,96 +77,78 @@ CREATE TABLE IF NOT EXISTS `{$this->tablename}` (
             mysqli_query($mysqli, $q);
             $this->was_init = true;
         }
-        
+
         $this->connection = $mysqli;
     }
-    
+
     /**
-     * Closes the connection
+     * Splits a DB URI for it's components
+     * @return array Components for db connection
+     * @param array $config
      */
-    private function end_connection() {
-        mysqli_close($this->connection);
-        $this->connection = null;
+    protected function extract_db_config($config)
+    {
+        $parts = parse_url($config['CacheLocation']);
+        $db = substr($parts["path"], 1);
+
+        list($db, $tablename) = split("\\.", substr($parts["path"], 1), 2);
+        return array(
+            "Host" => $parts["host"],
+            "Port" => $parts["port"],
+            "DatabaseName" => $db,
+            "Username" => $parts["user"],
+            "Password" => $parts["pass"],
+            "TableName" => $tablename
+        );
     }
-    
+
     // Stores in cache. Overrides existing data.
-    public function store($key, $value, $config)
+
+    private function clean($config)
     {
-        $this->start_connection($config);
-        
-        if(!empty($config["MaxCachedSeconds"])) {
-            $this->clean($config);
+        $maxCachedSeconds = $config["MaxCachedSeconds"];
+        // we need to delete all records before this timestamp
+        $firstTimestamp = time() - $maxCachedSeconds;
+
+        $q = "DELETE FROM `{$this->tablename}` WHERE timestamp < ?";
+
+        if ($stmt = mysqli_prepare($this->connection, $q)) {
+            mysqli_stmt_bind_param($stmt, "i", $firstTimestamp);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        } else {
+            throw new Exception(mysqli_error($this->connection));
         }
-        
-        $this->remove_exec($key, $config);
-        $result = $this->store_exec($key, $value, $config);
-        
-        $this->end_connection();
-        
-        return $result;
+        return;
     }
 
-    // Returns FALSE if key does not exist. 
-    public function pull($key, $config)
-    {
-        $this->start_connection($config);
-        
-        if (!$this->exists_exec($key, $config)) {
-            throw new Exception("MySQLMemory cache provider was not able to find page with the key: $key ");
-        }
-        
-        $result = $this->pull_exec($key, $config);
-        
-        if($config["DeleteAfterPull"]) {
-            $this->remove_exec($key, $config);
-        }
-        
-        $this->end_connection();
-        
-        return $result;
-    }
-    
-    public function remove($key, $config)
-    {
-        $this->start_connection($config);
+    // Returns FALSE if key does not exist.
 
-        $result = $this->remove_exec($key, $config);
-        
-        $this->end_connection();
-        
-        return $result;
-    }
-    
-    public function exists($key, $config)
+    private function remove_exec($key, $config)
     {
-        $this->start_connection($config);
+        $q = "DELETE FROM `{$this->tablename}` WHERE cache_key = ?";
+        $result = null;
 
-        $result = $this->exists_exec($key, $config);
-        
-        $this->end_connection();
-        
-        return $result;
+        if ($stmt = mysqli_prepare($this->connection, $q)) {
+            mysqli_stmt_bind_param($stmt, "s", $key);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        } else {
+            throw new Exception(mysqli_error($this->connection));
+        }
+        return null;
     }
-    
-    
-    //
-    //
-    // Actual SQL statements
-    //
-    //
-    
-    
-    
+
     private function store_exec($key, $value, $config)
-    {   
+    {
         $result = "";
 
         $blocksize = $this->block_size;
-        
+
         $timestamp = time();
-        
+
         $q = "
-INSERT INTO `{$this->tablename}` 
+INSERT INTO `{$this->tablename}`
 SELECT ?, BLOCK_NUMBERS.blockNumber + 1, SUBSTR(?,BLOCK_NUMBERS.blockNumber * $blocksize + 1, $blocksize), $timestamp FROM
   (
 SELECT
@@ -252,58 +230,50 @@ WHERE blockNumber <= (LENGTH(?) )/$blocksize
         } else {
             throw new Exception(mysqli_error($this->connection));
         }
-        
-        return null;
-    }
-    
-    
-    
-    
-    private function pull_exec($key, $config)
-    {   
-        $result = "";
-        $page = "";
 
-        $q = "SELECT block_contents";
-        $q .= " FROM `{$this->tablename}`";
-        $q .= " WHERE cache_key=?";
-        $q .= " ORDER BY block_num";
-        
-        if ($stmt = mysqli_prepare($this->connection, $q)) {
-            mysqli_stmt_bind_param($stmt, "s", $key);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_bind_result($stmt, $result);
-            while(mysqli_stmt_fetch($stmt)) {
-                $page .= $result;
-            }
-            mysqli_stmt_close($stmt);
-        } else {
-            throw new Exception(mysqli_error($this->connection));
-        }
-        
-        return $page;
-    }
-    
-    private function remove_exec($key, $config)
-    {
-        $q = "DELETE FROM `{$this->tablename}` WHERE cache_key = ?";
-        $result = null;
-        
-        if ($stmt = mysqli_prepare($this->connection, $q)) {
-            mysqli_stmt_bind_param($stmt, "s", $key);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
-        } else {
-            throw new Exception(mysqli_error($this->connection));
-        }
         return null;
     }
-    
+
+    /**
+     * Closes the connection
+     */
+    private function end_connection()
+    {
+        mysqli_close($this->connection);
+        $this->connection = null;
+    }
+
+
+    //
+    //
+    // Actual SQL statements
+    //
+    //
+
+    public function pull($key, $config)
+    {
+        $this->start_connection($config);
+
+        if (!$this->exists_exec($key, $config)) {
+            throw new Exception("MySQLMemory cache provider was not able to find page with the key: $key ");
+        }
+
+        $result = $this->pull_exec($key, $config);
+
+        if ($config["DeleteAfterPull"]) {
+            $this->remove_exec($key, $config);
+        }
+
+        $this->end_connection();
+
+        return $result;
+    }
+
     private function exists_exec($key, $config)
     {
         $q = "SELECT COUNT(block_num) FROM `{$this->tablename}` WHERE cache_key = ? AND block_num = 1";
         $result = null;
-        
+
         if ($stmt = mysqli_prepare($this->connection, $q)) {
             mysqli_stmt_bind_param($stmt, "s", $key);
             mysqli_stmt_execute($stmt);
@@ -315,28 +285,67 @@ WHERE blockNumber <= (LENGTH(?) )/$blocksize
         }
         return $result > 0;
     }
-    
-    
-    private function clean($config) 
-    {
-        $maxCachedSeconds = $config["MaxCachedSeconds"];
-        // we need to delete all records before this timestamp
-        $firstTimestamp = time() - $maxCachedSeconds;
 
-        $q = "DELETE FROM `{$this->tablename}` WHERE timestamp < ?";
-        
+    private function pull_exec($key, $config)
+    {
+        $result = "";
+        $page = "";
+
+        $q = "SELECT block_contents";
+        $q .= " FROM `{$this->tablename}`";
+        $q .= " WHERE cache_key=?";
+        $q .= " ORDER BY block_num";
+
         if ($stmt = mysqli_prepare($this->connection, $q)) {
-            mysqli_stmt_bind_param($stmt, "i", $firstTimestamp);
+            mysqli_stmt_bind_param($stmt, "s", $key);
             mysqli_stmt_execute($stmt);
+            mysqli_stmt_bind_result($stmt, $result);
+            while (mysqli_stmt_fetch($stmt)) {
+                $page .= $result;
+            }
             mysqli_stmt_close($stmt);
         } else {
             throw new Exception(mysqli_error($this->connection));
         }
-        return;
+
+        return $page;
     }
-    
-    
-    
+
+    public function remove($key, $config)
+    {
+        $this->start_connection($config);
+
+        $result = $this->remove_exec($key, $config);
+
+        $this->end_connection();
+
+        return $result;
+    }
+
+    public function exists($key, $config)
+    {
+        $this->start_connection($config);
+
+        $result = $this->exists_exec($key, $config);
+
+        $this->end_connection();
+
+        return $result;
+    }
+
+    public function config_validation($config)
+    {
+        if ($this->is_config_valid($config)) {
+            return array(
+                "Connected to MySQL successfully"
+            );
+        } else {
+            return array(
+                "MySQL error: " . mysqli_connect_error()
+            );
+        }
+    }
+
     public function is_config_valid($config)
     {
         try {
@@ -346,31 +355,19 @@ WHERE blockNumber <= (LENGTH(?) )/$blocksize
         }
         return true;
     }
-    
-    public function config_validation($config)
+
+    public function refresh($key, $config)
     {
-        if($this->is_config_valid($config)) {
-            return array(
-                "Connected to MySQL successfully"
-            );
-        } else {
-            return array(
-                "MySQL error: ".mysqli_connect_error()
-            );
-        }
-    }
-    
-    public function refresh($key, $config) {
         $tablename = $this->tablename;
         $timestamp = time();
         $q = "UPDATE $tablename SET timestamp = ? WHERE cache_key = ?";
-        
+
         try {
             $this->start_connection($config);
         } catch (Exception $e) {
             return false;
         }
-        
+
         if ($stmt = mysqli_prepare($this->connection, $q)) {
             mysqli_stmt_bind_param($stmt, "is", $timestamp, $key);
             mysqli_stmt_execute($stmt);
@@ -380,7 +377,7 @@ WHERE blockNumber <= (LENGTH(?) )/$blocksize
         }
         return true;
     }
-    
+
 }
 
 ?>

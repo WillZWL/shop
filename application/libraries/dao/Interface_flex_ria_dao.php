@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Interface_flex_ria_dao extends Base_dao
 {
-    private $table_name="interface_flex_ria";
-    private $vo_classname="Interface_flex_ria_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "interface_flex_ria";
+    private $vo_classname = "Interface_flex_ria_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

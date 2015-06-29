@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Interface_price_dao extends Base_dao
 {
-    private $table_name="interface_price";
-    private $vo_class_name="Interface_price_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "interface_price";
+    private $vo_class_name = "Interface_price_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -37,7 +37,7 @@ class Interface_price_dao extends Base_dao
 
     public function sp_ixtens_reprice_pg($batch_id)
     {
-        $sql  = "CALL sp_ixtens_reprice_pg(?)";
+        $sql = "CALL sp_ixtens_reprice_pg(?)";
         return $this->db->query($sql, $batch_id);
     }
 }

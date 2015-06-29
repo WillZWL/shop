@@ -120,4 +120,5 @@ class Email_address_vo extends Base_vo
     }
 
 }
+
 ?>

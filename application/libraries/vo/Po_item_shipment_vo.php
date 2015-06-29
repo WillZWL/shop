@@ -192,4 +192,5 @@ class Po_item_shipment_vo extends Base_vo
     }
 
 }
+
 ?>

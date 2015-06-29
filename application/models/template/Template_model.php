@@ -11,12 +11,9 @@ class Template_model extends CI_Model
 
     public function load_default($region, $preLoadData)
     {
-        if ($region == "header")
-        {
+        if ($region == "header") {
             return $this->_loadDefaultTemplateHeader($preLoadData);
-        }
-        else if ($region == "footer")
-        {
+        } else if ($region == "footer") {
             return $this->_loadDefaultTemplateFooter($preLoadData);
         }
         return array();
@@ -30,10 +27,8 @@ class Template_model extends CI_Model
         $data["cart"]["item"] = 0;
 
         $cart_info = $preLoadData["cart_info"];
-        if($cart_info["cart"])
-        {
-            foreach($cart_info["cart"] AS $key => $arr)
-            {
+        if ($cart_info["cart"]) {
+            foreach ($cart_info["cart"] AS $key => $arr) {
                 $data["cart"]["item"] += $arr["qty"];
             }
         }
@@ -52,8 +47,7 @@ class Template_model extends CI_Model
         if ($data["controller_path"] == "/common/redirect_controller/index")
             $data["controller_path"] = "";
         $data["query_string"] = urlencode($_SERVER["QUERY_STRING"] ? "?" . $_SERVER["QUERY_STRING"] : "");
-        if($_SESSION["cart"][PLATFORMID])
-        {
+        if ($_SESSION["cart"][PLATFORMID]) {
             $data["chk_cart"] = base64_encode(serialize($_SESSION["cart"][PLATFORMID]));
             $data["emptyCart"] = 2;
         }

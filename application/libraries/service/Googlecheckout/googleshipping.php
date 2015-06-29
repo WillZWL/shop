@@ -20,15 +20,16 @@
  * @version $Id: googleshipping.php 1234 2007-09-25 14:58:57Z ropu $
  */
 
-  /**
-   * Class that represents flat rate shipping
-   *
-   * info:
-   * {@link http://code.google.com/apis/checkout/developer/index.html#tag_flat-rate-shipping}
-   * {@link http://code.google.com/apis/checkout/developer/index.html#shipping_xsd}
-   *
-   */
-  class GoogleFlatRateShipping {
+/**
+ * Class that represents flat rate shipping
+ *
+ * info:
+ * {@link http://code.google.com/apis/checkout/developer/index.html#tag_flat-rate-shipping}
+ * {@link http://code.google.com/apis/checkout/developer/index.html#shipping_xsd}
+ *
+ */
+class GoogleFlatRateShipping
+{
 
     var $price;
     var $name;
@@ -39,9 +40,10 @@
      * @param string $name a name for the shipping
      * @param double $price the price for this shipping
      */
-    function GoogleFlatRateShipping($name, $price) {
-      $this->name = $name;
-      $this->price = $price;
+    function GoogleFlatRateShipping($name, $price)
+    {
+        $this->name = $name;
+        $this->price = $price;
     }
 
     /**
@@ -49,19 +51,21 @@
      *
      * @param GoogleShippingFilters $restrictions the shipping restrictions
      */
-    function AddShippingRestrictions($restrictions) {
-      $this->shipping_restrictions = $restrictions;
+    function AddShippingRestrictions($restrictions)
+    {
+        $this->shipping_restrictions = $restrictions;
     }
-  }
+}
 
-  /**
-   * Represents a merchant calculated shipping
-   *
-   * info:
-   * {@link http://code.google.com/apis/checkout/developer/index.html#shipping_xsd}
-   * {@link http://code.google.com/apis/checkout/developer/index.html#merchant_calculations_specifying}
-   */
-  class GoogleMerchantCalculatedShipping {
+/**
+ * Represents a merchant calculated shipping
+ *
+ * info:
+ * {@link http://code.google.com/apis/checkout/developer/index.html#shipping_xsd}
+ * {@link http://code.google.com/apis/checkout/developer/index.html#merchant_calculations_specifying}
+ */
+class GoogleMerchantCalculatedShipping
+{
 
     var $price;
     var $name;
@@ -74,9 +78,10 @@
      * @param double $price the default price for this shipping, used if the
      *                      calculation can't be made for some reason.
      */
-    function GoogleMerchantCalculatedShipping($name, $price) {
-      $this->price = $price;
-      $this->name = $name;
+    function GoogleMerchantCalculatedShipping($name, $price)
+    {
+        $this->price = $price;
+        $this->name = $name;
     }
 
     /**
@@ -84,8 +89,9 @@
      *
      * @param GoogleShippingFilters $restrictions the shipping restrictions
      */
-    function AddShippingRestrictions($restrictions) {
-      $this->shipping_restrictions = $restrictions;
+    function AddShippingRestrictions($restrictions)
+    {
+        $this->shipping_restrictions = $restrictions;
     }
 
     /**
@@ -93,15 +99,17 @@
      *
      * @param GoogleShippingFilters $filters the address filters
      */
-    function AddAddressFilters($filters) {
-      $this->address_filters = $filters;
+    function AddAddressFilters($filters)
+    {
+        $this->address_filters = $filters;
     }
-  }
+}
 
-  /**
-   * Represents carrier calculated shipping
-   */
-  class GoogleCarrierCalculatedShipping {
+/**
+ * Represents carrier calculated shipping
+ */
+class GoogleCarrierCalculatedShipping
+{
 
     var $name;
     var $type = "carrier-calculated-shipping";
@@ -113,32 +121,36 @@
     /**
      * @param string $name the name of this shipping
      */
-    function GoogleCarrierCalculatedShipping($name) {
-      $this->name = $name;
+    function GoogleCarrierCalculatedShipping($name)
+    {
+        $this->name = $name;
     }
 
     /**
      * @param GoogleCarrierCalculatedShippingOption $option the option to be
      * added to the carrier calculated shipping
      */
-    function addCarrierCalculatedShippingOptions($option){
-      $this->CarrierCalculatedShippingOptions[] = $option;
+    function addCarrierCalculatedShippingOptions($option)
+    {
+        $this->CarrierCalculatedShippingOptions[] = $option;
     }
 
     /**
      * @param GoogleShippingPackage $package
      */
-    function addShippingPackage($package){
+    function addShippingPackage($package)
+    {
 //      $this->ShippingPackages[] = $package;
-      $this->ShippingPackage = $package;
+        $this->ShippingPackage = $package;
     }
-  }
+}
 
-  /**
-   * Represents a shipping method for which Google Checkout will obtain
-   * shipping costs for the order.
-   */
-  class GoogleCarrierCalculatedShippingOption {
+/**
+ * Represents a shipping method for which Google Checkout will obtain
+ * shipping costs for the order.
+ */
+class GoogleCarrierCalculatedShippingOption
+{
 
     var $price;
     var $shipping_company;
@@ -168,26 +180,27 @@
      *
      */
     function GoogleCarrierCalculatedShippingOption($price, $shipping_company,
-         $shipping_type, $additional_fixed_charge=0,
-         $additional_variable_charge_percent=0, $carrier_pickup='DROP_OFF') {
-      $this->price = (double)$price;
-      $this->shipping_company = $shipping_company;
-      $this->shipping_type = trim($shipping_type);
-      switch(strtoupper($carrier_pickup)){
-        case 'DROP_OFF':
-        case 'REGULAR_PICKUP':
-        case 'SPECIAL_PICKUP':
-          $this->carrier_pickup = $carrier_pickup;;
-          break;
-        default:
-          $this->carrier_pickup = 'DROP_OFF';
-      }
-      if($additional_fixed_charge){
-        $this->additional_fixed_charge = (double)$additional_fixed_charge;
-      }
-      if($additional_variable_charge_percent){
-        $this->additional_variable_charge_percent = (double)$additional_variable_charge_percent;
-      }
+                                                   $shipping_type, $additional_fixed_charge = 0,
+                                                   $additional_variable_charge_percent = 0, $carrier_pickup = 'DROP_OFF')
+    {
+        $this->price = (double)$price;
+        $this->shipping_company = $shipping_company;
+        $this->shipping_type = trim($shipping_type);
+        switch (strtoupper($carrier_pickup)) {
+            case 'DROP_OFF':
+            case 'REGULAR_PICKUP':
+            case 'SPECIAL_PICKUP':
+                $this->carrier_pickup = $carrier_pickup;;
+                break;
+            default:
+                $this->carrier_pickup = 'DROP_OFF';
+        }
+        if ($additional_fixed_charge) {
+            $this->additional_fixed_charge = (double)$additional_fixed_charge;
+        }
+        if ($additional_variable_charge_percent) {
+            $this->additional_variable_charge_percent = (double)$additional_variable_charge_percent;
+        }
     }
 
 //    function AddShippingRestrictions($restrictions) {
@@ -197,12 +210,13 @@
 //    function AddAddressFilters($filters) {
 //      $this->address_filters = $filters;
 //    }
-  }
+}
 
-  /**
-   * Represents an individual package that will be shipped to the buyer.
-   */
-  class GoogleShippingPackage {
+/**
+ * Represents an individual package that will be shipped to the buyer.
+ */
+class GoogleShippingPackage
+{
 
     var $width;
     var $length;
@@ -223,36 +237,38 @@
      * values are "RESIDENTIAL", "COMMERCIAL"
      */
     function GoogleShippingPackage($ship_from, $width, $length, $height, $unit,
-                    $delivery_address_category='RESIDENTIAL') {
-      $this->width = (double)$width;
-      $this->length = (double)$length;
-      $this->height = (double)$height;
-      switch(strtoupper($unit)){
-        case 'CM':
-          $this->unit = strtoupper($unit);
-          break;
-        case 'IN':
-        default:
-          $this->unit = 'IN';
-      }
+                                   $delivery_address_category = 'RESIDENTIAL')
+    {
+        $this->width = (double)$width;
+        $this->length = (double)$length;
+        $this->height = (double)$height;
+        switch (strtoupper($unit)) {
+            case 'CM':
+                $this->unit = strtoupper($unit);
+                break;
+            case 'IN':
+            default:
+                $this->unit = 'IN';
+        }
 
-      $this->ship_from = $ship_from;
-      switch(strtoupper($delivery_address_category)){
-        case 'COMMERCIAL':
-          $this->delivery_address_category = strtoupper($delivery_address_category);
-          break;
-        case 'RESIDENTIAL':
-        default:
-          $this->delivery_address_category = 'RESIDENTIAL';
-      }
+        $this->ship_from = $ship_from;
+        switch (strtoupper($delivery_address_category)) {
+            case 'COMMERCIAL':
+                $this->delivery_address_category = strtoupper($delivery_address_category);
+                break;
+            case 'RESIDENTIAL':
+            default:
+                $this->delivery_address_category = 'RESIDENTIAL';
+        }
     }
-  }
+}
 
-  /**
-   * Represents the location from where packages will be shipped from.
-   * Used with {@link GoogleShippingPackage}.
-   */
-  class GoogleShipFrom {
+/**
+ * Represents the location from where packages will be shipped from.
+ * Used with {@link GoogleShippingPackage}.
+ */
+class GoogleShipFrom
+{
     var $id;
     var $city;
     var $country_code;
@@ -267,35 +283,37 @@
      * @param string $region the region
      */
     function GoogleShipFrom($id, $city, $country_code,
-                                  $postal_code, $region) {
-      $this->id = $id;
-      $this->city = $city;
-      $this->country_code = $country_code;
-      $this->postal_code = $postal_code;
-      $this->region = $region;
+                            $postal_code, $region)
+    {
+        $this->id = $id;
+        $this->city = $city;
+        $this->country_code = $country_code;
+        $this->postal_code = $postal_code;
+        $this->region = $region;
     }
-  }
+}
 
-  /**
-   *
-   * Shipping restrictions contain information about particular areas where
-   * items can (or cannot) be shipped.
-   *
-   * More info:
-   * {@link http://code.google.com/apis/checkout/developer/index.html#tag_shipping-restrictions}
-   *
-   * Address filters identify areas where a particular merchant-calculated
-   * shipping method is available or unavailable. Address filters are applied
-   * before Google Checkout sends a <merchant-calculation-callback> to the
-   * merchant. Google Checkout will not ask you to calculate the cost of a
-   * particular shipping method for an address if the address filters in the
-   * Checkout API request indicate that the method is not available for the
-   * address.
-   *
-   * More info:
-   * {@link http://code.google.com/apis/checkout/developer/index.html#tag_address-filters}
-   */
-  class GoogleShippingFilters {
+/**
+ *
+ * Shipping restrictions contain information about particular areas where
+ * items can (or cannot) be shipped.
+ *
+ * More info:
+ * {@link http://code.google.com/apis/checkout/developer/index.html#tag_shipping-restrictions}
+ *
+ * Address filters identify areas where a particular merchant-calculated
+ * shipping method is available or unavailable. Address filters are applied
+ * before Google Checkout sends a <merchant-calculation-callback> to the
+ * merchant. Google Checkout will not ask you to calculate the cost of a
+ * particular shipping method for an address if the address filters in the
+ * Checkout API request indicate that the method is not available for the
+ * address.
+ *
+ * More info:
+ * {@link http://code.google.com/apis/checkout/developer/index.html#tag_address-filters}
+ */
+class GoogleShippingFilters
+{
 
     var $allow_us_po_box = true;
 
@@ -315,16 +333,17 @@
     var $excluded_state_areas_arr;
     var $excluded_zip_patterns_arr;
 
-    function GoogleShippingFilters() {
-      $this->allowed_country_codes_arr = array();
-      $this->allowed_postal_patterns_arr = array();
-      $this->allowed_state_areas_arr = array();
-      $this->allowed_zip_patterns_arr = array();
+    function GoogleShippingFilters()
+    {
+        $this->allowed_country_codes_arr = array();
+        $this->allowed_postal_patterns_arr = array();
+        $this->allowed_state_areas_arr = array();
+        $this->allowed_zip_patterns_arr = array();
 
-      $this->excluded_country_codes_arr = array();
-      $this->excluded_postal_patterns_arr = array();
-      $this->excluded_state_areas_arr = array();
-      $this->excluded_zip_patterns_arr = array();
+        $this->excluded_country_codes_arr = array();
+        $this->excluded_postal_patterns_arr = array();
+        $this->excluded_state_areas_arr = array();
+        $this->excluded_zip_patterns_arr = array();
     }
 
     /**
@@ -333,8 +352,9 @@
      * @param bool $allow_us_po_box whether to allow delivery to PO boxes in US,
      * defaults to true
      */
-    function SetAllowUsPoBox($allow_us_po_box = true) {
-      $this->allow_us_po_box = $allow_us_po_box;
+    function SetAllowUsPoBox($allow_us_po_box = true)
+    {
+        $this->allow_us_po_box = $allow_us_po_box;
     }
 
     /**
@@ -344,9 +364,10 @@
      *
      * @param bool $world_area Set worldwide allowed shipping, defaults to true
      */
-    function SetAllowedWorldArea($world_area = true) {
-      $this->allowed_restrictions = true;
-      $this->allowed_world_area = $world_area;
+    function SetAllowedWorldArea($world_area = true)
+    {
+        $this->allowed_restrictions = true;
+        $this->allowed_world_area = $world_area;
     }
 
     // Allows
@@ -359,10 +380,11 @@
      * @param string $postal_pattern Pattern that matches the postal areas to
      * be allowed, as defined in {@link http://code.google.com/apis/checkout/developer/index.html#tag_postal-code-pattern}
      */
-    function AddAllowedPostalArea($country_code, $postal_pattern = "") {
-      $this->allowed_restrictions = true;
-      $this->allowed_country_codes_arr[] = $country_code;
-      $this->allowed_postal_patterns_arr[]= $postal_pattern;
+    function AddAllowedPostalArea($country_code, $postal_pattern = "")
+    {
+        $this->allowed_restrictions = true;
+        $this->allowed_country_codes_arr[] = $country_code;
+        $this->allowed_postal_patterns_arr[] = $postal_pattern;
     }
 
     /**
@@ -374,18 +396,19 @@
      * "FULL_50_STATES" or "ALL"
      *
      */
-    function SetAllowedCountryArea($country_area) {
-      switch ($country_area) {
-        case "CONTINENTAL_48":
-        case "FULL_50_STATES":
-        case "ALL":
-          $this->allowed_country_area = $country_area;
-          $this->allowed_restrictions = true;
-        break;
-        default:
-          $this->allowed_country_area = "";
-        break;
-      }
+    function SetAllowedCountryArea($country_area)
+    {
+        switch ($country_area) {
+            case "CONTINENTAL_48":
+            case "FULL_50_STATES":
+            case "ALL":
+                $this->allowed_country_area = $country_area;
+                $this->allowed_restrictions = true;
+                break;
+            default:
+                $this->allowed_country_area = "";
+                break;
+        }
     }
 
     /**
@@ -395,9 +418,10 @@
      *
      * @param array $areas Areas to be allowed
      */
-    function SetAllowedStateAreas($areas) {
-      $this->allowed_restrictions = true;
-      $this->allowed_state_areas_arr = $areas;
+    function SetAllowedStateAreas($areas)
+    {
+        $this->allowed_restrictions = true;
+        $this->allowed_state_areas_arr = $areas;
     }
 
     /**
@@ -407,9 +431,10 @@
      *
      * @param string $area Area to be allowed
      */
-    function AddAllowedStateArea($area) {
-      $this->allowed_restrictions = true;
-      $this->allowed_state_areas_arr[] = $area;
+    function AddAllowedStateArea($area)
+    {
+        $this->allowed_restrictions = true;
+        $this->allowed_state_areas_arr[] = $area;
     }
 
     /**
@@ -419,9 +444,10 @@
      *
      * @param array $zips
      */
-    function SetAllowedZipPatterns($zips) {
-      $this->allowed_restrictions = true;
-      $this->allowed_zip_patterns_arr = $zips;
+    function SetAllowedZipPatterns($zips)
+    {
+        $this->allowed_restrictions = true;
+        $this->allowed_zip_patterns_arr = $zips;
     }
 
     /**
@@ -431,9 +457,10 @@
      *
      * @param string
      */
-    function AddAllowedZipPattern($zip) {
-      $this->allowed_restrictions = true;
-      $this->allowed_zip_patterns_arr[] = $zip;
+    function AddAllowedZipPattern($zip)
+    {
+        $this->allowed_restrictions = true;
+        $this->allowed_zip_patterns_arr[] = $zip;
     }
 
     /**
@@ -441,10 +468,11 @@
      *
      * @see AddAllowedPostalArea
      */
-    function AddExcludedPostalArea($country_code, $postal_pattern = "") {
-      $this->excluded_restrictions = true;
-      $this->excluded_country_codes_arr[] = $country_code;
-      $this->excluded_postal_patterns_arr[]= $postal_pattern;
+    function AddExcludedPostalArea($country_code, $postal_pattern = "")
+    {
+        $this->excluded_restrictions = true;
+        $this->excluded_country_codes_arr[] = $country_code;
+        $this->excluded_postal_patterns_arr[] = $postal_pattern;
     }
 
     /**
@@ -452,9 +480,10 @@
      *
      * @see SetAllowedStateAreas
      */
-    function SetExcludedStateAreas($areas) {
-      $this->excluded_restrictions = true;
-      $this->excluded_state_areas_arr = $areas;
+    function SetExcludedStateAreas($areas)
+    {
+        $this->excluded_restrictions = true;
+        $this->excluded_state_areas_arr = $areas;
     }
 
     /**
@@ -462,9 +491,10 @@
      *
      * @see AddAllowedStateArea
      */
-    function AddExcludedStateArea($area) {
-      $this->excluded_restrictions = true;
-      $this->excluded_state_areas_arr[] = $area;
+    function AddExcludedStateArea($area)
+    {
+        $this->excluded_restrictions = true;
+        $this->excluded_state_areas_arr[] = $area;
     }
 
     /**
@@ -472,9 +502,10 @@
      *
      * @see SetAllowedZipPatterns
      */
-    function SetExcludedZipPatternsStateAreas($zips) {
-      $this->excluded_restrictions = true;
-      $this->excluded_zip_patterns_arr = $zips;
+    function SetExcludedZipPatternsStateAreas($zips)
+    {
+        $this->excluded_restrictions = true;
+        $this->excluded_zip_patterns_arr = $zips;
     }
 
     /**
@@ -482,9 +513,10 @@
      *
      * @see AddExcludedZipPattern
      */
-    function SetAllowedZipPatternsStateArea($zip) {
-      $this->excluded_restrictions = true;
-      $this->excluded_zip_patterns_arr[] = $zip;
+    function SetAllowedZipPatternsStateArea($zip)
+    {
+        $this->excluded_restrictions = true;
+        $this->excluded_zip_patterns_arr[] = $zip;
     }
 
     /**
@@ -492,29 +524,31 @@
      *
      * @see SetAllowedCountryArea
      */
-    function SetExcludedCountryArea($country_area) {
-      switch ($country_area) {
-        case "CONTINENTAL_48":
-        case "FULL_50_STATES":
-        case "ALL":
-          $this->excluded_country_area = $country_area;
-          $this->excluded_restrictions = true;
-            break;
+    function SetExcludedCountryArea($country_area)
+    {
+        switch ($country_area) {
+            case "CONTINENTAL_48":
+            case "FULL_50_STATES":
+            case "ALL":
+                $this->excluded_country_area = $country_area;
+                $this->excluded_restrictions = true;
+                break;
 
-        default:
-          $this->excluded_country_area = "";
-            break;
-      }
+            default:
+                $this->excluded_country_area = "";
+                break;
+        }
     }
-  }
+}
 
-  /**
-   * Used as a shipping option in which neither a carrier nor a ship-to
-   * address is specified
-   *
-   * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_pickup} <pickup>
-   */
-  class GooglePickUp {
+/**
+ * Used as a shipping option in which neither a carrier nor a ship-to
+ * address is specified
+ *
+ * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_pickup} <pickup>
+ */
+class GooglePickUp
+{
 
     var $price;
     var $name;
@@ -524,8 +558,9 @@
      * @param string $name the name of this shipping option
      * @param double $price the handling cost (if there is one)
      */
-    function GooglePickUp($name, $price) {
-      $this->price = $price;
-      $this->name = $name;
+    function GooglePickUp($name, $price)
+    {
+        $this->price = $price;
+        $this->name = $name;
     }
-  }
+}

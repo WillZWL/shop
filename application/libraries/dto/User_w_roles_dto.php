@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once "Base_dto.php";
 
-class User_w_roles_dto extends Base_dto {
+class User_w_roles_dto extends Base_dto
+{
 
     //class variable
     private $id;

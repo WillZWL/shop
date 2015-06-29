@@ -1,16 +1,18 @@
 <?php
+
 class Email_management extends MY_Controller
 {
 
-    private $app_id="MKT0077";
-    private $lang_id="en";
+    private $app_id = "MKT0077";
+    private $lang_id = "en";
+
     // private $
 
     public function __construct()
     {
         parent::__construct();
         $this->load->model('marketing/product_model');
-        $this->load->helper(array('url','notice','object','image'));
+        $this->load->helper(array('url', 'notice', 'object', 'image'));
         $this->load->library('dao/template_dao');
         $this->load->library('dao/template_by_platform_dao');
 
@@ -32,53 +34,43 @@ class Email_management extends MY_Controller
 
         // $listpage = $_SESSION["LISTPAGE"];
 
-        $sub_app_id = $this->_get_app_id()."00";
-        include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
+        $sub_app_id = $this->_get_app_id() . "00";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
         # get all the templates available for user edit. only those with html stored in database will be shown.
         $data["tpl_list"] = $this->get_template_list();
 
-        if($_POST)
-        {
-            if($save_template = $this->save_template())
-            {
+        if ($_POST) {
+            if ($save_template = $this->save_template()) {
                 $_SESSION["NOTICE"] = "Update success!";
             }
         }
 
-        if($_GET)
-        {
-            if($tpl_id = $_GET["tpl"])
-            {
+        if ($_GET) {
+            if ($tpl_id = $_GET["tpl"]) {
                 # this will grab the table that this template id is from (template or template_by_platform)
-                if($tpl_type = $this->get_template_type($tpl_id))
-                {
+                if ($tpl_type = $this->get_template_type($tpl_id)) {
                     $data["tpl_table"] = $tpl_type["table"];
 
-                    $filter_type =$data["filter_type"] = $tpl_type["filter"];    # gives either "lang_id" or "platform_id"
+                    $filter_type = $data["filter_type"] = $tpl_type["filter"];    # gives either "lang_id" or "platform_id"
 
                     $found_default = FALSE;
-                    if($selected_filter = $_GET["filter"])
+                    if ($selected_filter = $_GET["filter"])
                         $found_default = TRUE;
 
-                    if($tpl_list = $this->get_template_list($tpl_id, $tpl_type["table"]))
-                    {
+                    if ($tpl_list = $this->get_template_list($tpl_id, $tpl_type["table"])) {
                         # if no lang_id/platform+id filter selected, checks if template contains en or WEBGB and make default
-                        foreach ($tpl_list as $key => $obj)
-                        {
-                            if(($found_default === FALSE && ($obj->$filter_type == "en" || $obj->$filter_type == "WEBGB")))
-                            {
+                        foreach ($tpl_list as $key => $obj) {
+                            if (($found_default === FALSE && ($obj->$filter_type == "en" || $obj->$filter_type == "WEBGB"))) {
                                 $selected_filter = $obj->$filter_type;
                                 $found_default = TRUE;
                             }
                         }
 
-                        foreach ($tpl_list as $key => $obj)
-                        {
+                        foreach ($tpl_list as $key => $obj) {
                             # if no filter selected and template doesn't have en or WEBGB, then make first array default
-                            if($found_default === FALSE && $key == 0)
-                            {
+                            if ($found_default === FALSE && $key == 0) {
                                 $selected_filter = $obj->$filter_type;
                                 $found_default = TRUE;
                             }
@@ -88,8 +80,7 @@ class Email_management extends MY_Controller
                             $data["filter_arr"][] = $filter;    # for frontend dropdown list
 
                             # get contents of the selected template
-                            if($filter == $selected_filter)
-                            {
+                            if ($filter == $selected_filter) {
                                 $data["tpl_edit"]["selected_filter"] = $filter;
                                 $data["tpl_edit"]["id"] = $obj->id;
                                 $data["tpl_edit"]["subject"] = $obj->subject;
@@ -112,143 +103,213 @@ class Email_management extends MY_Controller
             }
         }
 
-        $_SESSION["LISTPAGE"] = ($tpl_id==""?base_url()."marketing/email_management/?":current_url())."?".$_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = ($tpl_id == "" ? base_url() . "marketing/email_management/?" : current_url()) . "?" . $_SERVER['QUERY_STRING'];
         $data["notice"] = notice($lang);
 
         $this->load->view('marketing/email_management/email_management_index_v', $data);
     }
 
-    public function get_description()
+    public function _get_app_id()
     {
-        /* ===================================================================
-            This function is called by ajax. Will get the name and description
-            of template id.
-            =================================================================== */
+        return $this->app_id;
+    }
 
-        $description_text = "<b>Template Description</b><br>";
-        if($_GET)
-        {
-            if($template_id = $_GET["tpl"])
-            {
-                # get from template_by_platform
-                $this->db->from("template_by_platform");
-                $this->db->select("id, name, description");
-                $this->db->where(array("status"=>1, "id"=>$template_id));
-                $this->db->order_by("modify_on", "desc");
-                $this->db->limit(1);
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
+    }
 
-                if($query = $this->db->get())
-                {
-                    if ($query->num_rows() > 0)
-                    {
-                        $obj = $query->result("object");
-                        foreach ($query->result() as $row)
-                        {
-                            $description_text .= "<u>{$row->name}</u><br>{$row->description}";
-                        }
+    private function get_template_list($template_id = "", $template_table = "")
+    {
+        if (empty($template_id) && empty($template_table)) {
+            # get unique template IDs from both tables
+            $result = array();
 
-                        echo $description_text;
-                        exit(); #already got info, exit.
+            $this->db->select('id');
+            $this->db->distinct();
+            $this->db->from("template");
+            $this->db->where(array("message_html !=''" => NULL, "status" => 1));
+            $this->db->order_by("id", "ASC");
+
+            if ($query = $this->db->get()) {
+                if ($query->num_rows() > 0) {
+                    $obj = $query->result("object");
+                    foreach ($query->result() as $row) {
+                        $result[] = $row->id;
                     }
                 }
-
-                # if cannot find from template_by_platform, get from template
-                $this->db->from("template");
-                $this->db->select("id, name, description");
-                $this->db->where(array("status"=>1, "id"=>$template_id));
-                $this->db->order_by("modify_on", "desc");
-                $this->db->limit(1);
-
-                if($query = $this->db->get())
-                {
-                    if ($query->num_rows() > 0)
-                    {
-                        $obj = $query->result("object");
-                        foreach ($query->result() as $row)
-                        {
-                            $description_text .= "<u>{$row->name}</u><br>{$row->description}";
-                        }
-
-                        echo $description_text;
-                        exit(); #already got info, exit.
-                    }
-                }
-
-                echo "Error getting description from template id ($template_id).";
-                exit();
             }
-        }
 
-        echo "No template id supplied.";
-        exit();
+            $this->db->select('id');
+            $this->db->distinct();
+            $this->db->from("template_by_platform");
+            $this->db->where(array("message_html !=''" => NULL, "status" => 1));
+            $this->db->order_by("modify_on", "DESC");
+
+            if ($query = $this->db->get()) {
+                if ($query->num_rows() > 0) {
+                    $obj = $query->result("object");
+                    foreach ($query->result() as $row) {
+                        $result[] = $row->id;
+                    }
+                }
+            }
+
+            return $result;
+        } elseif ($template_id && $template_table) {
+            # get list of templates from respective tables
+            $this->db->select('*');
+            $this->db->from($template_table);
+            $this->db->where(array("id" => $template_id, "message_html !=''" => NULL, "status" => 1));
+            $this->db->order_by("modify_on", "DESC");
+
+            if ($query = $this->db->get()) {
+                if ($query->num_rows() > 0) {
+                    foreach ($query->result() as $row) {
+                        $result[] = $row;
+                    }
+                }
+            }
+
+            return $result;
+        }
     }
 
     private function save_template()
     {
-        $variable_arr = $content_arr = $not_table_field =array();
+        $variable_arr = $content_arr = $not_table_field = array();
 
-        if($_POST)
-        {
+        if ($_POST) {
             $tpl_id = $_POST["tpl_id"];
             $table_name = $_POST["tpl_table"];
             $filter_type = $_POST["filter_type"];
             $selected_filter = $_POST["selected_filter"];
             $not_table_field = array("tpl_id", "tpl_table", "filter_type", "selected_filter");
 
-            $template_table_dao = $this->{$table_name."_dao"};
-            if($template_obj = $template_table_dao->get(array("id"=>$tpl_id, $filter_type=>$selected_filter)))
-            {
-                foreach ($_POST as $key => $value)
-                {
+            $template_table_dao = $this->{$table_name . "_dao"};
+            if ($template_obj = $template_table_dao->get(array("id" => $tpl_id, $filter_type => $selected_filter))) {
+                foreach ($_POST as $key => $value) {
                     $set = "";
 
-                    if(in_array($value, $not_table_field) === FALSE)
-                    {
-                        if($this->db->field_exists($key, $table_name))
-                        {
+                    if (in_array($value, $not_table_field) === FALSE) {
+                        if ($this->db->field_exists($key, $table_name)) {
                             $set = "set_$key";
                             $template_obj->$set($value);
-                        }
-                        else
-                        {
-                            $_SESSION["NOTICE"] = "Line " .__LINE__. ". ERROR - Input id $key does not exist in db table <$table_name>";
+                        } else {
+                            $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Input id $key does not exist in db table <$table_name>";
                         }
                     }
                 }
 
-                if($template_table_dao->update($template_obj) === FALSE)
-                {
-                    $_SESSION["NOTICE"] = "Line " .__LINE__. ". ERROR - Cannot update template. \n DB error_msg: ".$this->db->_error_message();
-                }
-                else
-                {
+                if ($template_table_dao->update($template_obj) === FALSE) {
+                    $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot update template. \n DB error_msg: " . $this->db->_error_message();
+                } else {
                     return TRUE;
                 }
 
-            }
-            else
-            {
-                $_SESSION["NOTICE"] = "Line " .__LINE__. ". ERROR - Cannot get template object. \n DB error_msg: ".$this->db->_error_message();
+            } else {
+                $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->_error_message();
             }
         }
 
         return FALSE;
     }
 
-    private function construct_textarea($type="", $template_string="", $variable_arr=array(), $enable_preview=FALSE)
+    private function get_template_type($template_id)
     {
-        if(!$type || !$template_string)
-        {
+        /* ======================================================================
+            This function will check for an  active template_id in both template
+            and template_by_platform tables. If found active in both, will throw error.
+            Else, will return table name and filter (lang_id or platform_id).
+        ====================================================================== */
+        $result = $ret = array();
+
+        $this->db->select('id');
+        $this->db->distinct();
+        $this->db->from("template");
+        $this->db->where(array("status" => 1, "id" => $template_id));
+        if ($query = $this->db->get()) {
+            if ($query->num_rows() > 0) {
+                $obj = $query->result("object");
+                foreach ($query->result() as $row) {
+                    $result[] = "template";
+                    $ret["filter"] = "lang_id";
+                }
+            }
+        }
+
+        $this->db->select('id');
+        $this->db->distinct();
+        $this->db->from("template_by_platform");
+        $this->db->where(array("status" => 1, "id" => $template_id));
+
+        if ($query = $this->db->get()) {
+            if ($query->num_rows() > 0) {
+                $obj = $query->result("object");
+                foreach ($query->result() as $row) {
+                    $result[] = "template_by_platform";
+                    $ret["filter"] = "platform_id";
+                }
+            }
+        }
+
+        # we find active template id in both tables and store in $result. Use this to check if template is active in both tables.
+        if (count($result) == 0) {
+            $_SESSION["NOTICE"] = "ERROR: Could not find Template id <$template_id> in database.";
+        } elseif (count($result) > 1) {
+            $_SESSION["NOTICE"] = "Line " . __LINE__ . " ERROR: Template id <$template_id> is active in both per language AND per platform.";
+        } else {
+            $ret["table"] = $result[0];
+        }
+
+        return $ret;
+    }
+
+    private function get_variables_in_template($template_string = "", $start_delimiter = "[:", $end_delimiter = ":]")
+    {
+        /* ======================================================================
+            This function gets all the variables in a template string, usually
+            encapsulated by [::]
+            e.g. [:client_id:], [:so_no:]
+        ====================================================================== */
+
+        $var_with_count_arr = $var_arr = $search_var_start = $search_var_end = array();
+        $count_of_var = array();
+
+        if ($template_string && $start_delimiter && $end_delimiter) {
+            if ($search_var_start = explode($start_delimiter, $template_string)) {
+                unset($search_var_start[0]);    # the array before the first "[:" is unwanted
+                foreach ($search_var_start as $key => $value) {
+                    # any array without ":]" in should not be a variable
+                    if (strpos($value, "$end_delimiter")) {
+                        $search_var_end = explode("$end_delimiter", trim($value));
+                        $var_arr[] = trim($search_var_end[0]); # anything after ":]" is unwanted
+                    }
+                }
+
+                # count number of occurances for each variable
+                if ($count_of_var = array_count_values($var_arr)) {
+                    foreach ($count_of_var as $key => $value) {
+                        $var_with_count_arr[] = "$key::$value";
+                    }
+                }
+            }
+        }
+
+        return $var_with_count_arr;
+    }
+
+    private function construct_textarea($type = "", $template_string = "", $variable_arr = array(), $enable_preview = FALSE)
+    {
+        if (!$type || !$template_string) {
             return FALSE;
         }
 
         $title = ucfirst($type);
         $var_to_display = $var_with_count = "";
 
-        if($variable_arr)
-        {
-            foreach ($variable_arr as $key => $value)
-            {
+        if ($variable_arr) {
+            foreach ($variable_arr as $key => $value) {
                 # $value = "variable::count"
 
                 $explode = explode("::", $value);
@@ -261,8 +322,7 @@ class Email_management extends MY_Controller
 
 
         # if enable_preview, it will construct the preview button to open up template in new window
-        if($enable_preview)
-        {
+        if ($enable_preview) {
             $preview_button = <<<HTML
                 <div >
                     <br>
@@ -272,8 +332,7 @@ class Email_management extends MY_Controller
 HTML;
         }
 
-        if(strtolower($type) == "subject")
-        {
+        if (strtolower($type) == "subject") {
             $textarea = <<<HTML
                 <div>
                     <b>Variables</b>
@@ -286,9 +345,7 @@ HTML;
                 <HR width="70%">
 
 HTML;
-        }
-        else
-        {
+        } else {
             $textarea = <<<HTML
                 <div>
                     <b>Variables</b>
@@ -308,181 +365,61 @@ HTML;
         return $textarea;
     }
 
-    private function get_variables_in_template($template_string = "", $start_delimiter = "[:", $end_delimiter = ":]")
+    public function get_description()
     {
-        /* ======================================================================
-            This function gets all the variables in a template string, usually
-            encapsulated by [::]
-            e.g. [:client_id:], [:so_no:]
-        ====================================================================== */
+        /* ===================================================================
+            This function is called by ajax. Will get the name and description
+            of template id.
+            =================================================================== */
 
-        $var_with_count_arr = $var_arr = $search_var_start = $search_var_end = array();
-        $count_of_var = array();
+        $description_text = "<b>Template Description</b><br>";
+        if ($_GET) {
+            if ($template_id = $_GET["tpl"]) {
+                # get from template_by_platform
+                $this->db->from("template_by_platform");
+                $this->db->select("id, name, description");
+                $this->db->where(array("status" => 1, "id" => $template_id));
+                $this->db->order_by("modify_on", "desc");
+                $this->db->limit(1);
 
-        if($template_string && $start_delimiter && $end_delimiter)
-        {
-            if($search_var_start = explode($start_delimiter, $template_string))
-            {
-                unset($search_var_start[0]);    # the array before the first "[:" is unwanted
-                foreach ($search_var_start as $key => $value)
-                {
-                    # any array without ":]" in should not be a variable
-                    if(strpos($value, "$end_delimiter"))
-                    {
-                        $search_var_end = explode("$end_delimiter", trim($value));
-                        $var_arr[] = trim($search_var_end[0]); # anything after ":]" is unwanted
+                if ($query = $this->db->get()) {
+                    if ($query->num_rows() > 0) {
+                        $obj = $query->result("object");
+                        foreach ($query->result() as $row) {
+                            $description_text .= "<u>{$row->name}</u><br>{$row->description}";
+                        }
+
+                        echo $description_text;
+                        exit(); #already got info, exit.
                     }
                 }
 
-                # count number of occurances for each variable
-                if($count_of_var =  array_count_values($var_arr))
-                {
-                    foreach ($count_of_var as $key => $value)
-                    {
-                        $var_with_count_arr[] = "$key::$value";
+                # if cannot find from template_by_platform, get from template
+                $this->db->from("template");
+                $this->db->select("id, name, description");
+                $this->db->where(array("status" => 1, "id" => $template_id));
+                $this->db->order_by("modify_on", "desc");
+                $this->db->limit(1);
+
+                if ($query = $this->db->get()) {
+                    if ($query->num_rows() > 0) {
+                        $obj = $query->result("object");
+                        foreach ($query->result() as $row) {
+                            $description_text .= "<u>{$row->name}</u><br>{$row->description}";
+                        }
+
+                        echo $description_text;
+                        exit(); #already got info, exit.
                     }
                 }
+
+                echo "Error getting description from template id ($template_id).";
+                exit();
             }
         }
 
-        return $var_with_count_arr;
-    }
-
-    private function get_template_type($template_id)
-    {
-        /* ======================================================================
-            This function will check for an  active template_id in both template
-            and template_by_platform tables. If found active in both, will throw error.
-            Else, will return table name and filter (lang_id or platform_id).
-        ====================================================================== */
-        $result = $ret = array();
-
-        $this->db->select('id');
-        $this->db->distinct();
-        $this->db->from("template");
-        $this->db->where(array("status"=>1, "id"=>$template_id));
-        if($query = $this->db->get())
-        {
-            if ($query->num_rows() > 0)
-            {
-                $obj = $query->result("object");
-                foreach ($query->result() as $row)
-                {
-                    $result[] = "template";
-                    $ret["filter"] = "lang_id";
-                }
-            }
-        }
-
-        $this->db->select('id');
-        $this->db->distinct();
-        $this->db->from("template_by_platform");
-        $this->db->where(array("status"=>1, "id"=>$template_id));
-
-        if($query = $this->db->get())
-        {
-            if ($query->num_rows() > 0)
-            {
-                $obj = $query->result("object");
-                foreach ($query->result() as $row)
-                {
-                    $result[] = "template_by_platform";
-                    $ret["filter"] = "platform_id";
-                }
-            }
-        }
-
-        # we find active template id in both tables and store in $result. Use this to check if template is active in both tables.
-        if(count($result) == 0)
-        {
-            $_SESSION["NOTICE"] = "ERROR: Could not find Template id <$template_id> in database.";
-        }
-        elseif (count($result) > 1)
-        {
-            $_SESSION["NOTICE"] = "Line ".__LINE__." ERROR: Template id <$template_id> is active in both per language AND per platform.";
-        }
-        else
-        {
-            $ret["table"] = $result[0];
-        }
-
-        return $ret;
-    }
-
-    private function get_template_list($template_id = "", $template_table = "")
-    {
-        if(empty($template_id) && empty($template_table))
-        {
-            # get unique template IDs from both tables
-            $result = array();
-
-            $this->db->select('id');
-            $this->db->distinct();
-            $this->db->from("template");
-            $this->db->where(array("message_html !=''"=>NULL, "status"=>1));
-            $this->db->order_by("id", "ASC");
-
-            if($query = $this->db->get())
-            {
-                if ($query->num_rows() > 0)
-                {
-                    $obj = $query->result("object");
-                    foreach ($query->result() as $row)
-                    {
-                        $result[] = $row->id;
-                    }
-                }
-            }
-
-            $this->db->select('id');
-            $this->db->distinct();
-            $this->db->from("template_by_platform");
-            $this->db->where(array("message_html !=''"=>NULL, "status"=>1));
-            $this->db->order_by("modify_on", "DESC");
-
-            if($query = $this->db->get())
-            {
-                if ($query->num_rows() > 0)
-                {
-                    $obj = $query->result("object");
-                    foreach ($query->result() as $row)
-                    {
-                        $result[] = $row->id;
-                    }
-                }
-            }
-
-            return $result;
-        }
-        elseif($template_id && $template_table)
-        {
-            # get list of templates from respective tables
-            $this->db->select('*');
-            $this->db->from($template_table);
-            $this->db->where(array("id"=>$template_id, "message_html !=''"=>NULL, "status"=>1));
-            $this->db->order_by("modify_on", "DESC");
-
-            if($query = $this->db->get())
-            {
-                if ($query->num_rows() > 0)
-                {
-                    foreach ($query->result() as $row)
-                    {
-                        $result[] = $row;
-                    }
-                }
-            }
-
-            return $result;
-        }
-    }
-
-    public function _get_app_id(){
-        return $this->app_id;
-    }
-
-    public function _get_lang_id(){
-        return $this->lang_id;
+        echo "No template id supplied.";
+        exit();
     }
 
 }

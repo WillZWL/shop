@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class So_payment_log_dao extends Base_dao
 {
-    private $table_name="so_payment_log";
-    private $vo_class_name="So_payment_log_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "so_payment_log";
+    private $vo_class_name = "So_payment_log_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

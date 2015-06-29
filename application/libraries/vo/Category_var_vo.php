@@ -132,4 +132,5 @@ class Category_var_vo extends Base_vo
     }
 
 }
+
 ?>

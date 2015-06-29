@@ -28,7 +28,7 @@ class Country_selection
             $pos = stripos($this->domain, $this->base_domain);
             if ($pos !== FALSE) {
                 $this->sub_domain = substr($this->domain, 0, $pos);
-                $this->domain_suffix = substr($this->domain, $pos+strlen($this->base_domain));
+                $this->domain_suffix = substr($this->domain, $pos + strlen($this->base_domain));
             }
         } else {
             // TODO
@@ -36,39 +36,24 @@ class Country_selection
         }
     }
 
-
-    public function get_country_code()
+    public function redirect_url()
     {
-        if (isset($_COOKIE['country_code'])) {
-            $country_code = $_COOKIE['country_code'];
-        } else {
-            $country_code = $this->get_country_code_by_ip2country_provider();
+        $current_domain = $this->domain;
+        $rewrite_domain = $this->get_rewrite_domain_by_country();
+
+
+        if ($current_domain != $rewrite_domain) {
+            $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https://" : "http://";
+
+            if ($_SERVER['SERVER_PORT'] != '80') {
+                $new_url = $protocol . $rewrite_domain . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['REQUEST_URI'];
+            } else {
+                $new_url = $protocol . $rewrite_domain . $_SERVER['REQUEST_URI'];
+            }
+
+            header("Location: " . $new_url);
+            exit;
         }
-
-        return $country_code;
-    }
-
-    public function get_country_code_by_ip2country_provider($ip = '')
-    {
-        $country_code = '';
-
-        try {
-            $reader = new Reader(config_item('maxmind_db_path'));
-
-            $ip = $ip ? $ip : $_SERVER['REMOTE_ADDR'];
-            $record = $reader->city($ip);
-            $country_code = $record->country->isoCode;
-            $reader->close();
-        } catch (Exception $e) {
-            // IP not in database
-        }
-
-        if (empty($country_code)) {
-            $country_code = 'SG';
-        }
-        $_SESSION['country_code_from_hook'] = $country_code;
-
-        return $country_code;
     }
 
     public function get_rewrite_domain_by_country()
@@ -121,29 +106,43 @@ class Country_selection
         return $this->sub_domain . $this->base_domain . $this->domain_suffix;
     }
 
-    public function redirect_url()
+    public function get_country_code()
     {
-        $current_domain = $this->domain;
-        $rewrite_domain = $this->get_rewrite_domain_by_country();
-
-
-        if ($current_domain != $rewrite_domain) {
-            $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https://" : "http://";
-
-            if ($_SERVER['SERVER_PORT'] != '80') {
-                $new_url = $protocol . $rewrite_domain . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['REQUEST_URI'];
-            } else {
-                $new_url = $protocol . $rewrite_domain . $_SERVER['REQUEST_URI'];
-            }
-
-            header("Location: " . $new_url);
-            exit;
+        if (isset($_COOKIE['country_code'])) {
+            $country_code = $_COOKIE['country_code'];
+        } else {
+            $country_code = $this->get_country_code_by_ip2country_provider();
         }
+
+        return $country_code;
+    }
+
+    public function get_country_code_by_ip2country_provider($ip = '')
+    {
+        $country_code = '';
+
+        try {
+            $reader = new Reader(config_item('maxmind_db_path'));
+
+            $ip = $ip ? $ip : $_SERVER['REMOTE_ADDR'];
+            $record = $reader->city($ip);
+            $country_code = $record->country->isoCode;
+            $reader->close();
+        } catch (Exception $e) {
+            // IP not in database
+        }
+
+        if (empty($country_code)) {
+            $country_code = 'SG';
+        }
+        $_SESSION['country_code_from_hook'] = $country_code;
+
+        return $country_code;
     }
 
     public function validate_country_code($country_code)
     {
-        if ( ! preg_match("/^[A-Za-z]{2}$/", $country_code)) {
+        if (!preg_match("/^[A-Za-z]{2}$/", $country_code)) {
             return FALSE;
         } else {
             return $country_code;

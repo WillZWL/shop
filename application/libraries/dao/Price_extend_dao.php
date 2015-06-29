@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Price_extend_dao extends Base_dao
 {
-    private $table_name="price_extend";
-    private $vo_classname="Price_extend_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "price_extend";
+    private $vo_classname = "Price_extend_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

@@ -1,4 +1,5 @@
 <?php
+
 class Brand_model extends CI_Model
 {
     public function __construct()
@@ -8,12 +9,12 @@ class Brand_model extends CI_Model
         $this->load->library('service/region_service');
     }
 
-    public function get_brand_list($where=array(), $option=array())
+    public function get_brand_list($where = array(), $option = array())
     {
         return $this->brand_service->get_brand_list_w_region($where, $option);
     }
 
-    public function get_brand($where=array())
+    public function get_brand($where = array())
     {
         return $this->brand_service->get($where);
     }
@@ -23,7 +24,7 @@ class Brand_model extends CI_Model
         return $this->brand_service->update($obj);
     }
 
-    public function get_region_list($where=array(), $option=array())
+    public function get_region_list($where = array(), $option = array())
     {
         return $this->region_service->get_list($where);
     }
@@ -38,12 +39,12 @@ class Brand_model extends CI_Model
         return $this->brand_service->insert($obj);
     }
 
-    public function get_brand_region($where=array())
+    public function get_brand_region($where = array())
     {
         return $this->brand_service->get_br_dao()->get($where);
     }
 
-    public function get_brand_region_list($where=array())
+    public function get_brand_region_list($where = array())
     {
         return $this->brand_service->get_br_dao()->get_list($where);
     }
@@ -53,7 +54,8 @@ class Brand_model extends CI_Model
         return $this->brand_service->get_br_dao()->q_delete($where);
     }
 
-    public function add_brand_region(Base_vo $obj){
+    public function add_brand_region(Base_vo $obj)
+    {
         return $this->brand_service->get_br_dao()->insert($obj);
     }
 

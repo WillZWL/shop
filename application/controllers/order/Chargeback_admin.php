@@ -9,28 +9,13 @@ require_once("chargeback_admin_grid.php");
 
 class Chargeback_admin extends MY_Controller
 {
-    protected $app_id="ORD0028";
-    private $lang_id="en";
+    protected $app_id = "ORD0028";
+    private $lang_id = "en";
     private $model;
     private $export_filename;
 
     private $gridcontent = "";
     private $s;
-
-    public function _set_app_id($value)
-    {
-        $this->app_id = $value;
-    }
-
-    public function _get_app_id()
-    {
-        return $this->app_id;
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
-    }
 
     public function __construct()
     {
@@ -46,14 +31,28 @@ class Chargeback_admin extends MY_Controller
         // $this->_set_export_filename('sales_report.csv');
     }
 
+    public function _get_app_id()
+    {
+        return $this->app_id;
+    }
+
+    public function _set_app_id($value)
+    {
+        $this->app_id = $value;
+    }
+
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
+    }
+
     function index()
     {
         // if (!empty($_POST))
         {
             $s = new Chargeback_admin_grid();
             // $where = $this->create_criteria_from_post();
-            if ($where != "")
-            {
+            if ($where != "") {
                 $s->set_where($where);
                 // var_dump("Setting {$_SESSION['where']}");
             }
@@ -71,39 +70,6 @@ class Chargeback_admin extends MY_Controller
         die();
     }
 
-    function create_criteria_from_post()
-    {
-        $query = "";
-        foreach ($_POST as $k=>$v)
-        {
-            if (!empty($v))
-            {
-                $kk = substr($k, 4);
-                switch ($kk)
-                {
-                    case 6:     $query .= " and si.prod_sku = '$v' ";               break;
-
-                    case 8:     $v = str_replace(" ", "%", $v);
-                                $query .= " and si.prod_name like '%$v%' ";         break;
-                    case 9:     $query .= " and pp.clearance = '$v' ";              break;
-
-                    // master sku
-                    case 39:    $query .= " and sm.ext_sku = '$v' ";                break;
-                    case 51:
-                                $d = date_parse($v);
-                                $dd = "{$d["year"]}-{$d["month"]}-{$d["day"]}";
-                                $query .= " and so.create_on >= '$dd' ";                break;
-                    case 52:
-                                $d = date_parse($v);
-                                $dd = "{$d["year"]}-{$d["month"]}-{$d["day"]}";
-                                $query .= " and so.create_on <= '$dd' ";                break;
-                }
-            }
-        }
-
-        return $query;
-    }
-
     function get_index_html()
     {
         $h = $this->get_unprocessed_index_html();
@@ -112,7 +78,7 @@ class Chargeback_admin extends MY_Controller
 
     private function get_unprocessed_index_html()
     {
-return <<<HTML
+        return <<<HTML
 
     <!DOCTYPE HTML>
     <html lang="en-US">
@@ -168,55 +134,97 @@ return <<<HTML
     </html>
 HTML;
 
-    // <table width=100%>
-    //     <tr>
-    //         <td>Platform</td>
-    //         <td>Competitor</td>
-    //         <td>Shipping Cost</td>
-    //         <td>Currency</td>
-    //         <td>Competitor Price</td>
-    //         <td>Our Price</td>
-    //         <td>Difference</td>
-    //         <td>Margin</td>
-    //         <td>Listing Status</td>
-    //         <td>Online Orders</td>
-    //         <td>Offline Orders</td>
-    //     </tr>
-    // </table>
+        // <table width=100%>
+        //     <tr>
+        //         <td>Platform</td>
+        //         <td>Competitor</td>
+        //         <td>Shipping Cost</td>
+        //         <td>Currency</td>
+        //         <td>Competitor Price</td>
+        //         <td>Our Price</td>
+        //         <td>Difference</td>
+        //         <td>Margin</td>
+        //         <td>Listing Status</td>
+        //         <td>Online Orders</td>
+        //         <td>Offline Orders</td>
+        //     </tr>
+        // </table>
 
+    }
+
+    function create_criteria_from_post()
+    {
+        $query = "";
+        foreach ($_POST as $k => $v) {
+            if (!empty($v)) {
+                $kk = substr($k, 4);
+                switch ($kk) {
+                    case 6:
+                        $query .= " and si.prod_sku = '$v' ";
+                        break;
+
+                    case 8:
+                        $v = str_replace(" ", "%", $v);
+                        $query .= " and si.prod_name like '%$v%' ";
+                        break;
+                    case 9:
+                        $query .= " and pp.clearance = '$v' ";
+                        break;
+
+                    // master sku
+                    case 39:
+                        $query .= " and sm.ext_sku = '$v' ";
+                        break;
+                    case 51:
+                        $d = date_parse($v);
+                        $dd = "{$d["year"]}-{$d["month"]}-{$d["day"]}";
+                        $query .= " and so.create_on >= '$dd' ";
+                        break;
+                    case 52:
+                        $d = date_parse($v);
+                        $dd = "{$d["year"]}-{$d["month"]}-{$d["day"]}";
+                        $query .= " and so.create_on <= '$dd' ";
+                        break;
+                }
+            }
+        }
+
+        return $query;
     }
 
     function update_email_template()
     {
         $query = "";
-        foreach ($_POST as $k=>$v)
-        {
-            if (!empty($v))
-            {
+        foreach ($_POST as $k => $v) {
+            if (!empty($v)) {
                 $kk = substr($k, 4);
-                switch ($kk)
-                {
+                switch ($kk) {
                     // subject
                     case 8:
-                    // case 14:
-                    // case 20:
-                        $subject = $v;      break;
+                        // case 14:
+                        // case 20:
+                        $subject = $v;
+                        break;
 
                     // message
                     case 1: // es
-                    // case 15:
-                    // case 21:
-                        $message_alt = $v;      break;
+                        // case 15:
+                        // case 21:
+                        $message_alt = $v;
+                        break;
 
                     // local sku
                     case 2:
                         $lang_id = $v;  // record this for use when redirecting
-                        $where["lang_id"] = $this->convert_option_to_lang($v); break;
+                        $where["lang_id"] = $this->convert_option_to_lang($v);
+                        break;
 
                     case 998:
-                        $so_no = $v;    break;
+                        $so_no = $v;
+                        break;
                     case 999:
-                        $where["id"] = $v;  break;
+                        $where["id"] = $v;
+                        break;
                 }
             }
         }
@@ -226,7 +234,7 @@ HTML;
         $t->set_message_alt($message_alt);
 
         $ret = $this->template_service->get_dao()->update($t, $where);
-        redirect(base_url()."order/chargeback_admin/record_email_template_click/{$t->get_id()}/{$so_no}?tfa_2=$lang_id");
+        redirect(base_url() . "order/chargeback_admin/record_email_template_click/{$t->get_id()}/{$so_no}?tfa_2=$lang_id");
 
         if ($ret)
             echo "UPDATE OK";
@@ -235,34 +243,11 @@ HTML;
 
         $r = $this->template_service->get($where);
 
-        echo "<PRE>";var_dump($r);
-        $set = trim($set,",");
-        echo "<PRE>";var_dump($_POST);
-    }
-
-    public function record_email_template_click($template_name, $so_no)
-    {
-        $s = new Chargeback_admin_grid();
-        $s->record_click("$template_name clicked", $so_no);
-
-        $url = base_url()."order/chargeback_admin/email_template/{$template_name}/{$so_no}";
-        redirect($url);
-    }
-
-    private function convert_lang_to_option($lang)
-    {
-        $lang_option["tfa_3"] = "en";
-        $lang_option["tfa_4"] = "es";
-        $lang_option["tfa_5"] = "fr";
-
-        foreach ($lang_option as $k=>$v)
-            if ($lang == $v) return $k;
-
-        foreach ($lang_option as $k=>$v)
-        {
-            // var_dump($k); die();
-            return $k;
-        }
+        echo "<PRE>";
+        var_dump($r);
+        $set = trim($set, ",");
+        echo "<PRE>";
+        var_dump($_POST);
     }
 
     private function convert_option_to_lang($option)
@@ -273,8 +258,17 @@ HTML;
 
         if (isset($lang_option["$option"])) return $lang_option["$option"];
 
-        foreach ($lang_option as $k=>$v)
+        foreach ($lang_option as $k => $v)
             return $v;
+    }
+
+    public function record_email_template_click($template_name, $so_no)
+    {
+        $s = new Chargeback_admin_grid();
+        $s->record_click("$template_name clicked", $so_no);
+
+        $url = base_url() . "order/chargeback_admin/email_template/{$template_name}/{$so_no}";
+        redirect($url);
     }
 
     function email_template($template_name, $so_no = "")
@@ -283,8 +277,7 @@ HTML;
         $where["id"] = $template_name;
         $templates = $this->template_service->get_tpl_list($where);
 
-        foreach ($templates as $t)
-        {
+        foreach ($templates as $t) {
             $message = $t->get_message_alt();
             $info = $this->so_service->get_dao()->get_chargeback_info($so_no);
             $variable_list = "";
@@ -294,8 +287,7 @@ HTML;
             $message = str_ireplace('\n', "\n", $message);
 
             // replace all the variables
-            foreach ($info[0] as $k=>$v)
-            {
+            foreach ($info[0] as $k => $v) {
                 $var = "[:{$k}:]";
                 $message = str_ireplace($var, $v, $message);
                 $variable_list .= "$var, ";
@@ -317,34 +309,43 @@ HTML;
         die();
     }
 
+    private function convert_lang_to_option($lang)
+    {
+        $lang_option["tfa_3"] = "en";
+        $lang_option["tfa_4"] = "es";
+        $lang_option["tfa_5"] = "fr";
+
+        foreach ($lang_option as $k => $v)
+            if ($lang == $v) return $k;
+
+        foreach ($lang_option as $k => $v) {
+            // var_dump($k); die();
+            return $k;
+        }
+    }
+
     function get_edit_template_html($template_name, $template, $so_no = "")
     {
         $h = $this->get_unprocessed_edit_template_html($template_name, $template, $so_no);
         $html = str_get_html($h);
 
-        if (!empty($_GET))
-        {
-            foreach ($_GET as $k=>$v)
-            {
+        if (!empty($_GET)) {
+            foreach ($_GET as $k => $v) {
                 $kk = substr($k, 4);
-                switch ($kk)
-                {
+                switch ($kk) {
                     default:
 
                         // translate $_GET onto the dropdowns
                         $t = $html->find("option[id=$v]", 0);
-                        if ($t != null)
-                        {
+                        if ($t != null) {
                             $t->setAttribute("selected", "");
                             break;
                         }
 
                         // translate $_GET anything that starts with input
                         $t = $html->find("[id=$k]", 0);
-                        if ($t != null)
-                        {
-                            switch ($t->getAttribute("type"))
-                            {
+                        if ($t != null) {
+                            switch ($t->getAttribute("type")) {
                                 case "text":
                                     $html->find("input[id=$k]", 0)->setAttribute("value", $_GET[$k]);
                                     break;
@@ -361,7 +362,7 @@ HTML;
     private function get_unprocessed_edit_template_html($template_name, $template, $so_no = "")
     {
 
-return <<<HTML
+        return <<<HTML
 
     <!DOCTYPE HTML>
     <html lang="en-US">

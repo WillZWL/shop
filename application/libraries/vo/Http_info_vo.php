@@ -216,4 +216,5 @@ class Http_info_vo extends Base_vo
     }
 
 }
+
 ?>

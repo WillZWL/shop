@@ -4,19 +4,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 include_once "Pmgw_report_service.php";
 
 /**
-*
-*/
+ *
+ */
 class Adyen_pmgw_report_service extends Pmgw_report_service
 {
 
     function __construct()
     {
         parent::__construct();
-    }
-
-    protected function get_pmgw()
-    {
-        return "adyen";
     }
 
     public function is_ria_record($dto_obj)
@@ -51,9 +46,36 @@ class Adyen_pmgw_report_service extends Pmgw_report_service
         return false;
     }
 
-    public function is_ria_include_psp_fee()
+    public function create_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
     {
         return false;
+    }
+
+    public function is_ria_include_so_fee()
+    {
+        return false;
+    }
+
+    public function is_refund_include_so_fee()
+    {
+        return false;
+    }
+
+    public function is_rolling_reserve_record($dto_obj)
+    {
+        return false;
+    }
+
+    public function insert_so_fee_from_refund_record($batch_id, $status, $dto_obj)
+    {
+    }
+
+    public function insert_so_fee_from_ria_record($batch_id, $status, $dto_obj)
+    {
+    }
+
+    public function insert_so_fee_from_rolling_reserve_record($batch_id, $status, $dto_obj)
+    {
     }
 
     protected function insert_interface_flex_ria($batch_id, $status, $dto_obj)
@@ -69,21 +91,29 @@ class Adyen_pmgw_report_service extends Pmgw_report_service
         $this->create_interface_flex_ria($batch_id, $status, $dto_obj, $include_psp_fee);
     }
 
-    protected function insert_interface_flex_refund($batch_id, $status, $dto_obj)
+    private function _set_format_data($dto_obj)
     {
-        $this->_set_format_data($dto_obj);
+        $date = date("Y-m-d H:i:s", strtotime($dto_obj->get_date()));
+        $dto_obj->set_date($date);
 
-        if ($this->is_ria_include_psp_fee()) {
-            $include_psp_fee = true;
-        } else {
-            $include_psp_fee = false;
+        if ($dto_obj->get_amount()) {
+            $dto_obj->set_amount(abs(ereg_replace(",", "", $dto_obj->get_amount())));
         }
 
-        $this->create_interface_flex_refund($batch_id, $status, $dto_obj, $include_psp_fee);
+        if ($dto_obj->get_commission()) {
+            $dto_obj->set_commission(ereg_replace(",", "", $dto_obj->get_commission()));
+        }
+
+        if (!$dto_obj->get_so_no() && $dto_obj->get_txn_id()) {
+            if ($so_obj = $this->get_so_obj(array("txn_id" => $dto_obj->get_txn_id()))) {
+                $dto_obj->set_so_no($so_obj->get_so_no());
+            }
+        }
     }
 
-    protected function insert_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
+    public function is_ria_include_psp_fee()
     {
+        return false;
     }
 
     protected function create_interface_flex_ria($batch_id, $status, $dto_obj, $include_psp_fee = false)
@@ -118,6 +148,28 @@ class Adyen_pmgw_report_service extends Pmgw_report_service
         return $ifr_obj;
     }
 
+    protected function get_pmgw()
+    {
+        return "adyen";
+    }
+
+    protected function insert_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
+    {
+    }
+
+    protected function insert_interface_flex_refund($batch_id, $status, $dto_obj)
+    {
+        $this->_set_format_data($dto_obj);
+
+        if ($this->is_ria_include_psp_fee()) {
+            $include_psp_fee = true;
+        } else {
+            $include_psp_fee = false;
+        }
+
+        $this->create_interface_flex_refund($batch_id, $status, $dto_obj, $include_psp_fee);
+    }
+
     protected function create_interface_flex_refund($batch_id, $status, $dto_obj, $include_psp_fee = false)
     {
         $ifrf_dao = $this->get_ifrf_dao();
@@ -147,50 +199,9 @@ class Adyen_pmgw_report_service extends Pmgw_report_service
         }
     }
 
-    public function create_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
-    {
-        return false;
-    }
-
-
-    private function _set_format_data($dto_obj)
-    {
-        $date = date("Y-m-d H:i:s", strtotime($dto_obj->get_date()));
-        $dto_obj->set_date($date);
-
-        if ($dto_obj->get_amount()) {
-            $dto_obj->set_amount(abs(ereg_replace(",", "", $dto_obj->get_amount())));
-        }
-
-        if ($dto_obj->get_commission()) {
-            $dto_obj->set_commission(ereg_replace(",", "", $dto_obj->get_commission()));
-        }
-
-        if (!$dto_obj->get_so_no() && $dto_obj->get_txn_id()) {
-            if ($so_obj = $this->get_so_obj(array("txn_id" => $dto_obj->get_txn_id()))) {
-                $dto_obj->set_so_no($so_obj->get_so_no());
-            }
-        }
-    }
-
     protected function after_insert_all_interface($batch_id)
     {
         return true;
-    }
-
-    public function is_ria_include_so_fee()
-    {
-        return false;
-    }
-
-    public function is_refund_include_so_fee()
-    {
-        return false;
-    }
-
-    public function is_rolling_reserve_record($dto_obj)
-    {
-        return false;
     }
 
     protected function insert_interface_flex_so_fee($batch_id, $status, $dto_obj)
@@ -209,18 +220,6 @@ class Adyen_pmgw_report_service extends Pmgw_report_service
         $result = $ifsf_dao->insert($ifsf_obj);
 
         return $result;
-    }
-
-    public function insert_so_fee_from_refund_record($batch_id, $status, $dto_obj)
-    {
-    }
-
-    public function insert_so_fee_from_ria_record($batch_id, $status, $dto_obj)
-    {
-    }
-
-    public function insert_so_fee_from_rolling_reserve_record($batch_id, $status, $dto_obj)
-    {
     }
 
     protected function insert_interface_flex_rolling_reserve($batch_id, $status, $dto_obj)

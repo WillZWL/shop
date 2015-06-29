@@ -156,4 +156,5 @@ class Product_feed_cat_vo extends Base_vo
     }
 
 }
+
 ?>

@@ -9,6 +9,7 @@ include_once "Base_dto.php";
  *
  * @author Trunks
  */
+
 class Lazy_dto extends Base_dto
 {
     // Mode available
@@ -37,8 +38,7 @@ class Lazy_dto extends Base_dto
      */
     public function __construct($value_array, $mode = 0)
     {
-        if (is_array($value_array))
-        {
+        if (is_array($value_array)) {
             $this->property = $value_array;
         }
 
@@ -52,21 +52,16 @@ class Lazy_dto extends Base_dto
      */
     public function __call($name, $arguments)
     {
-        if (method_exists($this, $name))
-        {
+        if (method_exists($this, $name)) {
             return $this->$name;
         }
 
         $property_name = '';
 
-        if ($this->_is_getter_call($name, $property_name))
-        {
-            if (array_key_exists($property_name, $this->property))
-            {
+        if ($this->_is_getter_call($name, $property_name)) {
+            if (array_key_exists($property_name, $this->property)) {
                 return $this->property[$property_name];
-            }
-            else
-            {
+            } else {
                 trigger_error
                 (
                     "Undefined property $property_name.",
@@ -75,15 +70,13 @@ class Lazy_dto extends Base_dto
 
                 return null;
             }
-        }
-        else if ($this->mode >= self::FIX_SIZE_WRITABLE
-            && $this->_is_setter_call($name, $property_name))
-        {
+        } else if ($this->mode >= self::FIX_SIZE_WRITABLE
+            && $this->_is_setter_call($name, $property_name)
+        ) {
             if ($this->mode >= self::FREE_SIZE_WRITABLE
-                || array_key_exists($property_name, $this->property))
-            {
-                switch(count($arguments))
-                {
+                || array_key_exists($property_name, $this->property)
+            ) {
+                switch (count($arguments)) {
                     case 0:
                         $this->property[$property_name] = '';
                         return $this->property[$property_name];
@@ -93,9 +86,7 @@ class Lazy_dto extends Base_dto
                     default:
                         $this->property[$property_name] = $arguments;
                 }
-            }
-            else
-            {
+            } else {
                 trigger_error
                 (
                     "Undefined property $property_name.",
@@ -104,9 +95,7 @@ class Lazy_dto extends Base_dto
 
                 return null;
             }
-        }
-        else
-        {
+        } else {
             trigger_error
             (
                 "Call to undefined method " . $property_name . "()",

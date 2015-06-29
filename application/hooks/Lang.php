@@ -1,4 +1,5 @@
 <?php
+
 class Lang extends CI_Controller
 {
 
@@ -12,7 +13,7 @@ class Lang extends CI_Controller
         $lang_id = '';
 
         $valid_lang = $this->config->item('valid_lang');
-        include_once(APPPATH."helpers/string_helper.php");
+        include_once(APPPATH . "helpers/string_helper.php");
 
         $url_segment = $_SERVER['REQUEST_URI'];
         list(, $language_country_id) = explode('/', $url_segment);
@@ -50,7 +51,7 @@ class Lang extends CI_Controller
 
 
         setcookie("lang_id", "", 0, "/", $_SERVER['HTTP_HOST']);
-        setcookie("lang_id", "", 0, "/", ".".$domain);
+        setcookie("lang_id", "", 0, "/", "." . $domain);
         // setcookie("lang_id", $_SESSION["lang_id"], time()+86400, "/", ".".$domain);
         $this->_setcookie("lang_id", $_SESSION["lang_id"]);
         // $_COOKIE["lang_id"] = $_SESSION["lang_id"];
@@ -60,18 +61,18 @@ class Lang extends CI_Controller
 
     private function _setcookie($cookie_name, $value)
     {
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.com");
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.com.au");
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.co.nz");
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.com.sg");
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.fr");
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.es");
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.com.mx");
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.ru");
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.pt");
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.com.ph");
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.be");
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.it");
-        setcookie($cookie_name, $value, time()+86400, "/",  ".valuebasket.pl");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.com");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.com.au");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.co.nz");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.com.sg");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.fr");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.es");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.com.mx");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.ru");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.pt");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.com.ph");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.be");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.it");
+        setcookie($cookie_name, $value, time() + 86400, "/", ".valuebasket.pl");
     }
 }

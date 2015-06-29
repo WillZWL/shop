@@ -10,7 +10,7 @@ class Amuk_order_model extends CI_Model
 
     public function get_ftp_info($name)
     {
-        return $this->amuk_order_service->get_ftp_dao()->get(array("name"=>$name));
+        return $this->amuk_order_service->get_ftp_dao()->get(array("name" => $name));
     }
 }
 

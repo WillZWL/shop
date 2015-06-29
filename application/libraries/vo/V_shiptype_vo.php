@@ -168,4 +168,5 @@ class V_shiptype_vo extends Base_vo
     }
 
 }
+
 ?>

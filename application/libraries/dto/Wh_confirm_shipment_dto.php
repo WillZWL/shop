@@ -121,6 +121,7 @@ Class Wh_confirm_shipment_dto extends Base_dto
     {
         $this->received_qty = $value;
     }
+
     public function get_supplier_id()
     {
         return $this->supplier_id;
@@ -151,7 +152,7 @@ Class Wh_confirm_shipment_dto extends Base_dto
         $this->detail = $value;
     }
 
-        public function get_reason()
+    public function get_reason()
     {
         return $this->reason;
     }
@@ -160,7 +161,8 @@ Class Wh_confirm_shipment_dto extends Base_dto
     {
         $this->reason = $value;
     }
-        public function get_remarks()
+
+    public function get_remarks()
     {
         return $this->remarks;
     }
@@ -169,7 +171,8 @@ Class Wh_confirm_shipment_dto extends Base_dto
     {
         $this->remarks = $value;
     }
-        public function get_delivery_mode()
+
+    public function get_delivery_mode()
     {
         return $this->delivery_mode;
     }

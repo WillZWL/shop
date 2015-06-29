@@ -15,14 +15,14 @@ class Ra_product_service extends Base_service
         $this->set_price_service(new Price_service());
     }
 
-    public function set_price_service($serv)
-    {
-        $this->price_service = $serv;
-    }
-
     public function get_price_service()
     {
         return $this->price_service;
+    }
+
+    public function set_price_service($serv)
+    {
+        $this->price_service = $serv;
     }
 
     public function get_ra_product_w_group_name($where = array(), $option = array(), $lang_id = "en")

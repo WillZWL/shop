@@ -9,7 +9,7 @@ class Wms_inventory_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Wms_inventory_dao.php");
+        include_once(APPPATH . "libraries/dao/Wms_inventory_dao.php");
         $this->set_dao(new Wms_inventory_dao());
     }
 
@@ -23,7 +23,7 @@ class Wms_inventory_service extends Base_service
         return $this->get_dao()->empty_table();
     }
 
-    public function get_inventory_list($where=array())
+    public function get_inventory_list($where = array())
     {
         return $this->get_dao()->get_inventory_list($where);
     }
@@ -36,25 +36,21 @@ class Wms_inventory_service extends Base_service
         $retailers = 'VB';
         $from = date('Y-m-d', strtotime('-1 day'));
         $to = date('Y-m-d');
-        $url = $link .'?clLogin='. $clLogin .'&clPwd='. $clPwd .'&retailers='. $retailers .'&datefrom='. $from .'&dateto='. $to;
+        $url = $link . '?clLogin=' . $clLogin . '&clPwd=' . $clPwd . '&retailers=' . $retailers . '&datefrom=' . $from . '&dateto=' . $to;
         $use_curl = true;
-        if ($use_curl)
-        {
+        if ($use_curl) {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
             $result = curl_exec($ch);
             curl_close($ch);
-        }
-        else
+        } else
             $result = file_get_contents($url);
-        if($result)
-        {
+        if ($result) {
             $so_no = array();
             $xml = simplexml_load_string($result);
-            foreach($xml->order AS $order)
-            {
+            foreach ($xml->order AS $order) {
                 $so_no[] = (string)$order->retailer_order_reference;
 
             }

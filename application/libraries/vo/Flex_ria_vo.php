@@ -192,4 +192,5 @@ class Flex_ria_vo extends Base_vo
     }
 
 }
+
 ?>

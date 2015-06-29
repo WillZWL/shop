@@ -38,6 +38,7 @@ class Festive_item_dto extends Base_dto
     {
         $this->prod_name = $value;
     }
+
     public function get_quantity()
     {
         return $this->quantity;

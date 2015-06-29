@@ -1,4 +1,5 @@
 <?php
+
 class Sourcing_region_report_model extends CI_Model
 {
     public function __construct()

@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Product_complementary_acc_dao extends Base_dao
 {
-    private $table_name="product_complementary_acc";
-    private $vo_classname="product_complementary_acc_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "product_complementary_acc";
+    private $vo_classname = "product_complementary_acc_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
     private $accessory_catid_arr;
 
     public function __construct()
@@ -37,11 +37,6 @@ class Product_complementary_acc_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function set_accessory_catid_arr()
-    {
-        $this->accessory_catid_arr = $this->get_accessory_catid_arr();
-    }
-
     public function get_accessory_catid_arr()
     {
         /* ======================================================================
@@ -54,47 +49,43 @@ class Product_complementary_acc_dao extends Base_dao
         return $accessory_catid_arr = array("753");
     }
 
-    public function check_cat($sku="", $is_ca = true)
+    public function set_accessory_catid_arr()
+    {
+        $this->accessory_catid_arr = $this->get_accessory_catid_arr();
+    }
+
+    public function check_cat($sku = "", $is_ca = true)
     {
         # if you want to check if product is NOT a complementary accessory,
         # then set $is_ca to false
         $ret = array();
         $ret["status"] = false;
 
-        if($sku)
-        {
+        if ($sku) {
             $sql = <<<SQL
                     SELECT * FROM product where sku = ? LIMIT 1
 SQL;
             $query = $this->db->query($sql, array($sku));
-            if($query->num_rows() > 0)
-            {
-                foreach ($query->result() as $row)
-                {
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $row) {
                     $cat_id = $row->cat_id;
                 }
 
-                if($is_ca)
-                {
+                if ($is_ca) {
                     // check if product SKU is in complementary accessory category
-                    if(in_array($cat_id, $this->accessory_catid_arr))
+                    if (in_array($cat_id, $this->accessory_catid_arr))
                         $ret["status"] = true;
                     else
-                        $ret["message"] = __LINE__." product_complementary_acc_dao.php. SKU<$sku> is not a Complementary Accessory.";
-                }
-                else
-                {
-                    if(in_array($cat_id, $this->accessory_catid_arr) === false)
+                        $ret["message"] = __LINE__ . " product_complementary_acc_dao.php. SKU<$sku> is not a Complementary Accessory.";
+                } else {
+                    if (in_array($cat_id, $this->accessory_catid_arr) === false)
                         $ret["status"] = true;
                 }
+            } else {
+                $ret["message"] = __LINE__ . " product_complementary_acc_dao.php. No cat_id exists for SKU<$sku>";
             }
-            else
-            {
-                $ret["message"] = __LINE__." product_complementary_acc_dao.php. No cat_id exists for SKU<$sku>";
-            }
-        }
-        else
-            $ret["message"] = __LINE__." product_complementary_acc_dao.php. No SKU passed in.";
+        } else
+            $ret["message"] = __LINE__ . " product_complementary_acc_dao.php. No SKU passed in.";
 
         return $ret;
     }
@@ -103,7 +94,7 @@ SQL;
     {
         $this->db->from("product_complementary_acc AS pca");
         # default to only active mapped status
-        if(!$option["all_status"])
+        if (!$option["all_status"])
             $where["accmap.status"] = 1;
 
         #sbf #3746 complementary accessory must be mapped
@@ -115,14 +106,12 @@ SQL;
         $this->db->join('category AS ssc', 'p.sub_sub_cat_id = ssc.id', 'LEFT');
         $this->db->join('brand AS b', 'p.brand_id = b.id', 'LEFT');
         // $this->db->join('supplier_prod AS sp', 'sp.prod_sku = pca.accessory_sku', 'LEFT');
-        if($active)
-        {
+        if ($active) {
             $where["pca.status"] = 1;
         }
         $this->db->where($where);
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
             $this->include_dto($classname);
             $this->db->select('
                                 pca.id, pca.mainprod_sku, pca.accessory_sku, pca.dest_country_id, pca.status AS ca_status,
@@ -132,46 +121,34 @@ SQL;
                             ');
             $option["limit"] = "";
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
-            }
-            else
-            {
+            } else {
                 $this->db->order_by("ca_status DESC, pca.mainprod_sku ASC");
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
             $rs = array();
             $query = $this->db->get();
 
-            if ($query->num_rows() > 0)
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query->num_rows() > 0) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
-            }
-            else
-            {
+                return (object)$rs;
+            } else {
                 return NULL;
             }
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -180,7 +157,7 @@ SQL;
 
     }
 
-    public function get_all_accessory($where=array(), $option=array(), $like=array(), $classname = "Complementary_accessory_list_dto")
+    public function get_all_accessory($where = array(), $option = array(), $like = array(), $classname = "Complementary_accessory_list_dto")
     {
         $ca_catid = implode(',', $this->accessory_catid_arr);
 
@@ -192,22 +169,19 @@ SQL;
         // $this->db->join('category AS sc', 'p.sub_cat_id = sc.id', 'LEFT');
         // $this->db->join('category AS ssc', 'p.sub_sub_cat_id = ssc.id', 'LEFT');
         // $this->db->join('brand AS b', 'p.brand_id = b.id', 'LEFT');
-        if($where)
-        {
+        if ($where) {
             $this->db->where($where);
         }
 
         $like_clause = "";
-        if(is_array($like))
-        {
+        if (is_array($like)) {
             # if more than one $like array passed in, then make it as OR WHERE $key LIKE '%$value%'
             $count = 0;
-            foreach ($like as $key => $value)
-            {
-                if($count == 0)
-                    $like_clause .= "$key LIKE '%".$this->db->escape_str($value)."%'";
+            foreach ($like as $key => $value) {
+                if ($count == 0)
+                    $like_clause .= "$key LIKE '%" . $this->db->escape_str($value) . "%'";
                 else
-                    $like_clause .= " OR $key LIKE '%".$this->db->escape_str($value)."%'";
+                    $like_clause .= " OR $key LIKE '%" . $this->db->escape_str($value) . "%'";
 
                 $count++;
             }
@@ -219,16 +193,13 @@ SQL;
                                 p.sku AS accessory_sku, p.name AS name, c.name AS category
                             ');
 
-        if (!isset($option["offset"]))
-        {
+        if (!isset($option["offset"])) {
             $option["offset"] = 0;
         }
-        if(!$option["limit"])
-        {
+        if (!$option["limit"]) {
             $option["limit"] = "";
         }
-        if ($this->rows_limit != "")
-        {
+        if ($this->rows_limit != "") {
             $this->db->limit($option["limit"], $option["offset"]);
         }
 
@@ -237,14 +208,12 @@ SQL;
         // WHERE (p.name LIKE '%%te%%' OR p.sku LIKE '%%te%%') AND `p`.`cat_id` IN ('750') LIMIT 50
         $rs = array();
         $query = $this->db->get();
-        if ($query->num_rows() > 0)
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query->num_rows() > 0) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
 
-            return (object) $rs;
+            return (object)$rs;
         }
 
     }

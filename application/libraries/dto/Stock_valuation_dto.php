@@ -53,10 +53,20 @@ class Stock_valuation_dto extends Base_dto
         return $this;
     }
 
+    public function get_prod_name()
+    {
+        return $this->prod_name;
+    }
+
     public function set_prod_name($value)
     {
         $this->prod_name = $value;
         return $this;
+    }
+
+    public function get_prod_sku()
+    {
+        return $this->prod_sku;
     }
 
     public function set_prod_sku($value)
@@ -65,10 +75,20 @@ class Stock_valuation_dto extends Base_dto
         return $this;
     }
 
+    public function get_log_sku()
+    {
+        return $this->log_sku;
+    }
+
     public function set_log_sku($value)
     {
         $this->log_sku = $value;
         return $this;
+    }
+
+    public function get_warehouse_id()
+    {
+        return $this->warehouse_id;
     }
 
     public function set_warehouse_id($value)
@@ -77,10 +97,20 @@ class Stock_valuation_dto extends Base_dto
         return $this;
     }
 
+    public function get_inventory()
+    {
+        return $this->inventory;
+    }
+
     public function set_inventory($value)
     {
         $this->inventory = $value;
         return $this;
+    }
+
+    public function get_git()
+    {
+        return $this->git;
     }
 
     public function set_git($value)
@@ -89,10 +119,20 @@ class Stock_valuation_dto extends Base_dto
         return $this;
     }
 
+    public function get_value_per_piece()
+    {
+        return $this->value_per_piece;
+    }
+
     public function set_value_per_piece($value)
     {
         $this->value_per_piece = $value;
         return $this;
+    }
+
+    public function get_total_inv_value()
+    {
+        return $this->total_inv_value;
     }
 
     public function set_total_inv_value($value)
@@ -101,10 +141,20 @@ class Stock_valuation_dto extends Base_dto
         return $this;
     }
 
+    public function get_total_git_value()
+    {
+        return $this->total_git_value;
+    }
+
     public function set_total_git_value($value)
     {
         $this->total_git_value = $value;
         return $this;
+    }
+
+    public function get_total_value()
+    {
+        return $this->total_value;
     }
 
     public function set_total_value($value)
@@ -112,55 +162,6 @@ class Stock_valuation_dto extends Base_dto
         $this->total_value = $value;
         return $this;
     }
-
-    public function get_prod_name()
-    {
-        return $this->prod_name;
-    }
-
-    public function get_prod_sku()
-    {
-        return $this->prod_sku;
-    }
-
-    public function get_log_sku()
-    {
-        return $this->log_sku;
-    }
-
-    public function get_warehouse_id()
-    {
-        return $this->warehouse_id;
-    }
-
-    public function get_inventory()
-    {
-        return $this->inventory;
-    }
-
-    public function get_git()
-    {
-        return $this->git;
-    }
-
-    public function get_value_per_piece()
-    {
-        return $this->value_per_piece;
-    }
-
-    public function get_total_inv_value()
-    {
-        return $this->total_inv_value;
-    }
-
-    public function get_total_git_value()
-    {
-        return $this->total_git_value;
-    }
-
-    public function get_total_value()
-    {
-        return $this->total_value;
-    }
 }
+
 ?>

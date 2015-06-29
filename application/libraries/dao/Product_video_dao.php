@@ -5,19 +5,14 @@ include_once 'Base_dao.php';
 
 class Product_video_dao extends Base_dao
 {
-    private $table_name="product_video";
-    private $vo_class_name="Product_video_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "product_video";
+    private $vo_class_name = "Product_video_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
         parent::__construct();
-    }
-
-    public function get_vo_classname()
-    {
-        return $this->vo_class_name;
     }
 
     public function get_table_name()
@@ -35,14 +30,11 @@ class Product_video_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_video_list_w_country($sku="", $country_arr=array(), $num_rows=FALSE)
+    public function get_video_list_w_country($sku = "", $country_arr = array(), $num_rows = FALSE)
     {
-        if($num_rows==TRUE)
-        {
+        if ($num_rows == TRUE) {
             $sql = "SELECT COUNT(*) AS total";
-        }
-        else
-        {
+        } else {
             $sql = "SELECT *";
         }
         $sql .= "
@@ -51,9 +43,8 @@ class Product_video_dao extends Base_dao
                 ";
 
         $is_first = TRUE;
-        foreach($country_arr as $obj)
-        {
-            $sql .= ($is_first?" AND (":" OR ")."country_id='".$obj."'";
+        foreach ($country_arr as $obj) {
+            $sql .= ($is_first ? " AND (" : " OR ") . "country_id='" . $obj . "'";
             $is_first = FALSE;
 
         }
@@ -62,35 +53,34 @@ class Product_video_dao extends Base_dao
 
         $this->include_vo();
 
-        if($num_rows== TRUE)
-        {
-            if ($query = $this->db->query($sql))
-            {
+        if ($num_rows == TRUE) {
+            if ($query = $this->db->query($sql)) {
                 return $query->row()->total;
             }
-        }
-        else
-        {
+        } else {
             $rs = array();
 
-            if ($query = $this->db->query($sql))
-            {
-                foreach ($query->result($this->get_vo_classname()) as $obj)
-                {
+            if ($query = $this->db->query($sql)) {
+                foreach ($query->result($this->get_vo_classname()) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
         }
         return FALSE;
     }
 
+    public function get_vo_classname()
+    {
+        return $this->vo_class_name;
+    }
+
     public function get_best_selling_video_list($filter_column = '',
-        $cat_id = 0, $day_count = 0, $limit = 0, $platform, $type, $src)
+                                                $cat_id = 0, $day_count = 0, $limit = 0, $platform, $type, $src)
     {
         if (($filter_column === '' && $cat_id !== 0) || !is_numeric($cat_id)
-            || !is_numeric($day_count) || $day_count <= 0 || empty($platform))
-        {
+            || !is_numeric($day_count) || $day_count <= 0 || empty($platform)
+        ) {
             return FALSE;
         }
 
@@ -98,19 +88,16 @@ class Product_video_dao extends Base_dao
         $limit_str = '';
         $input_array = array($day_count);
 
-        if ($cat_id !== 0)
-        {
+        if ($cat_id !== 0) {
             $cat_filter_str = " AND p.$filter_column = ?";
             array_push($input_array, $cat_id);
         }
 
-        if($src != 0)
-        {
+        if ($src != 0) {
             $src_filter_str = " AND pv.src = $src";
         }
 
-        if ($limit > 0)
-        {
+        if ($limit > 0) {
             $limit_str = "LIMIT ?";
             array_push($input_array, $limit);
         }
@@ -143,8 +130,7 @@ class Product_video_dao extends Base_dao
         $result_arr = array();
         $classname = $this->get_vo_classname();
 
-        foreach ($result->result("object", $classname) as $obj)
-        {
+        foreach ($result->result("object", $classname) as $obj) {
             array_push($result_arr, $obj);
         }
 
@@ -152,11 +138,11 @@ class Product_video_dao extends Base_dao
     }
 
     public function get_best_selling_video_list_by_cat($filter_column = '',
-        $cat_id = 0, $day_count = 0, $limit = 0, $platform, $type, $src)
+                                                       $cat_id = 0, $day_count = 0, $limit = 0, $platform, $type, $src)
     {
         if (($filter_column === '' && $cat_id !== 0) || !is_numeric($cat_id)
-            || !is_numeric($day_count) || $day_count <= 0 || empty($platform))
-        {
+            || !is_numeric($day_count) || $day_count <= 0 || empty($platform)
+        ) {
             return FALSE;
         }
 
@@ -164,19 +150,16 @@ class Product_video_dao extends Base_dao
         $limit_str = '';
         $input_array = array($day_count);
 
-        if ($cat_id !== 0)
-        {
+        if ($cat_id !== 0) {
             $cat_filter_str = " AND p.$filter_column = ?";
             array_push($input_array, $cat_id);
         }
 
-        if($src !== 0)
-        {
+        if ($src !== 0) {
             $src_filter_str = " AND pv.src = '$src'";
         }
 
-        if ($limit > 0)
-        {
+        if ($limit > 0) {
             $limit_str = "LIMIT ?";
             array_push($input_array, $limit);
         }
@@ -201,15 +184,13 @@ class Product_video_dao extends Base_dao
                 ORDER BY a.ttl_qty DESC
                 $limit_str";
 
-        if($result = $this->db->query($sql, $input_array))
-        {
+        if ($result = $this->db->query($sql, $input_array)) {
             $this->include_vo();
 
             $result_arr = array();
             $classname = $this->get_vo_classname();
 
-            foreach ($result->result("object", $classname) as $obj)
-            {
+            foreach ($result->result("object", $classname) as $obj) {
                 array_push($result_arr, $obj);
             }
             return $result_arr;
@@ -218,51 +199,42 @@ class Product_video_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_display_video_list($where=array(), $option=array(), $classname="Display_video_list_dto")
+    public function get_display_video_list($where = array(), $option = array(), $classname = "Display_video_list_dto")
     {
-        if($where["platform_id"] == "")
-        {
+        if ($where["platform_id"] == "") {
             return FALSE;
         }
 
-        if($where["cat_id"] != "")
-        {
-            $cat_filter = " AND p.cat_id = ".$where["cat_id"];
+        if ($where["cat_id"] != "") {
+            $cat_filter = " AND p.cat_id = " . $where["cat_id"];
         }
 
-        if($where["sub_cat_id"] != "")
-        {
-            $sub_cat_filter = " AND p.sub_cat_id = ".$where["sub_cat_id"];
+        if ($where["sub_cat_id"] != "") {
+            $sub_cat_filter = " AND p.sub_cat_id = " . $where["sub_cat_id"];
         }
 
-        if($where["min_price"] != "")
-        {
-            $min_filter = " AND IF(pr2.price>0, pr2.price, pr.price*ex.rate) >= ".$where["min_price"];
+        if ($where["min_price"] != "") {
+            $min_filter = " AND IF(pr2.price>0, pr2.price, pr.price*ex.rate) >= " . $where["min_price"];
         }
 
-        if($where["max_price"] != "")
-        {
-            $max_filter = " AND IF(pr2.price>0, pr2.price, pr.price*ex.rate) <= ".$where["max_price"];
+        if ($where["max_price"] != "") {
+            $max_filter = " AND IF(pr2.price>0, pr2.price, pr.price*ex.rate) <= " . $where["max_price"];
         }
 
-        if($where["brand"] != "")
-        {
-            $brand_filter = " AND br.brand_name ='".$where["brand"]."'";
+        if ($where["brand"] != "") {
+            $brand_filter = " AND br.brand_name ='" . $where["brand"] . "'";
         }
 
-        if($where["video_type"] != "")
-        {
-            $v_type_filter = " AND pv.type = '".$where["video_type"]."'";
+        if ($where["video_type"] != "") {
+            $v_type_filter = " AND pv.type = '" . $where["video_type"] . "'";
         }
 
-        if($where["video_src"] != "")
-        {
-            $v_src_filter = " AND pv.src = '".$where["video_src"]."'";
+        if ($where["video_src"] != "") {
+            $v_src_filter = " AND pv.src = '" . $where["video_src"] . "'";
         }
 
-        if($where["product_type"] != "")
-        {
-            $prod_type_filter = " AND pt.type = '".$where["product_type"]."'";
+        if ($where["product_type"] != "") {
+            $prod_type_filter = " AND pt.type = '" . $where["product_type"] . "'";
         }
 
         $sql = "SELECT pv.*, p.name, cat.id cat_id, cat.name cat_name, sub_cat.id sub_cat_id, sub_cat.name sub_cat_name, br.brand_name
@@ -278,14 +250,13 @@ class Product_video_dao extends Base_dao
                 LEFT JOIN (price pr, v_default_platform_id vdp)
                     ON (p.sku = pr.sku AND pr.platform_id = vdp.platform_id AND pr.listing_status = 'L')
                 LEFT JOIN price pr2
-                    ON (p.sku = pr2.sku AND pr2.platform_id = '".$where["platform_id"]."')
+                    ON (p.sku = pr2.sku AND pr2.platform_id = '" . $where["platform_id"] . "')
                 JOIN platform_biz_var pbv
-                    ON (pbv.selling_platform_id = '".$where["platform_id"]."')
+                    ON (pbv.selling_platform_id = '" . $where["platform_id"] . "')
                 JOIN exchange_rate ex
                     ON (ex.to_currency_id = pbv.platform_currency_id) AND (ex.from_currency_id = 'GBP')";
 
-        if($where["product_type"] != "")
-        {
+        if ($where["product_type"] != "") {
             $sql .= "
                     LEFT JOIN product_type pt
                         ON (pt.sku = p.sku)";
@@ -303,8 +274,7 @@ class Product_video_dao extends Base_dao
                     ON (ex.to_currency_id = pbv.platform_currency_id) AND (ex.from_currency_id = 'GBP')";
         }
         */
-        if($option['orderby'] == 'a.sold_amount DESC')
-        {
+        if ($option['orderby'] == 'a.sold_amount DESC') {
             $to_date = date("Y-m-d", time());
             $subtract = time() - (86400 * 30);
             $from_date = date("Y-m-d", $subtract);
@@ -335,50 +305,41 @@ class Product_video_dao extends Base_dao
                     $v_src_filter
                     $prod_type_filter";
 
-        if(!$option['num_rows'])
-        {
-            if($option['orderby'])
-            {
+        if (!$option['num_rows']) {
+            if ($option['orderby']) {
                 $sql .= "
-                    ORDER BY ".$option['orderby'];
+                    ORDER BY " . $option['orderby'];
             }
 
-            if($option['groupby'])
-            {
+            if ($option['groupby']) {
                 $sql = "SELECT a.cat_id, a.cat_name, a.sub_cat_id, a.sub_cat_name, a.brand_name, COUNT(*) as count
                         FROM
                         (
                             $sql
                         )a
-                        GROUP BY ".$option['groupby'];
+                        GROUP BY " . $option['groupby'];
             }
 
-            if($where['limit'])
-            {
-                $sql .= " LIMIT ".$where['limit'];
+            if ($where['limit']) {
+                $sql .= " LIMIT " . $where['limit'];
             }
-            if($where['offset'])
-            {
-                $sql .= " OFFSET ".$where['offset'];
+            if ($where['offset']) {
+                $sql .= " OFFSET " . $where['offset'];
             }
 
-            if($result = $this->db->query($sql))
-            {
+            if ($result = $this->db->query($sql)) {
                 $this->include_dto($classname);
 
                 $result_arr = array();
 
 
-                foreach ($result->result("object", $classname) as $obj)
-                {
+                foreach ($result->result("object", $classname) as $obj) {
                     array_push($result_arr, $obj);
                 }
 
                 return $result_arr;
             }
-        }
-        else
-        {
+        } else {
             $sql = "
                     SELECT COUNT(*) AS total
                     FROM
@@ -386,8 +347,7 @@ class Product_video_dao extends Base_dao
                         $sql
                     )t
                     ";
-            if ($query = $this->db->query($sql))
-            {
+            if ($query = $this->db->query($sql)) {
                 return $query->row()->total;
             }
         }

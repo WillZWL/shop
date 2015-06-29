@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class Ra_prod_cat_dao extends Base_dao
 {
-    private $table_name="ra_prod_cat";
-    private $vo_classname="Ra_prod_cat_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "ra_prod_cat";
+    private $vo_classname = "Ra_prod_cat_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,4 +35,5 @@ class Ra_prod_cat_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 }
+
 ?>

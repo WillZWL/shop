@@ -4,10 +4,10 @@ include_once 'Base_dao.php';
 
 class Bank_account_dao extends Base_dao
 {
-    private $table_name="bank_account";
-    private $vo_classname="bank_account_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "bank_account";
+    private $vo_classname = "bank_account_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {

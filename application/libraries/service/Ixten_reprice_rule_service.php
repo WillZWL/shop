@@ -8,7 +8,7 @@ class Ixten_reprice_rule_service extends Base_service
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH."libraries/dao/Ixten_reprice_rule_dao.php");
+        include_once(APPPATH . "libraries/dao/Ixten_reprice_rule_dao.php");
         $this->set_dao(new Ixten_reprice_rule_dao());
     }
 
@@ -24,10 +24,10 @@ class Ixten_reprice_rule_service extends Base_service
 
     public function q_delete($obj)
     {
-        return $this->get_dao()->q_delete(array("platform_id"=>$obj->get_platform_id(), "id"=>$obj->get_id()));
+        return $this->get_dao()->q_delete(array("platform_id" => $obj->get_platform_id(), "id" => $obj->get_id()));
     }
 
-    public function get_list($where=array(),$option=array())
+    public function get_list($where = array(), $option = array())
     {
         return $this->get_dao()->get_list_index($where, $option);
     }

@@ -26,23 +26,23 @@ abstract class  ClickTale_CacheProvider_BaseCacheProvider
      * @param array $config
      */
     abstract public function store($key, $value, $config);
-    
+
     /**
-     * 
+     *
      * @return string The cached page matching $key, or FALSE if there is no page
      * for the given key
      * @param object $key
      * @param object $config
      */
     abstract public function pull($key, $config);
-    
+
     /**
      * Remove a cached page
      * @param object $key
      * @param object $config
      */
     abstract public function remove($key, $config);
-    
+
     /**
      * Check if there is a cached page for the given $key
      * @return True if page exists, False otherwise
@@ -50,7 +50,7 @@ abstract class  ClickTale_CacheProvider_BaseCacheProvider
      * @param object $config
      */
     abstract public function exists($key, $config);
-    
+
     /**
      * For installation purposes, check if the settings for this cache are valid
      * (like accessible directory..)
@@ -58,7 +58,7 @@ abstract class  ClickTale_CacheProvider_BaseCacheProvider
      * @param array $config
      */
     abstract public function is_config_valid($config);
-    
+
     /**
      * Return array of validation messages
      * (directory is writeable..)
@@ -66,8 +66,9 @@ abstract class  ClickTale_CacheProvider_BaseCacheProvider
      * @param array $config
      */
     abstract public function config_validation($config);
-    
-    public function refresh($key, $config) {
+
+    public function refresh($key, $config)
+    {
         return null;
     }
 }

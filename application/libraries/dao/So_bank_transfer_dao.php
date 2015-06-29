@@ -5,10 +5,10 @@ include_once 'Base_dao.php';
 
 class So_bank_transfer_dao extends Base_dao
 {
-    private $table_name="so_bank_transfer";
-    private $vo_class_name="So_bank_transfer_vo";
-    private $seq_name="";
-    private $seq_mapping_field="";
+    private $table_name = "so_bank_transfer";
+    private $vo_class_name = "So_bank_transfer_vo";
+    private $seq_name = "";
+    private $seq_mapping_field = "";
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class So_bank_transfer_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
-    public function get_so_bank_transfer_list($where=array(), $option=array(), $type="", $received_amt="", $classname="Bank_transfer_list_dto")
+    public function get_so_bank_transfer_list($where = array(), $option = array(), $type = "", $received_amt = "", $classname = "Bank_transfer_list_dto")
     {
         # this function gives list of ALL so orders with so_payment_status.payment_gateway_id = 'w_bank_transfer'
         $this->db->from('so');
@@ -43,44 +43,37 @@ class So_bank_transfer_dao extends Base_dao
         $this->db->join('client AS c', 'c.id = so.client_id', 'INNER');
         $this->db->join('so_payment_status as sops', 'sops.so_no = so.so_no AND sops.payment_gateway_id = \'w_bank_transfer\'', 'INNER');
         $this->db->join('so_bank_transfer as sbt', 'sbt.so_no = so.so_no AND sbt.sbt_status = 1 ', 'LEFT');
-        $this->db->join ('( SELECT a.so_no, a.reason
+        $this->db->join('( SELECT a.so_no, a.reason
                                 FROM so_hold_reason a
                                 JOIN (SELECT so_no, max(create_on) as create_on
                                       FROM so_hold_reason
                                       GROUP BY so_no) AS c
                                 ON a.create_on = c.create_on AND a.so_no = c.so_no
-                                ) AS sohr','sohr.so_no = so.so_no','LEFT');
+                                ) AS sohr', 'sohr.so_no = so.so_no', 'LEFT');
         // $this->db->join('bank_account as bankacc', 'sbt.so_no = so.so_no', 'INNER');
-        if($type == "unpaid_on_hold")
-        {
+        if ($type == "unpaid_on_hold") {
             # new so records, totally unpaid and on hold
             $where["so.status"] = 1;
             $where["sbt.net_diff_status IS NULL"] = NULL;
             $where["sops.payment_status"] = 'N';
             $where["so.hold_status"] = 2;
-        }
-        elseif($type == "all_and_hold")
-        {
+        } elseif ($type == "all_and_hold") {
             # active so records, includes paid & unpaid, on-hold and not on-hold
             $where["(so.status != 0)"] = NULL;
             $where["so.hold_status in (0, 2)"] = NULL;
-        }
-        else
-        {
+        } else {
             # active so records, not on hold, includes paid & unpaid
             $where["(so.status != 0)"] = NULL;
             $where["so.hold_status"] = 0;
         }
 
-        if($received_amt)
-        {
+        if ($received_amt) {
             $where["sbt.received_amt_localcurr"] = $received_amt;
         }
         $this->db->where($where);
 
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
             $this->db->select('
                         so.*,
                         c.id,
@@ -110,32 +103,26 @@ class So_bank_transfer_dao extends Base_dao
                         GROUP_CONCAT(CAST(sbt.modify_at AS CHAR) SEPARATOR "||") AS sbt_modify_at,
                         GROUP_CONCAT(CAST(sbt.modify_by AS CHAR) SEPARATOR "||") AS sbt_modify_by
                         '
-                        );
+            );
 
             $this->db->group_by("so.so_no");
             $this->include_dto($classname);
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
@@ -144,20 +131,15 @@ class So_bank_transfer_dao extends Base_dao
 // $query = $this->db->get();
 // var_dump($this->db->last_query());die();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -166,18 +148,15 @@ class So_bank_transfer_dao extends Base_dao
     }
 
 
-
-    public function get_unknown_bank_transfer_list($where=array(), $option=array(), $type="", $received_amt="", $classname="Bank_transfer_list_dto")
+    public function get_unknown_bank_transfer_list($where = array(), $option = array(), $type = "", $received_amt = "", $classname = "Bank_transfer_list_dto")
     {
         $this->db->from('so_bank_transfer AS sbt');
 
-        if (empty($option["num_rows"]))
-        {
+        if (empty($option["num_rows"])) {
             $this->include_dto($classname);
             $where["sbt.sbt_status"] = 1;
             $where["sbt.so_no IS NULL"] = NULL;
-            if($received_amt)
-            {
+            if ($received_amt) {
                 $where["sbt.received_amt_localcurr"] = $received_amt;
             }
 
@@ -195,27 +174,21 @@ class So_bank_transfer_dao extends Base_dao
                             sbt.modify_by AS sbt_modify_by
                             ');
 
-            if (isset($option["orderby"]))
-            {
+            if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
-            if (empty($option["limit"]))
-            {
+            if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
-            }
-            elseif ($option["limit"] == -1)
-            {
+            } elseif ($option["limit"] == -1) {
                 $option["limit"] = "";
             }
 
-            if (!isset($option["offset"]))
-            {
+            if (!isset($option["offset"])) {
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "")
-            {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
@@ -223,20 +196,15 @@ class So_bank_transfer_dao extends Base_dao
 // $query = $this->db->get();
 // var_dump($this->db->last_query());die();
 
-            if ($query = $this->db->get())
-            {
-                foreach ($query->result($classname) as $obj)
-                {
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object) $rs;
+                return (object)$rs;
             }
-        }
-        else
-        {
+        } else {
             $this->db->select('COUNT(*) AS total');
-            if ($query = $this->db->get())
-            {
+            if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         }
@@ -245,7 +213,7 @@ class So_bank_transfer_dao extends Base_dao
     }
 
 
-    public function bank_transfer_report($where=array(), $receive_date=array(), $order_date=array(), $option=array(), $classname="Bank_transfer_list_dto")
+    public function bank_transfer_report($where = array(), $receive_date = array(), $order_date = array(), $option = array(), $classname = "Bank_transfer_list_dto")
     {
         // $receive_date = payment received date; so_bank_transfer.received_date_localtime
         $this->include_dto($classname);
@@ -258,13 +226,11 @@ class So_bank_transfer_dao extends Base_dao
         # either empty (unpaid) record or is active record
         $where["sbt.sbt_status"] = 1;
 
-        if($receive_date)
-        {
+        if ($receive_date) {
             $this->db->where('sbt.received_date_localtime >=', $receive_date["from"]);
             $this->db->where('sbt.received_date_localtime <=', $receive_date["to"]);
         }
-        if($order_date)
-        {
+        if ($order_date) {
             $this->db->where('so.order_create_date >=', $order_date["from"]);
             $this->db->where('so.order_create_date <=', $order_date["to"]);
         }
@@ -289,7 +255,7 @@ class So_bank_transfer_dao extends Base_dao
                         GROUP_CONCAT(CAST(sbt.modify_at AS CHAR) ORDER BY sbt.received_date_localtime SEPARATOR "||") AS sbt_modify_at,
                         GROUP_CONCAT(CAST(sbt.modify_by AS CHAR) ORDER BY sbt.received_date_localtime SEPARATOR "||") AS sbt_modify_by
                         '
-                        );
+        );
 
         $this->db->group_by("so.so_no");
 
@@ -297,14 +263,12 @@ class So_bank_transfer_dao extends Base_dao
 // $query = $this->db->get();
 // var_dump($this->db->last_query());die();
 
-        if ($query = $this->db->get())
-        {
-            foreach ($query->result($classname) as $obj)
-            {
+        if ($query = $this->db->get()) {
+            foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
             // echo "<pre>"; var_dump($rs);
-            return (object) $rs;
+            return (object)$rs;
         }
 
     }
