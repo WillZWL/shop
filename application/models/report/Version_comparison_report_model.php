@@ -18,6 +18,5 @@ class Version_comparison_report_model extends CI_Model
         $this->load->library('service/rpt_version_comparison_service');
         return $this->rpt_version_comparison_service;
     }
+
 }
-
-

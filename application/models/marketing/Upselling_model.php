@@ -290,5 +290,3 @@ class Upselling_model extends CI_Model
     }
 
 }
-
-

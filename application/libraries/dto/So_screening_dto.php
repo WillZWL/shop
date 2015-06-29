@@ -967,5 +967,3 @@ Class So_screening_dto extends Base_dto
         return $this->risk_ref4;
     }
 }
-
-

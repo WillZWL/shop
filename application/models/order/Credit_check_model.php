@@ -130,7 +130,3 @@ class Credit_check_model extends CI_Model
         return $this->quick_search_service->get_order_notes_dao()->insert($obj);
     }
 }
-
-
-
-?>

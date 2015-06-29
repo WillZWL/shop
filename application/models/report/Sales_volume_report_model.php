@@ -24,6 +24,5 @@ class Sales_volume_report_model extends CI_Model
     {
         return $this->rpt_sales_volume_service;
     }
+
 }
-
-

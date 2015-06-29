@@ -38,7 +38,4 @@ class Complementary_acc_model extends CI_Model
         return $this->complementary_acc_service->check_cat($sku, $is_ca);
     }
 
-
 }
-
-

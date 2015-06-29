@@ -38,5 +38,3 @@ class News_subscription extends PUB_Controller
     }
 
 }
-
-

@@ -21,6 +21,5 @@ class Sales_comparison_by_period_report_model extends CI_Model
         $this->load->library('service/rpt_sales_comparison_by_period_service');
         return $this->rpt_sales_comparison_by_period_service;
     }
+
 }
-
-

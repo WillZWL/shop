@@ -27,6 +27,5 @@ Class Forget_password extends PUB_Controller
 
         $this->load_view('forget_password.php', $data);
     }
+
 }
-
-

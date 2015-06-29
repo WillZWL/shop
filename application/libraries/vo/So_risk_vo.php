@@ -248,5 +248,3 @@ class So_risk_vo extends Base_vo
     }
 
 }
-
-

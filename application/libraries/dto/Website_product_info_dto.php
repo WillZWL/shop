@@ -361,5 +361,3 @@ class Website_product_info_dto extends Base_dto
         return $this;
     }
 }
-
-

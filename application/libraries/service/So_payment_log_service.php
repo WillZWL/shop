@@ -22,5 +22,3 @@ class So_payment_log_service extends Base_service
     }
 
 }
-
-

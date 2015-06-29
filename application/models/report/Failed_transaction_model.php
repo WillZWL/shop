@@ -14,5 +14,3 @@ class Failed_transaction_model extends CI_Model
         return $this->rpt_failed_transaction_service->get_csv($start_date, $end_date);
     }
 }
-
-

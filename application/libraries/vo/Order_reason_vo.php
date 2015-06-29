@@ -200,5 +200,3 @@ class Order_reason_vo extends Base_vo
     }
 
 }
-
-

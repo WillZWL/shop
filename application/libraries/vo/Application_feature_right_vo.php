@@ -152,5 +152,3 @@ class Application_feature_right_vo extends Base_vo
     }
 
 }
-
-

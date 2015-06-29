@@ -224,5 +224,3 @@ class Sourcing_list_vo extends Base_vo
     }
 
 }
-
-

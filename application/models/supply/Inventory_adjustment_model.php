@@ -11,8 +11,5 @@ class Inventory_adjustment_model extends CI_Model
         $this->load->library('service/warehouse_service.php');
         $this->load->library('service/product_service.php');
     }
+
 }
-
-
-
-?>

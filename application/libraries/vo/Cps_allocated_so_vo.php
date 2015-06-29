@@ -152,5 +152,3 @@ class Cps_allocated_so_vo extends Base_vo
     }
 
 }
-
-

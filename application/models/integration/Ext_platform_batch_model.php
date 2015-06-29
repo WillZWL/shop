@@ -14,5 +14,3 @@ class Ext_platform_batch_model extends CI_Model
         $this->ext_platform_batch_service->gen_shipping_override($platform_id);
     }
 }
-
-

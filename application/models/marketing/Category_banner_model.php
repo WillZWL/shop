@@ -88,6 +88,5 @@ class Category_banner_model extends CI_Model
     {
         return $this->category_service->get_dao()->get($where);
     }
+
 }
-
-

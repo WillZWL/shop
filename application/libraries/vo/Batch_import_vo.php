@@ -164,5 +164,3 @@ class Batch_import_vo extends Base_vo
     }
 
 }
-
-

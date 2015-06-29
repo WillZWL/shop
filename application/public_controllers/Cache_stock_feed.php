@@ -24,6 +24,5 @@ class Cache_stock_feed extends Stock_feed
             //parent::xml_skype_feed($sku, $promotion_code);
         }
     }
+
 }
-
-

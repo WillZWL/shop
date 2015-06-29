@@ -25,6 +25,5 @@ class Fulfillment_report_model extends CI_Model
         $this->load->library('service/rpt_fulfillment_service');
         return $this->rpt_fulfillment_service;
     }
+
 }
-
-

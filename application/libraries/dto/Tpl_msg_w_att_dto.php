@@ -159,5 +159,3 @@ class Tpl_msg_w_att_dto extends Base_dto
         $this->message_alt = $value;
     }
 }
-
-

@@ -18,6 +18,5 @@ class Release_order_report_model extends CI_Model
     {
         return $this->release_order_report_service->get_obj_list($where, $option);
     }
+
 }
-
-

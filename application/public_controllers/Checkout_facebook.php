@@ -208,6 +208,5 @@ class Checkout_facebook extends Checkout
     {
         $this->checkout_facebook_model->js_credit_card($append_pmgw);
     }
+
 }
-
-

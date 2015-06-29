@@ -132,5 +132,3 @@ class Product_warranty_vo extends Base_vo
     }
 
 }
-
-

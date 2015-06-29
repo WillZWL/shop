@@ -113,10 +113,3 @@ class MY_URI extends CI_URI
     }
 
 }
-
-// END MY_URI Class
-
-
-
-
-?>

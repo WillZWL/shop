@@ -10,7 +10,3 @@ class Special_order_model extends CI_Model
     }
 
 }
-
-
-
-?>

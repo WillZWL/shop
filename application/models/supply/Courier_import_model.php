@@ -8,7 +8,4 @@ class Courier_import_model extends CI_Model
 //      $this->load->library('service/context_config_service');
     }
 
-
 }
-
-

@@ -117,4 +117,3 @@ class Stock_feed_model extends CI_Model
         return $this->sp_srv;
     }
 }
-

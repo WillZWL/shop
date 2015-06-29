@@ -106,6 +106,5 @@ class Sales_report_model extends CI_Model
         $ret = $this->get_report_service()->get_split_order_csv($from_date, $to_date, $where, $option);
         return $ret;
     }
+
 }
-
-

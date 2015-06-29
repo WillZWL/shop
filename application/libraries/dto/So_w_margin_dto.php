@@ -115,5 +115,3 @@ class So_w_margin_dto extends Base_dto
     }
 
 }
-
-

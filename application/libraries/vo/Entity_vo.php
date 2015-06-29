@@ -176,5 +176,3 @@ class Entity_vo extends Base_vo
     }
 
 }
-
-

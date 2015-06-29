@@ -14,5 +14,3 @@ class Fraudulent_order_model extends CI_Model
         return $this->fraudulent_order_service->get_csv($start_date, $end_date, $where);
     }
 }
-
-

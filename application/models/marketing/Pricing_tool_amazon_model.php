@@ -290,5 +290,3 @@ class Pricing_tool_amazon_model extends Pricing_tool_model
         echo $js;
     }
 }
-
-

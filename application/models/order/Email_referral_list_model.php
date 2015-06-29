@@ -18,7 +18,3 @@ class Email_referral_list_model extends CI_Model
         return $this->email_referral_list_service->get_csv($where, $option);
     }
 }
-
-
-
-?>

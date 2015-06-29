@@ -71,5 +71,3 @@ class Fnac_model extends CI_Model
     }
 
 }
-
-

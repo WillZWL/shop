@@ -14,5 +14,3 @@ class Dispatch_email_model extends CI_Model
         $this->dispatch_email_service->dispatch_email();
     }
 }
-
-

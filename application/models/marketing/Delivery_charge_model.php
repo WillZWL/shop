@@ -212,7 +212,3 @@ class Delivery_charge_model extends CI_Model
     }
 
 }
-
-
-
-?>

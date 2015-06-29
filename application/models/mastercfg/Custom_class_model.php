@@ -133,8 +133,5 @@ class Custom_class_model extends CI_Model
     // {
     //  return $this->custom_classification_mapping_service->get_all_custom_class_mapping_by_main_cat_id($main_cat_id);
     // }
+
 }
-
-
-
-?>

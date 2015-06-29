@@ -7,5 +7,3 @@ interface Actable_service
 
     public function run($dto);
 }
-
-

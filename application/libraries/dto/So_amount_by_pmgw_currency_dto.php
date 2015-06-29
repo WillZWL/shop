@@ -74,4 +74,3 @@ class So_amount_by_pmgw_currency_dto extends Base_dto
         $this->platform_country_id = $value;
     }
 }
-

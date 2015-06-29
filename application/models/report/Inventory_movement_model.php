@@ -13,6 +13,5 @@ class Inventory_movement_model extends CI_Model
     {
         return $this->rpt_inventory_movement_service->get_csv($sku, $start_date, $end_date);
     }
+
 }
-
-

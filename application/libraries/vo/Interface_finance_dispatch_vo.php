@@ -176,5 +176,3 @@ class Interface_finance_dispatch_vo extends Base_vo
     }
 
 }
-
-

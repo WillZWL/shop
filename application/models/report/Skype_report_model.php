@@ -19,6 +19,5 @@ class Skype_report_model extends CI_Model
         $this->load->library('service/rpt_skype_service');
         return $this->rpt_skype_service;
     }
+
 }
-
-

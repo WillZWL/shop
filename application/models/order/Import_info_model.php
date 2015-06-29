@@ -260,5 +260,3 @@ abstract class Import_info_model extends CI_Model implements Import_info_model_i
         return array("result" => $result, "error_message" => $error_message, "number_of_successes" => $number_of_success, "import_data" => (object)$casted_data);
     }
 }
-
-

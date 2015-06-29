@@ -26,7 +26,4 @@ class Aftership_report_model extends Sales_report_model
         return $this->get_report_service()->get_aftership_report_for_ftp($start_date, $end_date, $where);
     }
 
-
 }
-
-

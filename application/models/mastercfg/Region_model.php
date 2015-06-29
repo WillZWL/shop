@@ -63,7 +63,3 @@ class Region_model extends CI_Model
         return $this->region_service->del_region_country($region_id);
     }
 }
-
-
-
-?>

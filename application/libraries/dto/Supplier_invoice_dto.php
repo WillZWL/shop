@@ -153,5 +153,3 @@ class Supplier_invoice_dto extends Base_dto
         $this->ship_loc_code = $value;
     }
 }
-
-

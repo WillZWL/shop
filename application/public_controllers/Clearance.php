@@ -86,6 +86,5 @@ class Clearance extends PUB_Controller
         $data["colour_list"] = $this->category_model->get_colour_code();
         $this->load_view('clearance.php', $data);
     }
+
 }
-
-

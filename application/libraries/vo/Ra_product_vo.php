@@ -353,6 +353,5 @@ class Ra_product_vo extends Base_vo
     {
         return $this->increment_field;
     }
+
 }
-
-

@@ -13,6 +13,5 @@ class Stock_valuation_model extends CI_Model
     {
         return $this->rpt_stock_valuation_service->get_csv($sku, $prod_name);
     }
+
 }
-
-

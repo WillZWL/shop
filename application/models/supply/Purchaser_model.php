@@ -134,8 +134,5 @@ class Purchaser_model extends CI_Model
     {
         return $this->sku_mapping_service->get_master_sku($where);
     }
+
 }
-
-
-
-?>

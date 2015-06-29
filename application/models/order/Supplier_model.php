@@ -61,7 +61,3 @@ class Supplier_model extends CI_Model
         return $this->supplier_service->$dao()->include_vo();
     }
 }
-
-
-
-?>

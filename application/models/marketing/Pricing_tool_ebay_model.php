@@ -225,5 +225,3 @@ class Pricing_tool_ebay_model extends Pricing_tool_model
     }
 
 }
-
-

@@ -9,8 +9,4 @@ class Product_overview_qoo10_model extends Product_overview_model
         parent::Product_overview_model("QOO10", 'marketing/pricing_tool_website');
     }
 
-
 }
-
-
-

@@ -73,7 +73,3 @@ class Product_overview_amuk_model extends CI_Model
         return $this->$service->price_service->insert($obj);
     }
 }
-
-
-
-?>

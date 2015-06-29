@@ -91,6 +91,3 @@ class Product_overview_amazon_model extends Product_overview_model
     }
 
 }
-
-
-

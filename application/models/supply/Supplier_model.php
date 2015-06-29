@@ -72,8 +72,5 @@ class Supplier_model extends CI_Model
     {
         return $this->supplier_service->get_cpssl_dao()->inactive_cpssl_status();
     }
+
 }
-
-
-
-?>

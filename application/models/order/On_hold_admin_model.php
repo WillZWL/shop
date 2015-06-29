@@ -101,6 +101,3 @@ class On_hold_admin_model extends CI_Model
         $this->so_service->fire_cs2log_email($so_no, $reason, $user_info);
     }
 }
-
-
-

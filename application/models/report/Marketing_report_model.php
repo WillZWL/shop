@@ -42,7 +42,5 @@ class Marketing_report_model extends CI_Model
 
         return $result;
     }
+
 }
-
-
-

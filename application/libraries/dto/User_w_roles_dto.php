@@ -131,5 +131,3 @@ class User_w_roles_dto extends Base_dto
     }
 
 }
-
-

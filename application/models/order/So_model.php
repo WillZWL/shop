@@ -409,7 +409,3 @@ class So_model extends CI_Model
         return $this->wmsi_srv;
     }
 }
-
-
-
-?>

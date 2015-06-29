@@ -22,5 +22,3 @@ class Check_site extends PUB_Controller
     }
 
 }
-
-

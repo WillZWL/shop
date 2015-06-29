@@ -305,8 +305,5 @@ class Product_overview_model extends CI_Model
             ";
         echo $js;
     }
+
 }
-
-
-
-?>

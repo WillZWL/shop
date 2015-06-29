@@ -10,6 +10,3 @@ class Product_overview_fnac_model extends Product_overview_model
     }
 
 }
-
-
-

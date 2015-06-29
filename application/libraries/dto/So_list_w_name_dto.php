@@ -838,5 +838,3 @@ class So_list_w_name_dto extends Base_dto
     }
 
 }
-
-

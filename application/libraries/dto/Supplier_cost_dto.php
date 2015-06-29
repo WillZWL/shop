@@ -54,5 +54,3 @@ class Supplier_cost_dto extends Base_dto
         $this->supplier_cost = $value;
     }
 }
-
-

@@ -21,5 +21,3 @@ class Batch_model extends CI_Model
         return $this->ebay_service->get_ebay_order($ebay_account, $specified_file);
     }
 }
-
-

@@ -64,5 +64,3 @@ class Website_prod_search_info_dto extends Website_prod_info_dto
         $this->image_file_ext = $data;
     }
 }
-
-

@@ -16,5 +16,3 @@ class Dispatch_report_model extends Sales_report_model
         return $this->rpt_dispatch_service;
     }
 }
-
-

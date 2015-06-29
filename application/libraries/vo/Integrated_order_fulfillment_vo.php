@@ -307,5 +307,3 @@ class Integrated_order_fulfillment_vo extends Base_vo
     }
 
 }
-
-

@@ -462,6 +462,5 @@ class Myaccount extends PUB_Controller
             $att_file = $this->pdf_rendering_service->convert_html_to_pdf($html, null, "I", "en");
         }
     }
+
 }
-
-

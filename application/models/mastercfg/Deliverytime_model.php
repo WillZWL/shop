@@ -12,6 +12,3 @@ class Deliverytime_model extends CI_Model
     }
 
 }
-
-
-

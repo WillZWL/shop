@@ -147,6 +147,5 @@ class Ra_group_vo extends Base_vo
     {
         return $this->increment_field;
     }
+
 }
-
-

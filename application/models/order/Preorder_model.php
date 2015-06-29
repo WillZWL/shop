@@ -9,7 +9,3 @@ class Preorder_model extends CI_Model
         $this->load->library('service/product_service');
     }
 }
-
-
-
-?>

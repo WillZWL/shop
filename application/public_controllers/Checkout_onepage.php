@@ -559,6 +559,5 @@ class Checkout_onepage extends Checkout_redirect_method
             return FALSE;
         }
     }
+
 }
-
-

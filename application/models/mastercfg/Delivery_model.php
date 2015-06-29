@@ -159,6 +159,3 @@ class Delivery_model extends CI_Model
         }
     }
 }
-
-
-

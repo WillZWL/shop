@@ -11,6 +11,5 @@ class ClickTale extends PUB_Controller
     {
         $this->load->view('ClickTale/ClickTaleCache.php');
     }
+
 }
-
-

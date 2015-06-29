@@ -13,6 +13,5 @@ class Order_score_activity_log_model extends CI_Model
     {
         return $this->rpt_order_score_activity_log_service->get_csv($start_date, $end_date, $order_score, $order_status);
     }
+
 }
-
-

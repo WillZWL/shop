@@ -489,5 +489,3 @@ class Yandex_product_feed_service extends Data_feed_service
         return "Yandex Product Feed Cron Time";
     }
 }
-
-

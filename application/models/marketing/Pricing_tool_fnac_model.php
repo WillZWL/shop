@@ -10,5 +10,3 @@ class Pricing_tool_fnac_model extends Pricing_tool_model
     }
 
 }
-
-

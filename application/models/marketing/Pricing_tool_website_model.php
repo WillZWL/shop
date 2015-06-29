@@ -19,5 +19,3 @@ class Pricing_tool_website_model extends Pricing_tool_model
         return $this->price_service->update_rrp_factor();
     }
 }
-
-

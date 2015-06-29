@@ -621,7 +621,5 @@ class Wsgb_price_service extends Platform_price_service
     {
         return $this->pc_dao;
     }
+
 }
-
-
-

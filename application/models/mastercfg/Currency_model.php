@@ -28,6 +28,3 @@ class Currency_model extends CI_Model
         return TRUE;
     }
 }
-
-
-

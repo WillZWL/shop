@@ -113,5 +113,3 @@ Class So_w_payment_dto extends Base_dto
         return $this;
     }
 }
-
-

@@ -131,5 +131,3 @@ class So_fee_invoice_dto extends Base_dto
         $this->txn_ref = $value;
     }
 }
-
-

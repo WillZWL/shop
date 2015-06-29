@@ -83,5 +83,3 @@ class Display_qty_model extends CI_Model
         }
     }
 }
-
-

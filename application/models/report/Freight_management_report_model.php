@@ -26,7 +26,4 @@ class Freight_management_report_model extends CI_Model
     //  return $this->get_report_service()->get_freight_management_report_for_ftp($start_date, $end_date, $where);
     // }
 
-
 }
-
-

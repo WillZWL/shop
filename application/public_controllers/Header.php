@@ -22,6 +22,5 @@ class Header extends PUB_Controller
 
         $this->load_view('banner/lytebox_' . $publish_key, $data);
     }
+
 }
-
-

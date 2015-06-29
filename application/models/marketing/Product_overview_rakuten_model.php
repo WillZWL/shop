@@ -9,8 +9,4 @@ class Product_overview_rakuten_model extends Product_overview_model
         parent::Product_overview_model("RAKUTEN", 'marketing/pricing_tool_website');
     }
 
-
 }
-
-
-

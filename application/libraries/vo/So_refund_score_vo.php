@@ -140,5 +140,3 @@ class So_refund_score_vo extends Base_vo
     }
 
 }
-
-

@@ -10,6 +10,3 @@ class Pricing_tool_skype_model extends Pricing_tool_model
     }
 
 }
-
-
-

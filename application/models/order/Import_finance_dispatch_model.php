@@ -68,5 +68,3 @@ class Import_finance_dispatch_model extends Import_info_model
         return $data_from_csv;
     }
 }
-
-

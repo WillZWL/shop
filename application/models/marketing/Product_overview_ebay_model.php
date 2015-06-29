@@ -167,6 +167,3 @@ class Product_overview_ebay_model extends Product_overview_model
     }
 
 }
-
-
-

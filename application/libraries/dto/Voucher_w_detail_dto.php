@@ -110,5 +110,3 @@ class Voucher_w_detail_dto extends Base_dto
         $this->status = $value;
     }
 }
-
-

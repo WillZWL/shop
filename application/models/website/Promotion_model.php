@@ -39,5 +39,3 @@ class Promotion_model extends CI_Model
         return $data;
     }
 }
-
-

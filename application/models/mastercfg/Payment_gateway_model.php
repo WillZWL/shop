@@ -18,7 +18,3 @@ class Payment_gateway_model extends CI_Model
         return $this->payment_gateway_service->get_num_rows($where);
     }
 }
-
-
-
-?>

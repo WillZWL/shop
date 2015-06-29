@@ -87,5 +87,3 @@ class Supplier_status_dto extends Base_dto
         $this->supplier_status_desc = $value;
     }
 }
-
-

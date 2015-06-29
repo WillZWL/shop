@@ -47,6 +47,3 @@ class Promotion_code_model extends CI_Model
         return $this->courier_service->get_list(array('weight_type' => 'CH'));
     }
 }
-
-
-

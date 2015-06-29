@@ -9,5 +9,3 @@ class Ebay_model extends CI_Model
         $this->load->library('service/ebay_service');
     }
 }
-
-

@@ -121,8 +121,5 @@ class Bundle_model extends CI_Model
     {
         return $this->product_service->get_dao()->update_seq($new_value);
     }
+
 }
-
-
-
-?>

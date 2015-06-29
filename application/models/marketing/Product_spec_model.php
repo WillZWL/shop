@@ -119,5 +119,3 @@ class Product_spec_model extends CI_Model
         }
     }
 }
-
-

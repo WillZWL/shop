@@ -63,5 +63,3 @@ function load_tpl($region, $view, $vars = array(), $overwrite = FALSE, $autoload
     $this->template->render();
 }
 }
-
-

@@ -178,6 +178,5 @@ class Login extends PUB_Controller
 
         return $this->objResponse;
     }
+
 }
-
-

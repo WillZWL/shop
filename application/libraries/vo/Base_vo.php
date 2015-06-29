@@ -11,5 +11,3 @@ abstract class Base_vo
     abstract function _get_primary_key();
 
 }
-
-

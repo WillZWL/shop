@@ -65,7 +65,3 @@ class Brand_model extends CI_Model
     }
 
 }
-
-
-
-?>

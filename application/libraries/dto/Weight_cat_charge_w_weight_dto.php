@@ -80,5 +80,3 @@ class Weight_cat_charge_w_weight_dto extends Base_dto
         $this->amount = $value;
     }
 }
-
-

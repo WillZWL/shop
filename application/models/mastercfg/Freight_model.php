@@ -195,7 +195,3 @@ class Freight_model extends CI_Model
         return $this->freight_cat_service->insert_fcc($obj);
     }
 }
-
-
-
-?>

@@ -136,7 +136,5 @@ class Integration_model extends CI_Model
     {
         return $this->cps_allocated_so_service->cps_allocated_so_no();
     }
+
 }
-
-
-

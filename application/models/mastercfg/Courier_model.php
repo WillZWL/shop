@@ -41,7 +41,3 @@ class Courier_model extends CI_Model
         return $this->currency_service->get_list($where, $option);
     }
 }
-
-
-
-?>

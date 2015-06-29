@@ -70,6 +70,3 @@ class Warranty_model extends CI_Model
         return $this->product_warranty_service->get_dao();
     }
 }
-
-
-
