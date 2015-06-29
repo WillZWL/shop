@@ -17,29 +17,29 @@ WIDTH: 170px;}
 <?=$notice["img"]?>
 <table cellpadding="0" cellspacing="0" width="100%" border="0">
 <tr>
-	<td align="left" class="title" height="30"><b style="font-size: 16px; color: rgb(0, 0, 0);"><?=$lang["title"]?></b></td>
+    <td align="left" class="title" height="30"><b style="font-size: 16px; color: rgb(0, 0, 0);"><?=$lang["title"]?></b></td>
 </tr>
 <tr>
-	<td height="2" bgcolor="#000033"></td>
+    <td height="2" bgcolor="#000033"></td>
 </tr>
 </table>
 <form name="fm" action="<?=base_url()."report/version_comparison_report/query"?>" method="post" target="report">
 <table cellpadding="0" cellspacing="0" border="0" width="100%" class="page_header">
 <tr height="70">
-	<td align="left" style="padding-left:8px;">
-		<b style="font-size: 14px; color: rgb(0, 0, 0);"><?=$lang["header"]?></b><br>
-	</td>
-	<td align="right">
-	<table border="0" cellpadding="0" cellspacing="0" width="400" style="line-height:8px;">
-	<col width="140"><col width="160"><col width="40">
-	<tr>
-		<td colspan="2" align="right" style="padding-top:5px; padding-right:8px;"><input type="button" value="<?=$lang["export_csv"]?>" class="button3" onClick="if (CheckForm(this.form)){this.form.submit();}"><input type="hidden" name="posted" value="1"></td>
-	</tr>
-	</table>
-	</td>
+    <td align="left" style="padding-left:8px;">
+        <b style="font-size: 14px; color: rgb(0, 0, 0);"><?=$lang["header"]?></b><br>
+    </td>
+    <td align="right">
+    <table border="0" cellpadding="0" cellspacing="0" width="400" style="line-height:8px;">
+    <col width="140"><col width="160"><col width="40">
+    <tr>
+        <td colspan="2" align="right" style="padding-top:5px; padding-right:8px;"><input type="button" value="<?=$lang["export_csv"]?>" class="button3" onClick="if (CheckForm(this.form)){this.form.submit();}"><input type="hidden" name="posted" value="1"></td>
+    </tr>
+    </table>
+    </td>
 </tr>
 <tr>
-	<td height="2" bgcolor="#000033" colspan="3"></td>
+    <td height="2" bgcolor="#000033" colspan="3"></td>
 </tr>
 </table>
 </form>

@@ -1,5 +1,5 @@
 <?php
-	
+    
 include VIEWPATH.'tbs_header.php';
 $this->tbswrapper->tbsLoadTemplate('resources/template/myaccount_profile_'.get_lang_id().'.html');
 $url["myaccount"] = base_url()."myaccount/ws_myaccount";
@@ -28,33 +28,33 @@ $title[2]["value"] = "Miss";
 $title[3]["value"] = "Dr";
 foreach($title AS $key=>$value)
 {
-	if($title[$key]["value"] == $data["client_obj"]->get_title())
-	{
-		$title[$key]["selected"]="SELECTED";
-	}
-	else
-	{
-		$title[$key]["selected"]="";
-	}
+    if($title[$key]["value"] == $data["client_obj"]->get_title())
+    {
+        $title[$key]["selected"]="SELECTED";
+    }
+    else
+    {
+        $title[$key]["selected"]="";
+    }
 }
 
 if($data["bill_to_list"])
 {
-	$i = 0;
-	foreach($data["bill_to_list"] AS $cobj)
-	{
-		$bill_country_arr[$i]["id"] = $cobj->get_id();
-		$bill_country_arr[$i]["display_name"] = $cobj->get_lang_name();
-		if($data["client_obj"]->get_country_id() == $data["client_obj"]->get_country_id())
-		{
-			$bill_country_arr[$i]["selected"] = "SELECTED";
-		}
-		else
-		{
-			$bill_country_arr[$i]["selected"] = "";
-		}
-		$i++;
-	}
+    $i = 0;
+    foreach($data["bill_to_list"] AS $cobj)
+    {
+        $bill_country_arr[$i]["id"] = $cobj->get_id();
+        $bill_country_arr[$i]["display_name"] = $cobj->get_lang_name();
+        if($data["client_obj"]->get_country_id() == $data["client_obj"]->get_country_id())
+        {
+            $bill_country_arr[$i]["selected"] = "SELECTED";
+        }
+        else
+        {
+            $bill_country_arr[$i]["selected"] = "";
+        }
+        $i++;
+    }
 }
 
 

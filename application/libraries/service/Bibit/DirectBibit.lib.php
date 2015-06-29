@@ -40,15 +40,15 @@ class Bibit {
   }
 
   function CancelOrderXML() {
-  	$this->xml = <<<EOT
+    $this->xml = <<<EOT
 <?xml version='1.0' encoding='UTF-8'<!DOCTYPE paymentService PUBLIC '-//Bibit//DTD Bibit PaymentService v1//EN' 'http://dtd.bibit.com/paymentService_v1.dtd'>
-		<paymentService version='1.4' merchantCode='{$this->merchantCode}'>
-		<modify>
-		<orderModification orderCode ='{$this->orderId}'>
-		<cancel/>
-		</orderModification>
-		</modify>
-		</paymentService>
+        <paymentService version='1.4' merchantCode='{$this->merchantCode}'>
+        <modify>
+        <orderModification orderCode ='{$this->orderId}'>
+        <cancel/>
+        </orderModification>
+        </modify>
+        </paymentService>
 EOT;
 }
 
@@ -73,13 +73,13 @@ EOT;
   }
 
 function FillExtPaymentXML($paymentArray){
-	$this->ExtPaymentInfo="";
+    $this->ExtPaymentInfo="";
   if ($paymentArray['cardtype']== "SOLO_GB-SSL" || $paymentArray['cardtype']=="SWITCH-SSL" || $paymentArray['cardtype']=="MAESTRO-SSL"){
-  	if($paymentArray['issuenum']!=''){
-  	$this->ExtPaymentInfo .= "<issueNumber>".$paymentArray['issuenum']."</issueNumber>";
-  	}
-  	if ($paymentArray['start_month']!='' && $paymentArray['start_year']!=''){
-  	$this->ExtPaymentInfo .= "<startDate><date month='".$paymentArray['start_month']."' year='".$paymentArray['start_year']."'/></startDate>";
+    if($paymentArray['issuenum']!=''){
+    $this->ExtPaymentInfo .= "<issueNumber>".$paymentArray['issuenum']."</issueNumber>";
+    }
+    if ($paymentArray['start_month']!='' && $paymentArray['start_year']!=''){
+    $this->ExtPaymentInfo .= "<startDate><date month='".$paymentArray['start_month']."' year='".$paymentArray['start_year']."'/></startDate>";
   }
 
 }
@@ -102,7 +102,7 @@ function FillExtPaymentXML($paymentArray){
   <cvc>{$paymentArray['cvc']}</cvc>
     <cardAddress>
     <address>
-  				<firstName>{$shopperArray['firstname']}</firstName>
+                <firstName>{$shopperArray['firstname']}</firstName>
           <lastName>{$shopperArray['lastname']}</lastName>
           <street>{$shopperArray['street']}</street>
           <postalCode>{$shopperArray['postcode']}</postalCode>
@@ -124,9 +124,9 @@ EOT;
         <shopperEmailAddress>{$shopperArray['email']}</shopperEmailAddress>
       <browser>
         <acceptHeader>{$shopperArray['acceptheader']}</acceptHeader>
-	<userAgentHeader>{$shopperArray['useragentheader']}</userAgentHeader>
+    <userAgentHeader>{$shopperArray['useragentheader']}</userAgentHeader>
         </browser>
-	</shopper>
+    </shopper>
       <shippingAddress>
         <address>
           <firstName>{$shopperArray['firstname']}</firstName>
@@ -137,13 +137,13 @@ EOT;
           <countryCode>{$shopperArray['countrycode']}</countryCode>
           <telephoneNumber>{$shopperArray['telephone']}</telephoneNumber>
         </address>
-	</shippingAddress>\n
+    </shippingAddress>\n
 EOT;
   }
 
   function EndXML($paymentArray) {
        if(strlen($paymentArray['echodata'])!=0){
-	  $this->xml .="<echoData>".$paymentArray['echodata']."</echoData>";
+      $this->xml .="<echoData>".$paymentArray['echodata']."</echoData>";
        }
 
     $this->xml .= <<<EOT

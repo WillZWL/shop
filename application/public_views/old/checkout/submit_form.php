@@ -10,7 +10,7 @@ print $form_data;
 /*
 foreach ($form_data as $name => $value)
 {
-	print "<input type='hidden' name='" . $name . "' value=\"" . $value . "\">\n";
+    print "<input type='hidden' name='" . $name . "' value=\"" . $value . "\">\n";
 }
 */
 ?>
@@ -19,7 +19,7 @@ foreach ($form_data as $name => $value)
 <!--
 function redirect2url()
 {
-	document.form_url.submit();
+    document.form_url.submit();
 }
 // -->
 </script>

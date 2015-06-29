@@ -15,35 +15,35 @@
 <div id="main">
 <?=$notice["img"]?>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
-	<tr>
-		<td height="30" class="title"><?=$lang["title"]?></td>
-		<td width="400" align="right" class="title">
-		</td>
-	</tr>
-	<tr>
-		<td height="2" class="line"></td>
-		<td height="2" class="line"></td>
-	</tr>
+    <tr>
+        <td height="30" class="title"><?=$lang["title"]?></td>
+        <td width="400" align="right" class="title">
+        </td>
+    </tr>
+    <tr>
+        <td height="2" class="line"></td>
+        <td height="2" class="line"></td>
+    </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
-	<tr>
-		<td height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["header"]?></b><br><?=$lang["header_message"]?></td>
-	</tr>
+    <tr>
+        <td height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["header"]?></b><br><?=$lang["header_message"]?></td>
+    </tr>
 </table>
 <form name="fm_edit" method="post" onSubmit="return CheckForm(this)">
-	<table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_main">
-		<tr>
-			<td class="field"><?=$lang["image_path"]?></td>
-			<td class="value"><input name="path" class="input" value=""></td>
-			<td class="value"><?=$lang["input_alert"]?> &nbsp;&nbsp;e.g http://cdn.valuebasket.com/808AA1/vb/salecycle/test.jpg</td>
-		</tr>
-		<tr>
-			<td colspan="3" align="right" style="padding-right:8px;" height="40" class="tb_detail">
-				<input type="submit" value="<?=$lang['refresh']?>">
-			</td>
-		</tr>
-	</table>
-	<input type="hidden" name="posted" value="1">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_main">
+        <tr>
+            <td class="field"><?=$lang["image_path"]?></td>
+            <td class="value"><input name="path" class="input" value=""></td>
+            <td class="value"><?=$lang["input_alert"]?> &nbsp;&nbsp;e.g http://cdn.valuebasket.com/808AA1/vb/salecycle/test.jpg</td>
+        </tr>
+        <tr>
+            <td colspan="3" align="right" style="padding-right:8px;" height="40" class="tb_detail">
+                <input type="submit" value="<?=$lang['refresh']?>">
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="posted" value="1">
 </form>
 <?=$notice["js"]?>
 </div>

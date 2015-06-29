@@ -10,10 +10,10 @@
 <!--
 function goToView(value)
 {
-	if(value != "")
-	{
-		document.location.href = '<?=base_url()?>mastercfg/latency/view/'+value;
-	}
+    if(value != "")
+    {
+        document.location.href = '<?=base_url()?>mastercfg/latency/view/'+value;
+    }
 }
 -->
 </script>
@@ -32,13 +32,13 @@ function goToView(value)
 </table>
 
 <?php
-	if($editable)
+    if($editable)
     {
 ?>
 <form action="<?=$_SERVER["PHP_SELF"]?>" method="post" name="tform" style="padding:0; margin:0">
 <input type="hidden" name="id" value="<?=$id?>">
 <?php
-	}
+    }
 ?>
 <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
 
@@ -46,10 +46,10 @@ function goToView(value)
 <td height="70" style="padding-left:8px">
 <b style="font-size:14px"><?=$lang["header"]?></b><br>
 <?=$lang["header_message"]?><select onChange="goToView(this.value)" style="width:300px;"><option value=""> -- <?=$lang["please_select"]?> --</option><?php
-	foreach($selling_platform_list as $obj)
-	{
-	?><option value="<?=$obj->get_id()?>" <?=($obj->get_id()==$id?"SELECTED":"")?>><?=$obj->get_id().' - '.$obj->get_name()?></option><?php
-	}
+    foreach($selling_platform_list as $obj)
+    {
+    ?><option value="<?=$obj->get_id()?>" <?=($obj->get_id()==$id?"SELECTED":"")?>><?=$obj->get_id().' - '.$obj->get_name()?></option><?php
+    }
 ?></select>
 </td>
 </tr>
@@ -69,8 +69,8 @@ function goToView(value)
 </tr>
 </table>
 <?php
-	if($editable)
-	{
+    if($editable)
+    {
 ?>
 <table border="0" cellpadding="0" cellspacing="0" height="40" class="page_header" width="100%">
 <tr>
@@ -80,17 +80,17 @@ function goToView(value)
 <input type="hidden" name="type" value="<?=$action?>">
 </form>
 <?php
-	}
+    }
 ?>
 <?php
-	if($updated)
-	{
+    if($updated)
+    {
 ?>
 <script language="javascript">
-	alert('<?=$lang["update_successful"]?>');
+    alert('<?=$lang["update_successful"]?>');
 </script>
 <?php
-	}
+    }
 
 ?>
 </div>

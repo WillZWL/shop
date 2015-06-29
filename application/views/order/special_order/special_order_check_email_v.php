@@ -8,15 +8,15 @@
 <script type="text/javascript">
 function clearForm()
 {
-	window.parent.document.fm_checkout.elements['client[delivery_company]'].value = "";
-	window.parent.document.fm_checkout.elements['client[delivery_name]'].value = "";;
-	window.parent.document.fm_checkout.elements['client[delivery_address_1]'].value = "";;
-	window.parent.document.fm_checkout.elements['client[delivery_address_2]'].value = "";;
-	window.parent.document.fm_checkout.elements['client[delivery_city]'].value = "";;
-	window.parent.document.fm_checkout.elements['client[delivery_postcode]'].value = "";;
-	window.parent.document.fm_checkout.elements['client[tel_1]'].value = "";;
-	window.parent.document.fm_checkout.elements['client[tel_2]'].value = "";;
-	window.parent.document.fm_checkout.elements['client[tel_3]'].value = "";;
+    window.parent.document.fm_checkout.elements['client[delivery_company]'].value = "";
+    window.parent.document.fm_checkout.elements['client[delivery_name]'].value = "";;
+    window.parent.document.fm_checkout.elements['client[delivery_address_1]'].value = "";;
+    window.parent.document.fm_checkout.elements['client[delivery_address_2]'].value = "";;
+    window.parent.document.fm_checkout.elements['client[delivery_city]'].value = "";;
+    window.parent.document.fm_checkout.elements['client[delivery_postcode]'].value = "";;
+    window.parent.document.fm_checkout.elements['client[tel_1]'].value = "";;
+    window.parent.document.fm_checkout.elements['client[tel_2]'].value = "";;
+    window.parent.document.fm_checkout.elements['client[tel_3]'].value = "";;
 }
 
 function deactivateTheBox(yesOrNo)
@@ -25,21 +25,21 @@ function deactivateTheBox(yesOrNo)
 if ($client)
 {
 ?>
-	window.parent.postMessage("<?=$client->get_client_id()?>", "*");
+    window.parent.postMessage("<?=$client->get_client_id()?>", "*");
 <?php
 }
 ?>
-	window.parent.document.fm_checkout.elements['client[delivery_country_id]'].disabled = yesOrNo;
-	window.parent.document.fm_checkout.elements['client[delivery_company]'].disabled = yesOrNo;
-	window.parent.document.fm_checkout.elements['client[title]'].disabled = yesOrNo;
-	window.parent.document.fm_checkout.elements['client[delivery_name]'].disabled = yesOrNo;
-	window.parent.document.fm_checkout.elements['client[delivery_address_1]'].disabled = yesOrNo;
-	window.parent.document.fm_checkout.elements['client[delivery_address_2]'].disabled = yesOrNo;
-	window.parent.document.fm_checkout.elements['client[delivery_city]'].disabled = yesOrNo;
-	window.parent.document.fm_checkout.elements['client[delivery_postcode]'].disabled = yesOrNo;
-	window.parent.document.fm_checkout.elements['client[tel_1]'].disabled = yesOrNo;
-	window.parent.document.fm_checkout.elements['client[tel_2]'].disabled = yesOrNo;
-	window.parent.document.fm_checkout.elements['client[tel_3]'].disabled = yesOrNo;
+    window.parent.document.fm_checkout.elements['client[delivery_country_id]'].disabled = yesOrNo;
+    window.parent.document.fm_checkout.elements['client[delivery_company]'].disabled = yesOrNo;
+    window.parent.document.fm_checkout.elements['client[title]'].disabled = yesOrNo;
+    window.parent.document.fm_checkout.elements['client[delivery_name]'].disabled = yesOrNo;
+    window.parent.document.fm_checkout.elements['client[delivery_address_1]'].disabled = yesOrNo;
+    window.parent.document.fm_checkout.elements['client[delivery_address_2]'].disabled = yesOrNo;
+    window.parent.document.fm_checkout.elements['client[delivery_city]'].disabled = yesOrNo;
+    window.parent.document.fm_checkout.elements['client[delivery_postcode]'].disabled = yesOrNo;
+    window.parent.document.fm_checkout.elements['client[tel_1]'].disabled = yesOrNo;
+    window.parent.document.fm_checkout.elements['client[tel_2]'].disabled = yesOrNo;
+    window.parent.document.fm_checkout.elements['client[tel_3]'].disabled = yesOrNo;
 }
 </script>
 </head>
@@ -65,10 +65,10 @@ if ($client)
 else
 {
 ?>
-	No Client Found!<br>
-	<input type="button" value="Enter New Client(not allow)" onClick="deactivateTheBox(true);clearForm();parent.document.getElementById('lbClose').onclick();">
+    No Client Found!<br>
+    <input type="button" value="Enter New Client(not allow)" onClick="deactivateTheBox(true);clearForm();parent.document.getElementById('lbClose').onclick();">
 <?php
-	}
+    }
 ?>
 </div>
 </body>

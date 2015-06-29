@@ -20,91 +20,91 @@ require_once(ClickTale_Root."/ClickTale.inc.php");
 
 class ClickTale_Settings
 {
-	function __construct() 
-	{
-   	 	require(ClickTale_Root."/config.php");
-		/// ====================================================
-		/// Settings values
-		/// ====================================================
-		$this->CacheProvider = $config['CacheProvider'];
-		$this->ScriptsFile = $config['ScriptsFile'];
-		$this->CacheScriptsFile = $config['CacheScriptsFile'];
-		$this->MaxCachedSeconds = $config['MaxCachedSeconds'];
-		$this->LogPathMask = $config['LogPathMask'];
-		$this->DeleteAfterPull = $config['DeleteAfterPull'];
-		$this->AllowDebug = $config['AllowDebug'];
-		$this->DisableCache = $config['DisableCache'];
-		$this->DisableFilter = $config['DisableFilter'];
-		$this->DoNotProcessCookieName = $config['DoNotProcessCookieName'];
-		$this->DoNotProcessCookieValue = $config['DoNotProcessCookieValue'];
-		$this->AllowedAddresses = $config['AllowedAddresses'];
-		$this->CacheLocation = $config['CacheLocation'];
-		$this->MaxFolderSize = $config['MaxFolderSize'];
-		$this->CacheFetchingUrl = $config['CacheFetchingUrl'];
-		$this->LogCaching = $config['LogCaching'];
-		$this->LogFetching = $config['LogFetching'];
-		/// ====================================================
-		///
-		/// ====================================================
-		$this->SystemTempDir = $config['SystemTempDir'];
-		
-	    $this->config = $config;
-	}
+    function __construct() 
+    {
+        require(ClickTale_Root."/config.php");
+        /// ====================================================
+        /// Settings values
+        /// ====================================================
+        $this->CacheProvider = $config['CacheProvider'];
+        $this->ScriptsFile = $config['ScriptsFile'];
+        $this->CacheScriptsFile = $config['CacheScriptsFile'];
+        $this->MaxCachedSeconds = $config['MaxCachedSeconds'];
+        $this->LogPathMask = $config['LogPathMask'];
+        $this->DeleteAfterPull = $config['DeleteAfterPull'];
+        $this->AllowDebug = $config['AllowDebug'];
+        $this->DisableCache = $config['DisableCache'];
+        $this->DisableFilter = $config['DisableFilter'];
+        $this->DoNotProcessCookieName = $config['DoNotProcessCookieName'];
+        $this->DoNotProcessCookieValue = $config['DoNotProcessCookieValue'];
+        $this->AllowedAddresses = $config['AllowedAddresses'];
+        $this->CacheLocation = $config['CacheLocation'];
+        $this->MaxFolderSize = $config['MaxFolderSize'];
+        $this->CacheFetchingUrl = $config['CacheFetchingUrl'];
+        $this->LogCaching = $config['LogCaching'];
+        $this->LogFetching = $config['LogFetching'];
+        /// ====================================================
+        ///
+        /// ====================================================
+        $this->SystemTempDir = $config['SystemTempDir'];
+        
+        $this->config = $config;
+    }
 
-	public static $hadRuntimeError = false;
+    public static $hadRuntimeError = false;
 
-	public $CacheProvider;
-	public $ScriptsFile;
-	public $CacheScriptsFile;
-	public $MaxCachedSeconds;
-	public $LogPathMask;
-	public $DeleteAfterPull;
-	public $AllowDebug;
-	public $DisableCache;
-	public $DisableFilter;
-	public $DoNotProcessCookieName;
-	public $DoNotProcessCookieValue;
-	public $AllowedAddresses;
-	public $MaxFolderSize;
-	public $Version = "1.0.0.0b";
-	public $SystemTempDir;
-	
-	public $UseStaticHash = false;
-	public $StaticHash = "test";
-	
-	public $CacheFetchingUrl;
-	
-	public $config;
-	
-	static private $instanceSettings = null;
-		
-	static public function Instance()
-	{
-		// If there is not already an instance of this class, 
-		//   instantiate one.
-		if (self::$instanceSettings == null){
-			self::$instanceSettings = new ClickTale_Settings;
-		}
+    public $CacheProvider;
+    public $ScriptsFile;
+    public $CacheScriptsFile;
+    public $MaxCachedSeconds;
+    public $LogPathMask;
+    public $DeleteAfterPull;
+    public $AllowDebug;
+    public $DisableCache;
+    public $DisableFilter;
+    public $DoNotProcessCookieName;
+    public $DoNotProcessCookieValue;
+    public $AllowedAddresses;
+    public $MaxFolderSize;
+    public $Version = "1.0.0.0b";
+    public $SystemTempDir;
+    
+    public $UseStaticHash = false;
+    public $StaticHash = "test";
+    
+    public $CacheFetchingUrl;
+    
+    public $config;
+    
+    static private $instanceSettings = null;
+        
+    static public function Instance()
+    {
+        // If there is not already an instance of this class, 
+        //   instantiate one.
+        if (self::$instanceSettings == null){
+            self::$instanceSettings = new ClickTale_Settings;
+        }
  
-		return self::$instanceSettings;
-	}
-	
-	// Gets the default configuration based on the settings.
-	public function getCacheProviderConfig()
-	{
-		return array
-		(
-			"MaxCachedSeconds" => $this->MaxCachedSeconds,
-			"DeleteAfterPull" => $this->DeleteAfterPull,
-			"CacheLocation" => $this->CacheLocation,
-			"SystemTempDir" => $this->SystemTempDir,
-			"MaxFolderSize" => $this->MaxFolderSize
-		);
-	}
-	
-	/*
-	function __get($id) { return $this->items[ $id ]; }
-	*/
+        return self::$instanceSettings;
+    }
+    
+    // Gets the default configuration based on the settings.
+    public function getCacheProviderConfig()
+    {
+        return array
+        (
+            "MaxCachedSeconds" => $this->MaxCachedSeconds,
+            "DeleteAfterPull" => $this->DeleteAfterPull,
+            "CacheLocation" => $this->CacheLocation,
+            "SystemTempDir" => $this->SystemTempDir,
+            "MaxFolderSize" => $this->MaxFolderSize
+        );
+    }
+    
+    /*
+    function __get($id) { return $this->items[ $id ]; }
+    */
 }
 
 ?>

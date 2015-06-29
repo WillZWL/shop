@@ -71,7 +71,7 @@
      * @param string $headers the headers from the request
      */
     function HttpAuthentication($headers=null, $die=true) {
-	  session_start();
+      session_start();
       if(!is_null($headers)) {
         $_SERVER = $headers;
       }
@@ -94,9 +94,9 @@
               "Failed to Get Basic Authentication Headers",$die);
         return false;
       }
-		//list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', base64_decode(substr($_SESSION['HTAUTH'], 6)));
+        //list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', base64_decode(substr($_SESSION['HTAUTH'], 6)));
         $_SERVER = $headers;
-		//list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', base64_decode(substr($_SERVER["HTTP_AUTHORIZATION"], 6)));
+        //list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', base64_decode(substr($_SERVER["HTTP_AUTHORIZATION"], 6)));
         //$compare_mer_id = $_SERVER['PHP_AUTH_USER']; 
         //$compare_mer_key = $_SERVER['PHP_AUTH_PW'];
       if($compare_mer_id != $this->merchant_id 

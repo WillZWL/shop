@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Remove TBS</title>
+    <title>Remove TBS</title>
 </head>
 <body>
-	Remove TBS, FIGHT.
+    Remove TBS, FIGHT.
 </body>
 </html>

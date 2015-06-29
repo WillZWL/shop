@@ -10,33 +10,33 @@
 <div id="main" style="width:auto">
 <?=$notice["img"]?>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
-	<tr>
-		<td height="30" class="title"><?=$lang["title"]?></td>
-		<td width="400" align="right" class="title"></td>
-	</tr>
-	<tr>
-		<td height="2" class="line"></td>
-		<td height="2" class="line"></td>
-	</tr>
+    <tr>
+        <td height="30" class="title"><?=$lang["title"]?></td>
+        <td width="400" align="right" class="title"></td>
+    </tr>
+    <tr>
+        <td height="2" class="line"></td>
+        <td height="2" class="line"></td>
+    </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
-	<tr>
-		<td height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["supplier_note"]?></b><br><?=$lang["id"]?>: <b><?=$supplier->get_id()?></b><br><?=$lang["supplier_name"]?>: <b><?=$supplier->get_name()?></b></td>
-	</tr>
+    <tr>
+        <td height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["supplier_note"]?></b><br><?=$lang["id"]?>: <b><?=$supplier->get_id()?></b><br><?=$lang["supplier_name"]?>: <b><?=$supplier->get_name()?></b></td>
+    </tr>
 </table>
 <form name="fm" method="post" onSubmit="return CheckForm(this);">
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_main">
-	<tr class="header">
-		<td height="20"><?=$lang["supplier_note"]?></td>
-	</tr>
-	<tr>
-		<td class="value"><textarea class="input" name="note" rows="6"><?=htmlspecialchars($supplier->get_note())?></textarea></td>
-	</tr>
-	<tr>
-		<td height="40" align="right" class="tb_detail" style="padding-right:8px;">
-			<input type="submit" value="<?=$lang['update_button']?>">
-		</td>
-	</tr>
+    <tr class="header">
+        <td height="20"><?=$lang["supplier_note"]?></td>
+    </tr>
+    <tr>
+        <td class="value"><textarea class="input" name="note" rows="6"><?=htmlspecialchars($supplier->get_note())?></textarea></td>
+    </tr>
+    <tr>
+        <td height="40" align="right" class="tb_detail" style="padding-right:8px;">
+            <input type="submit" value="<?=$lang['update_button']?>">
+        </td>
+    </tr>
 </table>
 <input name="id" type="hidden" value="<?=$supplier->get_id()?>">
 <input type="hidden" name="posted" value="1">

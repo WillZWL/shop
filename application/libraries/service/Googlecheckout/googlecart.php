@@ -63,8 +63,8 @@
     var $thirdPartyTackingUrl = false;
     var $thirdPartyTackingParams = array();
     
-		// For HTML API Conversion
-		
+        // For HTML API Conversion
+        
     // This tags are those that can be used more than once as a sub tag
     // so a "-#" must be added always
     /**
@@ -107,19 +107,19 @@
 
 
 
-		/**
-		 * Has all the logic to build the cart's xml (or html) request to be 
-		 * posted to google's servers.
-		 * 
-		 * @param string $id the merchant id
-		 * @param string $key the merchant key
-		 * @param string $server_type the server type of the server to be used, one 
-		 *                            of 'sandbox' or 'production'.
-		 *                            defaults to 'sandbox'
-		 * @param string $currency the currency of the items to be added to the cart
+        /**
+         * Has all the logic to build the cart's xml (or html) request to be 
+         * posted to google's servers.
+         * 
+         * @param string $id the merchant id
+         * @param string $key the merchant key
+         * @param string $server_type the server type of the server to be used, one 
+         *                            of 'sandbox' or 'production'.
+         *                            defaults to 'sandbox'
+         * @param string $currency the currency of the items to be added to the cart
      *                         , as of now values can be 'USD' or 'GBP'.
      *                         defaults to 'USD'
-		 */
+         */
     function GoogleCart($id, $key, $server_type="sandbox", $currency="GBP") {
       $this->merchant_id = $id;
       $this->merchant_key = $key;
@@ -356,7 +356,7 @@
      * @return void
      */
     function AddGoogleAnalyticsTracking($GA_id) {
-    	$this->googleAnalytics_id = $GA_id;
+        $this->googleAnalytics_id = $GA_id;
     }
     
     /**
@@ -1089,13 +1089,13 @@
      
     function CheckoutButtonCode($size="large", $variant=true, $loc="en_US",
                                                $showtext=true, $style="trans") {
-                    /*                           	
-                      $resultv4 = @mysql_query($sql) or die("An Error Occurred 163");					  
+                    /*                              
+                      $resultv4 = @mysql_query($sql) or die("An Error Occurred 163");                     
                       $orderid = mysql_insert_id();
                       if($orderid<1000) { $id2 = str_pad($orderid, 4, "0", STR_PAD_LEFT); } else { $id2 = $orderid; }
                 //      $ordernum = $userid."-".$id2;
                 //      echo "<br>order number: ".$ordernum;    
-					  $cart->SetMerchantPrivateData($id2);	*/
+                      $cart->SetMerchantPrivateData($id2);  */
 
       switch (strtolower($size)) {
         case "medium":
@@ -1129,7 +1129,7 @@
       
       $data = "<div style=\"width: ".$width."px\">";
       if ($this->variant == "text") 
-	  {
+      {
         $data .= "<div align=center><form method=\"POST\" name=\"googleform\" action=\"". 
                 $this->checkout_url . "\"" . ($this->googleAnalytics_id?
                 " onsubmit=\"setUrchinInputCode();\"":"") . ">
@@ -1168,8 +1168,8 @@
             <!-- End Google analytics -->";
         }
       } 
-	  else 
-	  {
+      else 
+      {
         $data .= "<div><img alt=\"Checkout\" src=\"" .
             "". $this->server_url."buttons/checkout.gif?merchant_id=" .
             "".$this->merchant_id."&w=".$width. "&h=".$height."&style=".$style.
@@ -1178,7 +1178,7 @@
       }
       
       if($showtext) 
-	  {
+      {
         $data .="<div align=\"center\"><a href=\"javascript:void(window.ope".
           "n('http://checkout.google.com/seller/what_is_google_checkout.html'" .
           ",'whatischeckout','scrollbars=0,resizable=1,directories=0,height=2" .
@@ -1193,7 +1193,7 @@
 /*****original checkout button function***********/
 
     function CheckoutButtonCode_original($size="large", $variant=true, $loc="en_US",
-                                               $showtext=true, $style="trans") {                                        	
+                                               $showtext=true, $style="trans") {                                            
 
       switch (strtolower($size)) {
         case "medium":
@@ -1552,7 +1552,7 @@
                 'alt="Google Checkout Acceptance Mark" /></noscript>';
           break;
         case 1:
-      	default:
+        default:
             return '<link rel="stylesheet" href="https://checkout.google.com/' .
                 'seller/accept/s.css" type="text/css" media="screen" /><scrip' .
                 't type="text/javascript" src="https://checkout.google.com/se' .
@@ -1560,7 +1560,7 @@
                 'owMark(3);</script><noscript><img src="https://checkout.goog' .
                 'le.com/seller/accept/images/sc.gif" width="72" height="73" a' .
                 'lt="Google Checkout Acceptance Mark" /></noscript>';
-      		break;
+            break;
       }
     }
 

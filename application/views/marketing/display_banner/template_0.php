@@ -2,11 +2,11 @@
 <tr>
 <td align="left" height="30" style="padding-left:10px;"><b><?=$lang["preview"]?></b></td>
 </tr>
-	<?=$content1?>
+    <?=$content1?>
 <tr>
 <td height="10">&nbsp;&nbsp;</td>
 </tr>
-	<?=$content2?>
+    <?=$content2?>
 <tr>
 <td height="10">&nbsp;&nbsp;</td>
 </tr>

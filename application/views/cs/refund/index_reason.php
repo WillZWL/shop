@@ -10,174 +10,174 @@
 <div id="main">
 <?=$notice["img"]?>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
-	<tr>
-		<td height="30" class="title"><?=$lang["title"]?></td>
-		<td width="400" align="right" class="title"></td>
-	</tr>
+    <tr>
+        <td height="30" class="title"><?=$lang["title"]?></td>
+        <td width="400" align="right" class="title"></td>
+    </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
-	<tr>
-		<td height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["header"]?></b><br><?=$lang["header_message"]?></td>
-	</tr>
+    <tr>
+        <td height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["header"]?></b><br><?=$lang["header_message"]?></td>
+    </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
-	<col width="20"><col width="200"><col><col width="120">
-	<tr class="add_header">
-		<td height="20"></td>
-		<td><?=$lang["reason_category"]?></td>
-		<td><?=$lang["reason_description"]?></td>
-		<td></td>
-	</tr>
+    <col width="20"><col width="200"><col><col width="120">
+    <tr class="add_header">
+        <td height="20"></td>
+        <td><?=$lang["reason_category"]?></td>
+        <td><?=$lang["reason_description"]?></td>
+        <td></td>
+    </tr>
 <form name="fm_add" action="<?=base_url()?>cs/refund/reason/?<?=$_SERVER['QUERY_STRING']?>" method="post" onSubmit="return CheckForm(this)">
-	<tr class="add_row">
-		<td>&nbsp;</td>
-		<?php
-			if ($action == "add")
-			{
-		?>
-		<td><select name="r_cat" class="input">
+    <tr class="add_row">
+        <td>&nbsp;</td>
+        <?php
+            if ($action == "add")
+            {
+        ?>
+        <td><select name="r_cat" class="input">
 <?php
-		foreach($lang["category"] as $key=>$value)
-		{
+        foreach($lang["category"] as $key=>$value)
+        {
 ?>
-		<option value="<?=$key?>" <?=$this->input->post('r_cat') == $key?"SELECTED":""?>><?=$value?></option>
+        <option value="<?=$key?>" <?=$this->input->post('r_cat') == $key?"SELECTED":""?>><?=$value?></option>
 <?php
-		}
+        }
 ?>
-		</select></td>
-		<td><input name="r_desc" class="input" value="<?=$this->input->post("r_desc")?>" notEmpty maxLen=255></td>
-		<?php
-			}
-			else
-			{
-		?>
-		<td><select name="r_cat" class="input">
+        </select></td>
+        <td><input name="r_desc" class="input" value="<?=$this->input->post("r_desc")?>" notEmpty maxLen=255></td>
+        <?php
+            }
+            else
+            {
+        ?>
+        <td><select name="r_cat" class="input">
 <?php
-				foreach($lang["category"] as $key=>$value)
-				{
+                foreach($lang["category"] as $key=>$value)
+                {
 ?>
-		<option value="<?=$key?>"><?=$value?></option>
+        <option value="<?=$key?>"><?=$value?></option>
 <?php
-				}
+                }
 ?>
-		</select></td>
-		<td><input name="r_desc" class="input" notEmpty maxLen=255></td>
+        </select></td>
+        <td><input name="r_desc" class="input" notEmpty maxLen=255></td>
 <?php
-			}
+            }
 ?>
-		<td align="center"><input type="submit" value="<?=$lang["add"]?>"></td>
-	</tr>
-	<tr class="empty_row">
-		<td colspan="6"><hr></hr></td>
-	</tr>
-	<input type="hidden" name="posted" value="1">
-	<input type="hidden" name="action" value="add">
+        <td align="center"><input type="submit" value="<?=$lang["add"]?>"></td>
+    </tr>
+    <tr class="empty_row">
+        <td colspan="6"><hr></hr></td>
+    </tr>
+    <input type="hidden" name="posted" value="1">
+    <input type="hidden" name="action" value="add">
 </form>
 <form name="fm" method="get" onSubmit="return CheckForm(this)">
-	<tr class="header">
-		<td height="20"><img src="<?=base_url()?>images/expand.png" class="pointer" onClick="Expand(document.getElementById('tr_search'));"></td>
-		<td><a href="#" onClick="SortCol(document.fm, 'cat', '<?=$xsort["cat"]?>')"><?=$lang["reason_category"]?> <?=$sortimg["cat"]?></a></td>
-		<td><a href="#" onClick="SortCol(document.fm, 'desc', '<?=$xsort["desc"]?>')"><?=$lang["reason_description"]?> <?=$sortimg["desc"]?></a></td>
-		<td></td>
-	</tr>
-	<tr class="search" id="tr_search" <?=$searchdisplay?>>
-		<td></td>
-		<td><select name="cat" class="input"><option value=""></option>
+    <tr class="header">
+        <td height="20"><img src="<?=base_url()?>images/expand.png" class="pointer" onClick="Expand(document.getElementById('tr_search'));"></td>
+        <td><a href="#" onClick="SortCol(document.fm, 'cat', '<?=$xsort["cat"]?>')"><?=$lang["reason_category"]?> <?=$sortimg["cat"]?></a></td>
+        <td><a href="#" onClick="SortCol(document.fm, 'desc', '<?=$xsort["desc"]?>')"><?=$lang["reason_description"]?> <?=$sortimg["desc"]?></a></td>
+        <td></td>
+    </tr>
+    <tr class="search" id="tr_search" <?=$searchdisplay?>>
+        <td></td>
+        <td><select name="cat" class="input"><option value=""></option>
 <?php
-		foreach($lang["category"] as $key=>$value)
-		{
+        foreach($lang["category"] as $key=>$value)
+        {
 ?>
-		<option value="<?=$key?>" <?=$this->input->get('cat') == $key?"SELECTED":""?>><?=$value?></option>
+        <option value="<?=$key?>" <?=$this->input->get('cat') == $key?"SELECTED":""?>><?=$value?></option>
 <?php
-		}
+        }
 ?>
-		</select></td>
-		<td><input name="desc" class="input" value="<?=htmlspecialchars($this->input->get("desc"))?>"></td>
-		<td align="center"><input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?=base_url()?>images/find.gif') no-repeat;"></td>
-	</tr>
+        </select></td>
+        <td><input name="desc" class="input" value="<?=htmlspecialchars($this->input->get("desc"))?>"></td>
+        <td align="center"><input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?=base_url()?>images/find.gif') no-repeat;"></td>
+    </tr>
 <input type="hidden" name="sort" value='<?=$this->input->get("sort")?>'>
 <input type="hidden" name="order" value='<?=$this->input->get("order")?>'>
 </form>
 <?php
-	$i=0;
-	if (!empty($reason_list))
-	{
-		foreach ($reason_list as $obj)
-		{
-			$is_edit = ($action == "edit" && $eid == $obj->get_id());
+    $i=0;
+    if (!empty($reason_list))
+    {
+        foreach ($reason_list as $obj)
+        {
+            $is_edit = ($action == "edit" && $eid == $obj->get_id());
 ?>
 
-	<tr class="row<?=$i%2?> pointer" onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){?>onClick="Redirect('<?=site_url('cs/refund/reason/'.$obj->get_id())?>/?<?=$_SERVER['QUERY_STRING']?>')"<?}?>>
-		<td height="20"><img src="<?=base_url()?>images/info.gif" title='<?=$lang["create_on"]?>:<?=$obj->get_create_on()?>&#13;<?=$lang["create_at"]?>:<?=$obj->get_create_at()?>&#13;<?=$lang["create_by"]?>:<?=$obj->get_create_by()?>&#13;<?=$lang["modify_on"]?>:<?=$obj->get_modify_on()?>&#13;<?=$lang["modify_at"]?>:<?=$obj->get_modify_at()?>&#13;<?=$lang["modify_by"]?>:<?=$obj->get_modify_by()?>'></td>
-		<?php
-			if ($is_edit)
-			{
-		?>
-		<form name="fm_edit" action="<?=base_url()?>cs/refund/reason/?<?=$_SERVER['QUERY_STRING']?>" method="post" onSubmit="return CheckForm(this)">
-			<input type="hidden" name="posted" value="1">
-			<input type="hidden" id="action" name="action" value="edit">
-			<input type="hidden" name="id" value="<?=$obj->get_id()?>">
-			<?php
-				if ($this->input->post("posted"))
-				{
-			?>
-				<td><select name="ecat" class="input">
+    <tr class="row<?=$i%2?> pointer" onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){?>onClick="Redirect('<?=site_url('cs/refund/reason/'.$obj->get_id())?>/?<?=$_SERVER['QUERY_STRING']?>')"<?}?>>
+        <td height="20"><img src="<?=base_url()?>images/info.gif" title='<?=$lang["create_on"]?>:<?=$obj->get_create_on()?>&#13;<?=$lang["create_at"]?>:<?=$obj->get_create_at()?>&#13;<?=$lang["create_by"]?>:<?=$obj->get_create_by()?>&#13;<?=$lang["modify_on"]?>:<?=$obj->get_modify_on()?>&#13;<?=$lang["modify_at"]?>:<?=$obj->get_modify_at()?>&#13;<?=$lang["modify_by"]?>:<?=$obj->get_modify_by()?>'></td>
+        <?php
+            if ($is_edit)
+            {
+        ?>
+        <form name="fm_edit" action="<?=base_url()?>cs/refund/reason/?<?=$_SERVER['QUERY_STRING']?>" method="post" onSubmit="return CheckForm(this)">
+            <input type="hidden" name="posted" value="1">
+            <input type="hidden" id="action" name="action" value="edit">
+            <input type="hidden" name="id" value="<?=$obj->get_id()?>">
+            <?php
+                if ($this->input->post("posted"))
+                {
+            ?>
+                <td><select name="ecat" class="input">
 <?php
-		foreach($lang["category"] as $key=>$value)
-		{
+        foreach($lang["category"] as $key=>$value)
+        {
 ?>
-		<option value="<?=$key?>" <?=$this->input->post('ecat') == $key?"SELECTED":""?>><?=$value?></option>
+        <option value="<?=$key?>" <?=$this->input->post('ecat') == $key?"SELECTED":""?>><?=$value?></option>
 <?php
-		}
+        }
 ?>
-		</select></td>
-				<td><input name="edesc" class="input" value="<?=$this->input->post("edesc")?>" notEmpty maxLen=255></td>
-			<?php
-				}
-				else
-				{
-			?>
-				<td><select name="ecat" class="input">
+        </select></td>
+                <td><input name="edesc" class="input" value="<?=$this->input->post("edesc")?>" notEmpty maxLen=255></td>
+            <?php
+                }
+                else
+                {
+            ?>
+                <td><select name="ecat" class="input">
 <?php
-		foreach($lang["category"] as $key=>$value)
-		{
+        foreach($lang["category"] as $key=>$value)
+        {
 ?>
-		<option value="<?=$key?>" <?=$this->input->post('ecat') == $key?"SELECTED":""?>><?=$value?></option>
+        <option value="<?=$key?>" <?=$this->input->post('ecat') == $key?"SELECTED":""?>><?=$value?></option>
 <?php
-		}
+        }
 ?>
-		</select></td>
-				<td><input name="edesc" class="input" value="<?=$obj->get_description()?>" notEmpty maxLen=255></td>
-			<?php
-				}
-				if(!check_app_feature_access_right($app_id, "CS000201_delete_btn"))
-				{
-					$disabled_button = "disabled";
-				}
-			?>
-			<td align="center"><input type="submit" value="<?=$lang["update"]?>"><input <?=$disabled_button?> onclick="document.getElementById('action').value = 'delete';" type="submit" value="<?=$lang["delete"]?>"> &nbsp; <input type="button" value="<?=$lang["back"]?>" onClick="Redirect('<?=site_url('cs/refund/reason/')?>?<?=$_SERVER['QUERY_STRING']?>')"></td>
-		</form>
-		<?php
-			}
-			else
-			{
-		?>
-		<td><?=$lang["category"][$obj->get_reason_cat()]?></td>
-		<td><?=$obj->get_description()?></td>
-		<td>&nbsp;</td>
-		<?php
-			}
-		?>
-	</tr>
+        </select></td>
+                <td><input name="edesc" class="input" value="<?=$obj->get_description()?>" notEmpty maxLen=255></td>
+            <?php
+                }
+                if(!check_app_feature_access_right($app_id, "CS000201_delete_btn"))
+                {
+                    $disabled_button = "disabled";
+                }
+            ?>
+            <td align="center"><input type="submit" value="<?=$lang["update"]?>"><input <?=$disabled_button?> onclick="document.getElementById('action').value = 'delete';" type="submit" value="<?=$lang["delete"]?>"> &nbsp; <input type="button" value="<?=$lang["back"]?>" onClick="Redirect('<?=site_url('cs/refund/reason/')?>?<?=$_SERVER['QUERY_STRING']?>')"></td>
+        </form>
+        <?php
+            }
+            else
+            {
+        ?>
+        <td><?=$lang["category"][$obj->get_reason_cat()]?></td>
+        <td><?=$obj->get_description()?></td>
+        <td>&nbsp;</td>
+        <?php
+            }
+        ?>
+    </tr>
 <?php
-			$i++;
-		}
-	}
+            $i++;
+        }
+    }
 ?>
-	<tr class="header">
-		<td></td>
-		<td colspan="3"><input type="button" onClick="Redirect('<?=base_url()?>cs/refund/');" value="<?=$lang["back_to_main"]?>"></td>
-	</tr>
+    <tr class="header">
+        <td></td>
+        <td colspan="3"><input type="button" onClick="Redirect('<?=base_url()?>cs/refund/');" value="<?=$lang["back_to_main"]?>"></td>
+    </tr>
 </table>
 <?=$this->pagination_service->create_links_with_style()?>
 <?=$notice["js"]?>

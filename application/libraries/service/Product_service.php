@@ -1465,28 +1465,28 @@ class Product_service extends Base_service
 
                 // foreach($keyword_list as $obj)
                 // {
-                // 	$new_lang_text = "";
-                // 	$source_text = $obj->get_keyword();
-                // 	try
-                // 	{
-                // 		$this->get_translate_service()->translate(nl2br($source_text), $new_lang_text, "en", $lang_id);
-                // 	}
-                // 	catch(Exception $ex)
-                // 	{
-                // 		$new_lang_text = "";
-                // 		mail("bd_product_team@eservicesgroup.com", "Translation error sku=" . $sku . "[keyword]", $ex->getMessage(), 'From: website@valuebasket.com');
-                // 	}
-                // 	$new_lang_text = preg_replace('/\<br(\s*)?\/?\>(\n)*/i', "\n", $new_lang_text); // convert from br to nl
+                //  $new_lang_text = "";
+                //  $source_text = $obj->get_keyword();
+                //  try
+                //  {
+                //      $this->get_translate_service()->translate(nl2br($source_text), $new_lang_text, "en", $lang_id);
+                //  }
+                //  catch(Exception $ex)
+                //  {
+                //      $new_lang_text = "";
+                //      mail("bd_product_team@eservicesgroup.com", "Translation error sku=" . $sku . "[keyword]", $ex->getMessage(), 'From: website@valuebasket.com');
+                //  }
+                //  $new_lang_text = preg_replace('/\<br(\s*)?\/?\>(\n)*/i', "\n", $new_lang_text); // convert from br to nl
 
-                // 	if(!$obj = $this->get_pk_dao()->get(array("sku"=>$sku, "lang_id"=>$lang_id, "keyword"=>$keyword)))
-                // 	{
-                // 		$pk_obj = clone $pk_vo;
-                // 		$pk_obj->set_sku($sku);
-                // 		$pk_obj->set_lang_id($lang_id);
-                // 		$pk_obj->set_keyword($new_lang_text);
-                // 		$pk_obj->set_type(1);
-                // 		$this->get_pk_dao()->insert($pk_obj);
-                // 	}
+                //  if(!$obj = $this->get_pk_dao()->get(array("sku"=>$sku, "lang_id"=>$lang_id, "keyword"=>$keyword)))
+                //  {
+                //      $pk_obj = clone $pk_vo;
+                //      $pk_obj->set_sku($sku);
+                //      $pk_obj->set_lang_id($lang_id);
+                //      $pk_obj->set_keyword($new_lang_text);
+                //      $pk_obj->set_type(1);
+                //      $this->get_pk_dao()->insert($pk_obj);
+                //  }
                 // }
             }
         }
@@ -1494,7 +1494,7 @@ class Product_service extends Base_service
 
     public function translate_product_enhance_content($sku = "", $lang_id = "en")
     {
-//		$forcingEnFields = array("ru" => array("prod_name"));
+//      $forcingEnFields = array("ru" => array("prod_name"));
         if($sku)
         {
             $translate_arr = array();
@@ -1551,66 +1551,66 @@ class Product_service extends Base_service
             // $pcex_action = "update";
             // if(!$new_pcex_obj = $this->get_pcext_dao()->get(array("prod_sku"=>$sku, "lang_id"=>$lang_id)))
             // {
-            // 	$pcex_action = "insert";
-            // 	$new_pcex_obj = $this->get_pcext_dao()->get();
-            // 	$new_pcex_obj->set_prod_sku($sku);
-            // 	$new_pcex_obj->set_lang_id($lang_id);
+            //  $pcex_action = "insert";
+            //  $new_pcex_obj = $this->get_pcext_dao()->get();
+            //  $new_pcex_obj->set_prod_sku($sku);
+            //  $new_pcex_obj->set_lang_id($lang_id);
             // }
 
             // if($pcex_obj = $this->get_pcext_dao()->get(array("prod_sku"=>$sku, "lang_id"=>"en")))
             // {
-            // 	if (in_array($lang_id, $copyEnLang))
-            // 	{
-            // 		$pcex_obj->set_lang_id("pl");
-            // 		$this->get_pcext_dao()->$pcex_action($pcex_obj);
-            // 	}
-            // 	else
-            // 	{
-            // 		$translate_arr = array(
-            // 								"feature" => $pcex_obj->get_feature(),
-            // 								"specification" => $pcex_obj->get_specification(),
-            // 								"requirement" => $pcex_obj->get_requirement(),
-            // 								"instruction" => $pcex_obj->get_instruction(),
-            // 							);
+            //  if (in_array($lang_id, $copyEnLang))
+            //  {
+            //      $pcex_obj->set_lang_id("pl");
+            //      $this->get_pcext_dao()->$pcex_action($pcex_obj);
+            //  }
+            //  else
+            //  {
+            //      $translate_arr = array(
+            //                              "feature" => $pcex_obj->get_feature(),
+            //                              "specification" => $pcex_obj->get_specification(),
+            //                              "requirement" => $pcex_obj->get_requirement(),
+            //                              "instruction" => $pcex_obj->get_instruction(),
+            //                          );
 
-            // 		foreach($translate_arr as $key=>$source_text)
-            // 		{
-            // 			if(!empty($source_text))
-            // 			{
-            // 				$new_lang_text = "";
-            // 				try
-            // 				{
-            // 					$this->get_translate_service()->translate(nl2br($source_text), $new_lang_text, "en", $lang_id);
-            // 				}
-            // 				catch(Exception $ex)
-            // 				{
-            // 					$new_lang_text = "";
-            // 					mail("bd_product_team@eservicesgroup.com", "Translation error sku=" . $sku . "[" . $key . "]", $ex->getMessage(), 'From: website@valuebasket.com');
-            // 				}
-            // 				$new_lang_text = preg_replace('/\<br(\s*)?\/?\>(\n)*/i', "\n", $new_lang_text); // convert from br to nl
-            // 				$new_pcex_obj->{"set_{$key}"}($new_lang_text);
-            // 			}
-            // 		}
-            // 		$this->get_pcext_dao()->$pcex_action($new_pcex_obj);
-            // 	}
+            //      foreach($translate_arr as $key=>$source_text)
+            //      {
+            //          if(!empty($source_text))
+            //          {
+            //              $new_lang_text = "";
+            //              try
+            //              {
+            //                  $this->get_translate_service()->translate(nl2br($source_text), $new_lang_text, "en", $lang_id);
+            //              }
+            //              catch(Exception $ex)
+            //              {
+            //                  $new_lang_text = "";
+            //                  mail("bd_product_team@eservicesgroup.com", "Translation error sku=" . $sku . "[" . $key . "]", $ex->getMessage(), 'From: website@valuebasket.com');
+            //              }
+            //              $new_lang_text = preg_replace('/\<br(\s*)?\/?\>(\n)*/i', "\n", $new_lang_text); // convert from br to nl
+            //              $new_pcex_obj->{"set_{$key}"}($new_lang_text);
+            //          }
+            //      }
+            //      $this->get_pcext_dao()->$pcex_action($new_pcex_obj);
+            //  }
             // }
 
             // if($keyword_list = $this->get_pk_dao()->get_list(array("sku"=>$sku, "lang_id"=>"en")))
             // {
-            // 	$pk_vo = $this->get_pk_dao()->get();
-            // 	$this->get_pk_dao()->q_delete(array("sku"=>$sku, "lang_id"=>$lang_id));
+            //  $pk_vo = $this->get_pk_dao()->get();
+            //  $this->get_pk_dao()->q_delete(array("sku"=>$sku, "lang_id"=>$lang_id));
 
-            // 	if($pc_lang_obj = $this->get_pc_dao()->get(array("prod_sku"=>$sku, "lang_id"=>$lang_id)))
-            // 	{
-            // 		# SBF#3041 keywords already assembled in product_content.keywords,
-            // 		# we don't want to mess the algo up with bing translate
-            // 		$keywords_arr = explode("\n", $pc_lang_obj->get_keywords());
-            // 		foreach ($keywords_arr as $keywords)
-            // 		{
-            // 			$pk_obj = clone $pk_vo;
-            // 			$pk_obj->set_sku($sku);
-            // 			$pk_obj->set_lang_id($lang_id);
-            // 			$pk_obj->set_keyword($keywords);
+            //  if($pc_lang_obj = $this->get_pc_dao()->get(array("prod_sku"=>$sku, "lang_id"=>$lang_id)))
+            //  {
+            //      # SBF#3041 keywords already assembled in product_content.keywords,
+            //      # we don't want to mess the algo up with bing translate
+            //      $keywords_arr = explode("\n", $pc_lang_obj->get_keywords());
+            //      foreach ($keywords_arr as $keywords)
+            //      {
+            //          $pk_obj = clone $pk_vo;
+            //          $pk_obj->set_sku($sku);
+            //          $pk_obj->set_lang_id($lang_id);
+            //          $pk_obj->set_keyword($keywords);
 
         }
     }
@@ -1793,10 +1793,10 @@ order by so.platform_id, so.so_no
                 s.ext_sku
             from product p
             inner join sku_mapping s on s.sku = p.sku and s.`status` = 1 and s.ext_sys = 'WMS'
-            where 1    							# find all that are
-            and p.sourcing_status <> 'D'		# not discontinued
-            and p.status <> 0		# not inactive
-            and s.ext_sku in ($sku_string)		# and in this list
+            where 1                             # find all that are
+            and p.sourcing_status <> 'D'        # not discontinued
+            and p.status <> 0       # not inactive
+            and s.ext_sku in ($sku_string)      # and in this list
         ";
 
         $result = $this->db->query($query);

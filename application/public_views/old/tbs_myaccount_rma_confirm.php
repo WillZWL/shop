@@ -1,5 +1,5 @@
 <?php
-	
+    
 include VIEWPATH.'tbs_header.php';
 $this->tbswrapper->tbsLoadTemplate('resources/template/myaccount_rma_confirm_'.get_lang_id().'.html');
 $url["myaccount"] = base_url()."myaccount/ws_myaccount";
@@ -11,45 +11,45 @@ $reason_arr = array(0=>"Needs Repair Under Warranty",1=>"Wrong Product Delivered
 $action_arr = array(0=>"Swap",1=>"Refund",2=>"Repair");
 if($data["rma_obj"])
 {
-	$rma_obj["id"] = $data["rma_obj"]->get_id();
-	$rma_obj["so_no"] = $data["rma_obj"]->get_so_no();
-	$rma_obj["category"] = $cat_arr[$data["rma_obj"]->get_category()];
-	$rma_obj["reason"] = $reason_arr[$data["rma_obj"]->get_reason()];
-	$rma_obj["action_request"] = $action_arr[$data["rma_obj"]->get_action_request()];
-	$rma_obj["details"] = $data["rma_obj"]->get_details();
-	$rma_obj["shipfrom"] = $data["rma_obj"]->get_shipfrom();
-	$rma_obj["product_returned"] = $data["rma_obj"]->get_product_returned();
+    $rma_obj["id"] = $data["rma_obj"]->get_id();
+    $rma_obj["so_no"] = $data["rma_obj"]->get_so_no();
+    $rma_obj["category"] = $cat_arr[$data["rma_obj"]->get_category()];
+    $rma_obj["reason"] = $reason_arr[$data["rma_obj"]->get_reason()];
+    $rma_obj["action_request"] = $action_arr[$data["rma_obj"]->get_action_request()];
+    $rma_obj["details"] = $data["rma_obj"]->get_details();
+    $rma_obj["shipfrom"] = $data["rma_obj"]->get_shipfrom();
+    $rma_obj["product_returned"] = $data["rma_obj"]->get_product_returned();
 }
 if($data["order"])
 {
-	$order_obj["order_create_date"] = date("Y-m-d",strtotime($data["order"]->get_order_create_date()));
+    $order_obj["order_create_date"] = date("Y-m-d",strtotime($data["order"]->get_order_create_date()));
 }
 
 if($data["components_list"])
 {
-	$ar_components = @explode("|", $data["rma_obj"]->get_components());
-	foreach($data["components_list"] AS $key=>$name)
-	{
-		if($key < 5)
-		{
-			$ret_prod_arr_1[$key]['name'] = $name;
-			$ret_prod_arr_1[$key]['key'] = $key;
-			$ret_prod_arr_1[$key]['checked'] = $ar_components[$key]?" CHECKED":"";
-		}
-		elseif($key < 10)
-		{
-			$ret_prod_arr_2[$key]['name'] = $name;
-			$ret_prod_arr_2[$key]['key'] = $key;
-			$ret_prod_arr_2[$key]['checked'] = $ar_components[$key]?" CHECKED":"";
-		}
-		elseif($key < 14)
-		{
-			$ret_prod_arr_3[$key]['name'] = $name;
-			$ret_prod_arr_3[$key]['key'] = $key;
-			$ret_prod_arr_3[$key]['checked'] = $ar_components[$key]?" CHECKED":"";
-		}
-	}
-	$ret_prod_arr_other["value"] = htmlspecialchars(end($ar_components));
+    $ar_components = @explode("|", $data["rma_obj"]->get_components());
+    foreach($data["components_list"] AS $key=>$name)
+    {
+        if($key < 5)
+        {
+            $ret_prod_arr_1[$key]['name'] = $name;
+            $ret_prod_arr_1[$key]['key'] = $key;
+            $ret_prod_arr_1[$key]['checked'] = $ar_components[$key]?" CHECKED":"";
+        }
+        elseif($key < 10)
+        {
+            $ret_prod_arr_2[$key]['name'] = $name;
+            $ret_prod_arr_2[$key]['key'] = $key;
+            $ret_prod_arr_2[$key]['checked'] = $ar_components[$key]?" CHECKED":"";
+        }
+        elseif($key < 14)
+        {
+            $ret_prod_arr_3[$key]['name'] = $name;
+            $ret_prod_arr_3[$key]['key'] = $key;
+            $ret_prod_arr_3[$key]['checked'] = $ar_components[$key]?" CHECKED":"";
+        }
+    }
+    $ret_prod_arr_other["value"] = htmlspecialchars(end($ar_components));
 }
 $this->tbswrapper->tbsMergeBlock('ret_prod_arr_1', $ret_prod_arr_1);
 $this->tbswrapper->tbsMergeBlock('ret_prod_arr_2', $ret_prod_arr_2);

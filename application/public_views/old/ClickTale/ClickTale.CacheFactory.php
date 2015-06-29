@@ -19,33 +19,33 @@
 require_once(ClickTale_Root."/ClickTale.Settings.php");
 
 final class ClickTale_CacheFactory
-{	
-	// Returns defaulrt provider
-	public static function &DefaultCacheProvider()
-	{
-		return ClickTale_CacheFactory::CacheProvider(ClickTale_Settings::Instance()->CacheProvider);
-	}
-	
-	// Returns default provider
-	private static function &CacheProvider($providerName)
-	{
-		// We use include because we don't want to break the site if file does not exist. 
-		//if (!@include_once(ClickTale_Root."/ClickTale.CachingProviders/ClickTale.CacheProvider.$providerName.php"))
-		if (!include_once(ClickTale_Root.ClickTale_DS."ClickTale.CachingProviders".ClickTale_DS."ClickTale.CacheProvider.$providerName.php"))
-			throw new Exception("CacheFactory could not find $providerName provider.");  
+{   
+    // Returns defaulrt provider
+    public static function &DefaultCacheProvider()
+    {
+        return ClickTale_CacheFactory::CacheProvider(ClickTale_Settings::Instance()->CacheProvider);
+    }
+    
+    // Returns default provider
+    private static function &CacheProvider($providerName)
+    {
+        // We use include because we don't want to break the site if file does not exist. 
+        //if (!@include_once(ClickTale_Root."/ClickTale.CachingProviders/ClickTale.CacheProvider.$providerName.php"))
+        if (!include_once(ClickTale_Root.ClickTale_DS."ClickTale.CachingProviders".ClickTale_DS."ClickTale.CacheProvider.$providerName.php"))
+            throw new Exception("CacheFactory could not find $providerName provider.");  
 
-		$class = 'ClickTale_CacheProvider_' . $providerName;		
-		if (class_exists($class))
-		{
-//			$ref = &new $class($options);
-			$ref = new $class($options);
-	        return $ref;
-		}
-		else
-		{
-			throw new Exception("CacheFactory could not find $class class.");  
-		}
-	}
+        $class = 'ClickTale_CacheProvider_' . $providerName;        
+        if (class_exists($class))
+        {
+//          $ref = &new $class($options);
+            $ref = new $class($options);
+            return $ref;
+        }
+        else
+        {
+            throw new Exception("CacheFactory could not find $class class.");  
+        }
+    }
 }
 
 ?>

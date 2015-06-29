@@ -16,25 +16,25 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <col width="5"><col width="40"><col width="120"><col width="35">
 <tr>
-	<td>&nbsp;</td>
-	<td colspan="3" height="40" valign="middle" align="left"><b style="font-size:14px; color:#000000;"><?=$lang["product_search"]?></b></td>
+    <td>&nbsp;</td>
+    <td colspan="3" height="40" valign="middle" align="left"><b style="font-size:14px; color:#000000;"><?=$lang["product_search"]?></b></td>
 </tr>
 <tr>
-	<td>&nbsp;</td>
-	<td align="left"><?=$lang["sku"]?></td>
-	<td><input type="text" name="sku" value="<?=$this->input->get('sku')?>" class="input"></td>
-	<td rowspan="2"><input type="submit" style="background: rgb(204, 204, 204) url('<?=base_url()?>/images/find.gif') no-repeat scroll center center; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: 30px; height: 25px;" class="search_button" value=""/></td>
+    <td>&nbsp;</td>
+    <td align="left"><?=$lang["sku"]?></td>
+    <td><input type="text" name="sku" value="<?=$this->input->get('sku')?>" class="input"></td>
+    <td rowspan="2"><input type="submit" style="background: rgb(204, 204, 204) url('<?=base_url()?>/images/find.gif') no-repeat scroll center center; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: 30px; height: 25px;" class="search_button" value=""/></td>
 </tr>
 </table>
 <?php
-	if($search)
-	{
+    if($search)
+    {
 ?>
 <script language="javascript">
 <!--
 function addToRight(sku,name,ref,lang)
 {
-	parent.frames['right'].addRow(sku,name,ref,lang);
+    parent.frames['right'].addRow(sku,name,ref,lang);
 
 }
 -->
@@ -42,36 +42,36 @@ function addToRight(sku,name,ref,lang)
 
 <hr>
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
-	<col width="30%"><col width="70%">
-	<tr class="header">
-		<td><a href="#" onClick="SortCol(document.fm, 'sku', '<?=$xsort["sku"]?>')"><?=$lang["sku"]?> <?=$sortimg["sku"]?></a></td>
-		<td><?=$lang["video"]?></td>
-	</tr>
+    <col width="30%"><col width="70%">
+    <tr class="header">
+        <td><a href="#" onClick="SortCol(document.fm, 'sku', '<?=$xsort["sku"]?>')"><?=$lang["sku"]?> <?=$sortimg["sku"]?></a></td>
+        <td><?=$lang["video"]?></td>
+    </tr>
 <?php
-	$i=0;
-	if ($objlist)
-	{
-		foreach ($objlist as $obj)
-		{
+    $i=0;
+    if ($objlist)
+    {
+        foreach ($objlist as $obj)
+        {
 ?>
 
-	<tr class="row<?=$i%2?> pointer" onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')" onClick="addToRight('<?=$obj->get_sku()?>','<?=$obj->get_prod_name()?>','<?=$obj->get_ref_id()?>','<?=$obj->get_lang_id()?>')">
-		<td nowrap style="white-space:nowrap;"><?=$obj->get_sku()?></td>
-		<td >
-			<object width="195" height="135"><param name="movie" value="http://www.youtube.com/v/<?=$obj->get_ref_id()?>&amp;hl=en_US&amp;fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/<?=$obj->get_ref_id()?>&amp;hl=en_US&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="195" height="135"></embed></object>
-		</td>
-	</tr>
+    <tr class="row<?=$i%2?> pointer" onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')" onClick="addToRight('<?=$obj->get_sku()?>','<?=$obj->get_prod_name()?>','<?=$obj->get_ref_id()?>','<?=$obj->get_lang_id()?>')">
+        <td nowrap style="white-space:nowrap;"><?=$obj->get_sku()?></td>
+        <td >
+            <object width="195" height="135"><param name="movie" value="http://www.youtube.com/v/<?=$obj->get_ref_id()?>&amp;hl=en_US&amp;fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/<?=$obj->get_ref_id()?>&amp;hl=en_US&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="195" height="135"></embed></object>
+        </td>
+    </tr>
 <?php
-			$i++;
-		}
-	}
+            $i++;
+        }
+    }
 ?>
 </table>
 <input type="hidden" name="sort" value='<?=$this->input->get("sort")?>'>
 <input type="hidden" name="order" value='<?=$this->input->get("order")?>'>
 <?=$this->pagination_service->create_links_with_style()?>
 <?php
-	}
+    }
 ?>
 </form>
 <br><br>

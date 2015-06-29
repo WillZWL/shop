@@ -5,33 +5,33 @@ include_once "Base_dto.php";
 
 class Cat_sub_cat_id_dto extends Base_dto {
 
-	private $id;
-	private $name;
+    private $id;
+    private $name;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function get_id()
-	{
-		return $this->id;
-	}
+    public function get_id()
+    {
+        return $this->id;
+    }
 
-	public function set_id($value)
-	{
-		$this->id = $value;
-	}
+    public function set_id($value)
+    {
+        $this->id = $value;
+    }
 
-	public function get_name()
-	{
-		return $this->name;
-	}
+    public function get_name()
+    {
+        return $this->name;
+    }
 
-	public function set_name($value)
-	{
-		$this->name = $value;
-	}
+    public function set_name($value)
+    {
+        $this->name = $value;
+    }
 }
 
 

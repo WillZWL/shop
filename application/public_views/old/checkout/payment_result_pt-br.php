@@ -16,94 +16,94 @@
 
 <!--  CONTENT -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr>
-		<td><img src="/images/chat_and_vision_logo.png" height="40" border="0" /></td>
-	</tr>
-	<tr  height="1" bgcolor="#FF9900"><td style="line-height:1px;padding:0px;" background="<?=base_url()?>images/line_blue.png" width="100%"></td></tr>
+    <tr>
+        <td><img src="/images/chat_and_vision_logo.png" height="40" border="0" /></td>
+    </tr>
+    <tr  height="1" bgcolor="#FF9900"><td style="line-height:1px;padding:0px;" background="<?=base_url()?>images/line_blue.png" width="100%"></td></tr>
   <tr>
     <td>
         <table align="center" width="1000" border="0" cellspacing="5" cellpadding="5">
           <?php /*
-		  <tr>
-					<td><font color="#999999"><b><a href="/">Home</a> > Shipping Information</b></font></td>
-				</tr>
-				*/ ?>
+          <tr>
+                    <td><font color="#999999"><b><a href="/">Home</a> > Shipping Information</b></font></td>
+                </tr>
+                */ ?>
 
-			<?php
-				if ($success)
-				{
-			?>
-			<tr>
-				<td><h1>Pagamento processado<a name="top" id="top"></a></h1></td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-			  	<td>
-					<p>
-					Parabéns! Você realizou o pedido de
-					<?php
-						if ($so_items)
-						{
-							$ar_prod_name = array();
-							foreach ($so_items as $so_item)
-							{
-								$ar_prod_name[] = $so_item->get_name();
-							}
-						}
-						echo @implode(",", $ar_prod_name);
-					?>
-					com sucesso.<br />
-					O número de seu pedido é <?=$so->get_so_no()?>.<br />
+            <?php
+                if ($success)
+                {
+            ?>
+            <tr>
+                <td><h1>Pagamento processado<a name="top" id="top"></a></h1></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                    Parabéns! Você realizou o pedido de
+                    <?php
+                        if ($so_items)
+                        {
+                            $ar_prod_name = array();
+                            foreach ($so_items as $so_item)
+                            {
+                                $ar_prod_name[] = $so_item->get_name();
+                            }
+                        }
+                        echo @implode(",", $ar_prod_name);
+                    ?>
+                    com sucesso.<br />
+                    O número de seu pedido é <?=$so->get_so_no()?>.<br />
 
-					<?php
-						if ($so_ps && $so_ps->get_payment_status() == "S")
-						{
-					?>
-					We have sent a confirmation of this order to your registered email at <?=$_SESSION["client"]["email"]?>. <br /><br />
-					<?php
-						}
-						else
-						{
-					?>
-					Enviamos uma notificação de recebimento para seu e-mail registrado em <?=$_SESSION["client"]["email"]?>. O informaremos novamente quando o pagamento for liberado.<br /><br />
-					<?php
-						}
-					?>
+                    <?php
+                        if ($so_ps && $so_ps->get_payment_status() == "S")
+                        {
+                    ?>
+                    We have sent a confirmation of this order to your registered email at <?=$_SESSION["client"]["email"]?>. <br /><br />
+                    <?php
+                        }
+                        else
+                        {
+                    ?>
+                    Enviamos uma notificação de recebimento para seu e-mail registrado em <?=$_SESSION["client"]["email"]?>. O informaremos novamente quando o pagamento for liberado.<br /><br />
+                    <?php
+                        }
+                    ?>
 
-					Em caso de dúvidas, por favor, não hesite em visitar <a href="<?=base_url()?>faq"> a nossa página de perguntas e respostas</a> ou nos envie um e-mail para <a href="mailto:support-br@chatandvision.com">support-br@chatandvision.com</a>para maior assistência.
-					</p>
-				</td>
-			<td>&nbsp;</td>
-		</tr>
-			<?php
-				}
-				else
-				{
-			?>
-		  <tr>
+                    Em caso de dúvidas, por favor, não hesite em visitar <a href="<?=base_url()?>faq"> a nossa página de perguntas e respostas</a> ou nos envie um e-mail para <a href="mailto:support-br@chatandvision.com">support-br@chatandvision.com</a>para maior assistência.
+                    </p>
+                </td>
+            <td>&nbsp;</td>
+        </tr>
+            <?php
+                }
+                else
+                {
+            ?>
+          <tr>
             <td><h1>Pagamento não completado <a name="top" id="top"></a></h1></td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-		  	<td>
-				<p>
-				Houve um erro ao processar o seu pagamento.<br />
-				Você pode conferir os detalhes da cobrança e tentar novamente. Caso contrário, entre em contato com nossos agentes de Atendimento ao Cliente em <a href="mailto:support-br@chatandvision.com">support-br@chatandvision.com</a><?=$so_no?", indicando o número de referência: {$so_no} para maior assistência.":"."?>
-				<br /><br />
-				Pedimos desculpas por qualquer inconveniente causado, e aguardamos o seu contato em breve.<br />
-				</p>
-			</td>
-			<td>&nbsp;</td>
-		</tr>
-			<?php
-				}
-			?>
-			<?php /*
+            <td>
+                <p>
+                Houve um erro ao processar o seu pagamento.<br />
+                Você pode conferir os detalhes da cobrança e tentar novamente. Caso contrário, entre em contato com nossos agentes de Atendimento ao Cliente em <a href="mailto:support-br@chatandvision.com">support-br@chatandvision.com</a><?=$so_no?", indicando o número de referência: {$so_no} para maior assistência.":"."?>
+                <br /><br />
+                Pedimos desculpas por qualquer inconveniente causado, e aguardamos o seu contato em breve.<br />
+                </p>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+            <?php
+                }
+            ?>
+            <?php /*
           <tr>
             <td><a href="#top">Back To Top</a></td>
             <td></td>
           </tr>
-		  */ ?>
+          */ ?>
           <tr>
             <td>&nbsp;</td>
             <td></td>

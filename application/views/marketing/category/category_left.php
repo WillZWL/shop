@@ -20,11 +20,11 @@ xmlhttp.onreadystatechange=function()
 {
 if(xmlhttp.readyState==4)
 {
-	document.getElementById(htmlid).innerHTML += xmlhttp.responseText;
-	if(document.getElementById('a'+id))
-	{
-	  document.getElementById('a'+id).innerHTML = '<a href="#"'+' onClick="remove('+"'"+id+"'"+')">-</a>';
-	}
+    document.getElementById(htmlid).innerHTML += xmlhttp.responseText;
+    if(document.getElementById('a'+id))
+    {
+      document.getElementById('a'+id).innerHTML = '<a href="#"'+' onClick="remove('+"'"+id+"'"+')">-</a>';
+    }
 }
 }
 url = '<?=base_url()?>/marketing/category/getnext/?id='+id+'&level='+level;
@@ -34,18 +34,18 @@ xmlhttp.send(null);
 
 function remove(id)
 {
-	var hide = 'na'+id;
-	document.getElementById(hide).style.display = 'none';
-	var show = 'a'+id;
-	document.getElementById(show).innerHTML = '<a href="#" onClick="show('+"'"+id+"'"+')">+</a>';
+    var hide = 'na'+id;
+    document.getElementById(hide).style.display = 'none';
+    var show = 'a'+id;
+    document.getElementById(show).innerHTML = '<a href="#" onClick="show('+"'"+id+"'"+')">+</a>';
 }
 
 function show(id)
 {
-	var show = 'na'+id;
-	document.getElementById(show).style.display = 'block';
-	var hide = 'a'+id;
-	document.getElementById(hide).innerHTML = '<a href="#" onClick="remove('+"'"+id+"'"+')">-</a>';
+    var show = 'na'+id;
+    document.getElementById(show).style.display = 'block';
+    var hide = 'a'+id;
+    document.getElementById(hide).innerHTML = '<a href="#" onClick="remove('+"'"+id+"'"+')">-</a>';
 }
 
 function GetXmlHttpObject()
@@ -67,21 +67,21 @@ return null;
 <body class="page_header">
 <div id="main" style="width:auto; text-align:left;" >
 <?php
-	foreach($objlist as $obj)
-	{
-		if($obj->get_total() > 0)
-		{
-			$link = "<span id=\"a".$obj->get_id()."\"><a href=\"javascript:showNextLayer('".$obj->get_id()."','".($level + 1 )."','c".$obj->get_id()."')\">+</a></span>&nbsp;&nbsp;";
-		}
-		else
-		{
-			$link = "&nbsp;&nbsp;&nbsp;";
-		}
-		$name = "<a href=\"".base_url()."marketing/category/view/".$obj->get_id()."\" target=\"right\" class=\"vlink\">".$obj->get_name()."</a>";
+    foreach($objlist as $obj)
+    {
+        if($obj->get_total() > 0)
+        {
+            $link = "<span id=\"a".$obj->get_id()."\"><a href=\"javascript:showNextLayer('".$obj->get_id()."','".($level + 1 )."','c".$obj->get_id()."')\">+</a></span>&nbsp;&nbsp;";
+        }
+        else
+        {
+            $link = "&nbsp;&nbsp;&nbsp;";
+        }
+        $name = "<a href=\"".base_url()."marketing/category/view/".$obj->get_id()."\" target=\"right\" class=\"vlink\">".$obj->get_name()."</a>";
 ?>
 <div id="c<?=$obj->get_id()?>" class="level1"><?=$link.$name?></div>
 <?php
-	}
+    }
 ?>
 </div>
 </body>

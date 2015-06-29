@@ -8,9 +8,9 @@ class Brand_cat_prod_dto extends Base_dto
         private $name;
         private $status;
         private $quantity;
-		private $website_quantity;
+        private $website_quantity;
         private $image;
-		private $colour_id;
+        private $colour_id;
         private $website_status;
         private $price;
 
@@ -19,10 +19,10 @@ class Brand_cat_prod_dto extends Base_dto
                 parent::__construct();
         }
 
-		public function get_colour_id()
-		{
-			return $this->colour_id;
-		}
+        public function get_colour_id()
+        {
+            return $this->colour_id;
+        }
 
         public function set_colour_id($value)
         {

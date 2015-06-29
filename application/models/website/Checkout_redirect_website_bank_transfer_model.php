@@ -5,20 +5,20 @@ include_once(APPPATH . "libraries/service/payment_gateway_redirect_website_bank_
 
 class Checkout_redirect_website_bank_transfer_model extends Checkout_redirect_model
 {
-	public function __construct($debug = 0)
-	{
-		parent::__construct($debug);
-//		$this->load->library('service/payment_gateway_redirect_website_bank_transfer_service');
-	}
+    public function __construct($debug = 0)
+    {
+        parent::__construct($debug);
+//      $this->load->library('service/payment_gateway_redirect_website_bank_transfer_service');
+    }
 
-	public function set_pmgw_service()
-	{
-		$this->pmgw_redirect_service = new Payment_gateway_redirect_website_bank_transfer_service($this->debug);
-	}
+    public function set_pmgw_service()
+    {
+        $this->pmgw_redirect_service = new Payment_gateway_redirect_website_bank_transfer_service($this->debug);
+    }
 /*
-	public function process_payment_status($general_data = array(), $get_data = array())
-	{
-		return $this->pmgw_redirect_service->process_payment_status($general_data, $get_data);
-	}
+    public function process_payment_status($general_data = array(), $get_data = array())
+    {
+        return $this->pmgw_redirect_service->process_payment_status($general_data, $get_data);
+    }
 */
 }

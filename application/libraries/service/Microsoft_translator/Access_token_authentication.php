@@ -14,9 +14,9 @@ class Access_Token_Authentication
  * @return string.
  */
     public function getTokens($grantType, $scopeUrl, $clientID, $clientSecret, $authUrl)
-	{
+    {
         try
-		{
+        {
 //Initialize the Curl Session.
             $ch = curl_init();
 //Create the request Array.
@@ -43,7 +43,7 @@ class Access_Token_Authentication
             //Get the Error Code returned by Curl.
             $curlErrno = curl_errno($ch);
             if($curlErrno)
-			{
+            {
                 $curlError = curl_error($ch);
                 throw new Exception($curlError);
             }
@@ -53,13 +53,13 @@ class Access_Token_Authentication
             $objResponse = json_decode($strResponse);
 
             if ($objResponse->error)
-			{
+            {
                 throw new Exception($objResponse->error_description);
             }
             return $objResponse->access_token;
         }
-		catch (Exception $e)
-		{
+        catch (Exception $e)
+        {
             echo "Exception-" . $e->getMessage();
         }
     }

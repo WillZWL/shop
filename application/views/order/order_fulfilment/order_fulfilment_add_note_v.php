@@ -11,28 +11,28 @@
 <?=$notice["img"]?>
 <center>
 <form name="fm" method="post">
-	<textarea name="note" style="width:99%" rows="5"><?=htmlspecialchars(@call_user_func(array($obj, "get_note")))?></textarea>
-	<input type="submit" value="<?=$lang["add_note"]?>">
-	<input type="hidden" name="posted" value="1">
+    <textarea name="note" style="width:99%" rows="5"><?=htmlspecialchars(@call_user_func(array($obj, "get_note")))?></textarea>
+    <input type="submit" value="<?=$lang["add_note"]?>">
+    <input type="hidden" name="posted" value="1">
 </form>
 </center>
 <hr></hr>
 <?php
-	if ($objlist)
-	{
-		foreach ($objlist as $note_obj)
-		{
+    if ($objlist)
+    {
+        foreach ($objlist as $note_obj)
+        {
 ?>
-			<p class="normal_p"><?=nl2br($note_obj->get_note())?></p><p class="normal_p comment"><?=$lang["create_by"]?>: <?=$note_obj->get_create_by()?> &nbsp; &nbsp; <?=$lang["create_on"]?>: <?=$note_obj->get_create_on()?><br><br></p>
+            <p class="normal_p"><?=nl2br($note_obj->get_note())?></p><p class="normal_p comment"><?=$lang["create_by"]?>: <?=$note_obj->get_create_by()?> &nbsp; &nbsp; <?=$lang["create_on"]?>: <?=$note_obj->get_create_on()?><br><br></p>
 <?php
-		}
-	}
+        }
+    }
 ?>
 </div>
 <script>
 function UpdateBack()
 {
-	window.parent.document.getElementById('note_<?=$line?>').innerHTML = '<?=str_replace(array("'", "\n"), array("\'", "<br \>"), @call_user_func(array($obj, "get_note")))?>'
+    window.parent.document.getElementById('note_<?=$line?>').innerHTML = '<?=str_replace(array("'", "\n"), array("\'", "<br \>"), @call_user_func(array($obj, "get_note")))?>'
 }
 </script>
 <?=$notice["js"]?>

@@ -10,10 +10,10 @@
 <!--
 function changeBaseCurrency(value)
 {
-	if(value != "")
-	{
-		document.location.href = '<?=base_url()?>mastercfg/exchange_rate/view/'+value;
-	}
+    if(value != "")
+    {
+        document.location.href = '<?=base_url()?>mastercfg/exchange_rate/view/'+value;
+    }
 }
 -->
 </script>
@@ -36,12 +36,12 @@ function changeBaseCurrency(value)
 <td height="70" style="padding-left:8px">
 <b style="font-size:14px"><?=$lang["header"]?></b><br>
 <?=$lang["header_message"]?> <select onChange="changeBaseCurrency(this.value)" style="width:300px;"><option value=""> -- <?=$lang["please_select"]?> -- </option><?php
-	foreach($currency_list as $key=>$value)
-	{
+    foreach($currency_list as $key=>$value)
+    {
 ?>
-		<option value="<?=$key?>"><?=$value?></option>
+        <option value="<?=$key?>"><?=$value?></option>
 <?php
-	}
+    }
 ?></select>
 </td>
 </tr>

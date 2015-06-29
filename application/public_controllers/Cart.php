@@ -23,7 +23,7 @@ Class Cart extends PUB_Controller
         $this->add_item_qty($sku, $qty);
 
         // if ( ! empty($sku)) {
-        // 	$this->add_item_v2($sku, $qty);
+        //  $this->add_item_v2($sku, $qty);
         // }
 
     }

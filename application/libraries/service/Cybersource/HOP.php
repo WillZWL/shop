@@ -14,9 +14,9 @@ function php_hmacsha1($data, $key) {
   if ($klen <= $blen) {
     while (strlen($key) < $blen) {
       $key .= "\0";
-    }				#zero-fill to blocksize
+    }               #zero-fill to blocksize
   } else {
-    $key = cybs_sha1($key);	#if longer, pre-hash key
+    $key = cybs_sha1($key); #if longer, pre-hash key
   }
   $key = str_pad($key, strlen($ipad) + strlen($data), "\0");
   return cybs_sha1(($key ^ $opad) . cybs_sha1($key ^ $ipad . $data));
@@ -61,7 +61,7 @@ if(function_exists('sha1')){
     $W = array_values(unpack($fmt, $chunk));
     if ($r < 57 ) {
       while (count($W) < 15) {
-	array_push($W, "\0");
+    array_push($W, "\0");
       }
       $W[15] = $l*8;
     }
@@ -79,16 +79,16 @@ if(function_exists('sha1')){
     for ($i = 0; $i<=79; $i++) {
       $t0 = 0;
       switch(intval($i/20)) {
-	case 1:
-	case 3:
-	$t0 = F1($b, $c, $d);
-	break;
-	case 2:
-	$t0 = F2($b, $c, $d);
-	break;
+    case 1:
+    case 3:
+    $t0 = F1($b, $c, $d);
+    break;
+    case 2:
+    $t0 = F2($b, $c, $d);
+    break;
       default:
-	$t0 = F0($b, $c, $d);
-	break;
+    $t0 = F0($b, $c, $d);
+    break;
       }
       $t = M($t0 + $e  + d($W, $i) + d($K, $i/20) + L($a, 5));
       $e = $d;

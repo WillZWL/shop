@@ -499,11 +499,11 @@
         case "ALL":
           $this->excluded_country_area = $country_area;
           $this->excluded_restrictions = true;
-     		break;
+            break;
 
-      	default:
+        default:
           $this->excluded_country_area = "";
-     		break;
+            break;
       }
     }
   }

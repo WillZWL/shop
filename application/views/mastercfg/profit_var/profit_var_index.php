@@ -10,10 +10,10 @@
 <!--
 function goToView(value)
 {
-	if(value != "")
-	{
-		document.location.href = '<?=base_url()?>mastercfg/profit_var/view/'+value;
-	}
+    if(value != "")
+    {
+        document.location.href = '<?=base_url()?>mastercfg/profit_var/view/'+value;
+    }
 }
 -->
 </script>
@@ -35,10 +35,10 @@ function goToView(value)
 <td height="70" style="padding-left:8px">
 <b style="font-size:14px"><?=$lang["title"]?></b><br>
 <?=$lang["header_message"]?><select onChange="goToView(this.value)" style="width:300px;"><option value=""> -- <?=$lang["please_select"]?> -- </option><?php
-	foreach($selling_platform_list as $obj)
-	{
-	?><option value="<?=$obj->get_id()?>"><?=$obj->get_id().' - '.$obj->get_name()?></option><?php
-	}
+    foreach($selling_platform_list as $obj)
+    {
+    ?><option value="<?=$obj->get_id()?>"><?=$obj->get_id().' - '.$obj->get_name()?></option><?php
+    }
 ?></select>
 </td>
 </tr>

@@ -13,64 +13,64 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <col width="5"><col width="40"><col width="120"><col width="35">
 <tr>
-	<td>&nbsp;</td>
-	<td colspan="3" height="40" valign="middle" align="left"><b style="font-size:14px; color:#000000;"><?=$lang["product_search"]?></b></td>
+    <td>&nbsp;</td>
+    <td colspan="3" height="40" valign="middle" align="left"><b style="font-size:14px; color:#000000;"><?=$lang["product_search"]?></b></td>
 </tr>
 <tr>
-	<td>&nbsp;</td>
-	<td align="left"><?=$lang["sku"]?></td>
-	<td><input type="text" name="sku" value="<?=$this->input->get('sku')?>" class="input"></td>
-	<td rowspan="2"><input type="submit" style="background: rgb(204, 204, 204) url(http://192.168.0.8:7080/images/find.gif) no-repeat scroll center center; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: 30px; height: 25px;" class="search_button" value=""/></td>
+    <td>&nbsp;</td>
+    <td align="left"><?=$lang["sku"]?></td>
+    <td><input type="text" name="sku" value="<?=$this->input->get('sku')?>" class="input"></td>
+    <td rowspan="2"><input type="submit" style="background: rgb(204, 204, 204) url(http://192.168.0.8:7080/images/find.gif) no-repeat scroll center center; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: 30px; height: 25px;" class="search_button" value=""/></td>
 </tr>
 <tr>
-	<td>&nbsp;</td>
-	<td align="left"><?=$lang["name"]?></td>
-	<td><input type="text" name="name" value="<?=$this->input->get('name')?>" class="input"></td>
+    <td>&nbsp;</td>
+    <td align="left"><?=$lang["name"]?></td>
+    <td><input type="text" name="name" value="<?=$this->input->get('name')?>" class="input"></td>
 </tr>
 </table>
 <?php
-	if($search)
-	{
+    if($search)
+    {
 ?>
 <script language="javascript">
 <!--
 function addToRight(sku,name)
 {
-	parent.frames['right'].addRow('order_form',sku,name);
+    parent.frames['right'].addRow('order_form',sku,name);
 
 }
 -->
 </script>
 <hr>
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
-	<col width="50"><col>
-	<tr class="header">
-		<td><a href="#" onClick="SortCol(document.fm, 'sku', '<?=$xsort["sku"]?>')"><?=$lang["sku"]?> <?=$sortimg["sku"]?></a></td>
-		<td><a href="#" onClick="SortCol(document.fm, 'name', '<?=$xsort["name"]?>')"><?=$lang["name"]?> <?=$sortimg["name"]?></a></td>
-	</tr>
+    <col width="50"><col>
+    <tr class="header">
+        <td><a href="#" onClick="SortCol(document.fm, 'sku', '<?=$xsort["sku"]?>')"><?=$lang["sku"]?> <?=$sortimg["sku"]?></a></td>
+        <td><a href="#" onClick="SortCol(document.fm, 'name', '<?=$xsort["name"]?>')"><?=$lang["name"]?> <?=$sortimg["name"]?></a></td>
+    </tr>
 <?php
-	$i=0;
-	if ($objlist)
-	{
-		foreach ($objlist as $obj)
-		{
+    $i=0;
+    if ($objlist)
+    {
+        foreach ($objlist as $obj)
+        {
 ?>
 
-	<tr class="row<?=$i%2?> pointer" onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')" onClick="addToRight('<?=$obj->get_sku()?>','<?=addslashes($obj->get_name())?>')">
-		<td nowrap style="white-space:nowrap;"><?=$obj->get_sku()?></td>
-		<td><?=$obj->get_name()?></td>
-	</tr>
+    <tr class="row<?=$i%2?> pointer" onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')" onClick="addToRight('<?=$obj->get_sku()?>','<?=addslashes($obj->get_name())?>')">
+        <td nowrap style="white-space:nowrap;"><?=$obj->get_sku()?></td>
+        <td><?=$obj->get_name()?></td>
+    </tr>
 <?php
-			$i++;
-		}
-	}
+            $i++;
+        }
+    }
 ?>
 </table>
 <input type="hidden" name="sort" value='<?=$this->input->get("sort")?>'>
 <input type="hidden" name="order" value='<?=$this->input->get("order")?>'>
 <?=$this->pagination_service->create_links_with_style()?>
 <?php
-	}
+    }
 ?>
 </form>
 </div>

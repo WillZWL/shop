@@ -10,29 +10,29 @@
 <script language="javascript">
 function SaveChange(el)
 {
-	el.form.submit();
+    el.form.submit();
 }
 function changeRightFrame(platform_type,language,platform_id,sku)
 {
-	document.getElementById('right').src = '<?=base_url()?>marketing/promotion_text/view_right/'+platform_type+'/'+language+'/'+platform_id+'/'+sku;
+    document.getElementById('right').src = '<?=base_url()?>marketing/promotion_text/view_right/'+platform_type+'/'+language+'/'+platform_id+'/'+sku;
 }
 function changeRightFrame2(platform_type)
 {
-	document.getElementById('right').src = '<?=base_url()?>marketing/promotion_text/view_right/'+platform_type;
+    document.getElementById('right').src = '<?=base_url()?>marketing/promotion_text/view_right/'+platform_type;
 }
 function changeRightFrame3(platform_type,language)
 {
-	document.getElementById('right').src = '<?=base_url()?>marketing/promotion_text/view_right/'+platform_type+'/'+language;
+    document.getElementById('right').src = '<?=base_url()?>marketing/promotion_text/view_right/'+platform_type+'/'+language;
 }
 function changeRightFrame4(platform_type,language,platform_id)
 {
-	document.getElementById('right').src = '<?=base_url()?>marketing/promotion_text/view_right/'+platform_type+'/'+language+'/'+platform_id;
+    document.getElementById('right').src = '<?=base_url()?>marketing/promotion_text/view_right/'+platform_type+'/'+language+'/'+platform_id;
 }
 
 function changeLeftFrame(lang, platform)
 {
-	alert(lang, platform);
-	document.getElementById('left').src = '<?=base_url()?>marketing/promotion_text/view_left/'+lang+'/'+platform;
+    alert(lang, platform);
+    document.getElementById('left').src = '<?=base_url()?>marketing/promotion_text/view_left/'+lang+'/'+platform;
 }
 </script>
 </head>
@@ -41,20 +41,20 @@ function changeLeftFrame(lang, platform)
 <?=$notice["img"]?>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
-	<td height="30" class="title"><?=$lang["title"]?></td>
+    <td height="30" class="title"><?=$lang["title"]?></td>
 </tr>
 <tr class="header">
-	<td height="2"></td>
-	<td height="2"></td>
+    <td height="2"></td>
+    <td height="2"></td>
 </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
 <col width="16%"><col width="30%"><col>
 <tr>
-	<td colspan=2 height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["title"]?></b><br><?=$lang["subheader"]?></td>
-	<td align="right">
-		<table align="right"><tr><td align="left"><?=$lang["header_algo"]?></td></tr></table>
-	</td>
+    <td colspan=2 height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["title"]?></b><br><?=$lang["subheader"]?></td>
+    <td align="right">
+        <table align="right"><tr><td align="left"><?=$lang["header_algo"]?></td></tr></table>
+    </td>
 </tr>
 </table>
 <?php

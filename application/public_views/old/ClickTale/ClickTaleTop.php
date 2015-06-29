@@ -18,9 +18,9 @@
 /* 
 // Direct access guard.
 if (__FILE__ == $_SERVER["SCRIPT_FILENAME"])
-	die ("This script needs to be included in order to work.");
+    die ("This script needs to be included in order to work.");
 */
-	
+    
 require("ClickTaleInit.php");
 
 require_once(ClickTale_Root."/ClickTale.inc.php");
@@ -30,7 +30,7 @@ require_once(ClickTale_Root."/ClickTale.Settings.php");
 
 function ClickTale_callback($buffer)
 {
-	return ClickTale_ProcessOutput($buffer);
+    return ClickTale_ProcessOutput($buffer);
 }
 
 ob_start("ClickTale_callback");

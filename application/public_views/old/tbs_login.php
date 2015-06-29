@@ -18,33 +18,33 @@ $login_failed_msg["notice"] = $data["login_failed_msg"];
 $register_failed_msg["notice"] = $data["register_failed_msg"];
 if($data["bill_to_list"])
 {
-	$i = 0;
-	foreach($data["bill_to_list"] AS $cobj)
-	{
-		$bill_country_arr[$i]["id"] = $cobj->get_id();
-		$bill_country_arr[$i]["display_name"] = $cobj->get_lang_name();
-		if($cobj->get_id() == PLATFORMCOUNTRYID)
-		{
-			$bill_country_arr[$i]["selected"] = "SELECTED";
-		}
-		else
-		{
-			$bill_country_arr[$i]["selected"] = "";
-		}
-		$i++;
-	}
+    $i = 0;
+    foreach($data["bill_to_list"] AS $cobj)
+    {
+        $bill_country_arr[$i]["id"] = $cobj->get_id();
+        $bill_country_arr[$i]["display_name"] = $cobj->get_lang_name();
+        if($cobj->get_id() == PLATFORMCOUNTRYID)
+        {
+            $bill_country_arr[$i]["selected"] = "SELECTED";
+        }
+        else
+        {
+            $bill_country_arr[$i]["selected"] = "";
+        }
+        $i++;
+    }
 }
 
 #SBF #2958 Add NIF/CIF for ES
 $show_client_id = 'false';
 if ((PLATFORMCOUNTRYID == 'ES') || (PLATFORMCOUNTRYID == 'RU'))
 {
-	$show_client_id = 'true';
-	$client_id_html = <<<html
-		<li>
-			<label>{$data['lang_text']['client_id_no']} <a href ="" title = "{$data['lang_text']['client_id_title']}">[?]</a></label>
-			<fieldset><input type="text" dname="{$data['lang_text']['client_id_no']}" name="client_id_no" /></fieldset>
-		</li>
+    $show_client_id = 'true';
+    $client_id_html = <<<html
+        <li>
+            <label>{$data['lang_text']['client_id_no']} <a href ="" title = "{$data['lang_text']['client_id_title']}">[?]</a></label>
+            <fieldset><input type="text" dname="{$data['lang_text']['client_id_no']}" name="client_id_no" /></fieldset>
+        </li>
 html
 ;
 }
@@ -63,8 +63,8 @@ $title[1]["value_EN"] = "Mrs";
 $title[2]["value_EN"] = "Miss";
 
 if($data['lang_id'] != 'es'){
-	$title[3]['value'] = $data['lang_text']['title_dr'];
-	$title[3]["value_EN"] = "Dr";
+    $title[3]['value'] = $data['lang_text']['title_dr'];
+    $title[3]["value_EN"] = "Dr";
 }
 
 

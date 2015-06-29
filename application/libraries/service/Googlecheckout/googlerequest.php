@@ -55,12 +55,12 @@
     var $log;
 
     /**
-		 * @param string $id the merchant id
-		 * @param string $key the merchant key
-		 * @param string $server_type the server type of the server to be used, one
-		 *                            of 'sandbox' or 'production'.
-		 *                            defaults to 'sandbox'
-		 * @param string $currency the currency of the items to be added to the cart
+         * @param string $id the merchant id
+         * @param string $key the merchant key
+         * @param string $server_type the server type of the server to be used, one
+         *                            of 'sandbox' or 'production'.
+         *                            defaults to 'sandbox'
+         * @param string $currency the currency of the items to be added to the cart
      *                         , as of now values can be 'USD' or 'GBP'.
      *                         defaults to 'USD'
      */

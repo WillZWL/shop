@@ -10,7 +10,7 @@
 <script language="javascript">
 function SaveChange(el)
 {
-	el.form.submit();
+    el.form.submit();
 }
 </script>
 </head>
@@ -19,10 +19,10 @@ function SaveChange(el)
 <?=$notice["img"]?>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
-	<td height="30" class="title"><b style="font-size:16px;color:#000000"><?=$lang["subtitle"]?></b></td>
+    <td height="30" class="title"><b style="font-size:16px;color:#000000"><?=$lang["subtitle"]?></b></td>
 </tr>
 <tr class="header">
-	<td height="2"></td>
+    <td height="2"></td>
 </tr>
 </table>
 <form action="" method="POST" name="form" style="padding:0; margin:0" onSubmit="return CheckForm(this)" enctype="multipart/form-data">
@@ -30,41 +30,41 @@ function SaveChange(el)
 <!-- <col width="15%"><col width="35%"><col width="50%"> -->
 <col width="15%"><col width="15%"><col width="15%"><col width="15%"><col width="40%">
 <tr>
-	<td colspan=4 height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["title"]?></b><br><?=$lang["subheader"]?></td>
-	<td align="right">
-		<table align="right"><tr><td align="left"><?=$lang["header_algo"]?></td></tr></table>
-	</td>
+    <td colspan=4 height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["title"]?></b><br><?=$lang["subheader"]?></td>
+    <td align="right">
+        <table align="right"><tr><td align="left"><?=$lang["header_algo"]?></td></tr></table>
+    </td>
 
 </tr>
 <tr>
-	<td class="field field_text"><?=$lang["select_platform"]?></td>
-	<td colspan=4 class="value value_text">&nbsp;&nbsp;
-		<select onChange='SaveChange(this);gotoPage("<?=base_url()."marketing/best_selling_video/main/?catid=".$this->input->get('catid')."&level=".$this->input->get('level')."&type=".$this->input->get('type')."&src=".$this->input->get('src')."&platform="?>",this.value)' ><option value=""> -- Please select -- </option><?php
-			foreach($platform_id_list as $obj)
-			{
-			?><option value="<?=$obj->get_id()?>" <?=($obj->get_id()==$platform?"SELECTED":"")?>><?=$obj->get_id()?></option><?php
-			}
-			?>
-		</select>
-	</td>
+    <td class="field field_text"><?=$lang["select_platform"]?></td>
+    <td colspan=4 class="value value_text">&nbsp;&nbsp;
+        <select onChange='SaveChange(this);gotoPage("<?=base_url()."marketing/best_selling_video/main/?catid=".$this->input->get('catid')."&level=".$this->input->get('level')."&type=".$this->input->get('type')."&src=".$this->input->get('src')."&platform="?>",this.value)' ><option value=""> -- Please select -- </option><?php
+            foreach($platform_id_list as $obj)
+            {
+            ?><option value="<?=$obj->get_id()?>" <?=($obj->get_id()==$platform?"SELECTED":"")?>><?=$obj->get_id()?></option><?php
+            }
+            ?>
+        </select>
+    </td>
 </tr>
 <tr>
-	<td class="field field_text"><?=$lang["select_src"]?></td>
-	<td  colspan=4 class="value value_text">&nbsp;&nbsp;
-		<select onChange='SaveChange(this);gotoPage("<?=base_url()."marketing/best_selling_video/main/?catid=".$this->input->get('catid')."&level=".$this->input->get('level')."&platform=".$this->input->get('platform')."&type=".$this->input->get('type')."&src="?>",this.value)' <?=$this->input->get('platform')?"":"disabled"?>><option value=""> -- Please select -- </option>
-			<option value="Y" <?=('Y'==$src?"SELECTED":"")?>><?="YouTube"?></option>
-			<option value="V" <?=('V'==$src?"SELECTED":"")?>><?="Vzaar"?></option>
-		</select>
-	</td>
+    <td class="field field_text"><?=$lang["select_src"]?></td>
+    <td  colspan=4 class="value value_text">&nbsp;&nbsp;
+        <select onChange='SaveChange(this);gotoPage("<?=base_url()."marketing/best_selling_video/main/?catid=".$this->input->get('catid')."&level=".$this->input->get('level')."&platform=".$this->input->get('platform')."&type=".$this->input->get('type')."&src="?>",this.value)' <?=$this->input->get('platform')?"":"disabled"?>><option value=""> -- Please select -- </option>
+            <option value="Y" <?=('Y'==$src?"SELECTED":"")?>><?="YouTube"?></option>
+            <option value="V" <?=('V'==$src?"SELECTED":"")?>><?="Vzaar"?></option>
+        </select>
+    </td>
 </tr>
 <tr>
-	<td class="field field_text"><?=$lang["select_video"]?></td>
-	<td  colspan=4 class="value value_text">&nbsp;&nbsp;
-		<select onChange='SaveChange(this);gotoPage("<?=base_url()."marketing/best_selling_video/main/?catid=".$this->input->get('catid')."&level=".$this->input->get('level')."&platform=".$this->input->get('platform')."&src=".$this->input->get('src')."&type="?>",this.value)' <?=$this->input->get('src')?"":"disabled"?>><option value=""> -- Please select -- </option>
-			<option value="G" <?=('G'==$type?"SELECTED":"")?>><?=$lang["guide"]?></option>
-			<option value="R" <?=('R'==$type?"SELECTED":"")?>><?=$lang["review"]?></option>
-		</select>
-	</td>
+    <td class="field field_text"><?=$lang["select_video"]?></td>
+    <td  colspan=4 class="value value_text">&nbsp;&nbsp;
+        <select onChange='SaveChange(this);gotoPage("<?=base_url()."marketing/best_selling_video/main/?catid=".$this->input->get('catid')."&level=".$this->input->get('level')."&platform=".$this->input->get('platform')."&src=".$this->input->get('src')."&type="?>",this.value)' <?=$this->input->get('src')?"":"disabled"?>><option value=""> -- Please select -- </option>
+            <option value="G" <?=('G'==$type?"SELECTED":"")?>><?=$lang["guide"]?></option>
+            <option value="R" <?=('R'==$type?"SELECTED":"")?>><?=$lang["review"]?></option>
+        </select>
+    </td>
 </tr>
 </table>
 </form>

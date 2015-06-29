@@ -16,94 +16,94 @@
 
 <!--  CONTENT -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr>
-		<td><img src="/images/chat_and_vision_logo.png" height="40" border="0" /></td>
-	</tr>
-	<tr  height="1" bgcolor="#FF9900"><td style="line-height:1px;padding:0px;" background="<?=base_url()?>images/line_blue.png" width="100%"></td></tr>
+    <tr>
+        <td><img src="/images/chat_and_vision_logo.png" height="40" border="0" /></td>
+    </tr>
+    <tr  height="1" bgcolor="#FF9900"><td style="line-height:1px;padding:0px;" background="<?=base_url()?>images/line_blue.png" width="100%"></td></tr>
   <tr>
     <td>
         <table align="center" width="1000" border="0" cellspacing="5" cellpadding="5">
           <?php /*
-		  <tr>
-					<td><font color="#999999"><b><a href="/">Home</a> > Shipping Information</b></font></td>
-				</tr>
-				*/ ?>
+          <tr>
+                    <td><font color="#999999"><b><a href="/">Home</a> > Shipping Information</b></font></td>
+                </tr>
+                */ ?>
 
-			<?php
-				if ($success)
-				{
-			?>
-			<tr>
-				<td><h1>Платёж успешно обработан<a name="top" id="top"></a></h1></td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-			  	<td>
-					<p>
-					Поздравляем! Вы успешно заказали товар
-					<?php
-						if ($so_items)
-						{
-							$ar_prod_name = array();
-							foreach ($so_items as $so_item)
-							{
-								$ar_prod_name[] = $so_item->get_name();
-							}
-						}
-						echo @implode(",", $ar_prod_name);
-					?>
-					.<br />
-					Ваш номер заказа — <?=$so->get_so_no()?>.<br />
+            <?php
+                if ($success)
+                {
+            ?>
+            <tr>
+                <td><h1>Платёж успешно обработан<a name="top" id="top"></a></h1></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                    Поздравляем! Вы успешно заказали товар
+                    <?php
+                        if ($so_items)
+                        {
+                            $ar_prod_name = array();
+                            foreach ($so_items as $so_item)
+                            {
+                                $ar_prod_name[] = $so_item->get_name();
+                            }
+                        }
+                        echo @implode(",", $ar_prod_name);
+                    ?>
+                    .<br />
+                    Ваш номер заказа — <?=$so->get_so_no()?>.<br />
 
-					<?php
-						if ($so_ps && $so_ps->get_payment_status() == "S")
-						{
-					?>
-					Мы отправили подтверждение этого заказа на ваш регистрационный email  <?=$_SESSION["client"]["email"]?>. <br /><br />
-					<?php
-						}
-						else
-						{
-					?>
-					Мы отправили подтверждение этого заказа на ваш регистрационный email <?=$_SESSION["client"]["email"]?>.  Мы сообщим вам, как только оплата будет завершена. <br /><br />
-					<?php
-						}
-					?>
+                    <?php
+                        if ($so_ps && $so_ps->get_payment_status() == "S")
+                        {
+                    ?>
+                    Мы отправили подтверждение этого заказа на ваш регистрационный email  <?=$_SESSION["client"]["email"]?>. <br /><br />
+                    <?php
+                        }
+                        else
+                        {
+                    ?>
+                    Мы отправили подтверждение этого заказа на ваш регистрационный email <?=$_SESSION["client"]["email"]?>.  Мы сообщим вам, как только оплата будет завершена. <br /><br />
+                    <?php
+                        }
+                    ?>
 
-					В случае возникновения каких-либо вопросов, пожалуйста, посетите нашу <a href="<?=base_url()?>faq">страницу часто задаваемых вопросов</a> или свяжитесь нами по email <a href="mailto:support-ru@chatandvision.com">support-ru@chatandvision.com</a>.
-					</p>
-				</td>
-			<td>&nbsp;</td>
-		</tr>
-			<?php
-				}
-				else
-				{
-			?>
-		  <tr>
+                    В случае возникновения каких-либо вопросов, пожалуйста, посетите нашу <a href="<?=base_url()?>faq">страницу часто задаваемых вопросов</a> или свяжитесь нами по email <a href="mailto:support-ru@chatandvision.com">support-ru@chatandvision.com</a>.
+                    </p>
+                </td>
+            <td>&nbsp;</td>
+        </tr>
+            <?php
+                }
+                else
+                {
+            ?>
+          <tr>
             <td><h1>Обработка платежа не удалась<a name="top" id="top"></a></h1></td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-		  	<td>
-				<p>
-				При обработке вашего платежа возникла ошибка.<br />
-				Пожалуйста, проверьте платёжные данные и попробуйте ещё раз. В случае неудачи, пожалуйста, свяжитесь с нашей службой поддержки клиентов через email <a href="mailto:support-ru@chatandvision.com">support-ru@chatandvision.com</a><?=$so_no?" , указав учётный номер {$so_no} для дальнейшей помощи. ":"."?>
-				<br /><br />
-				Мы приносим извинения за любые причинённые неудобства и надеемся услышать от вас скоро.<br />
-				</p>
-			</td>
-			<td>&nbsp;</td>
-		</tr>
-			<?php
-				}
-			?>
-			<?php /*
+            <td>
+                <p>
+                При обработке вашего платежа возникла ошибка.<br />
+                Пожалуйста, проверьте платёжные данные и попробуйте ещё раз. В случае неудачи, пожалуйста, свяжитесь с нашей службой поддержки клиентов через email <a href="mailto:support-ru@chatandvision.com">support-ru@chatandvision.com</a><?=$so_no?" , указав учётный номер {$so_no} для дальнейшей помощи. ":"."?>
+                <br /><br />
+                Мы приносим извинения за любые причинённые неудобства и надеемся услышать от вас скоро.<br />
+                </p>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+            <?php
+                }
+            ?>
+            <?php /*
           <tr>
             <td><a href="#top">Back To Top</a></td>
             <td></td>
           </tr>
-		  */ ?>
+          */ ?>
           <tr>
             <td>&nbsp;</td>
             <td></td>

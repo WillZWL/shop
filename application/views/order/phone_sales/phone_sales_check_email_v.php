@@ -26,10 +26,10 @@ if ($client)
 else
 {
 ?>
-	No Client Found!<br>
-	<input type="button" value="Enter New Client" onClick="parent.document.getElementById('lbClose').onclick()">
+    No Client Found!<br>
+    <input type="button" value="Enter New Client" onClick="parent.document.getElementById('lbClose').onclick()">
 <?php
-	}
+    }
 ?>
 </div>
 </body>

@@ -8,11 +8,11 @@ $mb_banner["url"] = base_url().'display/view/faq';
 $support_banner["url"] = base_url().'contact';
 if($free_delivery_limit > 0)
 {
-	$fdl_banner["limit"] = $data['lang_text']['footer_text_for_order_above'].$PLATFORMCURRSIGN." ".$free_delivery_limit;
+    $fdl_banner["limit"] = $data['lang_text']['footer_text_for_order_above'].$PLATFORMCURRSIGN." ".$free_delivery_limit;
 }
 else
 {
-	$fdl_banner["limit"] = $data['lang_text']['default_text_for_all_orders']."<sup>*</sup>";
+    $fdl_banner["limit"] = $data['lang_text']['default_text_for_all_orders']."<sup>*</sup>";
 }
 $menu_script = file_get_contents(VIEWPATH . "template/menu/".get_lang_id()."/footer_menu_".strtolower(PLATFORMID).".html", true);
 $this->tbswrapper->tbsMergeField('menu', $menu_script);
@@ -37,18 +37,18 @@ $pf = array();
 
 foreach($platform_list AS $key=>$obj)
 {
-	$pf[$key]['country_id'] = $obj->get_id();
-	$pf[$key]['country_name'] = $obj->get_name();
-	$platform_currency[$obj->get_id()] = $obj->get_currency_id();
-	if($obj->get_id() == PLATFORMCOUNTRYID)
-	{
-		$pf[$key]['selected'] = 'SELECTED';
-	}
-	else
-	{
-		
-		$pf[$key]['selected'] = '';
-	}
+    $pf[$key]['country_id'] = $obj->get_id();
+    $pf[$key]['country_name'] = $obj->get_name();
+    $platform_currency[$obj->get_id()] = $obj->get_currency_id();
+    if($obj->get_id() == PLATFORMCOUNTRYID)
+    {
+        $pf[$key]['selected'] = 'SELECTED';
+    }
+    else
+    {
+        
+        $pf[$key]['selected'] = '';
+    }
 }
 $this->tbswrapper->tbsMergeBlock('platform_list', $pf);
 
@@ -58,13 +58,13 @@ $domain = check_domain();
 $chk_cart = '';
 if($_SESSION["cart"][PLATFORMID])
 {
-	$chk_cart = base64_encode(serialize($_SESSION["cart"][PLATFORMID]));
-	$this->tbswrapper->tbsMergeField('chk_cart', $chk_cart);
-	$this->tbswrapper->tbsMergeField('empty_cart', 2);
+    $chk_cart = base64_encode(serialize($_SESSION["cart"][PLATFORMID]));
+    $this->tbswrapper->tbsMergeField('chk_cart', $chk_cart);
+    $this->tbswrapper->tbsMergeField('empty_cart', 2);
 }
 else
 {
-	$this->tbswrapper->tbsMergeField('empty_cart', 1);
+    $this->tbswrapper->tbsMergeField('empty_cart', 1);
 }
 
 $this->tbswrapper->tbsMergeField('back_url', $back_url);

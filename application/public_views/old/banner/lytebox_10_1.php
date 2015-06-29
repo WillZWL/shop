@@ -20,36 +20,36 @@
 <br />
 <table cellpadding="0" cellspacing="0" border="0" align="center">
 <tr>
-	<td align="center" valign="top">
-	<table style="text-align:left" cellspacing="0" cellpadding="1" width="580px">
-		<tr>
-			<td height="10px" colspan="3" style="text-align:left; font-weight:bold; padding:8px; ">
-			<table>
-			<tr>
-				<td width="150px">
-				<img style="display:inline; float:left" src="<?=base_url()?>images/skype_email_free_min_offer.gif" />
-				</td>
-				<td style="padding-left:16px">
-				<p style="font-size:11px; color:#4F4F4F"><?=$lang["paragraph_1"]?></p>
-				</td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="3" style="text-align:left; font-weight:bold; padding:8px; ">
-				<p style="font-size:11px; color:#4F4F4F"><?=$lang["paragraph_2"]?></p>
-				<p style="font-size:11px; color:#4F4F4F"><?=$lang["paragraph_3"]?></p>
-			</td>
-		</tr>
-		<tr>
-			<td style="text-align:left; padding:8px; ">
-				<p style="font-size:10px; color:#ADADAD"><?=$lang["terms_title"]?><br /></p>
-				<p style="font-size:10px; color:#ADADAD"><?=$lang["terms_content"]?></p>
-			</td>
-		</tr>
-	</table>
-	</td>
+    <td align="center" valign="top">
+    <table style="text-align:left" cellspacing="0" cellpadding="1" width="580px">
+        <tr>
+            <td height="10px" colspan="3" style="text-align:left; font-weight:bold; padding:8px; ">
+            <table>
+            <tr>
+                <td width="150px">
+                <img style="display:inline; float:left" src="<?=base_url()?>images/skype_email_free_min_offer.gif" />
+                </td>
+                <td style="padding-left:16px">
+                <p style="font-size:11px; color:#4F4F4F"><?=$lang["paragraph_1"]?></p>
+                </td>
+            </tr>
+            </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align:left; font-weight:bold; padding:8px; ">
+                <p style="font-size:11px; color:#4F4F4F"><?=$lang["paragraph_2"]?></p>
+                <p style="font-size:11px; color:#4F4F4F"><?=$lang["paragraph_3"]?></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:left; padding:8px; ">
+                <p style="font-size:10px; color:#ADADAD"><?=$lang["terms_title"]?><br /></p>
+                <p style="font-size:10px; color:#ADADAD"><?=$lang["terms_content"]?></p>
+            </td>
+        </tr>
+    </table>
+    </td>
 </tr>
 </table>
 </div>

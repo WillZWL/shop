@@ -5,21 +5,21 @@ include_once "Base_service.php";
 
 abstract class Handle_action_service extends Base_service {
 
-	abstract function run();
+    abstract function run();
 
-	var $_dto;
+    var $_dto;
 
-	function __construct(){
-		parent::__construct();
-	}
+    function __construct(){
+        parent::__construct();
+    }
 
-	function get_dto(){
-		return $this->_dto;
-	}
+    function get_dto(){
+        return $this->_dto;
+    }
 
-	function set_dto(Base_dto $dto){
-		$this->_dto = $dto;
-	}
+    function set_dto(Base_dto $dto){
+        $this->_dto = $dto;
+    }
 
 }
 

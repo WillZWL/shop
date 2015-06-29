@@ -9,7 +9,7 @@ include_once(APPPATH . "libraries/service/Db_text_lookup_service.php");
 // root sbf #4882
 class Payment_gateway_redirect_adyen_service extends Payment_gateway_redirect_service
 {
-	private $_adyen_integrator;
+    private $_adyen_integrator;
     public $config_service;
 
     const DEV_NOTIFICATION_HEX_HMAC_VALUEBASKETBE = "16A1128E5320F3C2DEF8F8BA344D1E3654154F3499D364B1A5F3E57F130E9407";
@@ -22,36 +22,36 @@ class Payment_gateway_redirect_adyen_service extends Payment_gateway_redirect_se
     const NOTIFICATION_HEX_HMAC_VALUEBASKETIE = "7487568071E3D2A812B6629C45730B32925C8A706E1FDCA860EE228E7A468E5C";
     const NOTIFICATION_HEX_HMAC_VALUEBASKETUK = "6A8D8D2854464C0BBF2CC188672735D68D06270DBAE4781EB82473DE2DE0D27F";
 
-	public function __construct($debug = 0)
-	{
-		parent::__construct($debug);
+    public function __construct($debug = 0)
+    {
+        parent::__construct($debug);
         $this->_adyen_integrator = new Adyen_integrator($debug);
         $this->so_service = new So_service();
         $this->db_text_lookup_service = new Db_text_lookup_service();
-		include_once(APPPATH . "libraries/service/Context_config_service.php");
-		$this->config_service = new Context_config_service();
+        include_once(APPPATH . "libraries/service/Context_config_service.php");
+        $this->config_service = new Context_config_service();
 
         $this->notification_email = "ping-alert@eservicesgroup.com,rachel@eservicesgroup.net";
-	}
+    }
 
-	public function get_payment_gateway_name()
-	{
-		return "adyen";
-	}
+    public function get_payment_gateway_name()
+    {
+        return "adyen";
+    }
 
-	public function get_technical_support_email()
-	{
-		return "ping-alert@eservicesgroup.com";
-	}
+    public function get_technical_support_email()
+    {
+        return "ping-alert@eservicesgroup.com";
+    }
 
-	public function prepare_get_url_request($payment_info = array(), &$request_data)
-	{
-		$card_id = $payment_info["card_type"];       // skinCode
+    public function prepare_get_url_request($payment_info = array(), &$request_data)
+    {
+        $card_id = $payment_info["card_type"];       // skinCode
         $card_code = $payment_info["card_code"];    // ay_VSA
-		$formData = $this->_adyen_integrator->form_payment_request($this->so, $this->client, $card_id, $card_code, $this->get_payment_response_page());
+        $formData = $this->_adyen_integrator->form_payment_request($this->so, $this->client, $card_id, $card_code, $this->get_payment_response_page());
         $request_data = @http_build_query($formData);
-		return $formData;
-	}
+        return $formData;
+    }
 
     public function get_payment_response_page()
     {
@@ -59,42 +59,42 @@ class Payment_gateway_redirect_adyen_service extends Payment_gateway_redirect_se
         return str_replace("https://", "http://", $url);
     }
 
-	public function get_redirect_url($request_data, &$response_data)
-	{
-		$error_occur = false;
-		$trycount = 0;
-		do
-		{
-			$output = $this->_adyen_integrator->submitCreatePaymentRequest($request_data);
-			$trycount++;
-		}while (($trycount < 2) && (!empty($output["error"])));
+    public function get_redirect_url($request_data, &$response_data)
+    {
+        $error_occur = false;
+        $trycount = 0;
+        do
+        {
+            $output = $this->_adyen_integrator->submitCreatePaymentRequest($request_data);
+            $trycount++;
+        }while (($trycount < 2) && (!empty($output["error"])));
 
-		if (!empty($output) && empty($output["error"]))
-		{
-			$response_data = $output["result"];
-			if ($response_data)
-			{
-				$redirectUrl = $response_data;
-			}
-			else
-			{
-				$error_occur = true;
-			}
-		}
-		else
-		{
-			$response_data = $output["error"] . " " . "\r\n{$output["result"]}";
-			$error_occur = true;
-		}
+        if (!empty($output) && empty($output["error"]))
+        {
+            $response_data = $output["result"];
+            if ($response_data)
+            {
+                $redirectUrl = $response_data;
+            }
+            else
+            {
+                $error_occur = true;
+            }
+        }
+        else
+        {
+            $response_data = $output["error"] . " " . "\r\n{$output["result"]}";
+            $error_occur = true;
+        }
 
-		if ($error_occur)
-		{
-			$down_message = "Session: " . $session . "Please contact " . $this->get_payment_gateway_name() . ", IT please consider to switch payment gateway." . "O:" . $request_data . ", I:" . $response_data;
-			mail($this->sitedown_email, $this->get_payment_gateway_name() . " payment issue", $down_message, 'From: website@valuebasket.com');
-			return "ERROR::" . base_url() . "checkout_onepage/payment_result/0/{$this->so->get_so_no()}?type=sitedown";
-		}
-		return $redirectUrl;
-	}
+        if ($error_occur)
+        {
+            $down_message = "Session: " . $session . "Please contact " . $this->get_payment_gateway_name() . ", IT please consider to switch payment gateway." . "O:" . $request_data . ", I:" . $response_data;
+            mail($this->sitedown_email, $this->get_payment_gateway_name() . " payment issue", $down_message, 'From: website@valuebasket.com');
+            return "ERROR::" . base_url() . "checkout_onepage/payment_result/0/{$this->so->get_so_no()}?type=sitedown";
+        }
+        return $redirectUrl;
+    }
 
 
     public function get_pending_schedule_id()
@@ -102,8 +102,8 @@ class Payment_gateway_redirect_adyen_service extends Payment_gateway_redirect_se
         return "ADYEN_ORDERS_VERIFICATION";
     }
 
-	public function process_payment_status($general_data = array(), $get_data = array(), &$so_number, &$data_from_pmgw, &$data_to_pmgw, &$so_data, &$sops_data, &$socc_data, &$sor_data)
-	{
+    public function process_payment_status($general_data = array(), $get_data = array(), &$so_number, &$data_from_pmgw, &$data_to_pmgw, &$so_data, &$sops_data, &$socc_data, &$sor_data)
+    {
         // adyen redirecting back after customer pays will come into here
         // called by checkout_redirect_method/payment_response
         $so_number = $get_data["merchantReference"];
@@ -163,7 +163,7 @@ class Payment_gateway_redirect_adyen_service extends Payment_gateway_redirect_se
 
         return $payment_result;
 
-	}
+    }
 
 
     public function payment_notification($postData)
@@ -448,25 +448,25 @@ class Payment_gateway_redirect_adyen_service extends Payment_gateway_redirect_se
 
 
 
-	public function process_failure_action()
-	{
+    public function process_failure_action()
+    {
         header("Location:" . $this->_get_failure_page());
-	}
+    }
 
-	public function process_cancel_action()
-	{
+    public function process_cancel_action()
+    {
 //no cancel button
        // header("Location:" . $this->_get_failure_page());
-	}
+    }
 
-	public function process_success_action()
-	{
+    public function process_success_action()
+    {
         $this->fire_success_event();
         header("Location:" . $this->_get_successful_page());
-	}
+    }
 
-	private function _get_successful_page($so_number = null)
-	{
+    private function _get_successful_page($so_number = null)
+    {
         $debug_string = ($this->debug) ? "?debug=1" : "";
         if($so_number == null)
             $put_so_no = $this->so->get_so_no();
@@ -478,11 +478,11 @@ class Payment_gateway_redirect_adyen_service extends Payment_gateway_redirect_se
         $url = "https://" . $base_url . $this->successful_page . $put_so_no . $debug_string;
 
         return $url;
-		// return $this->get_successful_page_top($so_number);
-	}
+        // return $this->get_successful_page_top($so_number);
+    }
 
-	public function _get_failure_page()
-	{
+    public function _get_failure_page()
+    {
         $debug_string = ($this->debug) ? "?debug=1" : "";
         $put_so_no = "";
         if($so_number == null)
@@ -497,10 +497,10 @@ class Payment_gateway_redirect_adyen_service extends Payment_gateway_redirect_se
 
         $url = "https://" . $base_url . $this->failure_page . $put_so_no . $debug_string;
         return $url;
-		// return $this->get_failure_page_top();
-	}
+        // return $this->get_failure_page_top();
+    }
 
-	public function is_payment_need_credit_check($is_fraud = false)
+    public function is_payment_need_credit_check($is_fraud = false)
     {
         if ($is_fraud)
             return true;
@@ -585,11 +585,11 @@ class Payment_gateway_redirect_adyen_service extends Payment_gateway_redirect_se
         return true;
     }
 
-	public function is_need_dm_service($is_fraud = false)
-	{
-		// return parent::is_payment_need_credit_check($is_fraud);
+    public function is_need_dm_service($is_fraud = false)
+    {
+        // return parent::is_payment_need_credit_check($is_fraud);
         return parent::require_decision_manager($is_fraud);
-	}
+    }
 
     private function send_email($action = "", $message="", $input_data=array())
     {

@@ -1,72 +1,72 @@
 <?php
 {
-	function htmlsku($prodinfo)
-	{
+    function htmlsku($prodinfo)
+    {
 
-		if ($prodinfo == null) return;
-		//<a href='' style='background:url(/images/landing/skuback.gif);width=154px;height=188px;'>&nbsp;</a>
-		$youtubeid = "";
-		$imagefilename = "imageunavailable_l.jpg";
-		if ($prodinfo->get_image() != "") $imagefilename = $prodinfo->get_sku(). "_l." . $prodinfo->get_image();
+        if ($prodinfo == null) return;
+        //<a href='' style='background:url(/images/landing/skuback.gif);width=154px;height=188px;'>&nbsp;</a>
+        $youtubeid = "";
+        $imagefilename = "imageunavailable_l.jpg";
+        if ($prodinfo->get_image() != "") $imagefilename = $prodinfo->get_sku(). "_l." . $prodinfo->get_image();
 
-		//http://usdev.valuebasket.com/mainproduct/view/10022-AA-NA
-		$url = base_url() . "mainproduct/view/" . $prodinfo->get_sku();
-		$add = base_url() . "cart/add_item_qty/" . $prodinfo->get_sku() . "/1";
+        //http://usdev.valuebasket.com/mainproduct/view/10022-AA-NA
+        $url = base_url() . "mainproduct/view/" . $prodinfo->get_sku();
+        $add = base_url() . "cart/add_item_qty/" . $prodinfo->get_sku() . "/1";
 
-		if ($prodinfo->get_youtube_id() != "")
-		{
-			$youtubelink = "http://www.youtube.com/v/" . $prodinfo->get_youtube_id() . "&fs=1&rel=0&border=1";
-			$videoicon = "<a href='$youtubelink' toptions='group = fr, type = flash, effect = show, width = 830, height = 495,  overlayClose = 1, layout = quicklook, shaded = 1, title = {alt} ({current} of {total})'>
-					<font face='Arial'><b>
-					<img border='0' src='/images/landing/icon-video.png'></b></font>
-					</a>";
-			$videotext = "<a href='$youtubelink' toptions='group = fr, type = flash, effect = show, width = 830, height = 495,  overlayClose = 1, layout = quicklook, shaded = 1, title = {alt} ({current} of {total})'>
-					<b><font size='2' color='#8A9398'>play
-					video</font></font></b>
-					</a>";
-		}
+        if ($prodinfo->get_youtube_id() != "")
+        {
+            $youtubelink = "http://www.youtube.com/v/" . $prodinfo->get_youtube_id() . "&fs=1&rel=0&border=1";
+            $videoicon = "<a href='$youtubelink' toptions='group = fr, type = flash, effect = show, width = 830, height = 495,  overlayClose = 1, layout = quicklook, shaded = 1, title = {alt} ({current} of {total})'>
+                    <font face='Arial'><b>
+                    <img border='0' src='/images/landing/icon-video.png'></b></font>
+                    </a>";
+            $videotext = "<a href='$youtubelink' toptions='group = fr, type = flash, effect = show, width = 830, height = 495,  overlayClose = 1, layout = quicklook, shaded = 1, title = {alt} ({current} of {total})'>
+                    <b><font size='2' color='#8A9398'>play
+                    video</font></font></b>
+                    </a>";
+        }
 
-		return "<table border='0'>
-				<tr>
-				<td rowspan='6' style='background:url (/images/landing/skuback.gif);padding:0;margin:0;width:154px;height:188px;margin:0;background-repeat:no-repeat;' valign='top'>
-				<a href='$url'><img border=0 style='padding-top:10px;padding-left:2px;margin:0px' width=150px  src='/images/product/$imagefilename'></a>
-				</td>
-				<td rowspan='6'></td>
-				<td valign=top height=50px colspan='2'><font face='Arial'><b><font size='2' color='#000000'><a href='$url'> {$prodinfo->get_content_prod_name()}</a></b></font></td>
-				</tr>
-				<tr>
-				<td colspan='2'><font face='Arial'><b><font size='2' color='#8A9398'>from</font></b></font></td>
-				</tr>
-				<tr>
-				<td valign='top' colspan='2'><font face='Arial'><b><font color='#DE328F'>".
-				platform_curr_format(PLATFORMID,$prodinfo->get_price())
-				."</font></b></font></td>
-				</tr>
-				<tr>
-				<td colspan='2'>
-				<a href='$url' style='background:url(/images/landing/bluebutton.png);display:block;padding-left:15px;padding-top:3px;width:98px;height:34px;margin:0;background-repeat: no-repeat;' valign='top'>
-				<font face='Arial' color='#FFFFFF' size='1'>learn more</font></a>
-				</td>
-				</tr>
-				<tr >
-				<td colspan='2'>
-				<p align='left'>
-				<a href='$add' style='background: url(/images/landing/yellowbutton.png);display:block;padding-left:15px;padding-top:3px;width:98px;height:34px;margin:0;background-repeat:no-repeat;' valign='top'>
-				<font face='Arial' color='#FFFFFF' size='1'>add to cart</font></a>
-				</p>
-				</td>
-				</tr>
-				<tr>
-				<td width='21' height='19' valign='center'>
-				$videoicon
-				</td>
+        return "<table border='0'>
+                <tr>
+                <td rowspan='6' style='background:url (/images/landing/skuback.gif);padding:0;margin:0;width:154px;height:188px;margin:0;background-repeat:no-repeat;' valign='top'>
+                <a href='$url'><img border=0 style='padding-top:10px;padding-left:2px;margin:0px' width=150px  src='/images/product/$imagefilename'></a>
+                </td>
+                <td rowspan='6'></td>
+                <td valign=top height=50px colspan='2'><font face='Arial'><b><font size='2' color='#000000'><a href='$url'> {$prodinfo->get_content_prod_name()}</a></b></font></td>
+                </tr>
+                <tr>
+                <td colspan='2'><font face='Arial'><b><font size='2' color='#8A9398'>from</font></b></font></td>
+                </tr>
+                <tr>
+                <td valign='top' colspan='2'><font face='Arial'><b><font color='#DE328F'>".
+                platform_curr_format(PLATFORMID,$prodinfo->get_price())
+                ."</font></b></font></td>
+                </tr>
+                <tr>
+                <td colspan='2'>
+                <a href='$url' style='background:url(/images/landing/bluebutton.png);display:block;padding-left:15px;padding-top:3px;width:98px;height:34px;margin:0;background-repeat: no-repeat;' valign='top'>
+                <font face='Arial' color='#FFFFFF' size='1'>learn more</font></a>
+                </td>
+                </tr>
+                <tr >
+                <td colspan='2'>
+                <p align='left'>
+                <a href='$add' style='background: url(/images/landing/yellowbutton.png);display:block;padding-left:15px;padding-top:3px;width:98px;height:34px;margin:0;background-repeat:no-repeat;' valign='top'>
+                <font face='Arial' color='#FFFFFF' size='1'>add to cart</font></a>
+                </p>
+                </td>
+                </tr>
+                <tr>
+                <td width='21' height='19' valign='center'>
+                $videoicon
+                </td>
 
-				<td valign='top'><font face='Arial'>
-				$videotext
-				</td>
-				</tr>
-				</table>";
-	}
+                <td valign='top'><font face='Arial'>
+                $videotext
+                </td>
+                </tr>
+                </table>";
+    }
 }
 //background-attachment:fixed;
 
@@ -151,8 +151,8 @@ text-decoration: none;
                     <br>
                     <font face="Arial" color="#8A9398">High definition VideoCam</font></td>
                 <td align="center">
-			<a href="<?=base_url()?>mainproduct/view/10035-AA-NA">
-			<font face="Arial" size="4"
+            <a href="<?=base_url()?>mainproduct/view/10035-AA-NA">
+            <font face="Arial" size="4"
                         color="#0A5BCA"><b>Yamaha USB Microphone Speaker (PSG-01S)</b></font></a>
                     <br>
                     <font face="Arial" color="#8A9398">High-quality portable speakerphone</font></td>
@@ -175,7 +175,7 @@ text-decoration: none;
                 </td>
                 <td>
                     <p align="center">
-                    	<a href="<?=base_url()?>mainproduct/view/10035-AA-NA">
+                        <a href="<?=base_url()?>mainproduct/view/10035-AA-NA">
                      <img border="0" src="/images/landing/pdt4.png" width="247" height="248"></a>
                 </td>
             </tr>
@@ -264,15 +264,15 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") { ?>
                 <td valign="top">
                     <p align="left">
                         <font face="Arial"><b><font color="#DE328F" size="5">
-				<?=platform_curr_format(PLATFORMID,$popular->get_price())?>
+                <?=platform_curr_format(PLATFORMID,$popular->get_price())?>
                             </font></b></font>
                 </td>
             </tr>
             <tr>
                 <td colspan="2" valign="top">
                     <p align="left">
-			<a href="<?=base_url()?>cart/add_item/<?=$popular->get_sku()?>" style="background: url('/images/landing/yellowbutton.png'); display: block; padding-left: 15px; padding-top: 3px; width: 98px; height: 34px; margin: 0; background-repeat: no-repeat;" valign="top">
-			<font face="Arial" color="#FFFFFF" size="1">add to cart</font></a>
+            <a href="<?=base_url()?>cart/add_item/<?=$popular->get_sku()?>" style="background: url('/images/landing/yellowbutton.png'); display: block; padding-left: 15px; padding-top: 3px; width: 98px; height: 34px; margin: 0; background-repeat: no-repeat;" valign="top">
+            <font face="Arial" color="#FFFFFF" size="1">add to cart</font></a>
                 </td>
             </tr>
         </table>
@@ -286,16 +286,16 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") { ?>
 $i = 0;
 foreach($cat_list as $key=>$cat)
 {
-	// create the tabs here
-	if (strtoupper($key) == "SMARTPHONES") $key = "phones";
+    // create the tabs here
+    if (strtoupper($key) == "SMARTPHONES") $key = "phones";
 
-	echo "<li ><a href='#' style='padding:5px;' rel='$key'";
-	if ($i == 0)
-	{
-		echo "class='selected'";
-		$i++;
-	}
-	echo "><font face='Arial' color='#FFFFFF' size='2'>&nbsp;&nbsp;&nbsp;". strtoupper($key) . "&nbsp;&nbsp;&nbsp;</font></a></li>";
+    echo "<li ><a href='#' style='padding:5px;' rel='$key'";
+    if ($i == 0)
+    {
+        echo "class='selected'";
+        $i++;
+    }
+    echo "><font face='Arial' color='#FFFFFF' size='2'>&nbsp;&nbsp;&nbsp;". strtoupper($key) . "&nbsp;&nbsp;&nbsp;</font></a></li>";
 }
 ?>
                     </ul>
@@ -303,10 +303,10 @@ foreach($cat_list as $key=>$cat)
 $i = 0;
 foreach($cat_list as $key=>$cat)
 {
-	$display = $key;
-	if (strtoupper($key) == "SMARTPHONES") $display = "phones";
-//	$cat[5] = null;
-	echo "<div id='$display' class='tabcontent'>";
+    $display = $key;
+    if (strtoupper($key) == "SMARTPHONES") $display = "phones";
+//  $cat[5] = null;
+    echo "<div id='$display' class='tabcontent'>";
 ?>
                         <table width="862px" style="background: url(/images/landing/tableback.png); width=862px;
                             height=548px;" border='0'>

@@ -214,8 +214,8 @@ class Cart_session_service extends Base_service
 ***********************************************/
     public function check_battery_inside_cart_valid_or_not($total_amount, $platform = NULL)
     {
-        $reference_amount = 100;			//use only when there is no situable currency in the reference_value
-        $reference_currency = "USD";		//use only when there is no situable currency in the reference_value
+        $reference_amount = 100;            //use only when there is no situable currency in the reference_value
+        $reference_currency = "USD";        //use only when there is no situable currency in the reference_value
         $reference_value = array("USD" => 100
                                 , "EUR" => 80
                                 , "GBP" => 60
@@ -973,9 +973,9 @@ class Cart_session_service extends Base_service
 
             if (($qty = $disc_item_list[$sku]) && ($apply_promotion === TRUE))
             {
-//				$components = count($detail[$line_idx]);
-//				$i_disc_amt = $line_idx == 0?$ar_i_adj_price["first"]:$ar_i_adj_price["rest"];
-//				$ar_adj_price = average_divide($i_disc_amt, $components*$qty);
+//              $components = count($detail[$line_idx]);
+//              $i_disc_amt = $line_idx == 0?$ar_i_adj_price["first"]:$ar_i_adj_price["rest"];
+//              $ar_adj_price = average_divide($i_disc_amt, $components*$qty);
 
                 $adj_count = 0;
                 foreach ($detail[$line_idx] as $d_sku=>$item_detail)

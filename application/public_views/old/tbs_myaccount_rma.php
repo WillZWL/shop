@@ -1,5 +1,5 @@
 <?php
-	
+    
 include VIEWPATH.'tbs_header.php';
 $this->tbswrapper->tbsLoadTemplate('resources/template/myaccount_rma_'.get_lang_id().'.html');
 $url["myaccount"] = base_url()."myaccount/ws_myaccount";
@@ -9,24 +9,24 @@ $url["logout"] = base_url()."logout/ws_logout";
 
 if($data["components_list"])
 {
-	foreach($data["components_list"] AS $key=>$name)
-	{
-		if($key < 5)
-		{
-			$ret_prod_arr_1[$key]['name'] = $name;
-			$ret_prod_arr_1[$key]['key'] = $key;
-		}
-		elseif($key < 10)
-		{
-			$ret_prod_arr_2[$key]['name'] = $name;
-			$ret_prod_arr_2[$key]['key'] = $key;
-		}
-		elseif($key < 14)
-		{
-			$ret_prod_arr_3[$key]['name'] = $name;
-			$ret_prod_arr_3[$key]['key'] = $key;
-		}
-	}
+    foreach($data["components_list"] AS $key=>$name)
+    {
+        if($key < 5)
+        {
+            $ret_prod_arr_1[$key]['name'] = $name;
+            $ret_prod_arr_1[$key]['key'] = $key;
+        }
+        elseif($key < 10)
+        {
+            $ret_prod_arr_2[$key]['name'] = $name;
+            $ret_prod_arr_2[$key]['key'] = $key;
+        }
+        elseif($key < 14)
+        {
+            $ret_prod_arr_3[$key]['name'] = $name;
+            $ret_prod_arr_3[$key]['key'] = $key;
+        }
+    }
 }
 $this->tbswrapper->tbsMergeBlock('ret_prod_arr_1', $ret_prod_arr_1);
 $this->tbswrapper->tbsMergeBlock('ret_prod_arr_2', $ret_prod_arr_2);

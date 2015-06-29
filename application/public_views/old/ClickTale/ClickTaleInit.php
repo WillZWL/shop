@@ -18,13 +18,13 @@
 /* 
 // Direct access guard.
 if (__FILE__ == $_SERVER["SCRIPT_FILENAME"])
-	die ("This script needs to be included in order to work.");
+    die ("This script needs to be included in order to work.");
 */
-	
+    
 if (!defined('ClickTale_Root'))
 {
-	$pathinfo = pathinfo(__FILE__);
-	define ("ClickTale_Root", $pathinfo["dirname"]);
+    $pathinfo = pathinfo(__FILE__);
+    define ("ClickTale_Root", $pathinfo["dirname"]);
 
 }
 

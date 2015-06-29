@@ -1,8 +1,8 @@
 <?php
 function ParseXML_new($bibitResult, $reply)
 {
-	global $replyArray;
-	$replyArray = $reply;
+    global $replyArray;
+    $replyArray = $reply;
   $xml_parser = xml_parser_create();
   // set callback functions
   xml_set_element_handler($xml_parser, "startElement_new", "endElement_new");

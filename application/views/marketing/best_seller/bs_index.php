@@ -10,7 +10,7 @@
 <script language="javascript">
 function SaveChange(el)
 {
-	el.form.submit();
+    el.form.submit();
 }
 </script>
 </head>
@@ -19,32 +19,32 @@ function SaveChange(el)
 <?=$notice["img"]?>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
-	<td height="30" class="title"><b style="font-size:16px;color:#000000"><?=$lang["subtitle"]?></b></td>
+    <td height="30" class="title"><b style="font-size:16px;color:#000000"><?=$lang["subtitle"]?></b></td>
 </tr>
 <tr class="header">
-	<td height="2"></td>
+    <td height="2"></td>
 </tr>
 </table>
 <form action="" method="POST" name="form" style="padding:0; margin:0" onSubmit="return CheckForm(this)" enctype="multipart/form-data">
 <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
 <col width="16%"><col width="30%"><col>
 <tr>
-	<td colspan=2 height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["title"]?></b><br><?=$lang["subheader"]?></td>
-	<td align="right">
-		<table align="right"><tr><td align="left"><?=$lang["header_algo"]?></td></tr></table>
-	</td>
+    <td colspan=2 height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["title"]?></b><br><?=$lang["subheader"]?></td>
+    <td align="right">
+        <table align="right"><tr><td align="left"><?=$lang["header_algo"]?></td></tr></table>
+    </td>
 </tr>
 <tr>
-	<td class="field field_text"><?=$lang["select_platform"]?></td>
-	<td  colspan=3 class="value value_text">&nbsp;&nbsp;
-		<select onChange='SaveChange(this);gotoPage("<?=base_url()."marketing/best_seller/main/".$catid."/".$level."/"?>",this.value)' ><option value=""> -- Please select -- </option><?php
-			foreach($platform_id_list as $obj)
-			{
-			?><option value="<?=$obj->get_id()?>" <?=($obj->get_id()==$platform?"SELECTED":"")?>><?=$obj->get_id()?></option><?php
-			}
-			?>
-		</select>
-	</td>
+    <td class="field field_text"><?=$lang["select_platform"]?></td>
+    <td  colspan=3 class="value value_text">&nbsp;&nbsp;
+        <select onChange='SaveChange(this);gotoPage("<?=base_url()."marketing/best_seller/main/".$catid."/".$level."/"?>",this.value)' ><option value=""> -- Please select -- </option><?php
+            foreach($platform_id_list as $obj)
+            {
+            ?><option value="<?=$obj->get_id()?>" <?=($obj->get_id()==$platform?"SELECTED":"")?>><?=$obj->get_id()?></option><?php
+            }
+            ?>
+        </select>
+    </td>
 </tr>
 </table>
 </form>

@@ -38,39 +38,39 @@
 <td >&nbsp;&nbsp;<?=$lang["assoc_value"]?></td>
 </tr>
 <tr>
-	<td height="20" width="250" class="field">&nbsp;&nbsp;<?=$lang["region_name"]?></td>
-	<td height="20" align="left" class="value">&nbsp;&nbsp;<input type="text" name="region_name" class="input" value="<?=$region_obj->get_region_name()?>" notEmpty></td>
+    <td height="20" width="250" class="field">&nbsp;&nbsp;<?=$lang["region_name"]?></td>
+    <td height="20" align="left" class="value">&nbsp;&nbsp;<input type="text" name="region_name" class="input" value="<?=$region_obj->get_region_name()?>" notEmpty></td>
 </tr>
 <tr>
-	<td height="20" width="250" class="field">&nbsp;&nbsp;<?=$lang["region_type"]?></td>
-	<td height="20"  class="value">&nbsp;&nbsp;
-		<select name="region_type" style="width:200px;" >
-			<option value="C"><?=$lang["courier"]?></option>
-			<option value="S"><?=$lang["sourcing"]?></option>
-		</select>
-	</td>
+    <td height="20" width="250" class="field">&nbsp;&nbsp;<?=$lang["region_type"]?></td>
+    <td height="20"  class="value">&nbsp;&nbsp;
+        <select name="region_type" style="width:200px;" >
+            <option value="C"><?=$lang["courier"]?></option>
+            <option value="S"><?=$lang["sourcing"]?></option>
+        </select>
+    </td>
 </tr>
 <tr>
-	<td height="20" width="250" class="field" >&nbsp;&nbsp;<?=$lang["country_in_region"]?></td>
-	<td height="20" align="left" class="value" style="padding:6px;">
-		<table border="0" cellpadding="0" cellspacing="1" class="tb_list">
-		<tr class="header">
-			<td align="center"><?=$lang["not_in_region"]?></th>
-			<td align="center">&nbsp;</th>
-			<td align="center"><?=$lang["in_region"]?></th>
-		</tr>
-		<tr>
-		<td><select name="countrylist" id='left' style='width:150px; height:300px;' multiple='multiple'><?php
-		foreach($country_ex as $key=>$value)	
-		{
-			echo '<option value=\''.$key.'\'>'.$value.'</option>';
-		}
+    <td height="20" width="250" class="field" >&nbsp;&nbsp;<?=$lang["country_in_region"]?></td>
+    <td height="20" align="left" class="value" style="padding:6px;">
+        <table border="0" cellpadding="0" cellspacing="1" class="tb_list">
+        <tr class="header">
+            <td align="center"><?=$lang["not_in_region"]?></th>
+            <td align="center">&nbsp;</th>
+            <td align="center"><?=$lang["in_region"]?></th>
+        </tr>
+        <tr>
+        <td><select name="countrylist" id='left' style='width:150px; height:300px;' multiple='multiple'><?php
+        foreach($country_ex as $key=>$value)    
+        {
+            echo '<option value=\''.$key.'\'>'.$value.'</option>';
+        }
 ?></select></td>
-		<td align="centre" valign="middle"><input type="button" value=">" onclick="AddOne(document.getElementById('left'),document.getElementById('right'));" class="button"><br><br><input type="button" value=">>" onclick="AddAll(document.getElementById('left'),document.getElementById('right'));" class="button"><br><br><br><input type="button" value="<" onclick="DelOne(document.getElementById('left'),document.getElementById('right'));" class="button"><br><br><input type="button" value="<<" onclick="DelAll(document.getElementById('left'),document.getElementById('right'));" class="button"></td>
-		<td><select name="country[]" id='right' style='width:150px; height:300px;' multiple='multiple'></select>		
-		</td>
-	</tr>
-	</table></td>
+        <td align="centre" valign="middle"><input type="button" value=">" onclick="AddOne(document.getElementById('left'),document.getElementById('right'));" class="button"><br><br><input type="button" value=">>" onclick="AddAll(document.getElementById('left'),document.getElementById('right'));" class="button"><br><br><br><input type="button" value="<" onclick="DelOne(document.getElementById('left'),document.getElementById('right'));" class="button"><br><br><input type="button" value="<<" onclick="DelAll(document.getElementById('left'),document.getElementById('right'));" class="button"></td>
+        <td><select name="country[]" id='right' style='width:150px; height:300px;' multiple='multiple'></select>        
+        </td>
+    </tr>
+    </table></td>
 </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" height="40" class="page_header"  width="100%">

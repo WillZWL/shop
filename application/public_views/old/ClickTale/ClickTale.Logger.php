@@ -19,48 +19,48 @@
 require_once(ClickTale_Root."/ClickTale.Settings.php");
 
 class ClickTale_Logger
-{		
-	static public function Write($data)
-	{
-		if (!self::Enabled())
-			return false;
-	
-		$handle = fopen(self::getFullPath(), "a");
-		fwrite($handle, $data.PHP_EOL);
-		fclose($handle);
-	}
-	
-	// Reads the latest log.
-	static public function Read()
-	{
-		if (!file_exists(self::getFullPath()) || !self::Enabled())
-			return false;
-	
-		$handle = fopen(self::getFullPath(), "r");
-		$contents = fread($handle, filesize(self::getFullPath()));
-		fclose($handle);
-		return $contents;
-	}
-	
-	static public function Enabled()
-	{
-		@$logFileNameMask = ClickTale_Settings::Instance()->LogPathMask;
-		if (empty($logFileNameMask) || strtolower($logFileNameMask) == "false")
-			return false;
-		else
-			return true;
-	}
-	
-	// Gets full path of the actual log file.
-	// {0} is being replaced by current date.
-	static public function getFullPath()
-	{		
-		if (!self::Enabled())
-			return false;
-		
-		$logFileNameMask = ClickTale_Settings::Instance()->LogPathMask;
-		return str_replace("{0}", date("Ymd"), $logFileNameMask);
-	}
+{       
+    static public function Write($data)
+    {
+        if (!self::Enabled())
+            return false;
+    
+        $handle = fopen(self::getFullPath(), "a");
+        fwrite($handle, $data.PHP_EOL);
+        fclose($handle);
+    }
+    
+    // Reads the latest log.
+    static public function Read()
+    {
+        if (!file_exists(self::getFullPath()) || !self::Enabled())
+            return false;
+    
+        $handle = fopen(self::getFullPath(), "r");
+        $contents = fread($handle, filesize(self::getFullPath()));
+        fclose($handle);
+        return $contents;
+    }
+    
+    static public function Enabled()
+    {
+        @$logFileNameMask = ClickTale_Settings::Instance()->LogPathMask;
+        if (empty($logFileNameMask) || strtolower($logFileNameMask) == "false")
+            return false;
+        else
+            return true;
+    }
+    
+    // Gets full path of the actual log file.
+    // {0} is being replaced by current date.
+    static public function getFullPath()
+    {       
+        if (!self::Enabled())
+            return false;
+        
+        $logFileNameMask = ClickTale_Settings::Instance()->LogPathMask;
+        return str_replace("{0}", date("Ymd"), $logFileNameMask);
+    }
 }
 
 

@@ -15,50 +15,50 @@
 <div id="main">
 <?=$notice["img"]?>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
-	<tr>
-		<td height="30" class="title"><?=$lang["title"]?></td>
-		<td width="400" align="right" class="title">
-		</td>
-	</tr>
-	<tr>
-		<td height="2" class="line"></td>
-		<td height="2" class="line"></td>
-	</tr>
+    <tr>
+        <td height="30" class="title"><?=$lang["title"]?></td>
+        <td width="400" align="right" class="title">
+        </td>
+    </tr>
+    <tr>
+        <td height="2" class="line"></td>
+        <td height="2" class="line"></td>
+    </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
-	<tr>
-		<td height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["header"]?></b><br><?=$lang["header_message"]?></td>
-	</tr>
+    <tr>
+        <td height="70" style="padding-left:8px"><b style="font-size:14px"><?=$lang["header"]?></b><br><?=$lang["header_message"]?></td>
+    </tr>
 </table>
 <form name="fm_edit" method="post" onSubmit="return CheckForm(this)">
 <?php
 if ($currency_list)
 {
 ?>
-	<table border="0" cellpadding="0" cellspacing="0" width="auto" class="tb_main">
-		<tr class="header">
-			<td height="20"><?=$lang["currency"]?></td>
-			<td height="20"><?=$lang["round_up"]?></td>
-		</tr>
+    <table border="0" cellpadding="0" cellspacing="0" width="auto" class="tb_main">
+        <tr class="header">
+            <td height="20"><?=$lang["currency"]?></td>
+            <td height="20"><?=$lang["round_up"]?></td>
+        </tr>
 <?php
-	foreach ($currency_list as $currency_obj)
-	{
+    foreach ($currency_list as $currency_obj)
+    {
 ?>
-		<tr>
-			<td class="field"><?=$currency_id = $currency_obj->get_id()?> - <?=$currency_obj->get_name()?></td>
-			<td class="value"><input name="round_up[<?=$currency_id?>]" class="input" value="<?=htmlspecialchars($currency_obj->get_round_up())?>"></td>
-		</tr>
+        <tr>
+            <td class="field"><?=$currency_id = $currency_obj->get_id()?> - <?=$currency_obj->get_name()?></td>
+            <td class="value"><input name="round_up[<?=$currency_id?>]" class="input" value="<?=htmlspecialchars($currency_obj->get_round_up())?>"></td>
+        </tr>
 <?php
-	}
+    }
 ?>
-		<tr>
-			<td colspan="2" align="right" style="padding-right:8px;" height="40" class="tb_detail">
-				<input type="submit" value="<?=$lang['update']?>">
-			</td>
-		</tr>
-	</table>
-	<?=_form_ru()?>
-	<input type="hidden" name="posted" value="1">
+        <tr>
+            <td colspan="2" align="right" style="padding-right:8px;" height="40" class="tb_detail">
+                <input type="submit" value="<?=$lang['update']?>">
+            </td>
+        </tr>
+    </table>
+    <?=_form_ru()?>
+    <input type="hidden" name="posted" value="1">
 <?php
 }
 ?>
