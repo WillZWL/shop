@@ -1,4 +1,4 @@
-﻿<script>var google_tag_params = { "countryId": "PL" } 
+<script>var google_tag_params = { "countryId": "PL" } 
                         </script><script>
                         dataLayer = [{"google_tag_params": window.google_tag_params,"pageTitle": "BankTransferAcknowledgement",
                         "affiliateID": "",

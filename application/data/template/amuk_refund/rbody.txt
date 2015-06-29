@@ -1,4 +1,4 @@
-﻿Dear [:forename:],
+Dear [:forename:],
 
 Greetings from PurelyGadgets.
 

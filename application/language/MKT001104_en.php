@@ -1,4 +1,4 @@
-﻿<?php
+<?php
     $lang = array(
             "title"=>"Upselling Group",
             "subtitle"=>"Upselling Group",

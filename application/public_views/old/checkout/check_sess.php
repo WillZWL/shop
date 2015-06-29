@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 header("Content-type: text/javascript; charset: UTF-8");
 header("Cache-Control: must-revalidate");
 $offset = 60 * 60 * 24;

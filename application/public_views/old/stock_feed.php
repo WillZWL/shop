@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 header('Content-type: application/xml');
 $xml_content = '';
 

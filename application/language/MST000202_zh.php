@@ -1,4 +1,4 @@
-﻿<?php
+<?php
     $lang = array(
             "title" => "地區管理",
             "header" => "檢視地區資料",
