@@ -3452,97 +3452,76 @@ die();
 	}
 
 
-	public function get_bundle_components_overview($where=array(), $option=array(), $classname="Product_cost_dto")
-	{
-		$this->db->from('v_prod_items AS vpi');
-		$this->db->join('product AS p', 'vpi.prod_sku = p.sku', 'INNER');
-		$this->db->join('v_prod_overview_wo_cost AS vpo', 'vpi.item_sku = vpo.sku', 'INNER');
+    public function get_bundle_components_overview($where = array(), $option = array(), $classname = "Product_cost_dto")
+    {
+        $this->db->from('v_prod_items AS vpi');
+        $this->db->join('product AS p', 'vpi.prod_sku = p.sku', 'INNER');
+        $this->db->join('v_prod_overview_wo_cost AS vpo', 'vpi.item_sku = vpo.sku', 'INNER');
 
-		if ($option["product"])
-		{
-			$select_str = 'p.*, COALESCE(p.youtube_id, vpo.youtube_id) AS youtube_id';
-			$classname = "";
-		}
-		else
-		{
-			$select_str = 'vpo.*, p.expected_delivery_date, p.warranty_in_month';
-		}
+        if ($option["product"]) {
+            $select_str = 'p.*, COALESCE(p.youtube_id, vpo.youtube_id) AS youtube_id';
+            $classname = "";
+        } else {
+            $select_str = 'vpo.*, p.expected_delivery_date, p.warranty_in_month';
+        }
 
-		if ($option["cart"])
-		{
-			$this->db->join('product_content pc', "pc.prod_sku = vpi.prod_sku AND pc.lang_id='".($option["language"]?$option["language"]:"en")."'",'LEFT');
-			$select_str .= ', IF(p.image IS NULL, vpo.sku, p.sku) AS sku, IF(p.image IS NULL, vpo.image, p.image) AS image, vpi.component_order, IF(component_order > -1, p.name, pc.prod_name) AS content_prod_name, pc.extra_info, vpi.discount';
-		}
+        if ($option["cart"]) {
+            $this->db->join('product_content pc', "pc.prod_sku = vpi.prod_sku AND pc.lang_id='" . ($option["language"] ? $option["language"] : "en") . "'", 'LEFT');
+            $select_str .= ', IF(p.image IS NULL, vpo.sku, p.sku) AS sku, IF(p.image IS NULL, vpo.image, p.image) AS image, vpi.component_order, IF(component_order > -1, p.name, pc.prod_name) AS content_prod_name, pc.extra_info, vpi.discount';
+        }
 
-		$this->db->where($where);
+        $this->db->where($where);
 
-		if (empty($option["num_rows"]))
-		{
+        if (empty($option["num_rows"])) {
 
-			if ($classname == "")
-			{
-				$classname = $this->get_vo_classname();
-				$rs_include = $this->include_vo();
-			}
-			else
-			{
-				$rs_include = $this->include_dto($classname);
-			}
+            if ($classname == "") {
+                $classname = $this->get_vo_classname();
+                $rs_include = $this->include_vo();
+            } else {
+                $rs_include = $this->include_dto($classname);
+            }
 
-			if ($rs_include === FALSE)
-			{
-				return FALSE;
-			}
+            if ($rs_include === FALSE) {
+                return FALSE;
+            }
 
-			$this->db->select($select_str, FALSE);
+            $this->db->select($select_str, FALSE);
 
-			if (isset($option["orderby"]))
-			{
-				$this->db->order_by($option["orderby"]);
-			}
+            if (isset($option["orderby"])) {
+                $this->db->order_by($option["orderby"]);
+            }
 
-			if (empty($option["limit"]))
-			{
-				$option["limit"] = $this->rows_limit;
-			}
+            if (empty($option["limit"])) {
+                $option["limit"] = $this->rows_limit;
+            } elseif ($option["limit"] == -1) {
+                $option["limit"] = "";
+            }
 
-			elseif ($option["limit"] == -1)
-			{
-				$option["limit"] = "";
-			}
+            if (!isset($option["offset"])) {
+                $option["offset"] = 0;
+            }
 
-			if (!isset($option["offset"]))
-			{
-				$option["offset"] = 0;
-			}
+            if ($this->rows_limit != "") {
+                $this->db->limit($option["limit"], $option["offset"]);
+            }
 
-			if ($this->rows_limit != "")
-			{
-				$this->db->limit($option["limit"], $option["offset"]);
-			}
+            $rs = array();
 
-			$rs = array();
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
+                    $rs[] = $obj;
+                }
+                return $rs ? ($option["limit"] == 1 ? $rs[0] : (object)$rs) : $rs;
+            }
+        } else {
+            $this->db->select('COUNT(*) AS total');
+            if ($query = $this->db->get()) {
+                return $query->row()->total;
+            }
+        }
 
-			if ($query = $this->db->get())
-			{
-				foreach ($query->result($classname) as $obj)
-				{
-					$rs[] = $obj;
-				}
-				return $rs?($option["limit"] == 1?$rs[0]:(object)$rs):$rs;
-			}
-		}
-		else
-		{
-			$this->db->select('COUNT(*) AS total');
-			if ($query = $this->db->get())
-			{
-				return $query->row()->total;
-			}
-		}
-
-		return FALSE;
-	}
+        return false;
+    }
 
 	public function search_by_product_name($where, $option, $classname="product_search_list_dto")
 	{
@@ -4421,6 +4400,8 @@ die();
 		return $this->common_get_list($where, $option, $classname, $select_str);
 	}
 
+    // TODO
+    // will remove
 	public function is_trial_software($sku = "")
 	{
 		$sql = "SELECT IF(COUNT(*), 1, 0) AS is_trial
@@ -4433,6 +4414,8 @@ die();
 		}
 	}
 
+    // TODO
+    // will remove
 	public function is_software($sku = "")
 	{
 		$sql = "SELECT IF(COUNT(*), 1, 0) AS is_software
@@ -4445,6 +4428,8 @@ die();
 		}
 	}
 
+    // TODO
+    // will remove
 	public function get_product_type_w_sku($sku = "")
 	{
 		$sql = "SELECT type_id

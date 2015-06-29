@@ -50,14 +50,14 @@ class Cart_session_model extends CI_Model
 		return $this->cart_session_service->remove($sku, $platform);
 	}
 
-	public function add($sku, $qty, $platform_id)
-	{
-		if (!isset($_SESSION["cart"][$platform_id][$sku]) || $_SESSION["cart"][$platform_id][$sku] < $qty) {
-			return $this->cart_session_service->add($sku, $qty, $platform_id);
-		} elseif (isset($_SESSION["cart"][$platform_id][$sku])) {
-			return TRUE;
-		}
-	}
+    public function add($sku, $qty, $platform_id)
+    {
+        if (!isset($_SESSION["cart"][$platform_id][$sku]) || $_SESSION["cart"][$platform_id][$sku] < $qty) {
+            return $this->cart_session_service->add($sku, $qty, $platform_id);
+        } elseif (isset($_SESSION["cart"][$platform_id][$sku])) {
+            return true;
+        }
+    }
 
 	public function get_warranty_by_sku($sku, $platform_id, $lang_id = "en")
 	{
