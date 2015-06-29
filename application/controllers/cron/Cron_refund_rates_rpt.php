@@ -22,5 +22,5 @@ class Cron_refund_rates_rpt extends MY_Controller
     }
 }
 
-/* End of file Cron_refund_rates_rpt.php */
-/* Location: ./app/controllers/cron/cron_refund_rates_rpt.php */
+
+

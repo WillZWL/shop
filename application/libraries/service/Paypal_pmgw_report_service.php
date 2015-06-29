@@ -442,5 +442,4 @@ abstract class Paypal_pmgw_report_service extends Pmgw_report_service
     }
 }
 
-/* End of file paypal_pmgw_report_service.php */
-/* Location: ./system/application/libraries/service/Paypal_pmgw_report_service.php */
+

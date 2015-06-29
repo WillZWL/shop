@@ -12,5 +12,5 @@ class Product_overview_qoo10_model extends Product_overview_model
 
 }
 
-/* End of file product_overview_qoo10_model.php */
-/* Location: ./system/application/models/product_overview_qoo10_model.php */
+
+

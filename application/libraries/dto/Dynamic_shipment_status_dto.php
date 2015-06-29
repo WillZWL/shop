@@ -84,5 +84,4 @@ class Dynamic_shipment_status_dto extends Base_dto
     }
 }
 
-/* End of file dynamic_shipment_status_dto.php */
-/* Location: ./system/application/libraries/dto/dynamic_shipment_status_dto.php */
+

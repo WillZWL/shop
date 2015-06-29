@@ -43,5 +43,4 @@ class Payment_gateway extends MY_Controller
     }
 }
 
-/* End of file payment_gateway.php */
-/* Location: ./system/application/controllers/mastercfg/payment_gateway.php */
+

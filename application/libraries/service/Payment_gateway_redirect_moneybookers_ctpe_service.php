@@ -218,5 +218,5 @@ class Payment_gateway_redirect_moneybookers_ctpe_service extends Payment_gateway
     }
 }
 
-/* End of file payment_gateway_redirect_moneybookers_ctpe_service.php */
-/* Location: ./system/application/libraries/service/Payment_gateway_redirect_moneybookers_ctpe_service.php */
+
+

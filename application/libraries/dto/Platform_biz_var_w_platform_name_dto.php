@@ -308,5 +308,4 @@ class Platform_biz_var_w_platform_name_dto extends Base_dto
 
 }
 
-/* End of file platform_biz_var_w_platform_name_dto.php */
-/* Location: ./system/application/libraries/dto/platform_biz_var_w_platform_name_dto.php */
+

@@ -99,5 +99,5 @@ class Festive_item_dto extends Base_dto
         $this->image_file_ext = $value;
     }
 }
-/* End of file base_dto.php */
-/* Location: ./system/application/libraries/dto/base_dto.php */
+
+

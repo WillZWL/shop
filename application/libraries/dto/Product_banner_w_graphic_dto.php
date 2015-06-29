@@ -253,5 +253,4 @@ class Product_banner_w_graphic_dto extends Base_dto
     }
 }
 
-/* End of file product_banner_w_graphic_dto.php */
-/* Location: ./system/application/libraries/dto/product_banner_w_graphic_dto.php */
+

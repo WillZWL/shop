@@ -239,6 +239,6 @@ class Pmgw_report_inpendium_dto extends Base_dto
     }
 
 }
-/* End of file pmgw_report_paypal_nz_dto.php */
-/* Location: ./system/application/libraries/dto/pmgw_report_paypal_nz_dto.php */
+
+
 

@@ -36,5 +36,4 @@ class Product_type_dao extends Base_dao
     }
 }
 
-/* End of file Product_type_dao.php */
-/* Location: ./system/application/libraries/dao/Product_type_dao.php */
+

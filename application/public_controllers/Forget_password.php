@@ -29,5 +29,4 @@ Class Forget_password extends PUB_Controller
     }
 }
 
-/* End of file forget_password.php */
-/* Location: ./app/public_controllers/forget_password.php */
+

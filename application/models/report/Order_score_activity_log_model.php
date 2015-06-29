@@ -15,5 +15,4 @@ class Order_score_activity_log_model extends CI_Model
     }
 }
 
-/* End of file stock_valuation.php */
-/* Location: ./system/application/models/report/stock_valuation.php */
+

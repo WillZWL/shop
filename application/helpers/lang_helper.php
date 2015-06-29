@@ -11,5 +11,4 @@ function lang($str, $lang)
     return $newstr;
 }
 
-/* End of file notice_helper.php */
-/* Location: ./system/application/helpers/notice_helper.php */
+

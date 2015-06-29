@@ -85,5 +85,4 @@ class Voucher_dao extends Base_dao
     }
 
 }
-/* End of file voucher_dao.php */
-/* Location: ./app/libraries/dao/Voucher_dao.php */
+

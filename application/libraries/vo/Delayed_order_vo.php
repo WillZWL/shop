@@ -128,5 +128,4 @@ class Delayed_order_vo extends Base_vo
 
 }
 
-/* End of file delayed_order_vo.php */
-/* Location: ./app/libraries/vo/delayed_order_vo.php */
+

@@ -34,5 +34,5 @@ class Cron_generate_video_listing extends MY_Controller
     }
 }
 
-/* End of file cron_generate_video_listing.php */
-/* Location: ./app/controllers/cron_generate_video_listing.php */
+
+

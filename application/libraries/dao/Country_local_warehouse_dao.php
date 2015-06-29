@@ -36,5 +36,4 @@ class Country_local_warehouse_dao extends Base_dao
     }
 }
 
-/* End of file country_local_warehouse_dao.php */
-/* Location: ./system/application/libraries/dao/Country_local_warehouse_dao.php */
+

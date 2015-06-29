@@ -66,5 +66,4 @@ class Ixten_reprice_rule_dao extends Base_dao
     }
 }
 
-/* End of file ixten_reprice_rule_dao.php */
-/* Location: ./app/libraries/dao/Ixten_reprice_rule_dao.php */
+

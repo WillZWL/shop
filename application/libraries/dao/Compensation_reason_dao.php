@@ -35,5 +35,4 @@ class Compensation_reason_dao extends Base_dao
     }
 }
 
-/* End of file compensation_reason_dao.php */
-/* Location: ./app/libraries/dao/Compensation_reason_dao.php */
+

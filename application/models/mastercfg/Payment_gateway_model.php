@@ -19,6 +19,6 @@ class Payment_gateway_model extends CI_Model
     }
 }
 
-/* End of file payment_gateway_model.php */
-/* Location: ./system/application/models/payment_gateway_model.php */
+
+
 ?>

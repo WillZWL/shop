@@ -53,5 +53,4 @@ class Display_banner_config_dao extends Base_dao
     }
 
 }
-/* End of file display_banner_config_dao.php */
-/* Location: ./app/libraries/dao/Display_banner_config_dao.php */
+

@@ -54,5 +54,4 @@ class Promotion_text_dao extends Base_dao
     }
 }
 
-/* End of file promotion_text_dao.php */
-/* Location: ./app/libraries/dao/Promotion_text_dao.php */
+

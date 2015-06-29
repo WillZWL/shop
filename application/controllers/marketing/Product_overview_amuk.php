@@ -298,5 +298,4 @@ class Product_overview_amuk extends MY_Controller
     }
 }
 
-/* End of file product.php */
-/* Location: ./system/application/controllers/product.php */
+

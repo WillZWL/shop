@@ -208,5 +208,4 @@ class Searchspring_product_feed_product_info_dto extends Base_dto
     }
 }
 
-/* End of file searchspring_product_feed_product_info_dto.php */
-/* Location: ./system/application/libraries/dto/searchspring_product_feed_product_info_dto.php */
+

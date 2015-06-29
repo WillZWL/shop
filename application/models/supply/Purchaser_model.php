@@ -136,6 +136,6 @@ class Purchaser_model extends CI_Model
     }
 }
 
-/* End of file purchaser_model.php */
-/* Location: ./system/application/models/purchaser_model.php */
+
+
 ?>

@@ -157,5 +157,4 @@ class Latest_video_service extends Landpage_video_listing_service
     }
 }
 
-/* End of file latest_video_service.php */
-/* Location: ./app/libraries/service/Latest_video.php */
+

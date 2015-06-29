@@ -93,5 +93,4 @@ class Failed_transaction extends MY_Controller
     }
 }
 
-/* End of file failed_transaction.php */
-/* Location: ./system/application/controllers/report/failed_transaction.php */
+

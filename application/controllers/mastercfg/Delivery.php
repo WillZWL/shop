@@ -86,5 +86,5 @@ class Delivery extends MY_Controller
     }
 }
 
-/* End of file freight.php */
-/* Location: ./system/application/controllers/freight.php */
+
+

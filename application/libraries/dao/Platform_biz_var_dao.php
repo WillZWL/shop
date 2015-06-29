@@ -128,5 +128,4 @@ class Platform_biz_var_dao extends Base_dao
 
 }
 
-/* End of file platform_biz_var_dao.php */
-/* Location: ./system/application/libraries/dao/Platform_biz_var_dao.php */
+

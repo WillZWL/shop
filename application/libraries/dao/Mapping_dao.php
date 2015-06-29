@@ -36,5 +36,4 @@ class Mapping_dao extends Base_dao
     }
 }
 
-/* End of file mapping_dao.php */
-/* Location: ./system/application/libraries/dao/Mapping_dao.php */
+

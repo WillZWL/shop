@@ -26,5 +26,4 @@ class Cache_stock_feed extends Stock_feed
     }
 }
 
-/* End of file cache_stock_feed.php */
-/* Location: ./app/public_controllers/cache_stock_feed.php */
+

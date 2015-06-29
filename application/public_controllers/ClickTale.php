@@ -13,5 +13,4 @@ class ClickTale extends PUB_Controller
     }
 }
 
-/* End of file checkout.php */
-/* Location: ./app/public_controllers/checkout.php */
+

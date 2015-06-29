@@ -35,5 +35,4 @@ class Graphic_dao extends Base_dao
     }
 
 }
-/* End of file graphic_dao.php */
-/* Location: ./app/libraries/dao/Graphic_dao.php */
+

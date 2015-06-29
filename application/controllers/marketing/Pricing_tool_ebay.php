@@ -467,5 +467,4 @@ class Pricing_tool_ebay extends MY_Controller
     }
 }
 
-/* End of file pricing_tool_ebay.php */
-/* Location: ./system/application/controllers/pricing_tool_ebay.php */
+

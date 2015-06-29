@@ -36,5 +36,4 @@ class Ftp_info_dao extends Base_dao
     }
 }
 
-/* End of file ftp_info_dao.php */
-/* Location: ./system/application/libraries/dao/Ftp_info_dao.php */
+

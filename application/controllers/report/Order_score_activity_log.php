@@ -62,5 +62,4 @@ class Order_score_activity_log extends MY_Controller
     }
 }
 
-/* End of file order_score_activity_log.php */
-/* Location: ./system/application/controllers/report/inventory/order_score_activity_log.php */
+

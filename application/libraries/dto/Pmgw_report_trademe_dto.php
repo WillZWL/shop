@@ -164,6 +164,6 @@ class Pmgw_report_trademe_dto extends Base_dto
         $this->currency_id = $value;
     }
 }
-/* End of file pmgw_report_trademe_dto.php */
-/* Location: ./system/application/libraries/dto/pmgw_report_trademe_dto.php */
+
+
 

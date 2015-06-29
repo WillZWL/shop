@@ -57,5 +57,4 @@ class Category_mapping_service extends Base_service
 
 }
 
-/* End of file category_mapping_service.php */
-/* Location: ./app/libraries/service/Category_mapping_service.php */
+

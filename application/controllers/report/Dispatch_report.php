@@ -35,5 +35,4 @@ class Dispatch_report extends Sales_report
     }
 }
 
-/* End of file dispatch_report.php */
-/* Location: ./system/application/controllers/report/inventory/dispatch_report.php */
+

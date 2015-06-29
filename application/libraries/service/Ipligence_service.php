@@ -52,5 +52,4 @@ class Ipligence_service extends Base_service
 
 }
 
-/* End of file ipligence_service.php */
-/* Location: ./system/application/libraries/service/Ipligence_service.php */
+

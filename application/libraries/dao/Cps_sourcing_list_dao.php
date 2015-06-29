@@ -50,5 +50,4 @@ class Cps_sourcing_list_dao extends Base_dao
     }
 }
 
-/* End of file cps_sourcing_list_dao.php */
-/* Location: ./system/application/libraries/dao/Cps_sourcing_list_dao.php */
+

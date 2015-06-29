@@ -131,5 +131,4 @@ class Bundle_list_dto extends Base_dto
     }
 
 }
-/* End of file bundle_list_dto.php */
-/* Location: ./system/application/libraries/dto/bundle_list_dto.php */
+

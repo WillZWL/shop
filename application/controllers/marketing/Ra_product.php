@@ -109,5 +109,4 @@ class Ra_product extends MY_Controller
 
 }
 
-/* End of file ra_product.php */
-/* Location: ./app/controllers/ra_product.php */
+

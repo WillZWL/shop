@@ -30,6 +30,3 @@ class Promotion extends PUB_Controller
         redirect(base_url() . "FaceVsion-TouchCam-V1/product_skype/add_promote/10120-AA-NA/skypepremiumV1");
     }
 }
-
-/* End of file promotion.php */
-/* Location: ./app/public_controllers/promotion.php */

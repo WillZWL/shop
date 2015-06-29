@@ -12,5 +12,4 @@ abstract class Base_vo
 
 }
 
-/* End of file base_vo.php */
-/* Location: ./app/libraries/vo/base_vo.php */
+

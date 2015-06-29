@@ -386,5 +386,4 @@ class Bundle_dao extends Base_dao
     }
 }
 
-/* End of file bundle_dao.php */
-/* Location: ./system/application/libraries/dao/Bundle_dao.php */
+

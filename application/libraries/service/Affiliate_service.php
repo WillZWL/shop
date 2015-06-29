@@ -307,5 +307,4 @@ class Affiliate_service extends Base_service
 
 }
 
-/* End of file affiliate_dao.php */
-/* Location: ./app/libraries/dao/Affiliate_dao.php */
+

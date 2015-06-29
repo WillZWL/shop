@@ -56,5 +56,5 @@ class Cron_ebay extends MY_Controller
     }
 }
 
-/* End of file cron_ebay.php */
-/* Location: ./app/controllers/cron_ebay.php */
+
+

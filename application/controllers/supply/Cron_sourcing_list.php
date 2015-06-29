@@ -293,5 +293,4 @@ class Cron_sourcing_list extends MY_Controller
     }
 }
 
-/* End of file cron_sourcing_list.php */
-/* Location: ./app/controllers/supply/cron_sourcing_list.php */
+

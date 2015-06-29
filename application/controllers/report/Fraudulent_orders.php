@@ -62,5 +62,4 @@ class Fraudulent_orders extends MY_Controller
     }
 }
 
-/* End of file fraudulent_orders.php */
-/* Location: ./system/application/controllers/report/fraudulent_orders.php */
+

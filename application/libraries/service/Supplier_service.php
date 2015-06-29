@@ -213,5 +213,4 @@ class Supplier_service extends Base_service
     }
 }
 
-/* End of file supplier_service.php */
-/* Location: ./system/application/libraries/service/Supplier_service.php */
+

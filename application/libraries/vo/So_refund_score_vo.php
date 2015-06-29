@@ -141,5 +141,4 @@ class So_refund_score_vo extends Base_vo
 
 }
 
-/* End of file so_refund_score_vo.php */
-/* Location: ./app/libraries/vo/so_refund_score_vo.php */
+

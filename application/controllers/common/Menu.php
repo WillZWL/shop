@@ -12,5 +12,4 @@ Class Menu extends CI_Controller
         $this->load->view("menu.php");
     }
 }
-/* End of file menu.php */
-/* Location: ./app/controllers/common/menu.php */
+

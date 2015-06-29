@@ -88,5 +88,4 @@ class Custom_class_service extends Base_service
     }
 }
 
-/* End of file custom_class_service.php */
-/* Location: ./system/application/libraries/service/Custom_class_service.php */
+

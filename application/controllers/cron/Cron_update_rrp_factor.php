@@ -21,5 +21,4 @@ class Cron_update_rrp_factor extends MY_Controller
     }
 }
 
-/* End of file Cron_update_rrp_factor.php */
-/* Location: ./app/controllers/cron_update_rrp_factor.php */
+

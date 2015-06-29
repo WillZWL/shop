@@ -90,5 +90,4 @@ class Rpt_margin_alert_service extends Report_service
     }
 }
 
-/* End of file rpt_margin_alert_service.php */
-/* Location: ./app/libraries/service/Rpt_margin_alert_service.php */
+

@@ -217,6 +217,6 @@ class Pmgw_report_moneybookers_dto extends Base_dto
         $this->payment_type = $value;
     }
 }
-/* End of file pmgw_report_moneybookers_dto.php */
-/* Location: ./system/application/libraries/dto/pmgw_report_moneybookers_dto.php */
+
+
 

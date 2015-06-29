@@ -295,5 +295,4 @@ class Product_overview_amazon extends MY_Controller
     }
 }
 
-/* End of file product_overview_amazon.php */
-/* Location: ./system/application/controllers/product_overview_amazon.php */
+

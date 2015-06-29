@@ -125,5 +125,4 @@ class Freight_cat_w_region_dto extends Base_dto
     }
 }
 
-/* End of file freight_cat_w_region_dto.php */
-/* Location: ./system/application/libraries/dto/freight_cat_w_region_dto.php */
+

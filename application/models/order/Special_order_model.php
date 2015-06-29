@@ -11,6 +11,6 @@ class Special_order_model extends CI_Model
 
 }
 
-/* End of file special_order_model.php */
-/* Location: ./system/application/models/special_order_model.php */
+
+
 ?>

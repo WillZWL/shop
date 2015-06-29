@@ -35,5 +35,4 @@ class So_payment_query_log_dao extends Base_dao
     }
 }
 
-/* End of file so_payment_query_log_dao.php */
-/* Location: ./app/libraries/dao/So_payment_query_log_dao.php */
+

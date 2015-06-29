@@ -36,5 +36,4 @@ class Supplier_region_dao extends Base_dao
     }
 }
 
-/* End of file supplier_region_dao.php */
-/* Location: ./system/application/libraries/dao/Supplier_region_dao.php */
+

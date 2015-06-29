@@ -89,5 +89,5 @@ class Category_banner_model extends CI_Model
         return $this->category_service->get_dao()->get($where);
     }
 }
-/* End of file category_banner_model.php */
-/* Location: ./app/models/marketing/category_banner_model.php */
+
+

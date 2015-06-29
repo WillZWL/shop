@@ -178,5 +178,5 @@ class Shoppydoo_product_feed_service extends Data_feed_service
     }
 }
 
-/* End of file Shoppydoo_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Shoppydoo_product_feed_service.php */
+
+

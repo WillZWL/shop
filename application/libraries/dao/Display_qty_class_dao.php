@@ -35,5 +35,4 @@ class Display_qty_class_dao extends Base_dao
     }
 }
 
-/* End of file display_qty_class_dao.php */
-/* Location: ./app/libraries/dao/Display_qty_class_dao.php */
+

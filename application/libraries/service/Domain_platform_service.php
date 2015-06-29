@@ -73,5 +73,4 @@ class Domain_platform_service extends Base_service
     }
 }
 
-/* End of file domain_platform_service.php */
-/* Location: ./system/application/libraries/service/Domain_platform_service.php */
+

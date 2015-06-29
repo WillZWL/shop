@@ -25,5 +25,4 @@ class Language_service extends Base_service
     }
 }
 
-/* End of file Language_service.php */
-/* Location: ./system/application/libraries/service/Language_service.php */
+

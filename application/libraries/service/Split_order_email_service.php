@@ -143,5 +143,5 @@ class Split_order_email_service extends Base_service
     }
 }
 
-/* End of file split_order_email_service.php */
-/* Location: ./system/application/libraries/service/Split_order_email_service.php */
+
+

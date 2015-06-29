@@ -35,5 +35,4 @@ class Ra_group_dao extends Base_dao
     }
 }
 
-/* End of file ra_group_dao.php */
-/* Location: ./app/libraries/dao/Ra_group_dao.php */
+

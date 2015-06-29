@@ -16,5 +16,4 @@ class Paypal_ipn extends PUB_Controller
     }
 }
 
-/* End of file paypal_ipn.php */
-/* Location: ./app/public_controllers/paypal_ipn.php */
+

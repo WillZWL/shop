@@ -36,5 +36,4 @@ class Client_log_dao extends Base_dao
     }
 }
 
-/* End of file client_log_dao.php */
-/* Location: ./system/application/libraries/dao/Client_log_dao.php */
+

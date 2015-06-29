@@ -484,5 +484,4 @@ class Manual_order extends MY_Controller
     }
 }
 
-/* End of file manual_order.php */
-/* Location: ./system/application/controllers/manual_order.php */
+

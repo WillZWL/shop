@@ -83,5 +83,4 @@ class Integrated_order_fulfillment_service extends Base_service
 
 }
 
-/* End of file integrated_order_fulfillment_service.php */
-/* Location: ./app/libraries/service/Integrated_order_fulfillment_service.php */
+

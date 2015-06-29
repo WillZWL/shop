@@ -466,5 +466,4 @@ class Compliance_refund_rates_rpt_service extends Base_service
     }
 }
 
-/* End of file compliance_refund_rates_rpt_service.php */
-/* Location: ./system/application/libraries/service/Compliance_refund_rates_rpt_service.php */
+

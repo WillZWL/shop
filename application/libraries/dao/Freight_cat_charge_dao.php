@@ -110,5 +110,4 @@ SQL;
     }
 }
 
-/* End of file freight_cat_charge_dao.php */
-/* Location: ./system/application/libraries/dao/Freight_cat_charge_dao.php */
+

@@ -62,5 +62,4 @@ class Category_banner_dao extends Base_dao
         }
     }
 }
-/* End of file category_banner_dao.php */
-/* Location: ./system/application/libraries/dao/Category_banner_dao.php */
+

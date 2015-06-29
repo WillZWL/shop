@@ -79,5 +79,4 @@ class Ext_platform_batch_service extends Base_batch_service
         return $this->product_service;
     }
 }
-/* End of file fulfillment_batch_service.php */
-/* Location: ./system/application/libraries/service/Fulfillment_batch_service.php */
+

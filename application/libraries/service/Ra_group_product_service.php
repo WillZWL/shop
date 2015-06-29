@@ -13,5 +13,4 @@ class Ra_group_product_service extends Base_service
     }
 }
 
-/* End of file ra_group_product_service.php */
-/* Location: ./app/libraries/service/Ra_group_product_service.php */
+

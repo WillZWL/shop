@@ -505,5 +505,5 @@ class Integration extends MY_Controller
     }
 }
 
-/* End of file integration.php */
-/* Location: ./system/application/controllers/integration.php */
+
+

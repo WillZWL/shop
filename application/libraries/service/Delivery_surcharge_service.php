@@ -58,5 +58,4 @@ class Delivery_surcharge_service extends Base_service
     }
 }
 
-/* End of file delivery_surcharge_service.php */
-/* Location: ./system/application/libraries/service/Delivery_surcharge_service.php */
+

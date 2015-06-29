@@ -480,5 +480,4 @@ class Pmgw_google_service extends Pmgw_voucher
     }
 }
 
-/* End of file pmgw_google_service.php */
-/* Location: ./system/application/libraries/service/Pmgw_google_service.php */
+

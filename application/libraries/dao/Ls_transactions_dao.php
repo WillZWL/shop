@@ -92,5 +92,4 @@ class Ls_transactions_dao extends Base_dao
     }
 }
 
-/* End of file ls_transactions_dao.php */
-/* Location: ./system/application/libraries/dao/Ls_transactions_dao.php */
+

@@ -289,5 +289,4 @@ class Product_overview_amfr extends MY_Controller
     }
 }
 
-/* End of file product.php */
-/* Location: ./system/application/controllers/product.php */
+

@@ -37,5 +37,4 @@ class Role_access_dto extends Base_dto
     }
 }
 
-/* End of file role_access_dto.php */
-/* Location: ./system/application/libraries/dto/role_access_dto.php */
+

@@ -18,5 +18,4 @@ class Temp_barcode_mapping_service extends Base_service
     }
 }
 
-/* End of file temp_barcode_mapping.php */
-/* Location: ./app/libraries/service/Temp_barcode_mapping.php */
+

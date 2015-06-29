@@ -189,5 +189,4 @@ class Auto_refund_vo extends Base_vo
 
 }
 
-/* End of file auto_refund_vo.php */
-/* Location: ./app/libraries/vo/auto_refund_vo.php */
+

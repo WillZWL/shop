@@ -230,5 +230,4 @@ class Trademe_pmgw_report_service extends Pmgw_report_service
     }
 }
 
-/* End of file trademe_pmgw_report_service.php */
-/* Location: ./system/application/libraries/service/Trademe_pmgw_report_service.php */
+

@@ -159,5 +159,4 @@ class Event_email_dto extends Base_dto
     }
 }
 
-/* End of file payment_success_dto.php */
-/* Location: ./system/application/libraries/dto/payment_success_dto */
+

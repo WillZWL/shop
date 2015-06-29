@@ -15,5 +15,4 @@ class Failed_transaction_model extends CI_Model
     }
 }
 
-/* End of file failed_transaction_model.php */
-/* Location: ./system/application/models/report/failed_transaction_model.php */
+

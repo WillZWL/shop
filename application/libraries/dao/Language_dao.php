@@ -36,5 +36,4 @@ class Language_dao extends Base_dao
     }
 }
 
-/* End of file language_dao.php */
-/* Location: ./system/application/libraries/dao/Language_dao.php */
+

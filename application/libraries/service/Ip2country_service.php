@@ -78,5 +78,4 @@ class Ip2country_service extends Base_service
     }
 }
 
-/* End of file ip2country_service.php */
-/* Location: ./system/application/libraries/service/Ip2country_service.php */
+

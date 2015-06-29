@@ -72,5 +72,4 @@ class Marketing_report extends MY_Controller
     }
 }
 
-/* End of file marketing_report.php */
-/* Location: ./app/controllers/report/marketing_report.php */
+

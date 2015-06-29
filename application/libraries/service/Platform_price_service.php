@@ -57,5 +57,4 @@ abstract class Platform_price_service extends Base_service
     }
 }
 
-/* End of file platform_price_service.php */
-/* Location: ./system/application/libraries/service/Platform_price_service.php */
+

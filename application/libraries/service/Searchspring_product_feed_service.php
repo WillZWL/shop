@@ -285,5 +285,4 @@ class Searchspring_product_feed_service extends Data_feed_service
     }
 }
 
-/* End of file searchspring_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Searchspring_product_feed_service.php */
+

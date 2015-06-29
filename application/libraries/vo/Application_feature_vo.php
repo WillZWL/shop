@@ -141,5 +141,4 @@ class Application_feature_vo extends Base_vo
 
 }
 
-/* End of file application_feature_vo.php */
-/* Location: ./app/libraries/vo/application_feature_vo.php */
+

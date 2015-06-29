@@ -64,4 +64,4 @@ function load_tpl($region, $view, $vars = array(), $overwrite = FALSE, $autoload
 }
 }
 
-/* End of file MOBILE_Controller.php */
+

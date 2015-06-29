@@ -130,5 +130,4 @@ class Full_cps_with_cat_id_dto extends Base_dto
     }
 }
 
-/* End of file full_cps_with_cat_id_dto.php */
-/* Location: ./system/application/libraries/dto/full_cps_with_cat_id_dto.php */
+

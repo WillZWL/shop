@@ -152,5 +152,4 @@ class Batch_dto extends Base_dto
 
 }
 
-/* End of file batch_dto.php */
-/* Location: ./system/application/libraries/dto/batch_dto.php */
+

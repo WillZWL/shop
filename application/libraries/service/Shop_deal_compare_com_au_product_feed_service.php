@@ -106,5 +106,4 @@ class Shop_deal_compare_com_au_product_feed_service extends My_shopping_com_au_p
     }
 }
 
-/* End of file shop_deal_compare_com_au_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Shop_deal_compare_au_product_feed_service.php */
+

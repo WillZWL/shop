@@ -57,5 +57,5 @@ class Cron_update_price_margin extends MY_Controller
     }
 }
 
-/* End of file cron_update_price_margin.php */
-/* Location: ./app/controllers/cron_update_price_margin.php */
+
+

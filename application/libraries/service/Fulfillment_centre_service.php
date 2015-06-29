@@ -13,5 +13,4 @@ class Fulfillment_centre_service extends Base_service
     }
 }
 
-/* End of file fulfillment_centre_service.php */
-/* Location: ./system/application/libraries/service/Fulfillment_centre_service.php */
+

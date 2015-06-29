@@ -21,5 +21,4 @@ class Skype_report_model extends CI_Model
     }
 }
 
-/* End of file skype_report_model.php */
-/* Location: ./system/application/models/report/skype_report_model.php */
+

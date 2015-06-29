@@ -58,5 +58,4 @@ class Event_dao extends Base_dao
     }
 }
 
-/* End of file event_dao.php */
-/* Location: ./system/application/libraries/dao/Event_dao.php */
+

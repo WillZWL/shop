@@ -210,5 +210,4 @@ class Courier extends MY_Controller
     }
 }
 
-/* End of file courier.php */
-/* Location: ./system/application/controllers/courier.php */
+

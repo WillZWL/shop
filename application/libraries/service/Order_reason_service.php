@@ -13,5 +13,4 @@ class Order_reason_service extends Base_service
     }
 }
 
-/* End of file order_reason_service.php */
-/* Location: ./app/libraries/service/Order_reason_service.php */
+

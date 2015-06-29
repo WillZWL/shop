@@ -76,5 +76,4 @@ class Ra_group_service extends Base_service
     }
 }
 
-/* End of file ra_group_service.php */
-/* Location: ./app/libraries/service/Ra_group_service.php */
+

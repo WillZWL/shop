@@ -323,5 +323,4 @@ class Inventory_dao extends Base_dao
     }
 }
 
-/* End of file inventory_dao.php */
-/* Location: ./system/application/libraries/dao/Inventory_dao.php */
+

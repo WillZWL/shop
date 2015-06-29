@@ -74,6 +74,6 @@ class Product_overview_amfr_model extends CI_Model
     }
 }
 
-/* End of file brand_model.php */
-/* Location: ./system/application/models/brand_model.php */
+
+
 ?>

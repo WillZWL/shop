@@ -83,5 +83,4 @@ class Software_licence_dao extends Base_dao
 
 }
 
-/* End of file software_licence_dao.php */
-/* Location: ./app/libraries/dao/Software_licence_dao.php */
+

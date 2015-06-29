@@ -64,5 +64,4 @@ class Rpt_failed_transaction_service extends Report_service
     }
 }
 
-/* End of file rpt_failed_transaction_service.php */
-/* Location: ./system/application/libraries/service/Rpt_failed_transaction_service.php */
+

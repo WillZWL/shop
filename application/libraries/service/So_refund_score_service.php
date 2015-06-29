@@ -115,5 +115,4 @@ class So_refund_score_service extends Base_service
     }
 }
 
-/* End of file so_refund_score_service.php */
-/* Location: ./app/libraries/service/So_refund_score_service.php */
+

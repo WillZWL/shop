@@ -36,5 +36,4 @@ class Sku_mapping_dao extends Base_dao
     }
 }
 
-/* End of file sku_mapping_dao.php */
-/* Location: ./system/application/libraries/dao/Sku_mapping_dao.php */
+

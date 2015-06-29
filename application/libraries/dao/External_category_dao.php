@@ -35,5 +35,4 @@ class External_category_dao extends Base_dao
     }
 }
 
-/* End of file external_category_dao.php */
-/* Location: ./app/libraries/dao/External_category_dao.php */
+

@@ -71,5 +71,5 @@ abstract class Payment_gateway_redirect_post_submit_service extends Payment_gate
     }
 }
 
-/* End of file payment_gateway_redirect_post_submit_service.php */
-/* Location: ./system/application/libraries/service/Payment_gateway_redirect_post_submit_service.php */
+
+

@@ -64,5 +64,4 @@ class Temp_barcode_mapping_dao extends Base_dao
     }
 }
 
-/* End of file temp_barcode_mapping_dao.php */
-/* Location: ./app/libraries/dao/Temp_barcode_mapping_dao.php */
+

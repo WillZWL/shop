@@ -567,5 +567,5 @@ class Amuk_price_service extends Platform_price_service
     }
 }
 
-/* End of file amuk_price_service.php */
-/* Location: ./system/application/libraries/service/Wsgb_price_service.php */
+
+

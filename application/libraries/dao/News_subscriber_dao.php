@@ -36,5 +36,4 @@ class News_subscriber_dao extends Base_dao
     }
 }
 
-/* End of file news_subscriber_dao.php */
-/* Location: ./system/application/libraries/dao/News_subscriber_dao.php */
+

@@ -35,5 +35,4 @@ class Flex_pmgw_transactions_dao extends Base_dao
     }
 }
 
-/* End of file flex_pmgw_transactions_dao.php */
-/* Location: ./app/libraries/dao/Flex_pmgw_transactions_dao.php */
+

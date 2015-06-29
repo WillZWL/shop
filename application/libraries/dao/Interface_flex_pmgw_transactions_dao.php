@@ -90,5 +90,4 @@ class Interface_flex_pmgw_transactions_dao extends Base_dao
     }
 }
 
-/* End of file interface_flex_pmgw_transactions_dao.php */
-/* Location: ./app/libraries/dao/Interface_flex_pmgw_transactions_dao.php */
+

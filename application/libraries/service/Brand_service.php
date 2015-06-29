@@ -58,5 +58,4 @@ class Brand_service extends Base_service
 
 }
 
-/* End of file Brand_service.php */
-/* Location: ./system/application/libraries/service/Brand_service.php */
+

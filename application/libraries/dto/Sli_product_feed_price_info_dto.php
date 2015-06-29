@@ -133,5 +133,4 @@ class Sli_product_feed_price_info_dto extends Base_dto
     }
 }
 
-/* End of file sli_product_feed_price_info_dto.php */
-/* Location: ./system/application/libraries/dto/sli_product_feed_price_info_dto.php */
+

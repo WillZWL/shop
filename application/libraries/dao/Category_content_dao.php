@@ -36,5 +36,4 @@ class Category_content_dao extends Base_dao
     }
 }
 
-/* End of file category_content_dao.php */
-/* Location: ./system/application/libraries/dao/Category_content_dao.php */
+

@@ -36,5 +36,4 @@ class Brand_region_dao extends Base_dao
     }
 }
 
-/* End of file brand_region_dao.php */
-/* Location: ./system/application/libraries/dao/Brand_region_dao.php */
+

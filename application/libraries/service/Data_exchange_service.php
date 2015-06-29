@@ -811,5 +811,4 @@ class Xml_to_vo implements out_converter
     }
 }
 
-/* End of file data_exchange_service.php */
-/* Location: ./system/application/libraries/service/Data_exchange_service.php */
+

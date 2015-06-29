@@ -149,5 +149,4 @@ class Ra_group_vo extends Base_vo
     }
 }
 
-/* End of file ra_group_vo.php */
-/* Location: ./app/libraries/vo/ra_group_vo.php */
+

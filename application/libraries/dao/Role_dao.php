@@ -36,5 +36,4 @@ class Role_dao extends Base_dao
     }
 }
 
-/* End of file role_dao.php */
-/* Location: ./system/application/libraries/dao/Role_dao.php */
+

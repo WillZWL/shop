@@ -24,5 +24,4 @@ class Header extends PUB_Controller
     }
 }
 
-/* End of file header.php */
-/* Location: ./app/controllers/header */
+

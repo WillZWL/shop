@@ -35,5 +35,4 @@ class Auto_refund_dao extends Base_dao
     }
 }
 
-/* End of file auto_refund_dao.php */
-/* Location: ./app/libraries/dao/Auto_refund_dao.php */
+

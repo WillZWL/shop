@@ -359,5 +359,4 @@ class Product_overview_qoo10 extends MY_Controller
     }
 }
 
-/* End of file product_overview_qoo10.php */
-/* Location: ./system/application/controllers/product_overview_qoo10.php */
+

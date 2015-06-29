@@ -86,5 +86,4 @@ class Ra_prod_cat extends MY_Controller
 
 }
 
-/* End of file ra_prod_cat.php */
-/* Location: ./app/controllers/ra_prod_cat.php */
+

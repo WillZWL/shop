@@ -350,5 +350,4 @@ class Client_service extends Base_service
     }
 }
 
-/* End of file client_service.php */
-/* Location: ./system/application/libraries/service/Client_service.php */
+

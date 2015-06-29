@@ -35,5 +35,4 @@ class Interface_finance_dispatch_dao extends Base_dao
     }
 }
 
-/* End of file interface_finance_dispatch_dao.php */
-/* Location: ./app/libraries/dao/Interface_finance_dispatch_dao.php */
+

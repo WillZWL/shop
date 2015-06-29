@@ -135,6 +135,6 @@ class Custom_class_model extends CI_Model
     // }
 }
 
-/* End of file custom_class_model.php */
-/* Location: ./system/application/models/custom_class_model.php */
+
+
 ?>

@@ -13,5 +13,4 @@ class Subject_domain_detail_service extends Base_service
     }
 }
 
-/* End of file subject_domain_detail_service.php */
-/* Location: ./app/libraries/service/Subject_domain_detail_service.php */
+

@@ -65,5 +65,4 @@ class Website_prod_search_info_dto extends Website_prod_info_dto
     }
 }
 
-/* End of file website_prod_search_info_dto.php */
-/* Location: ./app/libraries/dto/website_prod_search_info_dto.php */
+

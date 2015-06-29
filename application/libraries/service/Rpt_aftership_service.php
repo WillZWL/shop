@@ -82,5 +82,4 @@ class Rpt_aftership_service extends Report_service
 
 }
 
-/* End of file rpt_aftership_service.php */
-/* Location: ./system/application/libraries/service/Rpt_aftership_service.php */
+

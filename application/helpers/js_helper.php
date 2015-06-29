@@ -29,5 +29,4 @@ if (!function_exists('js_cache_header')) {
     }
 }
 
-/* End of file js_helper.php */
-/* Location: ./system/application/helpers/js_helper.php */
+

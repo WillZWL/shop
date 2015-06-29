@@ -27,5 +27,4 @@ abstract class Handle_action_service extends Base_service
 
 }
 
-/* End of file handle_action_service.php */
-/* Location: ./system/application/libraries/service/Handle_action_service.php */
+

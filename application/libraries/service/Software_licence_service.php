@@ -13,5 +13,4 @@ class Software_licence_service extends Base_service
     }
 }
 
-/* End of file software_licence_dao.php */
-/* Location: ./app/libraries/dao/Software_licence_dao.php */
+

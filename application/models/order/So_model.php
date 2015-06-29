@@ -410,6 +410,6 @@ class So_model extends CI_Model
     }
 }
 
-/* End of file so_model.php */
-/* Location: ./system/application/models/so_model.php */
+
+
 ?>

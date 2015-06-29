@@ -64,5 +64,5 @@ class Subject_domain_service extends Base_service
 }
 
 
-/* End of file Subject_domain_service.php */
-/* Location: ./system/application/libraries/service/Subject_domain_service.php */
+
+

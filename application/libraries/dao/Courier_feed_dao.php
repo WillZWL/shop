@@ -37,5 +37,4 @@ class Courier_feed_dao extends Base_dao
     }
 }
 
-/* End of file action_dao.php */
-/* Location: ./system/application/libraries/dao/Action_dao.php */
+

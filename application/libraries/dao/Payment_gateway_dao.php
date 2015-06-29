@@ -36,5 +36,4 @@ class Payment_gateway_dao extends Base_dao
     }
 }
 
-/* End of file payment_gateway_dao.php */
-/* Location: ./system/application/libraries/dao/Payment_gateway_dao.php */
+

@@ -353,5 +353,4 @@ class Weight_cat_charge_dao extends Base_dao
     }
 }
 
-/* End of file weight_cat_charge_dao.php */
-/* Location: ./system/application/libraries/dao/Weight_cat_charge_dao.php */
+

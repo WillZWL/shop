@@ -52,5 +52,4 @@ class Interface_so_dao extends Base_dao
 
 }
 
-/* End of file so_dao.php */
-/* Location: ./system/application/libraries/dao/So_dao.php */
+

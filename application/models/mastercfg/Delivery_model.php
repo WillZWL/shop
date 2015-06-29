@@ -160,5 +160,5 @@ class Delivery_model extends CI_Model
     }
 }
 
-/* End of file delivery_model.php */
-/* Location: ./system/application/models/delivery_model.php */
+
+

@@ -284,5 +284,5 @@ class Price_ebay_service extends Price_service
         return $this->paypal_fee_adj;
     }
 }
-/* End of file price_website_service.php */
-/* Location: ./system/application/libraries/service/Price_website_service.php */
+
+

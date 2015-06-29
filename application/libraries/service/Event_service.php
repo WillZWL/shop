@@ -69,5 +69,4 @@ class Event_service extends Base_service
 
 }
 
-/* End of file event_service.php */
-/* Location: ./system/application/libraries/service/Event_service.php */
+

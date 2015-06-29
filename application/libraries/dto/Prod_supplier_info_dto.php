@@ -155,5 +155,4 @@ class Prod_supplier_info_dto extends Base_dto
     }
 }
 
-/* End of file prod_supplier_info_dto.php */
-/* Location: ./system/application/libraries/dto/prod_supplier_info_dto.php */
+

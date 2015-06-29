@@ -464,5 +464,4 @@ class Myaccount extends PUB_Controller
     }
 }
 
-/* End of file myaccount.php */
-/* Location: ./app/public_controllers/myaccount.php */
+

@@ -172,5 +172,4 @@ class Sourcing_list extends MY_Controller
     }
 }
 
-/* End of file purchaser.php */
-/* Location: ./system/application/controllers/supply/purchaser.php */
+

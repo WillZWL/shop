@@ -19,5 +19,4 @@ if (!function_exists('simple_log')) {
     }
 }
 
-/* End of file simple_log_helper.php */
-/* Location: ./system/application/helpers/simple_log_helper.php */
+

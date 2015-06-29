@@ -261,5 +261,4 @@ abstract class Import_info_model extends CI_Model implements Import_info_model_i
     }
 }
 
-/* End of file Import_info_model.php */
-/* Location: ./system/application/models/order/import_info_model.php */
+

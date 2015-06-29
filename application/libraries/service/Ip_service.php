@@ -54,5 +54,4 @@ class Ip_service extends Base_service
     }
 }
 
-/* End of file ip_service.php */
-/* Location: ./system/application/libraries/service/Ip_service.php */
+

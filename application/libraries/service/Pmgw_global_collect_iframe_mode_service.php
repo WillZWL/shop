@@ -33,5 +33,4 @@ class Pmgw_global_collect_iframe_mode_service extends Pmgw_global_collect_servic
 
 }
 
-/* End of file pmgw_global_collect_iframe_mode_service.php */
-/* Location: ./system/application/libraries/service/Pmgw_global_collect_iframe_mode_service.php */
+

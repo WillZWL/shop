@@ -218,5 +218,5 @@ class Gateway_report extends MY_Controller
     }
 }
 
-/* End of file gateway_report.php */
-/* Location: ./app/controllers/gateway_report.php */
+
+

@@ -699,5 +699,4 @@ class Credit_check_list_dto extends Base_dto
     }
 }
 
-/* End of file credit_check_list_dto.php */
-/* Location: ./system/application/libraries/dto/credit_check_list_dto.php */
+

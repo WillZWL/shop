@@ -35,5 +35,4 @@ class Cps_allocated_so_dao extends Base_dao
     }
 }
 
-/* End of file cps_allocated_so_dao.php */
-/* Location: ./app/libraries/dao/Cps_allocated_so_dao.php */
+

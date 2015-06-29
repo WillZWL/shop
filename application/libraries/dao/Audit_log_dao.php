@@ -36,5 +36,4 @@ class Audit_log_dao extends Base_dao
     }
 }
 
-/* End of file audit_log_dao.php */
-/* Location: ./system/application/libraries/dao/Audit_log_dao.php */
+

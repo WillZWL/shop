@@ -147,5 +147,4 @@ class Affiliate_sku_platform_dao extends Base_dao
 
 }
 
-/* End of file affiliate_dao.php */
-/* Location: ./app/libraries/dao/Affiliate_dao.php */
+

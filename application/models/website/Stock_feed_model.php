@@ -117,5 +117,4 @@ class Stock_feed_model extends CI_Model
         return $this->sp_srv;
     }
 }
-/* End of file stock_feed_model.php */
-/* Location: ./app/models/website/stock_feed_model.php */
+

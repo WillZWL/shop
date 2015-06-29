@@ -23,5 +23,4 @@ class So_payment_log_service extends Base_service
 
 }
 
-/* End of file so_payment_log_service.php */
-/* Location: ./system/application/libraries/service/So_payment_log_service.php */
+

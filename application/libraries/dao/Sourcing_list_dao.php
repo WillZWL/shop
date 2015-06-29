@@ -150,5 +150,4 @@ class Sourcing_list_dao extends Base_dao
 
 }
 
-/* End of file sourcing_list_dao.php */
-/* Location: ./system/application/libraries/dao/Sourcing_list_dao.php */
+

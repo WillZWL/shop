@@ -37,5 +37,4 @@ Class Logmessage_dao extends Base_dao
 
 }
 
-/* End of file logmessage_dao.php */
-/* Location: ./system/application/libraries/dao/Logmessage_dao.php */
+

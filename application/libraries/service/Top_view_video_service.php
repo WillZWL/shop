@@ -160,5 +160,4 @@ class Top_view_video_service extends Landpage_video_listing_service
     }
 }
 
-/* End of file top_view_video_service.php */
-/* Location: ./app/libraries/service/Top_view_video.php */
+

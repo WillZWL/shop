@@ -905,5 +905,5 @@ abstract class Payment_gateway_redirect_service extends Pmgw_voucher implements 
     }
 }
 
-/* End of file payment_gateway_redirect_service.php */
-/* Location: ./system/application/libraries/service/Payment_gateway_redirect_service.php */
+
+

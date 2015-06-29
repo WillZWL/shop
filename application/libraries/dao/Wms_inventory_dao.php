@@ -93,5 +93,4 @@ class Wms_inventory_dao extends Base_dao
     }
 }
 
-/* End of file wms_inventory_dao.php */
-/* Location: ./system/application/libraries/dao/Wms_inventory_dao.php */
+

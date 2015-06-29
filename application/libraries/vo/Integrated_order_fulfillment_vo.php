@@ -308,5 +308,4 @@ class Integrated_order_fulfillment_vo extends Base_vo
 
 }
 
-/* End of file integrated_order_fulfillment_vo.php */
-/* Location: ./app/libraries/vo/integrated_order_fulfillment_vo.php */
+

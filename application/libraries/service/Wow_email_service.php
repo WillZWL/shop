@@ -44,5 +44,5 @@ class Wow_email_service extends Base_service
 }
 
 
-/* End of file Wow_email_service.php */
-/* Location: ./system/application/libraries/service/Wow_email_service.php */
+
+

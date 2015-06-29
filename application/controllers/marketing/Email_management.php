@@ -424,5 +424,4 @@ HTML;
 
 }
 
-/* End of file email_management.php */
-/* Location: ./system/application/controllers/email_management.php */
+

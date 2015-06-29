@@ -127,5 +127,4 @@ class Reevoo_customer_feed_service extends Data_feed_service
 
 }
 
-/* End of file reevoo_customer_feed_service.php */
-/* Location: ./system/application/libraries/service/Reevoo_customer_feed_service.php */
+

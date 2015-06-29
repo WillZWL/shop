@@ -22,5 +22,4 @@ class Cron_wms_inventory extends MY_Controller
     }
 }
 
-/* End of file Cron_wms_inventory.php */
-/* Location: ./app/controllers/cron_wms_inventory.php */
+

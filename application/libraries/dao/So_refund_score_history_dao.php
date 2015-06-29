@@ -35,5 +35,4 @@ class So_refund_score_history_dao extends Base_dao
     }
 }
 
-/* End of file so_refund_score_history_dao.php */
-/* Location: ./app/libraries/dao/So_refund_score_history_dao.php */
+

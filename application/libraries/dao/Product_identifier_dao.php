@@ -56,5 +56,4 @@ class Product_identifier_dao extends Base_dao
     }
 }
 
-/* End of file product_identifier_dao.php */
-/* Location: ./app/libraries/dao/Product_identifier_dao.php */
+

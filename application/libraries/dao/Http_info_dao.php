@@ -36,5 +36,4 @@ class Http_info_dao extends Base_dao
     }
 }
 
-/* End of file http_info_dao.php */
-/* Location: ./system/application/libraries/dao/Http_info_dao.php */
+

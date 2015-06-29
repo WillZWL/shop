@@ -263,5 +263,4 @@ class Price_margin_service extends Base_service
     }
 }
 
-/* End of file price_margin_service.php */
-/* Location: ./system/application/libraries/service/Price_margin_service.php */
+

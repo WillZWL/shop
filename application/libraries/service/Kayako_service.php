@@ -1121,5 +1121,4 @@ class Kayako_service
     }
 }
 
-/* End of file Kayako_service.php */
-/* Location: ./system/application/libraries/service/Kayako_service.php */
+

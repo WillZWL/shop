@@ -327,5 +327,4 @@ class Bundle extends MY_Controller
     }
 }
 
-/* End of file bundle.php */
-/* Location: ./system/application/controllers/bundle.php */
+

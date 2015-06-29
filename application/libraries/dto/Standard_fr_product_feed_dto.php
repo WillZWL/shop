@@ -541,5 +541,4 @@ class Standard_fr_product_feed_dto extends Base_dto
     }
 }
 
-/* End of file Standard_fr_product_feed_dto.php */
-/* Location: ./system/application/libraries/dto/standard_fr_product_feed_dto.php */
+

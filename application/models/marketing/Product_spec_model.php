@@ -119,5 +119,5 @@ class Product_spec_model extends CI_Model
         }
     }
 }
-/* End of file product_spec_model.php */
-/* Location: ./app/models/marketing/product_spec_model.php */
+
+

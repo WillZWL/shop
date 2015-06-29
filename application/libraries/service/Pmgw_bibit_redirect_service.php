@@ -425,5 +425,4 @@ function redirect2url()
     }
 }
 
-/* End of file pmgw_bibit_service.php */
-/* Location: ./system/application/libraries/service/Pmgw_bibit_service.php */
+

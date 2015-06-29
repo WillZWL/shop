@@ -225,5 +225,5 @@ class Cron_data_feed extends MY_Controller
     }
 }
 
-/* End of file cron_data_feed.php */
-/* Location: ./app/controllers/cron_data_feed.php */
+
+

@@ -35,5 +35,4 @@ class Fulfillment_centre_dao extends Base_dao
     }
 }
 
-/* End of file fulfillment_centre_dao.php */
-/* Location: ./system/application/libraries/dao/Fulfillment_centre_dao.php */
+

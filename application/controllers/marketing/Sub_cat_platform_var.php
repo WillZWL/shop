@@ -12,5 +12,4 @@ class Sub_cat_platform_var extends MY_Controller
 }
 
 
-/* End of file sub_cat_platform_var.php */
-/* Location: ./app/controllers/sub_cat_platform_var.php */
+

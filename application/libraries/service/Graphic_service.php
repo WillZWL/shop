@@ -24,5 +24,4 @@ class Graphic_service extends Base_service
     }
 }
 
-/* End of file Display_banner_service.php */
-/* Location: ./app/libraries/service/Display_banner_service.php */
+

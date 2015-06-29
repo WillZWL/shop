@@ -154,5 +154,5 @@ class Payment_gateway_redirect_manual_bank_transfer_service extends Payment_gate
     }
 }
 
-/* End of file payment_gateway_redirect_worldpay_service.php */
-/* Location: ./system/application/libraries/service/Payment_gateway_redirect_worldpay_service.php */
+
+

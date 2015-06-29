@@ -55,5 +55,4 @@ class Product_cost_change_dto extends Product_cost_dto
     }
 }
 
-/* End of file product_cost_change_dto.php */
-/* Location: ./system/application/libraries/dto/product_cost_change_dto.php */
+

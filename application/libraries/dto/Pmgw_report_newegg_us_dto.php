@@ -130,5 +130,4 @@ class Pmgw_report_newegg_us_dto extends Base_dto
         $this->commission = $value;
     }
 }
-/* End of file pmgw_report_newegg_us_dto.php */
-/* Location: ./app/libraries/dto/pmgw_report_newegg_us_dto.php */
+

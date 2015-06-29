@@ -121,5 +121,4 @@ class Pending_order_dto extends Base_dto
     }
 }
 
-/* End of file pending_order_dto.php */
-/* Location: ./system/application/libraries/dto/pending_order_dto.php */
+

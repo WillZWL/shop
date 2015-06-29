@@ -127,5 +127,4 @@ class Voucher_service extends Base_service implements Actable_service
 
 }
 
-/* End of file voucher_service.php */
-/* Location: ./app/libraries/service/Voucher_service.php */
+

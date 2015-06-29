@@ -154,5 +154,4 @@ class Supplier_invoice_dto extends Base_dto
     }
 }
 
-/* End of file supplier_invoice_dto.php */
-/* Location: ./system/application/libraries/dto/supplier_invoice_dto.php */
+

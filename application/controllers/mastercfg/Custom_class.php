@@ -476,5 +476,4 @@ class Custom_class extends MY_Controller
     }
 }
 
-/* End of file custom_class.php */
-/* Location: ./system/application/controllers/custom_class.php */
+

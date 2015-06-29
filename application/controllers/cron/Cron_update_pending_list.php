@@ -71,5 +71,5 @@ class Cron_update_pending_list extends MY_Controller
     }
 }
 
-/* End of file cron_update_pending_list.php */
-/* Location: ./app/controllers/cron_update_pending_list.php */
+
+

@@ -440,5 +440,4 @@ class Template_service extends Base_service
     }
 
 }
-/* End of file template_service.php */
-/* Location: ./system/application/libraries/service/Template_service.php */
+

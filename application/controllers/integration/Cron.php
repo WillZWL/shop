@@ -232,5 +232,5 @@ class Cron extends MY_Controller
     }
 }
 
-/* End of file cron.php */
-/* Location: ./system/application/controllers/cron.php */
+
+

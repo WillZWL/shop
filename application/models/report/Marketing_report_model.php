@@ -44,5 +44,5 @@ class Marketing_report_model extends CI_Model
     }
 }
 
-/* End of file marketing_report_model.php */
-/* Location: ./system/application/models/report/marketing_report_model.php */
+
+

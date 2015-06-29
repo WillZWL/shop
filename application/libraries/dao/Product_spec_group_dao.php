@@ -36,5 +36,4 @@ class Product_spec_group_dao extends Base_dao
     }
 }
 
-/* End of file product_spec_group_dao.php */
-/* Location: ./system/application/libraries/dao/Product_spec_group_dao.php */
+

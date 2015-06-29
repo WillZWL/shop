@@ -55,5 +55,4 @@ class Ra_product_service extends Base_service
     }
 }
 
-/* End of file ra_product_service.php */
-/* Location: ./app/libraries/service/Ra_product_service.php */
+

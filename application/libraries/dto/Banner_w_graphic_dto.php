@@ -325,5 +325,4 @@ class Banner_w_graphic_dto extends Base_dto
     }
 }
 
-/* End of file banner_w_graphic_dto.php */
-/* Location: ./system/application/libraries/dto/banner_w_graphic_dto.php */
+

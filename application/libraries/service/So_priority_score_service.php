@@ -175,5 +175,4 @@ class So_priority_score_service extends Base_service
     }
 }
 
-/* End of file so_priority_score_service.php */
-/* Location: ./app/libraries/service/So_priority_score_service.php */
+

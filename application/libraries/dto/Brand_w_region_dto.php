@@ -132,5 +132,4 @@ class Brand_w_region_dto extends Base_dto
 
 }
 
-/* End of file brand_w_region_dto.php */
-/* Location: ./system/application/libraries/dto/brand_w_region_dto.php */
+

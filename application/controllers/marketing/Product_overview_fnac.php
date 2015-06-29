@@ -422,5 +422,4 @@ class Product_overview_fnac extends MY_Controller
     }
 }
 
-/* End of file product.php */
-/* Location: ./system/application/controllers/product.php */
+

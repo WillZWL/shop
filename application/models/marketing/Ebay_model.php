@@ -10,5 +10,4 @@ class Ebay_model extends CI_Model
     }
 }
 
-/* End of file ebay_model.php */
-/* Location: ./system/application/models/ebay_model.php */
+

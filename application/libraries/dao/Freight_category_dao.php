@@ -73,5 +73,4 @@ class Freight_category_dao extends Base_dao
 
 }
 
-/* End of file freight_category_dao.php */
-/* Location: ./system/application/libraries/dao/Freight_category_dao.php */
+

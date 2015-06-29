@@ -13,5 +13,4 @@ class Rendering_service extends Base_service
     }
 }
 
-/* End of file rendering_service.php */
-/* Location: ./system/application/libraries/service/Rendering_service.php */
+

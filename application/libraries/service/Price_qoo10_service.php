@@ -148,5 +148,5 @@ class Price_qoo10_service extends Price_service
     //  return $result;
     // }
 }
-/* End of file price_qoo10_service.php */
-/* Location: ./system/application/libraries/service/Price_qoo10_service.php */
+
+

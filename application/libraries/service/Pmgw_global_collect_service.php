@@ -654,5 +654,4 @@ class Pmgw_global_collect_service extends Pmgw_voucher
     }
 }
 
-/* End of file pmgw_global_collect_service.php */
-/* Location: ./system/application/libraries/service/Pmgw_global_collect_service.php */
+

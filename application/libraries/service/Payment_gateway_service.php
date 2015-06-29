@@ -168,5 +168,4 @@ class Payment_gateway_service extends Base_service
     }
 }
 
-/* End of file payment_gateway_service.php */
-/* Location: ./system/application/libraries/service/Payment_gateway_service.php */
+

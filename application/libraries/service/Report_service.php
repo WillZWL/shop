@@ -79,5 +79,4 @@ abstract class Report_service extends Base_service
     }
 }
 
-/* End of file report_service.php */
-/* Location: ./system/application/libraries/service/Report_service.php */
+

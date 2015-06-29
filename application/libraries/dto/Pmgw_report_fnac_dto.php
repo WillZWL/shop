@@ -108,5 +108,4 @@ class Pmgw_report_fnac_dto extends Base_dto
         $this->commission = $value;
     }
 }
-/* End of file pmgw_report_fnac_dto.php */
-/* Location: ./app/libraries/dto/Pmgw_report_fnac_dto.php */
+

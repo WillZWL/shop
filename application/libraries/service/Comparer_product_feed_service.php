@@ -189,5 +189,5 @@ class Comparer_product_feed_service extends Data_feed_service
     }
 }
 
-/* End of file Comparer_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Comparer_product_feed_service.php */
+
+

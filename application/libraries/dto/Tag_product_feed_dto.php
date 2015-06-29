@@ -113,5 +113,4 @@ class Tag_product_feed_dto extends Base_dto
     }
 
 }
-/* End of file price_panda_product_feed_dto.php */
-/* Location: ./system/application/libraries/dto/price_panda_product_feed_dto.php */
+

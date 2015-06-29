@@ -42,5 +42,4 @@ class Interface_price_dao extends Base_dao
     }
 }
 
-/* End of file interface_price_dao.php */
-/* Location: ./system/application/libraries/dao/Interface_price_dao.php */
+

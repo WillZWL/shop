@@ -44,5 +44,4 @@ class Product_category_report extends MY_Controller
     }
 }
 
-/* End of file product_category_report.php */
-/* Location: ./app/controllers/product_category_report.php */
+

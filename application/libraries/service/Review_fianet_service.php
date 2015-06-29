@@ -238,5 +238,4 @@ class Review_fianet_service extends Base_service
 
 }
 
-/* End of file review_fianet_service.php */
-/* Location: ./system/application/libraries/service/Review_fianet_service.php */
+

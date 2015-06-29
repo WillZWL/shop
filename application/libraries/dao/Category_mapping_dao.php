@@ -99,5 +99,4 @@ class Category_mapping_dao extends Base_dao
 
 }
 
-/* End of file category_mapping_dao.php */
-/* Location: ./app/libraries/dao/Category_mapping_dao.php */
+

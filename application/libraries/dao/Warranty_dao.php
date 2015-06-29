@@ -112,5 +112,4 @@ class Warranty_dao extends Base_dao
     }
 }
 
-/* End of file warranty_dao.php */
-/* Location: ./system/application/libraries/dao/Warranty_dao.php */
+

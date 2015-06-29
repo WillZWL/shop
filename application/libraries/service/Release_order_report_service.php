@@ -38,5 +38,4 @@ class Release_order_report_service extends Report_service
     }
 }
 
-/* End of file release_order_report_service.php */
-/* Location: ./system/application/libraries/service/Release_order_report_service.php */
+

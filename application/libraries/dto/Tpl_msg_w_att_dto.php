@@ -160,5 +160,4 @@ class Tpl_msg_w_att_dto extends Base_dto
     }
 }
 
-/* End of file tpl_msg_w_att_dto.php */
-/* Location: ./system/application/libraries/dto/tpl_msg_w_att_dto.php */
+

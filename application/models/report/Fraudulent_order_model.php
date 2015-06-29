@@ -15,5 +15,4 @@ class Fraudulent_order_model extends CI_Model
     }
 }
 
-/* End of file fraudulent_order_model.php */
-/* Location: ./system/application/models/report/fraudulent_order_model.php */
+

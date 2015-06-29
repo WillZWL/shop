@@ -430,5 +430,5 @@ html;
         return $this->get_price_ext_dao()->get_list(array("platform_id" => $platform_id, "action" => "P", "remark IS NOT NULL" => null));
     }
 }
-/* End of file price_fnac_service.php */
-/* Location: ./system/application/libraries/service/Price_fnac_service.php */
+
+

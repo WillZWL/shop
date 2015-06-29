@@ -36,5 +36,4 @@ class Unit_type_dao extends Base_dao
     }
 }
 
-/* End of file unit_type_dao.php */
-/* Location: ./system/application/libraries/dao/Unit_type_dao.php */
+

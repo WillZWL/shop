@@ -155,5 +155,4 @@ class Shopbot_with_pricepanda_format_product_feed_service extends Data_feed_serv
     }
 }
 
-/* End of file panda_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Panda_product_feed_service.php */
+

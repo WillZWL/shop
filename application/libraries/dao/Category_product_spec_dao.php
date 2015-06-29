@@ -62,5 +62,4 @@ class Category_product_spec_dao extends Base_dao
     }
 }
 
-/* End of file category_product_spec_dao.php */
-/* Location: ./system/application/libraries/dao/Category_product_spec_dao.php */
+

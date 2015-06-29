@@ -81,5 +81,4 @@ class Weight_cat_charge_w_weight_dto extends Base_dto
     }
 }
 
-/* End of file weight_cat_charge_w_weight_dto.php */
-/* Location: ./system/application/libraries/dto/weight_cat_charge_w_weight_dto.php */
+

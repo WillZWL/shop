@@ -38,5 +38,4 @@ class Product_identifier_service extends Base_service
     }
 }
 
-/* End of file product_identifier_dao.php */
-/* Location: ./app/libraries/dao/Product_identifier_dao.php */
+

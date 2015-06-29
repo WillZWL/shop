@@ -40,5 +40,5 @@ class Complementary_acc_model extends CI_Model
 
 
 }
-/* End of file complementary_acc_model.php */
-/* Location: ./system/application/models/complementary_acc_model.php */
+
+

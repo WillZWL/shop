@@ -84,5 +84,4 @@ class Display_qty_model extends CI_Model
     }
 }
 
-/* End of file display_qty_model.php */
-/* Location: ./system/application/models/display_qty_model.php */
+

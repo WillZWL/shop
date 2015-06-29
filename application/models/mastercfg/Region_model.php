@@ -64,6 +64,6 @@ class Region_model extends CI_Model
     }
 }
 
-/* End of file email.php */
-/* Location: ./system/application/models/region.php */
+
+
 ?>

@@ -49,5 +49,4 @@ class So_credit_chk_dao extends Base_dao
     }
 }
 
-/* End of file so_credit_chk_dao.php */
-/* Location: ./system/application/libraries/dao/So_credit_chk_dao.php */
+

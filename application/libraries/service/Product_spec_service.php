@@ -297,5 +297,4 @@ class Product_spec_service extends Base_service
     }
 }
 
-/* End of file product_spec_service.php */
-/* Location: ./system/application/libraries/service/Product_spec_service.php */
+

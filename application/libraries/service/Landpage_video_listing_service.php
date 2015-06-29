@@ -100,5 +100,4 @@ abstract class Landpage_video_listing_service extends Base_service
     abstract protected function _get_product_list_for_home();
 }
 
-/* End of file landpage_video_listing_service.php */
-/* Location: ./app/libraries/service/Landpage_video_listing_service.php */
+

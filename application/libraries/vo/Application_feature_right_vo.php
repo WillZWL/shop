@@ -153,5 +153,4 @@ class Application_feature_right_vo extends Base_vo
 
 }
 
-/* End of file application_feature_right_vo.php */
-/* Location: ./app/libraries/vo/application_feature_right_vo.php */
+

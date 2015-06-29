@@ -86,5 +86,4 @@ class Payment_gateway_facebook_service extends payment_gateway_service
     }
 }
 
-/* End of file payment_gateway_facebook_service.php */
-/* Location: ./system/application/libraries/service/Payment_gateway_facebook_service.php */
+

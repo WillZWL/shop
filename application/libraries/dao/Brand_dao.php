@@ -209,5 +209,4 @@ class Brand_dao extends Base_dao
 
 }
 
-/* End of file brand_dao.php */
-/* Location: ./system/application/libraries/dao/Brand_dao.php */
+

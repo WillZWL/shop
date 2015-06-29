@@ -55,5 +55,4 @@ class Supplier_cost_dto extends Base_dto
     }
 }
 
-/* End of file supplier_cost_dto.php */
-/* Location: ./system/application/libraries/dto/supplier_cost_dto.php */
+

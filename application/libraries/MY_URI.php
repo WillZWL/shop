@@ -116,7 +116,7 @@ class MY_URI extends CI_URI
 
 // END MY_URI Class
 
-/* End of file URI.php */
-/* Location: ./application/libraries/MY_URI.php */
+
+
 
 ?>

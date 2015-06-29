@@ -93,5 +93,4 @@ class Role_app_dto extends Base_dto
 
 }
 
-/* End of file role_app_dto.php */
-/* Location: ./system/application/libraries/dto/role_app_dto.php */
+

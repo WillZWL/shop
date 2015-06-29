@@ -83,5 +83,4 @@ class Oizmy_product_feed_service extends Apac_product_feed_service
     }
 }
 
-/* End of file price_panda_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Price_panda_product_feed_service.php */
+

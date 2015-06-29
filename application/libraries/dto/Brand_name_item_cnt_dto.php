@@ -47,5 +47,4 @@ class Brand_name_item_cnt_dto extends Base_dto
 }
 
 
-/* End of file base_dto.php */
-/* Location: ./system/application/libraries/dto/base_dto.php */
+

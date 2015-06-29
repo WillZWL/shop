@@ -67,5 +67,4 @@ class Rpt_order_score_activity_log_service extends Report_service
     }
 }
 
-/* End of file rpt_order_score_activity_log_service.php */
-/* Location: ./system/application/libraries/service/Rpt_order_score_activity_log_service.php */
+

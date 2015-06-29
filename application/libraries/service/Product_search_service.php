@@ -219,5 +219,5 @@ class Product_search_service extends Base_service
     }
 }
 
-/* End of file product_search_service.php */
-/* Location: ./system/application/libraries/service/Product_search_service.php */
+
+

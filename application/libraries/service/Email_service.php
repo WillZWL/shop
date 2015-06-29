@@ -164,5 +164,4 @@ class Email_service extends Base_service implements Actable_service
     }
 }
 
-/* End of file email_service.php */
-/* Location: ./system/application/libraries/service/Email_service.php */
+

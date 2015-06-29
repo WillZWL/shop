@@ -104,5 +104,4 @@ class Currency_dao extends Base_dao
 
 }
 
-/* End of file currency_dao.php */
-/* Location: ./system/application/libraries/dao/Currency_dao.php */
+

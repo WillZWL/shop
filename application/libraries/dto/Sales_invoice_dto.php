@@ -363,5 +363,4 @@ class Sales_invoice_dto extends Base_dto
     }
 }
 
-/* End of file sales_invoice_dto.php */
-/* Location: ./system/application/libraries/dto/sales_invoice_dto.php */
+

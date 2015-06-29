@@ -196,6 +196,6 @@ class Freight_model extends CI_Model
     }
 }
 
-/* End of file courier_model.php */
-/* Location: ./system/application/models/courier_model.php */
+
+
 ?>

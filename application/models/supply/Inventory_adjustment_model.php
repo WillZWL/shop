@@ -13,6 +13,6 @@ class Inventory_adjustment_model extends CI_Model
     }
 }
 
-/* End of file inventory_adjustment_model.php */
-/* Location: ./system/application/models/inventory_adjustment_model.php */
+
+
 ?>

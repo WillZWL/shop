@@ -421,5 +421,4 @@ class Delivery_service extends Base_service
     }
 }
 
-/* End of file delivery_service.php */
-/* Location: ./app/libraries/service/Delivery_service.php */
+

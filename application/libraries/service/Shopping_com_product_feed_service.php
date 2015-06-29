@@ -134,5 +134,4 @@ class Shopping_com_product_feed_service extends Data_feed_service
     }
 }
 
-/* End of file shopping_com_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Shopping_com_product_feed_service.php */
+

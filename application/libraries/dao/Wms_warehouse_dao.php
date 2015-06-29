@@ -36,5 +36,4 @@ class Wms_warehouse_dao extends Base_dao
     }
 }
 
-/* End of file wms_warehouse_dao.php */
-/* Location: ./system/application/libraries/dao/Wms_warehouse_dao.php */
+

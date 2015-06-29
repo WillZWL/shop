@@ -13,5 +13,4 @@ class Compensation_reason_service extends Base_service
     }
 }
 
-/* End of file compensation_reason_service.php */
-/* Location: ./app/libraries/service/Compensation_reason_service.php */
+

@@ -51,5 +51,4 @@ class Db_cache_service extends Base_service
         return $cache_data;
     }
 }
-/* End of file Db_cache_service.php */
-/* Location: ./system/application/libraries/service/Db_cache_service.php */
+

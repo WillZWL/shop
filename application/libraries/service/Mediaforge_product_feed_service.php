@@ -358,5 +358,5 @@ class Mediaforge_product_feed_service extends Data_feed_service
     }
 }
 
-/* End of file Mediaforge_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Mediaforge_product_feed_service.php */
+
+

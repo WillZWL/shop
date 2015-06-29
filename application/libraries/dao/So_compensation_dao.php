@@ -74,5 +74,4 @@ class So_compensation_dao extends Base_dao
     }
 }
 
-/* End of file so_compensation_dao.php */
-/* Location: ./app/libraries/dao/So_compensation_dao.php */
+

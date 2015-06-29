@@ -29,5 +29,4 @@ class Aftership_report_model extends Sales_report_model
 
 }
 
-/* End of file aftership_report_model.php */
-/* Location: ./system/application/models/report/aftership_report_model.php */
+

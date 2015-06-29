@@ -235,5 +235,4 @@ class Promotion_code extends MY_Controller
     }
 }
 
-/* End of file promotion_code.php */
-/* Location: ./system/application/controllers/promotion_code.php */
+

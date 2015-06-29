@@ -340,5 +340,4 @@ class Order_reassessment extends MY_Controller
     }
 }
 
-/* End of file supplier.php */
-/* Location: ./system/application/controllers/supply/supplier.php */
+

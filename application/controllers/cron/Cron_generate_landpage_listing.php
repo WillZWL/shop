@@ -49,5 +49,5 @@ class Cron_generate_landpage_listing extends MY_Controller
     }
 }
 
-/* End of file cron_generate_landpage_listing.php */
-/* Location: ./app/controllers/cron_generate_landpage_listing.php */
+
+

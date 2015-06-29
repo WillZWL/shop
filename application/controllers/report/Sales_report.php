@@ -253,5 +253,4 @@ class Sales_report extends MY_Controller
 
 }
 
-/* End of file purchaser.php */
-/* Location: ./system/application/controllers/report/inventory/stock_valuation.php */
+

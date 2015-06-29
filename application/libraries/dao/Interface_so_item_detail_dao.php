@@ -36,5 +36,4 @@ class Interface_so_item_detail_dao extends Base_dao
     }
 }
 
-/* End of file so_item_detail_dao.php */
-/* Location: ./system/application/libraries/dao/So_item_detail_dao.php */
+

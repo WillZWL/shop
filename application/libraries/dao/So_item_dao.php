@@ -148,5 +148,4 @@ class So_item_dao extends Base_dao
     }
 }
 
-/* End of file so_item_dao.php */
-/* Location: ./system/application/libraries/dao/So_item_dao.php */
+

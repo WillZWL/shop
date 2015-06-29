@@ -273,5 +273,4 @@ class Rma extends MY_Controller
     }
 }
 
-/* End of file rma.php */
-/* Location: ./system/application/controllers/rma.php */
+

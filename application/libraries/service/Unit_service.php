@@ -35,5 +35,4 @@ class Unit_service extends Base_service
     }
 }
 
-/* End of file unit_service.php */
-/* Location: ./system/application/libraries/service/Unit_service.php */
+

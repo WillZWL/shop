@@ -304,5 +304,5 @@ class Freight extends Freight_helper
     }
 }
 
-/* End of file freight.php */
-/* Location: ./system/application/controllers/freight.php */
+
+

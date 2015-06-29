@@ -120,5 +120,4 @@ class Delivery_dao extends Base_dao
     */
 }
 
-/* End of file delivery_dao.php */
-/* Location: ./system/application/libraries/dao/Delivery_dao.php */
+

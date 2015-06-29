@@ -29,5 +29,5 @@ class Currency_model extends CI_Model
     }
 }
 
-/* End of file currency_model.php */
-/* Location: ./system/application/models/currency_model.php */
+
+

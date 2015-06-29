@@ -47,5 +47,4 @@ class Interface_flex_rolling_reserve_dao extends Base_dao
     }
 }
 
-/* End of file interface_flex_rolling_reserve_dao.php */
-/* Location: ./app/libraries/dao/Interface_flex_rolling_reserve_dao.php */
+

@@ -102,5 +102,5 @@ class On_hold_admin_model extends CI_Model
     }
 }
 
-/* End of file credit_check_model.php */
-/* Location: ./system/application/models/credit_check_model.php */
+
+

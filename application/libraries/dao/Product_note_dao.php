@@ -73,5 +73,4 @@ class Product_note_dao extends Base_dao
     }
 
 }
-/* End of file product_note_dao.php */
-/* Location: ./system/application/libraries/dao/Currency_dao.php */
+

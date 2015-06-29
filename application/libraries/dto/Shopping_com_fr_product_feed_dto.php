@@ -541,5 +541,4 @@ class Shopping_com_fr_product_feed_dto extends Base_dto
     }
 }
 
-/* End of file shopping_com_fr_product_feed_dto.php */
-/* Location: ./system/application/libraries/dto/shopping_com_fr_product_feed_dto.php */
+

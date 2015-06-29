@@ -165,5 +165,4 @@ class Product_custom_class_dto extends Base_dto
 
 }
 
-/* End of file product_custom_class_dto.php */
-/* Location: ./system/application/libraries/dto/product_custom_class_dto.php */
+

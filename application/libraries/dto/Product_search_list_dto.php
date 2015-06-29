@@ -584,5 +584,4 @@ class Product_search_list_dto extends Base_dto
     }
 }
 
-/* End of file product_search_list_dto.php */
-/* Location: ./system/application/libraries/dto/product_search_list_dto.php */
+

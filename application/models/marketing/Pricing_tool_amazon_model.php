@@ -290,5 +290,5 @@ class Pricing_tool_amazon_model extends Pricing_tool_model
         echo $js;
     }
 }
-/* End of file pricing_tool_amazon_model.php */
-/* Location: ./system/application/models/pricing_tool_amazon_model.php */
+
+

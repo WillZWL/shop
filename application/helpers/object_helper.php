@@ -155,5 +155,4 @@ function obj_to_query($obj)
 
 }
 
-/* End of file object_helper.php */
-/* Location: ./system/application/helpers/object_helper.php */
+

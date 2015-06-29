@@ -65,5 +65,4 @@ class Delayed_order_dao extends Base_dao
         return $this->common_get_list($where, $option, $classname = "");
     }
 }
-/* End of file delayed_order_dao.php */
-/* Location: ./system/application/libraries/dao/Delayed_order_dao.php */
+

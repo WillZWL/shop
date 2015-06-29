@@ -341,5 +341,4 @@ class Complementary_accessory_list_dto extends Base_dto
     }
 }
 
-/* End of file complementary_accessory_list_dto.php */
-/* Location: ./system/application/libraries/dto/complementary_accessory_list_dto.php */
+

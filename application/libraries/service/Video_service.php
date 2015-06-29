@@ -41,5 +41,4 @@ class Video_service extends Base_service
     }
 }
 
-/* End of file video_service.php */
-/* Location: ./app/libraries/service/Video_service.php */
+

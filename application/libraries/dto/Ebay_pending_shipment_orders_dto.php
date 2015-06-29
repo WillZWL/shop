@@ -99,5 +99,4 @@ class Ebay_pending_shipment_orders_dto extends Base_dto
     }
 }
 
-/* End of file ebay_pending_shipment_orders_dto.php */
-/* Location: ./system/application/libraries/dto/ebay_pending_shipment_orders_dto.php */
+

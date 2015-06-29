@@ -37,5 +37,4 @@ class Colour_service extends Base_service
     }
 }
 
-/* End of file colour_service.php */
-/* Location: ./system/application/libraries/service/Colour_service.php */
+

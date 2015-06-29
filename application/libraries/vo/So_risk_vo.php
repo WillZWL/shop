@@ -249,5 +249,4 @@ class So_risk_vo extends Base_vo
 
 }
 
-/* End of file so_risk_vo.php */
-/* Location: ./app/libraries/vo/so_risk_vo.php */
+

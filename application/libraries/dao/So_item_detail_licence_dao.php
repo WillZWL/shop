@@ -35,5 +35,4 @@ class So_item_detail_licence_dao extends Base_dao
     }
 }
 
-/* End of file so_item_detail_licence_dao.php */
-/* Location: ./app/libraries/dao/So_item_detail_licence_dao.php */
+

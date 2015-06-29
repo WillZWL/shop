@@ -44,5 +44,4 @@ function fetch_operator(&$ar_array, $rskey, $rsvalue)
         }
     }
 }
-/* End of file operator_helper.php */
-/* Location: ./system/application/helpers/operator_helper.php */
+

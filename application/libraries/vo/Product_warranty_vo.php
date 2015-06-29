@@ -133,5 +133,4 @@ class Product_warranty_vo extends Base_vo
 
 }
 
-/* End of file product_warranty_vo.php */
-/* Location: ./app/libraries/vo/product_warranty_vo.php */
+

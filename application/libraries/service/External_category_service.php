@@ -13,5 +13,4 @@ class External_category_service extends Base_service
     }
 }
 
-/* End of file external_category_service.php */
-/* Location: ./app/libraries/service/External_category_service.php */
+

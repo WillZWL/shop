@@ -35,5 +35,4 @@ class Price_extend_dao extends Base_dao
     }
 }
 
-/* End of file price_extend_dao.php */
-/* Location: ./app/libraries/dao/Price_extend_dao.php */
+

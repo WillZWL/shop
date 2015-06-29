@@ -36,5 +36,4 @@ class Delivery_surcharge_dao extends Base_dao
     }
 }
 
-/* End of file delivery_surcharge_dao.php */
-/* Location: ./system/application/libraries/dao/Delivery_surcharge_dao.php */
+

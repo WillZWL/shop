@@ -206,5 +206,4 @@ class Supplier extends Supplier_helper
     }
 }
 
-/* End of file supplier.php */
-/* Location: ./system/application/controllers/supply/supplier.php */
+

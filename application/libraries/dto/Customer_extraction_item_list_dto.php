@@ -419,5 +419,4 @@ class Customer_extraction_item_list_dto extends Base_dto
 }
 
 
-/* End of file customer_extraction_item_list_dto.php */
-/* Location: ./system/application/libraries/dto/customer_extraction_item_list_dto.php */
+

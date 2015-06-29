@@ -82,5 +82,4 @@ class Shopbot_my_product_feed_service extends Apac_product_feed_service
     }
 }
 
-/* End of file shopbot_nz_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Shopbot_nz_product_feed_service.php */
+

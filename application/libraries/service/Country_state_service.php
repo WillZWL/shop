@@ -14,5 +14,4 @@ class Country_state_service extends Base_service
     }
 }
 
-/* End of file country_state_service.php */
-/* Location: ./system/application/libraries/service/Country_state_service.php */
+

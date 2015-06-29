@@ -117,5 +117,5 @@ class Price_rakuten_service extends Price_service
     //  return $result;
     // }
 }
-/* End of file price_rakuten_service.php */
-/* Location: ./system/application/libraries/service/Price_rakuten_service.php */
+
+

@@ -36,5 +36,4 @@ class So_payment_status_dao extends Base_dao
     }
 }
 
-/* End of file so_payment_status_dao.php */
-/* Location: ./system/application/libraries/dao/So_payment_status_dao.php */
+

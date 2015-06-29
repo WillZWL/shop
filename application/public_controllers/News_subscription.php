@@ -39,5 +39,4 @@ class News_subscription extends PUB_Controller
 
 }
 
-/* End of file news_subscription.php */
-/* Location: ./app/public_controller/news_subscription.php */
+

@@ -92,5 +92,4 @@ class Interface_inventory_dao extends Base_dao
     }
 }
 
-/* End of file interface_inventory_dao.php */
-/* Location: ./system/application/libraries/dao/Interface_inventory_dao.php */
+

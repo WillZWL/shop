@@ -35,5 +35,4 @@ class Ipligence_dao extends Base_dao
     }
 }
 
-/* End of file ipligence_dao.php */
-/* Location: ./system/application/libraries/dao/Ipligence_dao.php */
+

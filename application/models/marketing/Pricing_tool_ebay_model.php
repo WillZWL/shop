@@ -225,5 +225,5 @@ class Pricing_tool_ebay_model extends Pricing_tool_model
     }
 
 }
-/* End of file pricing_tool_ebay_model.php */
-/* Location: ./system/application/models/pricing_tool_ebay_model.php */
+
+

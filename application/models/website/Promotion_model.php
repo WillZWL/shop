@@ -40,5 +40,4 @@ class Promotion_model extends CI_Model
     }
 }
 
-/* End of file promotion_model.php */
-/* Location: ./app/models/promotion_model.php */
+

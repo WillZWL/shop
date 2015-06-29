@@ -329,5 +329,4 @@ class Kelkoo_product_feed_service extends Data_feed_service
     }
 }
 
-/* End of file Kelkoo_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Kelkoo_product_feed_service.php */
+

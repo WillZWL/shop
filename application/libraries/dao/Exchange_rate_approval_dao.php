@@ -36,5 +36,4 @@ class Exchange_rate_approval_dao extends Base_dao
     }
 }
 
-/* End of file exchange_rate_approval_dao.php */
-/* Location: ./system/application/libraries/dao/Exchange_rate_approval_dao.php */
+

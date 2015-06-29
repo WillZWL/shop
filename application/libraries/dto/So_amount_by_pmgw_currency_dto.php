@@ -74,5 +74,4 @@ class So_amount_by_pmgw_currency_dto extends Base_dto
         $this->platform_country_id = $value;
     }
 }
-/* End of file so_amount_by_pmgw_currency_dto.php */
-/* Location: ./system/application/libraries/dto/so_amount_by_pmgw_currency_dto.php */
+

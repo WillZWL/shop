@@ -71,5 +71,4 @@ class Product_shipping_override_dto extends Base_dto
     }
 }
 
-/* End of file product_shipping_override_dto.php */
-/* Location: ./system/application/libraries/dto/product_shipping_override_dto.php */
+

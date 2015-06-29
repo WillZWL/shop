@@ -478,5 +478,4 @@ class Shipment_info_to_courier_dhl_dto extends Base_dto
     }
 }
 
-/* End of file shipment_info_to_courier_dhl_dto.php */
-/* Location: ./system/application/libraries/dto/shipment_info_to_courier_dhl_dto.php */
+

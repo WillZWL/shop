@@ -116,5 +116,5 @@ class Batch_dao extends Base_dao
 
 }
 
-/* End of file batch_dao.php */
-/* Location: ./system/application/libraries/dao/Batch_dao.php */
+
+

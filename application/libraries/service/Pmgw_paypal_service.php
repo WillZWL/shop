@@ -746,5 +746,4 @@ class Pmgw_paypal_service extends Pmgw_voucher
     }
 }
 
-/* End of file pmgw_paypal_service.php */
-/* Location: ./system/application/libraries/service/Pmgw_paypal_service.php */
+

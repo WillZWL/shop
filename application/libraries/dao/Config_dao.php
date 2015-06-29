@@ -45,7 +45,7 @@ class Config_dao extends Base_dao
     }
 }
 
-/* End of file config_dao.php */
-/* Location: ./system/application/libraries/dao/Config_dao.php */
+
+
 
 ?>

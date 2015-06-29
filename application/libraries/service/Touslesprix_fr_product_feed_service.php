@@ -50,5 +50,4 @@ class Touslesprix_fr_product_feed_service extends Standard_fr_product_feed_servi
     }
 }
 
-/* End of file Standard_fr_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Standard_fr_product_feed_service.php */
+

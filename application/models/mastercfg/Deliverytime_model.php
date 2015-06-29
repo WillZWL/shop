@@ -13,5 +13,5 @@ class Deliverytime_model extends CI_Model
 
 }
 
-/* End of file deliverytime_model.php */
-/* Location: ./system/application/mastercfg/deliverytime_model.php */
+
+

@@ -769,5 +769,4 @@ class Phone_sales extends MY_Controller
     }
 }
 
-/* End of file product.php */
-/* Location: ./system/application/controllers/product.php */
+

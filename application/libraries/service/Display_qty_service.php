@@ -175,5 +175,4 @@ class Display_qty_service extends Base_service
     }
 }
 
-/* End of file display_qty_service.php */
-/* Location: ./app/libraries/dao/Display_qty_service.php */
+

@@ -200,5 +200,4 @@ class Domain_platform_w_lang_dto extends Base_dto
     }
 
 }
-/* End of file domain_platform_w_lang_dto.php */
-/* Location: ./system/application/libraries/dto/domain_platform_w_lang_dto.php */
+

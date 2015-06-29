@@ -36,5 +36,4 @@ class Attachment_dao extends Base_dao
     }
 }
 
-/* End of file attachment_dao.php */
-/* Location: ./system/application/libraries/dao/Attachment_dao.php */
+

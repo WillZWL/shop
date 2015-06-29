@@ -151,6 +151,6 @@ class Pmgw_report_paypal_hk_dto extends Base_dto
         $this->so_no = $value;
     }
 }
-/* End of file pmgw_report_paypal_hk_dto.php */
-/* Location: ./system/application/libraries/dto/pmgw_report_paypal_hk_dto.php */
+
+
 

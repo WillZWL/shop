@@ -10,6 +10,6 @@ class Preorder_model extends CI_Model
     }
 }
 
-/* End of file preorder_model.php */
-/* Location: ./system/application/models/preorder_model.php */
+
+
 ?>

@@ -80,5 +80,5 @@ class Dispatch_email_service extends Base_service
 }
 
 
-/* End of file Dispatch_email_service.php */
-/* Location: ./system/application/libraries/service/Dispatch_email_service.php */
+
+

@@ -13,5 +13,4 @@ class Auto_refund_service extends Base_service
     }
 }
 
-/* End of file auto_refund_service.php */
-/* Location: ./app/libraries/service/Auto_refund_service.php */
+

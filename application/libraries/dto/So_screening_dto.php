@@ -968,5 +968,4 @@ Class So_screening_dto extends Base_dto
     }
 }
 
-/* End of file so_w_payment_dto.php */
-/* Location: ./app/libraries/dto/so_w_payment_dto.php */
+

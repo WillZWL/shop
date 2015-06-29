@@ -199,6 +199,3 @@ class Review_order extends PUB_Controller
         }
     }
 }
-
-/* End of file review_order.php */
-/* Location: ./app/public_controllers/review_order.php */

@@ -76,5 +76,4 @@ class Rpt_skype_service extends Base_service
 
 }
 
-/* End of file rpt_skype_service.php */
-/* Location: ./system/application/libraries/service/Rpt_skype_service.php */
+

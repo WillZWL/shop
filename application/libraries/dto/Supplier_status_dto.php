@@ -88,5 +88,4 @@ class Supplier_status_dto extends Base_dto
     }
 }
 
-/* End of file supplier_state_dto.php */
-/* Location: ./system/application/libraries/dto/supplier_state_dto.php */
+

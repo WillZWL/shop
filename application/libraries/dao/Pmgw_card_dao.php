@@ -37,5 +37,4 @@ class Pmgw_card_dao extends Base_dao
 
 }
 
-/* End of file pmgw_card_dao.php */
-/* Location: ./system/application/libraries/dao/Pmgw_card_dao.php */
+

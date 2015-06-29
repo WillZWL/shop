@@ -116,5 +116,4 @@ class So_w_margin_dto extends Base_dto
 
 }
 
-/* End of file so_w_margin_dto.php */
-/* Location: ./system/application/libraries/dto/so_w_margin_dto.php */
+

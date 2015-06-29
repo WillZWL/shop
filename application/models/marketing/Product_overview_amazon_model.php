@@ -92,5 +92,5 @@ class Product_overview_amazon_model extends Product_overview_model
 
 }
 
-/* End of file product_overview_amazon_model.php */
-/* Location: ./system/application/models/product_overview_amazon_model.php */
+
+

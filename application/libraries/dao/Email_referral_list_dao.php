@@ -45,5 +45,4 @@ class Email_referral_list_dao extends Base_dao
     }
 }
 
-/* End of file Email_referral_list_dao.php */
-/* Location: ./system/application/libraries/dao/Email_referral_list_dao.php */
+

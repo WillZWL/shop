@@ -35,5 +35,4 @@ class Integrated_order_fulfillment_dao extends Base_dao
     }
 }
 
-/* End of file integrated_order_fulfillment_dao.php */
-/* Location: ./app/libraries/dao/Integrated_order_fulfillment_dao.php */
+

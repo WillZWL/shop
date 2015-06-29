@@ -20,5 +20,4 @@ class Version_comparison_report_model extends CI_Model
     }
 }
 
-/* End of file version_comparison_report_model.php */
-/* Location: ./system/application/models/report/version_comparison_report_model.php */
+

@@ -26,5 +26,5 @@ class Price_skype_service extends Price_service
     }
 
 }
-/* End of file price_skype_service.php */
-/* Location: ./system/application/libraries/service/Price_skype_service.php */
+
+

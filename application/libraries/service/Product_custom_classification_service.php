@@ -15,5 +15,4 @@ class Product_custom_classification_service extends Base_service
 
 }
 
-/* End of file product_custom_classification_service.php */
-/* Location: ./system/application/libraries/service/Product_custom_classification_service.php */
+

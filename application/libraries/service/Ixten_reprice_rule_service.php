@@ -38,5 +38,4 @@ class Ixten_reprice_rule_service extends Base_service
     }
 }
 
-/* End of file ixten_reprice_rule_service.php */
-/* Location: ./app/libraries/service/Ixten_reprice_rule_service.php */
+

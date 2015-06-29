@@ -32,5 +32,5 @@ class Cron_exchange_rate extends MY_Controller
     }
 }
 
-/* End of file cCron_exchange_rate.php */
-/* Location: ./app/controllers/cron_exchange_rate.php */
+
+

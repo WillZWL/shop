@@ -36,5 +36,5 @@ class Cron_daily_order_email extends MY_Controller
     }
 }
 
-/* End of file Cron_daily_order_email.php */
-/* Location: ./app/controllers/cron_daily_order_email.php */
+
+

@@ -67,5 +67,4 @@ class Product_content_dao extends Base_dao
     }
 }
 
-/* End of file product_content_dao.php */
-/* Location: ./system/application/libraries/dao/Product_content_dao.php */
+

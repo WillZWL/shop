@@ -76,5 +76,4 @@ class Application_feature_dao extends Base_dao
     }
 }
 
-/* End of file application_feature_dao.php */
-/* Location: ./app/libraries/dao/Application_feature_dao.php */
+

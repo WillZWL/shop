@@ -92,5 +92,4 @@ class Ra_product_dao extends Base_dao
     }
 }
 
-/* End of file ra_product_dao.php */
-/* Location: ./app/libraries/dao/Ra_product_dao.php */
+

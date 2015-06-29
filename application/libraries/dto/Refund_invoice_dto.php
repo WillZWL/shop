@@ -253,5 +253,4 @@ class Refund_invoice_dto extends Base_dto
     }
 }
 
-/* End of file refund_invoice_dto.php */
-/* Location: ./system/application/libraries/dto/refund_invoice_dto.php */
+

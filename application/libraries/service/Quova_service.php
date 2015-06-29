@@ -58,5 +58,4 @@ class Quova_service extends Base_service
 
 }
 
-/* End of file quova_service.php */
-/* Location: ./system/application/libraries/service/Quova_service.php */
+

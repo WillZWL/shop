@@ -24,5 +24,4 @@ class Db_cache_product_feed_service extends Base_service
         return $this->get_dao()->get_xml_skype_feed($data);
     }
 }
-/* End of file Db_cache_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Cache_product_feed_service.php */
+

@@ -23,5 +23,4 @@ class Batch extends MY_Controller
 
 }
 
-/* End of file batch.php */
-/* Location: ./system/application/controllers/batch.php */
+

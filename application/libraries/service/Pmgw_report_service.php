@@ -1107,5 +1107,4 @@ abstract class Pmgw_report_service extends Base_service
     }
 }
 
-/* End of file pmgw_report_service.php */
-/* Location: ./system/application/libraries/service/Pmgw_report_service.php */
+

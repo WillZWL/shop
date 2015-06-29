@@ -274,5 +274,4 @@ class User_dao extends Base_dao
 
 }
 
-/* End of file user_dao.php */
-/* Location: ./system/application/libraries/dao/User_dao.php */
+

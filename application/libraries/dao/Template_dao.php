@@ -42,5 +42,4 @@ class Template_dao extends Base_dao
 
 }
 
-/* End of file template_dao.php */
-/* Location: ./system/application/libraries/dao/Template_dao.php */
+

@@ -47,5 +47,4 @@ class Func_option_dao extends Base_dao
 
 }
 
-/* End of file func_option_dao.php */
-/* Location: ./system/application/libraries/dao/Func_option_dao.php */
+

@@ -13,5 +13,4 @@ class Country_local_warehouse_service extends Base_service
     }
 }
 
-/* End of file country_local_warehouse_service.php */
-/* Location: ./app/libraries/dao/Country_local_warehouse_service.php */
+

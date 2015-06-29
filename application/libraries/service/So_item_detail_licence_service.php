@@ -13,5 +13,4 @@ class So_item_detail_licence_service extends Base_service
     }
 }
 
-/* End of file so_item_detail_licence_dao.php */
-/* Location: ./app/libraries/dao/So_item_detail_licence_dao.php */
+

@@ -274,5 +274,5 @@ class So_bank_transfer_dao extends Base_dao
     }
 
 }
-/* End of file so_bank_transfer_dao.php */
-/* Location: ./system/application/libraries/dao/So_bank_transfer_dao.php */
+
+

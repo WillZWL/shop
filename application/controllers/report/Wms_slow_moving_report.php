@@ -44,5 +44,4 @@ class Wms_slow_moving_report extends MY_Controller
     }
 }
 
-/* End of file wms_slow_moving_report.php */
-/* Location: ./system/application/controllers/report/wms_slow_moving_report.php */
+

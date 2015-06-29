@@ -131,5 +131,4 @@ class Product_sd_w_lang_dto extends Base_dto
     }
 }
 
-/* End of file product_spec_with_sku_dto.php */
-/* Location: ./system/application/libraries/dto/product_spec_with_sku_dto.php */
+

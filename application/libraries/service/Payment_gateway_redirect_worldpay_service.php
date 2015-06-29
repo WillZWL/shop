@@ -310,5 +310,5 @@ class Payment_gateway_redirect_worldpay_service extends Payment_gateway_redirect
     }
 }
 
-/* End of file payment_gateway_redirect_worldpay_service.php */
-/* Location: ./system/application/libraries/service/Payment_gateway_redirect_worldpay_service.php */
+
+

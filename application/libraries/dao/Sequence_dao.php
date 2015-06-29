@@ -41,5 +41,4 @@ class Sequence_dao extends Base_dao
     }
 }
 
-/* End of file sequence_dao.php */
-/* Location: ./system/application/libraries/dao/Sequence_dao.php */
+

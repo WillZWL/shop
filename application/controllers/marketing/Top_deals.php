@@ -358,5 +358,4 @@ class Top_deals extends MY_Controller
 
 }
 
-/* End of file top_deals.php */
-/* Location: ./app/controllers/top_deals.php */
+

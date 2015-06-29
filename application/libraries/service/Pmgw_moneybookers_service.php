@@ -733,5 +733,4 @@ class Pmgw_moneybookers_service extends Pmgw_voucher
     }
 }
 
-/* End of file pmgw_moneybookers_service.php */
-/* Location: ./system/application/libraries/service/Pmgw_moneybookers_service.php */
+

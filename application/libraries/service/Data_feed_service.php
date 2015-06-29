@@ -342,5 +342,4 @@ abstract class Data_feed_service extends Base_service
     }
 }
 
-/* End of file data_feed_service.php */
-/* Location: ./system/application/libraries/service/Data_feed_service.php */
+

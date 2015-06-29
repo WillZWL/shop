@@ -23,5 +23,4 @@ class Customer_service_info_service extends Base_service
     }
 }
 
-/* End of file customer_service_info_dao.php */
-/* Location: ./app/libraries/dao/Customer_service_info_dao.php */
+

@@ -608,5 +608,5 @@ class Product_model extends CI_Model
         return $result;
     }
 }
-/* End of file product_model.php */
-/* Location: ./system/application/models/product_model.php */
+
+

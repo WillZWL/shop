@@ -138,5 +138,4 @@ class Freight_cat_service extends Base_service
     }
 }
 
-/* End of file freight_cat_service.php */
-/* Location: ./system/application/libraries/service/Freight_cat_service.php */
+

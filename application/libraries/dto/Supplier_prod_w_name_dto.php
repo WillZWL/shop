@@ -233,5 +233,4 @@ class Supplier_prod_w_name_dto extends Base_dto
     }
 
 }
-/* End of file supplier_prod_w_name_dto.php */
-/* Location: ./system/application/libraries/dto/supplier_prod_w_name_dto.php */
+

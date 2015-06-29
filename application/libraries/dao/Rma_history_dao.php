@@ -36,5 +36,4 @@ class Rma_history_dao extends Base_dao
     }
 }
 
-/* End of file rma_history_dao.php */
-/* Location: ./system/application/libraries/dao/Rma_history_dao.php */
+

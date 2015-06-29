@@ -228,5 +228,5 @@ class Order_email_service extends Base_service
     }
 }
 
-/* End of file order_email_service.php */
-/* Location: ./system/application/libraries/service/Order_email_service.php */
+
+

@@ -144,5 +144,5 @@ class Bundle_service extends Base_service
     }
 }
 
-/* End of file bundle_service.php */
-/* Location: ./system/application/libraries/service/Bundle_service.php */
+
+

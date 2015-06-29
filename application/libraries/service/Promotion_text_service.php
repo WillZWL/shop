@@ -60,5 +60,4 @@ class Promotion_text_service extends Base_service
     }
 }
 
-/* End of file promotion_text_dao.php */
-/* Location: ./app/libraries/dao/Promotion_text_dao.php */
+

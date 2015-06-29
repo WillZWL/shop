@@ -37,5 +37,4 @@ class So_item_profit_dao extends Base_dao
 
 }
 
-/* End of file so_item_profit_dao.php */
-/* Location: ./system/application/libraries/dao/So_item_profit_dao.php */
+

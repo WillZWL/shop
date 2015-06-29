@@ -20,5 +20,4 @@ class Release_order_report_model extends CI_Model
     }
 }
 
-/* End of file release_order_report_model.php */
-/* Location: ./system/application/models/report/release_order_report_model.php */
+

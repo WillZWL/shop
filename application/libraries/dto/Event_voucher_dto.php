@@ -53,5 +53,4 @@ class Event_voucher_dto extends Base_dto
 
 }
 
-/* End of file event_voucher_dto.php */
-/* Location: ./system/application/libraries/dto/event_voucher_dto */
+

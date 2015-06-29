@@ -213,6 +213,6 @@ class Delivery_charge_model extends CI_Model
 
 }
 
-/* End of file delivery_charge_model.php */
-/* Location: ./system/application/models/delivery_charge_model.php */
+
+
 ?>

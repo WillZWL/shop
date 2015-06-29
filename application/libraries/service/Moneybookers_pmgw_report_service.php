@@ -394,5 +394,4 @@ class Moneybookers_pmgw_report_service extends Pmgw_report_service
     }
 }
 
-/* End of file paypal_hk_pmgw_report_service.php */
-/* Location: ./system/application/libraries/service/Paypal_hk_pmgw_report_service.php */
+

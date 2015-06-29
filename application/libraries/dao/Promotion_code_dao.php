@@ -37,5 +37,5 @@ class Promotion_code_dao extends Base_dao
 
 }
 
-/* End of file promotion_code_dao.php */
-/* Location: ./system/application/libraries/dao/Promotion_code_dao.php */
+
+

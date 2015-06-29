@@ -96,5 +96,4 @@ class Prod_bundle_dto extends Base_dto
     }
 }
 
-/* End of file prod_bundle_list_dto.php */
-/* Location: ./app/libraries/dao/Product_dao.php */
+

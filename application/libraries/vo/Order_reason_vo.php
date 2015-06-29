@@ -201,5 +201,4 @@ class Order_reason_vo extends Base_vo
 
 }
 
-/* End of file order_reason_vo.php */
-/* Location: ./app/libraries/vo/order_reason_vo.php */
+

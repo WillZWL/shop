@@ -126,5 +126,4 @@ class Shiptype_dao extends Base_dao
     }
 }
 
-/* End of file Pricing_tool_dao.php */
-/* Location: ./system/application/libraries/dao/Shiptype_dao.php */
+

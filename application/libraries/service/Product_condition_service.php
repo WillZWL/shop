@@ -13,5 +13,4 @@ class Product_condition_service extends Base_service
     }
 }
 
-/* End of file product_condition_service.php */
-/* Location: ./app/libraries/service/Product_condition_service.php */
+

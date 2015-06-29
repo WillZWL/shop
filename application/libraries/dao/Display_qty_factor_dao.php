@@ -35,5 +35,4 @@ class Display_qty_factor_dao extends Base_dao
     }
 }
 
-/* End of file display_qty_factor_dao.php */
-/* Location: ./app/libraries/dao/Display_qty_factor_dao.php */
+

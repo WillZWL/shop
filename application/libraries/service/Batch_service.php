@@ -3882,5 +3882,5 @@ class Batch_service extends Base_service
 }
 
 
-/* End of file batch_service.php */
-/* Location: ./system/application/libraries/service/Batch_service.php */
+
+

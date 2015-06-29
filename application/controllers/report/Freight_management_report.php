@@ -195,5 +195,4 @@ class Freight_management_report extends MY_Controller
     }
 }
 
-/* End of file freight_management_report.php */
-/* Location: ./system/application/controllers/report/inventory/freight_management_report.php */
+

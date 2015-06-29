@@ -234,5 +234,4 @@ class Fnac_pmgw_report_service extends Pmgw_report_service
     }
 }
 
-/* End of file fnac_pmgw_report_service.php */
-/* Location: ./system/application/libraries/service/Fnac_pmgw_report_service.php */
+

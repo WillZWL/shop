@@ -177,5 +177,4 @@ class Interface_finance_dispatch_vo extends Base_vo
 
 }
 
-/* End of file interface_finance_dispatch_vo.php */
-/* Location: ./app/libraries/vo/interface_finance_dispatch_vo.php */
+

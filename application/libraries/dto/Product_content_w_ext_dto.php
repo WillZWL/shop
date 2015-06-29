@@ -212,5 +212,4 @@ class Product_content_w_ext_dto extends Base_dto
     }
 }
 
-/* End of file product_content_w_ext_dto.php */
-/* Location: ./system/application/libraries/dto/product_content_w_ext_dto.php */
+

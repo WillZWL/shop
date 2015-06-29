@@ -22,5 +22,4 @@ class Batch_model extends CI_Model
     }
 }
 
-/* End of file batch_model.php */
-/* Location: ./system/application/models/integration/batch_model.php */
+

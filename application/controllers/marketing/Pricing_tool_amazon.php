@@ -394,5 +394,4 @@ class Pricing_tool_amazon extends MY_Controller
     }
 }
 
-/* End of file pricing_tool_ebay.php */
-/* Location: ./system/application/controllers/pricing_tool_ebay.php */
+

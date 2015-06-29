@@ -82,5 +82,4 @@ class Colour_dao extends Base_dao
     }
 }
 
-/* End of file colour_dao.php */
-/* Location: ./system/application/libraries/dao/Colour_dao.php */
+

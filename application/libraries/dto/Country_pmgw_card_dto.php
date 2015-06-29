@@ -180,5 +180,4 @@ class Country_pmgw_card_dto extends Base_dto
 
 }
 
-/* End of file country_pmgw_card_dto.php */
-/* Location: ./system/application/libraries/dto/country_pmgw_card_dto.php */
+

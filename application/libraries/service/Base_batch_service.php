@@ -239,5 +239,5 @@ class Base_batch_service extends Base_service
 }
 
 
-/* End of file base_batch_service.php */
-/* Location: ./system/application/libraries/service/Base_batch_service.php */
+
+

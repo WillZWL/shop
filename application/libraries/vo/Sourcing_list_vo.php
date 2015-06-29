@@ -225,5 +225,4 @@ class Sourcing_list_vo extends Base_vo
 
 }
 
-/* End of file sourcing_list_vo.php */
-/* Location: ./app/libraries/vo/sourcing_list_vo.php */
+

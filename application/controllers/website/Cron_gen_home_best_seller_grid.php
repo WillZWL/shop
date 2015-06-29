@@ -20,5 +20,4 @@ class Cron_gen_home_best_seller_grid extends MY_Controller
     }
 }
 
-/* End of file cron_gen_home_best_seller_grid.php */
-/* Location: ./app/controllers/cron_gen_home_best_seller_grid */
+

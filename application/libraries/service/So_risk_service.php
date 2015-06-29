@@ -13,5 +13,4 @@ class So_risk_service extends Base_service
     }
 }
 
-/* End of file so_risk_service.php */
-/* Location: ./app/libraries/service/So_risk_service.php */
+

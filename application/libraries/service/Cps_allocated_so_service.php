@@ -120,5 +120,4 @@ class Cps_allocated_so_service extends Base_service
     }
 }
 
-/* End of file cps_allocated_so_service.php */
-/* Location: ./app/libraries/service/Cps_allocated_so_service.php */
+

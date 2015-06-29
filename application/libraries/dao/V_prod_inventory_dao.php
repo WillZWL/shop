@@ -36,5 +36,4 @@ class V_prod_inventory_dao extends Base_dao
     }
 }
 
-/* End of file v_prod_inventory_dao.php */
-/* Location: ./system/application/libraries/dao/V_prod_inventory_dao.php */
+

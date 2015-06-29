@@ -8,5 +8,4 @@ interface Actable_service
     public function run($dto);
 }
 
-/* End of file actable_service.php */
-/* Location: ./system/application/libraries/service/Actable_service.php */
+

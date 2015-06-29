@@ -514,5 +514,5 @@ class Amfr_price_service extends Platform_price_service
 
 }
 
-/* End of file amfr_price_service.php */
-/* Location: ./system/application/libraries/service/Amfr_price_service.php */
+
+

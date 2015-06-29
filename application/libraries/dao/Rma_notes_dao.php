@@ -36,5 +36,4 @@ class Rma_notes_dao extends Base_dao
     }
 }
 
-/* End of file rma_notes_dao.php */
-/* Location: ./system/application/libraries/dao/Rma_notes_dao.php */
+

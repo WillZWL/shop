@@ -15,5 +15,4 @@ class Inventory_movement_model extends CI_Model
     }
 }
 
-/* End of file inventory_movement.php */
-/* Location: ./system/application/models/report/inventory_movement.php */
+

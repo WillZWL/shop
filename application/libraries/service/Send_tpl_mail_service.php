@@ -37,5 +37,4 @@ class Send_tpl_mail_service extends Handle_action_service
 
 }
 
-/* End of file send_tpl_mail_service.php */
-/* Location: ./system/application/libraries/service/Send_tpl_mail_service.php */
+

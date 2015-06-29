@@ -163,5 +163,4 @@ class Criteo_product_feed_dto extends Base_dto
 
 }
 
-/* End of file criteo_product_feed_dto.php */
-/* Location: ./system/application/libraries/dto/criteo_product_feed_dto.php */
+

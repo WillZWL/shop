@@ -274,5 +274,4 @@ class Home_model extends CI_Model
         return $this->website_service->get_prod_url($sku, $relative_path);
     }
 }
-/* End of file home_model.php */
-/* Location: ./app/models/website/home_model.php */
+

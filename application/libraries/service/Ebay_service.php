@@ -2660,5 +2660,4 @@ class Ebay_service extends Pmgw_voucher
     }
 }
 
-/* End of file ebay_service.php */
-/* Location: ./system/application/libraries/service/Ebay_service.php */
+

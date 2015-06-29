@@ -560,5 +560,5 @@ class Checkout_onepage extends Checkout_redirect_method
         }
     }
 }
-/* End of file checkout_one_page.php */
-/* Location: ./app/public_controllers/checkout_onepage.php */
+
+

@@ -210,5 +210,4 @@ class Checkout_facebook extends Checkout
     }
 }
 
-/* End of file Checkout_facebook.php */
-/* Location: ./app/public_controllers/Checkout_facebook.php */
+

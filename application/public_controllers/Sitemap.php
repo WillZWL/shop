@@ -175,6 +175,3 @@ class Sitemap extends PUB_Controller
     }
 
 }
-
-/* End of file sitemap.php */
-/* Location: ./app/public_controllers/sitemap.php */

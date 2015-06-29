@@ -35,5 +35,4 @@ class So_priority_score_dao extends Base_dao
     }
 }
 
-/* End of file so_priority_score_dao.php */
-/* Location: ./app/libraries/dao/So_priority_score_dao.php */
+

@@ -27,5 +27,4 @@ class Fulfillment_report_model extends CI_Model
     }
 }
 
-/* End of file sales_report_model.php */
-/* Location: ./system/application/models/report/sales_report_model.php */
+

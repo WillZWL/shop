@@ -63,5 +63,5 @@ class Cron_fnac extends MY_Controller
     }
 }
 
-/* End of file cron_fnac.php */
-/* Location: ./app/controllers/cron_fnac.php */
+
+

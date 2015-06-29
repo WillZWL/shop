@@ -36,5 +36,4 @@ class Delivery_type_dao extends Base_dao
     }
 }
 
-/* End of file delivery_type_dao.php */
-/* Location: ./system/application/libraries/dao/Delivery_type_dao.php */
+

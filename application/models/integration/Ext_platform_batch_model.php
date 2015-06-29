@@ -15,5 +15,4 @@ class Ext_platform_batch_model extends CI_Model
     }
 }
 
-/* End of file ext_batch_model.php */
-/* Location: ./system/application/models/integration/ext_batch_model.php */
+

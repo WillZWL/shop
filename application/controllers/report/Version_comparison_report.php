@@ -72,5 +72,4 @@ class Version_comparison_report extends MY_Controller
     }
 }
 
-/* End of file version_comparison_report.php */
-/* Location: ./system/application/controllers/report/inventory/version_comparison_report.php */
+

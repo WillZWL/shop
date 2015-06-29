@@ -70,5 +70,4 @@ class Email_address_dao extends Base_dao
     }
 }
 
-/* End of file email_address_dao.php */
-/* Location: ./system/application/libraries/dao/Email_address_dao.php */
+

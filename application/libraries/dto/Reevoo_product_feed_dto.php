@@ -133,5 +133,4 @@ class Reevoo_product_feed_dto extends Base_dto
     }
 }
 
-/* End of file reevoo_product_feed_dto.php */
-/* Location: ./system/application/libraries/dto/reevoo_product_feed_dto.php */
+

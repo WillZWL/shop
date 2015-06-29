@@ -102,5 +102,4 @@ class Pmgw_voucher extends Pmgw
     }
 }
 
-/* End of file pmgw_voucher.php */
-/* Location: ./system/application/libraries/service/Pmgw_voucher.php */
+

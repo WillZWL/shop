@@ -183,5 +183,4 @@ class Linkshare_product_feed_service extends Data_feed_service
     }
 }
 
-/* End of file linkshare_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Linkshare_product_feed_service.php */
+

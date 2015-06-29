@@ -35,5 +35,4 @@ class Product_condition_dao extends Base_dao
     }
 }
 
-/* End of file product_condition_dao.php */
-/* Location: ./app/libraries/dao/Product_condition_dao.php */
+

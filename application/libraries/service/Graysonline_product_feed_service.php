@@ -290,5 +290,4 @@ class Graysonline_product_feed_service extends Data_feed_service
     }
 }
 
-/* End of file graysonline_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Graysonline_product_feed_service.php */
+

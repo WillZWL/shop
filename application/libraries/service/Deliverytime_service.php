@@ -84,5 +84,4 @@ class Deliverytime_service extends Base_service
 
 }
 
-/* End of file deliverytime_service.php */
-/* Location: ./app/libraries/service/Deliverytime_service.php */
+

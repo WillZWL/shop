@@ -47,5 +47,4 @@ class Ra_prod_cat_service extends Base_service
 
 }
 
-/* End of file ra_prod_cat_service.php */
-/* Location: ./system/application/libraries/service/Ra_prod_cat_service.php */
+

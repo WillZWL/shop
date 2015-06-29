@@ -156,5 +156,4 @@ class Pick_of_the_day_service extends Landpage_listing_service
     }
 }
 
-/* End of file best_seller_service.php */
-/* Location: ./app/libraries/service/Best_seller.php */
+

@@ -170,5 +170,4 @@ class Supplier_dao extends Base_dao
     }
 }
 
-/* End of file supplier_dao.php */
-/* Location: ./system/application/libraries/dao/Supplier_dao.php */
+

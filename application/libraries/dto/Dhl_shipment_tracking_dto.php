@@ -178,5 +178,4 @@ class Dhl_shipment_tracking_dto extends Base_dto
 
 }
 
-/* End of file gen_dhl_shipment_tracking_feed.php */
-/* Location: ./system/application/libraries/dto/gen_dhl_shipment_tracking_feed.php */
+

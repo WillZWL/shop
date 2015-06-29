@@ -43,5 +43,4 @@ class Courier_w_region_dto extends Base_dto
     }
 }
 
-/* End of file courier_w_region_dto.php */
-/* Location: ./system/application/libraries/dto/courier_w_region_dto.php */
+

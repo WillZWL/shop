@@ -205,6 +205,6 @@ Class Purchase_order_dao extends Base_dao
     }
 }
 
-/* End of file purchase_order_dao.php */
-/* Location: ./system/application/libraries/dao/Purchase_order_dao.php */
+
+
 ?>

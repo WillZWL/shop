@@ -17,5 +17,4 @@ class So_release_order_service extends Base_service
     }
 }
 
-/* End of file so_release_order_service */
-/* Location: ./app/libraries/service/So_release_order_service.php */
+

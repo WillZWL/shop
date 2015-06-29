@@ -218,5 +218,4 @@ class Emailvision_data_extraction extends MY_Controller
     }
 }
 
-/* End of file emailvision_data_extraction.php */
-/* Location: ./system/application/controllers/report/emailvision_data_extraction.php */
+

@@ -64,5 +64,4 @@ class Subject_domain_detail_dao extends Base_dao
     */
 }
 
-/* End of file subject_domain_detail_dao.php */
-/* Location: ./system/application/libraries/dao/Subject_domain_detail_dao.php */
+

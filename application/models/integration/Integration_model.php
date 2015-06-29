@@ -138,5 +138,5 @@ class Integration_model extends CI_Model
     }
 }
 
-/* End of file integration_model.php */
-/* Location: ./system/application/models/integration/integration_model.php */
+
+

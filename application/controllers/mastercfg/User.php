@@ -238,5 +238,4 @@ class User extends MY_Controller
     }
 }
 
-/* End of file user.php */
-/* Location: ./system/application/controllers/user.php */
+

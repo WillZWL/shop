@@ -212,5 +212,4 @@ class Inv_mov_list_w_prod_name_dto extends Base_dto
     }
 }
 
-/* End of file inv_mov_list_w_prod_name_dto.php */
-/* Location: ./system/application/libraries/dto/inv_mov_list_w_prod_name_dto.php */
+

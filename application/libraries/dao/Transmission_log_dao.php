@@ -36,5 +36,4 @@ class Transmission_log_dao extends Base_dao
     }
 }
 
-/* End of file transmission_log_dao.php */
-/* Location: ./system/application/libraries/dao/Transmission_log_dao.php */
+

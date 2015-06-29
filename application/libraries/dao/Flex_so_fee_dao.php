@@ -54,5 +54,5 @@ class Flex_so_fee_dao extends Base_dao
     }
 }
 
-/* End of file flex_so_fee_dao.php */
-/* Location: ./system/application/libraries/dao/Flex_so_fee_dao.php */
+
+

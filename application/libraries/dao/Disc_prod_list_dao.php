@@ -37,5 +37,4 @@ class Disc_prod_list_dao extends Base_dao
 
 }
 
-/* End of file disc_prod_list_dao.php */
-/* Location: ./system/application/libraries/dao/Currency_dao.php */
+

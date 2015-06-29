@@ -35,5 +35,4 @@ class So_release_order_dao extends Base_dao
     }
 }
 
-/* End of file so_release_order_daoo.php */
-/* Location: ./app/libraries/dao/So_release_order_daoo.php */
+

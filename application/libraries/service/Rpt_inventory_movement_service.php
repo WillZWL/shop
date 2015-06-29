@@ -62,5 +62,4 @@ class Rpt_inventory_movement_service extends Report_service
     }
 }
 
-/* End of file rpt_inventory_movement_service.php */
-/* Location: ./system/application/libraries/service/Rpt_inventory_movement_service.php */
+

@@ -153,6 +153,6 @@ class Cron_delayed_order_email extends MY_Controller
     }
 }
 
-/* End of file Cron_delayed_order_email.php */
-/* Location: ./app/controllers/cron_delayed_order_email.php */
+
+
 ?>

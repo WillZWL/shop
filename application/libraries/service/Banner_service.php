@@ -98,5 +98,4 @@ class Banner_service extends Base_service
     }
 }
 
-/* End of file Adbanner_service.php */
-/* Location: ./system/application/libraries/service/Adbanner_service.php */
+

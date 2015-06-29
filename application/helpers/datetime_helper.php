@@ -17,5 +17,4 @@ function date_ex($format = "", $timestamp = "")
     return $date->format('d/m/Y');
 }
 
-/* End of file datetime_helper.php */
-/* Location: ./system/application/helpers/datetime_helper.php */
+

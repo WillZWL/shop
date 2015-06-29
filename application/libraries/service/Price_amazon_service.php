@@ -376,5 +376,5 @@ class Price_amazon_service extends Price_service
         return $this->irr_srv;
     }
 }
-/* End of file price_amazon_service.php */
-/* Location: ./system/application/libraries/service/Price_amazon_service.php */
+
+

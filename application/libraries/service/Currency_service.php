@@ -87,5 +87,4 @@ class Currency_service extends Base_service
 
 }
 
-/* End of file currency_service.php */
-/* Location: ./system/application/libraries/service/Currency_service.php */
+

@@ -145,5 +145,4 @@ class Order_release_report extends MY_Controller
     }
 }
 
-/* End of file order_release_report.php */
-/* Location: ./system/application/controllers/report/order_release_report.php */
+

@@ -153,5 +153,4 @@ class Cps_allocated_so_vo extends Base_vo
 
 }
 
-/* End of file cps_allocated_so_vo.php */
-/* Location: ./app/libraries/vo/cps_allocated_so_vo.php */
+

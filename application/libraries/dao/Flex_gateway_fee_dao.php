@@ -36,5 +36,5 @@ class Flex_gateway_fee_dao extends Base_dao
     }
 }
 
-/* End of file flex_gateway_fee_dao.php */
-/* Location: ./system/application/libraries/dao/Flex_gateway_fee_dao.php */
+
+

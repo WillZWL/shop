@@ -591,5 +591,4 @@ class Product_overview_website extends MY_Controller
     }
 }
 
-/* End of file product.php */
-/* Location: ./system/application/controllers/product.php */
+

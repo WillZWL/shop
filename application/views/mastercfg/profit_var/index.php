@@ -18,7 +18,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 |
 | This variable must contain the name of your "system" folder.
 | Include the path if the folder is not in the same  directory
-| as this file.
+| as this file.w
 |
 | NO TRAILING SLASH!
 |
@@ -105,6 +105,3 @@ if (is_dir($application_folder)) {
 |
 */
 require_once BASEPATH . 'codeigniter/CodeIgniter' . EXT;
-
-/* End of file index.php */
-/* Location: ./index.php */

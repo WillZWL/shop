@@ -167,5 +167,4 @@ class Inventory_adjustment extends MY_Controller
     }
 }
 
-/* End of file inventory_adjustment.php */
-/* Location: ./system/application/controllers/inventory_adjustment.php */
+

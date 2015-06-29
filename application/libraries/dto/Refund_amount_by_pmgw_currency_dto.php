@@ -85,5 +85,4 @@ class Refund_amount_by_pmgw_currency_dto extends Base_dto
         $this->platform_country_id = $value;
     }
 }
-/* End of file refund_amount_by_pmgw_currency_dto.php */
-/* Location: ./system/application/libraries/dto/refund_amount_by_pmgw_currency_dto.php */
+

@@ -13,5 +13,4 @@ class Price_extend_service extends Base_service
     }
 }
 
-/* End of file price_extend_service.php */
-/* Location: ./app/libraries/service/Price_extend_service.php */
+

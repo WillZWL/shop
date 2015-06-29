@@ -36,5 +36,4 @@ class Schedule_job_dao extends Base_dao
     }
 }
 
-/* End of file Schedule_job_dao.php */
-/* Location: ./system/application/libraries/dao/Schedule_job_dao.php */
+

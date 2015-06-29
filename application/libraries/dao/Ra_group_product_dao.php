@@ -58,5 +58,4 @@ class Ra_group_product_dao extends Base_dao
     }
 }
 
-/* End of file ra_group_product_dao.php */
-/* Location: ./app/libraries/dao/Ra_group_product_dao.php */
+

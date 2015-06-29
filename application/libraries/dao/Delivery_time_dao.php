@@ -132,5 +132,4 @@ class Delivery_time_dao extends Base_dao
 
 }
 
-/* End of file delivery_time_dao.php */
-/* Location: ./system/application/libraries/dao/Delivery_time_dao.php */
+

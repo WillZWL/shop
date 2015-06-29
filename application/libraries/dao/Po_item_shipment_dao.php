@@ -80,6 +80,6 @@ Class Po_item_shipment_dao extends Base_dao
     }
 }
 
-/* End of file purchase_order_item_shipment_dao.php */
-/* Location: ./system/application/libraries/dao/Purchase_order_item_shipment_dao.php */
+
+
 ?>

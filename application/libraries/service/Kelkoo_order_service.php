@@ -200,5 +200,4 @@ class Kelkoo_order_service extends Base_service
     }
 }
 
-/* End of file kelkoo_order_service.php */
-/* Location: ./system/application/libraries/service/Kelkoo_order_service.php */
+

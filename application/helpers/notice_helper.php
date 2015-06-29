@@ -34,5 +34,4 @@ function notice($lang = "", $enable = "")
     return $notice;
 }
 
-/* End of file notice_helper.php */
-/* Location: ./system/application/helpers/notice_helper.php */
+

@@ -42,5 +42,4 @@ class Entity_service extends Base_service
     }
 }
 
-/* End of file entity_service.php */
-/* Location: ./app/libraries/service/Entity_service.php */
+

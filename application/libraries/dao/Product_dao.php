@@ -6048,5 +6048,5 @@ sql;
         return $this->common_get_list($where, $option, $classname, "p.*");
     }
 }
-/* End of file product_dao.php */
-/* Location: ./system/application/libraries/dao/Product_dao.php */
+
+

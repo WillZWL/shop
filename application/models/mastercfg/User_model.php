@@ -72,5 +72,4 @@ class User_model extends CI_Model
 
 }
 
-/* End of file user_model.php */
-/* Location: ./system/application/models/user_model.php */
+

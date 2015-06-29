@@ -37,5 +37,4 @@ Class Product_feed_cat_dao extends Base_dao
 
 }
 
-/* End of file product_feed_cat_dao.php */
-/* Location: ./system/application/libraries/dao/Product_feed_cat_dao.php */
+

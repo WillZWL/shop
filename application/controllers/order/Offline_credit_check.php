@@ -252,5 +252,4 @@ class Offline_credit_check extends MY_Controller
     }
 }
 
-/* End of file supplier.php */
-/* Location: ./system/application/controllers/supply/supplier.php */
+

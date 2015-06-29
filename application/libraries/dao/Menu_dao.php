@@ -141,5 +141,4 @@ class Menu_dao extends Base_dao
         return FALSE;
     }
 }
-/* End of file menu_dao.php */
-/* Location: ./system/application/libraries/dao/Menu_dao.php */
+

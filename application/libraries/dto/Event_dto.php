@@ -20,5 +20,4 @@ Class Event_dto extends Base_dto
     }
 }
 
-/* End of file event_dto.php */
-/* Location: ./app/libraries/dto/event_dto.php */
+

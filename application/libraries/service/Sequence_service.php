@@ -17,5 +17,5 @@ class Sequence_service extends Base_service
 }
 
 
-/* End of file Sequence_service.php */
-/* Location: ./system/application/libraries/service/Sequence_service.php */
+
+

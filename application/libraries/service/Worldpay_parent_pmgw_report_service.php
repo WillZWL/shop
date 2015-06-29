@@ -322,5 +322,4 @@ abstract class Worldpay_parent_pmgw_report_service extends Pmgw_report_service
     }
 }
 
-/* End of file worldpay_parent_pmgw_report_service.php */
-/* Location: ./system/application/libraries/service/Worldpay_parent_pmgw_report_service.php */
+

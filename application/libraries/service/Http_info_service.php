@@ -13,5 +13,4 @@ class Http_info_service extends Base_service
     }
 }
 
-/* End of file http_info_service.php */
-/* Location: ./system/application/libraries/service/Http_info_service.php */
+

@@ -10,5 +10,5 @@ class Pricing_tool_fnac_model extends Pricing_tool_model
     }
 
 }
-/* End of file pricing_tool_fnac_model.php */
-/* Location: ./system/application/models/pricing_tool_fnac_model.php */
+
+

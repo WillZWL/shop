@@ -121,5 +121,4 @@ class Menu_model extends CI_Model
     }
 }
 
-/* End of file menu_model.php */
-/* Location: ./system/application/models/menu/menu_model.php */
+

@@ -1801,5 +1801,5 @@ class Flex_service extends Base_service
 
 }
 
-/* End of file flex_service.php */
-/* Location: ./system/application/libraries/service/Flex_service.php */
+
+

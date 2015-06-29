@@ -22,5 +22,4 @@ class So_payment_query_log_service extends Base_service
     }
 }
 
-/* End of file so_payment_query_log_service.php */
-/* Location: ./app/libraries/service/So_payment_query_log_service.php */
+

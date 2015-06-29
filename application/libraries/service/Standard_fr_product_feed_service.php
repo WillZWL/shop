@@ -129,5 +129,4 @@ class Standard_fr_product_feed_service extends Data_feed_service
     }
 }
 
-/* End of file Standard_fr_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Standard_fr_product_feed_service.php */
+

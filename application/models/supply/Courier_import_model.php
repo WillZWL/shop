@@ -11,5 +11,4 @@ class Courier_import_model extends CI_Model
 
 }
 
-/* End of file courier_import_model.php */
-/* Location: ./system/application/models/order/courier_import_model.php */
+

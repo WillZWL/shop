@@ -230,5 +230,4 @@ class newegg_us_pmgw_report_service extends Pmgw_report_service
 
 }
 
-/* End of file newegg_us_pmgw_report_service.php */
-/* Location: ./system/application/libraries/service/Newegg_us_pmgw_report_service.php */
+

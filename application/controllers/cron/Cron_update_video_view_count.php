@@ -95,5 +95,5 @@ class Cron_update_video_view_count extends MY_Controller
     }
 }
 
-/* End of file cron_update_video_view_count.php */
-/* Location: ./app/controllers/cron_update_video_view_count.php */
+
+

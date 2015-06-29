@@ -18,5 +18,4 @@ class So_compensation_history_service extends Base_service
     }
 }
 
-/* End of file so_compensation_history_service.php */
-/* Location: ./app/libraries/service/So_compensation_history_service.php */
+

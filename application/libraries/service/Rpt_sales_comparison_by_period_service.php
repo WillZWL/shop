@@ -212,5 +212,4 @@ class Rpt_sales_comparison_by_period_service extends Report_service
     }
 }
 
-/* End of file rpt_sales_comparison_by_period_service.php */
-/* Location: ./system/application/libraries/service/Rpt_sales_comparison_by_period_service.php */
+

@@ -88,5 +88,4 @@ class Clearance extends PUB_Controller
     }
 }
 
-/* End of file clearance.php */
-/* Location: ./app/public_controllers/clearance.php */
+

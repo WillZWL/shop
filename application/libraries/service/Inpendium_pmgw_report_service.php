@@ -167,5 +167,4 @@ class Inpendium_pmgw_report_service extends Pmgw_report_service
     }
 }
 
-/* End of file inpendium_pmgw_report_service.php */
-/* Location: ./system/application/libraries/service/Inpendium_pmgw_report_service.php */
+

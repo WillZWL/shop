@@ -144,5 +144,4 @@ class Adbanner_category_dto extends Base_dto
 
 }
 
-/* End of file brand_w_region_dto.php */
-/* Location: ./system/application/libraries/dto/adbanner_category_dto.php */
+

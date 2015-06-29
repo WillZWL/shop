@@ -99,5 +99,4 @@ class News_subscriber_service extends Base_service
     }
 }
 
-/* End of file news_subscriber_service.php */
-/* Location: ./app/libraries/service/News_subscriber_service.php */
+

@@ -71,5 +71,5 @@ class Warranty_model extends CI_Model
     }
 }
 
-/* End of file warranty_model.php */
-/* Location: ./system/application/models/warranty_model.php */
+
+

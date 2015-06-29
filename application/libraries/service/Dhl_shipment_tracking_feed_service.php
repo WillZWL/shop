@@ -594,5 +594,4 @@ class Dhl_shipment_tracking_feed_service extends Data_feed_service
     }
 }
 
-/* End of file googlebase_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Googlebase_product_feed_service.php */
+

@@ -527,5 +527,4 @@ class Prismastar_product_feed_dto extends Base_dto
     }
 }
 
-/* End of file prismastar_product_feed_dto.php */
-/* Location: ./system/application/libraries/dto/prismastar_product_feed_dto.php */
+

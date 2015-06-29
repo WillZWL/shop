@@ -31,5 +31,4 @@ class Fraudulent_order_service extends Report_service
     }
 }
 
-/* End of file fraudulent_order_service.php */
-/* Location: ./system/application/libraries/service/Fraudulent_order_service.php */
+

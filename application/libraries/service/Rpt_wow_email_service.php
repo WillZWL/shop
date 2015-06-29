@@ -51,5 +51,4 @@ class Rpt_wow_email_service extends Report_service
 
 }
 
-/* End of file rpt_wow_email_service.php */
-/* Location: ./system/application/libraries/service/Rpt_wow_email_service.php */
+

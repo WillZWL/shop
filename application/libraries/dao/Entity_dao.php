@@ -35,5 +35,4 @@ class Entity_dao extends Base_dao
     }
 }
 
-/* End of file entity_dao.php */
-/* Location: ./app/libraries/dao/Entity_dao.php */
+

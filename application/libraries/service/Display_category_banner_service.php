@@ -169,5 +169,4 @@ class Display_category_banner_service extends Base_service
     }
 }
 
-/* End of file display_category_banner_service.php */
-/* Location: ./system/application/libraries/service/Display_category_banner_service.php */
+

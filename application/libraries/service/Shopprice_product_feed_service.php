@@ -165,5 +165,5 @@ class Shopprice_product_feed_service extends Data_feed_service
 
 }
 
-/* End of file shopprice_product_feed_service.php */
-/* Location: ./system/application/libraries/service/Shopprice_product_feed_service.php */
+
+

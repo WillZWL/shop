@@ -348,5 +348,4 @@ class Landpage_listing_dao extends Base_dao
 
 }
 
-/* End of file landpage_listing_dao.php */
-/* Location: ./system/application/libraries/dao/Landpage_listing_dao.php */
+

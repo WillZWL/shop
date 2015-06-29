@@ -24,5 +24,4 @@ class Email_address_service extends Base_service
     }
 }
 
-/* End of file email_address_service.php */
-/* Location: ./system/application/libraries/service/Email_address_service.php */
+

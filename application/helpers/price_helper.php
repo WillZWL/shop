@@ -195,5 +195,4 @@ if (!function_exists('random_markup')) {
     }
 }
 
-/* End of file price_helper.php */
-/* Location: ./system/application/helpers/price_helper.php */
+

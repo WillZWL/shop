@@ -248,5 +248,4 @@ class Brand extends MY_Controller
     }
 }
 
-/* End of file brand.php */
-/* Location: ./system/application/controllers/mastercfg/brand.php */
+

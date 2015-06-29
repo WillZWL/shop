@@ -111,5 +111,4 @@ class Weight_cat_service extends Base_service
     }
 }
 
-/* End of file weight_cat_service.php */
-/* Location: ./system/application/libraries/service/Weight_cat_service.php */
+

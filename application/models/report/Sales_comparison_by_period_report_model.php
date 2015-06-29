@@ -23,5 +23,4 @@ class Sales_comparison_by_period_report_model extends CI_Model
     }
 }
 
-/* End of file sales_comparison_by_period_report_model.php */
-/* Location: ./system/application/models/report/sales_comparison_by_period_report_model.php */
+

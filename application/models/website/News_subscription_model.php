@@ -14,5 +14,4 @@ class News_subscription_model extends CI_Model
         $this->news_subscriber_service->add_subscriber($email);
     }
 }
-/* End of file news_subscription_model.php */
-/* Location: ./app/models/website/news_subscription_model.php */
+

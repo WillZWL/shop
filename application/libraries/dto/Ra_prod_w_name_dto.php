@@ -343,5 +343,4 @@ class Ra_prod_w_name_dto extends Base_dto
     }
 }
 
-/* End of file ra_prod_w_name_dto.php */
-/* Location: ./system/application/libraries/dto/ra_prod_w_name_dto.php */
+

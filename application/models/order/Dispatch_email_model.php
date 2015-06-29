@@ -15,5 +15,4 @@ class Dispatch_email_model extends CI_Model
     }
 }
 
-/* End of file Dispatch_email_model.php */
-/* Location: ./system/application/models/order/dispatch_email_model.php */
+

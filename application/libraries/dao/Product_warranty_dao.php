@@ -53,5 +53,4 @@ class Product_warranty_dao extends Base_dao
     }
 }
 
-/* End of file product_warranty_dao.php */
-/* Location: ./app/libraries/dao/Product_warranty_dao.php */
+

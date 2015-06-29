@@ -163,5 +163,4 @@ function get_banner_file($name = "", $ext = "")
         return "";
 }
 
-/* End of file image_helper.php */
-/* Location: ./system/application/helpers/image_helper.php */
+

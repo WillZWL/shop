@@ -60,5 +60,4 @@ class Wms_inventory_service extends Base_service
     }
 }
 
-/* End of file wms_inventory_service.php */
-/* Location: ./system/application/libraries/service/Wms_inventory_service.php */
+

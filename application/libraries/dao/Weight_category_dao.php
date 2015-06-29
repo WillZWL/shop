@@ -111,5 +111,4 @@ class Weight_category_dao extends Base_dao
     }
 }
 
-/* End of file weight_category_dao.php */
-/* Location: ./system/application/libraries/dao/Weight_category_dao.php */
+

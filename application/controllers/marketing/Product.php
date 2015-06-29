@@ -2985,5 +2985,4 @@ start;
     }
 }
 
-/* End of file product.php */
-/* Location: ./system/application/controllers/product.php */
+

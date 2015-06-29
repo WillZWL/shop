@@ -28,5 +28,4 @@ class So_compensation_service extends Base_service
     }
 }
 
-/* End of file so_compensation_service.php */
-/* Location: ./app/libraries/service/So_compensation_service.php */
+

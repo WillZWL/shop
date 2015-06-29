@@ -3220,5 +3220,4 @@ class Fnac_service
     }
 }
 
-/* End of file fnac_service.php */
-/* Location: ./system/application/libraries/service/Fnac_service.php */
+

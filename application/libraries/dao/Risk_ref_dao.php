@@ -35,5 +35,4 @@ class Risk_ref_dao extends Base_dao
     }
 }
 
-/* End of file risk_ref_dao.php */
-/* Location: ./system/application/libraries/dao/Risk_ref_dao.php */
+

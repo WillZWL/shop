@@ -110,5 +110,4 @@ class Skype_report extends MY_Controller
     }
 }
 
-/* End of file skype_report.php */
-/* Location: ./system/application/controllers/report/inventory/skype_report.php */
+

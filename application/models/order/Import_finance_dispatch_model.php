@@ -69,5 +69,4 @@ class Import_finance_dispatch_model extends Import_info_model
     }
 }
 
-/* End of file Import_finance_dispatch_model.php */
-/* Location: ./system/application/models/order/import_finance_dispatch_model.php */
+

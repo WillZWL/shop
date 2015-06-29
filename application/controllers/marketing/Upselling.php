@@ -469,5 +469,4 @@ class Upselling extends MY_Controller
     }
 }
 
-/* End of file product.php */
-/* Location: ./app/controllers/product.php */
+

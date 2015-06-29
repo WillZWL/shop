@@ -131,5 +131,5 @@ class Display_banner_model extends CI_Model
         return $this->display_banner_service->get_publish_banner($display_id, $position_id, $country_id, $lang_id, $usage = "PB");
     }
 }
-/* End of file display_banner_model.php */
-/* Location: ./app/models/marketing/display_banner_model.php */
+
+

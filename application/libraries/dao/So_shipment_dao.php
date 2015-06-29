@@ -270,5 +270,4 @@ class So_shipment_dao extends Base_dao
 
 }
 
-/* End of file so_shipment_dao.php */
-/* Location: ./system/application/libraries/dao/So_shipment_dao.php */
+

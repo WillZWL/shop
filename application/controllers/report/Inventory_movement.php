@@ -59,5 +59,4 @@ class Inventory_movement extends MY_Controller
     }
 }
 
-/* End of file inventory_movement.php */
-/* Location: ./system/application/controllers/report/inventory_movement.php */
+

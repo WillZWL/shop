@@ -66,5 +66,4 @@ class Product_banner_dao extends Base_dao
     }
 }
 
-/* End of file Product_banner_dao.php */
-/* Location: ./system/application/libraries/dao/Product_banner_dao.php */
+

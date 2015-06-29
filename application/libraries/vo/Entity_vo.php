@@ -177,5 +177,4 @@ class Entity_vo extends Base_vo
 
 }
 
-/* End of file entity_vo.php */
-/* Location: ./app/libraries/vo/entity_vo.php */
+

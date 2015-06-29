@@ -162,5 +162,4 @@ class Country_weight_charge_dto extends Base_dto
     }
 
 }
-/* End of file checkout_dto.php */
-/* Location: ./system/application/libraries/dto/checkout_dto.php */
+

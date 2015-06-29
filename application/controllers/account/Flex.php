@@ -629,5 +629,5 @@ class Flex extends MY_Controller
         $this->flex_model->platform_order_delete_interface_flex_ria($gateway_id, $so_no_list);
     }
 }
-/* End of file flex.php */
-/* Location: ./app/controllers/flex.php */
+
+

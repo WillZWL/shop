@@ -1002,5 +1002,4 @@ enable_TAG;
     }
 }
 
-/* End of file checkout.php */
-/* Location: ./app/public_controllers/checkout.php */
+

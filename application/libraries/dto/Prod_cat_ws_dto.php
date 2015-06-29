@@ -83,5 +83,4 @@ class Prod_cat_ws_dto extends Base_dto
     }
 }
 
-/* End of file product_cost_dto.php */
-/* Location: ./system/application/libraries/dto/product_cost_dto.php */
+

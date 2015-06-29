@@ -144,5 +144,4 @@ class Reevoo_customer_feed_dto extends Base_dto
     }
 }
 
-/* End of file reevoo_customer_feed_dto.php */
-/* Location: ./system/application/libraries/dto/reevoo_customer_feed_dto.php */
+

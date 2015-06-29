@@ -35,5 +35,4 @@ class So_risk_dao extends Base_dao
     }
 }
 
-/* End of file so_risk_dao.php */
-/* Location: ./app/libraries/dao/So_risk_dao.php */
+

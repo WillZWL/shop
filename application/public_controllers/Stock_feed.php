@@ -222,6 +222,3 @@ class Stock_feed extends PUB_Controller
     }
 
 }
-
-/* End of file stock_feed.php */
-/* Location: ./app/public_controllers/stock_feed.php */

@@ -232,5 +232,5 @@ class Delivery_charge extends MY_Controller
     }
 }
 
-/* End of file freight.php */
-/* Location: ./system/application/controllers/freight.php */
+
+

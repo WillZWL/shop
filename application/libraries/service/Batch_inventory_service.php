@@ -235,5 +235,5 @@ class Batch_inventory_service extends Base_batch_service
 }
 
 
-/* End of file batch_inventory_service.php */
-/* Location: ./system/application/libraries/service/Batch_inventory_service.php */
+
+

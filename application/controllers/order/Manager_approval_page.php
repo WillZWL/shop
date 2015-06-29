@@ -264,5 +264,4 @@ class Manager_approval_page extends MY_Controller
     }
 }
 
-/* End of file supplier.php */
-/* Location: ./system/application/controllers/supply/supplier.php */
+

@@ -36,5 +36,4 @@ class Platform_pmgw_dao extends Base_dao
 
 }
 
-/* End of file platform_pmgw_dao.php */
-/* Location: ./system/application/libraries/dao/Platform_pmgw_dao.php */
+

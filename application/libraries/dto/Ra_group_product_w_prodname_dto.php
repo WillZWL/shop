@@ -131,5 +131,4 @@ class Ra_group_product_w_prodname_dto extends Base_dto
     }
 }
 
-/* End of file ra_group_product_w_prodname_dto.php */
-/* Location: ./system/application/libraries/dto/ra_group_product_w_prodname_dto.php */
+

@@ -36,5 +36,5 @@ class Flex_batch_dao extends Base_dao
     }
 }
 
-/* End of file flex_batch_dao.php */
-/* Location: ./system/application/libraries/dao/Flex_batch_dao.php */
+
+

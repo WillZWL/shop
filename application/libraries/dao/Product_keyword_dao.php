@@ -57,5 +57,4 @@ class Product_keyword_dao extends Base_dao
     }
 }
 
-/* End of file Product_keyword_dao.php */
-/* Location: ./system/application/libraries/dao/Product_keyword_dao.php */
+

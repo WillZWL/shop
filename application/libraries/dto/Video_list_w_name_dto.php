@@ -352,5 +352,4 @@ class Video_list_w_name_dto extends Base_dto
 
 }
 
-/* End of file video_list_w_name_dto.php */
-/* Location: ./system/application/libraries/dto/video_list_w_name_dto.php */
+

@@ -139,6 +139,6 @@ class Pmgw_report_trustly_dto extends Base_dto
         $this->date = $value;
     }
 }
-/* End of file Pmgw_report_trustly_dto.php */
-/* Location: ./system/application/libraries/dto/Pmgw_report_trustly_dto.php */
+
+
 

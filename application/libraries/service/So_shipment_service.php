@@ -42,5 +42,5 @@ class So_shipment_service extends Base_service
     }
 }
 
-/* End of file so_shipment_service.php */
-/* Location: ./app/libraries/service/So_service.php */
+
+

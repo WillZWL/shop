@@ -89,5 +89,4 @@ abstract class Landpage_listing_service extends Base_service
     abstract protected function _get_product_list_for_home();
 }
 
-/* End of file latest_arrivals_service.php */
-/* Location: ./app/libraries/service/Latest_arrivals_service.php */
+

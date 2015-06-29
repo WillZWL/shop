@@ -144,5 +144,4 @@ class My_shopping_com_au_product_feed_dto extends Base_dto
     }
 }
 
-/* End of file my_shopping_com_au_product_feed_dto.php */
-/* Location: ./system/application/libraries/dto/my_shopping_com_au_product_feed_dto.php */
+

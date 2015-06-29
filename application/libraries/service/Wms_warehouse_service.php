@@ -24,5 +24,4 @@ class Wms_warehouse_service extends Base_service
     }
 }
 
-/* End of file wms_warehouse_service.php */
-/* Location: ./system/application/libraries/service/Wms_warehouse_service.php */
+

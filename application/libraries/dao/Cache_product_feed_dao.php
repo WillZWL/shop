@@ -121,5 +121,4 @@ class Cache_product_feed_dao extends Base_dao
     }
 }
 
-/* End of file cache_product_feed_dao.php */
-/* Location: ./system/application/libraries/dao/Cache_product_feed_dao.php */
+

@@ -156,5 +156,4 @@ class Shopbot_product_feed_dto extends Base_dto
 
 }
 
-/* End of file shopbot_product_feed_dto.php */
-/* Location: ./system/application/libraries/dto/shopbot_product_feed_dto.php */
+

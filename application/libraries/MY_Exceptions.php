@@ -29,5 +29,4 @@ class MY_Exceptions extends CI_Exceptions
     }
 }
 
-/* End of file MY_Exceptions.php */
-/* Location: ./system/application/libraries/MY_Exceptions.php */
+

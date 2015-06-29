@@ -154,6 +154,6 @@ class Pmgw_report_worldpay_moto_dto extends Base_dto
     }
 
 }
-/* End of file pmgw_report_worldpay_moto_dto.php */
-/* Location: ./system/application/libraries/dto/pmgw_report_worldpay_moto_dto.php */
+
+
 

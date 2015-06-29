@@ -29,5 +29,4 @@ class Schedule_job_service extends Base_service
     }
 }
 
-/* End of file schedule_job_service.php */
-/* Location: ./system/application/libraries/service/Schedule_job_service.php */
+

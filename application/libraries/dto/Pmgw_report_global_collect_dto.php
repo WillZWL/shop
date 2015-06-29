@@ -318,5 +318,4 @@ class Pmgw_report_global_collect_dto extends Base_dto
         $this->commission = $value;
     }
 }
-/* End of file pmgw_report_global_collect_dto.php */
-/* Location: ./system/application/libraries/dto/pmgw_report_global_collect_dto.php */
+

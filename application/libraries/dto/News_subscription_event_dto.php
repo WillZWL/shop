@@ -20,5 +20,4 @@ Class News_subscription_event_dto extends Event_dto
     }
 }
 
-/* End of file news_subscription_evenht_dto.php */
-/* Location: ./app/libraries/dto/news_subscription_event_dto.php */
+

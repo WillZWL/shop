@@ -44,5 +44,5 @@ class Display_qty extends MY_Controller
     }
 }
 
-/* End of file display_qty.php */
-/* Location: ./system/application/controllers/display_qty.php */
+
+

@@ -19,6 +19,6 @@ class Email_referral_list_model extends CI_Model
     }
 }
 
-/* End of file email_referral_list_model.php */
-/* Location: ./system/application/models/email_referral_list_model.php */
+
+
 ?>

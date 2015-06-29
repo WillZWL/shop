@@ -243,5 +243,4 @@ class Sli_product_feed_dto extends Base_dto
 
 }
 
-/* End of file sli_product_feed_dto.php */
-/* Location: ./system/application/libraries/dto/sli_product_feed_dto.php */
+
