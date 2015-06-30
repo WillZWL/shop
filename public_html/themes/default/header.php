@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lexus Motozz - Responsive Opencart Theme</title>
+    <title>Digital Discount</title>
     <meta name="description" content="Lexus Motozz - Responsive Opencart Theme" />
     <meta name="keywords" content="Lexus Motozz - Responsive Opencart Theme" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,6 +23,7 @@
     <link href="/themes/default/asset/css/homebuilder.css" rel="stylesheet" />
     <link href="/themes/default/asset/css/typo.css" rel="stylesheet" />
     <link href="/themes/default/asset/css/pavnewsletter.css" rel="stylesheet" />
+    <link href="/themes/default/asset/css/theme.css" rel="stylesheet" />
     <script type="text/javascript" src="/themes/default/asset/js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/jquery.magnific-popup.min.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/bootstrap.min.js"></script>

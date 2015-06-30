@@ -73,72 +73,63 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 column">
-                                            <div class="media border-left" data-toggle="modal" data-target="#myModal3">
-                                                <a class="media-left" href="#">
-                                                    <i class="fa-3x fa fa fa-facebook"></i>
-                                                </a>
-                                                <div class="media-body">
-                                                    <h6>Facebook</h6>
-                                                    <p>Like us
-                                                        <br>
-                                                    </p>
-                                                </div>
-                                            </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 column">
+                                            <img src="/themes/default/asset/image/payment.png">
                                         </div>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                                        <span class="icon-name fa fa fa-facebook"></span>
-                                                        <h4>Facebook</h4>
-                                                        <p>Like us
-                                                            <br>
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Detail Information</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-header ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                <div class="panel panel-white pavreassurances margin_top">
+                                    <div class="row">
+                                        <div class="col-lg-1 col-md-1 col-sm-3 col-xs-12 column"></div>
+                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 column">
+                                            <div class="image-wrap">
+                                                <img src="/themes/default/asset/image/thawte.png">
                                             </div>
+                                            <p class="desc">
+                                                100% Secure with SSL Encryption
+                                            </p>
                                         </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 column">
-                                            <div class="media border-left" data-toggle="modal" data-target="#myModal4">
-                                                <a class="media-left" href="#">
-                                                    <i class="fa-3x fa fa fa-twitter"></i>
-                                                </a>
-                                                <div class="media-body">
-                                                    <h6>Twitter</h6>
-                                                    <p>Follow us</p>
-                                                </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 column">
+                                            <div class="image-wrap">
+                                                <img src="/themes/default/asset/image/dataprotection.png">
                                             </div>
+                                            <p class="desc">
+                                                100% Data Protection your data is safe with us
+                                            </p>
                                         </div>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                                        <span class="icon-name fa fa fa-twitter"></span>
-                                                        <h4>Twitter</h4>
-                                                        <p>Follow us</p>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>
-                                                            <br>
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 column">
+                                            <div class="image-wrap">
+                                                <img src="/themes/default/asset/image/freedelivery.png">
                                             </div>
+                                            <p class="desc">
+                                                Free Delivery For All Orders* Shipping: 3-5 Working Days
+                                            </p>
                                         </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 column">
+                                            <div class="image-wrap">
+                                                <img src="/themes/default/asset/image/moneyback.png">
+                                            </div>
+                                            <p class="desc">
+                                                Money Back 14 day Money Back Guarantee
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 column">
+                                            <div class="image-wrap">
+                                                <img src="/themes/default/asset/image/warranty.png">
+                                            </div>
+                                            <p class="desc">
+                                                Warrant Up to 2 Years
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-3 col-xs-12 column"></div>
                                     </div>
                                 </div>
                             </div>
@@ -164,136 +155,36 @@
                                     <li><i class="fa fa-envelope-o"></i><a href="mailto:info@company.com">info@company.com</a></li>
                                 </ul>
                             </div>
-                            <div class="column padding col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                            <div class="column padding border-right col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="panel-white">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title">Contact Us</h4></div>
-                                    <div class="panel-body">
-                                        <ul class="list-unstyled">
-                                            <li><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=information/contact">Contact Us</a></li>
-                                            <li><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=account/return/add">Returns</a></li>
-                                            <li><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=information/sitemap">Site Map</a></li>
-                                        </ul>
+                                        <h4 class="panel-title panel-title-special">TERMS & CONDITIONS</h4>
+                                        <h4 class="panel-title panel-title-special">SHIPPING</h4>
+                                        <h4 class="panel-title panel-title-special">PRIVACY POLICY</h4>
+                                        <h4 class="panel-title panel-title-special">SITE MAP</h4>
                                     </div>
                                 </div>
                             </div>
-                            <div class="column col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                            <div class="column col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="panel-white">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title">categories</h4></div>
+                                        <h4 class="panel-title">SELECT SHIPPING COUNTRY</h4></div>
                                     <div class="panel-body">
-                                        <ul class="list-unstyled">
-                                            <li><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/manufacturer">Brands</a></li>
-                                            <li><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=account/voucher">Gift Vouchers</a></li>
-                                            <li><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=affiliate/account">Affiliates</a></li>
-                                            <li><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/special">Specials</a></li>
-                                        </ul>
+                                        <select name="footer_custom_country_id" id="footer_custom_country_id" onchange="change_country(2)" tabindex="-1">
+                                            <option value="en_AU" data-image="/images/icons/en_AU.png">Australia</option>
+                                            <option value="fr_BE" data-image="/images/icons/fr_BE.png">Belgium</option>
+                                            <option value="en_FI" data-image="/images/icons/en_FI.png">Finland</option>
+                                            <option value="fr_FR" data-image="/images/icons/fr_FR.png">France</option>
+                                            <option value="en_GB" data-image="/images/icons/en_GB.png">Great Britain</option>
+                                            <option value="en_HK" data-image="/images/icons/en_HK.png" selected="">Hong Kong</option>
+                                        </select>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="column col-xs-12 col-sm-6 col-md-2 col-lg-2">
-                                <div class="panel-white">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">My Account</h4></div>
-                                    <div class="panel-body">
-                                        <ul class="list-unstyled">
-                                            <li><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=account/account">My Account</a></li>
-                                            <li><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=account/order">Order History</a></li>
-                                            <li><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=account/wishlist">Wish List</a></li>
-                                            <li><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=account/newsletter">Newsletter</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom " id="pavo-footer-bottom">
-                    <div class="container">
-                        <div class="inside">
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
-                                    <div class="panel-white pav-newsletter" id="newsletter_204855713">
-                                        <form id="formNewLestter" method="post" action="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=module/pavnewsletter/subscribe" class="formNewLestter">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">Sign Up For Newsletter</h4></div>
-                                            <div class="panel-body">
-                                                <!-- <div class="description"><p>Aenean erat lacus, vulputate sit amet ornare a augue.</p></div> -->
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control email" size="18" name="email">
-                                                    <div class="input-group-btn">
-                                                        <button type="submit" name="submitNewsletter" class="btn btn-primary radius-right-5xxs" value="Subscribe">
-                                                            Subscribe</button>
-                                                    </div>
-                                                </div>
-                                                <input type="hidden" value="1" name="action">
-                                                <div class="valid"></div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <script type="text/javascript">
-                                    <!--
-
-                                    $(document).ready(function() {
-
-                                        $('#formNewLestter').on('submit', function() {
-                                            var email = $('.email').val();
-                                            $(".success_inline, .warning_inline, .error").remove();
-                                            if (!isValidEmailAddress(email)) {
-                                                $('.valid').html("<div class=\"error alert alert-danger\">Email is not valid!<button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button></div></div>");
-                                                $('.email').focus();
-                                                return false;
-                                            }
-
-                                            var url = "http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=module/pavnewsletter/subscribe";
-                                            $.ajax({
-                                                type: "post",
-                                                url: url,
-                                                data: $("#formNewLestter").serialize(),
-                                                dataType: 'json',
-                                                success: function(json) {
-                                                    $(".success_inline, .warning_inline, .error").remove();
-                                                    if (json['error']) {
-                                                        $('.valid').html("<div class=\"warning_inline alert alert-danger\">" + json['error'] + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button></div>");
-                                                    }
-                                                    if (json['success']) {
-                                                        $('.valid').html("<div class=\"success_inline alert alert-success\">" + json['success'] + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button></div>");
-                                                    }
-                                                }
-                                            });
-                                            return false;
-
-                                        }); //end submmit
-                                    }); //end document
-
-                                    function isValidEmailAddress(emailAddress) {
-                                            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-                                            return pattern.test(emailAddress);
-                                        }
-                                        -->
-                                    </script>
-                                </div>
-                                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-                                    <div class="paypal pull-right">
-                                        <img src="themes/default/asset/image/payment.png" alt=""> </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </footer>
-            <div id="powered">
-                <div class="container">
-                    <div id="top"><a>Top</a></div>
-                    <div class="copyright pull-left">
-                        Powered By <a href="http://www.opencart.com">OpenCart</a>
-                        <br /> Motozz &copy; 2015.
-                    </div>
-                    <div class="paypal pull-right">
-                        <img src="themes/default/asset/image/icon-ft.png" alt=""><a href="#">find a store near you</a>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="sidebar-offcanvas sidebar  visible-xs visible-sm">
             <div class="offcanvas-inner panel panel-offcanvas">

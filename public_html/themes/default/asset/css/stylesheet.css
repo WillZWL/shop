@@ -11,14 +11,14 @@
  * Web Application Prefix Apply For Making Owner Styles
  */
 /**
- *   Blocks Layout Selectors 
+ *   Blocks Layout Selectors
  */
 /**
  * Product Item Selectors
  */
 /***********************************************************************/
 /**
- *   Blocks Layout Selectors 
+ *   Blocks Layout Selectors
  */
 /* --- SCSS For Accordion --- */
 /* carousel-controls-v1 */
@@ -69,7 +69,7 @@
 /* testimonials light */
 /* --- SCSS For Typography --- */
 /**
-* Transition-timing-function property@mixin 
+* Transition-timing-function property@mixin
 */
 /*background RGBA
 ============================================*/
@@ -4632,7 +4632,7 @@ hr.divider-snow {
 			.latest-posts-meta{
 				position: relative;
 				padding:0 0 20px 0;
-				@include translate(0,0); 
+				@include translate(0,0);
 				a{
 					color: $link-color;
 					&:hover{
@@ -7491,7 +7491,7 @@ body.layout-boxed-lg #page {
 }
 
 /*
-* HEADER 
+* HEADER
 */
 /* line 26, ../development/scss/app/_layout.scss */
 #topbar {
@@ -7580,7 +7580,7 @@ body.layout-boxed-lg #page {
 
 /* line 90, ../development/scss/app/_layout.scss */
 #header-main {
-  margin: 35px 0;
+  margin: 30px 0 30px 0;
 }
 
 /* line 93, ../development/scss/app/_layout.scss */
@@ -7602,8 +7602,8 @@ body.layout-boxed-lg #page {
 #header-layout #logo-theme a {
   background-image: url("../image/logo.png");
   display: inline-block;
-  width: 140px;
-  height: 41px;
+  width: 200px;
+  height: 100px;
 }
 /* line 113, ../development/scss/app/_layout.scss */
 #header-layout #logo-theme a span {
@@ -7733,10 +7733,10 @@ body.layout-boxed-lg #page {
 }
 
 /*
-* SLIDESHOW 
+* SLIDESHOW
 */
 /*
-* SHOWCASE 
+* SHOWCASE
 */
 /* line 227, ../development/scss/app/_layout.scss */
 #pavo-showcase .inner {
@@ -7744,7 +7744,7 @@ body.layout-boxed-lg #page {
 }
 
 /*
-* PROMOTION TOP 
+* PROMOTION TOP
 */
 /* line 237, ../development/scss/app/_layout.scss */
 #breadcrumb {
@@ -8217,7 +8217,7 @@ body.layout-boxed-lg #page {
 /* line 56, ../development/scss/app/_product.scss */
 .price .price-old {
   font-size: 14px;
-  color: #e87169;
+  color: #589B24;
   text-decoration: line-through;
 }
 /* line 63, ../development/scss/app/_product.scss */
@@ -9135,7 +9135,7 @@ body.layout-boxed-lg #page {
   border-style: solid;
   border-width: 4px;
   margin: 0 auto;
-  background-color: #f7c720;
+  background-color: #589B24;
   width: 100%;
   display: flex;
 }
@@ -9510,8 +9510,8 @@ body .owl-carousel .owl-wrapper-outer {
   background-color: #f6f6f6;
 }
 
-/* 
- *  LISTING PRODUCTS PAGE 
+/*
+ *  LISTING PRODUCTS PAGE
  */
 /* line 69, ../development/scss/opencart/_opencart-pages.scss */
 .product-filter {
@@ -9668,7 +9668,7 @@ body .owl-carousel .owl-wrapper-outer {
   border: 2px solid #e5e5e5;
 }
 
-/* 
+/*
 * PRODUCT INFORMATION PAGE
 */
 /* line 190, ../development/scss/opencart/_opencart-pages.scss */
@@ -11157,6 +11157,10 @@ body .owl-carousel .owl-wrapper-outer {
 
 @media (min-width: 1200px) {
   /* line 3, ../development/scss/opencart/_responsive.scss */
+  .row-offcanva {
+    width: 1170px;
+  }
+
   .header-layout .container {
     padding-left: 40px;
     padding-right: 40px;
