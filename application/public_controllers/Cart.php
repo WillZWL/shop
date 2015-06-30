@@ -22,6 +22,7 @@ Class Cart extends PUB_Controller
 
         $this->add_item_qty($sku, $qty);
 
+        var_dump($_SESSION);
         // if ( ! empty($sku)) {
         //  $this->add_item_v2($sku, $qty);
         // }
@@ -39,20 +40,20 @@ Class Cart extends PUB_Controller
             "A" => $data['data']['lang_text']['status_arriving']
         );
 
-//        $this->affiliate_service->add_af_cookie($_GET);
+        //$this->affiliate_service->add_af_cookie($_GET);
 
         $allow_result = $this->cart_session_model->cart_session_service->is_allow_to_add($sku, $qty, PLATFORMID);
         if ($allow_result <= Cart_session_service::DECISION_POINT) {
             $result = $this->cart_session_model->add($sku, $qty, PLATFORMID);
         }
 
-//        if (($allow_result == Cart_session_service::ALLOW_AND_IS_PREORDER)
-//            || ($allow_result == Cart_session_service::ALLOW_AND_IS_ARRIVING)
-//            || ($allow_result == Cart_session_service::SAME_PREORDER_ITEM)
-//            || ($allow_result == Cart_session_service::SAME_ARRIVING_ITEM)
-//        ) {
-//            redirect(base_url() . "review_order");
-//        }
+        //if (($allow_result == Cart_session_service::ALLOW_AND_IS_PREORDER)
+        //    || ($allow_result == Cart_session_service::ALLOW_AND_IS_ARRIVING)
+        //    || ($allow_result == Cart_session_service::SAME_PREORDER_ITEM)
+        //    || ($allow_result == Cart_session_service::SAME_ARRIVING_ITEM)
+        //) {
+        //    redirect(base_url() . "review_order");
+        //}
 
         if ($this->upselling_model->get_ra($data, $sku, PLATFORMID, $this->get_lang_id(), $listing_status)) {
             // TODO
@@ -69,66 +70,13 @@ Class Cart extends PUB_Controller
             // redirect(base_url()."review_order");
         }
 
-        var_dump($_SESSION);
         return $result;
-    }
-
-    public function add_item_v2($sku, $qty)
-    {
-        $data['data']['lang_text'] = $this->_get_language_file('', '', 'add_item_qty');
-
-
-        $listing_status = array(
-            "I" => $data['data']['lang_text']['status_in_stock'],
-            "O" => $data['data']['lang_text']['status_out_stock'],
-            "P" => $data['data']['lang_text']['status_pre_order'],
-            "A" => $data['data']['lang_text']['status_arriving']
-        );
-
-        $this->affiliate_service->add_af_cookie($_GET);
-
-        $allow_result = $this->cart_session_model->cart_session_service->is_allow_to_add($sku, $qty, PLATFORMID);
-        if ($allow_result <= Cart_session_service::DECISION_POINT) {
-            if (!empty($sku) || !empty($qty)) {
-                $chk_cart = $this->cart_session_model->add($sku, $qty, PLATFORMID);
-            }
-        } else {
-            redirect(base_url() . "review_order?item_status=" . $allow_result . "&not_valid_sku=" . $sku);
-        }
-
-        if (($allow_result == Cart_session_service::ALLOW_AND_IS_PREORDER)
-            || ($allow_result == Cart_session_service::ALLOW_AND_IS_ARRIVING)
-            || ($allow_result == Cart_session_service::SAME_PREORDER_ITEM)
-            || ($allow_result == Cart_session_service::SAME_ARRIVING_ITEM)
-        ) {
-            if ($quiet_return) {
-                return true;
-            }
-
-            redirect(base_url() . "review_order");
-        }
-
-        if ($quiet_return) {
-            return false;
-        }
-
-        if ($this->upselling_model->get_ra($data, $sku, PLATFORMID, get_lang_id(), $listing_status)) {
-            $this->template->add_title($data['data']['lang_text']['meta_title'] . $data["prod_name"] . ' | ValueBasket');
-            $this->template->add_meta(array('name' => 'description', 'content' => $data['data']['lang_text']['meta_desc']));
-            $this->template->add_meta(array('name' => 'keywords', 'content' => $data['data']['lang_text']['meta_keyword']));
-            $this->template->add_js("/js/common.js");
-            $this->template->add_js("/resources/js/jquery.gritter.js");
-            $this->template->add_css("resources/css/jquery.gritter.css");
-            $this->template->add_js("/js/upselling.js", "import", TRUE);
-            $this->load_tpl('content', 'tbs_cart', $data, TRUE);
-        } else {
-            redirect(base_url() . "review_order");
-        }
     }
 
     public function info()
     {
-        $this->load->view('/default/cart/info');
+        $data['cart_info'] = $this->cart_session_model->get_cart_info();
+        $this->load->view('/default/cart/info', $data);
     }
 
     public function add_item($sku = "")

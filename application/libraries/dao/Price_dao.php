@@ -54,7 +54,7 @@ class Price_dao extends Base_dao
         }
     }
 
-    public function get_list_with_bundle_checking($sku, $platform = 'WSGB', $classname = "Product_cost_dto", $special = 0, $lang_id = 'en')
+    public function get_list_with_bundle_checking($sku, $platform = 'WSGB', $lang_id = 'en', $classname = 'Product_cost_dto')
     {
         $sql = "SELECT p.expected_delivery_date,COALESCE(pw.warranty_in_month, p.warranty_in_month) AS warranty_in_month, a.discount, COALESCE(pc.prod_name, p.name) AS bundle_name, a.component_order, b.*
                 FROM v_prod_items a
@@ -65,7 +65,7 @@ class Price_dao extends Base_dao
                 LEFT JOIN product_warranty pw
                     ON pw.sku = p.sku and pw.platform_id = ?
                 LEFT JOIN product_content pc
-                    ON a.prod_sku = pc.prod_sku AND pc.lang_id = '" . $lang_id . "'
+                    ON a.prod_sku = pc.prod_sku AND pc.lang_id = ?
                 WHERE a.prod_sku = ?
                 AND b.platform_id= ?
                 ORDER BY a.component_order";
@@ -73,16 +73,14 @@ class Price_dao extends Base_dao
         $this->include_dto($classname);
 
         $rs = array();
-
-
-        if ($query = $this->db->query($sql, array($platform, $sku, $platform))) {
-
+        if ($query = $this->db->query($sql, array($platform, $lang_id, $sku, $platform))) {
             foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
+
             return empty($rs) ? $rs : (object)$rs;
         } else {
-            return FALSE;
+            return false;
         }
     }
 
@@ -375,5 +373,3 @@ ON c.id = pbv.platform_country_id";
     }
 
 }
-
-

@@ -89,6 +89,66 @@ class Cart_session_service extends Base_service
         return true;
     }
 
+    public function is_allow_to_add($sku, $qty, $platform = NULL)
+    {
+        $product_obj = $this->prod_svc->get_dao()->get(array("sku" => $sku));
+        if (!$product_obj) {
+            return self::UNKNOWN_ITEM_STATUS;
+        }
+
+        //we don't check "out of stock item", it suppose not to be added
+        $website_status = $product_obj->get_website_status();
+        if (count($_SESSION["cart"][$platform]) == 0) {
+            //no item in cart
+            if ($website_status == 'I') {
+                return self::ALLOW_AND_IS_NORMAL_ITEM;
+            } elseif ($website_status == 'P') {
+                return self::ALLOW_AND_IS_PREORDER;
+            } elseif ($website_status == 'A') {
+                return self::ALLOW_AND_IS_ARRIVING;
+            }
+
+            return self::UNKNOWN_ITEM_STATUS;
+        } else {
+            foreach ($_SESSION["cart"][$platform] as $key => $value) {
+                if ($sku != $key) {
+                    continue;
+                } else {
+                    if ($website_status == "P") {
+                        return self::SAME_PREORDER_ITEM;
+                    } elseif ($website_status == "A") {
+                        return self::SAME_ARRIVING_ITEM;
+                    } elseif ($website_status == "I") {
+                        return self::SAME_NORMAL_ITEM;
+                    }
+                }
+            }
+            foreach ($_SESSION["cart"][$platform] as $key => $value) {
+                $stored_website_status = $value["website_status"];
+                // var_dump($stored_website_status);
+                // var_dump($website_status);
+                if (($stored_website_status == "I")
+                    && (($website_status == "P") || ($website_status == "A"))
+                ) {
+                    return self::NOT_ALLOW_PREORDER_ARRIVING_ITEM_AFTER_NORMAL_ITEM;
+                } elseif ((($stored_website_status == "P") || ($stored_website_status == "A"))
+                    && ($website_status == "I")
+                ) {
+                    return self::NOT_ALLOW_NORMAL_ITEM_AFTER_PREORDER_ARRIVING_ITEM;
+                } elseif ((($stored_website_status == "P") && ($website_status == "P"))
+                    || (($stored_website_status == "P") && ($website_status == "A"))
+                ) {
+                    return self::DIFFERENT_PREORDER_ITEM;
+                } elseif ((($stored_website_status == "A") && ($website_status == "A"))
+                    || (($stored_website_status == "A") && ($website_status == "P"))
+                ) {
+                    return self::DIFFERENT_ARRIVING_ITEM;
+                }
+            }
+            return self::ALLOW_AND_IS_NORMAL_ITEM;
+        }
+    }
+
     public function remove($sku, $platform = NULL)
     {
         if (is_null($platform)) {
@@ -125,6 +185,51 @@ class Cart_session_service extends Base_service
             'warranty_in_month' => $warranty_in_month
         ];
     }
+
+    public function get_cart_info($platform = '')
+    {
+        $result['cart'] = [];
+
+        if ($platform === '') {
+            $platform = defined(PLATFORMID) ? : "WEBSG";
+        }
+
+        $price_service = $this->get_price_service($platform);
+
+        if ($price_service === false) {
+            return $result;
+        }
+
+        if (count($_SESSION['cart'][$platform])) {
+            foreach ($_SESSION['cart'][$platform] as $sku => $prod) {
+                $prod_obj = $price_service->get_dao()->get_list_with_bundle_checking($sku, $platform, $this->get_lang_id());
+
+                if ($prod_obj) {
+
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    private function get_price_service($platform)
+    {
+        include_once(APPPATH.'libraries/service/Class_factory_service.php');
+        $cf_srv = new Class_factory_service();
+        $price_srv = $cf_srv->get_platform_price_service($platform);
+
+        if ($price_srv) {
+            return $price_srv;
+        } else {
+            // TODO
+            // log('not found price service')
+            return false;
+        }
+    }
+
+
+
 
     public function add_special($sku, $qty, $price = "", $platform = NULL)
     {
@@ -247,11 +352,11 @@ class Cart_session_service extends Base_service
                 $item_list = "(" . $item_list . ")";
 
             $battery_sku_list = $this->prod_svc->get_dao()->check_battery_inside_cart($battery_cat_list, $item_list);
-//        print $this->prod_svc->get_dao()->db->last_query();
+            //        print $this->prod_svc->get_dao()->db->last_query();
 
             if ($battery_sku_list) {
                 if (!array_key_exists(PLATFORMCURR, $reference_value)) {
-//do a conversion to ref USD
+                    //do a conversion to ref USD
                     $converted_ref_amount = $this->convert_amount($reference_amount, $reference_currency, PLATFORMCURR);
                 } else
                     $converted_ref_amount = $reference_value[PLATFORMCURR];
@@ -263,15 +368,15 @@ class Cart_session_service extends Base_service
                             //cart contain SKU other than battery and total amount >= 100USD
                             return false;
                         } else {
-//cart contain SKU other than battery but total amount < 100USD
+                            //cart contain SKU other than battery but total amount < 100USD
                             return $converted_ref_amount;
                         }
                     }
                 }
-//cart contain battery only
+                //cart contain battery only
                 return $converted_ref_amount;
             } else {
-//cart does not contain battery
+                //cart does not contain battery
                 return false;
             }
         }
@@ -296,66 +401,6 @@ class Cart_session_service extends Base_service
     public function set_exchange_rate_service($ex_rate_srv)
     {
         $this->exchange_rate_service = $ex_rate_srv;
-    }
-
-    public function is_allow_to_add($sku, $qty, $platform = NULL)
-    {
-        $product_obj = $this->prod_svc->get_dao()->get(array("sku" => $sku));
-        if (!$product_obj) {
-            return self::UNKNOWN_ITEM_STATUS;
-        }
-
-        //we don't check "out of stock item", it suppose not to be added
-        $website_status = $product_obj->get_website_status();
-        if (count($_SESSION["cart"][$platform]) == 0) {
-            //no item in cart
-            if ($website_status == 'I') {
-                return self::ALLOW_AND_IS_NORMAL_ITEM;
-            } elseif ($website_status == 'P') {
-                return self::ALLOW_AND_IS_PREORDER;
-            } elseif ($website_status == 'A') {
-                return self::ALLOW_AND_IS_ARRIVING;
-            }
-
-            return self::UNKNOWN_ITEM_STATUS;
-        } else {
-            foreach ($_SESSION["cart"][$platform] as $key => $value) {
-                if ($sku != $key) {
-                    continue;
-                } else {
-                    if ($website_status == "P") {
-                        return self::SAME_PREORDER_ITEM;
-                    } elseif ($website_status == "A") {
-                        return self::SAME_ARRIVING_ITEM;
-                    } elseif ($website_status == "I") {
-                        return self::SAME_NORMAL_ITEM;
-                    }
-                }
-            }
-            foreach ($_SESSION["cart"][$platform] as $key => $value) {
-                $stored_website_status = $value["website_status"];
-                // var_dump($stored_website_status);
-                // var_dump($website_status);
-                if (($stored_website_status == "I")
-                    && (($website_status == "P") || ($website_status == "A"))
-                ) {
-                    return self::NOT_ALLOW_PREORDER_ARRIVING_ITEM_AFTER_NORMAL_ITEM;
-                } elseif ((($stored_website_status == "P") || ($stored_website_status == "A"))
-                    && ($website_status == "I")
-                ) {
-                    return self::NOT_ALLOW_NORMAL_ITEM_AFTER_PREORDER_ARRIVING_ITEM;
-                } elseif ((($stored_website_status == "P") && ($website_status == "P"))
-                    || (($stored_website_status == "P") && ($website_status == "A"))
-                ) {
-                    return self::DIFFERENT_PREORDER_ITEM;
-                } elseif ((($stored_website_status == "A") && ($website_status == "A"))
-                    || (($stored_website_status == "A") && ($website_status == "P"))
-                ) {
-                    return self::DIFFERENT_ARRIVING_ITEM;
-                }
-            }
-            return self::ALLOW_AND_IS_NORMAL_ITEM;
-        }
     }
 
     public function get_cart($platform = NULL)
@@ -874,9 +919,9 @@ class Cart_session_service extends Base_service
             }
 
             if (($qty = $disc_item_list[$sku]) && ($apply_promotion === TRUE)) {
-//              $components = count($detail[$line_idx]);
-//              $i_disc_amt = $line_idx == 0?$ar_i_adj_price["first"]:$ar_i_adj_price["rest"];
-//              $ar_adj_price = average_divide($i_disc_amt, $components*$qty);
+                //              $components = count($detail[$line_idx]);
+                //              $i_disc_amt = $line_idx == 0?$ar_i_adj_price["first"]:$ar_i_adj_price["rest"];
+                //              $ar_adj_price = average_divide($i_disc_amt, $components*$qty);
 
                 $adj_count = 0;
                 foreach ($detail[$line_idx] as $d_sku => $item_detail) {

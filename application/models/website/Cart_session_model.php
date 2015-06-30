@@ -14,6 +14,13 @@ class Cart_session_model extends CI_Model
         $this->load->library('service/warranty_service');
     }
 
+    public function get_cart_info()
+    {
+        return $this->cart_session_service->get_cart_info();
+    }
+
+
+
     public function get_detail($platform_id)
     {
         return $this->cart_session_service->get_detail($platform_id);
@@ -104,6 +111,5 @@ class Cart_session_model extends CI_Model
     {
         return $this->product_model->get_product_content($where);
     }
-}
 
-?>
+}

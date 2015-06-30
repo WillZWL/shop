@@ -11,12 +11,11 @@ class Best_selling_video_service extends Landpage_video_listing_service
 
     public function __construct()
     {
-        parent::Landpage_video_listing_service();
+        parent::__construct();
         include_once(APPPATH . "libraries/service/Product_service.php");
         $this->product_service = new Product_service();
         include_once(APPPATH . "libraries/service/Latest_video_service.php");
         $this->set_latest_video_service(new Latest_video_service());
-
     }
 
     public function set_latest_video_service($srv = NULL)
