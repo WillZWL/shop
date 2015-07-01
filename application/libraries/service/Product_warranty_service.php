@@ -16,8 +16,5 @@ class Product_warranty_service extends Base_service
     {
         return $this->get_dao()->get_sku_warranty($sku, $platform_id);
     }
+
 }
-
-
-
-Å˜

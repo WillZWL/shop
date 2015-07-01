@@ -3,6 +3,7 @@
 class Common_data_prepare_model extends CI_Model
 {
     public $controller = null;
+    public $lang_id = 'en';
 
     public function __construct()
     {
@@ -12,23 +13,37 @@ class Common_data_prepare_model extends CI_Model
         // Load anything you need inside the method itself
     }
 
+    public function set_lang_id($lang_id)
+    {
+        $this->set_lang_id($lang_id);
+    }
+
+    public function get_lang_id()
+    {
+        return $this->lang_id;
+    }
+
     public function get_data_array($controller = null, $url_paras = array(), $i_class = '', $method = '')
     {
-        if (empty($i_class))
+        if (empty($i_class)) {
             $input_class = $this->router->class;
-        else
+        } else {
             $input_class = $i_class;
+        }
 
-        if (empty($method))
+        if (empty($method)) {
             $input_method = $this->router->method;
-        else
+        } else {
             $input_method = $method;
+        }
 
         $call_method = $input_class . '__' . $input_method;
         if (method_exists($this, $call_method)) {
+
             return $this->$call_method(($controller == null) ? "" : $controller, $url_paras);
-        } else
+        } else {
             return array();
+        }
     }
 
     public function checkout_onepage__ajax_cal_del_surcharge($controller, $url_paras)
@@ -1389,20 +1404,16 @@ salecycle_script;
         if (!$this->product_model->price_service->get(array("sku" => $sku, "listing_status" => "L", "platform_id" => PLATFORMID))) {
             return false;
         }
-        if ($sku && $listing_info = $this->product_model->get_listing_info($sku, PLATFORMID, get_lang_id())) {
+
+        if ($sku && $listing_info = $this->product_model->get_listing_info($sku, PLATFORMID, $this->get_lang_id())) {
             $data['lang_text'] = $controller->get_language_file();
 
-            if (!$prod_info = $this->product_model->get_website_product_info($sku, PLATFORMID, get_lang_id())) {
+            if (!$prod_info = $this->product_model->get_website_product_info($sku, PLATFORMID, $this->get_lang_id())) {
                 $prod_info = $this->product_model->get_website_product_info($sku, PLATFORMID);
             }
 
-            $is_trial_software = $this->product_model->is_trial_software($sku);
-            if ($listing_info->get_price() <= 0 && !$is_trial_software) {
-                show_404("page");
-            }
-
             $_SESSION['PARENT_PAGE'] = base_url() . "mainproduct/view/" . $sku;
-            $this->affiliate_service->add_af_cookie($_GET);
+            // $this->affiliate_service->add_af_cookie($_GET);
 
             if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) {
                 $secure_connection = TRUE;
@@ -1422,10 +1433,10 @@ salecycle_script;
                 $delivery_obj = $this->deliverytime_service->get_deliverytime_obj(PLATFORMCOUNTRYID, $delivery_scenarioid);
             }
 
-            $language_path = APPPATH . "/language/" . get_lang_id() . "/nocontroller/website_status.ini";
-            if (file_exists($language_path)) {
-                $website_status_text = parse_ini_file($language_path);
-            }
+            // $language_path = APPPATH . "/language/" . $this->get_lang_id() . "/nocontroller/website_status.ini";
+            // if (file_exists($language_path)) {
+            //     $website_status_text = parse_ini_file($language_path);
+            // }
             $data["listing_status"] = $listing_info->get_status();
             $listing_status = array("I" => $website_status_text["in_stock"], "O" => $website_status_text["out_of_stock"], "P" => $website_status_text["pre_order"], "A" => $website_status_text["arriving"]);
 
@@ -1467,23 +1478,23 @@ salecycle_script;
             }
 
 
-            $ra_list = $this->best_seller_model->best_seller_service->get_ra_bs_list($prod_info->get_sub_cat_id(), PLATFORMID, get_lang_id(), 4, TRUE);
-            if ($ra_list) {
-                foreach ($ra_list AS $key => $obj) {
-                    if (count($ra_list) >= 4) {
-                        break;
-                    }
-                    $ra_arr[$obj->get_sku()]["sku"] = $obj->get_sku();
-                    $ra_arr[$obj->get_sku()]["prod_name"] = $obj->get_prod_name();
-                    $ra_arr[$obj->get_sku()]["listing_status"] = $obj->get_status();
-                    $ra_arr[$obj->get_sku()]["stock_status"] = $obj->get_status() == 'I' ? $obj->get_qty() . " " . $listing_status[$obj->get_status()] : $listing_status[$obj->get_status()];
-                    $ra_arr[$obj->get_sku()]["prod_price"] = $obj->get_price();
-                    $ra_arr[$obj->get_sku()]["prod_rrp_price"] = $obj->get_rrp_price();
-                    $ra_arr[$obj->get_sku()]["prod_url"] = $this->website_model->get_prod_url($obj->get_sku());
-                    $ra_arr[$obj->get_sku()]["image"] = get_image_file($obj->get_image_ext(), "s", $obj->get_sku());
-                }
-            }
-            $data["ra_list"] = $ra_arr;
+            // $ra_list = $this->best_seller_model->best_seller_service->get_ra_bs_list($prod_info->get_sub_cat_id(), PLATFORMID, get_lang_id(), 4, TRUE);
+            // if ($ra_list) {
+            //     foreach ($ra_list AS $key => $obj) {
+            //         if (count($ra_list) >= 4) {
+            //             break;
+            //         }
+            //         $ra_arr[$obj->get_sku()]["sku"] = $obj->get_sku();
+            //         $ra_arr[$obj->get_sku()]["prod_name"] = $obj->get_prod_name();
+            //         $ra_arr[$obj->get_sku()]["listing_status"] = $obj->get_status();
+            //         $ra_arr[$obj->get_sku()]["stock_status"] = $obj->get_status() == 'I' ? $obj->get_qty() . " " . $listing_status[$obj->get_status()] : $listing_status[$obj->get_status()];
+            //         $ra_arr[$obj->get_sku()]["prod_price"] = $obj->get_price();
+            //         $ra_arr[$obj->get_sku()]["prod_rrp_price"] = $obj->get_rrp_price();
+            //         $ra_arr[$obj->get_sku()]["prod_url"] = $this->website_model->get_prod_url($obj->get_sku());
+            //         $ra_arr[$obj->get_sku()]["image"] = get_image_file($obj->get_image_ext(), "s", $obj->get_sku());
+            //     }
+            // }
+            // $data["ra_list"] = $ra_arr;
 
             if (empty($data["website_status_short_text"])) {
                 //create default message
@@ -1566,7 +1577,7 @@ salecycle_script;
             }
 
             // breadcrumb
-            switch (get_lang_id()) {
+            switch ($this->get_lang_id()) {
                 case "fr":
                     $home_text = "Accueil";
                     $home_text = "ValueBasket"; # SEO guru says change it all, #sbf 1572
@@ -1576,12 +1587,12 @@ salecycle_script;
                     $home_text = "ValueBasket";
             }
 
-            if (!$cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_cat_id(), "ce.lang_id" => get_lang_id(), "c.status" => 1), array("limit" => 1))) {
+            if (!$cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
                 $cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
             }
 
             $localized_cat_name = $cat_obj->get_name();
-            if (!$sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_cat_id(), "ce.lang_id" => get_lang_id(), "c.status" => 1), array("limit" => 1))) {
+            if (!$sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
                 $sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
             }
             $localized_sc_name = $sc_obj->get_name();
@@ -1591,7 +1602,7 @@ salecycle_script;
             $data['breadcrumb'][] = array($localized_sc_name => $sub_cat_url);
 
             if ($sub_sub_cat_url) {
-                if (!$cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_sub_cat_id(), "ce.lang_id" => get_lang_id(), "c.status" => 1), array("limit" => 1))) {
+                if (!$cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_sub_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
                     $cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_sub_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
                 }
                 $localized_ssc_name = $ssc_obj->get_name();
@@ -1608,63 +1619,63 @@ salecycle_script;
             if ($keyword_list = $this->product_model->get_product_keyword_arraylist($sku, PLATFORMID)) {
                 $meta_keyword = implode(',', $keyword_list);
             }
-            $this->template->add_title($meta_title . ' | ValueBasket ' . PLATFORMCOUNTRYID);
+            // $this->template->add_title($meta_title . ' | ValueBasket ' . PLATFORMCOUNTRYID);
             $content = $listing_info->get_short_desc();
             if ($content == "") {
                 $content = "Buy the " . $listing_info->get_prod_name() . " from ValueBasket " . PLATFORMCOUNTRYID . " with free shipping.";
                 // $listing_info->get_short_desc();
             }
-            $this->template->add_meta(array('name' => 'description', 'content' => $content));
-            $this->template->add_meta(array('name' => 'keywords', 'content' => $meta_keyword));
+            // $this->template->add_meta(array('name' => 'description', 'content' => $content));
+            // $this->template->add_meta(array('name' => 'keywords', 'content' => $meta_keyword));
 
 #           SBF #2284 add Tradedoubler variable js portion
-            $this->tradedoubler_tracking_script_service->set_country_id(PLATFORMCOUNTRYID);
-            $param["sku"] = $prod_info->get_sku();
-            $param["category"] = $prod_info->get_cat_name();
-            $param["brand"] = $prod_info->get_brand_name();
-            $param["product_name"] = $prod_info->get_prod_name();
-            $param["product_description"] = $prod_info->get_detail_desc();
-            $param["price"] = $listing_info->get_price();
-            $param["currency"] = array_shift(array_keys($_SESSION["CURRENCY"]));
-            $param["url"] = base_url() . "mainproduct/view/" . $prod_info->get_sku();
-            $param["image_url"] = 'http://cdn.valuebasket.com/808AA1/vb/images/product' . $data["prod_image"]["0"]["image"];
-            // $prod_list[] = $param_list;
-            $td_variable_code = $this->tradedoubler_tracking_script_service->get_variable_code("product", "", $param);
-            $this->template->add_js($td_variable_code, "print");
+            // $this->tradedoubler_tracking_script_service->set_country_id(PLATFORMCOUNTRYID);
+//             $param["sku"] = $prod_info->get_sku();
+//             $param["category"] = $prod_info->get_cat_name();
+//             $param["brand"] = $prod_info->get_brand_name();
+//             $param["product_name"] = $prod_info->get_prod_name();
+//             $param["product_description"] = $prod_info->get_detail_desc();
+//             $param["price"] = $listing_info->get_price();
+//             $param["currency"] = array_shift(array_keys($_SESSION["CURRENCY"]));
+//             $param["url"] = base_url() . "mainproduct/view/" . $prod_info->get_sku();
+//             $param["image_url"] = 'http://cdn.valuebasket.com/808AA1/vb/images/product' . $data["prod_image"]["0"]["image"];
+//             // $prod_list[] = $param_list;
+//             $td_variable_code = $this->tradedoubler_tracking_script_service->get_variable_code("product", "", $param);
+//             $this->template->add_js($td_variable_code, "print");
 
-            $enable_mediaforge_country = array('GB', 'AU', 'FR', 'ES');
-            if (in_array(PLATFORMCOUNTRYID, $enable_mediaforge_country)) {
-#               mediaforge - added by SBF#1902
-                $enable_mediaforge = true;
-                if ($enable_mediaforge) {
-                    if (PLATFORMCOUNTRYID == 'GB') $account_no = 1038;
-                    if (PLATFORMCOUNTRYID == 'AU') $account_no = 1059;
-                    if (PLATFORMCOUNTRYID == 'FR') $account_no = 1411; #SBF#2229
-                    if (PLATFORMCOUNTRYID == 'ES') $account_no = 1519; #SBF#2404
+//             $enable_mediaforge_country = array('GB', 'AU', 'FR', 'ES');
+//             if (in_array(PLATFORMCOUNTRYID, $enable_mediaforge_country)) {
+// #               mediaforge - added by SBF#1902
+//                 $enable_mediaforge = true;
+//                 if ($enable_mediaforge) {
+//                     if (PLATFORMCOUNTRYID == 'GB') $account_no = 1038;
+//                     if (PLATFORMCOUNTRYID == 'AU') $account_no = 1059;
+//                     if (PLATFORMCOUNTRYID == 'FR') $account_no = 1411; #SBF#2229
+//                     if (PLATFORMCOUNTRYID == 'ES') $account_no = 1519; #SBF#2404
 
-#                   function add_js($script, $type = 'import', $defer = FALSE, $position = "header")
-                    $this->template->add_js("//tags.mediaforge.com/js/$account_no?prodID=$sku", "import", FALSE, "body");
-                }
+// #                   function add_js($script, $type = 'import', $defer = FALSE, $position = "header")
+//                     $this->template->add_js("//tags.mediaforge.com/js/$account_no?prodID=$sku", "import", FALSE, "body");
+//                 }
 
-#               criteo - removed by SBF#1902
-                $enable_criteo = false;
-                if ($enable_criteo) {
-                    if ($data['is_http']) {
-                        $this->template->add_js("http://static.criteo.net/criteo_ld3.js");
-                    } else {
-                        $this->template->add_js("https://static.criteo.net/criteo_ld3.js");
-                    }
-                    $criteo_script =
-                        '
-                        document.write(\'<div id=\"cto_se_7719983_ac\" style=\"display:none\">\');
-                        document.write(\'<div class=\"ctoWidgetServer\">http:\/\/valuebasketuk.widget.criteo.com\/pvx\/<\/div>\');
-                        document.write(\'<div class=\"ctoDataType\">sendEvent<\/div>\');
-                        document.write(\'<div class=\"ctoParams\">wi=7719983&pt1=2&i=' . $sku . '<\/div>\');
-                        document.write(\'<\/div>\');
-                    ';
-                    $this->template->add_js($criteo_script, 'embed');
-                }
-            }
+// #               criteo - removed by SBF#1902
+//                 $enable_criteo = false;
+//                 if ($enable_criteo) {
+//                     if ($data['is_http']) {
+//                         $this->template->add_js("http://static.criteo.net/criteo_ld3.js");
+//                     } else {
+//                         $this->template->add_js("https://static.criteo.net/criteo_ld3.js");
+//                     }
+//                     $criteo_script =
+//                         '
+//                         document.write(\'<div id=\"cto_se_7719983_ac\" style=\"display:none\">\');
+//                         document.write(\'<div class=\"ctoWidgetServer\">http:\/\/valuebasketuk.widget.criteo.com\/pvx\/<\/div>\');
+//                         document.write(\'<div class=\"ctoDataType\">sendEvent<\/div>\');
+//                         document.write(\'<div class=\"ctoParams\">wi=7719983&pt1=2&i=' . $sku . '<\/div>\');
+//                         document.write(\'<\/div>\');
+//                     ';
+//                     $this->template->add_js($criteo_script, 'embed');
+//                 }
+//             }
 
             //
             $country = strtolower(PLATFORMCOUNTRYID);
@@ -1694,7 +1705,7 @@ salecycle_script;
             $data['hcb20130830_img_tag'] = $hcb20130830_img_tag;
 
             //
-            $lang_id = get_lang_id();
+            $lang_id = $this->get_lang_id();
             if (($lang_id != "en") && (($data["lang_restricted"] & (1 << $data["osd_lang_list"]["NA"])) != 1)) {
                 if (array_key_exists(strtoupper($lang_id), $data["osd_lang_list"])) {
                     $lang_restricted = false;
@@ -2149,6 +2160,7 @@ salecycle_script;
             }
             $data['sbf1597'] = $sbf1597;
 
+var_dump($data);die;
             return $data;
         }
     }

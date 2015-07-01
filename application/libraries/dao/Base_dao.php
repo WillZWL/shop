@@ -21,9 +21,9 @@ abstract class Base_dao
     public function get_list($where = array(), $option = array(), $classname = "")
     {
         if (isset($option["orderby"])) {
-            if ($this->db->_has_operator($option["orderby"])) {
-                $this->db->_protect_identifiers = FALSE;
-            }
+            // if ($this->db->_has_operator($option["orderby"])) {
+            //     $this->db->_protect_identifiers = FALSE;
+            // }
             $this->db->order_by($option["orderby"]);
         }
 
