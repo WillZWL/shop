@@ -38,7 +38,7 @@ class Product_warranty_dao extends Base_dao
     {
         $this->db->from("product p");
         $this->db->join("product_warranty pw", "p.sku = pw.sku and pw.platform_id='{$platform_id}'", "LEFT");
-        $this->db->select("COALESCE(pw.warranty_in_month, p.warranty_in_month)as warranty_in_month");
+        $this->db->select("COALESCE(pw.warranty_in_month, p.warranty_in_month) as warranty_in_month", false);
         $this->db->where(array("p.sku" => $sku));
         $this->db->limit(1);
 

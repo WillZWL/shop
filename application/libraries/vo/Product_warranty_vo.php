@@ -1,5 +1,5 @@
 <?php
-include_once "base_vo.php";
+include_once "Base_vo.php";
 
 class Product_warranty_vo extends Base_vo
 {

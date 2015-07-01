@@ -559,6 +559,14 @@ class Product_model extends CI_Model
 
     public function update_cat_map($obj)
     {
+
+
+        if (true)
+            echo 'abc';
+            echo 'fasf';
+
+
+
         return $this->category_mapping_service->update_cat_map($obj);
     }
 

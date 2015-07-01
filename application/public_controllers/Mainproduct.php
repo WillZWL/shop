@@ -28,6 +28,7 @@ class Mainproduct extends PUB_Controller
         $data = array();
         $data = $this->common_data_prepare_model->get_data_array($this, array("sku" => $sku, "type" => "web"));
         $this->load->view('/default/product', $data);
+
         // $index = strripos($sku, "-", -7);
         // $sku = trim(substr($sku, $index), "- ");
 

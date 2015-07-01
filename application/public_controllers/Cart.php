@@ -31,7 +31,7 @@ Class Cart extends PUB_Controller
 
     public function add_item_qty($sku = "", $qty = 0, $quiet_return = false)
     {
-//        $data['data']['lang_text'] = $this->_get_language_file('', '', 'add_item_qty');
+       // $data['data']['lang_text'] = $this->_get_language_file('', '', 'add_item_qty');
 
         $listing_status = array(
             "I" => $data['data']['lang_text']['status_in_stock'],
@@ -39,6 +39,8 @@ Class Cart extends PUB_Controller
             "P" => $data['data']['lang_text']['status_pre_order'],
             "A" => $data['data']['lang_text']['status_arriving']
         );
+
+        $foo = [];
 
         //$this->affiliate_service->add_af_cookie($_GET);
 

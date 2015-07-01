@@ -9,8 +9,8 @@
                         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 image-container">
                             <div class="image">
                                 <span class="product-label exist"><span class="product-label-special">Sale</span></span>
-                                <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/2-500x500.jpg" class="imagezoom">
-                                    <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/2-500x500.jpg" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" id="image" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/2-500x500.jpg" class="product-image-zoom img-responsive">
+                                <a href="/themes/default/asset/image/demo/2-500x500.jpg" class="imagezoom">
+                                    <img src="/themes/default/asset/image/demo/2-500x500.jpg" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" id="image" data-zoom-image="/themes/default/asset/image/demo/2-500x500.jpg" class="product-image-zoom img-responsive">
                                 </a>
                             </div>
                             <div class="thumbs-preview horizontal">
@@ -20,50 +20,50 @@
                                             <div class="owl-wrapper" style="width: 1456px; left: 0px; display: block;">
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix active">
-                                                        <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/2-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/2-500x500.jpg" data-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/2-500x500.jpg">
-                                                            <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/2-500x500.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/2-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/2-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/2-500x500.jpg" data-image="/themes/default/asset/image/demo/2-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/2-500x500.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="/themes/default/asset/image/demo/2-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix">
-                                                        <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/15-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/15-500x500.jpg" data-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/15-500x500.jpg">
-                                                            <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/15-80x80.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/15-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/15-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/15-500x500.jpg" data-image="/themes/default/asset/image/demo/15-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/15-80x80.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="/themes/default/asset/image/demo/15-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix">
-                                                        <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/16-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/16-500x500.jpg" data-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/16-500x500.jpg">
-                                                            <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/16-80x80.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/16-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/16-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/16-500x500.jpg" data-image="/themes/default/asset/image/demo/16-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/16-80x80.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="/themes/default/asset/image/demo/16-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix">
-                                                        <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/17-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/17-500x500.jpg" data-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/17-500x500.jpg">
-                                                            <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/17-80x80.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/17-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/17-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/17-500x500.jpg" data-image="/themes/default/asset/image/demo/17-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/17-80x80.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="/themes/default/asset/image/demo/17-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix">
-                                                        <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/18-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/18-500x500.jpg" data-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/18-500x500.jpg">
-                                                            <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/18-80x80.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/18-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/18-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/18-500x500.jpg" data-image="/themes/default/asset/image/demo/18-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/18-80x80.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="/themes/default/asset/image/demo/18-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix">
-                                                        <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/19-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/19-500x500.jpg" data-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/19-500x500.jpg">
-                                                            <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/19-80x80.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/19-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/19-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/19-500x500.jpg" data-image="/themes/default/asset/image/demo/19-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/19-80x80.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="/themes/default/asset/image/demo/19-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix">
-                                                        <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/20-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/20-500x500.jpg" data-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/20-500x500.jpg">
-                                                            <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/20-80x80.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/20-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/20-500x500.jpg" title="Apple iPhone 6 128GB" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/20-500x500.jpg" data-image="/themes/default/asset/image/demo/20-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/20-80x80.jpg" style="max-width:80px" title="Apple iPhone 6 128GB" alt="Apple iPhone 6 128GB" data-zoom-image="/themes/default/asset/image/demo/20-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
@@ -146,31 +146,14 @@
                                     <input type="hidden" name="product_id" value="50">
                                     <div class="action pull-left">
                                         <div class="cart pull-left">
-                                            <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary">Add to Cart</button>
+                                            <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary" onclick="cart.addcart('10111-AA-BK');">Add to Cart</button>
                                         </div>
                                         <div class="pull-left">
                                             <a data-toggle="tooltip" class="wishlist" title="" onclick="wishlist.addwishlist('50');" data-original-title="Add to Wish List">Add to Wish List</a>
                                         </div>
-                                        <div class="pull-left">
-                                            <a data-toggle="tooltip" class="compare" title="" onclick="compare.addcompare('50');" data-original-title="Compare this Product">Compare this Product</a>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <!-- AddThis Button BEGIN -->
-                                <div class="addthis_toolbox addthis_default_style space-40">
-                                    <a class="addthis_button_facebook_like at300b" fb:like:layout="button_count">
-                                        <div class="fb-like fb_iframe_widget" data-ref=".VZMIemUXRK0.like" data-layout="button_count" data-show_faces="false" data-share="false" data-action="like" data-width="90" data-font="arial" data-href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=50" data-send="false" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=172525162793917&amp;container_width=77&amp;font=arial&amp;href=http%3A%2F%2Fwww.themelexus.com%2Fdemo%2Fopencart%2Fmotozz%2Fdemo3%2Findex.php%3Froute%3Dproduct%2Fproduct%26product_id%3D50&amp;layout=button_count&amp;locale=en_US&amp;ref=.VZMIemUXRK0.like&amp;sdk=joey&amp;send=false&amp;share=false&amp;show_faces=false&amp;width=90"><span style="vertical-align: bottom; width: 77px; height: 20px;"><iframe name="f328ae259" width="90px" height="1000px" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:like Facebook Social Plugin" src="http://www.facebook.com/v2.0/plugins/like.php?action=like&amp;app_id=172525162793917&amp;channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter%2F1ldYU13brY_.js%3Fversion%3D41%23cb%3Dfaae39624%26domain%3Dwww.themelexus.com%26origin%3Dhttp%253A%252F%252Fwww.themelexus.com%252Ff15095ee78%26relation%3Dparent.parent&amp;container_width=77&amp;font=arial&amp;href=http%3A%2F%2Fwww.themelexus.com%2Fdemo%2Fopencart%2Fmotozz%2Fdemo3%2Findex.php%3Froute%3Dproduct%2Fproduct%26product_id%3D50&amp;layout=button_count&amp;locale=en_US&amp;ref=.VZMIemUXRK0.like&amp;sdk=joey&amp;send=false&amp;share=false&amp;show_faces=false&amp;width=90" style="border: none; visibility: visible; width: 77px; height: 20px;" class=""></iframe></span></div>
-                                    </a>
-                                    <a class="addthis_button_tweet at300b">
-                                        <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" src="http://platform.twitter.com/widgets/tweet_button.55a4019ea66c5d005a6e6d9d41c5e068.en.html#_=1435699323982&amp;count=horizontal&amp;counturl=http%3A%2F%2Fwww.themelexus.com%2Fdemo%2Fopencart%2Fmotozz%2Fdemo3%2Findex.php%3Froute%3Dproduct%2Fproduct%26product_id%3D50&amp;dnt=true&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=http%3A%2F%2Fwww.themelexus.com%2Fdemo%2Fopencart%2Fmotozz%2Fdemo3%2Findex.php%3Froute%3Dproduct%2Fproduct%26product_id%3D50&amp;size=m&amp;text=And%20it%20lets%20yo%3A&amp;url=http%3A%2F%2Fwww.themelexus.com%2Fdemo%2Fopencart%2Fmotozz%2Fdemo3%2Findex.php%3Froute%3Dproduct%2Fproduct%26product_id%3D50%23.VZMIetX96kg.twitter" class="twitter-share-button twitter-tweet-button twitter-share-button twitter-count-horizontal" title="Twitter Tweet Button" data-twttr-rendered="true" style="position: static; visibility: visible; width: 78px; height: 20px;"></iframe>
-                                    </a> <a class="addthis_button_pinterest_pinit at300b"><span class="at_PinItButton"></span></a> <a class="addthis_counter addthis_pill_style" href="#" style="display: inline-block;"><a class="atc_s addthis_button_compact"><span></span></a>
-                                    <a class="addthis_button_expanded" target="_blank" title="View more services" href="#"></a>
-                                    </a>
-                                    <div class="atclear"></div>
-                                </div>
-                                <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script>
-                                <!-- AddThis Button END -->
                                 <div class="tags">
                                 </div>
                             </div>
@@ -262,7 +245,7 @@
                                                         <span class="product-label sale-exist"><span class="product-label-special">Sale</span></span>
                                                         <div class="product-img img">
                                                             <a class="img" title="HTC Touch HD" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=28">
-                                                                <img class="img-responsive" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/4-500x500.jpg" title="HTC Touch HD" alt="HTC Touch HD">
+                                                                <img class="img-responsive" src="/themes/default/asset/image/demo/4-500x500.jpg" title="HTC Touch HD" alt="HTC Touch HD">
                                                             </a>
                                                             <div class="quickview hidden-xs">
                                                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=themecontrol/product&amp;product_id=28" title="" data-original-title="Quick View"><i class="fa fa-eye"></i></a>
@@ -296,9 +279,6 @@
                                                                         <i class="fa fa-shopping-cart"></i>
                                                                     </button>
                                                                 </div>
-                                                                <div class="compare">
-                                                                    <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="compare.addcompare('28');" data-original-title="Compare this Product"><i class="fa fa-exchange"></i></button>
-                                                                </div>
                                                                 <div class="wishlist">
                                                                     <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="wishlist.addwishlist('28');" data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
                                                                 </div>
@@ -316,7 +296,7 @@
                                                     <div class="image">
                                                         <div class="product-img img">
                                                             <a class="img" title="Palm Treo Pro" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=29">
-                                                                <img class="img-responsive" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/7-500x500.jpg" title="Palm Treo Pro" alt="Palm Treo Pro">
+                                                                <img class="img-responsive" src="/themes/default/asset/image/demo/7-500x500.jpg" title="Palm Treo Pro" alt="Palm Treo Pro">
                                                             </a>
                                                             <div class="quickview hidden-xs">
                                                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=themecontrol/product&amp;product_id=29" title="" data-original-title="Quick View"><i class="fa fa-eye"></i></a>
@@ -349,9 +329,6 @@
                                                                         <i class="fa fa-shopping-cart"></i>
                                                                     </button>
                                                                 </div>
-                                                                <div class="compare">
-                                                                    <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="compare.addcompare('29');" data-original-title="Compare this Product"><i class="fa fa-exchange"></i></button>
-                                                                </div>
                                                                 <div class="wishlist">
                                                                     <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="wishlist.addwishlist('29');" data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
                                                                 </div>
@@ -370,7 +347,7 @@
                                                         <span class="product-label sale-exist"><span class="product-label-special">Sale</span></span>
                                                         <div class="product-img img">
                                                             <a class="img" title="Canon EOS 5D" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=30">
-                                                                <img class="img-responsive" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/3-500x500.jpg" title="Canon EOS 5D" alt="Canon EOS 5D">
+                                                                <img class="img-responsive" src="/themes/default/asset/image/demo/3-500x500.jpg" title="Canon EOS 5D" alt="Canon EOS 5D">
                                                             </a>
                                                             <div class="quickview hidden-xs">
                                                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=themecontrol/product&amp;product_id=30" title="" data-original-title="Quick View"><i class="fa fa-eye"></i></a>
@@ -404,9 +381,6 @@
                                                                         <i class="fa fa-shopping-cart"></i>
                                                                     </button>
                                                                 </div>
-                                                                <div class="compare">
-                                                                    <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="compare.addcompare('30');" data-original-title="Compare this Product"><i class="fa fa-exchange"></i></button>
-                                                                </div>
                                                                 <div class="wishlist">
                                                                     <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="wishlist.addwishlist('30');" data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
                                                                 </div>
@@ -424,7 +398,7 @@
                                                     <div class="image">
                                                         <div class="product-img img">
                                                             <a class="img" title="Samsung SyncMaster 941BW" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=33">
-                                                                <img class="img-responsive" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/9-500x500.jpg" title="Samsung SyncMaster 941BW" alt="Samsung SyncMaster 941BW">
+                                                                <img class="img-responsive" src="/themes/default/asset/image/demo/9-500x500.jpg" title="Samsung SyncMaster 941BW" alt="Samsung SyncMaster 941BW">
                                                             </a>
                                                             <div class="quickview hidden-xs">
                                                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=themecontrol/product&amp;product_id=33" title="" data-original-title="Quick View"><i class="fa fa-eye"></i></a>
@@ -457,9 +431,6 @@
                                                                         <i class="fa fa-shopping-cart"></i>
                                                                     </button>
                                                                 </div>
-                                                                <div class="compare">
-                                                                    <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="compare.addcompare('33');" data-original-title="Compare this Product"><i class="fa fa-exchange"></i></button>
-                                                                </div>
                                                                 <div class="wishlist">
                                                                     <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="wishlist.addwishlist('33');" data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
                                                                 </div>
@@ -477,7 +448,7 @@
                                                     <div class="image">
                                                         <div class="product-img img">
                                                             <a class="img" title="IMAC shuffle born to be worn." href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=34">
-                                                                <img class="img-responsive" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/5-500x500.jpg" title="IMAC shuffle born to be worn." alt="IMAC shuffle born to be worn.">
+                                                                <img class="img-responsive" src="/themes/default/asset/image/demo/5-500x500.jpg" title="IMAC shuffle born to be worn." alt="IMAC shuffle born to be worn.">
                                                             </a>
                                                             <div class="quickview hidden-xs">
                                                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=themecontrol/product&amp;product_id=34" title="" data-original-title="Quick View"><i class="fa fa-eye"></i></a>
@@ -510,9 +481,6 @@
                                                                         <i class="fa fa-shopping-cart"></i>
                                                                     </button>
                                                                 </div>
-                                                                <div class="compare">
-                                                                    <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="compare.addcompare('34');" data-original-title="Compare this Product"><i class="fa fa-exchange"></i></button>
-                                                                </div>
                                                                 <div class="wishlist">
                                                                     <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="wishlist.addwishlist('34');" data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
                                                                 </div>
@@ -531,7 +499,7 @@
                                                         <span class="product-label sale-exist"><span class="product-label-special">Sale</span></span>
                                                         <div class="product-img img">
                                                             <a class="img" title="Apple Cinema 30&quot;" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=42">
-                                                                <img class="img-responsive" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/14-500x500.jpg" title="Apple Cinema 30&quot;" alt="Apple Cinema 30&quot;">
+                                                                <img class="img-responsive" src="/themes/default/asset/image/demo/14-500x500.jpg" title="Apple Cinema 30&quot;" alt="Apple Cinema 30&quot;">
                                                             </a>
                                                             <div class="quickview hidden-xs">
                                                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=themecontrol/product&amp;product_id=42" title="" data-original-title="Quick View"><i class="fa fa-eye"></i></a>
@@ -565,9 +533,6 @@
                                                                         <i class="fa fa-shopping-cart"></i>
                                                                     </button>
                                                                 </div>
-                                                                <div class="compare">
-                                                                    <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="compare.addcompare('42');" data-original-title="Compare this Product"><i class="fa fa-exchange"></i></button>
-                                                                </div>
                                                                 <div class="wishlist">
                                                                     <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="wishlist.addwishlist('42');" data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
                                                                 </div>
@@ -586,7 +551,7 @@
                                                         <span class="product-label sale-exist"><span class="product-label-special">Sale</span></span>
                                                         <div class="product-img img">
                                                             <a class="img" title="MacBook Pro" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=45">
-                                                                <img class="img-responsive" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/6-500x500.jpg" title="MacBook Pro" alt="MacBook Pro">
+                                                                <img class="img-responsive" src="/themes/default/asset/image/demo/6-500x500.jpg" title="MacBook Pro" alt="MacBook Pro">
                                                             </a>
                                                             <div class="quickview hidden-xs">
                                                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=themecontrol/product&amp;product_id=45" title="" data-original-title="Quick View"><i class="fa fa-eye"></i></a>
@@ -620,9 +585,6 @@
                                                                         <i class="fa fa-shopping-cart"></i>
                                                                     </button>
                                                                 </div>
-                                                                <div class="compare">
-                                                                    <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="compare.addcompare('45');" data-original-title="Compare this Product"><i class="fa fa-exchange"></i></button>
-                                                                </div>
                                                                 <div class="wishlist">
                                                                     <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="wishlist.addwishlist('45');" data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
                                                                 </div>
@@ -640,7 +602,7 @@
                                                     <div class="image">
                                                         <div class="product-img img">
                                                             <a class="img" title="Samsung Galaxy Tab 10.1" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=49">
-                                                                <img class="img-responsive" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/product/8-500x500.jpg" title="Samsung Galaxy Tab 10.1" alt="Samsung Galaxy Tab 10.1">
+                                                                <img class="img-responsive" src="/themes/default/asset/image/demo/8-500x500.jpg" title="Samsung Galaxy Tab 10.1" alt="Samsung Galaxy Tab 10.1">
                                                             </a>
                                                             <div class="quickview hidden-xs">
                                                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=themecontrol/product&amp;product_id=49" title="" data-original-title="Quick View"><i class="fa fa-eye"></i></a>
@@ -672,9 +634,6 @@
                                                                     <button data-loading-text="Loading..." class="btn btn-primary" type="button" onclick="cart.addcart('49');">
                                                                         <i class="fa fa-shopping-cart"></i>
                                                                     </button>
-                                                                </div>
-                                                                <div class="compare">
-                                                                    <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="compare.addcompare('49');" data-original-title="Compare this Product"><i class="fa fa-exchange"></i></button>
                                                                 </div>
                                                                 <div class="wishlist">
                                                                     <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="wishlist.addwishlist('49');" data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
