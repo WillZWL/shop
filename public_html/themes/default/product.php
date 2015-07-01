@@ -244,7 +244,7 @@
                                                     <div class="image">
                                                         <span class="product-label sale-exist"><span class="product-label-special">Sale</span></span>
                                                         <div class="product-img img">
-                                                            <a class="img" title="HTC Touch HD" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=28">
+                                                            <a class="img" title="HTC Touch HD" href="#">
                                                                 <img class="img-responsive" src="/themes/default/asset/image/demo/4-500x500.jpg" title="HTC Touch HD" alt="HTC Touch HD">
                                                             </a>
                                                             <div class="quickview hidden-xs">
@@ -257,7 +257,7 @@
                                                     </div>
                                                     <div class="product-meta">
                                                         <div class="left">
-                                                            <h6 class="name"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=28">HTC Touch HD</a></h6>
+                                                            <h6 class="name"><a href="#">HTC Touch HD</a></h6>
                                                             <p class="description">
                                                                 HTC Touch - in High Definition. Watch music videos and streaming content in awe-inspiring high de.....</p>
                                                             <div class="price">
@@ -295,7 +295,7 @@
                                                 <div class="product-block">
                                                     <div class="image">
                                                         <div class="product-img img">
-                                                            <a class="img" title="Palm Treo Pro" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=29">
+                                                            <a class="img" title="Palm Treo Pro" href="#">
                                                                 <img class="img-responsive" src="/themes/default/asset/image/demo/7-500x500.jpg" title="Palm Treo Pro" alt="Palm Treo Pro">
                                                             </a>
                                                             <div class="quickview hidden-xs">
@@ -308,7 +308,7 @@
                                                     </div>
                                                     <div class="product-meta">
                                                         <div class="left">
-                                                            <h6 class="name"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=29">Palm Treo Pro</a></h6>
+                                                            <h6 class="name"><a href="#">Palm Treo Pro</a></h6>
                                                             <p class="description">
                                                                 Redefine your workday with the Palm Treo Pro smartphone. Perfectly balanced, you can respond to b.....</p>
                                                             <div class="price">
@@ -346,7 +346,7 @@
                                                     <div class="image">
                                                         <span class="product-label sale-exist"><span class="product-label-special">Sale</span></span>
                                                         <div class="product-img img">
-                                                            <a class="img" title="Canon EOS 5D" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=30">
+                                                            <a class="img" title="Canon EOS 5D" href="#">
                                                                 <img class="img-responsive" src="/themes/default/asset/image/demo/3-500x500.jpg" title="Canon EOS 5D" alt="Canon EOS 5D">
                                                             </a>
                                                             <div class="quickview hidden-xs">
@@ -359,7 +359,7 @@
                                                     </div>
                                                     <div class="product-meta">
                                                         <div class="left">
-                                                            <h6 class="name"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=30">Canon EOS 5D</a></h6>
+                                                            <h6 class="name"><a href="#">Canon EOS 5D</a></h6>
                                                             <p class="description">
                                                                 Canon's press material for the EOS 5D states that it 'defines (a) new D-SLR category', while we'r.....</p>
                                                             <div class="price">
@@ -397,7 +397,7 @@
                                                 <div class="product-block">
                                                     <div class="image">
                                                         <div class="product-img img">
-                                                            <a class="img" title="Samsung SyncMaster 941BW" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=33">
+                                                            <a class="img" title="Samsung SyncMaster 941BW" href="#">
                                                                 <img class="img-responsive" src="/themes/default/asset/image/demo/9-500x500.jpg" title="Samsung SyncMaster 941BW" alt="Samsung SyncMaster 941BW">
                                                             </a>
                                                             <div class="quickview hidden-xs">
@@ -410,7 +410,7 @@
                                                     </div>
                                                     <div class="product-meta">
                                                         <div class="left">
-                                                            <h6 class="name"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=33">Samsung SyncMaster 941BW</a></h6>
+                                                            <h6 class="name"><a href="#">Samsung SyncMaster 941BW</a></h6>
                                                             <p class="description">
                                                                 Imagine the advantages of going big without slowing down. The big 19" 941BW monitor combines wide.....</p>
                                                             <div class="price">
@@ -447,7 +447,7 @@
                                                 <div class="product-block">
                                                     <div class="image">
                                                         <div class="product-img img">
-                                                            <a class="img" title="IMAC shuffle born to be worn." href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=34">
+                                                            <a class="img" title="IMAC shuffle born to be worn." href="#">
                                                                 <img class="img-responsive" src="/themes/default/asset/image/demo/5-500x500.jpg" title="IMAC shuffle born to be worn." alt="IMAC shuffle born to be worn.">
                                                             </a>
                                                             <div class="quickview hidden-xs">
@@ -460,7 +460,7 @@
                                                     </div>
                                                     <div class="product-meta">
                                                         <div class="left">
-                                                            <h6 class="name"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=34">IMAC shuffle born to be worn.</a></h6>
+                                                            <h6 class="name"><a href="#">IMAC shuffle born to be worn.</a></h6>
                                                             <p class="description">
                                                                 Born to be worn. Clip on the worlds most wearable music player and take up to 240 songs wit.....</p>
                                                             <div class="price">
@@ -498,7 +498,7 @@
                                                     <div class="image">
                                                         <span class="product-label sale-exist"><span class="product-label-special">Sale</span></span>
                                                         <div class="product-img img">
-                                                            <a class="img" title="Apple Cinema 30&quot;" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=42">
+                                                            <a class="img" title="Apple Cinema 30&quot;" href="#">
                                                                 <img class="img-responsive" src="/themes/default/asset/image/demo/14-500x500.jpg" title="Apple Cinema 30&quot;" alt="Apple Cinema 30&quot;">
                                                             </a>
                                                             <div class="quickview hidden-xs">
@@ -511,7 +511,7 @@
                                                     </div>
                                                     <div class="product-meta">
                                                         <div class="left">
-                                                            <h6 class="name"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=42">Apple Cinema 30"</a></h6>
+                                                            <h6 class="name"><a href="#">Apple Cinema 30"</a></h6>
                                                             <p class="description">
                                                                 The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed sp.....</p>
                                                             <div class="price">
@@ -550,7 +550,7 @@
                                                     <div class="image">
                                                         <span class="product-label sale-exist"><span class="product-label-special">Sale</span></span>
                                                         <div class="product-img img">
-                                                            <a class="img" title="MacBook Pro" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=45">
+                                                            <a class="img" title="MacBook Pro" href="#">
                                                                 <img class="img-responsive" src="/themes/default/asset/image/demo/6-500x500.jpg" title="MacBook Pro" alt="MacBook Pro">
                                                             </a>
                                                             <div class="quickview hidden-xs">
@@ -563,7 +563,7 @@
                                                     </div>
                                                     <div class="product-meta">
                                                         <div class="left">
-                                                            <h6 class="name"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=45">MacBook Pro</a></h6>
+                                                            <h6 class="name"><a href="#">MacBook Pro</a></h6>
                                                             <p class="description">
                                                                 Latest Intel mobile architecture Powered by the most advanced mobile processors .....</p>
                                                             <div class="price">
@@ -601,7 +601,7 @@
                                                 <div class="product-block">
                                                     <div class="image">
                                                         <div class="product-img img">
-                                                            <a class="img" title="Samsung Galaxy Tab 10.1" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=49">
+                                                            <a class="img" title="Samsung Galaxy Tab 10.1" href="#">
                                                                 <img class="img-responsive" src="/themes/default/asset/image/demo/8-500x500.jpg" title="Samsung Galaxy Tab 10.1" alt="Samsung Galaxy Tab 10.1">
                                                             </a>
                                                             <div class="quickview hidden-xs">
@@ -614,7 +614,7 @@
                                                     </div>
                                                     <div class="product-meta">
                                                         <div class="left">
-                                                            <h6 class="name"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/product&amp;product_id=49">Samsung Galaxy Tab 10.1</a></h6>
+                                                            <h6 class="name"><a href="#">Samsung Galaxy Tab 10.1</a></h6>
                                                             <p class="description">
                                                                 Samsung Galaxy Tab 10.1, is the world’s thinnest tablet, measuring 8.6 mm thickness, running with.....</p>
                                                             <div class="price">
