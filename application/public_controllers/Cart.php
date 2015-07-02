@@ -22,11 +22,9 @@ Class Cart extends PUB_Controller
 
         $this->add_item_qty($sku, $qty);
 
-        var_dump($_SESSION);
-        // if ( ! empty($sku)) {
-        //  $this->add_item_v2($sku, $qty);
-        // }
+        $return['redirect'] = '/review_order';
 
+        echo json_encode($return);
     }
 
     public function add_item_qty($sku = "", $qty = 0, $quiet_return = false)

@@ -237,13 +237,12 @@ $(document).ready(function() {
 var cart = {
     'addcart': function(sku, qty) {
         $.ajax({
-            url: 'index.php/cart/ajax_add_item',
+            url: '  /cart/ajax_add_item',
             type: 'post',
             data: 'sku=' + sku + '&qty=' + (typeof(qty) != 'undefined' ? qty : 1),
             dataType: 'json',
             success: function(json) {
                 $('.alert, .text-danger').remove();
-
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
