@@ -188,7 +188,11 @@ class Cart_session_service extends Base_service
 
     public function get_cart_info($platform = '')
     {
-        $result['cart'] = [];
+        $result = [
+            'item' => [],
+            'total_amount' => 0,
+            'total_weight' => 0
+        ];
 
         if ($platform === '') {
             $platform = defined(PLATFORMID) ? : "WEBSG";
@@ -203,9 +207,10 @@ class Cart_session_service extends Base_service
         if (count($_SESSION['cart'][$platform])) {
             foreach ($_SESSION['cart'][$platform] as $sku => $prod) {
                 $prod_obj = $price_service->get_dao()->get_list_with_bundle_checking($sku, $platform, $this->get_lang_id());
-
-                if ($prod_obj) {
-
+                foreach ($prod_obj as $obj) {
+                    $result['item'][$obj->get_sku()] = $obj;
+                    $result['total_amount'] += $obj->get_price();
+                    $result['total_weight'] += $obj->get_prod_weight();
                 }
             }
         }

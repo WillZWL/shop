@@ -9,11 +9,9 @@ require_once(BASEPATH . 'plugins/My_plugin/validator/postal_validator.php');
 
 class Checkout extends PUB_Controller
 {
-    public function Checkout($allow_force_https = true)
+    public function __construct($allow_force_https = true)
     {
-        parent::PUB_Controller();
-        $this->load->helper(array('url', 'tbswrapper'));
-        $this->load->library('template');
+        parent::__construct();
         $this->load->library('service/context_config_service');
         $this->load->library('service/display_banner_service');
         $this->load->library('service/affiliate_service');

@@ -74,7 +74,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 column">
-                                            <img src="/themes/default/asset/image/payment.png">
+                                            <img src="/themes/default/asset/image/payment.png" style="width:581px">
                                         </div>
                                     </div>
                                 </div>
