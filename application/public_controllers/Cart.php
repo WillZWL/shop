@@ -17,18 +17,18 @@ Class Cart extends PUB_Controller
 
     public function ajax_add_item()
     {
-        $sku = $this->input->get('sku');
-        $qty = $this->input->get('qty') ? $this->input->get('qty') : 1;
+        $sku = $this->input->post('sku');
+        $qty = $this->input->post('qty') ? $this->input->post('qty') : 1;
 
         $this->add_item_qty($sku, $qty);
 
-        $return['redirect'] = '/review_order';
+        $return['redirect'] = '/reivew_order';
 
         echo json_encode($return);
     }
 
     public function add_item_qty($sku = "", $qty = 0, $quiet_return = false)
-    {
+    {x``
        // $data['data']['lang_text'] = $this->_get_language_file('', '', 'add_item_qty');
 
         $listing_status = array(
