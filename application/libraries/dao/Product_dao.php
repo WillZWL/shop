@@ -4440,7 +4440,7 @@ class Product_dao extends Base_dao
             pc.contents_original, pc.keywords_original, pc.detail_desc_original, pcex.feature_original, pcex.spec_original, p.lang_restricted');
     }
 
-    public function get_home_best_seller_grid_info($platform_id)
+    public function get_home_best_seller_grid_info($platform_id, $limit = 6)
     {
         $sql = "SELECT ll.selection
                     FROM landpage_listing ll
@@ -4449,8 +4449,8 @@ class Product_dao extends Base_dao
                     JOIN price pr
                         ON pr.platform_id = ll.platform_id
                     WHERE ll.platform_id = ? AND ll.type = 'BS' AND p.status = 2 and pr.sku=ll.selection AND pr.listing_status = 'L'
-                    group by ll.selection ORDER BY ll.type = 'BS' DESC, field(ll.mode, 'M', 'A'), ll.rank
-                LIMIT 10";
+                    group by ll.selection ORDER BY ll.type = 'BS' DESC, field(ll.mode, 'M', 'A'), ll.rank ";
+        $sql .= "LIMIT {$limit}";
 
         if ($query = $this->db->query($sql, $platform_id)) {
             foreach ($query->result() as $row) {
@@ -4461,7 +4461,7 @@ class Product_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_home_latest_arrival_grid_info($platform_id)
+    public function get_home_latest_arrival_grid_info($platform_id, $limit = 6)
     {
         $sql = "SELECT ll.selection
                     FROM landpage_listing ll
@@ -4470,10 +4470,11 @@ class Product_dao extends Base_dao
                     JOIN price pr
                         ON pr.platform_id = ll.platform_id
                     WHERE ll.platform_id = ? AND ll.type = 'LA' AND p.status = 2 and pr.sku=ll.selection AND pr.listing_status = 'L'
-                    group by ll.selection ORDER BY ll.mode='M' DESC, ll.rank
-                LIMIT 10";
+                    group by ll.selection ORDER BY ll.mode='M' DESC, ll.rank ";
+        $sql .= "LIMIT {$limit}";
 
         if ($query = $this->db->query($sql, $platform_id)) {
+
             foreach ($query->result() as $row) {
                 $res[] = $row->selection;
             }
@@ -4482,7 +4483,7 @@ class Product_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_clearance_product_gird_info($platform_id)
+    public function get_clearance_product_gird_info($platform_id, $limit = 6)
     {
         $sql = "SELECT ll.selection
                     FROM landpage_listing ll
@@ -4491,8 +4492,8 @@ class Product_dao extends Base_dao
                     INNER JOIN price pr
                         ON pr.platform_id = ll.platform_id
                     WHERE ll.platform_id = ? AND ll.type = 'CL' AND p.status = 2 and pr.sku=ll.selection AND pr.listing_status = 'L'
-                    group by ll.selection ORDER BY ll.mode='M' DESC, ll.rank
-                LIMIT 4";
+                    group by ll.selection ORDER BY ll.mode='M' DESC, ll.rank ";
+        $sql .= "LIMIT {$limit}";
 
         if ($query = $this->db->query($sql, $platform_id)) {
             foreach ($query->result() as $row) {
