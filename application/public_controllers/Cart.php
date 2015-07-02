@@ -28,7 +28,7 @@ Class Cart extends PUB_Controller
     }
 
     public function add_item_qty($sku = "", $qty = 0, $quiet_return = false)
-    {x``
+    {
        // $data['data']['lang_text'] = $this->_get_language_file('', '', 'add_item_qty');
 
         $listing_status = array(
