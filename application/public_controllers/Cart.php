@@ -22,7 +22,7 @@ Class Cart extends PUB_Controller
 
         $this->add_item_qty($sku, $qty);
 
-        $return['redirect'] = '/reivew_order';
+        $return['redirect'] = '/review_order';
 
         echo json_encode($return);
     }
