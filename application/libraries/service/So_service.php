@@ -796,7 +796,7 @@ class So_service extends Base_service
                             $this->init_price_service($type);
                             $soid_obj = clone $soid_vo;
                             # the cost for complementary accessory is supplier cost
-                            $ca_priceobj = $this->price_service->get_dao()->get_list_with_bundle_checking($obj->get_accessory_sku(), $vars["platform_id"], "Product_cost_dto", 0, $lang_id);
+                            $ca_priceobj = $this->price_service->get_dao()->get_list_with_bundle_checking($obj->get_accessory_sku(), $vars["platform_id"], $lang_id);
                             if ($ca_priceobj) {
                                 foreach ($ca_priceobj as $value) {
                                     $soid_obj->set_item_unit_cost($value->get_item_cost());

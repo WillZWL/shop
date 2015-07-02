@@ -509,7 +509,7 @@ abstract class Payment_gateway_redirect_service extends Pmgw_voucher implements 
                 $gst_total += $soi->get_gst_total();
                 $discount = $soi->get_promo_disc_amt();
 
-                $pobj = $price_srv->get_dao()->get_list_with_bundle_checking($soi->get_item_sku(), $this->so->get_platform_id(), "Product_cost_dto");
+                $pobj = $price_srv->get_dao()->get_list_with_bundle_checking($soi->get_item_sku(), $this->so->get_platform_id());
                 if ($pobj) {
                     foreach ($pobj as $o) {
                         $real_total += ($o->get_price() * $soi->get_qty()) - $discount;

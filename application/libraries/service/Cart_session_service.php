@@ -523,7 +523,7 @@ class Cart_session_service extends Base_service
                 $subcost = 0;
                 $subtotal = 0;
                 $subvat = 0;
-                $pobj = $price_srv->get_dao()->get_list_with_bundle_checking($key, $platform, "Product_cost_dto", $special, get_lang_id());
+                $pobj = $price_srv->get_dao()->get_list_with_bundle_checking($key, $platform, get_lang_id());
 
                 $fdl = 0;
                 $pobj_count = 0;
@@ -704,7 +704,7 @@ class Cart_session_service extends Base_service
                     $ret["cart"][$i] = $ret["promo"]["free_item"];
                     $free_sku = $ret["promo"]["free_item"]["sku"];
                     $free_qty = $ret["promo"]["free_item"]["qty"];
-                    $free_pobj = $price_srv->get_dao()->get_list_with_bundle_checking($free_sku, $platform, "Product_cost_dto", 0, get_lang_id());
+                    $free_pobj = $price_srv->get_dao()->get_list_with_bundle_checking($free_sku, $platform, $this->get_lang_id());
                     foreach ($free_pobj as $free_o) {
                         $p_svc = $price_srv->get_price_service_from_dto($free_o);
                         $price_srv->calc_logistic_cost($free_o);
@@ -955,46 +955,36 @@ class Cart_session_service extends Base_service
         $this->delivery_charge = $value;
     }
 
-    public function get($platform = NULL, $foobar = '')
+    public function get($platform = 'WEBHK')
     {
-        if (is_null($platform)) {
-            $platform = PLATFORMID;
-        }
-
         include_once(APPPATH . "libraries/service/Class_factory_service.php");
         $cf_srv = new Class_factory_service();
         $price_srv = $cf_srv->get_platform_price_service($platform);
 
-        $ret = array();
         $total = 0;
         $count = 0;
         if (isset($_SESSION['cart'][$platform]) && count($_SESSION["cart"][$platform])) {
             foreach ($_SESSION["cart"][$platform] as $key => $val) {
                 $subtotal = 0;
                 $subvat = 0;
-                $pobj = $price_srv->get_dao()->get_list_with_bundle_checking($key, $platform, "Product_cost_dto", 0, get_lang_id());
-                $fdl = 0;
-                foreach ($pobj as $o) {
-                    $name = $o->get_bundle_name();
+                $pobj = $price_srv->get_dao()->get_list_with_bundle_checking($key, $platform, $this->get_lang_id());
 
-                    $p_svc = $price_srv->get_price_service_from_dto($o);
+                foreach ($pobj as $o) {
                     if (is_array($val)) {
-                        //$platform_price_svc->set_price($value["price"]);
-                        if (isset($val["price"]))
+                        if (isset($val["price"])) {
                             $o->set_price($val["price"]);
+                        }
                         $pqty = $val["qty"];
                     } else {
                         $pqty = $val;
                     }
 
-                    //$price_srv->calc_freight_cost($o, $p_svc, ($currency_id = $o->get_platform_currency_id()));
                     $price_srv->calc_logistic_cost($o);
                     $price_srv->calculate_profit($o);
 
                     $weight += $pqty * $o->get_prod_weight();
                     $subtotal += $price_srv->get_item_price($o);
                     $subvat += ($cur_vat = $o->get_vat() * (100 - $o->get_discount()) / 100);
-                    $fdl = $o->get_free_delivery_limit();
                 }
 
                 $count += $pqty;
@@ -1015,6 +1005,7 @@ class Cart_session_service extends Base_service
                 $total += $rstotal;
             }
         }
+
         return array("count" => $count, "total" => $total);
     }
 
