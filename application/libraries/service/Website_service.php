@@ -90,9 +90,6 @@ class Website_service extends Base_service
         }
         $data["best_seller"] = $best_seller_arr;
 
-        $data["cart"] = $this->cart_session_service->get(PLATFORMID);
-        $data["thiscountry"] = PLATFORMCOUNTRYID;
-
         return $data;
     }
 

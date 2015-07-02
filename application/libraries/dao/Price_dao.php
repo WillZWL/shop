@@ -54,7 +54,7 @@ class Price_dao extends Base_dao
         }
     }
 
-    public function get_list_with_bundle_checking($sku, $platform = 'WSGB', $lang_id = 'en', $classname = 'Product_cost_dto')
+    public function get_list_with_bundle_checking($sku, $platform = 'WEBHK', $lang_id = 'en', $classname = 'Product_cost_dto')
     {
         $sql = "SELECT p.expected_delivery_date,COALESCE(pw.warranty_in_month, p.warranty_in_month) AS warranty_in_month, a.discount, COALESCE(pc.prod_name, p.name) AS bundle_name, a.component_order, b.*
                 FROM v_prod_items a

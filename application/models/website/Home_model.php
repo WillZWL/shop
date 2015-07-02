@@ -5,7 +5,6 @@ class Home_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this->load->helper('url');
         $this->load->library('service/website_service');
         $this->load->library('service/language_service');
         $this->load->library('service/country_service');

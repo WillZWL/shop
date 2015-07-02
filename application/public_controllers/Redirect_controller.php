@@ -16,6 +16,9 @@ class Redirect_controller extends PUB_Controller
     {
         $data = [];
 
+        $data['product'] = $this->home_model->get_content();
+
+        //var_dump($data);die;
 
         $this->load->view('/default/index', $data);
 
@@ -23,8 +26,7 @@ class Redirect_controller extends PUB_Controller
         // $this->template->set_view('index');
         // Template::content();
         // $this->template->render();
-// die;
-        // $value = $this->home_model->get_content();
+        // die;
 
         // if ($value["best_seller"]) {
         //  $best_seller = array();

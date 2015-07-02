@@ -60,6 +60,8 @@ class Country_selection
     {
         $country_code = strtoupper($this->get_country_code());
 
+        define(PLATFORMID, 'WEB'.$country_code);
+
         switch ($country_code) {
             case 'AU':
                 $this->domain_suffix = '.com.au';

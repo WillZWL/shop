@@ -118,7 +118,7 @@ class Compensation extends Compensation_create
 
                     $err = 0;
 
-                    $pobj = $this->price_service->get_dao()->get_list_with_bundle_checking($cp_sku, $so_obj->get_platform_id(), "Product_cost_dto", 0, $so_obj->get_lang_id());
+                    $pobj = $this->price_service->get_dao()->get_list_with_bundle_checking($cp_sku, $so_obj->get_platform_id(), $so_obj->get_lang_id());
                     foreach ($pobj as $new_obj) {
                         $this->price_service->calc_logistic_cost($new_obj);
                         $this->price_service->calculate_profit($new_obj);
