@@ -1,5 +1,4 @@
 <?php
-die('test git hook again');
 /**
  * CodeIgniter
  *
