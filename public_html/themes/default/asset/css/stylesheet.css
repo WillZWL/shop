@@ -8273,10 +8273,10 @@ body.layout-boxed-lg #page {
 .product-block .name {
   padding: 0 15px;
   line-height: 18px;
-  height: 68px;
+  height: 111px;
   margin-bottom: 0;
   margin-top: 0;
-  overflow: visible;
+  overflow: hidden;
 }
 /* line 110, ../development/scss/app/_product.scss */
 .product-block .name a {

@@ -42,9 +42,9 @@ class Website_service extends Base_service
 
     public function get_home_content($lang_id = 'en')
     {
-        $grid_display_limit = 4;
+        $grid_display_limit = 6;
 
-        $option['limit'] = 4;
+        $option['limit'] = 6;
 
         // latest arrival
         if ($la_list = $this->get_latest_arrival_grid_info(PLATFORMID)) {

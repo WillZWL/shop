@@ -1,5 +1,4 @@
-<?php
-foreach($product as $title => $prod) : ?>
+<?php foreach($product as $title => $prod) : ?>
 
 <div class="pav-container ">
     <div class="pav-inner container space-50">
@@ -29,7 +28,7 @@ foreach($product as $title => $prod) : ?>
                                                     <div class="image">
                                                         <div class="product-img img">
                                                             <a class="img" title="<?= $prod_obj->get_prod_name(); ?>" href='<?= site_url("/mainproduct/view/$sku") ?>'>
-                                                                <img class="img-responsive" src="/themes/default/asset/image/demo/10-500x500.jpg" title="<?= $prod_obj->get_prod_name(); ?>" alt="<?= $prod_obj->get_prod_name(); ?>" />
+                                                                <img class="img-responsive" src="<?= get_image_file($prod_obj->get_image_ext(), 'm', $prod_obj->get_sku()) ?>" title="<?= $prod_obj->get_prod_name(); ?>" alt="<?= $prod_obj->get_prod_name(); ?>" />
                                                             </a>
                                                             <div class="quickview hidden-xs">
                                                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=themecontrol/product&amp;product_id=51" title="Quick View"><i class="fa fa-eye"></i></a>

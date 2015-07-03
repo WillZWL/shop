@@ -21,7 +21,7 @@ Class Cart extends PUB_Controller
         $qty = $this->input->post('qty') ? $this->input->post('qty') : 1;
 
         $this->add_item_qty($sku, $qty);
-
+var_dump($_SESSION);die;
         $return['redirect'] = '/review_order';
 
         echo json_encode($return);
@@ -43,6 +43,7 @@ Class Cart extends PUB_Controller
         //$this->affiliate_service->add_af_cookie($_GET);
 
         $allow_result = $this->cart_session_model->cart_session_service->is_allow_to_add($sku, $qty, PLATFORMID);
+
         if ($allow_result <= Cart_session_service::DECISION_POINT) {
             $result = $this->cart_session_model->add($sku, $qty, PLATFORMID);
         }

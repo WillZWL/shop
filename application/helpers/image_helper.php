@@ -120,7 +120,6 @@ function watermark($image, $watermark, $valign = "B", $align = "R", $padding = 5
 
 function get_image_file($name = "", $size = "", $sku = "", $id = "")
 {
-
     $default_name = "imageunavailable";
     $default_ext = "jpg";
     $ar_file = explode(".", $name);
@@ -142,6 +141,7 @@ function get_image_file($name = "", $size = "", $sku = "", $id = "")
     $admin_path = "../admincentre/images/product/";
     $file_exist = is_file($path . $filename) || is_file($admin_path . $filename);
     $rs_file = "/images/product/" . ($file_exist ? $filename : $default_name . $size . "." . $default_ext);
+
     return $rs_file;
 }
 
