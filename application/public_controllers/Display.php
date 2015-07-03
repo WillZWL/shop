@@ -22,11 +22,12 @@ class Display extends PUB_Controller
             && ($page != "conditions_of_use")
             && ($page != "privacy_policy"))
         {
+//very important to do page parameter validation
             show_404();
         }
 
-        $data["content"] = "/default/display/shipping";
-        $this->load->view('/default/display/view', $data);    
+        $data["content"] = "/default/display/" . $page;
+        $this->load->view('/default/display/view', $data);
     }
 
     public function promotions($page = '')
