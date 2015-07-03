@@ -195,7 +195,7 @@ class Cart_session_service extends Base_service
         ];
 
         if ($platform === '') {
-            $platform = defined(PLATFORMID) ? : "WEBSG";
+            $platform = defined(PLATFORMID) ? defined(PLATFORMID) : "WEBGB";
         }
 
         $price_service = $this->get_price_service($platform);
@@ -203,10 +203,10 @@ class Cart_session_service extends Base_service
         if ($price_service === false) {
             return $result;
         }
-
         if (count($_SESSION['cart'][$platform])) {
             foreach ($_SESSION['cart'][$platform] as $sku => $prod) {
                 $prod_obj = $price_service->get_dao()->get_list_with_bundle_checking($sku, $platform, $this->get_lang_id());
+
                 foreach ($prod_obj as $obj) {
                     $result['item'][$obj->get_sku()] = $obj;
                     $result['total_amount'] += $obj->get_price();
