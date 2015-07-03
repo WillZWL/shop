@@ -48,7 +48,7 @@
                         <div class="row">
                             <div class="logo inner  col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div id="logo-theme" class="logo-store pull-left">
-                                    <a href="#">
+                                    <a href="/">
                                         <span>digital discount</span>
                                     </a>
                                 </div>

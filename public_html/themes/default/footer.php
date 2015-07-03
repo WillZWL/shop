@@ -142,7 +142,7 @@
                         <div class="row">
                             <div class="column col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="panel-heading panel-white">
-                                    <h4 class="panel-title">About Us</h4></div>
+                                    <a href="/display/view/about_us"><h4 class="panel-title">About Us</h4></div></a>
                                 <p>This is Photoshop\'s version&nbsp; of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.&nbsp; sem accumsan ipsum velit.
                                     <br>
                                 </p>
