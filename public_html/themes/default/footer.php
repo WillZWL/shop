@@ -1,3 +1,4 @@
+            </div>
 			<footer id="footer" class="nostylingboxs">
                 <div class="footer-top " id="pavo-footer-top">
                     <div class="container">
@@ -158,10 +159,9 @@
                             <div class="column padding border-right col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="panel-white">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title panel-title-special">TERMS & CONDITIONS</h4>
-                                        <h4 class="panel-title panel-title-special">SHIPPING</h4>
-                                        <h4 class="panel-title panel-title-special">PRIVACY POLICY</h4>
-                                        <h4 class="panel-title panel-title-special">SITE MAP</h4>
+                                        <a href="/display/view/conditions_of_use"><h4 class="panel-title panel-title-special">CONDITIONS OF USE</h4></a>
+                                        <a href="/display/view/shipping"><h4 class="panel-title panel-title-special">SHIPPING</h4></a>
+                                        <a href="/display/view/privacy_policy"><h4 class="panel-title panel-title-special">PRIVACY POLICY</h4></a>
                                     </div>
                                 </div>
                             </div>
