@@ -19,9 +19,8 @@ Class Cart extends PUB_Controller
     {
         $sku = $this->input->post('sku');
         $qty = $this->input->post('qty') ? $this->input->post('qty') : 1;
-
         $this->add_item_qty($sku, $qty);
-var_dump($_SESSION);die;
+
         $return['redirect'] = '/review_order';
 
         echo json_encode($return);
