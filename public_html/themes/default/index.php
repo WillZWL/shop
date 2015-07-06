@@ -37,9 +37,9 @@
                                             <div class="layerslider-wrapper carousel slide pavcontentslider" style="max-width:1170px;">
                                                 <div class="fix-margin-right" style="padding: 0;margin: 18px 0 50px 0px !important;">
                                                     <div id="iview" class="hidden-xs" style="width:100%;height:300px; ">
-                                                        <div data-iview-thumbnail="/themes/default/asset/image/slider/bg.jpg" data-iview-image="/themes/default/asset/image/slider/bg.jpg" data-iview-transition="slice-top-fade,slice-right-fade">
+                                                        <div data-iview-thumbnail="/images/banner/0_1_0_GB_en_7390.jpg" data-iview-image="/images/banner/0_1_0_GB_en_7390.jpg" data-iview-transition="slice-top-fade,slice-right-fade">
                                                         </div>
-                                                        <div data-iview-thumbnail="/themes/default/asset/image/slider/bg1.jpg" data-iview-image="/themes/default/asset/image/slider/bg1.jpg" data-iview-transition="slice-top-fade,slice-right-fade">
+                                                        <div data-iview-thumbnail="/images/banner/0_1_4_GB_en_7470.jpg" data-iview-image="/images/banner/0_1_4_GB_en_7470.jpg" data-iview-transition="slice-top-fade,slice-right-fade">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -110,23 +110,6 @@
                                                         <img class="img-responsive" alt=" " src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/banners/adv4-279x140.png" />
                                                         <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/image/catalog/demo/banners/adv4.png" class="pts-popup fancybox" title="Large Image"><span class="icon icon-expand"></span></a>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pav-container ">
-                        <div class="pav-inner container ">
-                            <div class="row row-level-1 ">
-                                <div class="row-inner clearfix">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                        <div class="col-inner ">
-                                            <div class="panel-left panel panel-default">
-                                                <div class="panel-heading nopadding hightlight text-left">
-                                                    <h3 class="panel-title">Collections</h3>
                                                 </div>
                                             </div>
                                         </div>

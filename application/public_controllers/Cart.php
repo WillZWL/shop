@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-DEFINE ('ALLOW_REDIRECT_DOMAIN', 1);
-
 Class Cart extends PUB_Controller
 {
     public function __construct()
@@ -20,7 +18,6 @@ Class Cart extends PUB_Controller
         $sku = $this->input->post('sku');
         $qty = $this->input->post('qty') ? $this->input->post('qty') : 1;
         $this->add_item_qty($sku, $qty);
-
         $return['redirect'] = '/review_order';
 
         echo json_encode($return);

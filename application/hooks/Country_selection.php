@@ -137,10 +137,12 @@ class Country_selection
         if (empty($country_code)) {
             $country_code = 'HK';
         }
-        $_SESSION['country_code_from_hook'] = $country_code;
 
         // hardcode for develop
         $country_code = 'GB';
+
+        $_SESSION['country_code_from_hook'] = $country_code;
+
         return $country_code;
     }
 
