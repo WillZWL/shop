@@ -59,3 +59,18 @@
 .product-block .product-img {
 	padding:10%;
 }
+.img-thumbnail {
+	width: 70px;
+	height: 70px;
+}
+
+
+/* review order page */
+#review_order form {
+    margin-bottom: 25px;
+}
+
+/* product detail page */
+.product-detail {
+	padding-top: 30px;
+}

@@ -8,7 +8,7 @@
                     <div class="col-inner ">
                         <div class="widget bg-carousel panel-left panel panel-default">
                             <div class="widget-heading panel-heading nopadding hightlight space-10">
-                                <h3 class="panel-title"><?= $title ?></h3>
+                                <h3 class="panel-title"><?= str_replace('_', ' ', $title) ?></h3>
                             </div>
                             <div class="list box-products slide" id="product_list137567524">
                                 <div class="carousel-controls">
@@ -31,18 +31,16 @@
                                                                 <img class="img-responsive" src="<?= get_image_file($prod_obj->get_image_ext(), 'm', $prod_obj->get_sku()) ?>" title="<?= $prod_obj->get_prod_name(); ?>" alt="<?= $prod_obj->get_prod_name(); ?>" />
                                                             </a>
                                                             <div class="quickview hidden-xs">
-                                                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=themecontrol/product&amp;product_id=51" title="Quick View"><i class="fa fa-eye"></i></a>
+                                                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href='<?= site_url("/mainproduct/view/$sku") ?>' title="Quick View"><i class="fa fa-eye"></i></a>
                                                             </div>
                                                             <div class="zoom hidden-xs">
-                                                                <a data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/image/catalog/demo/product/10.jpg" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->get_prod_name(); ?>"><i class="fa fa-search-plus"></i></a>
+                                                                <a data-toggle="tooltip" data-placement="top" href="<?= get_image_file($prod_obj->get_image_ext(), 'l', $prod_obj->get_sku()) ?>" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->get_prod_name(); ?>"><i class="fa fa-search-plus"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="product-meta">
                                                         <div class="left">
                                                             <h6 class="name"><a href='<?= site_url("/mainproduct/view/$sku") ?>'><?= $prod_obj->get_prod_name(); ?></a></h6>
-                                                            <p class="description">
-                                                                Unprecedented power. The next generation of processing technology has arrived. Built into the newest VAIO notebooks lies Intel's latest, most powerful innovation yet: Intel® Centrino® 2 processor t...</p>
                                                             <div class="price">
                                                                 <span class="price-new"><?= $prod_obj->get_price(); ?></span>
                                                                 <span class="price-old"><?= $prod_obj->get_rrp_price(); ?></span>

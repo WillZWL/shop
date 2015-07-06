@@ -124,13 +124,13 @@ class Price_margin_dao extends Base_dao
             $this->include_dto($classname);
             $result_arr = array();
 
-            foreach ($result->result("object", $classname) as $obj) {
+            foreach ($result->result($classname) as $obj) {
                 $result_arr[] = $obj;
             }
             return $result_arr;
         }
 
-        return FALSE;
+        return false;
     }
 }
 

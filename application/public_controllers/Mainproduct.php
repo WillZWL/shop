@@ -26,32 +26,9 @@ class Mainproduct extends PUB_Controller
     public function view($sku = '')
     {
         $data = array();
-        $data = $this->common_data_prepare_model->get_data_array($this, array("sku" => $sku, "type" => "web"));
+        $data['prod_info'] = $this->common_data_prepare_model->get_data_array($this, array("sku" => $sku, "type" => "web"));
+        //var_dump($data);die;
         $this->load->view('/default/product', $data);
-
-        // $index = strripos($sku, "-", -7);
-        // $sku = trim(substr($sku, $index), "- ");
-
-        // // main page display
-
-        // if ($data) {
-        //     $this->load->view('/default/product', $data);
-        //     // if ($this->upselling_model->get_ra($data, $sku, PLATFORMID, get_lang_id(), $listing_status)) {
-        //     //     $this->template->add_js("/resources/js/jquery.gritter.js");
-        //     //     $this->template->add_js("/js/common.js");
-        //     //     $this->template->add_js("/js/upselling.js", "import", TRUE);
-        //     //     $this->template->add_css("resources/css/jquery.gritter.css");
-        //     // }
-
-        //     // $this->template->add_js("/resources/js/jquery-ui.js");
-        //     // $this->template->add_css("resources/css/jquery-ui.css");
-
-        //     // $this->template->add_link("rel='canonical' href='" . base_url() . "/mainproduct/view/$sku'");
-        //     // $this->load_tpl('content', 'tbs_product', $data, TRUE);
-
-        // } else {
-        //     show_404("page");
-        // }
     }
-}
 
+}

@@ -4432,12 +4432,7 @@ class Product_dao extends Base_dao
         $this->db->where(array("p.sku" => $sku, "p.status" => 2, "pbv.selling_platform_id" => $platform_id, "pc.lang_id" => $lang_id));
         $this->include_dto($classname);
 
-        return $this->common_get_list($where, $option, $classname,
-            'p.expected_delivery_date,
-
-            pc.website_status_long_text, pc.website_status_short_text, p.sku, cat.id cat_id, cat.name cat_name, sc.id sub_cat_id, sc.name sub_cat_name, ssc.id sub_sub_cat_id, ssc.name sub_sub_cat_name, b.id brand_id, b.brand_name,
-            pc.lang_id, IFNULL(pc.prod_name,p.name) prod_name, p.youtube_id, pc.short_desc, pc.detail_desc, pc.extra_info, pc.contents, pcex.feature, pcex.specification, pcex.requirement, pcex.instruction, pcex.apply_enhanced_listing, pcex.enhanced_listing,
-            pc.contents_original, pc.keywords_original, pc.detail_desc_original, pcex.feature_original, pcex.spec_original, p.lang_restricted');
+        return $this->common_get_list($where, $option, $classname, 'p.expected_delivery_date, p.image, pc.website_status_long_text, pc.website_status_short_text, p.sku, cat.id cat_id, cat.name cat_name, sc.id sub_cat_id, sc.name sub_cat_name, ssc.id sub_sub_cat_id, ssc.name sub_sub_cat_name, b.id brand_id, b.brand_name, pc.lang_id, IFNULL(pc.prod_name,p.name) prod_name, p.youtube_id, pc.short_desc, pc.detail_desc, pc.extra_info, pc.contents, pcex.feature, pcex.specification, pcex.requirement, pcex.instruction, pcex.apply_enhanced_listing, pcex.enhanced_listing, pc.contents_original, pc.keywords_original, pc.detail_desc_original, pcex.feature_original, pcex.spec_original, p.lang_restricted');
     }
 
     public function get_home_best_seller_grid_info($platform_id, $limit = 6)

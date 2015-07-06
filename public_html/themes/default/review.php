@@ -1,9 +1,9 @@
 <?php $this->load->view('/default/header') ?>
 <!-- header -->
-<div id="sidebar-main" class="col-md-12">
+<div id="review_order" class="col-md-12">
     <div id="content">
-        <h1 class="page-title">Shopping Cart&nbsp;(<?= $cart_info['total_weight'] ?>)</h1>
-        <form action="/checkout" method="post" enctype="multipart/form-data">
+        <h1 class="page-title">Shopping Cart</h1>
+        <form action="#" method="post" enctype="multipart/form-data">
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -19,7 +19,7 @@
                         <?php foreach ($cart_info['item'] as $sku => $item): ?>
                         <tr>
                             <td class="text-center">
-                                <a href="#"><img src="/themes/default/asset/image/demo/2-47x47.jpg" alt="<?= $item->get_prod_name() ?>" title="<?= $item->get_prod_name() ?>" class="img-thumbnail"></a>
+                                <a href="#"><img src="<?= get_image_file($item->get_image(), "m", $sku) ?>" alt="<?= $item->get_prod_name() ?>" title="<?= $item->get_prod_name() ?>" class="img-thumbnail"></a>
                             </td>
                             <td class="text-left"><a href="#"><?= $item->get_prod_name() ?></a>
                             </td>
@@ -54,7 +54,7 @@
         </div>
         <div class="buttons">
             <div class="pull-left"><a href="/" class="btn btn-default">Continue Shopping</a></div>
-            <div class="pull-right"><a href="/checkout" class="btn btn-primary">Checkout</a></div>
+            <div class="pull-right"><a href="#" class="btn btn-primary">Checkout</a></div>
         </div>
     </div>
 </div>

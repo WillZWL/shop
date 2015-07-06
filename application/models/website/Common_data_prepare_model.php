@@ -1438,6 +1438,7 @@ salecycle_script;
             $data["prod_rrp_price"] = $listing_info->get_rrp_price();
             $data["overview"] = nl2br(trim($prod_info->get_detail_desc()));
             $data["lang_restricted"] = trim($prod_info->get_lang_restricted());
+            $data['image'] = $prod_info->get_image();
             $data["osd_lang_list"] = $this->product_model->product_service->get_lang_osd_list();
             $data["website_status_long_text"] = trim($prod_info->get_website_status_long_text());
             $data["website_status_short_text"] = trim($prod_info->get_website_status_short_text());
@@ -1603,6 +1604,32 @@ salecycle_script;
             }
 
             $data["gst_msg_type"] = '';
+
+
+
+            $cross_sell_product_list = array();
+            $price = $listing_info->get_price();
+            //Loop 10 times.
+            for($price_adjustment = $price * 0.1, $n=0; count($cross_sell_product_list) < 6 && $n < 10; $price_adjustment += $price_adjustment)
+            {
+                $cross_sell_product_list = $this->price_margin_service->get_cross_sell_product($prod_info, PLATFORMID, $this->get_lang_id(), $price, $price_adjustment);
+                $n++;
+            }
+
+            if(count($cross_sell_product_list) > 0)
+            {
+                foreach($cross_sell_product_list as $obj)
+                {
+                    $csp_arr[$obj->get_sku()]["sku"] = $obj->get_sku();
+                    $csp_arr[$obj->get_sku()]["prod_name"] = $obj->get_prod_name();
+                    $csp_arr[$obj->get_sku()]["stock_status"] =  $obj->get_status() == 'I'?$obj->get_qty()." ".$listing_status[$obj->get_status()]:$listing_status[$obj->get_status()];
+                    $csp_arr[$obj->get_sku()]["prod_price"] = $obj->get_price();
+                    $csp_arr[$obj->get_sku()]["prod_rrp_price"] = $this->product_model->price_service->calc_website_product_rrp($obj->get_price(), $obj->get_fixed_rrp(), $obj->get_rrp_factor());
+                    $csp_arr[$obj->get_sku()]["prod_url"] = $this->website_model->get_prod_url($obj->get_sku());
+                    $csp_arr[$obj->get_sku()]["image"] = get_image_file($obj->get_image_ext(), "s", $obj->get_sku());
+                }
+            }
+            $data["cross_sell_product_list"] = $csp_arr;
 
             return $data;
         }

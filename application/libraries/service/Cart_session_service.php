@@ -234,8 +234,6 @@ class Cart_session_service extends Base_service
     }
 
 
-
-
     public function add_special($sku, $qty, $price = "", $platform = NULL)
     {
         if (is_null($platform)) {

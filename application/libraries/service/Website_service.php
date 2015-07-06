@@ -68,23 +68,15 @@ class Website_service extends Base_service
                 }
             }
         }
-        //clearance/on sale products, NO PLATFORMID specific
-        if ($clearance_list = $this->get_clearance_product_gird_info(PLATFORMID)) {
-            if ($cl_info_list = $this->price_service->get_listing_info_list($clearance_list, PLATFORMID, $lang_id, $option)) {
-                foreach ($cl_info_list as $sku => $result) {
-                    if ($result) {
-                        $on_sale_arr[$sku] = $result;
-                    }
-                }
-            }
-        }
-        $data["clearance_product"] = $on_sale_arr;
 
         // use latest arrival list as backup if best seller has no results
         if (count($best_seller_arr) < $grid_display_limit && count($latest_arrival_arr) > 0) {
             foreach ($latest_arrival_arr as $sku => $result) {
                 if ($result) {
                     $best_seller_arr[$sku] = $result;
+                }
+                if (count($best_seller_arr) === $grid_display_limit) {
+                    break;
                 }
             }
         }
