@@ -13,9 +13,92 @@ class Category_model extends CI_Model
         $this->load->library('service/currency_service');
         $this->load->library('service/custom_class_service');
         $this->load->library('service/product_service');
+        $this->load->library('service/price_service');
         $this->load->library('service/language_service');
         $this->load->library('service/product_spec_service');
         $this->load->library('service/unit_service');
+    }
+
+    public function getProductForCategoryPage($platformId, $catId, $catLevel, $brandId, &$sort, &$rpp, &$page, $langId)
+    {
+        $where = array();
+        $where['pr.platform_id'] = $platformId;
+        $where['p.status'] = 2;
+
+        switch ($catLevel) {
+            case 1:
+                $where['p.cat_id'] = $catId;
+                break;
+            case 2:
+                $where['p.sub_cat_id'] = $catId;
+                break;
+            case 3:
+                $where['p.sub_sub_cat_id'] = $catId;
+                break;
+            default:
+        }
+
+        if ($brandId) {
+            $where['br.id'] = $brandId;
+        }
+
+        if (!$sort) {
+//$data['sort'] = 'pop_desc';
+//Category Page display, sort by priority of the sub_category
+            $sort = 'priority_asc';
+        }
+
+        switch ($sort) {
+            case 'pop_desc':
+                $option["orderby"] = "pr.sales_qty desc";
+                break;
+            case 'price_asc':
+                $option["orderby"] = "pr.price ASC";
+                break;
+            case 'price_desc':
+                $option["orderby"] = "pr.price DESC";
+                break;
+            case 'latest_asc':
+                $option["orderby"] = "sc.priority asc, p.create_on ASC";
+                break;
+            case 'latest_desc':
+                $option["orderby"] = "sc.priority asc, p.create_on DESC";
+                break;
+            //#2580, sort by priority of the sub_category
+            case 'priority_asc':
+                $option["orderby"] = "sc.priority asc, pr.sales_qty desc";
+                break;
+            default:
+                $option["orderby"] = "sc.priority asc, p.create_on DESC";
+                break;
+        }
+
+        #SBF2580, push all the Arriving stock to bottom before Out of stock
+        $option["orderby"] = "is_arr asc, " . $option["orderby"];
+
+        #SBF1905, push all the Out of stock to bottom
+        $option["orderby"] = "is_oos asc, " . $option["orderby"];
+
+
+        if (!$rpp) {
+            $rpp = 12;
+        }
+
+        if (!$page) {
+            $page = 1;
+        }
+
+        $option['limit'] = $rpp;
+        $option['offset'] = $rpp * ($page - 1);
+
+        $total = $this->get_website_cat_page_product_list($where, array("num_rows" => 1));
+        if ($sku_list = $this->get_website_cat_page_product_list($where, $option)) {
+            $obj_list = $this->price_service->get_listing_info_list($sku_list, $platformId, $langId, array());
+        }
+
+//        print $this->product_service->get_dao()->db->last_query();
+//        exit;
+        return array("total" => $total, "sku_list" => $sku_list, "obj_list" => $obj_list, "criteria" => $where);
     }
 
     public function get_cat_obj($id = "")

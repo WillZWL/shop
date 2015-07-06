@@ -848,7 +848,7 @@ ORDER BY c.priority, c.id, sc.priority, sc.id, ssc.priority, ssc.id';
 
     public function get_cat_filter_grid_info($level, $where = array(), $option = array())
     {
-        $this->db->select("cat.id cat_id, sc.id sub_cat_id, ssc.id sub_sub_cat_id, p.sub_cat_id, IFNULL(scex.name, sc.name) sub_cat_name, p.sub_sub_cat_id, IFNULL(sscex.name, ssc.name) sub_sub_cat_name, count(*) total");
+        $this->db->select("cat.id cat_id, sc.id sub_cat_id, ssc.id sub_sub_cat_id, p.sub_cat_id, IFNULL(scex.name, sc.name) sub_cat_name, p.sub_sub_cat_id, IFNULL(sscex.name, ssc.name) sub_sub_cat_name, count(*) total", false);
         $this->db->from("product AS p");
         $this->db->join("category AS cat", "cat.id = p.cat_id", "INNER");
         $this->db->join("category AS sc", "sc.id = p.sub_cat_id", "INNER");

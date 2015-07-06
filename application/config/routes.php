@@ -53,7 +53,7 @@ $route['default_controller'] = 'redirect_controller';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-
+/*
 $valid_lang_arr = $this->config->item("valid_lang");
 
 foreach ($valid_lang_arr as $value) {
@@ -69,3 +69,8 @@ foreach ($valid_lang_arr as $value) {
     $route[$regex] = "redirect_controller";
 }
 
+if ($_SERVER["HTTP_HOST"] == "v2.valuebasket.com:8000")
+{
+    $route["cat/(:any)/(:any)"] = "digitaldiscount/cat/view/1";
+}
+*/
