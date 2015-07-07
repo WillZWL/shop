@@ -142,7 +142,7 @@
                                     <input type="hidden" name="product_id" value="50">
                                     <div class="action pull-left">
                                         <div class="cart pull-left">
-                                            <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary" onclick="cart.addcart('10111-AA-BK');">Add to Cart</button>
+                                            <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary" onclick="cart.addcart('<?=$sku?>');">Add to Cart</button>
                                         </div>
                                         <div class="pull-left">
                                             <a data-toggle="tooltip" class="wishlist" title="" onclick="wishlist.addwishlist('50');" data-original-title="Add to Wish List">Add to Wish List</a>

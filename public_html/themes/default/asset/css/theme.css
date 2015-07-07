@@ -2,6 +2,10 @@
 	padding: 1px;
 }
 
+#cart-top {
+	float: right;
+}
+
 .logo {
 	float: left;
 	margin-top: -30px;
@@ -71,6 +75,6 @@
 }
 
 /* product detail page */
-.product-detail {
+#product-detail {
 	padding-top: 30px;
 }

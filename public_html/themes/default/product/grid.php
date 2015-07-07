@@ -45,9 +45,9 @@
                                                                 <span class="price-new"><?= $prod_obj->get_price(); ?></span>
                                                                 <span class="price-old"><?= $prod_obj->get_rrp_price(); ?></span>
                                                             </div>
-                                                            <div class="save_alter">
+<!--                                                             <div class="save_alter">
                                                                 Save -30%
-                                                            </div>
+                                                            </div> -->
                                                         </div>
                                                         <div class="right">
                                                             <div class="action">
