@@ -130,11 +130,6 @@ class Product_cost_dto extends Base_dto
     private $ad_status;
     private $lang_restricted;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function get_vat()
     {
         return $this->vat;
@@ -1428,6 +1423,7 @@ class Product_cost_dto extends Base_dto
     {
         $this->lang_restricted = $value;
     }
+
 
 }
 

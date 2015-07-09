@@ -195,22 +195,22 @@ Class Cart extends PUB_Controller
         }
     }
 
-    public function ajax_rm_cart($parent_sku = "", $sku = "")
+    public function ajax_remove_cart($parent_sku = "", $sku = "")
     {
-        $data['data']['lang_text'] = $this->_get_language_file();
+        //$data['data']['lang_text'] = $this->_get_language_file();
 
-        $success = 0;
-        $prod_obj = $this->product_model->get("product", array("sku" => $sku));
-        if (!$prod_cont_obj = $this->product_model->get_product_content(array("prod_sku" => $sku, "lang_id" => get_lang_id()))) {
-            $prod_cont_obj = $this->product_model->get_product_content(array("prod_sku" => $sku, "lang_id" => "en"));
-        }
-
-        if ($prod_cont_obj) {
-            $prod_name = $prod_cont_obj->get_prod_name();
-        } else {
-            $prod_name = $prod_obj->get_name();
-        }
-        $image_url = get_image_file($prod_obj->get_image(), "m", $sku);
+        //$success = 0;
+        //$prod_obj = $this->product_model->get("product", array("sku" => $sku));
+        //if (!$prod_cont_obj = $this->product_model->get_product_content(array("prod_sku" => $sku, "lang_id" => get_lang_id()))) {
+        //    $prod_cont_obj = $this->product_model->get_product_content(array("prod_sku" => $sku, "lang_id" => "en"));
+        //}
+        //
+        //if ($prod_cont_obj) {
+        //    $prod_name = $prod_cont_obj->get_prod_name();
+        //} else {
+        //    $prod_name = $prod_obj->get_name();
+        //}
+        //$image_url = get_image_file($prod_obj->get_image(), "m", $sku);
 
         if (!empty($sku)) {
             if (is_array($_SESSION["cart"][PLATFORMID][$sku])) {

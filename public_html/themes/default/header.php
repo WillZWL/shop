@@ -53,16 +53,16 @@
                                     </a>
                                 </div>
                             </div>
-                            <div id="search" class="pull-left col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                                <div class="quick-access">
-                                    <div class="input-group pull-right">
-                                        <input type="text" name="search" value="" placeholder="Search" class="form-control" />
-                            <span class="input-group-btn">
-                                <button type="button" class="button-search"><i class="fa fa-search"></i></button>
-                            </span>
-                                    </div>
-                                </div>
-                            </div>
+                            <!--<div id="search" class="pull-left col-lg-5 col-md-5 col-sm-12 col-xs-12">-->
+                            <!--    <div class="quick-access">-->
+                            <!--        <div class="input-group pull-right">-->
+                            <!--            <input type="text" name="search" value="" placeholder="Search" class="form-control" />-->
+                            <!--            <span class="input-group-btn">-->
+                            <!--                <button type="button" class="button-search"><i class="fa fa-search"></i></button>-->
+                            <!--            </span>-->
+                            <!--        </div>-->
+                            <!--    </div>-->
+                            <!--</div>-->
                             <div id="cart-top" class=" inner col-lg-4 col-md-4 col-sm-12 hidden-xs">
                                 <div class="cart-top">
                                     <div id="cart" class="pull-right clearfix">
@@ -441,15 +441,15 @@
                                         <div class="navbar-header">
                                             <button data-toggle="offcanvas" class="btn btn-primary canvas-menu hidden-lg hidden-md" type="button"><span class="fa fa-bars"></span> Menu</button>
                                         </div>
-                                        <div class="collapse navbar-collapse" id="bs-megamenu">
-                                            <ul class="nav navbar-nav megamenu">
-                                                <li class=""><a href="#"><span class="menu-title">DEALS</span></a></li>
-                                                <li class=""><a href="#"><span class="menu-title">WARRANTY</span></a></li>
-                                                <li class=""><a href="#"><span class="menu-title">CONTACT</span></a></li>
-                                                <li class=""><a href="#"><span class="menu-title">HELP</span></a></li>
-                                                <li class=""><a href="#"><span class="menu-title">BULK SALES</span></a></li>
-                                            </ul>
-                                        </div>
+                                        <!--<div class="collapse navbar-collapse" id="bs-megamenu">-->
+                                        <!--    <ul class="nav navbar-nav megamenu">-->
+                                        <!--        <li class=""><a href="#"><span class="menu-title">DEALS</span></a></li>-->
+                                        <!--        <li class=""><a href="#"><span class="menu-title">WARRANTY</span></a></li>-->
+                                        <!--        <li class=""><a href="#"><span class="menu-title">CONTACT</span></a></li>-->
+                                        <!--        <li class=""><a href="#"><span class="menu-title">HELP</span></a></li>-->
+                                        <!--        <li class=""><a href="#"><span class="menu-title">BULK SALES</span></a></li>-->
+                                        <!--    </ul>-->
+                                        <!--</div>-->
                                     </nav>
                                 </div>
                             </div>
