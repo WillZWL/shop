@@ -500,3 +500,6 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 $config['valid_lang'] = array("en", "fr", "es", "it", "ru", "pl");
+
+$config['rows_limit'] = 100;
+
