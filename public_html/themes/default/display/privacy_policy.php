@@ -1,6 +1,6 @@
                 <div class="main-columns container">
                     <h2>Privacy <span>Policy</span></h2>
-                    <h3>ChatandVision Privacy Policy</h3>
+                    <h3>DigitalDiscount Privacy Policy</h3>
                     <br />
                     
                     <h3>CONTENTS</h3>
@@ -16,9 +16,9 @@
                     <br /><br />
                     
                     <p>
-                    	ChatandVision's Customer Privacy Policy covers the collection, use, and disclosure of personal information that may be collected by ChatandVision anytime you interact with ChatandVision, such as when visiting our website, purchasing products, or using our sales or support facilities. Please take a moment to read the following to learn more about our practices with regards to this, including what type of information we gather, how and for what purposes we use the information, to whom we disclose the information, and how the personal information is kept safe and secure. Your privacy is a priority at ChatandVision, and we do what we can to protect it.
+                    	DigitalDiscount's Customer Privacy Policy covers the collection, use, and disclosure of personal information that may be collected by DigitalDiscount anytime you interact with DigitalDiscount, such as when visiting our website, purchasing products, or using our sales or support facilities. Please take a moment to read the following to learn more about our practices with regards to this, including what type of information we gather, how and for what purposes we use the information, to whom we disclose the information, and how the personal information is kept safe and secure. Your privacy is a priority at DigitalDiscount, and we do what we can to protect it.
 						<br /><br />
-						ChatandVision may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes. This policy is effective from 31 May 2010.
+						DigitalDiscount may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes. This policy is effective from 31 May 2010.
 					</p>
                     
                     <h3 id="why_collect">WHY WE COLLECT</h3>
@@ -56,9 +56,9 @@
                     <p>
                         We are committed to ensuring that your information is secure. In order to prevent unauthorised access or disclosure, we have put in place suitable physical, electronic and managerial procedures to safeguard and secure the information we collect online.
 						<br /><br />
-						ChatandVision takes your privacy very seriously. ChatandVision does not sell or rent your contact information to other marketers.
+						DigitalDiscount takes your privacy very seriously. DigitalDiscount does not sell or rent your contact information to other marketers.
 						<br /><br />
-						ChatandVision may share certain personal information with other companies with which ChatandVision have a strategic relationship and/or provide services on our behalf to your advantage. These companies may help process information, fulfil customer orders, deliver products, manage and enhance customer data, provide customer service, assess levels of interest in our product range, or carry out customer research or satisfaction surveys. These companies are also obliged to protect your personal information, except if exchange of information is required for your purchase. For example, when an extended warranty is purchased, you authorise ChatandVision and the Warranty Provider to exchange information to carry out the service. Without the exchange, it would be otherwise be difficult to have products purchased, customer service offered, feedback provided to us, or have access to special offers or content from ChatandVision.
+						DigitalDiscount may share certain personal information with other companies with which DigitalDiscount have a strategic relationship and/or provide services on our behalf to your advantage. These companies may help process information, fulfil customer orders, deliver products, manage and enhance customer data, provide customer service, assess levels of interest in our product range, or carry out customer research or satisfaction surveys. These companies are also obliged to protect your personal information, except if exchange of information is required for your purchase. For example, when an extended warranty is purchased, you authorise DigitalDiscount and the Warranty Provider to exchange information to carry out the service. Without the exchange, it would be otherwise be difficult to have products purchased, customer service offered, feedback provided to us, or have access to special offers or content from DigitalDiscount.
 						<br /><br />
 						We may also be required by law or litigation to disclose your personal information. We may also disclose information if it is determined that it is necessary for security, law enforcement or other issues of public importance.
                     </p>
@@ -87,11 +87,11 @@
                     <h3 id="questions">PRIVACY QUESTIONS</h3>
                     <br /><br />
                     <p>
-                        If you have any questions or concerns, you can email us using our interactive web form located at our <a href="http://www.chatandvision.com/display/ws_view?page=ws_contact">Contact Us</a> page.
+                        If you have any questions or concerns, you can email us using our interactive web form located at our <a href="http://www.digitaldiscount.com/display/">Contact Us</a> page.
                     </p>
                     <br /><br />
                     
-                    Last updated 9th June 2010<br />
-					ChatandVision Limited. All rights reserved.
+                    Last updated 9th July 2015<br />
+					DigitalDiscount Limited. All rights reserved.
                     <div class="clearfix"></div>
                 </div>
