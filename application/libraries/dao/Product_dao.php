@@ -3871,7 +3871,7 @@ class Product_dao extends Base_dao
             #SBF1905, push all the Out of stock to bottom
             #SBF2580, push all the Arriving stock to bottom before Out of stock
 
-            $this->db->select('*, if(p.website_status = "O",1,0) is_oos, if(p.website_status = "A",1,0) is_arr');
+            $this->db->select("*, if(p.website_status = 'O','1','0') is_oos, if(p.website_status = 'A','1','0') is_arr");
 
             if ($query = $this->db->get()) {
                 // var_dump($this->db->last_query()); die();
