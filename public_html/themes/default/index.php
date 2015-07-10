@@ -36,7 +36,7 @@
                                             </script>
                                             <div class="layerslider-wrapper carousel slide pavcontentslider" style="max-width:1170px;">
                                                 <div class="fix-margin-right" style="padding: 0;margin: 18px 0 50px 0px !important;">
-                                                    <div id="iview" class="hidden-xs" style="width:100%;height:500px; ">
+                                                    <div id="iview" class="hidden-xs" style="width:100%;height:300px; ">
                                                         <div data-iview-thumbnail="/images/banner/0_1_0_GB_en_7390.jpg" data-iview-image="/images/banner/0_1_0_GB_en_7390.jpg" data-iview-transition="slice-top-fade,slice-right-fade">
                                                         </div>
                                                         <div data-iview-thumbnail="/images/banner/0_1_4_GB_en_7470.jpg" data-iview-image="/images/banner/0_1_4_GB_en_7470.jpg" data-iview-transition="slice-top-fade,slice-right-fade">
