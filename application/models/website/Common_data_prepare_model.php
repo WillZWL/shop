@@ -1532,13 +1532,18 @@ salecycle_script;
 
             if (!$cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
                 $cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
+                if ($cat_obj) {
+                    $localized_cat_name = $cat_obj->get_name();
+                }
             }
 
-            $localized_cat_name = $cat_obj->get_name();
+
             if (!$sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
                 $sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
+                if ($sc_obj) {
+                    $localized_sc_name = $sc_obj->get_name();
+                }
             }
-            $localized_sc_name = $sc_obj->get_name();
 
             $data['breadcrumb'][] = array($home_text => base_url());
             $data['breadcrumb'][] = array($localized_cat_name => $cat_url);

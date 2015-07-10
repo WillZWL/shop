@@ -299,48 +299,17 @@
                                                                                     <div class="mega-col-inner">
                                                                                         <div class="pavo-widget">
                                                                                             <div class="pavo-widget">
-                                                                                                <h4 class="widget-heading title">Electronics</h4>
+                                                                                                <h4 class="widget-heading title">SmartPhones</h4>
                                                                                                 <div class="">
                                                                                                     <ul class="content list-unstyled">
                                                                                                         <li>
-                                                                                                            <a href="#_63">
-                                                                                                                <span>Camera &amp; Photo</span>
-                                                                                                            </a>
+                                                                                                            <a href="#_63"> <span>Mobile Phones</span> </a>
                                                                                                         </li>
                                                                                                         <li>
-                                                                                                            <a href="#_36">
-                                                                                                                <span>Computer Peripherals</span>
-                                                                                                            </a>
+                                                                                                            <a href="#_36"> <span>Telephones</span> </a>
                                                                                                         </li>
                                                                                                         <li>
-                                                                                                            <a href="#_60">
-                                                                                                                <span>Mouse &amp; Keyboards</span>
-                                                                                                            </a>
-                                                                                                        </li>
-                                                                                                        <li>
-                                                                                                            <a href="#_35">
-                                                                                                                <span>Networking</span>
-                                                                                                            </a>
-                                                                                                        </li>
-                                                                                                        <li>
-                                                                                                            <a href="#_61">
-                                                                                                                <span>Tablet Accessories</span>
-                                                                                                            </a>
-                                                                                                        </li>
-                                                                                                        <li>
-                                                                                                            <a href="#_62">
-                                                                                                                <span>Wireless Routers</span>
-                                                                                                            </a>
-                                                                                                        </li>
-                                                                                                        <li>
-                                                                                                            <a href="#_28">
-                                                                                                                <span>Monitors</span>
-                                                                                                            </a>
-                                                                                                        </li>
-                                                                                                        <li>
-                                                                                                            <a href="#_30">
-                                                                                                                <span>Printers</span>
-                                                                                                            </a>
+                                                                                                            <a href="#_60"> <span>Media Players</span> </a>
                                                                                                         </li>
                                                                                                     </ul>
                                                                                                 </div>
