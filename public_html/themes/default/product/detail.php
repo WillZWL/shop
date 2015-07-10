@@ -150,6 +150,9 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
+                                <div>
+                                    4-7 working days delivery
+                                </div>
                                 <div class="tags">
                                 </div>
                             </div>
