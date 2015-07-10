@@ -5006,7 +5006,7 @@ hr.divider-snow {
 .panel .panel-heading .panel-title:after, .panel .panel-heading .panel-title:before {
   position: absolute;
   top: 2px;
-  background-color: #f7c720;
+  background-color: #589B24;
   content: "";
   width: 7px;
   height: 21px;
