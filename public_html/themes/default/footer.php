@@ -46,7 +46,7 @@
                                                     <i class="fa-3x fa fa fa-phone"></i>
                                                 </a>
                                                 <div class="media-body">
-                                                    <h6>Call 844 - 1525 - 6647</h6>
+                                                    <h6>Call 0870 295 9128</h6>
                                                     <p>Mon - Fri : 9A.M - 6 P.M
                                                         <br>
                                                     </p>
@@ -60,7 +60,7 @@
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                                         <span class="icon-name fa fa fa-phone"></span>
-                                                        <h4>Call 844 - 1525 - 6647</h4>
+                                                        <h4>Call 0870 295 9128</h4>
                                                         <p>Mon - Fri : 9A.M - 6 P.M
                                                             <br>
                                                         </p>
@@ -142,8 +142,8 @@
                         <div class="row">
                             <div class="column col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="panel-heading panel-white">
-                                    <a href="/display/view/about_us"><h4 class="panel-title">About Us</h4></div></a>
-                                <p>This is Photoshop\'s version&nbsp; of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.&nbsp; sem accumsan ipsum velit.
+                                    <!--<a href="/display/view/about_us">--><h4 class="panel-title">About Us</h4></div><!--</a>-->
+                                <p>DigitalDiscount prides itself on great deals without compromise on service! Feel free to contact us anytime for more information
                                     <br>
                                 </p>
                             </div>
@@ -152,8 +152,8 @@
                                     <br>ate sit amet lacinia.</p>
                                 <ul class="list-unstyled address">
                                     <li><i class="fa fa-map-marker"></i>No 1123, Sky Tower, New York, USA</li>
-                                    <li><i class="fa fa-tablet"></i>(+800) 1234 5678 90</li>
-                                    <li><i class="fa fa-envelope-o"></i><a href="mailto:info@company.com">info@company.com</a></li>
+                                    <li><i class="fa fa-tablet"></i>0870 295 9128</li>
+                                    <li><i class="fa fa-envelope-o"></i><a href="mailto:info@digitaldiscount.com">info@digitaldiscount.com</a></li>
                                 </ul>
                             </div>
                             <div class="column padding border-right col-xs-12 col-sm-6 col-md-3 col-lg-3">
