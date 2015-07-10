@@ -110,8 +110,8 @@
                                                         <div class="collapse navbar-collapse navbar-ex1-collapse">
                                                             <ul class="nav navbar-nav verticalmenu">
                                                                 <li class="topdropdow parent dropdown ">
-                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">Electronics</span><b class="caret"></b></a>
-                                                                    <div class="dropdown-menu" style="width:300px">
+                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">SmartPhones</span><b class="caret"></b></a>
+<!--                                                                     <div class="dropdown-menu" style="width:300px">
                                                                         <div class="dropdown-menu-inner">
                                                                             <div class="row">
                                                                                 <div class="mega-col col-md-12 sidebar">
@@ -207,11 +207,11 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </li>
                                                                 <li class="topdropdow parent dropdown ">
-                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">Accessories</span><b class="caret"></b></a>
-                                                                    <div class="dropdown-menu" style="width:500px">
+                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">Webcams</span><b class="caret"></b></a>
+<!--                                                                     <div class="dropdown-menu" style="width:500px">
                                                                         <div class="dropdown-menu-inner">
                                                                             <div class="row">
                                                                                 <div class="mega-col col-md-6 ">
@@ -288,11 +288,11 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </li>
                                                                 <li class="bg1 topdropdow parent dropdown ">
-                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">Home &amp; Garden</span><b class="caret"></b></a>
-                                                                    <div class="dropdown-menu" style="width:700px">
+                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">Headsets and Microphones</span><b class="caret"></b></a>
+<!--                                                                     <div class="dropdown-menu" style="width:700px">
                                                                         <div class="dropdown-menu-inner">
                                                                             <div class="row">
                                                                                 <div class="mega-col col-md-6 ">
@@ -372,28 +372,22 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </li>
                                                                 <li class="">
-                                                                    <a href="#"><i class=""></i><span class="menu-title">Automotive</span></a>
+                                                                    <a href="#"><i class=""></i><span class="menu-title">Conference Phones</span></a>
                                                                 </li>
                                                                 <li class="">
-                                                                    <a href="#"><i class=""></i><span class="menu-title">Beauty &amp; Health</span></a>
+                                                                    <a href="#"><i class=""></i><span class="menu-title">Digital Imaging</span></a>
                                                                 </li>
                                                                 <li class="">
-                                                                    <a href="#"><i class=""></i><span class="menu-title">Toys, Kids &amp; Baby</span></a>
+                                                                    <a href="#"><i class=""></i><span class="menu-title">Tablets</span></a>
                                                                 </li>
                                                                 <li class="">
-                                                                    <a href="#"><i class=""></i><span class="menu-title">Jewelry &amp; Watches</span></a>
+                                                                    <a href="#"><i class=""></i><span class="menu-title">Computing</span></a>
                                                                 </li>
                                                                 <li class="">
-                                                                    <a href="#"><i class=""></i><span class="menu-title">Bags &amp; Shoes</span></a>
-                                                                </li>
-                                                                <li class="">
-                                                                    <a href="#"><i class=""></i><span class="menu-title">Sports &amp; Outdoor</span></a>
-                                                                </li>
-                                                                <li class="">
-                                                                    <a href="index.php?route=product/category&amp;path=33"><i class=""></i><span class="menu-title">Cameras</span></a>
+                                                                    <a href="#"><i class=""></i><span class="menu-title">Accessories</span></a>
                                                                 </li>
                                                             </ul>
                                                         </div>
