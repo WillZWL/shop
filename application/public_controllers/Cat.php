@@ -14,7 +14,7 @@ class Cat extends PUB_Controller
         $this->load->model('marketing/banner_model');
         $this->load->library('service/affiliate_service');
         $this->load->library('service/price_website_service');
-        $this->load->library('service/display_category_banner_service');
+        $this->load->library('service/display_category_banner_service'); 
     }
 
     public function view($cat_id, $design_id = 0)
