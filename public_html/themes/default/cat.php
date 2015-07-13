@@ -101,9 +101,15 @@
     <ul class="pagination">
         <li><a href="?page=1&rpp=12&sort=priority_asc&brand_id=">|&lt;</a></li>
         <li><a href="?page=2&rpp=12&sort=priority_asc&brand_id=">&lt;</a></li>
-        <li><a href="?page=3&rpp=12&sort=priority_asc&brand_id=">1</a></li>
-        <li class="active"><span>2</span></li>
-        <li><a href="?page=3&rpp=12&sort=priority_asc&brand_id=">3</a></li>
+		<?php
+		for($i = 1; $i <= $total_page; $i++)
+		{
+		?>
+			<li><a href="<?=$i?>" <?=($i == $curr_page? "class='active'" :;?>)><?=$i?></a></li>
+		<?php
+		}
+		?>
+
         <li><a href="">&gt;|</a></li></ul>
     </ul>
 </div>
