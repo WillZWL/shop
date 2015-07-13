@@ -127,7 +127,7 @@
                                                 <img src="/themes/default/asset/image/warranty.png">
                                             </div>
                                             <p class="desc">
-                                                Warrant Up to 2 Years
+                                                Warranty Up to 2 Years
                                             </p>
                                         </div>
                                         <div class="col-lg-1 col-md-1 col-sm-3 col-xs-12 column"></div>
