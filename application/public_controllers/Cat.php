@@ -46,18 +46,6 @@ class Cat extends PUB_Controller
             // this flag is used to check against the list to make sure there is at least one available to be listed
             foreach ($catPageData["obj_list"] AS $key => $obj) {
                 if ($obj) {
-/*
-                    $product_list[$key]["sku"] = $obj->get_sku();
-                    $product_list[$key]["prod_name"] = $obj->get_prod_name();
-                    $product_list[$key]["listing_status"] = $obj->get_status();
-                    $product_list[$key]["qty"] = $obj->get_qty();
-                    $product_list[$key]["price"] = $obj->get_price();
-                    $product_list[$key]["rrp_price"] = $obj->get_rrp_price();
-                    $product_list[$key]["discount"] = number_format(($obj->get_rrp_price() == 0 ? 0 : ($obj->get_rrp_price() - $obj->get_price()) / $obj->get_rrp_price() * 100), 0);
-                    $product_list[$key]["prod_url"] = $this->category_model->get_prod_url($obj->get_sku());
-                    $product_list[$key]["short_desc"] = $obj->get_short_desc();
-                    $product_list[$key]["image_ext"] = $obj->get_image_ext();
-*/
                     $show_404 = FALSE;
                     break;
                 }
@@ -81,9 +69,9 @@ class Cat extends PUB_Controller
         $data['level'] = $level;
 
         // pagination variable
-        $data['total_result'] = $catePageData["total"];
+        $data['total_result'] = $catPageData["total"];
         $data['curr_page'] = $page;
-        $data['total_page'] = (int)ceil($total / $rpp);
+        $data['total_page'] = (int)ceil($data['total_result'] / $rpp);
         $data['rpp'] = $rpp;
 
         // url
