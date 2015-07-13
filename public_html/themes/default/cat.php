@@ -97,7 +97,6 @@
 <?php print $curr_page; ?><br>
 <?php print $total_page; ?><br>
 <?php print $rpp; ?><br>
-<?php print "abc"; ?><br>
 <div class="pagination paging clearfix">
     <ul class="pagination">
         <li><a href="?page=1&rpp=12&sort=priority_asc&brand_id=">|&lt;</a></li>

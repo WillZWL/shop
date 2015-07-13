@@ -33,7 +33,7 @@ class Cat extends PUB_Controller
         $level = $cat_obj->get_level();
         $sort = $this->input->get('sort');
         $rpp = $this->input->get('rpp');
-        $page = $this->input->get('page');
+        //$page = $this->input->get('page');
         $brandId = $this->input->get('brand_id');
         $catPageData = $this->category_model->getProductForCategoryPage(PLATFORMID, $cat_id, $level, $brandId, $sort, $rpp, $page, $langId);
         $data['sort'] = $sort;
