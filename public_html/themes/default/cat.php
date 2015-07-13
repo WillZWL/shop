@@ -109,7 +109,6 @@
 		<?php
 		}
 		?>
-
         <li><a href="">&gt;|</a></li></ul>
     </ul>
 </div>
