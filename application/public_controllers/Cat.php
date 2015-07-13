@@ -14,10 +14,10 @@ class Cat extends PUB_Controller
         $this->load->model('marketing/banner_model');
         $this->load->library('service/affiliate_service');
         $this->load->library('service/price_website_service');
-        $this->load->library('service/display_category_banner_service'); 
+        $this->load->library('service/display_category_banner_service');
     }
 
-    public function view($cat_id, $design_id = 0)
+    public function view($cat_id, $page = 1)
     {
 
         if (!$cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $cat_id, "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
