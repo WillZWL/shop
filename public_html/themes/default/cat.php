@@ -107,7 +107,7 @@
 		?>
 			<li><a href="<?=$i?>" <?=($i == $curr_page? "class='active'" :;?>)><?=$i?></a></li>
 		<?php
-		}
+		} 
 		?>
         <li><a href="">&gt;|</a></li></ul>
     </ul>
