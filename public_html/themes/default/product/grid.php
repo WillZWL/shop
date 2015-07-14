@@ -31,7 +31,7 @@
                                                                 <img class="img-responsive" src="<?= get_image_file($prod_obj->get_image_ext(), 'm', $prod_obj->get_sku()) ?>" title="<?= $prod_obj->get_prod_name(); ?>" alt="<?= $prod_obj->get_prod_name(); ?>" />
                                                             </a>
                                                             <div class="quickview hidden-xs">
-                                                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href='<?= site_url("/mainproduct/view/$sku") ?>' title="Quick View"><i class="fa fa-eye"></i></a>
+                                                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href='<?= site_url("/mainproduct/view/$sku/sv") ?>' title="Quick View"><i class="fa fa-eye"></i></a>
                                                             </div>
                                                             <div class="zoom hidden-xs">
                                                                 <a data-toggle="tooltip" data-placement="top" href="<?= get_image_file($prod_obj->get_image_ext(), 'l', $prod_obj->get_sku()) ?>" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->get_prod_name(); ?>"><i class="fa fa-search-plus"></i></a>
