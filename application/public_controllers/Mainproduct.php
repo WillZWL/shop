@@ -23,19 +23,15 @@ class Mainproduct extends PUB_Controller
         $this->load->library('service/deliverytime_service');
     }
 
-    public function view($sku = '')
+    public function view($sku = '', $sv = false)
     {
         $data = array();
         $data['prod_info'] = $this->common_data_prepare_model->get_data_array($this, array("sku" => $sku, "type" => "web"));
         //var_dump($data);die;
-        $this->load->view('/default/product', $data);
-    }
-	
-    public function simpleview($sku = '')
-    {
-        $data = array();
-        $data['prod_info'] = $this->common_data_prepare_model->get_data_array($this, array("sku" => $sku, "type" => "web"));
-        //var_dump($data);die;
-        $this->load->view('/default/simpleproduct', $data);
+		if($sv != "sv") {
+			$this->load->view('/default/product', $data);
+		} else {
+			$this->load->view('/default/product/simpledetail.php', $data['prod_info']);
+		}
     }
 }
