@@ -78,3 +78,15 @@
 #product-detail {
 	padding-top: 30px;
 }
+
+/* footer */
+.guarantee li {
+	width: 235px;
+	text-align: center;
+}
+.guarantee li:first-child {
+	float: left;
+}
+.guarantee li:last-child {
+	float: right;
+}
