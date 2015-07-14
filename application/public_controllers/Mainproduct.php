@@ -30,5 +30,12 @@ class Mainproduct extends PUB_Controller
         //var_dump($data);die;
         $this->load->view('/default/product', $data);
     }
-
+	
+    public function simpleview($sku = '')
+    {
+        $data = array();
+        $data['prod_info'] = $this->common_data_prepare_model->get_data_array($this, array("sku" => $sku, "type" => "web"));
+        //var_dump($data);die;
+        $this->load->view('/default/simpleproduct', $data);
+    }
 }
