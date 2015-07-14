@@ -89,48 +89,48 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                 <div class="panel panel-white pavreassurances margin_top">
                                     <div class="row">
-                                        <div class="col-lg-1 col-md-1 col-sm-3 col-xs-12 column"></div>
-                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 column">
-                                            <div class="image-wrap">
-                                                <img src="/themes/default/asset/image/thawte.png">
-                                            </div>
-                                            <p class="desc">
-                                                100% Secure with SSL Encryption
-                                            </p>
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 column">
-                                            <div class="image-wrap">
-                                                <img src="/themes/default/asset/image/dataprotection.png">
-                                            </div>
-                                            <p class="desc">
-                                                100% Data Protection your data is safe with us
-                                            </p>
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 column">
-                                            <div class="image-wrap">
-                                                <img src="/themes/default/asset/image/freedelivery.png">
-                                            </div>
-                                            <p class="desc">
-                                                Free Delivery For All Orders* Shipping: 3-5 Working Days
-                                            </p>
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 column">
-                                            <div class="image-wrap">
-                                                <img src="/themes/default/asset/image/moneyback.png">
-                                            </div>
-                                            <p class="desc">
-                                                Money Back 14 day Money Back Guarantee
-                                            </p>
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 column">
-                                            <div class="image-wrap">
-                                                <img src="/themes/default/asset/image/warranty.png">
-                                            </div>
-                                            <p class="desc">
-                                                Warranty Up to 2 Years
-                                            </p>
-                                        </div>
-                                        <div class="col-lg-1 col-md-1 col-sm-3 col-xs-12 column"></div>
+                                        <ul class="list-inline guarantee">
+                                            <li>
+                                                <div class="image-wrap">
+                                                    <img src="/themes/default/asset/image/thawte.png">
+                                                </div>
+                                                <p class="desc">
+                                                    100% Secure with SSL Encryption
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <div class="image-wrap">
+                                                    <img src="/themes/default/asset/image/dataprotection.png">
+                                                </div>
+                                                <p class="desc">
+                                                    100% Data Protection your data is safe with us
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <div class="image-wrap">
+                                                    <img src="/themes/default/asset/image/freedelivery.png">
+                                                </div>
+                                                <p class="desc">
+                                                    Free Delivery For All Orders* Shipping: 3-5 Working Days
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <div class="image-wrap">
+                                                    <img src="/themes/default/asset/image/moneyback.png">
+                                                </div>
+                                                <p class="desc">
+                                                    Money Back 14 day Money Back Guarantee
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <div class="image-wrap">
+                                                    <img src="/themes/default/asset/image/warranty.png">
+                                                </div>
+                                                <p class="desc">
+                                                    Warranty Up to 2 Years
+                                                </p>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
