@@ -1,121 +1,124 @@
 <?php $this->load->view('/default/header') ?>
-<div id="content">
-    <div class="product-filter no-shadow">
-     <div class="inner clearfix">
-      <div class="display">
-        <div class="btn-group group-switch">
-          <button data-original-title="List" type="button" id="list-view" class="btn btn-switch" data-toggle="tooltip" title=""><i class="fa fa-th-list"></i></button>
-          <button data-original-title="Grid" type="button" id="grid-view" class="btn btn-switch active" data-toggle="tooltip" title=""><i class="fa fa-th"></i></button>
-        </div>
-      </div>
-      <div class="filter-right">
-        <!--
-		<div class="product-compare pull-right"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/compare" class="btn btn-link" id="compare-total">Product Compare (0)</a></div>
-		-->
-		<div class="pagination paging clearfix pull-right">
-			<ul class="pagination" style="margin:0">
-				<?php
-					if($curr_page != 1) :
-				?>
-						<li><a href="<?=$curr_page-1?>">&lt;&lt;</a></li>
-				<?php
-					endif;
-					
-					for($i = 1; $i <= $total_page; $i++) :
-						if($i == $curr_page) :
-				?>
-							<li class="active"><span><?=$i?></span></li>
-				<?php
-						else:
-				?>
-							<li><a href="<?=$i?>"><?=$i?></a></li>
-				<?php
-						endif;
-					endfor;
-					
-					if($curr_page != $total_page) :
-				?>
-						<li><a href="<?=$curr_page+1?>">&gt;&gt;</a></li>
-				<?php
-					endif;
-				?>
-			</ul>
-		</div>
-        <div class="sort pull-right">
-          <span for="input-sort">Sort By:</span>
-          <select id="input-sort" class="form-control" onchange="location = this.value;">
-                            <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
-                                    <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=pd.name&amp;order=ASC">Name (A - Z)</option>
-                                    <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=pd.name&amp;order=DESC">Name (Z - A)</option>
-                                    <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
-                                    <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.price&amp;order=DESC">Price (High &gt; Low)</option>
-                                    <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=rating&amp;order=DESC">Rating (Highest)</option>
-                                    <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=rating&amp;order=ASC">Rating (Lowest)</option>
-                                    <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.model&amp;order=ASC">Model (A - Z)</option>
-                                    <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.model&amp;order=DESC">Model (Z - A)</option>
-                          </select>
-        </div>
-        
-        <div class="limit pull-right">
-          <span for="input-limit">Show:</span>
-          <select id="input-limit" class="form-control" onchange="location = this.value;">
-                            <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=12" selected="selected">12</option>
-                                    <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=25">25</option>
-                                    <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=50">50</option>
-                                    <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=75">75</option>
-                                    <option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=100">100</option>
-                          </select>
-        </div>
-      </div>
-      
-     </div>
-    </div>
-    <div id="products" class="product-grid">
-		<aside id="sidebar-right" class="col-md-3">	
-			<div id="column-right" class="hidden-xs sidebar">
-				<div class="panel panel-default nopadding">
-				<div class="panel-heading"><h4>Categories</h4></div>
-				<div class="panel-body tree-menu">
-					<ul class="box-category list-group accordion">
+<div id="content" style="margin: 20px auto">
+	<aside id="sidebar-right" class="col-md-3">	
+		<div id="column-right" class="hidden-xs sidebar">
+			<div class="panel panel-default nopadding">
+			<!--<div class="panel-heading"><h4>Categories</h4></div>-->
+			<div class="panel-body tree-menu">
+				<ul class="box-category list-group accordion">
+					<li class="list-group-item accordion-group">
 						<li class="list-group-item accordion-group">
-							<li class="list-group-item accordion-group">
-								<a href="" class="active"><?=$cat_name?></a>
-								<div class="accordion-heading pull-right">
-									<span data-toggle="collapse"  data-target="#accordiondata" class="bg">
-										<i class="fa fa-angle-down"></i>
-									</span>
-								</div>
-								<ul id="accordiondata" class="collapse accordion-body in">
-									<?php
-										foreach($brand_result as $brand) {
-									?>
-										<li>
-											<a href="<?=$brand['id']?>"><?=$brand['name']?> (<?=$brand['total']?>)</a>
-										</li>
-									<?php
-										}
-									?>
-								</ul>
-							</li>
-					</ul>
-				</div>
-		</div>
-		<script type="text/javascript">
-			$(document).ready(function(){
-				var active = $('.collapse.in').attr('id');
-				$('span[data-target=#'+active+']').html("<i class='fa fa-angle-down'></i>");
+							<a href="" class="active">BRANDS</a>
+							<div class="accordion-heading pull-right">
+								<span data-toggle="collapse"  data-target="#accordiondata" class="bg">
+									<i class="fa fa-angle-down"></i>
+								</span>
+							</div>
+							<ul id="accordiondata" class="collapse accordion-body in">
+								<?php
+									foreach($brand_result as $brand) {
+								?>
+									<li>
+										<a href="<?=$brand['id']?>"><?=$brand['name']?> (<?=$brand['total']?>)</a>
+									</li>
+								<?php
+									}
+								?>
+							</ul>
+						</li>
+				</ul>
+			</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var active = $('.collapse.in').attr('id');
+			$('span[data-target=#'+active+']').html("<i class='fa fa-angle-down'></i>");
 
-				$('.collapse').on('show.bs.collapse', function () {
-					$('span[data-target=#'+$(this).attr('id')+']').html("<i class='fa fa-angle-down'></i>");
-				});
-				$('.collapse').on('hide.bs.collapse', function () {
-					$('span[data-target=#'+$(this).attr('id')+']').html("<i class='fa fa-angle-right'></i>");
-				});
+			$('.collapse').on('show.bs.collapse', function () {
+				$('span[data-target=#'+$(this).attr('id')+']').html("<i class='fa fa-angle-down'></i>");
 			});
-		</script>
+			$('.collapse').on('hide.bs.collapse', function () {
+				$('span[data-target=#'+$(this).attr('id')+']').html("<i class='fa fa-angle-right'></i>");
+			});
+		});
+	</script>
+	</div>
+	</aside>
+    
+	<div class="products-block  col-lg-9 col-sm-9 col-xs-12">
+		<div class="category_title"><h3><?=$cat_name?></h3></div>
+		<div class="product-filter no-shadow" style="margin:20px auto">
+			<div class="inner clearfix">
+				<div class="display">
+					<div class="btn-group group-switch">
+						<button data-original-title="List" type="button" id="list-view" class="btn btn-switch" data-toggle="tooltip" title=""><i class="fa fa-th-list"></i></button>
+						<button data-original-title="Grid" type="button" id="grid-view" class="btn btn-switch active" data-toggle="tooltip" title=""><i class="fa fa-th"></i></button>
+					</div>
+				</div>
+				<div class="filter-right">
+					<!--
+					<div class="product-compare pull-right"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/compare" class="btn btn-link" id="compare-total">Product Compare (0)</a></div>
+					-->
+					<div class="pagination paging clearfix pull-right">
+						<ul class="pagination" style="margin:0">
+							<?php
+								if($curr_page != 1) :
+							?>
+									<li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page-1));?>">&lt;&lt;</a></li>
+							<?php
+								endif;
+								
+								for($i = 1; $i <= $total_page; $i++) :
+									if($i == $curr_page) :
+							?>
+										<li class="active"><span><?=$i?></span></li>
+							<?php
+									else:
+							?>
+										<li><a href="<?=base_url('cat/view/' . $cat_id . '/' . $i);?>"><?=$i?></a></li>
+							<?php
+									endif;
+								endfor;
+								
+								if($curr_page != $total_page) :
+							?>
+									<li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page+1));?>">&gt;&gt;</a></li>
+							<?php
+								endif;
+							?>
+						</ul>
+					</div>
+				  </div>
+
+				<div class="sort pull-right">
+					<span for="input-sort">Sort By:</span>
+					<select id="input-sort" class="form-control" onchange="location = this.value;">
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=pd.name&amp;order=ASC">Name (A - Z)</option>
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=pd.name&amp;order=DESC">Name (Z - A)</option>
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.price&amp;order=DESC">Price (High &gt; Low)</option>
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=rating&amp;order=DESC">Rating (Highest)</option>
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=rating&amp;order=ASC">Rating (Lowest)</option>
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.model&amp;order=ASC">Model (A - Z)</option>
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.model&amp;order=DESC">Model (Z - A)</option>
+					</select>
+				</div> 
+				<div class="limit pull-right">
+					<span for="input-limit">Display:</span>
+					<select id="input-limit" class="form-control" onchange="location = this.value;">
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=12" selected="selected">12</option>
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=25">25</option>
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=50">50</option>
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=75">75</option>
+						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=100">100</option>
+					</select>
+				</div>
+			</div>
 		</div>
-		</aside>
-        <div class="products-block  col-lg-9 col-sm-9 col-xs-12">
+	<div id="products" class="product-grid">
+		
+
             <div class="row products-row">
                 <?php if ($productList) : ?>
                     <?php foreach ($productList as $sku => $prod_obj): ?>
@@ -169,7 +172,7 @@
                 </div>
                 <?php endif; ?>
             </div>
-        </div>
+	</div>
     </div>
 </div>
 <?php $this->load->view('/default/footer') ?>
