@@ -95,7 +95,7 @@
                                                     <img src="/themes/default/asset/image/thawte.png">
                                                 </div>
                                                 <p class="desc">
-                                                    100% Secure with SSL Encryption
+                                                    100% Secure <br/> with SSL Encryption
                                                 </p>
                                             </li>
                                             <li>
@@ -103,7 +103,7 @@
                                                     <img src="/themes/default/asset/image/dataprotection.png">
                                                 </div>
                                                 <p class="desc">
-                                                    100% Data Protection your data is safe with us
+                                                    100% Data Protection <br /> your data is safe with us
                                                 </p>
                                             </li>
                                             <li>
@@ -127,7 +127,7 @@
                                                     <img src="/themes/default/asset/image/warranty.png">
                                                 </div>
                                                 <p class="desc">
-                                                    Warranty Up to 2 Years
+                                                    Warranty <br/> Up to 2 Years
                                                 </p>
                                             </li>
                                         </ul>
