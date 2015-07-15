@@ -13,7 +13,7 @@
                                                 </a>
                                                 <div class="media-body">
                                                     <h6>Questions?</h6>
-                                                    <p>Sen us and email
+                                                    <p>Send us and email
                                                         <br>
                                                     </p>
                                                 </div>
@@ -119,7 +119,7 @@
                                                     <img src="/themes/default/asset/image/moneyback.png">
                                                 </div>
                                                 <p class="desc">
-                                                    Money Back 14 day Money Back Guarantee
+                                                    Money Back 14 day <br/> Money Back Guarantee
                                                 </p>
                                             </li>
                                             <li>
