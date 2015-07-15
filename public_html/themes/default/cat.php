@@ -26,6 +26,23 @@
 								?>
 							</ul>
 						</li>
+						<li class="list-group-item accordion-group">
+							<a href="" class="active">Categories</a>
+							<div class="accordion-heading pull-right">
+								<span data-toggle="collapse" data-target="#accordiondata1" class="bg"><i class="fa fa-angle-down"></i></span>
+							</div>
+							<ul id="accordiondata1" class="collapse accordion-body in">
+								<li>
+									<a href="2">Desktop(8)</a>
+								</li>
+								<li>
+									<a href="20">Laptops & Notebooks (8)</a>
+								</li>
+								<li>
+									<a href="407">Electronics</a>
+								</li>
+							</ul>
+						</li>
 				</ul>
 			</div>
 	</div>
@@ -93,25 +110,25 @@
 				<div class="sort pull-right">
 					<span for="input-sort">Sort By:</span>
 					<select id="input-sort" class="form-control" onchange="location = this.value;">
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=pd.name&amp;order=ASC">Name (A - Z)</option>
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=pd.name&amp;order=DESC">Name (Z - A)</option>
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.price&amp;order=DESC">Price (High &gt; Low)</option>
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=rating&amp;order=DESC">Rating (Highest)</option>
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=rating&amp;order=ASC">Rating (Lowest)</option>
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.model&amp;order=ASC">Model (A - Z)</option>
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;sort=p.model&amp;order=DESC">Model (Z - A)</option>
+						<option value="?sort=p.sort_order&order=ASC" selected="selected">Default</option>
+						<option value="?sort=pd.name&order=ASC">Name (A - Z)</option>
+						<option value="?sort=pd.name&order=DESC">Name (Z - A)</option>
+						<option value="?sort=p.price&order=ASC">Price (Low &gt; High)</option>
+						<option value="?sort=p.price&order=DESC">Price (High &gt; Low)</option>
+						<option value="?sort=rating&order=DESC">Rating (Highest)</option>
+						<option value="?sort=rating&order=ASC">Rating (Lowest)</option>
+						<option value="?sort=p.model&order=ASC">Model (A - Z)</option>
+						<option value="?sort=p.model&order=DESC">Model (Z - A)</option>
 					</select>
 				</div> 
 				<div class="limit pull-right">
 					<span for="input-limit">Display:</span>
 					<select id="input-limit" class="form-control" onchange="location = this.value;">
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=12" selected="selected">12</option>
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=25">25</option>
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=50">50</option>
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=75">75</option>
-						<option value="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=24&amp;limit=100">100</option>
+						<option value="?limit=12" selected="selected">12</option>
+						<option value="?limit=25">25</option>
+						<option value="?limit=50">50</option>
+						<option value="?limit=75">75</option>
+						<option value="?limit=100">100</option>
 					</select>
 				</div>
 			</div>
