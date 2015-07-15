@@ -9,7 +9,38 @@
         </div>
       </div>
       <div class="filter-right">
-        <div class="product-compare pull-right"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/compare" class="btn btn-link" id="compare-total">Product Compare (0)</a></div>
+        <!--
+		<div class="product-compare pull-right"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/compare" class="btn btn-link" id="compare-total">Product Compare (0)</a></div>
+		-->
+		<div class="pagination paging clearfix pull-right">
+			<ul class="pagination" style="margin:0">
+				<?php
+					if($curr_page != 1) :
+				?>
+						<li><a href="<?=$curr_page-1?>">&lt;&lt;</a></li>
+				<?php
+					endif;
+					
+					for($i = 1; $i <= $total_page; $i++) :
+						if($i == $curr_page) :
+				?>
+							<li class="active"><span><?=$i?></span></li>
+				<?php
+						else:
+				?>
+							<li><a href="<?=$i?>"><?=$i?></a></li>
+				<?php
+						endif;
+					endfor;
+					
+					if($curr_page != $total_page) :
+				?>
+						<li><a href="<?=$curr_page+1?>">&gt;&gt;</a></li>
+				<?php
+					endif;
+				?>
+			</ul>
+		</div>
         <div class="sort pull-right">
           <span for="input-sort">Sort By:</span>
           <select id="input-sort" class="form-control" onchange="location = this.value;">
@@ -40,11 +71,55 @@
      </div>
     </div>
     <div id="products" class="product-grid">
-        <div class="products-block">
+		<aside id="sidebar-right" class="col-md-3">	
+			<div id="column-right" class="hidden-xs sidebar">
+				<div class="panel panel-default nopadding">
+				<div class="panel-heading"><h4>Categories</h4></div>
+				<div class="panel-body tree-menu">
+					<ul class="box-category list-group accordion">
+						<li class="list-group-item accordion-group">
+							<li class="list-group-item accordion-group">
+								<a href="" class="active"><?=$cat_name?></a>
+								<div class="accordion-heading pull-right">
+									<span data-toggle="collapse"  data-target="#accordiondata" class="bg">
+										<i class="fa fa-angle-down"></i>
+									</span>
+								</div>
+								<ul id="accordiondata" class="collapse accordion-body in">
+									<?php
+										foreach($brand_result as $brand) {
+									?>
+										<li>
+											<a href="<?=$brand['id']?>"><?=$brand['name']?> (<?=$brand['total']?>)</a>
+										</li>
+									<?php
+										}
+									?>
+								</ul>
+							</li>
+					</ul>
+				</div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var active = $('.collapse.in').attr('id');
+				$('span[data-target=#'+active+']').html("<i class='fa fa-angle-down'></i>");
+
+				$('.collapse').on('show.bs.collapse', function () {
+					$('span[data-target=#'+$(this).attr('id')+']').html("<i class='fa fa-angle-down'></i>");
+				});
+				$('.collapse').on('hide.bs.collapse', function () {
+					$('span[data-target=#'+$(this).attr('id')+']').html("<i class='fa fa-angle-right'></i>");
+				});
+			});
+		</script>
+		</div>
+		</aside>
+        <div class="products-block  col-lg-9 col-sm-9 col-xs-12">
             <div class="row products-row">
                 <?php if ($productList) : ?>
                     <?php foreach ($productList as $sku => $prod_obj): ?>
-                    <div class="col-lg-2 col-sm-2 col-xs-12 product-col border">
+                    <div class="col-lg-3 col-sm-3 col-xs-12 product-col border">
                         <div class="product-block">
                             <div class="image">
                                 <div class="product-img img">
@@ -52,10 +127,10 @@
                                         <img class="img-responsive" src="<?= get_image_file($prod_obj->get_image_ext(), 'm', $prod_obj->get_sku()) ?>" title="<?= $prod_obj->get_prod_name(); ?>" alt="<?= $prod_obj->get_prod_name(); ?>" />
                                     </a>
                                     <div class="quickview hidden-xs">
-                                        <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=themecontrol/product&amp;product_id=51" title="Quick View"><i class="fa fa-eye"></i></a>
+                                        <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="<?= site_url("/mainproduct/view/$sku/sv") ?>" title="Quick View"><i class="fa fa-eye"></i></a>
                                     </div>
                                     <div class="zoom hidden-xs">
-                                        <a data-toggle="tooltip" data-placement="top" href="http://www.themelexus.com/demo/opencart/motozz/demo3/image/catalog/demo/product/10.jpg" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->get_prod_name(); ?>"><i class="fa fa-search-plus"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" href="<?= get_image_file($prod_obj->get_image_ext(), 'l', $prod_obj->get_sku()) ?>" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->get_prod_name(); ?>"><i class="fa fa-search-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -93,20 +168,6 @@
                     <?php endforeach ?>
                 </div>
                 <?php endif; ?>
-<?php print $total_result; ?><br>
-<?php print $curr_page; ?><br>
-<?php print $total_page; ?><br>
-<?php print $rpp; ?><br>
-<div class="pagination paging clearfix">
-    <ul class="pagination">
-        <li><a href="?page=1&rpp=12&sort=priority_asc&brand_id=">|&lt;</a></li>
-        <li><a href="?page=2&rpp=12&sort=priority_asc&brand_id=">&lt;</a></li>
-        <li><a href="?page=3&rpp=12&sort=priority_asc&brand_id=">1</a></li>
-        <li class="active"><span>2</span></li>
-        <li><a href="?page=3&rpp=12&sort=priority_asc&brand_id=">3</a></li>
-        <li><a href="">&gt;|</a></li></ul>
-    </ul>
-</div>
             </div>
         </div>
     </div>
