@@ -13,7 +13,7 @@
                                                 </a>
                                                 <div class="media-body">
                                                     <h6>Questions?</h6>
-                                                    <p>Send us and email
+                                                    <p>Send us an email
                                                         <br>
                                                     </p>
                                                 </div>
@@ -27,7 +27,7 @@
                                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                                         <span class="icon-name fa fa-envelope-o"></span>
                                                         <h4>Questions?</h4>
-                                                        <p>Sen us and email
+                                                        <p>Send us an email
                                                             <br>
                                                         </p>
                                                     </div>
