@@ -1,6 +1,6 @@
 <?php $this->load->view('/default/header') ?>
 <div id="content" style="margin: 20px auto">
-	<aside id="sidebar-right" class="col-md-3">	
+	<aside id="sidebar-right" class="col-md-3">
 		<div id="column-right" class="hidden-xs sidebar">
 			<div class="panel panel-default nopadding">
 			<!--<div class="panel-heading"><h4>Categories</h4></div>-->
@@ -8,7 +8,7 @@
 				<ul class="box-category list-group accordion">
 					<li class="list-group-item accordion-group">
 						<li class="list-group-item accordion-group">
-							<a href="" class="active">BRANDS</a>
+							<a href="" class="active"><?= _('BRANDS') ?></a>
 							<div class="accordion-heading pull-right">
 								<span data-toggle="collapse"  data-target="#accordiondata" class="bg">
 									<i class="fa fa-angle-down"></i>
@@ -27,19 +27,19 @@
 							</ul>
 						</li>
 						<li class="list-group-item accordion-group">
-							<a href="" class="active">Categories</a>
+							<a href="" class="active"><?= _('Categories') ?></a>
 							<div class="accordion-heading pull-right">
 								<span data-toggle="collapse" data-target="#accordiondata1" class="bg"><i class="fa fa-angle-down"></i></span>
 							</div>
 							<ul id="accordiondata1" class="collapse accordion-body in">
 								<li>
-									<a href="2">Desktop(8)</a>
+									<a href="2"><?= _('Desktop(8)') ?></a>
 								</li>
 								<li>
-									<a href="20">Laptops & Notebooks (8)</a>
+									<a href="20"><?= _('Laptops & Notebooks (8)') ?></a>
 								</li>
 								<li>
-									<a href="407">Electronics</a>
+									<a href="407"><?= _('Electronics') ?></a>
 								</li>
 							</ul>
 						</li>
@@ -61,7 +61,7 @@
 	</script>
 	</div>
 	</aside>
-    
+
 	<div class="products-block  col-lg-9 col-sm-9 col-xs-12">
 		<div class="category_title"><h3><?=$cat_name?></h3></div>
 		<div class="product-filter no-shadow" style="margin:20px auto">
@@ -84,7 +84,7 @@
 									<li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page-1));?>">&lt;&lt;</a></li>
 							<?php
 								endif;
-								
+
 								for($i = 1; $i <= $total_page; $i++) :
 									if($i == $curr_page) :
 							?>
@@ -96,7 +96,7 @@
 							<?php
 									endif;
 								endfor;
-								
+
 								if($curr_page != $total_page) :
 							?>
 									<li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page+1));?>">&gt;&gt;</a></li>
@@ -108,21 +108,21 @@
 				  </div>
 
 				<div class="sort pull-right">
-					<span for="input-sort">Sort By:</span>
+					<span for="input-sort"><?= _('Sort By:') ?></span>
 					<select id="input-sort" class="form-control" onchange="location = this.value;">
-						<option value="?sort=p.sort_order&order=ASC" selected="selected">Default</option>
-						<option value="?sort=pd.name&order=ASC">Name (A - Z)</option>
-						<option value="?sort=pd.name&order=DESC">Name (Z - A)</option>
-						<option value="?sort=p.price&order=ASC">Price (Low &gt; High)</option>
-						<option value="?sort=p.price&order=DESC">Price (High &gt; Low)</option>
-						<option value="?sort=rating&order=DESC">Rating (Highest)</option>
-						<option value="?sort=rating&order=ASC">Rating (Lowest)</option>
-						<option value="?sort=p.model&order=ASC">Model (A - Z)</option>
-						<option value="?sort=p.model&order=DESC">Model (Z - A)</option>
+						<option value="?sort=p.sort_order&order=ASC" selected="selected"><?= _('Default') ?></option>
+						<option value="?sort=pd.name&order=ASC"><?= _('Name (A - Z)') ?></option>
+						<option value="?sort=pd.name&order=DESC"><?= _('Name (Z - A)') ?></option>
+						<option value="?sort=p.price&order=ASC"><?= _('Price (Low &gt; High)') ?></option>
+						<option value="?sort=p.price&order=DESC"><?= _('Price (High &gt; Low)') ?></option>
+						<option value="?sort=rating&order=DESC"><?= _('Rating (Highest)') ?></option>
+						<option value="?sort=rating&order=ASC"><?= _('Rating (Lowest)') ?></option>
+						<option value="?sort=p.model&order=ASC"><?= _('Model (A - Z)') ?></option>
+						<option value="?sort=p.model&order=DESC"><?= _('Model (Z - A)') ?></option>
 					</select>
-				</div> 
+				</div>
 				<div class="limit pull-right">
-					<span for="input-limit">Display:</span>
+					<span for="input-limit"><?= _('Display:') ?></span>
 					<select id="input-limit" class="form-control" onchange="location = this.value;">
 						<option value="?limit=12" selected="selected">12</option>
 						<option value="?limit=25">25</option>
@@ -134,7 +134,7 @@
 			</div>
 		</div>
 	<div id="products" class="product-grid">
-		
+
 
             <div class="row products-row">
                 <?php if ($productList) : ?>
