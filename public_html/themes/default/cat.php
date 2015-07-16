@@ -34,22 +34,22 @@
 							</div>
 							<ul id="accordiondata1" class="collapse accordion-body in">
 								<li>
-									<a href="1">SmartPhones</a>
+									<a href="<?=base_url('cat/view/1');?>">SmartPhones</a>
 								</li>
 								<li>
-									<a href="2">Webcams</a>
+									<a href="<?=base_url('cat/view/2');?>">Webcams</a>
 								</li>
 								<li>
-									<a href="4">Conference Phones</a>
+									<a href="<?=base_url('cat/view/4');?>">Conference Phones</a>
 								</li>
 								<li>
-									<a href="6">Accessories</a>
+									<a href="<?=base_url('cat/view/6');?>">Accessories</a>
 								</li>
 								<li>
-									<a href="29">Software</a>
+									<a href="<?=base_url('cat/view/29');?>">Software</a>
 								</li>
 								<li>
-									<a href="44">Computing</a>
+									<a href="<?=base_url('cat/view/44');?>">Computing</a>
 								</li>
 							</ul>
 						</li>
