@@ -94,8 +94,12 @@
 									<li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page-1));?>">&lt;&lt;</a></li>
 							<?php
 								endif;
-								
-								for($i = 1; $i <= $total_page; $i++) :
+								$start_page = floor($curr_page / $pagination) * $pagination + 1;
+								if($curr_page % $pagination == 0){
+									$start_page = $curr_page - $pagination + 1;
+								}
+								for($i = $start_page; $i < ($start_page + $pagination); $i++) :	
+									if($i > $total_page) continue;
 									if($i == $curr_page) :
 							?>
 										<li class="active"><span><?=$i?></span></li>

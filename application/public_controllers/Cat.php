@@ -37,7 +37,8 @@ class Cat extends PUB_Controller
         $brandId = $this->input->get('brand_id');
         $catPageData = $this->category_model->getProductForCategoryPage(PLATFORMID, $cat_id, $level, $brandId, $sort, $rpp, $page, $langId);
         $data['sort'] = $sort;
-
+		$data['pagination'] = 3;
+		
         $data['show_discount_text'] = $this->price_website_service->is_display_saving_message();
 
         $show_404 = TRUE;
