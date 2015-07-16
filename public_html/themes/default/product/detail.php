@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 image-container">
                             <div class="image">
-                                <span class="product-label exist"><span class="product-label-special">Sale</span></span>
+                                <span class="product-label exist"><span class="product-label-special"><?= _('Sale') ?></span></span>
                                 <a href="<?= get_image_file($image, 'l', $sku)?>" class="imagezoom">
                                     <img src="<?= get_image_file($image, 'l', $sku)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" class="product-image-zoom img-responsive">
                                 </a>
@@ -111,7 +111,7 @@
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                    <a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">0 reviews</a> / <a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">Write a review</a>
+                                    <a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('0 reviews') ?></a> / <a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('Write a review') ?></a>
                                 </div>
                                 <div class="price detail space-20">
                                     <ul class="list-unstyled">
@@ -120,7 +120,7 @@
                                 </div>
 
                                 <ul class="list-unstyled">
-                                    <li><span class="check-box text-success"><i class="fa fa-check"></i></span> <b>Availability:</b> In Stock</li>
+                                    <li><span class="check-box text-success"><i class="fa fa-check"></i></span> <b><?= _('Availability:') ?></b><?= _(' In Stock') ?></li>
                                 </ul>
                                 <div class="border-success space-30">
                                     <ul class="list-unstyled">
@@ -130,7 +130,7 @@
                                 </div>
                                 <div id="product">
                                     <div class="product-extra">
-                                        <label class="control-label pull-left qty">Qty:</label>
+                                        <label class="control-label pull-left qty"><?= _('Qty:') ?></label>
                                         <div class="quantity-adder pull-left space-40">
                                             <div class="quantity-number pull-left">
                                                 <input type="text" name="quantity" value="1" size="2" id="input-quantity" class="form-control">
@@ -142,16 +142,16 @@
                                     <input type="hidden" name="product_id" value="50">
                                     <div class="action pull-left">
                                         <div class="cart pull-left">
-                                            <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary" onclick="cart.addcart('<?=$sku?>');">Add to Cart</button>
+                                            <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary" onclick="cart.addcart('<?=$sku?>');"><?= _('Add to Cart') ?></button>
                                         </div>
                                         <div class="pull-left">
-                                            <a data-toggle="tooltip" class="wishlist" title="" onclick="wishlist.addwishlist('50');" data-original-title="Add to Wish List">Add to Wish List</a>
+                                            <a data-toggle="tooltip" class="wishlist" title="" onclick="wishlist.addwishlist('50');" data-original-title="Add to Wish List"><?= _('Add to Wish List') ?></a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div>
-                                    4-7 working days delivery
+                                    <?= _('4-7 working days delivery') ?>
                                 </div>
                                 <div class="tags">
                                 </div>
@@ -161,8 +161,8 @@
                     </div>
                     <div class="clearfix box-product-infomation tab-v4 none-border text-center">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li class="active"><a href="#tab-description" data-toggle="tab">Description</a></li>
-                            <li><a href="#tab-review" data-toggle="tab">Reviews (0)</a></li>
+                            <li class="active"><a href="#tab-description" data-toggle="tab"><?= _('Description') ?></a></li>
+                            <li><a href="#tab-review" data-toggle="tab"><?= _('Reviews (0)') ?></a></li>
                         </ul>
                         <div class="tab-content text-left">
                             <div class="tab-pane active" id="tab-description">
@@ -172,36 +172,36 @@
                             </div>
                             <div class="tab-pane" id="tab-review">
                                 <div id="review" class="space-20">
-                                    <p>There are no reviews for this product.</p>
+                                    <p><?= _('There are no reviews for this product.') ?></p>
                                 </div>
-                                <p> <a href="#review-form" class="popup-with-form btn btn-sm btn-primary" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">Write a review</a></p>
+                                <p> <a href="#review-form" class="popup-with-form btn btn-sm btn-primary" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('Write a review') ?></a></p>
                                 <div class="hide">
                                     <div id="review-form" class="panel review-form-width">
                                         <div class="panel-body">
                                             <form class="form-horizontal" id="form-review">
-                                                <h2>Write a review</h2>
+                                                <h2><?= _('Write a review') ?></h2>
                                                 <div class="form-group required">
                                                     <div class="col-sm-12">
-                                                        <label class="control-label" for="input-name">Your Name</label>
+                                                        <label class="control-label" for="input-name"><?= _('Your Name') ?></label>
                                                         <input type="text" name="name" value="" id="input-name" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
                                                     <div class="col-sm-12">
-                                                        <label class="control-label" for="input-review">Your Review</label>
+                                                        <label class="control-label" for="input-review"><?= _('Your Review') ?></label>
                                                         <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
-                                                        <div class="help-block"><span class="text-danger">Note:</span> HTML is not translated!</div>
+                                                        <div class="help-block"><span class="text-danger"><?= _('Note:') ?></span><?= _(' HTML is not translated!') ?></div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
                                                     <div class="col-sm-12">
-                                                        <label class="control-label">Rating</label>
-                                                        &nbsp;&nbsp;&nbsp; Bad&nbsp;
+                                                        <label class="control-label"><?= _('Rating') ?></label>
+                                                        &nbsp;&nbsp;&nbsp; <?= _('Bad') ?>&nbsp;
                                                         <input type="radio" name="rating" value="1"> &nbsp;
                                                         <input type="radio" name="rating" value="2"> &nbsp;
                                                         <input type="radio" name="rating" value="3"> &nbsp;
                                                         <input type="radio" name="rating" value="4"> &nbsp;
-                                                        <input type="radio" name="rating" value="5"> &nbsp;Good
+                                                        <input type="radio" name="rating" value="5"> &nbsp;<?= _('Good') ?>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -218,7 +218,7 @@
                                                 </div>
                                                 <div class="buttons">
                                                     <div class="pull-right">
-                                                        <button type="button" id="button-review" data-loading-text="Loading..." class="btn btn-primary">Continue</button>
+                                                        <button type="button" id="button-review" data-loading-text="Loading..." class="btn btn-primary"><?= _('Continue') ?></button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -231,7 +231,7 @@
                 </div>
                 <div class="panel panel-default nopadding-title nopadding product-grid">
                     <div class="panel-heading hightlight">
-                        <h4 class="panel-title">Related Products</h4>
+                        <h4 class="panel-title"><?= _('Related Products') ?></h4>
                     </div>
                     <div class="panel-body products-owl-carousel" id="wrap41f258ed38ee9e4ef2548ba34470c86c">
                         <div class="products-block products-owl owl-carousel owl-theme" id="41f258ed38ee9e4ef2548ba34470c86c" style="opacity: 1; display: block;">
@@ -243,7 +243,7 @@
                                             <div class="product-col">
                                                 <div class="product-block">
                                                     <div class="image">
-                                                        <span class="product-label sale-exist"><span class="product-label-special">Sale</span></span>
+                                                        <span class="product-label sale-exist"><span class="product-label-special"><?= _('Sale') ?></span></span>
                                                         <div class="product-img img">
                                                             <a class="img" title="<?= $prod_name ?>" href="#">
                                                                 <img class="img-responsive" src="<?= get_image_file($image, 'm', $sku)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>">
