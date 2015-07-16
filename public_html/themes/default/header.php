@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Digital Discount</title>
+    <title><?= _('Digital Discount') ?></title>
     <meta name="description" content="Lexus Motozz - Responsive Opencart Theme" />
     <meta name="keywords" content="Lexus Motozz - Responsive Opencart Theme" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,7 +49,7 @@
                             <div class="logo inner  col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div id="logo-theme" class="logo-store pull-left">
                                     <a href="/">
-                                        <span>digital discount</span>
+                                        <span><?= _('digital discount') ?></span>
                                     </a>
                                 </div>
                             </div>
@@ -70,15 +70,15 @@
                                             <div class="cart-inner media-body">
                                                 <a>
                                                     <i class="icon-cart fa fa-shopping-cart"></i>
-                                                    <span class="text-cart">Shopping Cart</span>
-                                                    <span id="cart-total" class="cart-total">0 item(s) - $0.00</span>
+                                                    <span class="text-cart"><?= _('Shopping Cart') ?></span>
+                                                    <span id="cart-total" class="cart-total"><?= _('0 item(s) - $0.00') ?></span>
                                                     <i class="fa fa-angle-down"></i>
                                                 </a>
                                             </div>
                                         </div>
                                         <ul class="dropdown-menu content">
                                             <li>
-                                                <p class="text-center">Your shopping cart is empty!</p>
+                                                <p class="text-center"><?= _('Your shopping cart is empty!') ?></p>
                                             </li>
                                         </ul>
                                     </div>
@@ -93,7 +93,7 @@
                             <div class="col-lg-3 col-sm-3 col-md-3 hidden-xs hidden-sm top-verticalmenu">
                                 <div class="menu-heading d-heading">
                                     <h4>
-                                        categories              <span class="fa fa-angle-down pull-right"></span>
+                                        <?= _('categories              ') ?><span class="fa fa-angle-down pull-right"></span>
                                     </h4>
                                 </div>
                                 <div id="pav-verticalmenu" class="pav-verticalmenu">
@@ -110,7 +110,7 @@
                                                         <div class="collapse navbar-collapse navbar-ex1-collapse">
                                                             <ul class="nav navbar-nav verticalmenu">
                                                                 <li class="topdropdow parent dropdown ">
-                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">SmartPhones</span><b class="caret"></b></a>
+                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title"><?= _('SmartPhones') ?></span><b class="caret"></b></a>
                                                                     <div class="dropdown-menu" style="width:700px">
                                                                         <div class="dropdown-menu-inner">
                                                                             <div class="row">
@@ -120,9 +120,9 @@
                                                                                             <div class="pavo-widget">
                                                                                                 <div class="">
                                                                                                     <ul class="content list-unstyled">
-                                                                                                        <li> <a href="#_63"> <span>Mobile Phones</span> </a> </li>
-                                                                                                        <li> <a href="#_36"> <span>Telephones</span> </a> </li>
-                                                                                                        <li> <a href="#_60"> <span>Media Players</span> </a> </li>
+                                                                                                        <li> <a href="#_63"> <span><?= _('Mobile Phones') ?></span> </a> </li>
+                                                                                                        <li> <a href="#_36"> <span><?= _('Telephones') ?></span> </a> </li>
+                                                                                                        <li> <a href="#_60"> <span><?= _('Media Players') ?></span> </a> </li>
                                                                                                     </ul>
                                                                                                 </div>
                                                                                             </div>
@@ -134,7 +134,7 @@
                                                                     </div>
                                                                 </li>
                                                                 <li class="topdropdow parent dropdown ">
-                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">Webcams</span><b class="caret"></b></a>
+                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title"><?= _('Webcams') ?></span><b class="caret"></b></a>
                                                                     <div class="dropdown-menu" style="width:700px">
                                                                         <div class="dropdown-menu-inner">
                                                                             <div class="row">
@@ -144,9 +144,9 @@
                                                                                             <div class="pavo-widget">
                                                                                                 <div class="">
                                                                                                     <ul class="content list-unstyled">
-                                                                                                        <li> <a href="#_63"> <span>HD Webcams</span> </a> </li>
-                                                                                                        <li> <a href="#_36"> <span>TV Webcams</span> </a> </li>
-                                                                                                        <li> <a href="#_60"> <span>IP Camerass</span> </a> </li>
+                                                                                                        <li> <a href="#_63"> <span><?= _('HD Webcams') ?></span> </a> </li>
+                                                                                                        <li> <a href="#_36"> <span><?= _('TV Webcams') ?></span> </a> </li>
+                                                                                                        <li> <a href="#_60"> <span><?= _('IP Camerass') ?></span> </a> </li>
                                                                                                     </ul>
                                                                                                 </div>
                                                                                             </div>
@@ -158,7 +158,7 @@
                                                                     </div>
                                                                 </li>
                                                                 <li class="bg1 topdropdow parent dropdown ">
-                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">Headsets and Microphones</span><b class="caret"></b></a>
+                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title"><?= _('Headsets and Microphones') ?></span><b class="caret"></b></a>
                                                                     <div class="dropdown-menu" style="width:700px">
                                                                         <div class="dropdown-menu-inner">
                                                                             <div class="row">
@@ -168,14 +168,14 @@
                                                                                             <div class="pavo-widget">
                                                                                                 <div class="">
                                                                                                     <ul class="content list-unstyled">
-                                                                                                        <li> <a href="#_63"> <span>Wired Headsets</span> </a> </li>
-                                                                                                        <li> <a href="#_36"> <span>Bluetooth Headsets</span> </a> </li>
-                                                                                                        <li> <a href="#_60"> <span>USB Headset</span> </a> </li>
-                                                                                                        <li> <a href="#_60"> <span>Wireless Headsets</span> </a> </li>
-                                                                                                        <li> <a href="#_60"> <span>In-Ear Headphones</span> </a> </li>
-                                                                                                        <li> <a href="#_60"> <span>Gaming Headsets</span> </a> </li>
-                                                                                                        <li> <a href="#_60"> <span>Microphones</span> </a> </li>
-                                                                                                        <li> <a href="#_60"> <span>Microphones + speakers (speakerphones)</span> </a> </li>
+                                                                                                        <li> <a href="#_63"> <span><?= _('Wired Headsets') ?></span> </a> </li>
+                                                                                                        <li> <a href="#_36"> <span><?= _('Bluetooth Headsets') ?></span> </a> </li>
+                                                                                                        <li> <a href="#_60"> <span><?= _('USB Headset') ?></span> </a> </li>
+                                                                                                        <li> <a href="#_60"> <span><?= _('Wireless Headsets') ?></span> </a> </li>
+                                                                                                        <li> <a href="#_60"> <span><?= _('In-Ear Headphones') ?></span> </a> </li>
+                                                                                                        <li> <a href="#_60"> <span><?= _('Gaming Headsets') ?></span> </a> </li>
+                                                                                                        <li> <a href="#_60"> <span><?= _('Microphones') ?></span> </a> </li>
+                                                                                                        <li> <a href="#_60"> <span><?= _('Microphones + speakers (speakerphones)') ?></span> </a> </li>
                                                                                                     </ul>
                                                                                                 </div>
                                                                                             </div>
@@ -187,19 +187,19 @@
                                                                     </div>
                                                                 </li>
                                                                 <li class="">
-                                                                    <a href="#"><i class=""></i><span class="menu-title">Conference Phones</span></a>
+                                                                    <a href="#"><i class=""></i><span class="menu-title"><?= _('Conference Phones') ?></span></a>
                                                                 </li>
                                                                 <li class="">
-                                                                    <a href="#"><i class=""></i><span class="menu-title">Digital Imaging</span></a>
+                                                                    <a href="#"><i class=""></i><span class="menu-title"><?= _('Digital Imaging') ?></span></a>
                                                                 </li>
                                                                 <li class="">
-                                                                    <a href="#"><i class=""></i><span class="menu-title">Tablets</span></a>
+                                                                    <a href="#"><i class=""></i><span class="menu-title"><?= _('Tablets') ?></span></a>
                                                                 </li>
                                                                 <li class="">
-                                                                    <a href="#"><i class=""></i><span class="menu-title">Computing</span></a>
+                                                                    <a href="#"><i class=""></i><span class="menu-title"><?= _('Computing') ?></span></a>
                                                                 </li>
                                                                 <li class="">
-                                                                    <a href="#"><i class=""></i><span class="menu-title">Accessories</span></a>
+                                                                    <a href="#"><i class=""></i><span class="menu-title"><?= _('Accessories') ?></span></a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -214,7 +214,7 @@
                                 <div id="pav-mainnav" class="hidden-xs hidden-sm pull-left">
                                     <nav id="pav-megamenu" class="navbar">
                                         <div class="navbar-header">
-                                            <button data-toggle="offcanvas" class="btn btn-primary canvas-menu hidden-lg hidden-md" type="button"><span class="fa fa-bars"></span> Menu</button>
+                                            <button data-toggle="offcanvas" class="btn btn-primary canvas-menu hidden-lg hidden-md" type="button"><span class="fa fa-bars"></span><?= _(' Menu') ?></button>
                                         </div>
                                         <!--<div class="collapse navbar-collapse" id="bs-megamenu">-->
                                         <!--    <ul class="nav navbar-nav megamenu">-->
