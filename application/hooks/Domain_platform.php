@@ -15,7 +15,7 @@ class Domain_platform extends CI_Controller
 
     function update_doamin_platform()
     {
-        $this->cur_country_id = (isset($_SESSION['country_code_from_hook']) ? $_SESSION['country_code_from_hook'] : '');
+        $this->cur_country_id = (isset($_SESSION['countryCodeFromHook']) ? $_SESSION['countryCodeFromHook'] : '');
         $this->cur_domain_type = $this->get_dp_srv()->get_config()->value_of("is_dev_site") ? -1 : 1;
         // TODO
         // need to understand PLATFORM_TYPE
