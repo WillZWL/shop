@@ -17,6 +17,7 @@
 							<ul id="accordiondata" class="collapse accordion-body in">
 								<?php
 									foreach($brand_result as $brand) {
+										break;
 								?>
 									<li>
 										<a href="<?=$brand['id']?>"><?=$brand['name']?> (<?=$brand['total']?>)</a>
@@ -33,13 +34,22 @@
 							</div>
 							<ul id="accordiondata1" class="collapse accordion-body in">
 								<li>
-									<a href="2">Desktop(8)</a>
+									<a href="1">SmartPhones</a>
 								</li>
 								<li>
-									<a href="20">Laptops & Notebooks (8)</a>
+									<a href="2">Webcams</a>
 								</li>
 								<li>
-									<a href="407">Electronics</a>
+									<a href="4">Conference Phones</a>
+								</li>
+								<li>
+									<a href="6">Accessories</a>
+								</li>
+								<li>
+									<a href="29">Software</a>
+								</li>
+								<li>
+									<a href="44">Computing</a>
 								</li>
 							</ul>
 						</li>
