@@ -1,5 +1,5 @@
                 <div class="contacts">
-                    <h2><?= _('Terms and ') ?><span><?= _('Conditions') ?></span></h2>
+                    <h2><?= _('Terms and Conditions') ?></h2>
                     <h3><?= _('DigitalDiscount.co.uk Conditions of Use and Sale') ?></h3>
                     <br />
 

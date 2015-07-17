@@ -33,10 +33,10 @@
 							</div>
 							<ul id="accordiondata1" class="collapse accordion-body in">
 								<li>
-									<a href="2"><?= _('Desktop(8)') ?></a>
+                                    <?= sprintf(_('Desktop%s'), "(8)") ?>
 								</li>
 								<li>
-									<a href="20"><?= _('Laptops & Notebooks (8)') ?></a>
+                                    <?= sprintf(_('Laptops & Notebooks %s'), "(8)") ?>
 								</li>
 								<li>
 									<a href="407"><?= _('Electronics') ?></a>
@@ -113,8 +113,8 @@
 						<option value="?sort=p.sort_order&order=ASC" selected="selected"><?= _('Default') ?></option>
 						<option value="?sort=pd.name&order=ASC"><?= _('Name (A - Z)') ?></option>
 						<option value="?sort=pd.name&order=DESC"><?= _('Name (Z - A)') ?></option>
-						<option value="?sort=p.price&order=ASC"><?= _('Price (Low &gt; High)') ?></option>
-						<option value="?sort=p.price&order=DESC"><?= _('Price (High &gt; Low)') ?></option>
+						<option value="?sort=p.price&order=ASC"><?= _('Price (Low to High)') ?></option>
+						<option value="?sort=p.price&order=DESC"><?= _('Price (High to Low)') ?></option>
 						<option value="?sort=rating&order=DESC"><?= _('Rating (Highest)') ?></option>
 						<option value="?sort=rating&order=ASC"><?= _('Rating (Lowest)') ?></option>
 						<option value="?sort=p.model&order=ASC"><?= _('Model (A - Z)') ?></option>

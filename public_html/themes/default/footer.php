@@ -46,8 +46,8 @@
                                                     <i class="fa-3x fa fa fa-phone"></i>
                                                 </a>
                                                 <div class="media-body">
-                                                    <h6><?= _('Call 0870 295 9128') ?></h6>
-                                                    <p><?= _('Mon - Fri : 9A.M - 6 P.M') ?>
+                                                    <h6><?= _('Call') ?> 0870 295 9128</h6>
+                                                    <p><?= _('') ?>
                                                         <br>
                                                     </p>
                                                 </div>
@@ -60,8 +60,8 @@
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                                         <span class="icon-name fa fa fa-phone"></span>
-                                                        <h4><?= _('Call 0870 295 9128') ?></h4>
-                                                        <p><?= _('Mon - Fri : 9A.M - 6 P.M') ?>
+                                                        <h4><?= _('Call') ?> 0870 295 9128</h4>
+                                                        <p><?= _('Mon - Fri : 9:00 AM - 6:00 PM') ?>
                                                             <br>
                                                         </p>
                                                     </div>
@@ -95,7 +95,7 @@
                                                     <img src="/themes/default/asset/image/thawte.png">
                                                 </div>
                                                 <p class="desc">
-                                                    <?= _('100% Secure ') ?><br/> <?= _('with SSL Encryption') ?>
+                                                    <?= sprintf(_('100% Secure %s with SSL Encryption'), "<br/> ") ?>
                                                 </p>
                                             </li>
                                             <li>
@@ -119,7 +119,7 @@
                                                     <img src="/themes/default/asset/image/moneyback.png">
                                                 </div>
                                                 <p class="desc">
-                                                    <?= _('Money Back 14 day ') ?><br/> <?= _('Money Back Guarantee') ?>
+                                                    <?= _('Money Back 14 days ') ?><br/> <?= _('Money Back Guarantee') ?>
                                                 </p>
                                             </li>
                                             <li>

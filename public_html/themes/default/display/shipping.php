@@ -1,6 +1,6 @@
                     <h3><?= _('FREE Shipping') ?></h3>
                     <p>
-                        <?= _('') ?>When you shop with us we like to keep it simple, our free shipping offer applies to all orders no matter the size or value. ChatandVision not only accepts payment in your local currency but also ships directly to your doorstep free of charge* to over 60 countries worldwide:
+                        <?= _('When you shop with us we like to keep it simple, our free shipping offer applies to all orders no matter the size or value. ChatandVision not only accepts payment in your local currency but also ships directly to your doorstep free of charge* to over 60 countries worldwide:') ?>
                     </p>
 
                     <h3><?= _('Taxes and Duties') ?></h3>

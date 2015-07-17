@@ -154,7 +154,7 @@
 												<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
 												<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
 												<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-												<a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('0 reviews') ?></a> / <a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('Write a review') ?></a>
+												<a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('0 review') ?></a> / <a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('Write a review') ?></a>
 											</div>
 											<div class="price detail space-20">
 												<ul class="list-unstyled">
@@ -205,7 +205,7 @@
 								<div class="clearfix box-product-infomation tab-v4 none-border text-center">
 									<ul class="nav nav-tabs" role="tablist">
 										<li class="active"><a href="#tab-description" data-toggle="tab"><?= _('Description') ?></a></li>
-										<li><a href="#tab-review" data-toggle="tab"><?= _('Reviews (0)') ?></a></li>
+										<li><a href="#tab-review" data-toggle="tab"><?= sprintf(_('Reviews %s'), "(0)") ?></a></li>
 									</ul>
 									<div class="tab-content text-left">
 										<div class="tab-pane active" id="tab-description">
@@ -215,7 +215,7 @@
 										</div>
 										<div class="tab-pane" id="tab-review">
 											<div id="review" class="space-20">
-												<p><?= _('There are no reviews for this product.') ?></p>
+												<p><?= _('There are no review for this product.') ?></p>
 											</div>
 											<p> <a href="#review-form" class="popup-with-form btn btn-sm btn-primary" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('Write a review') ?></a></p>
 											<div class="hide">
