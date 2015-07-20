@@ -5,7 +5,7 @@
 
                     <h3><?= _('Taxes and Duties') ?></h3>
                     <p>
-                        <?= _('Worried about hidden costs? Please don't be, we'll take care of any applicable taxes and duties prior to delivery so the price on the website is the final amount you pay. Rest assured that your buying experience with us will be completely hassle free.') ?>
+                        <?= _("Worried about hidden costs? Please don't be, we'll take care of any applicable taxes and duties prior to delivery so the price on the website is the final amount you pay. Rest assured that your buying experience with us will be completely hassle free.") ?>
                     </p>
 
                     <h3><?= _('Tracking Your Order') ?></h3>
