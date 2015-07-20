@@ -151,7 +151,7 @@
                                 <p class="contact">Units 12- 15
                                     <br>ate sit amet lacinia.</p>
                                 <ul class="list-unstyled address">
-                                    <li><i class="fa fa-map-marker"></i>No 1123, Sky Tower, New York, USA</li>
+                                    <li><i class="fa fa-map-marker"></i>Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong</li>
                                     <li><i class="fa fa-tablet"></i>0870 295 9128</li>
                                     <li><i class="fa fa-envelope-o"></i><a href="mailto:info@digitaldiscount.com">info@digitaldiscount.com</a></li>
                                 </ul>
