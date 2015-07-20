@@ -142,14 +142,16 @@
                         <div class="row">
                             <div class="column col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="panel-heading panel-white">
-                                    <!--<a href="/display/view/about_us">--><h4 class="panel-title">About Us</h4></div><!--</a>-->
+                                    <!--<a href="/display/view/about_us">--><h4 class="panel-title">About Us</h4><!--</a>-->
+                                </div>
                                 <p>DigitalDiscount prides itself on great deals without compromise on service! Feel free to contact us anytime for more information
                                     <br>
                                 </p>
                             </div>
                             <div class="column border-right col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                                <p class="contact">Units 12- 15
-                                    <br>ate sit amet lacinia.</p>
+                                <div class="panel-heading panel-white">
+                                    <h4 class="panel-title"></h4>
+                                </div>
                                 <ul class="list-unstyled address">
                                     <li><i class="fa fa-map-marker"></i>Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong</li>
                                     <li><i class="fa fa-tablet"></i>0870 295 9128</li>
