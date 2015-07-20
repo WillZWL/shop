@@ -95,7 +95,7 @@
                                                     <img src="/themes/default/asset/image/thawte.png">
                                                 </div>
                                                 <p class="desc">
-                                                    <?= sprintf(_('100% Secure %s with SSL Encryption'), "<br/> ") ?>
+                                                    <?= sprintf(_('100%% Secure %s with SSL Encryption'), "<br/> ") ?>
                                                 </p>
                                             </li>
                                             <li>
