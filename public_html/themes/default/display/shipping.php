@@ -1,8 +1,12 @@
                     <h3>FREE Shipping</h3>
                     <p>
-                        When you shop with us we like to keep it simple, our free shipping offer applies to all orders no matter the size or value. ChatandVision not only accepts payment in your local currency but also ships directly to your doorstep free of charge* to over 60 countries worldwide:
+                        When you shop with us we like to keep it simple, our free shipping offer applies to all orders no matter the size or value. Digital Discount not only accepts payment in your local currency but also ships directly to your doorstep free of charge* to over 60 countries worldwide with our courier partners:
                     </p>
-
+                        <img src="/images/shipping/dhl.jpg" border="0">
+                        &nbsp;<img src="/images/shipping/dpd.jpg" border="0">
+                        &nbsp;<img src="/images/shipping/royalmail.jpg" border="0">
+                        &nbsp;<img src="/images/shipping/ups.jpg" border="0">
+                        &nbsp;<img src="/images/shipping/tnt.jpg" border="0">
                     <h3>Taxes and Duties</h3>
                     <p>
                         Worried about hidden costs? Please don't be, we'll take care of any applicable taxes and duties prior to delivery so the price on the website is the final amount you pay. Rest assured that your buying experience with us will be completely hassle free.
