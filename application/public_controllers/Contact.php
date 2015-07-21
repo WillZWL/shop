@@ -29,7 +29,7 @@ class Contact extends PUB_Controller
         //"support@digitaldiscount.co.uk"
         mail("oswald@eservicesgroup.com", $subject, $message, "From: admin@digitaldiscount.co.uk\r\n");
         
-        redirect("/contact/index");
+        redirect("/contact");
     }
 
     public function show_enquiry($enquiry_type = '', $question_id = '') {
