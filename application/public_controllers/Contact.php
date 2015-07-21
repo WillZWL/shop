@@ -7,17 +7,32 @@ class Contact extends PUB_Controller
 {
     protected $data;
 
-    public function Contact()
-    {
-        parent::PUB_Controller();
-        $this->load->library('template');
-        $this->load->helper(array('url', 'directory', 'tbswrapper'));
+    public function __construct() {
+        parent::__construct();
         $this->load->model("website/website_model");
         $this->data = array();
     }
 
-    public function show_enquiry($enquiry_type = '', $question_id = '')
-    {
+    public function index() {
+//load the data first
+        $data = array();
+        $this->load->view('/default/contact', $data);
+    }
+
+    public function queryForm() {
+        $subject = "[DD] Contact us query";
+        $message = "OrderNumber:" . $this->input->post("orderNumber") . "\r\n";
+        $message .= "Customer Name:" . $this->input->post("name") . "\r\n";
+        $message .= "Email:" . $this->input->post("email") . "\r\n";
+        $message .= "Subject:" . $this->input->post("subject") . "\r\n";
+        $message .= "Message:" . $this->input->post("message") . "\r\n";
+        //"support@digitaldiscount.co.uk"
+        mail("oswald@eservicesgroup.com", $subject, $message, "From: admin@digitaldiscount.co.uk\r\n");
+        
+        redirect("/contact/index");
+    }
+
+    public function show_enquiry($enquiry_type = '', $question_id = '') {
 
         switch (strtoupper($enquiry_type)) {
             case 'GENERAL' :
@@ -33,36 +48,6 @@ class Contact extends PUB_Controller
         if (is_numeric($question_id)) $this->data['question_id'] = $question_id;
 
         $this->index();
-    }
-
-    public function index()
-    {
-//load the data first
-        $data = $this->data;
-
-        $data['data']['lang_text'] = $this->_get_language_file('', '', 'index');
-        $this->template->add_js('/js/checkform.js');
-
-        $countryid = PLATFORMCOUNTRYID;
-        if (PLATFORMCOUNTRYID == "MY") $countryid = "SG";
-
-        // moving towards a per country contact us page
-        // $data['contact_info'] = $this->website_model->get_cs_contact_list_by_country(array("type"=>"WEBSITE", "lang_id"=> get_lang_id()));
-        $data['contact_info'] = $this->website_model->get_cs_contact_list_by_country(array("type" => "WEBSITE", "platform_country_id" => $countryid));
-
-        #SBF 2200 to get respective contact info from db according to browser lang
-        $contact_info_list = $data['contact_info'];
-        foreach ($contact_info_list as $contact_info_row) {
-            $trim_lang_id = substr(lang_part(), 0, stripos(lang_part(), "_"));
-            if ($contact_info_row["lang_id"] == $trim_lang_id) {
-                $contact_info[] = $contact_info_row;
-            }
-        }
-
-        if (count($contact_info_list) > 1)
-            $data['contact_info'] = $contact_info;
-
-        $this->load_tpl('content', 'tbs_contact', $data, TRUE, TRUE);
     }
 
     public function process_enquiry()
