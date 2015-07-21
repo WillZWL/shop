@@ -27,7 +27,7 @@ class Contact extends PUB_Controller
         $message .= "Subject:" . $this->input->post("subject") . "\r\n";
         $message .= "Message:" . $this->input->post("message") . "\r\n";
         //"support@digitaldiscount.co.uk"
-        mail("oswald@eservicesgroup.com", $subject, $message, "From: admin@digitaldiscount.co.uk\r\n");
+        mail("support@digitaldiscount.co.uk", $subject, $message, "From: admin@digitaldiscount.co.uk\r\n");
         
         redirect("/contact");
     }
