@@ -71,7 +71,7 @@
                                                 <a>
                                                     <i class="icon-cart fa fa-shopping-cart"></i>
                                                     <span class="text-cart"><?= _('Shopping Cart') ?></span>
-                                                    <span id="cart-total" class="cart-total"><?= _('0 item(s) - $0.00') ?></span>
+                                                    <span id="cart-total" class="cart-total"><?= sprintf(_('%s item(s) - %s%s'), "0", "$", "0.00") ?>/span>
                                                     <i class="fa fa-angle-down"></i>
                                                 </a>
                                             </div>
