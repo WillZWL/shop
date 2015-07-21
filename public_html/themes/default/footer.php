@@ -47,7 +47,7 @@
                                                 </a>
                                                 <div class="media-body">
                                                     <h6><?= _('Call') ?> 0870 295 9128</h6>
-                                                    <p><?= _('') ?>
+                                                    <p>
                                                         <br>
                                                     </p>
                                                 </div>
@@ -95,7 +95,7 @@
                                                     <img src="/themes/default/asset/image/thawte.png">
                                                 </div>
                                                 <p class="desc">
-                                                    <?= sprintf(_('100% Secure %s with SSL Encryption'), "<br/> ") ?>
+                                                    <?= sprintf(_('100%% Secure %s with SSL Encryption'), "<br/> ") ?>
                                                 </p>
                                             </li>
                                             <li>
