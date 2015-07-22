@@ -7,7 +7,13 @@
             <?= _('Our goal is to assist you with your queries in a friendly and helpful manner. ') ?>
         </div>
         <div class="text-block address">
-            <?= _('Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong') ?>
+            <?= _('DigitalDiscount.co.uk
+                   Flat/RM 12, Tower 8,
+                   25/F Langham Place Office
+                   Argyle Street,
+                   Kowloon,
+                   Hong Kong
+            ') ?>
             <br>
             <br>
             <?= _('Tel:') ?> 0870 295 9128
@@ -16,7 +22,6 @@
         <div class="text-block">
             <?= _('Our ticketing system is designed to ensure that your queries are responded by the most qualified staff and as quickly as possible. ') ?>
             <?= _('In order to take advantage of this, please kindly choose the correct department and the most relevant "Query". ') ?>
-            <?= _('Please click link to select a department that you wish to contact below.') ?>
         </div>
         <div class="query-form">
             <form method="post" action="/contact/queryForm">
