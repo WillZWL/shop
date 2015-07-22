@@ -1,4 +1,7 @@
-<?php foreach($product as $title => $prod) : ?>
+<?php
+    foreach($product as $title => $prod) :
+        if ($prod) :
+?>
 
 <div class="pav-container ">
     <div class="pav-inner container space-50">
@@ -45,9 +48,6 @@
                                                                 <span class="price-new"><?= $prod_obj->get_price(); ?></span>
                                                                 <span class="price-old"><?= $prod_obj->get_rrp_price(); ?></span>
                                                             </div>
-<!--                                                             <div class="save_alter">
-                                                                Save -30%
-                                                            </div> -->
                                                         </div>
                                                         <div class="right">
                                                             <div class="action">
@@ -91,4 +91,7 @@
     </div>
 </div>
 
-<?php endforeach; ?>
+<?php
+        endif;
+    endforeach;
+?>
