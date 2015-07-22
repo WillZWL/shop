@@ -32,20 +32,20 @@
                 <div class="table-responsive">
                     <table class="table table-v4">
                         <tr>
-                            <td class="text-right"><strong>Total</strong></td>
+                            <td class="text-right"><strong><?= _('Total') ?></strong></td>
                             <td class="text-right"><?= $cart_info['total_amount'] ?></td>
                         </tr>
                     </table>
                     <p class="text-right">
-                        <a href="/review_order" class="btn btn-primary"> View Cart </a>&nbsp;&nbsp;&nbsp;
-                        <a href="/checkout" class="btn btn-primary"> Checkout</a>
+                        <a href="/review_order" class="btn btn-primary"><?= _(' View Cart ') ?></a>&nbsp;&nbsp;&nbsp;
+                        <a href="/checkout" class="btn btn-primary"><?= _(' Checkout') ?></a>
                     </p>
                 </div>
             </li>
 
         <?php else: ?>
             <li>
-                <p class="text-center">Your shopping cart is empty!</p>
+                <p class="text-center"><?= _('Your shopping cart is empty!') ?></p>
             </li>
         <?php endif ?>
     </ul>

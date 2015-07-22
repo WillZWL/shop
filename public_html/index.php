@@ -284,11 +284,12 @@ switch (ENVIRONMENT)
 	// define('VIEWPATH', $view_folder);
 
 
-define('CTRLPATH', APPPATH.'public_controllers/');
-define('VIEWPATH', FCPATH.'themes/');
-define('ENTRYPOINT', 'PUBLIC');
-define('PLATFORM_TYPE', 'WEBSITE');
-session_start();
+	define('CTRLPATH', APPPATH.'public_controllers/');
+	define('VIEWPATH', FCPATH.'themes/');
+	define('ENTRYPOINT', 'PUBLIC');
+	define('PLATFORM_TYPE', 'WEBSITE');
+	define('I18N', APPPATH . 'i18n/');
+	session_start();
 	// define('ENTRYPOINT', 'PUBLIC');
 	// var_dump($_SERVER);
 

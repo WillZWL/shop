@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Digital Discount</title>
+    <title><?= _('Digital Discount') ?></title>
     <meta name="description" content="Lexus Motozz - Responsive Opencart Theme" />
     <meta name="keywords" content="Lexus Motozz - Responsive Opencart Theme" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,7 +49,7 @@
                             <div class="logo inner  col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div id="logo-theme" class="logo-store pull-left">
                                     <a href="/">
-                                        <span>digital discount</span>
+                                        <span><?= _('digital discount') ?></span>
                                     </a>
                                 </div>
                             </div>
@@ -70,15 +70,15 @@
                                             <div class="cart-inner media-body">
                                                 <a>
                                                     <i class="icon-cart fa fa-shopping-cart"></i>
-                                                    <span class="text-cart">Shopping Cart</span>
-                                                    <span id="cart-total" class="cart-total">0 item(s) - $0.00</span>
+                                                    <span class="text-cart"><?= _('Shopping Cart') ?></span>
+                                                    <span id="cart-total" class="cart-total"><?= sprintf(_('%s item(s) - %s%s'), "0", "$", "0.00") ?>/span>
                                                     <i class="fa fa-angle-down"></i>
                                                 </a>
                                             </div>
                                         </div>
                                         <ul class="dropdown-menu content">
                                             <li>
-                                                <p class="text-center">Your shopping cart is empty!</p>
+                                                <p class="text-center"><?= _('Your shopping cart is empty!') ?></p>
                                             </li>
                                         </ul>
                                     </div>
