@@ -100,6 +100,8 @@ class DomainSelection
 
             default:
                 $domain = 'v2.digitaldiscount.co.uk';
+                define(SITENAME, 'Digital Discount');
+                define(LOGO, 'digitaldiscount.png');
                 break;
         }
 
