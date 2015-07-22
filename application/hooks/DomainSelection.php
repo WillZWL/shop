@@ -59,7 +59,7 @@ class DomainSelection
                 $domain = 'v2.buholoco.es';
                 $this->setLang('es_ES');
                 define(SITENAME, 'Buholoco');
-                define(LOGO, 'digitaldiscount.png');
+                define(LOGO, 'buholoco.png');
                 break;
             case 'FR':
                 $domain = 'v2.numeristock.fr';
