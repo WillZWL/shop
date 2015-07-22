@@ -42,7 +42,7 @@ class DomainSelection
         $_SESSION['countryCodeFromHook'] = $this->getCountryCode();
     }
 
-    public function getDomainByCountry()
+    private function getDomainByCountry()
     {
         $countryCode = strtoupper($this->getCountryCode());
 
@@ -51,9 +51,51 @@ class DomainSelection
         switch ($countryCode) {
             case 'GB':
                 $domain = 'v2.digitaldiscount.co.uk';
+                $this->setLang('en_GB');
+                define(SITENAME, 'Digital Discount');
+                define(LOGO, 'digitaldiscount.png');
+                break;
+            case 'ES':
+                $domain = 'v2.buholoco.es';
+                $this->setLang('es_ES');
+                define(SITENAME, 'Buholoco');
+                define(LOGO, 'digitaldiscount.png');
                 break;
             case 'FR':
                 $domain = 'v2.numeristock.fr';
+                $this->setLang('fr_FR');
+                define(SITENAME, 'Numeri Stock');
+                define(LOGO, 'numeristock.jpg');
+                break;
+            case 'BE':
+                $domain = 'v2.numeristock.be';
+                $this->setLang('fr_BE');
+                define(SITENAME, 'Numeri Stock');
+                define(LOGO, 'numeristock.jpg');
+                break;
+            case 'AU':
+                $domain = 'v2.aheaddigital.com.au';
+                $this->setLang('en_GB');
+                define(SITENAME, 'Aheaddigital');
+                define(LOGO, 'aheaddigital.jpg');
+                break;
+            case 'NZ':
+                $domain = 'v2.aheaddigital.co.nz';
+                $this->setLang('en_GB');
+                define(SITENAME, 'Aheaddigital');
+                define(LOGO, 'aheaddigital.jpg');
+                break;
+            case 'PL':
+                $domain = 'v2.elektroraj.pl';
+                $this->setLang('pl_PL');
+                define(SITENAME, 'elektroraj');
+                define(LOGO, 'elektroraj.jpg');
+                break;
+            case 'IT':
+                $domain = 'v2.nuovadigitale.it';
+                $this->setLang('it_IT');
+                define(SITENAME, 'nuovadigitale');
+                define(LOGO, 'nuovadigitale.jpg');
                 break;
 
             default:
@@ -72,6 +114,8 @@ class DomainSelection
     {
         $countryCode = '';
 
+        $ip = $_GET['ip'];
+
         try {
             $reader = new Reader(config_item('maxmind_db_path'));
 
@@ -86,9 +130,6 @@ class DomainSelection
         if (empty($countryCode)) {
             $countryCode = 'HK';
         }
-
-        // hard code for develop
-        $countryCode = 'GB';
 
         return $countryCode;
     }

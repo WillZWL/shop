@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= _('Digital Discount') ?></title>
+    <title><?= _(SITENAME) ?></title>
     <meta name="description" content="Lexus Motozz - Responsive Opencart Theme" />
     <meta name="keywords" content="Lexus Motozz - Responsive Opencart Theme" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -47,9 +47,9 @@
                     <div class="container">
                         <div class="row">
                             <div class="logo inner  col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                                <div id="logo-theme" class="logo-store pull-left">
+                                <div class="logo-store pull-left">
                                     <a href="/">
-                                        <span><?= _('digital discount') ?></span>
+                                        <img src='<?=base_url("/images/logo/" . LOGO)?>' class="img-responsive">
                                     </a>
                                 </div>
                             </div>
