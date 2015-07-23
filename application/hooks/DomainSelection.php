@@ -46,7 +46,7 @@ class DomainSelection
     {
         $countryCode = strtoupper($this->getCountryCode());
 
-        define(PLATFORMID, 'WEB'.$countryCode);
+        define('PLATFORMID', 'WEB'.$countryCode);
 
         switch ($countryCode) {
             case 'GB':
