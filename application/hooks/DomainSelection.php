@@ -132,14 +132,13 @@ class DomainSelection
         if (empty($countryCode)) {
             $countryCode = 'HK';
         }
-
+        setcookie('countryCode', $countryCode, time()+3600, '/', $this->getDomain());
         return $countryCode;
     }
 
     public function setLocalization()
     {
         setcookie('lang', $this->getLang(), time()+3600, '/', $this->getDomain());
-        setcookie('countryCode', $this->getCountryCode(), time()+3600, '/', $this->getDomain());
         putenv('LANG=' . $this->getLang());
         setlocale(LC_ALL, $this->getLang());
 
@@ -172,7 +171,9 @@ class DomainSelection
      */
     public function getCountryCode()
     {
-        if (isset($_COOKIE['countryCode'])) {
+        if ($_GET['ip']) {
+            $this->setCountryCode($this->convertIp2Country());
+        } elseif(isset($_COOKIE['countryCode'])) {
             $this->setCountryCode($_COOKIE['countryCode']);
         } else {
             $this->setCountryCode($this->convertIp2Country());
