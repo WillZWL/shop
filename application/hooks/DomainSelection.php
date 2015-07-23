@@ -143,6 +143,7 @@ class DomainSelection
         setlocale(LC_ALL, $this->getLang());
 
         $domain = 'message';
+        bindtextdomain($domain, I18N."Locale");
 
         bind_textdomain_codeset($domain, 'UTF-8');
 
