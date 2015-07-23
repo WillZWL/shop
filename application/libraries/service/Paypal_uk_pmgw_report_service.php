@@ -5,13 +5,13 @@ include_once "Paypal_pmgw_report_service.php";
 
 class Paypal_uk_pmgw_report_service extends Paypal_pmgw_report_service
 {
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function get_pmgw()
-	{
-		return "paypal_uk";
-	}
+    public function get_pmgw()
+    {
+        return "paypal_uk";
+    }
 }

@@ -5,30 +5,35 @@ include_once 'Base_dao.php';
 
 Class T3m_filelog_dao extends Base_dao
 {
-	private $table_name="t3m_filelog";
-	private $vo_class_name="T3m_filelog_vo";
-	private $seq_name="t3m_filelog";
-	private $seq_mapping_field="file_num";
+    private $table_name = "t3m_filelog";
+    private $vo_class_name = "T3m_filelog_vo";
+    private $seq_name = "t3m_filelog";
+    private $seq_mapping_field = "file_num";
 
-	public function __construct(){
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function get_vo_classname(){
-		return $this->vo_class_name;
-	}
+    public function get_vo_classname()
+    {
+        return $this->vo_class_name;
+    }
 
-	public function get_table_name(){
-		return $this->table_name;
-	}
+    public function get_table_name()
+    {
+        return $this->table_name;
+    }
 
-	public function get_seq_name(){
-		return $this->seq_name;
-	}
+    public function get_seq_name()
+    {
+        return $this->seq_name;
+    }
 
-	public function get_seq_mapping_field(){
-		return $this->seq_mapping_field;
-	}
+    public function get_seq_mapping_field()
+    {
+        return $this->seq_mapping_field;
+    }
 }
 
 ?>

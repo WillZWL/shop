@@ -1,11 +1,9 @@
 <?php if (!defined('BASEPATH'))
-	exit('No direct script access allowed');
+    exit('No direct script access allowed');
 
 interface Actable_service
 {
-	public function init();
-	public function run($dto);
-}
+    public function init();
 
-/* End of file actable_service.php */
-/* Location: ./system/application/libraries/service/Actable_service.php */
+    public function run($dto);
+}

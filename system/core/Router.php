@@ -340,7 +340,7 @@ class CI_Router {
 			$test = $this->directory
 				.ucfirst($this->translate_uri_dashes === TRUE ? str_replace('-', '_', $segments[0]) : $segments[0]);
 
-			if ( ! file_exists(APPPATH.'controllers/'.$test.'.php') && is_dir(APPPATH.'controllers/'.$this->directory.$segments[0]))
+			if ( ! file_exists(CTRLPATH.$test.'.php') && is_dir(CTRLPATH.$this->directory.$segments[0]))
 			{
 				$this->set_directory(array_shift($segments), TRUE);
 				continue;

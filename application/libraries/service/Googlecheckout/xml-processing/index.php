@@ -1,2 +1,2 @@
 <?php
-header( 'Location: http://www.chatandvision.com' ) ;
+header('Location: http://www.chatandvision.com');

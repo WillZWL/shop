@@ -1,1 +1,1 @@
-<?=$invoice_content?>
+<?= $invoice_content ?>

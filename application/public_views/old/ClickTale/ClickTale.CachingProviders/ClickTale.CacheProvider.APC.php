@@ -16,66 +16,66 @@
 ?>
 <?php
 
-require_once(ClickTale_Root."/ClickTale.CachingProviders/ClickTale.CacheProvider.BaseCacheProvider.php");
-require_once(ClickTale_Root."/ClickTale.Settings.php");
+require_once(ClickTale_Root . "/ClickTale.CachingProviders/ClickTale.CacheProvider.BaseCacheProvider.php");
+require_once(ClickTale_Root . "/ClickTale.Settings.php");
 
 class ClickTale_CacheProvider_APC extends ClickTale_CacheProvider_BaseCacheProvider
 {
-	// Stores in cache. Overrides existing data.
-	public function store($key, $value, $config)
-	{
-		$maxCachedSeconds = $config["MaxCachedSeconds"];
+    // Stores in cache. Overrides existing data.
+    public function store($key, $value, $config)
+    {
+        $maxCachedSeconds = $config["MaxCachedSeconds"];
 
-		if (!empty($maxCachedseconds))
-			apc_store($key, $value, $maxCachedSeconds);
-		else
-			apc_store($key, $value);
-	}
-	
-	// Returns FALSE if key does not exist. 
-	public function pull($key, $config)
-	{
-		$deleteAfterPull = $config["DeleteAfterPull"];
+        if (!empty($maxCachedseconds))
+            apc_store($key, $value, $maxCachedSeconds);
+        else
+            apc_store($key, $value);
+    }
 
-		$value = apc_fetch($key);
-		if (!empty($deleteAfterPull))
-			$this->remove($key, $config);
-		return $value;
-	}
-	
-	public function remove($key, $config)
-	{
-		apc_delete($key);
-	}
-	
-	public function exists($key, $config)
-	{
-		if (apc_fetch($key) != false)
-			return true;
-		else
-			return false;
-	}
-	
-	public function is_config_valid($config)
-	{
-		$valid = extension_loaded("apc");
-		return $valid;
-	}
-	
-	public function config_validation($config)
-	{
-		if($this->is_config_valid($config)) {
-			return array(
-				"Your configuration seem to be valid"
-			);
-		} else {
-			return array(
-				"PHP integration module seems to be mis-copnfigured or the ".
-				"APC extension is not operational"
-			);
-		}
-	}
-	
+    // Returns FALSE if key does not exist.
+    public function pull($key, $config)
+    {
+        $deleteAfterPull = $config["DeleteAfterPull"];
+
+        $value = apc_fetch($key);
+        if (!empty($deleteAfterPull))
+            $this->remove($key, $config);
+        return $value;
+    }
+
+    public function remove($key, $config)
+    {
+        apc_delete($key);
+    }
+
+    public function exists($key, $config)
+    {
+        if (apc_fetch($key) != false)
+            return true;
+        else
+            return false;
+    }
+
+    public function config_validation($config)
+    {
+        if ($this->is_config_valid($config)) {
+            return array(
+                "Your configuration seem to be valid"
+            );
+        } else {
+            return array(
+                "PHP integration module seems to be mis-copnfigured or the " .
+                "APC extension is not operational"
+            );
+        }
+    }
+
+    public function is_config_valid($config)
+    {
+        $valid = extension_loaded("apc");
+        return $valid;
+    }
+
 }
 
 ?>

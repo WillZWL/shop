@@ -16,34 +16,38 @@
 ?>
 <?php
 
-define("CLICKTALE_INTEGRATION_MODULE_DIRECTORY", dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR);
+define("CLICKTALE_INTEGRATION_MODULE_DIRECTORY", dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 
-require(CLICKTALE_INTEGRATION_MODULE_DIRECTORY."ClickTaleInit.php");
-require(CLICKTALE_INTEGRATION_MODULE_DIRECTORY."ClickTale.inc.php");
+require(CLICKTALE_INTEGRATION_MODULE_DIRECTORY . "ClickTaleInit.php");
+require(CLICKTALE_INTEGRATION_MODULE_DIRECTORY . "ClickTale.inc.php");
 
 
+class ClickTaleInstallValidator
+{
 
-class ClickTaleInstallValidator {
+    function IsCacheDirectoryWriteable()
+    {
+        $config = ClickTale_Settings::Instance()->getCacheProviderConfig();
+        return is_writeable($config["CacheLocation"]);
+    }
 
-      function IsCacheDirectoryWriteable() {
-         $config = ClickTale_Settings::Instance()->getCacheProviderConfig();
-         return is_writeable($config["CacheLocation"]);
-      }
-      
-      function UsingFileSystemCache() {
-         $config = ClickTale_Settings::Instance();
-         return $config->CacheProvider == "FileSystem";
-      }
-      
-      function IsLogsDirectoryWriteable() {
-         $config = ClickTale_Settings::Instance();
-         return empty($config->LogPathMask) || is_writeable(dirname($config->LogPathMask));
-      }
-      
-      function UsingLogging() {
-         $config = ClickTale_Settings::Instance();
-         return !empty($config->LogPathMask);
-      }
+    function UsingFileSystemCache()
+    {
+        $config = ClickTale_Settings::Instance();
+        return $config->CacheProvider == "FileSystem";
+    }
+
+    function IsLogsDirectoryWriteable()
+    {
+        $config = ClickTale_Settings::Instance();
+        return empty($config->LogPathMask) || is_writeable(dirname($config->LogPathMask));
+    }
+
+    function UsingLogging()
+    {
+        $config = ClickTale_Settings::Instance();
+        return !empty($config->LogPathMask);
+    }
 
 }
 

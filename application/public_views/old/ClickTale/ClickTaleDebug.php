@@ -15,15 +15,14 @@
  */
 ?>
 <?php
-if (!defined('ClickTale_Root'))
-{
-	$pathinfo = pathinfo(__FILE__);
-	define ("ClickTale_Root", $pathinfo["dirname"]);
+if (!defined('ClickTale_Root')) {
+    $pathinfo = pathinfo(__FILE__);
+    define ("ClickTale_Root", $pathinfo["dirname"]);
 }
 
-require_once(ClickTale_Root."/ClickTale.Settings.php");
-require_once(ClickTale_Root."/ClickTale.inc.php");
-require_once(ClickTale_Root."/ClickTale.Logger.php");
+require_once(ClickTale_Root . "/ClickTale.Settings.php");
+require_once(ClickTale_Root . "/ClickTale.inc.php");
+require_once(ClickTale_Root . "/ClickTale.Logger.php");
 ?>
 
 <?php
@@ -34,21 +33,18 @@ if (empty(ClickTale_Settings::Instance()->AllowDebug)) die("Debug mode is disabl
 
 <?php
 
-try
-{
-	$data = ClickTale_LoadScripts(ClickTale_Settings::Instance()->ScriptsFile); // Data contains data from the scripts file.
-	foreach($data as $var => $value)
-		echo "<b>$var</b><br>".htmlspecialchars($value)."<br>";
-}
-catch (Exception $ex)
-{
-	echo $ex->getMessage()."<br>";
-	ClickTale_Logger::Write($ex->getMessage());
+try {
+    $data = ClickTale_LoadScripts(ClickTale_Settings::Instance()->ScriptsFile); // Data contains data from the scripts file.
+    foreach ($data as $var => $value)
+        echo "<b>$var</b><br>" . htmlspecialchars($value) . "<br>";
+} catch (Exception $ex) {
+    echo $ex->getMessage() . "<br>";
+    ClickTale_Logger::Write($ex->getMessage());
 }
 
 $settingsInstance = ClickTale_Settings::Instance();
-foreach($settingsInstance as $var => $value)
-	echo "<b>$var</b><br>$value<br>";
+foreach ($settingsInstance as $var => $value)
+    echo "<b>$var</b><br>$value<br>";
 ?>
 <b>ClickTale_Logger::getFullPath()</b><br>
 <?php echo ClickTale_Logger::getFullPath(); ?><br>
@@ -60,4 +56,6 @@ foreach($settingsInstance as $var => $value)
 <b>ClickTale_IsAllowedIp()</b><br><?php echo ClickTale_IsAllowedIp(); ?><br>
 
 <b>Default cache provider configuration</b><br>
-<div style="border: solid;"><pre><?php print_r(ClickTale_Settings::Instance()->getCacheProviderConfig());  ?></pre</div>
+<div style="border: solid;">
+    <pre><?php print_r(ClickTale_Settings::Instance()->getCacheProviderConfig()); ?></pre
+</div>

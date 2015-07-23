@@ -1,404 +1,359 @@
 <?php
+
 class Best_selling_video extends MY_Controller
 {
 
-	private $app_id = "MKT0048";
-	private $lang_id = "en";
+    private $app_id = "MKT0048";
+    private $lang_id = "en";
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->load->helper(array('url','directory','notice'));
-		$this->load->model('marketing/best_selling_video_model');
-		$this->load->library('service/pagination_service');
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->helper(array('url', 'directory', 'notice'));
+        $this->load->model('marketing/best_selling_video_model');
+        $this->load->library('service/pagination_service');
+    }
 
-	public function main()
-	{
-		if($this->input->get('level') == "" || $this->input->get('catid') == "")
-		{
-			$this->index();
-			exit;
-		}
-		if($this->input->get('platform') && $this->input->get('type') && $this->input->get('src'))
-		{
-			$data["display"] = 1;
-		}
-		else
-		{
-			$data["display"] = 0;
-		}
+    public function main()
+    {
+        if ($this->input->get('level') == "" || $this->input->get('catid') == "") {
+            $this->index();
+            exit;
+        }
+        if ($this->input->get('platform') && $this->input->get('type') && $this->input->get('src')) {
+            $data["display"] = 1;
+        } else {
+            $data["display"] = 0;
+        }
 
-		$sub_app_id = $this->_get_app_id()."01";
-		include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-		$data["lang"] = $lang;
-		$data["catid"] = $this->input->get('catid');
-		$data["level"] = $this->input->get('level');
-		$data["platform"] = $this->input->get('platform');
-		$data["type"] = $this->input->get('type');
-		$data["src"] = $this->input->get('src');
-		$data["platform_id_list"] = $this->best_selling_video_model->get_platform_id_list(array(), array("orderby"=>"id ASC"));
-		$this->load->view('marketing/best_selling_video/bsv_index', $data);
-	}
+        $sub_app_id = $this->_get_app_id() . "01";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        $data["lang"] = $lang;
+        $data["catid"] = $this->input->get('catid');
+        $data["level"] = $this->input->get('level');
+        $data["platform"] = $this->input->get('platform');
+        $data["type"] = $this->input->get('type');
+        $data["src"] = $this->input->get('src');
+        $data["platform_id_list"] = $this->best_selling_video_model->get_platform_id_list(array(), array("orderby" => "id ASC"));
+        $this->load->view('marketing/best_selling_video/bsv_index', $data);
+    }
 
-	public function index()
-	{
-		$where = array();
-		$option = array();
+    public function index()
+    {
+        $where = array();
+        $option = array();
 
-		$_SESSION["LISTPAGE"] = base_url()."marketing/best_selling_video/?".$_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = base_url() . "marketing/best_selling_video/?" . $_SERVER['QUERY_STRING'];
 
-		$where["name"] = $this->input->get("name");
-		$where["description"] = $this->input->get("description");
-		$where["level"] = $this->input->get("level");
-		$where["status"] = $this->input->get("status");
-		$where["manual"] = $this->input->get("manual");
-		$sort = $this->input->get("sort");
-		$order = $this->input->get("order");
+        $where["name"] = $this->input->get("name");
+        $where["description"] = $this->input->get("description");
+        $where["level"] = $this->input->get("level");
+        $where["status"] = $this->input->get("status");
+        $where["manual"] = $this->input->get("manual");
+        $sort = $this->input->get("sort");
+        $order = $this->input->get("order");
 
-		$limit = '20';
+        $limit = '20';
 
-		$pconfig['base_url'] = $_SESSION["LISTPAGE"];
-		$option["limit"] = $pconfig['per_page'] = $limit;
-		if ($option["limit"])
-		{
-			$option["offset"] = $this->input->get("per_page");
-		}
+        $pconfig['base_url'] = $_SESSION["LISTPAGE"];
+        $option["limit"] = $pconfig['per_page'] = $limit;
+        if ($option["limit"]) {
+            $option["offset"] = $this->input->get("per_page");
+        }
 
-		if (empty($sort))
-		{
-			$sort = "name";
-		}
+        if (empty($sort)) {
+            $sort = "name";
+        }
 
-		if (empty($order))
-		{
-			$order = "asc";
-		}
+        if (empty($order)) {
+            $order = "asc";
+        }
 
-		$option["orderby"] = $sort." ".$order;
+        $option["orderby"] = $sort . " " . $order;
 
-		$data = $this->best_selling_video_model->get_cat_list_index($where,$option);
+        $data = $this->best_selling_video_model->get_cat_list_index($where, $option);
 
-		if($data["list"] === FALSE)
-		{
-			$_SESSION["NOTICE"] = "list_error";
-		}
-		else
-		{
-			unset($_SESSION["NOTICE"]);
-		}
-		$pconfig['total_rows'] = $data['total'];
-		$this->pagination_service->initialize($pconfig);
+        if ($data["list"] === FALSE) {
+            $_SESSION["NOTICE"] = "list_error";
+        } else {
+            unset($_SESSION["NOTICE"]);
+        }
+        $pconfig['total_rows'] = $data['total'];
+        $this->pagination_service->initialize($pconfig);
 
-		$data["notice"] = notice($lang);
+        $data["notice"] = notice($lang);
 
-		$data["refresh"] = $this->input->get("refresh");
-		$data["added"] = $this->input->get("added");
-		$data["updated"] = $this->input->get("updated");
+        $data["refresh"] = $this->input->get("refresh");
+        $data["added"] = $this->input->get("added");
+        $data["updated"] = $this->input->get("updated");
 
-		$data["showall"] = $this->input->get("showall");
-		$data["sortimg"][$sort] = "<img src='".base_url()."images/".$order.".gif'>";
-		$data["xsort"][$sort] = $order=="asc"?"desc":"asc";
-		$data["searchdisplay"] = ($where["name"]=="" && $where["description"]=="" && $where["level"]=="" && $where["status"]=="" && $where["manual"])?'style="display:none"':"";
+        $data["showall"] = $this->input->get("showall");
+        $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
+        $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
+        $data["searchdisplay"] = ($where["name"] == "" && $where["description"] == "" && $where["level"] == "" && $where["status"] == "" && $where["manual"]) ? 'style="display:none"' : "";
 
-		$sub_app_id = $this->_get_app_id()."04";
-		include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-		$data["lang"] = $lang;
-		$data["notice"] = notice($lang);
-		$this->load->view('marketing/best_selling_video/bsv_list_index', $data);
-	}
+        $sub_app_id = $this->_get_app_id() . "04";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        $data["lang"] = $lang;
+        $data["notice"] = notice($lang);
+        $this->load->view('marketing/best_selling_video/bsv_list_index', $data);
+    }
 
-	public function view_left()
-	{
-		$where = array();
-		$option = array();
-		$sub_app_id = $this->_get_app_id()."02";
-		include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-		$data["lang"] = $lang;
-		if (($sku = $this->input->get("sku")) != "" || ($prod_name = $this->input->get("name")) != "")
-		{
-			$data["search"] = 1;
-			if ($sku != "")
-			{
-				$where["sku"] = $sku;
-			}
+    public function _get_app_id()
+    {
+        return $this->app_id;
+    }
 
-			if ($prod_name != "")
-			{
-				$where["name"] = $prod_name;
-			}
-			$option["selling_platform"] = $this->input->get('platform');
-			$where["video_type"] = $this->input->get('type');
-			$where["video_src"] = $this->input->get('src');
-			$where["listing_status"] = "1";
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
+    }
 
-			$where["weblist"] = "1";
-			switch($this->input->get('level'))
-			{
-				case "1":
-				if($this->input->get('cat') != 0)
-				{
-					$where["cat_id"] = $this->input->get('cat');
-				}
-				break;
+    public function view_left()
+    {
+        $where = array();
+        $option = array();
+        $sub_app_id = $this->_get_app_id() . "02";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        $data["lang"] = $lang;
+        if (($sku = $this->input->get("sku")) != "" || ($prod_name = $this->input->get("name")) != "") {
+            $data["search"] = 1;
+            if ($sku != "") {
+                $where["sku"] = $sku;
+            }
 
-				case "2":
-				$where["sub_cat_id"] = $this->input->get('cat');
-				break;
+            if ($prod_name != "") {
+                $where["name"] = $prod_name;
+            }
+            $option["selling_platform"] = $this->input->get('platform');
+            $where["video_type"] = $this->input->get('type');
+            $where["video_src"] = $this->input->get('src');
+            $where["listing_status"] = "1";
 
-				case "3":
-				$where["sub_sub_cat_id"] = $this->input->get('cat');
-				break;
+            $where["weblist"] = "1";
+            switch ($this->input->get('level')) {
+                case "1":
+                    if ($this->input->get('cat') != 0) {
+                        $where["cat_id"] = $this->input->get('cat');
+                    }
+                    break;
 
-				default:
-				break;
-			}
+                case "2":
+                    $where["sub_cat_id"] = $this->input->get('cat');
+                    break;
 
-			$sort = $this->input->get("sort");
-			$order = $this->input->get("order");
+                case "3":
+                    $where["sub_sub_cat_id"] = $this->input->get('cat');
+                    break;
 
-			$limit = '20';
+                default:
+                    break;
+            }
 
-			$pconfig['base_url'] = current_url()."?".$_SERVER['QUERY_STRING'];
-			$option["limit"] = $pconfig['per_page'] = $limit;
+            $sort = $this->input->get("sort");
+            $order = $this->input->get("order");
 
-			if ($option["limit"])
-			{
-				$option["offset"] = $this->input->get("per_page");
-			}
+            $limit = '20';
 
-			if (empty($sort))
-				$sort = "sku";
+            $pconfig['base_url'] = current_url() . "?" . $_SERVER['QUERY_STRING'];
+            $option["limit"] = $pconfig['per_page'] = $limit;
 
-			if (empty($order))
-				$order = "asc";
+            if ($option["limit"]) {
+                $option["offset"] = $this->input->get("per_page");
+            }
 
-			$option["orderby"] = $sort." ".$order;
+            if (empty($sort))
+                $sort = "sku";
 
-			$data["objlist"] = $this->best_selling_video_model->get_video_list($where, $option);
+            if (empty($order))
+                $order = "asc";
 
-			$option = array();
-			$option["selling_platform"] = $this->input->get('platform');
-			$data["total"] = $this->best_selling_video_model->get_video_list_total($where, $option);
+            $option["orderby"] = $sort . " " . $order;
 
-			$pconfig['total_rows'] = $data['total'];
-			$this->pagination_service->set_show_count_tag(TRUE);
-			$this->pagination_service->msg_br = TRUE;
-			$this->pagination_service->initialize($pconfig);
+            $data["objlist"] = $this->best_selling_video_model->get_video_list($where, $option);
 
-			$data["notice"] = notice($lang);
+            $option = array();
+            $option["selling_platform"] = $this->input->get('platform');
+            $data["total"] = $this->best_selling_video_model->get_video_list_total($where, $option);
 
-			$data["sortimg"][$sort] = "<img src='".base_url()."images/".$order.".gif'>";
-			$data["xsort"][$sort] = $order=="asc"?"desc":"asc";
-		}
-		$this->load->view('marketing/best_selling_video/bsv_view_left',$data);
-	}
+            $pconfig['total_rows'] = $data['total'];
+            $this->pagination_service->set_show_count_tag(TRUE);
+            $this->pagination_service->msg_br = TRUE;
+            $this->pagination_service->initialize($pconfig);
 
-	public function view_right($catid, $platform_id, $type, $src)
-	{
-		$limit = $data["limit"] = $this->best_selling_video_model->get_list_limit();
+            $data["notice"] = notice($lang);
 
-		if($catid == "")
-		{
-			$this->index();
-			exit;
-		}
-		$data["catid"] = $catid;
-		$data["platform_id"] = $platform_id;
-		$data["video_type"] = $type;
-		$data["video_src"] = $src;
+            $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
+            $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
+        }
+        $this->load->view('marketing/best_selling_video/bsv_view_left', $data);
+    }
 
-		if($this->input->post('posted'))
-		{
-			$err = 0;
+    public function view_right($catid, $platform_id, $type, $src)
+    {
+        $limit = $data["limit"] = $this->best_selling_video_model->get_list_limit();
 
-			$input = $this->input->post('cat');
-			$sku = $this->input->post('sku');
-			$language = $this->input->post('language');
+        if ($catid == "") {
+            $this->index();
+            exit;
+        }
+        $data["catid"] = $catid;
+        $data["platform_id"] = $platform_id;
+        $data["video_type"] = $type;
+        $data["video_src"] = $src;
 
-			$this->best_selling_video_model->trans_start();
+        if ($this->input->post('posted')) {
+            $err = 0;
 
-			$ret = $this->best_selling_video_model->delete_bs(array("catid"=>$catid, "platform_id"=>$platform_id, "listing_type"=>"BV", "video_type"=>$type, "mode"=>"M", "src"=>$src));
-			if($ret === FALSE)
-			{
-				$_SESSION["NOTICE"] = "update_failed";
-			}
+            $input = $this->input->post('cat');
+            $sku = $this->input->post('sku');
+            $language = $this->input->post('language');
 
-			foreach($input as $key=>$v)
-			{
-				if($v != "")
-				{
-					$action = "insert";
-					$obj = $this->best_selling_video_model->get_vo();
-					$obj->set_catid($catid);
-					$obj->set_platform_id($platform_id);
-					$obj->set_listing_type('BV');
-					$obj->set_video_type($type);
-					$obj->set_src($src);
-					$obj->set_rank($key);
-					$obj->set_sku($sku[$key]);
-					$obj->set_lang_id($language[$key]);
-					$obj->set_mode('M');
-					$obj->set_ref_id($v);
-					$ret = $this->best_selling_video_model->insert($obj);
+            $this->best_selling_video_model->trans_start();
 
-					if($ret === FALSE)
-					{
-						$_SESSION["NOTICE"] = "update_failed";
-						$err++;
-						break;
-					}
-					else
-					{
-							unset($_SESSION["NOTICE"]);
-					}
-				}
-			}
-			if(!$err)
-			{
-				$this->best_selling_video_model->trans_complete();
-			}
-		}
+            $ret = $this->best_selling_video_model->delete_bs(array("catid" => $catid, "platform_id" => $platform_id, "listing_type" => "BV", "video_type" => $type, "mode" => "M", "src" => $src));
+            if ($ret === FALSE) {
+                $_SESSION["NOTICE"] = "update_failed";
+            }
 
-		$sub_app_id = $this->_get_app_id()."03";
-		include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-		$data["lang"] = $lang;
+            foreach ($input as $key => $v) {
+                if ($v != "") {
+                    $action = "insert";
+                    $obj = $this->best_selling_video_model->get_vo();
+                    $obj->set_catid($catid);
+                    $obj->set_platform_id($platform_id);
+                    $obj->set_listing_type('BV');
+                    $obj->set_video_type($type);
+                    $obj->set_src($src);
+                    $obj->set_rank($key);
+                    $obj->set_sku($sku[$key]);
+                    $obj->set_lang_id($language[$key]);
+                    $obj->set_mode('M');
+                    $obj->set_ref_id($v);
+                    $ret = $this->best_selling_video_model->insert($obj);
 
-		$count = $this->best_selling_video_model->get_count($catid,'M',$platform_id,$type,$src);
-		$cnt = 0;
+                    if ($ret === FALSE) {
+                        $_SESSION["NOTICE"] = "update_failed";
+                        $err++;
+                        break;
+                    } else {
+                        unset($_SESSION["NOTICE"]);
+                    }
+                }
+            }
+            if (!$err) {
+                $this->best_selling_video_model->trans_complete();
+            }
+        }
 
-		if($count === FALSE)
-		{
-			$this->index();
-			exit;
-		}
+        $sub_app_id = $this->_get_app_id() . "03";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        $data["lang"] = $lang;
 
-		if(!$count)
-		{
-			for($i = 1; $i <= $limit; $i++)
-			{
-				$obj = $this->best_selling_video_model->get_best_selling_video($catid,$i,$type,$platform_id,$src);
-				//echo $this->db->last_query()."  ".$this->db->_error_message();
+        $count = $this->best_selling_video_model->get_count($catid, 'M', $platform_id, $type, $src);
+        $cnt = 0;
 
-				$sku[$i] = "";
-				$value[$i] = $lang["not_assigned"];
-				$name[$i] = $lang["not_assigned"];
-			}
-		}
-		else
-		{
-			$list = $this->best_selling_video_model->get_list_w_name($catid,'M','BV',$type,$platform_id,$src);
-			//echo $this->db->last_query();
+        if ($count === FALSE) {
+            $this->index();
+            exit;
+        }
 
-			for($i = 1; $i <=$limit ; $i++)
-			{
-				$obj = $this->best_selling_video_model->get_best_selling_video($catid,$i,$type,$platform_id,$src);
-				//echo $this->db->last_query();
-				//echo "   ".$this->best_selling_video_model->_error_message();
-				if(isset($list[$i]))
-				{
-					$sku[$i] = $list[$i]->get_sku();
-					$name[$i] = $list[$i]->get_name();
-					$value[$i] = $list[$i]->get_ref_id();
-					$cnt++;
-				}
-				else
-				{
-					$sku[$i] = "";
-					$name[$i] = $lang["not_assigned"];
-					$value[$i] = $lang["not_assigned"];
-				}
-			}
-		}
+        if (!$count) {
+            for ($i = 1; $i <= $limit; $i++) {
+                $obj = $this->best_selling_video_model->get_best_selling_video($catid, $i, $type, $platform_id, $src);
+                //echo $this->db->last_query()."  ".$this->db->_error_message();
 
-		$count = $this->best_selling_video_model->get_count($catid,'A',$platform_id,$type,$src);
-		$acnt = 0;
+                $sku[$i] = "";
+                $value[$i] = $lang["not_assigned"];
+                $name[$i] = $lang["not_assigned"];
+            }
+        } else {
+            $list = $this->best_selling_video_model->get_list_w_name($catid, 'M', 'BV', $type, $platform_id, $src);
+            //echo $this->db->last_query();
 
-		if($count === FALSE)
-		{
-			$this->index();
-			exit;
-		}
-		if(!$count)
-		{
-			for($i = 1; $i <= $limit; $i++)
-			{
+            for ($i = 1; $i <= $limit; $i++) {
+                $obj = $this->best_selling_video_model->get_best_selling_video($catid, $i, $type, $platform_id, $src);
+                //echo $this->db->last_query();
+                //echo "   ".$this->best_selling_video_model->_error_message();
+                if (isset($list[$i])) {
+                    $sku[$i] = $list[$i]->get_sku();
+                    $name[$i] = $list[$i]->get_name();
+                    $value[$i] = $list[$i]->get_ref_id();
+                    $cnt++;
+                } else {
+                    $sku[$i] = "";
+                    $name[$i] = $lang["not_assigned"];
+                    $value[$i] = $lang["not_assigned"];
+                }
+            }
+        }
 
-				$obj = $this->best_selling_video_model->get_best_selling_video($catid,$i,$type,$platform_id,$src);
-				//echo $this->db->last_query()."  ".$this->db->_error_message();
+        $count = $this->best_selling_video_model->get_count($catid, 'A', $platform_id, $type, $src);
+        $acnt = 0;
 
-				$asku[$i] = "";
-				$aname[$i] = $lang["not_assigned"];
-				$avalue[$i] = $lang["not_assigned"];
+        if ($count === FALSE) {
+            $this->index();
+            exit;
+        }
+        if (!$count) {
+            for ($i = 1; $i <= $limit; $i++) {
 
-			}
-		}
-		else
-		{
-			$list = $this->best_selling_video_model->get_list_w_name($catid,'A','BV',$type,$platform_id,$src);
-			//echo $this->db->last_query();
-			for($i = 1; $i <=$limit ; $i++)
-			{
-				$obj = $this->best_selling_video_model->get_best_selling_video($catid,$i,$type,$platform_id,$src);
-				//echo $this->db->last_query();
-				//echo "   ".$this->db->_error_message();
-				if(isset($list[$i]))
-				{
-					$asku[$i] = $list[$i]->get_sku();
-					$aname[$i] = $list[$i]->get_name();
-					$avalue[$i] = $list[$i]->get_ref_id();
-					$acnt++;
-				}
-				else
-				{
-					$asku[$i] = "";
-					$aname[$i] = $lang["not_assigned"];
-					$avalue[$i] = $lang["not_assigned"];
-				}
-			}
-		}
+                $obj = $this->best_selling_video_model->get_best_selling_video($catid, $i, $type, $platform_id, $src);
+                //echo $this->db->last_query()."  ".$this->db->_error_message();
 
-		$data["asku"] = $asku;
-		$data["aname"] = $aname;
-		$data["avalue"] = $avalue;
-		$data["sku"] = $sku;
-		$data["name"] = $name;
-		$data["value"] = $value;
+                $asku[$i] = "";
+                $aname[$i] = $lang["not_assigned"];
+                $avalue[$i] = $lang["not_assigned"];
 
-		$osku = $sku;
-		$oname = $name;
-		$ovalue = $value;
+            }
+        } else {
+            $list = $this->best_selling_video_model->get_list_w_name($catid, 'A', 'BV', $type, $platform_id, $src);
+            //echo $this->db->last_query();
+            for ($i = 1; $i <= $limit; $i++) {
+                $obj = $this->best_selling_video_model->get_best_selling_video($catid, $i, $type, $platform_id, $src);
+                //echo $this->db->last_query();
+                //echo "   ".$this->db->_error_message();
+                if (isset($list[$i])) {
+                    $asku[$i] = $list[$i]->get_sku();
+                    $aname[$i] = $list[$i]->get_name();
+                    $avalue[$i] = $list[$i]->get_ref_id();
+                    $acnt++;
+                } else {
+                    $asku[$i] = "";
+                    $aname[$i] = $lang["not_assigned"];
+                    $avalue[$i] = $lang["not_assigned"];
+                }
+            }
+        }
 
-		if($cnt < $limit)
-		{
-			foreach($avalue as $key=>$val)
-			{
-				if($cnt < $limit && !in_array($val,$ovalue))
-				{
-					$ovalue[++$cnt] = $val;
-					$oname[$cnt] = $aname[$key];
-					$osku[$cnt] = $asku[$key];
-				}
-			}
-		}
+        $data["asku"] = $asku;
+        $data["aname"] = $aname;
+        $data["avalue"] = $avalue;
+        $data["sku"] = $sku;
+        $data["name"] = $name;
+        $data["value"] = $value;
 
-		$data["osku"] = $osku;
-		$data["oname"] = $oname;
-		$data["ovalue"] = $ovalue;
-		$data["notice"] = notice($lang);
+        $osku = $sku;
+        $oname = $name;
+        $ovalue = $value;
 
-		$this->load->view('marketing/best_selling_video/bsv_view_right',$data);
-	}
+        if ($cnt < $limit) {
+            foreach ($avalue as $key => $val) {
+                if ($cnt < $limit && !in_array($val, $ovalue)) {
+                    $ovalue[++$cnt] = $val;
+                    $oname[$cnt] = $aname[$key];
+                    $osku[$cnt] = $asku[$key];
+                }
+            }
+        }
 
-	public function _get_app_id()
-	{
-		return $this->app_id;
-	}
+        $data["osku"] = $osku;
+        $data["oname"] = $oname;
+        $data["ovalue"] = $ovalue;
+        $data["notice"] = notice($lang);
 
-	public function _get_lang_id()
-	{
-		return $this->lang_id;
-	}
+        $this->load->view('marketing/best_selling_video/bsv_view_right', $data);
+    }
 
 }
 

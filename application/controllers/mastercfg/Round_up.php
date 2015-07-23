@@ -1,47 +1,46 @@
 <?php
+
 class Round_up extends MY_Controller
 {
 
-	private $app_id="MST0014";
-	private $lang_id="en";
+    private $app_id = "MST0014";
+    private $lang_id = "en";
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->load->model('mastercfg/currency_model');
-		$this->load->helper(array('url', 'notice', 'object'));
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('mastercfg/currency_model');
+        $this->load->helper(array('url', 'notice', 'object'));
+    }
 
-	public function index()
-	{
-		$sub_app_id = $this->_get_app_id()."00";
+    public function index()
+    {
+        $sub_app_id = $this->_get_app_id() . "00";
 
-		$data["currency_list"] = $this->currency_service->get_list_w_key(array(), array("limit"=>-1));
+        $data["currency_list"] = $this->currency_service->get_list_w_key(array(), array("limit" => -1));
 
-		if($this->input->post('posted'))
-		{
-			if ($this->currency_model->update_round_up($data))
-			{
-				redirect($this->_get_ru());
-			}
-		}
+        if ($this->input->post('posted')) {
+            if ($this->currency_model->update_round_up($data)) {
+                redirect($this->_get_ru());
+            }
+        }
 
-		include_once(APPPATH."language/".$sub_app_id."_".$this->_get_lang_id().".php");
-		$data["lang"] = $lang;
-		$data["notice"] = notice($lang);
-		$this->load->view('mastercfg/round_up/round_up_index_v',$data);
-	}
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        $data["lang"] = $lang;
+        $data["notice"] = notice($lang);
+        $this->load->view('mastercfg/round_up/round_up_index_v', $data);
+    }
 
-	public function _get_app_id()
-	{
-		return $this->app_id;
-	}
+    public function _get_app_id()
+    {
+        return $this->app_id;
+    }
 
-	public function _get_lang_id()
-	{
-		return $this->lang_id;
-	}
+    public function _get_lang_id()
+    {
+        return $this->lang_id;
+    }
 }
 
-/* End of file freight.php */
-/* Location: ./system/application/controllers/freight.php */
+
+

@@ -2,8 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
-* public controller
-*/
+ * public controller
+ */
 class Public_Controller extends COMMON_Controller
 {
 }

@@ -1,4 +1,4 @@
-﻿#Table name
+#Table name
 data
 
 #Input column name	Output column name

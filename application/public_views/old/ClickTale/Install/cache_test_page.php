@@ -15,23 +15,23 @@
  */
 ?>
 <?php
-	require("../ClickTaleTop.php");
-	$config = ClickTale_Settings::Instance();
-	$config->UseStaticHash = true;
-	$config->StaticHash = "CacheTest";
+require("../ClickTaleTop.php");
+$config = ClickTale_Settings::Instance();
+$config->UseStaticHash = true;
+$config->StaticHash = "CacheTest";
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<title>ClickTale integration :: Cache test</title>
-	</head>
-	<body>
-		You should see this text in the right block<br />
-		Some randomness: <?php echo rand(1, 5000); ?>
-		<!-- No ClickTale -->
-	</body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>ClickTale integration :: Cache test</title>
+</head>
+<body>
+You should see this text in the right block<br/>
+Some randomness: <?php echo rand(1, 5000); ?>
+<!-- No ClickTale -->
+</body>
 </html>
 <?php
-	require("../ClickTaleBottom.php");
+require("../ClickTaleBottom.php");
 ?>

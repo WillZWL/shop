@@ -4,227 +4,226 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 include_once "Pmgw_report_service.php";
 
 /**
-*
-*/
+ *
+ */
 class Adyen_pmgw_report_service extends Pmgw_report_service
 {
 
-	function __construct()
-	{
-		parent::__construct();
-	}
+    function __construct()
+    {
+        parent::__construct();
+    }
 
-	protected function get_pmgw()
-	{
-		return "adyen";
-	}
+    public function is_ria_record($dto_obj)
+    {
+        if ($dto_obj->get_type() == "SentForSettle") {
+            return "RIA";
+        }
 
-	public function is_ria_record($dto_obj)
-	{
-		if ($dto_obj->get_type() == "SentForSettle") {
-			return "RIA";
-		}
+        return false;
+    }
 
-		return false;
-	}
+    public function is_refund_record($dto_obj)
+    {
+        if ($dto_obj->get_type() == 'Refunded') {
+            return 'R';
+        }
 
-	public function is_refund_record($dto_obj)
-	{
-		if ($dto_obj->get_type() == 'Refunded') {
-			return 'R';
-		}
+        return false;
+    }
 
-		return false;
-	}
+    public function is_so_fee_record($dto_obj)
+    {
+        if ($dto_obj->get_type() == 'Settled') {
+            return "RIA";
+        }
 
-	public function is_so_fee_record($dto_obj)
-	{
-		if ($dto_obj->get_type() == 'Settled') {
-			return "RIA";
-		}
+        return false;
+    }
 
-		return false;
-	}
+    public function is_gateway_fee_record($dto_obj)
+    {
+        return false;
+    }
 
-	public function is_gateway_fee_record($dto_obj)
-	{
-		return false;
-	}
+    public function create_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
+    {
+        return false;
+    }
 
-	public function is_ria_include_psp_fee()
-	{
-		return false;
-	}
+    public function is_ria_include_so_fee()
+    {
+        return false;
+    }
 
-	protected function insert_interface_flex_ria($batch_id, $status, $dto_obj)
-	{
+    public function is_refund_include_so_fee()
+    {
+        return false;
+    }
 
-		$this->_set_format_data($dto_obj);
-		if ($this->is_ria_include_psp_fee()) {
-			$include_psp_fee = true;
-		} else {
-			$include_psp_fee = false;
-		}
+    public function is_rolling_reserve_record($dto_obj)
+    {
+        return false;
+    }
 
-		$this->create_interface_flex_ria($batch_id, $status, $dto_obj, $include_psp_fee);
-	}
+    public function insert_so_fee_from_refund_record($batch_id, $status, $dto_obj)
+    {
+    }
 
-	protected function insert_interface_flex_refund($batch_id, $status, $dto_obj)
-	{
-		$this->_set_format_data($dto_obj);
+    public function insert_so_fee_from_ria_record($batch_id, $status, $dto_obj)
+    {
+    }
 
-		if ($this->is_ria_include_psp_fee()) {
-			$include_psp_fee = true;
-		} else {
-			$include_psp_fee = false;
-		}
+    public function insert_so_fee_from_rolling_reserve_record($batch_id, $status, $dto_obj)
+    {
+    }
 
-		$this->create_interface_flex_refund($batch_id, $status, $dto_obj, $include_psp_fee);
-	}
+    protected function insert_interface_flex_ria($batch_id, $status, $dto_obj)
+    {
 
-	protected function insert_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
-	{
-	}
+        $this->_set_format_data($dto_obj);
+        if ($this->is_ria_include_psp_fee()) {
+            $include_psp_fee = true;
+        } else {
+            $include_psp_fee = false;
+        }
 
-	protected function create_interface_flex_ria($batch_id, $status, $dto_obj, $include_psp_fee = false)
-	{
-		$ifr_dao = $this->get_ifr_dao();
-		$ifr_obj = $ifr_dao->get();
+        $this->create_interface_flex_ria($batch_id, $status, $dto_obj, $include_psp_fee);
+    }
 
-		$ifr_obj->set_so_no($dto_obj->get_so_no());
-		$ifr_obj->set_flex_batch_id($batch_id);
-		$ifr_obj->set_gateway_id($this->get_pmgw());
-		$ifr_obj->set_txn_id($dto_obj->get_txn_id());
-		$ifr_obj->set_txn_time($dto_obj->get_date());
-		$ifr_obj->set_currency_id($dto_obj->get_currency_id());
-		$ifr_obj->set_amount($dto_obj->get_amount());
-		$ifr_obj->set_status($status);
-		$ifr_obj->set_batch_status("N");
+    private function _set_format_data($dto_obj)
+    {
+        $date = date("Y-m-d H:i:s", strtotime($dto_obj->get_date()));
+        $dto_obj->set_date($date);
 
-		if (!$ifr_obj->get_so_no()) {
-			$ifr_obj->set_so_no(" ");
-			$ifr_obj->set_batch_status("F");
-			$ifr_obj->set_failed_reason(Pmgw_report_service::WRONG_TRANSACTION_ID);
-		}
+        if ($dto_obj->get_amount()) {
+            $dto_obj->set_amount(abs(ereg_replace(",", "", $dto_obj->get_amount())));
+        }
 
-		// if success insert interface_flex_gateway_fee
-		if ($ifr_dao->insert($ifr_obj) && $ifr_obj->get_batch_status() != "F") {
-			if ($include_psp_fee) {
-				// PSP is payment service provider fee.
-				$this->insert_interface_flex_gateway_fee($batch_id, 'PSP', $dto_obj);
-			}
-		}
+        if ($dto_obj->get_commission()) {
+            $dto_obj->set_commission(ereg_replace(",", "", $dto_obj->get_commission()));
+        }
 
-		return $ifr_obj;
-	}
+        if (!$dto_obj->get_so_no() && $dto_obj->get_txn_id()) {
+            if ($so_obj = $this->get_so_obj(array("txn_id" => $dto_obj->get_txn_id()))) {
+                $dto_obj->set_so_no($so_obj->get_so_no());
+            }
+        }
+    }
 
-	protected function create_interface_flex_refund($batch_id, $status, $dto_obj, $include_psp_fee = false)
-	{
-		$ifrf_dao = $this->get_ifrf_dao();
-		$ifrf_obj = $ifrf_dao->get();
+    public function is_ria_include_psp_fee()
+    {
+        return false;
+    }
 
-		$ifrf_obj->set_so_no($dto_obj->get_so_no());
-		$ifrf_obj->set_flex_batch_id($batch_id);
-		$ifrf_obj->set_gateway_id($this->get_pmgw());
-		$ifrf_obj->set_internal_txn_id($dto_obj->get_txn_id());
-		$ifrf_obj->set_txn_id($dto_obj->get_txn_id());
-		$ifrf_obj->set_txn_time($dto_obj->get_date());
-		$ifrf_obj->set_currency_id($dto_obj->get_currency_id());
-		$ifrf_obj->set_amount($dto_obj->get_amount());
-		$ifrf_obj->set_status($status);
-		$ifrf_obj->set_batch_status("N");
+    protected function create_interface_flex_ria($batch_id, $status, $dto_obj, $include_psp_fee = false)
+    {
+        $ifr_dao = $this->get_ifr_dao();
+        $ifr_obj = $ifr_dao->get();
 
-		if (!$ifrf_obj->get_so_no()) {
-			$ifrf_obj->set_so_no(" ");
-			$ifrf_obj->set_batch_status("F");
-			$ifrf_obj->set_failed_reason(Pmgw_report_service::WRONG_TRANSACTION_ID);
-		}
+        $ifr_obj->set_so_no($dto_obj->get_so_no());
+        $ifr_obj->set_flex_batch_id($batch_id);
+        $ifr_obj->set_gateway_id($this->get_pmgw());
+        $ifr_obj->set_txn_id($dto_obj->get_txn_id());
+        $ifr_obj->set_txn_time($dto_obj->get_date());
+        $ifr_obj->set_currency_id($dto_obj->get_currency_id());
+        $ifr_obj->set_amount($dto_obj->get_amount());
+        $ifr_obj->set_status($status);
+        $ifr_obj->set_batch_status("N");
 
-		if ($ifrf_dao->insert($ifrf_obj) && $ifrf_obj->get_batch_status() != "F") {
-			if ($include_psp_fee) {
-				$this->insert_interface_flex_gateway_fee($batch_id, 'PSP', $dto_obj);
-			}
-		}
-	}
+        if (!$ifr_obj->get_so_no()) {
+            $ifr_obj->set_so_no(" ");
+            $ifr_obj->set_batch_status("F");
+            $ifr_obj->set_failed_reason(Pmgw_report_service::WRONG_TRANSACTION_ID);
+        }
 
-	public function create_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
-	{
-		return false;
-	}
+        // if success insert interface_flex_gateway_fee
+        if ($ifr_dao->insert($ifr_obj) && $ifr_obj->get_batch_status() != "F") {
+            if ($include_psp_fee) {
+                // PSP is payment service provider fee.
+                $this->insert_interface_flex_gateway_fee($batch_id, 'PSP', $dto_obj);
+            }
+        }
 
+        return $ifr_obj;
+    }
 
-	private function _set_format_data($dto_obj)
-	{
-		$date = date("Y-m-d H:i:s", strtotime($dto_obj->get_date()));
-		$dto_obj->set_date($date);
+    protected function get_pmgw()
+    {
+        return "adyen";
+    }
 
-		if ($dto_obj->get_amount()) {
-			$dto_obj->set_amount(abs(ereg_replace(",", "", $dto_obj->get_amount())));
-		}
+    protected function insert_interface_flex_gateway_fee($batch_id, $status, $dto_obj)
+    {
+    }
 
-		if ($dto_obj->get_commission()) {
-			$dto_obj->set_commission(ereg_replace(",", "", $dto_obj->get_commission()));
-		}
+    protected function insert_interface_flex_refund($batch_id, $status, $dto_obj)
+    {
+        $this->_set_format_data($dto_obj);
 
-		if (!$dto_obj->get_so_no() && $dto_obj->get_txn_id()) {
-			if ($so_obj = $this->get_so_obj(array("txn_id" => $dto_obj->get_txn_id()))) {
-				$dto_obj->set_so_no($so_obj->get_so_no());
-			}
-		}
-	}
+        if ($this->is_ria_include_psp_fee()) {
+            $include_psp_fee = true;
+        } else {
+            $include_psp_fee = false;
+        }
 
-	protected function after_insert_all_interface($batch_id)
-	{
-		return true;
-	}
+        $this->create_interface_flex_refund($batch_id, $status, $dto_obj, $include_psp_fee);
+    }
 
-	public function is_ria_include_so_fee()
-	{
-		return false;
-	}
+    protected function create_interface_flex_refund($batch_id, $status, $dto_obj, $include_psp_fee = false)
+    {
+        $ifrf_dao = $this->get_ifrf_dao();
+        $ifrf_obj = $ifrf_dao->get();
 
-	public function is_refund_include_so_fee()
-	{
-		return false;
-	}
+        $ifrf_obj->set_so_no($dto_obj->get_so_no());
+        $ifrf_obj->set_flex_batch_id($batch_id);
+        $ifrf_obj->set_gateway_id($this->get_pmgw());
+        $ifrf_obj->set_internal_txn_id($dto_obj->get_txn_id());
+        $ifrf_obj->set_txn_id($dto_obj->get_txn_id());
+        $ifrf_obj->set_txn_time($dto_obj->get_date());
+        $ifrf_obj->set_currency_id($dto_obj->get_currency_id());
+        $ifrf_obj->set_amount($dto_obj->get_amount());
+        $ifrf_obj->set_status($status);
+        $ifrf_obj->set_batch_status("N");
 
-	public function is_rolling_reserve_record($dto_obj)
-	{
-		return false;
-	}
+        if (!$ifrf_obj->get_so_no()) {
+            $ifrf_obj->set_so_no(" ");
+            $ifrf_obj->set_batch_status("F");
+            $ifrf_obj->set_failed_reason(Pmgw_report_service::WRONG_TRANSACTION_ID);
+        }
 
-	protected function insert_interface_flex_so_fee($batch_id, $status, $dto_obj)
-	{
-		$ifsf_dao = $this->get_ifsf_dao();
-		$ifsf_obj = $ifsf_dao->get();
+        if ($ifrf_dao->insert($ifrf_obj) && $ifrf_obj->get_batch_status() != "F") {
+            if ($include_psp_fee) {
+                $this->insert_interface_flex_gateway_fee($batch_id, 'PSP', $dto_obj);
+            }
+        }
+    }
 
-		$ifsf_obj->set_flex_batch_id($batch_id);
-		$ifsf_obj->set_gateway_id($this->get_pmgw());
-		$ifsf_obj->set_txn_id($dto_obj->get_txn_id());
-		$ifsf_obj->set_txn_time($dto_obj->get_date());
-		$ifsf_obj->set_currency_id($dto_obj->get_currency_id());
-		$ifsf_obj->set_amount($dto_obj->get_commission()); // commission
-		$ifsf_obj->set_status($status);
-		$ifsf_obj->set_batch_status("N");
-		$result = $ifsf_dao->insert($ifsf_obj);
+    protected function after_insert_all_interface($batch_id)
+    {
+        return true;
+    }
 
-		return $result;
-	}
+    protected function insert_interface_flex_so_fee($batch_id, $status, $dto_obj)
+    {
+        $ifsf_dao = $this->get_ifsf_dao();
+        $ifsf_obj = $ifsf_dao->get();
 
-	public function insert_so_fee_from_refund_record($batch_id, $status, $dto_obj)
-	{
-	}
+        $ifsf_obj->set_flex_batch_id($batch_id);
+        $ifsf_obj->set_gateway_id($this->get_pmgw());
+        $ifsf_obj->set_txn_id($dto_obj->get_txn_id());
+        $ifsf_obj->set_txn_time($dto_obj->get_date());
+        $ifsf_obj->set_currency_id($dto_obj->get_currency_id());
+        $ifsf_obj->set_amount($dto_obj->get_commission()); // commission
+        $ifsf_obj->set_status($status);
+        $ifsf_obj->set_batch_status("N");
+        $result = $ifsf_dao->insert($ifsf_obj);
 
-	public function insert_so_fee_from_ria_record($batch_id, $status, $dto_obj)
-	{
-	}
+        return $result;
+    }
 
-	public function insert_so_fee_from_rolling_reserve_record($batch_id, $status, $dto_obj)
-	{
-	}
+    protected function insert_interface_flex_rolling_reserve($batch_id, $status, $dto_obj)
+    {
 
-	protected function insert_interface_flex_rolling_reserve($batch_id, $status, $dto_obj)
-	{
-
-	}
+    }
 }
