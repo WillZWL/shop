@@ -52,7 +52,7 @@
                 <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
                         <form action="#" method="POST" role="form">
-                            <legend><?= _('Where would you like to deliver to ?') ?></legend>
+                            <legend><?= _('Where would you like to deliver to?') ?></legend>
 
                             <div class="row">
                                 <div class="col-md-4 col-md-offset-2">

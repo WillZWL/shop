@@ -1,5 +1,5 @@
                 <div class="main-columns container">
-                    <h2><?= _('Privacy ') ?><span><?= _('Policy') ?></span></h2>
+                    <h2><?= _('Privacy Policy') ?></h2>
                     <h3><?= _('DigitalDiscount Privacy Policy') ?></h3>
                     <br />
 
