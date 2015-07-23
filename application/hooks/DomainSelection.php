@@ -140,7 +140,8 @@ class DomainSelection
     {
         setcookie('lang', $this->getLang(), time()+3600, '/', $this->getDomain());
         putenv('LANG=' . $this->getLang());
-        setlocale(LC_ALL, $this->getLang());
+        setlocale(LC_CTYPE, $this->getLang());
+        setlocale(LC_NUMERIC, 'en_US');
 
         $domain = 'message';
         bindtextdomain($domain, I18N."Locale");
