@@ -138,7 +138,8 @@ class DomainSelection
 
     public function setLocalization()
     {
-        setcookie('lang', $this->getLang());
+        setcookie('lang', $this->getLang(), time()+3600, '/', $this->getDomain());
+        setcookie('countryCode', $this->getCountryCode(), time()+3600, '/', $this->getDomain());
         putenv('LANG=' . $this->getLang());
         setlocale(LC_ALL, $this->getLang());
 
