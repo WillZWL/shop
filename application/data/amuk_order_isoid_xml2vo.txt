@@ -1,7 +1,0 @@
-#Table name
-interface_so_item_detail
-
-#Input column name	Output column name
-sku	item_sku
-order_qty	qty,outstanding_qty
-price	amount

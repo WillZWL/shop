@@ -1,9 +1,0 @@
-#Table name
-Pmgw_report_qoo10_dto
-
-#Input column name	Output column name
-0	date
-1	type
-2	txn_id
-14	amount
-19	commission

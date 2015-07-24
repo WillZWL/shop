@@ -1,7 +1,0 @@
-#Table name
-interface_so_shipment
-
-#Input column name	Output column name
-track1	tracking_no
-track2	+tracking_no
-so_shipment	sh_no

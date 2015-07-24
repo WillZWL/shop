@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<auth_response status="OK" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd">
-  <token>490BB66D-EB43-0FD8-AB19-8330B054F1DD</token>
-  <validity>2009-09-28T11:59:32+02:00</validity>
-</auth_response>
