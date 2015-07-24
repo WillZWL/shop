@@ -74,7 +74,7 @@ class DomainSelection
                 define(LOGO, 'numeristock.jpg');
                 break;
             case 'AU':
-                $domain = 'v2.aheaddigital.com.au';
+                $domain = 'v2.aheaddigital.net';
                 $this->setLang('en_GB');
                 define(SITENAME, 'Aheaddigital');
                 define(LOGO, 'aheaddigital.jpg');
