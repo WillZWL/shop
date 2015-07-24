@@ -156,7 +156,7 @@
                                 <ul class="list-unstyled address">
                                     <li><i class="fa fa-map-marker"></i><?= _('Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong') ?></li>
                                     <li><i class="fa fa-tablet"></i>0870 295 9128</li>
-                                    <li><i class="fa fa-envelope-o"></i><a href="mailto:info@digitaldiscount.co.uk"><?= _('info@digitaldiscount.co.uk') ?></a></li>
+                                    <li><i class="fa fa-envelope-o"></i><a href="mailto:<?= _('info@digitaldiscount.co.uk') ?>"><?= _('info@digitaldiscount.co.uk') ?></a></li>
                                 </ul>
                             </div>
                             <div class="column padding border-right col-xs-12 col-sm-6 col-md-3 col-lg-3">
