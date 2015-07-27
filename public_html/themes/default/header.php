@@ -49,7 +49,7 @@
                             <div class="logo inner  col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="logo-store pull-left">
                                     <a href="/">
-                                        <img src='<?=base_url("/images/logo/" . LOGO)?>' class="img-responsive">
+                                        <img src='<?=base_url("/images/logo/" . LOGO)?>' class="img-responsive img-logo">
                                     </a>
                                 </div>
                             </div>
