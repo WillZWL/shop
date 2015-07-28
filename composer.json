@@ -1,0 +1,16 @@
+{
+    "name": "esg/atomv2",
+    "description": "Do eCommerce better :)",
+    "require": {
+        "geoip2/geoip2": "2.3.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.7"
+    },
+    "authors": [
+        {
+            "name": "esgit",
+            "email": "itsupport@eservicesgroup.net"
+        }
+    ]
+}
