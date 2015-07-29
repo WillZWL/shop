@@ -1,8 +1,0 @@
-#Table name
-interface_inventory
-
-#Input column name	Output column name
-0	log_sku
-1	prod_name
-2	inventory
-3	weight

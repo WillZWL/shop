@@ -1,9 +1,0 @@
-#Table name
-data
-
-#Input column name	Output column name
-payment_gateway_id	Gateway Name
-order_create_date	Order Created Date
-currency_id	Currency
-so_no	SO Number
-amount	Amount

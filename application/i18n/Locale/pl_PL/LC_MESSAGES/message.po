@@ -1,0 +1,3068 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-20 16:09+0800\n"
+"PO-Revision-Date: 2015-07-28 16:46+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl_PL\n"
+"Last-Translator: \n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-20 16:12+0800\n"
+"PO-Revision-Date: 2015-07-23 13:50+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl_PL\n"
+"Last-Translator: \n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-20 16:28+0800\n"
+"PO-Revision-Date: 2015-07-23 13:51+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl_PL\n"
+"Last-Translator: \n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-28 12:25+0800\n"
+"PO-Revision-Date: 2015-07-28 15:45+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl_PL\n"
+"Last-Translator: \n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-23 14:12+0800\n"
+"PO-Revision-Date: 2015-07-23 14:15+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl_PL\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-20 16:33+0800\n"
+"PO-Revision-Date: 2015-07-23 14:08+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl_PL\n"
+"Last-Translator: \n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-23 12:26+0800\n"
+"PO-Revision-Date: 2015-07-23 13:28+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl_PL\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-20 16:20+0800\n"
+"PO-Revision-Date: 2015-07-23 13:51+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl_PL\n"
+"Last-Translator: \n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-28 12:28+0800\n"
+"PO-Revision-Date: 2015-07-28 12:59+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl_PL\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-20 16:35+0800\n"
+"PO-Revision-Date: 2015-07-23 14:09+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl_PL\n"
+"Last-Translator: \n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-23 12:10+0800\n"
+"PO-Revision-Date: 2015-07-23 12:25+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl_PL\n"
+
+#: about_us.php:2
+msgid "About ChatandVision"
+msgstr "O ChatandVision"
+
+#: about_us.php:3
+msgid "Who are we? "
+msgstr "Kim jesteśmy?"
+
+#: about_us.php:6
+#, php-format
+msgid ""
+"ChatandVision is one of Skype’s Global Merchant Partners, bringing %s high "
+"quality communication products %s to our valued customers. Partnering with "
+"Skype, ChatandVision has a variety of Skype Certified products that have met "
+"all of Skype’s stringent specifications for quality ensuring that you will "
+"have a wonderful Skype experience."
+msgstr ""
+"ChatandVision jest jednym z partnerów Skype Global Merchant Partners, "
+"dostarczającym %s wysokiej wartości produktów komunikacyjnych %s dla naszych "
+"klientów. We współpracy z Skype, ChatandVision posiada wiele produktów z "
+"certyfikatem Skype, które spełniają wszelkie warunki zapewniające świetne "
+"doświadczenie ze Skype."
+
+#: about_us.php:8
+msgid ""
+"We are driven by the strong desire to bring people closer together and offer "
+"the products to help people all over the world communicate with each other. "
+msgstr ""
+"Naszym głównym celem jest silna potrzeba zbliżenia ludzi do siebie poprzez "
+"oferowanie produktów które ułatwią kontaktyludziom na całym świecie między "
+"sobą."
+
+#: about_us.php:9
+msgid "Whether it’s for use at home or in the office, we’re here to help."
+msgstr ""
+"Niezależnie czy do użytkowani w domu czy też w biurze, jesteśmy gotowi pomóc."
+
+#: about_us.php:22
+msgid "Buying Experience"
+msgstr "Zakupy"
+
+#: about_us.php:25
+#, php-format
+msgid ""
+"We do our best to try and make this experience as simple as possible for our "
+"valued customers and act as your local online retailer. Delivering to over "
+"%s 70 countries %s, we manage all customs clearance, import duties and sales "
+"taxes – meaning the price you see on the site is the final delivered price "
+"that will be charged to you. We offer local payment options and currencies "
+"in order to provide you with a completely hassle free experience. By "
+"partnering with various reputable payment gateways we hope to give our "
+"customers total peace of mind and provide them with not only flexibility but "
+"the highest level of security when paying on our site."
+msgstr ""
+"Dokładamy wszelkich starań, aby zakupy były jak najprostsze dla naszych "
+"klientów i działały jak lokalny sklep online. Wysyłając do ponad %s 70 "
+"krajów %s zajmujemy się odprawą celną, opłatami podatkowymi - czyli cena "
+"którą widzisz na stronie jest ceną ostateczną. Oferujemy lokalne  opcje "
+"zapłaty i lokalne waluty w celu zapewnienia łatwiejszej płatności. "
+"Współpracujemy z wieloma renomowanymi bramkami płatniczymi w celu "
+"dostarczenia naszym klientom łatwego sposobu płatności zapewniającym wysoki "
+"poziom zabezpieczenia."
+
+#: about_us.php:27
+msgid ""
+"We ship from several hubs worldwide so that you can receive your products "
+"faster, and have chosen to partner with reputable courier companies to "
+"ensure that your order arrives safely."
+msgstr ""
+"Wysyłamy z kilku miejsc na świecie, tak abyś otrzymał zamówiony towar jak "
+"najszybciej. Współpracujemy z renomowanym kurierem, aby zapewnić bezpieczną "
+"dostawę zamówienia."
+
+#: about_us.php:33
+msgid "We're always here for you!"
+msgstr "Jesteśmy zawsze dostępni!"
+
+#: about_us.php:36
+#, php-format
+msgid ""
+"Our priority is in providing customer focused service, and we continually "
+"strive to put our customers first in all aspects. In order to provide the "
+"best shopping experience we make sure to communicate with you every step of "
+"the way – from the buying process, to order acknowledgement, and finally to "
+"dispatch. Our friendly %s customer service team %s is standing by and happy "
+"to assist if you should encounter any difficulties in choosing the right "
+"product or have any enquiries about the ordering process."
+msgstr ""
+"Naszym priorytetem jest zapewnienie jak najlepszej obsługi klienta, cały "
+"czas staramy się umieścić klienta na pierwszym miejscu. Aby zapewnić "
+"najlepsze doświadczenie zakupu, zapewniamy wyśmienitą komunikację na każdym "
+"kroku od złożenia zamówienia, zapłaty i wysyłki. Nasz przyjazny %s dział "
+"obsługi klienta %s zawsze z przyjemnością jest gotowy do pomocy, jeśli tylko "
+"masz jakiekolwiek problemy z wyborem właściwego produktu lub masz pytania "
+"dotyczące zakupów."
+
+#: cat.php:11
+msgid "BRANDS"
+msgstr "Marki"
+
+#: cat.php:30
+msgid "Categories"
+msgstr "Kategorie"
+
+#: cat.php:36
+#, php-format
+msgid "Desktop%s"
+msgstr "Pulpit%s"
+
+#: cat.php:39
+#, php-format
+msgid "Laptops & Notebooks %s"
+msgstr "Laptopy & Notebooki %s"
+
+#: cat.php:42
+msgid "Electronics"
+msgstr "Elektronika"
+
+#: cat.php:111
+msgid "Sort By:"
+msgstr "Sortuj według"
+
+#: cat.php:113
+msgid "Default"
+msgstr "Domyslne"
+
+#: cat.php:114
+msgid "Name (A - Z)"
+msgstr "Nazwa (A-Z)"
+
+#: cat.php:115
+msgid "Name (Z - A)"
+msgstr "Nazwa (Z-A)"
+
+#: cat.php:116
+msgid "Price (Low to High)"
+msgstr "Cena (od najniższej do najwyższej)"
+
+#: cat.php:117
+msgid "Price (High to Low)"
+msgstr "Cena (od najwyższej do najniższej)"
+
+#: cat.php:118
+msgid "Rating (Highest)"
+msgstr "Ocena (Najwyższa)"
+
+#: cat.php:119
+msgid "Rating (Lowest)"
+msgstr "Ocena (Najniższa)"
+
+#: cat.php:120
+msgid "Model (A - Z)"
+msgstr "Model (A - Z)"
+
+#: cat.php:121
+msgid "Model (Z - A)"
+msgstr "Model (Z - A)"
+
+#: cat.php:125
+msgid "Display:"
+msgstr "Ekran"
+
+#: header.php:12 simpledetail.php:12
+msgid "Digital Discount"
+msgstr "Elektro Raj"
+
+#: header.php:52
+msgid "digital discount"
+msgstr "elektro raj"
+
+#: header.php:73 review.php:5
+msgid "Shopping Cart"
+msgstr "Koszyk"
+
+#: header.php:74
+msgid "%s item(s) - %s%s"
+msgstr "%s produktów - %s%S"
+
+#: header.php:81
+msgid "Your shopping cart is empty!"
+msgstr "Twój koszyk jest pusty!"
+
+#: header.php:96
+msgid "categories              "
+msgstr "kategorie"
+
+#: header.php:113
+msgid "SmartPhones"
+msgstr "Smartfony"
+
+#: header.php:123
+msgid "Mobile Phones"
+msgstr "Telefony komórkowe"
+
+#: header.php:124
+msgid "Telephones"
+msgstr "Telefony"
+
+#: header.php:125
+msgid "Media Players"
+msgstr "Odtwarzacze"
+
+#: header.php:137
+msgid "Webcams"
+msgstr "Kamery internetowe"
+
+#: header.php:147
+msgid "HD Webcams"
+msgstr "Kamery internetowe HD"
+
+#: header.php:148
+msgid "TV Webcams"
+msgstr "kamery internetowe TV"
+
+#: header.php:149
+msgid "IP Camerass"
+msgstr "Kamery IP"
+
+#: header.php:161
+msgid "Headsets and Microphones"
+msgstr "Słuchawki i mikrofony"
+
+#: header.php:171
+msgid "Wired Headsets"
+msgstr "Słuchawki przewodowe"
+
+#: header.php:172
+msgid "Bluetooth Headsets"
+msgstr "Słuchawki Bluetooth"
+
+#: header.php:173
+msgid "USB Headset"
+msgstr "Słuchawki USB"
+
+#: header.php:174
+msgid "Wireless Headsets"
+msgstr "Bezprzewodowe Słuchawki"
+
+#: header.php:175
+msgid "In-Ear Headphones"
+msgstr "Słuchawki douszne"
+
+#: header.php:176
+msgid "Gaming Headsets"
+msgstr "Słuchawki dla graczy"
+
+#: header.php:177
+msgid "Microphones"
+msgstr "Mikrofony"
+
+#: header.php:178
+msgid "Microphones + speakers (speakerphones)"
+msgstr "Mikrofony + spikery"
+
+#: header.php:190
+msgid "Conference Phones"
+msgstr "Teefony do konferencji"
+
+#: header.php:193
+msgid "Digital Imaging"
+msgstr "Obrazy Digital"
+
+#: header.php:196
+msgid "Tablets"
+msgstr "Tablety"
+
+#: header.php:199
+msgid "Computing"
+msgstr "Komputery"
+
+#: header.php:202
+msgid "Accessories"
+msgstr "Akcesoria"
+
+#: header.php:217
+msgid " Menu"
+msgstr "Menu"
+
+#: detail.php:9 detail.php:246 simpledetail.php:52
+msgid "Sale"
+msgstr "Sprzedaż"
+
+#: detail.php:114
+msgid "0 review"
+msgstr "0 opinii"
+
+#: detail.php:114 detail.php:177 detail.php:182 simpledetail.php:157
+#: simpledetail.php:220 simpledetail.php:225
+msgid "Write a review"
+msgstr "Napisz recenzje"
+
+#: detail.php:123 simpledetail.php:166
+msgid "Availability:"
+msgstr "Dostępność"
+
+#: detail.php:123 simpledetail.php:166
+msgid " In Stock"
+msgstr "W sprzedaży"
+
+#: detail.php:133 simpledetail.php:176
+msgid "Qty:"
+msgstr "Ilość:"
+
+#: detail.php:145 simpledetail.php:188
+msgid "Add to Cart"
+msgstr "Dodaj do koszyka"
+
+#: detail.php:148 simpledetail.php:191
+msgid "Add to Wish List"
+msgstr "Dodaj do listy"
+
+#: detail.php:154 simpledetail.php:197
+msgid "4-7 working days delivery"
+msgstr "dostawa w orzeciągu 4-7 dni roboczych"
+
+#: detail.php:164 simpledetail.php:207
+msgid "Description"
+msgstr "Opis"
+
+#: detail.php:165 simpledetail.php:208
+#, php-format
+msgid "Reviews %s"
+msgstr "Recenzje %s"
+
+#: detail.php:175 simpledetail.php:218
+msgid "There are no review for this product."
+msgstr "Brak recenzji produktu"
+
+#: detail.php:185 simpledetail.php:228
+msgid "Your Name"
+msgstr "Twoje imię"
+
+#: detail.php:191 simpledetail.php:234
+msgid "Your Review"
+msgstr "Twoja recenzja"
+
+#: detail.php:193 simpledetail.php:236
+msgid "Note:"
+msgstr "Uwaga:"
+
+#: detail.php:193 simpledetail.php:236
+msgid " HTML is not translated!"
+msgstr "HTML jest nie przetłumaczony!"
+
+#: detail.php:198 simpledetail.php:241
+msgid "Rating"
+msgstr "Ocena"
+
+#: detail.php:199 simpledetail.php:242
+msgid "Bad"
+msgstr "Zła"
+
+#: detail.php:204 simpledetail.php:247
+msgid "Good"
+msgstr "Dobra"
+
+#: detail.php:221 simpledetail.php:264
+msgid "Continue"
+msgstr "Kontynuuj"
+
+#: detail.php:234
+msgid "Related Products"
+msgstr "Podobne produkty"
+
+#: simpledetail.php:157
+msgid "%s review"
+msgstr "%s recenzji"
+
+#: shipping.php:1
+msgid "FREE Shipping"
+msgstr "DARMOWA Wysyłka"
+
+#: shipping.php:3
+msgid ""
+"When you shop with us we like to keep it simple, our free shipping offer "
+"applies to all orders no matter the size or value. ChatandVision not only "
+"accepts payment in your local currency but also ships directly to your "
+"doorstep free of charge* to over 60 countries worldwide:"
+msgstr ""
+"Kiedy robisz zakupy w naszym sklepie stawiamy na prostotę, nasza darmowa "
+"wysyłka obejmuje wszystkie zamówienia niezależnie od wielkości i ceny. "
+"ChatandVision nie tylko akceptuje zapłat w twojej lokalnej walucie, ale "
+"również dostarcza bezpośrednio do twojego domu za darmo* do ponad 60 krajów "
+"na świecie: "
+
+#: shipping.php:6
+msgid "Taxes and Duties"
+msgstr "Podatki i Cło"
+
+#: shipping.php:8
+msgid ""
+"Worried about hidden costs? Please don't be, we'll take care of any "
+"applicable taxes and duties prior to delivery so the price on the website is "
+"the final amount you pay. Rest assured that your buying experience with us "
+"will be completely hassle free."
+msgstr ""
+"Obawiasz się ukrytych kosztów? Nie musisz, zajmiemy się podatkiem, opłatami "
+"celnymi w związku z dostawą, dlatego też cena podana na stronie jest ceną "
+"ostateczną którą musisz zapłacić. Zrelaksuj się mając pewność, że kupując u "
+"nas nie musisz się niczym przejmować."
+
+#: shipping.php:11
+msgid "Tracking Your Order"
+msgstr "Sledzenie przesyłki"
+
+#: shipping.php:13
+msgid ""
+"Once your order has been processed, an email containing your order and "
+"account information will be sent to your registered email. You can always "
+"check the status of your order by visiting the My Account page on our "
+"website and viewing your order history."
+msgstr ""
+"Kiedy twoje zamówienie zostanie wysłane, email zaiwrający twoje zamówienie "
+"oraz informacje dotyczące twojego konta zostanie wysłany na zarejestrowany "
+"przez ciebie email. Możesz zawsze sprawdzić status twojego zamówienia "
+"wchodząc w zakładkę Moje Konto na naszej stronie internetowej sprawdzając "
+"historię zamówienia."
+
+#: shipping.php:16
+msgid "FREE Shipping Delivery Times"
+msgstr "Czas Dostawy Darmowej Przesyłki"
+
+#: shipping.php:18
+msgid ""
+"Orders delivered with free shipping typically arrive within 7 to 14 business "
+"days; although this is dependent on your delivery region, with many orders "
+"often arriving sooner.\n"
+"                        In order to facilitate free shipping and pass on "
+"savings to our customers, we endeavor to use reliable and cost effective "
+"couriers to deliver globally. To minimize delays we ship directly to our "
+"customers from our global fulfillment centers in the UK, US and HK, however "
+"please bear in mind some regions may experience longer shipping lead times.**"
+msgstr ""
+"Zamówienia wysłane poprzez darmową wysyłkę zazwyczaj docierają w przeciągu 7 "
+"do 14 dni roboczych; jednakże to zależy od regionu dostawy, który może "
+"opóźnić termin dostawy.\n"
+"                      W celu zapewnienia darmowej wysyłki i zapewnieniu "
+"zaoszczędzenia kosztów naszym klientom, korzystamy z renomowanych kurierów, "
+"którzy dostarczają na cały świat. Aby zminimalizować opóźnienia w dostawie "
+"wysyłamy z naszych magazynów z Wielkiej Brytanii, Stanów Zjednoczonych i "
+"Hong kongu, jednak proszę mieć na uwadze, że niektóre regiony mogą wymagać "
+"dłuższej dostawy**"
+
+#: shipping.php:22
+msgid ""
+"* Shipping to and from less populated or accessible domestic and "
+"international areas carries higher operating costs. Delivery and extended or "
+"remote area surcharges will be added to your final order amount in order to "
+"more accurately reflect the cost of providing service to these areas."
+msgstr ""
+"* Dostawa do i z mniej zaldnionych lub trudniej dostepnych miejsc wymaga "
+"większej ilości kosztów. Dostawa do trudniej dostepnych miejsc dodatkowa "
+"opłata będzie dołożona do twojego zamówienia w celu lepszego zobrazowania "
+"kosztów serwisu do tych regionów."
+
+#: shipping.php:24
+msgid ""
+"United States: extended or remote areas within the contingent 48  states, "
+"Hawaii and Alaska"
+msgstr "Stany Zjednoczone: oddalone miejsca z 49 stanów, Hawaii i Alaska"
+
+#: shipping.php:27
+msgid "United Kingdom: areas in Guernsey, Jersey, and the Isle of Man"
+msgstr "Wielka Brytania: region Guernsey, Jersey i Isle of Man"
+
+#: shipping.php:32
+msgid ""
+"** Although we do our best to ensure a smooth shipping process please note "
+"delivery speed to some regions may experience delays depending on a wide "
+"variety of factors (e.g. specific address location and customs delay) which "
+"are outside of our control."
+msgstr ""
+"** Chociaż dokładamy wszelkich starań, aby zapewnić naj najlepszą dostawę "
+"proszę mieć na uwadze, że czas dostawy do poszczególnych regionów może się "
+"opóźnić ze względu na wiele różnorakich czynników ( na przykład konkretny "
+"adres, opóźnienie w związku z odprawą celną) na które nie mamy wpływu."
+
+#: privacy_policy.php:2
+msgid "Privacy "
+msgstr "PRYWATNOŚCI"
+
+#: privacy_policy.php:2
+msgid "Policy"
+msgstr "POLITYKA"
+
+#: privacy_policy.php:3
+msgid "DigitalDiscount Privacy Policy"
+msgstr "POLITYKA PRYWATNOŚCI Elektroraj"
+
+#: privacy_policy.php:6 conditions_of_use.php:6
+msgid "CONTENTS"
+msgstr "ZAWARTOŚĆ"
+
+#: privacy_policy.php:9 privacy_policy.php:24
+msgid "WHY WE COLLECT"
+msgstr "DLACZEGO POBIERAMY"
+
+#: privacy_policy.php:10 privacy_policy.php:31
+msgid "WHAT WE COLLECT"
+msgstr "CO POBIERAMY"
+
+#: privacy_policy.php:11 privacy_policy.php:42
+msgid "WHAT WE DO WITH THE INFORMATION WE GATHER"
+msgstr "CO ROBIMY Z ZEBRANYMI INFORMACJAMI"
+
+#: privacy_policy.php:12 privacy_policy.php:54 conditions_of_use.php:16
+#: conditions_of_use.php:105
+msgid "SECURITY"
+msgstr "BEZPIECZEŃSTWO"
+
+#: privacy_policy.php:13 privacy_policy.php:67
+msgid "HOW WE USE COOKIES"
+msgstr "JAK KORZYSTAMY Z COOKIES"
+
+#: privacy_policy.php:14 privacy_policy.php:80
+msgid "LINKS TO OTHER WEBSITES"
+msgstr "LINKI DO INNYCH STRON INTERNETOWYCH"
+
+#: privacy_policy.php:15 privacy_policy.php:87
+msgid "PRIVACY QUESTIONS"
+msgstr "PYTANIA DOTYCZĄCE PRYWATNOŚCI"
+
+#: privacy_policy.php:19
+msgid ""
+"DigitalDiscount's Customer Privacy Policy covers the collection, use, and "
+"disclosure of personal information that may be collected by DigitalDiscount "
+"anytime you interact with DigitalDiscount, such as when visiting our "
+"website, purchasing products, or using our sales or support facilities. "
+"Please take a moment to read the following to learn more about our practices "
+"with regards to this, including what type of information we gather, how and "
+"for what purposes we use the information, to whom we disclose the "
+"information, and how the personal information is kept safe and secure. Your "
+"privacy is a priority at DigitalDiscount, and we do what we can to protect "
+"it."
+msgstr ""
+"Polityka Prywatności Elelktroraj obejmuje zbiórkę, użytkowanie, oraz zebrane "
+"informacje osobiste które mogą zostać pobrane przez Elektroraj kiedykolwiek "
+"podczas użytkowania Elektroraj, tak jak odwiedzenie naszej strony "
+"internetowej, zakup towarów, lub korzystanie z naszej sprzedaży i innych "
+"usług. Proszę zapoznać się z poniższym tekstem, aby dowiedzieć się więcej na "
+"temat naszej praktyki, między innymi jakiego typu informacje są gromadzone, "
+"jak i w jakim celu używamy uzyskanych informacji, komu udzielamy otrzymane "
+"informacje, oraz w jaki sposób informacje są bezpiecznie przechowywane i "
+"chronione. Prywatność jest priorytetem dla Elektroraj i dokładamy wszelkich "
+"starań aby ją chronić."
+
+#: privacy_policy.php:21
+msgid ""
+"DigitalDiscount may change this policy from time to time by updating this "
+"page. You should check this page from time to time to ensure that you are "
+"happy with any changes. This policy is effective from 31 May 2010."
+msgstr ""
+"Elektroraj może zmienić politykę prywatności podczas akutalizacji stroy "
+"internetowej. Proszę sprawdzać stronę od czasu do czasu, aby zapoznać się ze "
+"zmianami. Obecna polityka prywatności obowiązuje od 31 Maja 2010 roku."
+
+#: privacy_policy.php:27
+msgid ""
+"We collect personal information because it helps us to deliver a customised "
+"customer service experience for you. This affords you convenient access to "
+"our product range and helps focus on categories most likely to interest you. "
+"In addition, your personal information helps allow us to keep you updated on "
+"the latest product announcements, special offers, and events that you might "
+"like to hear about."
+msgstr ""
+"Gromadzimy informacje osobiste ponieważ pomagają nam one w ulepszaniu "
+"doświadczenia z klientem. Pozwala to Państwu na wygodniejszy dostęp do "
+"naszych produktów oraz skupiania się na kategoriach które Państwa "
+"najbardziej interesują. Dodatkowo zebrane informacje pomagają nam "
+"aktualizować nowe produkty, oferty specjalne, oraz eventy które mogą Państwa "
+"zainteresowć."
+
+#: privacy_policy.php:34
+msgid "We may collect the following information:"
+msgstr "Możemy zebrać poniższe informacje:"
+
+#: privacy_policy.php:36
+msgid "name and job title"
+msgstr "imię i zawód"
+
+#: privacy_policy.php:37
+msgid "contact information including email address"
+msgstr "informacje kontaktowe włączając adres email"
+
+#: privacy_policy.php:38
+msgid "demographic information such as postcode, preferences and interests"
+msgstr ""
+"informacje demogrficzne takie jak kod pocztowy, zainteresowania i preferencje"
+
+#: privacy_policy.php:39
+msgid "other information relevant to customer surveys and/or offers"
+msgstr "inne informacje nawiązujące do ankiet konsumenckich i/lub ofert."
+
+#: privacy_policy.php:45
+msgid ""
+"The personal information may help us give you a better shopping experience "
+"with us in the following areas:"
+msgstr ""
+"Informacje osobiste mogą pomóc nam w ulepszeniu doświadczenia podczas "
+"zakupów w poniższych areach:"
+
+#: privacy_policy.php:47
+msgid ""
+"we may ask for your personal information when you're discussing a service "
+"issue on the phone with a representative, making a purchase, or registering "
+"your product."
+msgstr ""
+"możemy poprosić Państwa o udzielenie informacji podczas rozmowy "
+"telefonicznej z naszym pracownikiem, podczas dokonywania zakupów lub "
+"rejestracji produktu."
+
+#: privacy_policy.php:48
+msgid ""
+"we may use the information to improve our product range and services offered."
+msgstr ""
+"możemy użyć informacji, aby ulepszyć listę towarów i usług oferowanych."
+
+#: privacy_policy.php:49
+msgid ""
+"we may send promotional emails (to the email address provided) about new "
+"products, special offers or other information which we think you may find "
+"interesting."
+msgstr ""
+"możemy wysyłać emaile z promocjami (na adres email podany) dotyczące nowych "
+"produktów,ofert specjalnych oraz innych informacji, które mogą Państwa "
+"zainteresować."
+
+#: privacy_policy.php:50
+msgid ""
+"from time to time, we may also use your information to contact you for "
+"market research purposes. We may contact you by email, phone, or mail. We "
+"may use the information to customise the website according to your interests."
+msgstr ""
+"od czasu do czasu, możemy użyć Państwa informacji w celach analizy "
+"marketingowej. Możemy skontaktować się z Państwem poprzez email, telefon, "
+"list. Możemy użyć informacji, aby przystosować lepiej stronę internetową do "
+"potrzeb klientów"
+
+#: privacy_policy.php:51
+msgid ""
+"We will use the information to create an account area to which you can login "
+"and access your order history."
+msgstr ""
+"Użyjemy informacji, aby stworzyć konto, gdzie będą Państwo mogli się "
+"zalogować i mieć dostęp do historii."
+
+#: privacy_policy.php:57
+msgid ""
+"We are committed to ensuring that your information is secure. In order to "
+"prevent unauthorised access or disclosure, we have put in place suitable "
+"physical, electronic and managerial procedures to safeguard and secure the "
+"information we collect online."
+msgstr ""
+"Zapewniamy, że wszelkie Państwa informacje są bezpieczne. Aby uniemożliwić "
+"jakiegokolwiek nieautoryzowanego dostępu do danych Państwa, umieściliśmy je "
+"w odpowiednim miejscu, zabezpieczonym elektronicznie, aby mieć pewność, że "
+"przechowywane informacje online są chronione"
+
+#: privacy_policy.php:59
+msgid ""
+"DigitalDiscount takes your privacy very seriously. DigitalDiscount does not "
+"sell or rent your contact information to other marketers."
+msgstr ""
+"Elektroraj podchodzi do spraw ochrony danych bardzo poważnie. Elektroraj nie "
+"sprzedaje, ani nie wypożycza informacji kontaktowych innym marketom."
+
+#: privacy_policy.php:61
+msgid ""
+"DigitalDiscount may share certain personal information with other companies "
+"with which DigitalDiscount have a strategic relationship and/or provide "
+"services on our behalf to your advantage. These companies may help process "
+"information, fulfil customer orders, deliver products, manage and enhance "
+"customer data, provide customer service, assess levels of interest in our "
+"product range, or carry out customer research or satisfaction surveys. These "
+"companies are also obliged to protect your personal information, except if "
+"exchange of information is required for your purchase. For example, when an "
+"extended warranty is purchased, you authorise DigitalDiscount and the "
+"Warranty Provider to exchange information to carry out the service. Without "
+"the exchange, it would be otherwise be difficult to have products purchased, "
+"customer service offered, feedback provided to us, or have access to special "
+"offers or content from DigitalDiscount."
+msgstr ""
+"Elektroraj dzieli się pewnymi informacjami z innymi firmami które pozostają "
+"w strategicznym związku z Elektroraj i/oraz udzielają usług dla państwa "
+"korzyści. Firmy te mogą pomóc w przewarzaniu nformacji, realizacji zamówień, "
+"dostarcxaniu produktów, zarządzaniu danymi klientów, obsługi klientów, "
+"gromadzenia informacji o produktach, przeprowadzać ankiety konsumenckie. "
+"firmy te są zobowiązane do ochrony danych osobowych, poza przypadkami gdy "
+"wymagana jest wymiana informacji w celach zakupu. Na przykład, gdy dodatkowa "
+"gwarancja zostaje zakupiona, upoważniają Państwo Elektroraj i Dostawcę/"
+"wykonawcę Gwarancji do wymiany informacji w celu wykonania usługi. Bez "
+"powyższej wymiany, byłoby to bardzo trudne zakupić towar, zapewnić obsługę "
+"klienta, mieć dostęp do ofert specjalnych lub zawartości Elektroraj."
+
+#: privacy_policy.php:63
+msgid ""
+"We may also be required by law or litigation to disclose your personal "
+"information. We may also disclose information if it is determined that it is "
+"necessary for security, law enforcement or other issues of public importance."
+msgstr ""
+"Możemy być zobowiązani przez prawo do ujawnieni informacji osobistych. "
+"Możemy również ujawnić informacje jeśli jest to spowodowane potrzebą "
+"ochrony, bezpieczeństwa, prawa lub wysokiej ważności publicznej."
+
+#: privacy_policy.php:70
+msgid ""
+"A cookie is a small file which asks permission to be placed on your "
+"computer's hard drive. Once you agree, the file is added and the cookie "
+"helps analyse web traffic or lets you know when you visit a particular site. "
+"Cookies allow web applications to respond to you as an individual. The web "
+"application can tailor its operations to your needs, likes and dislikes by "
+"gathering and remembering information about your preferences."
+msgstr ""
+"Cookie jest to mały plik który prosi Państwa o pozwolenie na jego "
+"umieszczenie na Państwa dysku komputerowym. Kiedy Państwo wyrażą zgodę, plik "
+"zostaje dodany, cookie pomaga analizować przepustowość strony internetowej "
+"lub informuje kiedy odwiedzają Państwo konkretną stronę. Cookies umożliwiają "
+"aplikacjom stron internetowym odpowiadać do państwa jako indywidualna osoba. "
+"Aplikacje strony internetowej przystosowywują stronę do Państwa potrzeb i "
+"preferencji."
+
+#: privacy_policy.php:72
+msgid ""
+"We use traffic log cookies to identify which pages are being used. This "
+"helps us analyse data about web page traffic and improve our website in "
+"order to tailor it to customer needs. We only use this information for "
+"statistical analysis purposes and then the data is removed from the system."
+msgstr ""
+"Korzystamy z traffic log cookies aby zidentyfikować używane strony. Pomaga "
+"nam to w analizie danych dotyczących strony internetowej, jej "
+"przepustowości, pomaga w ulepszeniu strony i przystosowania do preferencji "
+"klientów. Używamy powyższych infromacji w celach statystycznych, a następnie "
+"dane są usówane z naszego systemu."
+
+#: privacy_policy.php:74
+msgid ""
+"Overall, cookies help us provide you with a better website, by enabling us "
+"to monitor which pages you find useful and which you do not. A cookie in no "
+"way gives us access to your computer or any information about you, other "
+"than the data you choose to share with us."
+msgstr ""
+"Podsumowując, cookies pomagają nam w ulepszeniu strony internetowej, poprzez "
+"monitorowanie która strona internetowa jest najbardziej użyteczna, a która "
+"nie. Cookies nie dają nam żadnego dostępu do Państwa komputera ani żadnych "
+"danych o Państwu innych niż które sami Państwo zgodzili się z nami podzielić"
+
+#: privacy_policy.php:76
+msgid ""
+"You can choose to accept or decline cookies. Most web browsers automatically "
+"accept cookies, but you can usually modify your browser setting to decline "
+"cookies if you prefer. This may prevent you from taking full advantage of "
+"the website."
+msgstr ""
+"Moga Państwo zaakceptować lub odrzucić cookies. Większość przęglądarek "
+"internetowych automatycznie akceptuje cookies, ale mogą Państwo zmodyfikować "
+"ustawienia przeglądarki. Może to uniemożliwoć używanie w pełni strony "
+"internetowej."
+
+#: privacy_policy.php:83
+msgid ""
+"Our website may contain links to other websites of interest. However, once "
+"you have used these links to leave our site, you should note that we do not "
+"have any control over that other website. Therefore, we cannot be "
+"responsible for the protection and privacy of any information which you "
+"provide whilst visiting such sites and such sites are not governed by this "
+"privacy statement. You should exercise caution and look at the privacy "
+"statement applicable to the website in question."
+msgstr ""
+"Nasza strona internetowa zawiera linki do innych stron intenretowych. "
+"Jednakże, kiedy skorzystasz z linku i opuścisz naszą stronę, proszę "
+"zauważyć, że nie posiadamy żadnej kontroli nad innymi stronami "
+"internetowymi. W konsekwencji, nie możemy być odpowiedzialni za politykę "
+"prywatności, ani za informacje które Państwo podadzą podczas odwiedzania "
+"takowych stron, strony takie nie podlegają tejże polityce prywatności. "
+"Proszę zachować ostrożność i zapoznać się ze stroną internetową."
+
+#: privacy_policy.php:90
+msgid ""
+"If you have any questions or concerns, you can email us using our "
+"interactive web form located at our "
+msgstr ""
+"jeśli mają Państwo jakiekolwiek pytania, proszę wysłać do nas maila poprzez "
+"stronę internetową w zakładce"
+
+#: privacy_policy.php:90
+msgid "Contact Us"
+msgstr "Kontakt"
+
+#: privacy_policy.php:90
+msgid " page."
+msgstr "strona"
+
+#: privacy_policy.php:94
+msgid "Last updated 9th July 2015"
+msgstr "Ostatnia aktualizacja 9 Lipiec 2015"
+
+#: privacy_policy.php:95
+msgid "DigitalDiscount Limited. All rights reserved."
+msgstr "Elektroraj Limited. Wszelkie Prawa zastrzeżone."
+
+#: footer.php:15 footer.php:29
+msgid "Questions?"
+msgstr "Pytania?"
+
+#: footer.php:16 footer.php:30
+msgid "Send us an email"
+msgstr "Wyślij do nas maila"
+
+#: footer.php:35 footer.php:69
+msgid "Detail Information"
+msgstr "Informacje szczegółowe"
+
+#: footer.php:38 footer.php:72
+msgid "Close"
+msgstr "Nie czynny"
+
+#: footer.php:49 footer.php:63
+msgid "Call"
+msgstr "Zadzwoń"
+
+#: footer.php:64
+msgid "Mon - Fri : 9:00 AM - 6:00 PM"
+msgstr "Poniedziałek - Piątek: 9.00 - 6.00"
+
+#: footer.php:98
+#, php-format
+msgid "100% Secure %s with SSL Encryption"
+msgstr "100% bezpieczeństwa z SSL Encryption"
+
+#: footer.php:106
+msgid "100% Data Protection "
+msgstr "100% ochrony danych"
+
+#: footer.php:106
+msgid "your data is safe with us"
+msgstr "twoje dane są z nami bezpieczne"
+
+#: footer.php:114
+msgid "Free Delivery For All Orders* Shipping: 3-5 Working Days"
+msgstr "Darmowa Dostawa Wszystkich Zamówień* Wysyłka: 3-5 Dni Roboczych"
+
+#: footer.php:122
+msgid "Money Back 14 days "
+msgstr "Zwrot pieniędzy w ciągu 14 dni"
+
+#: footer.php:122
+msgid "Money Back Guarantee"
+msgstr "Zwrot pieniędzy gwarantowany"
+
+#: footer.php:130
+msgid "Warranty "
+msgstr "Gwarancja"
+
+#: footer.php:130
+msgid "Up to 2 Years"
+msgstr "Do 2 lat"
+
+#: footer.php:145
+msgid "About Us"
+msgstr "O nas"
+
+#: footer.php:146
+msgid ""
+"DigitalDiscount prides itself on great deals without compromise on service! "
+"Feel free to contact us anytime for more information"
+msgstr ""
+"DigitalDiscounts to kompromis pomiędzy świetnymi okazjami i serwisem! "
+"Skontaktuj się z nami po więcej informacji"
+
+#: footer.php:151
+msgid "Units 12- 15"
+msgstr "Rozdziały 12-15"
+
+#: footer.php:152
+msgid "ate sit amet lacinia."
+msgstr "ate sit amet lacinia."
+
+#: footer.php:154
+msgid "No 1123, Sky Tower, New York, USA"
+msgstr "No 1123, Sky Tower, Nowy Jork, USA"
+
+#: footer.php:155
+msgid "0870 295 9128"
+msgstr "0870 295 9128"
+
+#: footer.php:156
+msgid "info@digitaldiscount.com"
+msgstr "infor@digitaldiscount.com"
+
+#: footer.php:162 conditions_of_use.php:8 conditions_of_use.php:20
+msgid "CONDITIONS OF USE"
+msgstr "WARUNKI UŻYTKOWANIA"
+
+#: footer.php:163
+msgid "SHIPPING"
+msgstr "WYSYŁKA"
+
+#: footer.php:164
+msgid "PRIVACY POLICY"
+msgstr "POLITYKA PRYWATNOŚCI"
+
+#: footer.php:171
+msgid "SELECT SHIPPING COUNTRY"
+msgstr "WYBIERZ KRAJ DOSTAWY"
+
+#: footer.php:174 review.php:77 review.php:501
+msgid "Australia"
+msgstr "Australia"
+
+#: footer.php:175 review.php:85 review.php:502
+msgid "Belgium"
+msgstr "Belgia"
+
+#: footer.php:176 review.php:140
+msgid "Finland"
+msgstr "Finlandia"
+
+#: footer.php:177
+msgid "France"
+msgstr "Francja"
+
+#: footer.php:178
+msgid "Great Britain"
+msgstr "Wielka Brytania"
+
+#: footer.php:179 review.php:165
+msgid "Hong Kong"
+msgstr "Hong Kong"
+
+#: review.php:11
+msgid "Image"
+msgstr "Obraz"
+
+#: review.php:12
+msgid "Product Name"
+msgstr "Nazwa Produktu"
+
+#: review.php:13
+msgid "Quantity"
+msgstr "Ilość"
+
+#: review.php:14
+msgid "Unit Price"
+msgstr "Cena za sztukę"
+
+#: review.php:15
+msgid "Total"
+msgstr "Całkowita"
+
+#: review.php:48
+msgid "Shipping Information"
+msgstr "Informacje na temat wysyłki"
+
+#: review.php:55
+msgid "Where would you like to deliver to ?"
+msgstr "Miejsce wysyłki?"
+
+#: review.php:60 review.php:498
+msgid "Country"
+msgstr "Kraj"
+
+#: review.php:62 review.php:323 review.php:500 review.php:516
+msgid " --- Please Select --- "
+msgstr "--- Proszę wybierz ---"
+
+#: review.php:63
+msgid "Aaland Islands"
+msgstr "Wyspy Aland"
+
+#: review.php:64
+msgid "Afghanistan"
+msgstr "Afganistan"
+
+#: review.php:65
+msgid "Albania"
+msgstr "Albania"
+
+#: review.php:66
+msgid "Algeria"
+msgstr "Algeria"
+
+#: review.php:67
+msgid "American Samoa"
+msgstr "Samoa"
+
+#: review.php:68
+msgid "Andorra"
+msgstr "Andora"
+
+#: review.php:69
+msgid "Angola"
+msgstr "Angola"
+
+#: review.php:70
+msgid "Anguilla"
+msgstr "Anguilla"
+
+#: review.php:71
+msgid "Antarctica"
+msgstr "Antarktyka"
+
+#: review.php:72
+msgid "Antigua and Barbuda"
+msgstr "ANtigua i Barbuda"
+
+#: review.php:73
+msgid "Argentina"
+msgstr "Argentyna"
+
+#: review.php:74
+msgid "Armenia"
+msgstr "Armenia"
+
+#: review.php:75
+msgid "Aruba"
+msgstr "Aruba"
+
+#: review.php:76
+msgid "Ascension Island (British)"
+msgstr "Wyspy Ancesion"
+
+#: review.php:78
+msgid "Austria"
+msgstr "Austria"
+
+#: review.php:79
+msgid "Azerbaijan"
+msgstr "Azerbejdżan"
+
+#: review.php:80
+msgid "Bahamas"
+msgstr "Bahamy"
+
+#: review.php:81
+msgid "Bahrain"
+msgstr "Bahrain"
+
+#: review.php:82
+msgid "Bangladesh"
+msgstr "Bangladesz"
+
+#: review.php:83
+msgid "Barbados"
+msgstr "Barbados"
+
+#: review.php:84
+msgid "Belarus"
+msgstr "Białoruś"
+
+#: review.php:86
+msgid "Belize"
+msgstr "Beliz"
+
+#: review.php:87
+msgid "Benin"
+msgstr "Benin"
+
+#: review.php:88
+msgid "Bermuda"
+msgstr "Bermudy"
+
+#: review.php:89
+msgid "Bhutan"
+msgstr "Butan"
+
+#: review.php:90
+msgid "Bolivia"
+msgstr "Boliwia"
+
+#: review.php:91
+msgid "Bonaire, Sint Eustatius and Saba"
+msgstr "Bonaire, Sint Eustatius i Saba"
+
+#: review.php:92
+msgid "Bosnia and Herzegovina"
+msgstr "Bośnia i Hercegowina"
+
+#: review.php:93
+msgid "Botswana"
+msgstr "Botswana"
+
+#: review.php:94
+msgid "Bouvet Island"
+msgstr "Wyspy Bouvet"
+
+#: review.php:95
+msgid "Brazil"
+msgstr "Brazylia"
+
+#: review.php:96
+msgid "British Indian Ocean Territory"
+msgstr "Brytyjskie terytorium oceanu Indyjskiego"
+
+#: review.php:97
+msgid "Brunei Darussalam"
+msgstr "Brunei Darussalam"
+
+#: review.php:98
+msgid "Bulgaria"
+msgstr "Bułgaria"
+
+#: review.php:99
+msgid "Burkina Faso"
+msgstr "Burkina Faso"
+
+#: review.php:100
+msgid "Burundi"
+msgstr "Burundi"
+
+#: review.php:101
+msgid "Cambodia"
+msgstr "Kambodża"
+
+#: review.php:102
+msgid "Cameroon"
+msgstr "Kamerun"
+
+#: review.php:103
+msgid "Canada"
+msgstr "Kanada"
+
+#: review.php:104
+msgid "Canary Islands"
+msgstr "Wyspy Kanaryjskie"
+
+#: review.php:105
+msgid "Cape Verde"
+msgstr "Cape Verde"
+
+#: review.php:106
+msgid "Cayman Islands"
+msgstr "Wyspy Kayman"
+
+#: review.php:107
+msgid "Central African Republic"
+msgstr "Centralna Refupblika Afryki"
+
+#: review.php:108
+msgid "Chad"
+msgstr "Czad"
+
+#: review.php:109
+msgid "Chile"
+msgstr "Czile"
+
+#: review.php:110
+msgid "China"
+msgstr "Chiny"
+
+#: review.php:111
+msgid "Christmas Island"
+msgstr "Wyspy Bożego Narodzenia"
+
+#: review.php:112
+msgid "Cocos (Keeling) Islands"
+msgstr "Wyspy Cocos (Keeling)"
+
+#: review.php:113
+msgid "Colombia"
+msgstr "Kolumbia"
+
+#: review.php:114
+msgid "Comoros"
+msgstr "Komoros"
+
+#: review.php:115
+msgid "Congo"
+msgstr "Kongo"
+
+#: review.php:116
+msgid "Cook Islands"
+msgstr "Wyspy Cooka"
+
+#: review.php:117
+msgid "Costa Rica"
+msgstr "Coasta Rica"
+
+#: review.php:118
+msgid "Cote D'Ivoire"
+msgstr "Cote D'Ivoire"
+
+#: review.php:119
+msgid "Croatia"
+msgstr "Chorwacja"
+
+#: review.php:120
+msgid "Cuba"
+msgstr "Kuba"
+
+#: review.php:121
+msgid "Curacao"
+msgstr "Kurakao"
+
+#: review.php:122
+msgid "Cyprus"
+msgstr "Cypr"
+
+#: review.php:123
+msgid "Czech Republic"
+msgstr "Czechy"
+
+#: review.php:124
+msgid "Democratic Republic of Congo"
+msgstr "Demokratyczna Republika Konga"
+
+#: review.php:125
+msgid "Denmark"
+msgstr "Dania"
+
+#: review.php:126
+msgid "Djibouti"
+msgstr "Dżibuti"
+
+#: review.php:127
+msgid "Dominica"
+msgstr "Dominikana"
+
+#: review.php:128
+msgid "Dominican Republic"
+msgstr "Republika Dominikany"
+
+#: review.php:129
+msgid "East Timor"
+msgstr "East Timor"
+
+#: review.php:130
+msgid "Ecuador"
+msgstr "Ekwador"
+
+#: review.php:131
+msgid "Egypt"
+msgstr "Egipt"
+
+#: review.php:132
+msgid "El Salvador"
+msgstr "El Salwador"
+
+#: review.php:133
+msgid "Equatorial Guinea"
+msgstr "Equatorial Gwinea"
+
+#: review.php:134
+msgid "Eritrea"
+msgstr "Eritrea"
+
+#: review.php:135
+msgid "Estonia"
+msgstr "Estonia"
+
+#: review.php:136
+msgid "Ethiopia"
+msgstr "Etiopia"
+
+#: review.php:137
+msgid "Falkland Islands (Malvinas)"
+msgstr "Wyspy Falklandy"
+
+#: review.php:138
+msgid "Faroe Islands"
+msgstr "Wyspy Faroe"
+
+#: review.php:139
+msgid "Fiji"
+msgstr "Fidżi"
+
+#: review.php:141 review.php:503
+msgid "France, Metropolitan"
+msgstr "Francja, Metropolitan"
+
+#: review.php:142
+msgid "French Guiana"
+msgstr "Gujana Francuska"
+
+#: review.php:143
+msgid "French Polynesia"
+msgstr "Polinezja Francuska"
+
+#: review.php:144
+msgid "French Southern Territories"
+msgstr "Francuskie Terytori Połudiowe"
+
+#: review.php:145
+msgid "FYROM"
+msgstr "FYROM"
+
+#: review.php:146
+msgid "Gabon"
+msgstr "Gabon"
+
+#: review.php:147
+msgid "Gambia"
+msgstr "Gambia"
+
+#: review.php:148
+msgid "Georgia"
+msgstr "Gruzja"
+
+#: review.php:149
+msgid "Germany"
+msgstr "Niemcy"
+
+#: review.php:150
+msgid "Ghana"
+msgstr "Gana"
+
+#: review.php:151
+msgid "Gibraltar"
+msgstr "Gibralar"
+
+#: review.php:152
+msgid "Greece"
+msgstr "Grecja"
+
+#: review.php:153
+msgid "Greenland"
+msgstr "Grenlandia"
+
+#: review.php:154
+msgid "Grenada"
+msgstr "Grenada"
+
+#: review.php:155
+msgid "Guadeloupe"
+msgstr "Gyadelupa"
+
+#: review.php:156
+msgid "Guam"
+msgstr "Guam"
+
+#: review.php:157
+msgid "Guatemala"
+msgstr "Guatemala"
+
+#: review.php:158
+msgid "Guernsey"
+msgstr "Guernsey"
+
+#: review.php:159
+msgid "Guinea"
+msgstr "Gwinea"
+
+#: review.php:160
+msgid "Guinea-Bissau"
+msgstr "Gwinea- Bissau"
+
+#: review.php:161
+msgid "Guyana"
+msgstr "Gujana"
+
+#: review.php:162
+msgid "Haiti"
+msgstr "Haiti"
+
+#: review.php:163
+msgid "Heard and Mc Donald Islands"
+msgstr "Heard and Mc Donald Islands"
+
+#: review.php:164
+msgid "Honduras"
+msgstr "Honduras"
+
+#: review.php:166
+msgid "Hungary"
+msgstr "Węgry"
+
+#: review.php:167
+msgid "Iceland"
+msgstr "Islandia"
+
+#: review.php:168
+msgid "India"
+msgstr "India"
+
+#: review.php:169
+msgid "Indonesia"
+msgstr "Indonezja"
+
+#: review.php:170
+msgid "Iran (Islamic Republic of)"
+msgstr "Iran"
+
+#: review.php:171
+msgid "Iraq"
+msgstr "Irak"
+
+#: review.php:172
+msgid "Ireland"
+msgstr "Irlandia"
+
+#: review.php:173
+msgid "Isle of Man"
+msgstr "Isle of Man"
+
+#: review.php:174
+msgid "Israel"
+msgstr "Izrael"
+
+#: review.php:175 review.php:504
+msgid "Italy"
+msgstr "Włochy"
+
+#: review.php:176
+msgid "Jamaica"
+msgstr "Jamaica"
+
+#: review.php:177
+msgid "Japan"
+msgstr "Japonia"
+
+#: review.php:178
+msgid "Jersey"
+msgstr "Jersey"
+
+#: review.php:179
+msgid "Jordan"
+msgstr "Jordania"
+
+#: review.php:180
+msgid "Kazakhstan"
+msgstr "Kazachstan"
+
+#: review.php:181
+msgid "Kenya"
+msgstr "Kenia"
+
+#: review.php:182
+msgid "Kiribati"
+msgstr "Kiribati"
+
+#: review.php:183
+msgid "Korea, Republic of"
+msgstr "Korea"
+
+#: review.php:184
+msgid "Kosovo, Republic of"
+msgstr "Kosowo"
+
+#: review.php:185
+msgid "Kuwait"
+msgstr "Kuwejt"
+
+#: review.php:186
+msgid "Kyrgyzstan"
+msgstr "Kirgistan"
+
+#: review.php:187
+msgid "Lao People's Democratic Republic"
+msgstr "Lao People's Democratic Republic"
+
+#: review.php:188
+msgid "Latvia"
+msgstr "Łotwa"
+
+#: review.php:189
+msgid "Lebanon"
+msgstr "Libania"
+
+#: review.php:190
+msgid "Lesotho"
+msgstr "Lesoto"
+
+#: review.php:191
+msgid "Liberia"
+msgstr "Liberia"
+
+#: review.php:192
+msgid "Libyan Arab Jamahiriya"
+msgstr "Libyan Arab Jamahiriya"
+
+#: review.php:193
+msgid "Liechtenstein"
+msgstr "Lichtensztain"
+
+#: review.php:194
+msgid "Lithuania"
+msgstr "Litwa"
+
+#: review.php:195
+msgid "Luxembourg"
+msgstr "Luksemburg"
+
+#: review.php:196
+msgid "Macau"
+msgstr "Makao"
+
+#: review.php:197
+msgid "Madagascar"
+msgstr "Madagaskar"
+
+#: review.php:198
+msgid "Malawi"
+msgstr "Malawi"
+
+#: review.php:199
+msgid "Malaysia"
+msgstr "Malezja"
+
+#: review.php:200
+msgid "Maldives"
+msgstr "Malediwy"
+
+#: review.php:201
+msgid "Mali"
+msgstr "Mali"
+
+#: review.php:202
+msgid "Malta"
+msgstr "Malta"
+
+#: review.php:203
+msgid "Marshall Islands"
+msgstr "Wyspy Marszala"
+
+#: review.php:204
+msgid "Martinique"
+msgstr "Martynika"
+
+#: review.php:205
+msgid "Mauritania"
+msgstr "Mauritania"
+
+#: review.php:206
+msgid "Mauritius"
+msgstr "Mauritius"
+
+#: review.php:207
+msgid "Mayotte"
+msgstr "Mayotte"
+
+#: review.php:208
+msgid "Mexico"
+msgstr "Meksyk"
+
+#: review.php:209
+msgid "Micronesia, Federated States of"
+msgstr "Mikronezja"
+
+#: review.php:210
+msgid "Moldova, Republic of"
+msgstr "Mołdawia"
+
+#: review.php:211
+msgid "Monaco"
+msgstr "Monako"
+
+#: review.php:212
+msgid "Mongolia"
+msgstr "Mongolia"
+
+#: review.php:213
+msgid "Montenegro"
+msgstr "Montenegro"
+
+#: review.php:214
+msgid "Montserrat"
+msgstr "Montserrat"
+
+#: review.php:215
+msgid "Morocco"
+msgstr "Maroko"
+
+#: review.php:216
+msgid "Mozambique"
+msgstr "Mozambik"
+
+#: review.php:217
+msgid "Myanmar"
+msgstr "Mianmar"
+
+#: review.php:218
+msgid "Namibia"
+msgstr "Namibi"
+
+#: review.php:219
+msgid "Nauru"
+msgstr "Nauru"
+
+#: review.php:220
+msgid "Nepal"
+msgstr "Nepal"
+
+#: review.php:221
+msgid "Netherlands"
+msgstr "Holandia"
+
+#: review.php:222
+msgid "Netherlands Antilles"
+msgstr "Netherlands Antilles"
+
+#: review.php:223
+msgid "New Caledonia"
+msgstr "Nowa Kaledonia"
+
+#: review.php:224 review.php:505
+msgid "New Zealand"
+msgstr "Nowa Zelandia"
+
+#: review.php:225
+msgid "Nicaragua"
+msgstr "Nikaragua"
+
+#: review.php:226
+msgid "Niger"
+msgstr "Niger"
+
+#: review.php:227
+msgid "Nigeria"
+msgstr "Nigeria"
+
+#: review.php:228
+msgid "Niue"
+msgstr "Niue"
+
+#: review.php:229
+msgid "Norfolk Island"
+msgstr "Wyspy Nortfolk"
+
+#: review.php:230
+msgid "North Korea"
+msgstr "Korea Północna"
+
+#: review.php:231
+msgid "Northern Mariana Islands"
+msgstr "Wyspy Północne Marian"
+
+#: review.php:232
+msgid "Norway"
+msgstr "Norwegia"
+
+#: review.php:233
+msgid "Oman"
+msgstr "Oman"
+
+#: review.php:234
+msgid "Pakistan"
+msgstr "Pakistan"
+
+#: review.php:235
+msgid "Palau"
+msgstr "Palau"
+
+#: review.php:236
+msgid "Palestinian Territory, Occupied"
+msgstr "Palestyna"
+
+#: review.php:237
+msgid "Panama"
+msgstr "Panama"
+
+#: review.php:238
+msgid "Papua New Guinea"
+msgstr "Papua Nowa Gwinea"
+
+#: review.php:239
+msgid "Paraguay"
+msgstr "Paragwaj"
+
+#: review.php:240
+msgid "Peru"
+msgstr "Peru"
+
+#: review.php:241
+msgid "Philippines"
+msgstr "Filipiny"
+
+#: review.php:242
+msgid "Pitcairn"
+msgstr "Pitcairn"
+
+#: review.php:243 review.php:506
+msgid "Poland"
+msgstr "Polska"
+
+#: review.php:244 review.php:507
+msgid "Portugal"
+msgstr "Portugalia"
+
+#: review.php:245
+msgid "Puerto Rico"
+msgstr "Puerto Rico"
+
+#: review.php:246
+msgid "Qatar"
+msgstr "Katar"
+
+#: review.php:247
+msgid "Reunion"
+msgstr "Reunion"
+
+#: review.php:248
+msgid "Romania"
+msgstr "Rumunia"
+
+#: review.php:249
+msgid "Russian Federation"
+msgstr "Rosja"
+
+#: review.php:250
+msgid "Rwanda"
+msgstr "Rwanda"
+
+#: review.php:251
+msgid "Saint Kitts and Nevis"
+msgstr "Saint Kitts and Nevis"
+
+#: review.php:252
+msgid "Saint Lucia"
+msgstr "Święta Lucja"
+
+#: review.php:253
+msgid "Saint Vincent and the Grenadines"
+msgstr "Saint Vincent and the Grenadines"
+
+#: review.php:254
+msgid "Samoa"
+msgstr "Samoa"
+
+#: review.php:255
+msgid "San Marino"
+msgstr "San Marino"
+
+#: review.php:256
+msgid "Sao Tome and Principe"
+msgstr "Sao Tome and Principe"
+
+#: review.php:257
+msgid "Saudi Arabia"
+msgstr "Arabia Saudyjska"
+
+#: review.php:258
+msgid "Senegal"
+msgstr "Senegal"
+
+#: review.php:259
+msgid "Serbia"
+msgstr "Serbia"
+
+#: review.php:260
+msgid "Seychelles"
+msgstr "Seszele"
+
+#: review.php:261
+msgid "Sierra Leone"
+msgstr "Sierra Leone"
+
+#: review.php:262
+msgid "Singapore"
+msgstr "Singapur"
+
+#: review.php:263
+msgid "Slovak Republic"
+msgstr "Słowacja"
+
+#: review.php:264
+msgid "Slovenia"
+msgstr "Słowenia"
+
+#: review.php:265
+msgid "Solomon Islands"
+msgstr "Wyspy Solmona"
+
+#: review.php:266
+msgid "Somalia"
+msgstr "Somalia"
+
+#: review.php:267
+msgid "South Africa"
+msgstr "Afryka Południowa"
+
+#: review.php:268
+msgid "South Georgia &amp; South Sandwich Islands"
+msgstr "South Georgia &amp; South Sandwich Islands"
+
+#: review.php:269
+msgid "South Sudan"
+msgstr "Sudan Południowy"
+
+#: review.php:270
+msgid "Spain"
+msgstr "Hiszpania"
+
+#: review.php:271
+msgid "Sri Lanka"
+msgstr "Sri Lanka"
+
+#: review.php:272
+msgid "St. Barthelemy"
+msgstr "St. Barthelemy"
+
+#: review.php:273
+msgid "St. Helena"
+msgstr "Święta Helena"
+
+#: review.php:274
+msgid "St. Martin (French part)"
+msgstr "St. Martin (French part)"
+
+#: review.php:275
+msgid "St. Pierre and Miquelon"
+msgstr "St. Pierre and Miquelon"
+
+#: review.php:276
+msgid "Sudan"
+msgstr "Sudan"
+
+#: review.php:277
+msgid "Suriname"
+msgstr "Suriname"
+
+#: review.php:278
+msgid "Svalbard and Jan Mayen Islands"
+msgstr "Svalbard and Jan Mayen Islands"
+
+#: review.php:279
+msgid "Swaziland"
+msgstr "Swaziland"
+
+#: review.php:280
+msgid "Sweden"
+msgstr "Szwecja"
+
+#: review.php:281
+msgid "Switzerland"
+msgstr "Szwajcaria"
+
+#: review.php:282
+msgid "Syrian Arab Republic"
+msgstr "Syria"
+
+#: review.php:283
+msgid "Taiwan"
+msgstr "Taiwan"
+
+#: review.php:284
+msgid "Tajikistan"
+msgstr "Tadżykistan"
+
+#: review.php:285
+msgid "Tanzania, United Republic of"
+msgstr "Tanzania"
+
+#: review.php:286
+msgid "Thailand"
+msgstr "Tailandia"
+
+#: review.php:287
+msgid "Togo"
+msgstr "Togo"
+
+#: review.php:288
+msgid "Tokelau"
+msgstr "Tokelau"
+
+#: review.php:289
+msgid "Tonga"
+msgstr "Tonga"
+
+#: review.php:290
+msgid "Trinidad and Tobago"
+msgstr "Trynidad i Tobogo"
+
+#: review.php:291
+msgid "Tristan da Cunha"
+msgstr "Tristan da Cunha"
+
+#: review.php:292
+msgid "Tunisia"
+msgstr "Tunezja"
+
+#: review.php:293
+msgid "Turkey"
+msgstr "Turcja"
+
+#: review.php:294
+msgid "Turkmenistan"
+msgstr "Turkmenistan"
+
+#: review.php:295
+msgid "Turks and Caicos Islands"
+msgstr "Turks and Caicos Islands"
+
+#: review.php:296
+msgid "Tuvalu"
+msgstr "Tuvalu"
+
+#: review.php:297
+msgid "Uganda"
+msgstr "Uganda"
+
+#: review.php:298
+msgid "Ukraine"
+msgstr "Ukraina"
+
+#: review.php:299
+msgid "United Arab Emirates"
+msgstr "Emiraty Arabskie"
+
+#: review.php:300 review.php:508
+msgid "United Kingdom"
+msgstr "Wielka Brytania"
+
+#: review.php:301
+msgid "United States"
+msgstr "Stany Zjednoczone"
+
+#: review.php:302
+msgid "United States Minor Outlying Islands"
+msgstr "United States Minor Outlying Islands"
+
+#: review.php:303
+msgid "Uruguay"
+msgstr "Urugwaj"
+
+#: review.php:304
+msgid "Uzbekistan"
+msgstr "Uzbekistan"
+
+#: review.php:305
+msgid "Vanuatu"
+msgstr "Vanuatu"
+
+#: review.php:306
+msgid "Vatican City State (Holy See)"
+msgstr "Watykan"
+
+#: review.php:307
+msgid "Venezuela"
+msgstr "Wenezuela"
+
+#: review.php:308
+msgid "Viet Nam"
+msgstr "Wietnam"
+
+#: review.php:309
+msgid "Virgin Islands (British)"
+msgstr "Wyspy Dziewicze (U.K.)"
+
+#: review.php:310
+msgid "Virgin Islands (U.S.)"
+msgstr "Wyspy Dziewicze (U.S.)"
+
+#: review.php:311
+msgid "Wallis and Futuna Islands"
+msgstr "Wallis and Futuna Islands"
+
+#: review.php:312
+msgid "Western Sahara"
+msgstr "Sahara Zachodnia"
+
+#: review.php:313
+msgid "Yemen"
+msgstr "Jemen"
+
+#: review.php:314
+msgid "Zambia"
+msgstr "Zambia"
+
+#: review.php:315
+msgid "Zimbabwe"
+msgstr "Zimbabwe"
+
+#: review.php:321 review.php:514
+msgid "State"
+msgstr "Stany"
+
+#: review.php:324 review.php:517
+msgid "Aberdeen"
+msgstr "Aberdeen"
+
+#: review.php:325 review.php:518
+msgid "Aberdeenshire"
+msgstr "Aberdeenshire"
+
+#: review.php:326 review.php:519
+msgid "Anglesey"
+msgstr "Anglesey"
+
+#: review.php:327 review.php:520
+msgid "Angus"
+msgstr "Angus"
+
+#: review.php:328 review.php:521
+msgid "Argyll and Bute"
+msgstr "Argyll and Bute"
+
+#: review.php:329 review.php:522
+msgid "Bedfordshire"
+msgstr "Bedfordshire"
+
+#: review.php:330 review.php:523
+msgid "Berkshire"
+msgstr "Berkshire"
+
+#: review.php:331 review.php:524
+msgid "Blaenau Gwent"
+msgstr "Blaenau Gwent"
+
+#: review.php:332 review.php:525
+msgid "Bridgend"
+msgstr "Bridgend"
+
+#: review.php:333 review.php:526
+msgid "Bristol"
+msgstr "Bristol"
+
+#: review.php:334 review.php:527
+msgid "Buckinghamshire"
+msgstr "Buckinghamshire"
+
+#: review.php:335 review.php:528
+msgid "Caerphilly"
+msgstr "Caerphilly"
+
+#: review.php:336 review.php:529
+msgid "Cambridgeshire"
+msgstr "Cambridgeshire"
+
+#: review.php:337 review.php:530
+msgid "Cardiff"
+msgstr "Cardiff"
+
+#: review.php:338 review.php:531
+msgid "Carmarthenshire"
+msgstr "Carmarthenshire"
+
+#: review.php:339 review.php:532
+msgid "Ceredigion"
+msgstr "Ceredigion"
+
+#: review.php:340 review.php:533
+msgid "Cheshire"
+msgstr "Cheshire"
+
+#: review.php:341 review.php:534
+msgid "Clackmannanshire"
+msgstr "Clackmannanshire"
+
+#: review.php:342 review.php:535
+msgid "Conwy"
+msgstr "Conwy"
+
+#: review.php:343 review.php:536
+msgid "Cornwall"
+msgstr "Cornwall"
+
+#: review.php:344 review.php:537
+msgid "County Antrim"
+msgstr "County Antrim"
+
+#: review.php:345 review.php:538
+msgid "County Armagh"
+msgstr "County Armagh"
+
+#: review.php:346 review.php:539
+msgid "County Down"
+msgstr "County Down"
+
+#: review.php:347 review.php:540
+msgid "County Fermanagh"
+msgstr "County Fermanagh"
+
+#: review.php:348 review.php:541
+msgid "County Londonderry"
+msgstr "County Londonderry"
+
+#: review.php:349 review.php:542
+msgid "County Tyrone"
+msgstr "County Tyrone"
+
+#: review.php:350 review.php:543
+msgid "Cumbria"
+msgstr "Cumbria"
+
+#: review.php:351 review.php:544
+msgid "Denbighshire"
+msgstr "Denbighshire"
+
+#: review.php:352 review.php:545
+msgid "Derbyshire"
+msgstr "Derbyshire"
+
+#: review.php:353 review.php:546
+msgid "Devon"
+msgstr "Devon"
+
+#: review.php:354 review.php:547
+msgid "Dorset"
+msgstr "Dorset"
+
+#: review.php:355 review.php:548
+msgid "Dumfries and Galloway"
+msgstr "Dumfries and Galloway"
+
+#: review.php:356 review.php:549
+msgid "Dundee"
+msgstr "Dundee"
+
+#: review.php:357 review.php:550
+msgid "Durham"
+msgstr "Durham"
+
+#: review.php:358 review.php:551
+msgid "East Ayrshire"
+msgstr "East Ayrshire"
+
+#: review.php:359 review.php:552
+msgid "East Dunbartonshire"
+msgstr "East Dunbartonshire"
+
+#: review.php:360 review.php:553
+msgid "East Lothian"
+msgstr "East Lothian"
+
+#: review.php:361 review.php:554
+msgid "East Renfrewshire"
+msgstr "East Renfrewshire"
+
+#: review.php:362 review.php:555
+msgid "East Riding of Yorkshire"
+msgstr "East Riding of Yorkshire"
+
+#: review.php:363 review.php:556
+msgid "East Sussex"
+msgstr "East Sussex"
+
+#: review.php:364 review.php:557
+msgid "Edinburgh"
+msgstr "Edinburgh"
+
+#: review.php:365 review.php:558
+msgid "Essex"
+msgstr "Essex"
+
+#: review.php:366 review.php:559
+msgid "Falkirk"
+msgstr "Falkirk"
+
+#: review.php:367 review.php:560
+msgid "Fife"
+msgstr "Fife"
+
+#: review.php:368 review.php:561
+msgid "Flintshire"
+msgstr "Flintshire"
+
+#: review.php:369 review.php:562
+msgid "Glasgow"
+msgstr "Glasgow"
+
+#: review.php:370 review.php:563
+msgid "Gloucestershire"
+msgstr "Gloucestershire"
+
+#: review.php:371 review.php:564
+msgid "Greater London"
+msgstr "Greater London"
+
+#: review.php:372 review.php:565
+msgid "Greater Manchester"
+msgstr "Greater Manchester"
+
+#: review.php:373 review.php:566
+msgid "Gwynedd"
+msgstr "Gwynedd"
+
+#: review.php:374 review.php:567
+msgid "Hampshire"
+msgstr "Hampshire"
+
+#: review.php:375 review.php:568
+msgid "Herefordshire"
+msgstr "Herefordshire"
+
+#: review.php:376 review.php:569
+msgid "Hertfordshire"
+msgstr "Hertfordshire"
+
+#: review.php:377 review.php:570
+msgid "Highlands"
+msgstr "Highlands"
+
+#: review.php:378 review.php:571
+msgid "Inverclyde"
+msgstr "Highlands"
+
+#: review.php:379 review.php:572
+msgid "Isle of Wight"
+msgstr "Isle of Wight"
+
+#: review.php:380 review.php:573
+msgid "Kent"
+msgstr "Kent"
+
+#: review.php:381 review.php:574
+msgid "Lancashire"
+msgstr "Lancashire"
+
+#: review.php:382 review.php:575
+msgid "Leicestershire"
+msgstr "Leicestershire"
+
+#: review.php:383 review.php:576
+msgid "Lincolnshire"
+msgstr "Lincolnshire"
+
+#: review.php:384 review.php:577
+msgid "Merseyside"
+msgstr "Merseyside"
+
+#: review.php:385 review.php:578
+msgid "Merthyr Tydfil"
+msgstr "Merthyr Tydfil"
+
+#: review.php:386 review.php:579
+msgid "Midlothian"
+msgstr "Midlothian"
+
+#: review.php:387 review.php:580
+msgid "Monmouthshire"
+msgstr "Monmouthshire"
+
+#: review.php:388 review.php:581
+msgid "Moray"
+msgstr "Moray"
+
+#: review.php:389 review.php:582
+msgid "Neath Port Talbot"
+msgstr "Neath Port Talbot"
+
+#: review.php:390 review.php:583
+msgid "Newport"
+msgstr "Newport"
+
+#: review.php:391 review.php:584
+msgid "Norfolk"
+msgstr "Norfolk"
+
+#: review.php:392 review.php:585
+msgid "North Ayrshire"
+msgstr "North Ayrshire"
+
+#: review.php:393 review.php:586
+msgid "North Lanarkshire"
+msgstr "North Lanarkshire"
+
+#: review.php:394 review.php:587
+msgid "North Yorkshire"
+msgstr "North Yorkshire"
+
+#: review.php:395 review.php:588
+msgid "Northamptonshire"
+msgstr "Northamptonshire"
+
+#: review.php:396 review.php:589
+msgid "Northumberland"
+msgstr "Northumberland"
+
+#: review.php:397 review.php:590
+msgid "Nottinghamshire"
+msgstr "Nottinghamshire"
+
+#: review.php:398 review.php:591
+msgid "Orkney Islands"
+msgstr "Orkney Islands"
+
+#: review.php:399 review.php:592
+msgid "Oxfordshire"
+msgstr "Oxfordshire"
+
+#: review.php:400 review.php:593
+msgid "Pembrokeshire"
+msgstr "Pembrokeshire"
+
+#: review.php:401 review.php:594
+msgid "Perth and Kinross"
+msgstr "Perth and Kinross"
+
+#: review.php:402 review.php:595
+msgid "Powys"
+msgstr "Powys"
+
+#: review.php:403 review.php:596
+msgid "Renfrewshire"
+msgstr "Renfrewshire"
+
+#: review.php:404 review.php:597
+msgid "Rhondda Cynon Taff"
+msgstr "Rhondda Cynon Taff"
+
+#: review.php:405 review.php:598
+msgid "Rutland"
+msgstr "Rutland"
+
+#: review.php:406 review.php:599
+msgid "Scottish Borders"
+msgstr "Scottish Borders"
+
+#: review.php:407 review.php:600
+msgid "Shetland Islands"
+msgstr "Shetland Islands"
+
+#: review.php:408 review.php:601
+msgid "Shropshire"
+msgstr "Shropshire"
+
+#: review.php:409 review.php:602
+msgid "Somerset"
+msgstr "Somerset"
+
+#: review.php:410 review.php:603
+msgid "South Ayrshire"
+msgstr "South Ayrshire"
+
+#: review.php:411 review.php:604
+msgid "South Lanarkshire"
+msgstr "South Lanarkshire"
+
+#: review.php:412 review.php:605
+msgid "South Yorkshire"
+msgstr "South Yorkshire"
+
+#: review.php:413 review.php:606
+msgid "Staffordshire"
+msgstr "Staffordshire"
+
+#: review.php:414 review.php:607
+msgid "Stirling"
+msgstr "Stirling"
+
+#: review.php:415 review.php:608
+msgid "Suffolk"
+msgstr "Suffolk"
+
+#: review.php:416 review.php:609
+msgid "Surrey"
+msgstr "Surrey"
+
+#: review.php:417 review.php:610
+msgid "Swansea"
+msgstr "Swansea"
+
+#: review.php:418 review.php:611
+msgid "Torfaen"
+msgstr "Torfaen"
+
+#: review.php:419 review.php:612
+msgid "Tyne and Wear"
+msgstr "Tyne and Wear"
+
+#: review.php:420 review.php:613
+msgid "Vale of Glamorgan"
+msgstr "Vale of Glamorgan"
+
+#: review.php:421 review.php:614
+msgid "Warwickshire"
+msgstr "Warwickshire"
+
+#: review.php:422 review.php:615
+msgid "West Dunbartonshire"
+msgstr "West Dunbartonshire"
+
+#: review.php:423 review.php:616
+msgid "West Lothian"
+msgstr "West Lothian"
+
+#: review.php:424 review.php:617
+msgid "West Midlands"
+msgstr "West Midlands"
+
+#: review.php:425 review.php:618
+msgid "West Sussex"
+msgstr "West Sussex"
+
+#: review.php:426 review.php:619
+msgid "West Yorkshire"
+msgstr "West Yorkshire"
+
+#: review.php:427 review.php:620
+msgid "Western Isles"
+msgstr "Western Isles"
+
+#: review.php:428 review.php:621
+msgid "Wiltshire"
+msgstr "Wiltshire"
+
+#: review.php:429 review.php:622
+msgid "Worcestershire"
+msgstr "Worcestershire"
+
+#: review.php:430 review.php:623
+msgid "Wrexham"
+msgstr "Wrexham"
+
+#: review.php:439 review.php:632
+msgid "First Name"
+msgstr "Imię"
+
+#: review.php:445 review.php:638
+msgid "Last Name"
+msgstr "Nazwisko"
+
+#: review.php:454 review.php:647
+msgid "Address"
+msgstr "Adres"
+
+#: review.php:477 review.php:670
+msgid "next"
+msgstr "dalej"
+
+#: review.php:488
+msgid "Billing Information"
+msgstr "Informacje"
+
+#: review.php:683
+msgid "Total:"
+msgstr "Całkowita:"
+
+#: review.php:691
+msgid "Continue Shopping"
+msgstr "Kontynuuj zakupy"
+
+#: review.php:692
+msgid "Checkout"
+msgstr "Podsumuj"
+
+#: conditions_of_use.php:2
+msgid "Terms and Conditions"
+msgstr "Warunki korzystania "
+
+#: conditions_of_use.php:3
+msgid "DigitalDiscount.co.uk Conditions of Use and Sale"
+msgstr "Elektroraj.pl Warunki użytkowania i Sprzedaży"
+
+#: conditions_of_use.php:9 conditions_of_use.php:29
+msgid "SITE CONTENTS, OWNERSHIP, AND USE RESTRICTIONS"
+msgstr "ZAWARTOŚĆ WITRYNY, PRAWA WŁASNOŚCI, ORAZ OGRANICZENIA"
+
+#: conditions_of_use.php:10 conditions_of_use.php:46
+msgid "PLACING AN ORDER"
+msgstr "SKŁADANIE ZAMÓWIENIA"
+
+#: conditions_of_use.php:11 conditions_of_use.php:64
+msgid "TAX AND DUTIES"
+msgstr "PODATKI I OPŁATY"
+
+#: conditions_of_use.php:12 conditions_of_use.php:74
+msgid "DELIVERY"
+msgstr "DOSTAWA"
+
+#: conditions_of_use.php:13 conditions_of_use.php:82
+msgid "CANCELLING YOUR ORDER"
+msgstr "ANULOWANIE ZAMÓWIENIA"
+
+#: conditions_of_use.php:14 conditions_of_use.php:88
+msgid "DEFECTIVE ITEM"
+msgstr "USZKODZONY TOWAR"
+
+#: conditions_of_use.php:15 conditions_of_use.php:97
+msgid "DISCLAIMER OF LIABILITY"
+msgstr "WYŁĄCZENIE ODPOWIEDZIALNOŚCI"
+
+#: conditions_of_use.php:17 conditions_of_use.php:121
+msgid "CONDITIONS OF USE REVISIONS"
+msgstr "ZMIANY W WARUNKACH UŻYTKOWANIA"
+
+#: conditions_of_use.php:22
+msgid ""
+"DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by "
+"ChatandVision Ltd (ChatandVision). By visiting or shopping at the "
+"DigitalDiscount website, you agree to accept and be bound by these "
+"conditions of use, as well as any other policies posted on the website, as "
+"modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN "
+"PLEASE DO NOT USE THE SITE."
+msgstr ""
+"Elektroraj.pl (Elektroraj) jest w całości własnością i jest zarządzany przez "
+"ChatandVision Ltd (ChatandVision). Odwiedzając lub dokonując zakupu na "
+"stronie DigitalDiscount, akceptują Państwo niniejsze warunki użytkowania, a "
+"także inne zasady zamieszczone na tej stronie internetowej, wraz z nowymi "
+"zmianami. JEŚLI NIE WYRAŻAJĄ PAŃŚTWO ZGODY NA NINIEJSZE WARUNKI TO PROSIMY O "
+"OPUSZCZENIE TEJ STRONY."
+
+#: conditions_of_use.php:24
+msgid ""
+"DigitalDiscount  is a trading name owned by ChatandVision Ltd with "
+"registered offices at Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle "
+"Street, Kowloon, Hong Kong. Through its websites, ChatandVision Ltd offers "
+"consumer electronics hardware, and services. "
+msgstr ""
+"DigitalDiscount jest nazwą handlową stanowiącą własność ChatandVision Ltd z "
+"siedzibą Flat / RM 12, 25 / F Langham Place Office Tower 8 Argyle Street, "
+"Kowloon, Hong Kong. Na swoich stronach internetowych, ChatandVision Ltd "
+"oferuje sprzęt elektroniczny i usługi."
+
+#: conditions_of_use.php:26
+msgid ""
+"If you have any queries relating to our terms and conditions, please contact "
+"the Customer Support team or read our FAQ."
+msgstr ""
+"Jeśli mają Państwo jakiekolwiek pytania dotyczące naszych warunków i "
+"regulaminów to prosimy o kontakt z Działem Obsługi Klienta lub zapoznanie "
+"się z naszym FAQ."
+
+#: conditions_of_use.php:31
+msgid ""
+"The information contained in this Site including all images, illustrations, "
+"designs, photographs, video clips, writings and other materials that appear "
+"herein are copyrights, trademarks, trade dress or other intellectual "
+"property owned, controlled, or licensed (all of which, collectively, are "
+"herein referred to as the \"Contents\") by ChatandVision Ltd or its "
+"subsidiaries and affiliates (\"ChatandVision\") or are the property of their "
+"respective owners. The name ChatandVision and the ChatandVision logo are "
+"registered marks of ChatandVision. "
+msgstr ""
+"Informacje zawarte na tej stronie, w tym wszystkie obrazy, ilustracje, "
+"projekty, zdjęcia, pliki wideo, teksty i inne materiały, które się tutaj "
+"pojawiają, prawa autorskie, znaki towarowe, handlowe lub inna własność "
+"intelektualna, są kontrolowane i licencjonowane (z których wszystkie, "
+"łącznie określa się je jako \"treści\") przez ChatandVision Ltd. lub jej "
+"podmioty zależne i stowarzyszone (\"ChatandVision\") lub są własnością ich "
+"prawowitych właścicieli. Nazwa ChatandVision i logo ChatandVision są "
+"zarejestrowanymi znakami należącymi do ChatandVision."
+
+#: conditions_of_use.php:33
+msgid ""
+"Permission is granted to display, copy, distribute, download, and print in "
+"hard copy portions of this Site for the purposes of: "
+msgstr ""
+"Udziela się zgody na wyświetlanie, kopiowanie, rozpowszechnianie, pobieranie "
+"i drukowanie części tej witryny w celach:"
+
+#: conditions_of_use.php:35
+msgid "placing an order with DigitalDiscount.co.uk or"
+msgstr "• złożenia zamówienia z DigitalDiscount.co.uk lub"
+
+#: conditions_of_use.php:36
+msgid ""
+"using this Site as a shopping resource, provided you do not modify the Site "
+"and that you retain all copyright and other proprietary notices contained in "
+"the Contents."
+msgstr ""
+"korzystania z tej witryny jako zasobu handlowego, pod warunkiem, nie "
+"modyfikowania tej witryny i zachowania wszelkich praw autorskich i innych "
+"zastrzeżeń zawartych w treści."
+
+#: conditions_of_use.php:38
+msgid ""
+"Except in connection with shopping or placing an order, none of the Contents "
+"may be copied, reproduced, distributed, re-published, downloaded, displayed, "
+"posted electronically or mechanically, transmitted, recorded, in any manner "
+"mirrored, photocopied, or reproduced without the prior written permission of "
+"ChatandVision or the applicable copyright owner. "
+msgstr ""
+"Z wyjątkiem zakupów lub złożenia zamówienia, żadna z treści nie może być "
+"kopiowana, reprodukowana, rozpowszechniana, ponownie publikowana, pobierana, "
+"wyświetlana, publikowana elektronicznie lub mechanicznie, przesyłana, "
+"rejestrowana w jakikolwiek sposób lustrzany, kopiowana lub powielana bez "
+"uprzedniej pisemnej zgody ChatandVision lub prawowitego właściciela praw "
+"autorskich."
+
+#: conditions_of_use.php:40
+msgid ""
+"Please note that the permission granted herein terminates automatically if "
+"you breach any of these Site terms or conditions. Any other use of the "
+"Contents on this Site including reproduction for purposes other than as "
+"noted above, and including any reproduction, modification, distribution, or "
+"republication may violate copyright or trademark laws, and, without the "
+"prior written permission of ChatandVision, is strictly prohibited."
+msgstr ""
+"Należy pamiętać, że przyznane uprawnienie kończą się automatycznie w "
+"przypadku naruszenia któregokolwiek warunku lub zasady zawartej na tej "
+"witrynie. Każde inne wykorzystanie treści na tej stronie, w tym powielanie "
+"dla celów innych niż podano powyżej, każda reprodukcja, modyfikacja, "
+"dystrybucja lub publikacją może stanowić naruszenie praw autorskich i "
+"przepisów o znakach towarowych i bez uprzedniej pisemnej zgody "
+"ChatandVision, jest surowo zabronione."
+
+#: conditions_of_use.php:42
+msgid ""
+"If you choose to leave this Site via links to other non-ChatandVision "
+"operated sites, ChatandVision is not responsible for the privacy policies of "
+"those sites or the cookies those sites use."
+msgstr ""
+"Jeśli zdecydujesz się na opuszczenie tej strony poprzez linki do innych "
+"witryn nieobsługiwanych przez ChatandVision, to ChatandVision nie ponosi "
+"odpowiedzialności za politykę prywatności tych stron lub wykorzystanie "
+"plików cookies."
+
+#: conditions_of_use.php:48
+msgid ""
+"The prices advertised on this Site are for Internet orders. Prices and the "
+"availability of items are subject to change without notice. Any recommended "
+"retail prices used on this Site are based on manufacturers’ suggested retail "
+"prices and may not be indicative of the actual selling prices in your area."
+msgstr ""
+"Ceny przedstawione na tej stronie odnoszą się do zamówień internetowych. "
+"Ceny oraz dostępność produktów mogą ulec zmianie bez powiadomienia. Zalecane "
+"ceny detaliczne użyte na tej stronie są oparte na sugerowanych cenach "
+"detalicznych producentów i nie mogą świadczyć o rzeczywistych cenach "
+"sprzedaży w Państwa okolicy."
+
+#: conditions_of_use.php:50
+msgid ""
+"Any reference to savings used on this Site indicates the promotional savings "
+"off the recommended retail price and the actual savings will vary depending "
+"upon the goods purchased and the date of the transaction."
+msgstr ""
+"Wszelkie odniesienia do oszczędności wykorzystane na tej stronie oznacza "
+"oszczędności promocyjne w stosunku do zalecanej ceny detalicznej a "
+"rzeczywiste oszczędności będą się różnić w zależności od zakupionych towarów "
+"i daty transakcji."
+
+#: conditions_of_use.php:52
+msgid ""
+"Please check carefully that all information given is accurate and complete "
+"when placing an order."
+msgstr ""
+"Proszę o dokładne sprawdzenie, czy wszystkie podane informacje są prawdziwe "
+"i kompletne podczas składania zamówienia."
+
+#: conditions_of_use.php:54
+msgid ""
+"Payment for all orders must be made in advance by credit or debit card. We "
+"accept payment from most major credit and debit cards as well as PayPal and "
+"Skrill (formerly known as MoneyBookers). "
+msgstr ""
+"Płatności za wszystkie zamówienia muszą być wykonane jako przedpłata za "
+"pomocą karty kredytowej lub debetowej. Akceptujemy płatności od większości "
+"głównych kart kredytowych i debetowych, a także PayPal i Skrill (dawniej "
+"Moneybookers)."
+
+#: conditions_of_use.php:56
+msgid ""
+"While we make every effort to provide accurate information, technical "
+"inaccuracies or typographic or photographic errors may occur. We reserve the "
+"right to make changes, corrections, and/or improvements to the information "
+"contained on this Site at any time without notice."
+msgstr ""
+"Pomimo dokładania wszelkich starań, aby zapewnić dokładne informacje, mogą "
+"wystąpić nieścisłości techniczne lub błędy typograficzne lub fotograficzne. "
+"Zastrzegamy sobie prawo do wprowadzania zmian, poprawek i / lub ulepszeń do "
+"informacji zawartych na tej stronie w dowolnym czasie i bez powiadomienia."
+
+#: conditions_of_use.php:58
+msgid ""
+"There may be certain orders that we are either unable to accept or must "
+"cancel. We reserve the right, at our sole discretion, to refuse or cancel "
+"any order for any reason. Possible circumstances involving cancellation of "
+"orders may be limitations on quantities available for purchases or "
+"inaccuracies or errors in product or pricing information."
+msgstr ""
+"Mogą wystąpić pewne zlecenia, których nie jesteśmy w stanie przyjąć lub "
+"musimy anulować. Zastrzegamy sobie prawo, według własnego uznania do odmowy "
+"lub anulowania zamówienia bez podania przyczyny. Możliwymi okolicznościami "
+"do anulowania zleceń mogą być ograniczenia dotyczące dostępności produktów "
+"do zakupów, nieścisłości lub błędy w informacji o produkcie lub błędna cena."
+
+#: conditions_of_use.php:60
+msgid ""
+"When you place an order to purchase a product from DigitalDiscount.co.uk, we "
+"will send you an e-mail confirming receipt of your order and containing the "
+"details of your order. Your order represents an offer to us to purchase a "
+"product which is accepted by us when we send e-mail confirmation to you that "
+"we've dispatched that product to you (the \"Dispatch Confirmation E-mail\"). "
+"That acceptance will be complete at the time we send the Dispatch "
+"Confirmation E-mail to you. Any products on the same order which we have not "
+"confirmed in a Dispatch Confirmation E-mail to have been dispatched do not "
+"form part of that contract."
+msgstr ""
+"Po złożeniu zamówienia na zakup produktu z DigitalDiscount.co.uk, wyślemy do "
+"Ciebie e-mail potwierdzający otrzymanie zamówienia oraz zawierający "
+"szczegóły zamówienia. Twoje zamówienie stanowi dla nas ofertę, aby zakupić "
+"produkt, która zostanie zaakceptowana przez nas w momencie wysłania do "
+"Państwa potwierdzenia e-mail, że produkt został wysłany (“E-mail "
+"potwierdzający wysłanie przedmiotu\"). Akceptacja zamówienia będzie "
+"kompletna w momencie wysłania do Państwa e-maila potwierdzającego wysyłkę "
+"przedmiotu. Wszelkie produkty, które nie zostały zawarte w mailu "
+"potwierdzającym wysyłkę nie są częścią umowy."
+
+#: conditions_of_use.php:66
+msgid ""
+"In using our services, you authorize ChatandVision to make arrangements for "
+"customs clearance for the products ordered. The responsibility for ensuring "
+"that your ordered product can be lawfully imported outside of Hong Kong to "
+"your destination country remains with our customers, and any applicable "
+"import duties and taxes will be subjected to the recipient. We do not have "
+"control over these import duties and taxes. Customs policies vary widely "
+"from country to country, hence if you should have any queries regarding your "
+"local Customs policies, contact your local Customs office for further "
+"information. "
+msgstr ""
+"Korzystając z naszych usług, zezwalasz ChatandVision dokonać uzgodnień "
+"dotyczących odpraw celnych zamówionych produktów. Odpowiedzialność za "
+"zapewnienie, że zamówiony produkt może być legalnie importowany z Hong Kongu "
+"do kraju docelowego pozostaje w gesti klienta, a wszelkie obowiązujące cła "
+"przywozowe i podatki spoczywają na odbiorcy. Nie mamy kontroli nad cłem "
+"przywozowym i podatkami. Polityka celna różni się znacznie w różnych "
+"krajach, a tym samym w przypadku jakichkolwiek pytań dotyczących lokalnej "
+"polityki celnej, skontaktuj się z lokalnym biurem Celnym w celu uzyskania "
+"dalszych informacji. "
+
+#: conditions_of_use.php:68
+msgid ""
+"Where the price of the goods allows, certain shipments to some countries may "
+"include a fee which is borne by ChatandVision, for import of the goods. This "
+"will be noted on your shipment invoice."
+msgstr ""
+"W pewnych przypadkach gdy cena produktu to umożliwia cena może zawierać "
+"opłaty celne, które są ponoszone przez ChatandVision. Zostanie to zaznaczone "
+"na fakturze wysyłki. "
+
+#: conditions_of_use.php:70
+msgid ""
+"In the event where customs clearance is required, this will cause delays to "
+"the original delivery estimate."
+msgstr ""
+" W przypadku, gdy wymagana jest odprawa celna, może to spowodować opóźnienia "
+"w pierwotnym szacunkowym terminie dostawy."
+
+#: conditions_of_use.php:76
+msgid ""
+"Goods will be sent to the address given by you in your order. If you are "
+"ordering more than one item, your goods may be sent to you in separate "
+"shipments. There will not be extra delivery charges for these delivery cases."
+msgstr ""
+"Towar zostanie wysłany na adres podany przez Państwa w zamówieniu. W "
+"przypadku zamówienia więcej niż jednego produktu, Państwa towary mogą być "
+"wysłane w odrębnych przesyłkach. W takich przypadkach nie zostaną nałożone "
+"dodatkowe koszty za dostawę."
+
+#: conditions_of_use.php:78
+msgid ""
+"Your order should not take any more than 7 to 14 working days to arrive, "
+"however, this is not guaranteed and we cannot be held responsible for events "
+"outside of our control. If you have not received your order within 20 "
+"working days you should contact our Customer Support team."
+msgstr ""
+"Dostarczenie Twojego zamówienia nie powinno trwać dłużej niż 7 do 14 dni "
+"roboczych, jednak taki czas dostawy nie jest gwarantowany i nie możemy "
+"ponosić odpowiedzialności za wydarzenia poza naszą kontrolą. Jeśli nie "
+"otrzymali Państwo swojego zamówienia w ciągu 20 dni roboczych, należy "
+"skontaktować się z naszym Działem Obsługi Klienta."
+
+#: conditions_of_use.php:84
+msgid ""
+"The period in which you can exercise the right to cancel an order is 30 days "
+"beginning the day after your goods are received. The cancellation request "
+"has to be received by us in writing - by email, or letter. The unused goods "
+"(including any accessories which were included in the price of the goods) "
+"must be returned at the customer's expense within 30 days after receipt of "
+"parcel and customer is responsible for any damage during the transit of the "
+"returned goods, (it also applies to products purchased as Christmas "
+"presents). We reserve the right to have the goods inspected by a technician "
+"prior to replacement or refund. Please note that software packages may only "
+"be returned unopened. Should you cancel your order within the cooling off "
+"period we will issue you a full refund for the price you paid for the "
+"item(s). Any cancellation made outside the 30 day \"cooling-off\" period may "
+"not be accepted."
+msgstr ""
+"Okres, w którym można skorzystać z prawa do anulowania zamówienia to 30 dni "
+"począwszy od dnia po otrzymaniu towarów. Wniosek o anulowanie musi zostać do "
+"nas wysłany w formie pisemnej - pocztą elektroniczną lub listownie. "
+"Nieużywane towary (włącznie ze wszelkimi akcesoriami, które zostały "
+"uwzględnione w cenie towaru) muszą zostać zwrócone na koszt klienta w ciągu "
+"30 dni od otrzymaniu przesyłki. Klient jest odpowiedzialny za jakiekolwiek "
+"szkody w trakcie tranzytu zwracanych towarów, (dotyczy to również produktów "
+"kupowanych jako prezenty świąteczne). Zastrzegamy sobie prawo do "
+"skontrolowania towaru przez technika przed wymianą lub zwrotem wpłaty. "
+"Należy pamiętać, że oprogramowanie może być zwracane tylko w przypadku jesli "
+"nie zostało otwarte. W przypadku anulowania zamówienia w przepisowym "
+"terminie, klient otrzyma pełny zwrot wpłaty za produkty. Anulowanie "
+"zamówienia poza terminem 30 dni nie może być zaakceptowane."
+
+#: conditions_of_use.php:90
+msgid ""
+"In the unlikely event your order is damaged in transit please contact us "
+"immediately. Please send the product back to us in the original packaging "
+"and a valid RMA (Return Merchandise Authorization) form. We will arrange for "
+"a prompt replacement or refund, whichever is your preference. Please note "
+"that we are unable to offer a refund if you notify us about the damaged "
+"goods after more than 30 days starting the day after receipt of goods."
+msgstr ""
+"W mało prawdopodobnym przypadku, gdyby zamówienie zostało uszkodzone w "
+"czasie transportu należy się z nami natychmiast skontaktować. Proszę wysłać "
+"do nas produkt w oryginalnym opakowaniu i ważny formularz zwrotu (Return "
+"Merchandise Authorization). Według woli klienta zorganizujemy wymianę towaru "
+"na nowy lub dokonamy zwrotu wpłaty. Należy pamiętać, że nie jesteśmy w "
+"stanie zaoferować zwrotu pieniędzy, jeśli zostaniemy powiadomieni o "
+"uszkodzonym towarze po upływie 30 dni licząc od dnia następnego po "
+"otrzymaniu towarów."
+
+#: conditions_of_use.php:93
+msgid ""
+"During the RMA process, ChatandVision Ltd will follow up with you via email "
+"on issues requiring your clarification and agreement, using the trading name "
+"DigitalDiscount. If no response is received from you within 7 days from the "
+"date of emailing, ChatandVision will follow up with a kind reminder in the "
+"form of a 1st and 2nd email at 7 day intervals. In the event no response is "
+"received within 7 days of the 2nd email being sent, ChatandVision will send "
+"a 3rd and final reminder email together with a recorded letter. Should no "
+"response be received within 2 weeks from date of final reminders, "
+"ChatandVision reserves the right to dispose of the RMA item(s) at its "
+"discretion in any way seen fit."
+msgstr ""
+"Podczas procesu zwrotu, ChatandVision Ltd będzie się z Państwem kontaktować "
+"poprzez e-mail na temat kwestii wymagających wyjaśnienia i zgody, używając "
+"nazwy handlowej DigitalDiscount. Jeżeli nie otrzymamy odpowiedzi w przeciągu "
+"7 dni liczac od dnia wyslania maila, ChatandVision wyśle przypomnienie w "
+"postaci 1 i 2 maila w przeciągu 7 dni. Jeżeli nadal nie otrzymamy odpowiedzi "
+"w przeciągu 7 dni liczac od dnia wyslania drugiego maila, ChatandVision "
+"wyśle 3. i ostateczny e-mail wraz z listem. Jeżeli po tym czasie nie "
+"otrzymamy odpowiedzi w przeciągu 2 tygodnii licząc od nia ostatniej próby "
+"kontaktu, ChatandVision rości sobie prawo do dysponowania reklamowanym "
+"sprzętem według własnego uznania."
+
+#: conditions_of_use.php:99
+msgid ""
+"IN NO EVENT SHALL CHATANDVISION BE LIABLE FOR SPECIAL, INDIRECT, EXEMPLARY, "
+"OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER, INCLUDING BUT NOT "
+"LIMITED TO, LOSS OF USE, DATA, OR PROFITS, WITHOUT REGARD TO THE FORM OF ANY "
+"ACTION, INCLUDING BUT NOT LIMITED TO CONTRACT, NEGLIGENCE, OR OTHER TORTIOUS "
+"ACTIONS, ALL ARISING OUT OF OR IN CONNECTION WITH THE USE, COPYING, OR "
+"DISPLAY OF THE CONTENTS OF THIS SITE. In an effort to provide our customers "
+"with the most current information, ChatandVision will, from time to time, "
+"make changes in the Contents and in the products or services described on "
+"this Site. "
+msgstr ""
+"W ŻADNYM WYPADKU CHATANDVISION NIE PONOSI ODPOWIEDZIALNOŚCI ZA ŻADNE SZKODY, "
+"SZCZEGÓLNE, POŚREDNIE, PRZYKŁADOWE, WTÓRNE LUB JAKIEKOLWIEK INNE SZKODY, W "
+"TYM, ALE NIE TYLKO, UTRATY DANYCH LUB ZYSKÓW, BEZ WZGLĘDU NA FORMĘ, W TYM "
+"MIĘDZY INNYMI UMOWY, ZANIEDBANIA LUB INNE DZIAŁANIA NIEDOZWOLONE WYNIKAJĄCE "
+"Z LUB W ZWIĄZKU Z UŻYTKOWANIEM, KOPIOWANIEM LUB WYŚWIETLANIEM ZAWARTOŚCI TEJ "
+"WITRYNY. W celu zapewnienia naszym klientom najbardziej aktualnych "
+"informacji, ChatandVision będzie, od czasu do czasu, dokonywać zmian w "
+"treści i opisie produktów lub usług przedstawionych na tej stronie."
+
+#: conditions_of_use.php:101
+msgid ""
+"ChatandVision Ltd does not accept liability for any loss caused by delay in "
+"the delivery of products ordered."
+msgstr ""
+"ChatandVision Ltd nie ponosi odpowiedzialności za jakiekolwiek straty "
+"spowodowane opóźnieniem w dostarczeniu zamówionych produktów."
+
+#: conditions_of_use.php:107
+msgid "In using this Site you agree to the following:"
+msgstr "Korzystając z tej strony, wyrażasz zgodę na następujące:"
+
+#: conditions_of_use.php:110
+msgid ""
+"You will not use any device, software, or other instrumentality to disrupt, "
+"damage or interfere with or attempt to disrupt, damage or interfere with the "
+"proper functioning of this site;"
+msgstr ""
+"a. Nie wolno używać żadnych urządzeń, oprogramowania lub innych "
+"instrumentów, które zakłócą, uszkodzą lub mogłyby uszkodzić lub zakłócić "
+"prawidłowe funkcjonowanie tej strony;"
+
+#: conditions_of_use.php:111
+msgid ""
+"You will not to violate or attempt to violate the security of this Site, "
+"including, without limitation,"
+msgstr ""
+"b. Nie wolno naruszać lub próbować naruszać bezpieczeństwa Serwisu, w tym:"
+
+#: conditions_of_use.php:113
+msgid "logging onto an account which you are not authorized to access;"
+msgstr "I. Logować się do konta, do którego nie ma się uprawnień;"
+
+#: conditions_of_use.php:114
+msgid ""
+"attempting to interfere with service to any user, host or network, "
+"including, without limitation, via means of submitting a virus to the Site, "
+"overloading, flooding, spamming, mail bombing or crashing; or"
+msgstr ""
+"II. Prób ingerencji w serwis, innych użytkowników, serwer lub sieć, w tym, "
+"infekowania witryny wirusami, przeciążania, floodowania, spamowania, "
+"bombardowania mailami lub powodowania awarii; lub"
+
+#: conditions_of_use.php:115
+msgid ""
+"attempt to transmit any virus, Trojan horse or other software destruction or "
+"disruption device; and"
+msgstr ""
+"III. Prób przesyłania wirusów, koni trojańskich lub innego złośliwego "
+"oprogramowania i urządzeń zakłucających ; i"
+
+#: conditions_of_use.php:118
+msgid ""
+"You will not intentionally or unintentionally violate any applicable "
+"international, federal, state or local law, including but not limited to any "
+"regulations applicable to your use of this Site. "
+msgstr ""
+"Nie będziesz świadomie lub nieświadomie naruszać obowiązującego prawa "
+"międzynarodowego, federalnego, państwowego lub lokalnego, w tym, ale nie "
+"ograniczając się do wszelkich przepisów mających zastosowanie do korzystania "
+"z tej witryny."
+
+#: conditions_of_use.php:123
+msgid ""
+"ChatandVision Ltd may revise these conditions of use by updating this "
+"posting. You agree that in the event any portion of these Site conditions of "
+"use is found to be unenforceable, the remainder of these Site conditions "
+"shall remain in full force and effect. By using this Site you agree to be "
+"bound by any such revisions and should therefore periodically visit this "
+"page to determine the current conditions of use to which you are bound."
+msgstr ""
+"ChatandVision Ltd może zmienić warunki użytkowania poprzez aktualizację tego "
+"regulamiu. Zgadzasz się, że w przypadku gdy jakakolwiek część tych warunków "
+"korzystania z serwisu okaże się niewykonalna, pozostałe części tych warunków "
+"strony pozostają w pełnej mocy. Korzystając z tej strony zgadzasz się "
+"przestrzegać wszelkich takich zmian i dlatego należy okresowo odwiedzać tę "
+"stronę, aby ustalić aktualne warunki korzystania do których przestrzegania "
+"jesteś zobligowany."
+
+#: conditions_of_use.php:126
+msgid "Updated: July 09, 2015 "
+msgstr "Zaktualizowane: 9 czerwiec 2015"

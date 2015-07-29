@@ -1,8 +1,0 @@
-#Table name
-data
-
-#Input column name	Output column name
-sku	VB SKU
-ext_sku	Master SKU
-prod_name	Product Name
-supplier_cost	Supplier Cost
