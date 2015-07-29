@@ -4,7 +4,7 @@
             <div class="col-lg-3 col-sm-3 col-md-3 hidden-xs hidden-sm top-verticalmenu">
                 <div class="menu-heading d-heading">
                     <h4>
-                        <?= _('categories') ?><span class="fa fa-angle-down pull-right"></span>
+                        <?= _('Categories') ?><span class="fa fa-angle-down pull-right"></span>
                     </h4>
                 </div>
                 <div id="pav-verticalmenu" class="pav-verticalmenu">
