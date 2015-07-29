@@ -142,7 +142,7 @@
                         <div class="row">
                             <div class="column col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="panel-heading panel-white">
-                                    <!--<a href="/display/view/about_us">--><h4 class="panel-title"><?= _('About Us') ?></h4><!--</a>-->
+                                    <a href="/contact"><h4 class="panel-title"><?= _('About Us') ?></h4></a>
                                 </div>
                                 <p>
                                     <?= _('DigitalDiscount prides itself on great deals without compromise on service! Feel free to contact us anytime for more information') ?>
