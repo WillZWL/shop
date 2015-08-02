@@ -8,7 +8,6 @@ use AtomV2\Dto;
 abstract class BaseDao
 {
     private $rows_limit;
-    private $sequence_table;
 
     abstract public function getVoClassname();
     abstract public function getTableName();
@@ -181,7 +180,7 @@ abstract class BaseDao
     public function setCreate(&$obj, $value = [])
     {
         $ts = date("Y-m-d H:i:s");
-        $ip = $_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "127.0.0.1";
+        $ip = $_SERVER["REMOTE_ADDR"] ? ip2long($_SERVER["REMOTE_ADDR"]) : ip2long("127.0.0.1");
         $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
         @call_user_func(array($obj, "setCreateOn"), $ts);
         @call_user_func(array($obj, "setCreateAt"), $ip);
@@ -235,7 +234,7 @@ abstract class BaseDao
     public function setModify(&$obj, $value = [])
     {
         $ts = date("Y-m-d H:i:s");
-        $ip = $_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "127.0.0.1";
+        $ip = $_SERVER["REMOTE_ADDR"] ? ip2long($_SERVER["REMOTE_ADDR"]) : ip2long("127.0.0.1");
         $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
         @call_user_func(array($obj, "setModifyOn"), $ts);
         @call_user_func(array($obj, "setModifyAt"), $ip);
