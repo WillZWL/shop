@@ -131,7 +131,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = TRUE;
+$config['composer_autoload'] = '../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -502,4 +502,3 @@ $config['proxy_ips'] = '';
 $config['valid_lang'] = array("en", "fr", "es", "it", "ru", "pl");
 
 $config['rows_limit'] = 100;
-
