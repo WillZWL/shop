@@ -1,6 +1,7 @@
 {
     "name": "esg/atomv2",
     "description": "Do eCommerce better :)",
+    "license": "MIT",
     "require": {
         "geoip2/geoip2": "2.3.1"
     },
@@ -12,5 +13,10 @@
             "name": "esgit",
             "email": "itsupport@eservicesgroup.net"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "AtomV2\\": "application/libraries/"
+        }
+    }
 }
