@@ -1,9 +1,5 @@
 <?php
-
 namespace AtomV2\Dao;
-
-use AtomV2\Vo;
-use AtomV2\Dto;
 
 abstract class BaseDao
 {
@@ -28,7 +24,7 @@ abstract class BaseDao
 
     public function get($where = [], $classname = "")
     {
-        $classname = ($classname) ? : $this->getVoClassname();
+        $classname = ($classname) ? : '\AtomV2\Vo\\' . $this->getVoClassname();
 
         if (empty($where)) {
             return new $classname;
@@ -37,7 +33,7 @@ abstract class BaseDao
         if ($query = $this->db->get_where($this->getTableName(), $where, 1, 0)) {
             $rs = $query->result($classname);
 
-            return empty($rs) ? : $rs[0];
+            return empty($rs) ? $rs : $rs[0];
         }
 
         return false;
