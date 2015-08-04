@@ -16,7 +16,10 @@
     ],
     "autoload": {
         "psr-4": {
-            "AtomV2\\": "application/libraries/"
-        }
+            "AtomV2\\": "application/libraries/",
+            "AtomV2\\Models\\": "application/models/",
+            "": ["application/libraries/Vo/", "application/libraries/Dto/"]
+        },
+        "classmap" : ["system/core/"]
     }
 }
