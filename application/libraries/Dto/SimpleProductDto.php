@@ -1,9 +1,7 @@
 <?php
-// namespace AtomV2\Dto;
-
 class SimpleProductDto
 {
-	public $sku;
+    public $sku;
 
     public function getSku()
     {

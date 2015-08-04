@@ -38,6 +38,7 @@ class SiteConfig extends PUB_Controller
             $site_config_obj = $this->getSiteConfigService()->getDao()->get($where);
         }
 
+        define('SITE_DOMAIN', $this->getDomain());
         define('SITE_NAME', $site_config_obj->getSiteName());
         define('SITE_LOGO', $site_config_obj->getLogo());
         define('SITE_EMAIL', $site_config_obj->getEmail());

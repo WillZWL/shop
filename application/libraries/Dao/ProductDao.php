@@ -80,14 +80,20 @@ class ProductDao extends BaseDao
             foreach ($query->result($class_name) as $obj) {
                 $rs[] = $obj;
             }
-            if (count($rs) > 1) {
-                return $rs;
-            } else {
-                return $obj;
-            }
 
+            return (count($rs) > 1) ? $rs : $rs[0];
         } else {
             return false;
         }
+    }
+
+    public function getProductOverview($where = [], $option = [], $class_name = "ProductOverviewDto")
+    {
+        $option = ['limit' => 1];
+        $this->db->from('v_prod_items AS vpi');
+        $this->db->join('product AS p', 'vpi.prod_sku = p.sku', 'INNER');
+        $this->db->join('v_prod_overview_wo_cost AS vpo', 'vpi.item_sku = vpo.sku', 'INNER');
+
+        return $this->commonGetList($class_name, $where, $option, 'vpo.*, p.expected_delivery_date, p.warranty_in_month');
     }
 }

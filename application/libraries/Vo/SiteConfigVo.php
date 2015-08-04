@@ -1,5 +1,5 @@
 <?php
-class SiteConfigVo extends BaseVo
+class SiteConfigVo extends \BaseVo
 {
     private $id;
     private $domain;
