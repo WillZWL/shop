@@ -13,12 +13,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 if (!defined('ENTRYPOINT') OR (defined('ENTRYPOINT') && (ENTRYPOINT !== 'ADMINCENTRE'))) {
-    // $hook['pre_system'][] = array(
-    //     'class' => 'DomainSelection',
-    //     'function' => 'checkDomain',
-    //     'filename' => 'DomainSelection.php',
-    //     'filepath' => 'hooks'
-    // );
+    $hook['pre_system'][] = array(
+        'class' => 'DomainSelection',
+        'function' => 'checkDomain',
+        'filename' => 'DomainSelection.php',
+        'filepath' => 'hooks'
+    );
 
     $hook['pre_controller'][] = array(
         'class' => 'SiteConfig',

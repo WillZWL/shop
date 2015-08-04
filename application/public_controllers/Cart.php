@@ -34,12 +34,9 @@ Class Cart extends PUB_Controller
             "A" => $data['data']['lang_text']['status_arriving']
         );
 
-        $foo = [];
-
         //$this->affiliate_service->add_af_cookie($_GET);
 
         $allow_result = $this->cart_session_model->cart_session_service->is_allow_to_add($sku, $qty, PLATFORMID);
-
         if ($allow_result <= Cart_session_service::DECISION_POINT) {
             $result = $this->cart_session_model->add($sku, $qty, PLATFORMID);
         }
