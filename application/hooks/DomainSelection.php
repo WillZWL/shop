@@ -1,5 +1,4 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
 use GeoIp2\Database\Reader;
 
@@ -24,18 +23,18 @@ class DomainSelection
         $currentDomain = $this->getDomain();
         $redirectDomain = $this->getDomainByCountry();
 
-        if ($currentDomain != $redirectDomain) {
-            $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https://" : "http://";
-
-            if ($_SERVER['SERVER_PORT'] != '80') {
-                $newUrl = $protocol . $redirectDomain . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['REQUEST_URI'];
-            } else {
-                $newUrl = $protocol . $redirectDomain . $_SERVER['REQUEST_URI'];
-            }
-
-            header("Location: " . $newUrl);
-            exit;
-        }
+        // if ($currentDomain != $redirectDomain) {
+        //     $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https://" : "http://";
+        //
+        //     if ($_SERVER['SERVER_PORT'] != '80') {
+        //         $newUrl = $protocol . $redirectDomain . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['REQUEST_URI'];
+        //     } else {
+        //         $newUrl = $protocol . $redirectDomain . $_SERVER['REQUEST_URI'];
+        //     }
+        //
+        //     header("Location: " . $newUrl);
+        //     exit;
+        // }
 
         $this->setLocalization();
 
