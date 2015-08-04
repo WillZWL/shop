@@ -22,16 +22,16 @@ abstract class BaseDao
         $this->rows_limit = $CI->config->item('rows_limit');
     }
 
-    public function get($where = [], $classname = "")
+    public function get($where = [], $class_name = "")
     {
-        $classname = ($classname) ? : '\AtomV2\Vo\\' . $this->getVoClassname();
+        $class_name = ($class_name) ? : $this->getVoClassname();
 
         if (empty($where)) {
-            return new $classname;
+            return new $class_name;
         }
 
         if ($query = $this->db->get_where($this->getTableName(), $where, 1, 0)) {
-            $rs = $query->result($classname);
+            $rs = $query->result($class_name);
 
             return empty($rs) ? $rs : $rs[0];
         }
@@ -39,7 +39,7 @@ abstract class BaseDao
         return false;
     }
 
-    public function getList($where = [], $option = [], $classname = "")
+    public function getList($where = [], $option = [], $class_name = "")
     {
         if (isset($option["orderby"])) {
             $this->db->order_by($option["orderby"]);
@@ -56,10 +56,10 @@ abstract class BaseDao
         }
 
         if ($query = $this->db->get_where($this->getTableName(), $where, $option["limit"], $option["offset"])) {
-            $classname = ($classname) ? : $this->getVoClassname();
+            $class_name = ($class_name) ? : $this->getVoClassname();
 
             $rs = [];
-            foreach ($query->result($classname) as $obj) {
+            foreach ($query->result($class_name) as $obj) {
                 $rs[] = $obj;
             }
 
@@ -77,7 +77,7 @@ abstract class BaseDao
         return false;
     }
 
-    public function commonGetList($classname, $where = [], $option = [], $select = '')
+    public function commonGetList($class_name, $where = [], $option = [], $select = '')
     {
         if ($where) {
             $this->db->where($where);
@@ -108,7 +108,7 @@ abstract class BaseDao
 
         $rs = [];
         if ($query = $this->db->get()) {
-            foreach ($query->result($classname) as $obj) {
+            foreach ($query->result($class_name) as $obj) {
                 $rs[] = $obj;
             }
             if ($option["limit"] == 1) {

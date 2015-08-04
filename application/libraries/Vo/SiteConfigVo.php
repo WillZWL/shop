@@ -1,14 +1,13 @@
 <?php
-
-namespace AtomV2\Vo;
-
 class SiteConfigVo extends BaseVo
 {
     private $id;
     private $domain;
     private $site_name;
+    private $lang;
     private $logo;
     private $email;
+    private $platform;
     private $domain_type;
     private $status;
 
@@ -56,6 +55,16 @@ class SiteConfigVo extends BaseVo
         $this->site_name = $site_name;
     }
 
+    public function getLang()
+    {
+        return $this->lang;
+    }
+
+    public function setLang($lang)
+    {
+        $this->lang = $lang;
+    }
+
     public function getLogo()
     {
         return $this->logo;
@@ -64,6 +73,16 @@ class SiteConfigVo extends BaseVo
     public function setLogo($logo)
     {
         $this->logo = $logo;
+    }
+
+    public function getPlatform()
+    {
+        return $this->platform;
+    }
+
+    public function setPlatform($platform)
+    {
+        $this->platform = $platform;
     }
 
     public function getEmail()

@@ -1,10 +1,10 @@
 <?php
 namespace AtomV2\Dao;
 
-class SiteConfigDao extends BaseDao
+class PriceDao extends BaseDao
 {
-    private $table_name = 'site_config';
-    private $vo_class_name = 'SiteConfigVo';
+    private $table_name = 'price';
+    private $vo_class_name = 'PriveVo';
 
     public function getVoClassname()
     {
