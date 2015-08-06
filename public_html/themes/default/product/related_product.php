@@ -1,3 +1,4 @@
+<?php if ($cross_sell_product_list): ?>
 <div id="related-product" class="panel panel-default nopadding-title nopadding product-grid">
     <div class="panel-heading hightlight">
         <h4 class="panel-title"><?= _('Related Products') ?></h4>
@@ -93,3 +94,4 @@
     });
     </script>
 </div>
+<?php endif ?>
