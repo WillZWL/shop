@@ -2,9 +2,8 @@
 .DS_Store
 ._.DS_Stroe
 .idea
-/application/composer.lock
-/application/vendor
 /application/config/development
 /public_html/GeoLite2-City.mmdb
 /public_html/images/product/
 /public_html/images/banner/
+/vendor/
