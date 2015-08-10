@@ -8,11 +8,11 @@ class ProductService extends BaseService
 
     public function __construct()
     {
-    	$this->setDao(new ProductDao);
+        $this->setDao(new ProductDao);
     }
 
-    public function getLatestArrivalProduct($where, $option)
+    public function getHomeProduct($where, $option)
     {
-    	return $this->getDao()->getLatestArrivalProduct($where, $option);
+        return $this->getDao()->getHomeProduct($where, $option);
     }
 }

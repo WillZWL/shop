@@ -16,11 +16,11 @@ class ProductDao extends BaseDao
         return $this->table_name;
     }
 
-    public function getLatestArrivalProduct($where = [], $option = [], $class_name = 'SimpleProductDto')
+    public function getHomeProduct($where = [], $option = [], $class_name = 'SimpleProductDto')
     {
-        $where['ll.type'] = 'LA';
         $where['pd.status'] = 2;
         $where['pr.listing_status'] = 'L';
+        $where['pd.website_status <>'] = 'O';
 
         $this->db->from('landpage_listing ll');
         $this->db->join('product pd', 'pd.sku = ll.selection', 'inner');
