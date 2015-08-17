@@ -5,11 +5,7 @@ class BaseService
 {
     private $dao;
 
-    public function __construct()
-    {
-    }
-
-    public function getDao()
+    protected function getDao()
     {
         return $this->dao;
     }
