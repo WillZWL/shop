@@ -1,22 +1,24 @@
 <?php
+use AtomV2\Models\Website\CartSessionModel;
 
 class ReviewOrder extends PUB_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('website/cart_session_model');
-        $this->load->model('website/checkout_model');
-        $this->load->library('service/context_config_service');
-        $this->load->library('service/complementary_acc_service');
-        $this->load->library('service/affiliate_service');
-        $this->load->library('service/tradedoubler_tracking_script_service');
+        $this->cartSessionModel = new CartSessionModel();
+        // $this->load->model('website/cart_session_model');
+        // $this->load->model('website/checkout_model');
+        // $this->load->library('service/context_config_service');
+        // $this->load->library('service/complementary_acc_service');
+        // $this->load->library('service/affiliate_service');
+        // $this->load->library('service/tradedoubler_tracking_script_service');
     }
 
     public function index()
     {
-        $data['cart_info'] = $this->cart_session_model->get_cart_info();
+        $data['cart_info'] = $this->cartSessionModel->getCartInfo();
+        var_dump($data);
         $this->load->view('/default/review', $data);
 //        $data['data']['lang_text'] = $this->_get_language_file('', '', 'index');
 //        $item_status = $this->input->get('item_status');

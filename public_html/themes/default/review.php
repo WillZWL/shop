@@ -16,26 +16,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($cart_info['item'] as $sku => $item): ?>
-                        <tr>
-                            <td class="text-center">
-                                <a href="#"><img src="<?= get_image_file($item->get_image(), "m", $sku) ?>" alt="<?= $item->get_prod_name() ?>" title="<?= $item->get_prod_name() ?>" class="img-thumbnail"></a>
-                            </td>
-                            <td class="text-left"><a href="#"><?= $item->get_prod_name() ?></a>
-                            </td>
-                            <td class="text-left">
-                                <div class="input-group btn-block" style="max-width: 200px;">
-                                    <input type="text" name="quantity[YToxOntzOjEwOiJwcm9kdWN0X2lkIjtpOjMzO30=]" value="1" size="1" class="form-control">
-                                    <span class="input-group-btn">
-                                        <button type="submit" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
-                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-primary" onclick="cart.remove('YToxOntzOjEwOiJwcm9kdWN0X2lkIjtpOjMzO30=');" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
-                                    </span>
-                                </div>
-                            </td>
-                            <td class="text-right"><?= $item->get_price() ?></td>
-                            <td class="text-right"><?= $item->get_price() ?></td>
-                        </tr>
-                        <?php endforeach ?>
+                        <?php if ($cart_info): ?>
+                            <?php foreach ($cart_info as $item): ?>
+                            <tr>
+                                <td class="text-center">
+                                    <a href="<?= site_url('/mainproduct/view/' . $item['sku']) ?>"><img src="<?= get_image_file($item['image'], "m", $item['sku']) ?>" alt="<?= $item['name'] ?>" title="<?= $item['name'] ?>" class="img-thumbnail"></a>
+                                </td>
+                                <td class="text-left"><a href="#"><?= $item['name'] ?></a>
+                                </td>
+                                <td class="text-left">
+                                    <div class="input-group btn-block" style="max-width: 200px;">
+                                        <input type="text" name="quantity[YToxOntzOjEwOiJwcm9kdWN0X2lkIjtpOjMzO30=]" value="1" size="1" class="form-control">
+                                        <span class="input-group-btn">
+                                            <button type="submit" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
+                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-primary" onclick="cart.remove('YToxOntzOjEwOiJwcm9kdWN0X2lkIjtpOjMzO30=');" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="text-right"><?= $item['price'] ?></td>
+                                <td class="text-right"><?= $item['price'] ?></td>
+                            </tr>
+                            <?php endforeach ?>
+                        <?php endif ?>
                     </tbody>
                 </table>
             </div>

@@ -20,48 +20,48 @@ class CartSessionService extends BaseService
 
     public function __construct()
     {
-        parent::__construct();
-        $this->product_service = new ProductService;
+        $this->productService = new ProductService;
         // $this->setDao(new ProductDao);
     }
 
     public function isAllowToAdd($sku, $qty, $platform)
     {
-        $product_obj = $this->product_service->getDao()->get(["sku" => $sku]);
-        if (empty($product_obj)) {
+        $productObj = $this->productService->getDao()->get(["sku" => $sku]);
+        if (empty($productObj)) {
             return self::UNKNOWN_ITEM_STATUS;
         }
 
-        $website_status = $product_obj->getWebsiteStatus();
+        // product.website_status 0 = Outstock / 1 = Instock / 2 = Pre-Order / 3 = Arriving
+        $websiteStatus = $productObj->getWebsiteStatus();
         if (count($_SESSION["cart"][$platform]) === 0) {
-            if ($website_status === 'I') {
+            if ($websiteStatus === '1') {
                 return self::ALLOW_AND_IS_NORMAL_ITEM;
-            } elseif ($website_status === 'P') {
+            } elseif ($websiteStatus === '2') {
                 return self::ALLOW_AND_IS_PREORDER;
-            } elseif ($website_status === 'A') {
+            } elseif ($websiteStatus === '3') {
                 return self::ALLOW_AND_IS_ARRIVING;
             }
 
             return self::UNKNOWN_ITEM_STATUS;
         } else {
             if (isset($_SESSION['cart'][$platform][$sku])) {
-                if ($website_status === "P") {
+                if ($websiteStatus === "2") {
                     return self::SAME_PREORDER_ITEM;
-                } elseif ($website_status === "A") {
+                } elseif ($websiteStatus === "3") {
                     return self::SAME_ARRIVING_ITEM;
-                } elseif ($website_status === "I") {
+                } elseif ($websiteStatus === "1") {
                     return self::SAME_NORMAL_ITEM;
                 }
 
                 foreach ($_SESSION["cart"][$platform] as $key => $value) {
-                    $stored_website_status = $value["website_status"];
-                    if (($stored_website_status == "I") && (($website_status == "P") || ($website_status == "A")) ) {
+                    $storedWebsiteStatus = $value["website_status"];
+                    if (($storedWebsiteStatus === "1") && (($websiteStatus === "2") || ($websiteStatus === "3")) ) {
                         return self::NOT_ALLOW_PREORDER_ARRIVING_ITEM_AFTER_NORMAL_ITEM;
-                    } elseif ((($stored_website_status == "P") || ($stored_website_status == "A")) && ($website_status == "I") ) {
+                    } elseif ((($storedWebsiteStatus === "2") || ($storedWebsiteStatus === "3")) && ($websiteStatus === "1") ) {
                         return self::NOT_ALLOW_NORMAL_ITEM_AFTER_PREORDER_ARRIVING_ITEM;
-                    } elseif ((($stored_website_status == "P") && ($website_status == "P")) || (($stored_website_status == "P") && ($website_status == "A")) ) {
+                    } elseif ((($storedWebsiteStatus === "2") && ($websiteStatus === "2")) || (($storedWebsiteStatus === "2") && ($websiteStatus === "3")) ) {
                         return self::DIFFERENT_PREORDER_ITEM;
-                    } elseif ((($stored_website_status == "A") && ($website_status == "A")) || (($stored_website_status == "A") && ($website_status == "P")) ) {
+                    } elseif ((($storedWebsiteStatus === "3") && ($websiteStatus === "3")) || (($storedWebsiteStatus === "3") && ($websiteStatus === "2")) ) {
                         return self::DIFFERENT_ARRIVING_ITEM;
                     }
                 }
@@ -74,34 +74,35 @@ class CartSessionService extends BaseService
     public function addItemQty($sku, $qty, $platform)
     {
         $where = [
-            'vpi.prod_sku' => $sku,
-            'vpo.platform_id' => $platform,
-            'p.status' => 2,
-            'p.website_status <>' => 'O'
+            'pd.status' => 2,
+            'pd.website_status <>' => 'O'
         ];
 
-        $prod_obj = $this->product_service->getDao()->getProductOverview($where);
-        if (empty($prod_obj)) {
+        $option = ['limit' => 1];
+
+        $prodInfo = $this->productService->getDao()->getProductInfo($where, $option);
+
+        if (empty($prodInfo)) {
             return false;
         }
 
-        $website_qty = $prod_obj->getWebsiteQuantity();
-        $website_status = $prod_obj->getWebsiteStatus();
-        $status = $prod_obj->getProdStatus();
-        $listing_status = $prod_obj->getListingStatus();
-        $price = $prod_obj->getPrice();
-        $expect_delivery_date = $prod_obj->getExpectedDeliveryDate();
-        $warranty_in_month = $prod_obj->getWarrantyInMonth();
-        $qty = ($qty > $website_qty) ? $website_qty : $qty;
+        $websiteQty = $prodInfo->getWebsiteQuantity();
+        $websiteStatus = $prodInfo->getWebsiteStatus();
+        $status = $prodInfo->getStatus();
+        $listingStatus = $prodInfo->getListingStatus();
+        $price = $prodInfo->getPrice();
+        $expectDeliveryDate = $prodInfo->getExpectedDeliveryDate();
+        $warrantyInMonth = $prodInfo->getWarrantyInMonth();
+        $qty = ($qty > $websiteQty) ? $websiteQty : $qty;
 
         // TODO
         // should write logic in isAllowToAdd()
-        if (! ($status == '2' && $listing_status == 'L' && $website_qty > 0 && $price > 0)) {
+        if (! ($status === '2' && $listingStatus === '1' && $websiteQty > 0 && $price > 0)) {
             $this->remove($sku, $platform);
             return false;
         }
 
-        $this->putCartSku($platform, $sku, $qty, $website_status, $expect_delivery_date, $warranty_in_month);
+        $this->putCartSku($platform, $sku, $qty, $websiteStatus, $expectDeliveryDate, $warrantyInMonth);
         $this->setCartCookie($platform);
 
         return true;
@@ -109,26 +110,49 @@ class CartSessionService extends BaseService
 
     public function updateItemQty($sku, $qty, $platform)
     {
-
+        //
     }
 
-    public function putCartSku($platform, $sku, $qty, $website_status, $expect_delivery_date, $warranty_in_month)
+    public function putCartSku($platform, $sku, $qty, $websiteStatus, $expectDeliveryDate, $warrantyInMonth)
     {
-        $_SESSION['cart'][$platform][$sku] = $this->cartFormat($qty, $website_status, $expect_delivery_date, $warranty_in_month);
+        $_SESSION['cart'][$platform][$sku] = $this->cartFormat($qty, $websiteStatus, $expectDeliveryDate, $warrantyInMonth);
     }
 
-    public function cartFormat($qty, $website_status, $expect_delivery_date, $warranty_in_month)
+    public function cartFormat($qty, $websiteStatus, $expectDeliveryDate, $warrantyInMonth)
     {
         return [
             'qty' => $qty,
-            'website_status' => $website_status,
-            'expect_delivery_date' => $expect_delivery_date,
-            'warranty_in_month' => $warranty_in_month
+            'website_status' => $websiteStatus,
+            'expect_delivery_date' => $expectDeliveryDate,
+            'warranty_in_month' => $warrantyInMonth
         ];
     }
 
     public function setCartCookie($platform)
     {
         setcookie('chk_cart', base64_encode(serialize($_SESSION['cart'][$platform])), time() + 86400, '/', SITE_DOMAIN);
+    }
+
+    public function getCartInfo()
+    {
+        //
+        // var_dump($_SESSION);
+        // var_dump(PLATFORM);
+        // var_dump(count($_SESSION['cart'][PLATFORM]));die;
+        if (count($_SESSION['cart'][PLATFORM])) {
+            foreach ($_SESSION['cart'][PLATFORM] as $sku => $info) {
+                $prodInfo = $this->productService->getProductInfo(['pd.sku' => $sku], ['limit' => 1]);
+                $ret[] = [
+                    "sku" => $sku,
+                    "image" => $prodInfo->getImage(),
+                    "qty" => $info[$qty],
+                    "name" => $prodInfo->getName(),
+                    "price" => $prodInfo->getPrice(),
+                    "total" => $prodInfo->getPrice() * $info[$qty]
+                ];
+            }
+
+            return $ret;
+        }
     }
 }
