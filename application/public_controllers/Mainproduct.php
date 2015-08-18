@@ -6,13 +6,13 @@ class Mainproduct extends \PUB_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->common_data_prepare_model = new CommonDataPrepareModel;
+        $this->commonDataPrepareModel = new CommonDataPrepareModel;
     }
 
     public function view($sku = '', $sv = false)
     {
         $data = array();
-        $data['prod_info'] = $this->common_data_prepare_model->getCommonData($this, ["sku" => $sku, "type" => "web"]);
+        $data = $this->commonDataPrepareModel->getCommonData($this, ["sku" => $sku, "type" => "web"]);
 		$data['sv'] = $sv;
 		$this->load->view('/default/product', $data);
     }

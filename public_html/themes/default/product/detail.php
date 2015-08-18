@@ -1,6 +1,4 @@
-<?php
-    if($sv) {
-?>
+<?php if ($sv): ?>
 <script>
     $(document).ready(function() {
         $('#header-layout').hide();
@@ -8,9 +6,7 @@
         $('#footer').hide();
     });
 </script>
-<?php
-    }
-?>
+<?php endif ?>
 
 <div class="main-columns container">
     <div class="row">
@@ -21,8 +17,8 @@
                         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 image-container">
                             <div class="image">
                                 <span class="product-label exist"><span class="product-label-special"><?= _('Sale') ?></span></span>
-                                <a href="<?= get_image_file($image, 'l', $sku)?>" class="imagezoom">
-                                    <img src="<?= get_image_file($image, 'l', $sku)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" class="product-image-zoom img-responsive">
+                                <a href="<?= get_image_file($prodInfo->getImage(), 'l', $prodInfo->getSku()) ?>" class="imagezoom">
+                                    <img src="<?= get_image_file($prodInfo->getImage(), 'l', $prodInfo->getSku()) ?>" alt="<?= $prodInfo->getName() ?>" id="image" data-zoom-image="<?= get_image_file($prodInfo->getImage(), 'l', $prodInfo->getSku()) ?>" class="product-image-zoom img-responsive">
                                 </a>
                             </div>
                             <div class="thumbs-preview horizontal">
@@ -32,50 +28,50 @@
                                             <div class="owl-wrapper" style="width: 1456px; left: 0px; display: block;">
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix active">
-                                                        <a href="<?= get_image_file($image, 'l', $sku)?>" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" data-image="<?= get_image_file($image, 'l', $sku)?>">
-                                                            <img src="<?= get_image_file($image, 'l', $sku)?>" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" class="product-image-zoom img-responsive">
+                                                        <a href="<?= get_image_file($prodInfo->getImage(), 'l', $prodInfo->getSku()) ?>" title="<?= $prodInfo->getName() ?>" class="imagezoom" data-zoom-image="<?= get_image_file($prodInfo->getImage(), 'l', $prodInfo->getSku()) ?>" data-image="<?= get_image_file($prodInfo->getImage(), 'l', $prodInfo->getSku()) ?>">
+                                                            <img src="<?= get_image_file($prodInfo->getImage(), 'l', $prodInfo->getSku()) ?>" style="max-width:80px" title="<?= $prodInfo->getName() ?>" alt="<?= $prodInfo->getName() ?>" data-zoom-image="<?= get_image_file($prodInfo->getImage(), 'l', $prodInfo->getSku()) ?>" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
 <!--                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix">
-                                                        <a href="/themes/default/asset/image/demo/15-500x500.jpg" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/15-500x500.jpg" data-image="/themes/default/asset/image/demo/15-500x500.jpg">
-                                                            <img src="/themes/default/asset/image/demo/15-80x80.jpg" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="/themes/default/asset/image/demo/15-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/15-500x500.jpg" title="<?= $prodInfo->getName() ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/15-500x500.jpg" data-image="/themes/default/asset/image/demo/15-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/15-80x80.jpg" style="max-width:80px" title="<?= $prodInfo->getName() ?>" alt="<?= $prodInfo->getName() ?>" data-zoom-image="/themes/default/asset/image/demo/15-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix">
-                                                        <a href="/themes/default/asset/image/demo/16-500x500.jpg" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/16-500x500.jpg" data-image="/themes/default/asset/image/demo/16-500x500.jpg">
-                                                            <img src="/themes/default/asset/image/demo/16-80x80.jpg" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="/themes/default/asset/image/demo/16-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/16-500x500.jpg" title="<?= $prodInfo->getName() ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/16-500x500.jpg" data-image="/themes/default/asset/image/demo/16-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/16-80x80.jpg" style="max-width:80px" title="<?= $prodInfo->getName() ?>" alt="<?= $prodInfo->getName() ?>" data-zoom-image="/themes/default/asset/image/demo/16-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix">
-                                                        <a href="/themes/default/asset/image/demo/17-500x500.jpg" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/17-500x500.jpg" data-image="/themes/default/asset/image/demo/17-500x500.jpg">
-                                                            <img src="/themes/default/asset/image/demo/17-80x80.jpg" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="/themes/default/asset/image/demo/17-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/17-500x500.jpg" title="<?= $prodInfo->getName() ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/17-500x500.jpg" data-image="/themes/default/asset/image/demo/17-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/17-80x80.jpg" style="max-width:80px" title="<?= $prodInfo->getName() ?>" alt="<?= $prodInfo->getName() ?>" data-zoom-image="/themes/default/asset/image/demo/17-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix">
-                                                        <a href="/themes/default/asset/image/demo/18-500x500.jpg" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/18-500x500.jpg" data-image="/themes/default/asset/image/demo/18-500x500.jpg">
-                                                            <img src="/themes/default/asset/image/demo/18-80x80.jpg" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="/themes/default/asset/image/demo/18-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/18-500x500.jpg" title="<?= $prodInfo->getName() ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/18-500x500.jpg" data-image="/themes/default/asset/image/demo/18-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/18-80x80.jpg" style="max-width:80px" title="<?= $prodInfo->getName() ?>" alt="<?= $prodInfo->getName() ?>" data-zoom-image="/themes/default/asset/image/demo/18-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix">
-                                                        <a href="/themes/default/asset/image/demo/19-500x500.jpg" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/19-500x500.jpg" data-image="/themes/default/asset/image/demo/19-500x500.jpg">
-                                                            <img src="/themes/default/asset/image/demo/19-80x80.jpg" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="/themes/default/asset/image/demo/19-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/19-500x500.jpg" title="<?= $prodInfo->getName() ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/19-500x500.jpg" data-image="/themes/default/asset/image/demo/19-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/19-80x80.jpg" style="max-width:80px" title="<?= $prodInfo->getName() ?>" alt="<?= $prodInfo->getName() ?>" data-zoom-image="/themes/default/asset/image/demo/19-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="owl-item" style="width: 104px;">
                                                     <div class="item clearfix">
-                                                        <a href="/themes/default/asset/image/demo/20-500x500.jpg" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/20-500x500.jpg" data-image="/themes/default/asset/image/demo/20-500x500.jpg">
-                                                            <img src="/themes/default/asset/image/demo/20-80x80.jpg" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="/themes/default/asset/image/demo/20-500x500.jpg" class="product-image-zoom img-responsive">
+                                                        <a href="/themes/default/asset/image/demo/20-500x500.jpg" title="<?= $prodInfo->getName() ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/20-500x500.jpg" data-image="/themes/default/asset/image/demo/20-500x500.jpg">
+                                                            <img src="/themes/default/asset/image/demo/20-80x80.jpg" style="max-width:80px" title="<?= $prodInfo->getName() ?>" alt="<?= $prodInfo->getName() ?>" data-zoom-image="/themes/default/asset/image/demo/20-500x500.jpg" class="product-image-zoom img-responsive">
                                                         </a>
                                                     </div>
                                                 </div> -->
@@ -118,7 +114,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
                             <div class="product-info-bg">
-                                <h1 class="title-product"><?= $prod_name ?></h1>
+                                <h1 class="title-product"><?= $prodInfo->getName() ?></h1>
                                 <div class="rating">
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
@@ -138,8 +134,8 @@
                                 </ul>
                                 <div class="border-success space-30">
                                     <ul class="list-unstyled">
-<!--                                         <li><b>Brand:</b> <a href="#">Apple</a></li>
-                                        <li><b>Product Code:</b> product 11</li> -->
+                                        <li><b>Brand:</b> <a href="#">Apple</a></li>
+                                        <li><b>Product Code:</b> product 11</li>
                                     </ul>
                                 </div>
                                 <div id="product">
@@ -156,7 +152,7 @@
                                     <input type="hidden" name="product_id" value="50">
                                     <div class="action pull-left">
                                         <div class="cart pull-left">
-                                            <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary" onclick="cart.addcart('<?=$sku?>');"><?= _('Add to Cart') ?></button>
+                                            <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary" onclick="cart.addcart('<?=$prodInfo->getSku()?>');"><?= _('Add to Cart') ?></button>
                                         </div>
                                         <div class="pull-left">
                                             <a data-toggle="tooltip" class="wishlist" title="" onclick="wishlist.addwishlist('50');" data-original-title="Add to Wish List"><?= _('Add to Wish List') ?></a>
@@ -171,7 +167,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End div bg -->
                     </div>
                     <div class="clearfix box-product-infomation tab-v4 none-border text-center">
                         <ul class="nav nav-tabs" role="tablist">

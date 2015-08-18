@@ -5,7 +5,7 @@ class ListingInfoDto
     private $sku;
     private $prod_name;
     private $short_desc;
-    private $image_ext;
+    private $image;
     private $currency_id;
     private $rrp_price;
     private $price;
@@ -60,14 +60,14 @@ class ListingInfoDto
         $this->short_desc = $short_desc;
     }
 
-    public function getImageExt()
+    public function getImage()
     {
-        return $this->image_ext;
+        return $this->image;
     }
 
-    public function setImageExt($image_ext)
+    public function setImage($image)
     {
-        $this->image_ext = $image_ext;
+        $this->image = $image;
     }
 
     public function getCurrencyId()

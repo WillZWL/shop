@@ -8,9 +8,9 @@ class CartSessionModel extends \CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this->cart_session_service = new CartSessionService;
+        $this->cartSessionService = new CartSessionService;
         // $this->load->model('marketing/product_model');
-        // $this->load->library('service/cart_session_service');
+        // $this->load->library('service/cartSessionService');
         // $this->load->library('service/ra_product_service');
         // $this->load->library('service/best_seller_service');
         // $this->load->library('service/website_service');
@@ -21,20 +21,20 @@ class CartSessionModel extends \CI_Model
     public function addItemQty($sku, $qty, $platform)
     {
         if (isset($_SESSION['cart'][$platform][$sku])) {
-            // return $this->cart_session_service->updateItemQty($sku, $qty, $platform);
+            // return $this->cartSessionService->updateItemQty($sku, $qty, $platform);
         } else {
-            return $this->cart_session_service->addItemQty($sku, $qty, $platform);
+            return $this->cartSessionService->addItemQty($sku, $qty, $platform);
         }
     }
 
-    public function get_cart_info()
+    public function getCartInfo()
     {
-        return $this->cart_session_service->get_cart_info();
+        return $this->cartSessionService->getCartInfo();
     }
 
     public function get_detail($platform)
     {
-        return $this->cart_session_service->get_detail($platform);
+        return $this->cartSessionService->get_detail($platform);
     }
 
     public function get($platform = NULL)
@@ -42,12 +42,12 @@ class CartSessionModel extends \CI_Model
         if (is_null($platform)) {
             $platform = PLATFORMID;
         }
-        return $this->cart_session_service->get($platform);
+        return $this->cartSessionService->get($platform);
     }
 
     public function update($sku, $qty, $platform)
     {
-        return $this->cart_session_service->modify($sku, $qty, $platform);
+        return $this->cartSessionService->modify($sku, $qty, $platform);
     }
 
     public function get_cart($platform = NULL)
@@ -55,7 +55,7 @@ class CartSessionModel extends \CI_Model
         if (is_null($platform)) {
             $platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
         }
-        return $this->cart_session_service->get_cart($platform);
+        return $this->cartSessionService->get_cart($platform);
     }
 
     public function remove($sku, $platform = NULL)
@@ -63,7 +63,7 @@ class CartSessionModel extends \CI_Model
         if (is_null($platform)) {
             $platform = PLATFORMID;
         }
-        return $this->cart_session_service->remove($sku, $platform);
+        return $this->cartSessionService->remove($sku, $platform);
     }
 
 

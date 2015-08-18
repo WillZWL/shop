@@ -1,20 +1,20 @@
 <?php
 namespace AtomV2\Models\Marketing;
 
-use AtomV2\Service\PriceService;
+use AtomV2\Service\ProductService;
 
 class ProductModel extends \CI_Model
 {
-	public $priceService;
+	public $productService;
 
     public function __construct()
     {
         parent::__construct();
-        $this->priceService = new PriceService;
+        $this->productService = new ProductService;
     }
 
-    public function getListingInfo($sku = "", $platform = "", $lang_id = "en", $option = [])
+    public function getProductInfo($where = [], $option = [])
     {
-        return $this->price_service->getListingInfo($sku, $platform, $lang_id, $option);
+        return $this->productService->getProductInfo($where, $option);
     }
 }

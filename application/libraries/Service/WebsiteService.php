@@ -25,16 +25,36 @@ class WebsiteService extends BaseService
     public function getLatestArrivalProduct($where, $option)
     {
         $latestProductSkuList = $this->latestArrivalsService->getLatestArrivalSku($where, $option);
-        $latestProductInfo = $this->latestArrivalsService->getProductInfo($latestProductSkuList);
 
-        return $latestProductInfo;
+        if ($latestProductSkuList) {
+            foreach ($latestProductSkuList as $obj) {
+                $sku[] = $obj->getSku();
+            }
+            $where["pd.sku in ('" . implode("','", $sku) ."') "] = null;
+
+            $latestProductInfo = $this->latestArrivalsService->getProductInfo($where, $option);
+
+            return $latestProductInfo;
+        }
+
+        return [];
     }
 
     public function getBestSellerProduct($where, $option)
     {
         $bestSellerSkuList = $this->bestSellerService->getBestSellerSku();
-        $bestSellerProductInfo = $this->bestSellerService->getProductInfo($bestSellerSkuList);
 
-        return $bestSellerProductInfo;
+        if ($bestSellerSkuList) {
+            foreach ($bestSellerSkuList as $obj) {
+                $sku[] = $obj->getSku();
+            }
+            $where["pd.sku in ('" . implode("','", $sku) ."') "] = null;
+
+            $bestSellerProductInfo = $this->bestSellerService->getProductInfo($where, $option);
+
+            return $bestSellerProductInfo;
+        }
+
+        return [];
     }
 }

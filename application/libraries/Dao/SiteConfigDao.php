@@ -3,16 +3,16 @@ namespace AtomV2\Dao;
 
 class SiteConfigDao extends BaseDao
 {
-    private $table_name = 'site_config';
-    private $vo_class_name = 'SiteConfigVo';
+    private $tableName = 'site_config';
+    private $voClassName = 'SiteConfigVo';
 
     public function getVoClassname()
     {
-        return $this->vo_class_name;
+        return $this->voClassName;
     }
 
     public function getTableName()
     {
-        return $this->table_name;
+        return $this->tableName;
     }
 }

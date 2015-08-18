@@ -15,12 +15,8 @@ class ProductService extends BaseService
         return $this->getDao()->getLandPageSku($where, $option);
     }
 
-    public function getProductInfo($skuObjList)
+    public function getProductInfo($where = [], $option = [])
     {
-        foreach ($skuObjList as $skuObj) {
-            $sku[] = $skuObj->getSku();
-        }
-
-        $this->getDao()->getProductInfo($sku);
+        return $this->getDao()->getProductInfo($where, $option);
     }
 }

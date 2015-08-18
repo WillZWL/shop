@@ -2,50 +2,55 @@
 namespace AtomV2\Models\Website;
 
 use AtomV2\Models\Marketing\ProductModel;
+use AtomV2\Models\Marketing\PriceModel;
 
 class CommonDataPrepareModel extends \CI_Model
 {
     private $productModel;
+    private $priceModel;
 
     public function __construct()
     {
         parent::__construct();
         $this->productModel = new ProductModel;
+        $this->priceModel = new PriceModel;
     }
 
-    public function getCommonData($controller, $url_paras = [], $input_class = '', $method = '')
+    public function getCommonData($controller, $URLParas = [], $inputClass = '', $method = '')
     {
-        $input_class = empty($input_class) ? $this->router->class : $input_class;
+        $inputClass = empty($inputClass) ? $this->router->class : $inputClass;
         $input_method = empty($method) ? $this->router->method : $method;
-        $call_method = $input_class . ucfirst($input_method);
+        $callMethod = $inputClass . ucfirst($input_method);
 
-        if (method_exists($this, $call_method)) {
-            return $this->$call_method($controller, $url_paras);
+        if (method_exists($this, $callMethod)) {
+            return $this->$callMethod($controller, $URLParas);
         }
 
-        return ['error_msg' => "Can't find {$call_method}() in " . get_class($this) . " class"];
+        return ['errorMsg' => "Can't find {$callMethod}() in " . get_class($this) . " class"];
     }
 
-    protected function mainproductView($controller, $url_paras)
+    protected function mainproductView($controller, $URLParas)
     {
-        $sku = $url_paras["sku"];
-        $type = $url_paras["type"];
+        $sku = $URLParas["sku"];
+        $type = $URLParas["type"];
 
-        if (!$this->productModel->priceService->get(['sku' => $sku, 'listing_status' => 'L', 'platform_id' => PLATFORM])) {
-            return ['error_msg' => 'No Price'];
+        if (!$this->priceModel->priceService->get(['sku' => $sku, 'listing_status' => '1', 'platform' => PLATFORM])) {
+            return ['errorMsg' => 'No Price'];
         }
 
-        if ($listing_info = $this->product_model->getListingInfo($sku, PLATFORM, SITE_LANG)) {
-
+        $where['pd.sku'] = $sku;
+        if ($prodInfo = $this->productModel->getProductInfo($where, ['limit' => 1])) {
+            $data['prodInfo'] = $prodInfo;
+            return $data;
         }
-var_dump($listing_info);die;
+// var_dump($listing_info);die;
 
 
         if ($sku && $listing_info = $this->product_model->get_listing_info($sku, PLATFORM, $this->get_lang_id())) {
             $data['lang_text'] = $controller->get_language_file();
 
-            if (!$prod_info = $this->product_model->get_website_product_info($sku, PLATFORM, $this->get_lang_id())) {
-                $prod_info = $this->product_model->get_website_product_info($sku, PLATFORM);
+            if (!$prodInfo = $this->product_model->get_website_product_info($sku, PLATFORM, $this->get_lang_id())) {
+                $prodInfo = $this->product_model->get_website_product_info($sku, PLATFORM);
             }
 
             $_SESSION['PARENT_PAGE'] = base_url() . "mainproduct/view/" . $sku;
@@ -73,18 +78,18 @@ var_dump($listing_info);die;
             $data["stock_status"] = $listing_info->get_status() == 'I' ? $listing_info->get_qty() . " " . $listing_status[$listing_info->get_status()] : $listing_status[$listing_info->get_status()];
             $data["prod_price"] = $listing_info->get_price();
             $data["prod_rrp_price"] = $listing_info->get_rrp_price();
-            $data["overview"] = nl2br(trim($prod_info->get_detail_desc()));
-            $data["lang_restricted"] = trim($prod_info->get_lang_restricted());
-            $data['image'] = $prod_info->get_image();
+            $data["overview"] = nl2br(trim($prodInfo->get_detail_desc()));
+            $data["lang_restricted"] = trim($prodInfo->get_lang_restricted());
+            $data['image'] = $prodInfo->get_image();
             $data["osd_lang_list"] = $this->product_model->product_service->get_lang_osd_list();
-            $data["website_status_long_text"] = trim($prod_info->get_website_status_long_text());
-            $data["website_status_short_text"] = trim($prod_info->get_website_status_short_text());
+            $data["website_status_long_text"] = trim($prodInfo->get_website_status_long_text());
+            $data["website_status_short_text"] = trim($prodInfo->get_website_status_short_text());
 
             //#2272 add the warranty.
             $data["warranty_in_month"] = $listing_info->get_warranty_in_month();
 
-            if ($prod_info->get_specification() != "") {
-                $data['specification'] = $prod_info->get_specification();
+            if ($prodInfo->get_specification() != "") {
+                $data['specification'] = $prodInfo->get_specification();
             }
 
             if (empty($data["website_status_short_text"])) {
@@ -110,7 +115,7 @@ var_dump($listing_info);die;
                                 $data["website_status_short_text"] = $website_status_text["pre_order_short"];
 
                                 //show expected delivery date for pre-order
-                                $expected_delivery_date = $prod_info->get_expected_delivery_date();
+                                $expected_delivery_date = $prodInfo->get_expected_delivery_date();
                                 if ($expected_delivery_date) {
                                     $data["website_status_long_text"] = $website_status_text["pre_order_long_1"] . $expected_delivery_date . $website_status_text["pre_order_long_2"];
                                 } else {
@@ -161,22 +166,22 @@ var_dump($listing_info);die;
                 }
             }
 
-            $cat_url = $this->website_model->get_cat_url($prod_info->get_cat_id());
-            $sub_cat_url = $this->website_model->get_cat_url($prod_info->get_sub_cat_id());
-            if (!$prod_info->get_sub_sub_cat_id() && $prod_info->get_sub_sub_cat_id() != 0) {
-                $sub_sub_cat_url = $this->website_model->get_cat_url($prod_info->get_sub_sub_cat_id());
+            $cat_url = $this->website_model->get_cat_url($prodInfo->get_cat_id());
+            $sub_cat_url = $this->website_model->get_cat_url($prodInfo->get_sub_cat_id());
+            if (!$prodInfo->get_sub_sub_cat_id() && $prodInfo->get_sub_sub_cat_id() != 0) {
+                $sub_sub_cat_url = $this->website_model->get_cat_url($prodInfo->get_sub_sub_cat_id());
             }
 
-            if (!$cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
-                $cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
+            if (!$cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prodInfo->get_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
+                $cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prodInfo->get_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
                 if ($cat_obj) {
                     $localized_cat_name = $cat_obj->get_name();
                 }
             }
 
 
-            if (!$sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
-                $sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
+            if (!$sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prodInfo->get_sub_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
+                $sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prodInfo->get_sub_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
                 if ($sc_obj) {
                     $localized_sc_name = $sc_obj->get_name();
                 }
@@ -187,19 +192,19 @@ var_dump($listing_info);die;
             $data['breadcrumb'][] = array($localized_sc_name => $sub_cat_url);
 
             if ($sub_sub_cat_url) {
-                if (!$cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_sub_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
-                    $cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_sub_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
+                if (!$cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prodInfo->get_sub_sub_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
+                    $cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prodInfo->get_sub_sub_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
                 }
                 $localized_ssc_name = $ssc_obj->get_name();
                 $data['breadcrumb'][] = array($localized_ssc_name => $sub_sub_cat_url);
             }
 
             // meta tag
-            if ($prod_info->get_sub_sub_cat_id() != 0) // check if there is sub_sub_cat_id
+            if ($prodInfo->get_sub_sub_cat_id() != 0) // check if there is sub_sub_cat_id
             {
-                $meta_title = implode(' - ', array($listing_info->get_prod_name(), $prod_info->get_sub_sub_cat_name(), $prod_info->get_sub_cat_name(), $prod_info->get_cat_name()));
+                $meta_title = implode(' - ', array($listing_info->get_prod_name(), $prodInfo->get_sub_sub_cat_name(), $prodInfo->get_sub_cat_name(), $prodInfo->get_cat_name()));
             } else {
-                $meta_title = implode(' - ', array($listing_info->get_prod_name(), $prod_info->get_sub_cat_name(), $prod_info->get_cat_name()));
+                $meta_title = implode(' - ', array($listing_info->get_prod_name(), $prodInfo->get_sub_cat_name(), $prodInfo->get_cat_name()));
             }
             if ($keyword_list = $this->product_model->get_product_keyword_arraylist($sku, PLATFORM)) {
                 $meta_keyword = implode(',', $keyword_list);
@@ -254,7 +259,7 @@ var_dump($listing_info);die;
             //Loop 10 times.
             for($price_adjustment = $price * 0.1, $n=0; count($cross_sell_product_list) < 6 && $n < 10; $price_adjustment += $price_adjustment)
             {
-                $cross_sell_product_list = $this->price_margin_service->get_cross_sell_product($prod_info, PLATFORM, $this->get_lang_id(), $price, $price_adjustment);
+                $cross_sell_product_list = $this->price_margin_service->get_cross_sell_product($prodInfo, PLATFORM, $this->get_lang_id(), $price, $price_adjustment);
                 $n++;
             }
 
@@ -272,12 +277,10 @@ var_dump($listing_info);die;
                 }
             }
             $data["cross_sell_product_list"] = $csp_arr;
-
-            return $data;
         }
     }
 
-    public function checkout_onepage__ajax_cal_del_surcharge($controller, $url_paras)
+    public function checkout_onepage__ajax_cal_del_surcharge($controller, $URLParas)
     {
         $total = 0;
         $data = $this->checkout_model->index_content();
@@ -295,7 +298,7 @@ var_dump($listing_info);die;
         }
         $grand_total = $total + $data["dc_default"]["charge"] - $promo_disc_amount;
 
-        $result = $this->checkout_onepage__calculate_delivery_surcharge($controller, $url_paras);
+        $result = $this->checkout_onepage__calculate_delivery_surcharge($controller, $URLParas);
         if ($result !== FALSE) {
             echo platform_curr_format(PLATFORM, $result['surcharge']) . '||' . platform_curr_format(PLATFORM, ($grand_total + $result['surcharge']));
         } else {
@@ -303,14 +306,14 @@ var_dump($listing_info);die;
         }
     }
 
-    protected function checkout_onepage__calculate_delivery_surcharge($controller, $url_paras)
+    protected function checkout_onepage__calculate_delivery_surcharge($controller, $URLParas)
     {
-        if (($url_paras["country_id"] == '') || ($url_paras["postcode"] == '')) {
+        if (($URLParas["country_id"] == '') || ($URLParas["postcode"] == '')) {
             return FALSE;
         }
 
-        $this->delivery_service->delivery_country_id = trim($url_paras["country_id"]);
-        $this->delivery_service->delivery_postcode = trim($url_paras["postcode"]);
+        $this->delivery_service->delivery_country_id = trim($URLParas["country_id"]);
+        $this->delivery_service->delivery_postcode = trim($URLParas["postcode"]);
 
         $this->delivery_service->item_list = $_SESSION["cart"][PLATFORM];
         if (($rs = $this->delivery_service->get_del_surcharge(TRUE)) && $rs["surcharge"]) {
@@ -321,7 +324,7 @@ var_dump($listing_info);die;
         }
     }
 
-    protected function checkout_onepage__is_same_listing_changing_country($controller, $url_paras)
+    protected function checkout_onepage__is_same_listing_changing_country($controller, $URLParas)
     {
         $platform_obj = $this->platform_biz_var_service->get_list_w_country_name(array("pbv.selling_platform_id like 'WEB%'" => NULL, 'c.id' => $new_country_id), array('limit' => 1));
         $platform_id = $platform_obj->get_selling_platform_id();
@@ -347,7 +350,7 @@ var_dump($listing_info);die;
         echo 'TRUE';
     }
 
-    protected function checkout_onepage__index($controller, $url_paras)
+    protected function checkout_onepage__index($controller, $URLParas)
     {
         $data = $this->checkout_model->index_content();
         if (!$data['cart_item']) {
@@ -512,7 +515,7 @@ var_dump($listing_info);die;
         return $data;
     }
 
-    protected function login___get_fail_msg($controller, $url_paras)
+    protected function login___get_fail_msg($controller, $URLParas)
     {
         $lfw = array("en" => "Login Failed",
             "de" => "Login fehlgeschlagen",
@@ -533,7 +536,7 @@ var_dump($listing_info);die;
         return $lfw;
     }
 
-    protected function login__index($controller, $url_paras)
+    protected function login__index($controller, $URLParas)
     {
         $data = array();
 
@@ -684,14 +687,14 @@ salecycle_script;
         return $data;
     }
 
-    protected function myaccount__index($controller, $url_paras)
+    protected function myaccount__index($controller, $URLParas)
     {
         include_once(APPPATH . "libraries/service/complementary_acc_service.php");
         $ca_srv = new Complementary_acc_service();
 
         $data = array();
-        $page = $url_paras['page'];
-        $rma_no = $url_paras['rma_no'];
+        $page = $URLParas['page'];
+        $rma_no = $URLParas['rma_no'];
         $data["show_bank_transfer_contact"] = FALSE;
         $data["show_partial_ship_text"] = FALSE;
 
@@ -851,7 +854,7 @@ salecycle_script;
         return $data;
     }
 
-    protected function myaccount__profile($controller, $url_paras)
+    protected function myaccount__profile($controller, $URLParas)
     {
         $data = array();
         $data['display_id'] = 15;
@@ -921,12 +924,12 @@ salecycle_script;
         return $data;
     }
 
-    protected function review_order__update($controller, $url_paras)
+    protected function review_order__update($controller, $URLParas)
     {
-        return $this->review_order__index($controller, $url_paras);
+        return $this->review_order__index($controller, $URLParas);
     }
 
-    protected function review_order__index($controller, $url_paras)
+    protected function review_order__index($controller, $URLParas)
     {
         $data['lang_text'] = $controller->get_language_file('', '', 'index');
         $item_status = $this->input->get('item_status');
@@ -1040,15 +1043,15 @@ salecycle_script;
         return $data;
     }
 
-    protected function review_order__remove($controller, $url_paras)
+    protected function review_order__remove($controller, $URLParas)
     {
-        return $this->review_order__index($controller, $url_paras);
+        return $this->review_order__index($controller, $URLParas);
     }
 
-    protected function display__view($controller, $url_paras)
+    protected function display__view($controller, $URLParas)
     {
-        $page = $url_paras['page'];
-        $subscribe_email = $url_paras['subscribe-email'];
+        $page = $URLParas['page'];
+        $subscribe_email = $URLParas['subscribe-email'];
 
         if (empty($page)) {
             show_404();
@@ -1182,7 +1185,7 @@ salecycle_script;
         return $data;
     }
 
-    protected function contact__index($controller, $url_paras)
+    protected function contact__index($controller, $URLParas)
     {
         $data = array();
         $data['lang_text'] = $controller->get_language_file();
@@ -1209,12 +1212,12 @@ salecycle_script;
         return $data;
     }
 
-    protected function cart__add_item($controller, $url_paras)
+    protected function cart__add_item($controller, $URLParas)
     {
-        $this->cart__add_item_qty($controller, $url_paras);
+        $this->cart__add_item_qty($controller, $URLParas);
     }
 
-    protected function cart__add_item_qty($controller, $url_paras)
+    protected function cart__add_item_qty($controller, $URLParas)
     {
         require_once(BASEPATH . 'plugins/My_plugin/validator/regex_validator.php');
         require_once(BASEPATH . 'plugins/My_plugin/validator/digits_validator.php');
@@ -1223,8 +1226,8 @@ salecycle_script;
         $this->affiliate_service->add_af_cookie($_GET);
         $listing_status = array("I" => $data['lang_text']['status_in_stock'], "O" => $data['lang_text']['status_out_stock'], "P" => $data['lang_text']['status_pre_order'], "A" => $data['lang_text']['status_arriving']);
 
-        $sku = $url_paras["sku"];
-        $qty = $url_paras["qty"];
+        $sku = $URLParas["sku"];
+        $qty = $URLParas["qty"];
         if (empty($sku)) {
             $sku = $_REQUEST["sku"];
         }
@@ -1273,10 +1276,10 @@ salecycle_script;
         }
     }
 
-    protected function cat__view($controller, $url_paras)
+    protected function cat__view($controller, $URLParas)
     {
         require_once(BASEPATH . 'plugins/My_plugin/validator/digits_validator.php');
-        $cat_id = $url_paras["cat_id"];
+        $cat_id = $URLParas["cat_id"];
 
         $digits_validator_allow_empty = new Digits_validator(array("allow_empty" => true));
         $digits_validator = new Digits_validator(array("allow_empty" => false));
@@ -1301,8 +1304,8 @@ salecycle_script;
             show_404('page');
         }
 
-        $rpp = $url_paras["rpp"];
-        $display_range = $url_paras["display_range"];
+        $rpp = $URLParas["rpp"];
+        $display_range = $URLParas["display_range"];
 
         $data['lang_text'] = $controller->get_language_file();
         $controller->template->add_link("rel='canonical' href='" . base_url() . "/cat/view/" . $cat_id . "'");  # SEO
@@ -1515,7 +1518,7 @@ salecycle_script;
         return $data;
     }
 
-    protected function redirect_controller__index($controller, $url_paras)
+    protected function redirect_controller__index($controller, $URLParas)
     {
         $controller->affiliate_service->add_af_cookie($_GET);
         $data['lang_text'] = $controller->get_language_file();
