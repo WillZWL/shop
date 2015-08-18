@@ -7,6 +7,7 @@ class MY_Exceptions extends CI_Exceptions
 
     function __construct()
     {
+//
         parent::CI_Exceptions();
     }
 
