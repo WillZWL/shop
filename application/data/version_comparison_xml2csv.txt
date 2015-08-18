@@ -1,9 +1,0 @@
-#Table name
-version_comparison_report
-
-#Input column name	Output column name
-country_name	Country
-platform_country_id	Country Code
-platform_id	Platform
-sku	SKU
-prod_name	Product Name

@@ -125,7 +125,7 @@
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                    <a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('0 review') ?></a> / <a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('Write a review') ?></a>
+                                    <a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= sprintf(_('%s review(s)'), "0") ?></a> / <a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('Write a review') ?></a>
                                 </div>
                                 <div class="price detail space-20">
                                     <ul class="list-unstyled">

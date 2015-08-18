@@ -11,4 +11,5 @@
 *.jpg binary
 *.gif binary
 *.mmdb binary
+*.mo binary
 

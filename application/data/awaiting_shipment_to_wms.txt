@@ -1,9 +1,0 @@
-#Table name
-data
-
-#Input column name	Output column name
-ext_sys	ext_sys
-sku	sku
-qty	consolidated_quantity
-warehouse	warehouse
-ext_ref_sku	ext_ref_sku

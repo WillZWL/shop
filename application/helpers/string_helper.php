@@ -1,5 +1,18 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+if (!function_exists('camelcase2underscore')) {
+    function camelcase2underscore($name)
+    {
+        return strtolower(preg_replace('/(?<!^)([A-Z]){1}/', '_$1', $name));
+    }
+}
+
+if (!function_exists('underscore2camelcase')) {
+    function underscore2camelcase($name)
+    {
+        return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $key))));
+    }
+}
 
 // ------------------------------------------------------------------------
 
@@ -68,7 +81,6 @@ if (!function_exists('cutstr')) {
 
         $n = $tn = $noc = 0;
         while ($n < strlen($string)) {
-
             $t = ord($string[$n]);
             if ($t == 9 || $t == 10 || (32 <= $t && $t <= 126)) {
                 $tn = 1;
@@ -133,7 +145,15 @@ if (!function_exists('strip_invalid_xml')) {
         $length = strlen($value);
         for ($i = 0; $i < $length; $i++) {
             $current = ord($value{$i}) . "\n";
-            if (($current == 0x9) || ($current == 0xA) || ($current == 0xD) || (($current >= 0x20) && ($current <= 0xD7FF)) || (($current >= 0xE000) && ($current <= 0xFFFD)) || (($current >= 0x10000) && ($current <= 0x10FFFF))) {
+            if (($current == 0x9)
+                || ($current == 0xA)
+                || ($current == 0xD)
+                || (($current >= 0x20)
+                && ($current <= 0xD7FF))
+                || (($current >= 0xE000)
+                && ($current <= 0xFFFD))
+                || (($current >= 0x10000)
+                && ($current <= 0x10FFFF))) {
                 $ret .= chr($current);
             } else {
                 $ret .= " ";
@@ -165,7 +185,7 @@ if (!function_exists('get_domain')) {
             $domain = substr($_SERVER['HTTP_HOST'], ($tmp ? $tmp : 0));
         }
 
-        if (($tmp === FALSE) || ($tmp == 0)) {
+        if (($tmp === false) || ($tmp == 0)) {
             $sub_domain = '';
         } else {
             $sub_domain = substr($_SERVER['HTTP_HOST'], 0, $tmp - 1);
@@ -223,17 +243,18 @@ if (!function_exists('check_finance_role')) {
         if (isset($_SESSION["user"]["role_id"])) {
             foreach ($_SESSION["user"]["role_id"] as $role) {
                 if (in_array($role, $account_role)) {
-                    if ($returnString)
+                    if ($returnString) {
                         return "so.finance_dispatch_date as dispatch_date";
-                    else
+                    } else {
                         return true;
+                    }
                 }
             }
         }
-        if ($returnString)
+        if ($returnString) {
             return "so.dispatch_date";
-        else
+        } else {
             return false;
+        }
     }
 }
-?>

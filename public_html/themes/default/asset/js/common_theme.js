@@ -237,7 +237,7 @@ $(document).ready(function() {
 var cart = {
     'addcart': function(sku, qty) {
         $.ajax({
-            url: '/cart/ajax_add_item',
+            url: '/cart/ajaxAddItem',
             type: 'post',
             data: 'sku=' + sku + '&qty=' + (typeof(qty) != 'undefined' ? qty : 1),
             dataType: 'json',

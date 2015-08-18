@@ -24,10 +24,11 @@ class PUB_Controller extends CI_Controller
         # SBF #2247
         // $this->load->library('service/adroll_tracking_script_service');
 
-        $this->_get_platform();
-        $this->load->helper(array('url', 'image'));
+        // $this->_get_platform();
+        // $this->load->helper(array('url', 'image'));
 
-        $_SESSION["CURRPAGE"] = str_replace($_SESSION['lang_id'] . "_" . $_SESSION['country_code_from_hook'] . "/", "", $_SERVER['REQUEST_URI']);
+        // $_SESSION["CURRPAGE"] = str_replace($_SESSION['lang_id'] . "_" . $_SESSION['country_code_from_hook'] . "/", "", $_SERVER['REQUEST_URI']);
+        $_SESSION["CURRPAGE"] = $_SERVER['REQUEST_URI'];
         $ref = isset($_SERVER['HTTP_REFERER']) ? $_SESSION['HTTP_REFERER'] : '';
 
         if ($this->is_allow_referer($ref)) {
