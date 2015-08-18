@@ -20,7 +20,7 @@
                             <?php foreach ($cart_info as $item): ?>
                             <tr>
                                 <td class="text-center">
-                                    <a href="<?= site_url('/mainproduct/view/' . $item['sku']) ?>"><img src="<?= get_image_file($item['image'], "m", $sku) ?>" alt="<?= $item['name'] ?>" title="<?= $item['name'] ?>" class="img-thumbnail"></a>
+                                    <a href="<?= site_url('/mainproduct/view/' . $item['sku']) ?>"><img src="<?= get_image_file($item['image'], "m", $item['sku']) ?>" alt="<?= $item['name'] ?>" title="<?= $item['name'] ?>" class="img-thumbnail"></a>
                                 </td>
                                 <td class="text-left"><a href="#"><?= $item['name'] ?></a>
                                 </td>
