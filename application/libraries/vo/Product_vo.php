@@ -20,7 +20,7 @@ class Product_vo extends Base_vo
     private $display_quantity = '0';
     private $website_quantity = '0';
     private $ex_demo = '0';
-    private $china_oem = '0';
+    // private $china_oem = '0';
     private $rrp = '0.00';
     private $image;
     private $flash;
@@ -35,7 +35,7 @@ class Product_vo extends Base_vo
     private $warranty_in_month;
     private $expected_delivery_date;
     private $cat_upselling;
-    private $shipment_restricted_type;
+    // private $shipment_restricted_type;
     private $lang_restricted;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
@@ -44,8 +44,8 @@ class Product_vo extends Base_vo
     private $modify_on;
     private $modify_at = '127.0.0.1';
     private $modify_by;
-    private $surplus_quantity = 0;
-    private $slow_move_7_days;
+    // private $surplus_quantity = 0;
+    // private $slow_move_7_days;
 
     //primary key
     private $primary_key = array("sku");
@@ -175,27 +175,27 @@ class Product_vo extends Base_vo
         return $this;
     }
 
-    public function get_surplus_quantity()
-    {
-        return $this->surplus_quantity;
-    }
+    // public function get_surplus_quantity()
+    // {
+        // return $this->surplus_quantity;
+    // }
 
-    public function set_surplus_quantity($value)
-    {
-        $this->surplus_quantity = $value;
-        return $this;
-    }
+    // public function set_surplus_quantity($value)
+    // {
+        // $this->surplus_quantity = $value;
+        // return $this;
+    // }
 
-    public function get_slow_move_7_days()
-    {
-        return $this->slow_move_7_days;
-    }
+    // public function get_slow_move_7_days()
+    // {
+        // return $this->slow_move_7_days;
+    // }
 
-    public function set_slow_move_7_days($value)
-    {
-        $this->slow_move_7_days = $value;
-        return $this;
-    }
+    // public function set_slow_move_7_days($value)
+    // {
+        // $this->slow_move_7_days = $value;
+        // return $this;
+    // }
 
     public function get_quantity()
     {
@@ -241,16 +241,16 @@ class Product_vo extends Base_vo
         return $this;
     }
 
-    public function get_china_oem()
-    {
-        return $this->china_oem;
-    }
+    // public function get_china_oem()
+    // {
+        // return $this->china_oem;
+    // }
 
-    public function set_china_oem($value)
-    {
-        $this->china_oem = $value;
-        return $this;
-    }
+    // public function set_china_oem($value)
+    // {
+        // $this->china_oem = $value;
+        // return $this;
+    // }
 
     public function get_rrp()
     {
@@ -417,16 +417,16 @@ class Product_vo extends Base_vo
         return $this;
     }
 
-    public function get_shipment_restricted_type()
-    {
-        return $this->shipment_restricted_type;
-    }
+    // public function get_shipment_restricted_type()
+    // {
+        // return $this->shipment_restricted_type;
+    // }
 
-    public function set_shipment_restricted_type($value)
-    {
-        $this->shipment_restricted_type = $value;
-        return $this;
-    }
+    // public function set_shipment_restricted_type($value)
+    // {
+        // $this->shipment_restricted_type = $value;
+        // return $this;
+    // }
 
     public function get_status()
     {
