@@ -14,30 +14,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 if (!defined('ENTRYPOINT') OR (defined('ENTRYPOINT') && (ENTRYPOINT !== 'ADMINCENTRE'))) {
     $hook['pre_system'][] = array(
-        'class' => 'CountrySelection',
-        'function' => 'redirectUrl',
-        'filename' => 'CountrySelection.php',
+        'class' => 'DomainSelection',
+        'function' => 'checkDomain',
+        'filename' => 'DomainSelection.php',
         'filepath' => 'hooks'
     );
 
     $hook['pre_controller'][] = array(
-        'class' => 'Domain_platform',
-        'function' => 'update_doamin_platform',
-        'filename' => 'Domain_platform.php',
+        'class' => 'SiteConfig',
+        'function' => 'selectSite',
+        'filename' => 'SiteConfig.php',
         'filepath' => 'hooks',
     );
-
-    $hook['pre_controller'][] = array(
-        'class' => 'Currency',
-        'function' => 'load_currency',
-        'filename' => 'Currency.php',
-        'filepath' => 'hooks',
-    );
-
-    $hook['pre_controller'][] = array(
-        'class' => 'Lang',
-        'function' => 'update_lang_id',
-        'filename' => 'Lang.php',
-        'filepath' => 'hooks',
-    );
+    //
+    // $hook['pre_controller'][] = array(
+    //     'class' => 'Currency',
+    //     'function' => 'load_currency',
+    //     'filename' => 'Currency.php',
+    //     'filepath' => 'hooks',
+    // );
+    //
+    // $hook['pre_controller'][] = array(
+    //     'class' => 'Lang',
+    //     'function' => 'update_lang_id',
+    //     'filename' => 'Lang.php',
+    //     'filepath' => 'hooks',
+    // );
 }

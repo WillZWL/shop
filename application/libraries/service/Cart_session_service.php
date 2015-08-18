@@ -195,7 +195,7 @@ class Cart_session_service extends Base_service
         ];
 
         if ($platform === '') {
-            $platform = defined(PLATFORMID) ? defined(PLATFORMID) : "WEBGB";
+            $platform = defined('PLATFORMID') ? PLATFORMID : 'WEBGB';
         }
 
         $price_service = $this->get_price_service($platform);

@@ -1,5 +1,5 @@
             </div>
-			<footer id="footer" class="nostylingboxs">
+            <footer id="footer" class="nostylingboxs">
                 <div class="footer-top " id="pavo-footer-top">
                     <div class="container">
                         <div class="row">
@@ -12,8 +12,8 @@
                                                     <i class="fa-3x fa fa-envelope-o"></i>
                                                 </a>
                                                 <div class="media-body">
-                                                    <h6>Questions?</h6>
-                                                    <p>Send us an email
+                                                    <h6><?= _('Questions?') ?></h6>
+                                                    <p><?= _('Send us an email') ?>
                                                         <br>
                                                     </p>
                                                 </div>
@@ -26,16 +26,16 @@
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                                         <span class="icon-name fa fa-envelope-o"></span>
-                                                        <h4>Questions?</h4>
-                                                        <p>Send us an email
+                                                        <h4><?= _('Questions?') ?></h4>
+                                                        <p><?= _('Send us an email') ?>
                                                             <br>
                                                         </p>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Detail Information</p>
+                                                        <p><?= _('Detail Information') ?></p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal"><?= _('Close') ?></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -46,8 +46,8 @@
                                                     <i class="fa-3x fa fa fa-phone"></i>
                                                 </a>
                                                 <div class="media-body">
-                                                    <h6>Call 0870 295 9128</h6>
-                                                    <p>Mon - Fri : 9A.M - 6 P.M
+                                                    <h6><?= _('Call') ?> 0870 295 9128</h6>
+                                                    <p>
                                                         <br>
                                                     </p>
                                                 </div>
@@ -60,16 +60,16 @@
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                                         <span class="icon-name fa fa fa-phone"></span>
-                                                        <h4>Call 0870 295 9128</h4>
-                                                        <p>Mon - Fri : 9A.M - 6 P.M
+                                                        <h4><?= _('Call') ?> 0870 295 9128</h4>
+                                                        <p><?= _('Mon - Fri : 9:00 AM - 6:00 PM') ?>
                                                             <br>
                                                         </p>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Detail Information</p>
+                                                        <p><?= _('Detail Information') ?></p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal"><?= _('Close') ?></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -95,7 +95,7 @@
                                                     <img src="/themes/default/asset/image/thawte.png">
                                                 </div>
                                                 <p class="desc">
-                                                    100% Secure <br/> with SSL Encryption
+                                                    <?= sprintf(_('100%% Secure %s with SSL Encryption'), "<br/> ") ?>
                                                 </p>
                                             </li>
                                             <li>
@@ -103,7 +103,7 @@
                                                     <img src="/themes/default/asset/image/dataprotection.png">
                                                 </div>
                                                 <p class="desc">
-                                                    100% Data Protection <br /> your data is safe with us
+                                                    <?= _('100% Data Protection ') ?><br /> <?= _('your data is safe with us') ?>
                                                 </p>
                                             </li>
                                             <li>
@@ -111,7 +111,7 @@
                                                     <img src="/themes/default/asset/image/freedelivery.png">
                                                 </div>
                                                 <p class="desc">
-                                                    Free Delivery For All Orders* Shipping: 3-5 Working Days
+                                                    <?= _('Free Delivery For All Orders* Shipping: 3-5 Working Days') ?>
                                                 </p>
                                             </li>
                                             <li>
@@ -119,7 +119,7 @@
                                                     <img src="/themes/default/asset/image/moneyback.png">
                                                 </div>
                                                 <p class="desc">
-                                                    Money Back 14 day <br/> Money Back Guarantee
+                                                    <?= _('Money Back 14 days ') ?><br/> <?= _('Money Back Guarantee') ?>
                                                 </p>
                                             </li>
                                             <li>
@@ -127,7 +127,7 @@
                                                     <img src="/themes/default/asset/image/warranty.png">
                                                 </div>
                                                 <p class="desc">
-                                                    Warranty <br/> Up to 2 Years
+                                                    <?= _('Warranty ') ?><br/> <?= _('Up to 2 Years') ?>
                                                 </p>
                                             </li>
                                         </ul>
@@ -142,9 +142,10 @@
                         <div class="row">
                             <div class="column col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="panel-heading panel-white">
-                                    <!--<a href="/display/view/about_us">--><h4 class="panel-title">About Us</h4><!--</a>-->
+                                    <a href="/contact"><h4 class="panel-title"><?= _('About Us') ?></h4></a>
                                 </div>
-                                <p>DigitalDiscount prides itself on great deals without compromise on service! Feel free to contact us anytime for more information
+                                <p>
+                                    <?= _('DigitalDiscount prides itself on great deals without compromise on service! Feel free to contact us anytime for more information') ?>
                                     <br>
                                 </p>
                             </div>
@@ -153,32 +154,32 @@
                                     <h4 class="panel-title"></h4>
                                 </div>
                                 <ul class="list-unstyled address">
-                                    <li><i class="fa fa-map-marker"></i>Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong</li>
+                                    <li><i class="fa fa-map-marker"></i><?= _('Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong') ?></li>
                                     <li><i class="fa fa-tablet"></i>0870 295 9128</li>
-                                    <li><i class="fa fa-envelope-o"></i><a href="mailto:info@digitaldiscount.co.uk">info@digitaldiscount.co.uk</a></li>
+                                    <li><i class="fa fa-envelope-o"></i><a href="mailto:<?= SITE_EMAIL ?>"><?= SITE_EMAIL ?></a></li>
                                 </ul>
                             </div>
                             <div class="column padding border-right col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="panel-white">
                                     <div class="panel-heading">
-                                        <a href="/display/view/conditions_of_use"><h4 class="panel-title panel-title-special">CONDITIONS OF USE</h4></a>
-                                        <a href="/display/view/shipping"><h4 class="panel-title panel-title-special">SHIPPING</h4></a>
-                                        <a href="/display/view/privacy_policy"><h4 class="panel-title panel-title-special">PRIVACY POLICY</h4></a>
+                                        <a href="/display/view/conditions_of_use"><h4 class="panel-title panel-title-special"><?= _('CONDITIONS OF USE') ?></h4></a>
+                                        <a href="/display/view/shipping"><h4 class="panel-title panel-title-special"><?= _('SHIPPING') ?></h4></a>
+                                        <a href="/display/view/privacy_policy"><h4 class="panel-title panel-title-special"><?= _('PRIVACY POLICY') ?></h4></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="column col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="panel-white">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title">SELECT SHIPPING COUNTRY</h4></div>
+                                        <h4 class="panel-title"><?= _('SELECT SHIPPING COUNTRY') ?></h4></div>
                                     <div class="panel-body">
                                         <select name="footer_custom_country_id" id="footer_custom_country_id" onchange="change_country(2)" tabindex="-1">
-                                            <option value="en_AU" data-image="/images/icons/en_AU.png">Australia</option>
-                                            <option value="fr_BE" data-image="/images/icons/fr_BE.png">Belgium</option>
-                                            <option value="en_FI" data-image="/images/icons/en_FI.png">Finland</option>
-                                            <option value="fr_FR" data-image="/images/icons/fr_FR.png">France</option>
-                                            <option value="en_GB" data-image="/images/icons/en_GB.png">Great Britain</option>
-                                            <option value="en_HK" data-image="/images/icons/en_HK.png" selected="">Hong Kong</option>
+                                            <option value="en_AU" data-image="/images/icons/en_AU.png"><?= _('Australia') ?></option>
+                                            <option value="fr_BE" data-image="/images/icons/fr_BE.png"><?= _('Belgium') ?></option>
+                                            <option value="en_FI" data-image="/images/icons/en_FI.png"><?= _('Finland') ?></option>
+                                            <option value="fr_FR" data-image="/images/icons/fr_FR.png"><?= _('France') ?></option>
+                                            <option value="en_GB" data-image="/images/icons/en_GB.png"><?= _('Great Britain') ?></option>
+                                            <option value="en_HK" data-image="/images/icons/en_HK.png" selected=""><?= _('Hong Kong') ?></option>
                                         </select>
                                     </div>
                                 </div>
