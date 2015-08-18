@@ -1,6 +1,6 @@
 <?php
 
-class Review_order extends PUB_Controller
+class ReviewOrder extends PUB_Controller
 {
 
     public function __construct()

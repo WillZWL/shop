@@ -51,7 +51,7 @@ class Cart_session_service extends Base_service
     public function add($sku, $qty, $platform = null)
     {
         if (is_null($platform)) {
-            $platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
+            $platform = defined(PLATFORM) ? PLATFORM : "WSUS";
         }
 
         $qty = (int)$qty;
@@ -127,7 +127,8 @@ class Cart_session_service extends Base_service
                 $stored_website_status = $value["website_status"];
                 // var_dump($stored_website_status);
                 // var_dump($website_status);
-                if (($stored_website_status == "I")
+                if (
+                ($stored_website_status == "I")
                     && (($website_status == "P") || ($website_status == "A"))
                 ) {
                     return self::NOT_ALLOW_PREORDER_ARRIVING_ITEM_AFTER_NORMAL_ITEM;
@@ -152,7 +153,7 @@ class Cart_session_service extends Base_service
     public function remove($sku, $platform = NULL)
     {
         if (is_null($platform)) {
-            $platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
+            $platform = defined(PLATFORM) ? PLATFORM : "WSUS";
         }
 
         unset($_SESSION["cart"][$platform][$sku]);
@@ -195,7 +196,7 @@ class Cart_session_service extends Base_service
         ];
 
         if ($platform === '') {
-            $platform = defined('PLATFORMID') ? PLATFORMID : 'WEBGB';
+            $platform = defined('PLATFORM') ? PLATFORM : 'WEBGB';
         }
 
         $price_service = $this->get_price_service($platform);
@@ -237,7 +238,7 @@ class Cart_session_service extends Base_service
     public function add_special($sku, $qty, $price = "", $platform = NULL)
     {
         if (is_null($platform)) {
-            $platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
+            $platform = defined(PLATFORM) ? PLATFORM : "WSUS";
         }
 
         $prod = $this->prod_svc->get_dao()->get(array("sku" => $sku));
@@ -254,7 +255,7 @@ class Cart_session_service extends Base_service
     {
 
         if (is_null($platform)) {
-            $platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
+            $platform = defined(PLATFORM) ? PLATFORM : "WSUS";
         }
 
         if (is_numeric($qty)) {
@@ -296,7 +297,7 @@ class Cart_session_service extends Base_service
     {
 
         if (is_null($platform)) {
-            $platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
+            $platform = defined(PLATFORM) ? PLATFORM : "WSUS";
         }
 
         $prod = $this->prod_svc->get_dao()->get(array("sku" => $sku));
@@ -341,7 +342,7 @@ class Cart_session_service extends Base_service
         $cart_sku_list = array();
 
         if (is_null($platform)) {
-            $platform = defined(PLATFORMID) ? PLATFORMID : "WEBGB";
+            $platform = defined(PLATFORM) ? PLATFORM : "WEBGB";
         }
 
         if ($_SESSION["cart"]) {
@@ -409,7 +410,7 @@ class Cart_session_service extends Base_service
     public function get_cart($platform = NULL)
     {
         if (is_null($platform)) {
-            $platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
+            $platform = defined(PLATFORM) ? PLATFORM : "WSUS";
         }
 
         return $_SESSION["cart"][$platform];
@@ -419,7 +420,7 @@ class Cart_session_service extends Base_service
     {
 
         if (is_null($platform)) {
-            $platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
+            $platform = defined(PLATFORM) ? PLATFORM : "WSUS";
         }
 
         $new_cart = $remove = $replace = array();
@@ -492,7 +493,7 @@ class Cart_session_service extends Base_service
     public function get_detail($platform = NULL, $get_dc = 1, $get_detail = 0, $get_weight = 0, $special = 0, $vat_exempt = 0, $free_delivery = 0, $customised_dc = 0, $promotion_code = "", $need_vat = 0, $delivery_country = NULL)
     {
         if (is_null($platform)) {
-            $platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
+            $platform = defined(PLATFORM) ? PLATFORM : "WSUS";
         }
 
         include_once(APPPATH . "libraries/service/Class_factory_service.php");
