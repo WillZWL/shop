@@ -30,7 +30,7 @@ class SiteConfig extends PUB_Controller
             'status' => 1
         ];
 
-        $site_config_obj = $this->getSiteConfigService()->get($where);
+        $site_config_obj = $this->getSiteConfigService()->getDao()->get($where);
 
         // set default site
         if (empty($site_config_obj)) {
@@ -42,8 +42,7 @@ class SiteConfig extends PUB_Controller
         define('SITE_NAME', $site_config_obj->getSiteName());
         define('SITE_LOGO', $site_config_obj->getLogo());
         define('SITE_EMAIL', $site_config_obj->getEmail());
-        define('SITE_LANG_WITH_COUNTRY', $site_config_obj->getLang());
-        define('SITE_LANG', substr(SITE_LANG_WITH_COUNTRY, 0, 2));
+        define('SITE_LANG', $site_config_obj->getLang());
         define('PLATFORM', $site_config_obj->getPlatform());
 
         $this->setLocalization();
@@ -51,9 +50,9 @@ class SiteConfig extends PUB_Controller
 
     private function setLocalization()
     {
-        setcookie('lang', SITE_LANG_WITH_COUNTRY, time()+3600, '/', $this->getDomain());
-        putenv('LANG=' . SITE_LANG_WITH_COUNTRY);
-        setlocale(LC_MESSAGES, SITE_LANG_WITH_COUNTRY);
+        setcookie('lang', SITE_LANG, time()+3600, '/', $this->getDomain());
+        putenv('LANG=' . SITE_LANG);
+        setlocale(LC_MESSAGES, SITE_LANG);
         setlocale(LC_NUMERIC, 'en_US');
 
         $domain = 'message';

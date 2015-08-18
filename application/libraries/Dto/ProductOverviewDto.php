@@ -1,7 +1,7 @@
 <?php
 class ProductOverviewDto
 {
-    private $platform;
+    private $platform_id;
     private $vat;
     private $vat_percent;
     private $duty;
@@ -26,7 +26,7 @@ class ProductOverviewDto
     private $version_id;
     private $colour_id;
     private $item_vat;
-    private $name;
+    private $prod_name;
     private $shiptype;
     private $shiptype_name;
     private $cost;
@@ -36,7 +36,7 @@ class ProductOverviewDto
     private $duty_pcent;
     private $import_percent;
     private $payment_charge_percent;
-    private $platform_currency;
+    private $platform_currency_id;
     private $delivery_charge;
     private $platform_delivery_charge;
     private $default_delivery_charge;
@@ -125,16 +125,15 @@ class ProductOverviewDto
     private $ad_api_request_result;
     private $ad_status;
     private $lang_restricted;
-    private $status;
 
-    public function getPlatform()
+    public function getPlatformId()
     {
-        return $this->platform;
+        return $this->platform_id;
     }
 
-    public function setPlatform($platform)
+    public function setPlatformId($platform_id)
     {
-        $this->platform = $platform;
+        $this->platform_id = $platform_id;
     }
 
     public function getVat()
@@ -377,14 +376,14 @@ class ProductOverviewDto
         $this->item_vat = $item_vat;
     }
 
-    public function getName()
+    public function getProdName()
     {
-        return $this->name;
+        return $this->prod_name;
     }
 
-    public function setName($name)
+    public function setProdName($prod_name)
     {
-        $this->name = $name;
+        $this->prod_name = $prod_name;
     }
 
     public function getShiptype()
@@ -477,14 +476,14 @@ class ProductOverviewDto
         $this->payment_charge_percent = $payment_charge_percent;
     }
 
-    public function getPlatformCurrency()
+    public function getPlatformCurrencyId()
     {
-        return $this->platform_currency;
+        return $this->platform_currency_id;
     }
 
-    public function setPlatformCurrency($platform_currency)
+    public function setPlatformCurrencyId($platform_currency_id)
     {
-        $this->platform_currency = $platform_currency;
+        $this->platform_currency_id = $platform_currency_id;
     }
 
     public function getDeliveryCharge()
@@ -1365,15 +1364,5 @@ class ProductOverviewDto
     public function setLangRestricted($lang_restricted)
     {
         $this->lang_restricted = $lang_restricted;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
     }
 }

@@ -101,6 +101,7 @@ abstract class BaseDao
             $this->db->limit($option["limit"], $option["offset"]);
         }
 
+
         if ($select != '') {
             $this->db->select($select, false);
         }
@@ -113,7 +114,11 @@ abstract class BaseDao
             if ($option["limit"] == 1) {
                 return $rs[0];
             } else {
-                return $rs;
+                if ($rs && empty($option["result_type"]) && empty($option["array_list"])) {
+                    return (object)$rs;
+                } else {
+                    return $rs;
+                }
             }
         }
 

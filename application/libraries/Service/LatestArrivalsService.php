@@ -1,20 +1,15 @@
 <?php
 namespace AtomV2\Service;
 
-class LatestArrivalsService extends ProductService
+class LatestArrivalsService extends LandpageListingService
 {
-	private $proudctType;
-
     public function __construct()
     {
         parent::__construct();
-        $this->proudctType = 'LA';
     }
 
-    public function getLatestArrivalSku($where, $option)
+    public function getLatestArrivalProduct($where, $option)
     {
-    	$where['ll.type'] = $this->proudctType;
-
-        return $this->getLandPageSku($where, $option);
+        return $this->product_service->getHomeProduct($where, $option);
     }
 }

@@ -3,16 +3,16 @@ namespace AtomV2\Dao;
 
 class PriceDao extends BaseDao
 {
-    private $tableName = 'price';
-    private $voClassName = 'PriveVo';
+    private $table_name = 'price';
+    private $vo_class_name = 'PriveVo';
 
     public function getVoClassname()
     {
-        return $this->voClassName;
+        return $this->vo_class_name;
     }
 
     public function getTableName()
     {
-        return $this->tableName;
+        return $this->table_name;
     }
 }

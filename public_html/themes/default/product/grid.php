@@ -25,39 +25,39 @@
                                 <div class="carousel-inner product-grid">
                                     <div class="item active products-block">
                                         <div class="row products-row last">
-                                            <?php foreach ($prod as $prod_obj): ?>
+                                            <?php foreach ($prod as $sku => $prod_obj): ?>
                                             <div class="col-lg-2 col-sm-2 col-xs-12  product-col border">
                                                 <div class="product-block">
                                                     <div class="image">
                                                         <div class="product-img img">
-                                                            <a class="img" title="<?= $prod_obj->getName(); ?>" href='<?= site_url("/mainproduct/view/".$prod_obj->getSku()) ?>'>
-                                                                <img class="img-responsive" src="<?= get_image_file($prod_obj->getImage(), 'm', $prod_obj->getSku()) ?>" title="<?= $prod_obj->getName(); ?>" alt="<?= $prod_obj->getName(); ?>" />
+                                                            <a class="img" title="<?= $prod_obj->getProdName(); ?>" href='<?= site_url("/mainproduct/view/$sku") ?>'>
+                                                                <img class="img-responsive" src="<?= get_image_file($prod_obj->getImageExt(), 'm', $prod_obj->getSku()) ?>" title="<?= $prod_obj->getProdName(); ?>" alt="<?= $prod_obj->getProdName(); ?>" />
                                                             </a>
                                                             <div class="quickview hidden-xs">
-                                                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href='<?= site_url("/mainproduct/view/".$prod_obj->getSku()."/sv") ?>' title="Quick View"><i class="fa fa-eye"></i></a>
+                                                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href='<?= site_url("/mainproduct/view/$sku/sv") ?>' title="Quick View"><i class="fa fa-eye"></i></a>
                                                             </div>
                                                             <div class="zoom hidden-xs">
-                                                                <a data-toggle="tooltip" data-placement="top" href="<?= get_image_file($prod_obj->getImage(), 'l', $prod_obj->getSku()) ?>" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->getName(); ?>"><i class="fa fa-search-plus"></i></a>
+                                                                <a data-toggle="tooltip" data-placement="top" href="<?= get_image_file($prod_obj->getImageExt(), 'l', $prod_obj->getSku()) ?>" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->getProdName(); ?>"><i class="fa fa-search-plus"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="product-meta">
                                                         <div class="left">
-                                                            <h6 class="name"><a href='<?= site_url("/mainproduct/view/".$prod_obj->getSku()) ?>'><?= $prod_obj->getName(); ?></a></h6>
+                                                            <h6 class="name"><a href='<?= site_url("/mainproduct/view/$sku") ?>'><?= $prod_obj->getProdName(); ?></a></h6>
                                                             <div class="price">
                                                                 <span class="price-new"><?= $prod_obj->getPrice(); ?></span>
-                                                                <span class="price-old"><?= $prod_obj->getPrice(); ?></span>
+                                                                <span class="price-old"><?= $prod_obj->getRrpPrice(); ?></span>
                                                             </div>
                                                         </div>
                                                         <div class="right">
                                                             <div class="action">
                                                                 <div class="cart">
-                                                                    <button data-loading-text="Loading..." class="btn btn-primary" type="button" onclick="cart.addcart('<?= $prod_obj->getSku() ?>');">
+                                                                    <button data-loading-text="Loading..." class="btn btn-primary" type="button" onclick="cart.addcart('<?= $sku ?>');">
                                                                         <i class="fa fa-shopping-cart"></i>
                                                                     </button>
                                                                 </div>
                                                                 <div class="wishlist">
-                                                                    <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="Add to Wish List" onclick="wishlist.addwishlist('<?= $prod_obj->getSku() ?>');">
+                                                                    <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="Add to Wish List" onclick="wishlist.addwishlist('<?= $sku ?>');">
                                                                         <i class="fa fa-heart"></i>
                                                                     </button>
                                                                 </div>
