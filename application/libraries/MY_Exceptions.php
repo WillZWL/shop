@@ -7,7 +7,7 @@ class MY_Exceptions extends CI_Exceptions
 
     function __construct()
     {
-        /////fsdf
+//test
         parent::CI_Exceptions();
     }
 
