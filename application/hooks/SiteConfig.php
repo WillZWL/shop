@@ -1,5 +1,4 @@
 <?php
-
 use AtomV2\Service\SiteConfigService;
 
 class SiteConfig extends PUB_Controller
