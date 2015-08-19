@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Redirect_controller extends PUB_Controller
@@ -10,15 +11,35 @@ class Redirect_controller extends PUB_Controller
         $this->load->model('website/home_model');
         $this->load->library('service/affiliate_service');
         $this->load->library('service/price_website_service');
+=======
+
+use AtomV2\Models\Website\HomeModel;
+
+class Redirect_controller extends PUB_Controller
+{
+    private $home_model;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->home_model = new HomeModel;
+        // $this->load->model('Website/HomeModel', 'home_model');
+        // $this->load->library('ervice/affiliate_service');
+        // $this->load->library('service/price_website_service');
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
     }
 
     public function index()
     {
         $data = [];
 
+<<<<<<< HEAD
         $data['product'] = $this->home_model->get_content();
 
         //var_dump($data);die;
+=======
+        $data['product'] = $this->home_model->getContent();
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
 
         $this->load->view('/default/index', $data);
 

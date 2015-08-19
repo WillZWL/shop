@@ -1,16 +1,24 @@
 <?php
+<<<<<<< HEAD
 defined('BASEPATH') OR exit('No direct script access allowed');
+=======
+use AtomV2\Models\Website\CartSessionModel;
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
 
 Class Cart extends PUB_Controller
 {
     public function __construct()
     {
         parent::__construct();
+<<<<<<< HEAD
         $this->load->library('template');
         $this->load->helper('url');
         $this->load->model('website/cart_session_model');
         $this->load->model('marketing/upselling_model');
         $this->load->library('service/affiliate_service');
+=======
+        $this->cart_session_model = new CartSessionModel;
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
     }
 
     public function ajax_add_item()
@@ -23,15 +31,22 @@ Class Cart extends PUB_Controller
         echo json_encode($return);
     }
 
+<<<<<<< HEAD
     public function add_item_qty($sku = "", $qty = 0, $quiet_return = false)
     {
        // $data['data']['lang_text'] = $this->_get_language_file('', '', 'add_item_qty');
 
         $listing_status = array(
+=======
+    public function addItemQty($sku = "", $qty = 0, $quiet_return = false)
+    {
+        $listing_status = [
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
             "I" => $data['data']['lang_text']['status_in_stock'],
             "O" => $data['data']['lang_text']['status_out_stock'],
             "P" => $data['data']['lang_text']['status_pre_order'],
             "A" => $data['data']['lang_text']['status_arriving']
+<<<<<<< HEAD
         );
 
         $foo = [];
@@ -42,6 +57,13 @@ Class Cart extends PUB_Controller
 
         if ($allow_result <= Cart_session_service::DECISION_POINT) {
             $result = $this->cart_session_model->add($sku, $qty, PLATFORMID);
+=======
+        ];
+
+        $allow_result = $this->cart_session_model->cart_session_service->isAllowToAdd($sku, $qty, PLATFORM);
+        if ($allow_result <= \AtomV2\Service\CartSessionService::DECISION_POINT) {
+            $result = $this->cart_session_model->addItemQty($sku, $qty, PLATFORM);
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
         }
 
         //if (($allow_result == Cart_session_service::ALLOW_AND_IS_PREORDER)
@@ -88,7 +110,11 @@ Class Cart extends PUB_Controller
         }
 
         if (!empty($sku)) {
+<<<<<<< HEAD
             if (!($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORMID))) {
+=======
+            if (!($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORM))) {
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
                 show_error("Product not found", "Product not found");
             }
         } else {
@@ -121,12 +147,20 @@ Class Cart extends PUB_Controller
         $image_url = get_image_file($prod_obj->get_image(), "m", $sku);
 
         if (!empty($sku)) {
+<<<<<<< HEAD
             if ($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORMID)) {
+=======
+            if ($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORM)) {
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
                 $success = 1;
             }
         }
 
+<<<<<<< HEAD
         $cart_info = $this->cart_session_model->get_detail(PLATFORMID);
+=======
+        $cart_info = $this->cart_session_model->get_detail(PLATFORM);
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
         $cart["total"] = $cart["item"] = 0;
         if ($cart_info["cart"]) {
             foreach ($cart_info["cart"] AS $key => $arr) {
@@ -164,7 +198,11 @@ Class Cart extends PUB_Controller
                         $success = 1;
                     }
                 } else {
+<<<<<<< HEAD
                     if ($chk_cart = $this->cart_session_model->update($old_warranty, $new_qty, PLATFORMID)) {
+=======
+                    if ($chk_cart = $this->cart_session_model->update($old_warranty, $new_qty, PLATFORM)) {
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
                         $success = 1;
                     }
                 }
@@ -172,12 +210,20 @@ Class Cart extends PUB_Controller
         }
 
         if (!empty($sku)) {
+<<<<<<< HEAD
             if ($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORMID)) {
+=======
+            if ($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORM)) {
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
                 $success = 1;
             }
         }
 
+<<<<<<< HEAD
         $cart_info = $this->cart_session_model->get_detail(PLATFORMID);
+=======
+        $cart_info = $this->cart_session_model->get_detail(PLATFORM);
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
         $cart["total"] = $cart["item"] = 0;
         if ($cart_info["cart"]) {
             foreach ($cart_info["cart"] AS $key => $arr) {
@@ -224,13 +270,21 @@ Class Cart extends PUB_Controller
                     $success = 1;
                 }
             } else {
+<<<<<<< HEAD
                 if ($chk_cart = $this->cart_session_model->update($sku, $new_qty, PLATFORMID)) {
+=======
+                if ($chk_cart = $this->cart_session_model->update($sku, $new_qty, PLATFORM)) {
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
                     $success = 1;
                 }
             }
         }
 
+<<<<<<< HEAD
         $cart_info = $this->cart_session_model->get_detail(PLATFORMID);
+=======
+        $cart_info = $this->cart_session_model->get_detail(PLATFORM);
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
         $cart["total"] = $cart["item"] = 0;
         if ($cart_info["cart"]) {
             foreach ($cart_info["cart"] AS $key => $arr) {

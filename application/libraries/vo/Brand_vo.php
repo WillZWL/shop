@@ -20,7 +20,11 @@ class Brand_vo extends Base_vo
     private $primary_key = array("id");
 
     //auo increment
+<<<<<<< HEAD
     private $increment_field = "";
+=======
+    private $increment_field = "id";
+>>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
 
     //instance method
     public function get_id()
