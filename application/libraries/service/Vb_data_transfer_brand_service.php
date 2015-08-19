@@ -10,7 +10,6 @@ class Vb_data_transfer_brand_service extends Vb_data_transfer_service
 				
 		include_once(APPPATH . 'libraries/dao/Brand_dao.php');
 		$this->brand_dao = new Brand_dao();
-		
 	}
 	
 	public function get_dao()

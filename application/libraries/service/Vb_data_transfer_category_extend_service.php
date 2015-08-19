@@ -51,7 +51,7 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 			$c--;			
 				
 			//Get the external (VB) category id to search the corresponding id in atomv2 database
-			$ext_id = $category->cat_id;
+			$ext_id = $category->id;
 						
 			$id = $this->category_id_mapping_service->get_local_id($ext_id);
 			
@@ -60,7 +60,7 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 				//category exists
 				$lang_id = "";
 				
-				if($cat_ext_atomv2 = $this->get_dao()->get(array("cat_id"=>$id, "lang_id"=>$category->lang_id)))
+				if($cat_ext_atomv2 = $this->get_dao()->get(array("id"=>$category->id, "lang_id"=>$category->lang_id)))
 				{
 					$lang_id .= $cat_ext_atomv2["lang_id"];
 				}				
@@ -68,7 +68,7 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 				if ($lang_id != "" && $lang_id != null)
 				{
 					//Update the AtomV2 category extend data 					
-					$where = array("cat_id"=>$id, "lang_id"=>$lang_id);
+					$where = array("id"=>$id, "lang_id"=>$lang_id);
 					
 					$new_cat_obj = array();
 					
@@ -81,7 +81,7 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 				{
 					$new_cat_obj = array();
 					
-					$new_cat_obj["cat_id"] = $id;
+					$new_cat_obj["id"] = $id;
 					$new_cat_obj["lang_id"] = $lang_id;
 					$new_cat_obj["name"] = $category->name;
 					
@@ -92,7 +92,7 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 			{
 				//if the ext_id is not changed in atomv2, we store it in an xml string to send it to VB
 				$xml[] = '<category>';
-				$xml[] = '<id>' . $category->cat_id . '</id>';
+				$xml[] = '<id>' . $category->id . '</id>';
 				$xml[] = '<lang_id>' . $category->lang_id . '</lang_id>';
 				$xml[] = '</category>';
 			}

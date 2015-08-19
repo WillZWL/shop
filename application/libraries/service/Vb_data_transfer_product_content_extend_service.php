@@ -73,6 +73,9 @@ class Vb_data_transfer_product_content_extend_service extends Vb_data_transfer_s
 				
 				$new_pc_obj = array();
 				
+				
+				//$xml[] = '<specification><![CDATA[' . preg_replace('/[\x00-\x1F\x7F]/', '', $pc['specification']) . ']]></specification>';	
+				
 				$new_pc_obj["feature"] = $pc->feature; 
 				$new_pc_obj["feature_original"] = $pc->feature_original;	
 				$new_pc_obj["specification"] = $pc->specification;	

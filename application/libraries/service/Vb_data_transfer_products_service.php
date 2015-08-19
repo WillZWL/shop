@@ -75,12 +75,12 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 				//$new_prod_obj["sub_sub_cat_id"] = $product->sub_sub_cat_id; //FK category
 				//$new_prod_obj["brand_id"] = $product->brand_id; //FK brand
 				$new_prod_obj["clearance"] = $product->clearance;
-				$new_prod_obj["surplus_quantity"] = $product->surplus_quantity; // NOT EXIST IN ATOMV2
-				$new_prod_obj["slow_move_7_days"] = $product->slow_move_7_days; // NOT EXIST IN ATOMV2
+				//$new_prod_obj["surplus_quantity"] = $product->surplus_quantity; // NOT EXIST IN ATOMV2
+				//$new_prod_obj["slow_move_7_days"] = $product->slow_move_7_days; // NOT EXIST IN ATOMV2
 				$new_prod_obj["quantity"] = $product->quantity;
 				$new_prod_obj["display_quantity"] = $product->display_quantity;
 				$new_prod_obj["website_quantity"] = $product->website_quantity;
-				$new_prod_obj["china_oem"] = $product->china_oem; // NOT EXIST IN ATOMV2
+				//$new_prod_obj["china_oem"] = $product->china_oem; // NOT EXIST IN ATOMV2
 				$new_prod_obj["ex_demo"] = $product->ex_demo;
 				$new_prod_obj["rrp"] = $product->rrp;
 				$new_prod_obj["image"] = $product->image;
@@ -97,7 +97,7 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 				$new_prod_obj["warranty_in_month"] = $product->warranty_in_month;
 				$new_prod_obj["cat_upselling"] = $product->cat_upselling;
 				$new_prod_obj["lang_restricted"] = $product->lang_restricted;
-				$new_prod_obj["shipment_restricted_type"] = $product->shipment_restricted_type; // NOT EXIST IN ATOMV2		
+				//$new_prod_obj["shipment_restricted_type"] = $product->shipment_restricted_type; // NOT EXIST IN ATOMV2		
 				
 				$this->get_dao()->q_update($where, $new_prod_obj);
 			}
