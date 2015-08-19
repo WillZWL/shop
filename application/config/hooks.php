@@ -21,23 +21,23 @@ if (!defined('ENTRYPOINT') OR (defined('ENTRYPOINT') && (ENTRYPOINT !== 'ADMINCE
     );
 
     $hook['pre_controller'][] = array(
-        'class' => 'SiteConfig',
-        'function' => 'selectSite',
-        'filename' => 'SiteConfig.php',
+        'class' => 'Domain_platform',
+        'function' => 'update_doamin_platform',
+        'filename' => 'Domain_platform.php',
         'filepath' => 'hooks',
     );
-    //
-    // $hook['pre_controller'][] = array(
-    //     'class' => 'Currency',
-    //     'function' => 'load_currency',
-    //     'filename' => 'Currency.php',
-    //     'filepath' => 'hooks',
-    // );
-    //
-    // $hook['pre_controller'][] = array(
-    //     'class' => 'Lang',
-    //     'function' => 'update_lang_id',
-    //     'filename' => 'Lang.php',
-    //     'filepath' => 'hooks',
-    // );
+
+    $hook['pre_controller'][] = array(
+        'class' => 'Currency',
+        'function' => 'load_currency',
+        'filename' => 'Currency.php',
+        'filepath' => 'hooks',
+    );
+
+    $hook['pre_controller'][] = array(
+        'class' => 'Lang',
+        'function' => 'update_lang_id',
+        'filename' => 'Lang.php',
+        'filepath' => 'hooks',
+    );
 }

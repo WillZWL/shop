@@ -23,7 +23,7 @@ class Cat extends PUB_Controller
         if (!$cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $cat_id, "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
             $cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $cat_id, "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
         }
-
+		
         if (empty($cat_id) || !$cat_obj) {
             show_404('page');
         }
@@ -35,10 +35,10 @@ class Cat extends PUB_Controller
         $rpp = $this->input->get('rpp');
         //$page = $this->input->get('page');
         $brandId = $this->input->get('brand_id');
-        $catPageData = $this->category_model->getProductForCategoryPage(PLATFORM, $cat_id, $level, $brandId, $sort, $rpp, $page, $langId);
+        $catPageData = $this->category_model->getProductForCategoryPage(PLATFORMID, $cat_id, $level, $brandId, $sort, $rpp, $page, $langId);
         $data['sort'] = $sort;
 		$data['pagination'] = 3;
-
+		
         $data['show_discount_text'] = $this->price_website_service->is_display_saving_message();
 
         $show_404 = TRUE;

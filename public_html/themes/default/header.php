@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= SITE_NAME ?></title>
+    <title><?= _(SITENAME) ?></title>
     <meta name="description" content="Lexus Motozz - Responsive Opencart Theme" />
     <meta name="keywords" content="Lexus Motozz - Responsive Opencart Theme" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,7 +49,7 @@
                             <div class="logo inner  col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="logo-store pull-left">
                                     <a href="/">
-                                        <img src='<?=base_url("/images/logo/" . SITE_LOGO)?>' class="img-responsive img-logo">
+                                        <img src='<?=base_url("/images/logo/" . LOGO)?>' class="img-responsive img-logo">
                                     </a>
                                 </div>
                             </div>

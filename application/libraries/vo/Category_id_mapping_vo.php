@@ -1,13 +1,12 @@
 <?php
 include_once 'Base_vo.php';
 
-class Brand_vo extends Base_vo
+class Category_id_mapping_vo extends Base_vo
 {
 
     //class variable
     private $id;
-    private $brand_name;
-    private $description;
+    private $ext_id = '';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
@@ -17,14 +16,10 @@ class Brand_vo extends Base_vo
     private $modify_by;
 
     //primary key
-    private $primary_key = array("id");
+    private $primary_key = array("id", "ext_id", "status");
 
     //auo increment
-<<<<<<< HEAD
     private $increment_field = "";
-=======
-    private $increment_field = "id";
->>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
 
     //instance method
     public function get_id()
@@ -38,25 +33,14 @@ class Brand_vo extends Base_vo
         return $this;
     }
 
-    public function get_brand_name()
+    public function get_ext_id()
     {
-        return $this->brand_name;
+        return $this->ext_id;
     }
 
-    public function set_brand_name($value)
+    public function set_ext_id($value)
     {
-        $this->brand_name = $value;
-        return $this;
-    }
-
-    public function get_description()
-    {
-        return $this->description;
-    }
-
-    public function set_description($value)
-    {
-        $this->description = $value;
+        $this->ext_id = $value;
         return $this;
     }
 

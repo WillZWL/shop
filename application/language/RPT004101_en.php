@@ -1,3 +1,0 @@
-<?php
-
-	// APS_report
