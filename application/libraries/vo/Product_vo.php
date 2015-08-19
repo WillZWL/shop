@@ -20,7 +20,7 @@ class Product_vo extends Base_vo
     private $display_quantity = '0';
     private $website_quantity = '0';
     private $ex_demo = '0';
-    // private $china_oem = '0';
+    private $china_oem = '0';
     private $rrp = '0.00';
     private $image;
     private $flash;
@@ -35,7 +35,7 @@ class Product_vo extends Base_vo
     private $warranty_in_month;
     private $expected_delivery_date;
     private $cat_upselling;
-    // private $shipment_restricted_type;
+    private $shipment_restricted_type;
     private $lang_restricted;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
@@ -44,8 +44,8 @@ class Product_vo extends Base_vo
     private $modify_on;
     private $modify_at = '127.0.0.1';
     private $modify_by;
-    // private $surplus_quantity = 0;
-    // private $slow_move_7_days;
+    private $surplus_quantity = 0;
+    private $slow_move_7_days;
 
     //primary key
     private $primary_key = array("sku");
