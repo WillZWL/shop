@@ -15,6 +15,7 @@ class Authorization_service extends Base_service
         include_once(APPPATH . "libraries/service/Application_feature_service.php");
         $this->set_user_srv(new User_service());
         $this->_app_feature_service = new Application_feature_service();
+//test
     }
 
     public function user_menu_item($user_id = "")
