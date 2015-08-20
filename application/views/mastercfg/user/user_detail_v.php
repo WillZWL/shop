@@ -43,9 +43,7 @@
             </tr>
             <tr>
                 <td class="field"><?= $lang["login_name"] ?></td>
-                <td class="value"><input name="id" class="input" <? if ($cmd != "add") { ?> type="hidden" <? } ?>
-                                         value="<?= htmlspecialchars($user->get_id()) ?>"
-                                         noSpecial><?= $user->get_id() ?></td>
+                <td class="value"><input name="id" class="input" <?=$cmd != "add" ? 'type="hidden"' : ''?> value="<?= htmlspecialchars($user->get_id()) ?>" noSpecial><?= $user->get_id() ?></td>
                 <td class="field"><?= $lang["name"] ?></td>
                 <td class="value"><input name="username" class="input"
                                          value="<?= htmlspecialchars($user->get_username()) ?>" notEmpty></td>

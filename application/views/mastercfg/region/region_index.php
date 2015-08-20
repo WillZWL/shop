@@ -8,7 +8,7 @@
 </head>
 <body>
 <div id="main">
-    <?= $notice["img"] ?>
+    <?=$notice["img"] ?>
     <?php
     $ar_status = array("C" => $lang["courier"], "S" => $lang["sourcing"]);
     ?>
@@ -69,28 +69,30 @@
             </tr>
         </table>
         <table border="0" cellpadding="0" cellspacing="1" bgcolor="#BBBBFF" width="100%" class="tb_pad">
-            <?php
+        <?php
+        if ($regionlist) {
             $i = 0;
             foreach ($regionlist as $region) {
-                $cur_color = $row_color[$i % 2];
+                // $cur_color = $row_color[$i % 2];
                 ?>
 
                 <tr class="row<?= $i % 2 ?>" onMouseOver="AddClassName(this, 'highlight')"
                     onMouseOut="RemoveClassName(this, 'highlight')"
-                    onclick="Redirect('<?= site_url('mastercfg/region/view/' . $region->get_id()) ?>');"
+                    onclick="Redirect('<?= site_url('mastercfg/region/view/' . $region->getId()) ?>');"
                     class="pointer">
                     <td height="20" width="20"><img src="<?= base_url() ?>images/info.gif"
-                                                    title='<?= $lang["create_on"] ?>:<?= $region->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $region->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $region->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $region->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $region->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $region->get_modify_by() ?>'>
+                                                    title='<?= $lang["create_on"] ?>:<?= $region->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $region->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $region->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $region->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $region->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $region->getModifyBy() ?>'>
                     </td>
-                    <td width="40"><?= $region->get_id() ?></td>
-                    <td width="140"><?= $region->get_region_name() ?></td>
-                    <td width="60"><?= $ar_status{$region->get_type()} ?></td>
+                    <td width="40"><?= $region->getId() ?></td>
+                    <td width="140"><?= $region->getRegionName() ?></td>
+                    <td width="60"><?= $ar_status{$region->getType()} ?></td>
                     <td width="22">&nbsp;</td>
                 </tr>
                 <?php
                 $i++;
             }
-            ?>
+        }
+        ?>
         </table>
         <input type="hidden" name="showall" value='<?= $this->input->get("showall") ?>'>
         <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
