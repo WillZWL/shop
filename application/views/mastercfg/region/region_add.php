@@ -23,7 +23,7 @@
             <td height="2" bgcolor="#000033"></td>
         </tr>
     </table>
-    <form action="<?= $_SERVER["PHP_SELF"] ?>" name="editform" method="post" style="padding:0; margin:0"
+    <form action="<?=base_url()?>mastercfg/region/add" name="editform" method="post" style="padding:0; margin:0"
           onSubmit="return CheckForm(this);">
         <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
             <tr>
@@ -42,7 +42,7 @@
                 <td height="20" width="250" class="field">&nbsp;&nbsp;<?= $lang["region_name"] ?></td>
                 <td height="20" align="left" class="value">&nbsp;&nbsp;<input type="text" name="region_name"
                                                                               class="input"
-                                                                              value="<?= $region_obj->get_region_name() ?>"
+                                                                              value="<?= $region_obj->getRegionName() ?>"
                                                                               notEmpty></td>
             </tr>
             <tr>
