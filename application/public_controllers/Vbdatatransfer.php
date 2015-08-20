@@ -39,8 +39,7 @@ class Vbdatatransfer extends PUB_Controller
 		// exit;
 		$feed =$this->vb_data_transfer_prices_service->start_process($xml);
 		print $feed;
-	}
-	
+	}	
 	
 	/********************** start product tables **********************/
 	public function product()
