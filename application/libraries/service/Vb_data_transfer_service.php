@@ -2,6 +2,7 @@
 
 interface Vb_data_transfer_service_interface
 {	
+
 	/*****************************************************************************
 	*	process_vb_data, get the VB data to save it in the corresponding tables
 	*****************************************************************************/

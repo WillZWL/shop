@@ -8,18 +8,18 @@ class Vbdatatransfer extends PUB_Controller
 	{		
         parent::__construct();
 		//price
-		//$this->load->library('Service/vb_data_transfer_prices_service');
+		$this->load->library('Service/vb_data_transfer_prices_service');
 		
 		//product
-		//$this->load->library('Service/vb_data_transfer_products_service');
-		/*$this->load->library('Service/vb_data_transfer_product_content_service');
+		$this->load->library('Service/vb_data_transfer_products_service');
+		$this->load->library('Service/vb_data_transfer_product_content_service');
 		$this->load->library('Service/vb_data_transfer_product_content_extend_service');		
 		$this->load->library('Service/vb_data_transfer_product_custom_class_service');			
 		$this->load->library('Service/vb_data_transfer_product_keyword_service');	
 		$this->load->library('Service/vb_data_transfer_product_note_service');	
 		$this->load->library('Service/vb_data_transfer_product_warranty_service');		
 		$this->load->library('Service/vb_data_transfer_product_identifier_service');	
-		$this->load->library('Service/vb_data_transfer_product_image_service');*/
+		$this->load->library('Service/vb_data_transfer_product_image_service');
 		
 		//master tables
 		$this->load->library('Service/vb_data_transfer_category_service');		
@@ -27,7 +27,7 @@ class Vbdatatransfer extends PUB_Controller
 		$this->load->library('Service/vb_data_transfer_brand_service');
 	}
 	
-	/*public function price()
+	public function price()
 	{			
 		$xml = file_get_contents('php://input');
 		// header('content-type: text/xml');
@@ -35,7 +35,7 @@ class Vbdatatransfer extends PUB_Controller
 		// exit;
 		$feed =$this->vb_data_transfer_prices_service->start_process($xml);
 		print $feed;
-	}*/
+	}
 	
 	
 	/********************** start product tables **********************/
@@ -49,107 +49,107 @@ class Vbdatatransfer extends PUB_Controller
 		print $feed;
 	}
 	
-	// public function productcontent()
-	// {			
-		// $xml = file_get_contents('php://input');
-		// // header('content-type: text/xml');
-		// // print $xml;
-		// // exit;
-		// $feed =$this->vb_data_transfer_product_content_service->start_process($xml);
-		// print $feed;
-	// }
+	public function productcontent()
+	{			
+		$xml = file_get_contents('php://input');
+		// header('content-type: text/xml');
+		// print $xml;
+		// exit;
+		$feed =$this->vb_data_transfer_product_content_service->start_process($xml);
+		print $feed;
+	}
 	
-	// public function productcontentextend()
-	// {			
-		// $xml = file_get_contents('php://input');
-		// // header('content-type: text/xml');
-		// // print $xml;
-		// // exit;
-		// $feed =$this->vb_data_transfer_product_content_extend_service->start_process($xml);
-		// print $feed;
-	// }
+	public function productcontentextend()
+	{			
+		$xml = file_get_contents('php://input');
+		// header('content-type: text/xml');
+		// print $xml;
+		// exit;
+		$feed =$this->vb_data_transfer_product_content_extend_service->start_process($xml);
+		print $feed;
+	}
 	
-	// public function productcustomclass()
-	// {			
-		// $xml = file_get_contents('php://input');
-		// // header('content-type: text/xml');
-		// // print $xml;
-		// // exit;
-		// $feed =$this->vb_data_transfer_product_custom_class_service->start_process($xml);
-		// print $feed;
-	// }
+	public function productcustomclass()
+	{			
+		$xml = file_get_contents('php://input');
+		// header('content-type: text/xml');
+		// print $xml;
+		// exit;
+		$feed =$this->vb_data_transfer_product_custom_class_service->start_process($xml);
+		print $feed;
+	}
 	
-	// public function productidentifier()
-	// {			
-		// $xml = file_get_contents('php://input');
-		// // header('content-type: text/xml');
-		// // print $xml;
-		// // exit;
-		// $feed =$this->vb_data_transfer_product_identifier_service->start_process($xml);
-		// print $feed;
-	// }
+	public function productidentifier()
+	{			
+		$xml = file_get_contents('php://input');
+		// header('content-type: text/xml');
+		// print $xml;
+		// exit;
+		$feed =$this->vb_data_transfer_product_identifier_service->start_process($xml);
+		print $feed;
+	}
 	
-	// public function productimage()
-	// {			
-		// $xml = file_get_contents('php://input');
-		// // header('content-type: text/xml');
-		// // print $xml;
-		// // exit;
-		// $feed =$this->vb_data_transfer_product_image_service->start_process($xml);
-		// print $feed;
-	// }
+	public function productimage()
+	{			
+		$xml = file_get_contents('php://input');
+		// header('content-type: text/xml');
+		// print $xml;
+		// exit;
+		$feed =$this->vb_data_transfer_product_image_service->start_process($xml);
+		print $feed;
+	}
 	
-	// public function productkeyword()
-	// {			
-		// $xml = file_get_contents('php://input');
-		// // header('content-type: text/xml');
-		// // print $xml;
-		// // exit;
-		// $feed =$this->vb_data_transfer_product_keyword_service->start_process($xml);
-		// print $feed;
-	// }
+	public function productkeyword()
+	{			
+		$xml = file_get_contents('php://input');
+		// header('content-type: text/xml');
+		// print $xml;
+		// exit;
+		$feed =$this->vb_data_transfer_product_keyword_service->start_process($xml);
+		print $feed;
+	}
 	
-	// public function productnote()
-	// {			
-		// $xml = file_get_contents('php://input');
-		// // header('content-type: text/xml');
-		// // print $xml;
-		// // exit;
-		// $feed =$this->vb_data_transfer_product_note_service->start_process($xml);
-		// print $feed;
-	// }
+	public function productnote()
+	{			
+		$xml = file_get_contents('php://input');
+		// header('content-type: text/xml');
+		// print $xml;
+		// exit;
+		$feed =$this->vb_data_transfer_product_note_service->start_process($xml);
+		print $feed;
+	}
 	
-	// public function productwarranty()
-	// {			
-		// $xml = file_get_contents('php://input');
-		// // header('content-type: text/xml');
-		// // print $xml;
-		// // exit;
-		// $feed =$this->vb_data_transfer_product_warranty_service->start_process($xml);
-		// print $feed;
-	// }
-	// /********************** end product tables **********************/
+	public function productwarranty()
+	{			
+		$xml = file_get_contents('php://input');
+		// header('content-type: text/xml');
+		// print $xml;
+		// exit;
+		$feed =$this->vb_data_transfer_product_warranty_service->start_process($xml);
+		print $feed;
+	}
+	/********************** end product tables **********************/
 	
-	// /********************** start master tables **********************/
-	// public function category()
-	// {			
-		// $xml = file_get_contents('php://input');
-		// // header('content-type: text/xml');
-		// // print $xml;
-		// // exit;
-		// $feed =$this->vb_data_transfer_category_service->start_process($xml);
-		// print $feed;
-	// }	
+	/********************** start master tables **********************/
+	public function category()
+	{			
+		$xml = file_get_contents('php://input');
+		// header('content-type: text/xml');
+		// print $xml;
+		// exit;
+		$feed =$this->vb_data_transfer_category_service->start_process($xml);
+		print $feed;
+	}	
 	
-	// public function categoryextend()
-	// {			
-		// $xml = file_get_contents('php://input');
-		// // header('content-type: text/xml');
-		// // print $xml;
-		// // exit;
-		// $feed =$this->vb_data_transfer_category_extend_service->start_process($xml);
-		// print $feed;
-	// }
+	public function categoryextend()
+	{			
+		$xml = file_get_contents('php://input');
+		// header('content-type: text/xml');
+		// print $xml;
+		// exit;
+		$feed =$this->vb_data_transfer_category_extend_service->start_process($xml);
+		print $feed;
+	}
 	
 	public function brand()
 	{			

@@ -3,7 +3,6 @@ include_once 'Base_vo.php';
 
 class Product_vo extends Base_vo
 {
-
     //class variable
     private $sku;
     private $prod_grp_cd;
