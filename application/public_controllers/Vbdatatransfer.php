@@ -8,27 +8,27 @@ class Vbdatatransfer extends PUB_Controller
 	{		
         parent::__construct();
 		//price
-		$this->load->library('Service/vb_data_transfer_prices_service');
+		$this->load->library('service/vb_data_transfer_prices_service');
 		
 		//product
-		$this->load->library('Service/vb_data_transfer_products_service');
-		$this->load->library('Service/vb_data_transfer_product_content_service');
-		$this->load->library('Service/vb_data_transfer_product_content_extend_service');		
-		$this->load->library('Service/vb_data_transfer_product_custom_class_service');			
-		$this->load->library('Service/vb_data_transfer_product_keyword_service');	
-		$this->load->library('Service/vb_data_transfer_product_note_service');	
-		$this->load->library('Service/vb_data_transfer_product_warranty_service');		
-		$this->load->library('Service/vb_data_transfer_product_identifier_service');	
-		$this->load->library('Service/vb_data_transfer_product_image_service');
+		$this->load->library('service/vb_data_transfer_products_service');
+		$this->load->library('service/vb_data_transfer_product_content_service');
+		$this->load->library('service/vb_data_transfer_product_content_extend_service');		
+		$this->load->library('service/vb_data_transfer_product_custom_class_service');			
+		$this->load->library('service/vb_data_transfer_product_keyword_service');	
+		$this->load->library('service/vb_data_transfer_product_note_service');	
+		$this->load->library('service/vb_data_transfer_product_warranty_service');		
+		$this->load->library('service/vb_data_transfer_product_identifier_service');	
+		$this->load->library('service/vb_data_transfer_product_image_service');
 		
 		//master tables
-		$this->load->library('Service/vb_data_transfer_category_service');		
-		$this->load->library('Service/vb_data_transfer_category_extend_service');
-		$this->load->library('Service/vb_data_transfer_brand_service');		
-		$this->load->library('Service/vb_data_transfer_colour_service');		
-		$this->load->library('Service/vb_data_transfer_colour_extend_service');
-		$this->load->library('Service/vb_data_transfer_version_service');
-		$this->load->library('Service/vb_data_transfer_freight_cat_service');
+		$this->load->library('service/vb_data_transfer_category_service');		
+		$this->load->library('service/vb_data_transfer_category_extend_service');
+		$this->load->library('service/vb_data_transfer_brand_service');		
+		$this->load->library('service/vb_data_transfer_colour_service');		
+		$this->load->library('service/vb_data_transfer_colour_extend_service');
+		$this->load->library('service/vb_data_transfer_version_service');
+		$this->load->library('service/vb_data_transfer_freight_cat_service');
 	}
 	
 	public function price()
