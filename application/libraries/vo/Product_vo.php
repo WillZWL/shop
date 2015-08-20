@@ -175,7 +175,6 @@ class Product_vo extends Base_vo
         return $this;
     }
 
-<<<<<<< HEAD
     // public function get_surplus_quantity()
     // {
         // return $this->surplus_quantity;
@@ -197,29 +196,6 @@ class Product_vo extends Base_vo
         // $this->slow_move_7_days = $value;
         // return $this;
     // }
-=======
-    public function get_surplus_quantity()
-    {
-        return $this->surplus_quantity;
-    }
-
-    public function set_surplus_quantity($value)
-    {
-        $this->surplus_quantity = $value;
-        return $this;
-    }
-
-    public function get_slow_move_7_days()
-    {
-        return $this->slow_move_7_days;
-    }
-
-    public function set_slow_move_7_days($value)
-    {
-        $this->slow_move_7_days = $value;
-        return $this;
-    }
->>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
 
     public function get_quantity()
     {
@@ -265,7 +241,6 @@ class Product_vo extends Base_vo
         return $this;
     }
 
-<<<<<<< HEAD
     // public function get_china_oem()
     // {
         // return $this->china_oem;
@@ -276,18 +251,6 @@ class Product_vo extends Base_vo
         // $this->china_oem = $value;
         // return $this;
     // }
-=======
-    public function get_china_oem()
-    {
-        return $this->china_oem;
-    }
-
-    public function set_china_oem($value)
-    {
-        $this->china_oem = $value;
-        return $this;
-    }
->>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
 
     public function get_rrp()
     {
@@ -454,7 +417,6 @@ class Product_vo extends Base_vo
         return $this;
     }
 
-<<<<<<< HEAD
     // public function get_shipment_restricted_type()
     // {
         // return $this->shipment_restricted_type;
@@ -465,18 +427,6 @@ class Product_vo extends Base_vo
         // $this->shipment_restricted_type = $value;
         // return $this;
     // }
-=======
-    public function get_shipment_restricted_type()
-    {
-        return $this->shipment_restricted_type;
-    }
-
-    public function set_shipment_restricted_type($value)
-    {
-        $this->shipment_restricted_type = $value;
-        return $this;
-    }
->>>>>>> 29ccc5cb624371694b2aa3dd7b3ed841fcd15669
 
     public function get_status()
     {
