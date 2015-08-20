@@ -24,7 +24,11 @@ class Vbdatatransfer extends PUB_Controller
 		//master tables
 		$this->load->library('Service/vb_data_transfer_category_service');		
 		$this->load->library('Service/vb_data_transfer_category_extend_service');
-		$this->load->library('Service/vb_data_transfer_brand_service');
+		$this->load->library('Service/vb_data_transfer_brand_service');		
+		$this->load->library('Service/vb_data_transfer_colour_service');		
+		$this->load->library('Service/vb_data_transfer_colour_extend_service');
+		$this->load->library('Service/vb_data_transfer_version_service');
+		$this->load->library('Service/vb_data_transfer_freight_cat_service');
 	}
 	
 	public function price()
@@ -158,6 +162,46 @@ class Vbdatatransfer extends PUB_Controller
 		print $xml;
 		exit;
 		$feed =$this->vb_data_transfer_brand_service->start_process($xml);
+		print $feed;
+	}
+	
+	public function colour()
+	{			
+		$xml = file_get_contents('php://input');
+		header('content-type: text/xml');
+		print $xml;
+		exit;
+		$feed =$this->vb_data_transfer_colour_service->start_process($xml);
+		print $feed;
+	}
+	
+	public function colourextend()
+	{			
+		$xml = file_get_contents('php://input');
+		header('content-type: text/xml');
+		print $xml;
+		exit;
+		$feed =$this->vb_data_transfer_colour_extend_service->start_process($xml);
+		print $feed;
+	}
+	
+	public function version()
+	{			
+		$xml = file_get_contents('php://input');
+		header('content-type: text/xml');
+		print $xml;
+		exit;
+		$feed =$this->vb_data_transfer_version_service->start_process($xml);
+		print $feed;
+	}
+	
+	public function freightcat()
+	{			
+		$xml = file_get_contents('php://input');
+		header('content-type: text/xml');
+		print $xml;
+		exit;
+		$feed =$this->vb_data_transfer_freight_cat_service->start_process($xml);
 		print $feed;
 	}
 	
