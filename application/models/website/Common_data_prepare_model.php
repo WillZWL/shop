@@ -66,9 +66,9 @@ class Common_data_prepare_model extends CI_Model
 
         $result = $this->checkout_onepage__calculate_delivery_surcharge($controller, $url_paras);
         if ($result !== FALSE) {
-            echo platform_curr_format(PLATFORMID, $result['surcharge']) . '||' . platform_curr_format(PLATFORMID, ($grand_total + $result['surcharge']));
+            echo platform_curr_format(PLATFORM, $result['surcharge']) . '||' . platform_curr_format(PLATFORM, ($grand_total + $result['surcharge']));
         } else {
-            echo '||' . platform_curr_format(PLATFORMID, $grand_total);
+            echo '||' . platform_curr_format(PLATFORM, $grand_total);
         }
     }
 
@@ -81,7 +81,7 @@ class Common_data_prepare_model extends CI_Model
         $this->delivery_service->delivery_country_id = trim($url_paras["country_id"]);
         $this->delivery_service->delivery_postcode = trim($url_paras["postcode"]);
 
-        $this->delivery_service->item_list = $_SESSION["cart"][PLATFORMID];
+        $this->delivery_service->item_list = $_SESSION["cart"][PLATFORM];
         if (($rs = $this->delivery_service->get_del_surcharge(TRUE)) && $rs["surcharge"]) {
             $result = array('currency_id' => $rs["currency_id"], 'surcharge' => $rs["surcharge"]);
             return $result;
@@ -96,7 +96,7 @@ class Common_data_prepare_model extends CI_Model
         $platform_id = $platform_obj->get_selling_platform_id();
 
         $sku_list = array();
-        foreach ($_SESSION['cart'][PLATFORMID] as $sku => $qty) {
+        foreach ($_SESSION['cart'][PLATFORM] as $sku => $qty) {
             $sku_list[] = $sku;
         }
 
@@ -127,7 +127,7 @@ class Common_data_prepare_model extends CI_Model
             $controller->set_current_step(Checkout_onepage::STEP_LOGIN);
             $data["no_login_before"] = true;
         } else {
-            if (PLATFORMID == "WEBPH")
+            if (PLATFORM == "WEBPH")
                 $controller->set_current_step(Checkout_onepage::STEP_SHIPPING_INFORMATION);
             else
                 $controller->set_current_step(Checkout_onepage::STEP_BILLING_INFORMATION);
@@ -147,9 +147,9 @@ class Common_data_prepare_model extends CI_Model
 
         $data["cart"] = $_SESSION["cart"];
 
-        if ($_SESSION["cart"][PLATFORMID]) {
+        if ($_SESSION["cart"][PLATFORM]) {
             include_once(APPPATH . "helpers/string_helper.php");
-            $data['chk_cart_cookie'] = base64_encode(serialize($_SESSION["cart"][PLATFORMID]));
+            $data['chk_cart_cookie'] = base64_encode(serialize($_SESSION["cart"][PLATFORM]));
         }
 
         $total = 0;
@@ -737,7 +737,7 @@ salecycle_script;
             $_SESSION["POSTFORM"] = $_POST;
         }
 
-        $result = $this->cart_session_model->get_detail(PLATFORMID);
+        $result = $this->cart_session_model->get_detail(PLATFORM);
         $item_total = 0;
 
         // SBF #2236, GST checking
@@ -765,13 +765,13 @@ salecycle_script;
         foreach ($result["cart"] AS $key => $val) {
             $item_total += $val["total"];
             $data["cart"][$val["sku"]]["prod_name"] = $val["name"];
-            $data["cart"][$val["sku"]]["price"] = platform_curr_format(PLATFORMID, $val["price"]);
+            $data["cart"][$val["sku"]]["price"] = platform_curr_format(PLATFORM, $val["price"]);
             $data["cart"][$val["sku"]]["qty"] = $val["qty"];
             $data["cart"][$val["sku"]]["increase_url"] = base_url() . "review_order/update/" . $val["sku"] . "/" . ($val["qty"] + 1);
             if ($val["qty"] - 1 > 0) {
                 $data["cart"][$val["sku"]]["decrease_url"] = base_url() . "review_order/update/" . $val["sku"] . "/" . ($val["qty"] - 1);
             }
-            $data["cart"][$val["sku"]]["sub_total"] = platform_curr_format(PLATFORMID, $val["total"]);
+            $data["cart"][$val["sku"]]["sub_total"] = platform_curr_format(PLATFORM, $val["total"]);
             $data["cart"][$val["sku"]]["remove_url"] = base_url() . "review_order/remove/" . $val["sku"];
             $data["cart"][$val["sku"]]["prod_url"] = $this->cart_session_model->get_prod_url($val["sku"]);
 
@@ -780,17 +780,17 @@ salecycle_script;
                 $data["allow_bulk_sales"] = TRUE;  #meets bulk sale criteria - show popup to contact us
             }
         }
-        $data["delivery_charge"] = platform_curr_format(PLATFORMID, $result["dc_default"]["charge"]);
-        $data["item_amount"] = platform_curr_format(PLATFORMID, $item_total);
-        $data["gst_total"] = platform_curr_format(PLATFORMID, $gst_total);
+        $data["delivery_charge"] = platform_curr_format(PLATFORM, $result["dc_default"]["charge"]);
+        $data["item_amount"] = platform_curr_format(PLATFORM, $item_total);
+        $data["gst_total"] = platform_curr_format(PLATFORM, $gst_total);
         $total = $item_total - $result["dc_default"]["charge"] * 1;
         if ($result['promo']['disc_amount']) {
             $total = $item_total - $result['promo']['disc_amount'];
             if ($result['promo']['disc_amount'] > 0) {
-                $result['promo']['display_disc_amount'] = "-" . platform_curr_format(PLATFORMID, $result['promo']["disc_amount"]);
+                $result['promo']['display_disc_amount'] = "-" . platform_curr_format(PLATFORM, $result['promo']["disc_amount"]);
             }
         }
-        $data["total"] = platform_curr_format(PLATFORMID, $total + $gst_total);
+        $data["total"] = platform_curr_format(PLATFORM, $total + $gst_total);
         $data['promo'] = $result['promo'];
 
         foreach ($result["cart"] as $key => $cart_obj) {
@@ -805,7 +805,7 @@ salecycle_script;
         $data["tracking_data"]["products"] = $tracking_products;
         $data["tracking_data"]["total_amount"] = $total + $gst_total;
 
-        $data["show_battery_message_w_amount"] = $this->cart_session_model->cart_session_service->check_battery_inside_cart_valid_or_not($total, PLATFORMID);
+        $data["show_battery_message_w_amount"] = $this->cart_session_model->cart_session_service->check_battery_inside_cart_valid_or_not($total, PLATFORM);
         return $data;
     }
 
@@ -1012,10 +1012,10 @@ salecycle_script;
             show_404('page');
         }
 
-        $allow_result = $this->cart_session_model->cart_session_service->is_allow_to_add($sku, 1, PLATFORMID);
+        $allow_result = $this->cart_session_model->cart_session_service->is_allow_to_add($sku, 1, PLATFORM);
         if ($allow_result <= Cart_session_service::DECISION_POINT) {
             if (!empty($sku) || !empty($qty)) {
-                $chk_cart = $this->cart_session_model->add($sku, $qty, PLATFORMID);
+                $chk_cart = $this->cart_session_model->add($sku, $qty, PLATFORM);
             }
         } else {
             redirect(base_url() . "review_order?item_status=" . $allow_result . "&not_valid_sku=" . $sku);
@@ -1029,7 +1029,7 @@ salecycle_script;
             redirect(base_url() . "review_order");
         }
 
-        if ($this->upselling_model->get_ra($data, $sku, PLATFORMID, get_lang_id(), $listing_status)) {
+        if ($this->upselling_model->get_ra($data, $sku, PLATFORM, get_lang_id(), $listing_status)) {
             /*
                         $this->template->add_title($data['data']['lang_text']['meta_title'].$data["prod_name"]. ' | ValueBasket');
                         $this->template->add_meta(array('name'=>'description','content'=>$data['data']['lang_text']['meta_desc']));
@@ -1090,7 +1090,7 @@ salecycle_script;
         $controller->affiliate_service->add_af_cookie($_GET);
         $level = $cat_obj->get_level();
 
-        $where['pr.platform_id'] = PLATFORMID;
+        $where['pr.platform_id'] = PLATFORM;
         $where['p.status'] = 2;
 
         switch ($level) {
@@ -1160,7 +1160,7 @@ salecycle_script;
 
         $total = $this->category_model->get_website_cat_page_product_list($where, array("num_rows" => 1));
         if ($sku_list = $this->category_model->get_website_cat_page_product_list($where, $option)) {
-            $obj_list = $this->product_model->get_listing_info_list($sku_list, PLATFORMID, get_lang_id(), array());
+            $obj_list = $this->product_model->get_listing_info_list($sku_list, PLATFORM, get_lang_id(), array());
         }
 
         $data['show_discount_text'] = $this->price_website_service->is_display_saving_message();
@@ -1176,8 +1176,8 @@ salecycle_script;
                     $product_list[$key]["listing_status_text"] = $data['lang_text'][$obj->get_status()];
                     $product_list[$key]["listing_status"] = $obj->get_status();
                     $product_list[$key]["qty"] = $obj->get_qty();
-                    $product_list[$key]["price"] = platform_curr_format(PLATFORMID, $obj->get_price());
-                    $product_list[$key]["rrp_price"] = platform_curr_format(PLATFORMID, $obj->get_rrp_price());
+                    $product_list[$key]["price"] = platform_curr_format(PLATFORM, $obj->get_price());
+                    $product_list[$key]["rrp_price"] = platform_curr_format(PLATFORM, $obj->get_rrp_price());
                     $product_list[$key]["discount"] = number_format(($obj->get_rrp_price() == 0 ? 0 : ($obj->get_rrp_price() - $obj->get_price()) / $obj->get_rrp_price() * 100), 0);
                     $product_list[$key]["prod_url"] = $this->category_model->get_prod_url($obj->get_sku());
                     $product_list[$key]["short_desc"] = $obj->get_short_desc();
@@ -1303,8 +1303,8 @@ salecycle_script;
                 $best_seller[$key]["prod_name"] = $obj->get_prod_name();
                 $best_seller[$key]["listing_status"] = $obj->get_status();
                 $best_seller[$key]["stock_status"] = ($obj->get_status() == 'I') ? $obj->get_qty() . " " . $listing_status[$obj->get_status()] : $listing_status[$obj->get_status()];
-                $best_seller[$key]["price"] = platform_curr_format(PLATFORMID, $obj->get_price());
-                $best_seller[$key]["rrp_price"] = platform_curr_format(PLATFORMID, $obj->get_rrp_price());
+                $best_seller[$key]["price"] = platform_curr_format(PLATFORM, $obj->get_price());
+                $best_seller[$key]["rrp_price"] = platform_curr_format(PLATFORM, $obj->get_rrp_price());
                 $best_seller[$key]["discount"] = number_format(($obj->get_rrp_price() == 0 ? 0 : ($obj->get_rrp_price() - $obj->get_price()) / $obj->get_rrp_price() * 100), 0);
                 $best_seller[$key]["prod_url"] = $controller->home_model->get_prod_url($obj->get_sku());
                 $best_seller[$key]["short_desc"] = $obj->get_short_desc();
@@ -1400,15 +1400,15 @@ salecycle_script;
         $sku = $url_paras["sku"];
         $type = $url_paras["type"];
 
-        if (!$this->product_model->price_service->get(array("sku" => $sku, "listing_status" => "L", "platform_id" => PLATFORMID))) {
+        if (!$this->product_model->price_service->get(array("sku" => $sku, "listing_status" => "L", "platform_id" => PLATFORM))) {
             return false;
         }
 
-        if ($sku && $listing_info = $this->product_model->get_listing_info($sku, PLATFORMID, $this->get_lang_id())) {
+        if ($sku && $listing_info = $this->product_model->get_listing_info($sku, PLATFORM, $this->get_lang_id())) {
             $data['lang_text'] = $controller->get_language_file();
 
-            if (!$prod_info = $this->product_model->get_website_product_info($sku, PLATFORMID, $this->get_lang_id())) {
-                $prod_info = $this->product_model->get_website_product_info($sku, PLATFORMID);
+            if (!$prod_info = $this->product_model->get_website_product_info($sku, PLATFORM, $this->get_lang_id())) {
+                $prod_info = $this->product_model->get_website_product_info($sku, PLATFORM);
             }
 
             $_SESSION['PARENT_PAGE'] = base_url() . "mainproduct/view/" . $sku;
@@ -1564,7 +1564,7 @@ salecycle_script;
             } else {
                 $meta_title = implode(' - ', array($listing_info->get_prod_name(), $prod_info->get_sub_cat_name(), $prod_info->get_cat_name()));
             }
-            if ($keyword_list = $this->product_model->get_product_keyword_arraylist($sku, PLATFORMID)) {
+            if ($keyword_list = $this->product_model->get_product_keyword_arraylist($sku, PLATFORM)) {
                 $meta_keyword = implode(',', $keyword_list);
             }
             // $this->template->add_title($meta_title . ' | ValueBasket ' . PLATFORMCOUNTRYID);
@@ -1617,7 +1617,7 @@ salecycle_script;
             //Loop 10 times.
             for($price_adjustment = $price * 0.1, $n=0; count($cross_sell_product_list) < 6 && $n < 10; $price_adjustment += $price_adjustment)
             {
-                $cross_sell_product_list = $this->price_margin_service->get_cross_sell_product($prod_info, PLATFORMID, $this->get_lang_id(), $price, $price_adjustment);
+                $cross_sell_product_list = $this->price_margin_service->get_cross_sell_product($prod_info, PLATFORM, $this->get_lang_id(), $price, $price_adjustment);
                 $n++;
             }
 

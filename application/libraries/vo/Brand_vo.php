@@ -3,7 +3,6 @@ include_once 'Base_vo.php';
 
 class Brand_vo extends Base_vo
 {
-
     //class variable
     private $id;
     private $brand_name;
