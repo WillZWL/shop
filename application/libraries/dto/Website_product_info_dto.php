@@ -37,11 +37,7 @@ class Website_product_info_dto extends Base_dto
     private $apply_enhanced_listing;
     private $enhanced_listing;
     private $lang_restricted;
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    private $image;
 
     public function get_sku()
     {
@@ -336,7 +332,6 @@ class Website_product_info_dto extends Base_dto
     public function set_apply_enhanced_listing($value)
     {
         $this->apply_enhanced_listing = $value;
-        return $this;
     }
 
     public function get_enhanced_listing()
@@ -347,7 +342,6 @@ class Website_product_info_dto extends Base_dto
     public function set_enhanced_listing($value)
     {
         $this->enhanced_listing = $value;
-        return $this;
     }
 
     public function get_lang_restricted()
@@ -358,6 +352,16 @@ class Website_product_info_dto extends Base_dto
     public function set_lang_restricted($value)
     {
         $this->lang_restricted = $value;
-        return $this;
     }
+
+    public function get_image()
+    {
+        return $this->image;
+    }
+
+    public function set_image($image)
+    {
+        $this->image = $image;
+    }
+
 }

@@ -5006,7 +5006,7 @@ hr.divider-snow {
 .panel .panel-heading .panel-title:after, .panel .panel-heading .panel-title:before {
   position: absolute;
   top: 2px;
-  background-color: #f7c720;
+  background-color: #589B24;
   content: "";
   width: 7px;
   height: 21px;
@@ -8273,9 +8273,10 @@ body.layout-boxed-lg #page {
 .product-block .name {
   padding: 0 15px;
   line-height: 18px;
-  min-height: 38px;
+  height: 111px;
   margin-bottom: 0;
   margin-top: 0;
+  overflow: hidden;
 }
 /* line 110, ../development/scss/app/_product.scss */
 .product-block .name a {
@@ -10344,7 +10345,7 @@ body .owl-carousel .owl-wrapper-outer {
 /* line 65, ../development/scss/opencart/_style.scss */
 .no-shadow button:active, .no-shadow button:focus, .no-shadow button.active {
   box-shadow: none;
-  color: #f7c720;
+  color: #589B24;
 }
 
 /* line 72, ../development/scss/opencart/_style.scss */

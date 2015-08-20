@@ -1,0 +1,28 @@
+{
+    "name": "esg/atomv2",
+    "description": "Do eCommerce better :)",
+    "license": "MIT",
+    "require": {
+        "geoip2/geoip2": "2.3.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.7"
+    },
+    "authors": [
+        {
+            "name": "esgit",
+            "email": "itsupport@eservicesgroup.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AtomV2\\": "application/libraries/",
+            "AtomV2\\Service\\": "application/libraries/ServicePSR4",
+            "AtomV2\\Dao\\": "application/libraries/DaoPSR4",
+            "AtomV2\\Service\\": "application/libraries/ServicePSR4",
+            "AtomV2\\Models\\Website\\": "application/models/WebsitePSR4",
+            "": ["application/libraries/VoPSR4/", "application/libraries/DtoPSR4/"]
+        },
+        "classmap" : ["system/core/"]
+    }
+}

@@ -3,8 +3,6 @@
 class Domain_platform extends CI_Controller
 {
     private $dp_srv;
-    private $ip_srv;
-    private $cart_srv;
     private $cur_country_id;
     private $cur_domain_type;
 
@@ -13,13 +11,11 @@ class Domain_platform extends CI_Controller
         parent::__construct();
         include_once(APPPATH . "libraries/service/Domain_platform_service.php");
         $this->set_dp_srv(new Domain_platform_service());
-        include_once(APPPATH . "libraries/service/Ip_service.php");
-        $this->set_ip_srv(new Ip_service());
     }
 
     function update_doamin_platform()
     {
-        $this->cur_country_id = (isset($_SESSION['country_code_from_hook']) ? $_SESSION['country_code_from_hook'] : '');
+        $this->cur_country_id = (isset($_SESSION['countryCodeFromHook']) ? $_SESSION['countryCodeFromHook'] : '');
         $this->cur_domain_type = $this->get_dp_srv()->get_config()->value_of("is_dev_site") ? -1 : 1;
         // TODO
         // need to understand PLATFORM_TYPE
@@ -50,16 +46,6 @@ class Domain_platform extends CI_Controller
         if (strpos(CTRLPATH, "public_controllers") !== FALSE && ($_SESSION["domain_platform"]["type"] == "WEBSITE" || (defined('CHECK_REDIRECT_DOMAIN') && CHECK_REDIRECT_DOMAIN))) {
             $this->redirect_domain();
         }
-    }
-
-    public function get_dp_srv()
-    {
-        return $this->dp_srv;
-    }
-
-    public function set_dp_srv(Base_service $srv)
-    {
-        $this->dp_srv = $srv;
     }
 
     public function redirect_domain()
@@ -93,13 +79,14 @@ class Domain_platform extends CI_Controller
         }
     }
 
-    public function get_ip_srv()
+    public function get_dp_srv()
     {
-        return $this->ip_srv;
+        return $this->dp_srv;
     }
 
-    public function set_ip_srv(Base_service $srv)
+    public function set_dp_srv($srv)
     {
-        $this->ip_srv = $srv;
+        $this->dp_srv = $srv;
     }
+
 }

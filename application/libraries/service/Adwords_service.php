@@ -1,12 +1,11 @@
-<?php if (!defined('BASEPATH')) exit('No Direct script access allowed');
+<?php
+if (!defined('BASEPATH')) exit('No Direct script access allowed');
 include_once "Base_service.php";
-include_once(APPPATH . "hooks/Country_selection.php");
+include_once(APPPATH . "hooks/DomainSelection.php");
 
 define('SRC_PATH_2', BASEPATH . 'plugins/adwords/src');
 define('ADS', BASEPATH . 'plugins/adwords/src/Google/Api/Ads');
-ini_set('include_path', implode(array(
-    ini_get('include_path'), PATH_SEPARATOR, SRC_PATH_2
-)));
+ini_set('include_path', implode(array(ini_get('include_path'), PATH_SEPARATOR, SRC_PATH_2 )));
 
 define('ADWORDS_LIB', ADS . '/AdWords/Lib');
 define('COMMON_LIB', ADS . 'Common/Lib');

@@ -1,6 +1,0 @@
-#Table name
-interface_price
-
-#Input column name	Output column name
-sku	sku
-price	price

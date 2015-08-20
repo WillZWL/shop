@@ -3871,7 +3871,7 @@ class Product_dao extends Base_dao
             #SBF1905, push all the Out of stock to bottom
             #SBF2580, push all the Arriving stock to bottom before Out of stock
 
-            $this->db->select('*, if(p.website_status = "O",1,0) is_oos, if(p.website_status = "A",1,0) is_arr');
+            $this->db->select("*, if(p.website_status = 'O','1','0') is_oos, if(p.website_status = 'A','1','0') is_arr");
 
             if ($query = $this->db->get()) {
                 // var_dump($this->db->last_query()); die();
@@ -4432,15 +4432,10 @@ class Product_dao extends Base_dao
         $this->db->where(array("p.sku" => $sku, "p.status" => 2, "pbv.selling_platform_id" => $platform_id, "pc.lang_id" => $lang_id));
         $this->include_dto($classname);
 
-        return $this->common_get_list($where, $option, $classname,
-            'p.expected_delivery_date,
-
-            pc.website_status_long_text, pc.website_status_short_text, p.sku, cat.id cat_id, cat.name cat_name, sc.id sub_cat_id, sc.name sub_cat_name, ssc.id sub_sub_cat_id, ssc.name sub_sub_cat_name, b.id brand_id, b.brand_name,
-            pc.lang_id, IFNULL(pc.prod_name,p.name) prod_name, p.youtube_id, pc.short_desc, pc.detail_desc, pc.extra_info, pc.contents, pcex.feature, pcex.specification, pcex.requirement, pcex.instruction, pcex.apply_enhanced_listing, pcex.enhanced_listing,
-            pc.contents_original, pc.keywords_original, pc.detail_desc_original, pcex.feature_original, pcex.spec_original, p.lang_restricted');
+        return $this->common_get_list($where, $option, $classname, 'p.expected_delivery_date, p.image, pc.website_status_long_text, pc.website_status_short_text, p.sku, cat.id cat_id, cat.name cat_name, sc.id sub_cat_id, sc.name sub_cat_name, ssc.id sub_sub_cat_id, ssc.name sub_sub_cat_name, b.id brand_id, b.brand_name, pc.lang_id, IFNULL(pc.prod_name,p.name) prod_name, p.youtube_id, pc.short_desc, pc.detail_desc, pc.extra_info, pc.contents, pcex.feature, pcex.specification, pcex.requirement, pcex.instruction, pcex.apply_enhanced_listing, pcex.enhanced_listing, pc.contents_original, pc.keywords_original, pc.detail_desc_original, pcex.feature_original, pcex.spec_original, p.lang_restricted');
     }
 
-    public function get_home_best_seller_grid_info($platform_id)
+    public function get_home_best_seller_grid_info($platform_id, $limit = 6)
     {
         $sql = "SELECT ll.selection
                     FROM landpage_listing ll
@@ -4449,8 +4444,8 @@ class Product_dao extends Base_dao
                     JOIN price pr
                         ON pr.platform_id = ll.platform_id
                     WHERE ll.platform_id = ? AND ll.type = 'BS' AND p.status = 2 and pr.sku=ll.selection AND pr.listing_status = 'L'
-                    group by ll.selection ORDER BY ll.type = 'BS' DESC, field(ll.mode, 'M', 'A'), ll.rank
-                LIMIT 10";
+                    group by ll.selection ORDER BY ll.type = 'BS' DESC, field(ll.mode, 'M', 'A'), ll.rank ";
+        $sql .= "LIMIT {$limit}";
 
         if ($query = $this->db->query($sql, $platform_id)) {
             foreach ($query->result() as $row) {
@@ -4461,7 +4456,7 @@ class Product_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_home_latest_arrival_grid_info($platform_id)
+    public function get_home_latest_arrival_grid_info($platform_id, $limit = 6)
     {
         $sql = "SELECT ll.selection
                     FROM landpage_listing ll
@@ -4470,10 +4465,11 @@ class Product_dao extends Base_dao
                     JOIN price pr
                         ON pr.platform_id = ll.platform_id
                     WHERE ll.platform_id = ? AND ll.type = 'LA' AND p.status = 2 and pr.sku=ll.selection AND pr.listing_status = 'L'
-                    group by ll.selection ORDER BY ll.mode='M' DESC, ll.rank
-                LIMIT 10";
+                    group by ll.selection ORDER BY ll.mode='M' DESC, ll.rank ";
+        $sql .= "LIMIT {$limit}";
 
         if ($query = $this->db->query($sql, $platform_id)) {
+
             foreach ($query->result() as $row) {
                 $res[] = $row->selection;
             }
@@ -4482,7 +4478,7 @@ class Product_dao extends Base_dao
         return FALSE;
     }
 
-    public function get_clearance_product_gird_info($platform_id)
+    public function get_clearance_product_gird_info($platform_id, $limit = 6)
     {
         $sql = "SELECT ll.selection
                     FROM landpage_listing ll
@@ -4491,8 +4487,8 @@ class Product_dao extends Base_dao
                     INNER JOIN price pr
                         ON pr.platform_id = ll.platform_id
                     WHERE ll.platform_id = ? AND ll.type = 'CL' AND p.status = 2 and pr.sku=ll.selection AND pr.listing_status = 'L'
-                    group by ll.selection ORDER BY ll.mode='M' DESC, ll.rank
-                LIMIT 4";
+                    group by ll.selection ORDER BY ll.mode='M' DESC, ll.rank ";
+        $sql .= "LIMIT {$limit}";
 
         if ($query = $this->db->query($sql, $platform_id)) {
             foreach ($query->result() as $row) {

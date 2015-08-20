@@ -1,9 +1,0 @@
-#Table name
-Amazon_ack
-
-#Input column name	Output column name
-platform_order_id	AmazonOrderID
-so_no	MerchantOrderID
-status_code	StatusCode
-ext_item_cd	AmazonOrderItemCode
-prod_sku	MerchantOrderItemID

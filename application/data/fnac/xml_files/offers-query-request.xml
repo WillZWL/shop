@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<offers_query results_count="10" partner_id="87B13D72-9938-9549-39B7-BC3FF73CDA84" shop_id="859A6B21-6916-58FB-8B71-88EAD9A6A1F0" token="890BB66D-EB43-0FD8-AB19-8330B054F1DD" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd">
-  <paging>1</paging>
-  <quantity mode="Equals" value="1"/>
-    <date type="Created">
-    <min>2009-01-28T11:53:24+02:00</min>
-    <max>2009-09-28T11:53:24+02:00</max>
-  </date>
-</offers_query>

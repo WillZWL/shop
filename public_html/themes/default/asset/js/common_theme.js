@@ -237,7 +237,7 @@ $(document).ready(function() {
 var cart = {
     'addcart': function(sku, qty) {
         $.ajax({
-            url: '  /cart/ajax_add_item',
+            url: '/cart/ajaxAddItem',
             type: 'post',
             data: 'sku=' + sku + '&qty=' + (typeof(qty) != 'undefined' ? qty : 1),
             dataType: 'json',
@@ -270,11 +270,11 @@ var cart = {
             }
         });
     },
-    'update': function(key, quantity) {
+    'update': function(sku, qty) {
         $.ajax({
-            url: 'index.php?route=checkout/cart/edit',
+            url: '/cart/ajax_update_item',
             type: 'post',
-            data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
+            data: 'sku=' + sku + '&qty=' + (typeof(qty) != 'undefined' ? qty : 1),
             dataType: 'json',
             beforeSend: function() {
                 $('#cart > button').button('loading');
@@ -291,11 +291,11 @@ var cart = {
             }
         });
     },
-    'remove': function(key) {
+    'remove': function(sku) {
         $.ajax({
-            url: 'index.php?route=checkout/cart/remove',
+            url: '/cart/ajax_remove_item',
             type: 'post',
-            data: 'key=' + key,
+            data: 'sku=' + sku,
             dataType: 'json',
             beforeSend: function() {
                 $('#cart > button').button('loading');
@@ -339,33 +339,6 @@ var wishlist = {
                 $('html, body').animate({
                     scrollTop: 0
                 }, 'slow');
-            }
-        });
-    },
-    'remove': function() {
-
-    }
-}
-
-var compare = {
-    'addcompare': function(product_id) {
-        $.ajax({
-            url: 'index.php?route=product/compare/add',
-            type: 'post',
-            data: 'product_id=' + product_id,
-            dataType: 'json',
-            success: function(json) {
-                $('.alert').remove();
-
-                if (json['success']) {
-                    $('#notification').html('<div class="alert alert-danger"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-                    $('#compare-total').html(json['total']);
-
-                    $('html, body').animate({
-                        scrollTop: 0
-                    }, 'slow');
-                }
             }
         });
     },

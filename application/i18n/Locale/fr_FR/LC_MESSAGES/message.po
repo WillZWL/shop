@@ -1,0 +1,2361 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-30 16:54+0800\n"
+"PO-Revision-Date: 2015-08-03 11:36+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-31 15:52+0800\n"
+"PO-Revision-Date: 2015-07-31 16:21+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.3\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-31 15:50+0800\n"
+"PO-Revision-Date: 2015-07-31 15:59+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.3\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-31 16:00+0800\n"
+"PO-Revision-Date: 2015-07-31 17:21+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.3\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-31 16:21+0800\n"
+"PO-Revision-Date: 2015-07-31 18:19+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.3\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-31 17:23+0800\n"
+"PO-Revision-Date: 2015-07-31 18:07+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.3\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-31 18:07+0800\n"
+"PO-Revision-Date: 2015-07-31 18:10+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.3\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
+
+#: detail.php:9 detail.php:246 simpledetail.php:52
+msgid "Sale"
+msgstr "Ventes"
+
+#: detail.php:114 simpledetail.php:157
+msgid "%s review"
+msgstr "%s commentaire"
+
+#: detail.php:114 detail.php:177 detail.php:182 simpledetail.php:157
+#: simpledetail.php:220 simpledetail.php:225
+msgid "Write a review"
+msgstr "rédigez un commentaire"
+
+#: detail.php:123 simpledetail.php:166
+msgid "Availability:"
+msgstr "Disponibilité :"
+
+#: detail.php:123 simpledetail.php:166
+msgid " In Stock"
+msgstr "En stock"
+
+#: detail.php:133 simpledetail.php:176
+msgid "Qty:"
+msgstr "Quantité :"
+
+#: detail.php:145 simpledetail.php:188
+msgid "Add to Cart"
+msgstr "Ajouter au panier"
+
+#: detail.php:148 simpledetail.php:191
+msgid "Add to Wish List"
+msgstr "Ajouter à la liste de souhaits"
+
+#: detail.php:154 simpledetail.php:197
+msgid "4-7 working days delivery"
+msgstr "Livraison en 4-7 jours ouvrables"
+
+#: detail.php:164 simpledetail.php:207
+msgid "Description"
+msgstr "Description"
+
+#: detail.php:165 simpledetail.php:208
+#, php-format
+msgid "Reviews %s"
+msgstr "Commentaires %s"
+
+#: detail.php:175 simpledetail.php:218
+msgid "There are no review for this product."
+msgstr "Aucun commentaire n'est disponible pour ce produit"
+
+#: detail.php:185 simpledetail.php:228
+msgid "Your Name"
+msgstr "Votre Nom"
+
+#: detail.php:191 simpledetail.php:234
+msgid "Your Review"
+msgstr "Votre Commentaire"
+
+#: detail.php:193 simpledetail.php:236
+msgid "Note:"
+msgstr "Note :"
+
+#: detail.php:193 simpledetail.php:236
+msgid " HTML is not translated!"
+msgstr "Le code HTML n'est pas traduit !"
+
+#: detail.php:198 simpledetail.php:241
+msgid "Rating"
+msgstr "Évaluations"
+
+#: detail.php:199 simpledetail.php:242
+msgid "Bad"
+msgstr "Mauvais"
+
+#: detail.php:204 simpledetail.php:247
+msgid "Good"
+msgstr "Bon"
+
+#: detail.php:221 simpledetail.php:264
+msgid "Continue"
+msgstr "Continuer"
+
+#: detail.php:234
+msgid "Related Products"
+msgstr "Produits en lien avec cet article"
+
+#: footer.php:15 footer.php:29
+msgid "Questions?"
+msgstr "Questions ? "
+
+#: footer.php:16 footer.php:30
+msgid "Send us an email"
+msgstr "Envoyez-nous un email"
+
+#: footer.php:35 footer.php:69
+msgid "Detail Information"
+msgstr "Informations"
+
+#: footer.php:38 footer.php:72
+msgid "Close"
+msgstr "Fermer"
+
+#: footer.php:49 footer.php:63
+msgid "Call"
+msgstr "Appeler"
+
+#: footer.php:64
+msgid "Mon - Fri : 9:00 AM - 6:00 PM"
+msgstr "Lundi - Vendredi : 9h00 - 18h00"
+
+#: footer.php:98
+#, php-format
+msgid "100% Secure %s with SSL Encryption"
+msgstr "100% sécurisé %s avec le cryptage SSL "
+
+#: footer.php:106
+msgid "100% Data Protection "
+msgstr "Données protégées à 100%"
+
+#: footer.php:106
+msgid "your data is safe with us"
+msgstr "Avec nous, vos données sont protégées"
+
+#: footer.php:114
+msgid "Free Delivery For All Orders* Shipping: 3-5 Working Days"
+msgstr ""
+"Livraison gratuite pour toutes les commandes* Expédition : 3 - 5 jours ouvrés"
+
+#: footer.php:122
+msgid "Money Back 14 days "
+msgstr "Satisfait ou remboursé de 14 jours"
+
+#: footer.php:122
+msgid "Money Back Guarantee"
+msgstr "Garantie satisfait ou remboursé"
+
+#: footer.php:130
+msgid "Warranty "
+msgstr "Guarantie"
+
+#: footer.php:130
+msgid "Up to 2 Years"
+msgstr "Jusqu'à 2 ans"
+
+#: footer.php:145
+msgid "About Us"
+msgstr "A propos de nous "
+
+#: footer.php:146
+msgid ""
+"DigitalDiscount prides itself on great deals without compromise on service! "
+"Feel free to contact us anytime for more information"
+msgstr ""
+"Numeristock est fier de pouvoir proposer les meilleurs offres sans compromis "
+"sur les services ! N'hésitez pas à nous contacter pour plus d'informations"
+
+#: footer.php:151
+msgid "Units 12- 15"
+msgstr "Unités 12-15"
+
+#: footer.php:152
+msgid "ate sit amet lacinia."
+msgstr ""
+
+#: footer.php:154
+msgid "No 1123, Sky Tower, New York, USA"
+msgstr "No 1123, Sky Tower, New York, USA"
+
+#: footer.php:156
+msgid "info@digitaldiscount.com"
+msgstr "info@numeristock.fr"
+
+#: footer.php:162
+msgid "CONDITIONS OF USE"
+msgstr "CONDITIONS D'UTILISATION"
+
+#: footer.php:163
+msgid "SHIPPING"
+msgstr "EXPEDITION"
+
+#: footer.php:164
+msgid "PRIVACY POLICY"
+msgstr "POLITIQUE PRIVEE"
+
+#: footer.php:171
+msgid "SELECT SHIPPING COUNTRY"
+msgstr "SELECTIONNER LE PAYS D'EXPEDITION"
+
+#: footer.php:174 review.php:77 review.php:501
+msgid "Australia"
+msgstr "Australie"
+
+#: footer.php:175 review.php:85 review.php:502
+msgid "Belgium"
+msgstr "Belgique"
+
+#: footer.php:176 review.php:140
+msgid "Finland"
+msgstr "Finlande"
+
+#: footer.php:177
+msgid "France"
+msgstr "France"
+
+#: footer.php:178
+msgid "Great Britain"
+msgstr "Grande Bretagne"
+
+#: footer.php:179 review.php:165
+msgid "Hong Kong"
+msgstr "Hong Kong"
+
+#: header.php:12 simpledetail.php:12
+msgid "Digital Discount"
+msgstr "Numeristock"
+
+#: header.php:52
+msgid "digital discount"
+msgstr "Numeristock"
+
+#: header.php:73 review.php:5
+msgid "Shopping Cart"
+msgstr "Panier"
+
+#: header.php:74
+msgid "%s item(s) - %s%S"
+msgstr "%s Article(s) - %s%s"
+
+#: header.php:81
+msgid "Your shopping cart is empty!"
+msgstr "Votre panier est vide !"
+
+#: header.php:96
+msgid "categories              "
+msgstr "Catégories"
+
+#: header.php:113
+msgid "SmartPhones"
+msgstr "Smartphones"
+
+#: header.php:123
+msgid "Mobile Phones"
+msgstr "Téléphones portables"
+
+#: header.php:124
+msgid "Telephones"
+msgstr "Téléphones"
+
+#: header.php:125
+msgid "Media Players"
+msgstr "Baladeurs / Walkmans"
+
+#: header.php:137
+msgid "Webcams"
+msgstr "Webcams"
+
+#: header.php:147
+msgid "HD Webcams"
+msgstr "Webcams HD"
+
+#: header.php:148
+msgid "TV Webcams"
+msgstr "TV Webcams"
+
+#: header.php:149
+msgid "IP Camerass"
+msgstr "Caméras de surveillance"
+
+#: header.php:161
+msgid "Headsets and Microphones"
+msgstr "Casques et micros"
+
+#: header.php:171
+msgid "Wired Headsets"
+msgstr "Casques audio filaires"
+
+#: header.php:172
+msgid "Bluetooth Headsets"
+msgstr "Casques audio Bluetooth"
+
+#: header.php:173
+msgid "USB Headset"
+msgstr "Casques audio USB"
+
+#: header.php:174
+msgid "Wireless Headsets"
+msgstr "Casques audio sans fil"
+
+#: header.php:175
+msgid "In-Ear Headphones"
+msgstr "Oreillettes intra-auriculaires"
+
+#: header.php:176
+msgid "Gaming Headsets"
+msgstr "Casques audio Gaming"
+
+#: header.php:177
+msgid "Microphones"
+msgstr "Micros"
+
+#: header.php:178
+msgid "Microphones + speakers (speakerphones)"
+msgstr "Micro + Haut-parleurs (\"Speakerphones\")"
+
+#: header.php:190
+msgid "Conference Phones"
+msgstr "Téléphones pour conférences"
+
+#: header.php:193
+msgid "Digital Imaging"
+msgstr "Imagerie numérique"
+
+#: header.php:196
+msgid "Tablets"
+msgstr "Tablettes"
+
+#: header.php:199
+msgid "Computing"
+msgstr "Informatique"
+
+#: header.php:202
+msgid "Accessories"
+msgstr "Accessoires"
+
+#: header.php:217
+msgid " Menu"
+msgstr "Menu"
+
+#: privacy_policy.php:2
+msgid "Privacy "
+msgstr "Confidencialité"
+
+#: privacy_policy.php:2
+msgid "Policy"
+msgstr "Politique"
+
+#: privacy_policy.php:3
+msgid "DigitalDiscount Privacy Policy"
+msgstr "Politique de confidencialité Numeristock"
+
+#: privacy_policy.php:6
+msgid "CONTENTS"
+msgstr "CONTENU"
+
+#: privacy_policy.php:9 privacy_policy.php:24
+msgid "WHY WE COLLECT"
+msgstr "POURQUOI NOUS RECUEILLONS"
+
+#: privacy_policy.php:10 privacy_policy.php:31
+msgid "WHAT WE COLLECT"
+msgstr "CE QUE NOUS RECUEILLONS"
+
+#: privacy_policy.php:11 privacy_policy.php:42
+msgid "WHAT WE DO WITH THE INFORMATION WE GATHER"
+msgstr "CE QUE NOUS FAISONS DE L'INFORMATION RECUEILLIE"
+
+#: privacy_policy.php:12 privacy_policy.php:54
+msgid "SECURITY"
+msgstr "SÉCURITÉ"
+
+#: privacy_policy.php:13 privacy_policy.php:67
+msgid "HOW WE USE COOKIES"
+msgstr "NOTRE UTILISATION DES COOKIES"
+
+#: privacy_policy.php:14 privacy_policy.php:80
+msgid "LINKS TO OTHER WEBSITES"
+msgstr "LIENS ANNEXES"
+
+#: privacy_policy.php:15 privacy_policy.php:87
+msgid "PRIVACY QUESTIONS"
+msgstr "QUESTIONS DE VIE PRIVÉE"
+
+#: privacy_policy.php:19
+msgid ""
+"DigitalDiscount's Customer Privacy Policy covers the collection, use, and "
+"disclosure of personal information that may be collected by DigitalDiscount "
+"anytime you interact with DigitalDiscount, such as when visiting our "
+"website, purchasing products, or using our sales or support facilities. "
+"Please take a moment to read the following to learn more about our practices "
+"with regards to this, including what type of information we gather, how and "
+"for what purposes we use the information, to whom we disclose the "
+"information, and how the personal information is kept safe and secure. Your "
+"privacy is a priority at DigitalDiscount, and we do what we can to protect "
+"it."
+msgstr ""
+"La politique de confidencialité de Numeristock couvre la collecte, "
+"l'utilisation et la divulgation des données personnelles qui peuvent être "
+"rassemblées au cours de votre interaction avec Numeristock, notamment lors "
+"de la visite, de l'achat ou de l'utilisation du service clientèle. Nous vous "
+"prions de prendre un moment pour lire les informations suivantes et ainsi en "
+"apprendre plus à propos de nos pratiques concernant le type d'informations "
+"recueillies, les modalités du rassemblement des données, leur utilisation et "
+"les moyens mis en oeuvre pour préserver leur confidencialité et leur "
+"sécurité. Votre vie privée est une priorité pour Numeristock et nous "
+"travaillons à sa protection. "
+
+#: privacy_policy.php:21
+msgid ""
+"DigitalDiscount may change this policy from time to time by updating this "
+"page. You should check this page from time to time to ensure that you are "
+"happy with any changes. This policy is effective from 31 May 2010."
+msgstr ""
+"Numeristock est susceptible de modifier ponctuellement ses politiques. Par "
+"conséquent, nous vous conseillons de consulter cette page régulièrement pour "
+"vous assurer que les changements vous conviennent. Cette politique prend "
+"effet en date du 31 mai 2010."
+
+#: privacy_policy.php:27
+msgid ""
+"We collect personal information because it helps us to deliver a customised "
+"customer service experience for you. This affords you convenient access to "
+"our product range and helps focus on categories most likely to interest you. "
+"In addition, your personal information helps allow us to keep you updated on "
+"the latest product announcements, special offers, and events that you might "
+"like to hear about."
+msgstr ""
+"Nous collectons certaines données personnelles en ceci qu'elles nous aident "
+"à adapter l'expérience utilisateur à chacun de nos clients. Cela facilite "
+"l'accès à nos produits et aide à mettre en avant les catégories les plus à "
+"mêmes de vous intéresser. Par ailleurs, ces informations nous permettent de "
+"nous maintenir à jour des dernières annonces, offres et évènements dont vous "
+"voudriez être prévenu."
+
+#: privacy_policy.php:34
+msgid "We may collect the following information:"
+msgstr "Nous sommes susceptibles de collecter les informations suivantes :"
+
+#: privacy_policy.php:36
+msgid "name and job title"
+msgstr "Nom et profession"
+
+#: privacy_policy.php:37
+msgid "contact information including email address"
+msgstr "Contacts, adresse e-mail comprise"
+
+#: privacy_policy.php:38
+msgid "demographic information such as postcode, preferences and interests"
+msgstr "Informations spécifiques, préférences et centres intérêts"
+
+#: privacy_policy.php:39
+msgid "other information relevant to customer surveys and/or offers"
+msgstr ""
+"Autres informations de l'ordre du sondage et/ou d'offres promotionnelles"
+
+#: privacy_policy.php:45
+msgid ""
+"The personal information may help us give you a better shopping experience "
+"with us in the following areas:"
+msgstr ""
+"Les informations nous permettrons de vous offrir une meilleure expérience "
+"d'utilisation dans les domaines suivants :"
+
+#: privacy_policy.php:47
+msgid ""
+"we may ask for your personal information when you're discussing a service "
+"issue on the phone with a representative, making a purchase, or registering "
+"your product."
+msgstr ""
+"Nous sommes susceptibles de vous poser des questions lors de votre entretien "
+"téléphonique avec l'un de nos agents, pendant le processus d'achat ou à "
+"l'enregistrement de votre produit."
+
+#: privacy_policy.php:48
+msgid ""
+"we may use the information to improve our product range and services offered."
+msgstr ""
+"Nous sommes susceptibles d'utiliser l'information recueillie pour élargir "
+"notre gamme de produits et de services. proposés "
+
+#: privacy_policy.php:49
+msgid ""
+"we may send promotional emails (to the email address provided) about new "
+"products, special offers or other information which we think you may find "
+"interesting."
+msgstr ""
+"Nous enverrons occasionnellement des e-mails promotionnels (à l'adresse "
+"fournie) au sujet de nos nouveaux porduits, offres spéciales ou autres "
+"informations dont nous pensons qu'elles peuvent vous intéresser."
+
+#: privacy_policy.php:50
+msgid ""
+"from time to time, we may also use your information to contact you for "
+"market research purposes. We may contact you by email, phone, or mail. We "
+"may use the information to customise the website according to your interests."
+msgstr ""
+"Occasionnellement, nous pouvons utiliser vos informations pour vous "
+"contacter à des fins d'études de marché. Nous pouvons vous contacter par e-"
+"mail, téléphone ou courrier. Nous pouvons utiliser vos informations pour "
+"personnaliser notre site en fonction de vos intérêts."
+
+#: privacy_policy.php:51
+msgid ""
+"We will use the information to create an account area to which you can login "
+"and access your order history."
+msgstr ""
+"Nous utiliserons vos informations pour la création d'un compte personnel "
+"auquel vous pourrez vous connecter et accéder à votre historique de "
+"commandes."
+
+#: privacy_policy.php:57
+msgid ""
+"We are committed to ensuring that your information is secure. In order to "
+"prevent unauthorised access or disclosure, we have put in place suitable "
+"physical, electronic and managerial procedures to safeguard and secure the "
+"information we collect online."
+msgstr ""
+"Nous nous engageons à assurer la sécurité de vos informations. Afin de "
+"prévenir tout accès, divulgation ou utilisation sans autorisation, nous "
+"avons mis en place un éventail de procédures physiques, électroniques et "
+"relatives à notre gestion interne pour sauvegarder et protéger les données "
+"collectées. "
+
+#: privacy_policy.php:59
+msgid ""
+"DigitalDiscount takes your privacy very seriously. DigitalDiscount does not "
+"sell or rent your contact information to other marketers."
+msgstr ""
+"Numeristock prend votre vie privée très au sérieux. Numeristock ne vend ni "
+"ne loue vos informations de contact à des tiers."
+
+#: privacy_policy.php:61
+msgid ""
+"DigitalDiscount may share certain personal information with other companies "
+"with which DigitalDiscount have a strategic relationship and/or provide "
+"services on our behalf to your advantage. These companies may help process "
+"information, fulfil customer orders, deliver products, manage and enhance "
+"customer data, provide customer service, assess levels of interest in our "
+"product range, or carry out customer research or satisfaction surveys. These "
+"companies are also obliged to protect your personal information, except if "
+"exchange of information is required for your purchase. For example, when an "
+"extended warranty is purchased, you authorise DigitalDiscount and the "
+"Warranty Provider to exchange information to carry out the service. Without "
+"the exchange, it would be otherwise be difficult to have products purchased, "
+"customer service offered, feedback provided to us, or have access to special "
+"offers or content from DigitalDiscount."
+msgstr ""
+"Numeristock est suscpetible de partager certaines informations avec d'autres "
+"sociétés liées stratégiquement et/ou fournissant des services à notre place "
+"et pour votre avantage. Ces sociétés peuvent aider à traiter l'information, "
+"fournir un service après-vente, évaluer le niveau d'intérêt dans nos gammes "
+"de produits, honorer les commandes, livrer des produits ou à effectuer des "
+"recherches et enquêtes de satisfaction sur notre clientèle. Ces sociétés "
+"sont également soumises à l'obligation de protéger vos informations "
+"personnelles, sauf si l'échange d'information est requis pour votre achat. A "
+"titre d'exemple, en achetant une extension de garantie, vous autorisez "
+"Numeristock et le fournisseur de garantie à échanger l'information "
+"nécessaire à la poursuite du service. Sans cet échange, il serait difficile "
+"voire impossible de permettre l'achat de certains produits, d'offrir un "
+"service clientèle, de recueillir des avis our d'accéder aux offres spéciales "
+"de Numeristock."
+
+#: privacy_policy.php:63
+msgid ""
+"We may also be required by law or litigation to disclose your personal "
+"information. We may also disclose information if it is determined that it is "
+"necessary for security, law enforcement or other issues of public importance."
+msgstr ""
+"La loi ou le juge sont également à même de nous forcer à divulguer vos "
+"informations personnelles. Ce dernier point est également valable pour les "
+"cas d'application de la loi, de sécurité ou autres questions d'importance "
+"publique."
+
+#: privacy_policy.php:70
+msgid ""
+"A cookie is a small file which asks permission to be placed on your "
+"computer's hard drive. Once you agree, the file is added and the cookie "
+"helps analyse web traffic or lets you know when you visit a particular site. "
+"Cookies allow web applications to respond to you as an individual. The web "
+"application can tailor its operations to your needs, likes and dislikes by "
+"gathering and remembering information about your preferences."
+msgstr ""
+"Un cookie est un fichier électronique qui demande permission d'être stocké "
+"sur la mémoire de votre ordinateur. Une fois cette permission obtenue, le "
+"fichier est ajouté et permet d'analyser le trafic ou la fréquence de visite "
+"sur un site particulier. Les cookies permettent aux applications web de vous "
+"répondre comme à un individu unique. L'application web peut alors offrir un "
+"service sur mesure, basé sur vos besoins propres, en se basant sur ce qui "
+"vous intéresse."
+
+#: privacy_policy.php:72
+msgid ""
+"We use traffic log cookies to identify which pages are being used. This "
+"helps us analyse data about web page traffic and improve our website in "
+"order to tailor it to customer needs. We only use this information for "
+"statistical analysis purposes and then the data is removed from the system."
+msgstr ""
+"Les Cookies de mesure d'audience sont utilisés aux fins de mesurer "
+"l’audience des différents contenus et rubriques de notre site, afin de les "
+"évaluer et de mieux les organiser. Ces Cookies ne produisent que des "
+"statistiques anonymes et des volumes de fréquentation, à l’exclusion de "
+"toute information individuelle. La durée de vie de ces Cookies de mesure "
+"d’audience est limitée dans le temps, conduisant à leur suppression."
+
+#: privacy_policy.php:74
+msgid ""
+"Overall, cookies help us provide you with a better website, by enabling us "
+"to monitor which pages you find useful and which you do not. A cookie in no "
+"way gives us access to your computer or any information about you, other "
+"than the data you choose to share with us."
+msgstr ""
+"Plus généralement, les Cookies nous permettent de proposer un meilleur site, "
+"nous informant sur les pages jugées plus ou moins utiles. En aucun cas un "
+"Cookie ne nous donne accès à votre ordinateur ou ne fournit d'autres "
+"informations que celles que vous choisissez de partager avec nous."
+
+#: privacy_policy.php:76
+msgid ""
+"You can choose to accept or decline cookies. Most web browsers automatically "
+"accept cookies, but you can usually modify your browser setting to decline "
+"cookies if you prefer. This may prevent you from taking full advantage of "
+"the website."
+msgstr ""
+"Vous pouvez choisir d'accepter ou de refuser les Cookies. La plupart des "
+"navigateurs les acceptent automatiquement, mais il demeure possible de "
+"modifier vos paramètres de navigation pour les refuser. Il est toutefois "
+"possible que cela vous empêche de profiter de certaines fonctionnalités du "
+"site."
+
+#: privacy_policy.php:83
+msgid ""
+"Our website may contain links to other websites of interest. However, once "
+"you have used these links to leave our site, you should note that we do not "
+"have any control over that other website. Therefore, we cannot be "
+"responsible for the protection and privacy of any information which you "
+"provide whilst visiting such sites and such sites are not governed by this "
+"privacy statement. You should exercise caution and look at the privacy "
+"statement applicable to the website in question."
+msgstr ""
+"Notre site internet contient des liens vers d'autres site. Cependant, en "
+"suivant ces liens, vous quittez notre site et par conséquent devez être "
+"attentif à ce que nous pouvons ne pas contrôler la page en question. Ainsi, "
+"nous ne pouvons être tenus pour responsables de la protection des "
+"informations que vous pourrez fournir en visitant les dits sites, lesquels "
+"ne sont pas nécessairement liés par la présente politique. Il est très "
+"fortement recommandé de faire preuve de prudence et d'attention quant aux "
+"règles applicables aux sites en question."
+
+#: privacy_policy.php:90
+msgid ""
+"If you have any questions or concerns, you can email us using our "
+"interactive web form located at our "
+msgstr ""
+"En cas de question ou demande, vous pouvez nous contacter par e-mail en "
+"utilisant notre forum interactif situé dans notre"
+
+#: privacy_policy.php:90
+msgid "Contact Us"
+msgstr "Nous contacter"
+
+#: privacy_policy.php:90
+msgid " page."
+msgstr "Page."
+
+#: privacy_policy.php:94
+msgid "Last updated 9th July 2015"
+msgstr "Dernière mise à jour le 31 Juillet 2015"
+
+#: privacy_policy.php:95
+msgid "DigitalDiscount Limited. All rights reserved."
+msgstr "DigitalDiscount Limited. Tous droits réservés."
+
+#: review.php:11
+msgid "Image"
+msgstr "Image"
+
+#: review.php:12
+msgid "Product Name"
+msgstr "Nom du produit"
+
+#: review.php:13
+msgid "Quantity"
+msgstr "Quantité"
+
+#: review.php:14
+msgid "Unit Price"
+msgstr "Prix à l'unité"
+
+#: review.php:15
+msgid "Total"
+msgstr "Total"
+
+#: review.php:48
+msgid "Shipping Information"
+msgstr "Informations d'expédition"
+
+#: review.php:55
+msgid "Where would you like to deliver to ?"
+msgstr "Où souhaitez-vous être livré ? "
+
+#: review.php:60 review.php:498
+msgid "Country"
+msgstr "Pays"
+
+#: review.php:62 review.php:323 review.php:500 review.php:516
+msgid " --- Please Select --- "
+msgstr "Sélectionnez"
+
+#: review.php:63
+msgid "Aaland Islands"
+msgstr "Iles Åland"
+
+#: review.php:64
+msgid "Afghanistan"
+msgstr "Afghanistan"
+
+#: review.php:65
+msgid "Albania"
+msgstr "Albanie"
+
+#: review.php:66
+msgid "Algeria"
+msgstr "Algérie"
+
+#: review.php:67
+msgid "American Samoa"
+msgstr "Samoas américains"
+
+#: review.php:68
+msgid "Andorra"
+msgstr "Andorre "
+
+#: review.php:69
+msgid "Angola"
+msgstr "Angola"
+
+#: review.php:70
+msgid "Anguilla"
+msgstr "Anguilla"
+
+#: review.php:71
+msgid "Antarctica"
+msgstr "Antarctique "
+
+#: review.php:72
+msgid "Antigua and Barbuda"
+msgstr "Antigua et Barbuda"
+
+#: review.php:73
+msgid "Argentina"
+msgstr "Argentine"
+
+#: review.php:74
+msgid "Armenia"
+msgstr "Arménie "
+
+#: review.php:75
+msgid "Aruba"
+msgstr "Aruba"
+
+#: review.php:76
+msgid "Ascension Island (British)"
+msgstr "Ile de l'Ascension"
+
+#: review.php:78
+msgid "Austria"
+msgstr "Autriche"
+
+#: review.php:79
+msgid "Azerbaijan"
+msgstr "Azerbaijan"
+
+#: review.php:80
+msgid "Bahamas"
+msgstr "Bahamas"
+
+#: review.php:81
+msgid "Bahrain"
+msgstr "Bahrain"
+
+#: review.php:82
+msgid "Bangladesh"
+msgstr "Bangladesh"
+
+#: review.php:83
+msgid "Barbados"
+msgstr "Barbades"
+
+#: review.php:84
+msgid "Belarus"
+msgstr "Biélorussie"
+
+#: review.php:86
+msgid "Belize"
+msgstr "Belize"
+
+#: review.php:87
+msgid "Benin"
+msgstr "Bénin"
+
+#: review.php:88
+msgid "Bermuda"
+msgstr "Bermudes"
+
+#: review.php:89
+msgid "Bhutan"
+msgstr "Bhoutan"
+
+#: review.php:90
+msgid "Bolivia"
+msgstr "Bolivie"
+
+#: review.php:91
+msgid "Bonaire, Sint Eustatius and Saba"
+msgstr "Bonaire, Saint-Eustache et Saba"
+
+#: review.php:92
+msgid "Bosnia and Herzegovina"
+msgstr "Bosnie Herzégovine"
+
+#: review.php:93
+msgid "Botswana"
+msgstr "Botswana"
+
+#: review.php:94
+msgid "Bouvet Island"
+msgstr "Ile Bouvet"
+
+#: review.php:95
+msgid "Brazil"
+msgstr "Brésil"
+
+#: review.php:96
+msgid "British Indian Ocean Territory"
+msgstr "Territoire britannique de l'Océan Indien"
+
+#: review.php:97
+msgid "Brunei Darussalam"
+msgstr "Brunei Darussalam"
+
+#: review.php:98
+msgid "Bulgaria"
+msgstr "Bulgarie"
+
+#: review.php:99
+msgid "Burkina Faso"
+msgstr "Burkina Faso"
+
+#: review.php:100
+msgid "Burundi"
+msgstr "Burundi"
+
+#: review.php:101
+msgid "Cambodia"
+msgstr "Cambodge"
+
+#: review.php:102
+msgid "Cameroon"
+msgstr "Cameroun"
+
+#: review.php:103
+msgid "Canada"
+msgstr "Canada"
+
+#: review.php:104
+msgid "Canary Islands"
+msgstr "Iles Canaries"
+
+#: review.php:105
+msgid "Cape Verde"
+msgstr "Cap Vert"
+
+#: review.php:106
+msgid "Cayman Islands"
+msgstr "Iles Caïmans"
+
+#: review.php:107
+msgid "Central African Republic"
+msgstr "République d'Afrique Centrale"
+
+#: review.php:108
+msgid "Chad"
+msgstr "Tchad"
+
+#: review.php:109
+msgid "Chile"
+msgstr "Chilie"
+
+#: review.php:110
+msgid "China"
+msgstr "Chine"
+
+#: review.php:111
+msgid "Christmas Island"
+msgstr "Ile Christmas"
+
+#: review.php:112
+msgid "Cocos (Keeling) Islands"
+msgstr "Iles Coco"
+
+#: review.php:113
+msgid "Colombia"
+msgstr "Colombie"
+
+#: review.php:114
+msgid "Comoros"
+msgstr "Comores"
+
+#: review.php:115
+msgid "Congo"
+msgstr "Congo"
+
+#: review.php:116
+msgid "Cook Islands"
+msgstr "Iles Cook"
+
+#: review.php:117
+msgid "Costa Rica"
+msgstr "Costa Rica"
+
+#: review.php:118
+msgid "Cote D'Ivoire"
+msgstr "Cote d'Ivoire"
+
+#: review.php:119
+msgid "Croatia"
+msgstr "Croatie"
+
+#: review.php:120
+msgid "Cuba"
+msgstr "Cuba"
+
+#: review.php:121
+msgid "Curacao"
+msgstr "Curaçao"
+
+#: review.php:122
+msgid "Cyprus"
+msgstr "Chypre"
+
+#: review.php:123
+msgid "Czech Republic"
+msgstr "République Tchèque"
+
+#: review.php:124
+msgid "Democratic Republic of Congo"
+msgstr "République Démocratique du Congo"
+
+#: review.php:125
+msgid "Denmark"
+msgstr "Danemark"
+
+#: review.php:126
+msgid "Djibouti"
+msgstr "Djibouti"
+
+#: review.php:127
+msgid "Dominica"
+msgstr "Dominique"
+
+#: review.php:128
+msgid "Dominican Republic"
+msgstr "République Dominicaine"
+
+#: review.php:129
+msgid "East Timor"
+msgstr "Timor oriental"
+
+#: review.php:130
+msgid "Ecuador"
+msgstr "Equateur"
+
+#: review.php:131
+msgid "Egypt"
+msgstr "Egypte"
+
+#: review.php:132
+msgid "El Salvador"
+msgstr "Le Salvador"
+
+#: review.php:133
+msgid "Equatorial Guinea"
+msgstr "Guinée équatoriale"
+
+#: review.php:134
+msgid "Eritrea"
+msgstr "Erythrée"
+
+#: review.php:135
+msgid "Estonia"
+msgstr "Estonie"
+
+#: review.php:136
+msgid "Ethiopia"
+msgstr "Ethiopie"
+
+#: review.php:137
+msgid "Falkland Islands (Malvinas)"
+msgstr "Iles Malouines"
+
+#: review.php:138
+msgid "Faroe Islands"
+msgstr "Iles Féroé"
+
+#: review.php:139
+msgid "Fiji"
+msgstr "Fiji"
+
+#: review.php:141 review.php:503
+msgid "France, Metropolitan"
+msgstr "France métropolitaine"
+
+#: review.php:142
+msgid "French Guiana"
+msgstr "Guinée française"
+
+#: review.php:143
+msgid "French Polynesia"
+msgstr "Polynésie française"
+
+#: review.php:144
+msgid "French Southern Territories"
+msgstr "Terres australes et antarctiques françaises"
+
+#: review.php:145
+msgid "FYROM"
+msgstr "Macédoine "
+
+#: review.php:146
+msgid "Gabon"
+msgstr "Gabon"
+
+#: review.php:147
+msgid "Gambia"
+msgstr "Gambie"
+
+#: review.php:148
+msgid "Georgia"
+msgstr "Géorgie"
+
+#: review.php:149
+msgid "Germany"
+msgstr "Allemagne"
+
+#: review.php:150
+msgid "Ghana"
+msgstr "Ghana"
+
+#: review.php:151
+msgid "Gibraltar"
+msgstr "Gibraltar"
+
+#: review.php:152
+msgid "Greece"
+msgstr "Grèce"
+
+#: review.php:153
+msgid "Greenland"
+msgstr "Groenland"
+
+#: review.php:154
+msgid "Grenada"
+msgstr "Grenade"
+
+#: review.php:155
+msgid "Guadeloupe"
+msgstr "Guadeloupe"
+
+#: review.php:156
+msgid "Guam"
+msgstr "Guam"
+
+#: review.php:157
+msgid "Guatemala"
+msgstr "Guatemala"
+
+#: review.php:158
+msgid "Guernsey"
+msgstr "Guernesey"
+
+#: review.php:159
+msgid "Guinea"
+msgstr "Guinée"
+
+#: review.php:160
+msgid "Guinea-Bissau"
+msgstr "Guniée-Bissau"
+
+#: review.php:161
+msgid "Guyana"
+msgstr "Guyane"
+
+#: review.php:162
+msgid "Haiti"
+msgstr "Haiti"
+
+#: review.php:163
+msgid "Heard and Mc Donald Islands"
+msgstr "Iles Heard-et-MacDonald"
+
+#: review.php:164
+msgid "Honduras"
+msgstr "Honduras"
+
+#: review.php:166
+msgid "Hungary"
+msgstr "Hongrie"
+
+#: review.php:167
+msgid "Iceland"
+msgstr "Islande"
+
+#: review.php:168
+msgid "India"
+msgstr "Inde"
+
+#: review.php:169
+msgid "Indonesia"
+msgstr "Indonésie"
+
+#: review.php:170
+msgid "Iran (Islamic Republic of)"
+msgstr "Iran"
+
+#: review.php:171
+msgid "Iraq"
+msgstr "Irak"
+
+#: review.php:172
+msgid "Ireland"
+msgstr "Irlande"
+
+#: review.php:173
+msgid "Isle of Man"
+msgstr "Ile de Man"
+
+#: review.php:174
+msgid "Israel"
+msgstr "Israel"
+
+#: review.php:175 review.php:504
+msgid "Italy"
+msgstr "Italie"
+
+#: review.php:176
+msgid "Jamaica"
+msgstr "Jamaïque"
+
+#: review.php:177
+msgid "Japan"
+msgstr "Japon"
+
+#: review.php:178
+msgid "Jersey"
+msgstr "Jersey"
+
+#: review.php:179
+msgid "Jordan"
+msgstr "Jordanie"
+
+#: review.php:180
+msgid "Kazakhstan"
+msgstr "Kazakhstan"
+
+#: review.php:181
+msgid "Kenya"
+msgstr "Kenya"
+
+#: review.php:182
+msgid "Kiribati"
+msgstr "Kiribati"
+
+#: review.php:183
+msgid "Korea, Republic of"
+msgstr "Corée"
+
+#: review.php:184
+msgid "Kosovo, Republic of"
+msgstr "Kosovo"
+
+#: review.php:185
+msgid "Kuwait"
+msgstr "Koweit"
+
+#: review.php:186
+msgid "Kyrgyzstan"
+msgstr "Kyrgyzstan"
+
+#: review.php:187
+msgid "Lao People's Democratic Republic"
+msgstr "Laos"
+
+#: review.php:188
+msgid "Latvia"
+msgstr "Lettonie"
+
+#: review.php:189
+msgid "Lebanon"
+msgstr "Liban"
+
+#: review.php:190
+msgid "Lesotho"
+msgstr "Lesotho"
+
+#: review.php:191
+msgid "Liberia"
+msgstr "Liberia"
+
+#: review.php:192
+msgid "Libyan Arab Jamahiriya"
+msgstr "Libye"
+
+#: review.php:193
+msgid "Liechtenstein"
+msgstr "Liechtenstein"
+
+#: review.php:194
+msgid "Lithuania"
+msgstr "Lituanie"
+
+#: review.php:195
+msgid "Luxembourg"
+msgstr "Luxembourg"
+
+#: review.php:196
+msgid "Macau"
+msgstr "Macau"
+
+#: review.php:197
+msgid "Madagascar"
+msgstr "Madagascar"
+
+#: review.php:198
+msgid "Malawi"
+msgstr "Malawi"
+
+#: review.php:199
+msgid "Malaysia"
+msgstr "Malaisie "
+
+#: review.php:200
+msgid "Maldives"
+msgstr "Maldives"
+
+#: review.php:201
+msgid "Mali"
+msgstr "Mali"
+
+#: review.php:202
+msgid "Malta"
+msgstr "Maltes"
+
+#: review.php:203
+msgid "Marshall Islands"
+msgstr "Iles Marshall"
+
+#: review.php:204
+msgid "Martinique"
+msgstr "Martinique"
+
+#: review.php:205
+msgid "Mauritania"
+msgstr "Mauritanie"
+
+#: review.php:206
+msgid "Mauritius"
+msgstr "Ile Maurice"
+
+#: review.php:207
+msgid "Mayotte"
+msgstr "Mayotte"
+
+#: review.php:208
+msgid "Mexico"
+msgstr "Mexique"
+
+#: review.php:209
+msgid "Micronesia, Federated States of"
+msgstr "Micronésie"
+
+#: review.php:210
+msgid "Moldova, Republic of"
+msgstr "Moldavie"
+
+#: review.php:211
+msgid "Monaco"
+msgstr "Monaco"
+
+#: review.php:212
+msgid "Mongolia"
+msgstr "Mongolie"
+
+#: review.php:213
+msgid "Montenegro"
+msgstr "Montenegro"
+
+#: review.php:214
+msgid "Montserrat"
+msgstr "Montserrat"
+
+#: review.php:215
+msgid "Morocco"
+msgstr "Maroc"
+
+#: review.php:216
+msgid "Mozambique"
+msgstr "Mozambique"
+
+#: review.php:217
+msgid "Myanmar"
+msgstr "Birmanie"
+
+#: review.php:218
+msgid "Namibia"
+msgstr "Namibie"
+
+#: review.php:219
+msgid "Nauru"
+msgstr "Nauru"
+
+#: review.php:220
+msgid "Nepal"
+msgstr "Nepal"
+
+#: review.php:221
+msgid "Netherlands"
+msgstr "Pays-Bas"
+
+#: review.php:222
+msgid "Netherlands Antilles"
+msgstr "Antilles néerlandaises"
+
+#: review.php:223
+msgid "New Caledonia"
+msgstr "Nouvelle Calédonie"
+
+#: review.php:224 review.php:505
+msgid "New Zealand"
+msgstr "Nouvelle Zélande"
+
+#: review.php:225
+msgid "Nicaragua"
+msgstr "Nicaragua"
+
+#: review.php:226
+msgid "Niger"
+msgstr "Niger"
+
+#: review.php:227
+msgid "Nigeria"
+msgstr "Nigeria"
+
+#: review.php:228
+msgid "Niue"
+msgstr "Niue"
+
+#: review.php:229
+msgid "Norfolk Island"
+msgstr "Ile Norfolk"
+
+#: review.php:230
+msgid "North Korea"
+msgstr "Corée du Nord"
+
+#: review.php:231
+msgid "Northern Mariana Islands"
+msgstr "Iles Mariannes du Nord"
+
+#: review.php:232
+msgid "Norway"
+msgstr "Norvège"
+
+#: review.php:233
+msgid "Oman"
+msgstr "Oman"
+
+#: review.php:234
+msgid "Pakistan"
+msgstr "Pakistan"
+
+#: review.php:235
+msgid "Palau"
+msgstr "Iles Palaos"
+
+#: review.php:236
+msgid "Palestinian Territory, Occupied"
+msgstr "Territoire Palestiniens occupés"
+
+#: review.php:237
+msgid "Panama"
+msgstr "Panama"
+
+#: review.php:238
+msgid "Papua New Guinea"
+msgstr "Paouasie Nouvelle Guinée"
+
+#: review.php:239
+msgid "Paraguay"
+msgstr "Paraguay"
+
+#: review.php:240
+msgid "Peru"
+msgstr "Pérou"
+
+#: review.php:241
+msgid "Philippines"
+msgstr "Philippines"
+
+#: review.php:242
+msgid "Pitcairn"
+msgstr "Iles Pitcairn"
+
+#: review.php:243 review.php:506
+msgid "Poland"
+msgstr "Pologne"
+
+#: review.php:244 review.php:507
+msgid "Portugal"
+msgstr "Portugal"
+
+#: review.php:245
+msgid "Puerto Rico"
+msgstr "Porto Rico"
+
+#: review.php:246
+msgid "Qatar"
+msgstr "Qatar"
+
+#: review.php:247
+msgid "Reunion"
+msgstr "Ile de la Réunion"
+
+#: review.php:248
+msgid "Romania"
+msgstr "Roumanie"
+
+#: review.php:249
+msgid "Russian Federation"
+msgstr "Russie"
+
+#: review.php:250
+msgid "Rwanda"
+msgstr "Rwanda"
+
+#: review.php:251
+msgid "Saint Kitts and Nevis"
+msgstr "Saint-Christophe-et-Niévès"
+
+#: review.php:252
+msgid "Saint Lucia"
+msgstr "Sainte Lucie"
+
+#: review.php:253
+msgid "Saint Vincent and the Grenadines"
+msgstr "Saint-Vincent-et-les-Grenadines"
+
+#: review.php:254
+msgid "Samoa"
+msgstr "Samoa"
+
+#: review.php:255
+msgid "San Marino"
+msgstr "Saint-Marin"
+
+#: review.php:256
+msgid "Sao Tome and Principe"
+msgstr "São Tomé-et-Principe"
+
+#: review.php:257
+msgid "Saudi Arabia"
+msgstr "Arabie Saoudite"
+
+#: review.php:258
+msgid "Senegal"
+msgstr "Sénégal"
+
+#: review.php:259
+msgid "Serbia"
+msgstr "Serbie"
+
+#: review.php:260
+msgid "Seychelles"
+msgstr "Seychelles"
+
+#: review.php:261
+msgid "Sierra Leone"
+msgstr "Sierra Leone"
+
+#: review.php:262
+msgid "Singapore"
+msgstr "Singapour"
+
+#: review.php:263
+msgid "Slovak Republic"
+msgstr "Slovaquie"
+
+#: review.php:264
+msgid "Slovenia"
+msgstr "Slovénie"
+
+#: review.php:265
+msgid "Solomon Islands"
+msgstr "Iles Salomon"
+
+#: review.php:266
+msgid "Somalia"
+msgstr "Somalie"
+
+#: review.php:267
+msgid "South Africa"
+msgstr "Afrique du Sud"
+
+#: review.php:268
+msgid "South Georgia &amp; South Sandwich Islands"
+msgstr "Géorgie du Sud-et-les Îles Sandwich du Sud"
+
+#: review.php:269
+msgid "South Sudan"
+msgstr "Soudan du Sud"
+
+#: review.php:270
+msgid "Spain"
+msgstr "Espagne"
+
+#: review.php:271
+msgid "Sri Lanka"
+msgstr "Sri Lanka"
+
+#: review.php:272
+msgid "St. Barthelemy"
+msgstr "St. Barthelemy"
+
+#: review.php:273
+msgid "St. Helena"
+msgstr "St. Hélèna"
+
+#: review.php:274
+msgid "St. Martin (French part)"
+msgstr "St. Martin (Français)"
+
+#: review.php:275
+msgid "St. Pierre and Miquelon"
+msgstr "St. Pierre et Miquelon"
+
+#: review.php:276
+msgid "Sudan"
+msgstr "Soudan"
+
+#: review.php:277
+msgid "Suriname"
+msgstr "Suriname"
+
+#: review.php:278
+msgid "Svalbard and Jan Mayen Islands"
+msgstr "Iles Svalbard et Jan Mayen"
+
+#: review.php:279
+msgid "Swaziland"
+msgstr "Swaziland"
+
+#: review.php:280
+msgid "Sweden"
+msgstr "Suède"
+
+#: review.php:281
+msgid "Switzerland"
+msgstr "Suisse"
+
+#: review.php:282
+msgid "Syrian Arab Republic"
+msgstr "Syrie"
+
+#: review.php:283
+msgid "Taiwan"
+msgstr "Taiwan"
+
+#: review.php:284
+msgid "Tajikistan"
+msgstr "Tajikistan"
+
+#: review.php:285
+msgid "Tanzania, United Republic of"
+msgstr "Tanzanie"
+
+#: review.php:286
+msgid "Thailand"
+msgstr "Thailande "
+
+#: review.php:287
+msgid "Togo"
+msgstr "Togo"
+
+#: review.php:288
+msgid "Tokelau"
+msgstr "Tokelau"
+
+#: review.php:289
+msgid "Tonga"
+msgstr "Tonga"
+
+#: review.php:290
+msgid "Trinidad and Tobago"
+msgstr "Trinité-et-Tobago"
+
+#: review.php:291
+msgid "Tristan da Cunha"
+msgstr "Tristan da Cunha"
+
+#: review.php:292
+msgid "Tunisia"
+msgstr "Tunisie"
+
+#: review.php:293
+msgid "Turkey"
+msgstr "Turiquie"
+
+#: review.php:294
+msgid "Turkmenistan"
+msgstr "Turkmenistan"
+
+#: review.php:295
+msgid "Turks and Caicos Islands"
+msgstr "Îles Turques-et-Caïques"
+
+#: review.php:296
+msgid "Tuvalu"
+msgstr "Tuvalu"
+
+#: review.php:297
+msgid "Uganda"
+msgstr "Ouganda"
+
+#: review.php:298
+msgid "Ukraine"
+msgstr "Ukraine"
+
+#: review.php:299
+msgid "United Arab Emirates"
+msgstr "Emirats Arabes Unis"
+
+#: review.php:300 review.php:508
+msgid "United Kingdom"
+msgstr "Royaume Uni"
+
+#: review.php:301
+msgid "United States"
+msgstr "Etats Unis"
+
+#: review.php:302
+msgid "United States Minor Outlying Islands"
+msgstr "Îles mineures éloignées des États-Unis"
+
+#: review.php:303
+msgid "Uruguay"
+msgstr "Uruguay"
+
+#: review.php:304
+msgid "Uzbekistan"
+msgstr "Ouzbekistan"
+
+#: review.php:305
+msgid "Vanuatu"
+msgstr "Vanuatu"
+
+#: review.php:306
+msgid "Vatican City State (Holy See)"
+msgstr "Vatican"
+
+#: review.php:307
+msgid "Venezuela"
+msgstr "Venezuela"
+
+#: review.php:308
+msgid "Viet Nam"
+msgstr "Vietnam"
+
+#: review.php:309
+msgid "Virgin Islands (British)"
+msgstr "Iles Vierges (Britanniques)"
+
+#: review.php:310
+msgid "Virgin Islands (U.S.)"
+msgstr "Iles Vierges (Etats-Unis)"
+
+#: review.php:311
+msgid "Wallis and Futuna Islands"
+msgstr "Wallis et Futuna"
+
+#: review.php:312
+msgid "Western Sahara"
+msgstr "Sahara occidental"
+
+#: review.php:313
+msgid "Yemen"
+msgstr "Yemen"
+
+#: review.php:314
+msgid "Zambia"
+msgstr "Zambie"
+
+#: review.php:315
+msgid "Zimbabwe"
+msgstr "Zimbabwe"
+
+#: review.php:321 review.php:514
+msgid "State"
+msgstr "Etat"
+
+#: review.php:324 review.php:517
+msgid "Aberdeen"
+msgstr "Aberdeen"
+
+#: review.php:325 review.php:518
+msgid "Aberdeenshire"
+msgstr "Aberdeenshire"
+
+#: review.php:326 review.php:519
+msgid "Anglesey"
+msgstr "Anglesey"
+
+#: review.php:327 review.php:520
+msgid "Angus"
+msgstr "Angus"
+
+#: review.php:328 review.php:521
+msgid "Argyll and Bute"
+msgstr "Argyll and Bute"
+
+#: review.php:329 review.php:522
+msgid "Bedfordshire"
+msgstr "Bedfordshire"
+
+#: review.php:330 review.php:523
+msgid "Berkshire"
+msgstr "Berkshire"
+
+#: review.php:331 review.php:524
+msgid "Blaenau Gwent"
+msgstr "Blaenau Gwent"
+
+#: review.php:332 review.php:525
+msgid "Bridgend"
+msgstr "Bridgend"
+
+#: review.php:333 review.php:526
+msgid "Bristol"
+msgstr "Bristol"
+
+#: review.php:334 review.php:527
+msgid "Buckinghamshire"
+msgstr "Buckinghamshire"
+
+#: review.php:335 review.php:528
+msgid "Caerphilly"
+msgstr "Caerphilly"
+
+#: review.php:336 review.php:529
+msgid "Cambridgeshire"
+msgstr "Cambridgeshire"
+
+#: review.php:337 review.php:530
+msgid "Cardiff"
+msgstr "Cardiff"
+
+#: review.php:338 review.php:531
+msgid "Carmarthenshire"
+msgstr "Carmarthenshire"
+
+#: review.php:339 review.php:532
+msgid "Ceredigion"
+msgstr "Ceredigion"
+
+#: review.php:340 review.php:533
+msgid "Cheshire"
+msgstr "Cheshire"
+
+#: review.php:341 review.php:534
+msgid "Clackmannanshire"
+msgstr ""
+
+#: review.php:342 review.php:535
+msgid "Conwy"
+msgstr ""
+
+#: review.php:343 review.php:536
+msgid "Cornwall"
+msgstr ""
+
+#: review.php:344 review.php:537
+msgid "County Antrim"
+msgstr ""
+
+#: review.php:345 review.php:538
+msgid "County Armagh"
+msgstr ""
+
+#: review.php:346 review.php:539
+msgid "County Down"
+msgstr ""
+
+#: review.php:347 review.php:540
+msgid "County Fermanagh"
+msgstr ""
+
+#: review.php:348 review.php:541
+msgid "County Londonderry"
+msgstr ""
+
+#: review.php:349 review.php:542
+msgid "County Tyrone"
+msgstr ""
+
+#: review.php:350 review.php:543
+msgid "Cumbria"
+msgstr ""
+
+#: review.php:351 review.php:544
+msgid "Denbighshire"
+msgstr ""
+
+#: review.php:352 review.php:545
+msgid "Derbyshire"
+msgstr ""
+
+#: review.php:353 review.php:546
+msgid "Devon"
+msgstr ""
+
+#: review.php:354 review.php:547
+msgid "Dorset"
+msgstr ""
+
+#: review.php:355 review.php:548
+msgid "Dumfries and Galloway"
+msgstr ""
+
+#: review.php:356 review.php:549
+msgid "Dundee"
+msgstr ""
+
+#: review.php:357 review.php:550
+msgid "Durham"
+msgstr ""
+
+#: review.php:358 review.php:551
+msgid "East Ayrshire"
+msgstr ""
+
+#: review.php:359 review.php:552
+msgid "East Dunbartonshire"
+msgstr ""
+
+#: review.php:360 review.php:553
+msgid "East Lothian"
+msgstr ""
+
+#: review.php:361 review.php:554
+msgid "East Renfrewshire"
+msgstr ""
+
+#: review.php:362 review.php:555
+msgid "East Riding of Yorkshire"
+msgstr ""
+
+#: review.php:363 review.php:556
+msgid "East Sussex"
+msgstr ""
+
+#: review.php:364 review.php:557
+msgid "Edinburgh"
+msgstr ""
+
+#: review.php:365 review.php:558
+msgid "Essex"
+msgstr ""
+
+#: review.php:366 review.php:559
+msgid "Falkirk"
+msgstr ""
+
+#: review.php:367 review.php:560
+msgid "Fife"
+msgstr ""
+
+#: review.php:368 review.php:561
+msgid "Flintshire"
+msgstr ""
+
+#: review.php:369 review.php:562
+msgid "Glasgow"
+msgstr ""
+
+#: review.php:370 review.php:563
+msgid "Gloucestershire"
+msgstr ""
+
+#: review.php:371 review.php:564
+msgid "Greater London"
+msgstr ""
+
+#: review.php:372 review.php:565
+msgid "Greater Manchester"
+msgstr ""
+
+#: review.php:373 review.php:566
+msgid "Gwynedd"
+msgstr ""
+
+#: review.php:374 review.php:567
+msgid "Hampshire"
+msgstr ""
+
+#: review.php:375 review.php:568
+msgid "Herefordshire"
+msgstr ""
+
+#: review.php:376 review.php:569
+msgid "Hertfordshire"
+msgstr ""
+
+#: review.php:377 review.php:570
+msgid "Highlands"
+msgstr ""
+
+#: review.php:378 review.php:571
+msgid "Inverclyde"
+msgstr ""
+
+#: review.php:379 review.php:572
+msgid "Isle of Wight"
+msgstr ""
+
+#: review.php:380 review.php:573
+msgid "Kent"
+msgstr ""
+
+#: review.php:381 review.php:574
+msgid "Lancashire"
+msgstr ""
+
+#: review.php:382 review.php:575
+msgid "Leicestershire"
+msgstr ""
+
+#: review.php:383 review.php:576
+msgid "Lincolnshire"
+msgstr ""
+
+#: review.php:384 review.php:577
+msgid "Merseyside"
+msgstr ""
+
+#: review.php:385 review.php:578
+msgid "Merthyr Tydfil"
+msgstr ""
+
+#: review.php:386 review.php:579
+msgid "Midlothian"
+msgstr ""
+
+#: review.php:387 review.php:580
+msgid "Monmouthshire"
+msgstr ""
+
+#: review.php:388 review.php:581
+msgid "Moray"
+msgstr ""
+
+#: review.php:389 review.php:582
+msgid "Neath Port Talbot"
+msgstr ""
+
+#: review.php:390 review.php:583
+msgid "Newport"
+msgstr ""
+
+#: review.php:391 review.php:584
+msgid "Norfolk"
+msgstr ""
+
+#: review.php:392 review.php:585
+msgid "North Ayrshire"
+msgstr ""
+
+#: review.php:393 review.php:586
+msgid "North Lanarkshire"
+msgstr ""
+
+#: review.php:394 review.php:587
+msgid "North Yorkshire"
+msgstr ""
+
+#: review.php:395 review.php:588
+msgid "Northamptonshire"
+msgstr ""
+
+#: review.php:396 review.php:589
+msgid "Northumberland"
+msgstr ""
+
+#: review.php:397 review.php:590
+msgid "Nottinghamshire"
+msgstr ""
+
+#: review.php:398 review.php:591
+msgid "Orkney Islands"
+msgstr ""
+
+#: review.php:399 review.php:592
+msgid "Oxfordshire"
+msgstr ""
+
+#: review.php:400 review.php:593
+msgid "Pembrokeshire"
+msgstr ""
+
+#: review.php:401 review.php:594
+msgid "Perth and Kinross"
+msgstr ""
+
+#: review.php:402 review.php:595
+msgid "Powys"
+msgstr ""
+
+#: review.php:403 review.php:596
+msgid "Renfrewshire"
+msgstr ""
+
+#: review.php:404 review.php:597
+msgid "Rhondda Cynon Taff"
+msgstr ""
+
+#: review.php:405 review.php:598
+msgid "Rutland"
+msgstr ""
+
+#: review.php:406 review.php:599
+msgid "Scottish Borders"
+msgstr ""
+
+#: review.php:407 review.php:600
+msgid "Shetland Islands"
+msgstr ""
+
+#: review.php:408 review.php:601
+msgid "Shropshire"
+msgstr ""
+
+#: review.php:409 review.php:602
+msgid "Somerset"
+msgstr ""
+
+#: review.php:410 review.php:603
+msgid "South Ayrshire"
+msgstr ""
+
+#: review.php:411 review.php:604
+msgid "South Lanarkshire"
+msgstr ""
+
+#: review.php:412 review.php:605
+msgid "South Yorkshire"
+msgstr ""
+
+#: review.php:413 review.php:606
+msgid "Staffordshire"
+msgstr ""
+
+#: review.php:414 review.php:607
+msgid "Stirling"
+msgstr ""
+
+#: review.php:415 review.php:608
+msgid "Suffolk"
+msgstr ""
+
+#: review.php:416 review.php:609
+msgid "Surrey"
+msgstr ""
+
+#: review.php:417 review.php:610
+msgid "Swansea"
+msgstr ""
+
+#: review.php:418 review.php:611
+msgid "Torfaen"
+msgstr ""
+
+#: review.php:419 review.php:612
+msgid "Tyne and Wear"
+msgstr ""
+
+#: review.php:420 review.php:613
+msgid "Vale of Glamorgan"
+msgstr ""
+
+#: review.php:421 review.php:614
+msgid "Warwickshire"
+msgstr ""
+
+#: review.php:422 review.php:615
+msgid "West Dunbartonshire"
+msgstr ""
+
+#: review.php:423 review.php:616
+msgid "West Lothian"
+msgstr ""
+
+#: review.php:424 review.php:617
+msgid "West Midlands"
+msgstr ""
+
+#: review.php:425 review.php:618
+msgid "West Sussex"
+msgstr ""
+
+#: review.php:426 review.php:619
+msgid "West Yorkshire"
+msgstr ""
+
+#: review.php:427 review.php:620
+msgid "Western Isles"
+msgstr ""
+
+#: review.php:428 review.php:621
+msgid "Wiltshire"
+msgstr ""
+
+#: review.php:429 review.php:622
+msgid "Worcestershire"
+msgstr ""
+
+#: review.php:430 review.php:623
+msgid "Wrexham"
+msgstr ""
+
+#: review.php:439 review.php:632
+msgid "First Name"
+msgstr "Prénom"
+
+#: review.php:445 review.php:638
+msgid "Last Name"
+msgstr "Nom"
+
+#: review.php:454 review.php:647
+msgid "Address"
+msgstr "Adresse"
+
+#: review.php:477 review.php:670
+msgid "next"
+msgstr "Suivant"
+
+#: review.php:488
+msgid "Billing Information"
+msgstr "Information de facturation"
+
+#: review.php:683
+msgid "Total:"
+msgstr "Total : "
+
+#: review.php:691
+msgid "Continue Shopping"
+msgstr "Continuer les achats"
+
+#: review.php:692
+msgid "Checkout"
+msgstr "Checkout"
+
+#: shipping.php:1
+msgid "FREE Shipping"
+msgstr "Expédition GRATUITE"
+
+#: shipping.php:3
+msgid ""
+"When you shop with us we like to keep it simple, our free shipping offer "
+"applies to all orders no matter the size or value. ChatandVision not only "
+"accepts payment in your local currency but also ships directly to your "
+"doorstep free of charge* to over 60 countries worldwide:"
+msgstr ""
+"Nous aimons à maintenir votre expérience d'achat aussi simple que possible. "
+"Ainsi, notre offre d'expédition gratuite s'applique à toutes les commandes, "
+"sans distinction de montant, poids du colis, ou quantité de produits "
+"achetés. Numeristock ne se contente pas d'accepter la devise de votre pays, "
+"mais va jusqu'à livrer gratuitement* et directement sur le lieu de votre "
+"choix dans 60 pays à travers le monde. "
+
+#: shipping.php:6
+msgid "Taxes and Duties"
+msgstr "Taxes et Frais"
+
+#: shipping.php:8
+msgid ""
+"Worried about hidden costs? Please don't be, we'll take care of any "
+"applicable taxes and duties prior to delivery so the price on the website is "
+"the final amount you pay. Rest assured that your buying experience with us "
+"will be completely hassle free."
+msgstr ""
+"Peur des coûts cachés ? Soyez sans crainte ! Nous prenons en charge toute "
+"taxe et frais avant même la livraison, de telle sorte que le prix affiché "
+"sur le site est le prix final à payer. Soyez assuré que votre expérience "
+"d'achat chez Numeristock sera détendue et sans soucis."
+
+#: shipping.php:11
+msgid "Tracking Your Order"
+msgstr "Suivez votre commande"
+
+#: shipping.php:13
+msgid ""
+"Once your order has been processed, an email containing your order and "
+"account information will be sent to your registered email. You can always "
+"check the status of your order by visiting the My Account page on our "
+"website and viewing your order history."
+msgstr ""
+"Une fois votre commande passée, un e-mail contenant les détails de votre "
+"achat ainsi que de votre compte sera envoyé à l'adresse e-mail que vous avez "
+"renseignée. Vous pouvez suivre le statut de votre commande en visitant la "
+"page Mon Compte de notre site et via votre historique de commandes."
+
+#: shipping.php:16
+msgid "FREE Shipping Delivery Times"
+msgstr "Délai de l'offre de livraison GRATUITE"
+
+#: shipping.php:18
+msgid ""
+"Orders delivered with free shipping typically arrive within 7 to 14 business "
+"days; although this is dependent on your delivery region, with many orders "
+"often arriving sooner.\n"
+"                        In order to facilitate free shipping and pass on "
+"savings to our customers, we endeavor to use reliable and cost effective "
+"couriers to deliver globally. To minimize delays we ship directly to our "
+"customers from our global fulfillment centers in the UK, US and HK, however "
+"please bear in mind some regions may experience longer shipping lead times.**"
+msgstr ""
+"L'offre de livraison gratuite permet un temps de lviraison de 7 à 14 jours "
+"ouvrables, en fonction de votre région, et tout en sachant que beaucoup "
+"arrivent plus tôt.\n"
+"De manière à faciliter l'expédition et la transmission des économies "
+"réalisées à nos clients, nous nous efforçons de travailler avec des "
+"transporteurs efficaces et profesionnels partout dans le monde. Pour "
+"minimiser les délais, nous expéditions les marchandises directement à nos "
+"clients depuis nos différents centres de tri situés de par le monde, aux "
+"États unis, en Grande Bretagne et à Hong Kong. Cependant, nous vous "
+"remercions de votre compréhension quant à d'éventuels délais plus longs "
+"concernant certaines régions du monde."
+
+#: shipping.php:22
+msgid ""
+"* Shipping to and from less populated or accessible domestic and "
+"international areas carries higher operating costs. Delivery and extended or "
+"remote area surcharges will be added to your final order amount in order to "
+"more accurately reflect the cost of providing service to these areas."
+msgstr ""
+"*L'expédition vers et depuis des régions moins peuplées ou accessibles "
+"peuvent entraîner des coûts d'opération plus élevés. Pour les régions "
+"reculées ou isolées, des frais peuvent être ajoutés au montant final pour "
+"harmoniser le coût d'expédition réel supporté."
+
+#: shipping.php:24
+msgid ""
+"United States: extended or remote areas within the contingent 48  states, "
+"Hawaii and Alaska"
+msgstr ""
+"États-Unis : Les zones reculées des 48 états extérieurs, de Hawaii et "
+"d'Alaska"
+
+#: shipping.php:27
+msgid "United Kingdom: areas in Guernsey, Jersey, and the Isle of Man"
+msgstr "Royaume Uni : Les régions du Guernsey, Jersey et île de Man"
+
+#: shipping.php:32
+msgid ""
+"** Although we do our best to ensure a smooth shipping process please note "
+"delivery speed to some regions may experience delays depending on a wide "
+"variety of factors (e.g. specific address location and customs delay) which "
+"are outside of our control."
+msgstr ""
+"** Cependant que nous faison de notre mieux pour assurer une livraison "
+"lissée et facile, mercid e noter que certaines régions peuvent nécessiter un "
+"délai supérieur, en fonction de plusieurs facteurs que nous ne contrôlons "
+"pas (délais imposés par les douanes, adresses particulières, ...)."
