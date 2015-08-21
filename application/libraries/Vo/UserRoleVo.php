@@ -1,12 +1,10 @@
 <?php
-class UserVo extends \BaseVo
+class UserRoleVo extends \BaseVo
 {
-    private $id;
-    private $username;
-    private $password;
-    private $email;
-    private $status = '0';
-    private $failed_attempt = '0';
+
+    //class variable
+    private $user_id;
+    private $role_id;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
     private $create_by;
@@ -14,73 +12,32 @@ class UserVo extends \BaseVo
     private $modify_at;
     private $modify_by;
 
-    private $primary_key = array("id");
+    //primary key
+    private $primary_key = array("user_id", "role_id");
 
+    //auo increment
     private $increment_field = "";
 
-    public function getId()
+    //instance method
+    public function getUserId()
     {
-        return $this->id;
+        return $this->user_id;
     }
 
-    public function setId($value)
+    public function setUserId($value)
     {
-        $this->id = $value;
+        $this->user_id = $value;
         return $this;
     }
 
-    public function getUsername()
+    public function getRoleId()
     {
-        return $this->username;
+        return $this->role_id;
     }
 
-    public function setUsername($value)
+    public function setRoleId($value)
     {
-        $this->username = $value;
-        return $this;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function setPassword($value)
-    {
-        $this->password = $value;
-        return $this;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($value)
-    {
-        $this->email = $value;
-        return $this;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    public function setStatus($value)
-    {
-        $this->status = $value;
-        return $this;
-    }
-
-    public function getFailedAttempt()
-    {
-        return $this->failed_attempt;
-    }
-
-    public function setFailedAttempt($value)
-    {
-        $this->failed_attempt = $value;
+        $this->role_id = $value;
         return $this;
     }
 
@@ -159,4 +116,7 @@ class UserVo extends \BaseVo
     {
         return $this->increment_field;
     }
+
 }
+
+?>

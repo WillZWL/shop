@@ -88,16 +88,16 @@
 
                     <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
                         onMouseOut="RemoveClassName(this, 'highlight')"
-                        onClick="Redirect('<?= site_url('mastercfg/user/view/' . $user->get_id()) ?>')">
+                        onClick="Redirect('<?= site_url('mastercfg/user/view/' . $user->getId()) ?>')">
                         <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                             title='<?= $lang["create_on"] ?>:<?= $user->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $user->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $user->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $user->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $user->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $user->get_modify_by() ?>'>
+                                             title='<?= $lang["create_on"] ?>:<?= $user->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $user->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $user->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $user->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $user->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $user->getModifyBy() ?>'>
                         </td>
-                        <td><?= $user->get_id() ?></td>
-                        <td><?= $user->get_username() ?></td>
-                        <td><?= $user->get_email() ?></td>
-                        <td><?= $user->get_roles() ?></td>
+                        <td><?= $user->getId() ?></td>
+                        <td><?= $user->getUsername() ?></td>
+                        <td><?= $user->getEmail() ?></td>
+                        <td><?= $user->getRoles() ?></td>
                         <td align="center"><input type="button" value="x" class="x_button"
-                                                  onClick="event.cancelBubble=true;Redirect('<?= site_url('mastercfg/user/delete/' . $user->get_id()) ?>')"
+                                                  onClick="event.cancelBubble=true;Redirect('<?= site_url('mastercfg/user/delete/' . $user->getId()) ?>')"
                                                   onClick=""></td>
                     </tr>
                     <?php
