@@ -1,6 +1,6 @@
 <?php
 
-class Exchange_rate_helper extends MY_Controller
+class ExchangeRateHelper extends \MY_Controller
 {
     private $app_id = "MST0003";
 
