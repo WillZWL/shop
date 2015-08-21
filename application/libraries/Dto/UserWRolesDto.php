@@ -1,12 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-include_once "Base_dto.php";
-
-class User_w_roles_dto extends Base_dto
+class UserWRolesDto
 {
-
-    //class variable
     private $id;
     private $username;
     private $email;
@@ -19,113 +13,112 @@ class User_w_roles_dto extends Base_dto
     private $modify_at;
     private $modify_by;
 
-    //instance method
-    public function get_id()
+    public function getId()
     {
         return $this->id;
     }
 
-    public function set_id($value)
+    public function setId($value)
     {
         $this->id = $value;
     }
 
-    public function get_username()
+    public function getUsername()
     {
         return $this->username;
     }
 
-    public function set_username($value)
+    public function setUsername($value)
     {
         $this->username = $value;
     }
 
-    public function get_email()
+    public function getEmail()
     {
         return $this->email;
     }
 
-    public function set_email($value)
+    public function setEmail($value)
     {
         $this->email = $value;
     }
 
-    public function get_status()
+    public function getStatus()
     {
         return $this->status;
     }
 
-    public function set_status($value)
+    public function setStatus($value)
     {
         $this->status = $value;
     }
 
-    public function get_roles()
+    public function getRoles()
     {
         return $this->roles;
     }
 
-    public function set_roles($value)
+    public function setRoles($value)
     {
         $this->roles = $value;
     }
 
-    public function get_create_on()
+    public function getCreateOn()
     {
         return $this->create_on;
     }
 
-    public function set_create_on($value)
+    public function setCreateOn($value)
     {
         $this->create_on = $value;
     }
 
-    public function get_create_at()
+    public function getCreateAt()
     {
         return $this->create_at;
     }
 
-    public function set_create_at($value)
+    public function setCreateAt($value)
     {
         $this->create_at = $value;
     }
 
-    public function get_create_by()
+    public function getCreateBy()
     {
         return $this->create_by;
     }
 
-    public function set_create_by($value)
+    public function setCreateBy($value)
     {
         $this->create_by = $value;
     }
 
-    public function get_modify_on()
+    public function getModifyOn()
     {
         return $this->modify_on;
     }
 
-    public function set_modify_on($value)
+    public function setModifyOn($value)
     {
         $this->modify_on = $value;
     }
 
-    public function get_modify_at()
+    public function getModifyAt()
     {
         return $this->modify_at;
     }
 
-    public function set_modify_at($value)
+    public function setModifyAt($value)
     {
         $this->modify_at = $value;
     }
 
-    public function get_modify_by()
+    public function getModifyBy()
     {
         return $this->modify_by;
     }
 
-    public function set_modify_by($value)
+    public function setModifyBy($value)
     {
         $this->modify_by = $value;
     }

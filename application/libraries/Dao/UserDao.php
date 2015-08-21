@@ -6,6 +6,11 @@ class UserDao extends BaseDao
     private $tableName = "user";
     private $voClassName = "UserVo";
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function getVoClassname()
     {
         return $this->voClassName;
@@ -16,9 +21,9 @@ class UserDao extends BaseDao
         return $this->tableName;
     }
 
-    public function getMenuByUserId($userId, $appGroupId, $classname = "RoleAppDto")
+    public function getMenuByUserId($user_id, $app_group_id, $classname = "RoleAppDto")
     {
-        $this->include_dto($classname);
+        // $this->includeDto($classname);
         $sql = "
                     select
                         distinct a.*
@@ -26,11 +31,11 @@ class UserDao extends BaseDao
                     from application a
                     inner join rights r         on a.id=r.app_id and r.rights='' and a.status=1 and r.status=1
                     inner join role_rights rr   on rr.rights_id=r.id
-                    inner join user_role ur     on ur.role_id=rr.role_id and ur.user_id='" . $userId . "'
+                    inner join user_role ur     on ur.role_id=rr.role_id and ur.user_id='" . $user_id . "'
                     where
-                    a.app_group_id = '" . $appGroupId . "' and a.status=1 and display_row=1 order by a.display_order;";
-        $rs = [];
-        if ($query = $this->db->query($sql, $userId)) {
+                    a.app_group_id = '" . $app_group_id . "' and a.status=1 and display_row=1 order by a.display_order;";
+        $rs = array();
+        if ($query = $this->db->query($sql, $user_id)) {
             // var_dump($this->db->last_query());
             foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
@@ -41,13 +46,13 @@ class UserDao extends BaseDao
         }
     }
 
-    public function isAllowedToCancelOrderByRole($userId, $classname = "RoleAppDto")
+    public function isAllowedToCancelOrderByRole($user_id, $classname = "RoleAppDto")
     {
-        $this->include_dto($classname);
+        // $this->includeDto($classname);
         $sql = "
                     SELECT role_id FROM user_role WHERE user_id =? AND (role_id = 'admin' OR role_id = 'com_lead' OR role_id = 'com_man' OR role_id = 'com_staff')
                 ";
-        if ($query = $this->db->query($sql, $userId)) {
+        if ($query = $this->db->query($sql, $user_id)) {
             foreach ($query->result($classname) as $obj) {
                 if ($obj->get_role_id()) {
                     return TRUE;
@@ -58,10 +63,10 @@ class UserDao extends BaseDao
         return FALSE;
     }
 
-    public function getMenuItem($userId = "", $classname = "")
+    public function getMenuItem($user_id = "", $classname = "")
     {
 
-        $this->include_dto($classname);
+        // $this->includeDto($classname);
 
         $sql = "
                 SELECT DISTINCT a.id AS app_id, a.app_name, a.parent_app_id, a.description, a.display_order
@@ -81,8 +86,8 @@ class UserDao extends BaseDao
                 ORDER BY display_order, app_id
                 ";
 
-        $rs = [];
-        if ($query = $this->db->query($sql, $userId)) {
+        $rs = array();
+        if ($query = $this->db->query($sql, $user_id)) {
             foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
@@ -92,10 +97,10 @@ class UserDao extends BaseDao
         }
     }
 
-    public function getAppRights($userId = "", $appId = "", $classname = "")
+    public function getAppRights($user_id = "", $app_id = "", $classname = "")
     {
 
-        $this->include_dto($classname);
+        // $this->includeDto($classname);
 
         $sql = "
                 SELECT DISTINCT r.app_id, r.id AS rights_id, r.rights
@@ -118,8 +123,8 @@ class UserDao extends BaseDao
                 ORDER BY rights_id
                 ";
 
-        $rs = [];
-        if ($query = $this->db->query($sql, [$userId, $appId, $appId])) {
+        $rs = array();
+        if ($query = $this->db->query($sql, array($user_id, $app_id, $app_id))) {
             foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
@@ -129,7 +134,7 @@ class UserDao extends BaseDao
         }
     }
 
-    public function checkAccess($userId = "", $appId = "", $rights = "")
+    public function checkAccess($user_id = "", $app_id = "", $rights = "")
     {
         $sql = "
                 SELECT
@@ -158,10 +163,10 @@ class UserDao extends BaseDao
                     a.id = ?";
         if ($rights == "") {
             $sql .= " AND r.rights = ''";
-            $binding = [$userId, $appId];
+            $binding = array($user_id, $app_id);
         } else {
             $sql .= " AND r.rights = ?";
-            $binding = [$userId, $appId, $rights];
+            $binding = array($user_id, $app_id, $rights);
         }
         $sql .= " AND r.status = 1
                 AND a.status = 1
@@ -176,7 +181,7 @@ class UserDao extends BaseDao
         }
     }
 
-    public function getListWRoles($where = [], $option = [], $classname = "")
+    public function getListWRoles($where = array(), $option = array(), $classname = "")
     {
 
         $this->db->from('user AS u');
@@ -214,7 +219,7 @@ class UserDao extends BaseDao
 
         if (empty($option["num_rows"])) {
 
-            $this->include_dto($classname);
+            // $this->includeDto($classname);
 
             $this->db->select('u.id, u.username, u.email, u.status, rn.roles, u.create_on, u.create_at, u.create_by, u.modify_on, u.modify_at, u.modify_by');
 
@@ -230,11 +235,11 @@ class UserDao extends BaseDao
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "") {
+            if (!empty($this->rows_limit)) {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
-            $rs = [];
+            $rs = array();
 
             if ($query = $this->db->get()) {
                 foreach ($query->result($classname) as $obj) {

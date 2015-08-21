@@ -11,9 +11,9 @@ class UserService extends BaseService
         $this->setDao(new UserDao);
     }
 
-    public function inactiveUser(Base_vo $userVo)
+    public function inactiveUser($userVo)
     {
-        $userVo->set_status(0);
+        $userVo->setStatus(0);
         return $this->getDao()->update($userVo);
     }
 
@@ -44,7 +44,7 @@ class UserService extends BaseService
 
     public function getListWRoles($where = array(), $option = array())
     {
-        $data["userlist"] = $this->getDao()->getListWRoles($where, $option, "User_w_roles_dto");
+        $data["userlist"] = $this->getDao()->getListWRoles($where, $option, "UserWRolesDto");
         $data["total"] = $this->getDao()->getListWRoles($where, array("num_rows" => 1));
         return $data;
     }

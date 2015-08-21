@@ -2,6 +2,7 @@
 include_once "RegionHelper.php";
 
 use AtomV2\Models\Mastercfg\RegionModel;
+use AtomV2\Service\PaginationService;
 
 class Region extends RegionHelper
 {
@@ -13,6 +14,7 @@ class Region extends RegionHelper
         parent::__construct();
         $this->authorization_service->check_access_rights($this->_get_app_id(), "");
         $this->regionModel = new RegionModel;
+        $this->paginationService = new PaginationService;
     }
 
     public function _get_app_id()
@@ -121,7 +123,7 @@ class Region extends RegionHelper
         $data["lang"] = $lang;
 
         $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->initialize($pconfig);
+        $this->paginationService->initialize($pconfig);
 
         $data["notice"] = notice();
 

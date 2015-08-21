@@ -1,12 +1,12 @@
 <?php
-class UserVo extends \BaseVo
+class RoleVo extends \BaseVo
 {
+
+    //class variable
     private $id;
-    private $username;
-    private $password;
-    private $email;
+    private $role_name;
+    private $description;
     private $status = '0';
-    private $failed_attempt = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
     private $create_by;
@@ -14,10 +14,13 @@ class UserVo extends \BaseVo
     private $modify_at;
     private $modify_by;
 
+    //primary key
     private $primary_key = array("id");
 
+    //auo increment
     private $increment_field = "";
 
+    //instance method
     public function getId()
     {
         return $this->id;
@@ -29,36 +32,25 @@ class UserVo extends \BaseVo
         return $this;
     }
 
-    public function getUsername()
+    public function getRoleName()
     {
-        return $this->username;
+        return $this->role_name;
     }
 
-    public function setUsername($value)
+    public function setRoleName($value)
     {
-        $this->username = $value;
+        $this->role_name = $value;
         return $this;
     }
 
-    public function getPassword()
+    public function getDescription()
     {
-        return $this->password;
+        return $this->description;
     }
 
-    public function setPassword($value)
+    public function setDescription($value)
     {
-        $this->password = $value;
-        return $this;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($value)
-    {
-        $this->email = $value;
+        $this->description = $value;
         return $this;
     }
 
@@ -70,17 +62,6 @@ class UserVo extends \BaseVo
     public function setStatus($value)
     {
         $this->status = $value;
-        return $this;
-    }
-
-    public function getFailedAttempt()
-    {
-        return $this->failed_attempt;
-    }
-
-    public function setFailedAttempt($value)
-    {
-        $this->failed_attempt = $value;
         return $this;
     }
 
@@ -159,4 +140,7 @@ class UserVo extends \BaseVo
     {
         return $this->increment_field;
     }
+
 }
+
+?>

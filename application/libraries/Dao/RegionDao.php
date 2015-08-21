@@ -4,7 +4,7 @@ namespace AtomV2\Dao;
 class RegionDao extends BaseDao
 {
     private $tableName = "region";
-    private $voClassname = "RegionVo";
+    private $voClassName = "RegionVo";
 
     public function __construct()
     {
@@ -18,7 +18,7 @@ class RegionDao extends BaseDao
 
     public function getVoClassname()
     {
-        return $this->voClassname;
+        return $this->voClassName;
     }
 
     public function getRegionByNameAndType($region_name = "", $type, $id, $option = [])
