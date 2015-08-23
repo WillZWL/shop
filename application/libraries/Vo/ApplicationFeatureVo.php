@@ -1,53 +1,44 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-include_once "Base_dto.php";
-
-class User_w_roles_dto extends Base_dto
+class ApplicationFeatureVo extends \BaseVo
 {
-
-    //class variable
-    private $id;
-    private $username;
-    private $email;
-    private $status;
-    private $roles;
-    private $create_on;
+    private $app_feature_id;
+    private $feature_name;
+    private $status = '0';
+    private $create_on = '0000-00-00 00:00:00';
     private $create_at;
     private $create_by;
     private $modify_on;
     private $modify_at;
     private $modify_by;
+    private $primary_key = array("app_feature_id");
 
-    //instance method
-    public function get_id()
+    private $increment_field = "app_feature_id";
+
+    public function __construct()
     {
-        return $this->id;
+        parent::Base_vo();
     }
 
-    public function set_id($value)
+    public function get_app_feature_id()
     {
-        $this->id = $value;
+        return $this->app_feature_id;
     }
 
-    public function get_username()
+    public function set_app_feature_id($value)
     {
-        return $this->username;
+        $this->app_feature_id = $value;
+        return $this;
     }
 
-    public function set_username($value)
+    public function get_feature_name()
     {
-        $this->username = $value;
+        return $this->feature_name;
     }
 
-    public function get_email()
+    public function set_feature_name($value)
     {
-        return $this->email;
-    }
-
-    public function set_email($value)
-    {
-        $this->email = $value;
+        $this->feature_name = $value;
+        return $this;
     }
 
     public function get_status()
@@ -58,16 +49,7 @@ class User_w_roles_dto extends Base_dto
     public function set_status($value)
     {
         $this->status = $value;
-    }
-
-    public function get_roles()
-    {
-        return $this->roles;
-    }
-
-    public function set_roles($value)
-    {
-        $this->roles = $value;
+        return $this;
     }
 
     public function get_create_on()
@@ -78,6 +60,7 @@ class User_w_roles_dto extends Base_dto
     public function set_create_on($value)
     {
         $this->create_on = $value;
+        return $this;
     }
 
     public function get_create_at()
@@ -88,6 +71,7 @@ class User_w_roles_dto extends Base_dto
     public function set_create_at($value)
     {
         $this->create_at = $value;
+        return $this;
     }
 
     public function get_create_by()
@@ -98,6 +82,7 @@ class User_w_roles_dto extends Base_dto
     public function set_create_by($value)
     {
         $this->create_by = $value;
+        return $this;
     }
 
     public function get_modify_on()
@@ -108,6 +93,7 @@ class User_w_roles_dto extends Base_dto
     public function set_modify_on($value)
     {
         $this->modify_on = $value;
+        return $this;
     }
 
     public function get_modify_at()
@@ -118,6 +104,7 @@ class User_w_roles_dto extends Base_dto
     public function set_modify_at($value)
     {
         $this->modify_at = $value;
+        return $this;
     }
 
     public function get_modify_by()
@@ -128,6 +115,18 @@ class User_w_roles_dto extends Base_dto
     public function set_modify_by($value)
     {
         $this->modify_by = $value;
+        return $this;
+    }
+
+
+    public function _get_primary_key()
+    {
+        return $this->primary_key;
+    }
+
+    public function _get_increment_field()
+    {
+        return $this->increment_field;
     }
 
 }

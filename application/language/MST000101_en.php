@@ -1,5 +1,5 @@
 <?php
-	$lang = array(
+	$lang = [
 			"title" => "Staff Accounts & Access",
 			"header" => "Add Staff Member",
 			"header_message" => "Please fill in all fields to add a new member of staff to the list.",
@@ -21,5 +21,5 @@
 			"active" => "Active",
 			"inactive" => "Inactive",
 			"user_existed" => "User Existed!",
-			);
+	];
 ?>

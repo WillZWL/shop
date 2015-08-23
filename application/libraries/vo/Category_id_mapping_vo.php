@@ -3,7 +3,6 @@ include_once 'Base_vo.php';
 
 class Category_id_mapping_vo extends Base_vo
 {
-
     //class variable
     private $id;
     private $ext_id = '';

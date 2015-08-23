@@ -43,14 +43,12 @@
             </tr>
             <tr>
                 <td class="field"><?= $lang["login_name"] ?></td>
-                <td class="value"><input name="id" class="input" <? if ($cmd != "add") { ?> type="hidden" <? } ?>
-                                         value="<?= htmlspecialchars($user->get_id()) ?>"
-                                         noSpecial><?= $user->get_id() ?></td>
+                <td class="value"><input name="id" class="input" <?=$cmd != "add" ? 'type="hidden"' : ''?> value="<?= htmlspecialchars($user->getId()) ?>" noSpecial><?= $user->getId() ?></td>
                 <td class="field"><?= $lang["name"] ?></td>
                 <td class="value"><input name="username" class="input"
-                                         value="<?= htmlspecialchars($user->get_username()) ?>" notEmpty></td>
+                                         value="<?= htmlspecialchars($user->getUsername()) ?>" notEmpty></td>
                 <td class="field"><?= $lang["email"] ?></td>
-                <td class="value"><input name="email" class="input" value="<?= htmlspecialchars($user->get_email()) ?>"
+                <td class="value"><input name="email" class="input" value="<?= htmlspecialchars($user->getEmail()) ?>"
                                          notEmpty validEmail></td>
             </tr>
             <tr>
@@ -63,7 +61,7 @@
                 <td class="field"><?= $lang["status"] ?></td>
                 <td class="value">
                     <?php
-                    $selected[$user->get_status()] = "SELECTED";
+                    $selected[$user->getStatus()] = "SELECTED";
                     ?>
                     <select name="status" class="input">
                         <option value="1"><?= $lang["active"] ?>
@@ -82,7 +80,7 @@
                                     foreach ($role_list as $role)
                                     {
                                     ?>
-                                    <option value="<?= $role->get_id() ?>"><?= $role->get_role_name() ?>
+                                    <option value="<?= $role->getId() ?>"><?= $role->getRoleName() ?>
                                         <?php
                                         }
                                         ?>
@@ -108,7 +106,7 @@
                                     foreach ($joined_list as $role)
                                     {
                                     ?>
-                                    <option value="<?= $role->get_id() ?>"><?= $role->get_role_name() ?>
+                                    <option value="<?= $role->getId() ?>"><?= $role->getRoleName() ?>
                                         <?php
                                         }
                                         ?>
@@ -123,19 +121,19 @@
                 ?>
                 <tr>
                     <td class="field"><?= $lang["create_on"] ?></td>
-                    <td class="value"><?= $user->get_create_on() ?></td>
+                    <td class="value"><?= $user->getCreateOn() ?></td>
                     <td class="field"><?= $lang["create_at"] ?></td>
-                    <td class="value"><?= $user->get_create_at() ?></td>
+                    <td class="value"><?= $user->getCreateAt() ?></td>
                     <td class="field"><?= $lang["create_by"] ?></td>
-                    <td class="value"><?= $user->get_create_by() ?></td>
+                    <td class="value"><?= $user->getCreateBy() ?></td>
                 </tr>
                 <tr>
                     <td class="field"><?= $lang["modify_on"] ?></td>
-                    <td class="value"><?= $user->get_modify_on() ?></td>
+                    <td class="value"><?= $user->getModifyOn() ?></td>
                     <td class="field"><?= $lang["modify_at"] ?></td>
-                    <td class="value"><?= $user->get_modify_at() ?></td>
+                    <td class="value"><?= $user->getModifyAt() ?></td>
                     <td class="field"><?= $lang["modify_by"] ?></td>
-                    <td class="value"><?= $user->get_modify_by() ?></td>
+                    <td class="value"><?= $user->getModifyBy() ?></td>
                 </tr>
             <?php
             }

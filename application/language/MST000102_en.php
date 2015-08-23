@@ -1,5 +1,5 @@
 <?php
-	$lang = array(
+	$lang = [
 			"title" => "Staff Accounts & Access",
 			"header" => "Staff Member",
 			"header_message" => "Please amend any fields and submit to store the updated details in the database.",
@@ -28,5 +28,5 @@
 			"modify_on" => "Modify On",
 			"modify_at" => "Modify At",
 			"modify_by" => "Modify By",
-			);
+	];
 ?>

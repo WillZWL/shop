@@ -1,7 +1,7 @@
 <?php
-include_once "exchange_rate_helper.php";
+include_once "ExchangeRateHelper.php";
 
-class Exchange_rate extends Exchange_rate_helper
+class Exchange_rate extends ExchangeRateHelper
 {
     private $app_id = "MST0003";
     private $lang_id = "en";

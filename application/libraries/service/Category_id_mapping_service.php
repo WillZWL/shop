@@ -3,7 +3,6 @@ include_once(APPPATH . "libraries/Service/BaseService.php");
 
 class Category_id_mapping_service extends BaseService
 {
-
     public function __construct()
     {
         parent::__construct();
