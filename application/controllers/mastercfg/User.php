@@ -3,8 +3,8 @@ use AtomV2\Models\Mastercfg\UserModel;
 
 class User extends MY_Controller
 {
-    private $app_id = "MST0001";
-    private $lang_id = "en";
+    private $appId = "MST0001";
+    private $langId = "en";
 
     public function __construct()
     {
@@ -19,8 +19,8 @@ class User extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        $subAppId = $this->getAppId() . "00";
+        include_once(APPPATH . "language/" . $subAppId . "_" . $this->getLangId() . ".php");
 
         $_SESSION["LISTPAGE"] = base_url() . "mastercfg/user/?" . $_SERVER['QUERY_STRING'];
 
@@ -72,19 +72,19 @@ class User extends MY_Controller
         $this->load->view('mastercfg/user/user_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
-    public function _get_lang_id()
+    public function getLangId()
     {
-        return $this->lang_id;
+        return $this->langId;
     }
 
     public function add()
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $subAppId = $this->getAppId() . "01";
 
         if ($this->input->post("posted")) {
             if (isset($_SESSION["user_vo"])) {
@@ -118,7 +118,7 @@ class User extends MY_Controller
             }
         }
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $subAppId . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
         if (empty($data["user"])) {
@@ -146,7 +146,7 @@ class User extends MY_Controller
     public function view($id = "")
     {
         if ($id) {
-            $sub_app_id = $this->_get_app_id() . "02";
+            $subAppId = $this->getAppId() . "02";
 
             if ($this->input->post("posted")) {
 
@@ -186,7 +186,7 @@ class User extends MY_Controller
                 }
             }
 
-            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+            include_once(APPPATH . "language/" . $subAppId . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
 
             if (empty($data["user"])) {

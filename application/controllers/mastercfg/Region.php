@@ -6,20 +6,20 @@ use AtomV2\Service\PaginationService;
 
 class Region extends RegionHelper
 {
-    private $app_id = "MST0002";
-    private $lang_id = "en";
+    private $appId = "MST0002";
+    private $langId = "en";
 
     public function __construct()
     {
         parent::__construct();
-        $this->authorization_service->check_access_rights($this->_get_app_id(), "");
+        $this->authorization_service->check_access_rights($this->getAppId(), "");
         $this->regionModel = new RegionModel;
         $this->paginationService = new PaginationService;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function view($value = "")
@@ -62,7 +62,7 @@ class Region extends RegionHelper
             $this->index();
             return;
         }
-        include_once APPPATH . '/language/' . $this->_get_app_id() . '02_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '02_' . $this->getLangId() . '.php';
         $data["lang"] = $lang;
         $data["region_obj"] = $this->regionModel->getRegion($value);
         if (empty($data["region_obj"])) {
@@ -117,9 +117,9 @@ class Region extends RegionHelper
 
         $data = $this->regionModel->getRegionByName($where["region_name"], $where["region_type"], $where["id"], $option);
 
-        $sub_app_id = $this->_get_app_id() . "00";
+        $subAppId = $this->getAppId() . "00";
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $subAppId . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
         $pconfig['total_rows'] = $data['total'];
@@ -136,9 +136,9 @@ class Region extends RegionHelper
         $this->load->view('mastercfg/region/region_index', $data);
     }
 
-    public function _get_lang_id()
+    public function getLangId()
     {
-        return $this->lang_id;
+        return $this->langId;
     }
 
     public function add()
@@ -163,7 +163,7 @@ class Region extends RegionHelper
             }
         }
 
-        include_once APPPATH . '/language/' . $this->_get_app_id() . '01_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '01_' . $this->getLangId() . '.php';
         $data["lang"] = $lang;
         $data["region_obj"] = $this->regionModel->getRegion();
         $data["header"] = 'Create a new region';

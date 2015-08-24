@@ -3,7 +3,7 @@ use AtomV2\Models\Mastercfg\RegionModel;
 
 class RegionHelper extends MY_Controller
 {
-    private $app_id = "MST0002";
+    private $appId = "MST0002";
     private $regionModel;
 
     public function __construct()
@@ -76,8 +76,8 @@ class RegionHelper extends MY_Controller
         echo $js;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
