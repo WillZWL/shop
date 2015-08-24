@@ -146,6 +146,7 @@ class Region extends RegionHelper
         $data = [];
         if ($this->input->post('posted')) {
             $obj = $this->regionModel->get_region();
+            $obj->setId(0);
             $obj->setRegionName($this->input->post("region_name"));
             $obj->setType($this->input->post("region_type"));
             $retobj = $this->regionModel->add_region($obj);
