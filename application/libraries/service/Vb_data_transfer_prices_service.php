@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-include_once(APPPATH . "libraries/Service/Vb_data_transfer_service.php");
+include_once(APPPATH . "libraries/service/Vb_data_transfer_service.php");
 
 class Vb_data_transfer_prices_service extends Vb_data_transfer_service
 {
@@ -11,10 +11,10 @@ class Vb_data_transfer_prices_service extends Vb_data_transfer_service
 				
 		include_once(APPPATH . 'libraries/dao/Price_dao.php');
 		$this->price_dao = new Price_dao();
-		include_once APPPATH . "libraries/Service/PriceService.php";
-        $this->price_service = new PriceService();
+		include_once APPPATH . "libraries/service/Price_service.php";
+        $this->price_service = new Price_service();
 		
-        include_once(APPPATH . "libraries/Service/Sku_mapping_service.php");		
+        include_once(APPPATH . "libraries/service/Sku_mapping_service.php");		
 		$this->sku_mapping_service = new Sku_mapping_service();
 	}
 	

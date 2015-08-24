@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-include_once(APPPATH . "libraries/Service/Vb_data_transfer_service.php");
+include_once(APPPATH . "libraries/service/Vb_data_transfer_service.php");
 
 class Vb_data_transfer_product_image_service extends Vb_data_transfer_service
 {
@@ -12,10 +12,10 @@ class Vb_data_transfer_product_image_service extends Vb_data_transfer_service
 		include_once(APPPATH . 'libraries/dao/Product_image_dao.php');
 		$this->product_image_dao = new Product_image_dao();
 		
-		include_once(APPPATH . 'libraries/Service/Context_config_service.php');
+		include_once(APPPATH . 'libraries/service/Context_config_service.php');
 		$this->context_config_service = new Context_config_service();
 		
-        include_once(APPPATH . "libraries/Service/Sku_mapping_service.php");		
+        include_once(APPPATH . "libraries/service/Sku_mapping_service.php");		
 		$this->sku_mapping_service = new Sku_mapping_service();	
 		
         //$this->load->library('service/context_config_service');

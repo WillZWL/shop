@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-include_once(APPPATH . "libraries/Service/Vb_data_transfer_service.php");
+include_once(APPPATH . "libraries/service/Vb_data_transfer_service.php");
 
 class Vb_data_transfer_product_identifier_service extends Vb_data_transfer_service
 {

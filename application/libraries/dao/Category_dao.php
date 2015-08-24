@@ -7,8 +7,8 @@ class Category_dao extends Base_dao
 {
     private $table_name = "category";
     private $vo_classname = "Category_vo";
-    private $seq_name = "";
-    private $seq_mapping_field = "";
+    private $seq_name = "category";
+    private $seq_mapping_field = "id";
 
     public function __construct()
     {
