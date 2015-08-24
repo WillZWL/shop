@@ -156,7 +156,7 @@ abstract class BaseDao
                 if (substr($fct_name, 0, 3) == "get") {
                     $rsvalue = call_user_func(array($obj, $fct_name));
                     $rskey = camelcase2underscore(substr($fct_name, 3));
-                    if (!in_array($rskey, ['primary_key']) && !in_array($rskey, ['increment_field'])) {
+                    if (!in_array($rskey, ['primary_key', 'increment_field'])) {
                         $this->db->set($rskey, $rsvalue);
                     }
                 }
@@ -209,7 +209,7 @@ abstract class BaseDao
                 $rsvalue = call_user_func(array($obj, $fct_name));
                 $rskey = camelcase2underscore(substr($fct_name, 3));
                 if (in_array($rskey, $primary_key) || in_array($rskey, ['primary_key']) || in_array($rskey, ['increment_field'])) {
-                    if (!in_array($rskey, ['primary_key']) && !in_array($rskey, ['increment_field'])) {
+                    if (!in_array($rskey, ['primary_key', 'increment_field'])) {
                         $this->db->where($rskey, $rsvalue);
                     }
                     continue;
@@ -250,7 +250,7 @@ abstract class BaseDao
             if (substr($fct_name, 0, 3) == "get") {
                 $rsvalue = call_user_func(array($obj, $fct_name));
                 $rskey = camelcase2underscore(substr($fct_name, 3));
-                if (!in_array($rskey, ['primary_key']) && !in_array($rskey, ['increment_field'])) {
+                if (!in_array($rskey, ['primary_key', 'increment_field'])) {
                     $this->db->where($rskey, $rsvalue);
                 }
             }
