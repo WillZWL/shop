@@ -11,14 +11,14 @@ class RegionModel extends \CI_Model
         $this->regionService = new RegionService;
     }
 
-    public function get_region($id = "")
+    public function getRegion($id = "")
     {
-        return $this->regionService->get_region($id);
+        return $this->regionService->getRegion($id);
     }
 
-    public function update_region($data)
+    public function updateRegion($data)
     {
-        return $this->regionService->update_region($data);
+        return $this->regionService->updateRegion($data);
     }
 
     public function add_region($data)
@@ -41,28 +41,28 @@ class RegionModel extends \CI_Model
         return $this->regionService->getRegionByName($region_name, $type, $id, $option);
     }
 
-    public function get_country_in_region($value)
+    public function getCountryInRegion($value)
     {
-        return $this->regionService->get_country_in_region($value);
+        return $this->regionService->getCountryInRegion($value);
     }
 
-    public function get_country_ex($full_list, $input)
+    public function getCountryEx($full_list, $input)
     {
-        return $this->regionService->get_country_ex($full_list, $input);
+        return $this->regionService->getCountryEx($full_list, $input);
     }
 
-    public function get_country_list($where = array(), $option = array())
+    public function getCountryList($where = [], $option = [])
     {
-        return $this->regionService->get_country_list($where, $option);
+        return $this->regionService->getCountryList($where, $option);
     }
 
-    public function add_region_country($region_id, $country)
+    public function addRegionCountry($region_id, $country)
     {
-        return $this->regionService->add_region_country($region_id, $country);
+        return $this->regionService->addRegionCountry($region_id, $country);
     }
 
-    public function del_region_country($region_id)
+    public function delRegionCountry($region_id)
     {
-        return $this->regionService->del_region_country($region_id);
+        return $this->regionService->delRegionCountry($region_id);
     }
 }
