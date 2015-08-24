@@ -1,17 +1,16 @@
 <?php
-class CountryVo extends \BaseVo
+class CurrencyVo extends \BaseVo
 {
-
     //class variable
     private $id;
-    private $id_3_digit;
+    private $sign;
     private $name;
     private $description;
-    private $status;
-    private $currency_id;
-    private $language_id;
-    private $fc_id;
-    private $allow_sell = '0';
+    private $round_up;
+    private $sign_pos;
+    private $dec_place;
+    private $dec_point;
+    private $thousands_sep;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
     private $create_by;
@@ -19,13 +18,10 @@ class CountryVo extends \BaseVo
     private $modify_at;
     private $modify_by;
 
-    //primary key
     private $primary_key = ["id"];
 
-    //auo increment
     private $increment_field = "";
 
-    //instance method
     public function getId()
     {
         return $this->id;
@@ -37,14 +33,14 @@ class CountryVo extends \BaseVo
         return $this;
     }
 
-    public function getId3Digit()
+    public function getSign()
     {
-        return $this->id_3_digit;
+        return $this->sign;
     }
 
-    public function setId3Digit($value)
+    public function setSign($value)
     {
-        $this->id_3_digit = $value;
+        $this->sign = $value;
         return $this;
     }
 
@@ -70,58 +66,58 @@ class CountryVo extends \BaseVo
         return $this;
     }
 
-    public function getStatus()
+    public function getRoundUp()
     {
-        return $this->status;
+        return $this->round_up;
     }
 
-    public function setStatus($value)
+    public function setRoundUp($value)
     {
-        $this->status = $value;
+        $this->round_up = $value;
         return $this;
     }
 
-    public function getCurrencyId()
+    public function getSignPos()
     {
-        return $this->currency_id;
+        return $this->sign_pos;
     }
 
-    public function setCurrencyId($value)
+    public function setSignPos($value)
     {
-        $this->currency_id = $value;
+        $this->sign_pos = $value;
         return $this;
     }
 
-    public function getLanguageId()
+    public function getDecPlace()
     {
-        return $this->language_id;
+        return $this->dec_place;
     }
 
-    public function setLanguageId($value)
+    public function setDecPlace($value)
     {
-        $this->language_id = $value;
+        $this->dec_place = $value;
         return $this;
     }
 
-    public function getFcId()
+    public function getDecPoint()
     {
-        return $this->fc_id;
+        return $this->dec_point;
     }
 
-    public function setFcId($value)
+    public function setDecPoint($value)
     {
-        $this->fc_id = $value;
+        $this->dec_point = $value;
         return $this;
     }
 
-    public function getAllowSell()
+    public function getThousandsSep()
     {
-        return $this->allow_sell;
+        return $this->thousands_sep;
     }
 
-    public function setAllowSell($value)
+    public function setThousandsSep($value)
     {
-        $this->allow_sell = $value;
+        $this->thousands_sep = $value;
         return $this;
     }
 

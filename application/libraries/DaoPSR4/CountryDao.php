@@ -21,7 +21,7 @@ class CountryDao extends BaseDao
         return $this->voClassname;
     }
 
-    public function get_list_lang($lang, $where = array(), $option = array(), $classname = "Country_lang_name_dto")
+    public function getListLang($lang, $where = array(), $option = array(), $classname = "CountryLangNameDto")
     {
         // Hardcoded to language_id = 'en' only
         $sql = "SELECT c.id, c.fc_id, IFNULL(ce.name, c.name) as name, l.name lang_name
@@ -36,7 +36,7 @@ class CountryDao extends BaseDao
                 ORDER BY ce.name";
 
         if (($query = $this->db->query($sql, $lang)) != FALSE) {
-            $this->include_dto($classname);
+
             $ret = array();
             foreach ($query->result($classname) as $obj) {
                 $ret[] = $obj;
@@ -46,7 +46,7 @@ class CountryDao extends BaseDao
         return FALSE;
     }
 
-    public function get_sell_currency_list()
+    public function getSellCurrencyList()
     {
         $sql = "SELECT distinct currency_id
                 FROM country AS c1
@@ -67,7 +67,7 @@ class CountryDao extends BaseDao
         return FALSE;
     }
 
-    public function get_sell_country_list($detail = 1)
+    public function getSellCountryList($detail = 1)
     {
         $sql = "
                 SELECT *
@@ -133,7 +133,7 @@ class CountryDao extends BaseDao
         return FALSE;
     }
 
-    public function get_rma_country_list($lang = "en")
+    public function getRmaCountryList($lang = "en")
     {
         $sql = "SELECT c.id, IFNULL(ce.name, c.name) AS name, rf.rma_fc AS fc_id
                 FROM country c
@@ -159,7 +159,7 @@ class CountryDao extends BaseDao
         return FALSE;
     }
 
-    public function get_list_w_rma_fc($where = array(), $option = array(), $classname = "Country_rma_fc_dto")
+    public function getListWRmaFc($where = array(), $option = array(), $classname = "CountryRmaFcDto")
     {
         $this->db->from('country AS c');
         $this->db->join('rma_fc r', 'r.cid = c.id', 'INNER');
@@ -180,11 +180,9 @@ class CountryDao extends BaseDao
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "") {
+            if (!empty($this->rows_limit)) {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
-
-            $this->include_dto($classname);
 
             if ($query = $this->db->get()) {
                 $rs = array();
@@ -205,7 +203,7 @@ class CountryDao extends BaseDao
         return FALSE;
     }
 
-    public function get_country_id_w_platform($platform_id)
+    public function getCountryIdWPlatform($platform_id)
     {
         $sql = "SELECT c.id
                 FROM country c
@@ -220,7 +218,7 @@ class CountryDao extends BaseDao
         return FALSE;
     }
 
-    public function get_country_language_list()
+    public function getCountryLanguageList()
     {
         $sql = "SELECT sp.id, c.id, c.id_3_digit, c.name, c.description, c.status, c.currency_id, pbv.language_id, c.fc_id, c.allow_sell, c.create_on, c.create_at, c.create_by, c.modify_on, c.modify_at, c.modify_by
                 FROM selling_platform sp
@@ -247,7 +245,7 @@ class CountryDao extends BaseDao
         return FALSE;
     }
 
-    public function is_available_country_id($country_id = null)
+    public function isAvailableCountryId($country_id = null)
     {
         if (!is_null($country_id)) {
             $sql = "SELECT c.id FROM country c WHERE c.status = 1 AND c.url_enable = 1 AND c.id = ?";
@@ -261,7 +259,7 @@ class CountryDao extends BaseDao
         return FALSE;
     }
 
-    public function get_all_available_country_w_correct_lang($lang_id)
+    public function getAllAvailableCountryWCorrectLang($lang_id)
     {
         $sql = "select c.id, ce.name, c.currency_id, c.language_id from country_ext ce
                 inner join country c on c.id=ce.cid and c.status=1 and ce.lang_id='" . $lang_id . "' and c.allow_sell=1 order by ce.name";
@@ -280,7 +278,7 @@ class CountryDao extends BaseDao
         return FALSE;
     }
 
-    public function is_allowed_postal($country_code, $postal_code)
+    public function isAllowedPostal($country_code, $postal_code)
     {
         // $country_code
         // $postal_code

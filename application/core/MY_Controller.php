@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 abstract class MY_Controller extends CI_Controller
 {
-    private $_lang_id = "en";
+    private $langId = "en";
 
     public function __construct($check_access_rights = TRUE)
     {
@@ -15,8 +15,8 @@ abstract class MY_Controller extends CI_Controller
             $this->_check_authed();
             $this->load->library('service/Authorization_service');
             if ($check_access_rights) {
-                $this->authorization_service->check_access_rights($this->_get_app_id(), "");
-                $feature_list = $this->authorization_service->set_application_feature_right($this->_get_app_id(), "");
+                $this->authorization_service->check_access_rights($this->getAppId(), "");
+                $feature_list = $this->authorization_service->set_application_feature_right($this->getAppId(), "");
             }
         }
     }
@@ -44,11 +44,11 @@ abstract class MY_Controller extends CI_Controller
         return "?back=" . urlencode($_SESSION["CURRPAGE"]);
     }
 
-    abstract public function _get_app_id();
+    abstract public function getAppId();
 
-    public function get_lang_id()
+    public function getLangId()
     {
-        return $this->_lang_id;
+        return $this->langId;
     }
 
     function _get_ru()

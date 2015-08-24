@@ -1,5 +1,5 @@
 <?php
-class CountryVo extends \BaseVo
+class CountryRmaFcDto
 {
 
     //class variable
@@ -11,6 +11,7 @@ class CountryVo extends \BaseVo
     private $currency_id;
     private $language_id;
     private $fc_id;
+    private $rma_fc;
     private $allow_sell = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
@@ -18,12 +19,6 @@ class CountryVo extends \BaseVo
     private $modify_on;
     private $modify_at;
     private $modify_by;
-
-    //primary key
-    private $primary_key = ["id"];
-
-    //auo increment
-    private $increment_field = "";
 
     //instance method
     public function getId()
@@ -191,14 +186,13 @@ class CountryVo extends \BaseVo
         return $this;
     }
 
-    public function getPrimaryKey()
+    public function getRmaFc()
     {
-        return $this->primary_key;
+        return $this->rma_fc;
     }
 
-    public function getIncrementField()
+    public function setRmaFc($value)
     {
-        return $this->increment_field;
+        $this->rma_fc = $value;
     }
-
 }
