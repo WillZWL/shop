@@ -1,17 +1,11 @@
 <?php
-class CountryVo extends \BaseVo
+class LanguageVo extends \BaseVo
 {
-
-    //class variable
     private $id;
-    private $id_3_digit;
     private $name;
     private $description;
-    private $status;
-    private $currency_id;
-    private $language_id;
-    private $fc_id;
-    private $allow_sell = '0';
+    private $status = '1';
+    private $char_set;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
     private $create_by;
@@ -19,13 +13,10 @@ class CountryVo extends \BaseVo
     private $modify_at;
     private $modify_by;
 
-    //primary key
     private $primary_key = ["id"];
 
-    //auo increment
     private $increment_field = "";
 
-    //instance method
     public function getId()
     {
         return $this->id;
@@ -34,17 +25,6 @@ class CountryVo extends \BaseVo
     public function setId($value)
     {
         $this->id = $value;
-        return $this;
-    }
-
-    public function getId3Digit()
-    {
-        return $this->id_3_digit;
-    }
-
-    public function setId3Digit($value)
-    {
-        $this->id_3_digit = $value;
         return $this;
     }
 
@@ -81,47 +61,14 @@ class CountryVo extends \BaseVo
         return $this;
     }
 
-    public function getCurrencyId()
+    public function getCharSet()
     {
-        return $this->currency_id;
+        return $this->char_set;
     }
 
-    public function setCurrencyId($value)
+    public function setCharSet($value)
     {
-        $this->currency_id = $value;
-        return $this;
-    }
-
-    public function getLanguageId()
-    {
-        return $this->language_id;
-    }
-
-    public function setLanguageId($value)
-    {
-        $this->language_id = $value;
-        return $this;
-    }
-
-    public function getFcId()
-    {
-        return $this->fc_id;
-    }
-
-    public function setFcId($value)
-    {
-        $this->fc_id = $value;
-        return $this;
-    }
-
-    public function getAllowSell()
-    {
-        return $this->allow_sell;
-    }
-
-    public function setAllowSell($value)
-    {
-        $this->allow_sell = $value;
+        $this->char_set = $value;
         return $this;
     }
 
@@ -200,5 +147,4 @@ class CountryVo extends \BaseVo
     {
         return $this->increment_field;
     }
-
 }

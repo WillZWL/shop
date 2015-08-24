@@ -1,50 +1,34 @@
 <?php
-class CountryVo extends \BaseVo
+class CountryStateVo extends \BaseVo
 {
 
     //class variable
-    private $id;
-    private $id_3_digit;
-    private $name;
-    private $description;
+    private $country_id;
+    private $name = '';
+    private $state_id;
     private $status;
-    private $currency_id;
-    private $language_id;
-    private $fc_id;
-    private $allow_sell = '0';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
+    private $create_at = '127.0.0.1';
     private $create_by;
     private $modify_on;
-    private $modify_at;
+    private $modify_at = '127.0.0.1';
     private $modify_by;
 
     //primary key
-    private $primary_key = ["id"];
+    private $primary_key = ["country_id", "name"];
 
     //auo increment
     private $increment_field = "";
 
     //instance method
-    public function getId()
+    public function getCountryId()
     {
-        return $this->id;
+        return $this->country_id;
     }
 
-    public function setId($value)
+    public function setCountryId($value)
     {
-        $this->id = $value;
-        return $this;
-    }
-
-    public function getId3Digit()
-    {
-        return $this->id_3_digit;
-    }
-
-    public function setId3Digit($value)
-    {
-        $this->id_3_digit = $value;
+        $this->country_id = $value;
         return $this;
     }
 
@@ -59,14 +43,14 @@ class CountryVo extends \BaseVo
         return $this;
     }
 
-    public function getDescription()
+    public function getStateId()
     {
-        return $this->description;
+        return $this->state_id;
     }
 
-    public function setDescription($value)
+    public function setStateId($value)
     {
-        $this->description = $value;
+        $this->state_id = $value;
         return $this;
     }
 
@@ -78,50 +62,6 @@ class CountryVo extends \BaseVo
     public function setStatus($value)
     {
         $this->status = $value;
-        return $this;
-    }
-
-    public function getCurrencyId()
-    {
-        return $this->currency_id;
-    }
-
-    public function setCurrencyId($value)
-    {
-        $this->currency_id = $value;
-        return $this;
-    }
-
-    public function getLanguageId()
-    {
-        return $this->language_id;
-    }
-
-    public function setLanguageId($value)
-    {
-        $this->language_id = $value;
-        return $this;
-    }
-
-    public function getFcId()
-    {
-        return $this->fc_id;
-    }
-
-    public function setFcId($value)
-    {
-        $this->fc_id = $value;
-        return $this;
-    }
-
-    public function getAllowSell()
-    {
-        return $this->allow_sell;
-    }
-
-    public function setAllowSell($value)
-    {
-        $this->allow_sell = $value;
         return $this;
     }
 
