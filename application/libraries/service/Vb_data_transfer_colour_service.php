@@ -4,6 +4,7 @@ include_once(APPPATH . "libraries/Service/Vb_data_transfer_service.php");
 
 class Vb_data_transfer_colour_service extends Vb_data_transfer_service
 {
+	
 	public function __construct($debug = 0)
 	{
 		parent::__construct($debug);

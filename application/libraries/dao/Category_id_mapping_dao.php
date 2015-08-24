@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once 'Base_dao.php';
 
+
 class Category_id_mapping_dao extends Base_dao
 {
     private $table_name = "category_id_mapping";
