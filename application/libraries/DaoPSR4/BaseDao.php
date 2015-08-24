@@ -243,14 +243,16 @@ abstract class BaseDao
         @call_user_func(array($obj, "setModifyBy"), $id);
     }
 
-    public function delete(Base_vo $obj)
+    public function delete($obj)
     {
         $class_methods = get_class_methods($obj);
         foreach ($class_methods as $fct_name) {
             if (substr($fct_name, 0, 3) == "get") {
                 $rsvalue = call_user_func(array($obj, $fct_name));
                 $rskey = camelcase2underscore(substr($fct_name, 3));
-                $this->db->where($rskey, $rsvalue);
+                if (!in_array($rskey, ['primary_key']) && !in_array($rskey, ['increment_field'])) {
+                    $this->db->where($rskey, $rsvalue);
+                }
             }
         }
         if ($this->db->delete($this->getTableName())) {
