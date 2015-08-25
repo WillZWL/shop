@@ -47,19 +47,17 @@ abstract class MY_Controller extends CI_Controller
 
     abstract public function getAppId();
 
-    function _get_ru()
+    function getRu()
     {
         $ru = $_SESSION["CURRPAGE"];
         if ($pru = $this->input->post("ru")) {
-            $this->load->library("encrypt");
             $ru = $this->encrypt->decode($pru);
         }
         return $ru;
     }
-}
 
-function _form_ru()
-{
-    $this->load->library("encrypt");
-    return "<input type='hidden' name='ru' value='" . $this->encrypt->encode($_SESSION["CURRPAGE"]) . "'>";
+    function setFormRu()
+    {
+        return "<input type='hidden' name='ru' value='".$this->encrypt->encode($_SESSION["CURRPAGE"])."'>";
+    }
 }

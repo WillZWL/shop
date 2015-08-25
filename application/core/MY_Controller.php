@@ -51,13 +51,17 @@ abstract class MY_Controller extends CI_Controller
         return $this->langId;
     }
 
-    function _get_ru()
+    function getRu()
     {
         $ru = $_SESSION["CURRPAGE"];
         if ($pru = $this->input->post("ru")) {
-            $this->load->library("encrypt");
             $ru = $this->encrypt->decode($pru);
         }
         return $ru;
+    }
+
+    function setFormRu()
+    {
+        return "<input type='hidden' name='ru' value='".$this->encrypt->encode($_SESSION["CURRPAGE"])."'>";
     }
 }
