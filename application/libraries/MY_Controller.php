@@ -60,7 +60,6 @@ abstract class MY_Controller extends CI_Controller
 
 function _form_ru()
 {
-    include_once(BASEPATH . "libraries/Encrypt.php");
-    $encrypt = new CI_Encrypt();
-    return "<input type='hidden' name='ru' value='" . $encrypt->encode($_SESSION["CURRPAGE"]) . "'>";
+    $this->load->library("encrypt");
+    return "<input type='hidden' name='ru' value='" . $this->encrypt->encode($_SESSION["CURRPAGE"]) . "'>";
 }
