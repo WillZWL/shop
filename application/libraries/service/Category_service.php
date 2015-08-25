@@ -96,11 +96,6 @@ class Category_service extends Base_service
         return $this->get_dao()->get_menu_list_w_platform_id($lang_id, $platform_id);
     }
 
-    // public function update($obj)
-    // {
-    //  return $this->get_dao()->update($obj);
-    // }
-
     public function get_menu_list_w_lang($lang_id)
     {
         return $this->get_dao()->get_menu_list_w_lang($lang_id);

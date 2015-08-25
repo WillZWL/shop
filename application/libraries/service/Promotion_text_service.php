@@ -48,16 +48,6 @@ class Promotion_text_service extends Base_service
     {
         return $this->get_dao()->get_list($where, $option);
     }
-
-    public function insert($obj)
-    {
-        return $this->get_dao()->insert($obj);
-    }
-
-    public function update($obj)
-    {
-        return $this->get_dao()->update($obj);
-    }
 }
 
 

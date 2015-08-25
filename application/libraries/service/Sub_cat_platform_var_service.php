@@ -15,16 +15,6 @@ class Sub_cat_platform_var_service extends Base_service
         $this->set_dao(new Sub_cat_platform_var_dao());
     }
 
-    public function insert($data)
-    {
-        return $this->get_dao()->insert($data);
-    }
-
-    public function update($data)
-    {
-        return $this->get_dao()->update($data);
-    }
-
     public function load_vo()
     {
         $this->get_dao()->include_vo();
@@ -40,5 +30,3 @@ class Sub_cat_platform_var_service extends Base_service
 
     }
 }
-
-?>

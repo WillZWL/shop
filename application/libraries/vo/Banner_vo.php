@@ -192,5 +192,3 @@ class Banner_vo extends Base_vo
     }
 
 }
-
-?>
