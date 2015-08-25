@@ -2,7 +2,7 @@
 
 class Cron_fnac extends MY_Controller
 {
-    private $app_id = "CRN0005";
+    private $appId = "CRN0005";
 
     function __construct()
     {
@@ -57,9 +57,9 @@ class Cron_fnac extends MY_Controller
         $this->fnac_model->get_fnac_orders_list($country_id, $debug, $enable_log);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

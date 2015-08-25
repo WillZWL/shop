@@ -2,7 +2,7 @@
 
 class Cron_exchange_rate extends MY_Controller
 {
-    private $app_id = "CRN0006";
+    private $appId = "CRN0006";
 
     function __construct()
     {
@@ -26,9 +26,9 @@ class Cron_exchange_rate extends MY_Controller
         $this->exchange_rate_model->update_exchange_rate_from_cv();
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

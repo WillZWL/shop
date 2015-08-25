@@ -3,7 +3,7 @@
 class Marketplace_order_import extends MY_Controller
 {
 
-    private $app_id = "ORD0030";
+    private $appId = "ORD0030";
     private $lang_id = "en";
 
 
@@ -184,9 +184,9 @@ html;
         return $html;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

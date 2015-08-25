@@ -3,7 +3,7 @@
 class Bundle extends MY_Controller
 {
 
-    private $app_id = "MKT0006";
+    private $appId = "MKT0006";
     private $lang_id = "en";
 
 
@@ -18,7 +18,7 @@ class Bundle extends MY_Controller
 
     public function index($cmd = "list", $prod_grp_cd = "")
     {
-        $sub_app_id = $this->_get_app_id() . ($cmd == "list" ? "00" : "01");
+        $sub_app_id = $this->getAppId() . ($cmd == "list" ? "00" : "01");
         $_SESSION["LISTPAGE"] = ($prod_grp_cd == "" ? base_url() . "marketing/bundle/index/{$cmd}?" : current_url()) . $_SERVER['QUERY_STRING'];
 
         $where = array();
@@ -114,9 +114,9 @@ class Bundle extends MY_Controller
         $this->load->view('marketing/bundle/bundle_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -128,7 +128,7 @@ class Bundle extends MY_Controller
     {
 
         if ($prod_sku) {
-            $sub_app_id = $this->_get_app_id() . "01";
+            $sub_app_id = $this->getAppId() . "01";
 
             if ($this->input->post("posted")) {
                 $comp_sku = explode(",", $_POST["comp_sku"]);
@@ -231,7 +231,7 @@ class Bundle extends MY_Controller
             show_404();
         }
 
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
 
         define('IMG_PH', $this->context_config_service->value_of("prod_img_path"));
         $img_size = array("l", "m", "s");

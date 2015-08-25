@@ -3,7 +3,7 @@ include_once "base_report.php";
 
 class Us_sourcing_report extends Base_report
 {
-    private $app_id = "RPT0047";
+    private $appId = "RPT0047";
     private $lang_id = "en";
 
     public function __construct()
@@ -44,9 +44,9 @@ class Us_sourcing_report extends Base_report
         }
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

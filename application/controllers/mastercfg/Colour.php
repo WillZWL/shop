@@ -2,7 +2,7 @@
 
 class Colour extends MY_Controller
 {
-    private $app_id = "MST0010";
+    private $appId = "MST0010";
     private $lang_id = "en";
 
     public function __construct()
@@ -24,7 +24,7 @@ class Colour extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = ($prod_grp_cd == "" ? base_url() . "mastercfg/colour/?" : current_url()) . $_SERVER['QUERY_STRING'];
         $colour_ext_dao = $this->colour_extend_service->get_dao();
         $data["lang_list"] = $this->product_model->get_list("language", array("status" => 1), array("orderby" => "id ASC"));
@@ -167,9 +167,9 @@ class Colour extends MY_Controller
         $this->load->view('mastercfg/colour/colour_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function translate_colour_name($source_name = "", $from_lang = "en", $to_lang = array())

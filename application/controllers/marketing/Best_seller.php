@@ -3,7 +3,7 @@
 class Best_seller extends MY_Controller
 {
 
-    private $app_id = "MKT0014";
+    private $appId = "MKT0014";
     private $lang_id = "en";
 
     public function __construct()
@@ -21,7 +21,7 @@ class Best_seller extends MY_Controller
         } else {
             $data["display"] = 0;
         }
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         $data["catid"] = $catid;
@@ -31,9 +31,9 @@ class Best_seller extends MY_Controller
         $this->load->view('marketing/best_seller/bs_index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -120,7 +120,7 @@ class Best_seller extends MY_Controller
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
         $data["searchdisplay"] = ($where["name"] == "" && $where["description"] == "" && $where["level"] == "" && $where["status"] == "" && $where["manual"]) ? 'style="display:none"' : "";
 
-        $sub_app_id = $this->_get_app_id() . "04";
+        $sub_app_id = $this->getAppId() . "04";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
@@ -140,7 +140,7 @@ class Best_seller extends MY_Controller
         }
         $where = array();
         $option = array();
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -263,7 +263,7 @@ class Best_seller extends MY_Controller
                 $this->best_seller_model->trans_complete();
             }
         }
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 

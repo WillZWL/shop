@@ -3,24 +3,24 @@ include_once "Profit_var_helper.php";
 
 class Profit_var extends Profit_var_helper
 {
-    private $app_id = "MST0004";
+    private $appId = "MST0004";
     private $lang_id = "en";
 
     public function __construct()
     {
         parent::__construct();
-        $this->authorization_service->check_access_rights($this->_get_app_id(), "");
+        $this->authorization_service->check_access_rights($this->getAppId(), "");
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function index()
     {
         $data = array();
-        include_once APPPATH . '/language/' . $this->_get_app_id() . '00_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '00_' . $this->_get_lang_id() . '.php';
         $data["lang"] = $lang;
         $data["selling_platform_list"] = $this->profit_var_model->get_selling_platform_list(array("status" => 1), array("limit" => -1));
         $this->load->view("mastercfg/profit_var/profit_var_index", $data);
@@ -77,7 +77,7 @@ class Profit_var extends Profit_var_helper
             $data["editable"] = 1;
         }
         //end determination
-        include_once APPPATH . '/language/' . $this->_get_app_id() . '02_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '02_' . $this->_get_lang_id() . '.php';
         $data["lang"] = $lang;
         $platform = $this->profit_var_model->check_platform($value);
         if (empty($platform)) {

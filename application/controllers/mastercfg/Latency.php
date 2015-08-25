@@ -2,7 +2,7 @@
 
 class Latency extends MY_Controller
 {
-    private $app_id = "MST0005";
+    private $appId = "MST0005";
     private $lang_id = "en";
 
     public function __construct()
@@ -17,15 +17,15 @@ class Latency extends MY_Controller
     public function index()
     {
         $data = array();
-        include_once APPPATH . '/language/' . $this->_get_app_id() . '00_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '00_' . $this->_get_lang_id() . '.php';
         $data["lang"] = $lang;
         $data["selling_platform_list"] = $this->selling_platform_list;
         $this->load->view("mastercfg/latency/latency_index", $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -80,7 +80,7 @@ class Latency extends MY_Controller
             }
         }
         $data["profit_obj"] = $platform_bizvar_obj;
-        include_once APPPATH . '/language/' . $this->_get_app_id() . '02_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '02_' . $this->_get_lang_id() . '.php';
         $data["lang"] = $lang;
         $data["selling_platform_list"] = $this->selling_platform_list;
         $_SESSION["profit_obj"] = serialize($data["profit_obj"]);

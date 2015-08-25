@@ -3,7 +3,7 @@
 class Deliverytime extends MY_Controller
 {
 
-    private $app_id = "MST0018";
+    private $appId = "MST0018";
     private $lang_id = "en";
 
     private $default_delivery;
@@ -19,7 +19,7 @@ class Deliverytime extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         if ($this->input->post('posted')) {
             $result = $this->update_form($_POST["postdata"]);
@@ -53,9 +53,9 @@ class Deliverytime extends MY_Controller
         $this->load->view('mastercfg/deliverytime/deliverytime_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     private function update_form($postdata = array())

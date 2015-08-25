@@ -3,7 +3,7 @@
 class Delivery extends MY_Controller
 {
 
-    private $app_id = "MST0013";
+    private $appId = "MST0013";
     private $lang_id = "en";
 
     private $default_delivery;
@@ -19,7 +19,7 @@ class Delivery extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         if ($this->input->post('posted')) {
             $vo["func_opt"] = $this->delivery_service->get_func_opt_srv()->get();
@@ -49,9 +49,9 @@ class Delivery extends MY_Controller
         $this->load->view('mastercfg/delivery/delivery_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -61,7 +61,7 @@ class Delivery extends MY_Controller
 
     public function region()
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post('posted')) {
             $vo = $this->delivery_service->get();

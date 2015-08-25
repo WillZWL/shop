@@ -10,7 +10,7 @@ class Product_overview_website_v2 extends MY_Controller
     //must set to public for view
     public $default_platform_id;
     public $product_update_followup_service;
-    private $app_id = "MKT0045";
+    private $appId = "MKT0045";
     private $lang_id = "en";
 
     public function __construct()
@@ -273,7 +273,7 @@ class Product_overview_website_v2 extends MY_Controller
 
     public function index($platform_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = base_url() . $this->overview_path_v2 . "/?" . $_SERVER['QUERY_STRING'];
 
         ini_set("memory_limit", "256M");
@@ -699,9 +699,9 @@ class Product_overview_website_v2 extends MY_Controller
         $this->load->view($this->overview_path . '/product_overview_v2', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     function generate_csv($list)

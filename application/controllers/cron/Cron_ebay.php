@@ -2,7 +2,7 @@
 
 class Cron_ebay extends MY_Controller
 {
-    private $app_id = "CRN0007";
+    private $appId = "CRN0007";
 
     function __construct()
     {
@@ -50,9 +50,9 @@ class Cron_ebay extends MY_Controller
         }
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

@@ -3,7 +3,7 @@
 class Delivery_charge extends MY_Controller
 {
 
-    private $app_id = "MKT0062";
+    private $appId = "MKT0062";
     private $lang_id = "en";
 
 
@@ -21,7 +21,7 @@ class Delivery_charge extends MY_Controller
 
     public function add()
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post("posted")) {
             if (isset($_SESSION["weight_cat_vo"])) {
@@ -54,14 +54,14 @@ class Delivery_charge extends MY_Controller
         $this->index();
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function index($cat_type = "weight", $cat_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $where = array();
         $option = array();
@@ -129,7 +129,7 @@ class Delivery_charge extends MY_Controller
     public function view($delivery_type = "")
     {
         if ($delivery_type) {
-            $sub_app_id = $this->_get_app_id() . "02";
+            $sub_app_id = $this->getAppId() . "02";
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
             if ($this->input->post("posted")) {
@@ -195,7 +195,7 @@ class Delivery_charge extends MY_Controller
 
     public function edit($cat_id)
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
 
         if ($this->input->post("posted")) {
             unset($_SESSION["NOTICE"]);

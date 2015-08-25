@@ -26,9 +26,9 @@ class Order_rma extends MY_Controller
         $this->load->library('service/template_service');
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _set_app_id($value)

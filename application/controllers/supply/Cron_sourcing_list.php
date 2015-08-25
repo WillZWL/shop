@@ -3,7 +3,7 @@
 class Cron_sourcing_list extends MY_Controller
 {
 
-    private $app_id = "SUP0003";
+    private $appId = "SUP0003";
     private $lang_id = "en";
 
 
@@ -268,9 +268,9 @@ class Cron_sourcing_list extends MY_Controller
         }
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

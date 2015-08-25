@@ -2,7 +2,7 @@
 
 class Cron_generate_sku_mapping_feed extends MY_Controller
 {
-    private $app_id = "CRN0004";
+    private $appId = "CRN0004";
 
     function __construct()
     {
@@ -16,8 +16,8 @@ class Cron_generate_sku_mapping_feed extends MY_Controller
 //      $this->load->view('index');
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }

@@ -2,7 +2,7 @@
 
 class Region_helper extends MY_Controller
 {
-    private $app_id = "MST0002";
+    private $appId = "MST0002";
 
     public function __construct()
     {
@@ -73,8 +73,8 @@ class Region_helper extends MY_Controller
         echo $js;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }

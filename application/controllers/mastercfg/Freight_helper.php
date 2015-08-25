@@ -2,7 +2,7 @@
 
 class Freight_helper extends MY_Controller
 {
-    private $app_id = "MST0009";
+    private $appId = "MST0009";
 
     public function __construct()
     {
@@ -45,8 +45,8 @@ class Freight_helper extends MY_Controller
         echo $js;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }

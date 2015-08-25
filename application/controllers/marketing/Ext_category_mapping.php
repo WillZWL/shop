@@ -4,7 +4,7 @@ include_once(APPPATH . "hooks/country_selection.php");
 
 class Ext_category_mapping extends MY_Controller
 {
-    private $app_id = "MKT0074";
+    private $appId = "MKT0074";
     private $lang_id = "en";
 
     public function __construct()
@@ -22,7 +22,7 @@ class Ext_category_mapping extends MY_Controller
 
     public function index()
     {
-        $sub_capp_id = $this->_get_app_id() . "00";
+        $sub_capp_id = $this->getAppId() . "00";
         $where = $option = array();
         $where["status"] = 1;
         $option["limit"] = -1;
@@ -126,9 +126,9 @@ class Ext_category_mapping extends MY_Controller
         $this->load->view('marketing/ext_category_mapping/ext_category_mapping_index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function get_google_category_existing_mapping()

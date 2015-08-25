@@ -3,7 +3,7 @@
 class Promotion_text extends MY_Controller
 {
 
-    private $app_id = "MKT0053";
+    private $appId = "MKT0053";
     private $lang_id = "en";
 
     public function __construct()
@@ -26,7 +26,7 @@ class Promotion_text extends MY_Controller
         $data["lang_id"] = $lang_id;
         $data["display"] = 1;
 
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -38,9 +38,9 @@ class Promotion_text extends MY_Controller
         $this->load->view('marketing/promotion_text/pt_index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -66,7 +66,7 @@ class Promotion_text extends MY_Controller
 
         $where = array();
         $option = array();
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -220,7 +220,7 @@ class Promotion_text extends MY_Controller
 
         $data['lang_list'] = $this->promotion_text_model->get_lang_list(array("status" => 1), array("orderby" => "id ASC"));
 
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 

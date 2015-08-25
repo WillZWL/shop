@@ -2,7 +2,7 @@
 
 class Cron_wms_inventory extends MY_Controller
 {
-    private $app_id = "CRN0001";
+    private $appId = "CRN0001";
 
     function __construct()
     {
@@ -16,9 +16,9 @@ class Cron_wms_inventory extends MY_Controller
         $this->wms_inventory_model->get_inventory();
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

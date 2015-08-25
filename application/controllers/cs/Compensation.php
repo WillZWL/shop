@@ -3,7 +3,7 @@ include_once "compensation_create.php";
 
 class Compensation extends Compensation_create
 {
-    private $app_id = 'CS0004';
+    private $appId = 'CS0004';
     private $lang_id = 'en';
 
     public function __construct()
@@ -13,19 +13,19 @@ class Compensation extends Compensation_create
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
-        //$this->authorization_service->check_access_rights($this->_get_app_id()."05");
+        $sub_app_id = $this->getAppId() . "00";
+        //$this->authorization_service->check_access_rights($this->getAppId()."05");
 
-        $langfile = $this->_get_app_id() . "00_" . $this->_get_lang_id() . ".php";
+        $langfile = $this->getAppId() . "00_" . $this->_get_lang_id() . ".php";
         include_once APPPATH . "language/" . $langfile;
         $data["lang"] = $lang;
-        $data["app_id"] = $this->_get_app_id();
+        $data["app_id"] = $this->getAppId();
         $this->load->view('cs/compensation/index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -35,8 +35,8 @@ class Compensation extends Compensation_create
 
     public function manager_approval()
     {
-        if (check_app_feature_access_right($this->_get_app_id(), "CS000400_man_approve_btn")) {
-            $sub_app_id = $this->_get_app_id() . "05";
+        if (check_app_feature_access_right($this->getAppId(), "CS000400_man_approve_btn")) {
+            $sub_app_id = $this->getAppId() . "05";
             //$this->authorization_service->check_access_rights($sub_app_id);
 
             if ($this->input->get('so') != "") {
@@ -76,7 +76,7 @@ class Compensation extends Compensation_create
 
             $option["orderby"] = $sort . " " . $order;
 
-            $langfile = $this->_get_app_id() . "04_" . $this->_get_lang_id() . ".php";
+            $langfile = $this->getAppId() . "04_" . $this->_get_lang_id() . ".php";
             include_once APPPATH . "language/" . $langfile;
 
             $data = $this->compensation_model->get_request_compensation_so($where, $option);
@@ -91,7 +91,7 @@ class Compensation extends Compensation_create
 
             $data["notice"] = notice($lang);
             $data["lang"] = $lang;
-            $data["app_id"] = $this->_get_app_id();
+            $data["app_id"] = $this->getAppId();
 
             $this->load->view('cs/compensation/index_approval', $data);
         } else {
@@ -101,13 +101,13 @@ class Compensation extends Compensation_create
 
     public function manager_approval_view($compensation_id = "", $orderid = "")
     {
-        if (check_app_feature_access_right($this->_get_app_id(), "CS000400_man_approve_btn")) {
+        if (check_app_feature_access_right($this->getAppId(), "CS000400_man_approve_btn")) {
             if ($orderid == "") {
                 Redirect(base_url() . "cs/compensation/manager_approval/");
                 exit;
             }
 
-            $sub_app_id = $this->_get_app_id() . "05";
+            $sub_app_id = $this->getAppId() . "05";
             $this->authorization_service->check_access_rights($sub_app_id, "Approve");
 
             if ($this->input->post('posted')) {
@@ -278,7 +278,7 @@ class Compensation extends Compensation_create
             $data["orderobj"] = $so = $this->compensation_model->get_so(array("so_no" => $cp_obj->get_so_no()));
             $data["compensate_obj"] = $this->compensation_model->get_order_compensated_item(array("so.so_no" => $so->get_so_no(), "so.platform_id" => $so->get_platform_id()), array("limit" => 1));
 
-            $langfile = $this->_get_app_id() . "05_" . $this->_get_lang_id() . ".php";
+            $langfile = $this->getAppId() . "05_" . $this->_get_lang_id() . ".php";
             include_once APPPATH . "language/" . $langfile;
 
             $data["notice"] = notice($lang);

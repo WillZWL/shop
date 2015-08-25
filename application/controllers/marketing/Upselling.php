@@ -3,7 +3,7 @@
 class Upselling extends MY_Controller
 {
 
-    private $app_id = "MKT0011";
+    private $appId = "MKT0011";
     private $lang_id = "en";
 
 
@@ -21,7 +21,7 @@ class Upselling extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = base_url() . "marketing/upselling/?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
@@ -118,9 +118,9 @@ class Upselling extends MY_Controller
         $this->load->view('marketing/upselling/upselling_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -155,7 +155,7 @@ class Upselling extends MY_Controller
         }
 
         if ($data["product"] = $this->upselling_model->product_service->get_dao()->get_prod_wo_bundle(array("sku" => $sku), array("limit" => 1))) {
-            $sub_app_id = $this->_get_app_id() . "01";
+            $sub_app_id = $this->getAppId() . "01";
             $data["sku"] = $sku;
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
@@ -167,7 +167,7 @@ class Upselling extends MY_Controller
 
     function group_list()
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         $_SESSION["LISTPAGE"] = base_url() . "marketing/upselling/group_list/?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
@@ -284,7 +284,7 @@ class Upselling extends MY_Controller
     {
         $where = array();
         $option = array();
-        $sub_app_id = $this->_get_app_id() . '03';
+        $sub_app_id = $this->getAppId() . '03';
         include_once(APPPATH . 'language/' . $sub_app_id . "_" . $this->_get_lang_id() . '.php');
         $data['lang'] = $lang;
 
@@ -335,7 +335,7 @@ class Upselling extends MY_Controller
 
     public function group_add_right()
     {
-        $sub_app_id = $this->_get_app_id() . '04';
+        $sub_app_id = $this->getAppId() . '04';
         include_once(APPPATH . 'language/' . $sub_app_id . '_' . $this->_get_lang_id() . '.php');
         $data['lang'] = $lang;
         $data['notice'] = notice($lang);
@@ -433,7 +433,7 @@ class Upselling extends MY_Controller
         if (empty($ra_group_obj)) {
             Redirect(base_url() . 'marketing/upselling/group_list');
         } else {
-            $sub_app_id = $this->_get_app_id() . '05';
+            $sub_app_id = $this->getAppId() . '05';
             include_once(APPPATH . 'language/' . $sub_app_id . '_' . $this->_get_lang_id() . '.php');
 
             $ra_group_content_obj = $this->upselling_model->get_ra_group_content($group_id, $lang_id);

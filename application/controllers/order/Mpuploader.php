@@ -4,7 +4,7 @@ class Mpuploader extends MY_Controller
 {
 
     private $lang_id = 'en';
-    private $app_id = 'ORD0006';
+    private $appId = 'ORD0006';
 
     public function __construct()
     {
@@ -29,7 +29,7 @@ class Mpuploader extends MY_Controller
             Redirect(base_url() . "order/mpuploader");
         }
 
-        $sub_id = $this->_get_app_id() . "00_" . $this->_get_lang_id();
+        $sub_id = $this->getAppId() . "00_" . $this->_get_lang_id();
         include_once APPPATH . "language/" . $sub_id . ".php";
 
         $data["lang"] = $lang;
@@ -37,9 +37,9 @@ class Mpuploader extends MY_Controller
         $this->load->view('order/mpuploader/index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

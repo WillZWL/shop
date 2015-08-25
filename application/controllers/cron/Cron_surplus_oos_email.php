@@ -2,7 +2,7 @@
 
 class Cron_surplus_oos_email extends MY_Controller
 {
-    private $app_id = 'CRN0030';
+    private $appId = 'CRN0030';
 
     function __construct()
     {
@@ -15,9 +15,9 @@ class Cron_surplus_oos_email extends MY_Controller
         $this->surplus_email_service->send_surplus_oos_email();
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

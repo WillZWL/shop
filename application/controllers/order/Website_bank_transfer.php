@@ -3,7 +3,7 @@
 class Website_bank_transfer extends MY_Controller
 {
 
-    private $app_id = "ORD0027";
+    private $appId = "ORD0027";
     private $lang_id = "en";
     private $so_bank_transfer_obj;
 
@@ -28,7 +28,7 @@ class Website_bank_transfer extends MY_Controller
 
     public function index($pagetype = "not_full")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $_SESSION["BTLISTPAGE"] = base_url() . "order/website_bank_transfer/" . ($pagetype ? "index/" . $pagetype : "") . "?" . $_SERVER['QUERY_STRING'];
         $_SESSION["BT_QSTRING"] = $_SERVER['QUERY_STRING'];
@@ -205,9 +205,9 @@ class Website_bank_transfer extends MY_Controller
         $this->load->view('order/website_bank_transfer/website_bank_transfer_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     private function process_payment()

@@ -2,7 +2,7 @@
 
 class Faqadmin extends MY_Controller
 {
-    private $app_id = "CS0003";
+    private $appId = "CS0003";
     private $lang_id = "en";
 
     public function __construct()
@@ -16,7 +16,7 @@ class Faqadmin extends MY_Controller
 
     public function index($edit = "", $eid = "")
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         $_SESSION["LISTPAGE"] = ($prod_grp_cd == "" ? base_url() . "marketing/product/?" : current_url()) . $_SERVER['QUERY_STRING'];
 
         if ($this->input->post("posted")) {
@@ -85,9 +85,9 @@ class Faqadmin extends MY_Controller
 
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
