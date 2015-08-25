@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Platform_integration extends MY_Controller
 {
-    private $app_id = "CRN0007";
+    private $appId = "CRN0007";
 
     function __construct()
     {
@@ -26,9 +26,9 @@ class Platform_integration extends MY_Controller
         $this->platform_integration_model->get_client_delivery_contact($platform_id, $day_diff);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
 }

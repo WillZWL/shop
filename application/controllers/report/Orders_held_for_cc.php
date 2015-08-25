@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cron_order_held_for_cc extends MY_Controller
 {
-    private $app_id = "RPT0067";
+    private $appId = "RPT0067";
 
     function __construct()
     {
@@ -17,8 +17,8 @@ class Cron_order_held_for_cc extends MY_Controller
             $this->order_held_for_cc_model->send_report($duration);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }

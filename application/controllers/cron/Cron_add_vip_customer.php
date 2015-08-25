@@ -2,7 +2,7 @@
 
 class Cron_add_vip_customer extends MY_Controller
 {
-    private $app_id = "CRN0009";
+    private $appId = "CRN0009";
 
     function __construct()
     {
@@ -23,9 +23,9 @@ class Cron_add_vip_customer extends MY_Controller
         }
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

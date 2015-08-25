@@ -18,7 +18,7 @@ class Email_referral_list_management extends MY_Controller
     {
 
         $_SESSION["LISTPAGE"] = base_url() . "order/email_referral_list_management/index" . "?" . $_SERVER['QUERY_STRING'];
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
 
         if ($id) {

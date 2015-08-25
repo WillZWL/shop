@@ -3,7 +3,7 @@
 class Preorder extends MY_Controller
 {
     const PAGE_LIMIT = 100;
-    private $app_id = "ORD0022";
+    private $appId = "ORD0022";
     private $lang_id = "en";
 
     public function __construct()
@@ -17,7 +17,7 @@ class Preorder extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         $search = $this->input->get_post('search');
         $where = array();
@@ -82,9 +82,9 @@ class Preorder extends MY_Controller
         $this->load->view('order/preorder/preorder_index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

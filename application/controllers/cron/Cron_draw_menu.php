@@ -2,7 +2,7 @@
 
 class Cron_draw_menu extends MY_Controller
 {
-    private $app_id = "CRN0008";
+    private $appId = "CRN0008";
 
     function __construct()
     {
@@ -765,9 +765,9 @@ class Cron_draw_menu extends MY_Controller
         return max($len);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

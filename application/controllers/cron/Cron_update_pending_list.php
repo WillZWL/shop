@@ -2,7 +2,7 @@
 
 class Cron_update_pending_list extends MY_Controller
 {
-    private $app_id = "CRN0002";
+    private $appId = "CRN0002";
 
     public function __construct()
     {
@@ -65,9 +65,9 @@ class Cron_update_pending_list extends MY_Controller
         $this->checkout_model->payment_verificaiton();
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

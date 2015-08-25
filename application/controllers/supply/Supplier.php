@@ -4,23 +4,23 @@ include_once "supplier_helper.php";
 
 class Supplier extends Supplier_helper
 {
-    private $app_id = "SUP0001";
+    private $appId = "SUP0001";
     private $lang_id = "en";
 
     public function __construct()
     {
         parent::Supplier_helper();
-        $this->authorization_service->check_access_rights($this->_get_app_id(), "");
+        $this->authorization_service->check_access_rights($this->getAppId(), "");
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $_SESSION["LISTPAGE"] = base_url() . "supply/supplier/?" . $_SERVER['QUERY_STRING'];
 
@@ -104,7 +104,7 @@ class Supplier extends Supplier_helper
     public function add()
     {
 
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post("posted")) {
             if (isset($_SESSION["supplier_vo"])) {
@@ -146,7 +146,7 @@ class Supplier extends Supplier_helper
     public function view($id = "", $isnote = 0)
     {
         if ($id) {
-            $sub_app_id = $this->_get_app_id() . "02";
+            $sub_app_id = $this->getAppId() . "02";
 
             if ($this->input->post("posted")) {
 

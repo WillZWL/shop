@@ -3,7 +3,7 @@
 class Round_up extends MY_Controller
 {
 
-    private $app_id = "MST0014";
+    private $appId = "MST0014";
     private $lang_id = "en";
 
     public function __construct()
@@ -15,7 +15,7 @@ class Round_up extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $data["currency_list"] = $this->currency_service->get_list_w_key(array(), array("limit" => -1));
 
@@ -31,9 +31,9 @@ class Round_up extends MY_Controller
         $this->load->view('mastercfg/round_up/round_up_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

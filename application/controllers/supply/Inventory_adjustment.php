@@ -3,7 +3,7 @@
 class Inventory_adjustment extends MY_Controller
 {
 
-    private $app_id = "SUP0004";
+    private $appId = "SUP0004";
     private $lang_id = "en";
 
 
@@ -17,7 +17,7 @@ class Inventory_adjustment extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $_SESSION["LISTPAGE"] = base_url() . "supply/inventory_adjustment/?" . $_SERVER['QUERY_STRING'];
 
@@ -156,9 +156,9 @@ class Inventory_adjustment extends MY_Controller
         $this->load->view('supply/inventory_adjustment/inventory_adjustment_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

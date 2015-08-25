@@ -2,7 +2,7 @@
 
 class Cron_aftership extends MY_Controller
 {
-    private $app_id = "CRN0025";
+    private $appId = "CRN0025";
 
     function __construct()
     {
@@ -76,9 +76,9 @@ class Cron_aftership extends MY_Controller
     }
 
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

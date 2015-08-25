@@ -4,7 +4,7 @@ include_once "base_report.php";
 
 class dispatch_with_hs_code_report extends Base_report
 {
-    private $app_id = "RPT0051";
+    private $appId = "RPT0051";
     private $lang_id = "en";
 
     public function dispatch_with_hs_code_report()
@@ -25,7 +25,7 @@ class dispatch_with_hs_code_report extends Base_report
     {
         $data["title"] = "Dispatch Report with HS Code";
 
-        $langfile = $this->_get_app_id() . "00_" . $this->_get_lang_id() . ".php";
+        $langfile = $this->getAppId() . "00_" . $this->_get_lang_id() . ".php";
         include_once APPPATH . "language/" . $langfile;
         $data["lang"] = $lang;
 
@@ -48,9 +48,9 @@ class dispatch_with_hs_code_report extends Base_report
         $this->load->view('report/dispatch_report', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

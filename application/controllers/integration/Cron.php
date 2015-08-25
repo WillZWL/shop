@@ -2,7 +2,7 @@
 
 class Cron extends MY_Controller
 {
-    private $app_id = "INT0002";
+    private $appId = "INT0002";
     private $valid_amazon_platform = array("AMUK", "AMFR", "AMDE", "AMUS");
 
     function __construct()
@@ -216,9 +216,9 @@ class Cron extends MY_Controller
         $this->batch_model->get_ebay_order($ebay_account, $specified_file);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function cps_allocated_so_no()

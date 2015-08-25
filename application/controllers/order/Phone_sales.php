@@ -3,7 +3,7 @@
 class Phone_sales extends MY_Controller
 {
 
-    private $app_id = "ORD0009";
+    private $appId = "ORD0009";
     private $lang_id = "en";
 
 
@@ -33,7 +33,7 @@ class Phone_sales extends MY_Controller
 
     public function index($platform_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
@@ -43,9 +43,9 @@ class Phone_sales extends MY_Controller
         $this->load->view('order/phone_sales/phone_sales_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -59,7 +59,7 @@ class Phone_sales extends MY_Controller
             show_404();
         }
 
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
@@ -159,7 +159,7 @@ class Phone_sales extends MY_Controller
 
     public function cart($platform_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         if ($platform_id == "") {
@@ -215,7 +215,7 @@ class Phone_sales extends MY_Controller
         $data["totalcart"] = count($data["cart"]);
         if ($data["totalcart"]) {
             #SBF #2799 temp only allow cs_man to see cart_profit_margin
-            $data["allow_see_margin"] = check_app_feature_access_right($this->_get_app_id(), "ORD000900_cs_man_margin");
+            $data["allow_see_margin"] = check_app_feature_access_right($this->getAppId(), "ORD000900_cs_man_margin");
 
             for ($i = 0; $i < $data["totalcart"]; $i++) {
                 $price = $data["cart"][$i]["price"] - $data["cart"][$i]["vat_total"] / $data["cart"][$i]["qty"];
@@ -257,7 +257,7 @@ class Phone_sales extends MY_Controller
 
     public function take_order($platform_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         if ($platform_id == "") {
@@ -450,7 +450,7 @@ class Phone_sales extends MY_Controller
     public function check_email($email = "", $platform_country = "")
     {
         if ($email) {
-            $sub_app_id = $this->_get_app_id() . "00";
+            $sub_app_id = $this->getAppId() . "00";
             $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
@@ -464,7 +464,7 @@ class Phone_sales extends MY_Controller
 
     public function on_hold()
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         if ($this->input->post("posted")) {
@@ -633,7 +633,7 @@ class Phone_sales extends MY_Controller
     {
 //SBF#1855, compliance don't use pending area any more, order will go to CC page directly instead
         exit;
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         if ($this->input->post("posted")) {

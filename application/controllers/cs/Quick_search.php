@@ -2,7 +2,7 @@
 
 class Quick_search extends MY_Controller
 {
-    private $app_id = 'CS0001';
+    private $appId = 'CS0001';
     private $lang_id = 'en';
 
     public function __construct()
@@ -83,7 +83,7 @@ class Quick_search extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
@@ -226,13 +226,13 @@ class Quick_search extends MY_Controller
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
-        $data["app_id"] = $this->_get_app_id();
+        $data["app_id"] = $this->getAppId();
         $this->load->view('cs/quick_search/index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -252,7 +252,7 @@ class Quick_search extends MY_Controller
 
     public function view($order_no, $viewtype = "")
     {
-        if (check_app_feature_access_right($this->_get_app_id(), 'CS000102_deactivate_client') === TRUE && $this->input->post('action') == 'deactivate_client') {
+        if (check_app_feature_access_right($this->getAppId(), 'CS000102_deactivate_client') === TRUE && $this->input->post('action') == 'deactivate_client') {
             $client_ids = $this->quick_search_model->so_service->get_dao()->get_distinct_client_id_list(array('so_no' => $order_no));
 
             if (!empty($client_ids[0]) && ($client = $this->quick_search_model->get_client(array('id' => $client_ids[0]))) != null) {
@@ -286,7 +286,7 @@ class Quick_search extends MY_Controller
             Redirect(base_url() . "cs/quick_search/view/" . $order_no . "/" . $viewtype);
         }
 
-        if (($this->input->post('ca') == 1) && (check_app_feature_access_right($this->_get_app_id(), "CS000102_change_delivery_addr"))) {
+        if (($this->input->post('ca') == 1) && (check_app_feature_access_right($this->getAppId(), "CS000102_change_delivery_addr"))) {
             $obj = $this->quick_search_model->get(array("so_no" => $order_no));
             if (!$obj) {
                 $_SESSION["NOTICE"] = $this->db->_error_message();
@@ -355,7 +355,7 @@ class Quick_search extends MY_Controller
             exit;
         }
 
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
@@ -497,7 +497,7 @@ class Quick_search extends MY_Controller
         $data["hold_history"] = $this->quick_search_model->get_hold_history($order_no);
         $data["del_opt_list"] = end($this->delivery_option_service->get_list_w_key(array("lang_id" => "en")));
         $data["notice"] = notice($lang);
-        $data["app_id"] = $this->_get_app_id();
+        $data["app_id"] = $this->getAppId();
 
         #sbf 2607
         if ($sorf_obj = $this->quick_search_model->get_refund_score_vo($order_no)) {
@@ -520,8 +520,8 @@ class Quick_search extends MY_Controller
 
         #INSERT INTO `application_feature` (`feature_name`) VALUES ('CS000102_release_button')
         #INSERT INTO `application_feature_right` (`app_id`, `app_feature_id`, `role_id`, `status`) VALUES ('CS0001', '20', 'cs_ext_man', '1');
-        $data["allow_release"] = check_app_feature_access_right($this->_get_app_id(), "CS000102_release_button");
-        $data["allow_split"] = check_app_feature_access_right($this->_get_app_id(), "CS000102_process_split_order");
+        $data["allow_release"] = check_app_feature_access_right($this->getAppId(), "CS000102_release_button");
+        $data["allow_split"] = check_app_feature_access_right($this->getAppId(), "CS000102_process_split_order");
         //echo $this->db->Last_query();die();
         $data["release_history"] = $this->quick_search_model->get_release_order_history_list(array("so_no" => $order_no), array("orderby" => "modify_on desc"));
         $this->load->view('cs/quick_search/view_detail', $data);
@@ -610,7 +610,7 @@ class Quick_search extends MY_Controller
 
     public function process_split($order_no = "")
     {
-        if (check_app_feature_access_right($this->_get_app_id(), "CS000102_process_split_order") === FALSE) {
+        if (check_app_feature_access_right($this->getAppId(), "CS000102_process_split_order") === FALSE) {
             echo "No access rights";
             die();
         }

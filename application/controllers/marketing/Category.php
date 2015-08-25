@@ -2,7 +2,7 @@
 
 class Category extends MY_Controller
 {
-    private $app_id = "MKT0002";
+    private $appId = "MKT0002";
     private $lang_id = "en";
 
     public function __construct()
@@ -18,15 +18,15 @@ class Category extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         $this->load->view('marketing/category/category_main', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -69,7 +69,7 @@ class Category extends MY_Controller
 
     public function top()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $_SESSION["LISTPAGE"] = base_url() . "marketing/category/?" . $_SERVER['QUERY_STRING'];
 
@@ -162,7 +162,7 @@ class Category extends MY_Controller
             }
         }
 
-        include_once APPPATH . "language/" . $this->_get_app_id() . "03_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "03_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["level"] = $this->input->get('level');
         $data["parent"] = $this->input->get('parent');
@@ -573,7 +573,7 @@ class Category extends MY_Controller
             }
         }
 
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
         $data["parent_list"] = $parent_list;
@@ -645,7 +645,7 @@ class Category extends MY_Controller
             $data["action"] = "update";
         }
         $_SESSION["scpv_obj"] = serialize($scpv_obj);
-        include_once APPPATH . "language/" . $this->_get_app_id() . "04_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "04_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $this->load->view("marketing/category/scpv_view", $data);
     }
@@ -783,7 +783,7 @@ class Category extends MY_Controller
         $data["cat_id"] = $cat_id;
 
         $data["lang"] = $lang;
-        include_once APPPATH . "language/" . $this->_get_app_id() . "05_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "05_" . $this->_get_lang_id() . ".php";
 
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);

@@ -3,7 +3,7 @@
 class Email_management extends MY_Controller
 {
 
-    private $app_id = "MKT0077";
+    private $appId = "MKT0077";
     private $lang_id = "en";
 
     // private $
@@ -34,7 +34,7 @@ class Email_management extends MY_Controller
 
         // $listpage = $_SESSION["LISTPAGE"];
 
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -109,9 +109,9 @@ class Email_management extends MY_Controller
         $this->load->view('marketing/email_management/email_management_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

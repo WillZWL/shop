@@ -3,7 +3,7 @@
 class Courier extends MY_Controller
 {
 
-    private $app_id = "MST0007";
+    private $appId = "MST0007";
     private $lang_id = "en";
 
 
@@ -20,7 +20,7 @@ class Courier extends MY_Controller
     public function add()
     {
 
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post("posted")) {
 
@@ -49,14 +49,14 @@ class Courier extends MY_Controller
         $this->index();
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function index($courier_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $_SESSION["LISTPAGE"] = base_url() . "mastercfg/courier/?" . $_SERVER['QUERY_STRING'];
 
@@ -146,7 +146,7 @@ class Courier extends MY_Controller
 
     public function edit($id)
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
 
         if ($this->input->post("posted")) {
             unset($_SESSION["NOTICE"]);

@@ -2,7 +2,7 @@
 
 class ExchangeRateHelper extends \MY_Controller
 {
-    private $app_id = "MST0003";
+    private $appId = "MST0003";
 
     public function __construct()
     {
@@ -51,8 +51,8 @@ class ExchangeRateHelper extends \MY_Controller
         echo $js;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }

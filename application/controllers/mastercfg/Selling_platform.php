@@ -33,9 +33,9 @@ class Selling_platform extends MY_Controller
         return $this->lang_id;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

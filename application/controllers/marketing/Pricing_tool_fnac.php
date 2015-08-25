@@ -5,7 +5,7 @@ class Pricing_tool_fnac extends MY_Controller
 {
     public $tool_path;
     public $default_platform_id;
-    private $app_id = 'MKT0063';
+    private $appId = 'MKT0063';
 
     //must set to public for view
     private $lang_id = 'en';
@@ -34,14 +34,14 @@ class Pricing_tool_fnac extends MY_Controller
     public function index()
     {
         $data = array();
-        include_once APPPATH . "language/" . $this->_get_app_id() . "00_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $this->load->view($this->tool_path . "/pricing_tool_index", $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -53,7 +53,7 @@ class Pricing_tool_fnac extends MY_Controller
     {
         $where = array();
         $option = array();
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -357,7 +357,7 @@ class Pricing_tool_fnac extends MY_Controller
                 $price_obj = $this->pricing_tool_model->get_price_obj();
                 $data["action"] = "add";
             }
-            include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+            include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
             $data["lang"] = $lang;
             $_SESSION["price_obj"] = serialize($price_obj);
             $data["canedit"] = 1;
@@ -385,7 +385,7 @@ class Pricing_tool_fnac extends MY_Controller
                     foreach ($platform_list as $platform_obj) {
                         $platform_id = $platform_obj->get_selling_platform_id();
                         $pdata[$platform_id]["obj"] = $platform_obj;
-                        $tmp = $this->pricing_tool_model->get_pricing_tool_info($platform_id, $value, $this->_get_app_id());
+                        $tmp = $this->pricing_tool_model->get_pricing_tool_info($platform_id, $value, $this->getAppId());
                         $pdata[$platform_id]["pdata"] = $tmp;
                         $objcount++;
                         $price_obj = $this->pricing_tool_model->get_price_obj(array("sku" => $value, "platform_id" => $platform_id));

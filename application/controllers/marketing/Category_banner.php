@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Category_banner extends MY_Controller
 {
-    private $app_id = "MKT0028";
+    private $appId = "MKT0028";
     private $lang_id = "en";
 
     public function __construct()
@@ -16,7 +16,7 @@ class Category_banner extends MY_Controller
     public function index($language_id = "")
     {
         define('CAT_PH', $this->context_config_service->value_of("cat_img_path"));
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
 
         if ($this->input->post('posted')) {
@@ -68,9 +68,9 @@ class Category_banner extends MY_Controller
         $this->load->view('marketing/category_banner/category_banner_view', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

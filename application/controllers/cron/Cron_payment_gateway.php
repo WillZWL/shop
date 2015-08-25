@@ -2,7 +2,7 @@
 
 class Cron_payment_gateway extends MY_Controller
 {
-    private $app_id = "CRN0023";
+    private $appId = "CRN0023";
 
     public function __construct()
     {
@@ -18,8 +18,8 @@ class Cron_payment_gateway extends MY_Controller
         $auto_refund_model->refund_orders($so_no);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }

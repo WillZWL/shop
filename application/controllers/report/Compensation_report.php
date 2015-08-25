@@ -3,7 +3,7 @@ include_once "base_report.php";
 
 class Compensation_report extends Base_report
 {
-    private $app_id = "RPT0031";
+    private $appId = "RPT0031";
     private $lang_id = "en";
 
     public function __construct()
@@ -20,7 +20,7 @@ class Compensation_report extends Base_report
     {
         $data["title"] = "Compensation Report";
 
-        $langfile = $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        $langfile = $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         include_once APPPATH . "language/" . $langfile;
         $data["lang"] = $lang;
 
@@ -112,9 +112,9 @@ class Compensation_report extends Base_report
         $this->load->view('report/compensation_report', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

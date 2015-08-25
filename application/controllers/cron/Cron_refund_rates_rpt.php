@@ -2,7 +2,7 @@
 
 class Cron_refund_rates_rpt extends MY_Controller
 {
-    private $app_id = "CRN0010";
+    private $appId = "CRN0010";
 
     function __construct()
     {
@@ -16,9 +16,9 @@ class Cron_refund_rates_rpt extends MY_Controller
         $this->compliance_refund_rates_rpt_model->send_report($week_of_data_to_show);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

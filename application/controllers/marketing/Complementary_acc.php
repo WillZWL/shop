@@ -3,7 +3,7 @@
 class Complementary_acc extends MY_Controller
 {
 
-    private $app_id = 'MKT0078';
+    private $appId = 'MKT0078';
     private $lang_id = 'en';
     private $accessory_catid_arr;
 
@@ -34,7 +34,7 @@ class Complementary_acc extends MY_Controller
     public function index()
     {
         $data = array();
-        include_once APPPATH . "language/" . $this->_get_app_id() . "00_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $this->load->view("/marketing/complementary_acc/complementary_acc_index", $data);
     }
@@ -54,7 +54,7 @@ class Complementary_acc extends MY_Controller
     {
         $where = array();
         $option = array();
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -184,7 +184,7 @@ class Complementary_acc extends MY_Controller
                 }
             }
         }
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["canedit"] = 1;
         $data["value"] = $sku;
@@ -429,7 +429,7 @@ class Complementary_acc extends MY_Controller
             }
         }
 
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["canedit"] = 1;
         $data["value"] = $sku;

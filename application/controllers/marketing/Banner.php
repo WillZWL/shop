@@ -2,7 +2,7 @@
 
 class Banner extends MY_Controller
 {
-    private $app_id = "MKT0001";
+    private $appId = "MKT0001";
     private $lang_id = "en";
 
     public function __construct()
@@ -14,14 +14,14 @@ class Banner extends MY_Controller
 
     public function index()
     {
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $this->load->view('marketing/banner/index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -213,7 +213,7 @@ class Banner extends MY_Controller
             $data["template_type"] = 2;
         }
 
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $image_list = $this->banner_model->get_banner_list(array("cat_id" => $catid, "usage" => "PV"), array("orderby" => "type asc"));
         $pimage_list = $this->banner_model->get_banner_list(array("cat_id" => $catid, "usage" => "PB"), array("orderby" => "type asc"));

@@ -9,7 +9,7 @@ class Product_overview_website extends MY_Controller
 
     //must set to public for view
     public $product_update_followup_service;
-    private $app_id = "MKT0045";
+    private $appId = "MKT0045";
     private $lang_id = "en";
 
     public function __construct()
@@ -270,7 +270,7 @@ class Product_overview_website extends MY_Controller
 
     public function index($platform_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = base_url() . $this->overview_path . "/?" . $_SERVER['QUERY_STRING'];
 
         if ($this->input->post("posted") && $_POST["check"]) {
@@ -553,9 +553,9 @@ class Product_overview_website extends MY_Controller
         $this->load->view($this->overview_path . '/product_overview_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     function generate_csv($list)

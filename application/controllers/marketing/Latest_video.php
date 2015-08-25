@@ -3,7 +3,7 @@
 class Latest_video extends MY_Controller
 {
 
-    private $app_id = "MKT0047";
+    private $appId = "MKT0047";
     private $lang_id = "en";
 
     public function __construct()
@@ -26,7 +26,7 @@ class Latest_video extends MY_Controller
             $data["display"] = 0;
         }
 
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         $data["catid"] = $this->input->get('catid');
@@ -91,16 +91,16 @@ class Latest_video extends MY_Controller
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
         $data["searchdisplay"] = ($where["name"] == "" && $where["description"] == "" && $where["level"] == "" && $where["status"] == "" && $where["manual"]) ? 'style="display:none"' : "";
 
-        $sub_app_id = $this->_get_app_id() . "04";
+        $sub_app_id = $this->getAppId() . "04";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
         $this->load->view('marketing/latest_video/lv_list_index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -112,7 +112,7 @@ class Latest_video extends MY_Controller
     {
         $where = array();
         $option = array();
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -246,7 +246,7 @@ class Latest_video extends MY_Controller
             }
         }
 
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 

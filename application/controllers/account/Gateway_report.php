@@ -2,7 +2,7 @@
 
 class Gateway_report extends MY_Controller
 {
-    private $app_id = "ACC0001";
+    private $appId = "ACC0001";
     private $lang_id = "en";
 
     function __construct()
@@ -16,7 +16,7 @@ class Gateway_report extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $_SESSION["LISTPAGE"] = base_url() . "account/gateway_report/?" . $_SERVER['QUERY_STRING'];
         $data["lang"] = $lang;
@@ -74,9 +74,9 @@ class Gateway_report extends MY_Controller
         $this->load->view('account/gateway_report/index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -86,7 +86,7 @@ class Gateway_report extends MY_Controller
 
     public function upload($pmgw = "")
     {
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $_SESSION["LISTPAGE"] = base_url() . "account/gateway_report/upload?" . $_SERVER['QUERY_STRING'];
         $data["lang"] = $lang;
