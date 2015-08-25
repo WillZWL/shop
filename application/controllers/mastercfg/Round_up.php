@@ -1,33 +1,34 @@
 <?php
+use AtomV2\Models\Mastercfg\CurrencyModel;
 
 class Round_up extends MY_Controller
 {
 
     private $appId = "MST0014";
-    private $lang_id = "en";
+    private $langId = "en";
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('mastercfg/currency_model');
-        $this->load->helper(array('url', 'notice', 'object'));
+        $this->currencyModel = new CurrencyModel;
     }
 
     public function index()
     {
-        $sub_app_id = $this->getAppId() . "00";
+        $sub_appId = $this->getAppId() . "00";
 
-        $data["currency_list"] = $this->currency_service->get_list_w_key(array(), array("limit" => -1));
+        $data["currency_list"] = $this->currencyModel->currencyService->getListWKey([], ["limit" => -1]);
 
         if ($this->input->post('posted')) {
-            if ($this->currency_model->update_round_up($data)) {
-                redirect($this->_get_ru());
+            if ($this->currencyModel->updateRoundUp($data)) {
+                redirect($this->getRu());
             }
         }
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_appId . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
+        $data["set_form_ru"] = $this->setFormRu();
         $this->load->view('mastercfg/round_up/round_up_index_v', $data);
     }
 
@@ -36,9 +37,9 @@ class Round_up extends MY_Controller
         return $this->appId;
     }
 
-    public function _get_lang_id()
+    public function getLangId()
     {
-        return $this->lang_id;
+        return $this->langId;
     }
 }
 
