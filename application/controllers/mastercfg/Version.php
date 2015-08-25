@@ -3,7 +3,7 @@
 class Version extends MY_Controller
 {
 
-    private $app_id = "MST0011";
+    private $appId = "MST0011";
     private $lang_id = "";
 
     public function __construct()
@@ -18,7 +18,7 @@ class Version extends MY_Controller
     public function index($edit = "", $eid = "")
     {
         $_SESSION["LISTPAGE"] = base_url() . "mastercfg/version/?" . $_SERVER["QUERY_STRING"];
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post("posted")) {
             if ($this->input->post('action') == "add") {
@@ -94,9 +94,9 @@ class Version extends MY_Controller
         $this->load->view("mastercfg/version/index_v", $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

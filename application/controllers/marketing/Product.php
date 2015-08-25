@@ -3,7 +3,7 @@
 class Product extends MY_Controller
 {
 
-    private $app_id = "MKT0003";
+    private $appId = "MKT0003";
     private $lang_id = "en";
     private $google_feed_arr = array("AU", "BE", "GB", "ES", "FR", "IT", "CH", "FI", "IE", "MT", "PT", "PL", "US");
 
@@ -226,7 +226,7 @@ html;
 
     public function translat_all_sku()
     {
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         $data = array();
         $data["lang_list"] = $this->product_model->get_list("language", array("status" => 1), array("orderby" => "name ASC"));
 
@@ -304,9 +304,9 @@ html;
         $this->load->view('marketing/product/batch_translat', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     private function update_google_product_title($sku, $lang_id, $cid, $google_cat_id, $google_product_name)
@@ -324,7 +324,7 @@ html;
 
     public function index($prod_grp_cd = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = ($prod_grp_cd == "" ? base_url() . "marketing/product/?" : current_url()) . $_SERVER['QUERY_STRING'];
 
         $where = array();
@@ -502,9 +502,9 @@ html;
 
     public function add()
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
-        if (!check_app_feature_access_right($this->_get_app_id(), 'MKT000301_add_product')) {
+        if (!check_app_feature_access_right($this->getAppId(), 'MKT000301_add_product')) {
             show_error("Access Denied!");
         }
         if ($this->input->post("posted")) {
@@ -662,7 +662,7 @@ html;
 
     public function add_colour($prod_grp_cd = "", $colour_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post("posted")) {
             if (isset($_SESSION["product_vo"])) {
@@ -865,7 +865,7 @@ html;
 
     public function add_version($prod_grp_cd = "", $version_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post("posted")) {
             if (isset($_SESSION["product_vo"])) {
@@ -1149,7 +1149,7 @@ html;
         // 12024-AU-SL GoPro HERO3 Camera Silver Edition
         // 12024-AU-BK GoPro HERO3 Camera Black Edition
 
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
 
         $ar_feed = array("FROOGLE", "KELKOO", "PRICERUNNER", "PRICEGRABBER", "PRICEMINISTER");
         // googlebase feed category, add a new country id to create a new tag
@@ -1959,7 +1959,7 @@ html;
             } else {
                 if (empty($data["master_sku"])) {
                     $data["master_sku"] = $this->product_model->product_service->get_sku_map_dao()->get();
-                } elseif (check_app_feature_access_right($this->_get_app_id(), 'MKT000302_edit_master_sku')) {
+                } elseif (check_app_feature_access_right($this->getAppId(), 'MKT000302_edit_master_sku')) {
                     $data["allow_edit_master_sku"] = 1;
                     $data["lock_master_sku"] = 1;
                 } else {

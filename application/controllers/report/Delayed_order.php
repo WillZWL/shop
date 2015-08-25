@@ -2,7 +2,7 @@
 
 class Delayed_order extends MY_Controller
 {
-    private $app_id = "RPT0013";
+    private $appId = "RPT0013";
     private $lang_id = "en";
 
     public function __construct()
@@ -16,7 +16,7 @@ class Delayed_order extends MY_Controller
 
     public function index()
     {
-        include_once APPPATH . '/language/' . $this->_get_app_id() . '00_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '00_' . $this->_get_lang_id() . '.php';
         $data["lang"] = $lang;
         $data["title"] = "Delayed Orders Report";
 
@@ -32,9 +32,9 @@ class Delayed_order extends MY_Controller
 
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -54,7 +54,7 @@ class Delayed_order extends MY_Controller
 
     private function _load_parent_lang()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
 
         return $lang;

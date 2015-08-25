@@ -2,7 +2,7 @@
 
 class Warranty extends MY_Controller
 {
-    private $app_id = "MKT0069";
+    private $appId = "MKT0069";
     private $lang_id = "en";
 
     public function __construct()
@@ -61,7 +61,7 @@ class Warranty extends MY_Controller
 
         }
 
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = ($prod_grp_cd == "" ? base_url() . "marketing/warranty/?" : current_url()) . $_SERVER['QUERY_STRING'];
 
         $where = array();
@@ -163,9 +163,9 @@ class Warranty extends MY_Controller
         $this->load->view('marketing/warranty/warranty_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

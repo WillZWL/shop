@@ -8,7 +8,7 @@ class Product_overview_qoo10 extends MY_Controller
     public $default_platform_id;
 
     //must set to public for view
-    private $app_id = "MKT0072";
+    private $appId = "MKT0072";
     private $lang_id = "en";
 
     public function __construct()
@@ -30,7 +30,7 @@ class Product_overview_qoo10 extends MY_Controller
 
     public function index($platform_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = base_url() . $this->overview_path . "/?" . $_SERVER['QUERY_STRING'];
 
         if ($this->input->post("posted") && $_POST["check"]) {
@@ -343,9 +343,9 @@ class Product_overview_qoo10 extends MY_Controller
         $this->load->view($this->overview_path . '/product_overview_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

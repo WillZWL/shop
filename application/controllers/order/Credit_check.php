@@ -3,7 +3,7 @@
 class Credit_check extends MY_Controller
 {
 
-    private $app_id = "ORD0002";
+    private $appId = "ORD0002";
     private $lang_id = "en";
 
 
@@ -23,7 +23,7 @@ class Credit_check extends MY_Controller
 
     public function index($pagetype = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $_SESSION["CCLISTPAGE"] = base_url() . "order/credit_check/" . ($pagetype ? "index/" . $pagetype : "") . "?" . $_SERVER['QUERY_STRING'];
         $_SESSION["CC_QSTRING"] = $_SERVER['QUERY_STRING'];
@@ -180,9 +180,9 @@ class Credit_check extends MY_Controller
         $this->load->view('order/credit_check/credit_check_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -194,7 +194,7 @@ class Credit_check extends MY_Controller
     {
         $password = $this->input->get("pw");
         if ($password) {
-            $sub_app_id = $this->_get_app_id() . "00";
+            $sub_app_id = $this->getAppId() . "00";
 
             $_SESSION["LISTPAGE"] = base_url() . "order/credit_check/chk_pw/" . $password . "/?" . $_SERVER['QUERY_STRING'];
 
@@ -988,7 +988,7 @@ class Credit_check extends MY_Controller
     {
         $data["title"] = "Bulk update";
 
-        $langfile = $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        $langfile = $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         include_once APPPATH . "language/" . $langfile;
         $data["lang"] = $lang;
 

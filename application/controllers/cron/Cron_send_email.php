@@ -2,7 +2,7 @@
 
 class Cron_send_email extends MY_Controller
 {
-    private $app_id = "CRN0003";
+    private $appId = "CRN0003";
 
     function __construct()
     {
@@ -56,9 +56,9 @@ class Cron_send_email extends MY_Controller
         }
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function wow_email_list_data()

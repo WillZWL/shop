@@ -2,7 +2,7 @@
 
 class Special_order extends MY_Controller
 {
-    private $app_id = "ORD0011";
+    private $appId = "ORD0011";
     private $lang_id = "en";
 
     public function __construct()
@@ -32,7 +32,7 @@ class Special_order extends MY_Controller
 
     public function index($platform_type = "", $platform_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         if ($platform_id) {
@@ -241,13 +241,13 @@ class Special_order extends MY_Controller
         $data["sp_list"] = $this->selling_platform_service->get_list(array("type" => $platform_type), array("orderby" => "name", "limit" => -1));
         $data["platform_id"] = $platform_id;
         $data["platform_type"] = $platform_type;
-        $data["app_id"] = $this->_get_app_id();
+        $data["app_id"] = $this->getAppId();
         $this->load->view('order/special_order/special_order_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -261,7 +261,7 @@ class Special_order extends MY_Controller
             show_404();
         }
 
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
@@ -363,7 +363,7 @@ class Special_order extends MY_Controller
     {
         if ($email) {
             $email = trim($email);
-            $sub_app_id = $this->_get_app_id() . "00";
+            $sub_app_id = $this->getAppId() . "00";
             $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
@@ -414,10 +414,10 @@ class Special_order extends MY_Controller
 
     public function on_hold($order_reason = "")
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         if ($order_reason == "aps_payment") {
             $is_aps_payment_page = true;
-            if (!check_app_feature_access_right($this->_get_app_id(), "ORD001101_aps_payment_order_page")) {
+            if (!check_app_feature_access_right($this->getAppId(), "ORD001101_aps_payment_order_page")) {
                 show_error("Access Denied!");
             }
         } else
@@ -552,13 +552,13 @@ class Special_order extends MY_Controller
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
         $data["searchdisplay"] = "";
-        $data["app_id"] = $this->_get_app_id();
+        $data["app_id"] = $this->getAppId();
         $this->load->view('order/special_order/special_order_on_hold_v', $data);
     }
 
     public function pending()
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         if ($this->input->post("posted")) {
@@ -573,13 +573,13 @@ class Special_order extends MY_Controller
                             $so_obj->set_hold_status('1');
                             break;
                         case "p":
-                            if (!check_app_feature_access_right($this->_get_app_id(), "ORD001102_process_order")) {
+                            if (!check_app_feature_access_right($this->getAppId(), "ORD001102_process_order")) {
                                 show_error("Access Denied!");
                             }
                             $so_obj->set_status('3');   // marked as fulfilled/creditchecked
                             break;
                         case "s":
-                            if (!check_app_feature_access_right($this->_get_app_id(), "ORD001102_process_order")) {
+                            if (!check_app_feature_access_right($this->getAppId(), "ORD001102_process_order")) {
                                 show_error("Access Denied!");
                             }
                             $so_obj->set_status('6');   // marked as shipped
@@ -670,7 +670,7 @@ class Special_order extends MY_Controller
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
         $data["searchdisplay"] = "";
 
-        $data["app_id"] = $this->_get_app_id();
+        $data["app_id"] = $this->getAppId();
         $this->load->view('order/special_order/special_order_pending_v', $data);
     }
 

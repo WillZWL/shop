@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cron_adroll_product_feed extends MY_Controller
 {
-    private $app_id = "CRN0032";
+    private $appId = "CRN0032";
 
     function __construct()
     {
@@ -17,8 +17,8 @@ class Cron_adroll_product_feed extends MY_Controller
         $this->adroll_product_feed_model->send_report($platform_id);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }

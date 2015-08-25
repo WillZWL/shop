@@ -2,7 +2,7 @@
 
 class Cron_duplicate_purchase extends MY_Controller
 {
-    private $app_id = "MKT0046";
+    private $appId = "MKT0046";
 
     function __construct()
     {

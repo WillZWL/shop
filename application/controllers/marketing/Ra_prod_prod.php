@@ -2,7 +2,7 @@
 
 class Ra_prod_prod extends MY_Controller
 {
-    private $app_id = "MKT0005";
+    private $appId = "MKT0005";
     private $lang_id = "en";
 
     public function __construct()
@@ -40,14 +40,14 @@ class Ra_prod_prod extends MY_Controller
                 $data["ra_prods"] = $this->ra_prod_prod_service->get_ra_prods_w_sku_key($this->input->get('sku'));
             }
         }
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $this->load->view('marketing/ra_prod_prod/ra_product_list', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

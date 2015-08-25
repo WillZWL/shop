@@ -3,7 +3,7 @@
 class Brand extends MY_Controller
 {
 
-    private $app_id = "MST0006";
+    private $appId = "MST0006";
     private $lang_id = "en";
 
 
@@ -19,7 +19,7 @@ class Brand extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $_SESSION["LISTPAGE"] = base_url() . "mastercfg/brand/?" . $_SERVER['QUERY_STRING'];
 
@@ -73,9 +73,9 @@ class Brand extends MY_Controller
         $this->load->view('mastercfg/brand/brand_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -86,7 +86,7 @@ class Brand extends MY_Controller
     public function add()
     {
 
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post("posted")) {
             if (isset($_SESSION["brand_vo"])) {
@@ -130,7 +130,7 @@ class Brand extends MY_Controller
 
     public function add_region()
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         global $data;
         if ($this->input->post("posted")) {
             if (isset($_SESSION["brand_vo"])) {
@@ -157,7 +157,7 @@ class Brand extends MY_Controller
     public function view($id = "")
     {
         if ($id) {
-            $sub_app_id = $this->_get_app_id() . "02";
+            $sub_app_id = $this->getAppId() . "02";
             global $data;
 
             if ($this->input->post("posted") && $this->input->post("cmd") == "edit") {

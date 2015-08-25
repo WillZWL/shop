@@ -3,7 +3,7 @@
 class Integrated_order_fulfillment extends MY_Controller
 {
 
-    private $app_id = "ORD0023";
+    private $appId = "ORD0023";
     private $lang_id = "en";
     private $metapack_path;
     private $courier_path;
@@ -16,7 +16,7 @@ class Integrated_order_fulfillment extends MY_Controller
         $public_method = array('invoice', 'custom_invoice', 'delivery_note', 'cron_generate_courier_file');
         $this->load->library('service/authorization_service');
         if (in_array(strtolower($this->router->fetch_method()), $public_method) === FALSE) {
-            $this->authorization_service->check_access_rights($this->_get_app_id(), "");
+            $this->authorization_service->check_access_rights($this->getAppId(), "");
         }
 
         $this->load->helper(array('url', 'operator', 'notice', 'object'));
@@ -64,14 +64,14 @@ class Integrated_order_fulfillment extends MY_Controller
         );
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function index($warehouse = "ES_HK")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $_SESSION["LISTPAGE"] = base_url() . "order/integrated_order_fulfillment/" . ($warehouse == "" ? "" : "index/" . $warehouse) . "?" . $_SERVER['QUERY_STRING'];
 
@@ -378,7 +378,7 @@ class Integrated_order_fulfillment extends MY_Controller
     public function to_ship()
     {
         set_time_limit(60);
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         $_SESSION["LISTPAGE"] = base_url() . "order/integrated_order_fulfillment/to_ship/?" . $_SERVER['QUERY_STRING'];
 
@@ -777,7 +777,7 @@ class Integrated_order_fulfillment extends MY_Controller
     public function dispatch()
     {
         set_time_limit(60);
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
 
         $_SESSION["LISTPAGE"] = base_url() . "order/integrated_order_fulfillment/dispatch/?" . $_SERVER['QUERY_STRING'];
         if ($this->input->post("posted") && $_POST["check"]) {
@@ -1118,7 +1118,7 @@ class Integrated_order_fulfillment extends MY_Controller
     public function add_note($so_no = "", $line = "")
     {
         if ($so_no && $line != "") {
-            $sub_app_id = $this->_get_app_id() . "00";
+            $sub_app_id = $this->getAppId() . "00";
             $_SESSION["LISTPAGE"] = base_url() . "order/integrated_order_fulfillment/add_note/$so_no/$line?" . $_SERVER['QUERY_STRING'];
             if ($this->input->post("posted")) {
                 if (isset($_SESSION["obj"])) {
@@ -1264,7 +1264,7 @@ class Integrated_order_fulfillment extends MY_Controller
 
     public function invoice()
     {
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         $data["message"] = $this->so_service->get_print_invoice_content($_POST["check"]);
         $this->load->view("order/integrated_order_fulfillment/invoice", $data);
 
@@ -1273,21 +1273,21 @@ class Integrated_order_fulfillment extends MY_Controller
     public function custom_invoice($currency = "")
     {
         $new_shipper_name = trim($_POST["shipper_name"]);
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         $data["message"] = $this->so_service->get_custom_invoice_content($_POST["check"], $new_shipper_name, $currency);
         $this->load->view("order/integrated_order_fulfillment/invoice", $data);
     }
 
     public function delivery_note()
     {
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         $data["message"] = $this->so_service->get_delivery_note_content($_POST["check"]);
         $this->load->view("order/integrated_order_fulfillment/invoice", $data);
     }
 
     public function order_packing_slip()
     {
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         $data["message"] = $this->so_service->get_order_packing_slip_content($_POST["check"]);
         $this->load->view("order/integrated_order_fulfillment/invoice", $data);
     }

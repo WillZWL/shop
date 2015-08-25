@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cron_competitor_mapping extends MY_Controller
 {
-    private $app_id = "CRN0018";
+    private $appId = "CRN0018";
 
     function __construct()
     {
@@ -16,9 +16,9 @@ class Cron_competitor_mapping extends MY_Controller
         $this->competitor_mapping_model->process_mapping_file($country_id, $debug_filename);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
 }

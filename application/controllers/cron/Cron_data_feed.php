@@ -2,7 +2,7 @@
 
 class Cron_data_feed extends MY_Controller
 {
-    private $app_id = "CRN0009";
+    private $appId = "CRN0009";
 
     function __construct()
     {
@@ -219,9 +219,9 @@ class Cron_data_feed extends MY_Controller
         $this->data_feed_model->download_supplier_cost_csv($platform_id);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

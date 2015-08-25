@@ -3,7 +3,7 @@
 class Promotion_code extends MY_Controller
 {
 
-    private $app_id = "MKT0017";
+    private $appId = "MKT0017";
     private $lang_id = "en";
 
 
@@ -18,7 +18,7 @@ class Promotion_code extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
@@ -93,9 +93,9 @@ class Promotion_code extends MY_Controller
         $this->load->view('marketing/promotion_code/promotion_code_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -106,7 +106,7 @@ class Promotion_code extends MY_Controller
     public function add()
     {
 
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post("posted")) {
             if (isset($_SESSION["promotion_code_vo"])) {
@@ -173,7 +173,7 @@ class Promotion_code extends MY_Controller
     public function view($code = "")
     {
         if ($code) {
-            $sub_app_id = $this->_get_app_id() . "02";
+            $sub_app_id = $this->getAppId() . "02";
 
             if ($this->input->post("posted")) {
                 unset($_SESSION["NOTICE"]);

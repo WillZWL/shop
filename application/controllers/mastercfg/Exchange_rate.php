@@ -3,18 +3,18 @@ include_once "ExchangeRateHelper.php";
 
 class Exchange_rate extends ExchangeRateHelper
 {
-    private $app_id = "MST0003";
+    private $appId = "MST0003";
     private $lang_id = "en";
 
     public function __construct()
     {
         parent::__construct();
-        $this->authorization_service->check_access_rights($this->_get_app_id(), "");
+        $this->authorization_service->check_access_rights($this->getAppId(), "");
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function view($value = "")
@@ -66,8 +66,8 @@ class Exchange_rate extends ExchangeRateHelper
 
         $canedit = 1;
 
-        include_once APPPATH . '/language/' . $this->_get_app_id() . '02_' . $this->_get_lang_id() . '.php';
-        $sub_app_id = $this->_get_app_id() . "02";
+        include_once APPPATH . '/language/' . $this->getAppId() . '02_' . $this->_get_lang_id() . '.php';
+        $sub_app_id = $this->getAppId() . "02";
         $data["lang"] = $lang;
 
         if ($canedit) {
@@ -110,7 +110,7 @@ class Exchange_rate extends ExchangeRateHelper
 
     public function index()
     {
-        include_once APPPATH . '/language/' . $this->_get_app_id() . '00_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '00_' . $this->_get_lang_id() . '.php';
         $data["lang"] = $lang;
         $data["title"] = "Exchange Rate Management";
         $data["header"] = "Please select the base currency";

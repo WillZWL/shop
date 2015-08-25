@@ -2,7 +2,7 @@
 
 class Ra_prod_cat extends MY_Controller
 {
-    private $app_id = "MKT0004";
+    private $appId = "MKT0004";
     private $lang_id = "en";
 
     public function __construct()
@@ -16,15 +16,15 @@ class Ra_prod_cat extends MY_Controller
     public function index()
     {
         $data = array();
-        include APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["sscat_list"] = $this->ra_prod_cat_model->get_scat_list();
         $this->load->view('marketing/ra_prod_cat/ra_index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -77,7 +77,7 @@ class Ra_prod_cat extends MY_Controller
             $data["type"] = "update";
         }
         $data["ra_obj"] = $ra_obj;
-        include APPPATH . "language/" . $this->_get_app_id() . "02_" . $this->_get_lang_id() . ".php";
+        include APPPATH . "language/" . $this->getAppId() . "02_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["sscat_list"] = $this->ra_prod_cat_model->get_scat_list();
         $data["warr_cat_list"] = $this->ra_prod_cat_model->get_warranty_cat_list();

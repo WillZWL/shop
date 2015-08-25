@@ -3,24 +3,24 @@ include_once "freight_helper.php";
 
 class Freight extends Freight_helper
 {
-    private $app_id = "MST0009";
+    private $appId = "MST0009";
     private $lang_id = "en";
 
     public function __construct()
     {
         parent::Freight_helper();
-        $this->authorization_service->check_access_rights($this->_get_app_id(), "");
+        $this->authorization_service->check_access_rights($this->getAppId(), "");
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function add()
     {
 
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         $cat_type = $this->input->post("cat_type");
 
         if ($this->input->post("posted")) {
@@ -59,7 +59,7 @@ class Freight extends Freight_helper
 
     public function index($cat_type = "freight", $cat_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $where = array();
         $option = array();
@@ -163,7 +163,7 @@ class Freight extends Freight_helper
     public function view($origin_country = "")
     {
         if ($origin_country) {
-            $sub_app_id = $this->_get_app_id() . "02";
+            $sub_app_id = $this->getAppId() . "02";
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
             if ($this->input->post("posted")) {
@@ -227,7 +227,7 @@ class Freight extends Freight_helper
     public function region($courier_id = "")
     {
         if ($courier_id) {
-            $sub_app_id = $this->_get_app_id() . "02";
+            $sub_app_id = $this->getAppId() . "02";
 
             $courier = $this->freight_model->get_courier(array("id" => $courier_id));
             $data["objlist"] = $this->freight_model->get_courier_region_country(array("courier_id" => $courier_id));
@@ -242,7 +242,7 @@ class Freight extends Freight_helper
 
     public function edit($cat_id)
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         $cat_type = $this->input->post("cat_type");
 
         if ($this->input->post("posted")) {

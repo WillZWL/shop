@@ -27,9 +27,9 @@ class Sales_trend_report extends MY_Controller
         // $CI->db->db_debug = true;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _set_app_id($value)

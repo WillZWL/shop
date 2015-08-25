@@ -3,7 +3,7 @@
 class Video extends MY_Controller
 {
 
-    private $app_id = "MKT0040";
+    private $appId = "MKT0040";
     private $lang_id = "en";
 
     public function __construct()
@@ -35,7 +35,7 @@ class Video extends MY_Controller
         } else {
             $data["display"] = 0;
         }
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -48,9 +48,9 @@ class Video extends MY_Controller
         $this->load->view('marketing/video/video_index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -72,7 +72,7 @@ class Video extends MY_Controller
 
         $where = array();
         $option = array();
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -134,7 +134,7 @@ class Video extends MY_Controller
 
     public function view_right($sku = "", $lang_id = "", $country = "", $id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 

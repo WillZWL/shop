@@ -7,7 +7,7 @@ class Website_bank_transfer_report extends MY_Controller
     public $default_country_id;
 
     //must set to public for view
-    private $app_id = "RPT0044";
+    private $appId = "RPT0044";
     private $lang_id = "en";
 
     public function __construct()
@@ -26,7 +26,7 @@ class Website_bank_transfer_report extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["BTRPAGE"] = base_url() . "report/website_bank_transfer_report/";
         $rec_date = $order_date = array();
 
@@ -78,9 +78,9 @@ class Website_bank_transfer_report extends MY_Controller
         }
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     private function generate_report($data = array())

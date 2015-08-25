@@ -3,7 +3,7 @@
 class Custom_class extends MY_Controller
 {
 
-    private $app_id = "MST0008";
+    private $appId = "MST0008";
     private $lang_id = "en";
 
 
@@ -18,7 +18,7 @@ class Custom_class extends MY_Controller
     public function add()
     {
 
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post("posted")) {
 
@@ -45,14 +45,14 @@ class Custom_class extends MY_Controller
         $this->index($this->input->post("region_id"));
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function index($country_id = "", $cc_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($region_id == "" ? "" : "index/" . $region_id) . ($cc_id == "" ? "" : "/" . $cc_id) . "?" . $_SERVER['QUERY_STRING'];
 
@@ -152,7 +152,7 @@ class Custom_class extends MY_Controller
 
     public function edit($id)
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
 
         if ($this->input->post("posted")) {
             unset($_SESSION["NOTICE"]);
@@ -190,7 +190,7 @@ class Custom_class extends MY_Controller
 
     public function edit_sku($sku)
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
 
         if ($this->input->post("posted")) {
             unset($_SESSION["NOTICE"]);
@@ -222,7 +222,7 @@ class Custom_class extends MY_Controller
 
     public function sku($country_id = "", $sku = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "sku/" . $country_id) . ($sku == "" ? "" : "/" . $sku) . "?" . $_SERVER['QUERY_STRING'];
 
@@ -328,7 +328,7 @@ class Custom_class extends MY_Controller
 
     public function edit_sub_cat($sub_cat_id)
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
 
         if ($this->input->post("posted")) {
             unset($_SESSION["NOTICE"]);
@@ -369,7 +369,7 @@ class Custom_class extends MY_Controller
 
     public function sub_cat($country_id = "", $sub_cat_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "sub_cat/" . $country_id) . ($sub_cat_id == "" ? "" : "/" . $sub_cat_id) . "?" . $_SERVER['QUERY_STRING'];
 

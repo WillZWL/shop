@@ -2,7 +2,7 @@
 
 class Import_finance_dispatch_date extends MY_Controller
 {
-    private $app_id = "ORD0026";
+    private $appId = "ORD0026";
     private $lang_id = "en";
 
     public function __construct()
@@ -15,7 +15,7 @@ class Import_finance_dispatch_date extends MY_Controller
 
     public function index($batch_id = null)
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -60,9 +60,9 @@ class Import_finance_dispatch_date extends MY_Controller
         $this->load->view('order/import_finance_dispatch_date/index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

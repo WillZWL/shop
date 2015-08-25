@@ -2,7 +2,7 @@
 
 class Cron_update_rrp_factor extends MY_Controller
 {
-    private $app_id = "CRN0015";
+    private $appId = "CRN0015";
 
     function __construct()
     {
@@ -15,9 +15,9 @@ class Cron_update_rrp_factor extends MY_Controller
         $this->pricing_tool_website_model->update_rrp_factor();
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

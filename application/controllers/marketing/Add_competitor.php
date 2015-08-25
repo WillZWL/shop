@@ -4,7 +4,7 @@ class Add_competitor extends MY_Controller
 {
 
     public $default_platform_id;
-    private $app_id = 'MKT0076';
+    private $appId = 'MKT0076';
 
     //must set to public for view
     private $lang_id = 'en';
@@ -54,7 +54,7 @@ class Add_competitor extends MY_Controller
             }
         }
 
-        include_once APPPATH . "language/" . $this->_get_app_id() . "00_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["country_list"] = $this->country_service->get_sell_country_list();
         if ($country_id) {
@@ -171,9 +171,9 @@ class Add_competitor extends MY_Controller
         return $result;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

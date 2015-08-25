@@ -7,7 +7,7 @@ DEFINE ("MAJOR_DELAY_SENT_STATUS", 2);
 
 class Cron_delayed_order_email extends MY_Controller
 {
-    private $app_id = 'CRN0017';
+    private $appId = 'CRN0017';
 
     function __construct()
     {
@@ -147,9 +147,9 @@ class Cron_delayed_order_email extends MY_Controller
         $this->event_service->fire_event($email_dto);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

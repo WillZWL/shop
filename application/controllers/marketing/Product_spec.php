@@ -2,7 +2,7 @@
 
 class Product_spec extends MY_Controller
 {
-    private $app_id = "MKT0049";
+    private $appId = "MKT0049";
     private $lang_id = "en";
 
     public function __construct()
@@ -16,7 +16,7 @@ class Product_spec extends MY_Controller
 
     public function index($ps_id = '')
     {
-        include_once APPPATH . "language/" . $this->_get_app_id() . "00_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
         $data["psg_list"] = $this->product_spec_model->get_prod_spec_group_list(array("status" => 1), array("orderby" => "priority DESC"));
@@ -38,9 +38,9 @@ class Product_spec extends MY_Controller
         $this->load->view('marketing/product_spec/prod_spec_view.php', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -125,7 +125,7 @@ class Product_spec extends MY_Controller
         $where["(func_id LIKE \"psg.%\" OR func_id LIKE \"ps.%\")"] = NULL;
         $this->product_spec_model->check_serialize('func_opt_list', $data, $where);
 
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
 
         $data["lang_list"] = $this->product_spec_model->get_lang_list(array("status" => 1), array("limit" => -1));
         $data["lang"] = $lang;

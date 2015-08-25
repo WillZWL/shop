@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cron_competitor_reprice extends MY_Controller
 {
-    private $app_id = "CRN0020";
+    private $appId = "CRN0020";
 
     function __construct()
     {
@@ -19,9 +19,9 @@ class Cron_competitor_reprice extends MY_Controller
         $this->competitor_model->reprice($platform_id, $echo_file, $debug_sku);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
 }

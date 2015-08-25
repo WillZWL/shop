@@ -2,7 +2,7 @@
 
 class Cron_daily_order_email extends MY_Controller
 {
-    private $app_id = 'CRN0028';
+    private $appId = 'CRN0028';
 
     function __construct()
     {
@@ -30,9 +30,9 @@ class Cron_daily_order_email extends MY_Controller
         $this->order_email_service->get_order_beforeship();
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

@@ -15,7 +15,7 @@
  **/
 class Refund extends MY_Controller
 {
-    private $app_id = 'CS0002';
+    private $appId = 'CS0002';
     private $lang_id = 'en';
 
     public function __construct()
@@ -36,20 +36,20 @@ class Refund extends MY_Controller
 
     public function index()
     {
-        //$sub_app_id = $this->_get_app_id()."00";
+        //$sub_app_id = $this->getAppId()."00";
         //$this->authorization_service->check_access_rights($sub_app_id, "List");
 
 
-        $langfile = $this->_get_app_id() . "00_" . $this->_get_lang_id() . ".php";
+        $langfile = $this->getAppId() . "00_" . $this->_get_lang_id() . ".php";
         include_once APPPATH . "language/" . $langfile;
         $data["lang"] = $lang;
-        $data["app_id"] = $this->_get_app_id();
+        $data["app_id"] = $this->getAppId();
         $this->load->view('cs/refund/index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -59,7 +59,7 @@ class Refund extends MY_Controller
 
     public function reason($id = "")
     {
-        if (check_app_feature_access_right($this->_get_app_id(), "CS000200_refund_btn")) {
+        if (check_app_feature_access_right($this->getAppId(), "CS000200_refund_btn")) {
             if ($this->input->post('posted')) {
                 if ($this->input->post('action') == 'add') {
                     $reason_obj = $this->refund_model->get_reason();
@@ -95,7 +95,7 @@ class Refund extends MY_Controller
 
             $_SESSION["LISTPAGE"] = base_url() . "cs/refund/reason?" . $_SERVER['QUERY_STRING'];
 
-            $langfile = $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+            $langfile = $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
             include_once APPPATH . "language/" . $langfile;
 
             $where["status"] = 1;
@@ -141,7 +141,7 @@ class Refund extends MY_Controller
                 $_SESSION["refund_reason"] = serialize($this->refund_model->get_reason(array("id" => $id)));
                 $data["eid"] = $id;
             }
-            $data["app_id"] = $this->_get_app_id();
+            $data["app_id"] = $this->getAppId();
             $this->load->view('cs/refund/index_reason', $data);
         } else {
             show_error("Access Denied!");
@@ -150,7 +150,7 @@ class Refund extends MY_Controller
 
     public function create()
     {
-        //$sub_app_id = $this->_get_app_id()."02";
+        //$sub_app_id = $this->getAppId()."02";
         //$this->authorization_service->check_access_rights($sub_app_id, "List");
 
         $where = array();
@@ -208,7 +208,7 @@ class Refund extends MY_Controller
             $this->pagination_service->initialize($pconfig);
         }
 
-        $langfile = $this->_get_app_id() . "02_" . $this->_get_lang_id() . ".php";
+        $langfile = $this->getAppId() . "02_" . $this->_get_lang_id() . ".php";
         include_once APPPATH . "language/" . $langfile;
 
         $data["notice"] = notice($lang);
@@ -224,7 +224,7 @@ class Refund extends MY_Controller
             exit;
         }
 
-        //$sub_app_id = $this->_get_app_id()."03";
+        //$sub_app_id = $this->getAppId()."03";
         //$this->authorization_service->check_access_rights($sub_app_id, "Edit");
 
         if ($this->input->post('posted')) {
@@ -393,7 +393,7 @@ class Refund extends MY_Controller
 
         $data["refund"] = $this->refund_model->get_refund(array("so_no" => $orderid, "status" => "I"), array("orderby" => "create_on DESC", "limit" => 1));
 
-        $langfile = $this->_get_app_id() . "03_" . $this->_get_lang_id() . ".php";
+        $langfile = $this->getAppId() . "03_" . $this->_get_lang_id() . ".php";
         include_once APPPATH . "language/" . $langfile;
 
         $reasonlist = $this->refund_model->get_reason_list(array("status" => 1), array("orderby" => "reason_cat , id"));
@@ -408,7 +408,7 @@ class Refund extends MY_Controller
 
     public function logistics()
     {
-        if (check_app_feature_access_right($this->_get_app_id(), "CS000200_log_btn")) {
+        if (check_app_feature_access_right($this->getAppId(), "CS000200_log_btn")) {
             $where = array();
             $option = array();
 
@@ -452,7 +452,7 @@ class Refund extends MY_Controller
 
             $option["orderby"] = $sort . " " . $order;
 
-            $langfile = $this->_get_app_id() . "04_" . $this->_get_lang_id() . ".php";
+            $langfile = $this->getAppId() . "04_" . $this->_get_lang_id() . ".php";
             include_once APPPATH . "language/" . $langfile;
 
             $data = $this->refund_model->get_refund_so_list($where, $option);
@@ -477,12 +477,12 @@ class Refund extends MY_Controller
 
     public function logistics_view($refundid = "")
     {
-        if (check_app_feature_access_right($this->_get_app_id(), "CS000200_log_btn")) {
+        if (check_app_feature_access_right($this->getAppId(), "CS000200_log_btn")) {
             if ($refundid == "") {
                 Redirect(base_url() . "cs/refund/logistics/");
             }
 
-            //$sub_app_id = $this->_get_app_id()."05";
+            //$sub_app_id = $this->getAppId()."05";
             //$this->authorization_service->check_access_rights($sub_app_id, "Edit");
 
             if ($this->input->post('posted')) {
@@ -627,7 +627,7 @@ class Refund extends MY_Controller
             $data["order_item_list"] = $order_item_list;
             $data["orderobj"] = $this->refund_model->get_so(array("so_no" => $refund_obj->get_so_no()));
             $data["refund_obj"] = $refund_obj;
-            $langfile = $this->_get_app_id() . "05_" . $this->_get_lang_id() . ".php";
+            $langfile = $this->getAppId() . "05_" . $this->_get_lang_id() . ".php";
             include_once APPPATH . "language/" . $langfile;
 
             $reasonlist = $this->refund_model->get_reason_list(array(), array());
@@ -657,7 +657,7 @@ class Refund extends MY_Controller
 
     public function export_cs_csv()
     {
-        if (check_app_feature_access_right($this->_get_app_id(), "CS000200_cs_btn")) {
+        if (check_app_feature_access_right($this->getAppId(), "CS000200_cs_btn")) {
             list($where, $option) = $this->build_cs_query();
             $option["limit"] = -1;
             $data = $this->refund_model->get_refund_so_list($where, $option);
@@ -741,12 +741,12 @@ class Refund extends MY_Controller
 
     public function cs()
     {
-        if (check_app_feature_access_right($this->_get_app_id(), "CS000200_cs_btn")) {
+        if (check_app_feature_access_right($this->getAppId(), "CS000200_cs_btn")) {
             $q = "";
             foreach ($_GET as $k => $v)
                 $q .= "&$k=" . urlencode($v);
 
-            $langfile = $this->_get_app_id() . "06_" . $this->_get_lang_id() . ".php";
+            $langfile = $this->getAppId() . "06_" . $this->_get_lang_id() . ".php";
             include_once APPPATH . "language/" . $langfile;
 
             list($where, $option) = $this->build_cs_query();
@@ -783,13 +783,13 @@ class Refund extends MY_Controller
 
     public function cs_view($refundid = "")
     {
-        if (check_app_feature_access_right($this->_get_app_id(), "CS000200_cs_btn")) {
+        if (check_app_feature_access_right($this->getAppId(), "CS000200_cs_btn")) {
             if ($refundid == "") {
                 Redirect(base_url() . "cs/refund/cs/");
                 exit;
             }
 
-            //$sub_app_id = $this->_get_app_id()."07";
+            //$sub_app_id = $this->getAppId()."07";
             //$this->authorization_service->check_access_rights($sub_app_id, "Edit");
 
             if ($this->input->post('posted')) {
@@ -933,7 +933,7 @@ class Refund extends MY_Controller
             $data["order_item_list"] = $order_item_list;
             $data["orderobj"] = $this->refund_model->get_so(array("so_no" => $refund_obj->get_so_no()));
             $data["refund_obj"] = $refund_obj;
-            $langfile = $this->_get_app_id() . "07_" . $this->_get_lang_id() . ".php";
+            $langfile = $this->getAppId() . "07_" . $this->_get_lang_id() . ".php";
             include_once APPPATH . "language/" . $langfile;
 
             $reasonlist = $this->refund_model->get_reason_list(array(), array());
@@ -953,7 +953,7 @@ class Refund extends MY_Controller
 
     public function account()
     {
-        if (check_app_feature_access_right($this->_get_app_id(), "CS000200_acc_btn")) {
+        if (check_app_feature_access_right($this->getAppId(), "CS000200_acc_btn")) {
             $where["rstatus"] = array('CS', 'CP');
 
             if ($this->input->get('rid') != "")
@@ -1019,7 +1019,7 @@ class Refund extends MY_Controller
                     $temp["multiSort"]["$v"] = 'DESC';
             }
 
-            $langfile = $this->_get_app_id() . "08_" . $this->_get_lang_id() . ".php";
+            $langfile = $this->getAppId() . "08_" . $this->_get_lang_id() . ".php";
             include_once APPPATH . "language/" . $langfile;
             $option["limit"] = $pconfig['per_page'] = 5000;
             $data = $this->refund_model->get_refund_so_list($where, $option);
@@ -1044,7 +1044,7 @@ class Refund extends MY_Controller
 
     public function account_view($refundid = "")
     {
-        if (check_app_feature_access_right($this->_get_app_id(), "CS000200_acc_btn")) {
+        if (check_app_feature_access_right($this->getAppId(), "CS000200_acc_btn")) {
 
             if ($refundid == "") {
                 Redirect(base_url() . "cs/refund/account/");
@@ -1066,7 +1066,7 @@ class Refund extends MY_Controller
                 Redirect(base_url() . "cs/refund/account_view/" . $refundid);
             }
 
-            //$sub_app_id = $this->_get_app_id()."09";
+            //$sub_app_id = $this->getAppId()."09";
             //$this->authorization_service->check_access_rights($sub_app_id, "Edit");
 
             if ($this->input->post('posted')) {
@@ -1198,7 +1198,7 @@ class Refund extends MY_Controller
             $data["order_item_list"] = $order_item_list;
             $data["orderobj"] = $this->refund_model->get_so(array("so_no" => $refund_obj->get_so_no()));
             $data["refund_obj"] = $refund_obj;
-            $langfile = $this->_get_app_id() . "09_" . $this->_get_lang_id() . ".php";
+            $langfile = $this->getAppId() . "09_" . $this->_get_lang_id() . ".php";
             include_once APPPATH . "language/" . $langfile;
 
             $reasonlist = $this->refund_model->get_reason_list(array(), array());
