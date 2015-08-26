@@ -22,16 +22,6 @@ class Product_identifier_service extends Base_service
         return $this->get_dao()->get_list($where, $option);
     }
 
-    public function insert($obj)
-    {
-        return $this->get_dao()->insert($obj);
-    }
-
-    public function update($obj)
-    {
-        return $this->get_dao()->update($obj);
-    }
-
     public function get_product_identifier_list_grouped_by_country($where = array())
     {
         return $this->get_dao()->get_product_identifier_list_grouped_by_country($where);

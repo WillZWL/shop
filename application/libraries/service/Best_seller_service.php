@@ -145,16 +145,6 @@ class Best_seller_service extends Landpage_listing_service
         return $bs_list;
     }
 
-    public function insert(Best_seller_vo $obj)
-    {
-        return $this->get_dao()->insert($obj);
-    }
-
-    public function update($obj)
-    {
-        return $this->get_dao()->update($obj);
-    }
-
     public function get_product_list($where = array(), $option = array())
     {
         return $this->product_service->get_dao()->get_list_w_name($where, $option, "Product_list_w_name_dto");

@@ -31,11 +31,4 @@ class Adbanner_service extends Base_service
         return $this->get_dao()->get_list_with_name($value);
     }
 
-    public function update($data)
-    {
-        return $this->get_dao()->update($data);
-    }
-
 }
-
-

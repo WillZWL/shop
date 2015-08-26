@@ -96,16 +96,6 @@ class Skype_promotion_service extends Landpage_listing_service
         return $this->get_dao()->get_item_w_name_list($where, $option);
     }
 
-    public function insert($obj)
-    {
-        return $this->get_dao()->insert($obj);
-    }
-
-    public function update($obj)
-    {
-        return $this->get_dao()->update($obj);
-    }
-
     public function get_product_list($where = array(), $option = array())
     {
         return $this->product_service->get_dao()->get_list_w_name($where, $option, "Product_list_w_name_dto");
