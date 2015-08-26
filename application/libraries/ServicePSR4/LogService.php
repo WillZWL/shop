@@ -1,6 +1,8 @@
 <?php
 namespace AtomV2\Service;
 
+use AtomV2\Dao\LogmessageDao;
+
 class LogService extends BaseService
 {
     var $logmedia = "";
@@ -22,12 +24,7 @@ class LogService extends BaseService
         $this->logformat = $this->config->item('logformat');
         $this->logpath = $this->config->item('logpath');
         $this->loglevel = $this->config->item('loglevel');
-        include_once APPPATH . '/libraries/dao/Logmessage_dao.php';
-        $this->dao = new Logmessage_dao();
-        // foreach($this->loglevel as $type=>$level)
-        // {
-        //  $this->rloglevel[$level] = $type;
-        // }
+        $this->setDao(new LogmessageDao);
     }
 
     public function get_loglevel()
@@ -38,11 +35,11 @@ class LogService extends BaseService
     public function get_log_header()
     {
         $empty_field_array = array();
-        $logmessage_obj = $this->dao->get();
+        $logmessage_obj = $this->getDao()->get();
         $class_method = get_class_methods($logmessage_obj);
         foreach ($class_method as $fct_name) {
-            if (substr($fct_name, 0, 4) == "get_") {
-                $field = substr($fct_name, 4);
+            if (substr($fct_name, 0, 3) == "get") {
+                $field = substr($fct_name, 3);
                 $empty_field_array[$field] = "";
             }
         }
@@ -110,20 +107,20 @@ class LogService extends BaseService
 
     private function write_log_to_database($data)
     {
-        $log_message_vo = $this->dao->get();
+        $log_message_vo = $this->getDao()->get();
         $class_methods = get_class_methods($log_message_vo);
         foreach ($class_methods as $fct_name) {
-            if (substr($fct_name, 0, 4) == 'set_') {
-                $var = substr($fct_name, 4);
-                $set_method = 'set_' . $var;
+            if (substr($fct_name, 0, 3) == 'set') {
+                $var = substr($fct_name, 3);
+                $set_method = 'set' . $var;
                 call_user_func(array($log_message_vo, $set_method), $data[$var]);
             }
         }
 
         try {
-            $return_obj = $this->dao->insert($log_message_vo);
+            $return_obj = $this->getDao()->insert($log_message_vo);
 
-//          if(!($return_obj = $this->dao->insert($log_message_vo)))
+//          if(!($return_obj = $this->getDao()->insert($log_message_vo)))
             if (!$return_obj) {
                 throw new Exception("Fail adding log records to database, dumping records into log file");
             }
