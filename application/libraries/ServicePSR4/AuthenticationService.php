@@ -81,7 +81,7 @@ class AuthenticationService extends BaseService
         session_destroy();
     }
 
-    public function check_authed()
+    public function checkAuthed()
     {
         if (isset($_SESSION["user"]["id"])) {
             if (md5($_SESSION["user"]["id"] . ":" . $_SESSION["user"]["username"]) == $_SESSION["user"]["authed"]) {
