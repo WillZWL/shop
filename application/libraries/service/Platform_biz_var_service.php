@@ -144,11 +144,6 @@ class Platform_biz_var_service extends Base_service
         return $this->get_dao()->get_unique_dest_country_list();
     }
 
-    // public function update($data, $where = array())
-    // {
-    //  return $this->platform_biz_var_dao->update($data);
-    // }
-
     public function get_dest_country_w_delivery_type_list()
     {
         return $this->get_dao()->get_dest_country_w_delivery_type_list();

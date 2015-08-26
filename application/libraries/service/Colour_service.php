@@ -12,16 +12,6 @@ class Colour_service extends Base_service
         $this->set_dao(new Colour_dao());
     }
 
-    public function insert($obj)
-    {
-        return $this->get_dao()->insert($obj);
-    }
-
-    public function update($obj)
-    {
-        return $this->get_dao()->update($obj);
-    }
-
     public function get($where = array())
     {
         if (!count($where)) {

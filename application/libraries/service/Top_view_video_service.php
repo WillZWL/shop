@@ -35,16 +35,6 @@ class Top_view_video_service extends Landpage_video_listing_service
         }
     }
 
-    public function insert($obj)
-    {
-        return $this->get_dao()->insert($obj);
-    }
-
-    public function update($obj)
-    {
-        return $this->get_dao()->update($obj);
-    }
-
     public function get_video_list($where = array(), $option = array())
     {
         return $this->product_service->get_dao()->get_video_list_w_name($where, $option);

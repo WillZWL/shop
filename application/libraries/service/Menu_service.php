@@ -22,16 +22,6 @@ class Menu_service extends Base_service
         return $this->get_dao()->get_list($where, $option);
     }
 
-    public function insert($obj)
-    {
-        return $this->get_dao()->insert($obj);
-    }
-
-    public function update($obj)
-    {
-        return $this->get_dao()->update($obj);
-    }
-
     public function get_list_w_name($where = array(), $option = array())
     {
         return $this->get_dao()->get_list_w_name($where, $option);
