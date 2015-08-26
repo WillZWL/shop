@@ -87,8 +87,14 @@
                         foreach ($scenario_list as $scenarioobj) {
                             $scenarioid = $scenarioobj->id;
                             $scenarioname = $scenarioobj->name;
-                            $info = array();
+                            $info = [];
                             // this info was stored in database
+// echo "<pre/>";
+// print_r($del_list_by_country);
+
+                            if (empty($del_list_by_country[$ctry_id])) {
+                                continue;
+                            }
                             if ($del_list = $del_list_by_country[$ctry_id]) {
                                 foreach ($del_list as $delobj) {
                                     // group them by scenarioid
@@ -98,7 +104,7 @@
                                     $info[$del_scenarioid]["del_min_day"] = $delobj->get_del_min_day();
                                     $info[$del_scenarioid]["del_max_day"] = $delobj->get_del_max_day();
                                     $info[$del_scenarioid]["margin"] = $delobj->get_margin();
-                                    $info[$del_scenarioid]["create_on"] = $delobj->get_create_on();
+                                    $info[$del_scenarioid]["create_oarrayn"] = $delobj->get_create_on();
                                     $info[$del_scenarioid]["create_at"] = $delobj->get_create_at();
                                     $info[$del_scenarioid]["create_by"] = $delobj->get_create_by();
                                     $info[$del_scenarioid]["modify_on"] = $delobj->get_modify_on();
@@ -109,7 +115,7 @@
 
                             // if previous post data different from database, then overwrite here
                             // so that if has error in updating, previous input data wont be lost.
-                            if ($postobj = $postdata[$ctry_id]) {
+                            if (!empty($postdata) && $postobj = $postdata[$ctry_id]) {
                                 if ($postobj[$scenarioid]["ship_min_day"] !== $info[$scenarioid]["ship_min_day"])
                                     $info[$scenarioid]["ship_min_day"] = $postobj[$scenarioid]["ship_min_day"];
 
@@ -122,7 +128,7 @@
                                 if ($postobj[$scenarioid]["del_max_day"] !== $info[$scenarioid]["del_max_day"])
                                     $info[$scenarioid]["del_max_day"] = $postobj[$scenarioid]["del_max_day"];
 
-                                if ($postobj[$scenarioid]["margin"] !== $info[$scenarioid]["margin"])
+                                if (!empty($postobj[$scenarioid]["margin"]) && $info[$scenarioid]["margin"] && $postobj[$scenarioid]["margin"] !== $info[$scenarioid]["margin"])
                                     $info[$scenarioid]["margin"] = $postobj[$scenarioid]["margin"];
                             }
                             ?>
