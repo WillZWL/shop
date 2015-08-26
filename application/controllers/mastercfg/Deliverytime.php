@@ -4,7 +4,7 @@ class Deliverytime extends MY_Controller
 {
 
     private $appId = "MST0018";
-    private $lang_id = "en";
+    private $langId = "en";
 
     private $default_delivery;
 
@@ -12,7 +12,6 @@ class Deliverytime extends MY_Controller
     {
         parent::__construct();
         $this->load->model('mastercfg/deliverytime_model');
-        $this->load->helper(array('url', 'notice', 'object'));
         $this->load->library('service/context_config_service');
         $this->default_delivery = $this->context_config_service->value_of("default_delivery_type");
     }
@@ -31,7 +30,7 @@ class Deliverytime extends MY_Controller
         $data["country_list"] = $this->country_service->get_sell_country_list();
         $del_list = $this->deliverytime_service->get_deliverytime_list();
 
-        $del_list_by_country = array();
+        $del_list_by_country = [];
         if ($data["country_list"] && $del_list && $data["scenario_list"]) {
             foreach ($data["country_list"] as $countryobj) {
                 $countrycode = $countryobj->get_id();
@@ -47,7 +46,7 @@ class Deliverytime extends MY_Controller
 
         $data["del_list_by_country"] = $del_list_by_country;
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
         $this->load->view('mastercfg/deliverytime/deliverytime_index_v', $data);
@@ -58,15 +57,16 @@ class Deliverytime extends MY_Controller
         return $this->appId;
     }
 
-    private function update_form($postdata = array())
+    private function update_form($postdata = [])
     {
-        $ret = array();
+        $ret = [];
         $ret["status"] = FALSE;
         $deliverytime_dao = $this->deliverytime_service->get_dao();
 
         if ($postdata) {
             $success = 1;
             $error_msg = "The following could not be updated: ";
+            $email_msg = "";
 
             if ($scenario_list = $this->deliverytime_service->get_delivery_scenario_list()) {
                 // get scenario names and compile by scenarioid
@@ -88,7 +88,11 @@ class Deliverytime extends MY_Controller
                     $ship_max_day = trim($data["ship_max_day"]);
                     $del_min_day = trim($data["del_min_day"]);
                     $del_max_day = trim($data["del_max_day"]);
-                    $margin = trim($data["margin"]);
+                    if (isset($data["margin"])) {
+                        $margin = trim($data["margin"]);
+                    } else {
+                        $margin = "";
+                    }
 
                     if (($ship_min_day == "" && $ship_max_day == "") && ($del_min_day == "" && $del_max_day == "")) {
                         // skip the loop if both min & max fields are empty for each country-scenario
@@ -140,8 +144,9 @@ class Deliverytime extends MY_Controller
                             $deliverytime_obj->set_del_max_day($del_max_day);
 
                             // only HighMargin scenario gets to update margin
-                            if ($scenarioid == 5)
+                            if ($scenarioid == 5 && $margin) {
                                 $deliverytime_obj->set_margin($margin);
+                            }
 
                             if ($deliverytime_dao->update($deliverytime_obj) === FALSE) {
                                 $success = 0;
@@ -202,7 +207,7 @@ class Deliverytime extends MY_Controller
         return $ret;
     }
 
-    private function check_empty_fields($value = array())
+    private function check_empty_fields($value = [])
     {
         /* =============================================================
             This function checks postdata to ensure that if one scenarioid
@@ -262,8 +267,8 @@ class Deliverytime extends MY_Controller
             $result = $phpmail->Send();
     }
 
-    public function _get_lang_id()
+    public function getLangId()
     {
-        return $this->lang_id;
+        return $this->langId;
     }
 }
