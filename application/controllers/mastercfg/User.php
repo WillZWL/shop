@@ -1,5 +1,8 @@
 <?php
 use AtomV2\Models\Mastercfg\UserModel;
+use AtomV2\Service\LogService;
+use AtomV2\Service\PaginationService;
+use AtomV2\Service\AuthorizationService;
 
 class User extends MY_Controller
 {
@@ -10,11 +13,9 @@ class User extends MY_Controller
     {
         parent::__construct();
         $this->userModel = new UserModel;
-        $this->load->helper('notice');
-        $this->load->helper('object');
-        $this->load->library('service/Log_service');
-        $this->load->library('service/Pagination_service');
-        $this->load->library('service/Authorization_service');
+        $this->logService = new LogService;
+        $this->paginationService = new PaginationService;
+        $this->authorizationService = new AuthorizationService;
     }
 
     public function index()
@@ -61,7 +62,7 @@ class User extends MY_Controller
 
         $data["lang"] = $lang;
         $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->initialize($pconfig);
+        $this->paginationService->initialize($pconfig);
 
         $data["notice"] = notice($lang);
 
