@@ -16,7 +16,7 @@ class ApplicationFeatureDao extends BaseDao
         return $this->voClassName;
     }
 
-    public function getApplicationFeatureAccessRight($where = [], $option = [], $className = "applicationFeatureRightDto")
+    public function getApplicationFeatureAccessRight($where = [], $option = [], $className = "ApplicationFeatureRightDto")
     {
         $role = "'no'";
         if (isset($where['role_id'])) {
