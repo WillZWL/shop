@@ -5,6 +5,7 @@ function notice($lang = "", $enable = "")
 {
     $notice["img"] = "";
     $notice["js"] = "";
+    $background = $msg = "";
     if ($enable) {
         $ar_display_colour = array("success" => "#00FF00", "fail" => "#FF0000");
         $msg = isset($lang[$_SESSION["DISPLAY"][0]]) ? $lang[$_SESSION["DISPLAY"][0]] : str_replace("\n", "\\n", $_SESSION["DISPLAY"][0]);
