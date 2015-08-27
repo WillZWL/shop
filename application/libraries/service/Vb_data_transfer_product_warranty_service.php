@@ -64,7 +64,6 @@ class Vb_data_transfer_product_warranty_service extends Vb_data_transfer_service
 			if(!$pc_obj_atomv2 = $this->get_dao()->get(array("sku"=>$sku, "platform_id"=>$pc->platform_id)))
 			{
 				$fail_reason .= "SKU/Lang not specified, ";
-				$sku = "";
 			}
 			
 			if ($fail_reason == "")
@@ -81,6 +80,18 @@ class Vb_data_transfer_product_warranty_service extends Vb_data_transfer_service
 				// print $this->db->last_query();
 				// print "------------";
 				// exit;
+			}
+			elseif ($sku != "" && $sku != null)
+			{
+				//insert				
+				$new_pc_obj = $this->get_dao()->get();
+				
+				$new_pc_obj->set_sku($sku); 
+				$new_pc_obj->set_platform_id($pc->platform_id); 
+				$new_pc_obj->set_warranty_in_month($pc->warranty_in_month);
+				
+				$this->get_dao()->insert($new_pc_obj);	
+				
 			}
 			elseif ($sku == "" || $sku == null)
 			{				

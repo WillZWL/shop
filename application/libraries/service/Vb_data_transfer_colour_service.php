@@ -33,6 +33,7 @@ class Vb_data_transfer_colour_service extends Vb_data_transfer_service
 	***********************************************************************/
 	public function process_vb_data ($feed)
 	{		
+		//print $feed; exit;
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
 		
@@ -46,12 +47,11 @@ class Vb_data_transfer_colour_service extends Vb_data_transfer_service
 		$c = count($xml_vb->colour);
 		foreach($xml_vb->colour as $colour)
 		{
-			$c--;			
-			
+			$c--;	
 			if($this->get_dao()->get(array("id"=>$colour->id)))
 			{				
 				//Update the AtomV2 colour data 					
-				$where = array("id"=>$id);
+				$where = array("id"=>$colour->id);
 				
 				$new_colour_obj = array();
 				
@@ -62,15 +62,15 @@ class Vb_data_transfer_colour_service extends Vb_data_transfer_service
 			}
             else
 			{
-				//insert colour and mapping
+				//insert colour
 				$new_colour_obj = array();
 				
-				$new_colour_obj["id"] = $colour->id;
-				$new_colour_obj["name"] = $colour->name;					
-				$new_colour_obj["status"] = $colour->status;	
+				$new_colour_obj = $this->get_dao()->get();
+				$new_colour_obj->set_id($colour->id);
+				$new_colour_obj->set_name($colour->name);
+				$new_colour_obj->set_status($colour->status);
 				
-				$this->get_dao()->q_insert($new_colour_obj);
-				
+				$this->get_dao()->insert($new_colour_obj);					
 			}
 		 }
 		 

@@ -64,7 +64,6 @@ class Vb_data_transfer_product_custom_class_service extends Vb_data_transfer_ser
 			if(!$pc_obj_atomv2 = $this->get_dao()->get(array("sku"=>$sku, "country_id"=>$pc->country_id)))
 			{
 				$fail_reason .= "SKU/Country not specified, ";
-				$sku = "";
 			}
 			
 			if ($fail_reason == "")
@@ -83,6 +82,20 @@ class Vb_data_transfer_product_custom_class_service extends Vb_data_transfer_ser
 				// print $this->db->last_query();
 				// print "------------";
 				// exit;
+			}
+			elseif ($sku != "" && $sku != null)
+			{
+				//insert			
+				
+				$new_pc_obj = $this->get_dao()->get();
+				$new_pc_obj->set_sku($sku);
+				$new_pc_obj->set_country_id($pc->country_id);
+				$new_pc_obj->set_code($pc->code);
+				$new_pc_obj->set_description($pc->description);
+				$new_pc_obj->set_duty_pcent($pc->duty_pcent);
+				
+				$this->get_dao()->insert($new_pc_obj);
+				
 			}
 			elseif ($sku == "" || $sku == null)
 			{				

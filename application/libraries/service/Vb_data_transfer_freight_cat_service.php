@@ -28,13 +28,13 @@ class Vb_data_transfer_freight_cat_service extends Vb_data_transfer_service
 	***********************************************************************/
 	public function process_vb_data ($feed)
 	{		
-		print $feed;
-		exit;
+		// print $feed;
+		// exit;
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
 		
 		$task_id = $xml_vb->attributes()->task_id;
-				
+						
 		//Create return xml string
 		$xml = array();
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
@@ -64,17 +64,18 @@ class Vb_data_transfer_freight_cat_service extends Vb_data_transfer_service
 			}
 			else
 			{
-				//insert
+				//insert			
 				$new_freight_cat_obj = array();
 				
-				$new_freight_cat_obj["id"] = $freight_cat->id;
-				$new_freight_cat_obj["name"] = $freight_cat->name;
-				$new_freight_cat_obj["weight"] = $freight_cat->weight;	
-				$new_freight_cat_obj["declared_pcent"] = $freight_cat->declared_pcent;
-				$new_freight_cat_obj["bulk_admin_chrg"] = $freight_cat->bulk_admin_chrg;					
-				$new_freight_cat_obj["status"] = $freight_cat->status;	
+				$new_freight_cat_obj = $this->get_dao()->get();
+				$new_freight_cat_obj->set_id($freight_cat->id);
+				$new_freight_cat_obj->set_name($freight_cat->name);
+				$new_freight_cat_obj->set_weight($freight_cat->weight);
+				$new_freight_cat_obj->set_declared_pcent($freight_cat->declared_pcent);
+				$new_freight_cat_obj->set_bulk_admin_chrg($freight_cat->bulk_admin_chrg);
+				$new_freight_cat_obj->set_status($freight_cat->status);
 				
-				$this->get_dao()->q_insert($new_freight_cat_obj);
+				$this->get_dao()->insert($new_freight_cat_obj);	
 			}            
 		 }
 		 

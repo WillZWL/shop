@@ -46,7 +46,7 @@ class Vb_data_transfer_product_identifier_service extends Vb_data_transfer_servi
 		{
 			$c--;
 			
-			if(!$pc_obj_atomv2 = $this->get_dao()->get(array("prod_grp_cd"=>$pc->prod_grp_cd, "colour_id"=>$pc->colour_id, "country_id"=>$pc->country_id)))
+			if(!$pc_obj_atomv2 = $this->get_dao()->get(array("prod_grp_cd"=>$product->prod_grp_cd, "colour_id"=>$product->colour_id, "country_id"=>$product->country_id)))
 			{
 				$fail_reason .= "Product identifier not specified, ";
 			}
@@ -54,7 +54,7 @@ class Vb_data_transfer_product_identifier_service extends Vb_data_transfer_servi
 			if ($fail_reason == "")
 			{
 				//Update the AtomV2 product data 					
-				$where = array("prod_grp_cd"=>$pc->prod_grp_cd, "colour_id"=>$pc->colour_id, "country_id"=>$pc->country_id);
+				$where = array("prod_grp_cd"=>$product->prod_grp_cd, "colour_id"=>$product->colour_id, "country_id"=>$product->country_id);
 				
 				$new_prod_obj = array();
 				
@@ -66,16 +66,31 @@ class Vb_data_transfer_product_identifier_service extends Vb_data_transfer_servi
 				$this->get_dao()->q_update($where, $new_prod_obj);
 			}
 			else
-			{		
-				//insert ??????
+			{
+				//insert				
+				$new_prod_obj = $this->get_dao()->get();
 				
-				//if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
-				$xml[] = '<product_identifier>';
-				$xml[] = '<prod_grp_cd>' . $product->prod_grp_cd . '</prod_grp_cd>';
-				$xml[] = '<colour_id>' . $product->colour_id . '</colour_id>';
-				$xml[] = '<country_id>' . $product->country_id . '</country_id>';
-				$xml[] = '</product_identifier>';
+				$new_prod_obj->set_prod_grp_cd($product->prod_grp_cd); 
+				$new_prod_obj->set_colour_id($product->colour_id); 	
+				$new_prod_obj->set_country_id($product->country_id); 	
+				$new_prod_obj->set_ean($product->ean);
+				$new_prod_obj->set_mpn($product->mpn); 
+				$new_prod_obj->set_upc($product->upc);	
+				$new_prod_obj->set_status($product->status);			
+				
+				$this->get_dao()->insert($new_prod_obj);
 			}
+			// else
+			// {		
+				// //insert ??????
+				
+				// //if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
+				// $xml[] = '<product_identifier>';
+				// $xml[] = '<prod_grp_cd>' . $product->prod_grp_cd . '</prod_grp_cd>';
+				// $xml[] = '<colour_id>' . $product->colour_id . '</colour_id>';
+				// $xml[] = '<country_id>' . $product->country_id . '</country_id>';
+				// $xml[] = '</product_identifier>';
+			// }
 		 }
 		 
 		$xml[] = '</no_updated_product_identifiers>';

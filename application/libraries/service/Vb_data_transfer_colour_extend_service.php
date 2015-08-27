@@ -49,7 +49,7 @@ class Vb_data_transfer_colour_extend_service extends Vb_data_transfer_service
 			
 			if($colour_ext_atomv2 = $this->get_dao()->get(array("colour_id"=>$id, "lang_id"=>$colour->lang_id)))
 			{
-				$lang_id .= $colour_ext_atomv2["lang_id"];
+				$lang_id = $colour_ext_atomv2->get_lang_id();
 			}				
 			//if extend content exists, update
 			if ($lang_id != "" && $lang_id != null)
@@ -68,11 +68,12 @@ class Vb_data_transfer_colour_extend_service extends Vb_data_transfer_service
 			{
 				$new_colour_obj = array();
 				
-				$new_colour_obj["colour_id"] = $id;
-				$new_colour_obj["lang_id"] = $lang_id;
-				$new_colour_obj["name"] = $colour->name;
+				$new_colour_obj = $this->get_dao()->get();
+				$new_colour_obj->set_colour_id($id);
+				$new_colour_obj->set_lang_id($colour->lang_id);
+				$new_colour_obj->set_name($colour->name);
 				
-				$this->get_dao()->q_insert($new_colour_obj);
+				$this->get_dao()->insert($new_colour_obj);	
 			}
 		 }
 		 

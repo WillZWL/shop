@@ -11,9 +11,12 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 				
 		include_once(APPPATH . 'libraries/dao/Category_extend_dao.php');
 		$this->category_extend_dao = new Category_extend_dao();
+				
+		include_once(APPPATH . 'libraries/dao/Category_dao.php');
+		$this->category_dao = new Category_dao();
 		
-        include_once(APPPATH . "libraries/service/Category_id_mapping_service.php");		
-		$this->category_id_mapping_service = new Category_id_mapping_service();
+        // include_once(APPPATH . "libraries/service/Category_id_mapping_service.php");		
+		// $this->category_id_mapping_service = new Category_id_mapping_service();
 	}
 	
 	public function get_dao()
@@ -21,10 +24,15 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 		return $this->category_extend_dao;
 	}
 	
-	public function get_map_dao()
+	public function get_cat_dao()
 	{
-		return $this->category_id_mapping_service;
+		return $this->category_dao;
 	}
+	
+	// public function get_map_dao()
+	// {
+		// return $this->category_id_mapping_service;
+	// }
 
 	public function set_dao(base_dao $dao)
 	{
@@ -50,11 +58,20 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 		foreach($xml_vb->category as $category)
 		{
 			$c--;			
-				
-			//Get the external (VB) category id to search the corresponding id in atomv2 database
-			$ext_id = $category->cat_id;
 						
-			$id = $this->category_id_mapping_service->get_local_id($ext_id);
+			//$id = $this->category_id_mapping_service->get_local_id($ext_id);
+			
+			//We look if the category exists
+			//$id = $category->cat_id;
+			
+			if($cat_atomv2 = $this->category_dao->get(array("id"=>$category->cat_id)))
+			{
+				$id = $cat_atomv2->get_id();				
+			}
+			else
+			{
+				$id = "";
+			}
 			
 			if ($id != "" && $id != null)
 			{
@@ -63,7 +80,7 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 				
 				if($cat_ext_atomv2 = $this->get_dao()->get(array("cat_id"=>$id, "lang_id"=>$category->lang_id)))
 				{
-					$lang_id .= $cat_ext_atomv2["lang_id"];
+					$lang_id .= $cat_ext_atomv2->get_lang_id();
 				}				
 				//if extend content exists, update
 				if ($lang_id != "" && $lang_id != null)
@@ -80,13 +97,14 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 				//if not exists, insert
 				else
 				{
+					//insert				
 					$new_cat_obj = array();
 					
-					$new_cat_obj["cat_id"] = $id;
-					$new_cat_obj["lang_id"] = $lang_id;
-					$new_cat_obj["name"] = $category->name;
-					
-					$this->get_dao()->q_insert($new_cat_obj);
+					$new_cat_obj = $this->get_dao()->get();
+					$new_cat_obj->set_cat_id($category->cat_id);
+					$new_cat_obj->set_lang_id($category->lang_id);
+					$new_cat_obj->set_name($category->name);
+					$this->get_dao()->insert($new_cat_obj);				
 				}
 			}
 			elseif ($id == "" || $id == null)

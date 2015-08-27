@@ -64,7 +64,6 @@ class Vb_data_transfer_product_content_extend_service extends Vb_data_transfer_s
 			if(!$pc_obj_atomv2 = $this->get_dao()->get(array("prod_sku"=>$sku, "lang_id"=>$pc->lang_id)))
 			{
 				$fail_reason .= "SKU/Lang not specified, ";
-				$sku = "";
 			}
 			
 			if ($fail_reason == "")
@@ -88,6 +87,25 @@ class Vb_data_transfer_product_content_extend_service extends Vb_data_transfer_s
 				// print $this->db->last_query();
 				// print "------------";
 				// exit;
+			}
+			elseif ($sku != "" && $sku != null)
+			{
+				//insert		
+
+				$new_pc_obj = $this->get_dao()->get();
+				
+				$new_pc_obj->set_prod_sku($sku); 
+				$new_pc_obj->set_lang_id($pc->lang_id); 				
+				$new_pc_obj->set_feature($pc->feature); 
+				$new_pc_obj->set_feature_original($pc->feature_original);	
+				$new_pc_obj->set_specification($pc->specification);	
+				$new_pc_obj->set_spec_original($pc->spec_original);	  
+				$new_pc_obj->set_requirement($pc->requirement);
+				$new_pc_obj->set_instruction($pc->instruction);
+				$new_pc_obj->set_apply_enhanced_listing($pc->apply_enhanced_listing);
+				$new_pc_obj->set_enhanced_listing($pc->enhanced_listing);	
+				
+				$this->get_dao()->insert($new_pc_obj);
 			}
 			elseif ($sku == "" || $sku == null)
 			{				

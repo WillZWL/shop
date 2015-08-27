@@ -28,8 +28,6 @@ class Vb_data_transfer_version_service extends Vb_data_transfer_service
 	***********************************************************************/
 	public function process_vb_data ($feed)
 	{		
-		print $feed;
-		exit;
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
 		
@@ -64,11 +62,12 @@ class Vb_data_transfer_version_service extends Vb_data_transfer_service
 				//insert
 				$new_version_obj = array();
 				
-				$new_version_obj["id"] = $version->id;
-				$new_version_obj["desc"] = $version->desc;						
-				$new_version_obj["status"] = $version->status;	
+				$new_version_obj = $this->get_dao()->get();
+				$new_version_obj->set_id($version->id);
+				$new_version_obj->set_desc($version->desc);
+				$new_version_obj->set_status($version->status);
 				
-				$this->get_dao()->q_insert($new_version_obj);
+				$this->get_dao()->insert($new_version_obj);	
 			}            
 		 }
 		 

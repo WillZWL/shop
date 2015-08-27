@@ -58,13 +58,14 @@ class Vb_data_transfer_product_content_service extends Vb_data_transfer_service
 			$sku = $this->sku_mapping_service->get_local_sku($master_sku);
 						
 			$fail_reason = "";
+			$lang_id = "";
             if ($master_sku == "" || $master_sku == null) $fail_reason .= "No master SKU mapped, ";
             if ($sku == "" || $sku == null) $fail_reason .= "SKU not specified, ";
 			
 			if(!$pc_obj_atomv2 = $this->get_dao()->get(array("prod_sku"=>$sku, "lang_id"=>$pc->lang_id)))
 			{
 				$fail_reason .= "SKU/Lang not specified, ";
-				$sku = "";
+				$lang_id = "";
 			}
 			
 			if ($fail_reason == "")
@@ -102,6 +103,39 @@ class Vb_data_transfer_product_content_service extends Vb_data_transfer_service
 				// print $this->db->last_query();
 				// print "------------";
 				// exit;
+			}
+			elseif ($sku != "" && $sku != null)
+			{
+				//insert				
+				$new_pc_obj = array();
+				
+				$new_pc_obj = $this->get_dao()->get();
+				$new_pc_obj->set_prod_sku($sku);
+				$new_pc_obj->set_lang_id($pc->lang_id);
+				$new_pc_obj->set_prod_name($pc->prod_name);
+				$new_pc_obj->set_prod_name_original($pc->prod_name_original);
+				$new_pc_obj->set_short_desc($pc->short_desc);	
+				$new_pc_obj->set_contents($pc->contents);	  
+				$new_pc_obj->set_contents_original($pc->contents_original);
+				$new_pc_obj->set_series($pc->series);
+				$new_pc_obj->set_keywords($pc->keywords);
+				$new_pc_obj->set_keywords_original($pc->keywords_original);	
+				$new_pc_obj->set_model_1($pc->model_1);
+				$new_pc_obj->set_model_2($pc->model_2);
+				$new_pc_obj->set_model_3($pc->model_3);
+				$new_pc_obj->set_model_4($pc->model_4);
+				$new_pc_obj->set_model_5($pc->model_5);
+				$new_pc_obj->set_detail_desc($pc->detail_desc);
+				$new_pc_obj->set_detail_desc_original($pc->detail_desc_original);
+				$new_pc_obj->set_extra_info($pc->extra_info);				
+				$new_pc_obj->set_website_status_long_text($pc->website_status_long_text);
+				$new_pc_obj->set_website_status_short_text($pc->website_status_short_text);
+				$new_pc_obj->set_youtube_id_1($pc->youtube_id_1);
+				$new_pc_obj->set_youtube_id_2($pc->youtube_id_2);
+				$new_pc_obj->set_youtube_caption_1($pc->youtube_caption_1);			
+				$new_pc_obj->set_youtube_caption_2($pc->youtube_caption_2);
+				
+				$this->get_dao()->insert($new_pc_obj);	
 			}
 			elseif ($sku == "" || $sku == null)
 			{				

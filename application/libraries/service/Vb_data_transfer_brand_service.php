@@ -29,8 +29,7 @@ class Vb_data_transfer_brand_service extends Vb_data_transfer_service
 	***********************************************************************/
 	public function process_vb_data ($feed)
 	{		
-		print $feed;
-		exit;
+		
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
 		
@@ -63,15 +62,16 @@ class Vb_data_transfer_brand_service extends Vb_data_transfer_service
 			}
 			else
 			{
-				//insert
+				//insert				
 				$new_brand_obj = array();
 				
-				$new_brand_obj["id"] = $brand->id;
-				$new_brand_obj["brand_name"] = $brand->brand_name;
-				$new_brand_obj["description"] = $brand->description;						
-				$new_brand_obj["status"] = $brand->status;	
+				$new_brand_obj = $this->get_dao()->get();
+				$new_brand_obj->set_id($brand->id);
+				$new_brand_obj->set_brand_name($brand->brand_name);
+				$new_brand_obj->set_description($brand->description);
+				$new_brand_obj->set_status($brand->status);
 				
-				$this->get_dao()->q_insert($new_brand_obj);
+				$this->get_dao()->insert($new_brand_obj);	
 			}            
 		 }
 		 

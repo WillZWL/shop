@@ -74,15 +74,24 @@ class Vb_data_transfer_product_note_service extends Vb_data_transfer_service
 					$current_sku = $sku;
 				}
 				
-				$new_pc_obj = array();
+				$new_pc_obj = $this->get_dao()->get();
 				
-				$new_pc_obj["sku"] = $sku; 
-				$new_pc_obj["platform_id"] = $pc->platform_id; 
-				$new_pc_obj["type"] = $pc->type; 
-				$new_pc_obj["note"] = $pc->note;	
-				$new_pc_obj["create_on"] = $pc->create_on;	
+				$new_pc_obj->set_sku($sku); 
+				$new_pc_obj->set_platform_id($pc->platform_id); 
+				$new_pc_obj->set_type($pc->type); 
+				$new_pc_obj->set_note($pc->note);	
+				$new_pc_obj->set_create_on($pc->create_on);	
 				
-				$this->get_dao()->q_insert($new_pc_obj);
+				$this->get_dao()->insert($new_pc_obj);				
+							
+				// $new_pc_obj = $this->get_dao()->get();
+				
+				// $new_pc_obj->set_sku($sku);
+				// $new_pc_obj->set_lang_id($pc->lang_id); 
+				// $new_pc_obj->set_keyword($pc->keyword); 
+				// $new_pc_obj->set_type($pc->type);	
+				
+				// $this->get_dao()->insert($new_pc_obj);
 				
 				// print $this->db->last_query();
 				// print "------------";

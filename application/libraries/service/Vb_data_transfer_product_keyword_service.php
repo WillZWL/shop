@@ -74,16 +74,16 @@ class Vb_data_transfer_product_keyword_service extends Vb_data_transfer_service
 					$current_sku = $sku;
 				}
 				
-				//After deleting, we insert de VB data
-				$new_pc_obj = array();
+				//After deleting, we insert de VB data				
+				$new_pc_obj = $this->get_dao()->get();
 				
-				$new_pc_obj["sku"] = $sku;
-				$new_pc_obj["lang_id"] = $pc->lang_id; 
-				$new_pc_obj["keyword"] = $pc->keyword; 
-				$new_pc_obj["type"] = $pc->type;	
+				$new_pc_obj->set_sku($sku);
+				$new_pc_obj->set_lang_id($pc->lang_id); 
+				$new_pc_obj->set_keyword($pc->keyword); 
+				$new_pc_obj->set_type($pc->type);	
 				
-				$this->get_dao()->q_insert($new_pc_obj);
-				
+				$this->get_dao()->insert($new_pc_obj);
+								
 				// print $this->db->last_query();
 				// print "------------";
 				// exit;
