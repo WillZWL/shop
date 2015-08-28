@@ -1,4 +1,7 @@
 <?php
+use AtomV2\Service\AuthorizationService;
+use AtomV2\Service\PriceMarginService;
+
 include_once "Profit_var_helper.php";
 
 class Profit_var extends Profit_var_helper
@@ -9,7 +12,8 @@ class Profit_var extends Profit_var_helper
     public function __construct()
     {
         parent::__construct();
-        $this->authorization_service->check_access_rights($this->getAppId(), "");
+        $this->authorizationService = new AuthorizationService;
+        $this->authorizationService->checkAccessRights($this->getAppId(), "");
     }
 
     public function getAppId()
@@ -19,10 +23,11 @@ class Profit_var extends Profit_var_helper
 
     public function index()
     {
-        $data = array();
+        $data = [];
         include_once APPPATH . '/language/' . $this->getAppId() . '00_' . $this->_get_lang_id() . '.php';
         $data["lang"] = $lang;
-        $data["selling_platform_list"] = $this->profit_var_model->get_selling_platform_list(array("status" => 1), array("limit" => -1));
+        $data["selling_platform_list"] = $this->profit_var_model->get_selling_platform_list(["status" => 1], ["limit" => -1]);
+        $data['notice'] = notice($lang);
         $this->load->view("mastercfg/profit_var/profit_var_index", $data);
     }
 
@@ -33,13 +38,12 @@ class Profit_var extends Profit_var_helper
 
     public function view($value = "")
     {
-        $data = array();
+        $data = [];
         $data["editable"] = 0;
         $data["updated"] = 0;
         if ($this->input->post('posted')) {
             $this->profit_var_model->__autoload();
-            include_once APPPATH . '/libraries/service/price_margin_service.php';
-            $price_margin_service = new Price_margin_service();
+            $this->priceMarginService = new PriceMarginService;
 
             $obj = unserialize($_SESSION["profit_obj"]);
             $obj->set_selling_platform_id($this->input->post("id"));
@@ -62,7 +66,7 @@ class Profit_var extends Profit_var_helper
 
             // update price_margin tb for all platforms
             $platform_id = $this->input->post("id");
-            $price_margin_service->refresh_all_platform_margin(array("id" => $platform_id));
+            $this->priceMarginService->refreshAllPlatformMargin(["id" => $platform_id]);
 
             if ($ret === FALSE) {
                 $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->_error_message();
@@ -97,9 +101,9 @@ class Profit_var extends Profit_var_helper
         $data["delivery_type_list"] = $this->profit_var_model->get_delivery_type_list();
         $data["region_list"] = $this->profit_var_model->get_courier_region_list();
         $data["selling_platform_list"] = $this->profit_var_model->get_selling_platform_list();
-        $data["country_list"] = $this->profit_var_model->get_country_list(array(), array("limit" => -1, "orderby" => "name"));
-        $data["active_country_list"] = $this->profit_var_model->get_country_list(array("status" => 1), array("limit" => -1, "orderby" => "name"));
-        $data["language_list"] = $this->language_service->get_list(array("status" => 1), array("limit" => -1, "orderby" => "name"));
+        $data["country_list"] = $this->profit_var_model->get_country_list([], ["limit" => -1, "orderby" => "name"]);
+        $data["active_country_list"] = $this->profit_var_model->get_country_list(["status" => 1], ["limit" => -1, "orderby" => "name"]);
+        $data["language_list"] = $this->language_service->get_list(["status" => 1], ["limit" => -1, "orderby" => "name"]);
         $_SESSION["profit_obj"] = serialize($data["profit_obj"]);
         $data["currency_list"] = $this->profit_var_model->get_currency_list();
         $data["id"] = $value;

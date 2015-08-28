@@ -16,6 +16,12 @@ class ProductDao extends BaseDao
         return $this->table_name;
     }
 
+    public function __construct()
+    {
+        parent::__construct();
+        // include_once(APPPATH . 'helpers/object_helper.php');
+    }
+
     public function getHomeProduct($where = [], $option = [], $class_name = 'SimpleProductDto')
     {
         $where['pd.status'] = 2;
@@ -33,60 +39,6 @@ class ProductDao extends BaseDao
         return $this->commonGetList($class_name, [], $option, 'pd.sku');
     }
 
-    public function getListingInfo($sku, $platform_id, $lang_id, $option, $class_name = 'ListingInfoDto')
-    {
-        if (empty($sku) || empty($platform_id)) {
-            return false;
-        }
-
-        if (is_array($sku)) {
-            $sku = "'" . implode("','", array_keys($sku)) . "'";
-        } else {
-            $sku = "'" . $sku . "'";
-        }
-
-        $sql =
-            "SELECT pbv.selling_platform_id AS platform_id, pd.sku, IFNULL(pc.prod_name, pd.name) prod_name, pc.youtube_id_1, pc.youtube_id_2, pc.youtube_caption_1, pc.youtube_caption_2, pc.short_desc, pd.image AS image_ext, pbv.platform_currency_id AS currency_id, p.price, p.fixed_rrp, p.rrp_factor, IF(pd.display_quantity > pd.website_quantity,pd.website_quantity, pd.display_quantity) AS qty, IF((p.listing_status = 'L') AND IF(pd.display_quantity > pd.website_quantity,pd.website_quantity, pd.display_quantity) > 0 , pd.website_status, 'O') AS status, pd.warranty_in_month,
-                p.delivery_scenarioid
-                FROM product pd
-                LEFT JOIN price p
-                ON pd.sku = p.sku AND p.platform_id = ?
-                JOIN platform_biz_var pbv
-                ON pbv.selling_platform_id = p.platform_id
-                LEFT JOIN product_content pc
-                ON pc.prod_sku = p.sku AND pc.lang_id = '" . $lang_id . "'
-                WHERE pd.status = 2 AND pd.sku IN (" . $sku . ") ";
-
-        if (isset($option["orderby"])) {
-            $this->db->order_by($option["orderby"]);
-        }
-
-        if (empty($option["limit"])) {
-            $option["limit"] = $this->rows_limit;
-        } elseif ($option["limit"] == -1) {
-            $option["limit"] = "";
-        }
-
-        if (!isset($option["offset"])) {
-            $option["offset"] = 0;
-        }
-
-        if ($this->rows_limit != "") {
-            $this->db->limit($option["limit"], $option["offset"]);
-        }
-
-        $rs = [];
-        if ($query = $this->db->query($sql, array($platform_id))) {
-            foreach ($query->result($class_name) as $obj) {
-                $rs[] = $obj;
-            }
-
-            return (count($rs) > 1) ? $rs : $rs[0];
-        } else {
-            return false;
-        }
-    }
-
     public function getProductOverview($where = [], $option = [], $class_name = "ProductOverviewDto")
     {
         $option = ['limit' => 1];
@@ -96,4 +48,112 @@ class ProductDao extends BaseDao
 
         return $this->commonGetList($class_name, $where, $option, 'vpo.*, p.expected_delivery_date, p.warranty_in_month');
     }
+
+    public function getListedProductList($platform_id = 'WEBGB', $classname = 'WebsiteProdInfoDto')
+    {
+        $sql = "SELECT * FROM v_prod_overview_wo_shiptype vpo
+                WHERE vpo.platform_id = ?
+                    AND vpo.listing_status = 'L'";
+
+        $result = $this->db->query($sql, array('platform_id' => $platform_id));
+
+        $result_arr = [];
+
+        if ($result) {
+            foreach ($result->result($classname) as $obj) {
+                $result_arr[] = $obj;
+            }
+        }
+
+        return $result_arr;
+    }
+
+    public function getProductWPriceInfo($platform_id = 'WEBGB', $sku = "", $classname = 'WebsiteProdInfoDto')
+    {
+
+        $sql = "SELECT * FROM v_prod_overview_wo_shiptype vpo WHERE vpo.platform_id = ? AND sku = ?";
+        $result = $this->db->query($sql, array($platform_id, $sku));
+
+        $result_arr = [];
+
+        if ($result->num_rows() > 0) {
+            foreach ($result->result($classname) as $obj) {
+                $result_arr[$obj->get_sku()] = $obj;
+            }
+        }
+
+        return $result_arr;
+    }
+
+
+    public function getProductWMarginReqUpdate($where = [], $classname = 'WebsiteProdInfoDto')
+    {
+        $table_alias = [
+                'v_prod_overview_w_update_time' => 'vpo',
+                'supplier_cost_history' => 'sch', 'price_margin' => 'pm'
+            ];
+        include_once APPPATH . "helpers/string_helper.php";
+        $new_where = replace_db_alias($where, $table_alias);
+
+        if (!isset($new_where['vpo.platform_id'])) {
+            $new_where['vpo.platform_id'] = 'WSGB';
+        }
+
+        $new_key_list = array_keys($new_where);
+
+        if ($new_key_list && count($new_key_list) > 0) {
+            $found = false;
+
+            foreach ($new_key_list as $new_key) {
+                if (strstr($new_key, 'vpo.prod_status')) {
+                    $found = true;
+                    break;
+                }
+            }
+
+            if (!$found) {
+                $new_where['vpo.prod_status >'] = 0;
+            }
+        }
+
+        $value_list = [];
+
+        if ($new_where && count($new_where) > 0) {
+            $where_clause = '';
+
+            foreach ($new_where as $key => $value) {
+                $where_clause .= ' AND ';
+
+                if ($this->db->_has_operator($key)) {
+                    $where_clause .= "$key ?";
+                } else {
+                    $where_clause .= "$key = ?";
+                }
+                array_push($value_list, $value);
+                $counter++;
+            }
+        }
+
+
+        $sql = "SELECT DISTINCT vpo.*
+                FROM v_prod_overview_w_update_time vpo
+                INNER JOIN supplier_cost_history sch
+                    ON (sch.prod_sku = vpo.sku)
+                LEFT JOIN price_margin pm
+                    ON (pm.sku = vpo.sku AND pm.platform_id = vpo.platform_id)
+                WHERE
+                    (vpo.price_modify_on > pm.modify_on OR sch.create_on > pm.modify_on)
+                    $where_clause";
+
+        $result = $this->db->query($sql, $value_list);
+
+        $result_arr = [];
+
+        foreach ($result->result($classname) as $obj) {
+            $result_arr[] = $obj;
+        }
+
+        return $result_arr;
+    }
+
 }
