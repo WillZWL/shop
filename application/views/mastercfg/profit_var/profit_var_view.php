@@ -35,7 +35,7 @@
     if ($editable)
     {
     ?>
-    <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" name="tform" style="padding:0; margin:0"
+    <form action="<?=base_url()?>mastercfg/profit_var/view/<?=$id?>" method="post" name="tform" style="padding:0; margin:0"
           onSubmit="return CheckForm(this)">
         <input type="hidden" name="id" value="<?= $id ?>">
         <?php
