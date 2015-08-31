@@ -37,24 +37,24 @@
             <col width="160">
             <col>
             <tr class="header">
-                <td height="20" colspan="4"><?= $lang["table_header"] ?></td>
+                <td height="20" colspan="4"><?= $lang["header_message"] ?></td>
             </tr>
             <tr>
                 <td class="field"><?= $lang["brand_name"] ?></td>
                 <td class="value"><input name="brand_name" class="input"
-                                         value="<?= htmlspecialchars($brand->get_brand_name()) ?>" notEmpty></td>
+                                         value="<?= htmlspecialchars($brand->getBrandName()) ?>" notEmpty></td>
                 <?php
                 if ($cmd == "edit") {
                     ?>
                     <td class="field"><?= $lang["status"] ?></td>
                     <td class="value">
                         <?php
-                        $selected[$brand->get_status()] = "SELECTED";
+                        $selected[$brand->getStatus()] = "SELECTED";
                         ?>
                         <select name="status" class="input" notEmpty>
                             <option value="">
-                            <option value="1" <?= $selected[1] ?>><?= $lang["active"] ?>
-                            <option value="0" <?= $selected[0] ?>><?= $lang["inactive"] ?>
+                            <option value="1"<?= !empty($selected[1]) ? $selected[1] : "" ?>><?= $lang["active"] ?>
+                            <option value="0"<?= !empty($selected[0]) ? $selected[0] : "" ?>><?= $lang["inactive"] ?>
                         </select>
                     </td>
                 <?php
@@ -69,28 +69,28 @@
             <tr>
                 <td class="field"><?= $lang["description"] ?></td>
                 <td class="value" colspan="3"><input name="description" class="input"
-                                                     value="<?= htmlspecialchars($brand->get_description()) ?>"></td>
+                                                     value="<?= htmlspecialchars($brand->getDescription()) ?>"></td>
             </tr>
             <?php
             if ($cmd != "add") {
                 ?>
                 <tr>
                     <td class="field"><?= $lang["create_on"] ?></td>
-                    <td class="value"><?= $brand->get_create_on() ?></td>
+                    <td class="value"><?= $brand->getCreateOn() ?></td>
                     <td class="field"><?= $lang["modify_on"] ?></td>
-                    <td class="value"><?= $brand->get_modify_on() ?></td>
+                    <td class="value"><?= $brand->getModifyOn() ?></td>
                 </tr>
                 <tr>
                     <td class="field"><?= $lang["create_at"] ?></td>
-                    <td class="value"><?= $brand->get_create_at() ?></td>
+                    <td class="value"><?= $brand->getCreateAt() ?></td>
                     <td class="field"><?= $lang["modify_at"] ?></td>
-                    <td class="value"><?= $brand->get_modify_at() ?></td>
+                    <td class="value"><?= $brand->getModifyAt() ?></td>
                 </tr>
                 <tr>
                     <td class="field"><?= $lang["create_by"] ?></td>
-                    <td class="value"><?= $brand->get_create_by() ?></td>
+                    <td class="value"><?= $brand->getCreateBy() ?></td>
                     <td class="field"><?= $lang["modify_by"] ?></td>
-                    <td class="value"><?= $brand->get_modify_by() ?></td>
+                    <td class="value"><?= $brand->getModifyBy() ?></td>
                 </tr>
             <?php
             }
@@ -114,77 +114,10 @@
                 </td>
             </tr>
         </table>
-        <input name="id" type="hidden" value="<?= $brand->get_id() ?>">
+        <input name="id" type="hidden" value="<?= $brand->getId() ?>">
         <input type="hidden" name="cmd" value="edit">
         <input type="hidden" name="posted" value="1">
     </form>
-    <!--
-<?php
-    if ($cmd == "edit") {
-        ?>
-<form name="fm_region" action="<?= base_url() ?>/mastercfg/brand/add_region" method="post" onSubmit="return CheckForm(this);">
-<table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
-    <tr class="header">
-        <td height="20"><?= $lang["add_regions"] ?></td>
-    </tr>
-</table>
-<table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_add">
-    <tr class="add_header">
-        <td height="20" width="45%"><?= $lang["sales_region"] ?></td>
-        <td width="45%"><?= $lang["sourcing_region"] ?></td>
-        <td width="10%"></td>
-    </tr>
-    <tr class="add_row">
-        <td>
-            <select name="sales_region_id" class="input" notEmpty>
-                <option value="">
-            </select>
-        </td>
-        <td>
-            <select name="src_region_id" class="input" notEmpty>
-                <option value="">
-            </select>
-        </td>
-        <td align="center"><input type="submit" value="<?= $lang["add_regions"] ?>"></td>
-    </tr>
-    <tr class="header">
-        <td colspan="3"><?= $lang["existing_regions"] ?></td>
-    </tr>
-    <?php
-        if ($br_list) {
-            $i = 0;
-            foreach ($br_list as $obj) {
-                ?>
-    <tr class="row<?= $i % 2 ?>">
-        <td><input name="del_sales_region_id[<?= $i ?>]" type="hidden" value="<?= $obj->get_sales_region_id() ?>"><script>w(src_region_list[<?= $obj->get_sales_region_id() ?>])</script></td>
-        <td><input name="del_src_region_id[<?= $i ?>]" type="hidden" value="<?= $obj->get_src_region_id() ?>"><script>w(src_region_list[<?= $obj->get_src_region_id() ?>])</script></td>
-        <td align="center"><input type="checkbox" name="check[]" value="<?= $i ?>"></td>
-    </tr>
-    <?php
-                $i++;
-            }
-        }
-        ?>
-    <tr>
-        <td colspan="3" align="right" style="padding-right:8px;">
-            <input type="button" value="<?= $lang['delete_regions'] ?>" onClick="this.form.action='<?= base_url() ?>/mastercfg/brand/del_region'; this.form.submit()">
-        </td>
-    </tr>
-</table>
-<input name="brand_id" type="hidden" value="<?= $brand->get_id() ?>">
-<input type="hidden" name="cmd" value="add">
-<input type="hidden" name="posted" value="1">
-</form>
-<script>
-InitSrcReg(document.fm_region.sales_region_id);
-ChangeSrcReg('<?= ($br) ? $br->get_sales_region_id() : "" ?>', document.fm_region.sales_region_id);
-InitSrcReg(document.fm_region.src_region_id);
-ChangeSrcReg('<?= ($br) ? $br->get_src_region_id() : "" ?>', document.fm_region.src_region_id);
-</script>
-<?php
-    }
-    ?>
--->
     <?= $this->pagination_service->create_links_with_style() ?>
 </div>
 <?= $notice["js"] ?>
