@@ -1,15 +1,10 @@
 <?php
-class SiteConfigVo extends \BaseVo
+class ColourExtendVo extends \BaseVo
 {
     private $id;
-    private $domain;
-    private $site_name;
-    private $lang;
-    private $logo;
-    private $email;
-    private $platform;
-    private $domain_type = '1';
-    private $status = '1';
+    private $colour_id;
+    private $lang_id;
+    private $colour_name;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -30,84 +25,34 @@ class SiteConfigVo extends \BaseVo
         return $this->id;
     }
 
-    public function setDomain($domain)
+    public function setColourId($colour_id)
     {
-        $this->domain = $domain;
+        $this->colour_id = $colour_id;
     }
 
-    public function getDomain()
+    public function getColourId()
     {
-        return $this->domain;
+        return $this->colour_id;
     }
 
-    public function setSiteName($site_name)
+    public function setLangId($lang_id)
     {
-        $this->site_name = $site_name;
+        $this->lang_id = $lang_id;
     }
 
-    public function getSiteName()
+    public function getLangId()
     {
-        return $this->site_name;
+        return $this->lang_id;
     }
 
-    public function setLang($lang)
+    public function setColourName($colour_name)
     {
-        $this->lang = $lang;
+        $this->colour_name = $colour_name;
     }
 
-    public function getLang()
+    public function getColourName()
     {
-        return $this->lang;
-    }
-
-    public function setLogo($logo)
-    {
-        $this->logo = $logo;
-    }
-
-    public function getLogo()
-    {
-        return $this->logo;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setPlatform($platform)
-    {
-        $this->platform = $platform;
-    }
-
-    public function getPlatform()
-    {
-        return $this->platform;
-    }
-
-    public function setDomainType($domain_type)
-    {
-        $this->domain_type = $domain_type;
-    }
-
-    public function getDomainType()
-    {
-        return $this->domain_type;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
+        return $this->colour_name;
     }
 
     public function setCreateOn($create_on)
