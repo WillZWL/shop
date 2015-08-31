@@ -101,7 +101,6 @@ abstract class BaseDao
             $this->db->limit($option["limit"], $option["offset"]);
         }
 
-
         if ($select != '') {
             $this->db->select($select, false);
         }
@@ -214,7 +213,6 @@ abstract class BaseDao
                     }
                     continue;
                 }
-
 
                 $this->db->set($rskey, $rsvalue);
             }

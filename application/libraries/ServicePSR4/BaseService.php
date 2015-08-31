@@ -19,8 +19,13 @@ class BaseService
         $this->dao = $dao;
     }
 
-    public function get($where = [], $classname = '')
+    public function get($where = [], $className = '')
     {
-        return $this->dao->get($where, $classname);
+        return $this->dao->get($where, $className);
+    }
+
+    public function getList($where = [], $option = [], $className = "")
+    {
+        return $this->dao->getList($where, $option, $className);
     }
 }

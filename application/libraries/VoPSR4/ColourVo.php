@@ -1,12 +1,10 @@
 <?php
-class LanguageVo extends \BaseVo
+class ColourVo extends \BaseVo
 {
     private $id;
-    private $lang_id;
-    private $lang_name;
-    private $description;
+    private $colour_id;
+    private $colour_name;
     private $status = '1';
-    private $char_set = 'UTF8';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -26,34 +24,24 @@ class LanguageVo extends \BaseVo
         return $this->id;
     }
 
-    public function setLangId($lang_id)
+    public function setColourId($colour_id)
     {
-        $this->lang_id = $lang_id;
+        $this->colour_id = $colour_id;
     }
 
-    public function getLangId()
+    public function getColourId()
     {
-        return $this->lang_id;
+        return $this->colour_id;
     }
 
-    public function setLangName($lang_name)
+    public function setColourName($colour_name)
     {
-        $this->lang_name = $lang_name;
+        $this->colour_name = $colour_name;
     }
 
-    public function getLangName()
+    public function getColourName()
     {
-        return $this->lang_name;
-    }
-
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    public function getDescription()
-    {
-        return $this->description;
+        return $this->colour_name;
     }
 
     public function setStatus($status)
@@ -64,16 +52,6 @@ class LanguageVo extends \BaseVo
     public function getStatus()
     {
         return $this->status;
-    }
-
-    public function setCharSet($char_set)
-    {
-        $this->char_set = $char_set;
-    }
-
-    public function getCharSet()
-    {
-        return $this->char_set;
     }
 
     public function setCreateOn($create_on)

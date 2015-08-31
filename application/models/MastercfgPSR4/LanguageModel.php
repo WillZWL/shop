@@ -21,7 +21,4 @@ class LanguageModel extends \CI_Model
     {
         return $this->languageService->getDao()->getList(["status" => 1], ["limit" => -1]);
     }
-
 }
-
-?>

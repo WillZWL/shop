@@ -22,5 +22,3 @@ class LanguageService extends BaseService
         return $ret;
     }
 }
-
-
