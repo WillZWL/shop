@@ -24,6 +24,11 @@ class BaseService
         return $this->dao->get($where, $className);
     }
 
+    public function getNumRows($where = [])
+    {
+        return $this->dao->getNumRows($where);
+    }
+
     public function getList($where = [], $option = [], $className = "")
     {
         return $this->dao->getList($where, $option, $className);

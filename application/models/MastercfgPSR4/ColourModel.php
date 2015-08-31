@@ -11,6 +11,11 @@ class ColourModel extends \CI_Model
         $this->colourService = new ColourService;
     }
 
+    public function save($data)
+    {
+        return $this->colourService->save($data);
+    }
+
     public function update($obj)
     {
         return $this->colourService->update($obj);
@@ -24,6 +29,11 @@ class ColourModel extends \CI_Model
     public function get($where = [])
     {
         return $this->colourService->get($where);
+    }
+
+    public function getNumRows($where = [])
+    {
+        return $this->colourService->getNumRows($where);
     }
 
     public function getList($where = [], $option = [])

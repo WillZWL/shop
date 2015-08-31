@@ -1,12 +1,10 @@
 <?php
-class ColourWithLangDto
+class ColourExtendVo extends \BaseVo
 {
     private $id;
     private $colour_id;
-    private $colour_name;
     private $lang_id;
-    private $lang_name;
-    private $status = '1';
+    private $colour_name;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -15,6 +13,7 @@ class ColourWithLangDto
     private $modify_by = 'system';
 
     private $primary_key = ['id'];
+    private $increment_field = 'id';
 
     public function setId($id)
     {
@@ -36,16 +35,6 @@ class ColourWithLangDto
         return $this->colour_id;
     }
 
-    public function setColourName($colour_name)
-    {
-        $this->colour_name = $colour_name;
-    }
-
-    public function getColourName()
-    {
-        return $this->colour_name;
-    }
-
     public function setLangId($lang_id)
     {
         $this->lang_id = $lang_id;
@@ -56,24 +45,14 @@ class ColourWithLangDto
         return $this->lang_id;
     }
 
-    public function setLangName($lang_name)
+    public function setColourName($colour_name)
     {
-        $this->lang_name = $lang_name;
+        $this->colour_name = $colour_name;
     }
 
-    public function getLangName()
+    public function getColourName()
     {
-        return $this->lang_name;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
+        return $this->colour_name;
     }
 
     public function setCreateOn($create_on)
@@ -139,5 +118,10 @@ class ColourWithLangDto
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

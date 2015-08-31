@@ -20,7 +20,8 @@ class ColourDao extends BaseDao
     {
         $this->db->from('colour c');
         $this->db->join('colour_extend ce', 'c.colour_id = ce.colour_id', 'inner');
+        $this->db->join('language l', 'ce.lang_id = l.lang_id', 'inner');
 
-        return $this->commonGetList($className, $where, $option, 'c.colour_id, ce.colour_name, ce.lang_id');
+        return $this->commonGetList($className, $where, $option, 'ce.id, c.colour_id, c.status, ce.colour_name, ce.lang_id, l.lang_name');
     }
 }
