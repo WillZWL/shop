@@ -1,19 +1,31 @@
 <?php
 class FreightCatChargeVo extends \BaseVo
 {
+    private $id;
     private $fcat_id;
     private $origin_country;
     private $dest_country;
     private $currency_id = 'HKD';
     private $amount;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at = '127.0.0.1';
+    private $create_at = '2130706433';
     private $create_by;
     private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at = '127.0.0.1';
+    private $modify_at = '2130706433';
     private $modify_by;
 
-    private $primary_key = ['fcat_id', 'origin_country', 'dest_country'];
+    private $primary_key = ['id'];
+    private $increment_field = 'id';
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function setFcatId($fcat_id)
     {
@@ -128,5 +140,10 @@ class FreightCatChargeVo extends \BaseVo
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

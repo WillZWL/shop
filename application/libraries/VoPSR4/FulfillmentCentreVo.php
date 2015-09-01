@@ -2,6 +2,7 @@
 class FulfillmentCentreVo extends \BaseVo
 {
     private $id;
+    private $fulfillment_centre_id;
     private $country_id;
     private $name;
     private $create_on = '0000-00-00 00:00:00';
@@ -12,6 +13,7 @@ class FulfillmentCentreVo extends \BaseVo
     private $modify_by;
 
     private $primary_key = ['id'];
+    private $increment_field = 'id';
 
     public function setId($id)
     {
@@ -21,6 +23,16 @@ class FulfillmentCentreVo extends \BaseVo
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setFulfillmentCentreId($fulfillment_centre_id)
+    {
+        $this->fulfillment_centre_id = $fulfillment_centre_id;
+    }
+
+    public function getFulfillmentCentreId()
+    {
+        return $this->fulfillment_centre_id;
     }
 
     public function setCountryId($country_id)
@@ -106,5 +118,10 @@ class FulfillmentCentreVo extends \BaseVo
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }
