@@ -1,16 +1,20 @@
 <?php
-class FulfillmentCentreVo extends \BaseVo
+class CourierVo extends \BaseVo
 {
     private $id;
-    private $fulfillment_centre_id;
-    private $country_id;
-    private $name;
+    private $courier_id;
+    private $aftership_id;
+    private $courier_name;
+    private $description;
+    private $type = 'F';
+    private $tracking_link;
+    private $weight_type;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at = '127.0.0.1';
-    private $create_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
     private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at = '127.0.0.1';
-    private $modify_by;
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
@@ -25,34 +29,74 @@ class FulfillmentCentreVo extends \BaseVo
         return $this->id;
     }
 
-    public function setFulfillmentCentreId($fulfillment_centre_id)
+    public function setCourierId($courier_id)
     {
-        $this->fulfillment_centre_id = $fulfillment_centre_id;
+        $this->courier_id = $courier_id;
     }
 
-    public function getFulfillmentCentreId()
+    public function getCourierId()
     {
-        return $this->fulfillment_centre_id;
+        return $this->courier_id;
     }
 
-    public function setCountryId($country_id)
+    public function setAftershipId($aftership_id)
     {
-        $this->country_id = $country_id;
+        $this->aftership_id = $aftership_id;
     }
 
-    public function getCountryId()
+    public function getAftershipId()
     {
-        return $this->country_id;
+        return $this->aftership_id;
     }
 
-    public function setName($name)
+    public function setCourierName($courier_name)
     {
-        $this->name = $name;
+        $this->courier_name = $courier_name;
     }
 
-    public function getName()
+    public function getCourierName()
     {
-        return $this->name;
+        return $this->courier_name;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setTrackingLink($tracking_link)
+    {
+        $this->tracking_link = $tracking_link;
+    }
+
+    public function getTrackingLink()
+    {
+        return $this->tracking_link;
+    }
+
+    public function setWeightType($weight_type)
+    {
+        $this->weight_type = $weight_type;
+    }
+
+    public function getWeightType()
+    {
+        return $this->weight_type;
     }
 
     public function setCreateOn($create_on)
