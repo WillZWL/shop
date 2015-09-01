@@ -1,10 +1,12 @@
 <?php
-class BrandVo extends \BaseVo
+class ProductCustomClassificationVo extends \BaseVo
 {
     private $id;
-    private $brand_name;
+    private $sku;
+    private $country_id;
+    private $code;
     private $description;
-    private $status = '1';
+    private $duty_pcent = '0.00';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -25,14 +27,34 @@ class BrandVo extends \BaseVo
         return $this->id;
     }
 
-    public function setBrandName($brand_name)
+    public function setSku($sku)
     {
-        $this->brand_name = $brand_name;
+        $this->sku = $sku;
     }
 
-    public function getBrandName()
+    public function getSku()
     {
-        return $this->brand_name;
+        return $this->sku;
+    }
+
+    public function setCountryId($country_id)
+    {
+        $this->country_id = $country_id;
+    }
+
+    public function getCountryId()
+    {
+        return $this->country_id;
+    }
+
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    public function getCode()
+    {
+        return $this->code;
     }
 
     public function setDescription($description)
@@ -45,14 +67,14 @@ class BrandVo extends \BaseVo
         return $this->description;
     }
 
-    public function setStatus($status)
+    public function setDutyPcent($duty_pcent)
     {
-        $this->status = $status;
+        $this->duty_pcent = $duty_pcent;
     }
 
-    public function getStatus()
+    public function getDutyPcent()
     {
-        return $this->status;
+        return $this->duty_pcent;
     }
 
     public function setCreateOn($create_on)

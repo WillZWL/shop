@@ -1,9 +1,10 @@
 <?php
-class BrandVo extends \BaseVo
+class SkuMappingVo extends \BaseVo
 {
     private $id;
-    private $brand_name;
-    private $description;
+    private $sku;
+    private $ext_sys;
+    private $ext_sku;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
@@ -25,24 +26,34 @@ class BrandVo extends \BaseVo
         return $this->id;
     }
 
-    public function setBrandName($brand_name)
+    public function setSku($sku)
     {
-        $this->brand_name = $brand_name;
+        $this->sku = $sku;
     }
 
-    public function getBrandName()
+    public function getSku()
     {
-        return $this->brand_name;
+        return $this->sku;
     }
 
-    public function setDescription($description)
+    public function setExtSys($ext_sys)
     {
-        $this->description = $description;
+        $this->ext_sys = $ext_sys;
     }
 
-    public function getDescription()
+    public function getExtSys()
     {
-        return $this->description;
+        return $this->ext_sys;
+    }
+
+    public function setExtSku($ext_sku)
+    {
+        $this->ext_sku = $ext_sku;
+    }
+
+    public function getExtSku()
+    {
+        return $this->ext_sku;
     }
 
     public function setStatus($status)
