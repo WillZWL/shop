@@ -5,110 +5,104 @@ use AtomV2\Dao\FreightCategoryDao;
 use AtomV2\Dao\FreightCatChargeDao;
 use AtomV2\Dao\FulfillmentCentreDao;
 use AtomV2\Dao\PlatformBizVarDao;
+use AtomV2\Service\ColourService;
 
 class FreightCatService extends BaseService
 {
-
-    private $fccDao;
-
     public function __construct()
     {
         parent::__construct();
         $this->setDao(new FreightCategoryDao);
-        $this->setFccDao(new FreightCatChargeDao);
-        $this->setFcDao(new FulfillmentCentreDao);
-        $this->setPbvDao(new PlatformBizVarDao);
+        $this->setFreightCatChargeDao(new FreightCatChargeDao);
+        $this->setFulFillmentCentreDao(new FulfillmentCentreDao);
+        $this->setPlatformBizVarDao(new PlatformBizVarDao);
+        $this->courierService = new ColourService;
     }
 
-    public function setFcDao($dao)
+    public function getFulFillmentCentreDao()
     {
-        $this->fcDao = $dao;
+        return $this->fulfillmentCentreDao;
     }
 
-    public function setPbvDao($dao)
+    public function setFulFillmentCentreDao($dao)
     {
-        $this->pbvDao = $dao;
+        $this->fulfillmentCentreDao = $dao;
     }
 
-    public function get_fcc_w_reg_list($where = [], $option = [])
+    public function getPlatformBizVarDao()
     {
-        include_once(APPPATH . "libraries/service/Courier_service.php");
-        include_once(APPPATH . "helpers/object_helper.php");
-        $courier_service = new Courier_service();
+        return $this->platformBizVarDao;
+    }
 
+    public function setPlatformBizVarDao($dao)
+    {
+        $this->platformBizVarDao = $dao;
+    }
+
+    public function getFccWithRegList($where = [], $option = [])
+    {
         $option["limit"] = -1;
-        $cat_w_reg_list = $this->getDao()->get_cat_w_region([], $option, "Freight_cat_w_region_dto");
-        $courier_reg_list = $courier_service->get_crc_dao()->get_list(["courier_id" => $where["courier_id"]], ["orderby" => "region_id ASC", "limit" => -1]);
-        $fcc_list = $this->getFccDao()->getList(["courier_id" => $where["courier_id"]], ["orderby" => "fcat_id ASC, region_id ASC", "limit" => -1]);
-        $fcc_vo = $this->getFccDao()->get();
+        $cat_w_reg_list = $this->getDao()->getCatWithRegion([], $option, "Freight_cat_w_region_dto");
+        $courier_reg_list = $this->courierService->getCrcDao()->getList(["courier_id" => $where["courier_id"]], ["orderby" => "region_id ASC", "limit" => -1]);
+        $fcc_list = $this->getFreightCatChargeDao()->getList(["courier_id" => $where["courier_id"]], ["orderby" => "fcat_id ASC, region_id ASC", "limit" => -1]);
+        $fcc_vo = $this->getFreightCatChargeDao()->get();
 
         foreach ($fcc_list as $fcc) {
-            $new_fcc[$fcc->get_fcat_id()][$fcc->get_region_id()] = $fcc;
+            $new_fcc[$fcc->getFcatId()][$fcc->getRegionId()] = $fcc;
         }
         foreach ($cat_w_reg_list as $cat) {
-            $cat_id = $cat->get_cat_id();
+            $cat_id = $cat->getCatId();
             foreach ($courier_reg_list as $region) {
-                $region_id = $region->get_region_id();
+                $region_id = $region->getRegionId();
                 if (empty($new_fcc[$cat_id][$region_id])) {
                     $vo = clone $fcc_vo;
                     set_value($vo, $region);
-                    $vo->set_fcat_id($cat_id);
+                    $vo->setFcatId($cat_id);
                     $new_fcc[$cat_id][$region_id] = $vo;
                 }
             }
-            $cat->set_charge((object)$new_fcc[$cat_id]);
+            $cat->setCharge((object)$new_fcc[$cat_id]);
             $new_cat[$cat_id] = $cat;
         }
         return $new_cat;
     }
 
-    public function getFccDao()
+    public function getFreightCatChargeDao()
     {
         return $this->fccDao;
     }
 
-    public function setFccDao($dao)
+    public function setFreightCatChargeDao($dao)
     {
         $this->fccDao = $dao;
     }
 
-    public function get_origin_country_list()
+    public function getOriginCountryList()
     {
-        $list = $this->getFcDao()->getList();
-        foreach ($list AS $key => $obj) {
-            $rs[] = $obj->get_country_id();
-        }
-        return $rs;
+       return $this->getFulFillmentCentreDao()->getList();
     }
 
-    public function getFcDao()
-    {
-        return $this->fcDao;
-    }
-
-    public function get_full_freight_cat_charge_list($where, $option)
+    public function getFullFreightCatChargeList($where, $option)
     {
         $fc_name_list = $combine_fcc_list = [];
-        $fc_list = $this->getDao()->get_list(["status" => 1], ["orderby" => "id ASC", "LIMIT" => -1]);
-        $dest_country_list = $this->getPbvDao()->getUniqueDestCountryList();
-        $fcc_vo = $this->getFccDao()->get();
-        $current_fcc_list = $this->getFccDao()->getList($where, $option);
+        $fc_list = $this->getDao()->getList(["status" => 1], ["orderby" => "id ASC", "LIMIT" => -1]);
+        $dest_country_list = $this->getPlatformBizVarDao()->getUniqueDestCountryList();
+        $fcc_vo = $this->getFreightCatChargeDao()->get();
+        $current_fcc_list = $this->getFreightCatChargeDao()->getList($where, $option);
         foreach ($current_fcc_list AS $fcc_obj) {
-            $combine_fcc_list[$fcc_obj->get_fcat_id()][$fcc_obj->get_dest_country()] = $fcc_obj;
+            $combine_fcc_list[$fcc_obj->getFcatId()][$fcc_obj->getDestCountry()] = $fcc_obj;
         }
         foreach ($fc_list AS $fc_obj) {
-            $fc_name_list["frieght_cat_arr"][$fc_obj->get_id()] = $fc_obj->get_name();
-            //$combine_fcc_list[$fc_obj->get_id()]['fc_obj'] = $fc_obj;
+            $fc_name_list["frieght_cat_arr"][$fc_obj->getId()] = $fc_obj->getName();
             foreach ($dest_country_list AS $dest_country_arr) {
                 $fc_name_list["dest_country_arr"][$dest_country_arr['country_id']] = $dest_country_arr['country_name'];
-                if (empty($combine_fcc_list[$fc_obj->get_id()][$dest_country_arr['country_id']])) {
+                if (empty($combine_fcc_list[$fc_obj->getId()][$dest_country_arr['country_id']])) {
                     $vo = clone $fcc_vo;
-                    $vo->set_fcat_id($fc_obj->get_id());
-                    $vo->set_origin_country($fc_obj->get_id());
-                    //Frankie confirmed that they will only have HKD as frieght cost
-                    $vo->set_currency_id("HKD");
-                    $vo->set_amount(0);
-                    $combine_fcc_list[$fc_obj->get_id()][$dest_country_arr['country_id']] = $vo;
+                    $vo->setFcatId($fc_obj->getId());
+                    $vo->setOriginCountry($fc_obj->getId());
+                    $vo->setCurrencyId("HKD");
+                    $vo->setAmount(0);
+                    $combine_fcc_list[$fc_obj->getId()][$dest_country_arr['country_id']] = $vo;
                 }
             }
         }
@@ -116,24 +110,39 @@ class FreightCatService extends BaseService
         return $ret;
     }
 
-    public function getPbvDao()
+    public function saveFreightCatCharge($values = [], $origin_country = "")
     {
-        return $this->pbvDao;
+        $fcc_vo = $this->getFreightCatChargeDao()->get();
+        foreach ($values AS $fcat_id => $country_value_arr) {
+            foreach ($country_value_arr AS $dest_country => $value) {
+                $obj = $this->getFreightCatChargeDao()->get(["origin_country" => $origin_country, "fcat_id" => $fcat_id, "dest_country" => $dest_country]);
+                if (!$obj) {
+                    $obj = clone $fcc_vo;
+                    $obj->setFcatId($fcat_id);
+                    $obj->setOriginCountry($origin_country);
+                    $obj->setDestCountry($dest_country);
+                    $obj->setCurrencyId("HKD");
+                    $action = "insertFcc";
+                } else {
+                    $action = "updateFcc";
+                }
+                $obj->setAmount($value);
+
+                if (!$this->$action($obj)) {
+                    $_SESSION["NOTICE"] = "ERROR " . __LINE__ . " : " . $this->db->_error_message();
+                }
+            }
+        }
     }
 
-    public function get_freight_cat_charge_obj($where = [])
+    public function insertFcc($obj)
     {
-        return $this->getFccDao()->get($where);
+        return $this->getFreightCatChargeDao()->insert($obj);
     }
 
-    public function insert_fcc($obj)
+    public function updateFcc($obj)
     {
-        return $this->getFccDao()->insert($obj);
-    }
-
-    public function update_fcc($obj)
-    {
-        return $this->getFccDao()->update($obj);
+        return $this->getFreightCatChargeDao()->update($obj);
     }
 }
 
