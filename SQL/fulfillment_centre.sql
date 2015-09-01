@@ -38,7 +38,7 @@ CREATE TABLE `fulfillment_centre` (
   `modify_by` varchar(32) NOT NULL DEFAULT 'system',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_fulfillment_centre_id` (`fulfillment_centre_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `fulfillment_centre` WRITE;
 /*!40000 ALTER TABLE `fulfillment_centre` DISABLE KEYS */;
