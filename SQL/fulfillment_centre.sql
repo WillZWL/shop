@@ -31,25 +31,23 @@ CREATE TABLE `fulfillment_centre` (
   `country_id` char(2) NOT NULL COMMENT 'International country code (2 characters)',
   `name` varchar(50) NOT NULL,
   `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `create_at` varchar(16) NOT NULL DEFAULT '127.0.0.1' COMMENT 'IP address',
-  `create_by` varchar(32) NOT NULL,
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
   `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modify_at` varchar(16) NOT NULL DEFAULT '127.0.0.1' COMMENT 'IP address',
-  `modify_by` varchar(32) NOT NULL,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
   PRIMARY KEY (`id`),
-  KEY `fk_fc_country_id` (`country_id`),
-  KEY `idx_fulfillment_centre_id` (`fulfillment_centre_id`),
-  CONSTRAINT `fk_fc_country_id` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `idx_fulfillment_centre_id` (`fulfillment_centre_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `fulfillment_centre` WRITE;
 /*!40000 ALTER TABLE `fulfillment_centre` DISABLE KEYS */;
 
 INSERT INTO `fulfillment_centre` (`id`, `fulfillment_centre_id`, `country_id`, `name`, `create_on`, `create_at`, `create_by`, `modify_on`, `modify_at`, `modify_by`)
 VALUES
-	(1,'HK_FC','HK','HK Fulfillment Center','2011-02-25 17:34:50','127.0.0.1','system','2012-02-01 19:33:50','127.0.0.1','system'),
-	(2,'UK_FC','GB','UK Fulfillment Center','2011-02-25 17:34:51','127.0.0.1','system','2012-02-01 19:33:50','127.0.0.1','system'),
-	(3,'US_FC','US','US Fulfillment Center','2011-02-25 17:34:51','127.0.0.1','system','2012-02-01 19:33:50','127.0.0.1','system');
+	(1,'HK_FC','HK','HK Fulfillment Center','2011-02-25 17:34:50',2130706433,'system','2012-02-01 19:33:50',2130706433,'system'),
+	(2,'UK_FC','GB','UK Fulfillment Center','2011-02-25 17:34:51',2130706433,'system','2012-02-01 19:33:50',2130706433,'system'),
+	(3,'US_FC','US','US Fulfillment Center','2011-02-25 17:34:51',2130706433,'system','2012-02-01 19:33:50',2130706433,'system');
 
 /*!40000 ALTER TABLE `fulfillment_centre` ENABLE KEYS */;
 UNLOCK TABLES;
