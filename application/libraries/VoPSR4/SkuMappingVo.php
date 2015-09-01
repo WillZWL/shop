@@ -1,14 +1,10 @@
 <?php
-class SiteConfigVo extends \BaseVo
+class SkuMappingVo extends \BaseVo
 {
     private $id;
-    private $domain;
-    private $site_name;
-    private $lang;
-    private $logo;
-    private $email;
-    private $platform;
-    private $domain_type = '1';
+    private $sku;
+    private $ext_sys;
+    private $ext_sku;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
@@ -30,74 +26,34 @@ class SiteConfigVo extends \BaseVo
         return $this->id;
     }
 
-    public function setDomain($domain)
+    public function setSku($sku)
     {
-        $this->domain = $domain;
+        $this->sku = $sku;
     }
 
-    public function getDomain()
+    public function getSku()
     {
-        return $this->domain;
+        return $this->sku;
     }
 
-    public function setSiteName($site_name)
+    public function setExtSys($ext_sys)
     {
-        $this->site_name = $site_name;
+        $this->ext_sys = $ext_sys;
     }
 
-    public function getSiteName()
+    public function getExtSys()
     {
-        return $this->site_name;
+        return $this->ext_sys;
     }
 
-    public function setLang($lang)
+    public function setExtSku($ext_sku)
     {
-        $this->lang = $lang;
+        $this->ext_sku = $ext_sku;
     }
 
-    public function getLang()
+    public function getExtSku()
     {
-        return $this->lang;
-    }
-
-    public function setLogo($logo)
-    {
-        $this->logo = $logo;
-    }
-
-    public function getLogo()
-    {
-        return $this->logo;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setPlatform($platform)
-    {
-        $this->platform = $platform;
-    }
-
-    public function getPlatform()
-    {
-        return $this->platform;
-    }
-
-    public function setDomainType($domain_type)
-    {
-        $this->domain_type = $domain_type;
-    }
-
-    public function getDomainType()
-    {
-        return $this->domain_type;
+        return $this->ext_sku;
     }
 
     public function setStatus($status)

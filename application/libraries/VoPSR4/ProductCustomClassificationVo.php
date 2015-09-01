@@ -1,15 +1,12 @@
 <?php
-class SiteConfigVo extends \BaseVo
+class ProductCustomClassificationVo extends \BaseVo
 {
     private $id;
-    private $domain;
-    private $site_name;
-    private $lang;
-    private $logo;
-    private $email;
-    private $platform;
-    private $domain_type = '1';
-    private $status = '1';
+    private $sku;
+    private $country_id;
+    private $code;
+    private $description;
+    private $duty_pcent = '0.00';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -30,84 +27,54 @@ class SiteConfigVo extends \BaseVo
         return $this->id;
     }
 
-    public function setDomain($domain)
+    public function setSku($sku)
     {
-        $this->domain = $domain;
+        $this->sku = $sku;
     }
 
-    public function getDomain()
+    public function getSku()
     {
-        return $this->domain;
+        return $this->sku;
     }
 
-    public function setSiteName($site_name)
+    public function setCountryId($country_id)
     {
-        $this->site_name = $site_name;
+        $this->country_id = $country_id;
     }
 
-    public function getSiteName()
+    public function getCountryId()
     {
-        return $this->site_name;
+        return $this->country_id;
     }
 
-    public function setLang($lang)
+    public function setCode($code)
     {
-        $this->lang = $lang;
+        $this->code = $code;
     }
 
-    public function getLang()
+    public function getCode()
     {
-        return $this->lang;
+        return $this->code;
     }
 
-    public function setLogo($logo)
+    public function setDescription($description)
     {
-        $this->logo = $logo;
+        $this->description = $description;
     }
 
-    public function getLogo()
+    public function getDescription()
     {
-        return $this->logo;
+        return $this->description;
     }
 
-    public function setEmail($email)
+    public function setDutyPcent($duty_pcent)
     {
-        $this->email = $email;
+        $this->duty_pcent = $duty_pcent;
     }
 
-    public function getEmail()
+    public function getDutyPcent()
     {
-        return $this->email;
-    }
-
-    public function setPlatform($platform)
-    {
-        $this->platform = $platform;
-    }
-
-    public function getPlatform()
-    {
-        return $this->platform;
-    }
-
-    public function setDomainType($domain_type)
-    {
-        $this->domain_type = $domain_type;
-    }
-
-    public function getDomainType()
-    {
-        return $this->domain_type;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
+        return $this->duty_pcent;
     }
 
     public function setCreateOn($create_on)
