@@ -85,7 +85,7 @@ class WeightCatChargeDao extends BaseDao
         }
     }
 
-    public function get_country_weight_charge_by_dest_country($platform_id, $weight, $delivery_type = "STD", $dest_country, $classname = "CountryWeightChargeDto")
+    public function getCountryWeightChargeByDestCountry($platform_id, $weight, $delivery_type = "STD", $dest_country, $classname = "CountryWeightChargeDto")
     {
         $sql = "
                 SELECT wcc.*, wcc.amount * er.rate converted_amount

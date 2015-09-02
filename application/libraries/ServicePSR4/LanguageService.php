@@ -16,7 +16,7 @@ class LanguageService extends BaseService
         $llist = $this->getDao()->getList(["status" => 1], ["limit" => -1]);
         $ret = [];
         foreach ($llist as $lobj) {
-            $ret[$lobj->getId()] = $lobj->getName();
+            $ret[$lobj->getLangId()] = $lobj->getLangName();
         }
 
         return $ret;

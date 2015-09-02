@@ -41,9 +41,9 @@
             <div id="div_tabs">
                 <?php
                 foreach ($lang_list as $lang_obj) {
-                    $cur_lang_id = $lang_obj->get_id();
-                    $cur_name = $cat_ext[$cat_id][$cur_lang_id] ? $cat_ext[$cat_id][$cur_lang_id]->get_name() : "";
-                    $cur_title = (isset($func_opt_list[$cur_lang_id]) || isset($del_opt_list[$cur_lang_id])) ? $lang_obj->get_name() : "<font color='red'>{$lang_obj->get_name()}</font>";
+                    $cur_lang_id = $lang_obj->getLangId();
+                    // $cur_name = $cat_ext[$cat_id][$cur_lang_id] ? $cat_ext[$cat_id][$cur_lang_id]->getLangName() : "";
+                    $cur_title = (isset($func_opt_list[$cur_lang_id]) || isset($del_opt_list[$cur_lang_id])) ? $lang_obj->getLangName() : "<font color='red'>{$lang_obj->getLangName()}</font>";
                     ?>
                     <div id="div_tab_<?= $cur_lang_id ?>" class="x-tab" title="<?= $cur_title ?>">
                         <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_main">
@@ -55,15 +55,15 @@
                             <?php
                             if ($delivery_type_list) {
                                 foreach ($delivery_type_list as $dt_obj) {
-                                    $dt_id = strtolower($dt_obj->get_id());
+                                    $dt_id = strtolower($dt_obj->getDeliveryTypeId());
                                     if ($func_opt_list["en"]["free_" . $dt_id]) {
                                         ?>
                                         <tr>
-                                            <td class="field"><?= $func_opt_list["en"]["free_" . $dt_id]->get_text() ?></td>
+                                            <td class="field"><?= $func_opt_list["en"]["free_" . $dt_id]->getText() ?></td>
                                             <td class="value"><input
-                                                    name="func_opt[<?= $cur_lang_id ?>][free_<?= $dt_id ?>][<?= ($exists = isset($func_opt_list[$cur_lang_id]["free_" . $dt_id])) ? $func_opt_list[$cur_lang_id]["free_" . $dt_id]->get_id() : "new" ?>]"
+                                                    name="func_opt[<?= $cur_lang_id ?>][free_<?= $dt_id ?>][<?= ($exists = isset($func_opt_list[$cur_lang_id]["free_" . $dt_id])) ? $func_opt_list[$cur_lang_id]["free_" . $dt_id]->getId() : "new" ?>]"
                                                     class="input"
-                                                    value="<?= $exists ? htmlspecialchars($func_opt_list[$cur_lang_id]["free_" . $dt_id]->get_text()) : "" ?>">
+                                                    value="<?= $exists ? htmlspecialchars($func_opt_list[$cur_lang_id]["free_" . $dt_id]->getText()) : "" ?>">
                                             </td>
                                         </tr>
                                     <?php
@@ -74,9 +74,9 @@
                             <tr>
                                 <td class="field"><?= $lang["working_days"] ?></td>
                                 <td class="value"><input
-                                        name="func_opt[<?= $cur_lang_id ?>][working_days][<?= ($exists = isset($func_opt_list[$cur_lang_id]["working_days"])) ? $func_opt_list[$cur_lang_id]["working_days"]->get_id() : "new" ?>]"
+                                        name="func_opt[<?= $cur_lang_id ?>][working_days][<?= ($exists = isset($func_opt_list[$cur_lang_id]["working_days"])) ? $func_opt_list[$cur_lang_id]["working_days"]->getId() : "new" ?>]"
                                         class="input"
-                                        value="<?= $exists ? htmlspecialchars($func_opt_list[$cur_lang_id]["working_days"]->get_text()) : "" ?>">
+                                        value="<?= $exists ? htmlspecialchars($func_opt_list[$cur_lang_id]["working_days"]->getText()) : "" ?>">
                                 </td>
                             </tr>
                             <tr class="header">
@@ -87,12 +87,12 @@
                                 foreach ($delivery_type_list as $dt_obj) {
                                     ?>
                                     <tr>
-                                        <td class="field"><?= $dt_id = $dt_obj->get_id() ?>
-                                            - <?= $dt_obj->get_name() ?></td>
+                                        <td class="field"><?= $dt_id = $dt_obj->getDeliveryTypeId() ?>
+                                            - <?= $dt_obj->getName() ?></td>
                                         <td class="value"><input
-                                                name="del_opt[<?= $cur_lang_id ?>][<?= $dt_id ?>][<?= ($exists = isset($del_opt_list[$cur_lang_id][$dt_id])) ? $del_opt_list[$cur_lang_id][$dt_id]->get_id() : "new" ?>]"
+                                                name="del_opt[<?= $cur_lang_id ?>][<?= $dt_id ?>][<?= ($exists = isset($del_opt_list[$cur_lang_id][$dt_id])) ? $del_opt_list[$cur_lang_id][$dt_id]->getId() : "new" ?>]"
                                                 class="input"
-                                                value="<?= $exists ? htmlspecialchars($del_opt_list[$cur_lang_id][$dt_id]->get_display_name()) : "" ?>">
+                                                value="<?= $exists ? htmlspecialchars($del_opt_list[$cur_lang_id][$dt_id]->getDisplayName()) : "" ?>">
                                         </td>
                                     </tr>
                                 <?php
@@ -115,7 +115,7 @@
                 </td>
             </tr>
         </table>
-        <?= _form_ru() ?>
+        <?= $set_form_ru ?>
         <input type="hidden" name="posted" value="1">
     </form>
     <script>
