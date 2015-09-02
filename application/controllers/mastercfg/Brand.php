@@ -1,20 +1,16 @@
 <?php
+use AtomV2\Models\Mastercfg\BrandModel;
+use AtomV2\Service\PaginationService;
 
 class Brand extends MY_Controller
 {
-
     private $appId = "MST0006";
-    private $lang_id = "en";
-
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('mastercfg/brand_model');
-        $this->load->helper('url');
-        $this->load->helper('notice');
-        $this->load->helper('object');
-        $this->load->library('service/pagination_service');
+        $this->brandModel = new BrandModel;
+        $this->paginationService = new PaginationService;
     }
 
     public function index()
@@ -23,8 +19,8 @@ class Brand extends MY_Controller
 
         $_SESSION["LISTPAGE"] = base_url() . "mastercfg/brand/?" . $_SERVER['QUERY_STRING'];
 
-        $where = array();
-        $option = array();
+        $where = [];
+        $option = [];
 
         if ($this->input->get("brand_name") != "") {
             $where["brand_name LIKE "] = "%" . $this->input->get("brand_name") . "%";
@@ -55,20 +51,19 @@ class Brand extends MY_Controller
 
         $option["orderby"] = $sort . " " . $order;
 
-        $data = $this->brand_model->get_brand_list($where, $option);
+        $data = $this->brandModel->getBrandList($where, $option);
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
         $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
+        $this->paginationService->set_show_count_tag(TRUE);
+        $this->paginationService->initialize($pconfig);
 
         $data["notice"] = notice($lang);
 
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
-//      $data["searchdisplay"] = ($where["brand_name"]=="" && $where["regions"]=="")?'style="display:none"':"";
         $data["searchdisplay"] = "";
         $this->load->view('mastercfg/brand/brand_index_v', $data);
     }
@@ -78,11 +73,6 @@ class Brand extends MY_Controller
         return $this->appId;
     }
 
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
-    }
-
     public function add()
     {
 
@@ -90,20 +80,20 @@ class Brand extends MY_Controller
 
         if ($this->input->post("posted")) {
             if (isset($_SESSION["brand_vo"])) {
-                $this->brand_model->include_brand_vo();
+                $this->brandModel->includeBrandVo();
                 $data["brand"] = unserialize($_SESSION["brand_vo"]);
 
                 $_POST["status"] = 1;
                 set_value($data["brand"], $_POST);
 
-                $proc = $this->brand_model->get_brand(array("brand_name" => $data["brand"]->get_brand_name()));
+                $proc = $this->brandModel->getBrand(["brand_name" => $data["brand"]->getBrandName()]);
                 if (!empty($proc)) {
                     $_SESSION["NOTICE"] = "brand_existed";
                 } else {
-
-                    if ($new_obj = $this->brand_model->add_brand($data["brand"])) {
+                    $data["brand"]->setId(0);
+                    if ($new_obj = $this->brandModel->addBrand($data["brand"])) {
                         unset($_SESSION["brand_vo"]);
-                        $id = $new_obj->get_id();
+                        $id = $new_obj->getId();
                         redirect(base_url() . "mastercfg/brand/view/" . $id);
                     } else {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
@@ -112,11 +102,11 @@ class Brand extends MY_Controller
             }
         }
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
         if (empty($data["brand"])) {
-            if (($data["brand"] = $this->brand_model->get_brand()) === FALSE) {
+            if (($data["brand"] = $this->brandModel->getBrand()) === FALSE) {
                 $_SESSION["NOTICE"] = $this->db->_error_message();
             } else {
                 $_SESSION["brand_vo"] = serialize($data["brand"]);
@@ -134,14 +124,18 @@ class Brand extends MY_Controller
         global $data;
         if ($this->input->post("posted")) {
             if (isset($_SESSION["brand_vo"])) {
-                $this->brand_model->include_brand_region_vo();
+                $this->brandModel->includeBrandRegionVo();
                 $data["br"] = unserialize($_SESSION["br_vo"]);
                 set_value($data["br"], $_POST);
-                $proc = $this->brand_model->get_brand_region(array("brand_id" => $data["br"]->get_brand_id(), "sales_region_id" => $data["br"]->get_sales_region_id(), "src_region_id" => $data["br"]->get_src_region_id()));
+                $proc = $this->brandModel->getBrandRegion([
+                        "brand_id" => $data["br"]->getBrandId(),
+                        "sales_region_id" => $data["br"]->getSalesRegionId(),
+                        "src_region_id" => $data["br"]->getSrcRegionId()
+                    ]);
                 if (!empty($proc)) {
                     $_SESSION["NOTICE"] = "regions_existed";
                 } else {
-                    if ($new_obj = $this->brand_model->add_brand_region($data["br"])) {
+                    if ($new_obj = $this->brandModel->addBrandRegion($data["br"])) {
                         unset($_SESSION["br_vo"]);
                         unset($data["br"]);
                         redirect(base_url() . "mastercfg/brand/view/" . $this->input->post("brand_id"));
@@ -163,18 +157,18 @@ class Brand extends MY_Controller
             if ($this->input->post("posted") && $this->input->post("cmd") == "edit") {
 
                 if (isset($_SESSION["brand_vo"])) {
-                    $this->brand_model->include_brand_vo();
+                    $this->brandModel->includeBrandVo();
                     $data["brand"] = unserialize($_SESSION["brand_vo"]);
 
-                    if ($data["brand"]->get_id() != $_POST["id"]) {
-                        $proc = $this->brand_model->get_brand(array("id" => $id));
+                    if ($data["brand"]->getId() != $_POST["id"]) {
+                        $proc = $this->brandModel->getBrand(["id" => $id]);
                         if (!empty($proc)) {
                             $_SESSION["NOTICE"] = "brand_existed";
                         }
                     } else {
                         set_value($data["brand"], $_POST);
 
-                        if ($this->brand_model->update_brand($data["brand"])) {
+                        if ($this->brandModel->updateBrand($data["brand"])) {
                             unset($_SESSION["brand_vo"]);
                             redirect(base_url() . "mastercfg/brand/view/" . $id);
                         } else {
@@ -184,11 +178,11 @@ class Brand extends MY_Controller
                 }
             }
 
-            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
 
             if (empty($data["brand"])) {
-                if (($data["brand"] = $this->brand_model->get_brand(array("id" => $id))) === FALSE) {
+                if (($data["brand"] = $this->brandModel->getBrand(["id" => $id])) === FALSE) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 } else {
                     $_SESSION["brand_vo"] = serialize($data["brand"]);
@@ -196,14 +190,14 @@ class Brand extends MY_Controller
             }
 
             if (empty($data["br"])) {
-                if (($data["br"] = $this->brand_model->get_brand_region()) === FALSE) {
+                if (($data["br"] = $this->brandModel->getBrandRegion()) === FALSE) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 } else {
                     $_SESSION["br_vo"] = serialize($data["br"]);
                 }
             }
 
-            $data["br_list"] = $this->brand_model->get_brand_region_list(array("brand_id" => $id));
+            $data["br_list"] = $this->brandModel->getBrandRegionList(["brand_id" => $id]);
 
             $data["notice"] = notice($lang);
             $data["cmd"] = "edit";
@@ -215,7 +209,7 @@ class Brand extends MY_Controller
     {
         if ($this->input->post("posted") && ($brand_id = $this->input->post("brand_id"))) {
             foreach ($_POST["check"] as $cur_brand) {
-                if ($this->brand_model->del_brand_region(array("brand_id" => $brand_id, "sales_region_id" => $_POST["del_sales_region_id"][$cur_brand], "src_region_id" => $_POST["del_src_region_id"][$cur_brand])) === FALSE) {
+                if ($this->brandModel->delBrandRegion(["brand_id" => $brand_id, "sales_region_id" => $_POST["del_sales_region_id"][$cur_brand], "src_region_id" => $_POST["del_src_region_id"][$cur_brand]]) === FALSE) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 }
             }
@@ -230,10 +224,10 @@ class Brand extends MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->brand_model->get_brand_list(array("status" => 1), array("orderby" => "brand_name ASC", "limit" => -1));
+        $objlist = $this->brandModel->getBrandList(["status" => 1], ["orderby" => "brand_name ASC", "limit" => -1]);
         foreach ($objlist["brandlist"] as $obj) {
-            $sid = str_replace("'", "\'", $obj->get_id());
-            $name = str_replace("'", "\'", $obj->get_brand_name());
+            $sid = str_replace("'", "\'", $obj->getId());
+            $name = str_replace("'", "\'", $obj->getBrandName());
             $slist[] = "'" . $sid . "':'" . $name . "'";
         }
         $js = "brandlist = {" . implode(", ", $slist) . "};";

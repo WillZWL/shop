@@ -1,79 +1,46 @@
 <?php
-class ColourWithLangDto
+class BrandRegionVo extends \BaseVo
 {
-    private $id;
-    private $colour_id;
-    private $colour_name;
-    private $lang_id;
-    private $lang_name;
-    private $status = '1';
+    private $brand_id;
+    private $sales_region_id;
+    private $src_region_id;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at = '2130706433';
-    private $create_by = 'system';
+    private $create_at;
+    private $create_by;
     private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at = '2130706433';
-    private $modify_by = 'system';
+    private $modify_at;
+    private $modify_by;
 
-    private $primary_key = ['id'];
+    private $primary_key = ['brand_id', 'sales_region_id', 'src_region_id'];
 
-    public function setId($id)
+    public function setBrandId($brand_id)
     {
-        $this->id = $id;
+        $this->brand_id = $brand_id;
     }
 
-    public function getId()
+    public function getBrandId()
     {
-        return $this->id;
+        return $this->brand_id;
     }
 
-    public function setColourId($colour_id)
+    public function setSalesRegionId($sales_region_id)
     {
-        $this->colour_id = $colour_id;
+        $this->sales_region_id = $sales_region_id;
     }
 
-    public function getColourId()
+    public function getSalesRegionId()
     {
-        return $this->colour_id;
+        return $this->sales_region_id;
     }
 
-    public function setColourName($colour_name)
+    public function setSrcRegionId($src_region_id)
     {
-        $this->colour_name = $colour_name;
+        $this->src_region_id = $src_region_id;
     }
 
-    public function getColourName()
+    public function getSrcRegionId()
     {
-        return $this->colour_name;
-    }
-
-    public function setLangId($lang_id)
-    {
-        $this->lang_id = $lang_id;
-    }
-
-    public function getLangId()
-    {
-        return $this->lang_id;
-    }
-
-    public function setLangName($lang_name)
-    {
-        $this->lang_name = $lang_name;
-    }
-
-    public function getLangName()
-    {
-        return $this->lang_name;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
+        return $this->src_region_id;
     }
 
     public function setCreateOn($create_on)

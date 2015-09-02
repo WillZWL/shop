@@ -41,16 +41,16 @@
                 <td height="20"><img src="<?= base_url() ?>images/expand.png" class="pointer"
                                      onClick="Expand(document.getElementById('tr_search'));"></td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'brand_name', '<?= $xsort["brand_name"] ?>')"><?= $lang["brand"] ?> <?= $sortimg["brand_name"] ?></a>
+                       onClick="SortCol(document.fm, 'brand_name', '<?= @$xsort["brand_name"] ?>')"><?= $lang["brand"] ?> <?= @$sortimg["brand_name"] ?></a>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'description', '<?= $xsort["description"] ?>')"><?= $lang["description"] ?> <?= $sortimg["description"] ?></a>
+                       onClick="SortCol(document.fm, 'description', '<?= @$xsort["description"] ?>')"><?= $lang["description"] ?> <?= @$sortimg["description"] ?></a>
                 </td>
                 <!--
         <td><a href="#" onClick="SortCol(document.fm, 'regions', '<?= $xsort["regions"] ?>')"><?= $lang["sales_regions"] ?>--<?= $lang["sourcing_regions"] ?> <?= $sortimg["regions"] ?></a></td>
         -->
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'status', '<?= $xsort["status"] ?>')"><?= $lang["status"] ?> <?= $sortimg["status"] ?></a>
+                       onClick="SortCol(document.fm, 'status', '<?= @$xsort["status"] ?>')"><?= $lang["status"] ?> <?= @$sortimg["status"] ?></a>
                 </td>
                 <td></td>
             </tr>
@@ -71,8 +71,8 @@
                     ?>
                     <select name="status" class="input" notEmpty>
                         <option value="">
-                        <option value="1"<?= $selected[1] ?>><?= $lang["active"] ?>
-                        <option value="0"<?= $selected[0] ?>><?= $lang["inactive"] ?>
+                        <option value="1"<?= !empty($selected[1]) ? $selected[1] : "" ?>><?= $lang["active"] ?>
+                        <option value="0"<?= !empty($selected[0]) ? $selected[0] : "" ?>><?= $lang["inactive"] ?>
                     </select>
                 </td>
                 <td align="center"><input type="submit" name="searchsubmit" value="" class="search_button"
@@ -86,14 +86,13 @@
 
                     <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
                         onMouseOut="RemoveClassName(this, 'highlight')"
-                        onClick="Redirect('<?= site_url('mastercfg/brand/view/' . $brand->get_id()) ?>')">
+                        onClick="Redirect('<?= site_url('mastercfg/brand/view/' . $brand->getId()) ?>')">
                         <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                             title='<?= $lang["create_on"] ?>:<?= $brand->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $brand->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $brand->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $brand->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $brand->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $brand->get_modify_by() ?>'>
+                                             title='<?= $lang["create_on"] ?>:<?= $brand->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $brand->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $brand->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $brand->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $brand->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $brand->getModifyBy() ?>'>
                         </td>
-                        <td><?= $brand->get_brand_name() ?></td>
-                        <td><?= $brand->get_description() ?></td>
-                        <!--<td><?= $brand->get_regions() ?></td>-->
-                        <td><?= $ar_status[$brand->get_status()] ?></td>
+                        <td><?= $brand->getBrandName() ?></td>
+                        <td><?= $brand->getDescription() ?></td>
+                        <td><?= $ar_status[$brand->getStatus()] ?></td>
                         <td></td>
                     </tr>
                     <?php
@@ -106,7 +105,7 @@
         <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $this->paginationService->create_links_with_style() ?>
     <?= $notice["js"] ?>
 </div>
 </body>

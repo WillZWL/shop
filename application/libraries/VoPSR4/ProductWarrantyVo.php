@@ -1,12 +1,10 @@
 <?php
-class ColourWithLangDto
+class ProductWarrantyVo extends \BaseVo
 {
     private $id;
-    private $colour_id;
-    private $colour_name;
-    private $lang_id;
-    private $lang_name;
-    private $status = '1';
+    private $sku;
+    private $platform_id;
+    private $warranty_in_month;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -15,6 +13,7 @@ class ColourWithLangDto
     private $modify_by = 'system';
 
     private $primary_key = ['id'];
+    private $increment_field = 'id';
 
     public function setId($id)
     {
@@ -26,54 +25,34 @@ class ColourWithLangDto
         return $this->id;
     }
 
-    public function setColourId($colour_id)
+    public function setSku($sku)
     {
-        $this->colour_id = $colour_id;
+        $this->sku = $sku;
     }
 
-    public function getColourId()
+    public function getSku()
     {
-        return $this->colour_id;
+        return $this->sku;
     }
 
-    public function setColourName($colour_name)
+    public function setPlatformId($platform_id)
     {
-        $this->colour_name = $colour_name;
+        $this->platform_id = $platform_id;
     }
 
-    public function getColourName()
+    public function getPlatformId()
     {
-        return $this->colour_name;
+        return $this->platform_id;
     }
 
-    public function setLangId($lang_id)
+    public function setWarrantyInMonth($warranty_in_month)
     {
-        $this->lang_id = $lang_id;
+        $this->warranty_in_month = $warranty_in_month;
     }
 
-    public function getLangId()
+    public function getWarrantyInMonth()
     {
-        return $this->lang_id;
-    }
-
-    public function setLangName($lang_name)
-    {
-        $this->lang_name = $lang_name;
-    }
-
-    public function getLangName()
-    {
-        return $this->lang_name;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
+        return $this->warranty_in_month;
     }
 
     public function setCreateOn($create_on)
@@ -139,5 +118,10 @@ class ColourWithLangDto
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

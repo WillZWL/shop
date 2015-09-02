@@ -1,11 +1,12 @@
 <?php
-class ColourWithLangDto
+class ProductSpecGroupVo extends \BaseVo
 {
     private $id;
-    private $colour_id;
-    private $colour_name;
-    private $lang_id;
-    private $lang_name;
+    private $func_id;
+    private $code;
+    private $name;
+    private $desc;
+    private $priority = '9';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
@@ -15,6 +16,7 @@ class ColourWithLangDto
     private $modify_by = 'system';
 
     private $primary_key = ['id'];
+    private $increment_field = 'id';
 
     public function setId($id)
     {
@@ -26,44 +28,54 @@ class ColourWithLangDto
         return $this->id;
     }
 
-    public function setColourId($colour_id)
+    public function setFuncId($func_id)
     {
-        $this->colour_id = $colour_id;
+        $this->func_id = $func_id;
     }
 
-    public function getColourId()
+    public function getFuncId()
     {
-        return $this->colour_id;
+        return $this->func_id;
     }
 
-    public function setColourName($colour_name)
+    public function setCode($code)
     {
-        $this->colour_name = $colour_name;
+        $this->code = $code;
     }
 
-    public function getColourName()
+    public function getCode()
     {
-        return $this->colour_name;
+        return $this->code;
     }
 
-    public function setLangId($lang_id)
+    public function setName($name)
     {
-        $this->lang_id = $lang_id;
+        $this->name = $name;
     }
 
-    public function getLangId()
+    public function getName()
     {
-        return $this->lang_id;
+        return $this->name;
     }
 
-    public function setLangName($lang_name)
+    public function setDesc($desc)
     {
-        $this->lang_name = $lang_name;
+        $this->desc = $desc;
     }
 
-    public function getLangName()
+    public function getDesc()
     {
-        return $this->lang_name;
+        return $this->desc;
+    }
+
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+    }
+
+    public function getPriority()
+    {
+        return $this->priority;
     }
 
     public function setStatus($status)
@@ -139,5 +151,10 @@ class ColourWithLangDto
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

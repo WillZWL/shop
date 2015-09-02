@@ -1,11 +1,12 @@
 <?php
-class ColourWithLangDto
+class ProductSpecVo extends \BaseVo
 {
     private $id;
-    private $colour_id;
-    private $colour_name;
-    private $lang_id;
-    private $lang_name;
+    private $product_spec_id;
+    private $psg_id;
+    private $code;
+    private $name;
+    private $unit_type_id;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
@@ -15,6 +16,7 @@ class ColourWithLangDto
     private $modify_by = 'system';
 
     private $primary_key = ['id'];
+    private $increment_field = 'id';
 
     public function setId($id)
     {
@@ -26,44 +28,54 @@ class ColourWithLangDto
         return $this->id;
     }
 
-    public function setColourId($colour_id)
+    public function setProductSpecId($product_spec_id)
     {
-        $this->colour_id = $colour_id;
+        $this->product_spec_id = $product_spec_id;
     }
 
-    public function getColourId()
+    public function getProductSpecId()
     {
-        return $this->colour_id;
+        return $this->product_spec_id;
     }
 
-    public function setColourName($colour_name)
+    public function setPsgId($psg_id)
     {
-        $this->colour_name = $colour_name;
+        $this->psg_id = $psg_id;
     }
 
-    public function getColourName()
+    public function getPsgId()
     {
-        return $this->colour_name;
+        return $this->psg_id;
     }
 
-    public function setLangId($lang_id)
+    public function setCode($code)
     {
-        $this->lang_id = $lang_id;
+        $this->code = $code;
     }
 
-    public function getLangId()
+    public function getCode()
     {
-        return $this->lang_id;
+        return $this->code;
     }
 
-    public function setLangName($lang_name)
+    public function setName($name)
     {
-        $this->lang_name = $lang_name;
+        $this->name = $name;
     }
 
-    public function getLangName()
+    public function getName()
     {
-        return $this->lang_name;
+        return $this->name;
+    }
+
+    public function setUnitTypeId($unit_type_id)
+    {
+        $this->unit_type_id = $unit_type_id;
+    }
+
+    public function getUnitTypeId()
+    {
+        return $this->unit_type_id;
     }
 
     public function setStatus($status)
@@ -139,5 +151,10 @@ class ColourWithLangDto
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

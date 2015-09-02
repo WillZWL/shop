@@ -1,12 +1,11 @@
 <?php
-class ColourWithLangDto
+class ProductKeywordVo extends \BaseVo
 {
     private $id;
-    private $colour_id;
-    private $colour_name;
+    private $sku;
     private $lang_id;
-    private $lang_name;
-    private $status = '1';
+    private $keyword;
+    private $type = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -15,6 +14,7 @@ class ColourWithLangDto
     private $modify_by = 'system';
 
     private $primary_key = ['id'];
+    private $increment_field = 'id';
 
     public function setId($id)
     {
@@ -26,24 +26,14 @@ class ColourWithLangDto
         return $this->id;
     }
 
-    public function setColourId($colour_id)
+    public function setSku($sku)
     {
-        $this->colour_id = $colour_id;
+        $this->sku = $sku;
     }
 
-    public function getColourId()
+    public function getSku()
     {
-        return $this->colour_id;
-    }
-
-    public function setColourName($colour_name)
-    {
-        $this->colour_name = $colour_name;
-    }
-
-    public function getColourName()
-    {
-        return $this->colour_name;
+        return $this->sku;
     }
 
     public function setLangId($lang_id)
@@ -56,24 +46,24 @@ class ColourWithLangDto
         return $this->lang_id;
     }
 
-    public function setLangName($lang_name)
+    public function setKeyword($keyword)
     {
-        $this->lang_name = $lang_name;
+        $this->keyword = $keyword;
     }
 
-    public function getLangName()
+    public function getKeyword()
     {
-        return $this->lang_name;
+        return $this->keyword;
     }
 
-    public function setStatus($status)
+    public function setType($type)
     {
-        $this->status = $status;
+        $this->type = $type;
     }
 
-    public function getStatus()
+    public function getType()
     {
-        return $this->status;
+        return $this->type;
     }
 
     public function setCreateOn($create_on)
@@ -139,5 +129,10 @@ class ColourWithLangDto
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

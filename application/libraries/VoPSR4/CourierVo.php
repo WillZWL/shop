@@ -1,12 +1,14 @@
 <?php
-class ColourWithLangDto
+class CourierVo extends \BaseVo
 {
     private $id;
-    private $colour_id;
-    private $colour_name;
-    private $lang_id;
-    private $lang_name;
-    private $status = '1';
+    private $courier_id;
+    private $aftership_id;
+    private $courier_name;
+    private $description;
+    private $type = 'F';
+    private $tracking_link;
+    private $weight_type;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -15,6 +17,7 @@ class ColourWithLangDto
     private $modify_by = 'system';
 
     private $primary_key = ['id'];
+    private $increment_field = 'id';
 
     public function setId($id)
     {
@@ -26,54 +29,74 @@ class ColourWithLangDto
         return $this->id;
     }
 
-    public function setColourId($colour_id)
+    public function setCourierId($courier_id)
     {
-        $this->colour_id = $colour_id;
+        $this->courier_id = $courier_id;
     }
 
-    public function getColourId()
+    public function getCourierId()
     {
-        return $this->colour_id;
+        return $this->courier_id;
     }
 
-    public function setColourName($colour_name)
+    public function setAftershipId($aftership_id)
     {
-        $this->colour_name = $colour_name;
+        $this->aftership_id = $aftership_id;
     }
 
-    public function getColourName()
+    public function getAftershipId()
     {
-        return $this->colour_name;
+        return $this->aftership_id;
     }
 
-    public function setLangId($lang_id)
+    public function setCourierName($courier_name)
     {
-        $this->lang_id = $lang_id;
+        $this->courier_name = $courier_name;
     }
 
-    public function getLangId()
+    public function getCourierName()
     {
-        return $this->lang_id;
+        return $this->courier_name;
     }
 
-    public function setLangName($lang_name)
+    public function setDescription($description)
     {
-        $this->lang_name = $lang_name;
+        $this->description = $description;
     }
 
-    public function getLangName()
+    public function getDescription()
     {
-        return $this->lang_name;
+        return $this->description;
     }
 
-    public function setStatus($status)
+    public function setType($type)
     {
-        $this->status = $status;
+        $this->type = $type;
     }
 
-    public function getStatus()
+    public function getType()
     {
-        return $this->status;
+        return $this->type;
+    }
+
+    public function setTrackingLink($tracking_link)
+    {
+        $this->tracking_link = $tracking_link;
+    }
+
+    public function getTrackingLink()
+    {
+        return $this->tracking_link;
+    }
+
+    public function setWeightType($weight_type)
+    {
+        $this->weight_type = $weight_type;
+    }
+
+    public function getWeightType()
+    {
+        return $this->weight_type;
     }
 
     public function setCreateOn($create_on)
@@ -139,5 +162,10 @@ class ColourWithLangDto
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }
