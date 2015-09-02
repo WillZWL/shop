@@ -1,146 +1,140 @@
 <?php
 class SellingPlatformVo extends \BaseVo
 {
-
-    //class variable
     private $id;
+    private $selling_platform_id;
     private $type = 'WEBSITE';
     private $name;
     private $description;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    //primary key
-    private $primary_key = ["id"];
+    private $primary_key = ['id'];
+    private $increment_field = 'id';
 
-    //auo increment
-    private $increment_field = "";
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-    //instance method
-    public function get_id()
+    public function getId()
     {
         return $this->id;
     }
 
-    public function set_id($value)
+    public function setSellingPlatformId($selling_platform_id)
     {
-        $this->id = $value;
-        return $this;
+        $this->selling_platform_id = $selling_platform_id;
     }
 
-    public function get_type()
+    public function getSellingPlatformId()
+    {
+        return $this->selling_platform_id;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    public function getType()
     {
         return $this->type;
     }
 
-    public function set_type($value)
+    public function setName($name)
     {
-        $this->type = $value;
-        return $this;
+        $this->name = $name;
     }
 
-    public function get_name()
+    public function getName()
     {
         return $this->name;
     }
 
-    public function set_name($value)
+    public function setDescription($description)
     {
-        $this->name = $value;
-        return $this;
+        $this->description = $description;
     }
 
-    public function get_description()
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function set_description($value)
+    public function setStatus($status)
     {
-        $this->description = $value;
-        return $this;
+        $this->status = $status;
     }
 
-    public function get_status()
+    public function getStatus()
     {
         return $this->status;
     }
 
-    public function set_status($value)
+    public function setCreateOn($create_on)
     {
-        $this->status = $value;
-        return $this;
+        $this->create_on = $create_on;
     }
 
-    public function get_create_on()
+    public function getCreateOn()
     {
         return $this->create_on;
     }
 
-    public function set_create_on($value)
+    public function setCreateAt($create_at)
     {
-        $this->create_on = $value;
-        return $this;
+        $this->create_at = $create_at;
     }
 
-    public function get_create_at()
+    public function getCreateAt()
     {
         return $this->create_at;
     }
 
-    public function set_create_at($value)
+    public function setCreateBy($create_by)
     {
-        $this->create_at = $value;
-        return $this;
+        $this->create_by = $create_by;
     }
 
-    public function get_create_by()
+    public function getCreateBy()
     {
         return $this->create_by;
     }
 
-    public function set_create_by($value)
+    public function setModifyOn($modify_on)
     {
-        $this->create_by = $value;
-        return $this;
+        $this->modify_on = $modify_on;
     }
 
-    public function get_modify_on()
+    public function getModifyOn()
     {
         return $this->modify_on;
     }
 
-    public function set_modify_on($value)
+    public function setModifyAt($modify_at)
     {
-        $this->modify_on = $value;
-        return $this;
+        $this->modify_at = $modify_at;
     }
 
-    public function get_modify_at()
+    public function getModifyAt()
     {
         return $this->modify_at;
     }
 
-    public function set_modify_at($value)
+    public function setModifyBy($modify_by)
     {
-        $this->modify_at = $value;
-        return $this;
+        $this->modify_by = $modify_by;
     }
 
-    public function get_modify_by()
+    public function getModifyBy()
     {
         return $this->modify_by;
-    }
-
-    public function set_modify_by($value)
-    {
-        $this->modify_by = $value;
-        return $this;
     }
 
     public function getPrimaryKey()
@@ -152,5 +146,4 @@ class SellingPlatformVo extends \BaseVo
     {
         return $this->increment_field;
     }
-
 }

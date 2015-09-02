@@ -2,9 +2,9 @@
 use AtomV2\Service\AuthorizationService;
 use AtomV2\Service\PriceMarginService;
 
-include_once "Profit_var_helper.php";
+include_once "ProfitVarHelper.php";
 
-class Profit_var extends Profit_var_helper
+class Profit_var extends ProfitVarHelper
 {
     private $appId = "MST0004";
     private $lang_id = "en";
@@ -24,16 +24,11 @@ class Profit_var extends Profit_var_helper
     public function index()
     {
         $data = [];
-        include_once APPPATH . '/language/' . $this->getAppId() . '00_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '00_' . $this->getLangId() . '.php';
         $data["lang"] = $lang;
-        $data["selling_platform_list"] = $this->profit_var_model->get_selling_platform_list(["status" => 1], ["limit" => -1]);
+        $data["selling_platform_list"] = $this->profitVarModel->getSellingPlatformList(["status" => 1], ["limit" => -1]);
         $data['notice'] = notice($lang);
         $this->load->view("mastercfg/profit_var/profit_var_index", $data);
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
     }
 
     public function view($value = "")
@@ -42,26 +37,26 @@ class Profit_var extends Profit_var_helper
         $data["editable"] = 0;
         $data["updated"] = 0;
         if ($this->input->post('posted')) {
-            $this->profit_var_model->__autoload();
+            $this->profitVarModel->autoload();
             $this->priceMarginService = new PriceMarginService;
 
             $obj = unserialize($_SESSION["profit_obj"]);
-            $obj->set_selling_platform_id($this->input->post("id"));
-            $obj->set_vat_percent($this->input->post("vat"));
-            $obj->set_forex_fee_percent($this->input->post("forex_fee_percent"));
-            $obj->set_platform_currency_id($_POST["currency"]);
-            $obj->set_platform_country_id($this->input->post('platform_country_id'));
-            $obj->set_language_id($this->input->post('language_id'));
-            $obj->set_payment_charge_percent($this->input->post('pcp'));
-            $obj->set_admin_fee($this->input->post('admin_fee') * 1);
-            $obj->set_delivery_type($this->input->post('delivery_type'));
-            $obj->set_dest_country($this->input->post('platform_country_id'));
-            $obj->set_free_delivery_limit($this->input->post('free_dlvry_limit'));
+            $obj->setSellingPlatformId($this->input->post("id"));
+            $obj->setVatPercent($this->input->post("vat"));
+            $obj->setForexFeePercent($this->input->post("forex_fee_percent"));
+            $obj->setPlatformCurrencyId($_POST["currency"]);
+            $obj->setPlatformCountryId($this->input->post('platform_country_id'));
+            $obj->setLanguageId($this->input->post('language_id'));
+            $obj->setPaymentChargePercent($this->input->post('pcp'));
+            $obj->setAdminFee($this->input->post('admin_fee') * 1);
+            $obj->setDeliveryType($this->input->post('delivery_type'));
+            $obj->setDestCountry($this->input->post('platform_country_id'));
+            $obj->setFreeDeliveryLimit($this->input->post('free_dlvry_limit'));
 
             if ($this->input->post("type") == "update") {
-                $ret = $this->profit_var_model->update($obj);
+                $ret = $this->profitVarModel->update($obj);
             } else {
-                $ret = $this->profit_var_model->add($obj);
+                $ret = $this->profitVarModel->add($obj);
             }
 
             // update price_margin tb for all platforms
@@ -81,31 +76,31 @@ class Profit_var extends Profit_var_helper
             $data["editable"] = 1;
         }
         //end determination
-        include_once APPPATH . '/language/' . $this->getAppId() . '02_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '02_' . $this->getLangId() . '.php';
         $data["lang"] = $lang;
-        $platform = $this->profit_var_model->check_platform($value);
+        $platform = $this->profitVarModel->checkPlatform($value);
         if (empty($platform)) {
             unset($data);
             $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->_error_message();
             Redirect(base_url() . "mastercfg/profit_var/index/");
         } else {
             $data["action"] = "update";
-            $platform_bizvar_obj = $this->profit_var_model->get_platform_biz_var($value);
+            $platform_bizvar_obj = $this->profitVarModel->getPlatformBizVar($value);
             if (empty($platform_bizvar_obj)) {
-                $platform_bizvar_obj = $this->profit_var_model->get_platform_biz_var();
+                $platform_bizvar_obj = $this->profitVarModel->getPlatformBizVar();
                 $data["action"] = "add";
             }
         }
         $data["profit_obj"] = $platform_bizvar_obj;
-        $data["courier_list"] = $this->profit_var_model->get_courier_list();
-        $data["delivery_type_list"] = $this->profit_var_model->get_delivery_type_list();
-        $data["region_list"] = $this->profit_var_model->get_courier_region_list();
-        $data["selling_platform_list"] = $this->profit_var_model->get_selling_platform_list();
-        $data["country_list"] = $this->profit_var_model->get_country_list([], ["limit" => -1, "orderby" => "name"]);
-        $data["active_country_list"] = $this->profit_var_model->get_country_list(["status" => 1], ["limit" => -1, "orderby" => "name"]);
-        $data["language_list"] = $this->language_service->get_list(["status" => 1], ["limit" => -1, "orderby" => "name"]);
+        $data["courier_list"] = $this->profitVarModel->getCourierList();
+        $data["delivery_type_list"] = $this->profitVarModel->getDeliveryTypeList();
+        $data["region_list"] = $this->profitVarModel->getCourierRegionList();
+        $data["selling_platform_list"] = $this->profitVarModel->getSellingPlatformList();
+        $data["country_list"] = $this->profitVarModel->getCountryList([], ["limit" => -1, "orderby" => "name"]);
+        $data["active_country_list"] = $this->profitVarModel->getCountryList(["status" => 1], ["limit" => -1, "orderby" => "name"]);
+        $data["language_list"] = $this->profitVarModel->languageService->getList(["status" => 1], ["limit" => -1, "orderby" => "lang_name"]);
         $_SESSION["profit_obj"] = serialize($data["profit_obj"]);
-        $data["currency_list"] = $this->profit_var_model->get_currency_list();
+        $data["currency_list"] = $this->profitVarModel->getCurrencyList();
         $data["id"] = $value;
         $data["header"] = "";
         $data["title"] = "";
