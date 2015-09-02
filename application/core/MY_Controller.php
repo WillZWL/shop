@@ -6,6 +6,8 @@ abstract class MY_Controller extends CI_Controller
 {
     private $langId = "en";
 
+    abstract public function getAppId();
+
     public function __construct($checkAccessRights = TRUE)
     {
         parent::__construct();
@@ -22,6 +24,11 @@ abstract class MY_Controller extends CI_Controller
         }
     }
 
+    public function getLangId()
+    {
+        return $this->langId;
+    }
+
     private function checkAuthed()
     {
         if (!$this->authenticationService->checkAuthed()) {
@@ -30,33 +37,27 @@ abstract class MY_Controller extends CI_Controller
         }
     }
 
-    function getFailMsg()
+    public function getFailMsg()
     {
         return "Please login to the system first!";
     }
 
-    function getLoginPage()
+    public function getLoginPage()
     {
         return "?back=" . urlencode($_SESSION["CURRPAGE"]);
     }
 
-    abstract public function getAppId();
-
-    public function getLangId()
-    {
-        return $this->langId;
-    }
-
-    function getRu()
+    public function getRu()
     {
         $ru = $_SESSION["CURRPAGE"];
         if ($pru = $this->input->post("ru")) {
             $ru = $this->encrypt->decode($pru);
         }
+
         return $ru;
     }
 
-    function setFormRu()
+    public function setFormRu()
     {
         return "<input type='hidden' name='ru' value='".$this->encrypt->encode($_SESSION["CURRPAGE"])."'>";
     }
