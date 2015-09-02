@@ -23,7 +23,7 @@ class PlatformBizVarService extends BaseService
         $this->setDeliveryTypeDao(new DeliveryTypeDao);
     }
 
-    public function get_platform_biz_var($id)
+    public function getPlatformBizVar($id)
     {
         if ($id != "") {
             $ret = $this->getPlatformBizVarDao()->get(["selling_platform_id" => $id]);
@@ -38,19 +38,19 @@ class PlatformBizVarService extends BaseService
         return $this->getPlatformBizVarDao()->get_platform_biz_var_w_country($country = []);
     }
 
-    public function get_selling_platform_list()
+    public function getSellingPlatformList()
     {
         return $this->getSellingPlatformDao()->getList([], ["limit" => -1]);
     }
 
-    public function get_currency_list()
+    public function getCurrencyList()
     {
         $obj_array = $this->getCurrencyDao()->getList([]);
 
         if ($obj_array !== FALSE) {
             $rtn = [];
             foreach ($obj_array as $obj) {
-                $rtn[$obj->get_id()] = $obj->get_name();
+                $rtn[$obj->getCurrencyId()] = $obj->getName();
             }
         } else {
             $rtn = FALSE;
@@ -70,14 +70,14 @@ class PlatformBizVarService extends BaseService
 
         if ($objlist = $this->getDao()->getList($where, ["limit" => -1])) {
             foreach ($objlist as $obj) {
-                $platform_id = $obj->get_selling_platform_id();
-                $curr_id = $obj->get_platform_currency_id();
+                $platform_id = $obj->getSellingPlatformId();
+                $curr_id = $obj->getPlatformCurrencyId();
                 if (isset($_SESSION["CURRENCY"][$curr_id])) {
 
-                    $sign_pos = $obj->get_sign_pos();
-                    $dec_place = $obj->get_dec_place();
-                    $dec_point = $obj->get_dec_point();
-                    $thousands_sep = $obj->get_thousands_sep();
+                    $sign_pos = $obj->getSignPos();
+                    $dec_place = $obj->getDecPlace();
+                    $dec_point = $obj->getDecPoint();
+                    $thousands_sep = $obj->getThousandsSep();
 
                     if (empty($sign_pos)) {
                         $sign_pos = $_SESSION["CURRENCY"][$curr_id]["sign_pos"];
@@ -89,19 +89,19 @@ class PlatformBizVarService extends BaseService
                     $data[$platform_id] = [
                         "currency_id" => $curr_id,
                         "sign" => $_SESSION["CURRENCY"][$curr_id]["sign"],
-                        "sign_pos" => $obj->get_sign_pos(),
-                        "dec_place" => $obj->get_dec_place(),
-                        "dec_point" => $obj->get_dec_point(),
-                        "thousands_sep" => $obj->get_thousands_sep()
+                        "sign_pos" => $obj->getSignPos(),
+                        "dec_place" => $obj->getDecPlace(),
+                        "dec_point" => $obj->getDecPoint(),
+                        "thousands_sep" => $obj->getThousandsSep()
                     ];
                 } else {
                     $data[$platform_id] = [
                         "currency_id" => $curr_id,
                         "sign" => null,
-                        "sign_pos" => $obj->get_sign_pos(),
-                        "dec_place" => $obj->get_dec_place(),
-                        "dec_point" => $obj->get_dec_point(),
-                        "thousands_sep" => $obj->get_thousands_sep()
+                        "sign_pos" => $obj->getSignPos(),
+                        "dec_place" => $obj->getDecPlace(),
+                        "dec_point" => $obj->getDecPoint(),
+                        "thousands_sep" => $obj->getThousandsSep()
                     ];
                 }
             }
@@ -129,10 +129,10 @@ class PlatformBizVarService extends BaseService
         return $this->getDao()->get_unique_dest_country_list();
     }
 
-    // public function update($data, $where = [])
-    // {
-    //  return $this->getPlatformBizVarDao()->update($data);
-    // }
+    public function update($data, $where = [])
+    {
+     return $this->getPlatformBizVarDao()->update($data);
+    }
 
     public function get_dest_country_w_delivery_type_list()
     {
@@ -144,9 +144,9 @@ class PlatformBizVarService extends BaseService
         return $this->getDao()->get_free_delivery_limit($platform_id);
     }
 
-    public function load_vo()
+    public function loadVo()
     {
-        $this->getPlatformBizVarDao()->include_vo();
+        $this->getPlatformBizVarDao()->get();
     }
 
     public function setPlatformBizVarDao($value)

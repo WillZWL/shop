@@ -1,15 +1,14 @@
 <?php
+use AtomV2\Models\Mastercfg\ProfitVarModel;
 
-class Profit_var_helper extends MY_Controller
+class ProfitVarHelper extends MY_Controller
 {
     private $appId = "MST0004";
 
     public function __construct()
     {
         parent::__construct(FALSE);
-        $this->load->helper(array('url', 'notice'));
-        $this->load->model('mastercfg/profit_var_model');
-        $this->load->library('input');
+        $this->profitVarModel = new ProfitVarModel;
     }
 
     public function js_platformlist()
@@ -19,10 +18,10 @@ class Profit_var_helper extends MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->profit_var_model->get_selling_platform_list();
+        $objlist = $this->profitVarModel->getSellingPlatformList();
         foreach ($objlist as $obj) {
-            $sid = str_replace("'", "\'", $obj->get_id());
-            $name = str_replace("'", "\'", $obj->get_name());
+            $sid = str_replace("'", "\'", $obj->getId());
+            $name = str_replace("'", "\'", $obj->getName());
             $slist[] = "'" . $sid . "':'" . $name . "'";
         }
         $js = "platformlist = {" . implode(", ", $slist) . "};";
