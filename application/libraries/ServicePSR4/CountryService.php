@@ -81,12 +81,12 @@ class CountryService extends BaseService
         return $this->get_dao()->is_available_country_id($country_id);
     }
 
-    public function get_country_name_list_w_key($where = array(), $option = array())
+    public function getCountryNameListWithKey($where = array(), $option = array())
     {
         $data = array();
-        if ($obj_list = $this->get_list($where, $option)) {
+        if ($obj_list = $this->getDao()->getList($where, $option)) {
             foreach ($obj_list as $obj) {
-                $data[$obj->get_id()] = $obj->get_name();
+                $data[$obj->getId()] = $obj->getName();
             }
         }
         return $data;

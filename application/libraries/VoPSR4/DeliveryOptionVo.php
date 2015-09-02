@@ -1,16 +1,16 @@
 <?php
-class DeliveryTypeVo extends \BaseVo
+class DeliveryOptionVo extends \BaseVo
 {
     private $id;
-    private $delivery_type_id;
-    private $name;
-    private $platform_type;
+    private $lang_id;
+    private $courier_id;
+    private $display_name;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at = '2130706433';
-    private $create_by = 'system';
+    private $create_at = '127.0.0.1';
+    private $create_by;
     private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at = '2130706433';
-    private $modify_by = 'system';
+    private $modify_at = '127.0.0.1';
+    private $modify_by;
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
@@ -25,34 +25,34 @@ class DeliveryTypeVo extends \BaseVo
         return $this->id;
     }
 
-    public function setDeliveryTypeId($delivery_type_id)
+    public function setLangId($lang_id)
     {
-        $this->delivery_type_id = $delivery_type_id;
+        $this->lang_id = $lang_id;
     }
 
-    public function getDeliveryTypeId()
+    public function getLangId()
     {
-        return $this->delivery_type_id;
+        return $this->lang_id;
     }
 
-    public function setName($name)
+    public function setCourierId($courier_id)
     {
-        $this->name = $name;
+        $this->courier_id = $courier_id;
     }
 
-    public function getName()
+    public function getCourierId()
     {
-        return $this->name;
+        return $this->courier_id;
     }
 
-    public function setPlatformType($platform_type)
+    public function setDisplayName($display_name)
     {
-        $this->platform_type = $platform_type;
+        $this->display_name = $display_name;
     }
 
-    public function getPlatformType()
+    public function getDisplayName()
     {
-        return $this->platform_type;
+        return $this->display_name;
     }
 
     public function setCreateOn($create_on)

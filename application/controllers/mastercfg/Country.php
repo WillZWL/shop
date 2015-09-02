@@ -175,8 +175,8 @@ class Country extends MY_Controller
         $lang_list = $this->languageModel->getList();
         $name = [];
         foreach ($lang_list as $lobj) {
-            $tmp = $this->countryModel->get('CountryExt', ['cid' => $country, 'lang_id' => $lobj->getId()]);
-            $name[$lobj->getId()] = $tmp ? $tmp->getName() : "";
+            $tmp = $this->countryModel->get('CountryExt', ['cid' => $country, 'lang_id' => $lobj->getLangId()]);
+            $name[$lobj->getLangId()] = $tmp ? $tmp->getName() : "";
         }
 
         include_once APPPATH . "language/" . $sub_id . ".php";

@@ -96,7 +96,7 @@ class Brand extends MY_Controller
                         $id = $new_obj->getId();
                         redirect(base_url() . "mastercfg/brand/view/" . $id);
                     } else {
-                        $_SESSION["NOTICE"] = $this->db->_error_message();
+                        $_SESSION["NOTICE"] = $this->db->error();
                     }
                 }
             }
@@ -107,7 +107,7 @@ class Brand extends MY_Controller
 
         if (empty($data["brand"])) {
             if (($data["brand"] = $this->brandModel->getBrand()) === FALSE) {
-                $_SESSION["NOTICE"] = $this->db->_error_message();
+                $_SESSION["NOTICE"] = $this->db->error();
             } else {
                 $_SESSION["brand_vo"] = serialize($data["brand"]);
             }
@@ -116,36 +116,6 @@ class Brand extends MY_Controller
         $data["notice"] = notice($lang);
         $data["cmd"] = "add";
         $this->load->view('mastercfg/brand/brand_detail_v', $data);
-    }
-
-    public function add_region()
-    {
-        $sub_app_id = $this->getAppId() . "01";
-        global $data;
-        if ($this->input->post("posted")) {
-            if (isset($_SESSION["brand_vo"])) {
-                $this->brandModel->includeBrandRegionVo();
-                $data["br"] = unserialize($_SESSION["br_vo"]);
-                set_value($data["br"], $_POST);
-                $proc = $this->brandModel->getBrandRegion([
-                        "brand_id" => $data["br"]->getBrandId(),
-                        "sales_region_id" => $data["br"]->getSalesRegionId(),
-                        "src_region_id" => $data["br"]->getSrcRegionId()
-                    ]);
-                if (!empty($proc)) {
-                    $_SESSION["NOTICE"] = "regions_existed";
-                } else {
-                    if ($new_obj = $this->brandModel->addBrandRegion($data["br"])) {
-                        unset($_SESSION["br_vo"]);
-                        unset($data["br"]);
-                        redirect(base_url() . "mastercfg/brand/view/" . $this->input->post("brand_id"));
-                    } else {
-                        $_SESSION["NOTICE"] = $this->db->_error_message();
-                    }
-                }
-                $this->view($this->input->post("brand_id"));
-            }
-        }
     }
 
     public function view($id = "")
@@ -172,7 +142,7 @@ class Brand extends MY_Controller
                             unset($_SESSION["brand_vo"]);
                             redirect(base_url() . "mastercfg/brand/view/" . $id);
                         } else {
-                            $_SESSION["NOTICE"] = $this->db->_error_message();
+                            $_SESSION["NOTICE"] = $this->db->error();
                         }
                     }
                 }
@@ -183,17 +153,9 @@ class Brand extends MY_Controller
 
             if (empty($data["brand"])) {
                 if (($data["brand"] = $this->brandModel->getBrand(["id" => $id])) === FALSE) {
-                    $_SESSION["NOTICE"] = $this->db->_error_message();
+                    $_SESSION["NOTICE"] = $this->db->error();
                 } else {
                     $_SESSION["brand_vo"] = serialize($data["brand"]);
-                }
-            }
-
-            if (empty($data["br"])) {
-                if (($data["br"] = $this->brandModel->getBrandRegion()) === FALSE) {
-                    $_SESSION["NOTICE"] = $this->db->_error_message();
-                } else {
-                    $_SESSION["br_vo"] = serialize($data["br"]);
                 }
             }
 
@@ -210,7 +172,7 @@ class Brand extends MY_Controller
         if ($this->input->post("posted") && ($brand_id = $this->input->post("brand_id"))) {
             foreach ($_POST["check"] as $cur_brand) {
                 if ($this->brandModel->delBrandRegion(["brand_id" => $brand_id, "sales_region_id" => $_POST["del_sales_region_id"][$cur_brand], "src_region_id" => $_POST["del_src_region_id"][$cur_brand]]) === FALSE) {
-                    $_SESSION["NOTICE"] = $this->db->_error_message();
+                    $_SESSION["NOTICE"] = $this->db->error();
                 }
             }
             redirect(base_url() . "mastercfg/brand/view/" . $brand_id);

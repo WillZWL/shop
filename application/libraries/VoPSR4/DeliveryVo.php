@@ -1,10 +1,12 @@
 <?php
-class DeliveryTypeVo extends \BaseVo
+class DeliveryVo extends \BaseVo
 {
     private $id;
     private $delivery_type_id;
-    private $name;
-    private $platform_type;
+    private $country_id;
+    private $min_day;
+    private $max_day;
+    private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -35,24 +37,44 @@ class DeliveryTypeVo extends \BaseVo
         return $this->delivery_type_id;
     }
 
-    public function setName($name)
+    public function setCountryId($country_id)
     {
-        $this->name = $name;
+        $this->country_id = $country_id;
     }
 
-    public function getName()
+    public function getCountryId()
     {
-        return $this->name;
+        return $this->country_id;
     }
 
-    public function setPlatformType($platform_type)
+    public function setMinDay($min_day)
     {
-        $this->platform_type = $platform_type;
+        $this->min_day = $min_day;
     }
 
-    public function getPlatformType()
+    public function getMinDay()
     {
-        return $this->platform_type;
+        return $this->min_day;
+    }
+
+    public function setMaxDay($max_day)
+    {
+        $this->max_day = $max_day;
+    }
+
+    public function getMaxDay()
+    {
+        return $this->max_day;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     public function setCreateOn($create_on)
