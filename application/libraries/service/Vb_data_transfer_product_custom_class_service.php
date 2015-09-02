@@ -41,10 +41,7 @@ class Vb_data_transfer_product_custom_class_service extends Vb_data_transfer_ser
 		//Create return xml string
 		$xml = array();
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
-		$xml[] = '<no_updated_products task_id="' . $task_id . '">';
-		
-		$error_nodes = array();	
-		$error_nodes[] = '<errors task_id="' . $task_id . '">';		
+		$xml[] = '<products task_id="' . $task_id . '">';
 				
 		$c = count($xml_vb->product);
 		foreach($xml_vb->product as $pc)
@@ -66,59 +63,87 @@ class Vb_data_transfer_product_custom_class_service extends Vb_data_transfer_ser
 				$fail_reason .= "SKU/Country not specified, ";
 			}
 			
-			if ($fail_reason == "")
+			try
 			{
-				//Update the AtomV2 product data 					
-				$where = array("sku"=>$sku, "country_id"=>$pc->country_id);
-				
-				$new_pc_obj = array();
-								
-				$new_pc_obj["code"] = $pc->code; 
-				$new_pc_obj["description"] = $pc->description;	
-				$new_pc_obj["duty_pcent"] = $pc->duty_pcent;
-				
-				$this->get_dao()->q_update($where, $new_pc_obj);
-				
-				// print $this->db->last_query();
-				// print "------------";
-				// exit;
-			}
-			elseif ($sku != "" && $sku != null)
+				if ($fail_reason == "")
+				{
+					//Update the AtomV2 product data 					
+					$where = array("sku"=>$sku, "country_id"=>$pc->country_id);
+					
+					$new_pc_obj = array();
+									
+					$new_pc_obj["code"] = $pc->code; 
+					$new_pc_obj["description"] = $pc->description;	
+					$new_pc_obj["duty_pcent"] = $pc->duty_pcent;
+					
+					$this->get_dao()->q_update($where, $new_pc_obj);
+					
+					//return result
+					$xml[] = '<product>';
+					$xml[] = '<sku>' . $pc->sku . '</sku>';
+					$xml[] = '<platform_id>' . $pc->country_id . '</platform_id>';
+					$xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';					
+					$xml[] = '<status>5</status>'; //updated
+					$xml[] = '<is_error>' . $pc->is_error . '</is_error>';
+					$xml[] = '</product>';
+				}
+				elseif ($sku != "" && $sku != null)
+				{
+					//insert						
+					$new_pc_obj = $this->get_dao()->get();
+					$new_pc_obj->set_sku($sku);
+					$new_pc_obj->set_country_id($pc->country_id);
+					$new_pc_obj->set_code($pc->code);
+					$new_pc_obj->set_description($pc->description);
+					$new_pc_obj->set_duty_pcent($pc->duty_pcent);
+					
+					$this->get_dao()->insert($new_pc_obj);
+					
+					//return result
+					$xml[] = '<product>';
+					$xml[] = '<sku>' . $pc->sku . '</sku>';
+					$xml[] = '<platform_id>' . $pc->country_id . '</platform_id>';
+					$xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';					
+					$xml[] = '<status>5</status>'; //updated
+					$xml[] = '<is_error>' . $pc->is_error . '</is_error>';
+					$xml[] = '</product>';
+				}
+				elseif ($sku == "" || $sku == null)
+				{				
+					//if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
+					$xml[] = '<product>';
+					$xml[] = '<sku>' . $pc->sku . '</sku>';
+					$xml[] = '<platform_id>' . $pc->country_id . '</platform_id>';
+					$xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';					
+					$xml[] = '<status>2</status>'; //not found	
+					$xml[] = '<is_error>' . $pc->is_error . '</is_error>';
+					$xml[] = '</product>';
+				}
+				else
+				{
+					$xml[] = '<product>';
+					$xml[] = '<sku>' . $pc->sku . '</sku>';
+					$xml[] = '<platform_id>' . $pc->country_id . '</platform_id>';
+					$xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';					
+					$xml[] = '<status>3</status>'; //not updated
+					$xml[] = '<is_error>' . $pc->is_error . '</is_error>';	
+					$xml[] = '</product>';			
+				}
+			
+			}	
+			catch(Exception $e)
 			{
-				//insert			
-				
-				$new_pc_obj = $this->get_dao()->get();
-				$new_pc_obj->set_sku($sku);
-				$new_pc_obj->set_country_id($pc->country_id);
-				$new_pc_obj->set_code($pc->code);
-				$new_pc_obj->set_description($pc->description);
-				$new_pc_obj->set_duty_pcent($pc->duty_pcent);
-				
-				$this->get_dao()->insert($new_pc_obj);
-				
-			}
-			elseif ($sku == "" || $sku == null)
-			{				
-				//if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
 				$xml[] = '<product>';
 				$xml[] = '<sku>' . $pc->sku . '</sku>';
 				$xml[] = '<platform_id>' . $pc->country_id . '</platform_id>';
-				$xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';		
-				$xml[] = '</product>';
-			}
-			else
-			{
-				$error_nodes[] = '<error>';
-				$error_nodes[] = '<sku>' . $pc->sku . '</sku>';		
-				$error_nodes[] = '<description>' . $fail_reason . '</description>';				
-				$error_nodes[] = '</error>';				
+				$xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';					
+				$xml[] = '<status>4</status>';	//error
+				$xml[] = '<is_error>' . $pc->is_error . '</is_error>';
+				$xml[] = '</product>';	
 			}
 		 }
 		 
-		$error_nodes[] = '</errors>';
-		$xml[] = '</no_updated_products>';
-		
-		//array_merge($xml, $error_nodes);
+		$xml[] = '</products>';
 		
 		$return_feed = implode("\n", $xml);	
 			

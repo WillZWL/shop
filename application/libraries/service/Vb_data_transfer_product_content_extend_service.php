@@ -41,10 +41,7 @@ class Vb_data_transfer_product_content_extend_service extends Vb_data_transfer_s
 		//Create return xml string
 		$xml = array();
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
-		$xml[] = '<no_updated_products task_id="' . $task_id . '">';
-		
-		$error_nodes = array();	
-		$error_nodes[] = '<errors task_id="' . $task_id . '">';		
+		$xml[] = '<products task_id="' . $task_id . '">';
 				
 		$c = count($xml_vb->product);
 		foreach($xml_vb->product as $pc)
@@ -66,69 +63,98 @@ class Vb_data_transfer_product_content_extend_service extends Vb_data_transfer_s
 				$fail_reason .= "SKU/Lang not specified, ";
 			}
 			
-			if ($fail_reason == "")
+			try
 			{
-				//Update the AtomV2 product data 					
-				$where = array("prod_sku"=>$sku, "lang_id"=>$pc->lang_id);
-				
-				$new_pc_obj = array();
-				
-				$new_pc_obj["feature"] = $pc->feature; 
-				$new_pc_obj["feature_original"] = $pc->feature_original;	
-				$new_pc_obj["specification"] = $pc->specification;	
-				$new_pc_obj["spec_original"]  = $pc->spec_original;	  
-				$new_pc_obj["requirement"] = $pc->requirement;
-				$new_pc_obj["instruction"] = $pc->instruction;
-				$new_pc_obj["apply_enhanced_listing"] = $pc->apply_enhanced_listing;
-				$new_pc_obj["enhanced_listing"] = $pc->enhanced_listing;	
-				
-				$this->get_dao()->q_update($where, $new_pc_obj);
-				
-				// print $this->db->last_query();
-				// print "------------";
-				// exit;
-			}
-			elseif ($sku != "" && $sku != null)
-			{
-				//insert		
+				if ($fail_reason == "")
+				{
+					//Update the AtomV2 product data 					
+					$where = array("prod_sku"=>$sku, "lang_id"=>$pc->lang_id);
+					
+					$new_pc_obj = array();
+					
+					$new_pc_obj["feature"] = $pc->feature; 
+					$new_pc_obj["feature_original"] = $pc->feature_original;	
+					$new_pc_obj["specification"] = $pc->specification;	
+					$new_pc_obj["spec_original"]  = $pc->spec_original;	  
+					$new_pc_obj["requirement"] = $pc->requirement;
+					$new_pc_obj["instruction"] = $pc->instruction;
+					$new_pc_obj["apply_enhanced_listing"] = $pc->apply_enhanced_listing;
+					$new_pc_obj["enhanced_listing"] = $pc->enhanced_listing;	
+					
+					$this->get_dao()->q_update($where, $new_pc_obj);
+					
+					//return result
+					$xml[] = '<product>';
+					$xml[] = '<sku>' . $pc->prod_sku . '</sku>';
+					$xml[] = '<platform_id>' . $pc->lang_id . '</platform_id>';
+					$xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';			
+					$xml[] = '<status>5</status>';	//updated
+					$xml[] = '<is_error>' . $pc->is_error . '</is_error>';
+					$xml[] = '</product>';
+				}
+				elseif ($sku != "" && $sku != null)
+				{
+					//insert		
 
-				$new_pc_obj = $this->get_dao()->get();
-				
-				$new_pc_obj->set_prod_sku($sku); 
-				$new_pc_obj->set_lang_id($pc->lang_id); 				
-				$new_pc_obj->set_feature($pc->feature); 
-				$new_pc_obj->set_feature_original($pc->feature_original);	
-				$new_pc_obj->set_specification($pc->specification);	
-				$new_pc_obj->set_spec_original($pc->spec_original);	  
-				$new_pc_obj->set_requirement($pc->requirement);
-				$new_pc_obj->set_instruction($pc->instruction);
-				$new_pc_obj->set_apply_enhanced_listing($pc->apply_enhanced_listing);
-				$new_pc_obj->set_enhanced_listing($pc->enhanced_listing);	
-				
-				$this->get_dao()->insert($new_pc_obj);
-			}
-			elseif ($sku == "" || $sku == null)
-			{				
-				//if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
+					$new_pc_obj = $this->get_dao()->get();
+					
+					$new_pc_obj->set_prod_sku($sku); 
+					$new_pc_obj->set_lang_id($pc->lang_id); 				
+					$new_pc_obj->set_feature($pc->feature); 
+					$new_pc_obj->set_feature_original($pc->feature_original);	
+					$new_pc_obj->set_specification($pc->specification);	
+					$new_pc_obj->set_spec_original($pc->spec_original);	  
+					$new_pc_obj->set_requirement($pc->requirement);
+					$new_pc_obj->set_instruction($pc->instruction);
+					$new_pc_obj->set_apply_enhanced_listing($pc->apply_enhanced_listing);
+					$new_pc_obj->set_enhanced_listing($pc->enhanced_listing);	
+					
+					$this->get_dao()->insert($new_pc_obj);
+					
+					//return result
+					$xml[] = '<product>';
+					$xml[] = '<sku>' . $pc->prod_sku . '</sku>';
+					$xml[] = '<platform_id>' . $pc->lang_id . '</platform_id>';
+					$xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';			
+					$xml[] = '<status>5</status>';	//updated
+					$xml[] = '<is_error>' . $pc->is_error . '</is_error>';
+					$xml[] = '</product>';
+				}
+				elseif ($sku == "" || $sku == null)
+				{				
+					//if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
+					$xml[] = '<product>';
+					$xml[] = '<sku>' . $pc->prod_sku . '</sku>';
+					$xml[] = '<platform_id>' . $pc->lang_id . '</platform_id>';
+					$xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';			
+					$xml[] = '<status>2</status>';	//not found	
+					$xml[] = '<is_error>' . $pc->is_error . '</is_error>';	
+					$xml[] = '</product>';
+				}
+				else
+				{
+					$xml[] = '<product>';
+					$xml[] = '<sku>' . $pc->prod_sku . '</sku>';
+					$xml[] = '<platform_id>' . $pc->lang_id . '</platform_id>';
+					$xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';				
+					$xml[] = '<status>3</status>';	//not updated	
+					$xml[] = '<is_error>' . $pc->is_error . '</is_error>';
+					$xml[] = '</product>';			
+				}
+			}	
+			catch(Exception $e)
+			{
 				$xml[] = '<product>';
 				$xml[] = '<sku>' . $pc->prod_sku . '</sku>';
 				$xml[] = '<platform_id>' . $pc->lang_id . '</platform_id>';
-				$xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';		
-				$xml[] = '</product>';
-			}
-			else
-			{
-				$error_nodes[] = '<error>';
-				$error_nodes[] = '<sku>' . $pc->prod_sku . '</sku>';		
-				$error_nodes[] = '<description>' . $fail_reason . '</description>';				
-				$error_nodes[] = '</error>';				
+				$xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';					
+				$xml[] = '<status>4</status>';	//error
+				$xml[] = '<is_error>' . $pc->is_error . '</is_error>';
+				$xml[] = '</product>';	
 			}
 		 }
 		 
-		$error_nodes[] = '</errors>';
-		$xml[] = '</no_updated_products>';
-		
-		//array_merge($xml, $error_nodes);
+		$xml[] = '</products>';
 		
 		$return_feed = implode("\n", $xml);	
 			

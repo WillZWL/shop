@@ -38,7 +38,7 @@ class Vb_data_transfer_brand_service extends Vb_data_transfer_service
 		//Create return xml string
 		$xml = array();
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
-		$xml[] = '<no_updated_brands task_id="' . $task_id . '">';
+		$xml[] = '<brands task_id="' . $task_id . '">';
 					
 		$c = count($xml_vb->brand);
 		foreach($xml_vb->brand as $brand)
@@ -46,36 +46,59 @@ class Vb_data_transfer_brand_service extends Vb_data_transfer_service
 			$c--;			
 				
 			$id = $brand->id;
-						
-			if($this->get_dao()->get(array("id"=>$brand->id)))
+			
+			try
+			{			
+				if($this->get_dao()->get(array("id"=>$brand->id)))
+				{
+					//update					
+					$where = array("id"=>$id);
+					
+					$new_brand_obj = array();
+					
+					$new_brand_obj["brand_name"] = $brand->brand_name;
+					$new_brand_obj["description"] = $brand->description;					
+					$new_brand_obj["status"] = $brand->status;	
+					
+					$this->get_dao()->q_update($where, $new_brand_obj);
+
+					$xml[] = '<brand>';
+					$xml[] = '<id>' . $brand->id . '</id>';			
+					$xml[] = '<status>5</status>'; //updated
+					$xml[] = '<is_error>' . $brand->is_error . '</is_error>';
+					$xml[] = '</brand>';	
+				}
+				else
+				{
+					//insert				
+					$new_brand_obj = array();
+					
+					$new_brand_obj = $this->get_dao()->get();
+					$new_brand_obj->set_id($brand->id);
+					$new_brand_obj->set_brand_name($brand->brand_name);
+					$new_brand_obj->set_description($brand->description);
+					$new_brand_obj->set_status($brand->status);
+					
+					$this->get_dao()->insert($new_brand_obj);
+
+					$xml[] = '<brand>';
+					$xml[] = '<id>' . $brand->id . '</id>';			
+					$xml[] = '<status>5</status>'; //updated
+					$xml[] = '<is_error>' . $brand->is_error . '</is_error>';
+					$xml[] = '</brand>';					
+				}  
+			}	
+			catch(Exception $e)
 			{
-				//update					
-				$where = array("id"=>$id);
-				
-				$new_brand_obj = array();
-				
-				$new_brand_obj["brand_name"] = $brand->brand_name;
-				$new_brand_obj["description"] = $brand->description;					
-				$new_brand_obj["status"] = $brand->status;	
-				
-				$this->get_dao()->q_update($where, $new_brand_obj);
-			}
-			else
-			{
-				//insert				
-				$new_brand_obj = array();
-				
-				$new_brand_obj = $this->get_dao()->get();
-				$new_brand_obj->set_id($brand->id);
-				$new_brand_obj->set_brand_name($brand->brand_name);
-				$new_brand_obj->set_description($brand->description);
-				$new_brand_obj->set_status($brand->status);
-				
-				$this->get_dao()->insert($new_brand_obj);	
-			}            
+				$xml[] = '<brand>';
+				$xml[] = '<id>' . $price->sku . '</id>';			
+				$xml[] = '<status>4</status>'; //error
+				$xml[] = '<is_error>' . $brand->is_error . '</is_error>';
+				$xml[] = '</brand>';
+			}           
 		 }
 		 
-		$xml[] = '</no_updated_brands>';
+		$xml[] = '</brands>';
 		
 		
 		$return_feed = implode("\n", $xml);	
