@@ -1,16 +1,19 @@
 <?php
-class DeliveryTypeVo extends \BaseVo
+class FuncOptionVo extends \BaseVo
 {
     private $id;
-    private $delivery_type_id;
-    private $name;
-    private $platform_type;
+    private $func_id;
+    private $lang_id = 'en';
+    private $text;
+    private $value;
+    private $priority;
+    private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at = '2130706433';
-    private $create_by = 'system';
+    private $create_at = '127.0.0.1';
+    private $create_by;
     private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at = '2130706433';
-    private $modify_by = 'system';
+    private $modify_at = '127.0.0.1';
+    private $modify_by;
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
@@ -25,34 +28,64 @@ class DeliveryTypeVo extends \BaseVo
         return $this->id;
     }
 
-    public function setDeliveryTypeId($delivery_type_id)
+    public function setFuncId($func_id)
     {
-        $this->delivery_type_id = $delivery_type_id;
+        $this->func_id = $func_id;
     }
 
-    public function getDeliveryTypeId()
+    public function getFuncId()
     {
-        return $this->delivery_type_id;
+        return $this->func_id;
     }
 
-    public function setName($name)
+    public function setLangId($lang_id)
     {
-        $this->name = $name;
+        $this->lang_id = $lang_id;
     }
 
-    public function getName()
+    public function getLangId()
     {
-        return $this->name;
+        return $this->lang_id;
     }
 
-    public function setPlatformType($platform_type)
+    public function setText($text)
     {
-        $this->platform_type = $platform_type;
+        $this->text = $text;
     }
 
-    public function getPlatformType()
+    public function getText()
     {
-        return $this->platform_type;
+        return $this->text;
+    }
+
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+    }
+
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     public function setCreateOn($create_on)

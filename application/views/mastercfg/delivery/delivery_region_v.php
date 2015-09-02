@@ -44,7 +44,7 @@
                 <?php
                 if ($delivery_list[$default_delivery] && $country_list) {
                     $display_country_list = array_keys($delivery_list[$default_delivery]);
-                    $i == 0;
+                    $i = 0;
                     foreach ($display_country_list as $country_id) {
                         $cur_locked = $i == 0 ? " locked" : "";
                         ?>
@@ -67,18 +67,18 @@
             <tbody>
             <tr class="row<?= $i % 2 ?>" onMouseOver="AddClassName(this, 'highlight')"
                 onMouseOut="RemoveClassName(this, 'highlight')">
-                <td nowrap style="white-space:nowrap;"><?= $dt_id = $dt_obj->get_id() ?>
-                    - <?= $dt_obj->get_name() ?></td>
+                <td nowrap style="white-space:nowrap;"><?= $dt_id = $dt_obj->getDeliveryTypeId() ?>
+                    - <?= $dt_obj->getName() ?></td>
                 <?php
                 foreach ($display_country_list as $country_id) {
                     $checkbox = $cur_max = $cur_min = $checked = "";
                     if (isset($delivery_list[$dt_id][$country_id])) {
                         $del_obj = $delivery_list[$dt_id][$country_id];
-                        if ($cur_status = $del_obj->get_status()) {
+                        if ($cur_status = $del_obj->getStatus()) {
                             $checked = " CHECKED";
                         }
-                        $cur_min = $del_obj->get_min_day();
-                        $cur_max = $del_obj->get_max_day();
+                        $cur_min = $del_obj->getMinDay();
+                        $cur_max = $del_obj->getMaxDay();
                     }
                     if ($dt_id == $default_delivery) {
                         $checkbox = "<input type='hidden' name='del[{$dt_id}][{$country_id}][status][$cur_status]' value='1'>";
@@ -87,11 +87,11 @@
                     }
                     ?>
                     <td nowrap style="white-space:nowrap;" align="center"><?= $checkbox ?><input
-                            name="del[<?= $dt_id ?>][<?= $country_id ?>][min][<?= is_null($cur_min) ? 'null' : $cur_min ?>]"
-                            class="s_int_input" size="3" value="<?= $cur_min ?>" min=1 max=255 maxlength=3 isNatural> -
+                            name="del[<?= $dt_id ?>][<?= $country_id ?>][min][<?= $cur_min == 0 ? '' : $cur_min ?>]"
+                            class="s_int_input" size="3" value="<?= $cur_min == 0 ? '' : $cur_min ?>" min=1 max=255 maxlength=3 isNatural> -
                         <input
-                            name="del[<?= $dt_id ?>][<?= $country_id ?>][max][<?= is_null($cur_max) ? 'null' : $cur_max ?>]"
-                            class="s_int_input" size="3" value="<?= $cur_max ?>" min=1 max=255 maxlength=3
+                            name="del[<?= $dt_id ?>][<?= $country_id ?>][max][<?= $cur_max == 0 ? '' : $cur_max ?>]"
+                            class="s_int_input" size="3" value="<?= $cur_max == 0 ? '' : $cur_max ?>" min=1 max=255 maxlength=3
                             isNatural><br><?= $lang["working_days"] ?></td>
                 <?php
                 }
@@ -112,7 +112,7 @@
                 </td>
             </tr>
         </table>
-        <?= _form_ru() ?>
+        <?= $set_form_ru ?>
         <input type="hidden" name="posted" value="1">
     </form>
     <?= $notice["js"] ?>

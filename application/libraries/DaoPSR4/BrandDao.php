@@ -25,13 +25,6 @@ class BrandDao extends BaseDao
     {
 
         $this->db->from('brand AS b');
-        $this->db->join('(
-                    SELECT bn.id, bn.description, GROUP_CONCAT(CONCAT(sr.region_name, "--",  srr.region_name) ORDER BY sr.region_name SEPARATOR ", ") AS regions
-                    FROM brand_region br
-                    JOIN (brand bn, region sr, region srr)
-                        ON (bn.id = br.brand_id AND sr.id = br.sales_region_id AND srr.id = br.src_region_id)
-                    GROUP BY bn.id
-                ) AS srn', 'b.id = srn.id', 'LEFT');
 
         if ($where) {
             $this->db->where($where);
@@ -44,7 +37,7 @@ class BrandDao extends BaseDao
 
         if (empty($option["num_rows"])) {
 
-            $this->db->select('b.id, b.brand_name, b.description, b.status, srn.regions, b.create_on, b.create_at, b.create_by, b.modify_on, b.modify_at, b.modify_by');
+            $this->db->select('b.id, b.brand_name, b.description, b.status, b.create_on, b.create_at, b.create_by, b.modify_on, b.modify_at, b.modify_by');
 
             $this->db->order_by($option["orderby"]);
 
@@ -85,13 +78,6 @@ class BrandDao extends BaseDao
     {
 
         $this->db->from('brand AS b');
-        $this->db->join('(
-                    SELECT bn.id, GROUP_CONCAT(DISTINCT sr.region_name ORDER BY sr.region_name SEPARATOR ", ") AS regions
-                    FROM brand_region br
-                    JOIN (brand bn, region sr)
-                        ON (bn.id = br.brand_id AND sr.id = br.src_region_id)
-                    GROUP BY bn.id
-                ) AS srn', 'b.id = srn.id', 'LEFT');
 
         $this->db->where($where);
 

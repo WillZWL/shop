@@ -1,10 +1,12 @@
 <?php
-class DeliveryTypeVo extends \BaseVo
+class InventoryVo extends \BaseVo
 {
     private $id;
-    private $delivery_type_id;
-    private $name;
-    private $platform_type;
+    private $warehouse_id;
+    private $prod_sku;
+    private $inventory;
+    private $git;
+    private $surplus_qty;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -25,34 +27,54 @@ class DeliveryTypeVo extends \BaseVo
         return $this->id;
     }
 
-    public function setDeliveryTypeId($delivery_type_id)
+    public function setWarehouseId($warehouse_id)
     {
-        $this->delivery_type_id = $delivery_type_id;
+        $this->warehouse_id = $warehouse_id;
     }
 
-    public function getDeliveryTypeId()
+    public function getWarehouseId()
     {
-        return $this->delivery_type_id;
+        return $this->warehouse_id;
     }
 
-    public function setName($name)
+    public function setProdSku($prod_sku)
     {
-        $this->name = $name;
+        $this->prod_sku = $prod_sku;
     }
 
-    public function getName()
+    public function getProdSku()
     {
-        return $this->name;
+        return $this->prod_sku;
     }
 
-    public function setPlatformType($platform_type)
+    public function setInventory($inventory)
     {
-        $this->platform_type = $platform_type;
+        $this->inventory = $inventory;
     }
 
-    public function getPlatformType()
+    public function getInventory()
     {
-        return $this->platform_type;
+        return $this->inventory;
+    }
+
+    public function setGit($git)
+    {
+        $this->git = $git;
+    }
+
+    public function getGit()
+    {
+        return $this->git;
+    }
+
+    public function setSurplusQty($surplus_qty)
+    {
+        $this->surplus_qty = $surplus_qty;
+    }
+
+    public function getSurplusQty()
+    {
+        return $this->surplus_qty;
     }
 
     public function setCreateOn($create_on)
