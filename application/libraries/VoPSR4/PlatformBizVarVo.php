@@ -1,13 +1,13 @@
 <?php
 class PlatformBizVarVo extends \BaseVo
 {
-
-    //class variable
+    private $id;
     private $selling_platform_id;
+    private $need_round_nearest = 'N';
     private $latency_in_stock;
     private $latency_out_of_stock;
     private $vat_percent = '0.00';
-    private $admin_fee;
+    private $admin_fee = '0.00';
     private $platform_region_id;
     private $platform_country_id;
     private $dest_country;
@@ -20,305 +20,295 @@ class PlatformBizVarVo extends \BaseVo
     private $payment_charge_percent = '0.00';
     private $forex_fee_percent = '0.00';
     private $delivery_type;
-    private $free_delivery_limit = '0';
+    private $free_delivery_limit;
     private $default_shiptype;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    //primary key
-    private $primary_key = ["selling_platform_id"];
+    private $primary_key = ['id'];
+    private $increment_field = 'id';
 
-    //auo increment
-    private $increment_field = "";
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-    //instance method
-    public function get_selling_platform_id()
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setSellingPlatformId($selling_platform_id)
+    {
+        $this->selling_platform_id = $selling_platform_id;
+    }
+
+    public function getSellingPlatformId()
     {
         return $this->selling_platform_id;
     }
 
-    public function set_selling_platform_id($value)
+    public function setNeedRoundNearest($need_round_nearest)
     {
-        $this->selling_platform_id = $value;
-        return $this;
+        $this->need_round_nearest = $need_round_nearest;
     }
 
-    public function get_latency_in_stock()
+    public function getNeedRoundNearest()
+    {
+        return $this->need_round_nearest;
+    }
+
+    public function setLatencyInStock($latency_in_stock)
+    {
+        $this->latency_in_stock = $latency_in_stock;
+    }
+
+    public function getLatencyInStock()
     {
         return $this->latency_in_stock;
     }
 
-    public function set_latency_in_stock($value)
+    public function setLatencyOutOfStock($latency_out_of_stock)
     {
-        $this->latency_in_stock = $value;
-        return $this;
+        $this->latency_out_of_stock = $latency_out_of_stock;
     }
 
-    public function get_latency_out_of_stock()
+    public function getLatencyOutOfStock()
     {
         return $this->latency_out_of_stock;
     }
 
-    public function set_latency_out_of_stock($value)
+    public function setVatPercent($vat_percent)
     {
-        $this->latency_out_of_stock = $value;
-        return $this;
+        $this->vat_percent = $vat_percent;
     }
 
-    public function get_vat_percent()
+    public function getVatPercent()
     {
         return $this->vat_percent;
     }
 
-    public function set_vat_percent($value)
+    public function setAdminFee($admin_fee)
     {
-        $this->vat_percent = $value;
-        return $this;
+        $this->admin_fee = $admin_fee;
     }
 
-    public function get_admin_fee()
+    public function getAdminFee()
     {
         return $this->admin_fee;
     }
 
-    public function set_admin_fee($value)
+    public function setPlatformRegionId($platform_region_id)
     {
-        $this->admin_fee = $value;
-        return $this;
+        $this->platform_region_id = $platform_region_id;
     }
 
-    public function get_platform_region_id()
+    public function getPlatformRegionId()
     {
         return $this->platform_region_id;
     }
 
-    public function set_platform_region_id($value)
+    public function setPlatformCountryId($platform_country_id)
     {
-        $this->platform_region_id = $value;
-        return $this;
+        $this->platform_country_id = $platform_country_id;
     }
 
-    public function get_platform_country_id()
+    public function getPlatformCountryId()
     {
         return $this->platform_country_id;
     }
 
-    public function set_platform_country_id($value)
+    public function setDestCountry($dest_country)
     {
-        $this->platform_country_id = $value;
-        return $this;
+        $this->dest_country = $dest_country;
     }
 
-    public function get_dest_country()
+    public function getDestCountry()
     {
         return $this->dest_country;
     }
 
-    public function set_dest_country($value)
+    public function setPlatformCurrencyId($platform_currency_id)
     {
-        $this->dest_country = $value;
-        return $this;
+        $this->platform_currency_id = $platform_currency_id;
     }
 
-    public function get_platform_currency_id()
+    public function getPlatformCurrencyId()
     {
         return $this->platform_currency_id;
     }
 
-    public function set_platform_currency_id($value)
+    public function setSignPos($sign_pos)
     {
-        $this->platform_currency_id = $value;
-        return $this;
+        $this->sign_pos = $sign_pos;
     }
 
-    public function get_sign_pos()
+    public function getSignPos()
     {
         return $this->sign_pos;
     }
 
-    public function set_sign_pos($value)
+    public function setDecPlace($dec_place)
     {
-        $this->sign_pos = $value;
-        return $this;
+        $this->dec_place = $dec_place;
     }
 
-    public function get_dec_place()
+    public function getDecPlace()
     {
         return $this->dec_place;
     }
 
-    public function set_dec_place($value)
+    public function setDecPoint($dec_point)
     {
-        $this->dec_place = $value;
-        return $this;
+        $this->dec_point = $dec_point;
     }
 
-    public function get_dec_point()
+    public function getDecPoint()
     {
         return $this->dec_point;
     }
 
-    public function set_dec_point($value)
+    public function setThousandsSep($thousands_sep)
     {
-        $this->dec_point = $value;
-        return $this;
+        $this->thousands_sep = $thousands_sep;
     }
 
-    public function get_thousands_sep()
+    public function getThousandsSep()
     {
         return $this->thousands_sep;
     }
 
-    public function set_thousands_sep($value)
+    public function setLanguageId($language_id)
     {
-        $this->thousands_sep = $value;
-        return $this;
+        $this->language_id = $language_id;
     }
 
-    public function get_language_id()
+    public function getLanguageId()
     {
         return $this->language_id;
     }
 
-    public function set_language_id($value)
+    public function setPaymentChargePercent($payment_charge_percent)
     {
-        $this->language_id = $value;
-        return $this;
+        $this->payment_charge_percent = $payment_charge_percent;
     }
 
-    public function get_payment_charge_percent()
+    public function getPaymentChargePercent()
     {
         return $this->payment_charge_percent;
     }
 
-    public function set_payment_charge_percent($value)
+    public function setForexFeePercent($forex_fee_percent)
     {
-        $this->payment_charge_percent = $value;
-        return $this;
+        $this->forex_fee_percent = $forex_fee_percent;
     }
 
-    public function get_forex_fee_percent()
+    public function getForexFeePercent()
     {
         return $this->forex_fee_percent;
     }
 
-    public function set_forex_fee_percent($value)
+    public function setDeliveryType($delivery_type)
     {
-        $this->forex_fee_percent = $value;
-        return $this;
+        $this->delivery_type = $delivery_type;
     }
 
-    public function get_delivery_type()
+    public function getDeliveryType()
     {
         return $this->delivery_type;
     }
 
-    public function set_delivery_type($value)
+    public function setFreeDeliveryLimit($free_delivery_limit)
     {
-        $this->delivery_type = $value;
-        return $this;
+        $this->free_delivery_limit = $free_delivery_limit;
     }
 
-    public function get_free_delivery_limit()
+    public function getFreeDeliveryLimit()
     {
         return $this->free_delivery_limit;
     }
 
-    public function set_free_delivery_limit($value)
+    public function setDefaultShiptype($default_shiptype)
     {
-        $this->free_delivery_limit = $value;
-        return $this;
+        $this->default_shiptype = $default_shiptype;
     }
 
-    public function get_default_shiptype()
+    public function getDefaultShiptype()
     {
         return $this->default_shiptype;
     }
 
-    public function set_default_shiptype($value)
+    public function setCreateOn($create_on)
     {
-        $this->default_shiptype = $value;
-        return $this;
+        $this->create_on = $create_on;
     }
 
-    public function get_create_on()
+    public function getCreateOn()
     {
         return $this->create_on;
     }
 
-    public function set_create_on($value)
+    public function setCreateAt($create_at)
     {
-        $this->create_on = $value;
-        return $this;
+        $this->create_at = $create_at;
     }
 
-    public function get_create_at()
+    public function getCreateAt()
     {
         return $this->create_at;
     }
 
-    public function set_create_at($value)
+    public function setCreateBy($create_by)
     {
-        $this->create_at = $value;
-        return $this;
+        $this->create_by = $create_by;
     }
 
-    public function get_create_by()
+    public function getCreateBy()
     {
         return $this->create_by;
     }
 
-    public function set_create_by($value)
+    public function setModifyOn($modify_on)
     {
-        $this->create_by = $value;
-        return $this;
+        $this->modify_on = $modify_on;
     }
 
-    public function get_modify_on()
+    public function getModifyOn()
     {
         return $this->modify_on;
     }
 
-    public function set_modify_on($value)
+    public function setModifyAt($modify_at)
     {
-        $this->modify_on = $value;
-        return $this;
+        $this->modify_at = $modify_at;
     }
 
-    public function get_modify_at()
+    public function getModifyAt()
     {
         return $this->modify_at;
     }
 
-    public function set_modify_at($value)
+    public function setModifyBy($modify_by)
     {
-        $this->modify_at = $value;
-        return $this;
+        $this->modify_by = $modify_by;
     }
 
-    public function get_modify_by()
+    public function getModifyBy()
     {
         return $this->modify_by;
     }
 
-    public function set_modify_by($value)
-    {
-        $this->modify_by = $value;
-        return $this;
-    }
-
-    public function _get_primary_key()
+    public function getPrimaryKey()
     {
         return $this->primary_key;
     }
 
-    public function _get_increment_field()
+    public function getIncrementField()
     {
         return $this->increment_field;
     }
-
 }

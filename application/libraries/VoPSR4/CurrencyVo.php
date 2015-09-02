@@ -1,36 +1,50 @@
 <?php
 class CurrencyVo extends \BaseVo
 {
-    //class variable
     private $id;
+    private $currency_id;
     private $sign;
     private $name;
     private $description;
     private $round_up;
+    private $round_up_nearest_for_price_table = '0.99';
     private $sign_pos;
     private $dec_place;
     private $dec_point;
     private $thousands_sep;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    private $primary_key = ["id"];
+    private $primary_key = ['id'];
+    private $increment_field = 'id';
 
-    private $increment_field = "";
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     public function getId()
     {
         return $this->id;
     }
 
-    public function setId($value)
+    public function setCurrencyId($currency_id)
     {
-        $this->id = $value;
-        return $this;
+        $this->currency_id = $currency_id;
+    }
+
+    public function getCurrencyId()
+    {
+        return $this->currency_id;
+    }
+
+    public function setSign($sign)
+    {
+        $this->sign = $sign;
     }
 
     public function getSign()
@@ -38,10 +52,9 @@ class CurrencyVo extends \BaseVo
         return $this->sign;
     }
 
-    public function setSign($value)
+    public function setName($name)
     {
-        $this->sign = $value;
-        return $this;
+        $this->name = $name;
     }
 
     public function getName()
@@ -49,10 +62,9 @@ class CurrencyVo extends \BaseVo
         return $this->name;
     }
 
-    public function setName($value)
+    public function setDescription($description)
     {
-        $this->name = $value;
-        return $this;
+        $this->description = $description;
     }
 
     public function getDescription()
@@ -60,10 +72,9 @@ class CurrencyVo extends \BaseVo
         return $this->description;
     }
 
-    public function setDescription($value)
+    public function setRoundUp($round_up)
     {
-        $this->description = $value;
-        return $this;
+        $this->round_up = $round_up;
     }
 
     public function getRoundUp()
@@ -71,10 +82,19 @@ class CurrencyVo extends \BaseVo
         return $this->round_up;
     }
 
-    public function setRoundUp($value)
+    public function setRoundUpNearestForPriceTable($round_up_nearest_for_price_table)
     {
-        $this->round_up = $value;
-        return $this;
+        $this->round_up_nearest_for_price_table = $round_up_nearest_for_price_table;
+    }
+
+    public function getRoundUpNearestForPriceTable()
+    {
+        return $this->round_up_nearest_for_price_table;
+    }
+
+    public function setSignPos($sign_pos)
+    {
+        $this->sign_pos = $sign_pos;
     }
 
     public function getSignPos()
@@ -82,10 +102,9 @@ class CurrencyVo extends \BaseVo
         return $this->sign_pos;
     }
 
-    public function setSignPos($value)
+    public function setDecPlace($dec_place)
     {
-        $this->sign_pos = $value;
-        return $this;
+        $this->dec_place = $dec_place;
     }
 
     public function getDecPlace()
@@ -93,10 +112,9 @@ class CurrencyVo extends \BaseVo
         return $this->dec_place;
     }
 
-    public function setDecPlace($value)
+    public function setDecPoint($dec_point)
     {
-        $this->dec_place = $value;
-        return $this;
+        $this->dec_point = $dec_point;
     }
 
     public function getDecPoint()
@@ -104,10 +122,9 @@ class CurrencyVo extends \BaseVo
         return $this->dec_point;
     }
 
-    public function setDecPoint($value)
+    public function setThousandsSep($thousands_sep)
     {
-        $this->dec_point = $value;
-        return $this;
+        $this->thousands_sep = $thousands_sep;
     }
 
     public function getThousandsSep()
@@ -115,10 +132,9 @@ class CurrencyVo extends \BaseVo
         return $this->thousands_sep;
     }
 
-    public function setThousandsSep($value)
+    public function setCreateOn($create_on)
     {
-        $this->thousands_sep = $value;
-        return $this;
+        $this->create_on = $create_on;
     }
 
     public function getCreateOn()
@@ -126,10 +142,9 @@ class CurrencyVo extends \BaseVo
         return $this->create_on;
     }
 
-    public function setCreateOn($value)
+    public function setCreateAt($create_at)
     {
-        $this->create_on = $value;
-        return $this;
+        $this->create_at = $create_at;
     }
 
     public function getCreateAt()
@@ -137,10 +152,9 @@ class CurrencyVo extends \BaseVo
         return $this->create_at;
     }
 
-    public function setCreateAt($value)
+    public function setCreateBy($create_by)
     {
-        $this->create_at = $value;
-        return $this;
+        $this->create_by = $create_by;
     }
 
     public function getCreateBy()
@@ -148,10 +162,9 @@ class CurrencyVo extends \BaseVo
         return $this->create_by;
     }
 
-    public function setCreateBy($value)
+    public function setModifyOn($modify_on)
     {
-        $this->create_by = $value;
-        return $this;
+        $this->modify_on = $modify_on;
     }
 
     public function getModifyOn()
@@ -159,10 +172,9 @@ class CurrencyVo extends \BaseVo
         return $this->modify_on;
     }
 
-    public function setModifyOn($value)
+    public function setModifyAt($modify_at)
     {
-        $this->modify_on = $value;
-        return $this;
+        $this->modify_at = $modify_at;
     }
 
     public function getModifyAt()
@@ -170,21 +182,14 @@ class CurrencyVo extends \BaseVo
         return $this->modify_at;
     }
 
-    public function setModifyAt($value)
+    public function setModifyBy($modify_by)
     {
-        $this->modify_at = $value;
-        return $this;
+        $this->modify_by = $modify_by;
     }
 
     public function getModifyBy()
     {
         return $this->modify_by;
-    }
-
-    public function setModifyBy($value)
-    {
-        $this->modify_by = $value;
-        return $this;
     }
 
     public function getPrimaryKey()
@@ -196,5 +201,4 @@ class CurrencyVo extends \BaseVo
     {
         return $this->increment_field;
     }
-
 }
