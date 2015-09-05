@@ -7,6 +7,7 @@ class LanguageService extends BaseService
 {
     public function __construct()
     {
+        log_message('info', 'RAPHALEInitialized');
         parent::__construct();
         $this->setDao(new LanguageDao());
     }

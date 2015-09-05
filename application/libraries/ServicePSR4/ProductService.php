@@ -1,16 +1,17 @@
 <?php
 namespace AtomV2\Service;
 
+use AtomV2\Service\BrandService;
 use AtomV2\Dao\ProductDao;
-use AtomV2\Dao\ProductTypeDao;
 
-class ProductService extends BaseService
+
+
+class ProductService extends BaseProductService
 {
 
     public function __construct()
     {
         $this->setDao(new ProductDao);
-        $this->setProductTypeDao(new ProductTypeDao);
     }
 
     public function getHomeProduct($where, $option)
@@ -33,13 +34,13 @@ class ProductService extends BaseService
         return $this->getDao()->getProductWMarginReqUpdate($where, $classname);
     }
 
-    public function setProductTypeDao($dao)
+    public function getCreateProductOptions()
     {
-        $this->productTypeDao = $dao;
-    }
+        $data['brandList'] = $this->brandService->getList([], ['orderby' => 'brand_name ASC', 'limit' => -1]);
+        $data['colourList'] = $this->colourService->getList(['status' => 1], ['orderby' => 'colour_id ASC', 'limit' => -1]);
+        $data['versionList'] = $this->versionService->getList(['status' => A], ['orderby' => 'colour_id ASC', 'limit' => -1]);
 
-    public function getProductTypeDao()
-    {
-        return $this->productTypeDao;
+        $data["version_list"] = $this->product_model->get_list("version", array("status" => 'A'));
+        $data["type_list"] = $this->subject_domain_service->get_subj_list_w_subj_lang("MKT.PROD_TYPE.PROD_TYPE_ID", "en");
     }
 }
