@@ -94,15 +94,17 @@ class FreightCatService extends BaseService
         }
         foreach ($fc_list AS $fc_obj) {
             $fc_name_list["frieght_cat_arr"][$fc_obj->getId()] = $fc_obj->getName();
-            foreach ($dest_country_list AS $dest_country_arr) {
-                $fc_name_list["dest_country_arr"][$dest_country_arr['country_id']] = $dest_country_arr['country_name'];
-                if (empty($combine_fcc_list[$fc_obj->getId()][$dest_country_arr['country_id']])) {
-                    $vo = clone $fcc_vo;
-                    $vo->setFcatId($fc_obj->getId());
-                    $vo->setOriginCountry($fc_obj->getId());
-                    $vo->setCurrencyId("HKD");
-                    $vo->setAmount(0);
-                    $combine_fcc_list[$fc_obj->getId()][$dest_country_arr['country_id']] = $vo;
+            if ($dest_country_list) {
+                foreach ($dest_country_list AS $dest_country_arr) {
+                    $fc_name_list["dest_country_arr"][$dest_country_arr['country_id']] = $dest_country_arr['country_name'];
+                    if (empty($combine_fcc_list[$fc_obj->getId()][$dest_country_arr['country_id']])) {
+                        $vo = clone $fcc_vo;
+                        $vo->setFcatId($fc_obj->getId());
+                        $vo->setOriginCountry($fc_obj->getId());
+                        $vo->setCurrencyId("HKD");
+                        $vo->setAmount(0);
+                        $combine_fcc_list[$fc_obj->getId()][$dest_country_arr['country_id']] = $vo;
+                    }
                 }
             }
         }

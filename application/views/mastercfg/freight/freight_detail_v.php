@@ -71,19 +71,21 @@
                     ?>
                     <tr>
                         <td height="22"></td>
-                        <td nowrap style="white-space:nowrap;"><?=$i?> / <?= $cur_cat_name ?></td>
+                        <td nowrap style="white-space:nowrap;"><?= $cur_cat_name ?></td>
                         <?php
-                        foreach ($key_country_list as $country_id => $country_name) :
-                            if ($fcc_obj = $objlist[$cur_cat_id][$country_id]) :
-                                $cur_currency_id = $fcc_obj->getCurrencyId();
-                                ?>
-                                <td nowrap style="white-space:nowrap;">
-                                    <?= $cur_currency_id ?>
-                                    <input name="value[<?= $cur_cat_id ?>][<?= $country_id ?>]" class="int_input" value="<?= $fcc_obj->getAmount() ?>" notEmpty isNumber min=0>
-                                </td>
-                            <?php
-                            endif;
-                        endforeach;
+                        if ($key_country_list) :
+                            foreach ($key_country_list as $country_id => $country_name) :
+                                if ($fcc_obj = $objlist[$cur_cat_id][$country_id]) :
+                                    $cur_currency_id = $fcc_obj->getCurrencyId();
+                                    ?>
+                                    <td nowrap style="white-space:nowrap;">
+                                        <?= $cur_currency_id ?>
+                                        <input name="value[<?= $cur_cat_id ?>][<?= $country_id ?>]" class="int_input" value="<?= $fcc_obj->getAmount() ?>" notEmpty isNumber min=0>
+                                    </td>
+                                <?php
+                                endif;
+                            endforeach;
+                        endif;
                         ?>
                     </tr>
                     <?php

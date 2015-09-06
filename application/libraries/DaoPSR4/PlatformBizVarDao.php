@@ -38,7 +38,7 @@ class PlatformBizVarDao extends BaseDao
                 JOIN selling_platform AS s
                     ON pbv.selling_platform_id = s.id
                 JOIN country AS c
-                    ON c.id = pbv.platform_country_id
+                    ON c.country_id = pbv.platform_country_id
                 LEFT JOIN price AS pr
                     ON pr.platform_id = pbv.selling_platform_id AND pr.platform_id = s.id AND pr.sku = ?
                 WHERE type = ? AND s.status = 1
@@ -62,7 +62,7 @@ class PlatformBizVarDao extends BaseDao
         $select_str = "pbv.*, c.name AS platform_country";
         $this->db->from('platform_biz_var AS pbv');
         $this->db->join('selling_platform AS s', 'pbv.selling_platform_id = s.id', 'INNER');
-        $this->db->join('country AS c', 'c.id = pbv.platform_country_id', 'INNER');
+        $this->db->join('country AS c', 'c.country_id = pbv.platform_country_id', 'INNER');
         $this->include_dto($classname);
         return $this->common_get_list($where, $option, $classname, $select_str);
     }
@@ -72,7 +72,7 @@ class PlatformBizVarDao extends BaseDao
         $sql = "SELECT DISTINCT(pbv.dest_country) AS country_id, c.name AS country_name, pbv.platform_currency_id
                 FROM platform_biz_var pbv
                 INNER JOIN country c
-                    ON c.id = pbv.dest_country
+                    ON c.country_id = pbv.dest_country
                 ";
         if ($query = $this->db->query($sql)) {
             foreach ($query->result() as $row) {
@@ -90,7 +90,7 @@ class PlatformBizVarDao extends BaseDao
                 JOIN platform_biz_var pbv
                     ON sp.id = pbv.selling_platform_id
                 JOIN country c
-                    ON c.id = pbv.dest_country
+                    ON c.country_id = pbv.dest_country
                 ";
         if ($query = $this->db->query($sql)) {
             foreach ($query->result() as $row) {
