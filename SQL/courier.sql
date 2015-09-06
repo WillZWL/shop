@@ -1,6 +1,6 @@
 CREATE TABLE `courier` (
-  `id` int not null auto_increment,
-  `courier_id` varchar(32) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `courier_id` varchar(32) NOT NULL DEFAULT '',
   `aftership_id` varchar(32) NOT NULL DEFAULT '',
   `courier_name` varchar(32) NOT NULL DEFAULT '',
   `description` varchar(255) NOT NULL DEFAULT '',
@@ -14,5 +14,5 @@ CREATE TABLE `courier` (
   `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
   `modify_by` varchar(32) NOT NULL DEFAULT 'system',
   PRIMARY KEY (`id`),
-  unique key idx_courier_id (courier_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `idx_courier_id` (`courier_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8;
