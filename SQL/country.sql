@@ -17,5 +17,6 @@ CREATE TABLE `country` (
   `modify_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modify_at` INT(10) UNSIGNED NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
   `modify_by` VARCHAR(32) NOT NULL DEFAULT 'system',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  unique index idx_country_id (country_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
