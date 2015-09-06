@@ -9,5 +9,6 @@ CREATE TABLE `delivery_type` (
   `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
   `modify_by` varchar(32) NOT NULL DEFAULT 'system',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  unique index idx_delivery_type_id (delivery_type_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
