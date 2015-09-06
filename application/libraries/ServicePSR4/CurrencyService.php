@@ -28,7 +28,7 @@ class CurrencyService extends BaseService
         $data = [];
         if ($objlist = $this->getDao()->getList([], ["limit" => -1])) {
             foreach ($objlist as $obj) {
-                $data[$obj->getId()] = $obj->getName();
+                $data[$obj->getCurrencyId()] = $obj->getName();
             }
         }
         return $data;

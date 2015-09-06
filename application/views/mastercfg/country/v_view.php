@@ -63,7 +63,7 @@ $ar_fcid = array("US_FC" => $lang["us_fc"], "UK_FC" => $lang["uk_fc"], "HK_FC" =
                                 <td height="20" width="70%"><?= $lang["name_in_language"] ?></td>
                             </tr>
                             <?php
-                            foreach ($name as $key => $value) {
+                            foreach ($name as $key => $value) :
                                 ?>
                                 <tr>
                                     <td class="field"><?= $ar_lang[$key] ?></td>
@@ -71,7 +71,7 @@ $ar_fcid = array("US_FC" => $lang["us_fc"], "UK_FC" => $lang["uk_fc"], "HK_FC" =
                                                              value="<?= htmlspecialchars($value) ?>"></td>
                                 </tr>
                             <?php
-                            }
+                            endforeach;
                             ?>
                         </table>
                     </div>
@@ -95,11 +95,11 @@ $ar_fcid = array("US_FC" => $lang["us_fc"], "UK_FC" => $lang["uk_fc"], "HK_FC" =
                 <td class="field"><?= $lang["currency_id"] ?></td>
                 <td class="value" colspan="3"><select name="currency_id" class="input">
                         <?php
-                        foreach ($ar_currency as $cur => $cname) {
+                        foreach ($ar_currency as $cur => $cname) :
                             ?>
                             <option value="<?= $cur ?>" <?= !empty($select[$cur]) ? $select[$cur] : '' ?>><?= $cname ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </select></td>
             </tr>
@@ -111,11 +111,11 @@ $ar_fcid = array("US_FC" => $lang["us_fc"], "UK_FC" => $lang["uk_fc"], "HK_FC" =
                 <td class="field"><?= $lang["language_id"] ?></td>
                 <td class="value" colspan="3"><select name="language_id" class="input">
                         <?php
-                        foreach ($ar_lang as $langid => $lname) {
+                        foreach ($ar_lang as $langid => $lname) :
                             ?>
                             <option value="<?= $langid ?>" <?= !empty($select[$langid]) ? $select[$langid] : '' ?>><?= $lname ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </select></td>
             </tr>
@@ -129,12 +129,12 @@ $ar_fcid = array("US_FC" => $lang["us_fc"], "UK_FC" => $lang["uk_fc"], "HK_FC" =
                         <option value=""></option>
                         <?php
                         unset($select);
-                        $select[$rma_fc_vo->getRmaFc()] = "selected";
-                        foreach ($ar_fcid as $k => $v) {
+                        $select[$rmaFcVo->getRmaFc()] = "selected";
+                        foreach ($ar_fcid as $k => $v) :
                             ?>
                             <option value="<?= $k ?>" <?= !empty($select[$k]) ? $select[$k] : '' ?>><?= $v ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </select></td>
             </tr>

@@ -37,7 +37,7 @@
                     foreach ($selling_platform_list as $obj) {
                         ?>
                         <option
-                        value="<?= $obj->get_id() ?>"><?= $obj->get_id() . ' - ' . $obj->get_name() ?></option><?php
+                        value="<?= $obj->getSellingPlatformId() ?>"><?= $obj->getSellingPlatformId() . ' - ' . $obj->getName() ?></option><?php
                     }
                     ?></select>
             </td>

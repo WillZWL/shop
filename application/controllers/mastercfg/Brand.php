@@ -13,7 +13,7 @@ class Brand extends MY_Controller
         $this->paginationService = new PaginationService;
     }
 
-    public function index()
+    public function index($offset = 0)
     {
         $sub_app_id = $this->getAppId() . "00";
 
@@ -23,25 +23,19 @@ class Brand extends MY_Controller
         $option = [];
 
         if ($this->input->get("brand_name") != "") {
-            $where["brand_name LIKE "] = "%" . $this->input->get("brand_name") . "%";
+            $where["b.brand_name LIKE "] = "%" . $this->input->get("brand_name") . "%";
         }
         if ($this->input->get("regions") != "") {
-            $where["regions"] = "%" . $this->input->get("regions") . "%";
+            $where["b.regions"] = "%" . $this->input->get("regions") . "%";
         }
         if ($this->input->get("status") != "") {
-            $where["status"] = $this->input->get("status");
+            $where["b.status"] = $this->input->get("status");
         }
 
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
         $limit = '20';
-
-        $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-        $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"]) {
-            $option["offset"] = $this->input->get("per_page");
-        }
 
         if (empty($sort))
             $sort = "brand_name";
@@ -51,14 +45,20 @@ class Brand extends MY_Controller
 
         $option["orderby"] = $sort . " " . $order;
 
+        $option["limit"] = $limit;
+        $option["offset"] = $offset;
+
         $data = $this->brandModel->getBrandList($where, $option);
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->paginationService->set_show_count_tag(TRUE);
-        $this->paginationService->initialize($pconfig);
+        $config['base_url'] = base_url('mastercfg/brand/index');
+        $config['total_rows'] = $data["total"];
+        $config['per_page'] = $limit;
+
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
 
         $data["notice"] = notice($lang);
 
@@ -158,8 +158,6 @@ class Brand extends MY_Controller
                     $_SESSION["brand_vo"] = serialize($data["brand"]);
                 }
             }
-
-            $data["br_list"] = $this->brandModel->getBrandRegionList(["brand_id" => $id]);
 
             $data["notice"] = notice($lang);
             $data["cmd"] = "edit";

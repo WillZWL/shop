@@ -160,7 +160,6 @@
 
         <input type="hidden" name="posted" value="1">
     </form>
-    <?= $this->paginationService->create_links_with_style() ?>
     <?= $notice["js"] ?>
 </div>
 </body>

@@ -67,10 +67,10 @@
             <col width="10%">
             <col width="20%">
             <col width="20%">
-            <?php if ($country_list) {
-                foreach ($country_list as $ctry_obj) {
-                    $ctry_id = $ctry_obj->get_id();
-                    $ctry_name = $ctry_obj->get_name();
+            <?php if ($country_list) :
+                foreach ($country_list as $ctry_obj) :
+                    $ctry_id = $ctry_obj->getCountryId();
+                    $ctry_name = $ctry_obj->getName();
                     ?>
                     <tr class="header">
                         <td colspan="5"><?= "$ctry_id - $ctry_name" ?></td>
@@ -83,54 +83,53 @@
                         <td>&nbsp;</td>
                     </tr>
                     <?php
-                    if ($scenario_list) {
-                        foreach ($scenario_list as $scenarioobj) {
+                    if ($scenario_list) :
+                        foreach ($scenario_list as $scenarioobj) :
                             $scenarioid = $scenarioobj->id;
                             $scenarioname = $scenarioobj->name;
                             $info = [];
-                            // this info was stored in database
-// echo "<pre/>";
-// print_r($del_list_by_country);
 
-                            if (empty($del_list_by_country[$ctry_id])) {
+                            if (empty($del_list_by_country[$ctry_id])) :
                                 continue;
-                            }
-                            if ($del_list = $del_list_by_country[$ctry_id]) {
-                                foreach ($del_list as $delobj) {
-                                    // group them by scenarioid
-                                    $del_scenarioid = $delobj->get_scenarioid();
-                                    $info[$del_scenarioid]["ship_min_day"] = $delobj->get_ship_min_day();
-                                    $info[$del_scenarioid]["ship_max_day"] = $delobj->get_ship_max_day();
-                                    $info[$del_scenarioid]["del_min_day"] = $delobj->get_del_min_day();
-                                    $info[$del_scenarioid]["del_max_day"] = $delobj->get_del_max_day();
-                                    $info[$del_scenarioid]["margin"] = $delobj->get_margin();
-                                    $info[$del_scenarioid]["create_oarrayn"] = $delobj->get_create_on();
-                                    $info[$del_scenarioid]["create_at"] = $delobj->get_create_at();
-                                    $info[$del_scenarioid]["create_by"] = $delobj->get_create_by();
-                                    $info[$del_scenarioid]["modify_on"] = $delobj->get_modify_on();
-                                    $info[$del_scenarioid]["modify_at"] = $delobj->get_modify_at();
-                                    $info[$del_scenarioid]["modify_by"] = $delobj->get_modify_by();
-                                }
-                            }
+                            endif;
+                            if ($del_list = $del_list_by_country[$ctry_id]) :
+                                foreach ($del_list as $delobj) :
+                                    $del_scenarioid = $delobj->getScenarioid();
+                                    $info[$del_scenarioid]["ship_min_day"] = $delobj->getShipMinDay();
+                                    $info[$del_scenarioid]["ship_max_day"] = $delobj->getShipMaxDay();
+                                    $info[$del_scenarioid]["del_min_day"] = $delobj->getDelMinDay();
+                                    $info[$del_scenarioid]["del_max_day"] = $delobj->getDelMaxDay();
+                                    $info[$del_scenarioid]["margin"] = $delobj->getMargin();
+                                    $info[$del_scenarioid]["create_oarrayn"] = $delobj->getCreateOn();
+                                    $info[$del_scenarioid]["create_at"] = $delobj->getCreateAt();
+                                    $info[$del_scenarioid]["create_by"] = $delobj->getCreateBy();
+                                    $info[$del_scenarioid]["modify_on"] = $delobj->getModifyOn();
+                                    $info[$del_scenarioid]["modify_at"] = $delobj->getModifyAt();
+                                    $info[$del_scenarioid]["modify_by"] = $delobj->getModifyBy();
+                                endforeach;
+                            endif;
 
-                            // if previous post data different from database, then overwrite here
-                            // so that if has error in updating, previous input data wont be lost.
-                            if (!empty($postdata) && $postobj = $postdata[$ctry_id]) {
-                                if ($postobj[$scenarioid]["ship_min_day"] !== $info[$scenarioid]["ship_min_day"])
+                            if (!empty($postdata) && $postobj = $postdata[$ctry_id]) :
+                                if ($postobj[$scenarioid]["ship_min_day"] !== $info[$scenarioid]["ship_min_day"]) :
                                     $info[$scenarioid]["ship_min_day"] = $postobj[$scenarioid]["ship_min_day"];
+                                endif;
 
-                                if ($postobj[$scenarioid]["ship_max_day"] !== $info[$scenarioid]["ship_max_day"])
+                                if ($postobj[$scenarioid]["ship_max_day"] !== $info[$scenarioid]["ship_max_day"]) :
                                     $info[$scenarioid]["ship_max_day"] = $postobj[$scenarioid]["ship_max_day"];
+                                endif;
 
-                                if ($postobj[$scenarioid]["del_min_day"] !== $info[$scenarioid]["del_min_day"])
+                                if ($postobj[$scenarioid]["del_min_day"] !== $info[$scenarioid]["del_min_day"]) :
                                     $info[$scenarioid]["del_min_day"] = $postobj[$scenarioid]["del_min_day"];
+                                endif;
 
-                                if ($postobj[$scenarioid]["del_max_day"] !== $info[$scenarioid]["del_max_day"])
+                                if ($postobj[$scenarioid]["del_max_day"] !== $info[$scenarioid]["del_max_day"]) :
                                     $info[$scenarioid]["del_max_day"] = $postobj[$scenarioid]["del_max_day"];
+                                endif;
 
-                                if (!empty($postobj[$scenarioid]["margin"]) && $info[$scenarioid]["margin"] && $postobj[$scenarioid]["margin"] !== $info[$scenarioid]["margin"])
+                                if (!empty($postobj[$scenarioid]["margin"]) && $info[$scenarioid]["margin"] && $postobj[$scenarioid]["margin"] !== $info[$scenarioid]["margin"]) :
                                     $info[$scenarioid]["margin"] = $postobj[$scenarioid]["margin"];
-                            }
+                                endif;
+                            endif;
                             ?>
                             <tr>
                                 <td class="field" style="cursor:pointer;"><img src="<?= base_url() ?>images/info.gif"
@@ -160,7 +159,7 @@
                                            id="postdata[<?= $ctry_id ?>][<?= $scenarioid ?>][del_max_day]" isNumber>
                                 </td>
                                 <?php
-                                if ($scenarioid == 5) {// HighMargin row
+                                if ($scenarioid == 5) :
                                     ?>
                                     <td class="field">
                                         Product margin >= &nbsp;&nbsp;
@@ -171,18 +170,18 @@
                                         %
                                     </td>
                                 <?php
-                                } else {// NOT HighMargin row
+                                else :
                                     ?>
                                     <td class="field">&nbsp;</td>
                                 <?php
-                                }
+                                endif;
                                 ?>
                             </tr>
                         <?php
-                        }
-                    }
-                }
-            }
+                        endforeach;
+                    endif;
+                endforeach;
+            endif;
             ?>
         </table>
         <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
