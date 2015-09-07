@@ -33,10 +33,10 @@ class ExchangeRateModel extends \CI_Model
         return $this->exchangeRateService->getBasedRate($base, $currency_list, $dao);
     }
 
-    public function getBasedApprovalRate($base, $currency_list)
-    {
-        return $this->exchangeRateService->getBasedApprovalRate($base, $currency_list);
-    }
+    // public function getBasedApprovalRate($base, $currency_list)
+    // {
+    //     return $this->exchangeRateService->getBasedApprovalRate($base, $currency_list);
+    // }
 
     public function getCurrencyList($where = [], $option = [])
     {

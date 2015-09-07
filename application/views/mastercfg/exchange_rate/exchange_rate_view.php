@@ -73,15 +73,15 @@
             foreach ($currency_full_list as $obj) {
                 ?>
                 <tr class="row<?= $i % 2 ?>"
-                    <?php if ($exchange_rate[$obj->get_id()] != $exchange_rate_approval[$obj->get_id()]) { ?>style="BACKGROUND-COLOR: red"<?php }?> >
-                    <td height="20" width="30%">&nbsp;&nbsp;<?= $obj->get_name() ?></td>
-                    <td height="20" width="10%">&nbsp;&nbsp;<?= $obj->get_id() ?></td>
-                    <td height="20" width="10%">&nbsp;&nbsp;<?= $obj->get_sign() ?></td>
+                    <?php if ($exchange_rate[$obj->getCurrencyId()] != $exchange_rate_approval[$obj->getCurrencyId()]) { ?>style="BACKGROUND-COLOR: red"<?php }?> >
+                    <td height="20" width="30%">&nbsp;&nbsp;<?= $obj->getName() ?></td>
+                    <td height="20" width="10%">&nbsp;&nbsp;<?= $obj->getCurrencyId() ?></td>
+                    <td height="20" width="10%">&nbsp;&nbsp;<?= $obj->getSign() ?></td>
                     <td height="20" width="25%" align="left">
-                        &nbsp;&nbsp;<?= number_format($exchange_rate[$obj->get_id()], 6, '.', '') ?></td>
-                    <td height="20" width="25%" align="left">&nbsp;&nbsp;<input type="text" name="<?= $obj->get_id() ?>"
-                                                                                value="<?= number_format($exchange_rate_approval[$obj->get_id()], 6, '.', '') ?>"
-                                                                                style="font-size:11px;width:100px" <?= (!$editable || $obj->get_id() == $base ? "readonly" : "") ?>
+                        &nbsp;&nbsp;<?= number_format($exchange_rate[$obj->getCurrencyId()], 6, '.', '') ?></td>
+                    <td height="20" width="25%" align="left">&nbsp;&nbsp;<input type="text" name="<?= $obj->getCurrencyId() ?>"
+                                                                                value="<?= number_format($exchange_rate_approval[$obj->getCurrencyId()], 6, '.', '') ?>"
+                                                                                style="font-size:11px;width:100px" <?= (!$editable || $obj->getCurrencyId() == $base ? "readonly" : "") ?>
                                                                                 min=0 isNumber></td>
                 </tr>
                 <?php
