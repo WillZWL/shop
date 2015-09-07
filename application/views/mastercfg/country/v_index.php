@@ -157,7 +157,7 @@
                         <td height="20"><img src="<?= base_url() ?>images/info.gif"
                                              title='<?= $lang["create_on"] ?>:<?= $cobj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $cobj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $cobj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $cobj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $cobj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $cobj->getModifyBy() ?>'>
                         </td>
-                        <td><?= $cobj->getId() ?></td>
+                        <td><?= $cobj->getCountryId() ?></td>
                         <td><?= $cobj->getId3Digit() ?></td>
                         <td><?= $cobj->getName() ?></td>
                         <td><?= $ar_status[$cobj->getStatus()] ?></td>

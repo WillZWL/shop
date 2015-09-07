@@ -39,10 +39,10 @@
                 <td height="20"><img src="<?= base_url() . '/images/expand.png' ?>" class="pointer"
                                      onClick="Expand(document.getElementById('tr_search'));"></td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'lang_id', '<?= $xsort["lang_id"] ?>')"><?= $lang["lang_id"] ?></a> <?= $sortimg["lang_id"] ?>
+                       onClick="SortCol(document.fm, 'lang_id', '<?= @$xsort["lang_id"] ?>')"><?= $lang["lang_id"] ?></a> <?= @$sortimg["lang_id"] ?>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'faq_ver', '<?= $xsort["faq_ver"] ?>')"><?= $lang["faq_ver"] ?></a> <?= $sortimg["faq_ver"] ?>
+                       onClick="SortCol(document.fm, 'faq_ver', '<?= @$xsort["faq_ver"] ?>')"><?= $lang["faq_ver"] ?></a> <?= @$sortimg["faq_ver"] ?>
                 </td>
                 <td></td>
             </tr>
@@ -68,16 +68,16 @@
         $i = 0;
         if ($list) {
             foreach ($list as $obj) {
-                if ($obj->get_lang_id() != $eid || $edit != 1) {
+                if ($obj->getLangId() != $eid || $edit != 1) {
                     ?>
                     <tr class="row<?= $i++ % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
                         onMouseOut="RemoveClassName(this, 'highlight')"
-                        onClick='Redirect("<?= base_url() . "cs/faqadmin/index/1/" . $obj->get_lang_id() . "/?" . $_SERVER["QUERY_STRING"] ?>");'>
+                        onClick='Redirect("<?= base_url() . "cs/faqadmin/index/1/" . $obj->getLangId() . "/?" . $_SERVER["QUERY_STRING"] ?>");'>
                         <td><img src="<?= base_url() ?>images/info.gif"
-                                 title='<?= $lang["create_on"] ?>:<?= $obj->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->get_modify_by() ?>'>
+                                 title='<?= $lang["create_on"] ?>:<?= $obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->getModifyBy() ?>'>
                         </td>
-                        <td><?= $obj->get_lang_id() ?></td>
-                        <td><?= $faq_version[$obj->get_faq_ver()] ?></td>
+                        <td><?= $obj->getLangId() ?></td>
+                        <td><?= @$faq_version[$obj->getFaqVer()] ?></td>
                         <td></td>
                     </tr>
                 <?php
@@ -87,20 +87,20 @@
                           method="post" onClick="checkForm(this)" ;>
                         <tr class="row<?= $i++ % 2 ?>">
                             <td><img src="<?= base_url() ?>images/info.gif"
-                                     title='<?= $lang["create_on"] ?>:<?= $obj->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->get_modify_by() ?>'>
+                                     title='<?= $lang["create_on"] ?>:<?= $obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->getModifyBy() ?>'>
                             </td>
-                            <td><?= $obj->get_lang_id() ?><input name="lang_id" type="hidden"
-                                                                 value="<?= $obj->get_lang_id() ?>" class="input"></td>
+                            <td><?= $obj->getLangId() ?><input name="lang_id" type="hidden"
+                                                                 value="<?= $obj->getLangId() ?>" class="input"></td>
                             <td><select name="faq_ver" class="input"><?php
                                     foreach ($faq_version as $k => $v) {
                                         ?>
                                         <option
-                                        value="<?= $k ?>" <?= $k == $obj->get_faq_ver() ? "SELECTED" : "" ?>><?= $v ?></option><?php
+                                        value="<?= $k ?>" <?= $k == $obj->getFaqVer() ? "SELECTED" : "" ?>><?= $v ?></option><?php
                                     }
                                     ?></select></td>
                             <td><input name="posted" type="hidden" value="1"><input name="action" type="hidden"
-                                                                                    value="<?= $obj->get_faq_ver() ? "edit" : "add" ?>"><input
-                                    type="button" value="<?= $obj->get_faq_ver() ? $lang["update"] : $lang["add"] ?>"
+                                                                                    value="<?= $obj->getFaqVer() ? "edit" : "add" ?>"><input
+                                    type="button" value="<?= $obj->getFaqVer() ? $lang["update"] : $lang["add"] ?>"
                                     onClick="if(CheckForm(this.form)) document.fm_edit.submit();" class="button">&nbsp;&nbsp;<input
                                     type="button" value="<?= $lang["back"] ?>"
                                     onClick='Redirect("<?= base_url() . "cs/faqadmin/?" . $_SERVER["QUERY_STRING"] ?>");'
@@ -114,7 +114,6 @@
 
         ?>
     </table>
-    <?= $this->pagination_service->create_links_with_style() ?>
 </div>
 <?= $notice["js"] ?>
 </body>

@@ -35,11 +35,11 @@
                 <b style="font-size:14px"><?= $lang["header"] ?></b><br>
                 <?= $lang["header_message"] ?> <select onChange="changeBaseCurrency(this.value)" style="width:300px;">
                     <option value=""> -- <?= $lang["please_select"] ?> --</option><?php
-                    foreach ($currency_list as $key => $value) {
+                    foreach ($currency_list as $key => $value) :
                         ?>
                         <option value="<?= $key ?>"><?= $value ?></option>
                     <?php
-                    }
+                    endforeach;
                     ?></select>
             </td>
         </tr>

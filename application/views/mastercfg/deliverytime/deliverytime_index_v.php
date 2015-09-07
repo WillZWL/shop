@@ -37,15 +37,13 @@
                     <col width="20%">
                     <col width="30%">
                     <tr>
-                        <!-- using count so will be flexible if have more scenarios in future -->
                         <td rowspan="<?= count((array)$scenario_list) + 1 ?>" style="text-align:center;">Legend:</td>
                         <td style="text-align:right;padding-right:8px"><b><?= $lang["scenario"] ?></b></td>
                         <td style="padding-left:8px"><b><?= $lang["occurrence"] ?></b></td>
                     </tr>
                     <?php
-                    if ($scenario_list) {
-                        // display Legend
-                        foreach ($scenario_list as $scenarioobj) {
+                    if ($scenario_list) :
+                        foreach ($scenario_list as $scenarioobj) :
                             $scenarioname = $scenarioobj->name;
                             $scenariodesc = $scenarioobj->description;
                             ?>
@@ -54,8 +52,8 @@
                                 <td style="padding-left:8px"><?= $scenariodesc ?></td>
                             </tr>
                         <?php
-                        }
-                    }
+                        endforeach;
+                    endif;
                     ?>
                 </table>
             </td>

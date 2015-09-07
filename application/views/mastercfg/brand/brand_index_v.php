@@ -46,9 +46,6 @@
                 <td><a href="#"
                        onClick="SortCol(document.fm, 'description', '<?= @$xsort["description"] ?>')"><?= $lang["description"] ?> <?= @$sortimg["description"] ?></a>
                 </td>
-                <!--
-        <td><a href="#" onClick="SortCol(document.fm, 'regions', '<?= $xsort["regions"] ?>')"><?= $lang["sales_regions"] ?>--<?= $lang["sourcing_regions"] ?> <?= $sortimg["regions"] ?></a></td>
-        -->
                 <td><a href="#"
                        onClick="SortCol(document.fm, 'status', '<?= @$xsort["status"] ?>')"><?= $lang["status"] ?> <?= @$sortimg["status"] ?></a>
                 </td>
@@ -60,14 +57,11 @@
                            value="<?= htmlspecialchars($this->input->get("brand_name")) ?>"></td>
                 <td><input name="description" class="input"
                            value="<?= htmlspecialchars($this->input->get("description")) ?>"></td>
-                <!--
-        <td><input name="regions" class="input" value="<?= htmlspecialchars($this->input->get("regions")) ?>"></td>
-        -->
                 <td>
                     <?php
-                    if ($this->input->get("status") !== FALSE) {
+                    if ($this->input->get("status") !== FALSE) :
                         $selected[$this->input->get("status")] = " SELECTED";
-                    }
+                    endif;
                     ?>
                     <select name="status" class="input" notEmpty>
                         <option value="">
@@ -80,8 +74,8 @@
             </tr>
             <?php
             $i = 0;
-            if ($brandlist) {
-                foreach ($brandlist as $brand) {
+            if ($brandlist) :
+                foreach ($brandlist as $brand) :
                     ?>
 
                     <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
@@ -97,15 +91,15 @@
                     </tr>
                     <?php
                     $i++;
-                }
-            }
+                endforeach;
+            endif;
             ?>
         </table>
         <input type="hidden" name="showall" value='<?= $this->input->get("showall") ?>'>
         <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
     </form>
-    <?= $this->paginationService->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>

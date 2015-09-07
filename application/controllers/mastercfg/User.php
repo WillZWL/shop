@@ -21,6 +21,8 @@ class User extends MY_Controller
         $subAppId = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $subAppId . "_" . $this->getLangId() . ".php");
 
+        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/user/?" . $_SERVER['QUERY_STRING'];
+
         $where = array();
         $option = array();
 
