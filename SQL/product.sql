@@ -9,7 +9,7 @@ CREATE TABLE `product` (
   `freight_cat_id` int(10) unsigned NOT NULL,
   `cat_id` int(10) unsigned NOT NULL,
   `sub_cat_id` int(10) unsigned NOT NULL,
-  `sub_sub_cat_id` int(10) unsigned NOT NULL,
+  `sub_sub_cat_id` int(10) unsigned NOT NULL DEFAULT 0,
   `brand_id` int(10) unsigned NOT NULL DEFAULT '0',
   `clearance` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'whether product is for clearance',
   `surplus_quantity` int(11) NOT NULL DEFAULT '0',
