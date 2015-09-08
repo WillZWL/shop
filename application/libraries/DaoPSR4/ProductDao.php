@@ -36,6 +36,7 @@ class ProductDao extends BaseDao
         $this->db->group_by('ll.selection');
         $this->db->order_by("ll.mode = 'M' DESC, ll.rank");
 
+
         return $this->commonGetList($class_name, [], $option, 'pd.sku');
     }
 

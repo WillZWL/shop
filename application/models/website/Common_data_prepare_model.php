@@ -1400,6 +1400,8 @@ salecycle_script;
         $sku = $url_paras["sku"];
         $type = $url_paras["type"];
 
+        $abc = $this->product_model->price_service->get(array("sku" => $sku, "listing_status" => "L", "platform_id" => PLATFORM));
+
         if (!$this->product_model->price_service->get(array("sku" => $sku, "listing_status" => "L", "platform_id" => PLATFORM))) {
             return false;
         }

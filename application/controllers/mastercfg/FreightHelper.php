@@ -23,9 +23,9 @@ class FreightHelper extends MY_Controller
         header($ExpStr);
         $objlist = $this->freightModel->getFreightCatList([], ["orderby" => "name ASC", "limit" => -1]);
         foreach ($objlist as $obj) {
-            $sid = str_replace("'", "\'", $obj->get_id());
-            $name = str_replace("'", "\'", $obj->get_name());
-            $weight = str_replace("'", "\'", $obj->get_weight());
+            $sid = str_replace("'", "\'", $obj->getId());
+            $name = str_replace("'", "\'", $obj->getName());
+            $weight = str_replace("'", "\'", $obj->getWeight());
             $slist[] = "'" . $sid . "':['" . $name . "', '" . $weight . "']";
         }
         $js = "fcatlist = {" . implode(", ", $slist) . "};";

@@ -19,12 +19,10 @@ class BaseProductService extends BaseService
         $this->addProductContent();
     }
 
-
     public function addSkuMapping(SkuMappingVo $obj)
     {
         $this->getSkuMappingDao()->insert($obj);
     }
-
 
     public function addProductSpec()
     {

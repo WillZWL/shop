@@ -5,6 +5,7 @@ use AtomV2\Service\AuthorizationService;
 use AtomV2\Service\AuthenticationService;
 use AtomV2\Service\LanguageService;
 use AtomV2\Models\Mastercfg\ColourModel;
+use AtomV2\Service\ProductService;
 
 abstract class MY_Controller extends CI_Controller
 {
@@ -39,6 +40,10 @@ abstract class MY_Controller extends CI_Controller
         $this->container['colourModel'] = function ($c) {
             return new ColourModel;
         };
+
+        $this->container['productVoByPost'] = $this->container->factory(function ($c) {
+            return new ProductVoByPost();
+        });
     }
 
     private function loadServiceDependcy()
@@ -46,6 +51,10 @@ abstract class MY_Controller extends CI_Controller
         $this->container['languageService'] = $this->container->factory(function ($c) {
             return new LanguageService();
         });
+
+        $this->container['productService'] = function ($c) {
+            return new ProductService();
+        };
     }
 
 

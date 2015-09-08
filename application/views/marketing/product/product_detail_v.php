@@ -10,7 +10,7 @@
 <script type="text/javascript" src="<?=base_url()?>js/jquery.js"></script>
 <script type="text/javascript" src="<?=base_url()?>js/jquery.dg-magnet-combo.js"></script>
 <script type="text/javascript" src="<?=base_url()?>marketing/product/js_catlist"></script>
-<script type="text/javascript" src="<?=base_url()?>mastercfg/freight_helper/js_freight_cat"></script>
+<script type="text/javascript" src="<?=base_url()?>mastercfg/FreightHelper/js_freight_cat"></script>
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>js/ext-js/resources/css/ext-all.css" />
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>js/ext-js/resources/css/tab-scroller-menu.css" />
 <script type="text/javascript" src="<?=base_url()?>js/ext-js/adapter/ext/ext-base.js"></script>
@@ -66,7 +66,6 @@
 </head>
 <body>
 <div id="main">
-
 <?=$notice["img"]?>
 <?php
     $ar_status = array($lang["inactive"], $lang["created"], $lang["listed"]);
@@ -130,11 +129,10 @@
             <select name="brand_id" class="input" notEmpty>
                 <option value=""></option>
                 <?
-var_dump($brandList);die;
-                    if ($brandList)
+                    if ($brand_list)
                     {
                         $selectedb[$product->get_brand_id()]="SELECTED";
-                        foreach ($brandList as $brand)
+                        foreach ($brand_list as $brand)
                         {
                 ?>
                 <option value="<?=$brand->get_id()?>" <?=$selectedb[$brand->get_id()]?>><?=$brand->get_brand_name()?></option>
@@ -372,17 +370,15 @@ var_dump($brandList);die;
                 <tr>
                     <td align="center"><?=$lang["existing_colours"]?><br>
                         <select name="full_list[]" multiple='multiple' class="multi_select">
-                        <?
-                            if ($colour_list)
-                            {
+                        <?php
+                            if ($colour_list) {
                                 foreach ($colour_list as $colour) {
-                                    $colour_lists[$colour->get_id()] = $colour->get_name();
+                                    $colour_lists[$colour->getColourId()] = $colour->getColourName();
                                 }
                                 ksort($colour_lists);
-                                foreach ($colour_lists as $key => $value)
-                                {
+                                foreach ($colour_lists as $key => $value) {
                         ?>
-                            <option value="<?=$key?>::<?=$value?>"><?=$value?>
+                            <option value="<?=$key?>::<?=$value?>"><?=$value?></option>
                         <?
                                 }
                             }
@@ -401,7 +397,7 @@ var_dump($brandList);die;
                             foreach ($joined_list as $colour)
                             {
                         ?>
-                            <option value="<?=$colour->get_id()?>::<?=$colour->get_name()?>"><?=$colour->get_name()?>
+                            <option value="<?=$colour->getColourId()?>::<?=$colour->getColourName()?>"><?=$colour->getColourName()?></option>
                         <?
                             }
                         ?>
@@ -458,46 +454,23 @@ var_dump($brandList);die;
             </table>
         </td>
     </tr>
-    <?
+    <?php
             }
         }
         else
         {
     ?>
-    <!--<tr>
-        <td class="field"><?=$lang["inventory"]?></td>
-        <td class="value"><?=$inventory?$inventory->get_inventory():"0"?></td>
-        <td class="field"><?=$lang["cost"]?></td>
-        <td class="value">
-        <?
-        if($cmd == 'add')
-        {
-        ?>
-        <?=htmlspecialchars(@call_user_func(array($supp_prod, "get_currency_id")))?>
-        <input name="cost" value="<?=htmlspecialchars(@call_user_func(array($supp_prod, "get_cost")))?>" notEmpty isNumber>
-        <?
-        }
-        else
-        {
-        ?>
-        <?=htmlspecialchars(@call_user_func(array($supp_prod, "get_currency_id")))?>
-        <?=htmlspecialchars(@call_user_func(array($supp_prod, "get_cost")))?>
-        <?
-        }
-        ?></td>
-
-    </tr>-->
     <tr>
         <td class="field"><?=$lang["website_status"]?></td>
         <td class="value">
             <select name="website_status" class="input">
-                <?
+                <?php
                     $selected_wss[$product->get_website_status()] = "SELECTED";
                     foreach ($ar_ws_status as $rskey=>$rsvalue)
                     {
                 ?>
                     <option value="<?=$rskey?>" <?=$selected_wss[$rskey]?>><?=$rsvalue?>
-                <?
+                <?php
                     }
                 ?>
             </select>
@@ -507,13 +480,13 @@ var_dump($brandList);die;
         <td class="field"><?=$lang["status"]?></td>
         <td class="value">
         <select name="status" class="input">
-        <?
+        <?php
             $selected_s[$product->get_status()] = "SELECTED";
             foreach ($ar_status as $rskey=>$rsvalue)
             {
         ?>
             <option value="<?=$rskey?>" <?=$selected_s[$rskey]?>><?=$rsvalue?>
-        <?
+        <?php
             }
         ?>
         </select>
@@ -523,7 +496,7 @@ var_dump($brandList);die;
     <tr>
         <td class="field"><?=$lang["image_file"]?></td>
         <td class="value">
-            <?
+            <?php
                 if ($prod_image[0])
                 {
                     $img_f = $prod_image[0]->get_sku().".".$prod_image[0]->get_image();
@@ -531,7 +504,7 @@ var_dump($brandList);die;
                     {
             ?>
                     <a href="<?=base_url()?>images/product/<?=$img_f?>" target="preview"><?=$img_f?></a>
-            <?
+            <?php
                     }
                 }
             ?>
@@ -546,7 +519,7 @@ var_dump($brandList);die;
     <tr>
         <td class="field"><?=$lang["flash_file"]?></td>
         <td class="value">
-            <?
+            <?php
                 if ($product->get_flash())
                 {
                     $flash_f = $product->get_sku().".".$product->get_flash();
@@ -554,7 +527,7 @@ var_dump($brandList);die;
                     {
             ?>
                     <a href="<?=base_url()?>images/product/<?=$flash_f?>" target="preview"><?=$flash_f?></a>
-            <?
+            <?php
                     }
                 }
             ?>
@@ -604,12 +577,12 @@ var_dump($brandList);die;
     <tr>
         <td class="field"><?=$lang["master_sku"]?></td>
         <td class="value"><input name="master_sku" class="input" value="<?=$master_sku?htmlspecialchars($master_sku->get_ext_sku()):""?>" <?=$lock_master_sku?"DISABLED":""?> onblur="check_master_sku(this);" <?=$master_sku_check?>>
-    <?
+    <?php
         if ($allow_edit_master_sku)
         {
     ?>
         <input type="button" value="<?=$lang["edit_master_sku"]?>" onClick="edit_master_sku(this);this.style.visibility='hidden';">
-    <?
+    <?php
         }
     ?>
         </td>
@@ -709,23 +682,23 @@ var_dump($brandList);die;
         <td class="field"><?=$lang["model_2"]?></td>
         <td class="value"><input name="model_2" id="model_2" value="<?=$model_2?htmlspecialchars($model_2):""?>" class="input"></td>
     </tr>
-    <?
+    <?php
         }
     ?>
-<?
+<?php
     if ($cmd == "edit")
     {
 ?>
     <tr class="header">
         <td height="20"><?=$lang["product_content_header"]?></td>
-        <td><? if($language_id != '' && $language_id != 'en'){?><input type="button" onClick="confirmTranslate('<?=$sku?>','<?=$language_id?>');" value="<?=$lang["translate_product_content"]?>"><?}?>
-            <? if($language_id != '' && $language_id == 'en'){?><input type="button" onClick="confirmTranslate('<?=$sku?>','<?=$lang_list_str?>');" value="<?=$lang["translate_product_content_all_in_one"]?>">
-            <?}?>
+        <td><?php if($language_id != '' && $language_id != 'en'){?><input type="button" onClick="confirmTranslate('<?=$sku?>','<?=$language_id?>');" value="<?=$lang["translate_product_content"]?>"><?}?>
+            <?php if($language_id != '' && $language_id == 'en'){?><input type="button" onClick="confirmTranslate('<?=$sku?>','<?=$lang_list_str?>');" value="<?=$lang["translate_product_content_all_in_one"]?>">
+            <?php } ?>
         </td>
         <td><?=$lang["language"]?></td>
         <td>
             <select name="lang_id" onchange='SaveChange(this);gotoPage("<?=base_url()."marketing/product/view/".$product->get_sku()."/"?>",this.value)' class="input" notEmpty>
-                <?
+                <?php
                     if ($lang_list)
                     {
                         $selectedb[$language_id]="SELECTED";
@@ -733,7 +706,7 @@ var_dump($brandList);die;
                         {
                 ?>
                 <option value="<?=$language->get_id()?>" <?=$selectedb[$language->get_id()]?>><?=strtoupper($language->get_id()).' - '.$language->get_name()?>
-                <?
+                <?php
                         }
                     }
                 ?>
@@ -769,12 +742,12 @@ var_dump($brandList);die;
         </td>
         <td class="value">
             <textarea name="keywords" class="input" rows="8"><?=$keywords?></textarea>
-<?
+<?php
         if($language_id == 'en')
         {
 ?>
             <input type="button" value="Generate <?=strtoupper($language_id)?> keywords" onclick="generate_keywords('<?=$sku?>')">
-<?
+<?php
         }
 ?>
         </td>
@@ -855,7 +828,7 @@ var_dump($brandList);die;
                 <!--<br>-->
                 <!--<label for="apply_enhanced_listing" style="font-weight:bold;">Full Preview</label>-->
 
-                <? if($language_id != '' && $language_id == 'en'){?><input type="button" onClick="confirmEnhanceTranslate('<?=$sku?>','<?=$lang_list_str?>');" style="margin-left:4px; width:60px" value="Translate"><?}?>
+                <?php if($language_id != '' && $language_id == 'en'){?><input type="button" onClick="confirmEnhanceTranslate('<?=$sku?>','<?=$lang_list_str?>');" style="margin-left:4px; width:60px" value="Translate"><?}?>
 
                 <!--<input type="button" name="preview_full_enhance" id="preview_full_enhance" value="Translate" size="60" style="margin-left:4px; width:60px" onClick="preview_enhanced(event)">-->
                 <!-- end jerry codes for HTML Editor -->
@@ -881,7 +854,7 @@ var_dump($brandList);die;
             Format: jpg, jpeg, gif, png
         </td>
         <td colspan="2" class="value">
-        <?
+        <?php
             $prod_image = (array)$prod_image;
         ?>
         <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
@@ -892,13 +865,13 @@ var_dump($brandList);die;
             <td width="40px"><?=$lang["t_status"]?></td>
         </tr>
 
-        <?
+        <?php
             for($i=0; $i<5; $i++)
             {
         ?>
                 <tr class="row<?=$i%2?>">
                 <td>
-        <?
+        <?php
                 if($prod_image[$i])
                 {
                     $img_f = $prod_image[$i]->get_sku()."_".$prod_image[$i]->get_id().".".$prod_image[$i]->get_image();
@@ -906,7 +879,7 @@ var_dump($brandList);die;
                     {
         ?>
                     <a href="<?=base_url()?>images/product/<?=$img_f?>" target="preview"><?=$img_f?></a><br>
-        <?
+        <?php
                     }
                     else
                     {
@@ -920,7 +893,7 @@ var_dump($brandList);die;
         ?>
                 </td>
                 <td>
-        <?
+        <?php
                 if ($prod_image[$i] && $prod_image[$i]->get_status()== "1")
                 {
                     $p[$i] = $prod_image[$i]->get_priority()?$prod_image[$i]->get_priority():"1";
@@ -937,7 +910,7 @@ var_dump($brandList);die;
                 <input type="checkbox" name="im_status[]" value="1" <?=($prod_image[$i] && $prod_image[$i]->get_status()==1)?"CHECKED":""?>>
                 </td>
                 </tr>
-        <?
+        <?php
             }
         ?>
                 <tr>
@@ -955,24 +928,24 @@ var_dump($brandList);die;
             <table align="center">
             <tr>
             <td colspan=4 style="border: 0px; padding:0px 0px 0px 0px">
-            <?
+            <?php
                 if ($prod_image[0] && $prod_image[0]->get_status()== "1" && file_exists(IMG_PH.$prod_image[0]->get_sku()."_".$prod_image[0]->get_id()."_s.".$prod_image[0]->get_image()))
                 {
             ?>
                     <img id='p_img' alt='<?=$prod_image[0]?$prod_image[0]->get_alt_text():""?>' src='<?=base_url()?>images/product/<?=$prod_image[0]->get_sku()."_".$prod_image[0]->get_id()."_l.".$prod_image[0]->get_image()?>?<?=$prod_image[0]->get_modify_on()?>'>
-            <?
+            <?php
                 }
                 else
                 {
             ?>
                     <!-- <img id='p_img' src='<?=base_url()?>images/product/imageunavailable_l.jpg'>  -->
-            <?
+            <?php
                 }
             ?>
             </td>
             </tr>
             <tr align="center">
-            <?
+            <?php
                 for($i=1; $i<5; $i++)
                 {
                     if($prod_image[$i] && $prod_image[$i]->get_status()== "1" && file_exists(IMG_PH.$prod_image[$i]->get_sku()."_".$prod_image[$i]->get_id()."_s.".$prod_image[$i]->get_image()))
@@ -1003,12 +976,12 @@ var_dump($brandList);die;
     </tr>
     <tr>
         <td class="value" align="left" colspan="4">
-    <?
+    <?php
         if($country_list)
         {
     ?>
         <div id="div_promo_banner_tabs">
-            <?
+            <?php
                 // $prod_banner = (array)$prod_banner;
                 foreach ($country_list as $country_obj)
                 {
@@ -1024,7 +997,7 @@ var_dump($brandList);die;
                         Format: jpg, jpeg, gif, png
                         </td>
                         <td class="value">
-                    <?
+                    <?php
                         foreach ($prod_banner_obj as $pb_country_id=>$prod_banner)
                         {
                             if($pb_country_id == $country_id && !empty($prod_banner))
@@ -1035,7 +1008,7 @@ var_dump($brandList);die;
 
                     ?>
                                 <a href="<?=base_url()?>images/product_banner/<?=$prod_banner_file?>" target="preview"><?=$prod_banner_file?></a><br>
-                    <?
+                    <?php
                                 }
                                 else
                                 {
@@ -1075,16 +1048,16 @@ var_dump($brandList);die;
                                     {
                     ?>
                             <a href="<?=$target_url?>" target="<?=$pb_link_type?>">
-                    <?
+                    <?php
                                     }
                     ?>
                                 <img width="920px" height="156px" src='<?=base_url()?>images/product_banner/<?=$prod_banner_file?>'><br /><br />
-                    <?
+                    <?php
                                     if($pb_url)
                                     {
                     ?>
                             </a>
-                    <?
+                    <?php
                                     }
                                 }
                             }
@@ -1127,7 +1100,7 @@ var_dump($brandList);die;
                 }
             ?>
         </div>
-    <?
+    <?php
         }
     ?>
         </td>
@@ -1144,12 +1117,12 @@ var_dump($brandList);die;
     </tr>
     <tr>
         <td class="value" align="left" colspan="4">
-    <?
+    <?php
         if($lang_list)
         {
     ?>
         <div id="div_banner_tabs">
-            <?
+            <?php
                 foreach ($lang_list as $lang_obj)
                 {
                     $cur_lang_id = $lang_obj->get_id();
@@ -1164,7 +1137,7 @@ var_dump($brandList);die;
                         Format: jpg, jpeg, gif, png
                         </td>
                         <td class="value">
-                        <?
+                        <?php
                             if($product_banner[$cur_lang_id])
                             {
                                 $result_link = '';
@@ -1199,16 +1172,16 @@ var_dump($brandList);die;
                                     {
                         ?>
                             <a href="<?=$result_link?>" target="<?=$type?>">
-                        <?
+                        <?php
                                     }
                         ?>
                                 <img width="534px" height="170px" src='<?=base_url()?>images/<?=$prod_banner_w_graphic[$cur_lang_id]->get_location().$prod_banner_w_graphic[$cur_lang_id]->get_file()?>'><br /><br />
-                        <?
+                        <?php
                                     if($link)
                                     {
                         ?>
                             </a>
-                        <?
+                        <?php
                                     }
                                 }
                             }
@@ -1240,11 +1213,11 @@ var_dump($brandList);die;
                     </tr>
                 </table>
             </div>
-            <?
+            <?php
                 }
             ?>
         </div>
-    <?
+    <?php
         }
     ?>
         </td>
@@ -1254,12 +1227,12 @@ var_dump($brandList);die;
     </tr>
     <tr>
         <td class="value" align="left" colspan="4">
-        <?
+        <?php
 if ($lang_list)
 {
 ?>
 <div id="div_tabs">
-    <?
+    <?php
         foreach ($lang_list as $lang_obj)
         {
             $cur_lang_id = $lang_obj->get_id();
@@ -1268,7 +1241,7 @@ if ($lang_list)
     <div id="div_tab_<?=$cur_lang_id?>" class="x-tab" title="<?=$cur_name?>">
         <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_main">
             <col width="200"><col width="100"><col width="200"><col width="200"><col><col width="100">
-            <?
+            <?php
                 if($psd_list[$cur_lang_id])
                 {
                     foreach($psd_list[$cur_lang_id] as $psg_name=>$psd_obj_list)
@@ -1288,7 +1261,7 @@ if ($lang_list)
                             <td>Minimum Value (Fixed Value)</td>
                             <td>Maximum Value</td>
                         </tr>
-                        <?
+                        <?php
                         if ($psd_obj_list)
                         {
                             foreach($psd_obj_list AS $ps_name=>$psd_obj)
@@ -1311,12 +1284,12 @@ if ($lang_list)
             <tr>
                 <td class="value"><?=$ps_name?></td>
                 <td class="value"><?=$psd_obj->get_unit_id()?></td>
-                <?
+                <?php
                                 if($unit_id == 'txt')
                                 {
                 ?>
                 <td class="value" colspan = '2'><input name="ps[<?=$cur_lang_id?>][<?=$ps_id?>][<?=$unit_id?>][text]" class="input" value="<?=$text?>"></td>
-                <?
+                <?php
                                 }
                                 else
                                 {
@@ -1325,11 +1298,11 @@ if ($lang_list)
                 <td class="value"><input name="ps[<?=$cur_lang_id?>][<?=$ps_id?>][<?=$unit_id?>][end_value]" class="input" value="<?=$end_value?>"></td>
                 <input type="hidden" name="ps[<?=$cur_lang_id?>][<?=$ps_id?>][<?=$unit_id?>][start_standardize_value]" value="<?=$start_standardize_value?>">
                 <input type="hidden" name="ps[<?=$cur_lang_id?>][<?=$ps_id?>][<?=$unit_id?>][end_standardize_value]" value="<?=$end_standardize_value?>">
-            <?
+            <?php
                                 }
                                     ?>
                 <td class="value">
-                <?
+                <?php
                     if($text || $start_value)
                     {
                         if($unit_id == 'txt')
@@ -1354,7 +1327,7 @@ if ($lang_list)
                     <input type="checkbox" name="populate[<?=$ps_id?>]" value="<?=$cur_lang_id?>"<?=$prod_feed[$feed]["status"]?"CHECKED":""?>>
                 </td>
             </tr>
-                                    <?
+                                    <?php
                             }
                         }
                     }
@@ -1362,11 +1335,11 @@ if ($lang_list)
             ?>
         </table>
     </div>
-    <?
+    <?php
         }
     ?>
 </div>
-<?
+<?php
     }
 ?>
     </td>
@@ -1383,7 +1356,7 @@ if ($lang_list)
                     <td><?=$lang["feed"]?></td>
                     <td><?=$lang["feed_specific"]?></td>
                 </tr>
-                <?
+                <?php
                     for ($i=0; $i<count($ar_feed); $i++)
                     {
                         $feed = $ar_feed[$i];
@@ -1392,7 +1365,7 @@ if ($lang_list)
                     <td><input type="checkbox" name="prod_feed[<?=$feed?>][status]" value="1"<?=$prod_feed[$feed]["status"]?"CHECKED":""?>></td>
                     <td><?=$feed?></td>
                     <td>
-                        <?
+                        <?php
                             switch ($feed)
                             {
                                 case "KELKOO":
@@ -1409,7 +1382,7 @@ if ($lang_list)
                             <select name="prod_feed[<?=$feed?>][value_3]">
                                 <option value=""><?=$lang["please_select"]?>
                             </select>
-                        <?
+                        <?php
                                     break;
                                 case "PRICERUNNER":
                         ?>
@@ -1417,25 +1390,25 @@ if ($lang_list)
                             <input name="prod_feed[<?=$feed?>][value_1]" size="60" value="<?=htmlspecialchars($prod_feed[$feed]["value_1"])?>"> &nbsp;
                             <?=$lang["link"]?>:
                             <input name="prod_feed[<?=$feed?>][value_2]" size="60" value="<?=htmlspecialchars($prod_feed[$feed]["value_2"])?>"> &nbsp;
-                        <?
+                        <?php
                                     break;
                                 case "PRICEGRABBER":
                         ?>
                             <?=$lang["category"]?>:
                             <input name="prod_feed[<?=$feed?>][value_1]" size="60" value="<?=htmlspecialchars($prod_feed[$feed]["value_1"])?>">
-                        <?
+                        <?php
                                     break;
                                 case "PRICEMINISTER":
                         ?>
                             <?=$lang["ad_text"]?>:
                             <input name="prod_feed[<?=$feed?>][value_1]" size="100" value="<?=htmlspecialchars($prod_feed[$feed]["value_1"])?>">
-                        <?
+                        <?php
                                     break;
                             }
                         ?>
                     </td>
                 </tr>
-                <?
+                <?php
                     }
                 ?>
             </table>
@@ -1448,7 +1421,7 @@ if ($lang_list)
     <tr>
         <td colspan="4" class="value">
         <div id="div_googlebase_tabs">
-            <?
+            <?php
                 foreach ($country_list as $country_obj)
                 {
                     $valid_country = $google_feed_arr;
@@ -1474,7 +1447,7 @@ if ($lang_list)
                     </tr>
                 </table>
             </div>
-            <?
+            <?php
                     }
                 }
             ?>
@@ -1483,7 +1456,7 @@ if ($lang_list)
     <tr class="header">
         <td height="20" colspan="4"><?=$lang["bundle_list"]?></td>
     </tr>
-    <?
+    <?php
         if ($bundle_list)
         {
             foreach ($bundle_list as $bundle)
@@ -1492,11 +1465,11 @@ if ($lang_list)
     <tr class="value">
             <td class="value" colspan="4"><a href="<?=base_url()?>marketing/bundle/view/<?=$bundle->get_prod_sku()?>" target="bundle">[<?=$bundle->get_prod_sku()?>] - <?=$bundle->get_bundle_name()?></a></td>
     </tr>
-    <?
+    <?php
             }
         }
     ?>
-<?
+<?php
     }
 ?>
         <td colspan="2" height="40" style="border-right:0px;" class="tb_detail"><input type="button" name="back" value="<?=$lang['back_list']?>" onClick="Redirect('<?=isset($_SESSION['LISTPAGE'])?$_SESSION['LISTPAGE']:base_url().'/marketing/product'?>')"></td>
@@ -1526,7 +1499,7 @@ if ($lang_list)
 <!--
 InitFCat(document.fm.freight_cat_id);
 ChangeCat('0', document.fm.cat_id);
-<?
+<?php
     if ($cmd == "edit" || $this->input->post("posted") || $prod_grp_cd)
     {
 ?>
@@ -1611,7 +1584,7 @@ jQuery(function(){
 
         // SBF 4402 warranty for different countries
 
-        <?if($selling_platform_list)
+        <?php if($selling_platform_list)
         {
         ?>
             warranty_new_field_counter = 0 + <?php echo $this->warranty_model->product_warranty_service->get_dao()->get_num_rows(array('sku' => $product->get_sku())); ?>;
@@ -1673,7 +1646,7 @@ jQuery(function(){
 
 });
 
-<?
+<?php
     }
 ?>
 
