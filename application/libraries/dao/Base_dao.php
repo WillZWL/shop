@@ -271,17 +271,17 @@ abstract class Base_dao
         }
     }
 
-    public function set_create(&$obj, $value = array())
+    public function set_create(&$obj, $value = [])
     {
         $ts = date("Y-m-d H:i:s");
-        $ip = $_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "127.0.0.1";
+        $ip = $_SERVER["REMOTE_ADDR"] ? ip2long($_SERVER["REMOTE_ADDR"]) : ip2long("127.0.0.1");
         $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
-        @call_user_func(array($obj, "set_create_on"), $ts);
-        @call_user_func(array($obj, "set_create_at"), $ip);
-        @call_user_func(array($obj, "set_create_by"), $id);
-        @call_user_func(array($obj, "set_modify_on"), $ts);
-        @call_user_func(array($obj, "set_modify_at"), $ip);
-        @call_user_func(array($obj, "set_modify_by"), $id);
+        @call_user_func(array($obj, "setCreateOn"), $ts);
+        @call_user_func(array($obj, "setCreateAt"), $ip);
+        @call_user_func(array($obj, "setCreateBy"), $id);
+        @call_user_func(array($obj, "setModifyOn"), $ts);
+        @call_user_func(array($obj, "setModifyAt"), $ip);
+        @call_user_func(array($obj, "setModifyBy"), $id);
     }
 
     abstract function get_seq_mapping_field();

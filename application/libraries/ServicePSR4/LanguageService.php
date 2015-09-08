@@ -7,6 +7,7 @@ class LanguageService extends BaseService
 {
     public function __construct()
     {
+        log_message('info', 'RAPHALEInitialized');
         parent::__construct();
         $this->setDao(new LanguageDao());
     }
@@ -16,11 +17,9 @@ class LanguageService extends BaseService
         $llist = $this->getDao()->getList(["status" => 1], ["limit" => -1]);
         $ret = [];
         foreach ($llist as $lobj) {
-            $ret[$lobj->getId()] = $lobj->getName();
+            $ret[$lobj->getLangId()] = $lobj->getLangName();
         }
 
         return $ret;
     }
 }
-
-

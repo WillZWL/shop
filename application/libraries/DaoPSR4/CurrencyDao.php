@@ -24,10 +24,9 @@ class CurrencyDao extends BaseDao
     public function getByPlatform($platform)
     {
         $this->db->from('currency c');
-        $this->db->join('platform_biz_var pbv', "pbv.platform_currency_id = c.id AND pbv.selling_platform_id = '$platform'", 'INNER');
+        $this->db->join('platform_biz_var pbv', "pbv.platform_currency_id = c.currency_id AND pbv.selling_platform_id = '$platform'", 'INNER');
         $this->db->select('c.*');
         if ($query = $this->db->get()) {
-            $this->include_vo();
             foreach ($query->result("object", $this->getVoClassName()) as $obj) {
                 $tmp = $obj;
             }
@@ -42,7 +41,7 @@ class CurrencyDao extends BaseDao
         $sql = "SELECT c.sign
                 FROM currency c
                 JOIN platform_biz_var p
-                    ON p.platform_currency_id = c.id
+                    ON p.platform_currency_id = c.currency_id
                     AND p.selling_platform_id = ?
                 LIMIT 1";
 
@@ -56,7 +55,7 @@ class CurrencyDao extends BaseDao
     public function getRoundUp($currency_id)
     {
         $this->db->select('round_up');
-        if ($query = $this->db->get_where($this->getTableName(), array("id" => $currency_id), 1)) {
+        if ($query = $this->db->get_where($this->getTableName(), array("currency_id" => $currency_id), 1)) {
             return $query->row()->round_up;
         } else {
             return FALSE;
@@ -68,15 +67,13 @@ class CurrencyDao extends BaseDao
         $sql = "SELECT c.*
                 FROM selling_platform sp
                 JOIN platform_biz_var pbv
-                    ON pbv.selling_platform_id = sp.id
+                    ON pbv.selling_platform_id = sp.selling_platform_id
                 JOIN currency c
-                    ON c.id = pbv.platform_currency_id
+                    ON c.currency_id = pbv.platform_currency_id
                 WHERE sp.status = 1
-                GROUP BY c.id, c.name, c.description, c.sign, c.round_up, c.sign_pos, c.dec_place, c.dec_point, c.thousands_sep";
+                GROUP BY c.currency_id, c.name, c.description, c.sign, c.round_up, c.sign_pos, c.dec_place, c.dec_point, c.thousands_sep";
 
         $result = $this->db->query($sql);
-
-        $this->include_vo();
 
         $result_arr = array();
         $classname = $this->getVoClassname();

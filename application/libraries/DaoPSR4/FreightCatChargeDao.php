@@ -21,7 +21,7 @@ class FreightCatChargeDao extends BaseDao
         return $this->voClassName;
     }
 
-    public function get_nearest_amount($fcat_id, $weight)
+    public function getNearestAmount($fcat_id, $weight)
     {
         $sql = "
                 SELECT f.fcat_id, fcc.origin_country, fcc.dest_country, fcc.currency_id, fcc.amount
@@ -38,11 +38,9 @@ class FreightCatChargeDao extends BaseDao
                 ON fcc.fcat_id = f.fcat_id
             ";
 
-        $this->include_vo();
-
-        if ($query = $this->db->query($sql, array($fcat_id, $weight, $weight))) {
-            $rs = array();
-            foreach ($query->result($this->get_vo_classname()) as $obj) {
+        if ($query = $this->db->query($sql, [$fcat_id, $weight, $weight])) {
+            $rs = [];
+            foreach ($query->result($this->getVoClassname()) as $obj) {
                 $rs[] = $obj;
             }
             return (object)$rs;
@@ -83,8 +81,8 @@ class FreightCatChargeDao extends BaseDao
         LIMIT 1
 SQL;
 
-        if ($query = $this->db->query($sql, array($platform_id, $sku))) {
-            $rs = array();
+        if ($query = $this->db->query($sql, [$platform_id, $sku])) {
+            $rs = [];
 
             if ($query->num_rows() != 1) {
                 return FALSE;

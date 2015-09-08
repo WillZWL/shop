@@ -30,9 +30,9 @@ class CountryModel extends \CI_Model
     {
         $method = "get" . $dao . "Dao";
         if ($option["num_rows"] == 1) {
-            return $this->countryService->$method()->get_num_rows($where);
+            return $this->countryService->$method()->getNumRows($where);
         } else {
-            return $this->countryService->$method()->get_list($where, $option);
+            return $this->countryService->$method()->getList($where, $option);
         }
     }
 

@@ -8,21 +8,21 @@ class SiteConfigVo extends \BaseVo
     private $logo;
     private $email;
     private $platform;
-    private $domain_type;
-    private $status;
+    private $domain_type = '1';
+    private $status = '1';
+    private $create_on = '0000-00-00 00:00:00';
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    private $create_on;
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
+    private $primary_key = ['id'];
+    private $increment_field = 'id';
 
-    private $primary_key = array("id");
-
-    public function getPrimaryKey()
+    public function setId($id)
     {
-        return $this->primary_key;
+        $this->id = $id;
     }
 
     public function getId()
@@ -30,9 +30,9 @@ class SiteConfigVo extends \BaseVo
         return $this->id;
     }
 
-    public function setId($id)
+    public function setDomain($domain)
     {
-        $this->id = $id;
+        $this->domain = $domain;
     }
 
     public function getDomain()
@@ -40,9 +40,9 @@ class SiteConfigVo extends \BaseVo
         return $this->domain;
     }
 
-    public function setDomain($domain)
+    public function setSiteName($site_name)
     {
-        $this->domain = $domain;
+        $this->site_name = $site_name;
     }
 
     public function getSiteName()
@@ -50,9 +50,9 @@ class SiteConfigVo extends \BaseVo
         return $this->site_name;
     }
 
-    public function setSiteName($site_name)
+    public function setLang($lang)
     {
-        $this->site_name = $site_name;
+        $this->lang = $lang;
     }
 
     public function getLang()
@@ -60,9 +60,9 @@ class SiteConfigVo extends \BaseVo
         return $this->lang;
     }
 
-    public function setLang($lang)
+    public function setLogo($logo)
     {
-        $this->lang = $lang;
+        $this->logo = $logo;
     }
 
     public function getLogo()
@@ -70,19 +70,9 @@ class SiteConfigVo extends \BaseVo
         return $this->logo;
     }
 
-    public function setLogo($logo)
+    public function setEmail($email)
     {
-        $this->logo = $logo;
-    }
-
-    public function getPlatform()
-    {
-        return $this->platform;
-    }
-
-    public function setPlatform($platform)
-    {
-        $this->platform = $platform;
+        $this->email = $email;
     }
 
     public function getEmail()
@@ -90,14 +80,14 @@ class SiteConfigVo extends \BaseVo
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setPlatform($platform)
     {
-        $this->email = $email;
+        $this->platform = $platform;
     }
 
-    public function getDomainType()
+    public function getPlatform()
     {
-        return $this->domain_type;
+        return $this->platform;
     }
 
     public function setDomainType($domain_type)
@@ -105,13 +95,88 @@ class SiteConfigVo extends \BaseVo
         $this->domain_type = $domain_type;
     }
 
-    public function getStatus()
+    public function getDomainType()
     {
-        return $this->status;
+        return $this->domain_type;
     }
 
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setCreateOn($create_on)
+    {
+        $this->create_on = $create_on;
+    }
+
+    public function getCreateOn()
+    {
+        return $this->create_on;
+    }
+
+    public function setCreateAt($create_at)
+    {
+        $this->create_at = $create_at;
+    }
+
+    public function getCreateAt()
+    {
+        return $this->create_at;
+    }
+
+    public function setCreateBy($create_by)
+    {
+        $this->create_by = $create_by;
+    }
+
+    public function getCreateBy()
+    {
+        return $this->create_by;
+    }
+
+    public function setModifyOn($modify_on)
+    {
+        $this->modify_on = $modify_on;
+    }
+
+    public function getModifyOn()
+    {
+        return $this->modify_on;
+    }
+
+    public function setModifyAt($modify_at)
+    {
+        $this->modify_at = $modify_at;
+    }
+
+    public function getModifyAt()
+    {
+        return $this->modify_at;
+    }
+
+    public function setModifyBy($modify_by)
+    {
+        $this->modify_by = $modify_by;
+    }
+
+    public function getModifyBy()
+    {
+        return $this->modify_by;
+    }
+
+    public function getPrimaryKey()
+    {
+        return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

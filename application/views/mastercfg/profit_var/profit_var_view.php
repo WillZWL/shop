@@ -32,14 +32,13 @@
     </table>
 
     <?php
-    if ($editable)
-    {
+    if ($editable) :
     ?>
     <form action="<?=base_url()?>mastercfg/profit_var/view/<?=$id?>" method="post" name="tform" style="padding:0; margin:0"
           onSubmit="return CheckForm(this)">
         <input type="hidden" name="id" value="<?= $id ?>">
         <?php
-        }
+        endif;
         ?>
         <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
 
@@ -49,11 +48,11 @@
                     <?= $lang["header_message"] ?><select onChange="goToView(this.value)" style="width:300px;">
                         <option value=""> -- <?= $lang["please_select"] ?> --</option><?php
 
-                        foreach ($selling_platform_list as $obj) {
+                        foreach ($selling_platform_list as $obj) :
                             ?>
                             <option
-                            value="<?= $obj->get_id() ?>" <?= ($obj->get_id() == $id ? "SELECTED" : "") ?>><?= $obj->get_id() . ' - ' . $obj->get_name() ?></option><?php
-                        }
+                            value="<?= $obj->getSellingPlatformId() ?>" <?= ($obj->getSellingPlatformId() == $id ? "SELECTED" : "") ?>><?= $obj->getSellingPlatformId() . ' - ' . $obj->getName() ?></option><?php
+                        endforeach;
                         ?></select>
                 </td>
             </tr>
@@ -66,7 +65,7 @@
             <tr>
                 <td width="150" class="field">&nbsp;&nbsp;<?= $lang["vat_percent"] ?></td>
                 <td height="20" class="value">&nbsp;&nbsp;<input type="text" name="vat"
-                                                                 value="<?= $profit_obj->get_vat_percent() ?>"
+                                                                 value="<?= $profit_obj->getVatPercent() ?>"
                                                                  style="font-size:11px;width:60px" <?= (!$editable ? "readonly" : "") ?>
                                                                  isNumber min=0>%
                 </td>
@@ -74,7 +73,7 @@
             <tr>
                 <td width="150" class="field">&nbsp;&nbsp;<?= $lang["payment_chrg_percent"] ?></td>
                 <td height="20" class="value">&nbsp;&nbsp;<input type="text" name="pcp"
-                                                                 value="<?= $profit_obj->get_payment_charge_percent() ?>"
+                                                                 value="<?= $profit_obj->getPaymentChargePercent() ?>"
                                                                  style="font-size:11px;width:60px" <?= (!$editable ? "readonly" : "") ?>
                                                                  isNumber min=0>%
                 </td>
@@ -82,7 +81,7 @@
             <tr>
                 <td width="150" class="field">&nbsp;&nbsp;<?= $lang["forex_fee_percent"] ?></td>
                 <td height="20" class="value">&nbsp;&nbsp;<input type="text" name="forex_fee_percent"
-                                                                 value="<?= $profit_obj->get_forex_fee_percent() ?>"
+                                                                 value="<?= $profit_obj->getForexFeePercent() ?>"
                                                                  style="font-size:11px;width:60px" <?= (!$editable ? "readonly" : "") ?>
                                                                  isNumber min=0>%
                 </td>
@@ -90,51 +89,51 @@
             <tr>
                 <td width="150" class="field">&nbsp;&nbsp;<?= $lang["admin_fee"] ?></td>
                 <td height="20" class="value">&nbsp;&nbsp;<input type="text" name="admin_fee"
-                                                                 value="<?= $profit_obj->get_admin_fee() ?>"
+                                                                 value="<?= $profit_obj->getAdminFee() ?>"
                                                                  style="font-size:11px;width:60px" <?= (!$editable ? "readonly" : "") ?>
                                                                  isNumber min=0>&nbsp;<span
-                        id="curr"><?= $profit_obj->get_platform_currency_id() ?></span></td>
+                        id="curr"><?= $profit_obj->getPlatformCurrencyId() ?></span></td>
             </tr>
             <tr>
                 <td width="150" class="field">&nbsp;&nbsp;<?= $lang["free_delivery_limit"] ?></td>
                 <td height="20" class="value">&nbsp;&nbsp;<?= $lang["above"] ?>&nbsp;<input type="text"
                                                                                             name="free_dlvry_limit"
-                                                                                            value="<?= $profit_obj->get_free_delivery_limit() ?>"
+                                                                                            value="<?= $profit_obj->getFreeDeliveryLimit() ?>"
                                                                                             style="font-size:11px;width:60px" <?= (!$editable ? "readonly" : "") ?>
                                                                                             isNumber min=0>&nbsp;<span
-                        id="curr2"><?= $profit_obj->get_platform_currency_id() ?></span></td>
+                        id="curr2"><?= $profit_obj->getPlatformCurrencyId() ?></span></td>
             </tr>
             <tr>
                 <td width="150" class="field">&nbsp;&nbsp;<?= $lang["country"] ?></td>
                 <td height="20" class="value">&nbsp;&nbsp;<select name="platform_country_id"
                                                                   class="input" <?= $editable ? "" : "DISABLED" ?>><?php
-                        foreach ($active_country_list as $obj) {
+                        foreach ($active_country_list as $obj) :
                             ?>
                             <option
-                            value="<?= $obj->get_id() ?>" <?= ($obj->get_id() == $profit_obj->get_platform_country_id() ? "SELECTED" : "") ?>><?= $obj->get_name() ?></option><?php
-                        }
+                            value="<?= $obj->getCountryId() ?>" <?= ($obj->getCountryId() == $profit_obj->getPlatformCountryId() ? "SELECTED" : "") ?>><?= $obj->getName() ?></option><?php
+                        endforeach;
                         ?></select></td>
             </tr>
             <tr>
                 <td width="150" class="field">&nbsp;&nbsp;<?= $lang["language"] ?></td>
                 <td height="20" class="value">&nbsp;&nbsp;<select name="language_id"
                                                                   class="input" <?= $editable ? "" : "DISABLED" ?>><?php
-                        foreach ($language_list as $obj) {
+                        foreach ($language_list as $obj) :
                             ?>
                             <option
-                            value="<?= $obj->get_id() ?>" <?= ($obj->get_id() == $profit_obj->get_language_id() ? "SELECTED" : "") ?>><?= $obj->get_name() ?></option><?php
-                        }
+                            value="<?= $obj->getLangId() ?>" <?= ($obj->getLangId() == $profit_obj->getLanguageId() ? "SELECTED" : "") ?>><?= $obj->getLangName() ?></option><?php
+                        endforeach;
                         ?></select></td>
             </tr>
             <tr>
                 <td width="150" class="field">&nbsp;&nbsp;<?= $lang["dlvry_courier"] ?></td>
                 <td height="20" class="value">&nbsp;&nbsp;<select name="delivery_type"
                                                                   class="input" <?= $editable ? "" : "DISABLED" ?>><?php
-                        foreach ($delivery_type_list as $obj) {
+                        foreach ($delivery_type_list as $obj) :
                             ?>
                             <option
-                            value="<?= $obj->get_id() ?>" <?= ($obj->get_id() == $profit_obj->get_delivery_type() ? "SELECTED" : "") ?>><?= $obj->get_name() ?></option><?php
-                        }
+                            value="<?= $obj->getDeliveryTypeId() ?>" <?= ($obj->getDeliveryTypeId() == $profit_obj->getDeliveryType() ? "SELECTED" : "") ?>><?= $obj->getName() ?></option><?php
+                        endforeach;
                         ?></select></td>
             </tr>
             <tr>
@@ -143,20 +142,19 @@
                     &nbsp;&nbsp;<select name="currency" class="input" <?= (!$editable ? "disabled" : "") ?>
                                         onChange="document.getElementById('curr').innerHTML=this.value; document.getElementById('curr2').innerHTML=this.value;" <?= $editable ? "" : "DISABLED" ?>>
                         <?php
-                        foreach ($currency_list as $key => $value) {
+                        foreach ($currency_list as $key => $value) :
                             ?>
                             <option
-                                value="<?= $key ?>" <?= ($profit_obj->get_platform_currency_id() == $key ? "SELECTED" : "") ?>><?= $value . '-' . $key ?></option>
+                                value="<?= $key ?>" <?= ($profit_obj->getPlatformCurrencyId() == $key ? "SELECTED" : "") ?>><?= $value . '-' . $key ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </select>
                 </td>
             </tr>
         </table>
         <?php
-        if ($editable)
-        {
+        if ($editable) :
         ?>
         <table border="0" cellpadding="0" cellspacing="0" height="40" class="page_header" width="100%">
             <tr>
@@ -170,7 +168,7 @@
         <input type="hidden" name="posted" value="1">
     </form>
 <?php
-}
+endif;
 if ($updated) {
     ?>
     <script language="javascript">

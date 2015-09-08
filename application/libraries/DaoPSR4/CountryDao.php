@@ -53,8 +53,6 @@ class CountryDao extends BaseDao
                 WHERE allow_sell = 1
                 ORDER BY currency_id";
 
-        $this->include_vo();
-
         $rs = array();
 
         if ($query = $this->db->query($sql)) {
@@ -77,8 +75,6 @@ class CountryDao extends BaseDao
                 ";
 
         if ($detail) {
-
-            $this->include_vo();
 
             $rs = array();
 
@@ -110,8 +106,6 @@ class CountryDao extends BaseDao
                 ";
 
         if ($detail) {
-
-            $this->include_vo();
 
             $rs = array();
 
@@ -145,8 +139,6 @@ class CountryDao extends BaseDao
                 WHERE c.allow_sell = 1
                 AND c.status = 1";
 
-        $this->include_vo();
-
         if ($query = $this->db->query($sql, $lang)) {
             $ret = array();
             foreach ($query->result($this->getVoClassname()) as $obj) {
@@ -162,13 +154,15 @@ class CountryDao extends BaseDao
     public function getListWRmaFc($where = array(), $option = array(), $classname = "CountryRmaFcDto")
     {
         $this->db->from('country AS c');
-        $this->db->join('rma_fc r', 'r.cid = c.id', 'INNER');
-        $this->db->where($where);
+        $this->db->join('rma_fc r', 'r.cid = c.country_id', 'INNER');
+
         if (!isset($option["num_rows"])) {
 
             $this->db->select('c.*, r.rma_fc');
 
-            $this->db->order_by($option["orderby"]);
+            if (isset($option["orderby"])) {
+                $this->db->order_by($option["orderby"]);
+            }
 
             if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
@@ -180,21 +174,19 @@ class CountryDao extends BaseDao
                 $option["offset"] = 0;
             }
 
-            if (!empty($this->rows_limit)) {
-                $this->db->limit($option["limit"], $option["offset"]);
-            }
-
-            if ($query = $this->db->get()) {
-                $rs = array();
+            if ($query = $this->db->get_where('', $where, $option["limit"], $option["offset"])) {
+                $classname = ($classname) ? : $this->getVoClassname();
+                $rs = [];
                 foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
 
                 return $rs;
             }
+
         } else {
             $this->db->select("COUNT(*) as total", "FALSE");
-
+            $this->db->where($where);
             if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
@@ -203,12 +195,12 @@ class CountryDao extends BaseDao
         return FALSE;
     }
 
-    public function getCountryIdWPlatform($platform_id)
+    public function getCountryIdWithPlatform($platform_id)
     {
         $sql = "SELECT c.id
                 FROM country c
                 JOIN platform_biz_var pbv
-                    ON c.id = platform_country_id
+                    ON c.country_id = platform_country_id
                 WHERE c.status = 1 AND c.allow_sell = 1 AND pbv.selling_platform_id = ?";
 
         if (($query = $this->db->query($sql, $platform_id)) != FALSE) {
@@ -232,7 +224,6 @@ class CountryDao extends BaseDao
                 ORDER BY name ASC";
 
         if ($result = $this->db->query($sql)) {
-            $this->include_vo();
 
             $result_arr = array();
             $classname = $this->getVoClassname();
@@ -259,13 +250,12 @@ class CountryDao extends BaseDao
         return FALSE;
     }
 
-    public function getAllAvailableCountryWCorrectLang($lang_id)
+    public function getAllAvailableCountryWithCorrectLang($lang_id)
     {
         $sql = "select c.id, ce.name, c.currency_id, c.language_id from country_ext ce
                 inner join country c on c.id=ce.cid and c.status=1 and ce.lang_id='" . $lang_id . "' and c.allow_sell=1 order by ce.name";
 
         if ($result = $this->db->query($sql)) {
-            $this->include_vo();
 
             $result_arr = array();
             $classname = $this->getVoClassname();
@@ -280,9 +270,6 @@ class CountryDao extends BaseDao
 
     public function isAllowedPostal($country_code, $postal_code)
     {
-        // $country_code
-        // $postal_code
-
         $sql = "select * from country_blocked_postal_code
         where country_id = ? and blocked_postal_code = ?";
 

@@ -175,5 +175,3 @@ class Region extends RegionHelper
     }
 
 }
-
-?>

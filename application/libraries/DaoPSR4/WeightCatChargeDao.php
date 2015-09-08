@@ -16,7 +16,12 @@ class WeightCatChargeDao extends BaseDao
         return $this->tableName;
     }
 
-    public function get_nearest_amount($wcat_id, $weight)
+    public function getVoClassname()
+    {
+        return $this->voClassName;
+    }
+
+    public function getNearestAmount($wcat_id, $weight)
     {
         $sql = "
                 SELECT w.wcat_id, wcc.delivery_type, wcc.dest_country, wcc.currency_id, wcc.amount
@@ -44,11 +49,6 @@ class WeightCatChargeDao extends BaseDao
         } else {
             return FALSE;
         }
-    }
-
-    public function getVoClassname()
-    {
-        return $this->voClassName;
     }
 
     public function get_platform_total_charge($platform_id, $delivery_type, $weight)
@@ -85,7 +85,7 @@ class WeightCatChargeDao extends BaseDao
         }
     }
 
-    public function get_country_weight_charge_by_dest_country($platform_id, $weight, $delivery_type = "STD", $dest_country, $classname = "Country_weight_charge_dto")
+    public function getCountryWeightChargeByDestCountry($platform_id, $weight, $delivery_type = "STD", $dest_country, $classname = "CountryWeightChargeDto")
     {
         $sql = "
                 SELECT wcc.*, wcc.amount * er.rate converted_amount
@@ -112,7 +112,7 @@ class WeightCatChargeDao extends BaseDao
         return FALSE;
     }
 
-    public function getCountryWeightChargeByPlatform($platform_id, $weight, $delivery_type = "STD", $classname = "Country_weight_charge_dto")
+    public function getCountryWeightChargeByPlatform($platform_id, $weight, $delivery_type = "STD", $classname = "CountryWeightChargeDto")
     {
         $sql = "
                 SELECT wcc.*, wcc.amount * er.rate converted_amount
@@ -141,7 +141,7 @@ class WeightCatChargeDao extends BaseDao
         return FALSE;
     }
 
-    public function get_full_weight_cat_charge_list($where = [], $option = [], $classname = "Weight_cat_charge_w_weight_dto")
+    public function getFullWeightCatChargeList($where = [], $option = [], $classname = "WeightCatChargeWithWeightDto")
     {
         $this->db->from('weight_category AS wc');
         $this->db->join('weight_cat_charge AS wcc', 'wc.id = wcc.wcat_id', 'INNER');
@@ -192,13 +192,13 @@ class WeightCatChargeDao extends BaseDao
         return FALSE;
     }
 
-    public function insert_wcc($obj)
+    public function insertWcc($obj)
     {
-        return $this->get_dao()->insert($obj);
+        return $this->getDao()->insert($obj);
     }
 
-    public function update_wcc($obj)
+    public function updateWcc($obj)
     {
-        return $this->get_dao()->update($obj);
+        return $this->getDao()->update($obj);
     }
 }

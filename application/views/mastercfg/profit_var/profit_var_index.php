@@ -34,11 +34,11 @@
                 <b style="font-size:14px"><?= $lang["title"] ?></b><br>
                 <?= $lang["header_message"] ?><select onChange="goToView(this.value)" style="width:300px;">
                     <option value=""> -- <?= $lang["please_select"] ?> --</option><?php
-                    foreach ($selling_platform_list as $obj) {
+                    foreach ($selling_platform_list as $obj) :
                         ?>
                         <option
-                        value="<?= $obj->get_id() ?>"><?= $obj->get_id() . ' - ' . $obj->get_name() ?></option><?php
-                    }
+                        value="<?= $obj->getSellingPlatformId() ?>"><?= $obj->getSellingPlatformId() . ' - ' . $obj->getName() ?></option><?php
+                    endforeach;
                     ?></select>
             </td>
         </tr>

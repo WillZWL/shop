@@ -21,7 +21,7 @@ class FreightCategoryDao extends BaseDao
         return $this->voClassName;
     }
 
-    public function get_cat_w_region($where = [], $option = [], $classname = "")
+    public function getCatWithRegion($where = [], $option = [], $classname = "")
     {
 
         $this->include_dto($classname);

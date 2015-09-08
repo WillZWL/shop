@@ -1,9 +1,10 @@
 <?php
 class CategoryMappingVo extends \BaseVo
 {
+    private $id;
     private $ext_party;
     private $level;
-    private $id;
+    private $category_mapping_id;
     private $ext_id;
     private $ext_name;
     private $lang_id;
@@ -11,13 +12,24 @@ class CategoryMappingVo extends \BaseVo
     private $product_name;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
     private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at;
-    private $modify_by;
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    private $primary_key = ['ext_party', 'level', 'id', 'lang_id', 'country_id'];
+    private $primary_key = ['id'];
+    private $increment_field = 'id';
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function setExtParty($ext_party)
     {
@@ -39,14 +51,14 @@ class CategoryMappingVo extends \BaseVo
         return $this->level;
     }
 
-    public function setId($id)
+    public function setCategoryMappingId($category_mapping_id)
     {
-        $this->id = $id;
+        $this->category_mapping_id = $category_mapping_id;
     }
 
-    public function getId()
+    public function getCategoryMappingId()
     {
-        return $this->id;
+        return $this->category_mapping_id;
     }
 
     public function setExtId($ext_id)
@@ -172,5 +184,10 @@ class CategoryMappingVo extends \BaseVo
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

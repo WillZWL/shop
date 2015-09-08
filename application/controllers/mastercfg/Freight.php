@@ -1,60 +1,19 @@
 <?php
-include_once "freight_helper.php";
+include_once "FreightHelper.php";
 
-class Freight extends Freight_helper
+class Freight extends FreightHelper
 {
     private $appId = "MST0009";
-    private $lang_id = "en";
 
     public function __construct()
     {
-        parent::Freight_helper();
-        $this->authorization_service->check_access_rights($this->getAppId(), "");
+        parent::__construct();
+        $this->container['authorizationService']->checkAccessRights($this->getAppId(), "");
     }
 
     public function getAppId()
     {
         return $this->appId;
-    }
-
-    public function add()
-    {
-
-        $sub_app_id = $this->getAppId() . "01";
-        $cat_type = $this->input->post("cat_type");
-
-        if ($this->input->post("posted")) {
-
-            if (isset($_SESSION["freight_cat_vo"])) {
-                $this->freight_model->include_freight_cat_vo();
-                $data["freight_cat"] = unserialize($_SESSION["freight_cat_vo"]);
-
-                $_POST["status"] = 1;
-                set_value($data["freight_cat"], $_POST);
-
-                $name = $data["freight_cat"]->get_name();
-                $proc = $this->freight_model->get_freight_cat(array("name" => $name));
-                if (!empty($proc)) {
-                    $_SESSION["NOTICE"] = "freight_cat_existed";
-                } else {
-
-                    if ($newobj = $this->freight_model->add_freight_cat($data["freight_cat"])) {
-                        if ($objlist = $this->freight_model->get_fcc_nearest_amount($newobj->get_id(), $data["freight_cat"]->get_weight())) {
-                            foreach ($objlist as $obj) {
-                                $obj->set_fcat_id($newobj->get_id());
-                                $this->freight_model->add_fcc($obj);
-                            }
-                        }
-                        unset($_SESSION["freight_cat_vo"]);
-                        redirect(base_url() . "mastercfg/freight/index/" . $cat_type . "?" . $_SERVER['QUERY_STRING']);
-                    } else {
-                        $_SESSION["NOTICE"] = "ERROR " . __LINE__ . " : " . $this->db->_error_message();
-                    }
-                }
-            }
-        }
-
-        $this->index($cat_type);
     }
 
     public function index($cat_type = "freight", $cat_id = "")
@@ -70,17 +29,7 @@ class Freight extends Freight_helper
 
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
-        /*
-                $limit = '20';
 
-                $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-
-                $option["limit"] = $pconfig['per_page'] = $limit;
-                if ($option["limit"])
-                {
-                    $option["offset"] = $this->input->get("per_page");
-                }
-        */
         if (empty($sort)) {
             $sort = $cat_type == "weight" ? "weight" : "id";
         }
@@ -94,13 +43,15 @@ class Freight extends Freight_helper
         if ($this->input->get("declared_pcent") != "") {
             $where["declared_pcent"] = $this->input->get("declared_pcent");
         }
+
         if ($this->input->get("bulk_admin_chrg") != "") {
             $where["bulk_admin_chrg"] = $this->input->get("bulk_admin_chrg");
         }
 
         $_SESSION["LISTPAGE"] = base_url() . "mastercfg/freight/index/{$cat_type}/{$cat_id}?" . $_SERVER['QUERY_STRING'];
+
         if ($this->input->get("name") != "") {
-            $where["name"] = "%" . $this->input->get("name") . "%";
+            $where["name like"] = "%" . $this->input->get("name") . "%";
         }
 
         if ($this->input->get("declared_pcent") != "") {
@@ -111,83 +62,89 @@ class Freight extends Freight_helper
             $where["bulk_admin_chrg"] = $this->input->get("bulk_admin_chrg");
         }
 
-        $data["objlist"] = $this->freight_model->get_freight_cat_list($where, $option);
-        $data["total"] = $this->freight_model->get_freight_cat_total($where, $option);
-//          $data["searchdisplay"] = ($this->input->get("name") =="" && $this->input->get("weight")=="" && $this->input->get("declared_pcent")=="" && $this->input->get("bulk_admin_chrg")=="")?'style="display:none"':"";
+        $data["objlist"] = $this->container['freightModel']->getFreightCatList($where, $option);
+        $data["total"] = $this->container['freightModel']->getFreightCatTotal($where, $option);
+
         $data["searchdisplay"] = "";
 
-        if (empty($_SESSION["freight_cat_vo"])) {
-            if (($freight_cat_vo = $this->freight_model->get_freight_cat()) === FALSE) {
+        if (empty($_SESSION["freightCatVo"])) {
+            if (($freightCatVo = $this->container['freightModel']->getFreightCat()) === FALSE) {
                 $_SESSION["NOTICE"] = "ERROR " . __LINE__ . " : " . $this->db->_error_message();
             } else {
-                $_SESSION["freight_cat_vo"] = serialize($freight_cat_vo);
+                $_SESSION["freightCatVo"] = serialize($freightCatVo);
             }
         }
 
-        if (empty($_SESSION["freight_cat_obj"][$cat_id])) {
-            if (($data["freight_cat_obj"] = $this->freight_model->get_freight_cat(array("id" => $cat_id))) === FALSE) {
+        if (empty($_SESSION["freightCatObj"][$cat_id])) {
+            if (($data["freightCatObj"] = $this->container['freightModel']->getFreightCat(array("id" => $cat_id))) === FALSE) {
                 $_SESSION["NOTICE"] = "ERROR " . __LINE__ . " : " . $this->db->_error_message();
             } else {
-                unset($_SESSION["freight_cat_obj"]);
-                $_SESSION["freight_cat_obj"][$cat_id] = serialize($data["freight_cat_obj"]);
+                unset($_SESSION["freightCatObj"]);
+                $_SESSION["freightCatObj"][$cat_id] = serialize($data["freightCatObj"]);
             }
         }
-        $view_file = 'mastercfg/freight/freight_index_v';
 
-        //$data["courierlist"] = $this->freight_model->get_courier_list(array(), array("orderby"=>"type, id, weight_type"));
-        $data["origin_country_list"] = $this->freight_model->get_origin_country_list();
+        $data["origin_country_list"] = $this->container['freightModel']->getOriginCountryList();
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
-        /*
-                $pconfig['total_rows'] = $data['total'];
-                $this->pagination_service->set_show_count_tag(TRUE);
-                $this->pagination_service->initialize($pconfig);
-        */
         $data["notice"] = notice($lang);
-
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
-
         $data["cmd"] = ($cat_id == "") ? $this->input->post("cmd") : "edit";
         $data["cat_id"] = $cat_id;
         $data["cat_type"] = $cat_type;
+        $view_file = 'mastercfg/freight/freight_index_v';
         $this->load->view($view_file, $data);
     }
 
-    public function _get_lang_id()
+    public function add()
     {
-        return $this->lang_id;
+        $sub_app_id = $this->getAppId() . "01";
+        $cat_type = $this->input->post("cat_type");
+
+        if ($this->input->post("posted")) {
+            if (isset($_SESSION["freightCatVo"])) {
+                $data["freight_cat"] = unserialize($_SESSION["freightCatVo"]);
+
+                $_POST["status"] = 1;
+                set_value($data["freight_cat"], $_POST);
+
+                $name = $data["freight_cat"]->getName();
+                $proc = $this->container['freightModel']->getFreightCat(array("name" => $name));
+                if (!empty($proc)) {
+                    $_SESSION["NOTICE"] = "freight_cat_existed";
+                } else {
+
+                    if ($newobj = $this->container['freightModel']->addFreightCat($data["freight_cat"])) {
+                        if ($objlist = $this->container['freightModel']->getFccNearestAmount($newobj->getId(), $data["freight_cat"]->getWeight())) {
+                            foreach ($objlist as $obj) {
+                                $obj->setFcatId($newobj->getId());
+                                $this->container['freightModel']->addFcc($obj);
+                            }
+                        }
+
+                        unset($_SESSION["freightCatVo"]);
+                        redirect(base_url() . "mastercfg/freight/index/" . $cat_type . "?" . $_SERVER['QUERY_STRING']);
+                    } else {
+                        $_SESSION["NOTICE"] = "ERROR " . __LINE__ . " : " . $this->db->_error_message();
+                    }
+                }
+            }
+        }
+
+        $this->index($cat_type);
     }
 
     public function view($origin_country = "")
     {
+        $cat_type = "";
         if ($origin_country) {
             $sub_app_id = $this->getAppId() . "02";
-            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
             if ($this->input->post("posted")) {
-                $fcc_vo = $this->freight_model->get_freight_cat_charge_obj();
-                foreach ($_POST["value"] AS $fcat_id => $country_value_arr) {
-                    foreach ($country_value_arr AS $dest_country => $value) {
-                        $obj = $this->freight_model->get_freight_cat_charge_obj(array("origin_country" => $origin_country, "fcat_id" => $fcat_id, "dest_country" => $dest_country));
-                        if (!$obj) {
-                            $obj = clone $fcc_vo;
-                            $obj->set_fcat_id($fcat_id);
-                            $obj->set_origin_country($origin_country);
-                            $obj->set_dest_country($dest_country);
-                            $obj->set_currency_id("HKD");
-                            $action = "insert_fcc";
-                        } else {
-                            $action = "update_fcc";
-                        }
-                        $obj->set_amount($value);
-
-                        if (!$this->freight_model->$action($obj)) {
-                            $_SESSION["NOTICE"] = "ERROR " . __LINE__ . " : " . $this->db->_error_message();
-                        }
-                    }
-                }
+                $this->container['freightModel']->saveFreightCatCharge($_POST["value"], $origin_country);
                 if (empty($_SESSION["NOTICE"])) {
                     redirect(current_url() . "?" . $_SERVER['QUERY_STRING']);
                 }
@@ -206,15 +163,15 @@ class Freight extends Freight_helper
 
             $option["orderby"] = $sort . " " . $order;
 
-            $full_list = $this->freight_model->get_full_freight_cat_charge_list(array("origin_country" => $origin_country), array("orderby" => "fcat_id ASC", "limit" => -1));
+            $full_list = $this->container['freightModel']->getFullFreightCatChargeList(array("origin_country" => $origin_country), array("orderby" => "fcat_id ASC", "limit" => -1));
             $data["objlist"] = $full_list["value_list"];
             $data["key_freight_list"] = $full_list["key_list"]["frieght_cat_arr"];
             $data["key_country_list"] = $full_list["key_list"]["dest_country_arr"];
 
-            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
 
-            $data["origin_country_list"] = $this->freight_model->get_origin_country_list();
+            $data["origin_country_list"] = $this->container['freightModel']->getOriginCountryList();
             $data["origin_country"] = $origin_country;
             $data["notice"] = notice($lang);
             $data["cmd"] = "edit";
@@ -229,10 +186,10 @@ class Freight extends Freight_helper
         if ($courier_id) {
             $sub_app_id = $this->getAppId() . "02";
 
-            $courier = $this->freight_model->get_courier(array("id" => $courier_id));
-            $data["objlist"] = $this->freight_model->get_courier_region_country(array("courier_id" => $courier_id));
+            $courier = $this->container['freightModel']->getCourier(array("id" => $courier_id));
+            $data["objlist"] = $this->container['freightModel']->getCourierRegionCountry(array("courier_id" => $courier_id));
 
-            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
 
             $data["cmd"] = "view";
@@ -247,14 +204,12 @@ class Freight extends Freight_helper
 
         if ($this->input->post("posted")) {
             unset($_SESSION["NOTICE"]);
-
             if ($cat_type == "freight") {
-                if (isset($_SESSION["freight_cat_obj"][$cat_id])) {
-                    $this->freight_model->include_freight_cat_vo();
-                    $data["freight_cat"] = unserialize($_SESSION["freight_cat_obj"][$cat_id]);
+                if (isset($_SESSION["freightCatObj"][$cat_id])) {
+                    $data["freight_cat"] = unserialize($_SESSION["freightCatObj"][$cat_id]);
 
-                    if ($data["freight_cat"]->get_name() != $_POST["name"]) {
-                        $proc = $this->freight_model->get_freight_cat(array("name" => $_POST["name"]));
+                    if ($data["freight_cat"]->getName() != $_POST["name"]) {
+                        $proc = $this->container['freightModel']->getFreightCat(array("name" => $_POST["name"]));
                         if (!empty($proc)) {
                             $_SESSION["NOTICE"] = "freight_cat_existed";
                         }
@@ -262,8 +217,8 @@ class Freight extends Freight_helper
                     if (empty($_SESSION["NOTICE"])) {
                         set_value($data["freight_cat"], $_POST);
 
-                        if ($this->freight_model->update_freight_cat($data["freight_cat"])) {
-                            unset($_SESSION["freight_cat_obj"]);
+                        if ($this->container['freightModel']->updateFreightCat($data["freight_cat"])) {
+                            unset($_SESSION["freightCatObj"]);
                             redirect(base_url() . "mastercfg/freight/index/" . $cat_type . "?" . $_SERVER['QUERY_STRING']);
                         } else {
                             $_SESSION["NOTICE"] = "ERROR " . __LINE__ . " : " . $this->db->_error_message();
@@ -272,11 +227,10 @@ class Freight extends Freight_helper
                 }
             } else {
                 if (isset($_SESSION["weight_cat_obj"][$cat_id])) {
-                    $this->freight_model->include_weight_cat_vo();
                     $data["weight_cat"] = unserialize($_SESSION["weight_cat_obj"][$cat_id]);
 
-                    if ($data["weight_cat"]->get_weight() != $_POST["weight"]) {
-                        $proc = $this->freight_model->get_weight_cat(array("weight" => $_POST["weight"]));
+                    if ($data["weight_cat"]->getWeight() != $_POST["weight"]) {
+                        $proc = $this->container['freightModel']->getWeightCat(array("weight" => $_POST["weight"]));
                         if (!empty($proc)) {
                             $_SESSION["NOTICE"] = "weight_cat_existed";
                         }
@@ -284,7 +238,7 @@ class Freight extends Freight_helper
                     if (empty($_SESSION["NOTICE"])) {
                         set_value($data["weight_cat"], $_POST);
 
-                        if ($this->freight_model->update_weight_cat($data["weight_cat"])) {
+                        if ($this->container['freightModel']->updateWeightCat($data["weight_cat"])) {
                             unset($_SESSION["weight_cat_obj"]);
                             redirect(base_url() . "mastercfg/freight/index/" . $cat_type . "?" . $_SERVER['QUERY_STRING']);
                         } else {

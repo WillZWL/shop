@@ -66,50 +66,50 @@ class CountryService extends BaseService
         $this->countryStateSrv = $service;
     }
 
-    public function get_country_id_w_platform($platform_id)
+    public function getCountryIdWithPlatform($platform_id)
     {
-        return $this->get_dao()->get_country_id_w_platform($platform_id);
+        return $this->getDao()->getCountryIdWithPlatform($platform_id);
     }
 
-    public function get_country_language_list()
+    public function getCountryLanguageList()
     {
-        return $this->get_dao()->get_country_language_list();
+        return $this->getDao()->getCountryLanguageList();
     }
 
-    public function is_available_country_id($country_id = null)
+    public function isAvailableCountryId($country_id = null)
     {
-        return $this->get_dao()->is_available_country_id($country_id);
+        return $this->getDao()->isAvailableCountryId($country_id);
     }
 
-    public function get_country_name_list_w_key($where = array(), $option = array())
+    public function getCountryNameListWithKey($where = array(), $option = array())
     {
         $data = array();
-        if ($obj_list = $this->get_list($where, $option)) {
-            foreach ($obj_list as $obj) {
-                $data[$obj->get_id()] = $obj->get_name();
+        if ($objList = $this->getDao()->getList($where, $option)) {
+            foreach ($objList as $obj) {
+                $data[$obj->getCountryId()] = $obj->getName();
             }
         }
         return $data;
     }
 
-    public function get_sell_country_list($detail = 1)
+    public function getSellCountryList($detail = 1)
     {
-        return $this->get_dao()->get_sell_country_list($detail);
+        return $this->getDao()->getSellCountryList($detail);
     }
 
-    public function get_sell_currency_list()
+    public function getSellCurrencyList()
     {
-        return $this->get_dao()->get_sell_currency_list();
+        return $this->getDao()->getSellCurrencyList();
     }
 
-    public function get_all_available_country_w_correct_lang($lang_id)
+    public function getAllAvailableCountryWithCorrectLang($lang_id)
     {
-        return $this->get_dao()->get_all_available_country_w_correct_lang($lang_id);
+        return $this->getDao()->getAllAvailableCountryWithCorrectLang($lang_id);
     }
 
-    public function is_allowed_postal($country_code, $postal_code)
+    public function isAllowedPostal($country_code, $postal_code)
     {
-        return $this->get_dao()->is_allowed_postal($country_code, $postal_code);
+        return $this->getDao()->isAllowedPostal($country_code, $postal_code);
     }
 
 }

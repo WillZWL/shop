@@ -57,7 +57,7 @@ class WeightCategoryDao extends BaseDao
         }
     }
 
-    public function get_default_delivery_charge($platform_id, $shiptype, $weight)
+    public function getDefaultDeliveryCharge($platform_id, $shiptype, $weight)
     {
         $sql = "
                 SELECT dwcc.amount AS charge
@@ -80,7 +80,7 @@ class WeightCategoryDao extends BaseDao
         }
     }
 
-    public function get_from_fc($fc = "")
+    public function getFromFc($fc = "")
     {
         $sql = "SELECT wc.id
                 FROM weight_category wc
