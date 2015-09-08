@@ -1,0 +1,22 @@
+/* remove the default left,center and right images from the button border*/
+.minimize-icon-text-icon .x-btn-left, .minimize-icon-text-icon .x-btn-right, .minimize-icon-text-icon .x-btn-center{
+    background: 0;
+}
+	
+/* now customize the new button	that has a caption below the icon */	
+.minimize-icon-text-icon .x-btn-center .x-btn-text{
+	background-position: center top;
+	background-repeat: no-repeat;
+	padding-left:0px;
+	padding-top:50px;
+	padding-bottom:0px;
+    padding-right:0px;
+    height: 70px;
+    width: 75px;
+}
+
+.dd-proxy {
+    opacity: 0.4;
+    -moz-opacity: 0.4;
+    filter: alpha(opacity=40);
+}
