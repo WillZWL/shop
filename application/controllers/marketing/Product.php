@@ -1,7 +1,5 @@
 <?php
 
-// use AtomV2\Models\Mastercfg\ColourModel;
-
 class Product extends MY_Controller
 {
 
@@ -11,8 +9,6 @@ class Product extends MY_Controller
 
     public function __construct()
     {
-
-        // $this->colourModel = new ColourModel();
         parent::__construct();
         $this->load->model('marketing/product_model');
         $this->load->model('marketing/warranty_model');
@@ -563,7 +559,6 @@ html;
     public function add()
     {
 
-$this->testAdd($_POST);
 
         $sub_app_id = $this->getAppId() . "01";
 
@@ -571,6 +566,7 @@ $this->testAdd($_POST);
             show_error("Access Denied!");
         }
         if ($this->input->post("posted")) {
+$this->testAdd($_POST);
             if (isset($_SESSION["product_vo"])) {
                 $this->product_model->include_vo("product");
                 $data["product"] = unserialize($_SESSION["product_vo"]);
