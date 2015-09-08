@@ -1,7 +1,4 @@
 <?php
-use AtomV2\Service\LanguageService;
-use AtomV2\Models\Mastercfg\ColourModel;
-
 class Colour extends MY_Controller
 {
     private $appId = "MST0010";
@@ -9,15 +6,6 @@ class Colour extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->languageService = new LanguageService;
-        $this->colourModel = new ColourModel;
-        // $this->load->model('mastercfg/colour_model');
-        // $this->load->model('marketing/product_model');
-        // $this->load->helper(array('url', 'notice'));
-        // $this->load->library('service/pagination_service');
-        // $this->load->library('service/colour_extend_service');
-        // include_once(APPPATH . 'libraries/service/translate_service.php');
-        // $this->set_translate_service(new Translate_service());
     }
 
     public function getAppId()
@@ -34,7 +22,7 @@ class Colour extends MY_Controller
     {
         if ($this->input->post('translate') !== null) {
             $sourceName = ucfirst(strtolower($this->input->post('colour_name')));
-            $data['langList'] = $this->languageService->getList(['status' => 1], ['orderby' => 'lang_id ASC']);
+            $data['langList'] = $this->container['languageService']->getList(['status' => 1], ['orderby' => 'lang_id ASC']);
 
             $translated = $this->translateColourName($sourceName, 'en', $data['langList']);
             if ($translated) {
@@ -50,7 +38,7 @@ class Colour extends MY_Controller
                 $errorMsg = __LINE__ . 'Could not translate. $sourceName and $toLang cannot be empty.';
             }
         } elseif ($this->input->post('add')) {
-            $result = $this->colourModel->save($this->input->post());
+            $result = $this->container['colourModel']->save($this->input->post());
             redirect('/mastercfg/colour');
         }
     }
@@ -132,12 +120,12 @@ class Colour extends MY_Controller
 
         $limit = 20;
 
-        $data['langList'] = $this->languageService->getList(['status' => 1], ['orderby' => 'lang_id ASC']);
-        $data['colourList'] = $this->colourModel->getList([], ['limit' => $limit, 'offset' => $offset]);
-        $total = $this->colourModel->getNumRows();
+        $data['colourList'] = $this->container['colourModel']->getList([], ['limit' => $limit, 'offset' => $offset]);
+        $data['langList'] = $this->container['languageService']->getList(['status' => 1], ['orderby' => 'lang_id ASC']);
+        $total = $this->container['colourModel']->getNumRows();
 
         $editColourId = $this->input->get('edit');
-        $data['colourWithLang'] = $this->colourModel->getListWithLang(['c.colour_id' => $editColourId], ['limit' => -1]);
+        $data['colourWithLang'] = $this->container['colourModel']->getListWithLang(['c.colour_id' => $editColourId], ['limit' => -1]);
 
         $config['base_url'] = base_url('mastercfg/colour/index');
         $config['total_rows'] = $total;
