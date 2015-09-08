@@ -1,16 +1,13 @@
 <?php
-class CategoryMappingVo extends \BaseVo
+class CategoryBannerVo extends \BaseVo
 {
     private $id;
-    private $ext_party;
-    private $level;
-    private $category_mapping_id;
-    private $ext_id;
-    private $ext_name;
+    private $cat_id;
     private $lang_id;
     private $country_id;
-    private $product_name;
-    private $status = '1';
+    private $image;
+    private $flash;
+    private $priority;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -31,54 +28,14 @@ class CategoryMappingVo extends \BaseVo
         return $this->id;
     }
 
-    public function setExtParty($ext_party)
+    public function setCatId($cat_id)
     {
-        $this->ext_party = $ext_party;
+        $this->cat_id = $cat_id;
     }
 
-    public function getExtParty()
+    public function getCatId()
     {
-        return $this->ext_party;
-    }
-
-    public function setLevel($level)
-    {
-        $this->level = $level;
-    }
-
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    public function setCategoryMappingId($category_mapping_id)
-    {
-        $this->category_mapping_id = $category_mapping_id;
-    }
-
-    public function getCategoryMappingId()
-    {
-        return $this->category_mapping_id;
-    }
-
-    public function setExtId($ext_id)
-    {
-        $this->ext_id = $ext_id;
-    }
-
-    public function getExtId()
-    {
-        return $this->ext_id;
-    }
-
-    public function setExtName($ext_name)
-    {
-        $this->ext_name = $ext_name;
-    }
-
-    public function getExtName()
-    {
-        return $this->ext_name;
+        return $this->cat_id;
     }
 
     public function setLangId($lang_id)
@@ -101,24 +58,34 @@ class CategoryMappingVo extends \BaseVo
         return $this->country_id;
     }
 
-    public function setProductName($product_name)
+    public function setImage($image)
     {
-        $this->product_name = $product_name;
+        $this->image = $image;
     }
 
-    public function getProductName()
+    public function getImage()
     {
-        return $this->product_name;
+        return $this->image;
     }
 
-    public function setStatus($status)
+    public function setFlash($flash)
     {
-        $this->status = $status;
+        $this->flash = $flash;
     }
 
-    public function getStatus()
+    public function getFlash()
     {
-        return $this->status;
+        return $this->flash;
+    }
+
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+    }
+
+    public function getPriority()
+    {
+        return $this->priority;
     }
 
     public function setCreateOn($create_on)
