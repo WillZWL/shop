@@ -43,7 +43,7 @@ $ar_fcid = array("US_FC" => $lang["us_fc"], "UK_FC" => $lang["uk_fc"], "HK_FC" =
             </tr>
             <tr>
                 <td class="field"><?= $lang["id"] ?></td>
-                <td class="value" colspan="3"><?= $country_vo->getId() ?><input name="id" type="hidden"
+                <td class="value" colspan="3"><?= $country_vo->getCountryId() ?><input name="id" type="hidden"
                                                                                  value="<?= $country_vo->getId() ?>"><input
                         type="hidden" name="posted" value="1"></td>
             </tr>

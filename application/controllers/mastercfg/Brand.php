@@ -1,6 +1,5 @@
 <?php
 use AtomV2\Models\Mastercfg\BrandModel;
-use AtomV2\Service\PaginationService;
 
 class Brand extends MY_Controller
 {
@@ -10,7 +9,6 @@ class Brand extends MY_Controller
     {
         parent::__construct();
         $this->brandModel = new BrandModel;
-        $this->paginationService = new PaginationService;
     }
 
     public function index($offset = 0)

@@ -155,7 +155,7 @@ class CountryDao extends BaseDao
     {
         $this->db->from('country AS c');
         $this->db->join('rma_fc r', 'r.cid = c.country_id', 'INNER');
-        $this->db->where($where);
+
         if (!isset($option["num_rows"])) {
 
             $this->db->select('c.*, r.rma_fc');
@@ -174,7 +174,7 @@ class CountryDao extends BaseDao
                 $option["offset"] = 0;
             }
 
-            if ($query = $this->db->get_where($this->getTableName(), $where, $option["limit"], $option["offset"])) {
+            if ($query = $this->db->get_where('', $where, $option["limit"], $option["offset"])) {
                 $classname = ($classname) ? : $this->getVoClassname();
                 $rs = [];
                 foreach ($query->result($classname) as $obj) {
@@ -186,7 +186,7 @@ class CountryDao extends BaseDao
 
         } else {
             $this->db->select("COUNT(*) as total", "FALSE");
-
+            $this->db->where($where);
             if ($query = $this->db->get()) {
                 return $query->row()->total;
             }

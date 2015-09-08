@@ -26,7 +26,7 @@ class Country extends MY_Controller
 
         $where = $option = [];
         if ($this->input->get("id") != "") {
-            $where["id LIKE"] = '%' . $this->input->get("id") . '%';
+            $where["country_id LIKE"] = '%' . $this->input->get("id") . '%';
         }
 
         if ($this->input->get("id_3_digit") != "") {
