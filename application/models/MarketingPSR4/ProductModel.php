@@ -17,4 +17,10 @@ class ProductModel extends \CI_Model
     {
         return $this->productService->getProductInfo($where, $option);
     }
+
+    public function getCreateProductOptions()
+    {
+        return $this->productService->getCreateProductOptions();
+    }
+
 }

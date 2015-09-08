@@ -36,11 +36,11 @@
         </tr>
     </table>
     <form name="fm_edit" method="post" onSubmit="return CheckForm(this)">
-        <?php if ($lang_list) {
+        <?php if ($lang_list) :
             ?>
             <div id="div_tabs">
                 <?php
-                foreach ($lang_list as $lang_obj) {
+                foreach ($lang_list as $lang_obj) :
                     $cur_lang_id = $lang_obj->getLangId();
                     // $cur_name = $cat_ext[$cat_id][$cur_lang_id] ? $cat_ext[$cat_id][$cur_lang_id]->getLangName() : "";
                     $cur_title = (isset($func_opt_list[$cur_lang_id]) || isset($del_opt_list[$cur_lang_id])) ? $lang_obj->getLangName() : "<font color='red'>{$lang_obj->getLangName()}</font>";
@@ -53,10 +53,10 @@
                                 <td height="20" colspan="2"><?= $lang["general_content"] ?></td>
                             </tr>
                             <?php
-                            if ($delivery_type_list) {
-                                foreach ($delivery_type_list as $dt_obj) {
+                            if ($delivery_type_list) :
+                                foreach ($delivery_type_list as $dt_obj) :
                                     $dt_id = strtolower($dt_obj->getDeliveryTypeId());
-                                    if ($func_opt_list["en"]["free_" . $dt_id]) {
+                                    if ($func_opt_list["en"]["free_" . $dt_id]) :
                                         ?>
                                         <tr>
                                             <td class="field"><?= $func_opt_list["en"]["free_" . $dt_id]->getText() ?></td>
@@ -67,9 +67,9 @@
                                             </td>
                                         </tr>
                                     <?php
-                                    }
-                                }
-                            }
+                                    endif;
+                                endforeach;
+                            endif;
                             ?>
                             <tr>
                                 <td class="field"><?= $lang["working_days"] ?></td>
@@ -83,8 +83,8 @@
                                 <td height="20" colspan="2"><?= $lang["del_opt_content"] ?></td>
                             </tr>
                             <?php
-                            if ($delivery_type_list) {
-                                foreach ($delivery_type_list as $dt_obj) {
+                            if ($delivery_type_list) :
+                                foreach ($delivery_type_list as $dt_obj) :
                                     ?>
                                     <tr>
                                         <td class="field"><?= $dt_id = $dt_obj->getDeliveryTypeId() ?>
@@ -96,17 +96,17 @@
                                         </td>
                                     </tr>
                                 <?php
-                                }
-                            }
+                                endforeach;
+                            endif;
                             ?>
                         </table>
                     </div>
                 <?php
-                }
+                endforeach;
                 ?>
             </div>
         <?php
-        }
+        endif;
         ?>
         <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
             <tr>

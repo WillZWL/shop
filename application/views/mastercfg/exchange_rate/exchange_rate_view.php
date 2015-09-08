@@ -34,14 +34,13 @@
     </table>
 
     <?php
-    if ($editable)
-    {
+    if ($editable) :
     ?>
     <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" name="tform" onSubmit="return CheckForm(this)"
           style="padding:0; margin:0">
         <input type="hidden" name="base" value="<?= $base ?>">
         <?php
-        }
+    endif;
         ?>
         <table border="0" cellpadding="0" cellspacing="1" height="70" class="page_header" width="100%">
 
@@ -51,11 +50,11 @@
                     <?= $lang["header_message"] ?> <select onChange="changeBaseCurrency(this.value)"
                                                            style="width:300px;">
                         <option value=""> -- <?= $lang["please_select"] ?> --</option><?php
-                        foreach ($currency_list as $key => $value) {
+                        foreach ($currency_list as $key => $value) :
                             ?>
                             <option value="<?= $key ?>" <?= ($base == $key ? "selected" : "") ?>><?= $value ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?></select>
                 </td>
             </tr>
@@ -70,46 +69,44 @@
             </tr>
             <?php
             $i = 0;
-            foreach ($currency_full_list as $obj) {
+            foreach ($currency_full_list as $obj) :
                 ?>
                 <tr class="row<?= $i % 2 ?>"
-                    <?php if ($exchange_rate[$obj->get_id()] != $exchange_rate_approval[$obj->get_id()]) { ?>style="BACKGROUND-COLOR: red"<?php }?> >
-                    <td height="20" width="30%">&nbsp;&nbsp;<?= $obj->get_name() ?></td>
-                    <td height="20" width="10%">&nbsp;&nbsp;<?= $obj->get_id() ?></td>
-                    <td height="20" width="10%">&nbsp;&nbsp;<?= $obj->get_sign() ?></td>
+                    <?php if ($exchange_rate[$obj->getCurrencyId()] != $exchange_rate_approval[$obj->getCurrencyId()]) { ?>style="BACKGROUND-COLOR: red"<?php }?> >
+                    <td height="20" width="30%">&nbsp;&nbsp;<?= $obj->getName() ?></td>
+                    <td height="20" width="10%">&nbsp;&nbsp;<?= $obj->getCurrencyId() ?></td>
+                    <td height="20" width="10%">&nbsp;&nbsp;<?= $obj->getSign() ?></td>
                     <td height="20" width="25%" align="left">
-                        &nbsp;&nbsp;<?= number_format($exchange_rate[$obj->get_id()], 6, '.', '') ?></td>
-                    <td height="20" width="25%" align="left">&nbsp;&nbsp;<input type="text" name="<?= $obj->get_id() ?>"
-                                                                                value="<?= number_format($exchange_rate_approval[$obj->get_id()], 6, '.', '') ?>"
-                                                                                style="font-size:11px;width:100px" <?= (!$editable || $obj->get_id() == $base ? "readonly" : "") ?>
+                        &nbsp;&nbsp;<?= number_format($exchange_rate[$obj->getCurrencyId()], 6, '.', '') ?></td>
+                    <td height="20" width="25%" align="left">&nbsp;&nbsp;<input type="text" name="<?= $obj->getCurrencyId() ?>"
+                                                                                value="<?= number_format($exchange_rate_approval[$obj->getCurrencyId()], 6, '.', '') ?>"
+                                                                                style="font-size:11px;width:100px" <?= (!$editable || $obj->getCurrencyId() == $base ? "readonly" : "") ?>
                                                                                 min=0 isNumber></td>
                 </tr>
                 <?php
                 $i++;
-            }
+            endforeach;
             ?>
         </table>
         <?php
-        if ($editable)
-        {
+        if ($editable) :
         ?>
         <table border="0" cellpadding="0" cellspacing="0" height="40" class="page_header" width="100%">
             <tr>
                 <td align="right" width="500" style="padding-right:8px">
                     <?php
-                    if (!($approval))
-                    {
+                    if (!($approval)) :
                     ?>
                 <td align="right" style="padding-right:12px"><font
                         style="color:#ff0000; font-weight:bold; font-size:14px;">SUBMIT FOR APPROVAL</font>
                     <?php
-                    }
-                    if ($type) {
+                    endif;
+                    if ($type) :
                         ?>
                         <input type="button" value="<?= $lang{$type} ?>"
                                onClick="if(CheckForm(this.form)) document.tform.submit();" style="font-size:11px">
                     <?php
-                    }
+                    endif;
                     ?>
                 </td>
 
@@ -119,17 +116,17 @@
         <input type="hidden" name="type" value="<?= $type ?>">
     </form>
 <?php
-}
+    endif;
 ?>
 </div>
 <?php
-if ($updated) {
+if ($updated) :
     ?>
     <script language="javascript">
         alert('<?=$lang["{$type}_submit"]?>');
     </script>
 <?php
-}
+endif;
 echo $notice["js"];
 ?>
 </body>

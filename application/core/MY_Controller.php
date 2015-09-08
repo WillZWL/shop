@@ -1,16 +1,27 @@
 <?php
+use Pimple\Container;
+use AtomV2\Service;
 use AtomV2\Service\AuthorizationService;
 use AtomV2\Service\AuthenticationService;
+use AtomV2\Service\LanguageService;
+use AtomV2\Models\Mastercfg\ColourModel;
+use AtomV2\Service\ProductService;
 
 abstract class MY_Controller extends CI_Controller
 {
     private $langId = "en";
+    protected $container;
+
 
     abstract public function getAppId();
 
     public function __construct($checkAccessRights = TRUE)
     {
         parent::__construct();
+        $this->container = new Container();
+        $this->loadModelDependcy();
+        $this->loadServiceDependcy();
+
         $this->authenticationService = new AuthenticationService;
         $_SESSION["CURRPAGE"] = $_SERVER['REQUEST_URI'];
         $currsign = array("GBP" => "£", "EUR" => "€");
@@ -23,6 +34,29 @@ abstract class MY_Controller extends CI_Controller
             }
         }
     }
+
+    public function loadModelDependcy()
+    {
+        $this->container['colourModel'] = function ($c) {
+            return new ColourModel;
+        };
+
+        $this->container['productVoByPost'] = $this->container->factory(function ($c) {
+            return new ProductVoByPost();
+        });
+    }
+
+    private function loadServiceDependcy()
+    {
+        $this->container['languageService'] = $this->container->factory(function ($c) {
+            return new LanguageService();
+        });
+
+        $this->container['productService'] = function ($c) {
+            return new ProductService();
+        };
+    }
+
 
     public function getLangId()
     {

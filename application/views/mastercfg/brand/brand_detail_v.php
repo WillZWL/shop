@@ -44,7 +44,7 @@
                 <td class="value"><input name="brand_name" class="input"
                                          value="<?= htmlspecialchars($brand->getBrandName()) ?>" notEmpty></td>
                 <?php
-                if ($cmd == "edit") {
+                if ($cmd == "edit") :
                     ?>
                     <td class="field"><?= $lang["status"] ?></td>
                     <td class="value">
@@ -58,12 +58,12 @@
                         </select>
                     </td>
                 <?php
-                } else {
+                else :
                     ?>
                     <td class="field"></td>
                     <td class="value"></td>
                 <?php
-                }
+                endif;
                 ?>
             </tr>
             <tr>
@@ -72,7 +72,7 @@
                                                      value="<?= htmlspecialchars($brand->getDescription()) ?>"></td>
             </tr>
             <?php
-            if ($cmd != "add") {
+            if ($cmd != "add") :
                 ?>
                 <tr>
                     <td class="field"><?= $lang["create_on"] ?></td>
@@ -93,7 +93,7 @@
                     <td class="value"><?= $brand->getModifyBy() ?></td>
                 </tr>
             <?php
-            }
+            endif;
             ?>
             <tr class="tb_detail">
                 <td colspan="2" height="40"><input type="button" name="back" value="<?= $lang['back_list'] ?>"
@@ -101,15 +101,15 @@
                 </td>
                 <td colspan="2" align="right" style="padding-right:8px;">
                     <?php
-                    if ($cmd == "add") {
+                    if ($cmd == "add") :
                         ?>
                         <input type="submit" value="<?= $lang['header'] ?>">
                     <?php
-                    } elseif ($cmd == "edit") {
+                    elseif ($cmd == "edit") :
                         ?>
                         <input type="submit" value="<?= $lang['update_button'] ?>">
                     <?php
-                    }
+                    endif;
                     ?>
                 </td>
             </tr>
@@ -118,7 +118,6 @@
         <input type="hidden" name="cmd" value="edit">
         <input type="hidden" name="posted" value="1">
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
 </div>
 <?= $notice["js"] ?>
 </body>

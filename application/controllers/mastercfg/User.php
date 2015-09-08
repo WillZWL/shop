@@ -1,7 +1,6 @@
 <?php
 use AtomV2\Models\Mastercfg\UserModel;
 use AtomV2\Service\LogService;
-use AtomV2\Service\PaginationService;
 use AtomV2\Service\AuthorizationService;
 
 class User extends MY_Controller
@@ -14,11 +13,10 @@ class User extends MY_Controller
         parent::__construct();
         $this->userModel = new UserModel;
         $this->logService = new LogService;
-        $this->paginationService = new PaginationService;
         $this->authorizationService = new AuthorizationService;
     }
 
-    public function index()
+    public function index($offset = 0)
     {
         $subAppId = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $subAppId . "_" . $this->getLangId() . ".php");
@@ -28,20 +26,31 @@ class User extends MY_Controller
         $where = array();
         $option = array();
 
-        $where["id"] = $this->input->get("id");
-        $where["username"] = $this->input->get("username");
-        $where["email"] = $this->input->get("email");
-        $where["roles"] = $this->input->get("roles");
+        if ($this->input->get("id")) {
+            $where["u.id like"] = $this->input->get("id") .'%';
+        }
+
+        if ($this->input->get("username")) {
+            $where["u.username like"] = '%'. $this->input->get("username") .'%';
+        }
+
+        if ($this->input->get("email")) {
+            $where["u.email like"] = $this->input->get("email") .'%';
+        }
+
+        if ($this->input->get("roles")) {
+            $where["rn.roles like"] = $this->input->get("roles") .'%';
+        }
+
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
-        $limit = '20';
+        $limit = 20;
 
         $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-        $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"]) {
-            $option["offset"] = $this->input->get("per_page");
-        }
+
+        $option["limit"] = $limit;
+        $option["offset"] = $offset;
 
         if (empty($sort)) {
             $sort = "id";
@@ -56,13 +65,18 @@ class User extends MY_Controller
         if ($this->input->get("showall")) {
             $data = $this->userModel->getListWRoles($where, $option);
         } else {
-            $where["status"] = 1;
+            $where["u.status"] = 1;
             $data = $this->userModel->getListWRoles($where, $option);
         }
 
         $data["lang"] = $lang;
-        $pconfig['total_rows'] = $data['total'];
-        $this->paginationService->initialize($pconfig);
+
+        $config['base_url'] = base_url('mastercfg/user/index');
+        $config['total_rows'] =  $data['total'];
+        $config['per_page'] = $limit;
+
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
 
         $data["notice"] = notice($lang);
 

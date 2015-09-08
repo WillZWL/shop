@@ -1,4 +1,8 @@
 <?php
+use AtomV2\Models\Mastercfg\ExchangeRateModel;
+use AtomV2\Service\LogService;
+use AtomV2\Service\AuthorizationService;
+use AtomV2\Service\ContextConfigService;
 
 class ExchangeRateHelper extends \MY_Controller
 {
@@ -7,14 +11,14 @@ class ExchangeRateHelper extends \MY_Controller
     public function __construct()
     {
         parent::__construct(FALSE);
-        $this->load->model('mastercfg/exchange_rate_model');
-        $this->load->helper(array('url', 'notice'));
-        $this->load->library('input');
+        $this->exchangeRateModel = new ExchangeRateModel;
+        $this->logService = new LogService;
+        $this->authorizationService = new AuthorizationService;
+        $this->contextConfigService = new ContextConfigService;
+
         $this->title = 'Region Information';
-        $this->load->library('service/log_service');
-        $this->load->library('service/authorization_service');
-        $this->load->library('service/context_config_service');
-        $this->currency_list = $this->exchange_rate_model->get_active_currency_list(array(), array("orderby" => "name ASC"));
+
+        $this->currency_list = $ccc = $this->exchangeRateModel->getActiveCurrencyList([], array("orderby" => "name ASC"));
     }
 
     public function js_xratelist($to_currency = "")
@@ -24,7 +28,7 @@ class ExchangeRateHelper extends \MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $xratelist = $this->exchange_rate_model->exchange_rate_service->exchange_rate_dao->get_list($to_currency == "" ? array() : array("to_currency_id" => $to_currency));
+        $xratelist = $this->exchangeRateModel->exchangeRateService->getDao()->getList($to_currency == "" ? [] : array("to_currency_id" => $to_currency));
         foreach ($xratelist as $obj) {
             $fid = str_replace("'", "\'", $obj->get_from_currency_id());
             $tid = str_replace("'", "\'", $obj->get_to_currency_id());

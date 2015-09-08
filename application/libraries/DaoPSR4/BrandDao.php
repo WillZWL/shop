@@ -26,11 +26,6 @@ class BrandDao extends BaseDao
 
         $this->db->from('brand AS b');
 
-        if ($where) {
-            $this->db->where($where);
-        }
-
-
         if (empty($option["orderby"])) {
             $option["orderby"] = "b.brand_name ASC";
         }
@@ -39,7 +34,9 @@ class BrandDao extends BaseDao
 
             $this->db->select('b.id, b.brand_name, b.description, b.status, b.create_on, b.create_at, b.create_by, b.modify_on, b.modify_at, b.modify_by');
 
-            $this->db->order_by($option["orderby"]);
+            if (isset($option["orderby"])) {
+                $this->db->order_by($option["orderby"]);
+            }
 
             if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
@@ -51,17 +48,14 @@ class BrandDao extends BaseDao
                 $option["offset"] = 0;
             }
 
-            if (!empty($this->rows_limit)) {
-                $this->db->limit($option["limit"], $option["offset"]);
-            }
-
-            $rs = [];
-
-            if ($query = $this->db->get()) {
+            if ($query = $this->db->get_where('', $where, $option["limit"], $option["offset"])) {
+                $classname = ($classname) ? : $this->getVoClassname();
+                $rs = [];
                 foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object)$rs;
+
+                return $rs;
             }
         } else {
             $this->db->select('COUNT(*) AS total');
@@ -87,7 +81,7 @@ class BrandDao extends BaseDao
 
         if (empty($option["num_rows"])) {
 
-            $this->db->select('b.id, b.brand_name, b.description, b.status, srn.regions, b.create_on, b.create_at, b.create_by, b.modify_on, b.modify_at, b.modify_by');
+            $this->db->select('b.id, b.brand_name, b.description, b.status, b.create_on, b.create_at, b.create_by, b.modify_on, b.modify_at, b.modify_by');
 
             $this->db->order_by($option["orderby"]);
 

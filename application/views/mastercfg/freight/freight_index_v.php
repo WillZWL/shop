@@ -176,7 +176,6 @@
         endif;
         ?>
     </table>
-    <?= $this->paginationService->create_links_with_style() ?>
     <?= $notice["js"] ?>
 </div>
 </body>
