@@ -1,16 +1,10 @@
 <?php
-class CategoryMappingVo extends \BaseVo
+class CustomClassificationMappingVo extends \BaseVo
 {
     private $id;
-    private $ext_party;
-    private $level;
-    private $category_mapping_id;
-    private $ext_id;
-    private $ext_name;
-    private $lang_id;
+    private $sub_cat_id;
     private $country_id;
-    private $product_name;
-    private $status = '1';
+    private $custom_class_id;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -31,64 +25,14 @@ class CategoryMappingVo extends \BaseVo
         return $this->id;
     }
 
-    public function setExtParty($ext_party)
+    public function setSubCatId($sub_cat_id)
     {
-        $this->ext_party = $ext_party;
+        $this->sub_cat_id = $sub_cat_id;
     }
 
-    public function getExtParty()
+    public function getSubCatId()
     {
-        return $this->ext_party;
-    }
-
-    public function setLevel($level)
-    {
-        $this->level = $level;
-    }
-
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    public function setCategoryMappingId($category_mapping_id)
-    {
-        $this->category_mapping_id = $category_mapping_id;
-    }
-
-    public function getCategoryMappingId()
-    {
-        return $this->category_mapping_id;
-    }
-
-    public function setExtId($ext_id)
-    {
-        $this->ext_id = $ext_id;
-    }
-
-    public function getExtId()
-    {
-        return $this->ext_id;
-    }
-
-    public function setExtName($ext_name)
-    {
-        $this->ext_name = $ext_name;
-    }
-
-    public function getExtName()
-    {
-        return $this->ext_name;
-    }
-
-    public function setLangId($lang_id)
-    {
-        $this->lang_id = $lang_id;
-    }
-
-    public function getLangId()
-    {
-        return $this->lang_id;
+        return $this->sub_cat_id;
     }
 
     public function setCountryId($country_id)
@@ -101,24 +45,14 @@ class CategoryMappingVo extends \BaseVo
         return $this->country_id;
     }
 
-    public function setProductName($product_name)
+    public function setCustomClassId($custom_class_id)
     {
-        $this->product_name = $product_name;
+        $this->custom_class_id = $custom_class_id;
     }
 
-    public function getProductName()
+    public function getCustomClassId()
     {
-        return $this->product_name;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
+        return $this->custom_class_id;
     }
 
     public function setCreateOn($create_on)
