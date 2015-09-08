@@ -1,22 +1,22 @@
 <?php
-class CategoryMappingVo extends \BaseVo
+class CategoryVo extends \BaseVo
 {
     private $id;
-    private $ext_party;
-    private $level;
-    private $category_mapping_id;
-    private $ext_id;
-    private $ext_name;
-    private $lang_id;
-    private $country_id;
-    private $product_name;
+    private $name;
+    private $description;
+    private $parent_cat_id;
+    private $level = '1';
+    private $add_colour_name = '1';
+    private $priority = '9';
+    private $bundle_discount;
+    private $min_display_qty;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at = '2130706433';
-    private $create_by = 'system';
+    private $create_at = '127.0.0.1';
+    private $create_by;
     private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at = '2130706433';
-    private $modify_by = 'system';
+    private $modify_at = '127.0.0.1';
+    private $modify_by;
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
@@ -31,14 +31,34 @@ class CategoryMappingVo extends \BaseVo
         return $this->id;
     }
 
-    public function setExtParty($ext_party)
+    public function setName($name)
     {
-        $this->ext_party = $ext_party;
+        $this->name = $name;
     }
 
-    public function getExtParty()
+    public function getName()
     {
-        return $this->ext_party;
+        return $this->name;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setParentCatId($parent_cat_id)
+    {
+        $this->parent_cat_id = $parent_cat_id;
+    }
+
+    public function getParentCatId()
+    {
+        return $this->parent_cat_id;
     }
 
     public function setLevel($level)
@@ -51,64 +71,44 @@ class CategoryMappingVo extends \BaseVo
         return $this->level;
     }
 
-    public function setCategoryMappingId($category_mapping_id)
+    public function setAddColourName($add_colour_name)
     {
-        $this->category_mapping_id = $category_mapping_id;
+        $this->add_colour_name = $add_colour_name;
     }
 
-    public function getCategoryMappingId()
+    public function getAddColourName()
     {
-        return $this->category_mapping_id;
+        return $this->add_colour_name;
     }
 
-    public function setExtId($ext_id)
+    public function setPriority($priority)
     {
-        $this->ext_id = $ext_id;
+        $this->priority = $priority;
     }
 
-    public function getExtId()
+    public function getPriority()
     {
-        return $this->ext_id;
+        return $this->priority;
     }
 
-    public function setExtName($ext_name)
+    public function setBundleDiscount($bundle_discount)
     {
-        $this->ext_name = $ext_name;
+        $this->bundle_discount = $bundle_discount;
     }
 
-    public function getExtName()
+    public function getBundleDiscount()
     {
-        return $this->ext_name;
+        return $this->bundle_discount;
     }
 
-    public function setLangId($lang_id)
+    public function setMinDisplayQty($min_display_qty)
     {
-        $this->lang_id = $lang_id;
+        $this->min_display_qty = $min_display_qty;
     }
 
-    public function getLangId()
+    public function getMinDisplayQty()
     {
-        return $this->lang_id;
-    }
-
-    public function setCountryId($country_id)
-    {
-        $this->country_id = $country_id;
-    }
-
-    public function getCountryId()
-    {
-        return $this->country_id;
-    }
-
-    public function setProductName($product_name)
-    {
-        $this->product_name = $product_name;
-    }
-
-    public function getProductName()
-    {
-        return $this->product_name;
+        return $this->min_display_qty;
     }
 
     public function setStatus($status)

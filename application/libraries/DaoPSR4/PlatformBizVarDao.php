@@ -21,13 +21,12 @@ class PlatformBizVarDao extends BaseDao
         return $this->tableName;
     }
 
-    public function get_list_w_platform_name($where = array(), $option = array(), $classname = "Platform_biz_var_w_platform_name_dto")
+    public function getListWithPlatformName($where = [], $option = [], $classname = "Platform_biz_var_w_platform_name_dto")
     {
         $select_str = "pbv.*, s.name AS platform_name";
         $this->db->from('platform_biz_var AS pbv');
         $this->db->join('selling_platform AS s', 'pbv.selling_platform_id = s.id', 'INNER');
-        $this->include_dto($classname);
-        return $this->common_get_list($where, $option, $classname, $select_str);
+        return $this->commonCetList($classname, $where, $option, $select_str);
     }
 
     public function get_pricing_tool_platform_list($sku, $platform_type, $classname = "Platform_biz_var_w_platform_name_dto")
@@ -45,8 +44,7 @@ class PlatformBizVarDao extends BaseDao
                 ORDER BY pr.listing_status = 'L' DESC, s.id ASC";
 
         if ($result = $this->db->query($sql, array($sku, $platform_type))) {
-            $this->include_dto($classname);
-            $result_arr = array();
+            $result_arr = [];
 
             foreach ($result->result("object", $classname) as $obj) {
                 $result_arr[] = $obj;
@@ -57,14 +55,13 @@ class PlatformBizVarDao extends BaseDao
         return FALSE;
     }
 
-    public function get_list_w_country_name($where = array(), $option = array(), $classname = "Platform_biz_var_w_platform_name_dto")
+    public function getListWithCountryName($where = [], $option = [], $classname = "Platform_biz_var_w_platform_name_dto")
     {
         $select_str = "pbv.*, c.name AS platform_country";
         $this->db->from('platform_biz_var AS pbv');
         $this->db->join('selling_platform AS s', 'pbv.selling_platform_id = s.id', 'INNER');
         $this->db->join('country AS c', 'c.country_id = pbv.platform_country_id', 'INNER');
-        $this->include_dto($classname);
-        return $this->common_get_list($where, $option, $classname, $select_str);
+        return $this->commonCetList($classname, $where, $option, $select_str);
     }
 
     public function getUniqueDestCountryList()

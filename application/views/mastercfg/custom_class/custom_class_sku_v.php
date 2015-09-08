@@ -34,24 +34,22 @@
                         onChange="Redirect('<?= base_url() ?>mastercfg/custom_class/sku/'+this.value)">
                     <option value="">
                         <?php
-                        if ($countrylist){
+                        if ($countrylist) :
                         $selected[$country_id] = "SELECTED";
-                        foreach ($countrylist as $country)
-                        {
+                        foreach ($countrylist as $country) :
                         ?>
                     <option
-                        value="<?= $country->get_id() ?>" <?= $selected[$country->get_id()] ?>><?= $country->get_name() ?>
+                        value="<?= $country->getCountryId() ?>" <?= @$selected[$country->getCountryId()] ?>><?= $country->getName() ?>
                         <?php
-                        }
-                        }
+                        endforeach;
+                        endif;
                         ?>
                 </select>
             </td>
         </tr>
     </table>
     <?php
-    if ($country_id)
-    {
+    if ($country_id) :
     ?>
     <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
         <col width="20">
@@ -67,22 +65,22 @@
                 <td height="20"><img src="<?= base_url() ?>images/expand.png" class="pointer"
                                      onClick="Expand(document.getElementById('tr_search'));"></td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'sku', '<?= $xsort["sku"] ?>')"><?= $lang["sku"] ?> <?= $sortimg["sku"] ?></a>
+                       onClick="SortCol(document.fm, 'sku', '<?= @$xsort["sku"] ?>')"><?= $lang["sku"] ?> <?= @$sortimg["sku"] ?></a>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'prod_name', '<?= $xsort["prod_name"] ?>')"><?= $lang["prod_name"] ?> <?= $sortimg["prod_name"] ?></a>
+                       onClick="SortCol(document.fm, 'prod_name', '<?= @$xsort["prod_name"] ?>')"><?= $lang["prod_name"] ?> <?= @$sortimg["prod_name"] ?></a>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'sub_cat_name', '<?= $xsort["sub_cat_name"] ?>')"><?= $lang["sub_cat_name"] ?> <?= $sortimg["sub_cat_name"] ?></a>
+                       onClick="SortCol(document.fm, 'sub_cat_name', '<?= @$xsort["sub_cat_name"] ?>')"><?= $lang["sub_cat_name"] ?> <?= @$sortimg["sub_cat_name"] ?></a>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'code', '<?= $xsort["code"] ?>')"><?= $lang["code"] ?> <?= $sortimg["code"] ?></a>
+                       onClick="SortCol(document.fm, 'code', '<?= @$xsort["code"] ?>')"><?= $lang["code"] ?> <?= @$sortimg["code"] ?></a>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'description', '<?= $xsort["description"] ?>')"><?= $lang["description"] ?> <?= $sortimg["description"] ?></a>
+                       onClick="SortCol(document.fm, 'description', '<?= @$xsort["description"] ?>')"><?= $lang["description"] ?> <?= @$sortimg["description"] ?></a>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'duty_pcent', '<?= $xsort["duty_pcent"] ?>')"><?= $lang["duty_pcent"] ?> <?= $sortimg["duty_pcent"] ?></a>
+                       onClick="SortCol(document.fm, 'duty_pcent', '<?= @$xsort["duty_pcent"] ?>')"><?= $lang["duty_pcent"] ?> <?= @$sortimg["duty_pcent"] ?></a>
                 </td>
                 <td></td>
             </tr>
@@ -107,32 +105,29 @@
         <?php
         $i = 0;
         if (!empty($pcclist)) {
-            foreach ($pcclist as $pcc) {
-                $is_edit = ($cmd == "edit" && $sku == $pcc->get_sku());
+            foreach ($pcclist as $pcc) :
+                $is_edit = ($cmd == "edit" && $sku == $pcc->getSku());
                 ?>
 
-                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
-                    onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){
-                ?>onClick="Redirect('<?= site_url('mastercfg/custom_class/sku/' . $country_id . '/' . $pcc->get_sku()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"<?
-                }?>>
+                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" <?=(!($is_edit)) ? "onClick=Redirect('". site_url('mastercfg/custom_class/sku/' . $country_id ."/".$pcc->getSku())."/?".$_SERVER['QUERY_STRING']."')" : ""?> onMouseOut="RemoveClassName(this, 'highlight')">
                     <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                         title='<?= $lang["create_on"] ?>:<?= $pcc->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $pcc->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $pcc->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $pcc->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $pcc->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $pcc->get_modify_by() ?>'>
+                                         title='<?= $lang["create_on"] ?>:<?= $pcc->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $pcc->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $pcc->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $pcc->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $pcc->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $pcc->getModifyBy() ?>'>
                     </td>
-                    <td><?= $pcc->get_sku() ?></td>
-                    <td><?= $pcc->get_prod_name() ?></td>
-                    <td><?= $pcc->get_sub_cat_name() ?></td>
+                    <td><?= $pcc->getSku() ?></td>
+                    <td><?= $pcc->getProdName() ?></td>
+                    <td><?= $pcc->getSubCatName() ?></td>
                     <?php
-                    if ($is_edit) {
+                    if ($is_edit) :
                         ?>
                         <form name="fm_edit"
-                              action="<?= base_url() ?>mastercfg/custom_class/edit_sku/<?= $pcc->get_sku() ?>/?<?= $_SERVER['QUERY_STRING'] ?>"
+                              action="<?= base_url() ?>mastercfg/custom_class/edit_sku/<?= $pcc->getSku() ?>/?<?= $_SERVER['QUERY_STRING'] ?>"
                               method="post" onSubmit="return CheckForm(this)">
                             <input type="hidden" name="posted" value="1">
                             <input type="hidden" name="cmd" value="edit">
-                            <input type="hidden" name="sku" value="<?= $pcc->get_sku() ?>">
+                            <input type="hidden" name="sku" value="<?= $pcc->getSku() ?>">
                             <input type="hidden" name="country_id" value="<?= $country_id ?>">
                             <?php
-                            if ($this->input->post("posted")) {
+                            if ($this->input->post("posted")) :
                                 ?>
                                 <td><input name="code" class="input" value="<?= $this->input->post("code") ?>" notEmpty
                                            maxLen=20></td>
@@ -141,43 +136,43 @@
                                 <td><input name="duty_pcent" class="input"
                                            value="<?= $this->input->post("duty_pcent") ?>" notEmpty isNumber min=0></td>
                             <?php
-                            } else {
+                            else :
                                 ?>
-                                <td><input name="code" class="input" value="<?= $pcc->get_code() ?>" notEmpty maxLen=20>
+                                <td><input name="code" class="input" value="<?= $pcc->getCode() ?>" notEmpty maxLen=20>
                                 </td>
-                                <td><input name="description" class="input" value="<?= $pcc->get_description() ?>"
+                                <td><input name="description" class="input" value="<?= $pcc->getDescription() ?>"
                                            maxLen=255></td>
-                                <td><input name="duty_pcent" class="input" value="<?= $pcc->get_duty_pcent() ?>"
+                                <td><input name="duty_pcent" class="input" value="<?= $pcc->getDutyPcent() ?>"
                                            notEmpty isNumber min=0></td>
                             <?php
-                            }
+                            endif;
                             ?>
-                            <td align="center"><input type="submit" value="<?= $lang["update"] ?>"> &nbsp; <input
-                                    type="button" value="<?= $lang["back"] ?>"
-                                    onClick="Redirect('<?= site_url('mastercfg/custom_class/edit_sku/' . $country_id) ?>?<?= $_SERVER['QUERY_STRING'] ?>')">
+                            <td align="center">
+                                <input type="submit" value="<?= $lang["update"] ?>"> &nbsp;
+                                <input type="button" value="<?= $lang["back"] ?>" onClick="Redirect('<?= site_url('mastercfg/custom_class/sku/' . $country_id) ?>?<?= $_SERVER['QUERY_STRING'] ?>')">
                             </td>
                         </form>
                     <?php
-                    } else {
+                    else :
                         ?>
-                        <td><?= $pcc->get_code() ?></td>
-                        <td><?= $pcc->get_description() ?></td>
-                        <td><?= $pcc->get_duty_pcent() ?></td>
+                        <td><?= $pcc->getCode() ?></td>
+                        <td><?= $pcc->getDescription() ?></td>
+                        <td><?= $pcc->getDutyPcent() ?></td>
                         <td>&nbsp;</td>
                     <?php
-                    }
+                    endif;
                     ?>
                 </tr>
                 <?php
                 $i++;
-            }
+            endforeach;
         }
         ?>
         <?php
-        }
+        endif;
         ?>
     </table>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>
