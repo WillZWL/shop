@@ -1,6 +1,4 @@
 <?php
-use AtomV2\Models\Mastercfg\BrandModel;
-
 class Brand extends MY_Controller
 {
     private $appId = "MST0006";
@@ -8,7 +6,6 @@ class Brand extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->brandModel = new BrandModel;
     }
 
     public function index($offset = 0)
@@ -46,7 +43,7 @@ class Brand extends MY_Controller
         $option["limit"] = $limit;
         $option["offset"] = $offset;
 
-        $data = $this->brandModel->getBrandList($where, $option);
+        $data = $this->container['brandModel']->getBrandList($where, $option);
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
@@ -73,23 +70,22 @@ class Brand extends MY_Controller
 
     public function add()
     {
-
         $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post("posted")) {
             if (isset($_SESSION["brand_vo"])) {
-                $this->brandModel->includeBrandVo();
+                $this->container['brandModel']->includeBrandVo();
                 $data["brand"] = unserialize($_SESSION["brand_vo"]);
 
                 $_POST["status"] = 1;
                 set_value($data["brand"], $_POST);
 
-                $proc = $this->brandModel->getBrand(["brand_name" => $data["brand"]->getBrandName()]);
+                $proc = $this->container['brandModel']->getBrand(["brand_name" => $data["brand"]->getBrandName()]);
                 if (!empty($proc)) {
                     $_SESSION["NOTICE"] = "brand_existed";
                 } else {
                     $data["brand"]->setId(0);
-                    if ($new_obj = $this->brandModel->addBrand($data["brand"])) {
+                    if ($new_obj = $this->container['brandModel']->addBrand($data["brand"])) {
                         unset($_SESSION["brand_vo"]);
                         $id = $new_obj->getId();
                         redirect(base_url() . "mastercfg/brand/view/" . $id);
@@ -104,7 +100,7 @@ class Brand extends MY_Controller
         $data["lang"] = $lang;
 
         if (empty($data["brand"])) {
-            if (($data["brand"] = $this->brandModel->getBrand()) === FALSE) {
+            if (($data["brand"] = $this->container['brandModel']->getBrand()) === FALSE) {
                 $_SESSION["NOTICE"] = $this->db->error();
             } else {
                 $_SESSION["brand_vo"] = serialize($data["brand"]);
@@ -125,18 +121,18 @@ class Brand extends MY_Controller
             if ($this->input->post("posted") && $this->input->post("cmd") == "edit") {
 
                 if (isset($_SESSION["brand_vo"])) {
-                    $this->brandModel->includeBrandVo();
+                    $this->container['brandModel']->includeBrandVo();
                     $data["brand"] = unserialize($_SESSION["brand_vo"]);
 
                     if ($data["brand"]->getId() != $_POST["id"]) {
-                        $proc = $this->brandModel->getBrand(["id" => $id]);
+                        $proc = $this->container['brandModel']->getBrand(["id" => $id]);
                         if (!empty($proc)) {
                             $_SESSION["NOTICE"] = "brand_existed";
                         }
                     } else {
                         set_value($data["brand"], $_POST);
 
-                        if ($this->brandModel->updateBrand($data["brand"])) {
+                        if ($this->container['brandModel']->updateBrand($data["brand"])) {
                             unset($_SESSION["brand_vo"]);
                             redirect(base_url() . "mastercfg/brand/view/" . $id);
                         } else {
@@ -150,7 +146,7 @@ class Brand extends MY_Controller
             $data["lang"] = $lang;
 
             if (empty($data["brand"])) {
-                if (($data["brand"] = $this->brandModel->getBrand(["id" => $id])) === FALSE) {
+                if (($data["brand"] = $this->container['brandModel']->getBrand(["id" => $id])) === FALSE) {
                     $_SESSION["NOTICE"] = $this->db->error();
                 } else {
                     $_SESSION["brand_vo"] = serialize($data["brand"]);
@@ -167,7 +163,7 @@ class Brand extends MY_Controller
     {
         if ($this->input->post("posted") && ($brand_id = $this->input->post("brand_id"))) {
             foreach ($_POST["check"] as $cur_brand) {
-                if ($this->brandModel->delBrandRegion(["brand_id" => $brand_id, "sales_region_id" => $_POST["del_sales_region_id"][$cur_brand], "src_region_id" => $_POST["del_src_region_id"][$cur_brand]]) === FALSE) {
+                if ($this->container['brandModel']->delBrandRegion(["brand_id" => $brand_id, "sales_region_id" => $_POST["del_sales_region_id"][$cur_brand], "src_region_id" => $_POST["del_src_region_id"][$cur_brand]]) === FALSE) {
                     $_SESSION["NOTICE"] = $this->db->error();
                 }
             }
@@ -182,7 +178,7 @@ class Brand extends MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->brandModel->getBrandList(["status" => 1], ["orderby" => "brand_name ASC", "limit" => -1]);
+        $objlist = $this->container['brandModel']->getBrandList(["status" => 1], ["orderby" => "brand_name ASC", "limit" => -1]);
         foreach ($objlist["brandlist"] as $obj) {
             $sid = str_replace("'", "\'", $obj->getId());
             $name = str_replace("'", "\'", $obj->getBrandName());

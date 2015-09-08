@@ -1,6 +1,7 @@
 <?php
 namespace AtomV2\Service;
 
+use PHPMailer;
 use AtomV2\Service\SellingPlatformService;
 use AtomV2\Dao\ProductDao;
 use AtomV2\Dao\DeliveryTimeDao;
@@ -100,8 +101,8 @@ class DeliverytimeService extends BaseService
 
     public function sendNotificationEmail($type, $msg = "")
     {
-        include_once(BASEPATH . "plugins/phpmailer/phpmailer_pi.php");
-        $phpmail = new phpmailer();
+        $phpmail = new PHPMailer;
+
         $phpmail->IsSMTP();
         $phpmail->From = "Admin <admin@valuebasket.net>";
 

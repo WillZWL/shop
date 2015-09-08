@@ -8,7 +8,7 @@ class Freight extends FreightHelper
     public function __construct()
     {
         parent::__construct();
-        $this->authorizationService->checkAccessRights($this->getAppId(), "");
+        $this->container['authorizationService']->checkAccessRights($this->getAppId(), "");
     }
 
     public function getAppId()
@@ -62,13 +62,13 @@ class Freight extends FreightHelper
             $where["bulk_admin_chrg"] = $this->input->get("bulk_admin_chrg");
         }
 
-        $data["objlist"] = $this->freightModel->getFreightCatList($where, $option);
-        $data["total"] = $this->freightModel->getFreightCatTotal($where, $option);
+        $data["objlist"] = $this->container['freightModel']->getFreightCatList($where, $option);
+        $data["total"] = $this->container['freightModel']->getFreightCatTotal($where, $option);
 
         $data["searchdisplay"] = "";
 
         if (empty($_SESSION["freightCatVo"])) {
-            if (($freightCatVo = $this->freightModel->getFreightCat()) === FALSE) {
+            if (($freightCatVo = $this->container['freightModel']->getFreightCat()) === FALSE) {
                 $_SESSION["NOTICE"] = "ERROR " . __LINE__ . " : " . $this->db->_error_message();
             } else {
                 $_SESSION["freightCatVo"] = serialize($freightCatVo);
@@ -76,7 +76,7 @@ class Freight extends FreightHelper
         }
 
         if (empty($_SESSION["freightCatObj"][$cat_id])) {
-            if (($data["freightCatObj"] = $this->freightModel->getFreightCat(array("id" => $cat_id))) === FALSE) {
+            if (($data["freightCatObj"] = $this->container['freightModel']->getFreightCat(array("id" => $cat_id))) === FALSE) {
                 $_SESSION["NOTICE"] = "ERROR " . __LINE__ . " : " . $this->db->_error_message();
             } else {
                 unset($_SESSION["freightCatObj"]);
@@ -84,7 +84,7 @@ class Freight extends FreightHelper
             }
         }
 
-        $data["origin_country_list"] = $this->freightModel->getOriginCountryList();
+        $data["origin_country_list"] = $this->container['freightModel']->getOriginCountryList();
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
@@ -100,30 +100,27 @@ class Freight extends FreightHelper
 
     public function add()
     {
-
         $sub_app_id = $this->getAppId() . "01";
         $cat_type = $this->input->post("cat_type");
 
         if ($this->input->post("posted")) {
-
             if (isset($_SESSION["freightCatVo"])) {
-                $this->freightModel->includeFreightCatVo();
                 $data["freight_cat"] = unserialize($_SESSION["freightCatVo"]);
 
                 $_POST["status"] = 1;
                 set_value($data["freight_cat"], $_POST);
 
                 $name = $data["freight_cat"]->getName();
-                $proc = $this->freightModel->getFreightCat(array("name" => $name));
+                $proc = $this->container['freightModel']->getFreightCat(array("name" => $name));
                 if (!empty($proc)) {
                     $_SESSION["NOTICE"] = "freight_cat_existed";
                 } else {
 
-                    if ($newobj = $this->freightModel->addFreightCat($data["freight_cat"])) {
-                        if ($objlist = $this->freightModel->getFccNearestAmount($newobj->getId(), $data["freight_cat"]->getWeight())) {
+                    if ($newobj = $this->container['freightModel']->addFreightCat($data["freight_cat"])) {
+                        if ($objlist = $this->container['freightModel']->getFccNearestAmount($newobj->getId(), $data["freight_cat"]->getWeight())) {
                             foreach ($objlist as $obj) {
                                 $obj->setFcatId($newobj->getId());
-                                $this->freightModel->addFcc($obj);
+                                $this->container['freightModel']->addFcc($obj);
                             }
                         }
 
@@ -147,7 +144,7 @@ class Freight extends FreightHelper
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
             if ($this->input->post("posted")) {
-                $this->freightModel->saveFreightCatCharge($_POST["value"], $origin_country);
+                $this->container['freightModel']->saveFreightCatCharge($_POST["value"], $origin_country);
                 if (empty($_SESSION["NOTICE"])) {
                     redirect(current_url() . "?" . $_SERVER['QUERY_STRING']);
                 }
@@ -166,7 +163,7 @@ class Freight extends FreightHelper
 
             $option["orderby"] = $sort . " " . $order;
 
-            $full_list = $this->freightModel->getFullFreightCatChargeList(array("origin_country" => $origin_country), array("orderby" => "fcat_id ASC", "limit" => -1));
+            $full_list = $this->container['freightModel']->getFullFreightCatChargeList(array("origin_country" => $origin_country), array("orderby" => "fcat_id ASC", "limit" => -1));
             $data["objlist"] = $full_list["value_list"];
             $data["key_freight_list"] = $full_list["key_list"]["frieght_cat_arr"];
             $data["key_country_list"] = $full_list["key_list"]["dest_country_arr"];
@@ -174,7 +171,7 @@ class Freight extends FreightHelper
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
 
-            $data["origin_country_list"] = $this->freightModel->getOriginCountryList();
+            $data["origin_country_list"] = $this->container['freightModel']->getOriginCountryList();
             $data["origin_country"] = $origin_country;
             $data["notice"] = notice($lang);
             $data["cmd"] = "edit";
@@ -189,8 +186,8 @@ class Freight extends FreightHelper
         if ($courier_id) {
             $sub_app_id = $this->getAppId() . "02";
 
-            $courier = $this->freightModel->getCourier(array("id" => $courier_id));
-            $data["objlist"] = $this->freightModel->getCourierRegionCountry(array("courier_id" => $courier_id));
+            $courier = $this->container['freightModel']->getCourier(array("id" => $courier_id));
+            $data["objlist"] = $this->container['freightModel']->getCourierRegionCountry(array("courier_id" => $courier_id));
 
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
@@ -209,11 +206,10 @@ class Freight extends FreightHelper
             unset($_SESSION["NOTICE"]);
             if ($cat_type == "freight") {
                 if (isset($_SESSION["freightCatObj"][$cat_id])) {
-                    $this->freightModel->includeFreightCatVo();
                     $data["freight_cat"] = unserialize($_SESSION["freightCatObj"][$cat_id]);
 
                     if ($data["freight_cat"]->getName() != $_POST["name"]) {
-                        $proc = $this->freightModel->getFreightCat(array("name" => $_POST["name"]));
+                        $proc = $this->container['freightModel']->getFreightCat(array("name" => $_POST["name"]));
                         if (!empty($proc)) {
                             $_SESSION["NOTICE"] = "freight_cat_existed";
                         }
@@ -221,7 +217,7 @@ class Freight extends FreightHelper
                     if (empty($_SESSION["NOTICE"])) {
                         set_value($data["freight_cat"], $_POST);
 
-                        if ($this->freightModel->updateFreightCat($data["freight_cat"])) {
+                        if ($this->container['freightModel']->updateFreightCat($data["freight_cat"])) {
                             unset($_SESSION["freightCatObj"]);
                             redirect(base_url() . "mastercfg/freight/index/" . $cat_type . "?" . $_SERVER['QUERY_STRING']);
                         } else {
@@ -231,11 +227,10 @@ class Freight extends FreightHelper
                 }
             } else {
                 if (isset($_SESSION["weight_cat_obj"][$cat_id])) {
-                    $this->freightModel->includeWeightCatVo();
                     $data["weight_cat"] = unserialize($_SESSION["weight_cat_obj"][$cat_id]);
 
                     if ($data["weight_cat"]->getWeight() != $_POST["weight"]) {
-                        $proc = $this->freightModel->getWeightCat(array("weight" => $_POST["weight"]));
+                        $proc = $this->container['freightModel']->getWeightCat(array("weight" => $_POST["weight"]));
                         if (!empty($proc)) {
                             $_SESSION["NOTICE"] = "weight_cat_existed";
                         }
@@ -243,7 +238,7 @@ class Freight extends FreightHelper
                     if (empty($_SESSION["NOTICE"])) {
                         set_value($data["weight_cat"], $_POST);
 
-                        if ($this->freightModel->updateWeightCat($data["weight_cat"])) {
+                        if ($this->container['freightModel']->updateWeightCat($data["weight_cat"])) {
                             unset($_SESSION["weight_cat_obj"]);
                             redirect(base_url() . "mastercfg/freight/index/" . $cat_type . "?" . $_SERVER['QUERY_STRING']);
                         } else {

@@ -1,6 +1,4 @@
 <?php
-use AtomV2\Models\CustomerService\FaqadminModel;
-
 class Faqadmin extends MY_Controller
 {
     private $appId = "CS0003";
@@ -9,7 +7,6 @@ class Faqadmin extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->faqadminModel = new FaqadminModel;
     }
 
 
@@ -25,7 +22,7 @@ class Faqadmin extends MY_Controller
                     'lang_id'=>$this->input->post("lang_id"),
                     'faq_ver'=>$this->input->post("faq_ver")
                   ];
-            $this->faqadminModel->save($wh);
+            $this->container['faqadminModel']->save($wh);
 
             Redirect(base_url() . "cs/faqadmin/?" . $_SERVER["QUERY_STRING"]);
         }
@@ -61,7 +58,7 @@ class Faqadmin extends MY_Controller
         $option["orderby"] = $sort . " " . $order;
 
 
-        $data = $this->faqadminModel->getListCnt($where, $option);
+        $data = $this->container['faqadminModel']->getListCnt($where, $option);
 
         include_once APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php";
         $data["lang"] = $lang;

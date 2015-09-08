@@ -54,7 +54,7 @@
                     $i = 0;
                     foreach ($key_country_list as $country_id => $country_name) :
                         ?>
-                        <th width="90"<?= "";//$cur_locked ?> title="<?= $country_name ?>"><?= $country_name ?></th>
+                        <th width="90"<?= $cur_locked ?> title="<?= $country_name ?>"><?= $country_name ?></th>
                         <?php
                         $cols++;
                         $i++;

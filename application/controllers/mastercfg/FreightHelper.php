@@ -1,7 +1,4 @@
 <?php
-use AtomV2\Models\Mastercfg\FreightModel;
-use AtomV2\Service\PaginationService;
-
 class FreightHelper extends MY_Controller
 {
     private $appId = "MST0009";
@@ -9,9 +6,6 @@ class FreightHelper extends MY_Controller
     public function __construct()
     {
         parent::__construct(FALSE);
-        $this->freightModel = new FreightModel;
-        $this->paginationService = new PaginationService;
-        // $this->load->library('service/context_config_service');
     }
 
     public function js_freight_cat()
@@ -21,7 +15,7 @@ class FreightHelper extends MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->freightModel->getFreightCatList([], ["orderby" => "name ASC", "limit" => -1]);
+        $objlist = $this->container['freightModel']->getFreightCatList([], ["orderby" => "name ASC", "limit" => -1]);
         foreach ($objlist as $obj) {
             $sid = str_replace("'", "\'", $obj->getId());
             $name = str_replace("'", "\'", $obj->getName());

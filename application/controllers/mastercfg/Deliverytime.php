@@ -1,7 +1,4 @@
 <?php
-use AtomV2\Models\Mastercfg\DeliverytimeModel;
-use AtomV2\Service\ContextConfigService;
-
 class Deliverytime extends MY_Controller
 {
 
@@ -13,9 +10,7 @@ class Deliverytime extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->deliverytimeModel = new DeliverytimeModel;
-        $this->contextConfigService = new ContextConfigService;
-        $this->default_delivery = $this->contextConfigService->valueOf("default_delivery_type");
+        $this->default_delivery = $this->container['contextConfigService']->valueOf("default_delivery_type");
     }
 
     public function index()
@@ -28,9 +23,9 @@ class Deliverytime extends MY_Controller
             $_SESSION["NOTICE"] = $result["msg"];
         }
 
-        $data["scenario_list"] = $this->deliverytimeModel->deliverytimeService->getDeliveryScenarioList();
-        $data["country_list"] = $this->deliverytimeModel->countryService->getSellCountryList();
-        $del_list = $this->deliverytimeModel->deliverytimeService->getDeliverytimeList();
+        $data["scenario_list"] = $this->container['deliverytimeModel']->deliverytimeService->getDeliveryScenarioList();
+        $data["country_list"] = $this->container['deliverytimeModel']->countryService->getSellCountryList();
+        $del_list = $this->container['deliverytimeModel']->deliverytimeService->getDeliverytimeList();
 
         $del_list_by_country = [];
         if ($data["country_list"] && $del_list && $data["scenario_list"]) {
@@ -62,14 +57,14 @@ class Deliverytime extends MY_Controller
     {
         $ret = [];
         $ret["status"] = FALSE;
-        $deliverytimeDao = $this->deliverytimeModel->deliverytimeService->getDao();
+        $deliverytimeDao = $this->container['deliverytimeModel']->deliverytimeService->getDao();
 
         if ($postdata) {
             $success = 1;
             $error_msg = "The following could not be updated: ";
             $email_msg = "";
 
-            if ($scenario_list = $this->deliverytimeModel->deliverytimeService->getDeliveryScenarioList()) {
+            if ($scenario_list = $this->container['deliverytimeModel']->deliverytimeService->getDeliveryScenarioList()) {
                 foreach ($scenario_list as $obj) {
                     $scenario[$obj->id] = $obj->name;
                 }
@@ -77,7 +72,7 @@ class Deliverytime extends MY_Controller
 
             foreach ($postdata as $ctry_id => $value) {
                 $data_exists = false;
-                if (($check_empty = $this->deliverytimeModel->deliverytimeService->checkEmptyFields($value)) === false) {
+                if (($check_empty = $this->container['deliverytimeModel']->deliverytimeService->checkEmptyFields($value)) === false) {
                     $success = 0;
                     $error_msg .= "\n" . __LINE__ . " All scenarios of country<$ctry_id> must be filled.";
                     continue;
@@ -186,7 +181,7 @@ class Deliverytime extends MY_Controller
 
             if ($email_msg) {
                 $email_msg = "Changes made to ship/delivery time frames: " . $email_msg;
-                $this->$this->deliverytimeModel->deliverytimeService->sendNotificationEmail("CHG", $email_msg);
+                $this->container['deliverytimeModel']->deliverytimeService->sendNotificationEmail("CHG", $email_msg);
             }
         } else {
             $ret["msg"] = "deliverytime LINE: " . __LINE__ . " postdata is empty.";

@@ -1,9 +1,4 @@
 <?php
-use AtomV2\Models\Mastercfg\ExchangeRateModel;
-use AtomV2\Service\LogService;
-use AtomV2\Service\AuthorizationService;
-use AtomV2\Service\ContextConfigService;
-
 class ExchangeRateHelper extends \MY_Controller
 {
     private $appId = "MST0003";
@@ -11,14 +6,8 @@ class ExchangeRateHelper extends \MY_Controller
     public function __construct()
     {
         parent::__construct(FALSE);
-        $this->exchangeRateModel = new ExchangeRateModel;
-        $this->logService = new LogService;
-        $this->authorizationService = new AuthorizationService;
-        $this->contextConfigService = new ContextConfigService;
-
         $this->title = 'Region Information';
-
-        $this->currency_list = $ccc = $this->exchangeRateModel->getActiveCurrencyList([], array("orderby" => "name ASC"));
+        $this->currency_list = $ccc = $this->container['exchangeRateModel']->getActiveCurrencyList([], ["orderby" => "name ASC"]);
     }
 
     public function js_xratelist($to_currency = "")
@@ -28,7 +17,7 @@ class ExchangeRateHelper extends \MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $xratelist = $this->exchangeRateModel->exchangeRateService->getDao()->getList($to_currency == "" ? [] : array("to_currency_id" => $to_currency));
+        $xratelist = $this->container['exchangeRateModel']->exchangeRateService->getDao()->getList($to_currency == "" ? [] : ["to_currency_id" => $to_currency]);
         foreach ($xratelist as $obj) {
             $fid = str_replace("'", "\'", $obj->get_from_currency_id());
             $tid = str_replace("'", "\'", $obj->get_to_currency_id());
