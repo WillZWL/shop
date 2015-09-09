@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\CategoryMappingDao;
+use ESG\Panther\Dao\CategoryMappingDao;
 
 class CategoryMappingService extends BaseService
 {

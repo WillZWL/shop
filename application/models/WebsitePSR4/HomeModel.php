@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Models\Website;
+namespace ESG\Panther\Models\Website;
 
-use AtomV2\Service\WebsiteService;
+use ESG\Panther\Service\WebsiteService;
 
 class HomeModel extends \CI_Model
 {

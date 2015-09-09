@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\CurrencyDao;
+use ESG\Panther\Dao\CurrencyDao;
 
 class CurrencyService extends BaseService
 {

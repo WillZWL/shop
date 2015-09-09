@@ -1,10 +1,10 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\CountryDao;
-use AtomV2\Dao\CountryExtDao;
-use AtomV2\Dao\RmaFcDao;
-use AtomV2\Service\CountryStateService;
+use ESG\Panther\Dao\CountryDao;
+use ESG\Panther\Dao\CountryExtDao;
+use ESG\Panther\Dao\RmaFcDao;
+use ESG\Panther\Service\CountryStateService;
 
 class CountryService extends BaseService
 {

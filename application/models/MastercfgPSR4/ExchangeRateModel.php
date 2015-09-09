@@ -1,8 +1,8 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\ExchangeRateService;
-use AtomV2\Service\CurrencyService;
+use ESG\Panther\Service\ExchangeRateService;
+use ESG\Panther\Service\CurrencyService;
 
 class ExchangeRateModel extends \CI_Model
 {

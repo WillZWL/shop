@@ -1,8 +1,8 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Service\WmsWarehouseService;
-use AtomV2\Service\ExtCategoryMappingService;
+use ESG\Panther\Service\WmsWarehouseService;
+use ESG\Panther\Service\ExtCategoryMappingService;
 
 include_once "PriceService.php";
 

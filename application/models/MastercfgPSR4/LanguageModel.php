@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\LanguageService;
+use ESG\Panther\Service\LanguageService;
 
 class LanguageModel extends \CI_Model
 {

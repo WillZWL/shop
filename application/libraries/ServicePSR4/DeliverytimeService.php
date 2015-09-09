@@ -1,10 +1,10 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
 use PHPMailer;
-use AtomV2\Service\SellingPlatformService;
-use AtomV2\Dao\ProductDao;
-use AtomV2\Dao\DeliveryTimeDao;
+use ESG\Panther\Service\SellingPlatformService;
+use ESG\Panther\Dao\ProductDao;
+use ESG\Panther\Dao\DeliveryTimeDao;
 
 class DeliverytimeService extends BaseService
 {

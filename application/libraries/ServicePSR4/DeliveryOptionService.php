@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\DeliveryOptionDao;
+use ESG\Panther\Dao\DeliveryOptionDao;
 
 class DeliveryOptionService extends BaseService
 {

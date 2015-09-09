@@ -1,8 +1,8 @@
 <?php
-namespace AtomV2\Models\Website;
+namespace ESG\Panther\Models\Website;
 
-use AtomV2\Models\Marketing\ProductModel;
-use AtomV2\Models\Marketing\PriceModel;
+use ESG\Panther\Models\Marketing\ProductModel;
+use ESG\Panther\Models\Marketing\PriceModel;
 
 class CommonDataPrepareModel extends \CI_Model
 {

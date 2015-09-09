@@ -1,13 +1,13 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\PriceDao;
-use AtomV2\Dao\ProductComplementaryAccDao;
-use AtomV2\Service\FreightCatService;
-use AtomV2\Service\ProductService;
-use AtomV2\Service\WeightCatService;
-use AtomV2\Service\ContextConfigService;
-use AtomV2\Service\SubjectDomainService;
+use ESG\Panther\Dao\PriceDao;
+use ESG\Panther\Dao\ProductComplementaryAccDao;
+use ESG\Panther\Service\FreightCatService;
+use ESG\Panther\Service\ProductService;
+use ESG\Panther\Service\WeightCatService;
+use ESG\Panther\Service\ContextConfigService;
+use ESG\Panther\Service\SubjectDomainService;
 
 class PriceService extends BaseService
 {

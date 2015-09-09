@@ -1,9 +1,9 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\UserService;
-use AtomV2\Service\UserRoleService;
-use AtomV2\Service\RoleService;
+use ESG\Panther\Service\UserService;
+use ESG\Panther\Service\UserRoleService;
+use ESG\Panther\Service\RoleService;
 
 class UserModel extends \CI_Model
 {

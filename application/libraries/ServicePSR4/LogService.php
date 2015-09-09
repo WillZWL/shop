@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\LogmessageDao;
+use ESG\Panther\Dao\LogmessageDao;
 
 class LogService extends BaseService
 {

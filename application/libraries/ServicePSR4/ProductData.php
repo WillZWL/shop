@@ -1,5 +1,5 @@
 <?php
-namespace AtomV2;
+namespace ESG\Panther;
 
 use ArrayAccess;
 use InvalidArgumentException;

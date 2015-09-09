@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\SellingPlatformDao;
+use ESG\Panther\Dao\SellingPlatformDao;
 
 class SellingPlatformService extends BaseService
 {

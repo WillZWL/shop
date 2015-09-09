@@ -1,5 +1,5 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
 include_once "Microsoft_translator/Access_token_authentication.php";
 

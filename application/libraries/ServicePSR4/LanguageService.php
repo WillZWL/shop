@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\LanguageDao;
+use ESG\Panther\Dao\LanguageDao;
 
 class LanguageService extends BaseService
 {

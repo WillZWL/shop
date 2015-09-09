@@ -1,9 +1,9 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\RegionDao;
-use AtomV2\Dao\CountryDao;
-use AtomV2\Dao\RegionCountryDao;
+use ESG\Panther\Dao\RegionDao;
+use ESG\Panther\Dao\CountryDao;
+use ESG\Panther\Dao\RegionCountryDao;
 
 class RegionService extends BaseService
 {

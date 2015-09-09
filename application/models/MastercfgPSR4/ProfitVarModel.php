@@ -1,14 +1,14 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\PlatformBizVarService;
-use AtomV2\Service\RegionService;
-use AtomV2\Service\CountryService;
-use AtomV2\Service\CourierService;
-use AtomV2\Service\DeliveryTypeService;
-use AtomV2\Service\ShiptypeService;
-use AtomV2\Service\SellingPlatformService;
-use AtomV2\Service\LanguageService;
+use ESG\Panther\Service\PlatformBizVarService;
+use ESG\Panther\Service\RegionService;
+use ESG\Panther\Service\CountryService;
+use ESG\Panther\Service\CourierService;
+use ESG\Panther\Service\DeliveryTypeService;
+use ESG\Panther\Service\ShiptypeService;
+use ESG\Panther\Service\SellingPlatformService;
+use ESG\Panther\Service\LanguageService;
 
 class ProfitVarModel extends \CI_Model
 {

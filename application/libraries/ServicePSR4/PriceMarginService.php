@@ -1,10 +1,10 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\PriceMarginDao;
-use AtomV2\Service\ClassFactoryService;
-use AtomV2\Service\ProductService;
-use AtomV2\Service\PlatformBizVarService;
+use ESG\Panther\Dao\PriceMarginDao;
+use ESG\Panther\Service\ClassFactoryService;
+use ESG\Panther\Service\ProductService;
+use ESG\Panther\Service\PlatformBizVarService;
 
 class PriceMarginService extends BaseService
 {

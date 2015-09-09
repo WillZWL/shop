@@ -1,9 +1,9 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\WeightCategoryDao;
-use AtomV2\Dao\WeightCatChargeDao;
-use AtomV2\Service\ColourService;
+use ESG\Panther\Dao\WeightCategoryDao;
+use ESG\Panther\Dao\WeightCatChargeDao;
+use ESG\Panther\Service\ColourService;
 
 class WeightCatService extends BaseService
 {

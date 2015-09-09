@@ -1,8 +1,8 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\FaqadminDao;
-use AtomV2\Service\PlatformBizVarService;
+use ESG\Panther\Dao\FaqadminDao;
+use ESG\Panther\Service\PlatformBizVarService;
 
 class FaqadminService extends BaseService
 {

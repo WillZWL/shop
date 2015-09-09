@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\ApplicationFeatureDao;
+use ESG\Panther\Dao\ApplicationFeatureDao;
 
 class ApplicationFeatureService extends BaseService
 {

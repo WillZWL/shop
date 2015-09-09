@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\CurrencyService;
+use ESG\Panther\Service\CurrencyService;
 
 class CurrencyModel extends \CI_Model
 {

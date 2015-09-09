@@ -1,8 +1,8 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Service\FtpconnectionService;
-use AtomV2\Service\LogService;
+use ESG\Panther\Service\FtpconnectionService;
+use ESG\Panther\Service\LogService;
 
 class FtpConnector extends Connector
 {

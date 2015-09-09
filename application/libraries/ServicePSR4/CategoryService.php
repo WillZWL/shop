@@ -1,12 +1,12 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\CategoryDao;
-use AtomV2\Dao\ColourDao;
-use AtomV2\Dao\CategoryExtendDao;
-use AtomV2\Dao\CategoryContentDao;
-use AtomV2\Dao\CategoryBannerDao;
-use AtomV2\Service\BrandService;
+use ESG\Panther\Dao\CategoryDao;
+use ESG\Panther\Dao\ColourDao;
+use ESG\Panther\Dao\CategoryExtendDao;
+use ESG\Panther\Dao\CategoryContentDao;
+use ESG\Panther\Dao\CategoryBannerDao;
+use ESG\Panther\Service\BrandService;
 
 class CategoryService extends BaseService
 {

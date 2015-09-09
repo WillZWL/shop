@@ -1,8 +1,8 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Service\BrandService;
-use AtomV2\Dao\ProductDao;
+use ESG\Panther\Service\BrandService;
+use ESG\Panther\Dao\ProductDao;
 
 class ProductService extends BaseProductService
 {

@@ -1,5 +1,5 @@
 <?php
-use AtomV2\Models\Mastercfg\RegionModel;
+use ESG\Panther\Models\Mastercfg\RegionModel;
 
 class RegionHelper extends MY_Controller
 {

@@ -1,8 +1,8 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\BrandService;
-use AtomV2\Service\RegionService;
+use ESG\Panther\Service\BrandService;
+use ESG\Panther\Service\RegionService;
 
 class BrandModel extends \CI_Model
 {

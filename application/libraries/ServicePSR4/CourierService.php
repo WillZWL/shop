@@ -1,8 +1,8 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\CourierDao;
-use AtomV2\Dao\CourierRegionDao;
+use ESG\Panther\Dao\CourierDao;
+use ESG\Panther\Dao\CourierRegionDao;
 
 class CourierService extends BaseService
 {
