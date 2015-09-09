@@ -20,6 +20,7 @@
         "psr-4": {
             "ESG\\Panther\\": "application/libraries/",
             "ESG\\Panther\\Dao\\": "application/libraries/DaoPSR4",
+            "ESG\\Panther\\Models\\Auth\\": "application/models/AuthPSR4",
             "ESG\\Panther\\Service\\": "application/libraries/ServicePSR4",
             "ESG\\Panther\\Models\\Website\\": "application/models/WebsitePSR4",
             "ESG\\Panther\\Models\\Mastercfg\\": "application/models/MastercfgPSR4",
