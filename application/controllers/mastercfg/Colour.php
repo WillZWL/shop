@@ -13,11 +13,6 @@ class Colour extends MY_Controller
         return $this->appId;
     }
 
-    public function set_translate_service($serv)
-    {
-        $this->translate_service = $serv;
-    }
-
     public function add()
     {
         if ($this->input->post('translate') !== null) {
@@ -156,5 +151,10 @@ class Colour extends MY_Controller
         }
 
         return $translated;
+    }
+
+    public function set_translate_service($serv)
+    {
+        $this->translate_service = $serv;
     }
 }

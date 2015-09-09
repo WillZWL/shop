@@ -19,7 +19,6 @@ class ProductDao extends BaseDao
     public function __construct()
     {
         parent::__construct();
-        // include_once(APPPATH . 'helpers/object_helper.php');
     }
 
     public function getHomeProduct($where = [], $option = [], $class_name = 'SimpleProductDto')
@@ -35,7 +34,6 @@ class ProductDao extends BaseDao
         $this->db->where(['pr.sku = ll.selection' => null]);
         $this->db->group_by('ll.selection');
         $this->db->order_by("ll.mode = 'M' DESC, ll.rank");
-
 
         return $this->commonGetList($class_name, [], $option, 'pd.sku');
     }

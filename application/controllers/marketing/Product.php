@@ -494,82 +494,44 @@ html;
             }
         }
 
-
         mail("tslau@eservicesgroup.com, jesslyn@eservicesgroup.com", "[VB] CSV upload of SKU mapping completed", $response);
-
-
     }
 
 
     public function testAdd(array $data)
     {
         $versionList = $data['joined_vlist'] ?: ['AA:All Version'];
- // if (is_array($this->input->post("joined_vlist"))) {
- //                    $version_list = $this->input->post("joined_vlist");
- //                } else {
- //                    $version_list = array("AA::All Version");
- //                }
-
- //                $this->product_model->product_service->get_dao()->trans_start();
-
- //                foreach ($this->input->post("joined_list") as $colour) {
- //                    list($colour_id, $colour_name) = explode("::", $colour);
- //                    foreach ($version_list as $version) {
- //                        list($version_id, $version_name) = explode("::", $version);
- //                        $sku = str_pad($prod_grp_cd . "-" . $version_id . "-" . $colour_id, 11, "0", STR_PAD_LEFT);
- //                        $data["product"]->set_sku($sku)->set_prod_grp_cd($prod_grp_cd)->set_colour_id($colour_id)->set_version_id($version_id)->set_proc_status('0')->set_name($_POST["name"] . (($sub_cat_obj->get_add_colour_name() && $colour_id != "NA") ? " ({$colour_name})" : ""));
-
- //                        // default supp_id to 4
- //                        $data["supp_prod"]->set_supplier_id(4);
- //                        $data["supp_prod"]->set_prod_sku($sku);
- //                        $data["supp_prod"]->set_cost($_POST["cost"]);
- //                        $data["supp_prod"]->set_currency_id("HKD");
- //                        $data["supp_prod"]->set_order_default("1");
- //                        $data["supp_prod"]->set_moq("1");
- //                        $data["supp_prod"]->set_supplier_status("O");
-
-
-
-
-        $data['sku'] = $this->product_model->product_service->get_dao()->db->query("SELECT next_value('sku') as sku")->row('sku');
+        $data['prod_sku'] = $data['sku'] = $this->product_model->product_service->get_dao()->db->query("SELECT next_value('sku') as sku")->row('sku');
         $data['prod_grp_cd'] = $this->product_model->product_service->get_dao()->db->query("SELECT next_value('prod_grp_cd') as prod_grp_cd")->row('prod_grp_cd');
         $data['version_id'] = 'AA';
+        $data['supplier_id'] = '4';
+        $data['currency_id'] = 'HKD';
+        $data['lead_day'] = '1';
+        $data['moq'] = 1;
 
+        $productVo = $this->container['productVoByPost']->pick($data);
+        $supplierProdVo = $this->container['supplierProdVoByPost']->pick($data);
 
-        $foo = $this->container['productVoByPost']->pick($data);
-
-        // $this->product_model->product_service->get_dao()->db->insert($foo);
-
-        // var_dump($this->container['productService']->getDao());
-
-        $this->container['productService']->getDao()->insert($foo);
+        $this->container['productService']->getDao()->insert($productVo);
+        $this->container['supplierProdDao']->insert($supplierProdVo);
 
         return $data['prod_grp_cd'];
-
-
-
-        // var_dump($this->product_model->product_service->get_dao()->db->last_query());
-
-        // var_dump($foo);
     }
-
-
 
 
 
 
     public function add()
     {
-
-
         $sub_app_id = $this->getAppId() . "01";
-
         if (!check_app_feature_access_right($this->getAppId(), 'MKT000301_add_product')) {
             show_error("Access Denied!");
         }
         if ($this->input->post("posted")) {
-$prod_grp_cd = $this->testAdd($_POST);
-redirect(base_url() . "marketing/product/index/" . $prod_grp_cd);
+
+            $prod_grp_cd = $this->testAdd($_POST);
+            redirect(base_url() . "marketing/product/index/" . $prod_grp_cd);
+
             // if (isset($_SESSION["product_vo"])) {
             //     $this->product_model->include_vo("product");
             //     $data["product"] = unserialize($_SESSION["product_vo"]);

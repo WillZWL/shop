@@ -23,7 +23,6 @@ class BrandDao extends BaseDao
 
     public function getBrandListWRegion($where = [], $option = [], $classname = "BrandWRegionDto")
     {
-
         $this->db->from('brand AS b');
 
         if (empty($option["orderby"])) {
@@ -31,9 +30,7 @@ class BrandDao extends BaseDao
         }
 
         if (empty($option["num_rows"])) {
-
             $this->db->select('b.id, b.brand_name, b.description, b.status, b.create_on, b.create_at, b.create_by, b.modify_on, b.modify_at, b.modify_by');
-
             if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }

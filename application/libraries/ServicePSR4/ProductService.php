@@ -4,15 +4,45 @@ namespace AtomV2\Service;
 use AtomV2\Service\BrandService;
 use AtomV2\Dao\ProductDao;
 
-
-
 class ProductService extends BaseProductService
 {
+    private $factory;
+    private $data;
+    private $vos;
 
-    public function __construct()
+    public function __construct(ProductDataFactory $factory = null)
     {
         $this->setDao(new ProductDao);
+        $this->factory = $factory;
     }
+
+    public function addProductData(ProductData $obj)
+    {
+        $obj->parseData($data);
+        $this->vos = $obj->getData();
+    }
+
+    public function createProductProcess(ProductCreationInterface $obj = null)
+    {
+        $data = $this->vos;
+        $this->vos = '';
+
+        foreach ($data as $key) {
+            $sku = $this->createSkuMapping($data[$key]['skuMappingVo']);
+            $sku = $this->createProductContent($data[$key]['productContentVo']);
+            $sku = $this->createProduct($data[$key]['productVo']);
+        }
+    }
+
+    public function createSkuMapping(BaseVo $obj)
+    {
+        $this->container['skuMppingDao']->insert($obj);
+    }
+
+
+
+
+
 
     public function getHomeProduct($where, $option)
     {
