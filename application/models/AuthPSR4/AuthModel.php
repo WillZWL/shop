@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Models\Auth;
+namespace ESG\Panther\Models\Auth;
 
-use AtomV2\Service\AuthenticationService;
+use ESG\Panther\Service\AuthenticationService;
 
 class AuthModel extends \CI_Model
 {

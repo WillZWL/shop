@@ -1,10 +1,10 @@
 <?php
 namespace ESG\Panther\Service;
 
-use AtomV2\Dao\UserDao;
-use AtomV2\Dao\UserRoleDao;
-use AtomV2\Dao\AuditLogDao;
-use AtomV2\Service\ContextConfigService;
+use ESG\Panther\Dao\UserDao;
+use ESG\Panther\Dao\UserRoleDao;
+use ESG\Panther\Dao\AuditLogDao;
+use ESG\Panther\Service\ContextConfigService;
 
 class AuthenticationService extends BaseService
 {

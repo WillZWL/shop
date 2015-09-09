@@ -1,5 +1,5 @@
 <?php
-use AtomV2\Models\Auth\AuthModel;
+use ESG\Panther\Models\Auth\AuthModel;
 
 class Auth extends CI_Controller
 {
