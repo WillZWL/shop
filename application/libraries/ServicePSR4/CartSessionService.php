@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Service\ProductService;
+use ESG\Panther\Service\ProductService;
 
 class CartSessionService extends BaseService
 {

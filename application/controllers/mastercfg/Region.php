@@ -1,8 +1,8 @@
 <?php
 include_once "RegionHelper.php";
 
-use AtomV2\Models\Mastercfg\RegionModel;
-use AtomV2\Service\PaginationService;
+use ESG\Panther\Models\Mastercfg\RegionModel;
+use ESG\Panther\Service\PaginationService;
 
 class Region extends RegionHelper
 {

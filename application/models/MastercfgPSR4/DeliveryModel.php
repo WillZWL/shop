@@ -1,9 +1,9 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\DeliveryService;
-use AtomV2\Service\LanguageService;
-use AtomV2\Service\CountryService;
+use ESG\Panther\Service\DeliveryService;
+use ESG\Panther\Service\LanguageService;
+use ESG\Panther\Service\CountryService;
 
 class DeliveryModel extends \CI_Model
 {

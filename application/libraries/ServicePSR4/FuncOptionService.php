@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\FuncOptionDao;
+use ESG\Panther\Dao\FuncOptionDao;
 
 class FuncOptionService extends BaseService
 {

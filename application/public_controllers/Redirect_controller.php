@@ -1,6 +1,6 @@
 <?php
 
-use AtomV2\Models\Website\HomeModel;
+use ESG\Panther\Models\Website\HomeModel;
 
 class Redirect_controller extends PUB_Controller
 {

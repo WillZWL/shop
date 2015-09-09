@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\RegionService;
+use ESG\Panther\Service\RegionService;
 
 class RegionModel extends \CI_Model
 {

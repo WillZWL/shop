@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Models\CustomerService;
+namespace ESG\Panther\Models\CustomerService;
 
-use AtomV2\Service\FaqadminService;
+use ESG\Panther\Service\FaqadminService;
 
 class FaqadminModel extends \CI_Model
 {

@@ -1,10 +1,10 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\CourierService;
-use AtomV2\Service\FreightCatService;
-use AtomV2\Service\WeightCatService;
-use AtomV2\Service\AuthorizationService;
+use ESG\Panther\Service\CourierService;
+use ESG\Panther\Service\FreightCatService;
+use ESG\Panther\Service\WeightCatService;
+use ESG\Panther\Service\AuthorizationService;
 
 class FreightModel extends \CI_Model
 {

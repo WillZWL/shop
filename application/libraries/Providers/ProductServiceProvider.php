@@ -1,9 +1,9 @@
 <?php
-namespace AtomV2\Providers;
+namespace ESG\Panther\Providers;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-use AtomV2\Service\ProductService;
+use ESG\Panther\Service\ProductService;
 
 class ProductServiceProvider implements ServiceProviderInterface
 {

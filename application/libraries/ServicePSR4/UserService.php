@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\UserDao;
+use ESG\Panther\Dao\UserDao;
 
 class UserService extends BaseService
 {

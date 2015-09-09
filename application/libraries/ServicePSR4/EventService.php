@@ -1,8 +1,8 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\EventDao;
-use AtomV2\Dao\ActionDao;
+use ESG\Panther\Dao\EventDao;
+use ESG\Panther\Dao\ActionDao;
 
 class EventService extends BaseService
 {

@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\InventoryDao;
+use ESG\Panther\Dao\InventoryDao;
 
 class InventoryService extends BaseService
 {

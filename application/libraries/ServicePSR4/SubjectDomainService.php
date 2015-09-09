@@ -1,9 +1,9 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\SubjectDomainDao;
-use AtomV2\Dao\SubjectDomainDetailDao;
-use AtomV2\Dao\SubjectDomainDetailLabelDao;
+use ESG\Panther\Dao\SubjectDomainDao;
+use ESG\Panther\Dao\SubjectDomainDetailDao;
+use ESG\Panther\Dao\SubjectDomainDetailLabelDao;
 
 class SubjectDomainService extends BaseService
 {

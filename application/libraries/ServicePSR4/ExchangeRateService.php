@@ -1,19 +1,19 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\CurrencyDao;
-use AtomV2\Dao\ExchangeRateDao;
-use AtomV2\Dao\ExchangeRateApprovalDao;
-use AtomV2\Dao\ExchangeRateHistoryDao;
-use AtomV2\Dao\TransmissionLogDao;
-use AtomV2\Dao\InterfaceExchangeRateDao;
-use AtomV2\Dao\BatchDao;
-use AtomV2\Dao\FtpInfoDao;
-use AtomV2\Service\ContextConfigService;
-use AtomV2\Service\ValidationService;
-use AtomV2\Service\EventService;
-use AtomV2\Service\PriceMarginService;
-use AtomV2\Service\FtpConnector;
+use ESG\Panther\Dao\CurrencyDao;
+use ESG\Panther\Dao\ExchangeRateDao;
+use ESG\Panther\Dao\ExchangeRateApprovalDao;
+use ESG\Panther\Dao\ExchangeRateHistoryDao;
+use ESG\Panther\Dao\TransmissionLogDao;
+use ESG\Panther\Dao\InterfaceExchangeRateDao;
+use ESG\Panther\Dao\BatchDao;
+use ESG\Panther\Dao\FtpInfoDao;
+use ESG\Panther\Service\ContextConfigService;
+use ESG\Panther\Service\ValidationService;
+use ESG\Panther\Service\EventService;
+use ESG\Panther\Service\PriceMarginService;
+use ESG\Panther\Service\FtpConnector;
 
 class ExchangeRateService extends BaseService
 {
@@ -69,7 +69,7 @@ class ExchangeRateService extends BaseService
 
     public function alterExchangeRate($from, $to, $rate, $dao)
     {
-        $SnapDao = "\AtomV2\Dao\\".$dao;
+        $SnapDao = "\ESG\Panther\Dao\\".$dao;
         $this->setSnapDao(new $SnapDao);
 
 
@@ -108,7 +108,7 @@ class ExchangeRateService extends BaseService
 
     public function getBasedRate($base, $currency_list, $dao)
     {
-        $SnapDao = "\AtomV2\Dao\\".$dao;
+        $SnapDao = "\ESG\Panther\Dao\\".$dao;
         $this->setSnapDao(new $SnapDao);
 
         if ($base != "") {

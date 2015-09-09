@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\ShiptypeDao;
+use ESG\Panther\Dao\ShiptypeDao;
 
 class ShiptypeService extends BaseService
 {

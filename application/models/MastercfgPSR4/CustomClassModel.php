@@ -1,11 +1,11 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\RegionService;
-use AtomV2\Service\CountryService;
-use AtomV2\Service\CategoryService;
-use AtomV2\Service\CustomClassService;
-use AtomV2\Service\CustomClassificationMappingService;
+use ESG\Panther\Service\RegionService;
+use ESG\Panther\Service\CountryService;
+use ESG\Panther\Service\CategoryService;
+use ESG\Panther\Service\CustomClassService;
+use ESG\Panther\Service\CustomClassificationMappingService;
 
 class CustomClassModel extends \CI_Model
 {

@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\ColourService;
+use ESG\Panther\Service\ColourService;
 
 class ColourModel extends \CI_Model
 {

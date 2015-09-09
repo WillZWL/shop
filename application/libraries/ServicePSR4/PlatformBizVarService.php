@@ -1,11 +1,11 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\PlatformBizVarDao;
-use AtomV2\Dao\CurrencyDao;
-use AtomV2\Dao\SellingPlatformDao;
-use AtomV2\Dao\PlatformCourierDao;
-use AtomV2\Dao\DeliveryTypeDao;
+use ESG\Panther\Dao\PlatformBizVarDao;
+use ESG\Panther\Dao\CurrencyDao;
+use ESG\Panther\Dao\SellingPlatformDao;
+use ESG\Panther\Dao\PlatformCourierDao;
+use ESG\Panther\Dao\DeliveryTypeDao;
 
 class PlatformBizVarService extends BaseService
 {

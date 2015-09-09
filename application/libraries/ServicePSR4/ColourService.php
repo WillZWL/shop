@@ -1,8 +1,8 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\ColourDao;
-use AtomV2\Dao\ColourExtendDao;
+use ESG\Panther\Dao\ColourDao;
+use ESG\Panther\Dao\ColourExtendDao;
 
 class ColourService extends BaseService
 {

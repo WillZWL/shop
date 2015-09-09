@@ -1,9 +1,9 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\CustomClassificationDao;
-use AtomV2\Dao\CustomClassificationMappingDao;
-use AtomV2\Dao\ProductCustomClassificationDao;
+use ESG\Panther\Dao\CustomClassificationDao;
+use ESG\Panther\Dao\CustomClassificationMappingDao;
+use ESG\Panther\Dao\ProductCustomClassificationDao;
 
 class CustomClassService extends BaseService
 {

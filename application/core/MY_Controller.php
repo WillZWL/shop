@@ -1,20 +1,20 @@
 <?php
 use Pimple\Container;
-use AtomV2\Models\CustomerService\FaqadminModel;
-use AtomV2\Models\Mastercfg\BrandModel;
-use AtomV2\Models\Mastercfg\ColourModel;
-use AtomV2\Models\Mastercfg\CountryModel;
-use AtomV2\Models\Mastercfg\CurrencyModel;
-use AtomV2\Models\Mastercfg\CustomClassModel;
-use AtomV2\Models\Mastercfg\DeliverytimeModel;
-use AtomV2\Models\Mastercfg\DeliveryModel;
-use AtomV2\Models\Mastercfg\ExchangeRateModel;
-use AtomV2\Models\Mastercfg\FreightModel;
-use AtomV2\Models\Mastercfg\LanguageModel;
-use AtomV2\Models\Mastercfg\UserModel;
-use AtomV2\Models\Mastercfg\ProfitVarModel;
-use AtomV2\Service as S;
-use AtomV2\Dao as D;
+use ESG\Panther\Models\CustomerService\FaqadminModel;
+use ESG\Panther\Models\Mastercfg\BrandModel;
+use ESG\Panther\Models\Mastercfg\ColourModel;
+use ESG\Panther\Models\Mastercfg\CountryModel;
+use ESG\Panther\Models\Mastercfg\CurrencyModel;
+use ESG\Panther\Models\Mastercfg\CustomClassModel;
+use ESG\Panther\Models\Mastercfg\DeliverytimeModel;
+use ESG\Panther\Models\Mastercfg\DeliveryModel;
+use ESG\Panther\Models\Mastercfg\ExchangeRateModel;
+use ESG\Panther\Models\Mastercfg\FreightModel;
+use ESG\Panther\Models\Mastercfg\LanguageModel;
+use ESG\Panther\Models\Mastercfg\UserModel;
+use ESG\Panther\Models\Mastercfg\ProfitVarModel;
+use ESG\Panther\Service as S;
+use ESG\Panther\Dao as D;
 
 abstract class MY_Controller extends CI_Controller
 {

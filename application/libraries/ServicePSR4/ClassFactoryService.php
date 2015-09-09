@@ -1,8 +1,8 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Service\SellingPlatformService;
-// use AtomV2\Service\PriceWebsiteService;
+use ESG\Panther\Service\SellingPlatformService;
+// use ESG\Panther\Service\PriceWebsiteService;
 
 class ClassFactoryService extends BaseService
 {
@@ -45,7 +45,7 @@ class ClassFactoryService extends BaseService
         if ($sp_obj = $this->sellingPlatformService->getDao()->get(["id" => $platform_id])) {
             $paltform_type = $sp_obj->get_type();
 
-            $p_srv_name = "\AtomV2\Service\Price" . ucwords(strtolower($paltform_type)) . "Service";
+            $p_srv_name = "\ESG\Panther\Service\Price" . ucwords(strtolower($paltform_type)) . "Service";
 
             $this->svc = new $p_srv_name;
 

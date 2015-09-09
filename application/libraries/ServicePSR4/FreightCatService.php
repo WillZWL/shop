@@ -1,11 +1,11 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\FreightCategoryDao;
-use AtomV2\Dao\FreightCatChargeDao;
-use AtomV2\Dao\FulfillmentCentreDao;
-use AtomV2\Dao\PlatformBizVarDao;
-use AtomV2\Service\ColourService;
+use ESG\Panther\Dao\FreightCategoryDao;
+use ESG\Panther\Dao\FreightCatChargeDao;
+use ESG\Panther\Dao\FulfillmentCentreDao;
+use ESG\Panther\Dao\PlatformBizVarDao;
+use ESG\Panther\Service\ColourService;
 
 class FreightCatService extends BaseService
 {

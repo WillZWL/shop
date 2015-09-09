@@ -1,10 +1,10 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\LanguageService;
-use AtomV2\Service\RegionService;
-use AtomV2\Service\CountryService;
-use AtomV2\Service\DeliverytimeService;
+use ESG\Panther\Service\LanguageService;
+use ESG\Panther\Service\RegionService;
+use ESG\Panther\Service\CountryService;
+use ESG\Panther\Service\DeliverytimeService;
 
 class DeliverytimeModel extends \CI_Model
 {

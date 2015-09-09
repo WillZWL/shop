@@ -1,5 +1,5 @@
 <?php
-use AtomV2\Models\Mastercfg\ExchangeRateModel;
+use ESG\Panther\Models\Mastercfg\ExchangeRateModel;
 
 class Cron_exchange_rate extends MY_Controller
 {

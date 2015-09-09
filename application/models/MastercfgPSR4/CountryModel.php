@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\CountryService;
+use ESG\Panther\Service\CountryService;
 
 class CountryModel extends \CI_Model
 {

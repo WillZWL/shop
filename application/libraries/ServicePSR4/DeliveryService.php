@@ -1,16 +1,16 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\DeliveryDao;
-use AtomV2\Service\ContextConfigService;
-use AtomV2\Service\CourierService;
-use AtomV2\Service\WeightCatService;
-use AtomV2\Service\ProductService;
-use AtomV2\Service\DeliveryOptionService;
-use AtomV2\Service\FuncOptionService;
-use AtomV2\Service\DeliveryTypeService;
-use AtomV2\Service\InventoryService;
-use AtomV2\Service\DeliverySurchargeService;
+use ESG\Panther\Dao\DeliveryDao;
+use ESG\Panther\Service\ContextConfigService;
+use ESG\Panther\Service\CourierService;
+use ESG\Panther\Service\WeightCatService;
+use ESG\Panther\Service\ProductService;
+use ESG\Panther\Service\DeliveryOptionService;
+use ESG\Panther\Service\FuncOptionService;
+use ESG\Panther\Service\DeliveryTypeService;
+use ESG\Panther\Service\InventoryService;
+use ESG\Panther\Service\DeliverySurchargeService;
 
 class DeliveryService extends BaseService
 {
