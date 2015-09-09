@@ -1,30 +1,30 @@
 <?php
+use AtomV2\Models\Auth\AuthModel;
 
 class Auth extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('auth/auth_model');
-        $this->load->helper('url');
+        $this->authModel = new AuthModel;
     }
 
     public function external_logout($last_session_id)
     {
-        $this->set_session($last_session_id);
+        $this->setSession($last_session_id);
         session_destroy();
     }
 
-    public function set_session($last_session_id)
+    public function setSession($last_session_id)
     {
         session_id($last_session_id);
     }
 
     public function index()
     {
-        $this->auth_model->auth($this->input->post("user_id"), $this->input->post("password"));
+        $this->authModel->auth($this->input->post("user_id"), $this->input->post("password"));
 
-        if ($this->auth_model->check_authed()) {
+        if ($this->authModel->checkAuthed()) {
             if ($back = $this->input->get("back")) {
                 redirect(urldecode($back));
             } else {
@@ -36,19 +36,19 @@ class Auth extends CI_Controller
         }
     }
 
-    public function deny($data = array())
+    public function deny($data = [])
     {
         $this->load->view("login.php", $data);
     }
 
     public function check_authed()
     {
-        var_dump($this->auth_model->check_authed());
+        var_dump($this->authModel->checkAuthed());
     }
 
     public function deauth()
     {
-        $this->auth_model->deauth_user();
+        $this->authModel->deauthUser();
         $data["err_msg"] = "You have logout successfully!";
         $this->deny($data);
     }

@@ -21,6 +21,7 @@
             "AtomV2\\": "application/libraries/",
             "AtomV2\\Dao\\": "application/libraries/DaoPSR4",
             "AtomV2\\Service\\": "application/libraries/ServicePSR4",
+            "AtomV2\\Models\\Auth\\": "application/models/AuthPSR4",
             "AtomV2\\Models\\Website\\": "application/models/WebsitePSR4",
             "AtomV2\\Models\\Mastercfg\\": "application/models/MastercfgPSR4",
             "AtomV2\\Models\\CustomerService\\": "application/models/CustomerServicePSR4",
