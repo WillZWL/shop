@@ -5,6 +5,7 @@ use ESG\Panther\Dao\PriceMarginDao;
 use ESG\Panther\Service\ClassFactoryService;
 use ESG\Panther\Service\ProductService;
 use ESG\Panther\Service\PlatformBizVarService;
+use ESG\Panther\Service\PriceService;
 
 class PriceMarginService extends BaseService
 {
@@ -17,13 +18,14 @@ class PriceMarginService extends BaseService
         $this->classFactoryService = new ClassFactoryService;
         $this->productService = new ProductService;
         $this->platformBizVarService = new PlatformBizVarService;
+        $this->priceService = new PriceService;
     }
 
-    public function refresh_margin_for_top_deal()
+    public function refreshMarginForTopDeal()
     {
         if ($obj_list = $this->platformBizVarService->getSellingPlatformDao()->getList(["status" => 1])) {
             foreach ($obj_list as $obj) {
-                $this->refreshMargin($obj->get_id());
+                $this->refreshMargin($obj->getSellingPlatformId());
             }
         }
     }
@@ -40,7 +42,7 @@ class PriceMarginService extends BaseService
             return FALSE;
         }
 
-        $pr_svc = $this->classFactoryService->get_platform_price_service($platform);
+        $pr_svc = $this->classFactoryService->getPlatformPriceService($platform);
 
         $sample_vo = $this->getDao()->get();
         foreach ($prod_list as $prod) {
@@ -70,7 +72,7 @@ class PriceMarginService extends BaseService
                 set_time_limit(600);
                 ini_set("memory_limit", "500M");
 
-                $platform_id = $sellingplatform_obj->get_id();
+                $platform_id = $sellingplatform_obj->getSellingPlatformId();
                 $updatelist .= $platform_id . ",\n";
                 if ($skulist == "") {
                     echo "<br>Updating price_margin $platform_id,";
@@ -85,7 +87,6 @@ class PriceMarginService extends BaseService
             }
 
             $ts = date("Y-m-d H:i:s");
-            // mail("itsupport@eservicesgroup.net", "VB price_margin platforms update", "price_margin refreshed for following platforms @ GMT+0 $ts: \n$updatelist");
             $ret["status"] = TRUE;
             $ret["updatelist"] = $updatelist;
             return $ret;
@@ -109,28 +110,28 @@ class PriceMarginService extends BaseService
             $platform = "WEBHK";
         }
 
-        $pf_var = $this->platformBizVarService->get_platform_biz_var($platform);
+        $pf_var = $this->platformBizVarService->getPlatformBizVar($platform);
 
         $shiptype = 1;
 
         if ($pf_var) {
-            $shiptype = $pf_var->get_default_shiptype();
+            $shiptype = $pf_var->getDefaultShiptype();
         }
 
 
-        $price_srv = $this->classFactoryService->get_price_service($platform);
+        $price_srv = $this->classFactoryService->getPriceService($platform);
         $sample_vo = $this->getDao()->get();
 
         foreach ($prod_list as $prod) {
             $margin_vo = clone $sample_vo;
-            $prod->set_shiptype($shiptype);
-            $prod->set_price($price_srv->get_price($prod->get_sku()));
+            $prod->setShiptype($shiptype);
+            $prod->setPrice($price_srv->getPrice($prod->getSku()));
 
-            $price_srv->calc_profit($prod);
+            $price_srv->calcProfit($prod);
             set_value($margin_vo, $prod);
 
             $this->getDao()->replace($margin_vo);
-            if ($prod->get_sku() == '10051-NA') {
+            if ($prod->getSku() == '10051-NA') {
                 var_dump($this->getDao()->db->last_query());
                 var_dump($prod);
                 exit;
@@ -139,38 +140,38 @@ class PriceMarginService extends BaseService
         }
     }
 
-    public function refresh_margin_amazon($platform = 'AMUS')
+    public function refreshMarginAmazon($platform = 'AMUS')
     {
         $prod_list = $this->productService->getListedProductList($platform, 'ProductCostDto');
-        $this->_update_margin_amazon($prod_list, $platform);
+        $this->_updateMarginAmazon($prod_list, $platform);
     }
 
-    public function _update_margin_amazon($prod_list, $platform = 'AMUS')
+    public function _updateMarginAmazon($prod_list, $platform = 'AMUS')
     {
         if ($platform == "") {
             return FALSE;
         }
 
-        $pr_svc = $this->classFactoryService->get_platform_price_service($platform);
+        $pr_svc = $this->classFactoryService->getPlatformPriceService($platform);
 
         $sample_vo = $this->getDao()->get();
         foreach ($prod_list as $prod) {
-            $p_srv = $pr_svc->get_price_service_from_dto($prod);
-            $p_srv->set_platform_id($prod->get_platform_id());
-            $p_srv->set_platform_curr_id($prod->get_platform_currency_id());
+            $p_srv = $pr_svc->getPriceServiceFromDto($prod);
+            $p_srv->setPlatformId($prod->getPlatformId());
+            $p_srv->setPlatformCurrId($prod->getPlatformCurrencyId());
 
             // get fulfillment centre id for amazon
-            $price_ext_obj = $pr_svc->get_price_ext_dao()->get(["sku" => $prod->get_sku(), "platform_id" => $prod->get_platform_id()]);
-            if (!$price_ext_obj || !$fc_id = $price_ext_obj->get_fulfillment_centre_id()) {
+            $price_ext_obj = $pr_svc->get_Price_ext_dao()->get(["sku" => $prod->getSku(), "platform_id" => $prod->getPlatformId()]);
+            if (!$price_ext_obj || !$fc_id = $price_ext_obj->getFulfillmentCentreId()) {
                 $fc_id = "DEFAULT";
             }
-            $p_srv->set_fulfillment_centre_id($fc_id);
+            $p_srv->setFulfillmentCentreId($fc_id);
 
             $margin_vo = clone $sample_vo;
 
-            $prod->set_price($pr_svc->get_price($prod));
-            $pr_svc->calc_freight_cost($prod, $p_srv, $prod->get_platform_currency_id());
-            $pr_svc->calculate_profit($prod);
+            $prod->setPrice($pr_svc->getPrice($prod));
+            $pr_svc->calcFreightCost($prod, $p_srv, $prod->getPlatformCurrencyId());
+            $pr_svc->calculateProfit($prod);
             set_value($margin_vo, $prod);
 
             $this->getDao()->replace($margin_vo);
@@ -185,40 +186,40 @@ class PriceMarginService extends BaseService
         $this->updateMargin($prod_list, $where["v_prod_overview_w_update_time.platform_id"]);
     }
 
-    public function get_price_service()
+    public function getPriceService()
     {
         return $this->price_service;
     }
 
-    public function set_price_service(Base_service $svc)
+    public function setPriceService($svc)
     {
         $this->price_service = $svc;
         return $this;
     }
 
-    public function insert_or_update_margin($sku, $platform_id, $price = null, $profit, $margin)
+    public function insertOrUpdateMargin($sku, $platform_id, $price = null, $profit, $margin)
     {
         if ($price_margin_obj = $this->getDao()->get(['sku' => $sku, 'platform_id' => $platform_id])) {
             if (!$temp_price_margin_obj = $this->getDao()->get(['sku' => $sku, 'platform_id' => $platform_id, 'profit' => $profit, 'margin' => $margin])) {
-                $price_margin_obj->set_profit($profit);
-                $price_margin_obj->set_selling_price($price);
-                $price_margin_obj->set_margin($margin);
+                $price_margin_obj->setProfit($profit);
+                $price_margin_obj->setSellingPrice($price);
+                $price_margin_obj->setMargin($margin);
                 $this->getDao()->update($price_margin_obj);
             }
         } else {
             $price_margin_obj = $this->getDao()->get();
-            $price_margin_obj->set_sku($sku);
-            $price_margin_obj->set_platform_id($platform_id);
-            $price_margin_obj->set_selling_price($price);
-            $price_margin_obj->set_profit($profit);
-            $price_margin_obj->set_margin($margin);
+            $price_margin_obj->setSku($sku);
+            $price_margin_obj->setPlatformId($platform_id);
+            $price_margin_obj->setSellingPrice($price);
+            $price_margin_obj->setProfit($profit);
+            $price_margin_obj->setMargin($margin);
             $this->getDao()->insert($price_margin_obj);
         }
     }
 
-    public function get_cross_sell_product($prod_info, $platform_id, $language_id, $price, $price_adjustment)
+    public function getCrossSellProduct($prod_info, $platform_id, $language_id, $price, $price_adjustment)
     {
-        return $this->getDao()->get_cross_sell_product($prod_info, $platform_id, $language_id, $price, $price_adjustment);
+        return $this->getDao()->getCrossSellProduct($prod_info, $platform_id, $language_id, $price, $price_adjustment);
     }
 }
 

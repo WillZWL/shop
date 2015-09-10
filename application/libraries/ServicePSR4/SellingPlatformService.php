@@ -12,34 +12,34 @@ class SellingPlatformService extends BaseService
         $this->setDao(new SellingPlatformDao);
     }
 
-    public function get_platform_by_lang($where = array(), $option = array())
+    public function get_platform_by_lang($where = [], $option = [])
     {
         return $this->getDao()->get_platform_by_lang($where, $option);
     }
 
-    public function get_platform_list_w_country_id($country_id = "")
+    public function getPlatformListWithCountryId($country_id = "")
     {
-        return $this->getDao()->get_platform_list_w_country_id($country_id);
+        return $this->getDao()->getPlatformListWithCountryId($country_id);
     }
 
-    public function get_platform_list_w_lang_id($lang_id = "")
+    public function getPlatformListWithLangId($lang_id = "")
     {
-        return $this->getDao()->get_platform_list_w_lang_id($lang_id);
+        return $this->getDao()->getPlatformListWithLangId($lang_id);
     }
 
-    public function get_platform_type_list($where = array(), $option = array())
+    public function getPlatformTypeList($where = [], $option = [])
     {
-        return $this->getDao()->get_platform_type_list($where, $option);
+        return $this->getDao()->getPlatformTypeList($where, $option);
     }
 
-    public function get_selling_platform_w_lang_id($where = array(), $option = array())
+    public function getSellingPlatformWithLangId($where = [], $option = [])
     {
-        return $this->getDao()->get_selling_platform_w_lang_id($where, $option);
+        return $this->getDao()->getSellingPlatformWithLangId($where, $option);
     }
 
-    public function get_platform_list_w_allow_sell_country($type = "")
+    public function getPlatformListWithAllowSellCountry($type = "")
     {
-        return $this->getDao()->get_platform_list_w_allow_sell_country($type);
+        return $this->getDao()->getPlatformListWithAllowSellCountry($type);
     }
 
 }

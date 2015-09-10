@@ -9,7 +9,7 @@ class LanguageService extends BaseService
     {
         log_message('info', 'RAPHALEInitialized');
         parent::__construct();
-        $this->setDao(new LanguageDao());
+        $this->setDao(new LanguageDao);
     }
 
     public function getNameWIdKey()

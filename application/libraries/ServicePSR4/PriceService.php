@@ -67,13 +67,13 @@ class PriceService extends BaseService
     public function getWDefaultPrice($sku, $platform_id)
     {
         $price_obj = $this->getDao()->get(["sku" => $sku, "platform_id" => $platform_id]);
-        if (!$price_obj || !(call_user_func([$price_obj, "get_price"]) * 1)) {
+        if (!$price_obj || !(call_user_func([$price_obj, "getPrice"]) * 1)) {
             if (!($default_obj = $this->getDao()->getDefaultConvertedPrice(["sku" => $sku, "platform_id" => $platform_id]))) {
                 return 0;
             }
-            $default_platform_converted_price = $default_obj->get_default_platform_converted_price();
+            $defaultPlatformConvertedPrice = $default_obj->getDefaultPlatformConvertedPrice();
         }
-        return $default_platform_converted_price ? $default_platform_converted_price : $price_obj->get_price();
+        return $defaultPlatformConvertedPrice ? $defaultPlatformConvertedPrice : $price_obj->getPrice();
     }
 
     public function calcLogisticCost(&$dto)
@@ -146,7 +146,7 @@ class PriceService extends BaseService
 
             if ($required_cost_price != -1) {
                 $k = $required_cost_price;
-                $dto->set_supplier_cost($k);
+                $dto->setSupplierCost($k);
             } else
                 $k = $dto->getSupplierCost();
 
@@ -322,20 +322,20 @@ class PriceService extends BaseService
         if ($dto->getPrice()) {
             $price = $dto->getPrice();
         } else {
-            $price_obj = $this->getDao()->get(["sku" => $dto->get_sku(), "platform_id" => $dto->getPlatformId()]);
+            $price_obj = $this->getDao()->get(["sku" => $dto->getSku(), "platform_id" => $dto->getPlatformId()]);
             if ($price_obj) {
-                $price = $price_obj->get_price();
-                $dto->set_current_platform_price($price);
+                $price = $price_obj->getPrice();
+                $dto->setCurrentPlatformPrice($price);
                 if (!($price * 1)) {
-                    if ($default_obj = $this->getDao()->getDefaultConvertedPrice(["sku" => $dto->get_sku(), "platform_id" => $dto->getPlatformId()])) {
-                        $default_platform_converted_price = $default_obj->get_default_platform_converted_price();
-                        $price = $default_platform_converted_price;
-                        $dto->set_default_platform_converted_price($price);
+                    if ($default_obj = $this->getDao()->getDefaultConvertedPrice(["sku" => $dto->getSku(), "platform_id" => $dto->getPlatformId()])) {
+                        $defaultPlatformConvertedPrice = $default_obj->getDefaultPlatformConvertedPrice();
+                        $price = $defaultPlatformConvertedPrice;
+                        $dto->setDefaultPlatformConvertedPrice($price);
                     }
                 }
-                $dto->set_price($price);
+                $dto->setPrice($price);
             } else {
-                $dto->set_price(0);
+                $dto->setPrice(0);
                 $price = 0;
             }
         }
@@ -377,7 +377,7 @@ class PriceService extends BaseService
         $auto_declared = $tmp_cost / (1 - ($markup_percent / 100)) * ($dto->getDeclaredPcent() / 100);
         $country_id = substr($dto->getPlatformId(), -2);
         if ($obj = $this->subjectDomainService->getDao()->get(["subject" => "MAX_DECLARE_VALUE.{$country_id}"])) {
-            $max_value = $obj->get_value();
+            $max_value = $obj->getValue();
             $auto_declared = min($max_value, $auto_declared);
         }
 
@@ -398,7 +398,7 @@ class PriceService extends BaseService
                 } else {
                     $auto_declared = 400;
                 }
-                $dto->set_vat_percent(15);
+                $dto->setVatPercent(15);
                 $recalVat = $auto_declared * $dto->getVatPercent() / 100 + 38.07;
             }
         }
@@ -416,7 +416,7 @@ class PriceService extends BaseService
         $this->initDto($dto);
 
         if ($dto->getPlatformCountryId() == "NZ") {
-            $value = $dto->getPrice();# + $dto->get_delivery_charge();
+            $value = $dto->getPrice();
 
             if ($value > 400) {
                 $dto->setVatPercent(0);
@@ -430,7 +430,7 @@ class PriceService extends BaseService
                 if ($dto->getDeclaredValue() > 400) {
                     $dto->setVat(number_format((($dto->getDeclaredValue()) * $dto->getVatPercent() / 100) + 38.07, 2, ".", ""));
                 } else
-                    $dto->set_vat(0.00);
+                    $dto->setVat(0.00);
             }
         } else {
             $dto->setVat(number_format(($dto->getDeclaredValue()) * $dto->getVatPercent() / 100, 2, ".", ""));
@@ -480,7 +480,7 @@ class PriceService extends BaseService
             } else {
                 $declared = $value * $dto->getDeclaredPcent() / 100;
             }
-        } elseif ($obj = $this->subjectDomainService->getDao()->get(["subject" => "MAX_DECLARE_VALUE.{$dto->get_platform_country_id()}"])) {
+        } elseif ($obj = $this->subjectDomainService->getDao()->get(["subject" => "MAX_DECLARE_VALUE.{$dto->getPlatformCountryId()}"])) {
             $dto->setDeclaredPcent(100);
             $max_value = $obj->getValue();
             $declared = min($max_value, $value);
@@ -785,8 +785,8 @@ class PriceService extends BaseService
                 default:    # all other countries
                     $declared_pcent = 10;
                     break;
-                    if ($fc_obj = $this->freightCatService->getDao()->get(["id" => $prod_obj->get_freight_cat_id()])) {
-                        $declared_pcent = $fc_obj->get_declared_pcent();
+                    if ($fc_obj = $this->freightCatService->getDao()->get(["id" => $prod_obj->getFreightCatId()])) {
+                        $declared_pcent = $fc_obj->getDeclaredPcent();
                         $this->declared_value_debug .= "1. declared pcent is $declared_pcent\r\n";
                     } else {
                         // default value
@@ -795,7 +795,7 @@ class PriceService extends BaseService
                     }
 
                     if ($obj = $this->subjectDomainService->getDao()->get(["subject" => "MAX_DECLARE_VALUE.{$country_id}"])) {
-                        $max_value = $obj->get_value();
+                        $max_value = $obj->getValue();
                         $declared = min($max_value, $price);
                         $this->declared_value_debug .= "3. (max, price, chosen) is ($max_value, $price, $declared)\r\n";
                     } else {

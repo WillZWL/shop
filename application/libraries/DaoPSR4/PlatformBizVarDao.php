@@ -25,23 +25,23 @@ class PlatformBizVarDao extends BaseDao
     {
         $select_str = "pbv.*, s.name AS platform_name";
         $this->db->from('platform_biz_var AS pbv');
-        $this->db->join('selling_platform AS s', 'pbv.selling_platform_id = s.id', 'INNER');
+        $this->db->join('selling_platform AS s', 'pbv.selling_platform_id = s.selling_platform_id', 'INNER');
         return $this->commonCetList($classname, $where, $option, $select_str);
     }
 
-    public function get_pricing_tool_platform_list($sku, $platform_type, $classname = "Platform_biz_var_w_platform_name_dto")
+    public function getPricingToolPlatformList($sku, $platform_type, $classname = "Platform_biz_var_w_platform_name_dto")
     {
         $sql = "SELECT
                     pbv.*, s.name AS platform_name, c.name AS platform_country
                 FROM platform_biz_var AS pbv
                 JOIN selling_platform AS s
-                    ON pbv.selling_platform_id = s.id
+                    ON pbv.selling_platform_id = s.selling_platform_id
                 JOIN country AS c
                     ON c.country_id = pbv.platform_country_id
                 LEFT JOIN price AS pr
-                    ON pr.platform_id = pbv.selling_platform_id AND pr.platform_id = s.id AND pr.sku = ?
+                    ON pr.platform_id = pbv.selling_platform_id AND pr.platform_id = s.selling_platform_id AND pr.sku = ?
                 WHERE type = ? AND s.status = 1
-                ORDER BY pr.listing_status = 'L' DESC, s.id ASC";
+                ORDER BY pr.listing_status = 'L' DESC, s.selling_platform_id ASC";
 
         if ($result = $this->db->query($sql, array($sku, $platform_type))) {
             $result_arr = [];
@@ -59,7 +59,7 @@ class PlatformBizVarDao extends BaseDao
     {
         $select_str = "pbv.*, c.name AS platform_country";
         $this->db->from('platform_biz_var AS pbv');
-        $this->db->join('selling_platform AS s', 'pbv.selling_platform_id = s.id', 'INNER');
+        $this->db->join('selling_platform AS s', 'pbv.selling_platform_id = s.selling_platform_id', 'INNER');
         $this->db->join('country AS c', 'c.country_id = pbv.platform_country_id', 'INNER');
         return $this->commonCetList($classname, $where, $option, $select_str);
     }
@@ -80,12 +80,12 @@ class PlatformBizVarDao extends BaseDao
         return FALSE;
     }
 
-    public function get_dest_country_w_delivery_type_list()
+    public function getDestCountryWithDeliveryTypeList()
     {
-        $sql = "SELECT sp.type, sp.id, pbv.dest_country country_id, c.name as country_name, pbv.platform_currency_id
+        $sql = "SELECT sp.type, sp.selling_platform_id, pbv.dest_country country_id, c.name as country_name, pbv.platform_currency_id
                 FROM selling_platform sp
                 JOIN platform_biz_var pbv
-                    ON sp.id = pbv.selling_platform_id
+                    ON sp.selling_platform_id = pbv.selling_platform_id
                 JOIN country c
                     ON c.country_id = pbv.dest_country
                 ";
@@ -98,7 +98,7 @@ class PlatformBizVarDao extends BaseDao
         return FALSE;
     }
 
-    public function get_free_delivery_limit($platform_id)
+    public function getFreeDeliveryLimit($platform_id)
     {
         $sql = "SELECT free_delivery_limit
                 FROM platform_biz_var

@@ -33,9 +33,9 @@ class PlatformBizVarService extends BaseService
         return $ret;
     }
 
-    public function get_platform_biz_var_w_country($country = [])
+    public function getPlatformBizVarWithCountry($country = [])
     {
-        return $this->getPlatformBizVarDao()->get_platform_biz_var_w_country($country = []);
+        return $this->getPlatformBizVarDao()->getPlatformBizVarWithCountry($country = []);
     }
 
     public function getSellingPlatformList()
@@ -59,7 +59,7 @@ class PlatformBizVarService extends BaseService
         return $rtn;
     }
 
-    public function pre_load_platform_currency_list($platform_id = NULL)
+    public function preLoadPlatformCurrencyList($platform_id = NULL)
     {
         $data = [];
         $where = [];
@@ -109,24 +109,24 @@ class PlatformBizVarService extends BaseService
         return $data;
     }
 
-    public function get_list_w_platform_name($where = [], $option = [])
+    public function getListWithPlatformName($where = [], $option = [])
     {
-        return $this->getDao()->get_list_w_platform_name($where, $option);
+        return $this->getDao()->getListWithPlatformName($where, $option);
     }
 
-    public function get_pricing_tool_platform_list($sku, $platform_type)
+    public function getPricingToolPlatformList($sku, $platform_type)
     {
-        return $this->getDao()->get_pricing_tool_platform_list($sku, $platform_type);
+        return $this->getDao()->getPricingToolPlatformList($sku, $platform_type);
     }
 
-    public function get_list_w_country_name($where = [], $option = [])
+    public function getListWithCountryName($where = [], $option = [])
     {
-        return $this->getDao()->get_list_w_country_name($where, $option);
+        return $this->getDao()->getListWithCountryName($where, $option);
     }
 
-    public function get_unique_dest_country_list()
+    public function getUniqueDestCountryList()
     {
-        return $this->getDao()->get_unique_dest_country_list();
+        return $this->getDao()->getUniqueDestCountryList();
     }
 
     public function update($data, $where = [])
@@ -134,14 +134,14 @@ class PlatformBizVarService extends BaseService
      return $this->getPlatformBizVarDao()->update($data);
     }
 
-    public function get_dest_country_w_delivery_type_list()
+    public function getDestCountryWithDeliveryTypeList()
     {
-        return $this->getDao()->get_dest_country_w_delivery_type_list();
+        return $this->getDao()->getDestCountryWithDeliveryTypeList();
     }
 
-    public function get_free_delivery_limit($platform_id = "")
+    public function getFreeDeliveryLimit($platform_id = "")
     {
-        return $this->getDao()->get_free_delivery_limit($platform_id);
+        return $this->getDao()->getFreeDeliveryLimit($platform_id);
     }
 
     public function loadVo()

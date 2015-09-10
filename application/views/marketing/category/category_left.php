@@ -47,7 +47,7 @@
                 }
             }
         }
-        url = '<?=base_url()?>/marketing/category/getnext/?id=' + id + '&level=' + level;
+        url = '<?=base_url()?>marketing/category/getnext/?id=' + id + '&level=' + level;
         xmlhttp.open("GET", url, true);
         xmlhttp.send(null);
     }
@@ -83,14 +83,14 @@
 <div id="main" style="width:auto; text-align:left;">
     <?php
     foreach ($objlist as $obj) {
-        if ($obj->get_total() > 0) {
-            $link = "<span id=\"a" . $obj->get_id() . "\"><a href=\"javascript:showNextLayer('" . $obj->get_id() . "','" . ($level + 1) . "','c" . $obj->get_id() . "')\">+</a></span>&nbsp;&nbsp;";
+        if ($obj->getTotal() > 0) {
+            $link = "<span id=\"a" . $obj->getId() . "\"><a href=\"javascript:showNextLayer('" . $obj->getId() . "','" . ($level + 1) . "','c" . $obj->getId() . "')\">+</a></span>&nbsp;&nbsp;";
         } else {
             $link = "&nbsp;&nbsp;&nbsp;";
         }
-        $name = "<a href=\"" . base_url() . "marketing/category/view/" . $obj->get_id() . "\" target=\"right\" class=\"vlink\">" . $obj->get_name() . "</a>";
+        $name = "<a href=\"" . base_url() . "marketing/category/view/" . $obj->getId() . "\" target=\"right\" class=\"vlink\">" . $obj->getName() . "</a>";
         ?>
-        <div id="c<?= $obj->get_id() ?>" class="level1"><?= $link . $name ?></div>
+        <div id="c<?= $obj->getId() ?>" class="level1"><?= $link . $name ?></div>
     <?php
     }
     ?>
