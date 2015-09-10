@@ -13,6 +13,8 @@ use ESG\Panther\Models\Mastercfg\FreightModel;
 use ESG\Panther\Models\Mastercfg\LanguageModel;
 use ESG\Panther\Models\Mastercfg\UserModel;
 use ESG\Panther\Models\Mastercfg\ProfitVarModel;
+use ESG\Panther\Models\Marketing\CategoryModel;
+use ESG\Panther\Models\Marketing\RaProdCatModel;
 use ESG\Panther\Service as S;
 use ESG\Panther\Dao as D;
 
@@ -98,6 +100,14 @@ abstract class MY_Controller extends CI_Controller
         $this->container['profitVarModel'] = function ($c) {
             return new ProfitVarModel;
         };
+
+        $this->container['categoryModel'] = function ($c) {
+            return new CategoryModel;
+        };
+
+        $this->container['raProdCatModel'] = function ($c) {
+            return new RaProdCatModel;
+        };
     }
 
     public function loadVoDependcy()
@@ -128,6 +138,10 @@ abstract class MY_Controller extends CI_Controller
             return new S\AuthenticationService;
         };
 
+        $this->container['categoryService'] = function ($c) {
+            return new S\categoryService;
+        };
+
         $this->container['contextConfigService'] = function ($c) {
             return new S\ContextConfigService;
         };
@@ -147,6 +161,7 @@ abstract class MY_Controller extends CI_Controller
         $this->container['logService'] = function ($c) {
             return new S\LogService;
         };
+
     }
 
     public function getLangId()

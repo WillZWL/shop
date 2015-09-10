@@ -155,4 +155,128 @@ class ProductDao extends BaseDao
         return $result_arr;
     }
 
+    public function getWebsiteCatPageProductList($where = [], $option = [])
+    {
+        $this->db->from('product AS p');
+        $this->db->join('price AS pr', 'p.sku = pr.sku AND pr.listing_status = "L" AND p.status = "2"', 'INNER');
+        $this->db->join('category AS cat', 'cat.id = p.cat_id AND cat.status = 1', 'INNER');
+        $this->db->join('category AS sc', 'sc.id = p.sub_cat_id AND sc.status = 1', 'INNER');
+        $this->db->join('category AS ssc', 'ssc.id = p.sub_sub_cat_id AND ssc.status = 1', 'LEFT');
+        $this->db->join('brand AS br', 'br.id = p.brand_id AND br.status = 1', 'INNER');
+        $this->db->where($where);
+
+        if (empty($option["num_rows"])) {
+            $this->include_dto($classname);
+
+            if (isset($option["orderby"])) {
+                $this->db->order_by($option["orderby"]);
+            }
+
+            if (empty($option["limit"])) {
+                $option["limit"] = $this->rows_limit;
+            } elseif ($option["limit"] == -1) {
+                $option["limit"] = "";
+            }
+
+            if (!isset($option["offset"])) {
+                $option["offset"] = 0;
+            }
+
+            if ($this->rows_limit != "") {
+                $this->db->limit($option["limit"], $option["offset"]);
+            }
+
+            $this->db->select("*, if(p.website_status = 'O','1','0') is_oos, if(p.website_status = 'A','1','0') is_arr");
+
+            if ($query = $this->db->get()) {
+                $ret = [];
+                $result = $query->result_array();
+                foreach ($result as $row) {
+                    $ret[] = $row["sku"];
+                }
+
+                return $ret;
+            }
+        } else {
+            $this->db->select('COUNT(*) AS total');
+            if ($query = $this->db->get()) {
+                return $query->row()->total;
+            }
+        }
+
+        return FALSE;
+    }
+
+    public function getRaProductOverview($sku = "", $platform_id = "", $classname = "ProductCostDto")
+    {
+        $sql = "
+                SELECT vpo.*
+                FROM
+                v_prod_overview_wo_shiptype AS vpo
+                WHERE EXISTS
+                (
+                    SELECT 1 FROM ra_prod_prod AS rpp
+                    WHERE rpp.sku = ?
+                    AND
+                    (
+                        vpo.sku = ?
+                        OR
+                        (
+                            vpo.sku = rpp.rcm_prod_id_1
+                        )
+                    )
+                )
+                AND vpo.platform_id = ?
+                AND vpo.website_status = 'I'
+                ";
+
+        $rs = [];
+        if ($query = $this->db->query($sql, [$sku, $sku, $platform_id])) {
+            foreach ($query->result($classname) as $obj) {
+                $rs[] = $obj;
+            }
+            return (object)$rs;
+        } else {
+            return FALSE;
+        }
+    }
+
+
+    public function getComponentsWithName($where = [], $option = [], $classname = "ProductCostDto")
+    {
+
+        $this->db->from('bundle AS b');
+        $this->db->join('v_prod_overview_wo_shiptype AS p', 'p.sku = b.component_sku', 'LEFT');
+
+        if (!isset($where["platform_id"])) {
+            $where["platform_id"] = "WSGB";
+        }
+
+        $this->db->where('platform_id', $where["platform_id"]);
+
+        if ($where["sku"] != "") {
+            $this->db->where('b.prod_sku', $where["sku"]);
+        }
+
+        if (isset($option["orderby"])) {
+            $this->db->order_by($option["orderby"]);
+        }
+
+        $this->db->select('p.*');
+
+        if ($query = $this->db->get()) {
+            $rs = [];
+            foreach ($query->result($classname) as $obj) {
+                $rs[] = $obj;
+            }
+            if ($option["limit"] == 1) {
+                return $rs[0];
+            } else {
+                return (object)$rs;
+            }
+        } else {
+            return FALSE;
+        }
+    }
+
 }

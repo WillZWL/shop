@@ -95,6 +95,7 @@ class CategoryDao extends BaseDao
 
     public function getParent($level, $id, $classname)
     {
+        $sql = "";
         if ($level == 3) {
             $sql .= 'SELECT v.*, c.name as sub_cat_name, cc.name as cat_name
                     FROM v_sub_sub_category v
@@ -216,7 +217,7 @@ class CategoryDao extends BaseDao
             $this->db->like('level', $where["level"]);
         }
 
-        if ($where["status"] != "") {
+        if (!empty($where["status"])) {
             $this->db->where('status', $where["status"]);
         }
 
@@ -227,8 +228,6 @@ class CategoryDao extends BaseDao
         }
 
         if (empty($option["num_rows"])) {
-
-            $this->include_vo();
 
             $this->db->select('id, name, description, level, status, create_on, create_at, create_by, modify_on, modify_at, modify_by');
 
@@ -244,7 +243,7 @@ class CategoryDao extends BaseDao
                 $option["offset"] = 0;
             }
 
-            if ($this->rows_limit != "") {
+            if (!empty($this->rows_limit)) {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
@@ -291,13 +290,11 @@ class CategoryDao extends BaseDao
                           FROM category
                           WHERE level='3') AS ssc", "ssc.id = p.sub_sub_cat_id", "INNER");
 
-        $this->db->where(array("p.sku" => $sku));
+        $this->db->where(["p.sku" => $sku]);
 
         $this->db->select("p.sku, c.id as cat_id, c.name as cat_name, sc.id as scat_id, sc.name as scat_name, ssc.id as sscat_id, ssc.name as sscat_name");
 
         $this->db->limit(1);
-
-        $this->include_dto($classname);
 
         if ($query = $this->db->get()) {
             foreach ($query->result($classname) as $temp) {
@@ -332,8 +329,6 @@ class CategoryDao extends BaseDao
         $sql .= "GROUP BY p.brand_id
                 ORDER BY brand_name";
 
-        $this->include_dto($classname);
-
         $rs = [];
 
         if ($query = $this->db->query($sql, $catid)) {
@@ -347,7 +342,7 @@ class CategoryDao extends BaseDao
 
     }
 
-    public function retrieveCatlistForScat($catid, $brand = "", $platform_id = "WEBGB", $classname = "Cat_name_item_cnt_dto")
+    public function retrieveCatlistForScat($catid, $brand = "", $platform_id = "WEBGB", $classname = "CatNameItemCntDto")
     {
         $sql = "SELECT cat.id, cat.name, s.total
                 FROM category cat
@@ -374,8 +369,6 @@ class CategoryDao extends BaseDao
                 AND cat.parent_cat_id = ?
                 AND cat.status = '1'
                 ORDER BY ISNULL(cat.priority), cat.priority, cat.id";
-
-        $this->include_dto($classname);
 
         $rs = [];
 
@@ -413,9 +406,6 @@ class CategoryDao extends BaseDao
         $sql .= "       GROUP BY brand_id
                         ORDER BY brand_name";
 
-
-        $this->include_dto($classname);
-
         $rs = [];
 
         if ($query = $this->db->query($sql, $catid)) {
@@ -430,7 +420,7 @@ class CategoryDao extends BaseDao
     }
 
 
-    public function retrieveCatlistForSscat($catid, $brand = "", $platform_id = "WEBGB", $classname = "Cat_name_item_cnt_dto")
+    public function retrieveCatlistForSscat($catid, $brand = "", $platform_id = "WEBGB", $classname = "CatNameItemCntDto")
     {
         $sql = "SELECT cat.id, cat.name, s.total
                 FROM category cat
@@ -454,9 +444,6 @@ class CategoryDao extends BaseDao
                 WHERE cat.level = '3'
                 AND cat.parent_cat_id =?
                 AND cat.status = '1'";
-
-
-        $this->include_dto($classname);
 
         $rs = [];
 
@@ -492,9 +479,6 @@ class CategoryDao extends BaseDao
         }
         $sql .= "   GROUP BY brand_id
                     ORDER BY brand_name";
-
-
-        $this->include_dto($classname);
 
         $rs = [];
 
@@ -602,7 +586,7 @@ class CategoryDao extends BaseDao
     }
 
 
-    public function getChildWithCount($level = '1', $id = '0', $status = '1', $classname = "Cat_name_item_cnt_dto")
+    public function getChildWithCount($level = '1', $id = '0', $status = '1', $classname = "CatNameItemCntDto")
     {
         $sql = "SELECT c.id, c.name, IFNULL(s.ttl,0) as total
                 FROM category c
@@ -615,8 +599,6 @@ class CategoryDao extends BaseDao
                 AND c.status = '1'
                 AND id <> '0'
                 ORDER BY c.name ASC";
-
-        $this->include_dto($classname);
 
         $rs = [];
 
@@ -640,8 +622,6 @@ class CategoryDao extends BaseDao
                 SELECT id, name FROM category
                 WHERE level = '1' and name <> 'base'
                 ORDER BY name";
-
-        $this->include_dto($classname);
 
         $rs = [];
 
@@ -747,8 +727,6 @@ class CategoryDao extends BaseDao
                 WHERE c.id > 0 AND c.status = 1 AND if(cat.total>0, cat.total, sc.total) > 0
                 ORDER BY c.level, ISNULL(c.priority), c.priority, c.id";
 
-        $this->include_dto($classname);
-
         if ($query = $this->db->query($sql, $lang_id)) {
             foreach ($query->result($classname) as $obj) {
                 $data["list"][$obj->get_level()][$obj->get_parent_cat_id()][] = $obj;
@@ -770,8 +748,6 @@ class CategoryDao extends BaseDao
                 WHERE c.id > 0 AND c.status = 1
                 ORDER BY c.level, ISNULL(c.priority), c.priority, c.id
                 ";
-
-        $this->include_dto($classname);
 
         if ($query = $this->db->query($sql, $lang_id)) {
             foreach ($query->result($classname) as $obj) {
@@ -812,8 +788,6 @@ class CategoryDao extends BaseDao
         if (!$result) {
             return FALSE;
         }
-
-        $this->include_dto($classname);
 
         $result_arr = [];
 
@@ -871,7 +845,7 @@ class CategoryDao extends BaseDao
         $this->db->select('parent.id');
         $this->db->from('category AS cat');
         $this->db->join('category AS parent', 'cat.parent_cat_id = parent.id', 'INNER');
-        $this->db->where(array('cat.id' => $cat_id));
+        $this->db->where(['cat.id' => $cat_id]);
 
         if ($query = $this->db->get()) {
             return $query->row()->id;
@@ -882,7 +856,7 @@ class CategoryDao extends BaseDao
     {
         $this->db->from('category AS c');
         $this->db->join('category_extend AS ce', 'c.id = ce.cat_id', 'LEFT');
-        $this->include_dto($classname);
+
         return $this->commonGetList($classname, $where, $option, 'c.id AS cat_id, c.level, ce.lang_id, COALESCE(ce.name, c.name) AS name, c.description');
     }
 }

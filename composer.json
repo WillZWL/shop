@@ -24,6 +24,7 @@
             "ESG\\Panther\\Service\\": "application/libraries/ServicePSR4",
             "ESG\\Panther\\Models\\Website\\": "application/models/WebsitePSR4",
             "ESG\\Panther\\Models\\Mastercfg\\": "application/models/MastercfgPSR4",
+            "ESG\\Panther\\Models\\Marketing\\": "application/models/MarketingPSR4",
             "ESG\\Panther\\Models\\CustomerService\\": "application/models/CustomerServicePSR4",
             "": ["application/libraries/VoPSR4/", "application/libraries/DtoPSR4/"]
         },

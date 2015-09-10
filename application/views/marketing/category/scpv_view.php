@@ -13,38 +13,31 @@
 <div id="main" style="width:1058px;">
     <?= $notice["img"] ?>
     <?php
-    if ($canedit && $this->input->get('platform') <> "")
-    {
+    if ($canedit && $this->input->get('platform') <> "") :
     ?>
     <form name="catview" action="<?= base_url() . "marketing/category/update_scpv/" ?>" method="POST"
           onSubmit="CheckForm(this);">
         <?php
-        }
+        endif;
         ?>
         <div style="width:100%; background-color:#000000; height:2px;">&nbsp;</div>
         <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
             <tr>
                 <td height="70" style="padding-left:8px">
-                    <b style="font-size:14px"><?= $lang["header"] . " " . $cat_obj->get_name() ?></b>
-                    <br><?= $lang["select_sp"] ?><select style="width:250px;"
-                                                         onChange="gotoPage('<?= base_url() ?>marketing/category/view_scpv/?subcat_id=<?= $this->input->get("subcat_id") ?>&platform=',this.value)">
-                        <option value="">-- <?= $lang["please_select"] ?> --</option><?php
-                        foreach ($sp_list as $obj) {
+                    <b style="font-size:14px"><?= $lang["header"] . " " . $cat_obj->getName() ?></b>
+                    <br><?= $lang["select_sp"] ?>
+                    <select style="width:250px;" onChange="gotoPage('<?= base_url() ?>marketing/category/view_scpv/?subcat_id=<?= $this->input->get("subcat_id") ?>&platform=',this.value)">
+                        <option value="">-- <?= $lang["please_select"] ?> --</option>
+                        <?php
+                        foreach ($sp_list as $obj) :
                             ?>
-                            <option
-                            value="<?= $obj->get_id() ?>" <?= ($this->input->get('platform') == $obj->get_id() ? "SELECTED" : "") ?>><?= $obj->get_id() . " - " . $obj->get_name(); ?></option><?php
-                        }
-                        ?></select>
+                            <option value="<?= $obj->getSellingPlatformId() ?>" <?= ($this->input->get('platform') == $obj->getSellingPlatformId() ? "SELECTED" : "") ?>><?= $obj->getSellingPlatformId() . " - " . $obj->getName(); ?></option>
+                        <?php
+                        endforeach;
+                        ?>
+                    </select>
                 </td>
                 <td>
-
-                    <!--    var features = "scrollbars=yes,resizable=yes,width=320,height=240";
-                        pop = window.open(theURL, winname, features);
-                        if ((document.window != null) && (!pop.opener))
-                            pop.opener = document.window;
-
-                        pop.focus();
-                     -->
                     <a href="#"
                        OnClick="javascript:window.open('/marketing/pricing_tool_website/auto_pricing_by_platform/<?= $this->input->get('platform') ?>','','height=120,width=640');">
                         Update auto-priced SKUs
@@ -53,8 +46,7 @@
             </tr>
         </table>
         <?php
-        if ($this->input->get('platform') <> "")
-        {
+        if ($this->input->get('platform') <> "") :
         ?>
         <table border="0" cellpadding="0" cellspacing="1" height="20" class="page_header" width="100%">
             <tr class="header">
@@ -65,52 +57,43 @@
             </tr>
             <tr>
                 <td width="142" valign="top" class="field" align="right">&nbsp;&nbsp;<?= $lang["scpv_currency"] ?></td>
-                <td align="left" class="value">&nbsp;&nbsp;<select
-                        name="currency" <?= ($canedit ? "" : "DISABLED") ?>><?php
-                        foreach ($currency_list as $obj) {
+                <td align="left" class="value">&nbsp;&nbsp;
+                    <select name="currency" <?= ($canedit ? "" : "DISABLED") ?>>
+                        <?php
+                        foreach ($currency_list as $obj) :
                             ?>
-                            <option
-                            value="<?= $obj->get_id() ?>" <?= ($obj->get_id() == $scpv_obj->get_currency_id() ? "SELECTED" : "") ?>><?= $obj->get_id() . " - " . $obj->get_name() ?></option><?php
-                        }
-                        ?></select></td>
+                            <option value="<?= $obj->getCurrencyId() ?>" <?= ($obj->getCurrencyId() == $scpv_obj->getCurrencyId() ? "SELECTED" : "") ?>><?= $obj->getCurrencyId() . " - " . $obj->getName() ?></option>
+                        <?php
+                        endforeach;
+                        ?>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td width="142" height="20" valign="top" class="field" align="right">
                     &nbsp;&nbsp;<?= $lang["scpv_commission"] ?></td>
-                <td height="20" valign="top" class="value" align="left">&nbsp;&nbsp;<input type="text" name="commission"
-                                                                                           value="<?= ($type == "insert" ? "" : number_format($scpv_obj->get_platform_commission(), 2, '.', ' ')) ?>" <?= ($canedit ? "" : "READONLY") ?>
-                                                                                           isNumber min=0>%
+                <td height="20" valign="top" class="value" align="left">&nbsp;&nbsp;
+                    <input type="text" name="commission" value="<?= ($type == "insert" ? "" : number_format($scpv_obj->getPlatformCommission(), 2, '.', ' ')) ?>" <?= $canedit ? "" : "READONLY" ?> isNumber min=0>%
                 </td>
             </tr>
             <tr>
                 <td width="142" height="20" valign="top" class="field" align="right">
                     &nbsp;&nbsp;<?= $lang["fixed_fee"] ?></td>
-                <td height="20" valign="top" class="value" align="left">&nbsp;&nbsp;<input type="text" name="fixed_fee"
-                                                                                           value="<?= ($type == "insert" ? "" : number_format($scpv_obj->get_fixed_fee(), 2, '.', ' ')) ?>" <?= ($canedit ? "" : "READONLY") ?>
-                                                                                           isNumber min=0></td>
+                <td height="20" valign="top" class="value" align="left">&nbsp;&nbsp;
+                    <input type="text" name="fixed_fee" value="<?= ($type == "insert" ? "" : number_format($scpv_obj->getFixedFee(), 2, '.', ' ')) ?>" <?= $canedit ? "" : "READONLY" ?> isNumber min=0>
+                </td>
             </tr>
             <tr>
                 <td width="142" height="20" valign="top" class="field" align="right">
                     &nbsp;&nbsp;<?= $lang["profit_margin"] ?></td>
-                <td height="20" valign="top" class="value" align="left">&nbsp;&nbsp;<input type="text"
-                                                                                           name="profit_margin"
-                                                                                           value="<?= ($type == "insert" ? "" : number_format($scpv_obj->get_profit_margin(), 2, '.', ' ')) ?>" <?= ($canedit ? "" : "READONLY") ?>
-                                                                                           isNumber min=0>%
+                <td height="20" valign="top" class="value" align="left">&nbsp;&nbsp;
+                <input type="text" name="profit_margin" value="<?= ($type == "insert" ? "" : number_format($scpv_obj->getProfitMargin(), 2, '.', ' ')) ?>" <?= $canedit ? "" : "READONLY" ?> isNumber min=0>%
                 </td>
             </tr>
-            <?php
-            /*
-            <tr>
-                <td width="142" valign="top"  class="field" align="right">&nbsp;&nbsp;<?=$lang["scpv_dlvry_chrg"]?></td>
-                <td align="left" class="value">&nbsp;&nbsp;<input name="dlvry_chrg" value="<?=($type=="insert"?"":number_format($scpv_obj->get_dlvry_chrg(),2,'.',' '))?>" <?=($canedit?"":"READONLY")?> isNumber min=0></td>
-            </tr>
-            */
-            ?>
             <input type="hidden" name="dlvry_chrg" value="0">
         </table>
         <?php
-        if ($canedit)
-        {
+        if ($canedit) :
         ?>
         <table border="0" cellpadding="0" cellspacing="0" height="40" class="page_header" width="100%">
             <tr>
@@ -128,34 +111,27 @@
         <input type="hidden" name="posted" value="1">
     </form>
 <?php
-}
-}
+        endif;
+endif;
 ?>
 </div>
 <?php
 
-if ($this->input->get('d') == 1)
-{
-if ($this->input->get("dtype") == "insert")
-{
+if ($this->input->get('d') == 1) :
+    if ($this->input->get("dtype") == "insert")
+    :
+        ?>
+        <script language="javascript">alert('<?=$lang["add_done"]?>')</script><?php
+    elseif ($this->input->get("dtype") == "update") :
     ?>
-    <script language="javascript">alert('<?=$lang["add_done"]?>')</script><?php
-}
-else if ($this->input->get("dtype") == "update")
-{
-?>
-<script language="javascript">alert('<?=$lang["update_done"]?>')</script>
+    <script language="javascript">alert('<?=$lang["update_done"]?>')</script>
 <?php
-    }
-    else
-    {
+    else :
 
-    }
+    endif;
 ?></script><?php
-}
-
+endif;
 ?>
 <?=$notice["js"]?>
-</
-body >
-< / html >
+</body >
+</html >

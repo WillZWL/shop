@@ -31,7 +31,6 @@ class CustomClassificationDao extends BaseDao
                 ";
 
         if ($result = $this->db->query($sql, array($platform_id))) {
-            $this->include_vo();
 
             $result_arr = [];
             $classname = $this->getVoClassname();

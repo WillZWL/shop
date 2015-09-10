@@ -21,10 +21,10 @@ class SellingPlatformDao extends BaseDao
         return $this->voClassName;
     }
 
-    public function get_platform_by_lang($where = array(), $option = array())
+    public function getPlatformByLang($where = [], $option = [])
     {
         $this->db->from("selling_platform sp");
-        $this->db->join("platform_biz_var pbv", "sp.id = pbv.selling_platform_id", "INNER");
+        $this->db->join("platform_biz_var pbv", "sp.selling_platform_id = pbv.selling_platform_id", "INNER");
         $this->db->where($where);
 
         if (empty($option["num_rows"])) {
@@ -49,7 +49,7 @@ class SellingPlatformDao extends BaseDao
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
-            $rs = array();
+            $rs = [];
 
             if ($query = $this->db->get()) {
                 foreach ($query->result($this->get_vo_classname()) as $obj) {
@@ -67,19 +67,19 @@ class SellingPlatformDao extends BaseDao
         return FALSE;
     }
 
-    public function get_platform_list_w_country_id($country_id = "")
+    public function getPlatformListWithCountryId($country_id = "")
     {
         $sql = "SELECT sp.*
                 FROM selling_platform sp
                 JOIN platform_biz_var pbv
-                    ON sp.id = pbv.selling_platform_id
+                    ON sp.selling_platform_id = pbv.selling_platform_id
                 WHERE (sp.type = 'WEBSITE' OR sp.type = 'SKYPE') AND sp.status = 1
                     AND pbv.platform_country_id = ?";
 
         if ($result = $this->db->query($sql, $country_id)) {
             $this->include_vo();
 
-            $result_arr = array();
+            $result_arr = [];
             $classname = $this->get_vo_classname();
 
             foreach ($result->result("object", $classname) as $obj) {
@@ -90,12 +90,12 @@ class SellingPlatformDao extends BaseDao
         return FALSE;
     }
 
-    public function get_platform_list_w_lang_id($lang_id = "")
+    public function getPlatformListWithLangId($lang_id = "")
     {
         $sql = "SELECT sp.*
                 FROM selling_platform sp
                 JOIN platform_biz_var pbv
-                    ON sp.id = pbv.selling_platform_id
+                    ON sp.selling_platform_id = pbv.selling_platform_id
                 JOIN country c
                     ON c.id = pbv.platform_country_id
                 WHERE (sp.type = 'WEBSITE' OR sp.type = 'SKYPE') AND sp.status = 1
@@ -105,7 +105,7 @@ class SellingPlatformDao extends BaseDao
         if ($result = $this->db->query($sql, $lang_id)) {
             $this->include_vo();
 
-            $result_arr = array();
+            $result_arr = [];
             $classname = $this->get_vo_classname();
 
             foreach ($result->result("object", $classname) as $obj) {
@@ -116,7 +116,7 @@ class SellingPlatformDao extends BaseDao
         return FALSE;
     }
 
-    public function get_platform_type_list()
+    public function getPlatformTypeList()
     {
         $sql = "SELECT DISTINCT type
                 FROM selling_platform
@@ -126,7 +126,7 @@ class SellingPlatformDao extends BaseDao
         if ($result = $this->db->query($sql)) {
             $this->include_vo();
 
-            $result_arr = array();
+            $result_arr = [];
             $classname = $this->get_vo_classname();
 
             foreach ($result->result("object", $classname) as $obj) {
@@ -137,32 +137,32 @@ class SellingPlatformDao extends BaseDao
         return FALSE;
     }
 
-    public function get_selling_platform_w_lang_id($where = array(), $option = array(), $classname = "selling_platform_w_lang_id_dto")
+    public function getSellingPlatformWithLangId($where = [], $option = [], $classname = "selling_platform_w_lang_id_dto")
     {
         $this->db->from("selling_platform AS sp");
-        $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = sp.id", "INNER");
+        $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = sp.selling_platform_id", "INNER");
         $this->include_dto($classname);
         return $this->common_get_list($where, $option, $classname, "sp.*, pbv.language_id lang_id");
     }
 
-    public function get_platform_list_w_allow_sell_country($type = "")
+    public function getPlatformListWithAllowSellCountry($type = "")
     {
         //Only those platform not started with WEB%
         if (isset($type) && $type == "MARKETPLACE") {
-            $sql = "SELECT sp.id AS platform_id, c.id AS country_id
+            $sql = "SELECT sp.selling_platform_id AS platform_id, c.id AS country_id
                     FROM selling_platform sp
                     JOIN platform_biz_var pbv
-                        ON sp.id = pbv.selling_platform_id
+                        ON sp.selling_platform_id = pbv.selling_platform_id
                     JOIN country c
                         ON c.id = pbv.platform_country_id
-                    WHERE (sp.id NOT LIKE 'WEB%') AND sp.status = 1
+                    WHERE (sp.selling_platform_id NOT LIKE 'WEB%') AND sp.status = 1
                         AND c.allow_sell = 1 AND c.status = 1";
         } //Original query, still be used to retrieve the WEBSITE type
         else {
-            $sql = "SELECT sp.id AS platform_id, c.id AS country_id
+            $sql = "SELECT sp.selling_platform_id AS platform_id, c.id AS country_id
                     FROM selling_platform sp
                     JOIN platform_biz_var pbv
-                        ON sp.id = pbv.selling_platform_id
+                        ON sp.selling_platform_id = pbv.selling_platform_id
                     JOIN country c
                         ON c.id = pbv.platform_country_id
                     WHERE (sp.type = ?) AND sp.status = 1
@@ -172,7 +172,7 @@ class SellingPlatformDao extends BaseDao
         if ($result = $this->db->query($sql, $type)) {
             $this->include_vo();
 
-            $result_arr = array();
+            $result_arr = [];
             $classname = $this->get_vo_classname();
 
             foreach ($result->result() as $row) {
@@ -183,5 +183,3 @@ class SellingPlatformDao extends BaseDao
         return FALSE;
     }
 }
-
-?>

@@ -64,6 +64,11 @@ class ProductService extends BaseProductService
         return $this->getDao()->getProductWMarginReqUpdate($where, $classname);
     }
 
+    public function getWebsiteCatPageProductList($where = array(), $option = array())
+    {
+        return $this->getDao()->getWebsiteCatPageProductList($where, $option);
+    }
+
     public function getCreateProductOptions()
     {
         $data['brandList'] = $this->brandService->getList([], ['orderby' => 'brand_name ASC', 'limit' => -1]);

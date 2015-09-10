@@ -21,7 +21,7 @@ class PriceMarginDao extends BaseDao
         return $this->tableName;
     }
 
-    public function get_last_update()
+    public function getLastUpdate()
     {
         $this->db->from("$this->tableName AS pm");
         $this->db->select('MAX(pm.modify_on) last_modify_on');
@@ -66,7 +66,7 @@ class PriceMarginDao extends BaseDao
 
     }
 
-    public function get_cross_sell_product($prod_info, $platform_id, $language_id, $price, $price_adjustment, $classname = 'cross_selling_product_dto')
+    public function getCrossSellProduct($prod_info, $platform_id, $language_id, $price, $price_adjustment, $classname = 'CrossSellingProductDto')
     {
         $cat_id = $prod_info->getCatId();
         $sub_cat_id = $prod_info->getSubCatId();

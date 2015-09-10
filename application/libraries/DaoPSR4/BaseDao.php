@@ -3,8 +3,6 @@ namespace ESG\Panther\Dao;
 
 abstract class BaseDao
 {
-    private $rows_limit;
-
     abstract public function getVoClassname();
     abstract public function getTableName();
 
