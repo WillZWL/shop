@@ -55,7 +55,7 @@ class Category extends MY_Controller
         }
     }
 
-    public function top()
+    public function top($offset = 0)
     {
         $sub_app_id = $this->getAppId() . "00";
 
@@ -72,13 +72,10 @@ class Category extends MY_Controller
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
-        $limit = '20';
+        $limit = '30';
 
-        $pconfig['base_url'] = "marketing/category/top/?" . $_SERVER['QUERY_STRING'];
-        $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"]) {
-            $option["offset"] = $this->input->get("per_page");
-        }
+        $option["limit"] = $limit;
+        $option["offset"] = $offset;
 
         if (empty($sort))
             $sort = "id";
@@ -93,8 +90,12 @@ class Category extends MY_Controller
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['total_rows'] = $data['total'];
-        //$this->pagination_service->initialize($pconfig);
+        $config['base_url'] = base_url('marketing/category/top/');
+        $config['total_rows'] = $data['total'];
+        $config['per_page'] = $limit;
+
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
 
         $data["notice"] = notice($lang);
 
@@ -188,57 +189,61 @@ class Category extends MY_Controller
                         $config['is_image'] = TRUE;
                         $this->load->library('upload', $config);
 
-                        if ($_FILES["image_file_" . $rs_lang_id]["name"]) {
-                            $config['file_name'] = $value . "_" . $rs_lang_id;
-                            $this->upload->initialize($config);
+                        if ($_FILES) {
+                            if ($_FILES["image_file_" . $rs_lang_id]["name"]) {
+                                $config['file_name'] = $value . "_" . $rs_lang_id;
+                                $this->upload->initialize($config);
 
-                            if ($this->upload->do_upload("image_file_" . $rs_lang_id)) {
-                                $res = $this->upload->data();
-                                $ext = substr($res["file_ext"], 1);
-                                if (!$cat_cont_obj = $this->container['categoryModel']->getCatContObj(array("cat_id" => $value, "lang_id" => $rs_lang_id))) {
-                                    $cat_cont_obj = $this->container['categoryService']->getCategoryContentDao()->get();
-                                    $cat_cont_obj->setCatId($value);
-                                    $cat_cont_obj->setLangId($rs_lang_id);
-                                    $cat_cont_obj->setImage($ext);
-                                    if (!$this->container['categoryService']->getCategoryContentDao()->insert($cat_cont_obj)) {
-                                        $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
+                                if ($this->upload->do_upload("image_file_" . $rs_lang_id)) {
+                                    $res = $this->upload->data();
+                                    $ext = substr($res["file_ext"], 1);
+                                    if (!$cat_cont_obj = $this->container['categoryModel']->getCatContObj(["cat_id" => $value, "lang_id" => $rs_lang_id])) {
+                                        $cat_cont_obj = $this->container['categoryService']->getCategoryContentDao()->get();
+                                        $cat_cont_obj->setCatId($value);
+                                        $cat_cont_obj->setLangId($rs_lang_id);
+                                        $cat_cont_obj->setImage($ext);
+                                        if (!$this->container['categoryService']->getCategoryContentDao()->insert($cat_cont_obj)) {
+                                            $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
+                                        }
+                                    } else {
+                                        $cat_cont_obj->setImage($ext);
+                                        if (!$this->container['categoryService']->getCategoryContentDao()->update($cat_cont_obj)) {
+                                            $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
+                                        }
                                     }
                                 } else {
-                                    $cat_cont_obj->setImage($ext);
-                                    if (!$this->container['categoryService']->getCategoryContentDao()->update($cat_cont_obj)) {
-                                        $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
-                                    }
+                                    $_SESSION["NOTICE"] = $this->upload->display_errors();
                                 }
-                            } else {
-                                $_SESSION["NOTICE"] = $this->upload->display_errors();
                             }
                         }
 
-                        if (!empty($_FILES["flash_file_" . $rs_lang_id]["name"])) {
-                            $config['allowed_types'] = 'swf';
-                            $config['file_name'] = $value . "_" . $rs_lang_id;
-                            $config['is_image'] = FALSE;
-                            $this->upload->initialize($config);
+                        if ($_FILES) {
+                            if (!empty($_FILES["flash_file_" . $rs_lang_id]["name"])) {
+                                $config['allowed_types'] = 'swf';
+                                $config['file_name'] = $value . "_" . $rs_lang_id;
+                                $config['is_image'] = FALSE;
+                                $this->upload->initialize($config);
 
-                            if ($this->upload->do_upload("flash_file_" . $rs_lang_id)) {
-                                $res = $this->upload->data();
-                                $ext = substr($res["file_ext"], 1);
-                                if (!$cat_cont_obj = $this->container['categoryModel']->getCatContObj(array("cat_id" => $value, "lang_id" => $rs_lang_id))) {
-                                    $cat_cont_obj = $this->container['categoryService']->getCategoryContentDao()->get();
-                                    $cat_cont_obj->setCatId($value);
-                                    $cat_cont_obj->setLangId($rs_lang_id);
-                                    $cat_cont_obj->setFlash($ext);
-                                    if (!$this->container['categoryService']->getCategoryContentDao()->insert($cat_cont_obj)) {
-                                        $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
+                                if ($this->upload->do_upload("flash_file_" . $rs_lang_id)) {
+                                    $res = $this->upload->data();
+                                    $ext = substr($res["file_ext"], 1);
+                                    if (!$cat_cont_obj = $this->container['categoryModel']->getCatContObj(["cat_id" => $value, "lang_id" => $rs_lang_id])) {
+                                        $cat_cont_obj = $this->container['categoryService']->getCategoryContentDao()->get();
+                                        $cat_cont_obj->setCatId($value);
+                                        $cat_cont_obj->setLangId($rs_lang_id);
+                                        $cat_cont_obj->setFlash($ext);
+                                        if (!$this->container['categoryService']->getCategoryContentDao()->insert($cat_cont_obj)) {
+                                            $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
+                                        }
+                                    } else {
+                                        $cat_cont_obj->setFlash($ext);
+                                        if (!$this->container['categoryService']->getCategoryContentDao()->update($cat_cont_obj)) {
+                                            $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
+                                        }
                                     }
                                 } else {
-                                    $cat_cont_obj->setFlash($ext);
-                                    if (!$this->container['categoryService']->getCategoryContentDao()->update($cat_cont_obj)) {
-                                        $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
-                                    }
+                                    $_SESSION["NOTICE"] = $this->upload->display_errors();
                                 }
-                            } else {
-                                $_SESSION["NOTICE"] = $this->upload->display_errors();
                             }
                         }
                     }
@@ -254,90 +259,33 @@ class Category extends MY_Controller
             $cat_obj->setPriority($this->input->post('priority') ? $this->input->post('priority') : '');
             $cat_obj->setAddColourName($this->input->post('add_colour_name'));
             $cat_obj->setBundleDiscount($this->input->post('bundle_discount'));
-            $ccmap = array(
-                array('country' => 'AU', 'code' => $this->input->post('hscode_AU')),
-                array('country' => 'BE', 'code' => $this->input->post('hscode_BE')),
-                array('country' => 'CH', 'code' => $this->input->post('hscode_CH')),
-                array('country' => 'ES', 'code' => $this->input->post('hscode_ES')),
-                array('country' => 'FI', 'code' => $this->input->post('hscode_FI')),
-                array('country' => 'FR', 'code' => $this->input->post('hscode_FR')),
-                array('country' => 'GB', 'code' => $this->input->post('hscode_GB')),
-                array('country' => 'HK', 'code' => $this->input->post('hscode_HK')),
-                array('country' => 'ID', 'code' => $this->input->post('hscode_ID')),
-                array('country' => 'IE', 'code' => $this->input->post('hscode_IE')),
-                array('country' => 'IT', 'code' => $this->input->post('hscode_IT')),
-                array('country' => 'MT', 'code' => $this->input->post('hscode_MT')),
-                array('country' => 'MY', 'code' => $this->input->post('hscode_MY')),
-                array('country' => 'NZ', 'code' => $this->input->post('hscode_NZ')),
-                array('country' => 'PH', 'code' => $this->input->post('hscode_PH')),
-                array('country' => 'PL', 'code' => $this->input->post('hscode_PL')),
-                array('country' => 'PT', 'code' => $this->input->post('hscode_PT')),
-                array('country' => 'RU', 'code' => $this->input->post('hscode_RU')),
-                array('country' => 'SG', 'code' => $this->input->post('hscode_SG')),
-                array('country' => 'TH', 'code' => $this->input->post('hscode_TH')),
-                array('country' => 'US', 'code' => $this->input->post('hscode_US'))
-            );
+            $ccmap = [
+                ['country' => 'AU', 'code' => $this->input->post('hscode_AU'), 'duty' => $this->input->post('duty_AU')],
+                ['country' => 'BE', 'code' => $this->input->post('hscode_BE'), 'duty' => $this->input->post('duty_BE')],
+                ['country' => 'CH', 'code' => $this->input->post('hscode_CH'), 'duty' => $this->input->post('duty_CH')],
+                ['country' => 'ES', 'code' => $this->input->post('hscode_ES'), 'duty' => $this->input->post('duty_ES')],
+                ['country' => 'FI', 'code' => $this->input->post('hscode_FI'), 'duty' => $this->input->post('duty_FI')],
+                ['country' => 'FR', 'code' => $this->input->post('hscode_FR'), 'duty' => $this->input->post('duty_FR')],
+                ['country' => 'GB', 'code' => $this->input->post('hscode_GB'), 'duty' => $this->input->post('duty_GB')],
+                ['country' => 'HK', 'code' => $this->input->post('hscode_HK'), 'duty' => $this->input->post('duty_HK')],
+                ['country' => 'ID', 'code' => $this->input->post('hscode_ID'), 'duty' => $this->input->post('duty_ID')],
+                ['country' => 'IE', 'code' => $this->input->post('hscode_IE'), 'duty' => $this->input->post('duty_IE')],
+                ['country' => 'IT', 'code' => $this->input->post('hscode_IT'), 'duty' => $this->input->post('duty_IT')],
+                ['country' => 'MT', 'code' => $this->input->post('hscode_MT'), 'duty' => $this->input->post('duty_MT')],
+                ['country' => 'MY', 'code' => $this->input->post('hscode_MY'), 'duty' => $this->input->post('duty_MY')],
+                ['country' => 'NZ', 'code' => $this->input->post('hscode_NZ'), 'duty' => $this->input->post('duty_NZ')],
+                ['country' => 'PH', 'code' => $this->input->post('hscode_PH'), 'duty' => $this->input->post('duty_PH')],
+                ['country' => 'PL', 'code' => $this->input->post('hscode_PL'), 'duty' => $this->input->post('duty_PL')],
+                ['country' => 'PT', 'code' => $this->input->post('hscode_PT'), 'duty' => $this->input->post('duty_PT')],
+                ['country' => 'RU', 'code' => $this->input->post('hscode_RU'), 'duty' => $this->input->post('duty_RU')],
+                ['country' => 'SG', 'code' => $this->input->post('hscode_SG'), 'duty' => $this->input->post('duty_SG')],
+                ['country' => 'TH', 'code' => $this->input->post('hscode_TH'), 'duty' => $this->input->post('duty_TH')],
+                ['country' => 'US', 'code' => $this->input->post('hscode_US'), 'duty' => $this->input->post('duty_US')]
+            ];
             $cccount = count($ccmap);
 
             for ($i = 0; $i < $cccount; $i++) {
-                $cc_obj = $this->container['customClassModel']->getCustomClass(array('country_id' => $ccmap[$i]['country'], 'code' => $ccmap[$i]['code']));
-
-                if ($cc_obj) {
-                    $ccm_obj = $this->container['customClassModel']->getCustomClassMapping(array('sub_cat_id' => $value, 'country_id' => $ccmap[$i]['country']));
-                    $ccm_dao = $this->container['customClassModel']->customClassificationMappingService->getDao();
-                    $ccm_vo = $ccm_dao->get();
-
-                    if (!$ccm_obj) {
-                        $action = "insert_ccm";
-                        $ccm_obj = clone($ccm_vo);
-                        $ccm_obj->setSubCatId($value);
-                        $ccm_obj->setCountryId($ccmap[$i]['country']);
-                        $ccm_obj->setCustomClassId($cc_obj->getId());
-                    } else {
-                        $action = "update_ccm";
-                        $ccm_obj->setCustomClassId($cc_obj->getId());
-                    }
-
-                    if ($this->container['customClassModel']->$action($ccm_obj) === FALSE) {
-                        $error_message = __LINE__ . "category.php " . $action . " Error. " . $ccm_dao->db->_error_message();
-                        $_SESSION["NOTICE"] = $error_message;
-                    }
-
-                } else {
-                    $cc_dao = $this->container['customClassModel']->customClassService->getDao();
-                    $cc_vo = $cc_dao->get();
-                    $action = "add_cc";
-                    $cc_obj = clone($cc_vo);
-                    $cc_obj->setCountryId($ccmap[$i]['country']);
-                    $cc_obj->setCode($ccmap[$i]['code']);
-                    $cc_obj->setDescription($this->input->post('name'));
-                    $cc_obj->setDutyPcent($ccmap[$i]['duty']);
-
-                    if ($this->container['customClassModel']->$action($cc_obj) === FALSE) {
-                        $error_message = __LINE__ . "category.php " . $action . " Error. " . $cc_dao->db->_error_message();
-                        $_SESSION["NOTICE"] = $error_message;
-                    }
-
-                    $ccm_obj = $this->container['customClassModel']->getCustomClassMapping(array('sub_cat_id' => $value, 'country_id' => $ccmap[$i]['country']));
-                    $ccm_dao = $this->container['customClassModel']->customClassificationMappingService->getDao();
-                    $ccm_vo = $ccm_dao->get();
-                    if (!$ccm_obj) {
-                        $action = "insert_ccm";
-                        $ccm_obj = clone($ccm_vo);
-                        $ccm_obj->setSubCatId($value);
-                        $ccm_obj->setCountryId($ccmap[$i]['country']);
-                        $ccm_obj->setCustomClassId($cc_obj->getId());
-                    } else {
-                        $action = "update_ccm";
-                        $ccm_obj->setCustomClassId($cc_obj->getId());
-                    }
-
-                    if ($this->container['customClassModel']->$action($ccm_obj) === FALSE) {
-                        $error_message = __LINE__ . "category.php " . $action . " Error. " . $ccm_dao->db->_error_message();
-                        $_SESSION["NOTICE"] = $error_message;
-                    }
-
-                }
+                $this->container['customClassModel']->saveCustomClassMapping($ccmap, $i, $value, $this->input->post('name'));
             }
 
             if ($this->input->post('level') == 1) {
@@ -356,7 +304,7 @@ class Category extends MY_Controller
             }
         }
         $cat_obj = $this->container['categoryModel']->getCatObj($value);
-        $cat_cont_obj = $this->container['categoryModel']->getCatContList(array("cat_id" => $value));
+        $cat_cont_obj = $this->container['categoryModel']->getCatContList(["cat_id" => $value]);
         $data["cat_obj"] = $cat_obj;
         $data["cat_cont_obj"] = $cat_cont_obj;
         $data["canadd"] = $canadd;
@@ -371,7 +319,7 @@ class Category extends MY_Controller
         $uarr = "";
         $data['upcode'] = [];
         if ($cat_obj->getLevel() == "3") {
-            $parent_list = $this->container['categoryModel']->categoryService->getList(array("level" => "2", "id <>" => "0"), array("limit" => -1));
+            $parent_list = $this->container['categoryModel']->categoryService->getList(["level" => "2", "id <>" => "0"], ["limit" => -1]);
             $subcat_list = $this->container['categoryModel']->getParent(3, $cat_obj->getId());
             if ($inherit == 1) {
                 $hs_obj = $this->container['customClassModel']->getCustomClassByCatSubId($parent);
@@ -379,7 +327,7 @@ class Category extends MY_Controller
                 $udesc = [];
                 for ($i = 0; $i < count($data['hs']); $i++) {
                     $udesc[$i]['code'] = $data['hs'][$i]['code'];
-                    $udesc[$i]['description'] = $data['parcode'][$i]['description'];
+                    $udesc[$i]['description'] = $data['hs'][$i]['description'];
                 }
                 $data['ucode'] = $this->arrayUnique($udesc);
 
@@ -422,7 +370,7 @@ class Category extends MY_Controller
             }
 
         } else if ($cat_obj->getLevel() == "2") {
-            $parent_list = $this->container['categoryModel']->categoryService->getList(array("level" => "1", "id <>" => "0"), array("limit" => -1));
+            $parent_list = $this->container['categoryModel']->categoryService->getList(["level" => "1", "id <>" => "0"], ["limit" => -1]);
             $subcat_list = $this->container['categoryModel']->getParent(2, $cat_obj->getId());
             if ($inherit == 1) {
                 $hs_obj = $this->container['customClassModel']->getCustomClassByCatSubId($parent);
@@ -491,7 +439,7 @@ class Category extends MY_Controller
         }
 
         if (empty($data["cat_ext"])) {
-            if (($data["cat_ext"] = $this->container['categoryService']->getCatExtWithKey(array("cat_id" => $value))) === FALSE) {
+            if (($data["cat_ext"] = $this->container['categoryService']->getCatExtWithKey(["cat_id" => $value])) === FALSE) {
                 $_SESSION["NOTICE"] = $this->db->_error_message();
             } else {
                 $_SESSION["cat_ext"] = serialize($data["cat_ext"]);
@@ -504,7 +452,7 @@ class Category extends MY_Controller
         $data["parent_list"] = $parent_list;
         $data["child_list"] = $child_list;
         $data["subcat_list"] = $subcat_list;
-        $data["lang_list"] = $this->container['languageService']->getList(array("status" => 1), array("limit" => -1));
+        $data["lang_list"] = $this->container['languageService']->getList(["status" => 1], ["limit" => -1]);
         $data["cat_id"] = $value;
         $_SESSION["category_edit"] = serialize($cat_obj);
         $this->load->view("marketing/category/category_view", $data);
@@ -549,7 +497,7 @@ class Category extends MY_Controller
         $canedit = 1;
         $data = [];
         $data['type'] = $this->input->post('type') ? $this->input->post('type') : "";
-        $selling_platform_obj_list = $this->container['categoryModel']->getSellingPlatform([], array("orderby" => "name", "limit" => -1));
+        $selling_platform_obj_list = $this->container['categoryModel']->getSellingPlatform([], ["orderby" => "name", "limit" => -1]);
         $cat_obj = $this->container['categoryModel']->getCatObj($this->input->get("subcat_id"));
         $ccid_list = $this->container['categoryModel']->getCustomClassListWithPlatformId($this->input->get('platform'));
         $currency_list = $this->container['categoryModel']->getCurrencyList();
@@ -557,12 +505,12 @@ class Category extends MY_Controller
         $data["cat_obj"] = $cat_obj;
         $data["currency_list"] = $currency_list;
         $data["canedit"] = $canedit ? $canedit : 0;
-        $scpv_obj = $this->container['categoryModel']->getScpvObj(array("sub_cat_id" => $this->input->get('subcat_id'), "platform_id" => $this->input->get('platform')));
+        $scpv_obj = $this->container['categoryModel']->getScpvObj(["sub_cat_id" => $this->input->get('subcat_id'), "platform_id" => $this->input->get('platform')]);
         $data["scpv_obj"] = $scpv_obj;
         if (empty($scpv_obj)) {
             $data["action"] = "insert";
-            $data["scpv_obj"] = $this->container['categoryModel']->getScpvObj(array());
-            $replace_scpv_obj = $this->container['categoryModel']->getReplaceScpvObj(array("selling_platform_id" => $this->input->get('platform')));
+            $data["scpv_obj"] = $this->container['categoryModel']->getScpvObj([]);
+            $replace_scpv_obj = $this->container['categoryModel']->getReplaceScpvObj(["selling_platform_id" => $this->input->get('platform')]);
             if ($replace_scpv_obj) {
                 $data["scpv_obj"]->setCurrencyId($replace_scpv_obj->getPlatformCurrencyId());
             }
@@ -581,7 +529,7 @@ class Category extends MY_Controller
     {
         if ($this->input->post('posted')) {
             if ($this->input->post('type') == "insert") {
-                $scpv_obj = $this->container['categoryModel']->getScpvObj(array());
+                $scpv_obj = $this->container['categoryModel']->getScpvObj([]);
 
             } else {
                 $this->container['categoryModel']->autoloadScpv();
@@ -617,35 +565,19 @@ class Category extends MY_Controller
     public function view_prod_spec($cat_id = "")
     {
         if ($this->input->post('posted')) {
-            foreach ($this->input->post('cps_obj') AS $ps_id => $cps_array) {
-                $cps_obj = $this->container['categoryModel']->getCps(array('cat_id' => $cat_id, 'ps_id' => $ps_id));
-                if ($cps_obj) {
-                    $cps_action = "update_cps";
-                } else {
-                    $cps_action = "insert_cps";
-                    $cps_obj = $this->container['categoryModel']->getCps();
-                    $cps_obj->setPsId($ps_id);
-                    $cps_obj->setCatId($cat_id);
-                    $cps_obj->setUnitId($cps_array['unit_id']);
-                }
-                $cps_obj->setPriority($cps_array['priority']);
-                $cps_obj->setStatus($cps_array['status']);
-                if ($this->container['categoryModel']->$cps_action($cps_obj) === FALSE) {
-                    $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
-                }
-            }
+            $this->container['categoryModel']->saveProdSpec($this->input->post('cps_obj'), $cat_id);
             if (!$_SESSION["NOTICE"]) {
                 redirect(base_url() . "marketing/category/view_prod_spec/" . $cat_id);
             }
         }
-        $data["cat_obj"] = $this->container['categoryModel']->getCategory(array("id" => $cat_id, "level" => 2, "status" => 1));
+        $data["cat_obj"] = $this->container['categoryModel']->getCategory(["id" => $cat_id, "level" => 2, "status" => 1]);
         $full_cps_list = $this->container['categoryModel']->getFullCpsList($cat_id);
         foreach ($full_cps_list AS $obj) {
             $data["full_cps_list"][$obj->getPsgName()][$obj->getPsName()] = $obj;
         }
-        $unit_type_list = $this->container['categoryModel']->getUnitTypeList(array("status" => 1), array("orderby" => "name ASC"));
+        $unit_type_list = $this->container['categoryModel']->getUnitTypeList(["status" => 1], ["orderby" => "name ASC"]);
         foreach ($unit_type_list AS $ut_obj) {
-            $ut_array[$ut_obj->getUnitTypeId()] = $this->container['categoryModel']->getUnitList(array("status" => 1, "unit_type_id" => $ut_obj->getUnitTypeId()), array("orderby" => "standardize_value DESC"));
+            $ut_array[$ut_obj->getUnitTypeId()] = $this->container['categoryModel']->getUnitList(["status" => 1, "unit_type_id" => $ut_obj->getUnitTypeId()], ["orderby" => "standardize_value DESC"]);
         }
         $data["ut_array"] = $ut_array;
 
@@ -658,5 +590,3 @@ class Category extends MY_Controller
     }
 
 }
-
-?>

@@ -6,7 +6,6 @@ class Cron_draw_menu extends MY_Controller
 
     function __construct()
     {
-
         // load controller parent
         parent::__construct();
         $this->load->model('website/home_model');
@@ -33,7 +32,7 @@ class Cron_draw_menu extends MY_Controller
                 $platform_id = $platform_obj->get_id();
                 $pbv_obj = $this->platform_biz_var_service->get_platform_biz_var($platform_id);
                 $country_id = $pbv_obj->get_platform_country_id();
-                // $base_url = $this->context_config_service->value_of("default_url")."/".$lang_id."_".$country_id;
+
                 $base_url = "/" . $lang_id . "_" . $country_id;
                 $cat_id_css_map = array(1 => "camera", 2 => "lens", 3 => "camcorders", 4 => "phones", 5 => "apple", 6 => "tablets", 7 => "headphones", 8 => "computing", 9 => "audio", 10 => "warranty");
 
@@ -170,16 +169,7 @@ class Cron_draw_menu extends MY_Controller
                         $cat_url = $base_url . htmlentities($this->website_service->get_cat_url($cat_id, TRUE));
                         $footer_content .= $tab . "<li>" . $eol;
                         $footer_content .= $tab . $tab . "<p><a href='" . $cat_url . "' title='" . $cat_name_map[$cat_id] . "'>" . $cat_name_map[$cat_id] . "</a></p>" . $eol;
-                        /*
-                        $footer_content .= $tab.$tab."<dl>".$eol;
-                        foreach($sub_cat as $sub_cat_id=>$sub_sub_cat)
-                        {
-                            $sub_cat_url = $base_url.$this->website_service->get_cat_url($sub_cat_id, TRUE);
-                            $footer_content .= $tab.$tab.$tab."<dd><a href='" . $sub_cat_url . "' title='" . $cat_name_map[$sub_cat_id] . "'>" . $cat_name_map[$sub_cat_id] . "</a></dd>".$eol;
-                        }
 
-                        $footer_content .= $tab.$tab."</dl>".$eol;
-                        */
                         $footer_content .= $tab . "</li>" . $eol;
                     }
                     $footer_content .= "</ul>" . $eol;
@@ -349,10 +339,7 @@ class Cron_draw_menu extends MY_Controller
 
             // using only en for now
             $menudata = $this->menu_model->get_menu_list_w_platform_id('en', $platform_id);
-//          if(!$menudata = $this->menu_model->get_menu_list_w_platform_id($lang_id, $platform_id))
-//          {
-//              $menudata = $this->menu_model->get_menu_list_w_platform_id('en', $platform_id);
-//          }
+
             $menulist = $menudata["list"];
             $allcatlist = $menudata["allcat"];
 
@@ -370,15 +357,8 @@ class Cron_draw_menu extends MY_Controller
             $total_subsubcat = $this->context_config_service->value_of("menu_total_subsubcat");
             $padding = 0;
 
-            //      $menulinks_cats = 4;
-            //      $adj_cats = $total_cat - ($half_m_cats=floor($menulinks_cats/2));
-
             $menu_width = $this->context_config_service->value_of("menu_width");
-            //      $n0_width = 50;
-            //      $cat_width = ($rs_cat_width=floor(($menu_width-$n0_width)/$total_cat)) - 2;
-            //      $search[] = '[:cat_width:]';
-            //      $replace[] = $cat_width;
-            //$menulinks_width = $menu_width/2;
+
             $menulinks_width = 200;
             $search[] = '[:menulinks_width:]';
             $replace[] = $menulinks_width;
@@ -424,15 +404,6 @@ class Cron_draw_menu extends MY_Controller
                         $cat_length[$cat_count] = strlen($cur_name);
                     }
 
-                    /*
-                    if ($cat_count == $total_cat - 1) // leave last row for subtype
-                    {
-                        break;
-                    }
-
-                    // for subtype
-                    $cat_length[sizeof($cat_length)] = strlen($prod_type_title);
-                    */
                 }
             }
 
@@ -462,63 +433,12 @@ class Cron_draw_menu extends MY_Controller
             $search[] = '[:adj_width:]';
             $replace[] = $adj_width_str;
 
-            //      $n0_width = $n0_width + ($menu_width - ($rs_cat_width * $total_cat) - $n0_width) - 2;
-            //      $search[] = '[:n0_width:]';
-            //      $replace[] = $n0_width;
             $col_width = 200;
             $search[] = '[:col_width:]';
             $replace[] = $col_width;
             $search[] = '[:a_width:]';
             $replace[] = $col_width - 17;
 
-
-            /*
-                    $n_adj_str .= '
-            #sitenav #n1:hover .menu
-            {
-                left:-'.($n0_width+2).'px;
-            }';
-
-                    for ($i=1; $i<$adj_cats; $i++)
-                    {
-                    $n_adj_str .= '
-            #sitenav #n'.($i+1).':hover .menu
-            {
-                left:-'.($rs_cat_width+2).'px;
-            }';
-                    }
-
-                    for ($i=$half_m_cats-1; $i<$adj_cats; $i++)
-                    {
-                    $n_adj_ie_str .= '
-            #sitenav ul #n'.($i+1).' a:hover .menu
-            {
-                left:'.($rs_cat_width*($i+1-$half_m_cats)+$n0_width).'px;
-            }';
-                    }
-
-                    for ($i=$adj_cats; $i<$total_cat; $i++)
-                    {
-                    $n_adj_str .= '
-            #sitenav #n'.($i+1).':hover .menu
-            {
-                left:-'.($rs_cat_width*($half_m_cats+($i-$adj_cats))+2).'px;
-            }';
-
-                    $n_adj_ie_str .= '
-            #sitenav ul #n'.($i+1).' a:hover .menu
-            {
-                left:'.($rs_cat_width*($total_cat-$adj_cats+1)+$n0_width).'px;
-            }';
-
-                    }
-
-                    $search[] = '[:n_adj_str:]';
-                    $replace[] = $n_adj_str;
-
-                    $search_ie[] = '[:n_adj_ie_str:]';
-                    $replace_ie[] = $n_adj_ie_str;
-            */
             $half_menulinks_width = floor($menulinks_width / 2);
             $left_width = 0;
             for ($i = 0; $i < $total_cat + 1; $i++) {
@@ -600,7 +520,6 @@ class Cron_draw_menu extends MY_Controller
                 foreach ($menulist[1][0] as $cat_obj) {
                     $i++;
                     $padding_right = $cat_width[$i] - 8; // 8 is the size of the seperator_right.gif
-                    //<img style="display:block" src="/images/seperator.gif" class="seperator">
                     $cat_count++;
                     $str .= '
                 <li id="n' . $cat_count . '" class="nav">
@@ -612,73 +531,6 @@ class Cron_draw_menu extends MY_Controller
                     <table class="menu" id="m' . $cat_count . '" cellpadding=0 cellspacing=0 border=0><tr><td>
                         <table class="menu_links" cellpadding=0 cellspacing=0 border=0>
                         <tr>';
-                    //modified by daneil 21012010
-                    //<td class="cat_header2">All Categories</td></tr>
-                    //<tr>';
-                    /* removed by jess
-                    // Sub-cat
-
-                                    if ($menulist[2][$cat_obj->get_id()])
-                                    {
-                                        $subcat_count = 0;
-                                        foreach ($menulist[2][$cat_obj->get_id()] as $subcat_obj)
-                                        {
-                                            if ($subcat_count == 0 || $subcat_count == $total_col1)
-                                            {
-                                                $cur_col = ($subcat_count < $total_col1)?"1":"2";
-                                                $str .='
-                                            <td class="col'.$cur_col.'" valign=top><ul>';
-                                            }
-                                            $str .='
-                                                <li><h3><a href="/'.str_replace($n_search, $n_replace, parse_url_char(str_replace('<br />', ' ', $subcat_obj->get_name()))).'/cat/?catid='.$subcat_obj->get_id().'">'.$subcat_obj->get_name().'</a></h3></li>';
-
-                    // Sub-Sub-Cat
-                                            if ($menulist[3][$subcat_obj->get_id()])
-                                            {
-                                                $str .='
-                                                <ul class="sub">';
-                                                $subsubcat_count = 0;
-                                                foreach ($menulist[3][$subcat_obj->get_id()] as $subsubcat_obj)
-                                                {
-                                                    $str .='
-                                                    <li><a href="/'.str_replace($n_search, $n_replace, parse_url_char(str_replace('<br />', ' ', $subsubcat_obj->get_name()))).'/cat/?catid='.$subsubcat_obj->get_id().'">'.$subsubcat_obj->get_name().'</a></li>';
-
-                                                    $subsubcat_count++;
-                                                    if ($subsubcat_count == $total_subsubcat)
-                                                    {
-                                                        break;
-                                                    }
-                                                }
-                                                $str.='
-                                                    <li><a href="/'.str_replace($n_search, $n_replace, parse_url_char(str_replace('<br />', ' ', $subcat_obj->get_name()))).'/cat/?catid='.$subcat_obj->get_id().'" class="see">see all</a></li>
-                                                </ul>';
-                                            }
-
-                                            $subcat_count++;
-                                            if ($subcat_count == $total_col1)
-                                            {
-                                                $cur_col = ($subcat_count < $total_col1)?"1":"2";
-                                                $str .='
-                                            </ul></td>';
-                                            }
-                                            if ($subcat_count == $total_subcat)
-                                            {
-                                                break;
-                                            }
-                                        }
-                                        if ($subcat_count != $total_col1)
-                                        {
-                                            $str .='
-                                            </ul></td>';
-                                        }
-                                        if ($subcat_count<=$total_col1)
-                                        {
-                                        $str .='
-                                            <td class="col2" valign=top><ul>
-                                            </ul></td>';
-                                        }
-                                    }
-                    */
                     if ($allcatlist[$cat_obj->get_id()]) {
                         $str .= '
                             <td class="col3" valign=top><ul>';
@@ -701,34 +553,6 @@ class Cron_draw_menu extends MY_Controller
                         break;
                     }
                 }
-                /*
-                            // generate menu for subtype
-                            $cat_count++;
-                            $str .= '
-                                <li id="n'.$cat_count.'" class="nav">
-                                    <h1><img src="/images/orangeseperator.gif" class="seperator">
-                                    <a class="cat"><span>'.$prod_type_title.'</span>
-                                    </h1>
-                                    <table class="menu" id="m'.$cat_count.'" cellpadding=0 cellspacing=0 border=0><tr><td>
-                                        <table class="menu_links" cellpadding=0 cellspacing=0 border=0>
-                                        <tr>';
-
-                            $str .= '<td class="col3" valign=top><ul>';
-                            foreach ($p_list AS $p_obj)
-                            {
-                                $str .='
-                                    <li><h3><a href="">'.$p_obj->get_subkey_value_w_lang().'</a></h3></li>';
-                            }
-                            $str .='</ul></td>';
-
-                            $str .= '
-                                    </tr></table>
-                                </td></tr></table>
-                                <iframe frameborder="0"></iframe>
-                                </a>
-                            </li>';
-                            // end generate menu for subtype
-                */
             }
 
 

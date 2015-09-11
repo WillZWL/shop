@@ -139,7 +139,7 @@ abstract class MY_Controller extends CI_Controller
         };
 
         $this->container['categoryService'] = function ($c) {
-            return new S\categoryService;
+            return new S\CategoryService;
         };
 
         $this->container['contextConfigService'] = function ($c) {

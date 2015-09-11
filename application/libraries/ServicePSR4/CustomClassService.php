@@ -96,6 +96,64 @@ class CustomClassService extends BaseService
     {
         return $this->getDao()->insert($obj);
     }
+
+    public function saveCustomClassMapping($ccmap, $i, $value, $name)
+    {
+        $ccObj = $this->getDao()->get(['country_id' => $ccmap[$i]['country'], 'code' => $ccmap[$i]['code']]);
+
+        if ($ccObj) {
+            $ccmObj = $this->getCustomClassificationMappingDao()->get(['sub_cat_id' => $value, 'country_id' => $ccmap[$i]['country']]);
+            $ccmVo = $this->getCustomClassificationMappingDao()->get();
+            $action = "";
+            if (!$ccmObj) {
+                $action = "insert";
+                $ccmObj = clone($ccmVo);
+                $ccmObj->setSubCatId($value);
+                $ccmObj->setCountryId($ccmap[$i]['country']);
+                $ccmObj->setCustomClassId($ccObj->getId());
+            } else {
+                $action = "update";
+                $ccmObj->setCustomClassId($ccObj->getId());
+            }
+
+            if ($this->getCustomClassificationMappingDao()->$action($ccmObj) === FALSE) {
+                $error_message = __LINE__ . "category.php " . $action . " Error. " . $this->getCustomClassificationMappingDao()->db->_error_message();
+                $_SESSION["NOTICE"] = $error_message;
+            }
+
+        } else {
+            $ccVo = $this->getDao()->get();
+            $action = "insert";
+            $ccObj = clone($ccVo);
+            $ccObj->setCountryId($ccmap[$i]['country']);
+            $ccObj->setCode($ccmap[$i]['code']);
+            $ccObj->setDescription($name);
+            $ccObj->setDutyPcent($ccmap[$i]['duty']);
+
+            if ($this->getDao()->$action($ccObj) === FALSE) {
+                $error_message = __LINE__ . "category.php " . $action . " Error. " . $this->getDao()->db->_error_message();
+                $_SESSION["NOTICE"] = $error_message;
+            }
+            $action = "";
+            $ccmObj = $this->getCustomClassificationMappingDao()->get(['sub_cat_id' => $value, 'country_id' => $ccmap[$i]['country']]);
+            $ccmVo = $this->getCustomClassificationMappingDao()->get();
+            if (!$ccmObj) {
+                $action = "insert";
+                $ccmObj = clone($ccmVo);
+                $ccmObj->setSubCatId($value);
+                $ccmObj->setCountryId($ccmap[$i]['country']);
+                $ccmObj->setCustomClassId($ccObj->getId());
+            } else {
+                $action = "update";
+                $ccmObj->setCustomClassId($ccObj->getId());
+            }
+
+            if ($this->getCustomClassificationMappingDao()->$action($ccmObj) === FALSE) {
+                $error_message = __LINE__ . "category.php " . $action . " Error. " . $this->getCustomClassificationMappingDao()->db->_error_message();
+                $_SESSION["NOTICE"] = $error_message;
+            }
+        }
+    }
 }
 
 

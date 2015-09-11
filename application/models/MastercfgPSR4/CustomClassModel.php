@@ -19,6 +19,11 @@ class CustomClassModel extends \CI_Model
         $this->customClassificationMappingService = new CustomClassificationMappingService;
     }
 
+    public function saveCustomClassMapping($ccmap, $i, $value, $name)
+    {
+        return $this->customClassService->saveCustomClassMapping($ccmap, $i, $value, $name);
+    }
+
     public function getCountryList($where = [], $option = [])
     {
         return $this->countryService->getList($where, $option);

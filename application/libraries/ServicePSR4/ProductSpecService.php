@@ -112,7 +112,7 @@ class ProductSpecService extends BaseService
         return $this->getCategoryProductSpecDao()->getFullCpsList($cat_id);
     }
 
-    public function getCps($where)
+    public function getCps($where = [])
     {
         return $this->getCategoryProductSpecDao()->get($where);
     }
@@ -263,6 +263,27 @@ class ProductSpecService extends BaseService
                         $this->getProductSpecDetailsDao()->$action($target_obj);
                     }
                 }
+            }
+        }
+    }
+
+    public function saveProdSpec($cpsObjList, $cat_id)
+    {
+        foreach ($cpsObjList AS $ps_id => $cps_array) {
+            $cpsObj = $this->getCps(['cat_id' => $cat_id, 'ps_id' => $ps_id]);
+            if ($cpsObj) {
+                $cps_action = "updateCps";
+            } else {
+                $cps_action = "insertCps";
+                $cpsObj = $this->getCps();
+                $cpsObj->setPsId($ps_id);
+                $cpsObj->setCatId($cat_id);
+                $cpsObj->setUnitId($cps_array['unit_id']);
+            }
+            $cpsObj->setPriority($cps_array['priority']);
+            $cpsObj->setStatus($cps_array['status']);
+            if ($this->$cps_action($cpsObj) === FALSE) {
+                $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
             }
         }
     }
