@@ -28,7 +28,15 @@ class Vbdatatransfer extends PUB_Controller
 		$this->load->library('service/vb_data_transfer_colour_service');		
 		$this->load->library('service/vb_data_transfer_colour_extend_service');
 		$this->load->library('service/vb_data_transfer_version_service');
-		$this->load->library('service/vb_data_transfer_freight_cat_service');
+		$this->load->library('service/vb_data_transfer_freight_cat_service');		
+		
+		//RA
+		$this->load->library('service/vb_data_transfer_ra_group_content_service');
+		$this->load->library('service/vb_data_transfer_ra_group_service');
+		$this->load->library('service/vb_data_transfer_ra_group_product_service');				
+		//$this->load->library('service/vb_data_transfer_ra_prod_prod_service');
+		$this->load->library('service/vb_data_transfer_ra_product_service');
+		$this->load->library('service/vb_data_transfer_ra_prod_cat_service');	
 	}
 	
 	public function price()
@@ -205,6 +213,53 @@ class Vbdatatransfer extends PUB_Controller
 	}
 	
 	/********************** end master tables **********************/
+	
+	
+	/********************** start RA tables **********************/
+	
+	
+	public function ragroup()
+	{			
+		$xml = file_get_contents('php://input');
+		// header('content-type: text/xml');
+		// print $xml;
+		// exit;
+		$feed =$this->vb_data_transfer_ra_group_service->start_process($xml);
+		print $feed;
+	}
+	
+	public function ragroupcontent()
+	{			
+		$xml = file_get_contents('php://input');
+		$feed =$this->vb_data_transfer_ra_group_content_service->start_process($xml);
+		print $feed;
+	}
+	
+	public function ragroupproduct()
+	{			
+		$xml = file_get_contents('php://input');
+		header('content-type: text/xml');
+		print $xml;
+		exit;
+		$feed =$this->vb_data_transfer_ra_group_product_service->start_process($xml);
+		print $feed;
+	}
+	
+	public function raproduct()
+	{			
+		$xml = file_get_contents('php://input');
+		$feed =$this->vb_data_transfer_ra_product_service->start_process($xml);
+		print $feed;
+	}
+	
+	public function raprodcat()
+	{			
+		$xml = file_get_contents('php://input');
+		$feed =$this->vb_data_transfer_ra_prod_cat_service->start_process($xml);
+		print $feed;
+	}
+	
+	/********************** end RA tables **********************/
 	
 	 public function index()
 	 {	
