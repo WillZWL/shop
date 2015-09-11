@@ -3,7 +3,7 @@
 class Manual_order extends MY_Controller
 {
 
-    private $app_id = "ORD0017";
+    private $appId = "ORD0017";
     private $lang_id = "en";
 
     public function __construct()
@@ -31,7 +31,7 @@ class Manual_order extends MY_Controller
 
     public function index($platform_type = "", $platform_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         if ($platform_id) {
@@ -191,9 +191,9 @@ class Manual_order extends MY_Controller
         $this->load->view('order/manual_order/manual_order_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -207,7 +207,7 @@ class Manual_order extends MY_Controller
             show_404();
         }
 
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
@@ -310,7 +310,7 @@ class Manual_order extends MY_Controller
     public function check_email($email = "")
     {
         if ($email) {
-            $sub_app_id = $this->_get_app_id() . "00";
+            $sub_app_id = $this->getAppId() . "00";
             $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
@@ -323,7 +323,7 @@ class Manual_order extends MY_Controller
 
     public function on_hold()
     {
-        $data['sub_app_id'] = $sub_app_id = $this->_get_app_id() . "01";
+        $data['sub_app_id'] = $sub_app_id = $this->getAppId() . "01";
         $this->authorization_service->check_access_rights($sub_app_id, "On Hold");
 
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
@@ -400,7 +400,7 @@ class Manual_order extends MY_Controller
 
     public function pending()
     {
-        $data['sub_app_id'] = $sub_app_id = $this->_get_app_id() . "02";
+        $data['sub_app_id'] = $sub_app_id = $this->getAppId() . "02";
         $this->authorization_service->check_access_rights($sub_app_id, "Pending");
 
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];

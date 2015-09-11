@@ -3,7 +3,7 @@
 class Supplier_order extends MY_Controller
 {
 
-    private $app_id = "ORD0001";
+    private $appId = "ORD0001";
     private $lang_id = "en";
 
     public function __construct()
@@ -35,7 +35,7 @@ class Supplier_order extends MY_Controller
             Redirect(base_url() . "order/supplier_order/");
         }
 
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         $_SESSION["SOLISTPAGE"] = base_url() . "order/supplier_order/?" . $_SERVER['QUERY_STRING'];
 
@@ -95,9 +95,9 @@ class Supplier_order extends MY_Controller
         $this->load->view('order/supplier_order/index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -177,7 +177,7 @@ class Supplier_order extends MY_Controller
     {
         $where = array();
         $option = array();
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -231,7 +231,7 @@ class Supplier_order extends MY_Controller
 
     public function add_right()
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
@@ -461,7 +461,7 @@ class Supplier_order extends MY_Controller
             }
             Redirect(base_url() . "order/supplier_order/view_ship/" . $po_number);
         }
-        $sub_app_id = $this->_get_app_id() . "05";
+        $sub_app_id = $this->getAppId() . "05";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["po_number"] = $po_number;
         $data["lang"] = $lang;
@@ -480,7 +480,7 @@ class Supplier_order extends MY_Controller
             $data["shipment_info"] = $this->supplier_order_model->get_shipment_info($po_number);
 
             $_SESSION["shipment_list"] = serialize($shipment_list);
-            $sub_app_id = $this->_get_app_id() . "06";
+            $sub_app_id = $this->getAppId() . "06";
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["po_obj"] = $po_obj;
             $_SESSION["po_obj"] = serialize($po_obj);
@@ -514,7 +514,7 @@ class Supplier_order extends MY_Controller
             $display_list = $this->supplier_order_model->get_order_item($po_number);
 
             $data["po_item_list"] = $display_list;
-            $sub_app_id = $this->_get_app_id() . "04";
+            $sub_app_id = $this->getAppId() . "04";
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
             $data["notice"] = notice($lang);
@@ -642,7 +642,7 @@ class Supplier_order extends MY_Controller
 
     public function confirm_shipment($wh = "CW")
     {
-        $sub_app_id = $this->_get_app_id() . "07";
+        $sub_app_id = $this->getAppId() . "07";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         if ($this->input->post('posted')) {
 

@@ -1,23 +1,25 @@
 <?php
 include_once "RegionHelper.php";
 
-use AtomV2\Models\Mastercfg\RegionModel;
+use ESG\Panther\Models\Mastercfg\RegionModel;
+use ESG\Panther\Service\PaginationService;
 
 class Region extends RegionHelper
 {
-    private $app_id = "MST0002";
-    private $lang_id = "en";
+    private $appId = "MST0002";
+    private $langId = "en";
 
     public function __construct()
     {
         parent::__construct();
-        $this->authorization_service->check_access_rights($this->_get_app_id(), "");
+        $this->authorization_service->check_access_rights($this->getAppId(), "");
         $this->regionModel = new RegionModel;
+        $this->paginationService = new PaginationService;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function view($value = "")
@@ -27,15 +29,15 @@ class Region extends RegionHelper
         $data["editable"] = 1;
         if ($this->input->post('posted')) {
             $error = 0;
-            if ($obj = $this->regionModel->get_region($this->input->post("id"))) {
+            if ($obj = $this->regionModel->getRegion($this->input->post("id"))) {
                 $obj->setId($this->input->post("id"));
                 $obj->setRegionName($this->input->post("region_name"));
                 $obj->setType($this->input->post("region_type"));
-                if ($this->regionModel->update_region($obj)) {
-                    $result = $this->regionModel->del_region_country($value);
+                if ($this->regionModel->updateRegion($obj)) {
+                    $result = $this->regionModel->delRegionCountry($value);
                     if ($result !== FALSE) {
                         if (!empty($this->input->post('country'))) {
-                            $result2 = $this->regionModel->add_region_country($value, $this->input->post('country'));
+                            $result2 = $this->regionModel->addRegionCountry($value, $this->input->post('country'));
                             if (!$result2) {
                                 $error++;
                             }
@@ -60,15 +62,15 @@ class Region extends RegionHelper
             $this->index();
             return;
         }
-        include_once APPPATH . '/language/' . $this->_get_app_id() . '02_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '02_' . $this->getLangId() . '.php';
         $data["lang"] = $lang;
-        $data["region_obj"] = $this->regionModel->get_region($value);
+        $data["region_obj"] = $this->regionModel->getRegion($value);
         if (empty($data["region_obj"])) {
             $_SESSION["NOTICE"] = "region_not_found";
-            $data["region_obj"] = $this->regionModel->get_region();
+            $data["region_obj"] = $this->regionModel->getRegion();
         }
-        $data['country_in'] = $this->regionModel->get_country_in_region($value);
-        $data['country_ex'] = $this->regionModel->get_country_ex($this->country_list, $data['country_in']);
+        $data['country_in'] = $this->regionModel->getCountryInRegion($value);
+        $data['country_ex'] = $this->regionModel->getCountryEx($this->country_list, $data['country_in']);
         $data['notice'] = notice($lang);
         $data["id"] = $value;
         $this->load->view('mastercfg/region/region_view', $data);
@@ -115,13 +117,13 @@ class Region extends RegionHelper
 
         $data = $this->regionModel->getRegionByName($where["region_name"], $where["region_type"], $where["id"], $option);
 
-        $sub_app_id = $this->_get_app_id() . "00";
+        $subAppId = $this->getAppId() . "00";
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $subAppId . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
         $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->initialize($pconfig);
+        $this->paginationService->initialize($pconfig);
 
         $data["notice"] = notice();
 
@@ -134,21 +136,22 @@ class Region extends RegionHelper
         $this->load->view('mastercfg/region/region_index', $data);
     }
 
-    public function _get_lang_id()
+    public function getLangId()
     {
-        return $this->lang_id;
+        return $this->langId;
     }
 
     public function add()
     {
         $data = [];
         if ($this->input->post('posted')) {
-            $obj = $this->regionModel->get_region();
+            $obj = $this->regionModel->getRegion();
+            $obj->setId(0);
             $obj->setRegionName($this->input->post("region_name"));
             $obj->setType($this->input->post("region_type"));
             $retobj = $this->regionModel->add_region($obj);
             if ($retobj !== FALSE) {
-                if (!$this->regionModel->add_region_country($retobj->getId(), $this->input->post("country"))) {
+                if (!$this->regionModel->addRegionCountry($retobj->getId(), $this->input->post("country"))) {
                     $_SESSION["notice"] = "Failed to add city to list";
                 } else {
                     Redirect(base_url() . "mastercfg/region/");
@@ -160,9 +163,9 @@ class Region extends RegionHelper
             }
         }
 
-        include_once APPPATH . '/language/' . $this->_get_app_id() . '01_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '01_' . $this->getLangId() . '.php';
         $data["lang"] = $lang;
-        $data["region_obj"] = $this->regionModel->get_region();
+        $data["region_obj"] = $this->regionModel->getRegion();
         $data["header"] = 'Create a new region';
         $data['title'] = 'Create a new region';
         $data['country_ex'] = $this->country_list;
@@ -172,5 +175,3 @@ class Region extends RegionHelper
     }
 
 }
-
-?>

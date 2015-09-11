@@ -3,7 +3,7 @@ include_once "base_report.php";
 
 class expect_delivery_date_report extends Base_report
 {
-    private $app_id = "RPT0066";
+    private $appId = "RPT0066";
     private $lang_id = "en";
 
     public function expect_delivery_date_report()
@@ -20,7 +20,7 @@ class expect_delivery_date_report extends Base_report
     {
         $data["title"] = "expect_delivery_date Report";
 
-        $langfile = $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        $langfile = $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         include_once APPPATH . "language/" . $langfile;
         $data["lang"] = $lang;
 
@@ -137,9 +137,9 @@ class expect_delivery_date_report extends Base_report
         $this->load->view('report/expect_delivery_date_report', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

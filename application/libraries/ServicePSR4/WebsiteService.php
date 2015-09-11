@@ -1,5 +1,5 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
 class WebsiteService extends BaseService
 {
@@ -59,4 +59,43 @@ class WebsiteService extends BaseService
     {
         return $this->best_seller_service->getBestSellerProduct($where, $option);
     }
+
+
+    public function getCatUrl($cat_id, $relative_path = FALSE)
+    {
+        if (empty($cat_id) || $cat_id == 0) {
+            return false;
+        }
+
+        if ($cat_obj = $this->category_service->get(array('id' => $cat_id))) {
+            $cat_name = str_replace(array(" ", "/", "."), "-", $cat_obj->get_name());
+
+            if ($relative_path) {
+                return "/" . $cat_name . "/cat/view/" . $cat_obj->get_id();
+            } else {
+                return base_url() . $cat_name . "/cat/view/" . $cat_obj->get_id();
+            }
+        }
+
+        return false;
+    }
+
+    public function getProdUrl($sku, $relative_path = FALSE)
+    {
+        if (empty($sku)) {
+            return false;
+        }
+
+        if ($prod_obj = $this->product_service->get(array("sku" => $sku))) {
+            $prod_name = str_replace(array(" ", "/", "."), "-", $prod_obj->get_name());
+
+            if ($relative_path) {
+                return "/" . $prod_name . "/mainproduct/view/" . $prod_obj->get_sku();
+            } else {
+                return base_url() . $prod_name . "/mainproduct/view/" . $prod_obj->get_sku();
+            }
+        }
+        return $sku;
+    }
+
 }

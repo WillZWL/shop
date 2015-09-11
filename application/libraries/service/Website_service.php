@@ -183,7 +183,7 @@ class Website_service extends Base_service
             return false;
         }
 
-        if ($cat_obj = $this->category_service->get($cat_id)) {
+        if ($cat_obj = $this->category_service->get(array('id' => $cat_id))) {
             $cat_name = str_replace(array(" ", "/", "."), "-", $cat_obj->get_name());
 
             if ($relative_path) {

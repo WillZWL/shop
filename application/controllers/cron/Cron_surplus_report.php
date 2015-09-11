@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cron_surplus_report extends MY_Controller
 {
-    private $app_id = "CRN0019";
+    private $appId = "CRN0019";
     private $notification_email = "itsupport@eservicesgroup.net";
 
     function __construct()
@@ -79,9 +79,9 @@ class Cron_surplus_report extends MY_Controller
     }
 
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
 }

@@ -1,9 +1,9 @@
 <?php
-use AtomV2\Models\Mastercfg\RegionModel;
+use ESG\Panther\Models\Mastercfg\RegionModel;
 
 class RegionHelper extends MY_Controller
 {
-    private $app_id = "MST0002";
+    private $appId = "MST0002";
     private $regionModel;
 
     public function __construct()
@@ -11,10 +11,10 @@ class RegionHelper extends MY_Controller
         parent::__construct(FALSE);
         $this->regionModel = new RegionModel;
 
-        $this->load->helper(array('url', 'notice', 'object'));
+        $this->load->helper(['url', 'notice', 'object']);
         $this->load->library('input');
         $this->title = 'Region Information';
-        $this->country_list = $this->regionModel->get_country_list(array(), array("orderby" => "name"));
+        $this->country_list = $this->regionModel->getCountryList([], ["orderby" => "name"]);
         $this->load->library('service/log_service');
     }
 
@@ -25,7 +25,7 @@ class RegionHelper extends MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->regionModel->regionService->get_list(array("type" => "C"), array("orderby" => "region_name ASC", "limit" => -1));
+        $objlist = $this->regionModel->regionService->getList(["type" => "C"], ["orderby" => "region_name ASC", "limit" => -1]);
         foreach ($objlist as $obj) {
             $sid = str_replace("'", "\'", $obj->get_id());
             $name = str_replace("'", "\'", $obj->get_region_name());
@@ -54,7 +54,7 @@ class RegionHelper extends MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->regionModel->regionService->get_list(array("type" => "S"), array("orderby" => "region_name ASC", "limit" => -1));
+        $objlist = $this->regionModel->regionService->getList(["type" => "S"], ["orderby" => "region_name ASC", "limit" => -1]);
         foreach ($objlist as $obj) {
             $sid = str_replace("'", "\'", $obj->get_id());
             $name = str_replace("'", "\'", $obj->get_region_name());
@@ -76,8 +76,8 @@ class RegionHelper extends MY_Controller
         echo $js;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }

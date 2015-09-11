@@ -3,7 +3,7 @@ include_once "Base_report.php";
 
 class Special_order_report extends Base_report
 {
-    private $app_id = "RPT0029";
+    private $appId = "RPT0029";
     private $lang_id = "en";
 
     public function __construct()
@@ -45,9 +45,9 @@ class Special_order_report extends Base_report
         }
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

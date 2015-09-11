@@ -2,7 +2,7 @@
 
 class Compensation_create extends MY_Controller
 {
-    private $app_id = 'CS0005';
+    private $appId = 'CS0005';
     private $lang_id = 'en';
 
     public function __construct()
@@ -21,7 +21,7 @@ class Compensation_create extends MY_Controller
 
     public function create()
     {
-        //$sub_app_id = $this->_get_app_id()."02";
+        //$sub_app_id = $this->getAppId()."02";
         //$this->authorization_service->check_access_rights($sub_app_id, "List");
 
         $where = array();
@@ -100,7 +100,7 @@ class Compensation_create extends MY_Controller
             exit;
         }
 
-        //$sub_app_id = $this->_get_app_id()."03";
+        //$sub_app_id = $this->getAppId()."03";
         //$this->authorization_service->check_access_rights($sub_app_id, "Edit");
         if ($this->input->post('posted')) {
             $success = 1;
@@ -196,7 +196,7 @@ class Compensation_create extends MY_Controller
             show_404();
         }
 
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
@@ -294,9 +294,9 @@ class Compensation_create extends MY_Controller
         $this->load->view('cs/compensation/view_prod_list', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

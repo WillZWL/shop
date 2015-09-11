@@ -12,16 +12,6 @@ class Version_service extends Base_service
         $this->set_dao(new Version_dao());
     }
 
-    public function insert($obj)
-    {
-        return $this->get_dao()->insert($obj);
-    }
-
-    public function update($obj)
-    {
-        return $this->get_dao()->update($obj);
-    }
-
     public function get($where = array())
     {
         return $this->get_dao()->get($where);

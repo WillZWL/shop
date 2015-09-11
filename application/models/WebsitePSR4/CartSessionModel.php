@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Models\Website;
+namespace ESG\Panther\Models\Website;
 
-use AtomV2\Service\CartSessionService;
+use ESG\Panther\Service\CartSessionService;
 
 class CartSessionModel extends \CI_Model
 {

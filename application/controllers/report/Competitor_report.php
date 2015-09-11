@@ -8,7 +8,7 @@ class Competitor_report extends MY_Controller
     public $default_country_id;
 
     //must set to public for view
-    private $app_id = "RPT0045";
+    private $appId = "RPT0045";
     private $lang_id = "en";
 
     public function __construct()
@@ -28,7 +28,7 @@ class Competitor_report extends MY_Controller
 
     public function index($country_id = "", $nodata = 0)
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         if ($nodata) {
             echo "<script>alert('No data available for your selection!');</script>";
@@ -48,9 +48,9 @@ class Competitor_report extends MY_Controller
         $this->load->view('report/competitor_report', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

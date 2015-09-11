@@ -42,16 +42,6 @@ class Competitor_map_service extends Base_service
         return $this->get_dao()->get_competitor_rpt_data($where);
     }
 
-    public function insert($obj)
-    {
-        return $this->get_dao()->insert($obj);
-    }
-
-    public function update($obj)
-    {
-        return $this->get_dao()->update($obj);
-    }
-
     public function update_last_price($country_id)
     {
         return $this->get_dao()->update_last_price($country_id);

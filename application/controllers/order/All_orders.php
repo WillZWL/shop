@@ -19,7 +19,7 @@ class All_orders extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->get_lang_id() . ".php");
 
         #SBF #2768 add search filters

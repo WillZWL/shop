@@ -4,7 +4,7 @@ include_once "base_report.php";
 
 class product_hs_code_report extends Base_report
 {
-    private $app_id = "RPT0050";
+    private $appId = "RPT0050";
     private $lang_id = "en";
 
     public function product_hs_code_report()
@@ -23,7 +23,7 @@ class product_hs_code_report extends Base_report
     {
         $data["title"] = "Product HS Code Report";
 
-        $langfile = $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        $langfile = $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         include_once APPPATH . "language/" . $langfile;
         $data["lang"] = $lang;
 
@@ -40,9 +40,9 @@ class product_hs_code_report extends Base_report
         $this->load->view('report/product_hs_code_report', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

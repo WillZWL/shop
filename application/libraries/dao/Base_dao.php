@@ -271,10 +271,10 @@ abstract class Base_dao
         }
     }
 
-    public function set_create(&$obj, $value = array())
+    public function set_create(&$obj, $value = [])
     {
         $ts = date("Y-m-d H:i:s");
-        $ip = $_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "127.0.0.1";
+        $ip = $_SERVER["REMOTE_ADDR"] ? ip2long($_SERVER["REMOTE_ADDR"]) : ip2long("127.0.0.1");
         $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
         @call_user_func(array($obj, "set_create_on"), $ts);
         @call_user_func(array($obj, "set_create_at"), $ip);

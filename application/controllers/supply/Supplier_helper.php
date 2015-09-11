@@ -2,7 +2,7 @@
 
 class Supplier_helper extends MY_Controller
 {
-    private $app_id = "SUP0001";
+    private $appId = "SUP0001";
 
     public function __construct()
     {
@@ -85,8 +85,8 @@ class Supplier_helper extends MY_Controller
         echo $js;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }

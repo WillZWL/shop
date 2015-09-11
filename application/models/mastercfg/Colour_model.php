@@ -32,6 +32,3 @@ class Colour_model extends CI_Model
         return $this->colour_service->get_list($where, $option);
     }
 }
-
-
-?>

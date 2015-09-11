@@ -4,7 +4,7 @@ class Competitor_map extends MY_Controller
 {
 
     public $default_platform_id;
-    private $app_id = 'MKT0075';
+    private $appId = 'MKT0075';
 
     //must set to public for view
     private $lang_id = 'en';
@@ -27,7 +27,7 @@ class Competitor_map extends MY_Controller
     public function index($country_id = "")
     {
         $data = array();
-        include_once APPPATH . "language/" . $this->_get_app_id() . "00_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["country_list"] = $this->competitor_map_model->get_sell_country_list();
         if ($country_id) {
@@ -42,9 +42,9 @@ class Competitor_map extends MY_Controller
         $this->load->view("marketing/competitor_map/competitor_map_index", $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -57,7 +57,7 @@ class Competitor_map extends MY_Controller
         # product list on left sidebar
         $where = array();
         $option = array();
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -320,7 +320,7 @@ class Competitor_map extends MY_Controller
             Redirect(base_url() . "marketing/competitor_map/view/$country_id/$sku");
         }
 
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["canedit"] = 1;
         $data["sku"] = $sku;

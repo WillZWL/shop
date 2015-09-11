@@ -2,7 +2,7 @@
 
 class Payment_gateway extends MY_Controller
 {
-    private $app_id = "ACC0001";
+    private $appId = "ACC0001";
     private $lang_id = "en";
 
     function __construct()
@@ -16,7 +16,7 @@ class Payment_gateway extends MY_Controller
 
     public function index($pmgw = "")
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -48,9 +48,9 @@ class Payment_gateway extends MY_Controller
         $this->load->view('account/payment_gateway/index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -119,7 +119,7 @@ class Payment_gateway extends MY_Controller
 
     public function pmgw_failed_record($trans_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 

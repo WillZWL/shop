@@ -2,7 +2,7 @@
 
 class Footer extends MY_Controller
 {
-    private $app_id = "MKT0050";
+    private $appId = "MKT0050";
     private $lang_id = "en";
 
     public function __construct()
@@ -17,7 +17,7 @@ class Footer extends MY_Controller
 
     public function index($menu_item_id = '')
     {
-        include_once APPPATH . "language/" . $this->_get_app_id() . "00_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
 
@@ -30,9 +30,9 @@ class Footer extends MY_Controller
         $this->load->view('marketing/footer/footer_menu_view.php', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -131,7 +131,7 @@ class Footer extends MY_Controller
         $where["(func_id LIKE \"footer.%\")"] = NULL;
         $this->menu_model->check_serialize('func_opt_list', $data, $where);
 
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
 
         $data["lang_list"] = $this->menu_model->get_lang_list(array("status" => 1), array("orderby" => "id='en' DESC", "limit" => -1));
         $data["lang"] = $lang;

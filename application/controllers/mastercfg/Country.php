@@ -1,29 +1,23 @@
 <?php
-
 class Country extends MY_Controller
 {
-    private $lang_id = "en";
-    private $app_id = "MST0012";
+    private $langId = "en";
+    private $appId = "MST0012";
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("mastercfg/country_model");
-        $this->load->model("mastercfg/language_model");
-        $this->load->model("mastercfg/currency_model");
-        $this->load->library("service/pagination_service");
-        $this->load->helper(array("url", "notice", "object"));
     }
 
-    public function index()
+    public function index($offset = 0)
     {
-        $sub_id = $this->_get_app_id() . "01_" . $this->_get_lang_id();
+        $sub_id = $this->getAppId() . "01_" . $this->getLangId();
 
         $_SESSION["clist_page"] = base_url() . "mastercfg/country/?" . $_SERVER["QUERY_STRING"];
 
-        $where = $option = array();
+        $where = $option = [];
         if ($this->input->get("id") != "") {
-            $where["id LIKE"] = '%' . $this->input->get("id") . '%';
+            $where["country_id LIKE"] = '%' . $this->input->get("id") . '%';
         }
 
         if ($this->input->get("id_3_digit") != "") {
@@ -64,11 +58,8 @@ class Country extends MY_Controller
         $limit = '20';
 
         $pconfig['base_url'] = $_SESSION["clist_page"];
-        $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"]) {
-            $option["offset"] = $this->input->get("per_page");
-        }
-
+        $option["limit"] = $limit;
+        $option["offset"] = $offset;
         if (empty($sort))
             $sort = "status";
 
@@ -77,74 +68,80 @@ class Country extends MY_Controller
 
         $option["orderby"] = $sort . " " . $order;
 
-        $clist = $this->country_model->get_list_w_rma_fc($where, $option);
-        $data["total"] = $this->country_model->get_list_w_rma_fc($where, array("num_rows" => 1));
+        $clist = $this->container['countryModel']->getListWRmaFc($where, $option);
+        $total = $this->container['countryModel']->getListWRmaFc($where, ["num_rows" => 1]);
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
+        $config['base_url'] = base_url('mastercfg/country/index');
+        $config['total_rows'] = $total;
+        $config['per_page'] = $limit;
 
-        $data["ar_lang"] = $this->language_model->get_name_w_id_key();
-        $data["ar_currency"] = $this->currency_model->get_name_w_id_key();
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
+
+        $data["ar_lang"] = $this->container['languageModel']->getNameWIdKey();
+        $data["ar_currency"] = $this->container['currencyModel']->getNameWIdKey();
 
         include_once APPPATH . "language/" . $sub_id . ".php";
         $data["lang"] = $lang;
         $data["clist"] = $clist;
+        $data["notice"] = notice($lang);
+        $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
+        $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
+        $data["searchdisplay"] = "";
         $this->load->view("mastercfg/country/v_index", $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
-    public function _get_lang_id()
+    public function getLangId()
     {
-        return $this->lang_id;
+        return $this->langId;
     }
 
     public function view($country = "")
     {
-        $sub_id = $this->_get_app_id() . "02_" . $this->_get_lang_id();
+        $sub_id = $this->getAppId() . "02_" . $this->getLangId();
 
         if ($this->input->post('posted')) {
-            $cobj = $this->country_model->get('country', array("id" => $country));
-            $cobj->set_id_3_digit($this->input->post("id_3_digit"));
-            $cobj->set_status($this->input->post("status"));
-            $cobj->set_currency_id($this->input->post("currency_id"));
-            $cobj->set_language_id($this->input->post("language_id"));
-            $cobj->set_fc_id(NULL);
-            $cobj->set_allow_sell($this->input->post("allow_sell"));
-            $cobj->set_url_enable($this->input->post("url_enable"));
+            $cobj = $this->container['countryModel']->get('Country', ["country_id" => $country]);
+            $cobj->setId3Digit($this->input->post("id_3_digit"));
+            $cobj->setStatus($this->input->post("status"));
+            $cobj->setCurrencyId($this->input->post("currency_id"));
+            $cobj->setLanguageId($this->input->post("language_id"));
+            $cobj->setFcId("");
+            $cobj->setAllowSell($this->input->post("allow_sell"));
 
-            if ($this->country_model->update('country', $cobj) === FALSE) {
+            if ($this->container['countryModel']->update('Country', $cobj) === FALSE) {
                 $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->_error_message();
             } else {
                 //continue updating country name in different country
                 $error = 0;
                 foreach ($_POST["langname"] as $key => $name) {
-                    $ceobj = $this->country_model->get('country_ext', array("lang_id" => $key, "cid" => $country));
+                    $ceobj = $this->container['countryModel']->get('CountryExt', ["lang_id" => $key, "cid" => $country]);
                     if ($ceobj) {
-                        $ceobj->set_name($name);
+                        $ceobj->setName($name);
                         $action = "update";
                     } else {
-                        $ceobj = $this->country_model->get('country_ext');
-                        $ceobj->set_cid($country);
-                        $ceobj->set_lang_id($key);
-                        $ceobj->set_name($name);
+                        $ceobj = $this->container['countryModel']->get('CountryExt');
+                        $ceobj->setCid($country);
+                        $ceobj->setLangId($key);
+                        $ceobj->setName($name);
                         $action = "insert";
                     }
 
-                    if ($this->country_model->$action('country_ext', $ceobj) === FALSE) {
+                    if ($this->container['countryModel']->$action('CountryExt', $ceobj) === FALSE) {
                         $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->_error_message();
                         $error++;
                     }
                 }
 
-                if ($rma_fc_obj = $this->country_model->get('rma_fc', array("cid" => $country))) {
-                    $rma_fc_obj->set_rma_fc($this->input->post('rma_fc'));
+                if ($rma_fc_obj = $this->container['countryModel']->get('RmaFc', ["cid" => $country])) {
+                    $rma_fc_obj->setRmaFc($this->input->post('rma_fc'));
 
-                    if ($this->country_model->update('rma_fc', $rma_fc_obj) === FALSE) {
+                    if ($this->container['countryModel']->update('RmaFc', $rma_fc_obj) === FALSE) {
                         $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->_error_message();
                         $error++;
                     }
@@ -164,12 +161,12 @@ class Country extends MY_Controller
         }
 
 
-        $country_vo = $this->country_model->get('country', array("id" => $country));
-        $lang_list = $this->language_model->get_list();
-        $name = array();
+        $country_vo = $this->container['countryModel']->get('Country', ["country_id" => $country]);
+        $lang_list = $this->container['languageModel']->getList();
+        $name = [];
         foreach ($lang_list as $lobj) {
-            $tmp = $this->country_model->get('country_ext', array('cid' => $country, 'lang_id' => $lobj->get_id()));
-            $name[$lobj->get_id()] = $tmp ? $tmp->get_name() : "";
+            $tmp = $this->container['countryModel']->get('CountryExt', ['cid' => $country, 'lang_id' => $lobj->getLangId()]);
+            $name[$lobj->getLangId()] = $tmp ? $tmp->getName() : "";
         }
 
         include_once APPPATH . "language/" . $sub_id . ".php";
@@ -177,12 +174,10 @@ class Country extends MY_Controller
         $data["country_vo"] = $country_vo;
         $data["name"] = $name;
         $data["notice"] = notice($lang);
-        $data["ar_lang"] = $this->language_model->get_name_w_id_key();
-        $data["ar_currency"] = $this->currency_model->get_name_w_id_key();
-        $data["rma_fc_vo"] = $this->country_model->get('rma_fc', array("cid" => $country));
+        $data["ar_lang"] = $this->container['languageModel']->getNameWIdKey();
+        $data["ar_currency"] = $this->container['currencyModel']->getNameWIdKey();
+        $data["rmaFcVo"] = $this->container['countryModel']->get('RmaFc', ["cid" => $country]);
         $this->load->view("mastercfg/country/v_view", $data);
     }
 }
 
-
-?>

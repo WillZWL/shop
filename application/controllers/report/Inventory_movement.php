@@ -4,7 +4,7 @@
 class Inventory_movement extends MY_Controller
 {
 
-    private $app_id = "RPT0009";
+    private $appId = "RPT0009";
     private $lang_id = "en";
 
 
@@ -34,15 +34,15 @@ class Inventory_movement extends MY_Controller
 
     private function _load_parent_lang()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
 
         return $lang;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

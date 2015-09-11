@@ -3,7 +3,7 @@
 class Integration extends MY_Controller
 {
 
-    private $app_id = "INT0001";
+    private $appId = "INT0001";
     private $lang_id = "en";
     private $notification_email = "itsupport@eservicesgroup.net";
 
@@ -20,7 +20,7 @@ class Integration extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         //$this->authorization_service->check_access_rights($sub_app_id, "List");
 
         $_SESSION["LISTPAGE"] = base_url() . "integration/integration/?" . $_SERVER['QUERY_STRING'];
@@ -97,9 +97,9 @@ class Integration extends MY_Controller
         $this->load->view('integration/integration_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -109,7 +109,7 @@ class Integration extends MY_Controller
 
     public function view($func, $batch_id)
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         //$this->authorization_service->check_access_rights($sub_app_id, "List");
 
         if ($func && $batch_id) {
@@ -230,7 +230,7 @@ class Integration extends MY_Controller
 
     public function view_amazon($func, $batch_id)
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
 
         $_SESSION["LISTPAGE"] = base_url() . "integration/integration/view_amazon/{$func}/{$batch_id}?" . $_SERVER['QUERY_STRING'];
 
@@ -306,7 +306,7 @@ class Integration extends MY_Controller
 
     public function examine_client($batch_id = "", $trans_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -350,7 +350,7 @@ class Integration extends MY_Controller
 
     public function examine_order($batch_id = "", $trans_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "04";
+        $sub_app_id = $this->getAppId() . "04";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         if ($batch_id == "" || $trans_id == "") {

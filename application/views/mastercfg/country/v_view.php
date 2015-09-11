@@ -43,14 +43,14 @@ $ar_fcid = array("US_FC" => $lang["us_fc"], "UK_FC" => $lang["uk_fc"], "HK_FC" =
             </tr>
             <tr>
                 <td class="field"><?= $lang["id"] ?></td>
-                <td class="value" colspan="3"><?= $country_vo->get_id() ?><input name="id" type="hidden"
-                                                                                 value="<?= $country_vo->get_id() ?>"><input
+                <td class="value" colspan="3"><?= $country_vo->getCountryId() ?><input name="id" type="hidden"
+                                                                                 value="<?= $country_vo->getId() ?>"><input
                         type="hidden" name="posted" value="1"></td>
             </tr>
             <tr>
                 <td class="field"><?= $lang["id_3_digit"] ?></td>
                 <td class="value" colspan="3"><input name="id_3_digit" class="input"
-                                                     value="<?= htmlspecialchars($country_vo->get_id_3_digit()) ?>"
+                                                     value="<?= htmlspecialchars($country_vo->getId3Digit()) ?>"
                                                      maxlength="3"></td>
             </tr>
             <tr>
@@ -63,7 +63,7 @@ $ar_fcid = array("US_FC" => $lang["us_fc"], "UK_FC" => $lang["uk_fc"], "HK_FC" =
                                 <td height="20" width="70%"><?= $lang["name_in_language"] ?></td>
                             </tr>
                             <?php
-                            foreach ($name as $key => $value) {
+                            foreach ($name as $key => $value) :
                                 ?>
                                 <tr>
                                     <td class="field"><?= $ar_lang[$key] ?></td>
@@ -71,126 +71,101 @@ $ar_fcid = array("US_FC" => $lang["us_fc"], "UK_FC" => $lang["uk_fc"], "HK_FC" =
                                                              value="<?= htmlspecialchars($value) ?>"></td>
                                 </tr>
                             <?php
-                            }
+                            endforeach;
                             ?>
                         </table>
                     </div>
                 </td>
             </tr>
             <?php
-            $select[$country_vo->get_status()] = "selected";
+            $select[$country_vo->getStatus()] = " selected";
             ?>
             <tr>
                 <td class="field"><?= $lang["status"] ?></td>
                 <td class="value" colspan="3"><select name="status" class="input">
-                        <option value="1" <?= $select[1] ?>><?= $lang["active"] ?></option>
-                        <option value="0" <?= $select[0] ?>><?= $lang["inactive"] ?></option>
+                        <option value="1"<?= !empty($selected[1]) ? $selected[1] : '' ?>><?= $lang["active"] ?></option>
+                        <option value="0"<?= !empty($selected[0]) ? $selected[0] : '' ?>><?= $lang["inactive"] ?></option>
                     </select></td>
             </tr>
             <?php
             unset($select);
-            $select[$country_vo->get_currency_id()] = "selected";
+            $select[$country_vo->getCurrencyId()] = "selected";
             ?>
             <tr>
                 <td class="field"><?= $lang["currency_id"] ?></td>
                 <td class="value" colspan="3"><select name="currency_id" class="input">
                         <?php
-                        foreach ($ar_currency as $cur => $cname) {
+                        foreach ($ar_currency as $cur => $cname) :
                             ?>
-                            <option value="<?= $cur ?>" <?= $select[$cur] ?>><?= $cname ?></option>
+                            <option value="<?= $cur ?>" <?= !empty($select[$cur]) ? $select[$cur] : '' ?>><?= $cname ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </select></td>
             </tr>
             <?php
             unset($select);
-            $select[$country_vo->get_language_id()] = "selected";
+            $select[$country_vo->getLanguageId()] = "selected";
             ?>
             <tr>
                 <td class="field"><?= $lang["language_id"] ?></td>
                 <td class="value" colspan="3"><select name="language_id" class="input">
                         <?php
-                        foreach ($ar_lang as $langid => $lname) {
+                        foreach ($ar_lang as $langid => $lname) :
                             ?>
-                            <option value="<?= $langid ?>" <?= $select[$langid] ?>><?= $lname ?></option>
+                            <option value="<?= $langid ?>" <?= !empty($select[$langid]) ? $select[$langid] : '' ?>><?= $lname ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </select></td>
             </tr>
             <?php
             unset($select);
-            $select[$country_vo->get_fc_id()] = "selected";
+            $select[$country_vo->getFcId()] = "selected";
             ?>
-            <!--
-    <tr>
-        <td class="field"><?= $lang["fc_id"] ?></td>
-        <td class="value" colspan="3"><select name="fc_id" class="input"><option value=""></option>
-<?php
-            foreach ($ar_fcid as $k => $v) {
-                ?>
-<option value="<?= $k ?>" <?= $select[$k] ?>><?= $v ?></option>
-<?php
-            }
-            ?>
-        </select></td>
-    </tr>
--->
             <tr>
                 <td class="field"><?= $lang["rma_fc"] ?></td>
                 <td class="value" colspan="3"><select name="rma_fc" class="input">
                         <option value=""></option>
                         <?php
                         unset($select);
-                        $select[$rma_fc_vo->get_rma_fc()] = "selected";
-                        foreach ($ar_fcid as $k => $v) {
+                        $select[$rmaFcVo->getRmaFc()] = "selected";
+                        foreach ($ar_fcid as $k => $v) :
                             ?>
-                            <option value="<?= $k ?>" <?= $select[$k] ?>><?= $v ?></option>
+                            <option value="<?= $k ?>" <?= !empty($select[$k]) ? $select[$k] : '' ?>><?= $v ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </select></td>
             </tr>
             <?php
             unset($select);
-            $select[$country_vo->get_allow_sell()] = "selected";
+            $select[$country_vo->getAllowSell()] = "selected";
             ?>
             <tr>
                 <td class="field"><?= $lang["allow_sell"] ?></td>
                 <td class="value" colspan="3"><select name="allow_sell" class="input">
-                        <option value="1" <?= $select[1] ?>><?= $lang["allow_sell_to"] ?></option>
-                        <option value='0' <?= $select[0] ?>><?= $lang["not_allow_sell"] ?></option>
-                    </select></td>
-            </tr>
-            <?php
-            unset($select);
-            $select[$country_vo->get_url_enable()] = "selected";
-            ?>
-            <tr>
-                <td class="field"><?= $lang["url_enable"] ?></td>
-                <td class="value" colspan="3"><select name="url_enable" class="input">
-                        <option value="1" <?= $select[1] ?>><?= $lang["url_enable_to"] ?></option>
-                        <option value='0' <?= $select[0] ?>><?= $lang["not_url_enable"] ?></option>
+                        <option value="1" <?= !empty($select[1]) ? $select[1] : '' ?>><?= $lang["allow_sell_to"] ?></option>
+                        <option value='0' <?= !empty($select[0]) ? $select[0] : '' ?>><?= $lang["not_allow_sell"] ?></option>
                     </select></td>
             </tr>
             <tr>
                 <td class="field"><?= $lang["create_on"] ?></td>
-                <td class="value"><?= $country_vo->get_create_on() ?></td>
+                <td class="value"><?= $country_vo->getCreateOn() ?></td>
                 <td class="field"><?= $lang["modify_on"] ?></td>
-                <td class="value"><?= $country_vo->get_modify_on() ?></td>
+                <td class="value"><?= $country_vo->getModifyOn() ?></td>
             </tr>
             <tr>
                 <td class="field"><?= $lang["create_at"] ?></td>
-                <td class="value"><?= $country_vo->get_create_at() ?></td>
+                <td class="value"><?= $country_vo->getCreateAt() ?></td>
                 <td class="field"><?= $lang["modify_at"] ?></td>
-                <td class="value"><?= $country_vo->get_modify_at() ?></td>
+                <td class="value"><?= $country_vo->getModifyAt() ?></td>
             </tr>
             <tr>
                 <td class="field"><?= $lang["create_by"] ?></td>
-                <td class="value"><?= $country_vo->get_create_by() ?></td>
+                <td class="value"><?= $country_vo->getCreateBy() ?></td>
                 <td class="field"><?= $lang["modify_by"] ?></td>
-                <td class="value"><?= $country_vo->get_modify_by() ?></td>
+                <td class="value"><?= $country_vo->getModifyBy() ?></td>
             </tr>
 
             <tr class="tb_detail">

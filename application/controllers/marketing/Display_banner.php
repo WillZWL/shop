@@ -2,7 +2,7 @@
 
 class Display_banner extends MY_Controller
 {
-    private $app_id = "MKT0020";
+    private $appId = "MKT0020";
     private $lang_id = "en";
 
     public function __construct()
@@ -18,14 +18,14 @@ class Display_banner extends MY_Controller
 
     public function index()
     {
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $this->load->view('marketing/display_banner/index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -758,7 +758,7 @@ class Display_banner extends MY_Controller
                 }
             }
         }
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $data["publish_banner"] = $publish_banner;
         $data["lang_list"] = $this->display_banner_model->get_language_list(array("status" => 1), array("orderby" => "name ASC"));

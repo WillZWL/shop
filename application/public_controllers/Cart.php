@@ -1,5 +1,5 @@
 <?php
-use AtomV2\Models\Website\CartSessionModel;
+use ESG\Panther\Models\Website\CartSessionModel;
 
 Class Cart extends PUB_Controller
 {
@@ -30,7 +30,7 @@ Class Cart extends PUB_Controller
         ];
 
         $allow_result = $this->cart_session_model->cart_session_service->isAllowToAdd($sku, $qty, PLATFORM);
-        if ($allow_result <= \AtomV2\Service\CartSessionService::DECISION_POINT) {
+        if ($allow_result <= \ESG\Panther\Service\CartSessionService::DECISION_POINT) {
             $result = $this->cart_session_model->addItemQty($sku, $qty, PLATFORM);
         }
 

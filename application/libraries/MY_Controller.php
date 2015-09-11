@@ -16,8 +16,8 @@ abstract class MY_Controller extends CI_Controller
             $this->load->library('service/authorization_service');
 
             if ($check_access_rights) {
-                $this->authorization_service->check_access_rights($this->_get_app_id(), "");
-                $feature_list = $this->authorization_service->set_application_feature_right($this->_get_app_id(), "");
+                $this->authorization_service->check_access_rights($this->getAppId(), "");
+                $feature_list = $this->authorization_service->set_application_feature_right($this->getAppId(), "");
             }
         }
     }
@@ -45,22 +45,19 @@ abstract class MY_Controller extends CI_Controller
         return "?back=" . urlencode($_SESSION["CURRPAGE"]);
     }
 
-    abstract public function _get_app_id();
+    abstract public function getAppId();
 
-    function _get_ru()
+    function getRu()
     {
         $ru = $_SESSION["CURRPAGE"];
         if ($pru = $this->input->post("ru")) {
-            $this->load->library("encrypt");
             $ru = $this->encrypt->decode($pru);
         }
         return $ru;
     }
-}
 
-function _form_ru()
-{
-    include_once(BASEPATH . "libraries/Encrypt.php");
-    $encrypt = new CI_Encrypt();
-    return "<input type='hidden' name='ru' value='" . $encrypt->encode($_SESSION["CURRPAGE"]) . "'>";
+    function setFormRu()
+    {
+        return "<input type='hidden' name='ru' value='".$this->encrypt->encode($_SESSION["CURRPAGE"])."'>";
+    }
 }

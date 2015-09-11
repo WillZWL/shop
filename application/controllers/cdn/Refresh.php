@@ -2,7 +2,7 @@
 
 class Refresh extends MY_Controller
 {
-    private $app_id = "MKT0081";
+    private $appId = "MKT0081";
     private $lang_id = "en";
     private $cdn_url_prefix = "http://cdn.valuebasket.com/808AA1/vb/";
 
@@ -11,17 +11,17 @@ class Refresh extends MY_Controller
         parent::__construct();
         $this->load->helper(array('url'));
         $this->load->helper(array('notice'));
-        $this->authorization_service->check_access_rights($this->_get_app_id(), "");
+        $this->authorization_service->check_access_rights($this->getAppId(), "");
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function index()
     {
-        include_once APPPATH . 'language/' . $this->_get_app_id() . '00_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . 'language/' . $this->getAppId() . '00_' . $this->_get_lang_id() . '.php';
         $data["lang"] = $lang;
         $data["title"] = "Refresh CDN Image";
         $data["header"] = "Please Input the image path you want to Refresh";

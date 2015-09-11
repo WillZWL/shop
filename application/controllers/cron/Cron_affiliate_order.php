@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cron_affiliate_order extends MY_Controller
 {
-    private $app_id = "CRN0022";
+    private $appId = "CRN0022";
 
     function __construct()
     {
@@ -24,9 +24,9 @@ class Cron_affiliate_order extends MY_Controller
     }
 
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
 }

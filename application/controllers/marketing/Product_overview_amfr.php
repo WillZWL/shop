@@ -3,7 +3,7 @@
 class Product_overview_amfr extends MY_Controller
 {
 
-    private $app_id = "MKT0013";
+    private $appId = "MKT0013";
     private $lang_id = "en";
 
 
@@ -18,7 +18,7 @@ class Product_overview_amfr extends MY_Controller
 
     public function index($platform_id = "AMFR")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = base_url() . "marketing/product_overview_amfr/?" . $_SERVER['QUERY_STRING'];
         switch ($platform_id) {
             default:
@@ -222,9 +222,9 @@ class Product_overview_amfr extends MY_Controller
         $this->load->view('marketing/product_overview_amfr/product_overview_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

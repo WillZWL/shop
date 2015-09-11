@@ -2,7 +2,7 @@
 
 class Order_release_report extends MY_Controller
 {
-    private $app_id = "RPT0038";
+    private $appId = "RPT0038";
     private $lang_id = "en";
 
     public function __construct()
@@ -19,7 +19,7 @@ class Order_release_report extends MY_Controller
     {
         $data["title"] = "Compensation Report";
 
-        include_once APPPATH . '/language/' . $this->_get_app_id() . '00_' . $this->_get_lang_id() . '.php';
+        include_once APPPATH . '/language/' . $this->getAppId() . '00_' . $this->_get_lang_id() . '.php';
         $data["lang"] = $lang;
 
 
@@ -129,14 +129,14 @@ class Order_release_report extends MY_Controller
 
     private function _load_parent_lang()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         return $lang;
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

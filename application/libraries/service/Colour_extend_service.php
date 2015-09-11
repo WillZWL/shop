@@ -19,16 +19,6 @@ class Colour_extend_service extends Base_service
         $this->translate_service = $serv;
     }
 
-    public function insert($obj)
-    {
-        return $this->get_dao()->insert($obj);
-    }
-
-    public function update($obj)
-    {
-        return $this->get_dao()->update($obj);
-    }
-
     public function get($where = array())
     {
         if (!count($where)) {

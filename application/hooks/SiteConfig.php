@@ -1,5 +1,5 @@
 <?php
-use AtomV2\Service\SiteConfigService;
+use ESG\Panther\Service\SiteConfigService;
 
 class SiteConfig extends PUB_Controller
 {

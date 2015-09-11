@@ -43,12 +43,12 @@
             </tr>
             <tr>
                 <td class="field"><?= $lang["login_name"] ?></td>
-                <td class="value"><input name="id" class="input" <?=$cmd != "add" ? 'type="hidden"' : ''?> value="<?= htmlspecialchars($user->get_id()) ?>" noSpecial><?= $user->get_id() ?></td>
+                <td class="value"><input name="id" class="input" <?=$cmd != "add" ? 'type="hidden"' : ''?> value="<?= htmlspecialchars($user->getId()) ?>" noSpecial><?= $user->getId() ?></td>
                 <td class="field"><?= $lang["name"] ?></td>
                 <td class="value"><input name="username" class="input"
-                                         value="<?= htmlspecialchars($user->get_username()) ?>" notEmpty></td>
+                                         value="<?= htmlspecialchars($user->getUsername()) ?>" notEmpty></td>
                 <td class="field"><?= $lang["email"] ?></td>
-                <td class="value"><input name="email" class="input" value="<?= htmlspecialchars($user->get_email()) ?>"
+                <td class="value"><input name="email" class="input" value="<?= htmlspecialchars($user->getEmail()) ?>"
                                          notEmpty validEmail></td>
             </tr>
             <tr>
@@ -61,11 +61,11 @@
                 <td class="field"><?= $lang["status"] ?></td>
                 <td class="value">
                     <?php
-                    $selected[$user->get_status()] = "SELECTED";
+                    $selected[$user->getStatus()] = "SELECTED";
                     ?>
                     <select name="status" class="input">
                         <option value="1"><?= $lang["active"] ?>
-                        <option value="0" <?= $selected[0] ?>><?= $lang["inactive"] ?>
+                        <option value="0" <?= @$selected[0] ?>><?= $lang["inactive"] ?>
                     </select>
                 </td>
             </tr>
@@ -77,13 +77,12 @@
                             <td align="center"><?= $lang["existing_roles"] ?><br>
                                 <select name="full_list[]" multiple='multiple' class="multi_select">
                                     <?php
-                                    foreach ($role_list as $role)
-                                    {
+                                    foreach ($role_list as $role) :
                                     ?>
-                                    <option value="<?= $role->get_id() ?>"><?= $role->get_role_name() ?>
-                                        <?php
-                                        }
-                                        ?>
+                                    <option value="<?= $role->getId() ?>"><?= $role->getRoleName() ?>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </select>
                             </td>
                             <td align="center">
@@ -103,13 +102,12 @@
                             <td align="center"><?= $lang["joined_roles"] ?><br>
                                 <select name="joined_list[]" multiple='multiple' class="multi_select" selectAll>
                                     <?php
-                                    foreach ($joined_list as $role)
-                                    {
+                                    foreach ($joined_list as $role) :
                                     ?>
-                                    <option value="<?= $role->get_id() ?>"><?= $role->get_role_name() ?>
-                                        <?php
-                                        }
-                                        ?>
+                                    <option value="<?= $role->getId() ?>"><?= $role->getRoleName() ?>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </select>
                             </td>
                         </tr>
@@ -117,26 +115,26 @@
                 </td>
             </tr>
             <?php
-            if ($cmd != "add") {
+            if ($cmd != "add") :
                 ?>
                 <tr>
                     <td class="field"><?= $lang["create_on"] ?></td>
-                    <td class="value"><?= $user->get_create_on() ?></td>
+                    <td class="value"><?= $user->getCreateOn() ?></td>
                     <td class="field"><?= $lang["create_at"] ?></td>
-                    <td class="value"><?= $user->get_create_at() ?></td>
+                    <td class="value"><?= $user->getCreateAt() ?></td>
                     <td class="field"><?= $lang["create_by"] ?></td>
-                    <td class="value"><?= $user->get_create_by() ?></td>
+                    <td class="value"><?= $user->getCreateBy() ?></td>
                 </tr>
                 <tr>
                     <td class="field"><?= $lang["modify_on"] ?></td>
-                    <td class="value"><?= $user->get_modify_on() ?></td>
+                    <td class="value"><?= $user->getModifyOn() ?></td>
                     <td class="field"><?= $lang["modify_at"] ?></td>
-                    <td class="value"><?= $user->get_modify_at() ?></td>
+                    <td class="value"><?= $user->getModifyAt() ?></td>
                     <td class="field"><?= $lang["modify_by"] ?></td>
-                    <td class="value"><?= $user->get_modify_by() ?></td>
+                    <td class="value"><?= $user->getModifyBy() ?></td>
                 </tr>
             <?php
-            }
+            endif;
             ?>
             <tr class="tb_detail">
                 <td colspan="3" height="40"><input type="button" name="back" value="<?= $lang['back_list'] ?>"
@@ -144,15 +142,15 @@
                 </td>
                 <td colspan="3" align="right" style="padding-right:8px;">
                     <?php
-                    if ($cmd == "add") {
+                    if ($cmd == "add") :
                         ?>
                         <input type="submit" value="<?= $lang['header'] ?>">
                     <?php
-                    } elseif ($cmd == "edit") {
+                    elseif ($cmd == "edit") :
                         ?>
                         <input type="submit" value="<?= $lang['update_button'] ?>">
                     <?php
-                    }
+                    endif;
                     ?>
                 </td>
             </tr>
@@ -160,7 +158,6 @@
 
         <input type="hidden" name="posted" value="1">
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
     <?= $notice["js"] ?>
 </div>
 </body>

@@ -32,11 +32,6 @@ class Banner_service extends Base_service
         return $this->get_dao()->get_list_with_name($catid, $value);
     }
 
-    public function update($data)
-    {
-        return $this->get_dao()->update($data);
-    }
-
     public function get_banner_list($where, $option)
     {
         $obj_list = $this->get_dao()->get_list($where, $option);
@@ -97,5 +92,3 @@ class Banner_service extends Base_service
         }
     }
 }
-
-
