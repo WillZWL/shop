@@ -69,6 +69,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\ColourDao();
         };
 
+        $daoContainer['ColourExtend'] = function () {
+            return new D\ColourExtendDao();
+        };
+
         $daoContainer['DeliveryTime'] = function () {
             return new D\DeliveryTimeDao();
         };
@@ -91,6 +95,10 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['DeliveryType'] = function () {
             return new D\DeliveryTypeDao();
+        };
+
+        $daoContainer['Brand'] = function () {
+            return new D\BrandDao();
         };
 
         $daoContainer['Category'] = function () {

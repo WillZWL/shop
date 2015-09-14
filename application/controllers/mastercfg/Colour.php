@@ -35,7 +35,7 @@ class Colour extends MY_Controller
                 $errorMsg = __LINE__ . 'Could not translate. $sourceName and $toLang cannot be empty.';
             }
         } elseif ($this->input->post('add')) {
-            $result = $this->sc['colourModel']->save($this->input->post());
+            $result = $this->sc['Colour']->save($this->input->post());
             redirect('/mastercfg/colour');
         }
     }
@@ -117,12 +117,12 @@ class Colour extends MY_Controller
 
         $limit = 20;
 
-        $data['colourList'] = $this->sc['colourModel']->getList([], ['limit' => $limit, 'offset' => $offset]);
-        $data['langList'] = $this->sc['Language']->getList(['status' => 1], ['orderby' => 'lang_id ASC']);
-        $total = $this->sc['colourModel']->getNumRows();
+        $data['colourList'] = $this->sc['Colour']->getDao('Colour')->getList([], ['limit' => $limit, 'offset' => $offset]);
+        $data['langList'] = $this->sc['Language']->getDao('Language')->getList(['status' => 1], ['orderby' => 'lang_id ASC']);
+        $total = $this->sc['Colour']->getDao('Colour')->getNumRows();
 
         $editColourId = $this->input->get('edit');
-        $data['colourWithLang'] = $this->sc['colourModel']->getListWithLang(['c.colour_id' => $editColourId], ['limit' => -1]);
+        $data['colourWithLang'] = $this->sc['Colour']->getDao('Colour')->getListWithLang(['c.colour_id' => $editColourId], ['limit' => -1]);
 
         $config['base_url'] = base_url('mastercfg/colour/index');
         $config['total_rows'] = $total;
