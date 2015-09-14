@@ -9,11 +9,11 @@ use ESG\Panther\Service\ContextConfigService;
 
 class AuthenticationService extends BaseService
 {
-    public function __construct(BaseDao $dao)
+    public function __construct()
     {
 
         // var_dump($dao);die;
-        parent::__construct($dao);
+        parent::__construct();
         // $this->setUserDao(New UserDao);
         // $this->setUserRoleDao(New UserRoleDao);
         // $this->setAuditLogDao(New AuditLogDao);

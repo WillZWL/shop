@@ -16,15 +16,15 @@ class CountryModel extends \CI_Model
         return $this->countryService->getDao()->get_all_available_country_w_correct_lang($lang_id);
     }
 
-    public function get($dao, $where = "")
-    {
-        $method = "get" . $dao . "Dao";
-        if (is_array($where)) {
-            return $this->countryService->$method()->get($where);
-        } else {
-            return $this->countryService->$method()->get();
-        }
-    }
+    // public function get($dao, $where = "")
+    // {
+    //     $method = "get" . $dao . "Dao";
+    //     if (is_array($where)) {
+    //         return $this->countryService->$method()->get($where);
+    //     } else {
+    //         return $this->countryService->$method()->get();
+    //     }
+    // }
 
     public function getList($dao, $where = [], $option = [])
     {
@@ -38,14 +38,14 @@ class CountryModel extends \CI_Model
 
     public function getListWRmaFc($where = [], $option = [])
     {
-        return $this->countryService->getDao()->getListWRmaFc($where, $option);
+        return $this->countryService->getDao('Country')->getListWRmaFc($where, $option);
     }
 
-    public function update($dao, $obj)
-    {
-        $method = "get" . $dao . "Dao";
-        return $this->countryService->$method()->update($obj);
-    }
+    // public function update($dao, $obj)
+    // {
+    //     $method = "get" . $dao . "Dao";
+    //     return $this->countryService->$method()->update($obj);
+    // }
 
     public function insert($dao, $obj)
     {

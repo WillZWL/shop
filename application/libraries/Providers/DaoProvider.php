@@ -41,12 +41,16 @@ class DaoProvider implements ServiceProviderInterface
             return new D\LogmessageDao();
         };
 
-        $daoContainer['DeliveryTime'] = function () {
-            return new D\DeliveryTimeDao();
-        };
-
         $daoContainer['Country'] = function () {
             return new D\CountryDao();
+        };
+
+        $daoContainer['CountryExt'] = function () {
+            return new D\CountryExtDao();
+        };
+
+        $daoContainer['RmaFc'] = function () {
+            return new D\RmaFcDao();
         };
 
         $daoContainer['Product'] = function () {
@@ -59,6 +63,18 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['Colour'] = function () {
             return new D\ColourDao();
+        };
+
+        $daoContainer['DeliveryTime'] = function () {
+            return new D\DeliveryTimeDao();
+        };
+
+        $daoContainer['Language'] = function () {
+            return new D\LanguageDao();
+        };
+
+        $daoContainer['Currency'] = function () {
+            return new D\CurrencyDao();
         };
 
     }

@@ -10,27 +10,16 @@ class ServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $servcieContainer)
     {
-
-        $servcieContainer['ColourDao'] = function($c) {
-            return new D\ColourDao();
-        };
-
-        $servcieContainer['UserDao'] = function($c) {
-            return new D\ColourDao();
-        };
-
-
-
         $servcieContainer['Colour'] = function () {
             return new S\ColourService();
         };
 
         $servcieContainer['Authorization'] = function ($c) {
-            return new S\AuthorizationService($c['UserDao']);
+            return new S\AuthorizationService();
         };
 
         $servcieContainer['Authentication'] = function ($c) {
-            return new S\AuthenticationService($c['ColourDao']);
+            return new S\AuthenticationService();
         };
 
         $servcieContainer['Category'] = function () {
@@ -55,6 +44,14 @@ class ServiceProvider implements ServiceProviderInterface
 
         $servcieContainer['Log'] = function () {
             return new S\LogService();
+        };
+
+        $servcieContainer['DeliveryTime'] = function () {
+            return new S\DeliveryTimeService();
+        };
+
+        $servcieContainer['Country'] = function () {
+            return new S\CountryService();
         };
     }
 }

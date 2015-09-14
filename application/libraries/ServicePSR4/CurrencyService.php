@@ -26,7 +26,7 @@ class CurrencyService extends BaseService
     public function getNameWIdKey()
     {
         $data = [];
-        if ($objlist = $this->getDao()->getList([], ["limit" => -1])) {
+        if ($objlist = $this->getDao('Currency')->getList([], ["limit" => -1])) {
             foreach ($objlist as $obj) {
                 $data[$obj->getCurrencyId()] = $obj->getName();
             }

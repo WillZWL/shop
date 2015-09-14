@@ -8,9 +8,9 @@ class ColourService extends BaseService
 {
     private $colourExtendDao;
 
-    public function __construct(BaseDao $dao)
+    public function __construct()
     {
-        parent::__construct($dao);
+        parent::__construct();
         // $this->setDao(new ColourDao);
         // $this->setColourExtendDao(new ColourExtendDao);
     }

@@ -11,11 +11,11 @@ class AuthorizationService extends BaseService
     private $user_srv;
     private $_appFeatureService;
 
-    public function __construct(BaseDao $dao)
+    public function __construct()
     {
-        parent::__construct($dao);
-        // $this->userService = new UserService;
-        // $this->_appFeatureService = new ApplicationFeatureService;
+        parent::__construct();
+        $this->userService = new UserService;
+        $this->_appFeatureService = new ApplicationFeatureService;
     }
 
     public function userMenuItem($userId = "")

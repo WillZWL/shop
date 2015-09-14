@@ -9,7 +9,7 @@ class BaseService
 
     private static $daoContainer;
 
-    public function __construct($dao)
+    public function __construct()
     {
 
         if (!self::$daoContainer) {
@@ -22,9 +22,9 @@ class BaseService
             self::$daoContainer = $dc;
         }
 
-        self::$daoContainer['Current'] = function () {
-            return new $dao();
-        };
+        // self::$daoContainer['Current'] = function () {
+        //     return new $dao();
+        // };
     }
 
     public function getDao($dao = null)
