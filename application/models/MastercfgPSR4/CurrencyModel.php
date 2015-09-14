@@ -5,7 +5,6 @@ use ESG\Panther\Service\CurrencyService;
 
 class CurrencyModel extends \CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();

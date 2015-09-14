@@ -520,7 +520,7 @@ html;
 
     public function save()
     {
-        $this->productCreationService->saveByXML($xml);
+        $this->sc['ProductCreation']->saveByXML($xml);
     }
 
 

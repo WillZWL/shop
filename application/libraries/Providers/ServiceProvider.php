@@ -53,5 +53,9 @@ class ServiceProvider implements ServiceProviderInterface
         $servcieContainer['Country'] = function () {
             return new S\CountryService();
         };
+
+        $servcieContainer['ProductCreation'] = function () {
+            return new S\ProductCreationService();
+        };
     }
 }

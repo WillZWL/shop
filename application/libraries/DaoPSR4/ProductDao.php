@@ -21,6 +21,16 @@ class ProductDao extends BaseDao
         parent::__construct();
     }
 
+    public function getNewSku()
+    {
+        return $this->db->query("SELECT next_value('sku') as sku")->row('sku');
+    }
+
+    public function getNewProductGroup()
+    {
+        return $this->db->query("SELECT next_value('prod_grp_cd') as prod_grp_cd")->row('prod_grp_cd');
+    }
+
     public function getHomeProduct($where = [], $option = [], $class_name = 'SimpleProductDto')
     {
         $where['pd.status'] = 2;
