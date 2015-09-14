@@ -55,7 +55,7 @@ class Profit_var extends ProfitVarHelper
 
             // update price_margin tb for all platforms
             $platform_id = $this->input->post("id");
-            $this->sc['priceMarginService']->refreshAllPlatformMargin(["id" => $platform_id]);
+            $this->sc['PriceMargin']->refreshAllPlatformMargin(["id" => $platform_id]);
 
             if ($ret === FALSE) {
                 $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->_error_message();
@@ -92,7 +92,7 @@ class Profit_var extends ProfitVarHelper
         $data["selling_platform_list"] = $this->sc['profitVarModel']->getSellingPlatformList();
         $data["country_list"] = $this->sc['profitVarModel']->getCountryList([], ["limit" => -1, "orderby" => "name"]);
         $data["active_country_list"] = $this->sc['profitVarModel']->getCountryList(["status" => 1], ["limit" => -1, "orderby" => "name"]);
-        $data["language_list"] = $this->sc['profitVarModel']->languageService->getList(["status" => 1], ["limit" => -1, "orderby" => "lang_name"]);
+        $data["language_list"] = $this->sc['Language']->getDao('Language')->getList(["status" => 1], ["limit" => -1, "orderby" => "lang_name"]);
         $_SESSION["profit_obj"] = serialize($data["profit_obj"]);
         $data["currency_list"] = $this->sc['profitVarModel']->getCurrencyList();
         $data["id"] = $value;

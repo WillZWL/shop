@@ -41,6 +41,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\LogmessageDao();
         };
 
+        $daoContainer['Region'] = function () {
+            return new D\RegionDao();
+        };
+
         $daoContainer['Country'] = function () {
             return new D\CountryDao();
         };
@@ -75,6 +79,30 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['Currency'] = function () {
             return new D\CurrencyDao();
+        };
+
+        $daoContainer['SellingPlatform'] = function () {
+            return new D\SellingPlatformDao();
+        };
+
+        $daoContainer['Courier'] = function () {
+            return new D\CourierDao();
+        };
+
+        $daoContainer['DeliveryType'] = function () {
+            return new D\DeliveryTypeDao();
+        };
+
+        $daoContainer['Category'] = function () {
+            return new D\CategoryDao();
+        };
+
+        $daoContainer['CustomClassification'] = function () {
+            return new D\CustomClassificationDao();
+        };
+
+        $daoContainer['CustomClassificationMapping'] = function () {
+            return new D\CustomClassificationMappingDao();
         };
 
     }

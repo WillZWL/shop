@@ -13,10 +13,8 @@ class CategoryService extends BaseService
     private $brand_service;
     private $ext_dao;
 
-    public function __construct(ContainerInterface $daoContainer)
+    public function __construct()
     {
-        $this->container = $c;
-
         parent::__construct();
         $CI =& get_instance();
         $this->load = $CI->load;
