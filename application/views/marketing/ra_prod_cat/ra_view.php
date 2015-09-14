@@ -12,7 +12,7 @@
     <?php
     if ($canedit == 1) :
     ?>
-    <form action="<?= $_SERVER["PHP_SELF"] ?>?sscat=<?= $this->input->get('sscat') ?>" method="POST">
+    <form action="<?= base_url() . "marketing/ra_prod_cat/view/?sscat=". $this->input->get('sscat') ?>" method="POST">
         <?php
         endif;
         ?>

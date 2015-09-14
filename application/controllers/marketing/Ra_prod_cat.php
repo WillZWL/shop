@@ -31,7 +31,7 @@ class Ra_prod_cat extends MY_Controller
         if ($this->input->post('posted') == 1) {
             if ($this->input->post('type') == "insert") {
                 $ra_obj = $this->container['raProdCatModel']->getRaObj();
-                $ra_obj->set_ss_cat_id($this->input->post('sscat'));
+                $ra_obj->setSsCatId($this->input->post('sscat'));
             } else {
                 $this->container['raProdCatModel']->autoload();
                 $ra_obj = unserialize($_SESSION["ra_obj"]);
@@ -41,8 +41,8 @@ class Ra_prod_cat extends MY_Controller
                 $func = "setRcmSsCatId" . $j;
                 $ra_obj->$func($this->input->post('sscat' . $j));
             }
-            $ra_obj->set_warranty_cat($this->input->post('warranty_cat'));
-            $ra_obj->set_status($this->input->post('status'));
+            $ra_obj->setWarrantyCat($this->input->post('warranty_cat'));
+            $ra_obj->setStatus($this->input->post('status'));
 
             if ($this->input->post('type') == "insert") {
                 $ret = $this->container['raProdCatModel']->insert($ra_obj);

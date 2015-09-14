@@ -16,6 +16,8 @@ class CategoryService extends BaseService
     public function __construct()
     {
         parent::__construct();
+        $CI =& get_instance();
+        $this->load = $CI->load;
         $this->setDao(new CategoryDao);
         $this->setCategoryExtendDao(new CategoryExtendDao);
         $this->setCategoryContentDao(new CategoryContentDao);
@@ -113,6 +115,11 @@ class CategoryService extends BaseService
     public function add($obj)
     {
         return $this->getDao()->insert($obj);
+    }
+
+    public function update($obj)
+    {
+        return $this->getDao()->update($obj);
     }
 
     public function loadVo()

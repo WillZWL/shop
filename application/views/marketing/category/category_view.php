@@ -13,7 +13,8 @@
     <script type="text/javascript" src="<?= base_url() ?>js/ext-js/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/ext-js/ext-all.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/ext-js/TabScrollerMenu.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+    <script src="<?= base_url() ?>js/jquery-1.11.1/jquery-1.11.1.min.js"></script>
 
     <style type="text/css">
         <?php
@@ -88,12 +89,12 @@
 <body topmargin="0" leftmargin="0" style="width:auto;">
 <div id="main" style="width:auto;">
     <?= $notice["img"] ?>
-    <form name="catview" id="catview" action="<?= $_SERVER["PHP_SELF"] ?>" method="POST" enctype="multipart/form-data">
+    <form name="catview" id="catview" action="/marketing/category/view/<?= $cat_id ?>" method="POST" enctype="multipart/form-data">
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td height="30" class="title"><b style="font-size:16px;color:#000000"><?= $lang["subtitle"] ?></b></td>
-                <td width="400" align="right" class="title"><input type="button" value="Generate Menu" class="button"
-                                                                   onClick="document.getElementById('update_menu').src='<?= base_url() ?>cron/cron_draw_menu/cron_multilanguage_menu'">
+                <td width="400" align="right" class="title">
+                <input type="button" value="Generate Menu" class="button" onClick="document.getElementById('update_menu').src='<?= base_url() ?>cron/cron_draw_menu/cron_multilanguage_menu'">
                 </td>
             </tr>
             <tr>

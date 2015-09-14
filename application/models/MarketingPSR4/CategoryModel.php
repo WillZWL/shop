@@ -33,6 +33,11 @@ class CategoryModel extends \CI_Model
         $this->productSpecService = new ProductSpecService;
     }
 
+    public function saveProdSpec($cpsObjList, $cat_id)
+    {
+        return $this->productSpecService->saveProdSpec($cpsObjList, $cat_id);
+    }
+
     public function getProductForCategoryPage($platformId, $catId, $catLevel, $brandId, &$sort, &$rpp, &$page, $langId)
     {
         $where = [];
@@ -113,7 +118,7 @@ class CategoryModel extends \CI_Model
 
     public function getCatObj($id)
     {
-        return $this->categoryService->get(['id'=>$id]);
+        return $this->categoryService->get($id ? ['id'=>$id] : []);
     }
 
     public function getlistcount($level, $id = "")

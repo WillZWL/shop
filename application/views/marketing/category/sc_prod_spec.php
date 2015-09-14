@@ -25,7 +25,7 @@
             <td height="50" style="padding-left:8px"><b style="font-size:14px"><?= $lang["header"] . " " . $cat_obj->getName() ?></b>
         </tr>
     </table>
-    <form name="fm_edit" action="<?= $_SERVER["PHP_SELF"] ?>" method="post" onSubmit="return CheckForm(this)">
+    <form name="fm_edit" action="<?=base_url()?>marketing/category/view_prod_spec/<?= $cat_id ?>" method="post" onSubmit="return CheckForm(this)">
         <table border="0" cellpadding="0" cellspacing="1" height="20" class="page_header" width="100%">
             <col>
             <col width="150">
@@ -34,7 +34,9 @@
             <col width="150">
             <?php
             if ($full_cps_list) :
+                $i = 0;
                 foreach ($full_cps_list AS $psg_name => $cps_array) :
+                    $i++;
                     ?>
                     <tr class="header">
                         <td height="20" colspan="5">&nbsp;&nbsp;<?= $psg_name ?></td>
@@ -93,8 +95,7 @@
                                     ?>
                                 </td>
 
-                                <td><input name="cps_obj[<?= $cps_obj->getPsFuncId() ?>][priority]" class="input"
-                                           value="<?= $cps_obj->getPriority() ?>" notEmpty isNumber min=0></td>
+                                <td><input name="cps_obj[<?= $cps_obj->getPsFuncId() ?>][priority]" class="input" value="<?= $cps_obj->getPriority() ?>" notEmpty isNumber min=0></td>
                                 <td>
                                     <select name="cps_obj[<?= $cps_obj->getPsFuncId() ?>][status]" class="input">
                                         <?php

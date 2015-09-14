@@ -12,7 +12,7 @@
 <div id="main" style="width:1058px;">
     <?= $notice["img"] ?>
     <form name="catview"
-          action="<?= $_SERVER["PHP_SELF"] ?>?level=<?= $this->input->get('level') ?>&parent=<?= $this->input->get('parent') ?>"
+          action="<?= base_url() ?>marketing/category/add?level=<?= $this->input->get('level') ?>&parent=<?= $this->input->get('parent') ?>"
           method="POST">
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr>
@@ -55,40 +55,40 @@
             <tr>
                 <td width="142" valign="top" class="field" align="left">&nbsp;&nbsp;<?= $lang["category_status"] ?></td>
                 <td align="left" class="value">&nbsp;&nbsp;<select name="status" style="width:120px;"><?php
-                        for ($i = 0; $i < 2; $i++) {
+                        for ($i = 0; $i < 2; $i++) :
                             ?>
                             <option value="<?= $i ?>"><?= $lang["status" . $i] ?></option><?php
-                        }
+                        endfor;
                         ?></select></td>
             </tr>
             <?php
-            if ($level > 1) {
-                if ($level == 2) {
+            if ($level > 1) :
+                if ($level == 2) :
                     ?>
                     <tr>
                         <td width="142" height="20" valign="top" class="field" align="left">
                             &nbsp;&nbsp;<?= $lang["category_cat"] ?></td>
                         <td height="20" valign="top" class="value" align="left">
-                            &nbsp;&nbsp;<?= $parent_obj->get_name() ?></td>
+                            &nbsp;&nbsp;<?= $parent_obj->getName() ?></td>
                     </tr>
                 <?php
-                } else {
+                else :
                     ?>
                     <tr>
                         <td width="142" height="20" valign="top" class="field" align="left">
                             &nbsp;&nbsp;<?= $lang["category_cat"] ?></td>
                         <td height="20" valign="top" class="value" align="left">
-                            &nbsp;&nbsp;<?= $parent_obj->get_cat_name() ?></td>
+                            &nbsp;&nbsp;<?= $parent_obj->getCatName() ?></td>
                     </tr>
                     <tr>
                         <td width="142" height="20" valign="top" class="field" align="left">
                             &nbsp;&nbsp;<?= $lang["category_subcat"] ?></td>
                         <td height="20" valign="top" class="value" align="left">
-                            &nbsp;&nbsp;<?= $parent_obj->get_name() ?></td>
+                            &nbsp;&nbsp;<?= $parent_obj->getName() ?></td>
                     </tr>
                 <?php
-                }
-            }
+                endif;
+            endif;
             ?>
         </table>
         <table border="0" cellpadding="0" cellspacing="0" height="40" class="page_header" width="100%">
