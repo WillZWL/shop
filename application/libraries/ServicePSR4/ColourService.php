@@ -8,15 +8,17 @@ class ColourService extends BaseService
 {
     private $colourExtendDao;
 
-    public function __construct()
+    public function __construct(BaseDao $dao)
     {
-        $this->setDao(new ColourDao);
-        $this->setColourExtendDao(new ColourExtendDao);
+        parent::__construct($dao);
+        // $this->setDao(new ColourDao);
+        // $this->setColourExtendDao(new ColourExtendDao);
     }
 
     public function getListWithLang($where, $option)
     {
-        return $this->getDao()->getListWithLang($where, $option);
+        return $this->getDao('Colour')->getListWithLang($where, $option);
+        // return $this->getDao()->getListWithLang($where, $option);
     }
 
     public function save($data)
@@ -32,7 +34,7 @@ class ColourService extends BaseService
 
         $nameTranslate = $data["name_translate"];
 
-        $colourExtendVo = $this->getColourExtendDao()->get();
+        $colourExtendVo = $this->getDao('ColourExtendDao')->get();
 
         foreach ($nameTranslate as $langId => $name) {
             $colourExtendObj = clone $colourExtendVo;

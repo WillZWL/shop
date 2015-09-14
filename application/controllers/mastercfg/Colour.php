@@ -17,7 +17,9 @@ class Colour extends MY_Controller
     {
         if ($this->input->post('translate') !== null) {
             $sourceName = ucfirst(strtolower($this->input->post('colour_name')));
-            $data['langList'] = $this->container['languageService']->getList(['status' => 1], ['orderby' => 'lang_id ASC']);
+
+            var_dump($this->sc['Language']);die;
+            $data['langList'] = $this->sc['Language']->getDao('Language')->getList(['status' => 1], ['orderby' => 'lang_id ASC']);
 
             $translated = $this->translateColourName($sourceName, 'en', $data['langList']);
             if ($translated) {
@@ -33,7 +35,7 @@ class Colour extends MY_Controller
                 $errorMsg = __LINE__ . 'Could not translate. $sourceName and $toLang cannot be empty.';
             }
         } elseif ($this->input->post('add')) {
-            $result = $this->container['colourModel']->save($this->input->post());
+            $result = $this->sc['colourModel']->save($this->input->post());
             redirect('/mastercfg/colour');
         }
     }
@@ -115,12 +117,12 @@ class Colour extends MY_Controller
 
         $limit = 20;
 
-        $data['colourList'] = $this->container['colourModel']->getList([], ['limit' => $limit, 'offset' => $offset]);
-        $data['langList'] = $this->container['languageService']->getList(['status' => 1], ['orderby' => 'lang_id ASC']);
-        $total = $this->container['colourModel']->getNumRows();
+        $data['colourList'] = $this->sc['colourModel']->getList([], ['limit' => $limit, 'offset' => $offset]);
+        $data['langList'] = $this->sc['Language']->getList(['status' => 1], ['orderby' => 'lang_id ASC']);
+        $total = $this->sc['colourModel']->getNumRows();
 
         $editColourId = $this->input->get('edit');
-        $data['colourWithLang'] = $this->container['colourModel']->getListWithLang(['c.colour_id' => $editColourId], ['limit' => -1]);
+        $data['colourWithLang'] = $this->sc['colourModel']->getListWithLang(['c.colour_id' => $editColourId], ['limit' => -1]);
 
         $config['base_url'] = base_url('mastercfg/colour/index');
         $config['total_rows'] = $total;

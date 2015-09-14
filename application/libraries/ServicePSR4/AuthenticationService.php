@@ -1,6 +1,7 @@
 <?php
 namespace ESG\Panther\Service;
 
+use ESG\Panther\Dao\BaseDao;
 use ESG\Panther\Dao\UserDao;
 use ESG\Panther\Dao\UserRoleDao;
 use ESG\Panther\Dao\AuditLogDao;
@@ -8,27 +9,31 @@ use ESG\Panther\Service\ContextConfigService;
 
 class AuthenticationService extends BaseService
 {
-    public function __construct()
+    public function __construct(BaseDao $dao)
     {
-        $this->setUserDao(New UserDao);
-        $this->setUserRoleDao(New UserRoleDao);
-        $this->setAuditLogDao(New AuditLogDao);
-        $this->contextConfigService = new ContextConfigService;
+
+        // var_dump($dao);die;
+        parent::__construct($dao);
+        // $this->setUserDao(New UserDao);
+        // $this->setUserRoleDao(New UserRoleDao);
+        // $this->setAuditLogDao(New AuditLogDao);
+        // $this->getDao('Config') = new ContextConfigService;
     }
 
     public function authUser($user_id = "", $password = "", $salt = "")
     {
         if (!($user_id == "" && $password == "")) {
-            $user_obj = $this->getUserDao()->get(["id" => $user_id, "status" => 1]);
+
+            $user_obj = $this->getDao('User')->get(["id" => $user_id, "status" => 1]);
             $_SESSION["vo"] = $user_obj;
-            $audit_log_obj = $this->getAuditLogDao()->get();
+            $audit_log_obj = $this->getDao('AuditLog')->get();
             $audit_log_obj->setUserId($user_id);
             $audit_log_obj->setIpAddress($_SERVER["REMOTE_ADDR"]);
             if (!empty($user_obj)) {
-                if ($user_obj->getFailedAttempt() >= $this->contextConfigService->valueOf("max_failed_attempt")) {
-                    if ($last_failed_obj = $this->getAuditLogDao()->getList(["user_id" => $user_id, "status" => 0], ["orderby" => "create_on DESC", "limit" => 1])) {
-                        if (mktime() < strtotime($last_failed_obj->get_create_on()) + $this->contextConfigService->valueOf("failed_wait_time") * 60) {
-                            redirect($this->contextConfigService->valueOf("failed_redirect_page"));
+                if ($user_obj->getFailedAttempt() >= $this->getDao('Config')->valueOf("max_failed_attempt")) {
+                    if ($last_failed_obj = $this->getDao('AuditLog')->getList(["user_id" => $user_id, "status" => 0], ["orderby" => "create_on DESC", "limit" => 1])) {
+                        if (mktime() < strtotime($last_failed_obj->get_create_on()) + $this->getDao('Config')->valueOf("failed_wait_time") * 60) {
+                            redirect($this->getDao('Config')->valueOf("failed_redirect_page"));
                             return FALSE;
                         }
                     }
@@ -49,26 +54,26 @@ class AuthenticationService extends BaseService
                         }
                     }
 
-                    $user_role_obj = $this->getUserRoleDao()->getList(["user_id" => $userdata["id"]]);
+                    $user_role_obj = $this->getDao('UserRole')->getList(["user_id" => $userdata["id"]]);
                     $userdata["role_id"] = [];
                     foreach ($user_role_obj as $user_role) {
                         $userdata["role_id"][] = $user_role->getRoleId();
                     }
                     $userdata["authed"] = md5($userdata["id"] . ":" . $userdata["username"]);
                     $user_obj->setFailedAttempt(0);
-                    $this->getUserDao()->update($user_obj);
+                    $this->getDao('User')->update($user_obj);
                     $audit_log_obj->setStatus(1);
-                    $this->getAuditLogDao()->insert($audit_log_obj);
+                    $this->getDao('AuditLog')->insert($audit_log_obj);
                     $_SESSION["user"] = $userdata;
                     var_dump(isset($_SESSION["user"]["id"]));
                     return TRUE;
                 } else {
                     $user_obj->setFailedAttempt($user_obj->getFailedAttempt() + 1);
-                    $this->getUserDao()->update($user_obj);
+                    $this->getDao('User')->update($user_obj);
                 }
             }
             $audit_log_obj->setStatus(0);
-            $this->getAuditLogDao()->insert($audit_log_obj);
+            $this->getDao('AuditLog')->insert($audit_log_obj);
             $this->deauthUser();
         }
         return FALSE;
@@ -87,35 +92,5 @@ class AuthenticationService extends BaseService
             }
         }
         return FALSE;
-    }
-
-    public function getUserDao()
-    {
-        return $this->userDao;
-    }
-
-    public function setUserDao($value)
-    {
-        $this->userDao = $value;
-    }
-
-    public function getUserRoleDao()
-    {
-        return $this->UserRoleDao;
-    }
-
-    public function setUserRoleDao($value)
-    {
-        $this->UserRoleDao = $value;
-    }
-
-    public function getAuditLogDao()
-    {
-        return $this->AuditLogDao;
-    }
-
-    public function setAuditLogDao($value)
-    {
-        $this->AuditLogDao = $value;
     }
 }

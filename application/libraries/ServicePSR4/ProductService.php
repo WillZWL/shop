@@ -36,7 +36,7 @@ class ProductService extends BaseProductService
 
     public function createSkuMapping(BaseVo $obj)
     {
-        $this->container['skuMppingDao']->insert($obj);
+        $this->sc['skuMppingDao']->insert($obj);
     }
 
 

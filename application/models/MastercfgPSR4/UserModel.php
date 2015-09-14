@@ -22,17 +22,17 @@ class UserModel extends \CI_Model
 
     public function getUser($where = array())
     {
-        return $this->userService->getDao()->get($where);
+        return $this->userService->getDao('User')->get($where);
     }
 
     public function getUserRole($where = array())
     {
-        return $this->userRoleService->getDao()->get($where);
+        return $this->userRoleService->getDao('UserRole')->get($where);
     }
 
     public function getUserRoleList($where = array())
     {
-        return $this->userRoleService->getDao()->getList($where);
+        return $this->userRoleService->getDao('UserRole')->getList($where);
     }
 
     public function inactiveUser($userVo)
@@ -42,9 +42,9 @@ class UserModel extends \CI_Model
 
     public function delUserRole($where)
     {
-        if ($objlist = $this->userRoleService->getDao()->getList($where)) {
+        if ($objlist = $this->userRoleService->getDao('UserRole')->getList($where)) {
             foreach ($objlist as $obj) {
-                $this->userRoleService->getDao()->delete($obj);
+                $this->userRoleService->getDao('UserRole')->delete($obj);
             }
             return true;
         }
@@ -53,32 +53,32 @@ class UserModel extends \CI_Model
 
     public function includeUserVo()
     {
-        return $this->userService->getDao()->includeVo();
+        return $this->userService->getDao('User')->includeVo();
     }
 
     public function include_user_role_vo()
     {
-        return $this->userRoleService->getDao()->includeVo();
+        return $this->userRoleService->getDao('UserRole')->includeVo();
     }
 
     public function getRoleList($where = array())
     {
-        return $this->roleService->getDao()->getList();
+        return $this->roleService->getDao('Role')->getList();
     }
 
     public function addUser($obj)
     {
-        return $this->userService->getDao()->insert($obj);
+        return $this->userService->getDao('User')->insert($obj);
     }
 
     public function addUserRole($obj)
     {
-        return $this->userRoleService->getDao()->insert($obj);
+        return $this->userRoleService->getDao('UserRole')->insert($obj);
     }
 
     public function update_user($obj)
     {
-        return $this->userService->getDao()->update($obj);
+        return $this->userService->getDao('User')->update($obj);
     }
 
 }

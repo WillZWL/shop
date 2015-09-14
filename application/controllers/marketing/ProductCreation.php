@@ -6,7 +6,7 @@ class ProductCreation extends MY_Controller
     {
         $data = 'xml_file';
 
-        $this->container['productService']->data = $data;
-        $this->container['productService']->addProductData($this->container['productDataXML'])->createProductProcess();
+        $this->sc['productService']->data = $data;
+        $this->sc['productService']->addProductData($this->sc['productDataXML'])->createProductProcess();
     }
 }

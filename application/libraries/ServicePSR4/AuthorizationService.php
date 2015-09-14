@@ -1,6 +1,7 @@
 <?php
 namespace ESG\Panther\Service;
 
+use ESG\Panther\Dao\BaseDao;
 use ESG\Panther\Service\UserService;
 use ESG\Panther\Service\ApplicationFeatureService;
 
@@ -10,10 +11,11 @@ class AuthorizationService extends BaseService
     private $user_srv;
     private $_appFeatureService;
 
-    public function __construct()
+    public function __construct(BaseDao $dao)
     {
-        $this->userService = new UserService;
-        $this->_appFeatureService = new ApplicationFeatureService;
+        parent::__construct($dao);
+        // $this->userService = new UserService;
+        // $this->_appFeatureService = new ApplicationFeatureService;
     }
 
     public function userMenuItem($userId = "")

@@ -5,11 +5,11 @@ use ESG\Panther\Dao\LanguageDao;
 
 class LanguageService extends BaseService
 {
-    public function __construct()
+    public function __construct(BaseDao $dao)
     {
         log_message('info', 'RAPHALEInitialized');
-        parent::__construct();
-        $this->setDao(new LanguageDao);
+        parent::__construct($dao);
+        // $this->setDao(new LanguageDao);
     }
 
     public function getNameWIdKey()

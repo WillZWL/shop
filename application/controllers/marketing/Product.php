@@ -509,15 +509,19 @@ html;
         $data['lead_day'] = '1';
         $data['moq'] = 1;
 
-        $productVo = $this->container['productVoByPost']->pick($data);
-        $supplierProdVo = $this->container['supplierProdVoByPost']->pick($data);
+        $productVo = $this->sc['productVoByPost']->pick($data);
+        $supplierProdVo = $this->sc['supplierProdVoByPost']->pick($data);
 
-        $this->container['productService']->getDao()->insert($productVo);
-        $this->container['supplierProdDao']->insert($supplierProdVo);
+        $this->sc['productService']->getDao()->insert($productVo);
+        $this->sc['supplierProdDao']->insert($supplierProdVo);
 
         return $data['prod_grp_cd'];
     }
 
+    public function save()
+    {
+        $this->productCreationService->saveByXML($xml);
+    }
 
 
 
@@ -660,7 +664,7 @@ html;
         }
 
         // $data["prod_type"] = $this->product_model->get_product_type_list(array("sku" => $sku));
-        $data['colour_list'] = $this->container['colourModel']->getList(['status' => 1], ['orderby' => 'colour_id DESC', 'limit' => '-1']);
+        $data['colour_list'] = $this->sc['colourModel']->getList(['status' => 1], ['orderby' => 'colour_id DESC', 'limit' => '-1']);
         $data["version_list"] = $this->product_model->get_list("version", array("status" => 'A'));
         $data["type_list"] = $this->subject_domain_service->get_subj_list_w_subj_lang("MKT.PROD_TYPE.PROD_TYPE_ID", "en");
         $data["joined_list"] = array();

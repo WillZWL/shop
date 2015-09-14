@@ -7,7 +7,7 @@ class ExchangeRateHelper extends \MY_Controller
     {
         parent::__construct(FALSE);
         $this->title = 'Region Information';
-        $this->currency_list = $ccc = $this->container['exchangeRateModel']->getActiveCurrencyList([], ["orderby" => "name ASC"]);
+        $this->currency_list = $ccc = $this->sc['exchangeRateModel']->getActiveCurrencyList([], ["orderby" => "name ASC"]);
     }
 
     public function js_xratelist($to_currency = "")
@@ -17,7 +17,7 @@ class ExchangeRateHelper extends \MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $xratelist = $this->container['exchangeRateModel']->exchangeRateService->getDao()->getList($to_currency == "" ? [] : ["to_currency_id" => $to_currency]);
+        $xratelist = $this->sc['exchangeRateModel']->exchangeRateService->getDao()->getList($to_currency == "" ? [] : ["to_currency_id" => $to_currency]);
         foreach ($xratelist as $obj) {
             $fid = str_replace("'", "\'", $obj->get_from_currency_id());
             $tid = str_replace("'", "\'", $obj->get_to_currency_id());

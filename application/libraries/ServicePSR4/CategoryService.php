@@ -13,8 +13,10 @@ class CategoryService extends BaseService
     private $brand_service;
     private $ext_dao;
 
-    public function __construct()
+    public function __construct(ContainerInterface $daoContainer)
     {
+        $this->container = $c;
+
         parent::__construct();
         $CI =& get_instance();
         $this->load = $CI->load;
@@ -89,6 +91,7 @@ class CategoryService extends BaseService
 
     public function getMenuListWithPlatformId($lang_id = "", $platform_id = "")
     {
+        $this->sc['CategoryDao']->getMenuListWithPlatformId($lang_id, $platform_id);
         return $this->getDao()->getMenuListWithPlatformId($lang_id, $platform_id);
     }
 

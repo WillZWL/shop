@@ -17,7 +17,7 @@ class FaqadminService extends BaseService
 
     public function getListCnt($where = [], $option = [])
     {
-        return $this->getDao()->getListCnt($where, $option);
+        return $this->getDao('Faqadmin')->getListCnt($where, $option);
     }
 
     public function getContent($platform_id = "WSGB")
@@ -114,16 +114,16 @@ class FaqadminService extends BaseService
 
     public function save($wh){
         if ($wh["action"] == "add") {
-            $obj = $this->getDao()->get();
+            $obj = $this->getDao('Faqadmin')->get();
             $method = "insert";
             $obj->setLangId($wh["lang_id"]);
         } else {
-            $obj = $this->getDao()->get(["lang_id" => $wh["lang_id"]]);
+            $obj = $this->getDao('Faqadmin')->get(["lang_id" => $wh["lang_id"]]);
             $method = "update";
         }
         $obj->setFaqVer($wh["faq_ver"]);
 
-        if ($this->getDao()->$method($obj) === FALSE) {
+        if ($this->getDao('Faqadmin')->$method($obj) === FALSE) {
             $_SESSION["notice"] = $this->db->_error_message();
         }
     }
