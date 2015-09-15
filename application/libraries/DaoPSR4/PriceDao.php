@@ -16,6 +16,28 @@ class PriceDao extends BaseDao
         return $this->table_name;
     }
 
+    public function getItemsWithPrice($where = array(), $classname = "ItemWithPriceDto")
+    {
+        $this->db->from('v_prod_items AS vpi');
+        $this->db->join('price AS p', 'vpi.item_sku = p.sku', 'LEFT');
+
+        if ($where) {
+            $this->db->where($where);
+        }
+
+        $rs = [];
+
+        if ($query = $this->db->get()) {
+            $this->include_dto($classname);
+            foreach ($query->result($classname) as $obj) {
+                $rs[] = $obj;
+            }
+            return (object)$rs;
+        }
+
+        return FALSE;
+    }
+
     public function getPriceCostDto($sku, $platform, $shiptype = "", $classname = "ProductCostDto")
     {
         $where = $option = [];

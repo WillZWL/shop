@@ -44,16 +44,16 @@
                 <td height="20"><img src="<?= base_url() ?>images/expand.png" class="pointer"
                                      onClick="Expand(document.getElementById('tr_search'));"></td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'name', '<?= $xsort["name"] ?>')"><?= $lang["category_name"] ?> <?= $sortimg["name"] ?></a>
+                       onClick="SortCol(document.fm, 'name', '<?= @$xsort["name"] ?>')"><?= $lang["category_name"] ?> <?= @$sortimg["name"] ?></a>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'description', '<?= $xsort["description"] ?>')"><?= $lang["category_desc"] ?> <?= $sortimg["description"] ?></a>
+                       onClick="SortCol(document.fm, 'description', '<?= @$xsort["description"] ?>')"><?= $lang["category_desc"] ?> <?= @$sortimg["description"] ?></a>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'level', '<?= $xsort["level"] ?>')"><?= $lang["category_level"] ?> <?= $sortimg["level"] ?></a>
+                       onClick="SortCol(document.fm, 'level', '<?= @$xsort["level"] ?>')"><?= $lang["category_level"] ?> <?= @$sortimg["level"] ?></a>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'status', '<?= $xsort["status"] ?>')"><?= $lang["category_status"] ?> <?= $sortimg["status"] ?></a>
+                       onClick="SortCol(document.fm, 'status', '<?= @$xsort["status"] ?>')"><?= $lang["category_status"] ?> <?= @$sortimg["status"] ?></a>
                 </td>
                 <td></td>
             </tr>
@@ -64,88 +64,89 @@
                            value="<?= htmlspecialchars($this->input->get("description")) ?>"></td>
                 <td><select name="level" class="input">
                         <option value="">-- Please Select --</option><?php
-                        for ($i = 1; $i < 3; $i++) {
+                        for ($i = 1; $i < 3; $i++) :
                             ?>
                             <option
                             value="<?= $i ?>" <?= ($i == $this->input->get('level') ? "SELECTED" : "") ?>><?= $lang["type" . $i] ?></option><?php
-                        }
+                        endfor;
                         ?></select></td>
                 <td><select name="status" class="input">
                         <option value="">-- Please Select --</option><?php
-                        for ($j = 0; $j < 2; $j++) {
+                        for ($j = 0; $j < 2; $j++) :
                             ?>
                             <option
                             value="<?= $j ?>" <?= ($j == $this->input->get('status') && $this->input->get('status') != "") ? "SELECTED" : "" ?>><?= $lang["status" . $j] ?></option><?php
-                        }
+                        endfor;
                         ?></select></td>
                 <td align="center"><input type="submit" name="searchsubmit" value="" class="search_button"
                                           style="background: url('<?= base_url() ?>images/find.gif') no-repeat;"></td>
             </tr>
             <?php
             $i = 0;
-            if (!empty($category_list)) {
-                if ($total > 0) {
-                    foreach ($category_list as $category) {
+            $row_color = ["#EEEEFF", "#DDDDFF"];
+            if (!empty($category_list)) :
+                if ($total > 0) :
+                    foreach ($category_list as $category) :
                         $cur_color = $row_color[$i % 2];
                         ?>
 
                         <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
                             onMouseOut="RemoveClassName(this, 'highlight')"
-                            onClick="Redirect('<?= site_url('marketing/category/view/' . $category->get_id()) ?>')">
+                            onClick="Redirect('<?= site_url('marketing/category/view/' . $category->getId()) ?>')">
                             <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                                 title='<?= $lang["create_on"] ?>:<?= $category->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $category->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $category->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $category->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $category->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $category->get_modify_by() ?>'>
+                                                 title='<?= $lang["create_on"] ?>:<?= $category->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $category->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $category->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $category->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $category->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $category->getModifyBy() ?>'>
                             </td>
-                            <td><?= $category->get_name() ?></td>
+                            <td><?= $category->getName() ?></td>
                             <td><?php
-                                $output = strip_tags($category->get_description());
+                                $output = strip_tags($category->getDescription());
                                 $cnt = strlen($output);
-                                if ($cnt < 100) {
+                                if ($cnt < 100) :
                                     echo stripslashes($output);
-                                } else {
+                                else :
                                     echo stripslashes(substr($output, 100)) . " ... ";
-                                }
+                                endif;
                                 ?></td>
-                            <td><?= $lang["type" . $category->get_level()] ?></td>
-                            <td><?= $lang["status" . $category->get_status()] ?></td>
+                            <td><?= $lang["type" . $category->getLevel()] ?></td>
+                            <td><?= $lang["status" . $category->getStatus()] ?></td>
                             <td align="center">&nbsp;</td>
                         </tr>
                         <?php
                         $i++;
-                    }
-                } else {
+                    endforeach;
+                else :
                     ?>
                     <tr bgcolor="<?= $row_color[0] ?>">
                         <td colspan="6" align="center"><?= $lang["category_not_found"] ?></td>
                     </tr>
                 <?php
-                }
-            }
+                endif;
+            endif;
             ?>
         </table>
         <input type="hidden" name="showall" value='<?= $this->input->get("showall") ?>'>
         <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 <?php
-if ($added) {
+if ($added) :
     ?>
     <script language="javascript">
         alert('<?=$lang["add_successful"]?>');
     </script>
 <?php
-}
+endif;
 ?>
 <?php
-if ($updated) {
+if ($updated) :
     ?>
     <script language="javascript">
         alert('<?=$lang["update_successful"]?>');
     </script>
 <?php
-}
+endif;
 ?>
 </body>
 </html>

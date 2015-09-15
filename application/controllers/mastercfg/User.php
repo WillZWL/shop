@@ -56,10 +56,10 @@ class User extends MY_Controller
         $option["orderby"] = $sort . " " . $order;
 
         if ($this->input->get("showall")) {
-            $data = $this->container['userModel']->getListWRoles($where, $option);
+            $data = $this->sc['userModel']->getListWRoles($where, $option);
         } else {
             $where["u.status"] = 1;
-            $data = $this->container['userModel']->getListWRoles($where, $option);
+            $data = $this->sc['userModel']->getListWRoles($where, $option);
         }
 
         $data["lang"] = $lang;
@@ -101,19 +101,19 @@ class User extends MY_Controller
                 set_value($data["user"], $_POST);
 
                 $id = $data["user"]->getId();
-                $proc = $this->container['userModel']->getUser(array("id" => $id));
+                $proc = $this->sc['userModel']->getUser(array("id" => $id));
                 if (!empty($proc)) {
                     $_SESSION["NOTICE"] = "user_existed";
                 } else {
-                    if ($this->container['userModel']->addUser($data["user"])) {
-                        $user_role_vo = $this->container['userModel']->getUserRole();
+                    if ($this->sc['userModel']->addUser($data["user"])) {
+                        $user_role_vo = $this->sc['userModel']->getUserRole();
 
                         if ($this->input->post("joined_list")) {
                             foreach ($this->input->post("joined_list") as $role_id) {
                                 $user_role_obj = $user_role_vo;
                                 call_user_func(array($user_role_obj, "setUserId"), $id);
                                 call_user_func(array($user_role_obj, "setRoleId"), $role_id);
-                                $this->container['userModel']->addUserRole($user_role_obj);
+                                $this->sc['userModel']->addUserRole($user_role_obj);
                             }
                         }
                         unset($_SESSION["user_vo"]);
@@ -129,14 +129,14 @@ class User extends MY_Controller
         $data["lang"] = $lang;
 
         if (empty($data["user"])) {
-            if (($data["user"] = $this->container['userModel']->getUser()) === FALSE) {
+            if (($data["user"] = $this->sc['userModel']->getUser()) === FALSE) {
                 $_SESSION["NOTICE"] = "sql_error";
             } else {
                 $_SESSION["user_vo"] = serialize($data["user"]);
             }
         }
 
-        $data["role_list"] = $this->container['userModel']->getRoleList();
+        $data["role_list"] = $this->sc['userModel']->getRoleList();
         $data["joined_list"] = array();
 
         if ($this->input->post("joined_list")) {
@@ -158,30 +158,30 @@ class User extends MY_Controller
             if ($this->input->post("posted")) {
 
                 if (isset($_SESSION["user_vo"])) {
-                    //$this->container['userModel']->includeVserVo();
+                    //$this->sc['userModel']->includeVserVo();
                     $data["user"] = unserialize($_SESSION["user_vo"]);
 
                     $_POST["password"] = empty($_POST["password"]) ? $data["user"]->getPassword() : md5($_POST["password"]);
 
                     if ($data["user"]->getId() != $_POST["id"]) {
-                        $proc = $this->container['userModel']->getUser(array("id" => $_POST["id"]));
+                        $proc = $this->sc['userModel']->getUser(array("id" => $_POST["id"]));
                         if (!empty($proc)) {
                             $_SESSION["NOTICE"] = "user_existed";
                         }
                     } else {
                         set_value($data["user"], $_POST);
 
-                        if ($this->container['userModel']->update_user($data["user"])) {
+                        if ($this->sc['userModel']->update_user($data["user"])) {
                             print_r($id);
-                            $this->container['userModel']->delUserRole(array("user_id" => $id));
-                            $user_role_vo = $this->container['userModel']->getUserRole();
+                            $this->sc['userModel']->delUserRole(array("user_id" => $id));
+                            $user_role_vo = $this->sc['userModel']->getUserRole();
 
                             if ($this->input->post("joined_list")) {
                                 foreach ($this->input->post("joined_list") as $role_id) {
                                     $user_role_obj = $user_role_vo;
                                     call_user_func(array($user_role_obj, "setUserId"), $id);
                                     call_user_func(array($user_role_obj, "setRoleId"), $role_id);
-                                    $this->container['userModel']->addUserRole($user_role_obj);
+                                    $this->sc['userModel']->addUserRole($user_role_obj);
                                 }
                             }
                             unset($_SESSION["user_vo"]);
@@ -197,21 +197,21 @@ class User extends MY_Controller
             $data["lang"] = $lang;
 
             if (empty($data["user"])) {
-                if (($data["user"] = $this->container['userModel']->getUser(array("id" => $id))) === FALSE) {
+                if (($data["user"] = $this->sc['userModel']->getUser(array("id" => $id))) === FALSE) {
                     $_SESSION["NOTICE"] = "sql_error";
                 } else {
                     $_SESSION["user_vo"] = serialize($data["user"]);
                 }
             }
 
-            $data["role_list"] = $this->container['userModel']->getRoleList();
+            $data["role_list"] = $this->sc['userModel']->getRoleList();
             $data["joined_list"] = array();
             if ($this->input->post("joined_list")) {
                 $inc_list = $this->input->post("joined_list");
                 $data["joined_list"] = get_inclusion($data["role_list"], $inc_list, "Id");
                 $data["role_list"] = get_exclusion($data["role_list"], $inc_list, "Id");
             } else {
-                $inc_list = $this->container['userModel']->getUserRoleList(array("user_id" => $id));
+                $inc_list = $this->sc['userModel']->getUserRoleList(array("user_id" => $id));
                 if ((array) $inc_list) {
                     $data["joined_list"] = get_inclusion($data["role_list"], $inc_list, "Id", "RoleId");
                     $data["role_list"] = get_exclusion($data["role_list"], $inc_list, "Id", "RoleId");
@@ -226,14 +226,14 @@ class User extends MY_Controller
 
     public function delete($id = "")
     {
-        if (($userVo = $this->container['userModel']->getUser(array("id" => $id))) === FALSE) {
+        if (($userVo = $this->sc['userModel']->getUser(array("id" => $id))) === FALSE) {
             $_SESSION["NOTICE"] = "submit_error";
         } else {
             if (empty($userVo)) {
                 $_SESSION["NOTICE"] = "user_not_found";
             } else {
                 $userVo->setStatus(0);
-                if (!$this->container['userModel']->inactiveUser($userVo)) {
+                if (!$this->sc['userModel']->inactiveUser($userVo)) {
                     $_SESSION["NOTICE"] = "submit_error";
                 }
             }

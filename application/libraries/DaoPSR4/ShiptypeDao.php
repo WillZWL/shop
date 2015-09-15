@@ -54,7 +54,7 @@ class ShiptypeDao extends BaseDao
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
-            $rs = array();
+            $rs = [];
 
             if ($query = $this->db->get()) {
                 foreach ($query->result($classname) as $obj) {

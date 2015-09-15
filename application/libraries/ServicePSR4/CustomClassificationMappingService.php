@@ -21,33 +21,33 @@ class CustomClassificationMappingService extends BaseService
 
     public function getCustomClassMapping($where = [])
     {
-        return $this->getDao()->get($where);
+        return $this->getDao('CustomClassificationMapping')->get($where);
     }
 
     public function insertCustomClassMapping($obj)
     {
-        return $this->getDao()->insert($obj);
+        return $this->getDao('CustomClassificationMapping')->insert($obj);
     }
 
     public function updateCustomClassMapping($obj)
     {
-        return $this->getDao()->update($obj);
+        return $this->getDao('CustomClassificationMapping')->update($obj);
     }
 
     public function addCustomClassMapping($obj)
     {
-        return $this->getDao()->insert($obj);
+        return $this->getDao('CustomClassificationMapping')->insert($obj);
     }
 
     public function getCustomClassMappingList($where = [], $option = [])
     {
-        if ($objlist = $this->getDao()->getCustomClassMappingList($where, $option)) {
+        if ($objlist = $this->getDao('CustomClassificationMapping')->getCustomClassMappingList($where, $option)) {
             foreach ($objlist as $obj) {
                 $data["ccmlist"][$obj->getSubCatId()] = $obj;
             }
         }
         $option["limit"] = -1;
-        $allRecord = $this->getDao()->getCustomClassMappingList($where, $option);
+        $allRecord = $this->getDao('CustomClassificationMapping')->getCustomClassMappingList($where, $option);
 
         $data["total"] = count((array) $allRecord);
         return $data;
@@ -57,7 +57,7 @@ class CustomClassificationMappingService extends BaseService
     {
         if ($country_list = $this->getCountryDao()->getList(["allow_sell" => 1], ["limit" => -1])) {
             foreach ($country_list as $country_obj) {
-                $ccm_obj = $this->getDao()->getCustomClassMappingList(["sub_cat_id" => $sub_cat_id, "ccm.country_id" => $country_obj->getCountryId()], ["limit" => 1]);
+                $ccm_obj = $this->getDao('CustomClassificationMapping')->getCustomClassMappingList(["sub_cat_id" => $sub_cat_id, "ccm.country_id" => $country_obj->getCountryId()], ["limit" => 1]);
                 $rs[$country_obj->getCountryId()] = $ccm_obj;
             }
             return $rs;
@@ -72,7 +72,7 @@ class CustomClassificationMappingService extends BaseService
 
     public function getAllCustomClassMappingBySubCatId($sub_cat_id = "")
     {
-        return $this->getDao()->getAllCustomClassMappingList($sub_cat_id, $option = '');
+        return $this->getDao('CustomClassificationMapping')->getAllCustomClassMappingList($sub_cat_id, $option = '');
     }
 }
 

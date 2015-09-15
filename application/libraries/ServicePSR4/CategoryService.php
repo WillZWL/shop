@@ -16,6 +16,8 @@ class CategoryService extends BaseService
     public function __construct()
     {
         parent::__construct();
+        $CI =& get_instance();
+        $this->load = $CI->load;
         $this->setDao(new CategoryDao);
         $this->setCategoryExtendDao(new CategoryExtendDao);
         $this->setCategoryContentDao(new CategoryContentDao);
@@ -55,22 +57,22 @@ class CategoryService extends BaseService
         if ($menu_list) {
             $menulist = $menu_list["list"];
             $allcatlist = $menu_list["allcat"];
-            $n_search = array("  ", " ");
-            $n_replace = array(" ", "-");
+            $n_search = ["  ", " "];
+            $n_replace = [" ", "-"];
 
             if ($menulist[1][0]) {
                 $i = 0;
                 foreach ($menulist[1][0] as $cat_obj) {
-                    $name = str_replace($n_search, $n_replace, parse_url_char($cat_obj->get_name()));
+                    $name = str_replace($n_search, $n_replace, parse_url_char($cat_obj->getName()));
                     $data["menu"][$i]["cat_id"] = $cat_obj->getId();
-                    $data["menu"][$i]["display_name"] = $cat_obj->get_name();
+                    $data["menu"][$i]["display_name"] = $cat_obj->getName();
                     $data["menu"][$i]["name"] = $name;
                     $data["menu"][$i]["link"] = "{$name}/cat/?catid={$cat_obj->getId()}";
                     if ($allcatlist[$cat_obj->getId()]) {
                         $j = 0;
                         foreach ($allcatlist[$cat_obj->getId()] as $subcat_obj) {
-                            $name = str_replace($n_search, $n_replace, parse_url_char($subcat_obj->get_name()));
-                            $data["sub_menu"][$i][$j]["display_name"] = $subcat_obj->get_name();
+                            $name = str_replace($n_search, $n_replace, parse_url_char($subcat_obj->getName()));
+                            $data["sub_menu"][$i][$j]["display_name"] = $subcat_obj->getName();
                             $data["sub_menu"][$i][$j]["name"] = $name;
                             $data["sub_menu"][$i][$j]["link"] = "search/?from=c&catid=" . $subcat_obj->getId();
                             $j++;
@@ -87,6 +89,7 @@ class CategoryService extends BaseService
 
     public function getMenuListWithPlatformId($lang_id = "", $platform_id = "")
     {
+        $this->sc['CategoryDao']->getMenuListWithPlatformId($lang_id, $platform_id);
         return $this->getDao()->getMenuListWithPlatformId($lang_id, $platform_id);
     }
 
@@ -95,17 +98,17 @@ class CategoryService extends BaseService
         return $this->getDao()->getMenuListWithLang($lang_id);
     }
 
-    public function getListWithChildCount($level, $id = "", $classname = "Category_count_dto")
+    public function getListWithChildCount($level, $id = "", $classname = "CategoryCountDto")
     {
         return $this->getDao()->getItemWithChildCount($level, $id, $classname);
     }
 
     public function getItemWithPopChildCount($level, $id = "")
     {
-        return $this->getDao()->getItemWithPopChildCount($level, $id, "Category_count_dto");
+        return $this->getDao()->getItemWithPopChildCount($level, $id, "CategoryCountDto");
     }
 
-    public function getParent($level, $id, $classname = "View_sub_cat_dto")
+    public function getParent($level, $id, $classname = "ViewSubCatDto")
     {
         return $this->getDao()->getParent($level, $id, $classname);
     }
@@ -115,16 +118,21 @@ class CategoryService extends BaseService
         return $this->getDao()->insert($obj);
     }
 
-    public function load_vo()
+    public function update($obj)
     {
-        $this->getDao()->include_vo();
+        return $this->getDao()->update($obj);
+    }
+
+    public function loadVo()
+    {
+        $this->getDao()->get();
     }
 
     public function getCatListIndex($where, $option)
     {
         $data["category_list"] = $this->getDao()->getListIndex($where, $option, $this->getDao()->getVoClassname());
 
-        $data["total"] = $this->getDao()->getListIndex($where, array("num_rows" => 1));
+        $data["total"] = $this->getDao()->getListIndex($where, ["num_rows" => 1]);
         return $data;
     }
 
@@ -186,8 +194,8 @@ class CategoryService extends BaseService
 
     public function getDisplayCatlist($catid, $data = [])
     {
-        $obj = $this->getDao()->get(array("id" => $catid));
-        $data[$obj->getLevel()] = array("name" => $obj->get_name(), "id" => $obj->getId());
+        $obj = $this->getDao()->get(["id" => $catid]);
+        $data[$obj->getLevel()] = ["name" => $obj->getName(), "id" => $obj->getId()];
         if ($obj->getLevel() == 1) {
             return $data;
         } else {
@@ -223,7 +231,7 @@ class CategoryService extends BaseService
         $sitemap = [];
         $depth = 0;
 
-        $list = $this->getDao()->getList(array("level" => 1), array("result_type" => "array"));
+        $list = $this->getDao()->getList(["level" => 1], ["result_type" => "array"]);
 
         $sitemap = [];
         foreach ($list AS $item) {
@@ -288,7 +296,7 @@ class CategoryService extends BaseService
         $sub_cat = [];
 
         foreach ($array as $row) {
-            $sub_sub_cat = array('sub_sub_cat_id' => $row['sub_sub_cat_id'], 'sub_sub_cat_name' => $row['sub_sub_cat_name']);
+            $sub_sub_cat = ['sub_sub_cat_id' => $row['sub_sub_cat_id'], 'sub_sub_cat_name' => $row['sub_sub_cat_name']];
 
 
             if ($cat['cat_id'] != $row['cat_id']) {
@@ -301,18 +309,15 @@ class CategoryService extends BaseService
                 }
 
                 $sub_sub_cat_list = [];
-                $sub_cat = array('sub_cat_id' => $row['sub_cat_id'],
-                    'sub_cat_name' => $row['sub_cat_name']);
+                $sub_cat = ['sub_cat_id' => $row['sub_cat_id'], 'sub_cat_name' => $row['sub_cat_name']];
                 $sub_cat_list = [];
-                $cat = array('cat_id' => $row['cat_id'],
-                    'cat_name' => $row['cat_name']);
+                $cat = ['cat_id' => $row['cat_id'], 'cat_name' => $row['cat_name']];
             } else if ($sub_cat['sub_cat_id'] != $row['sub_cat_id']) {
                 $sub_cat['sub_sub_cat_list'] = $sub_sub_cat_list;
                 array_push($sub_cat_list, $sub_cat);
 
                 $sub_sub_cat_list = [];
-                $sub_cat = array('sub_cat_id' => $row['sub_cat_id'],
-                    'sub_cat_name' => $row['sub_cat_name']);
+                $sub_cat = ['sub_cat_id' => $row['sub_cat_id'], 'sub_cat_name' => $row['sub_cat_name']];
             }
 
             array_push($sub_sub_cat_list, $sub_sub_cat);
@@ -324,23 +329,20 @@ class CategoryService extends BaseService
         $cat['brand_list'] = $this->brandService->getListedBrandByCat($cat['cat_id']);
         array_push($cat_list, $cat);
 
-        return array('cat_list' => $cat_list);
+        return ['cat_list' => $cat_list];
     }
 
     private function buildCategoryTree($me, $parentID)
     {
-        $list = $this->getDao()->getList(array("parent_cat_id" => $parentID), array("result_type" => "array"));
+        $list = $this->getDao()->getList(["parent_cat_id" => $parentID], ["result_type" => "array"]);
 
         $tempTree = NULL;
         foreach ($list AS $child) {
             if ($child['cat_id'] != $child['parent_cat_id']) {
-                //$depth++;     // Increment depth as we are building this child's child tree
 
                 $tempTree[$child['id']]["name"] = $child['name'];
                 $tempTree[$child['id']]["child"] = $this->buildCategoryTree($tempTree[$child['cat_id']], $id);
 
-                //$depth--;     // Decrement depth we're done building the child's child tree.
-                //array_push($exclude, $child['id']);           // Add the item to the exclusion list
             }
         }
 
@@ -380,7 +382,7 @@ class CategoryService extends BaseService
         if ($obj_list = $this->getCategoryExtendDao()->getList($where, $option)) {
             $data = [];
             foreach ($obj_list as $obj) {
-                $data[$obj->get_cat_id()][$obj->get_lang_id()] = $obj;
+                $data[$obj->getCatId()][$obj->getLangId()] = $obj;
             }
             return $data;
         }
@@ -444,9 +446,10 @@ class CategoryService extends BaseService
 
     public function getCatContList($where = [], $option = [])
     {
+        $ret = [];
         $cc_list = $this->getCategoryContentDao()->getList($where, $option);
         foreach ($cc_list AS $cc_obj) {
-            $ret[$cc_obj->get_lang_id()] = $cc_obj;
+            $ret[$cc_obj->getLangId()] = $cc_obj;
         }
 
         return $ret;
@@ -484,7 +487,7 @@ class CategoryService extends BaseService
 
     public function getWarrantyCatList()
     {
-        return $this->getDao()->getList(array("parent_cat_id" => 538), array("limit" => -1, "orderby" => "name ASC"));
+        return $this->getDao()->getList(["parent_cat_id" => 538], ["limit" => -1, "orderby" => "name ASC"]);
     }
 
     public function getCatInfoWithLang($where = [], $option = [])

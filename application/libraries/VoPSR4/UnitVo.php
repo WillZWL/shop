@@ -1,17 +1,13 @@
 <?php
-class ProductSpecDetailVo extends \BaseVo
+class UnitVo extends \BaseVo
 {
     private $id;
-    private $ps_id;
-    private $cat_id;
-    private $prod_sku;
-    private $lang_id;
-    private $cps_unit_id;
-    private $text;
-    private $start_value = '0.0000';
-    private $start_standardize_value = '0.0000';
-    private $end_value = '0.0000';
-    private $end_standardize_value = '0.0000';
+    private $unit_id;
+    private $unit_type_id;
+    private $unit_name;
+    private $func_unit_name;
+    private $standardize_value = '1.0000';
+    private $description;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
@@ -33,104 +29,64 @@ class ProductSpecDetailVo extends \BaseVo
         return $this->id;
     }
 
-    public function setPsId($ps_id)
+    public function setUnitId($unit_id)
     {
-        $this->ps_id = $ps_id;
+        $this->unit_id = $unit_id;
     }
 
-    public function getPsId()
+    public function getUnitId()
     {
-        return $this->ps_id;
+        return $this->unit_id;
     }
 
-    public function setCatId($cat_id)
+    public function setUnitTypeId($unit_type_id)
     {
-        $this->cat_id = $cat_id;
+        $this->unit_type_id = $unit_type_id;
     }
 
-    public function getCatId()
+    public function getUnitTypeId()
     {
-        return $this->cat_id;
+        return $this->unit_type_id;
     }
 
-    public function setProdSku($prod_sku)
+    public function setUnitName($unit_name)
     {
-        $this->prod_sku = $prod_sku;
+        $this->unit_name = $unit_name;
     }
 
-    public function getProdSku()
+    public function getUnitName()
     {
-        return $this->prod_sku;
+        return $this->unit_name;
     }
 
-    public function setLangId($lang_id)
+    public function setFuncUnitName($func_unit_name)
     {
-        $this->lang_id = $lang_id;
+        $this->func_unit_name = $func_unit_name;
     }
 
-    public function getLangId()
+    public function getFuncUnitName()
     {
-        return $this->lang_id;
+        return $this->func_unit_name;
     }
 
-    public function setCpsUnitId($cps_unit_id)
+    public function setStandardizeValue($standardize_value)
     {
-        $this->cps_unit_id = $cps_unit_id;
+        $this->standardize_value = $standardize_value;
     }
 
-    public function getCpsUnitId()
+    public function getStandardizeValue()
     {
-        return $this->cps_unit_id;
+        return $this->standardize_value;
     }
 
-    public function setText($text)
+    public function setDescription($description)
     {
-        $this->text = $text;
+        $this->description = $description;
     }
 
-    public function getText()
+    public function getDescription()
     {
-        return $this->text;
-    }
-
-    public function setStartValue($start_value)
-    {
-        $this->start_value = $start_value;
-    }
-
-    public function getStartValue()
-    {
-        return $this->start_value;
-    }
-
-    public function setStartStandardizeValue($start_standardize_value)
-    {
-        $this->start_standardize_value = $start_standardize_value;
-    }
-
-    public function getStartStandardizeValue()
-    {
-        return $this->start_standardize_value;
-    }
-
-    public function setEndValue($end_value)
-    {
-        $this->end_value = $end_value;
-    }
-
-    public function getEndValue()
-    {
-        return $this->end_value;
-    }
-
-    public function setEndStandardizeValue($end_standardize_value)
-    {
-        $this->end_standardize_value = $end_standardize_value;
-    }
-
-    public function getEndStandardizeValue()
-    {
-        return $this->end_standardize_value;
+        return $this->description;
     }
 
     public function setStatus($status)

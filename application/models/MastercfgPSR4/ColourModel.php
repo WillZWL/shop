@@ -33,12 +33,12 @@ class ColourModel extends \CI_Model
 
     public function getNumRows($where = [])
     {
-        return $this->colourService->getNumRows($where);
+        return $this->colourService->getDao('Colour')->getNumRows($where);
     }
 
     public function getList($where = [], $option = [])
     {
-        return $this->colourService->getList($where, $option);
+        return $this->colourService->getDao()->getList($where, $option);
     }
 
     public function getListWithLang($where, $option)

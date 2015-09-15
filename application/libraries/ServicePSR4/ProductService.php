@@ -36,7 +36,7 @@ class ProductService extends BaseProductService
 
     public function createSkuMapping(BaseVo $obj)
     {
-        $this->container['skuMppingDao']->insert($obj);
+        $this->sc['skuMppingDao']->insert($obj);
     }
 
 
@@ -62,6 +62,11 @@ class ProductService extends BaseProductService
     public function getProductWMarginReqUpdate($where = [], $classname = 'WebsiteProdInfoDto')
     {
         return $this->getDao()->getProductWMarginReqUpdate($where, $classname);
+    }
+
+    public function getWebsiteCatPageProductList($where = array(), $option = array())
+    {
+        return $this->getDao()->getWebsiteCatPageProductList($where, $option);
     }
 
     public function getCreateProductOptions()

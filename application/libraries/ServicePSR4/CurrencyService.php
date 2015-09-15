@@ -15,7 +15,7 @@ class CurrencyService extends BaseService
     public function getSignWIdKey()
     {
         $data = [];
-        if ($objlist = $this->getDao()->getList([], ["limit" => -1])) {
+        if ($objlist = $this->getDao('Currency')->getList([], ["limit" => -1])) {
             foreach ($objlist as $obj) {
                 $data[$obj->getId()] = $obj->getSign();
             }
@@ -26,7 +26,7 @@ class CurrencyService extends BaseService
     public function getNameWIdKey()
     {
         $data = [];
-        if ($objlist = $this->getDao()->getList([], ["limit" => -1])) {
+        if ($objlist = $this->getDao('Currency')->getList([], ["limit" => -1])) {
             foreach ($objlist as $obj) {
                 $data[$obj->getCurrencyId()] = $obj->getName();
             }
@@ -37,7 +37,7 @@ class CurrencyService extends BaseService
     public function getListWKey($where = [], $option = [])
     {
         $data = [];
-        if ($objlist = $this->getDao()->getList($where, $option)) {
+        if ($objlist = $this->getDao('Currency')->getList($where, $option)) {
             foreach ($objlist as $obj) {
                 $data[$obj->getId()] = $obj;
             }
@@ -54,7 +54,7 @@ class CurrencyService extends BaseService
             $where["id"] = $currency_id;
         }
 
-        if ($objlist = $this->getDao()->getList($where, ["limit" => -1])) {
+        if ($objlist = $this->getDao('Currency')->getList($where, ["limit" => -1])) {
             foreach ($objlist as $obj) {
                 $curr_id = $obj->getId();
                 $data[$curr_id] = [
@@ -71,17 +71,17 @@ class CurrencyService extends BaseService
 
     public function roundUpOf($currency_id)
     {
-        return $this->getDao()->getRoundUp($currency_id);
+        return $this->getDao('Currency')->getRoundUp($currency_id);
     }
 
     public function getPlatformCurrency($platform)
     {
-        return $this->getDao()->getByPlatform($platform);
+        return $this->getDao('Currency')->getByPlatform($platform);
     }
 
     public function getSign($platform)
     {
-        return $this->getDao()->getSign($platform);
+        return $this->getDao('Currency')->getSign($platform);
     }
 
 }
