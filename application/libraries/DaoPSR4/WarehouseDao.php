@@ -3,7 +3,7 @@ namespace ESG\Panther\Dao;
 
 class WarehouseDao extends BaseDao
 {
-    private $tableTame = "Warehouse";
+    private $tableTame = "warehouse";
     private $voClassName = "WarehouseVo";
 
     public function __construct()

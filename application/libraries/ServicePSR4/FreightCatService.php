@@ -1,22 +1,11 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\FreightCategoryDao;
-use ESG\Panther\Dao\FreightCatChargeDao;
-use ESG\Panther\Dao\FulfillmentCentreDao;
-use ESG\Panther\Dao\PlatformBizVarDao;
-use ESG\Panther\Service\ColourService;
-
 class FreightCatService extends BaseService
 {
     public function __construct()
     {
         parent::__construct();
-        $this->setDao(new FreightCategoryDao);
-        $this->setFreightCatChargeDao(new FreightCatChargeDao);
-        $this->setFulFillmentCentreDao(new FulfillmentCentreDao);
-        $this->setPlatformBizVarDao(new PlatformBizVarDao);
-        $this->courierService = new ColourService;
     }
 
     public function getFulFillmentCentreDao()
@@ -29,23 +18,13 @@ class FreightCatService extends BaseService
         $this->fulfillmentCentreDao = $dao;
     }
 
-    public function getPlatformBizVarDao()
-    {
-        return $this->platformBizVarDao;
-    }
-
-    public function setPlatformBizVarDao($dao)
-    {
-        $this->platformBizVarDao = $dao;
-    }
-
     public function getFccWithRegList($where = [], $option = [])
     {
         $option["limit"] = -1;
-        $cat_w_reg_list = $this->getDao()->getCatWithRegion([], $option, "Freight_cat_w_region_dto");
-        $courier_reg_list = $this->courierService->getCrcDao()->getList(["courier_id" => $where["courier_id"]], ["orderby" => "region_id ASC", "limit" => -1]);
-        $fcc_list = $this->getFreightCatChargeDao()->getList(["courier_id" => $where["courier_id"]], ["orderby" => "fcat_id ASC, region_id ASC", "limit" => -1]);
-        $fcc_vo = $this->getFreightCatChargeDao()->get();
+        $cat_w_reg_list = $this->getDao('FreightCategory')->getCatWithRegion([], $option, "Freight_cat_w_region_dto");
+        $courier_reg_list = $this->getDao('CourierRegion')->getList(["courier_id" => $where["courier_id"]], ["orderby" => "region_id ASC", "limit" => -1]);
+        $fcc_list = $this->getDao('FreightCatCharge')->getList(["courier_id" => $where["courier_id"]], ["orderby" => "fcat_id ASC, region_id ASC", "limit" => -1]);
+        $fcc_vo = $this->getDao('FreightCatCharge')->get();
 
         foreach ($fcc_list as $fcc) {
             $new_fcc[$fcc->getFcatId()][$fcc->getRegionId()] = $fcc;
@@ -67,28 +46,18 @@ class FreightCatService extends BaseService
         return $new_cat;
     }
 
-    public function getFreightCatChargeDao()
-    {
-        return $this->fccDao;
-    }
-
-    public function setFreightCatChargeDao($dao)
-    {
-        $this->fccDao = $dao;
-    }
-
     public function getOriginCountryList()
     {
-       return $this->getFulFillmentCentreDao()->getList();
+       return $this->getDao('FulfillmentCentre')->getList();
     }
 
     public function getFullFreightCatChargeList($where, $option)
     {
         $fc_name_list = $combine_fcc_list = [];
-        $fc_list = $this->getDao()->getList(["status" => 1], ["orderby" => "id ASC", "LIMIT" => -1]);
-        $dest_country_list = $this->getPlatformBizVarDao()->getUniqueDestCountryList();
-        $fcc_vo = $this->getFreightCatChargeDao()->get();
-        $current_fcc_list = $this->getFreightCatChargeDao()->getList($where, $option);
+        $fc_list = $this->getDao('FreightCategory')->getList(["status" => 1], ["orderby" => "id ASC", "LIMIT" => -1]);
+        $dest_country_list = $this->getDao('PlatformBizVar')->getUniqueDestCountryList();
+        $fcc_vo = $this->getDao('FreightCatCharge')->get();
+        $current_fcc_list = $this->getDao('FreightCatCharge')->getList($where, $option);
         foreach ($current_fcc_list AS $fcc_obj) {
             $combine_fcc_list[$fcc_obj->getFcatId()][$fcc_obj->getDestCountry()] = $fcc_obj;
         }
@@ -114,10 +83,10 @@ class FreightCatService extends BaseService
 
     public function saveFreightCatCharge($values = [], $origin_country = "")
     {
-        $fcc_vo = $this->getFreightCatChargeDao()->get();
+        $fcc_vo = $this->getDao('FreightCatCharge')->get();
         foreach ($values AS $fcat_id => $country_value_arr) {
             foreach ($country_value_arr AS $dest_country => $value) {
-                $obj = $this->getFreightCatChargeDao()->get(["origin_country" => $origin_country, "fcat_id" => $fcat_id, "dest_country" => $dest_country]);
+                $obj = $this->getDao('FreightCatCharge')->get(["origin_country" => $origin_country, "fcat_id" => $fcat_id, "dest_country" => $dest_country]);
                 if (!$obj) {
                     $obj = clone $fcc_vo;
                     $obj->setFcatId($fcat_id);
@@ -139,12 +108,12 @@ class FreightCatService extends BaseService
 
     public function insertFcc($obj)
     {
-        return $this->getFreightCatChargeDao()->insert($obj);
+        return $this->getDao('FreightCatCharge')->insert($obj);
     }
 
     public function updateFcc($obj)
     {
-        return $this->getFreightCatChargeDao()->update($obj);
+        return $this->getDao('FreightCatCharge')->update($obj);
     }
 }
 

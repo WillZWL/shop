@@ -21,7 +21,7 @@ class CountryDao extends BaseDao
         return $this->voClassname;
     }
 
-    public function getListLang($lang, $where = array(), $option = array(), $classname = "CountryLangNameDto")
+    public function getListLang($lang, $where = [], $option = [], $classname = "CountryLangNameDto")
     {
         // Hardcoded to language_id = 'en' only
         $sql = "SELECT c.id, c.fc_id, IFNULL(ce.name, c.name) as name, l.name lang_name
@@ -37,7 +37,7 @@ class CountryDao extends BaseDao
 
         if (($query = $this->db->query($sql, $lang)) != FALSE) {
 
-            $ret = array();
+            $ret = [];
             foreach ($query->result($classname) as $obj) {
                 $ret[] = $obj;
             }
@@ -53,7 +53,7 @@ class CountryDao extends BaseDao
                 WHERE allow_sell = 1
                 ORDER BY currency_id";
 
-        $rs = array();
+        $rs = [];
 
         if ($query = $this->db->query($sql)) {
             foreach ($query->result($this->getVoClassname()) as $obj) {
@@ -76,7 +76,7 @@ class CountryDao extends BaseDao
 
         if ($detail) {
 
-            $rs = array();
+            $rs = [];
 
             if ($query = $this->db->query($sql)) {
                 foreach ($query->result($this->getVoClassname()) as $obj) {
@@ -107,7 +107,7 @@ class CountryDao extends BaseDao
 
         if ($detail) {
 
-            $rs = array();
+            $rs = [];
 
             if ($query = $this->db->query($sql)) {
                 foreach ($query->result($this->getVoClassname()) as $obj) {
@@ -140,7 +140,7 @@ class CountryDao extends BaseDao
                 AND c.status = 1";
 
         if ($query = $this->db->query($sql, $lang)) {
-            $ret = array();
+            $ret = [];
             foreach ($query->result($this->getVoClassname()) as $obj) {
                 $ret[] = $obj;
             }
@@ -151,7 +151,7 @@ class CountryDao extends BaseDao
         return FALSE;
     }
 
-    public function getListWRmaFc($where = array(), $option = array(), $classname = "CountryRmaFcDto")
+    public function getListWRmaFc($where = [], $option = [], $classname = "CountryRmaFcDto")
     {
         $this->db->from('country AS c');
         $this->db->join('rma_fc r', 'r.cid = c.country_id', 'INNER');
@@ -225,7 +225,7 @@ class CountryDao extends BaseDao
 
         if ($result = $this->db->query($sql)) {
 
-            $result_arr = array();
+            $result_arr = [];
             $classname = $this->getVoClassname();
 
             foreach ($result->result("object", $classname) as $obj) {
@@ -257,7 +257,7 @@ class CountryDao extends BaseDao
 
         if ($result = $this->db->query($sql)) {
 
-            $result_arr = array();
+            $result_arr = [];
             $classname = $this->getVoClassname();
 
             foreach ($result->result("object", $classname) as $obj) {
