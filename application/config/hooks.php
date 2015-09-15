@@ -19,13 +19,14 @@ if (!defined('ENTRYPOINT') OR (defined('ENTRYPOINT') && (ENTRYPOINT !== 'ADMINCE
         'filename' => 'DomainSelection.php',
         'filepath' => 'hooks'
     );
-
+/*
     $hook['pre_controller'][] = array(
         'class' => 'LoadSiteParameter',
         'function' => 'initSite',
         'filename' => 'LoadSiteParameter.php',
         'filepath' => 'hooks',
     );
+*/
     //
     // $hook['pre_controller'][] = array(
     //     'class' => 'Currency',

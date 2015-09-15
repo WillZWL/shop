@@ -1,45 +1,47 @@
 <?php
+use ESG\Panther\Service\LoadSiteParameterService;
 
 class PUB_Controller extends CI_Controller
 {
     private $lang_id = 'en';
 
-    private $allow_referer_host = '/^http[s]?:\/\/shop\.skype\.com/';
-    private $require_login = 0;
-    private $load_header = 1;
-    private $get_currency_list = 1;
+//    private $allow_referer_host = '/^http[s]?:\/\/shop\.skype\.com/';
+//    private $require_login = 0;
+//    private $load_header = 1;
+//    private $get_currency_list = 1;
 
-    function __construct($params = array())
+    function __construct()
     {
         parent::__construct();
-
+/*
         if (is_array($params) && count($params) > 0) {
             $this->initialize($params);
+
         } elseif ($params) {
             $this->require_login = $params;
         }
 
-        # SBF #2284 this adds fixed portion of Tradedouble tracking code to all required pages
-        // $this->load->library('service/tradedoubler_tracking_script_service');
-        # SBF #2247
-        // $this->load->library('service/adroll_tracking_script_service');
-
-        // $this->_get_platform();
-        // $this->load->helper(array('url', 'image'));
-
-        // $_SESSION["CURRPAGE"] = str_replace($_SESSION['lang_id'] . "_" . $_SESSION['country_code_from_hook'] . "/", "", $_SERVER['REQUEST_URI']);
         $_SESSION["CURRPAGE"] = $_SERVER['REQUEST_URI'];
         $ref = isset($_SERVER['HTTP_REFERER']) ? $_SESSION['HTTP_REFERER'] : '';
 
         if ($this->is_allow_referer($ref)) {
             $_SESSION['GOBACK_URL'] = $ref;
         }
-
         if ($this->require_login) {
             $this->check_login();
         }
+*/
+        $this->loadSiteParameterService = new LoadSiteParameterService();
+        $this->loadSiteInfo();
     }
 
+    protected function loadSiteInfo()
+    {
+        $stieInfo = $this->loadSiteParameterService->initSite();
+        $this->set_lang_id($stieInfo->getLangId());
+        $this->setSiteInfo($stieInfo);        
+    }
+/*
     function initialize($params = array())
     {
         if (count($params) > 0) {
@@ -50,7 +52,7 @@ class PUB_Controller extends CI_Controller
             }
         }
     }
-/*
+
     private function _get_platform()
     {
         $platform_id = $this->_get_platform_by_ip();
@@ -130,7 +132,7 @@ class PUB_Controller extends CI_Controller
 
     public function getSiteInfo()
     {
-        $this->siteInfo;
+        return $this->siteInfo;
     }
 
     public function set_lang_id($langId)
@@ -142,12 +144,12 @@ class PUB_Controller extends CI_Controller
     {
         return $this->lang_id;
     }
-
+/*
     protected function is_allow_referer($url)
     {
         return preg_match($this->allow_referer_host, $url);
     }
-
+*/
     public function check_login($back = "")
     {
         $login_url = "login";
