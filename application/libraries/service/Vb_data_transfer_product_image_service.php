@@ -129,8 +129,8 @@ class Vb_data_transfer_product_image_service extends Vb_data_transfer_service
 								continue;
 							}						
 							
-							list($width, $height) = explode("x", $this->context_config_service->value_of("thumb_w_x_h"));
-							thumbnail($imgpath . $sku . "_" . $new_id . "." . $pc->image, $width, $height, $imgpath . $sku . "_" . $new_id . "." . $pc->image);
+							// list($width, $height) = explode("x", $this->context_config_service->value_of("thumb_w_x_h"));
+							// thumbnail($imgpath . $sku . "_" . $new_id . "." . $pc->image, $width, $height, $imgpath . $sku . "_" . $new_id . "." . $pc->image);
 							//watermark(IMG_PH . $sku . "." . $ext, "images/watermark.png", "B", "R", "", "#000000");
 							
 							// foreach ($img_size as $size) 
