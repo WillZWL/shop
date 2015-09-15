@@ -8,7 +8,7 @@ class ProfitVarHelper extends MY_Controller
         parent::__construct(FALSE);
     }
 
-    public function js_platformlist()
+    public function jsPlatformlist()
     {
         header("Content-type: text/javascript; charset: UTF-8");
         header("Cache-Control: must-revalidate");
@@ -17,7 +17,7 @@ class ProfitVarHelper extends MY_Controller
         header($ExpStr);
         $objlist = $this->sc['profitVarModel']->getSellingPlatformList();
         foreach ($objlist as $obj) {
-            $sid = str_replace("'", "\'", $obj->getId());
+            $sid = str_replace("'", "\'", $obj->getSellingPlatformId());
             $name = str_replace("'", "\'", $obj->getName());
             $slist[] = "'" . $sid . "':'" . $name . "'";
         }

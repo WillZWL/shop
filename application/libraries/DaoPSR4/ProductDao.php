@@ -289,4 +289,56 @@ class ProductDao extends BaseDao
         }
     }
 
+    public function isClearance($sku = "")
+    {
+        $sql = "SELECT clearance FROM product p WHERE p.sku = '$sku'";
+
+        if ($query = $this->db->query($sql)) {
+            return $query->row()->clearance;
+        }
+    }
+
+
+    // TODO
+    // will remove
+    public function isTrialSoftware($sku = "")
+    {
+        $sql = "SELECT IF(COUNT(*), 1, 0) AS is_trial
+                        FROM product_type pt
+                        WHERE pt.sku = '$sku' AND pt.type_id = 'TRIAL'";
+
+        if ($query = $this->db->query($sql)) {
+            return $query->row()->is_trial;
+        }
+    }
+
+    // TODO
+    // will remove
+    public function isSoftware($sku = "")
+    {
+        $sql = "SELECT IF(COUNT(*), 1, 0) AS is_software
+                        FROM product_type pt
+                        WHERE pt.sku = '$sku' AND pt.type_id = 'VIRTUAL'";
+
+        if ($query = $this->db->query($sql)) {
+            return $query->row()->is_software;
+        }
+    }
+
+    // TODO
+    // will remove
+    public function getProductTypeWithSku($sku = "")
+    {
+        $sql = "SELECT type_id
+                FROM product_type pt
+                WHERE pt.sku = '$sku'";
+
+        if ($query = $this->db->query($sql)) {
+            foreach ($query->result() as $row) {
+                $res[$row->type_id] = 1;
+            }
+            return $res;
+        }
+        return FALSE;
+    }
 }

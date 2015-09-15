@@ -45,12 +45,20 @@ class DaoProvider implements ServiceProviderInterface
             return new D\RegionDao();
         };
 
+        $daoContainer['RegionCountry'] = function () {
+            return new D\RegionCountryDao();
+        };
+
         $daoContainer['Country'] = function () {
             return new D\CountryDao();
         };
 
         $daoContainer['CountryExt'] = function () {
             return new D\CountryExtDao();
+        };
+
+        $daoContainer['Rma'] = function () {
+            return new D\RmaDao();
         };
 
         $daoContainer['RmaFc'] = function () {
@@ -105,6 +113,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\ColourExtendDao();
         };
 
+        $daoContainer['Client'] = function () {
+            return new D\ClientDao();
+        };
+
         $daoContainer['DeliveryTime'] = function () {
             return new D\DeliveryTimeDao();
         };
@@ -123,6 +135,10 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['Courier'] = function () {
             return new D\CourierDao();
+        };
+
+        $daoContainer['CourierRegion'] = function () {
+            return new D\CourierRegionDao();
         };
 
         $daoContainer['DeliveryType'] = function () {
@@ -147,6 +163,122 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['SkuMapping'] = function () {
             return new D\SkuMappingDao();
+        };
+
+        $daoContainer['PlatformBizVar'] = function () {
+            return new D\PlatformBizVarDao();
+        };
+
+        $daoContainer['PlatformCourier'] = function () {
+            return new D\PlatformCourierDao();
+        };
+
+        $daoContainer['Entity'] = function () {
+            return new D\EntityDao();
+        };
+
+        $daoContainer['ExchangeRate'] = function () {
+            return new D\ExchangeRateDao();
+        };
+
+        $daoContainer['ExchangeRateApproval'] = function () {
+            return new D\ExchangeRateApprovalDao();
+        };
+
+        $daoContainer['ExchangeRateHistory'] = function () {
+            return new D\ExchangeRateHistoryDao();
+        };
+
+        $daoContainer['TransmissionLog'] = function () {
+            return new D\TransmissionLogDao();
+        };
+
+        $daoContainer['InterfaceExchangeRate'] = function () {
+            return new D\InterfaceExchangeRateDao();
+        };
+
+        $daoContainer['Batch'] = function () {
+            return new D\BatchDao();
+        };
+
+        $daoContainer['FtpInfo'] = function () {
+            return new D\FtpInfoDao();
+        };
+
+        $daoContainer['FreightCategory'] = function () {
+            return new D\FreightCategoryDao();
+        };
+
+        $daoContainer['FreightCatCharge'] = function () {
+            return new D\FreightCatChargeDao();
+        };
+
+        $daoContainer['FulfillmentCentre'] = function () {
+            return new D\FulfillmentCentreDao();
+        };
+
+        $daoContainer['So'] = function () {
+            return new D\SoDao();
+        };
+
+        $daoContainer['SoItem'] = function () {
+            return new D\SoItemDao();
+        };
+
+        $daoContainer['SoItemDetail'] = function () {
+            return new D\SoItemDetailDao();
+        };
+
+        $daoContainer['SoExtend'] = function () {
+            return new D\SoExtendDao();
+        };
+
+        $daoContainer['SoAllocate'] = function () {
+            return new D\SoAllocateDao();
+        };
+
+        $daoContainer['SoPaymentStatus'] = function () {
+            return new D\SoPaymentStatusDao();
+        };
+
+        $daoContainer['SoHoldReason'] = function () {
+            return new D\SoHoldReasonDao();
+        };
+
+        $daoContainer['SoCreditChk'] = function () {
+            return new D\SoCreditChkDao();
+        };
+
+        $daoContainer['SoRisk'] = function () {
+            return new D\SoRiskDao();
+        };
+
+        $daoContainer['SoShipment'] = function () {
+            return new D\SoShipmentDao();
+        };
+
+        $daoContainer['OrderNotes'] = function () {
+            return new D\OrderNotesDao();
+        };
+
+        $daoContainer['Refund'] = function () {
+            return new D\RefundDao();
+        };
+
+        $daoContainer['RefundHistory'] = function () {
+            return new D\RefundHistoryDao();
+        };
+
+        $daoContainer['RefundReason'] = function () {
+            return new D\RefundReasonDao();
+        };
+
+        $daoContainer['RefundItem'] = function () {
+            return new D\RefundItemDao();
+        };
+
+        $daoContainer['Warehouse'] = function () {
+            return new D\WarehouseDao();
         };
 
     }
