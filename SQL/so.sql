@@ -57,5 +57,5 @@ CREATE TABLE `so` (
   `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
   `modify_by` varchar(32) NOT NULL DEFAULT 'system',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_so` (`so_no`,`platform_id`,`currency_id`,`client_id`,`delivery_type_id`,`cc_reminder_schedule_date`,`parent_so_no`,`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=720886 DEFAULT CHARSET=utf8;
+  unique KEY idx_so (`so_no`,`platform_id`,`currency_id`,`client_id`,`delivery_type_id`,`cc_reminder_schedule_date`,`parent_so_no`,`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
