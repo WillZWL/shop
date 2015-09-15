@@ -30,11 +30,10 @@ class BaseService
     public function getDao($dao = null)
     {
         if (is_null($dao)) {
-            return self::$daoContainer['Current'];
+            return $this->dao;
         }
 
         if (is_null(self::$daoContainer[$dao])) {
-
             throw new \InvalidArgumentException("{$dao} doesn't in DaoProvider.php");
         }
 
