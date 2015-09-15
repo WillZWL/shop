@@ -13,7 +13,7 @@ class DeliveryTimeVo extends \BaseVo
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '127.0.0.1';
     private $create_by;
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '127.0.0.1';
     private $modify_by;
 

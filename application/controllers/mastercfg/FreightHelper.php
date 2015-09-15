@@ -15,7 +15,7 @@ class FreightHelper extends MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->container['freightModel']->getFreightCatList([], ["orderby" => "name ASC", "limit" => -1]);
+        $objlist = $this->sc['freightModel']->getFreightCatList([], ["orderby" => "name ASC", "limit" => -1]);
         foreach ($objlist as $obj) {
             $sid = str_replace("'", "\'", $obj->getId());
             $name = str_replace("'", "\'", $obj->getName());

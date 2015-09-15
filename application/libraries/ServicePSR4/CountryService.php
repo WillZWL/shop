@@ -20,21 +20,11 @@ class CountryService extends BaseService
         $this->load = $CI->load;
 
         $this->setDao(new CountryDao);
-        $this->setCountryDao(new CountryDao);
         $this->setCountryExtDao(new CountryExtDao);
         $this->setRmaFcDao(new RmaFcDao);
         $this->setCountryStateSrv(new CountryStateService);
     }
 
-    public function getCountryDao()
-    {
-        return $this->countryDao;
-    }
-
-    public function setCountryDao($dao)
-    {
-        $this->countryDao = $dao;
-    }
 
     public function getCountryExtDao()
     {
@@ -68,23 +58,23 @@ class CountryService extends BaseService
 
     public function getCountryIdWithPlatform($platform_id)
     {
-        return $this->getDao()->getCountryIdWithPlatform($platform_id);
+        return $this->getDao('Country')->getCountryIdWithPlatform($platform_id);
     }
 
     public function getCountryLanguageList()
     {
-        return $this->getDao()->getCountryLanguageList();
+        return $this->getDao('Country')->getCountryLanguageList();
     }
 
     public function isAvailableCountryId($country_id = null)
     {
-        return $this->getDao()->isAvailableCountryId($country_id);
+        return $this->getDao('Country')->isAvailableCountryId($country_id);
     }
 
     public function getCountryNameListWithKey($where = array(), $option = array())
     {
         $data = array();
-        if ($objList = $this->getDao()->getList($where, $option)) {
+        if ($objList = $this->getDao('Country')->getList($where, $option)) {
             foreach ($objList as $obj) {
                 $data[$obj->getCountryId()] = $obj->getName();
             }
@@ -94,22 +84,22 @@ class CountryService extends BaseService
 
     public function getSellCountryList($detail = 1)
     {
-        return $this->getDao()->getSellCountryList($detail);
+        return $this->getDao('Country')->getSellCountryList($detail);
     }
 
     public function getSellCurrencyList()
     {
-        return $this->getDao()->getSellCurrencyList();
+        return $this->getDao('Country')->getSellCurrencyList();
     }
 
     public function getAllAvailableCountryWithCorrectLang($lang_id)
     {
-        return $this->getDao()->getAllAvailableCountryWithCorrectLang($lang_id);
+        return $this->getDao('Country')->getAllAvailableCountryWithCorrectLang($lang_id);
     }
 
     public function isAllowedPostal($country_code, $postal_code)
     {
-        return $this->getDao()->isAllowedPostal($country_code, $postal_code);
+        return $this->getDao('Country')->isAllowedPostal($country_code, $postal_code);
     }
 
 }

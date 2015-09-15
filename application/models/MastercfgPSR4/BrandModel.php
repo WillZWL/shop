@@ -20,12 +20,12 @@ class BrandModel extends \CI_Model
 
     public function getBrand($where = [])
     {
-        return $this->brandService->getDao()->get($where);
+        return $this->brandService->getDao('Brand')->get($where);
     }
 
     public function updateBrand($obj)
     {
-        return $this->brandService->getDao()->update($obj);
+        return $this->brandService->getDao('Brand')->update($obj);
     }
 
     public function getRegionList($where = [], $option = [])
@@ -35,17 +35,17 @@ class BrandModel extends \CI_Model
 
     public function includeBrandVo()
     {
-        return $this->brandService->getDao()->get();
+        return $this->brandService->getDao('Brand')->get();
     }
 
     public function addBrand($obj)
     {
-        return $this->brandService->getDao()->insert($obj);
+        return $this->brandService->getDao('Brand')->insert($obj);
     }
 
     public function getBrandRegion($where = [])
     {
-        return $this->brandService->getBrDao()->get($where);
+        return $this->brandService->getBrDao('Brand')->get($where);
     }
 
     public function getBrandRegionList($where = [])
