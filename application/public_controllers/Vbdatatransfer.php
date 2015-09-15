@@ -20,6 +20,7 @@ class Vbdatatransfer extends PUB_Controller
 		$this->load->library('service/vb_data_transfer_product_warranty_service');		
 		$this->load->library('service/vb_data_transfer_product_identifier_service');	
 		$this->load->library('service/vb_data_transfer_product_image_service');
+		$this->load->library('service/vb_data_transfer_supplier_product_service');
 		
 		//master tables
 		$this->load->library('service/vb_data_transfer_category_service');		
@@ -137,6 +138,16 @@ class Vbdatatransfer extends PUB_Controller
 		// print $xml;
 		// exit;
 		$feed =$this->vb_data_transfer_product_warranty_service->start_process($xml);
+		print $feed;
+	}
+	
+	public function supplierproduct()
+	{			
+		$xml = file_get_contents('php://input');
+		// header('content-type: text/xml');
+		// print $xml;
+		// exit;
+		$feed =$this->vb_data_transfer_supplier_product_service->start_process($xml);
 		print $feed;
 	}
 	/********************** end product tables **********************/

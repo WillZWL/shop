@@ -87,20 +87,20 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 					//if extend content exists, update
 					if ($lang_id != "" && $lang_id != null)
 					{
-						//Update the AtomV2 category extend data 					
+						/*//Update the AtomV2 category extend data 					
 						$where = array("cat_id"=>$id, "lang_id"=>$lang_id);
 						
 						$new_cat_obj = array();
 						
 						$new_cat_obj["name"] = $category->name;
 						
-						$this->get_dao()->q_update($where, $new_cat_obj);				
+						$this->get_dao()->q_update($where, $new_cat_obj);*/				
 						
 						//return result
 						$xml[] = '<category>';
 						$xml[] = '<id>' . $category->cat_id . '</id>';
 						$xml[] = '<lang_id>' . $category->lang_id . '</lang_id>';
-						$xml[] = '<status>5</status>'; //updated
+						$xml[] = '<status>2</status>'; //we dont update the display name of the category (only insert) --> not updated
 						$xml[] = '<is_error>' . $category->is_error . '</is_error>';
 						$xml[] = '</category>';		
 					}

@@ -11,6 +11,8 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 				
 		include_once(APPPATH . 'libraries/dao/Product_dao.php');
 		$this->product_dao = new Product_dao();
+		include_once(APPPATH . 'libraries/dao/Sku_mapping_dao.php');
+		$this->sku_mapping_dao = new Sku_mapping_dao();
 		
         include_once(APPPATH . "libraries/service/Sku_mapping_service.php");		
 		$this->sku_mapping_service = new Sku_mapping_service();
@@ -24,6 +26,11 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 	public function set_dao(base_dao $dao)
 	{
 		$this->product_dao = $dao;
+	}
+	
+	public function get_sku_dao()
+	{
+		return $this->sku_mapping_dao;
 	}
 		
 	/*******************************************************************
@@ -98,7 +105,9 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 					$new_prod_obj["warranty_in_month"] = $product->warranty_in_month;
 					$new_prod_obj["cat_upselling"] = $product->cat_upselling;
 					$new_prod_obj["lang_restricted"] = $product->lang_restricted;
-					$new_prod_obj["shipment_restricted_type"] = $product->shipment_restricted_type; // NOT EXIST IN ATOMV2		
+					$new_prod_obj["shipment_restricted_type"] = $product->shipment_restricted_type; 
+					//$new_prod_obj["comments"] = $product->comments; 	
+					$new_prod_obj["status"] = $product->status; 		
 					
 					$this->get_dao()->q_update($where, $new_prod_obj);				
 					
@@ -110,14 +119,83 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 					$xml[] = '</product>';
 				}
 				elseif ($sku == "" || $sku == null)
-				{				
-					//if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
-					$xml[] = '<product>';
-					$xml[] = '<sku>' . $product->sku . '</sku>';
-					$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';				
-					$xml[] = '<status>2</status>'; //not found	
-					$xml[] = '<is_error>' . $product->is_error . '</is_error>';			
-					$xml[] = '</product>';
+				{	
+					//TO DO --> Create product function
+					
+					//insert									
+					$new_prod_obj = $this->get_dao()->get();
+					
+					$sku = $this->get_dao()->getNewSku();
+					$prod_grp_cd = $this->get_dao()->getNewProductGroup();
+					if ($sku != "" && $sku != null && $prod_grp_cd != "" && $prod_grp_cd != null)
+					{
+						//insert sku mapping
+						$new_sku_map_obj = $this->get_sku_dao()->get();
+						
+						$new_sku_map_obj->set_ext_sku($master_sku);
+						$new_sku_map_obj->set_ext_sys("WMS");
+						$new_sku_map_obj->set_sku($sku);
+						$new_sku_map_obj->set_status(1);
+						
+						$this->sku_mapping_service->get_dao()->insert($new_sku_map_obj);
+						
+						//insert the product
+						$new_prod_obj->set_sku($sku);
+						$new_prod_obj->set_prod_grp_cd($prod_grp_cd);
+						$new_prod_obj->set_colour_id($product->colour_id); //FK colour
+						$new_prod_obj->set_version_id($product->version_id);	
+						$new_prod_obj->set_name($product->name);				
+						$new_prod_obj->set_freight_cat_id($product->freight_cat_id); //FK freight_category
+						$new_prod_obj->set_cat_id($product->cat_id); //FK category
+						$new_prod_obj->set_sub_cat_id($product->sub_cat_id); //FK category
+						$new_prod_obj->set_sub_sub_cat_id($product->sub_sub_cat_id); //FK category
+						$new_prod_obj->set_brand_id($product->brand_id); //FK brand
+						$new_prod_obj->set_clearance($product->clearance);
+						$new_prod_obj->set_surplus_quantity($product->surplus_quantity);
+						$new_prod_obj->set_slow_move_7_days($product->slow_move_7_days);
+						$new_prod_obj->set_quantity($product->quantity);
+						$new_prod_obj->set_display_quantity($product->display_quantity);
+						$new_prod_obj->set_website_quantity($product->website_quantity);
+						$new_prod_obj->set_china_oem($product->china_oem); 
+						$new_prod_obj->set_ex_demo($product->ex_demo);
+						$new_prod_obj->set_rrp($product->rrp);
+						$new_prod_obj->set_image($product->image);
+						$new_prod_obj->set_flash($product->flash);
+						$new_prod_obj->set_youtube_id($product->youtube_id);
+						$new_prod_obj->set_ean($product->ean);
+						$new_prod_obj->set_mpn($product->mpn);
+						$new_prod_obj->set_upc($product->upc);
+						$new_prod_obj->set_discount($product->discount);
+						$new_prod_obj->set_proc_status($product->proc_status);
+						$new_prod_obj->set_website_status($product->website_status);
+						$new_prod_obj->set_sourcing_status($product->sourcing_status);
+						$new_prod_obj->set_expected_delivery_date($product->expected_delivery_date);
+						$new_prod_obj->set_warranty_in_month($product->warranty_in_month);
+						$new_prod_obj->set_cat_upselling($product->cat_upselling);
+						$new_prod_obj->set_lang_restricted($product->lang_restricted);
+						$new_prod_obj->set_shipment_restricted_type($product->shipment_restricted_type); 
+						//$new_prod_obj->set_comments($product->comments); 	
+						$new_prod_obj->set_status($product->status); 
+						
+						$this->get_dao()->insert($new_prod_obj);
+						
+						//if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
+						$xml[] = '<product>';
+						$xml[] = '<sku>' . $product->sku . '</sku>';
+						$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';				
+						$xml[] = '<status>5</status>'; //inserted	
+						$xml[] = '<is_error>' . $product->is_error . '</is_error>';			
+						$xml[] = '</product>';
+					}
+					else
+					{
+						$xml[] = '<product>';
+						$xml[] = '<sku>' . $product->sku . '</sku>';
+						$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';					
+						$xml[] = '<status>2</status>'; //not found	
+						$xml[] = '<is_error>' . $product->is_error . '</is_error>';
+						$xml[] = '</product>';	
+					}
 				}
 				else
 				{

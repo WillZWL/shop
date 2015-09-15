@@ -58,7 +58,7 @@ class Vb_data_transfer_product_image_service extends Vb_data_transfer_service
 						
 			$master_sku = strtoupper($master_sku);
 			$sku = $this->sku_mapping_service->get_local_sku($master_sku);
-						
+					
 			$fail_reason = "";
             if ($master_sku == "" || $master_sku == null) $fail_reason .= "No master SKU mapped, ";
             if ($sku == "" || $sku == null) $fail_reason .= "SKU not specified, ";
@@ -97,13 +97,13 @@ class Vb_data_transfer_product_image_service extends Vb_data_transfer_service
 					{
 						$this->get_dao()->update_seq($new_id);
 					
-					/* 
+					 
 						//save VB images 
 						$img_size = array("l", "m", "s");
 						
 						//$file_exist = file_exists($pc->imgurl . $pc->sku . "_" . $pc->id . "." . $pc->image);
 						
-						$file = $pc->imgurl . $pc->sku . "_" . $pc->id . "." . $pc->image;
+						$file = "http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg";//$pc->imgurl . $pc->sku . "_" . $pc->id . "." . $pc->image;
 						$file_headers = @get_headers($file);
 						if($file_headers[0] == 'HTTP/1.1 404 Not Found')
 							$file_exist = false;
@@ -115,31 +115,23 @@ class Vb_data_transfer_product_image_service extends Vb_data_transfer_service
 							$imgpath = $this->context_config_service->value_of("prod_img_path"); 
 							
 							//delete old images 
-							//$img_old = file_exists( $imgpath . $sku . "_" . $id . "." . $pc->image);						
-							$file_old = base_url() . $imgpath . $sku . "_" . $id . "." . $pc->image;
-							$file_headers = @get_headers($file);
-							if($file_headers[0] != 'HTTP/1.1 404 Not Found')
+							$file_old = file_exists( $imgpath . $sku . "_" . $id . "." . $pc->image);						
+							// $file_old = base_url() . $imgpath . $sku . "_" . $id . "." . $pc->image;
+							// $file_headers = @get_headers($file);
+							// if($file_headers[0] != 'HTTP/1.1 404 Not Found')
+							if ($file_old)
 								@unlink($imgpath . $sku . "_" . $id . "." . $pc->image);
 							
 							//save VB image in AtomV2					
-							$image_content = file_get_contents($pc->imgurl . $pc->sku . "_" . $pc->id . "." . $pc->image);
-							if (file_put_contents(base_url() . $imgpath . $sku . "_" . $new_id . "." . $pc->image, $image_content) === FALSE)
+							$image_content = file_get_contents("http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg");//($pc->imgurl . $pc->sku . "_" . $pc->id . "." . $pc->image);
+							if (file_put_contents($imgpath . $sku . "_" . $new_id . "." . $pc->image, $image_content) === FALSE)
 							{
 								continue;
-							}
+							}						
 							
-							// list($width, $height) = explode('x', $image_wxh['thumb_w_x_h']);
-										// $outputfilename = $image_path . $sku . '.' . $ext;
-										// thumbnail($source_file, $width, $height, $outputfilename);
-										// $url = $outputfilename;
-										// cdn_purge($url);
-
-										// $prod_obj->set_image($ext);
-						
-							
-							// list($width, $height) = explode("x", $this->context_config_service->value_of("thumb_w_x_h"));
-							// thumbnail($pc->imgurl . $sku . "_" . $new_id . "." . $pc->image, $width, $height, $imgpath . $sku . "_" . $new_id . "." . $pc->image);
-							// //watermark(IMG_PH . $sku . "." . $ext, "images/watermark.png", "B", "R", "", "#000000");
+							list($width, $height) = explode("x", $this->context_config_service->value_of("thumb_w_x_h"));
+							thumbnail($imgpath . $sku . "_" . $new_id . "." . $pc->image, $width, $height, $imgpath . $sku . "_" . $new_id . "." . $pc->image);
+							//watermark(IMG_PH . $sku . "." . $ext, "images/watermark.png", "B", "R", "", "#000000");
 							
 							// foreach ($img_size as $size) 
 							// {
@@ -154,7 +146,7 @@ class Vb_data_transfer_product_image_service extends Vb_data_transfer_service
 								// thumbnail($pc->imgurl . $sku . "_" . $new_id . "." . $pc->image, $width, $height, $imgpath . $sku . "_" . $new_id . "_{$size}." . $pc->image);
 							// }
 						}
-					*/
+					
 					
 						//return result
 						$xml[] = '<product_image>';

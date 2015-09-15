@@ -91,7 +91,7 @@ class Vb_data_transfer_brand_service extends Vb_data_transfer_service
 			catch(Exception $e)
 			{
 				$xml[] = '<brand>';
-				$xml[] = '<id>' . $price->sku . '</id>';			
+				$xml[] = '<id>' . $brand->id . '</id>';			
 				$xml[] = '<status>4</status>'; //error
 				$xml[] = '<is_error>' . $brand->is_error . '</is_error>';
 				$xml[] = '</brand>';
