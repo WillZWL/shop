@@ -91,7 +91,6 @@ class DeliveryTimeService extends BaseService
                     }
                 }
             }
-
             return $success;
         }
         return false;
