@@ -61,6 +61,38 @@ class DaoProvider implements ServiceProviderInterface
             return new D\ProductDao();
         };
 
+        $daoContainer['SupplierProd'] = function () {
+            return new D\SupplierProdDao();
+        };
+
+        $daoContainer['ProductCustomClassification'] = function () {
+            return new D\ProductCustomClassificationDao();
+        };
+
+        $daoContainer['ProductSpecDetails'] = function () {
+            return new D\ProductSpecDetailsDao();
+        };
+
+        $daoContainer['ProductWarranty'] = function () {
+            return new D\ProductWarrantyDao();
+        };
+
+        $daoContainer['ProductKeyword'] = function () {
+            return new D\ProductKeywordDao();
+        };
+
+        $daoContainer['ProductContent'] = function () {
+            return new D\ProductContentDao();
+        };
+
+        $daoContainer['ProductImage'] = function () {
+            return new D\ProductImageDao();
+        };
+
+        $daoContainer['ProductContentExtend'] = function () {
+            return new D\ProductContentExtendDao();
+        };
+
         $daoContainer['Faqadmin'] = function () {
             return new D\FaqadminDao();
         };
