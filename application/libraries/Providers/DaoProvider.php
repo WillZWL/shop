@@ -113,5 +113,9 @@ class DaoProvider implements ServiceProviderInterface
             return new D\CustomClassificationMappingDao();
         };
 
+        $daoContainer['SkuMapping'] = function () {
+            return new D\SkuMappingDao();
+        };
+
     }
 }
