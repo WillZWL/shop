@@ -50,7 +50,7 @@ class PUB_Controller extends CI_Controller
             }
         }
     }
-
+/*
     private function _get_platform()
     {
         $platform_id = $this->_get_platform_by_ip();
@@ -121,6 +121,21 @@ class PUB_Controller extends CI_Controller
             echo "<script>" . $str . "</script>";
             exit;
         }
+    }
+*/
+    public function setSiteInfo($siteInfo)
+    {
+        $this->siteInfo = $siteInfo;
+    }
+
+    public function getSiteInfo()
+    {
+        $this->siteInfo;
+    }
+
+    public function set_lang_id($langId)
+    {
+        $this->lang_id = $langId;
     }
 
     public function get_lang_id()

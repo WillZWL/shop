@@ -21,9 +21,9 @@ if (!defined('ENTRYPOINT') OR (defined('ENTRYPOINT') && (ENTRYPOINT !== 'ADMINCE
     );
 
     $hook['pre_controller'][] = array(
-        'class' => 'SiteConfig',
-        'function' => 'selectSite',
-        'filename' => 'SiteConfig.php',
+        'class' => 'LoadSiteParameter',
+        'function' => 'initSite',
+        'filename' => 'LoadSiteParameter.php',
         'filepath' => 'hooks',
     );
     //

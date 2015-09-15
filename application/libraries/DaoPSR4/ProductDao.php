@@ -21,6 +21,22 @@ class ProductDao extends BaseDao
         parent::__construct();
     }
 
+    public function getCartData($where = [], $option = [], $className = "CartItemDto")
+    {
+        $option = ["limit" => 1];
+        $this->db->from("product AS p");
+        $this->db->join("product_content AS pc", "pc.prod_sku=p.sku", 'LEFT');
+        $this->db->join("price AS pr", "p.sku=pr.sku", 'INNER');
+        
+        $select = "p.sku, p.name, pc.prod_name as nameInLang, pr.price, pr.listing_status, p.website_status";
+        if (isset($option["supplierCost"]))
+        {
+            $this->db->join("supplier_prod AS sp", "sp.prod_sku=p.sku and sp.order_default=1", 'LEFT');
+            $select .= ", sp.currency_id, sp.cost";
+        }
+        return $this->commonGetList($className, $where, $option, $select);
+    }
+
     public function getHomeProduct($where = [], $option = [], $class_name = 'SimpleProductDto')
     {
         $where['pd.status'] = 2;
