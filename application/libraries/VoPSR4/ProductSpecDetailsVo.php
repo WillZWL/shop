@@ -1,5 +1,5 @@
 <?php
-class ProductSpecDetailVo extends \BaseVo
+class ProductSpecDetailsVo extends \BaseVo
 {
     private $id;
     private $ps_id;

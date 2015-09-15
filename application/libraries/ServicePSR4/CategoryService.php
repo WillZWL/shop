@@ -89,6 +89,7 @@ class CategoryService extends BaseService
 
     public function getMenuListWithPlatformId($lang_id = "", $platform_id = "")
     {
+        $this->sc['CategoryDao']->getMenuListWithPlatformId($lang_id, $platform_id);
         return $this->getDao()->getMenuListWithPlatformId($lang_id, $platform_id);
     }
 

@@ -9,7 +9,7 @@ class Exchange_rate extends ExchangeRateHelper
     public function __construct()
     {
         parent::__construct();
-        $this->container['authorizationService']->checkAccessRights($this->getAppId(), "");
+        $this->sc['Authorization']->checkAccessRights($this->getAppId(), "");
     }
 
     public function getAppId()
@@ -23,17 +23,17 @@ class Exchange_rate extends ExchangeRateHelper
         $data["updated"] = 0;
         $data["editable"] = 0;
         if ($this->input->post('posted')) {
-            $obj = $this->container['exchangeRateModel']->getExchangeRate();
-            $approval_obj = $this->container['exchangeRateModel']->getBasedRate($value, $this->currency_list, "approval");
+            $obj = $this->sc['exchangeRateModel']->getExchangeRate();
+            $approval_obj = $this->sc['exchangeRateModel']->getBasedRate($value, $this->currency_list, "approval");
             $base = $value;
             if ($this->input->post('type') == 'edit') {
                 foreach ($_POST as $key => $exvalue) {
                     if ($key != "posted" && $key != "base" && $key != "type") {
-                        $change = $this->container['exchangeRateModel']->compareDifference($base, $key, $exvalue);
+                        $change = $this->sc['exchangeRateModel']->compareDifference($base, $key, $exvalue);
                         if ($change) {
                             $remark .= $change;
                         }
-                        $ret = $this->container['exchangeRateModel']->alterExchangeRate($base, $key, $exvalue, "approval");
+                        $ret = $this->sc['exchangeRateModel']->alterExchangeRate($base, $key, $exvalue, "approval");
                         if ($ret === "FALSE") {
                             $_SESSION["notice"] = "Update_Failed";
                         } else {
@@ -43,16 +43,16 @@ class Exchange_rate extends ExchangeRateHelper
                     }
                 }
                 if ($ret && $remark) {
-                    $email_to = $this->container['contextConfigService']->valueOf("alan_email");
+                    $email_to = $this->sc['ContextConfig']->valueOf("alan_email");
                     if ($email_to) {
-                        $this->container['exchangeRateModel']->notificationEmail($email_to, $remark);
+                        $this->sc['exchangeRateModel']->notificationEmail($email_to, $remark);
                     }
                 }
             }
             if ($this->input->post('type') == 'approve') {
                 foreach ($_POST as $key => $exvalue) {
                     if ($key != "posted" && $key != "base" && $key != "type") {
-                        $ret = $this->container['exchangeRateModel']->alterExchangeRate($base, $key, $exvalue);
+                        $ret = $this->sc['exchangeRateModel']->alterExchangeRate($base, $key, $exvalue);
                         if ($ret === "FALSE") {
                             $_SESSION["notice"] = "Update_Failed";
                         } else {
@@ -75,10 +75,10 @@ class Exchange_rate extends ExchangeRateHelper
         }
         $data["base"] = $value;
         $data["currency_list"] = $this->currency_list;
-        $data["currency_full_list"] = $this->container['exchangeRateModel']->getActiveCurrencyObjList([], ["orderby" => "name ASC"]);
-        $data["exchange_rate"] = $this->container['exchangeRateModel']->getBasedRate($value, $this->currency_list);
-        $data["exchange_rate_approval"] = $this->container['exchangeRateModel']->getBasedRate($value, $this->currency_list, "approval");
-        $approval = $this->container['exchangeRateModel']->getExchangeRateApprovalList(["from_currency_id" => $value], ["orderby" => "approval_status"]);
+        $data["currency_full_list"] = $this->sc['exchangeRateModel']->getActiveCurrencyObjList([], ["orderby" => "name ASC"]);
+        $data["exchange_rate"] = $this->sc['exchangeRateModel']->getBasedRate($value, $this->currency_list);
+        $data["exchange_rate_approval"] = $this->sc['exchangeRateModel']->getBasedRate($value, $this->currency_list, "approval");
+        $approval = $this->sc['exchangeRateModel']->getExchangeRateApprovalList(["from_currency_id" => $value], ["orderby" => "approval_status"]);
         $data["approval"] = "1";
         foreach ($approval AS $obj) {
             if ($obj->getApprovalStatus() == 0) {
@@ -94,9 +94,9 @@ class Exchange_rate extends ExchangeRateHelper
         $data["notice"] = notice($lang);
         $data["title"] = 'Exchange Rate Manage - Editing';
         $data["header"] = 'Editing ' . $this->currency_list[$value] . ' based exchange rates:';
-        if ($this->container['authorizationService']->checkAccessRights($sub_app_id, "Edit", "0")) {
+        if ($this->sc['Authorization']->checkAccessRights($sub_app_id, "Edit", "0")) {
             $data["type"] = "edit";
-        } elseif ($this->container['authorizationService']->checkAccessRights($sub_app_id, "Approve", "0")) {
+        } elseif ($this->sc['Authorization']->checkAccessRights($sub_app_id, "Approve", "0")) {
             $data["type"] = "approve";
         }
         $this->load->view('mastercfg/exchange_rate/exchange_rate_view', $data);
@@ -115,7 +115,7 @@ class Exchange_rate extends ExchangeRateHelper
 
     public function insert()
     {
-        $this->container['exchangeRateModel']->uploadExchangeRate();
+        $this->sc['exchangeRateModel']->uploadExchangeRate();
 
     }
 }

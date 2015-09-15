@@ -15,7 +15,7 @@ class ProfitVarHelper extends MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->container['profitVarModel']->getSellingPlatformList();
+        $objlist = $this->sc['profitVarModel']->getSellingPlatformList();
         foreach ($objlist as $obj) {
             $sid = str_replace("'", "\'", $obj->getId());
             $name = str_replace("'", "\'", $obj->getName());

@@ -26,54 +26,54 @@ class CustomClassModel extends \CI_Model
 
     public function getCountryList($where = [], $option = [])
     {
-        return $this->countryService->getList($where, $option);
+        return $this->countryService->getDao('Country')->getList($where, $option);
     }
 
     public function getSubCatList($where = [], $option = [])
     {
-        return $this->categoryService->getList($where, $option);
+        return $this->categoryService->getDao('Category')->getList($where, $option);
     }
 
     public function getCustomClassList($where = [], $option = [])
     {
-        return $this->customClassService->getList($where, $option);
+        return $this->customClassService->getDao('CustomClassification')->getList($where, $option);
     }
 
     public function getRegionList($where = [], $option = [])
     {
-        return $this->regionService->getList($where, $option);
+        return $this->regionService->getDao('Region')->getList($where, $option);
     }
 
     public function getCustomClassObjList($where = [], $option = [])
     {
-        $data["cclist"] = $this->customClassService->getList($where, $option);
-        $data["total"] = $this->customClassService->getNumRows($where);
+        $data["cclist"] = $this->customClassService->getDao('CustomClassification')->getList($where, $option);
+        $data["total"] = $this->customClassService->getDao('CustomClassification')->getNumRows($where);
         return $data;
     }
 
     public function getCustomClass($where = [])
     {
-        return $this->customClassService->get($where);
+        return $this->customClassService->getDao('CustomClassification')->get($where);
     }
 
     public function getCustomClassOption($where = [])
     {
-        return $this->customClassService->getOption($where);
+        return $this->customClassService->getDao('CustomClassification')->getOption($where);
     }
 
     public function updateCustomClass($obj)
     {
-        return $this->customClassService->update($obj);
+        return $this->customClassService->getDao('CustomClassification')->update($obj);
     }
 
     public function includeCustomClassVo()
     {
-        return $this->customClassService->get();
+        return $this->customClassService->getDao('CustomClassification')->get();
     }
 
     public function addCustomClass($obj)
     {
-        return $this->customClassService->insert($obj);
+        return $this->customClassService->getDao('CustomClassification')->insert($obj);
     }
 
     public function getProductCustomClass($where = [])

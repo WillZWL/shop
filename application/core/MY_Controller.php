@@ -22,6 +22,7 @@ abstract class MY_Controller extends CI_Controller
 {
     private $langId = "en";
     protected $container;
+    private static $serviceContainer;
 
     abstract public function getAppId();
 
@@ -29,140 +30,105 @@ abstract class MY_Controller extends CI_Controller
     {
         parent::__construct();
         $this->load->library('pagination');
-        $this->container = new Container();
-        $this->loadModelDependcy();
-        $this->loadServiceDependcy();
-        $this->loadVoDependcy();
 
-        $this->authenticationService = new S\AuthenticationService;
+        if (!self::$serviceContainer) {
+            $sc = new \Pimple\Container;
+            $daoArr = (array) require APPPATH . 'libraries/ServicePSR4/providers.php';
+            array_walk($daoArr, function($class, $i, $sc) {
+                class_exists($class) AND $sc->register(new $class);
+            }, $sc);
+
+            self::$serviceContainer = true;
+            $this->sc = $sc;
+        }
+
+        $this->loadModelDependcy();
+        // $this->loadVoDependcy();
+
         $_SESSION["CURRPAGE"] = $_SERVER['REQUEST_URI'];
         $currsign = array("GBP" => "£", "EUR" => "€");
         if ($this->config->item('uri_protocol') != "CLI") {
             $this->checkAuthed();
-            $this->authorizationService = new S\AuthorizationService;
             if ($checkAccessRights) {
-                $this->container['authorizationService']->checkAccessRights($this->getAppId(), "");
-                $feature_list = $this->container['authorizationService']->setApplicationFeatureRight($this->getAppId(), "");
+                $this->sc['Authorization']->checkAccessRights($this->getAppId(), "");
             }
         }
     }
 
     public function loadModelDependcy()
     {
-        $this->container['brandModel'] = function ($c) {
+        $this->sc['brandModel'] = function ($c) {
             return new BrandModel;
         };
 
-        $this->container['colourModel'] = function ($c) {
+        $this->sc['colourModel'] = function ($c) {
             return new ColourModel;
         };
 
-        $this->container['countryModel'] = function ($c) {
+        $this->sc['countryModel'] = function ($c) {
             return new CountryModel;
         };
 
-        $this->container['currencyModel'] = function ($c) {
+        $this->sc['currencyModel'] = function ($c) {
             return new CurrencyModel;
         };
 
-        $this->container['customClassModel'] = function ($c) {
+        $this->sc['customClassModel'] = function ($c) {
             return new CustomClassModel;
         };
 
-        $this->container['deliverytimeModel'] = function ($c) {
+        $this->sc['deliverytimeModel'] = function ($c) {
             return new DeliverytimeModel;
         };
 
-        $this->container['deliveryModel'] = function ($c) {
+        $this->sc['deliveryModel'] = function ($c) {
             return new DeliveryModel;
         };
 
-        $this->container['exchangeRateModel'] = function ($c) {
+        $this->sc['exchangeRateModel'] = function ($c) {
             return new ExchangeRateModel;
         };
 
-        $this->container['faqadminModel'] = function ($c) {
+        $this->sc['faqadminModel'] = function ($c) {
             return new FaqadminModel;
         };
 
-        $this->container['freightModel'] = function ($c) {
+        $this->sc['freightModel'] = function ($c) {
             return new FreightModel;
         };
 
-        $this->container['languageModel'] = function ($c) {
+        $this->sc['languageModel'] = function ($c) {
             return new LanguageModel;
         };
 
-        $this->container['userModel'] = function ($c) {
+        $this->sc['userModel'] = function ($c) {
             return new UserModel;
         };
 
-        $this->container['profitVarModel'] = function ($c) {
+        $this->sc['profitVarModel'] = function ($c) {
             return new ProfitVarModel;
         };
 
-        $this->container['categoryModel'] = function ($c) {
+        $this->sc['categoryModel'] = function ($c) {
             return new CategoryModel;
         };
 
-        $this->container['raProdCatModel'] = function ($c) {
+        $this->sc['raProdCatModel'] = function ($c) {
             return new RaProdCatModel;
         };
     }
 
-    public function loadVoDependcy()
-    {
-        $this->container['productVoByPost'] = $this->container->factory(function ($c) {
-            return new ProductVoByPost();
-        });
+    // public function loadVoDependcy()
+    // {
+    //     $this->sc['productVoByPost'] = $this->sc->factory(function ($c) {
+    //         return new ProductVoByPost();
+    //     });
 
-        $this->container['supplierProdVoByPost'] = $this->container->factory(function ($c) {
-            return new SupplierProdVoByPost();
-        });
-    }
+    //     $this->sc['supplierProdVoByPost'] = $this->sc->factory(function ($c) {
+    //         return new SupplierProdVoByPost();
+    //     });
+    // }
 
-    public function loadDaoDependcy()
-    {
-        $this->container['supplierProdDao'] = $this->container->factory(function ($c) {
-            return new D\SupplierProdDao();
-        });
-    }
-
-    private function loadServiceDependcy()
-    {
-        $this->container['authorizationService'] = function ($c) {
-            return new S\AuthorizationService;
-        };
-
-        $this->container['authenticationService'] = function ($c) {
-            return new S\AuthenticationService;
-        };
-
-        $this->container['categoryService'] = function ($c) {
-            return new S\CategoryService;
-        };
-
-        $this->container['contextConfigService'] = function ($c) {
-            return new S\ContextConfigService;
-        };
-
-        $this->container['languageService'] = $this->container->factory(function ($c) {
-            return new S\LanguageService();
-        });
-
-        $this->container['priceMarginService'] = function ($c) {
-            return new S\PriceMarginService();
-        };
-
-        $this->container['productService'] = function ($c) {
-            return new S\ProductService();
-        };
-
-        $this->container['logService'] = function ($c) {
-            return new S\LogService;
-        };
-
-    }
 
     public function getLangId()
     {
@@ -171,7 +137,7 @@ abstract class MY_Controller extends CI_Controller
 
     private function checkAuthed()
     {
-        if (!$this->container['authenticationService']->checkAuthed()) {
+        if (!$this->sc['Authentication']->checkAuthed()) {
             $data["fail_msg"] = $this->getFailMsg();
             redirect($this->getLoginPage());
         }

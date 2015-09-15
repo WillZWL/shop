@@ -10,29 +10,31 @@ class ColourService extends BaseService
 
     public function __construct()
     {
-        $this->setDao(new ColourDao);
-        $this->setColourExtendDao(new ColourExtendDao);
+        parent::__construct();
+        // $this->setDao(new ColourDao);
+        // $this->setColourExtendDao(new ColourExtendDao);
     }
 
     public function getListWithLang($where, $option)
     {
-        return $this->getDao()->getListWithLang($where, $option);
+        return $this->getDao('Colour')->getListWithLang($where, $option);
+        // return $this->getDao('Colour')->getListWithLang($where, $option);
     }
 
     public function save($data)
     {
         $errorMsg = '';
 
-        $obj = $this->getDao()->get();
+        $obj = $this->getDao('Colour')->get();
 
         $obj->setColourId($data['colour_id']);
         $obj->setColourName($data['colour_name']);
         $obj->setStatus($data['status']);
-        $this->getDao()->insert($obj);
+        $this->getDao('Colour')->insert($obj);
 
         $nameTranslate = $data["name_translate"];
 
-        $colourExtendVo = $this->getColourExtendDao()->get();
+        $colourExtendVo = $this->getDao('ColourExtend')->get();
 
         foreach ($nameTranslate as $langId => $name) {
             $colourExtendObj = clone $colourExtendVo;
@@ -40,7 +42,7 @@ class ColourService extends BaseService
             $colourExtendObj->setLangId($langId);
             $colourExtendObj->setColourName(ucfirst(strtolower($name)));
 
-            $ret = $this->getColourExtendDao()->insert($colourExtendObj);
+            $ret = $this->getDao('ColourExtend')->insert($colourExtendObj);
 
             if ($ret === false) {
                 $errorMsg .= "\r\nTranslated name <$name> cannot be updated for language <$langId>. DB error_msg: {$this->db->_error_message()}";

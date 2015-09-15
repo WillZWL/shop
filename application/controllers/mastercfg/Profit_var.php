@@ -8,7 +8,7 @@ class Profit_var extends ProfitVarHelper
     public function __construct()
     {
         parent::__construct();
-        $this->container['authorizationService']->checkAccessRights($this->getAppId(), "");
+        $this->sc['Authorization']->checkAccessRights($this->getAppId(), "");
     }
 
     public function getAppId()
@@ -21,7 +21,7 @@ class Profit_var extends ProfitVarHelper
         $data = [];
         include_once APPPATH . '/language/' . $this->getAppId() . '00_' . $this->getLangId() . '.php';
         $data["lang"] = $lang;
-        $data["selling_platform_list"] = $this->container['profitVarModel']->getSellingPlatformList(["status" => 1], ["limit" => -1]);
+        $data["selling_platform_list"] = $this->sc['profitVarModel']->getSellingPlatformList(["status" => 1], ["limit" => -1]);
         $data['notice'] = notice($lang);
         $this->load->view("mastercfg/profit_var/profit_var_index", $data);
     }
@@ -32,7 +32,7 @@ class Profit_var extends ProfitVarHelper
         $data["editable"] = 0;
         $data["updated"] = 0;
         if ($this->input->post('posted')) {
-            $this->container['profitVarModel']->autoload();
+            $this->sc['profitVarModel']->autoload();
 
             $obj = unserialize($_SESSION["profit_obj"]);
             $obj->setSellingPlatformId($this->input->post("id"));
@@ -48,14 +48,14 @@ class Profit_var extends ProfitVarHelper
             $obj->setFreeDeliveryLimit($this->input->post('free_dlvry_limit'));
 
             if ($this->input->post("type") == "update") {
-                $ret = $this->container['profitVarModel']->update($obj);
+                $ret = $this->sc['profitVarModel']->update($obj);
             } else {
-                $ret = $this->container['profitVarModel']->add($obj);
+                $ret = $this->sc['profitVarModel']->add($obj);
             }
 
             // update price_margin tb for all platforms
             $platform_id = $this->input->post("id");
-            $this->container['priceMarginService']->refreshAllPlatformMargin(["id" => $platform_id]);
+            $this->sc['PriceMargin']->refreshAllPlatformMargin(["id" => $platform_id]);
 
             if ($ret === FALSE) {
                 $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->_error_message();
@@ -72,29 +72,29 @@ class Profit_var extends ProfitVarHelper
 
         include_once APPPATH . '/language/' . $this->getAppId() . '02_' . $this->getLangId() . '.php';
         $data["lang"] = $lang;
-        $platform = $this->container['profitVarModel']->checkPlatform($value);
+        $platform = $this->sc['profitVarModel']->checkPlatform($value);
         if (empty($platform)) {
             unset($data);
             $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->_error_message();
             Redirect(base_url() . "mastercfg/profit_var/index/");
         } else {
             $data["action"] = "update";
-            $platform_bizvar_obj = $this->container['profitVarModel']->getPlatformBizVar($value);
+            $platform_bizvar_obj = $this->sc['profitVarModel']->getPlatformBizVar($value);
             if (empty($platform_bizvar_obj)) {
-                $platform_bizvar_obj = $this->container['profitVarModel']->getPlatformBizVar();
+                $platform_bizvar_obj = $this->sc['profitVarModel']->getPlatformBizVar();
                 $data["action"] = "add";
             }
         }
         $data["profit_obj"] = $platform_bizvar_obj;
-        $data["courier_list"] = $this->container['profitVarModel']->getCourierList();
-        $data["delivery_type_list"] = $this->container['profitVarModel']->getDeliveryTypeList();
-        $data["region_list"] = $this->container['profitVarModel']->getCourierRegionList();
-        $data["selling_platform_list"] = $this->container['profitVarModel']->getSellingPlatformList();
-        $data["country_list"] = $this->container['profitVarModel']->getCountryList([], ["limit" => -1, "orderby" => "name"]);
-        $data["active_country_list"] = $this->container['profitVarModel']->getCountryList(["status" => 1], ["limit" => -1, "orderby" => "name"]);
-        $data["language_list"] = $this->container['profitVarModel']->languageService->getList(["status" => 1], ["limit" => -1, "orderby" => "lang_name"]);
+        $data["courier_list"] = $this->sc['profitVarModel']->getCourierList();
+        $data["delivery_type_list"] = $this->sc['profitVarModel']->getDeliveryTypeList();
+        $data["region_list"] = $this->sc['profitVarModel']->getCourierRegionList();
+        $data["selling_platform_list"] = $this->sc['profitVarModel']->getSellingPlatformList();
+        $data["country_list"] = $this->sc['profitVarModel']->getCountryList([], ["limit" => -1, "orderby" => "name"]);
+        $data["active_country_list"] = $this->sc['profitVarModel']->getCountryList(["status" => 1], ["limit" => -1, "orderby" => "name"]);
+        $data["language_list"] = $this->sc['Language']->getDao('Language')->getList(["status" => 1], ["limit" => -1, "orderby" => "lang_name"]);
         $_SESSION["profit_obj"] = serialize($data["profit_obj"]);
-        $data["currency_list"] = $this->container['profitVarModel']->getCurrencyList();
+        $data["currency_list"] = $this->sc['profitVarModel']->getCurrencyList();
         $data["id"] = $value;
         $data["header"] = "";
         $data["title"] = "";

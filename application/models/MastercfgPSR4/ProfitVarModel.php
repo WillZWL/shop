@@ -42,7 +42,7 @@ class ProfitVarModel extends \CI_Model
 
     public function checkPlatform($value)
     {
-        return $this->sellingPlatformService->getDao()->get(["selling_platform_id" => $value]);
+        return $this->sellingPlatformService->getDao('SellingPlatform')->get(["selling_platform_id" => $value]);
     }
 
     public function update($data)
@@ -62,22 +62,22 @@ class ProfitVarModel extends \CI_Model
 
     public function getCourierRegionList()
     {
-        return $this->regionService->getDao()->getList(["type" => "C"]);
+        return $this->regionService->getDao('Region')->getList(["type" => "C"]);
     }
 
     public function getCourierList()
     {
-        return $this->courierService->getDao()->getList(["type" => "W", "weight_type <>" => "CO"]);
+        return $this->courierService->getDao('Courier')->getList(["type" => "W", "weight_type <>" => "CO"]);
     }
 
     public function getCountryList($where = [], $option = [])
     {
-        return $this->countryService->getDao()->getList($where, $option);
+        return $this->countryService->getDao('Country')->getList($where, $option);
     }
 
     public function getDeliveryTypeList()
     {
-        return $this->deliveryTypeService->getDao()->getList();
+        return $this->deliveryTypeService->getDao('DeliveryType')->getList();
     }
 
     public function getShiptypeList($where = [])
@@ -85,5 +85,3 @@ class ProfitVarModel extends \CI_Model
         return $this->shiptypeService->getDao()->getList($where);
     }
 }
-
-?>
