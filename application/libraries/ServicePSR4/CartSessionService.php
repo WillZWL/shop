@@ -1,7 +1,8 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Service\ProductService;
+use ESG\Panther\Service\ProductService;
+use ESG\Panther\Dto\CartDto;
 
 class CartSessionService extends BaseService
 {
@@ -17,17 +18,33 @@ class CartSessionService extends BaseService
     const DIFFERENT_PREORDER_ITEM = 80;
     const DIFFERENT_ARRIVING_ITEM = 85;
     const UNKNOWN_ITEM_STATUS = 100;
+    
+    const CART_ACTION_ADD = "ADD";
+    const CART_ACTION_SUBTRACTION = "MINUS";
+    const CART_ACTION_REMOVE = "REMOVE";
+
+    private $_cart;
 
     public function __construct()
     {
         parent::__construct();
-        $this->product_service = new ProductService;
-        // $this->setDao(new ProductDao);
+        $this->productService = new ProductService;
+        if (isset($_SESSION["cart"]))
+        {
+            if ($_SESSION["cart"] instanceof CartDto)
+            {
+                if (PLATFORMID != $_SESSION["cart"]->getPlatformId())
+                {
+                    $this->reBuildCart(PLATFORMID, $_SESSION["cart"]);
+                }
+            }
+            $this->_cart = $_SESSION["cart"];
+        }
     }
-
+/*
     public function isAllowToAdd($sku, $qty, $platform)
     {
-        $product_obj = $this->product_service->getDao()->get(["sku" => $sku]);
+        $product_obj = $this->productService->getDao()->get(["sku" => $sku]);
         if (empty($product_obj)) {
             return self::UNKNOWN_ITEM_STATUS;
         }
@@ -41,7 +58,6 @@ class CartSessionService extends BaseService
             } elseif ($website_status === 'A') {
                 return self::ALLOW_AND_IS_ARRIVING;
             }
-
             return self::UNKNOWN_ITEM_STATUS;
         } else {
             if (isset($_SESSION['cart'][$platform][$sku])) {
@@ -70,6 +86,72 @@ class CartSessionService extends BaseService
             return self::ALLOW_AND_IS_NORMAL_ITEM;
         }
     }
+*/
+    public function add($sku, $qty, $lang, $platformId)
+    {
+        if (!$this->modifyItem(self::CART_ACTION_ADD, $sku, $qty, $lang, $platformId))
+        {
+            $this->addItemToSession($sku, $qty, $lang, $platformId);
+        }
+        return $this->getCart();
+    }
+
+    public function minus($sku, $qty, $lang, $platformId)
+    {
+        $this->modifyItem(self::CART_ACTION_SUBTRACTION, $sku, $qty, $lang, $platformId);
+        return $this->getCart();
+    }
+
+    public function emptyCart()
+    {
+        $container = new Container(self::CART_SESSION_NAMESPACE);
+        $container->cart = null;
+        unset($container->cart);
+    }
+
+    public function modifyItem($action, $sku, $qty, $platformId)
+    {
+        return false;
+        if (isset($cart) && array_key_exists($sku, $cart))
+        {
+            if ($action == self::CART_ACTION_ADD)
+                $cart[$sku]["qty"] += $qty;
+            elseif ($action == self::CART_ACTION_SUBTRACTION)
+            {
+                $cart[$sku]["qty"] -= $qty;
+                if ($cart[$sku]["qty"] <= 0)
+                {
+                    $this->removeItem($sku);
+                }
+            }
+            elseif ($action == self::CART_ACTION_REMOVE)
+                $this->removeItem($sku);
+            $container->cart = $cart;
+            return true;
+        }
+        return false;
+    }
+
+    public function addItemToSession($sku, $qty, $lang, $platformId)
+    {
+        if ($productDetails = $this->_createCartItem($sku, $qty, $lang, $platformId))
+        {
+            if (isset($productDetails) && $productDetails)
+            {
+                $cart[$sku] = $productDetails[0];
+            }
+//            $container->cart = $cart;
+        }
+    }
+
+    private function _createCartItem($sku, $qty, $lang, $platformId)
+    {
+        $where = ["pr.platform_id" => $platformId, "pc.lang_id" => $lang, "p.sku" => $sku];
+        $productInfo = $this->productService->getDao()->getCartData($where, []);
+        print $this->productService->getDao()->db->last_query();
+        var_dump($productInfo);
+        exit;
+    }
 
     public function addItemQty($sku, $qty, $platform)
     {
@@ -80,7 +162,7 @@ class CartSessionService extends BaseService
             'p.website_status <>' => 'O'
         ];
 
-        $prod_obj = $this->product_service->getDao()->getProductOverview($where);
+        $prod_obj = $this->productService->getDao()->getProductOverview($where);
         if (empty($prod_obj)) {
             return false;
         }

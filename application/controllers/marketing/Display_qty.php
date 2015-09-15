@@ -3,7 +3,7 @@
 class Display_qty extends MY_Controller
 {
 
-    private $app_id = "MKT0057";
+    private $appId = "MKT0057";
     private $lang_id = "en";
 
     public function __construct()
@@ -15,7 +15,7 @@ class Display_qty extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         $data["default_min_display_qty"] = $this->display_qty_service->get_config()->get(array("variable" => "default_min_display_qty"));
         $data["cat_list"] = $this->display_qty_service->get_cat_srv()->get_list_w_key(array("level" => 1, "status" => 1), array("limit" => -1));
         $data["class_list"] = $this->display_qty_service->get_class_list_w_key(array(), array("orderby" => "price", "limit" => -1));
@@ -33,9 +33,9 @@ class Display_qty extends MY_Controller
         $this->load->view('marketing/display_qty/display_qty_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

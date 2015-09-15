@@ -3,7 +3,7 @@
 class Rma extends MY_Controller
 {
 
-    private $app_id = "ORD0003";
+    private $appId = "ORD0003";
     private $lang_id = "en";
 
 
@@ -20,7 +20,7 @@ class Rma extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         $_SESSION["LISTPAGE"] = base_url() . "order/rma/?" . $_SERVER['QUERY_STRING'];
 
@@ -87,9 +87,9 @@ class Rma extends MY_Controller
         $this->load->view('order/rma/rma_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -100,7 +100,7 @@ class Rma extends MY_Controller
     public function view($id = "")
     {
         if ($id) {
-            $sub_app_id = $this->_get_app_id() . "01";
+            $sub_app_id = $this->getAppId() . "01";
 
             $data["rma_obj"] = $this->so_model->get("rma_dao", array("id" => $id));
             if ($data["rma_obj"]) {

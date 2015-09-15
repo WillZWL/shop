@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cron_fireman extends MY_Controller
 {
-    private $app_id = "CRN0026";
+    private $appId = "CRN0026";
 
     function __construct()
     {
@@ -17,8 +17,8 @@ class Cron_fireman extends MY_Controller
             $this->fireman_model->send_report($type);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }

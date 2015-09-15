@@ -3,7 +3,7 @@ include_once "base_report.php";
 
 class Refund_reason_report extends Base_report
 {
-    private $app_id = "RPT0048";
+    private $appId = "RPT0048";
     private $lang_id = "en";
 
     public function __construct()
@@ -66,9 +66,9 @@ class Refund_reason_report extends Base_report
         $this->refund_reason_report_model->send_email($data['filename'], $csv, $msg);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

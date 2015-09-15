@@ -1,63 +1,176 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+use Pimple\Container;
+use ESG\Panther\Models\CustomerService\FaqadminModel;
+use ESG\Panther\Models\Mastercfg\BrandModel;
+use ESG\Panther\Models\Mastercfg\ColourModel;
+use ESG\Panther\Models\Mastercfg\CountryModel;
+use ESG\Panther\Models\Mastercfg\CurrencyModel;
+use ESG\Panther\Models\Mastercfg\CustomClassModel;
+use ESG\Panther\Models\Mastercfg\DeliverytimeModel;
+use ESG\Panther\Models\Mastercfg\DeliveryModel;
+use ESG\Panther\Models\Mastercfg\ExchangeRateModel;
+use ESG\Panther\Models\Mastercfg\FreightModel;
+use ESG\Panther\Models\Mastercfg\LanguageModel;
+use ESG\Panther\Models\Mastercfg\UserModel;
+use ESG\Panther\Models\Mastercfg\ProfitVarModel;
+use ESG\Panther\Models\Marketing\CategoryModel;
+use ESG\Panther\Models\Marketing\RaProdCatModel;
+use ESG\Panther\Models\Order\SoModel;
+
+use ESG\Panther\Service as S;
+use ESG\Panther\Dao as D;
 
 abstract class MY_Controller extends CI_Controller
 {
-    private $_lang_id = "en";
+    private $langId = "en";
+    protected $container;
+    private static $serviceContainer;
 
-    public function __construct($check_access_rights = TRUE)
+    abstract public function getAppId();
+
+    public function __construct($checkAccessRights = TRUE)
     {
         parent::__construct();
-        $this->load->library($this->_get_service());
+        $this->load->library('pagination');
+
+        if (!self::$serviceContainer) {
+            $sc = new \Pimple\Container;
+            $daoArr = (array) require APPPATH . 'libraries/ServicePSR4/providers.php';
+            array_walk($daoArr, function($class, $i, $sc) {
+                class_exists($class) AND $sc->register(new $class);
+            }, $sc);
+
+            self::$serviceContainer = true;
+            $this->sc = $sc;
+        }
+
+        $this->loadModelDependcy();
+        // $this->loadVoDependcy();
+
         $_SESSION["CURRPAGE"] = $_SERVER['REQUEST_URI'];
         $currsign = array("GBP" => "£", "EUR" => "€");
         if ($this->config->item('uri_protocol') != "CLI") {
-            $this->_check_authed();
-            $this->load->library('service/Authorization_service');
-            if ($check_access_rights) {
-                $this->authorization_service->check_access_rights($this->_get_app_id(), "");
-                $feature_list = $this->authorization_service->set_application_feature_right($this->_get_app_id(), "");
+            $this->checkAuthed();
+            if ($checkAccessRights) {
+                $this->sc['Authorization']->checkAccessRights($this->getAppId(), "");
             }
         }
     }
 
-    function _get_service()
+    public function loadModelDependcy()
     {
-        return "service/Authentication_service";
+        $this->sc['brandModel'] = function ($c) {
+            return new BrandModel;
+        };
+
+        $this->sc['colourModel'] = function ($c) {
+            return new ColourModel;
+        };
+
+        $this->sc['countryModel'] = function ($c) {
+            return new CountryModel;
+        };
+
+        $this->sc['currencyModel'] = function ($c) {
+            return new CurrencyModel;
+        };
+
+        $this->sc['customClassModel'] = function ($c) {
+            return new CustomClassModel;
+        };
+
+        $this->sc['deliverytimeModel'] = function ($c) {
+            return new DeliverytimeModel;
+        };
+
+        $this->sc['deliveryModel'] = function ($c) {
+            return new DeliveryModel;
+        };
+
+        $this->sc['exchangeRateModel'] = function ($c) {
+            return new ExchangeRateModel;
+        };
+
+        $this->sc['faqadminModel'] = function ($c) {
+            return new FaqadminModel;
+        };
+
+        $this->sc['freightModel'] = function ($c) {
+            return new FreightModel;
+        };
+
+        $this->sc['languageModel'] = function ($c) {
+            return new LanguageModel;
+        };
+
+        $this->sc['userModel'] = function ($c) {
+            return new UserModel;
+        };
+
+        $this->sc['profitVarModel'] = function ($c) {
+            return new ProfitVarModel;
+        };
+
+        $this->sc['categoryModel'] = function ($c) {
+            return new CategoryModel;
+        };
+
+        $this->sc['raProdCatModel'] = function ($c) {
+            return new RaProdCatModel;
+        };
+
+        $this->sc['soModel'] = function ($c) {
+            return new SoModel;
+        };
     }
 
-    private function _check_authed()
+    // public function loadVoDependcy()
+    // {
+    //     $this->sc['productVoByPost'] = $this->sc->factory(function ($c) {
+    //         return new ProductVoByPost();
+    //     });
+
+    //     $this->sc['supplierProdVoByPost'] = $this->sc->factory(function ($c) {
+    //         return new SupplierProdVoByPost();
+    //     });
+    // }
+
+
+    public function getLangId()
     {
-        if (!$this->authentication_service->check_authed()) {
-            $data["fail_msg"] = $this->_get_fail_msg();
-            redirect($this->_get_login_page());
+        return $this->langId;
+    }
+
+    private function checkAuthed()
+    {
+        if (!$this->sc['Authentication']->checkAuthed()) {
+            $data["fail_msg"] = $this->getFailMsg();
+            redirect($this->getLoginPage());
         }
     }
 
-    function _get_fail_msg()
+    public function getFailMsg()
     {
         return "Please login to the system first!";
     }
 
-    function _get_login_page()
+    public function getLoginPage()
     {
         return "?back=" . urlencode($_SESSION["CURRPAGE"]);
     }
 
-    abstract public function _get_app_id();
-
-    public function get_lang_id()
-    {
-        return $this->_lang_id;
-    }
-
-    function _get_ru()
+    public function getRu()
     {
         $ru = $_SESSION["CURRPAGE"];
         if ($pru = $this->input->post("ru")) {
-            $this->load->library("encrypt");
             $ru = $this->encrypt->decode($pru);
         }
+
         return $ru;
+    }
+
+    public function setFormRu()
+    {
+        return "<input type='hidden' name='ru' value='".$this->encrypt->encode($_SESSION["CURRPAGE"])."'>";
     }
 }

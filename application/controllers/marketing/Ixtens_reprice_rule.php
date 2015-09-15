@@ -2,7 +2,7 @@
 
 class Ixtens_reprice_rule extends MY_Controller
 {
-    private $app_id = "MKT0060";
+    private $appId = "MKT0060";
     private $lang_id = "en";
 
     public function __construct()
@@ -15,7 +15,7 @@ class Ixtens_reprice_rule extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
 
         if ($this->input->post('posted')) {
             if ($this->input->post('action') == "add") {
@@ -108,9 +108,9 @@ class Ixtens_reprice_rule extends MY_Controller
         $this->load->view('marketing/ixtens_reprice_rule/irr_index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

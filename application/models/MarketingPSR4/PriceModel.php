@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Models\Marketing;
+namespace ESG\Panther\Models\Marketing;
 
-use AtomV2\Service\PriceService;
+use ESG\Panther\Service\PriceService;
 
 class PriceModel extends \CI_Model
 {

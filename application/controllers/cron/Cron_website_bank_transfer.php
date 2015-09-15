@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cron_website_bank_transfer extends MY_Controller
 {
-    private $app_id = "CRN0021";
+    private $appId = "CRN0021";
 
     function __construct()
     {
@@ -21,9 +21,9 @@ class Cron_website_bank_transfer extends MY_Controller
         $this->website_bank_transfer_model->cancel_unpaid($platform_id);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
 }

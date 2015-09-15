@@ -2,7 +2,7 @@
 
 class Flex extends MY_Controller
 {
-    private $app_id = "ACC0002";
+    private $appId = "ACC0002";
     private $lang_id = "en";
 
     function __construct()
@@ -20,7 +20,7 @@ class Flex extends MY_Controller
     public function sales($start_date = "", $end_date = "")
     {
         $query = 0;
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         DEFINE('FLEX_REPORT_PATH', $this->context_config_service->value_of("flex_report_path"));
@@ -81,9 +81,9 @@ class Flex extends MY_Controller
         $this->load->view('account/flex/index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -116,7 +116,7 @@ class Flex extends MY_Controller
     public function refund($start_date = "", $end_date = "")
     {
         $query = 0;
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         DEFINE('FLEX_REPORT_PATH', $this->context_config_service->value_of("flex_report_path"));
@@ -189,7 +189,7 @@ class Flex extends MY_Controller
     public function pending_order_report()
     {
         $query = 0;
-        $sub_app_id = $this->_get_app_id() . "04";
+        $sub_app_id = $this->getAppId() . "04";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         DEFINE('FLEX_REPORT_PATH', $this->context_config_service->value_of("flex_report_path"));
@@ -227,7 +227,7 @@ class Flex extends MY_Controller
 
     public function order_not_in_ria_report()
     {
-        $sub_app_id = $this->_get_app_id() . "05";
+        $sub_app_id = $this->getAppId() . "05";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data['lang'] = $lang;
 
@@ -259,7 +259,7 @@ class Flex extends MY_Controller
     public function fee($start_date = "", $end_date = "")
     {
         $query = 0;
-        $sub_app_id = $this->_get_app_id() . "03";
+        $sub_app_id = $this->getAppId() . "03";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         DEFINE('FLEX_REPORT_PATH', $this->context_config_service->value_of("flex_report_path"));
@@ -543,7 +543,7 @@ class Flex extends MY_Controller
 
     public function get_rakuten_shipped_order($page = 'search')
     {
-        $sub_app_id = $this->_get_app_id() . "06";
+        $sub_app_id = $this->getAppId() . "06";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 

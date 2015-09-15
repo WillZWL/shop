@@ -3,7 +3,7 @@
 class On_hold_admin extends MY_Controller
 {
 
-    private $app_id = "ORD0007";
+    private $appId = "ORD0007";
     private $lang_id = "en";
 
 
@@ -22,7 +22,7 @@ class On_hold_admin extends MY_Controller
     public function index($pmghold = 0)
     {
         $search = $this->input->get('search');
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         if ($search) {
 
@@ -118,9 +118,9 @@ class On_hold_admin extends MY_Controller
         $this->load->view('order/on_hold_admin/index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -130,7 +130,7 @@ class On_hold_admin extends MY_Controller
 
     public function log_approval_page($pmghold = 0)
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
 
         $_SESSION["LISTPAGE"] = base_url() . "order/on_hold_admin/log_approval_page/?" . $_SERVER['QUERY_STRING'];
 
@@ -217,7 +217,7 @@ class On_hold_admin extends MY_Controller
         if ($type != "" && $type != "cc" && $type != "vv") {
             Redirect(base_url() . "order/on_hold_admin/oc_index/");
         } else {
-            $sub_app_id = $this->_get_app_id() . "03";
+            $sub_app_id = $this->getAppId() . "03";
 
             $_SESSION["LISTPAGE"] = base_url() . "order/on_hold_admin/oc_index" . ($type == "" ? "" : "/" . $type) . "/?" . $_SERVER['QUERY_STRING'];
 
@@ -334,7 +334,7 @@ class On_hold_admin extends MY_Controller
     {
         $password = $this->input->get("pw");
         if ($password) {
-            $sub_app_id = $this->_get_app_id() . "00";
+            $sub_app_id = $this->getAppId() . "00";
 
             $_SESSION["LISTPAGE"] = base_url() . "order/on_hold_admin/chk_pw/" . $password . "/?" . $_SERVER['QUERY_STRING'];
 

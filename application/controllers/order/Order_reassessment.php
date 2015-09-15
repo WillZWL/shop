@@ -3,7 +3,7 @@
 class Order_reassessment extends MY_Controller
 {
 
-    private $app_id = "ORD0014";
+    private $appId = "ORD0014";
     private $lang_id = "en";
 
 
@@ -20,7 +20,7 @@ class Order_reassessment extends MY_Controller
 
     public function index($pmghold = 0)
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         $_SESSION["LISTPAGE"] = base_url() . "order/order_reassessment/?" . $_SERVER['QUERY_STRING'];
 
@@ -131,9 +131,9 @@ class Order_reassessment extends MY_Controller
         $this->load->view('order/credit_check/order_reassessment_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -146,7 +146,7 @@ class Order_reassessment extends MY_Controller
         $password = $this->input->get("pw");
         if ($password) {
 
-            $sub_app_id = $this->_get_app_id() . "00";
+            $sub_app_id = $this->getAppId() . "00";
 
             $_SESSION["LISTPAGE"] = base_url() . "order/order_reassessment/chk_pw/" . $password . "/?" . $_SERVER['QUERY_STRING'];
 

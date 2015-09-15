@@ -2,7 +2,7 @@
 
 class Courier_import extends MY_Controller
 {
-    private $app_id = "SUP0017";
+    private $appId = "SUP0017";
     private $lang_id = "en";
     private $error = "";
 
@@ -17,7 +17,7 @@ class Courier_import extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
         define('DATAPATH', $this->context_config_service->value_of("data_path"));
@@ -46,9 +46,9 @@ class Courier_import extends MY_Controller
         $this->load->view('supply/courier_import/index', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

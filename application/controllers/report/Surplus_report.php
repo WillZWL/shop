@@ -3,7 +3,7 @@ DEFINE("PLATFORM_TYPE", "WEBSITE");
 
 class Surplus_report extends MY_Controller
 {
-    private $app_id = "RPT0042";
+    private $appId = "RPT0042";
     private $lang_id = "en";
 
     public function __construct()
@@ -49,9 +49,9 @@ class Surplus_report extends MY_Controller
 
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

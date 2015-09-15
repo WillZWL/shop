@@ -55,9 +55,8 @@
     if ($editable && $notice["img"] == "")
     {
     ?>
-    <form action="<?= $_SERVER["PHP_SELF"] ?>" name="editform" method="post" style="padding:0; margin:0"
-          onSubmit="return CheckForm(this)">
-        <input type="hidden" name="id" value="<?php echo $region_obj->get_id(); ?>">
+    <form action="<?=base_url()?>mastercfg/region/view/<?=$id?>" name="editform" method="post" style="padding:0; margin:0" onSubmit="return CheckForm(this)">
+        <input type="hidden" name="id" value="<?php echo $region_obj->getId(); ?>">
         <?php
         }
         ?>
@@ -65,7 +64,7 @@
 
             <tr>
                 <td height="70" style="padding-left:8px">
-                    <b style="font-size:14px"><?= $lang["header"] ?> - <?= $region_obj->get_region_name() ?></b><br>
+                    <b style="font-size:14px"><?= $lang["header"] ?> - <?= $region_obj->getRegionName() ?></b><br>
                     <?= $lang["header_message"] ?><br>
                 </td>
             </tr>
@@ -77,12 +76,12 @@
             </tr>
             <tr>
                 <td height="20" width="250" class="field" align="right">&nbsp;&nbsp;<?= $lang["region_id"] ?></td>
-                <td height="20" align="left" class="value">&nbsp;&nbsp;<?= $region_obj->get_id() ?></td>
+                <td height="20" align="left" class="value">&nbsp;&nbsp;<?= $region_obj->getId() ?></td>
             </tr>
             <tr>
                 <td height="20" width="250" class="field" align="right">&nbsp;&nbsp;<?= $lang["region_name"] ?></td>
                 <td height="20" align="left" class="value">&nbsp;&nbsp;<input type="text" name="region_name"
-                                                                              value="<?= $region_obj->get_region_name() ?>" <?= (!$editable ? "readonly" : "") ?>
+                                                                              value="<?= $region_obj->getRegionName() ?>" <?= (!$editable ? "readonly" : "") ?>
                                                                               notEmpty></td>
             </tr>
             <tr>
@@ -90,9 +89,9 @@
                 <td height="20" align="left" class="value">&nbsp;&nbsp;
                     <select name="region_type" style="width:200px;" <?= ($editable ? "" : "DISABLED") ?>>
                         <option
-                            value="C" <?= ($region_obj->get_type() == "C" ? "SELECTED" : "") ?>><?= $lang["courier"] ?></option>
+                            value="C" <?= ($region_obj->getType() == "C" ? "SELECTED" : "") ?>><?= $lang["courier"] ?></option>
                         <option
-                            value="S" <?= ($region_obj->get_type() == "S" ? "SELECTED" : "") ?>><?= $lang["sourcing"] ?></option>
+                            value="S" <?= ($region_obj->getType() == "S" ? "SELECTED" : "") ?>><?= $lang["sourcing"] ?></option>
                     </select>
                 </td>
             </tr>

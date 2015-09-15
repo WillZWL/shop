@@ -4,7 +4,7 @@ include_once "base_report.php";
 
 class aps_report extends Base_report
 {
-    private $app_id = "RPT0041";
+    private $appId = "RPT0041";
     private $lang_id = "en";
 
     public function aps_report()
@@ -22,16 +22,16 @@ class aps_report extends Base_report
     {
         $data["title"] = "Compensation Report";
 
-        $langfile = $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        $langfile = $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         include_once APPPATH . "language/" . $langfile;
         $data["lang"] = $lang;
 
         $this->load->view('report/aps_report', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

@@ -2,7 +2,7 @@
 
 class Cron_so_popularity extends MY_Controller
 {
-    private $app_id = "CRN0010";
+    private $appId = "CRN0010";
 
     function __construct()
     {
@@ -18,9 +18,9 @@ class Cron_so_popularity extends MY_Controller
         if (!$so_item->calculate_popularity(7)) echo "FAILED";
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
 }

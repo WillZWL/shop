@@ -31,9 +31,9 @@ class Chargeback_admin extends MY_Controller
         // $this->_set_export_filename('sales_report.csv');
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _set_app_id($value)

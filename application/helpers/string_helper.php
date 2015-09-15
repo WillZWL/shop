@@ -3,14 +3,14 @@
 if (!function_exists('camelcase2underscore')) {
     function camelcase2underscore($name)
     {
-        return strtolower(preg_replace('/(?<!^)([A-Z]){1}/', '_$1', $name));
+        return strtolower(preg_replace('/(?<!^)([A-Z0-9]){1}/', '_$1', $name));
     }
 }
 
 if (!function_exists('underscore2camelcase')) {
     function underscore2camelcase($name)
     {
-        return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $key))));
+        return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $name))));
     }
 }
 

@@ -1,5 +1,5 @@
 <?php
-	$lang = array(
+	$lang = [
 			"title" => "Region Management",
 			"header" => "View Region Information",
 			"header_message" => "Below shows which countries are in this region:",
@@ -30,5 +30,4 @@
 			"modify_on" => "Modify On",
 			"modify_at" => "Modify At",
 			"modify_by" => "Modify By"
-			);
-?>
+	];

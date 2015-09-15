@@ -44,10 +44,10 @@
                 foreach ($currency_list as $currency_obj) {
                     ?>
                     <tr>
-                        <td class="field"><?= $currency_id = $currency_obj->get_id() ?>
-                            - <?= $currency_obj->get_name() ?></td>
+                        <td class="field"><?= $currency_id = $currency_obj->getId() ?>
+                            - <?= $currency_obj->getName() ?></td>
                         <td class="value"><input name="round_up[<?= $currency_id ?>]" class="input"
-                                                 value="<?= htmlspecialchars($currency_obj->get_round_up()) ?>"></td>
+                                                 value="<?= htmlspecialchars($currency_obj->getRoundUp()) ?>"></td>
                     </tr>
                 <?php
                 }
@@ -58,7 +58,7 @@
                     </td>
                 </tr>
             </table>
-            <?= _form_ru() ?>
+            <?= $set_form_ru ?>
             <input type="hidden" name="posted" value="1">
         <?php
         }

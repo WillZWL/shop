@@ -55,7 +55,7 @@ class CI_Pagination {
 	 *
 	 * @var	string
 	 */
-	protected $base_url		= '';
+	public $base_url		= '';
 
 	/**
 	 * Prefix
@@ -76,7 +76,7 @@ class CI_Pagination {
 	 *
 	 * @var	int
 	 */
-	protected $total_rows = 0;
+	public $total_rows = 0;
 
 	/**
 	 * Number of links to show
@@ -86,7 +86,7 @@ class CI_Pagination {
 	 *
 	 * @var	int
 	 */
-	protected $num_links = 2;
+	public $num_links = 2;
 
 	/**
 	 * Items per page
@@ -109,84 +109,84 @@ class CI_Pagination {
 	 *
 	 * @var	bool
 	 */
-	protected $use_page_numbers = FALSE;
+	public $use_page_numbers = FALSE;
 
 	/**
 	 * First link
 	 *
 	 * @var	string
 	 */
-	protected $first_link = '&lsaquo; First';
+	public $first_link = '&lsaquo; First';
 
 	/**
 	 * Next link
 	 *
 	 * @var	string
 	 */
-	protected $next_link = '&gt;';
+	public $next_link = '&gt;';
 
 	/**
 	 * Previous link
 	 *
 	 * @var	string
 	 */
-	protected $prev_link = '&lt;';
+	public $prev_link = '&lt;';
 
 	/**
 	 * Last link
 	 *
 	 * @var	string
 	 */
-	protected $last_link = 'Last &rsaquo;';
+	public $last_link = 'Last &rsaquo;';
 
 	/**
 	 * URI Segment
 	 *
 	 * @var	int
 	 */
-	protected $uri_segment = 0;
+	public $uri_segment = 0;
 
 	/**
 	 * Full tag open
 	 *
 	 * @var	string
 	 */
-	protected $full_tag_open = '';
+	public $full_tag_open = '';
 
 	/**
 	 * Full tag close
 	 *
 	 * @var	string
 	 */
-	protected $full_tag_close = '';
+	public $full_tag_close = '';
 
 	/**
 	 * First tag open
 	 *
 	 * @var	string
 	 */
-	protected $first_tag_open = '';
+	public $first_tag_open = '';
 
 	/**
 	 * First tag close
 	 *
 	 * @var	string
 	 */
-	protected $first_tag_close = '';
+	public $first_tag_close = '';
 
 	/**
 	 * Last tag open
 	 *
 	 * @var	string
 	 */
-	protected $last_tag_open = '';
+	public $last_tag_open = '';
 
 	/**
 	 * Last tag close
 	 *
 	 * @var	string
 	 */
-	protected $last_tag_close = '';
+	public $last_tag_close = '';
 
 	/**
 	 * First URL
@@ -195,91 +195,91 @@ class CI_Pagination {
 	 *
 	 * @var	string
 	 */
-	protected $first_url = '';
+	public $first_url = '';
 
 	/**
 	 * Current tag open
 	 *
 	 * @var	string
 	 */
-	protected $cur_tag_open = '<strong>';
+	public $cur_tag_open = '<strong>';
 
 	/**
 	 * Current tag close
 	 *
 	 * @var	string
 	 */
-	protected $cur_tag_close = '</strong>';
+	public $cur_tag_close = '</strong>';
 
 	/**
 	 * Next tag open
 	 *
 	 * @var	string
 	 */
-	protected $next_tag_open = '';
+	public $next_tag_open = '';
 
 	/**
 	 * Next tag close
 	 *
 	 * @var	string
 	 */
-	protected $next_tag_close = '';
+	public $next_tag_close = '';
 
 	/**
 	 * Previous tag open
 	 *
 	 * @var	string
 	 */
-	protected $prev_tag_open = '';
+	public $prev_tag_open = '';
 
 	/**
 	 * Previous tag close
 	 *
 	 * @var	string
 	 */
-	protected $prev_tag_close = '';
+	public $prev_tag_close = '';
 
 	/**
 	 * Number tag open
 	 *
 	 * @var	string
 	 */
-	protected $num_tag_open = '';
+	public $num_tag_open = '';
 
 	/**
 	 * Number tag close
 	 *
 	 * @var	string
 	 */
-	protected $num_tag_close = '';
+	public $num_tag_close = '';
 
 	/**
 	 * Page query string flag
 	 *
 	 * @var	bool
 	 */
-	protected $page_query_string = FALSE;
+	public $page_query_string = FALSE;
 
 	/**
 	 * Query string segment
 	 *
 	 * @var	string
 	 */
-	protected $query_string_segment = 'per_page';
+	public $query_string_segment = 'per_page';
 
 	/**
 	 * Display pages flag
 	 *
 	 * @var	bool
 	 */
-	protected $display_pages = TRUE;
+	public $display_pages = TRUE;
 
 	/**
 	 * Attributes
 	 *
 	 * @var	string
 	 */
-	protected $_attributes = '';
+	public $_attributes = '';
 
 	/**
 	 * Link types
@@ -289,21 +289,21 @@ class CI_Pagination {
 	 * @see	CI_Pagination::_attr_rel()
 	 * @var	array
 	 */
-	protected $_link_types = array();
+	public $_link_types = array();
 
 	/**
 	 * Reuse query string flag
 	 *
 	 * @var	bool
 	 */
-	protected $reuse_query_string = FALSE;
+	public $reuse_query_string = FALSE;
 
 	/**
 	 * Use global URL suffix flag
 	 *
 	 * @var	bool
 	 */
-	protected $use_global_url_suffix = FALSE;
+	public $use_global_url_suffix = FALSE;
 
 	/**
 	 * Data page attribute

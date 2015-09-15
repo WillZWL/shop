@@ -3,7 +3,7 @@
 class Purchaser extends MY_Controller
 {
 
-    private $app_id = "SUP0002";
+    private $appId = "SUP0002";
     private $lang_id = "en";
 
 
@@ -18,7 +18,7 @@ class Purchaser extends MY_Controller
 
     public function index($frame = "top")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -82,9 +82,9 @@ class Purchaser extends MY_Controller
         }
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -95,7 +95,7 @@ class Purchaser extends MY_Controller
     public function add()
     {
         global $data;
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post("posted") && $this->input->post("cmd") == "add") {
             if (isset($_SESSION["supp_prod"])) {
@@ -129,7 +129,7 @@ class Purchaser extends MY_Controller
     {
         if ($sku) {
             global $data;
-            $sub_app_id = $this->_get_app_id() . "01";
+            $sub_app_id = $this->getAppId() . "01";
             define('IMG_PH', $this->context_config_service->value_of("prod_img_path"));
 
             if ($this->input->post("posted") && $this->input->post("cmd") == "edit") {
@@ -272,7 +272,7 @@ class Purchaser extends MY_Controller
     public function update_status($sku = "")
     {
         if ($sku) {
-            $sub_app_id = $this->_get_app_id() . "02";
+            $sub_app_id = $this->getAppId() . "02";
 
             if ($this->input->post("posted")) {
                 if ($prod_obj = $this->purchaser_model->get("product", "dao", array("sku" => $sku))) {
@@ -289,7 +289,7 @@ class Purchaser extends MY_Controller
 
     public function add_note($sku)
     {
-        $sub_app_id = $this->_get_app_id() . "02";
+        $sub_app_id = $this->getAppId() . "02";
         if ($this->input->post("posted")) {
             $note_obj = $this->purchaser_model->get("product_note", "dao");
             $note_obj->set_sku($sku);

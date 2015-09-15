@@ -2,7 +2,7 @@
 
 class Customer_service_info extends MY_Controller
 {
-    private $app_id = "MKT0054";
+    private $appId = "MKT0054";
     private $lang_id = "en";
 
     public function __construct()
@@ -15,7 +15,7 @@ class Customer_service_info extends MY_Controller
 
     function index($lang_id = "", $country_id = "")
     {
-        $sub_app_id = $this->_get_app_id() . "00";
+        $sub_app_id = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
 
         if (!empty($country_id) && $lang_id == "ALL") {
@@ -119,9 +119,9 @@ class Customer_service_info extends MY_Controller
         $this->load->view("marketing/customer_service_info/cs_info_v.php", $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -205,7 +205,7 @@ class Customer_service_info extends MY_Controller
                 }
             }
         }
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
 
         $data['country_list'] = $this->customer_service_info_model->get_country_list(array("allow_sell" => 1, "status" => 1), array("orderby" => "name ASC", "limit" => -1));
         $country_list = $this->customer_service_info_model->get_country_language_list();

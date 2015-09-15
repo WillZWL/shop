@@ -2,7 +2,7 @@
 
 class Product_category_report extends MY_Controller
 {
-    private $app_id = "ACC0003";
+    private $appId = "ACC0003";
     private $lang_id = "en";
 
     function __construct()
@@ -13,16 +13,16 @@ class Product_category_report extends MY_Controller
 
     public function index()
     {
-        $sub_app_id = $this->_get_app_id() . "01";
+        $sub_app_id = $this->getAppId() . "01";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
         $this->load->view('account/product_category_report/index_v', $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()

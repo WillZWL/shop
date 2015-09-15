@@ -343,7 +343,7 @@ class Product_dao extends Base_dao
         }
 
         if ($where["colour"] != "") {
-            $this->db->like('cl.name', $where["colour"]);
+            $this->db->like('cl.colour_name', $where["colour"]);
         }
 
         if ($where["category"] != "") {
@@ -420,7 +420,7 @@ class Product_dao extends Base_dao
 
             $this->include_dto($classname);
 
-            $this->db->select('p.sku, p.name, c.name AS category, sc.name AS sub_cat, cl.name AS colour, ssc.name AS sub_sub_cat, b.brand_name AS brand, p.proc_status, p.website_status, p.website_quantity, p.image AS image_file, p.status, p.create_on, p.create_at, p.create_by, p.modify_on, p.modify_at, p.modify_by, map.ext_sku master_sku, p.warranty_in_month');
+            $this->db->select('p.sku, p.name, c.name AS category, sc.name AS sub_cat, cl.colour_name AS colour, ssc.name AS sub_sub_cat, b.brand_name AS brand, p.proc_status, p.website_status, p.website_quantity, p.image AS image_file, p.status, p.create_on, p.create_at, p.create_by, p.modify_on, p.modify_at, p.modify_by, map.ext_sku master_sku, p.warranty_in_month');
 
             if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
@@ -515,7 +515,7 @@ class Product_dao extends Base_dao
         }
 
         if ($where["colour"] != "") {
-            $this->db->like('cl.name', $where["colour"]);
+            $this->db->like('cl.colour_name', $where["colour"]);
         }
 
         if ($where["category"] != "") {
@@ -583,7 +583,7 @@ class Product_dao extends Base_dao
 
             $this->include_dto($classname);
 
-            $this->db->select('p.sku, p.name, c.name AS category, sc.name AS sub_cat, cl.name AS colour, ssc.name AS sub_sub_cat, b.brand_name AS brand, p.proc_status, p.website_status, p.website_quantity, p.image AS image_file, p.status, p.create_on, p.create_at, p.create_by, p.modify_on, p.modify_at, p.modify_by');
+            $this->db->select('p.sku, p.name, c.name AS category, sc.name AS sub_cat, cl.colour_name AS colour, ssc.name AS sub_sub_cat, b.brand_name AS brand, p.proc_status, p.website_status, p.website_quantity, p.image AS image_file, p.status, p.create_on, p.create_at, p.create_by, p.modify_on, p.modify_at, p.modify_by');
 
             if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
@@ -627,7 +627,7 @@ class Product_dao extends Base_dao
             $sql = "SELECT COUNT(*) AS total ";
         } else {
             $sql = "SELECT
-                        p.sku, p.name, c.name AS category, sc.name AS sub_cat, cl.name AS colour, ssc.name AS sub_sub_cat,
+                        p.sku, p.name, c.name AS category, sc.name AS sub_cat, cl.colour_name AS colour, ssc.name AS sub_sub_cat,
                         b.brand_name AS brand, p.proc_status, p.website_status, p.website_quantity, p.image AS image_file, p.status,
                         p.create_on, p.create_at, p.create_by, p.modify_on, p.modify_at, p.modify_by";
         }
@@ -740,7 +740,7 @@ class Product_dao extends Base_dao
         }
 
         if ($where["colour"] != "") {
-            $this->db->like('cl.name', $where["colour"]);
+            $this->db->like('cl.colour_name', $where["colour"]);
         }
 
         if ($where["category"] != "") {
@@ -820,7 +820,7 @@ class Product_dao extends Base_dao
 
             $this->include_dto($classname);
 
-            $this->db->select('pv.id, pv.sku, pv.country_id, pv.lang_id, pv.type, pv.src, pv.ref_id, pv.description, pv.view_count, pv.status, p.name as prod_name, c.name AS category, sc.name AS sub_cat, ssc.name AS sub_sub_cat, cl.name AS colour, b.brand_name AS brand, p.proc_status, p.website_status, p.website_quantity, p.image AS image_file, p.status AS prod_status, pv.create_on, pv.create_at, pv.create_by, pv.modify_on, pv.modify_at, pv.modify_by');
+            $this->db->select('pv.id, pv.sku, pv.country_id, pv.lang_id, pv.type, pv.src, pv.ref_id, pv.description, pv.view_count, pv.status, p.name as prod_name, c.name AS category, sc.name AS sub_cat, ssc.name AS sub_sub_cat, cl.colour_name AS colour, b.brand_name AS brand, p.proc_status, p.website_status, p.website_quantity, p.image AS image_file, p.status AS prod_status, pv.create_on, pv.create_at, pv.create_by, pv.modify_on, pv.modify_at, pv.modify_by');
 
             if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
@@ -950,7 +950,7 @@ class Product_dao extends Base_dao
         }
 
         if ($where["colour"] != "") {
-            $this->db->like('cl.name', $where["colour"]);
+            $this->db->like('cl.colour_name', $where["colour"]);
         }
 
         if ($where["category"] != "") {
@@ -973,7 +973,7 @@ class Product_dao extends Base_dao
 
             $this->include_dto($classname);
 
-            $this->db->select('p.sku, p.name, c.name AS category, sc.name AS sub_cat, cl.name AS colour, ssc.name AS sub_sub_cat, b.brand_name AS brand, p.status, p.create_on, p.create_at, p.create_by, p.modify_on, p.modify_at, p.modify_by');
+            $this->db->select('p.sku, p.name, c.name AS category, sc.name AS sub_cat, cl.colour_name AS colour, ssc.name AS sub_sub_cat, b.brand_name AS brand, p.status, p.create_on, p.create_at, p.create_by, p.modify_on, p.modify_at, p.modify_by');
 
             if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);

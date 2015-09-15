@@ -26,16 +26,6 @@ class Faqadmin_service extends Base_service
         $this->dao = $dao;
     }
 
-    public function update(Base_vo $vo)
-    {
-        return $this->get_dao()->update($vo);
-    }
-
-    public function insert(Base_vo $vo)
-    {
-        return $this->get_dao()->insert($vo);
-    }
-
     public function get_content($platform_id = "WSGB")
     {
         include_once APPPATH . "libraries/service/Platform_biz_var_service.php";

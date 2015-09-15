@@ -3,7 +3,7 @@
 class Adbanner extends MY_Controller
 {
 
-    private $app_id = "MKT0001";
+    private $appId = "MKT0001";
     private $lang_id = "en";
 
     public function __construct()
@@ -46,14 +46,14 @@ class Adbanner extends MY_Controller
         }
         $data['option_list'] = $this->option_list;
         $data['adbanner_list'] = $this->adbanner_model->get_banner_list();
-        include_once APPPATH . "language/" . $this->_get_app_id() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $this->load->view("marketing/adbanner/adbanner_index", $data);
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 
     public function _get_lang_id()
@@ -107,7 +107,7 @@ class Adbanner extends MY_Controller
         $data["max_height"] = $this->setting["max_height"];
         $data["max_width"] = $this->setting["max_width"];
         $data["type"] = "." . str_replace("|", ", .", $this->setting["allowed_types"]);
-        include_once APPPATH . "language/" . $this->_get_app_id() . "04_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "04_" . $this->_get_lang_id() . ".php";
         $data["lang"] = $lang;
         $this->load->view("marketing/adbanner/adbanner_upload", $data);
     }

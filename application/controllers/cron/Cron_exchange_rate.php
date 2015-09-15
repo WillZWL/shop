@@ -1,34 +1,34 @@
 <?php
+use ESG\Panther\Models\Mastercfg\ExchangeRateModel;
 
 class Cron_exchange_rate extends MY_Controller
 {
-    private $app_id = "CRN0006";
+    private $appId = "CRN0006";
 
     function __construct()
     {
         parent::__construct();
-        $this->load->model('mastercfg/exchange_rate_model');
-        $this->load->helper('url');
+        $this->exchangeRateModel = new ExchangeRateModel;
     }
 
     function index()
     {
-        $this->upload_exchange_rate();
+        $this->uploadExchangeRate();
     }
 
-    function upload_exchange_rate()
+    function uploadExchangeRate()
     {
-        $this->exchange_rate_model->upload_exchange_rate();
+        $this->exchangeRateModel->uploadExchangeRate();
     }
 
-    function update_exchange_rate_from_cv()
+    function updateExchangeRateFromCv()
     {
-        $this->exchange_rate_model->update_exchange_rate_from_cv();
+        $this->exchangeRateModel->updateExchangeRateFromCv();
     }
 
-    public function _get_app_id()
+    public function getAppId()
     {
-        return $this->app_id;
+        return $this->appId;
     }
 }
 

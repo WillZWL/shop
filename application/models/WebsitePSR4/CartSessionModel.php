@@ -1,16 +1,15 @@
 <?php
-namespace AtomV2\Models\Website;
+namespace ESG\Panther\Models\Website;
 
-use AtomV2\Service\CartSessionService;
+use ESG\Panther\Service\CartSessionService;
 
 class CartSessionModel extends \CI_Model
 {
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
-        $this->cart_session_service = new CartSessionService;
+        $this->cartSessionService = new CartSessionService;
         // $this->load->model('marketing/product_model');
-        // $this->load->library('service/cart_session_service');
+        // $this->load->library('service/cartSessionService');
         // $this->load->library('service/ra_product_service');
         // $this->load->library('service/best_seller_service');
         // $this->load->library('service/website_service');
@@ -18,23 +17,24 @@ class CartSessionModel extends \CI_Model
         // $this->load->library('service/warranty_service');
     }
 
-    public function addItemQty($sku, $qty, $platform)
-    {
+    public function addItemQty($sku, $qty, $langId, $platformId) {
+/*
         if (isset($_SESSION['cart'][$platform][$sku])) {
-            // return $this->cart_session_service->updateItemQty($sku, $qty, $platform);
+             return $this->cartSessionService->updateItemQty($sku, $qty, $platform);
         } else {
-            return $this->cart_session_service->addItemQty($sku, $qty, $platform);
-        }
+*/
+            return $this->cartSessionService->add($sku, $qty, $langId, $platformId);
+//        }
     }
 
     public function get_cart_info()
     {
-        return $this->cart_session_service->get_cart_info();
+        return $this->cartSessionService->get_cart_info();
     }
 
     public function get_detail($platform)
     {
-        return $this->cart_session_service->get_detail($platform);
+        return $this->cartSessionService->get_detail($platform);
     }
 
     public function get($platform = NULL)
@@ -42,12 +42,12 @@ class CartSessionModel extends \CI_Model
         if (is_null($platform)) {
             $platform = PLATFORMID;
         }
-        return $this->cart_session_service->get($platform);
+        return $this->cartSessionService->get($platform);
     }
 
     public function update($sku, $qty, $platform)
     {
-        return $this->cart_session_service->modify($sku, $qty, $platform);
+        return $this->cartSessionService->modify($sku, $qty, $platform);
     }
 
     public function get_cart($platform = NULL)
@@ -55,7 +55,7 @@ class CartSessionModel extends \CI_Model
         if (is_null($platform)) {
             $platform = defined(PLATFORMID) ? PLATFORMID : "WSUS";
         }
-        return $this->cart_session_service->get_cart($platform);
+        return $this->cartSessionService->get_cart($platform);
     }
 
     public function remove($sku, $platform = NULL)
@@ -63,7 +63,7 @@ class CartSessionModel extends \CI_Model
         if (is_null($platform)) {
             $platform = PLATFORMID;
         }
-        return $this->cart_session_service->remove($sku, $platform);
+        return $this->cartSessionService->remove($sku, $platform);
     }
 
 
