@@ -24,9 +24,12 @@ class ProductCreation extends MY_Controller
 
     public function createProductByXML($data = '')
     {
-        // $this->data = $data;
+        if ($data) {
+            // $this->data = $data;
 
-        $this->sc['ProductCreation']->process($this->data);
+            $this->sc['ProductCreation']->process($this->data);
+        }
+
     }
 
     public function process()
