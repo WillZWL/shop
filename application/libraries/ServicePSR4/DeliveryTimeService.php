@@ -61,8 +61,6 @@ class DeliveryTimeService extends BaseService
             $this->error_msg = $error_msg;
             return FALSE;
         }
-
-
     }
 
     private function getOroductDao()
