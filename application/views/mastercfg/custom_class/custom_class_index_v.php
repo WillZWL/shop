@@ -140,7 +140,7 @@ if ($country_id) :
                 $is_edit = ($cmd == "edit" && $cc_id == $cc->getId());
                 ?>
 
-                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" <?=(!($is_edit)) ? "onClick=Redirect('". site_url('mastercfg/custom_class/index/' . $country_id ."/".$cc->getId())."/?".$_SERVER['QUERY_STRING']."')" : ""?> onMouseOut="RemoveClassName(this, 'highlight')">
+                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" <?=(!($is_edit)) ? "onClick=Redirect('". site_url('mastercfg/custom_class/index/' . $country_id ."/".$cc->getId())."/". $offset ."/?".$_SERVER['QUERY_STRING']."')" : ""?> onMouseOut="RemoveClassName(this, 'highlight')">
 
                     <td height="20"><img src="<?= base_url() ?>images/info.gif"
                                          title='<?= $lang["create_on"] ?>:<?= $cc->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $cc->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $cc->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $cc->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $cc->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $cc->getModifyBy() ?>'>

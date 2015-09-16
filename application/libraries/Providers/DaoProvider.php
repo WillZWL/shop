@@ -9,10 +9,6 @@ class DaoProvider implements ServiceProviderInterface
 {
     public function register(Container $daoContainer)
     {
-        $daoContainer['Colour'] = function () {
-            return new D\ColourDao();
-        };
-
         $daoContainer['User'] = function () {
             return new D\UserDao();
         };
@@ -153,6 +149,18 @@ class DaoProvider implements ServiceProviderInterface
             return new D\CategoryDao();
         };
 
+        $daoContainer['CategoryExtend'] = function () {
+            return new D\CategoryExtendDao();
+        };
+
+        $daoContainer['CategoryContent'] = function () {
+            return new D\CategoryContentDao();
+        };
+
+        $daoContainer['CategoryBanner'] = function () {
+            return new D\CategoryBannerDao();
+        };
+
         $daoContainer['CustomClassification'] = function () {
             return new D\CustomClassificationDao();
         };
@@ -171,6 +179,10 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['PlatformCourier'] = function () {
             return new D\PlatformCourierDao();
+        };
+
+        $daoContainer['SubCatPlatformVar'] = function () {
+            return new D\SubCatPlatformVarDao();
         };
 
         $daoContainer['Entity'] = function () {
@@ -277,8 +289,24 @@ class DaoProvider implements ServiceProviderInterface
             return new D\RefundItemDao();
         };
 
+        $daoContainer['Unit'] = function () {
+            return new D\UnitDao();
+        };
+
+        $daoContainer['UnitType'] = function () {
+            return new D\UnitTypeDao();
+        };
+
         $daoContainer['Warehouse'] = function () {
             return new D\WarehouseDao();
+        };
+
+        $daoContainer['WeightCategory'] = function () {
+            return new D\WeightCategoryDao();
+        };
+
+        $daoContainer['WeightCatCharge'] = function () {
+            return new D\WeightCatChargeDao();
         };
 
     }

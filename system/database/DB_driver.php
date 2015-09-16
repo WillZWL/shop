@@ -260,7 +260,7 @@ abstract class CI_DB_driver {
 	 *
 	 * @var	bool
 	 */
-	protected $_trans_status	= TRUE;
+	public $_trans_status	= TRUE;
 
 	/**
 	 * Transaction failure flag

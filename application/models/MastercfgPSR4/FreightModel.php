@@ -19,67 +19,67 @@ class FreightModel extends \CI_Model
 
     public function getCourierList($where = [], $option = [])
     {
-        return $this->courierService->getDao()->getList($where, $option);
+        return $this->courierService->getDao('Courier')->getList($where, $option);
     }
 
     public function getCourier($where = [])
     {
-        return $this->courierService->getDao()->get($where);
+        return $this->courierService->getDao('Courier')->get($where);
     }
 
     public function getCourierListWithRegion($where = [], $option = [])
     {
-        return $this->courierService->getDao()->getListWithName($where, $option, "CourierWithRegionDto");
+        return $this->courierService->getDao('Courier')->getListWithName($where, $option, "CourierWithRegionDto");
     }
 
     public function getCourierRegionCountry($where = [], $option = [])
     {
-        return $this->courierService->getDao()->getRegionCountryList($where, $option, "CourierRegionCountryDto");
+        return $this->courierService->getDao('Courier')->getRegionCountryList($where, $option, "CourierRegionCountryDto");
     }
 
     public function getFreightCatList($where = [], $option = [])
     {
-        return $this->freightCatService->getDao()->getList($where, $option);
+        return $this->freightCatService->getDao('FreightCategory')->getList($where, $option);
     }
 
     public function getFreightCatTotal($where = [])
     {
-        return $this->freightCatService->getDao()->getNumRows($where);
+        return $this->freightCatService->getDao('FreightCategory')->getNumRows($where);
     }
 
     public function getWeightCatList($where = [], $option = [])
     {
-        return $this->weightCatService->getDao()->getList($where, $option);
+        return $this->weightCatService->getDao('WeightCategory')->getList($where, $option);
     }
 
     public function getWeightCatTotal($where = [])
     {
-        return $this->weightCatService->getDao()->getNumRows($where);
+        return $this->weightCatService->getDao('WeightCategory')->getNumRows($where);
     }
 
     public function getFreightCat($where = [])
     {
-        return $this->freightCatService->getDao()->get($where);
+        return $this->freightCatService->getDao('FreightCategory')->get($where);
     }
 
     public function getWeightCat($where = [])
     {
-        return $this->weightCatService->getDao()->get($where);
+        return $this->weightCatService->getDao('WeightCategory')->get($where);
     }
 
     public function includeFreightCatVo()
     {
-        return $this->freightCatService->getDao()->get();
+        return $this->freightCatService->getDao('FreightCategory')->get();
     }
 
     public function include_freight_cat_charge_vo()
     {
-        return $this->freightCatService->getFreightCatChargeDao()->get();
+        return $this->freightCatService->getDao('FreightCatCharge')->get();
     }
 
     public function include_weight_cat_charge_vo()
     {
-        return $this->weightCatService->getWeightCatChargeDao()->get();
+        return $this->weightCatService->getDao('WeightCatCharge')->get();
     }
 
     public function include_freight_cat_w_region_dto()
@@ -89,32 +89,32 @@ class FreightModel extends \CI_Model
 
     public function include_weight_cat_vo()
     {
-        return $this->weightCatService->getDao()->get();
+        return $this->weightCatService->getDao('WeightCategory')->get();
     }
 
     public function addFreightCat($obj)
     {
-        return $this->freightCatService->getDao()->insert($obj);
+        return $this->freightCatService->getDao('FreightCategory')->insert($obj);
     }
 
     public function addWeightCat($obj)
     {
-        return $this->weightCatService->getDao()->insert($obj);
+        return $this->weightCatService->getDao('WeightCategory')->insert($obj);
     }
 
     public function addCourier($obj)
     {
-        return $this->courierService->getDao()->insert($obj);
+        return $this->courierService->getDao('Courier')->insert($obj);
     }
 
     public function getFcc($where = [])
     {
-        return $this->freightCatService->getFreightCatChargeDao()->get($where);
+        return $this->freightCatService->getDao('FreightCatCharge')->get($where);
     }
 
     public function getWcc($where = [])
     {
-        return $this->weightCatService->getWeightCatChargeDao()->get($where);
+        return $this->weightCatService->getDao('WeightCatCharge')->get($where);
     }
 
     public function getFccWithRegList($where = [], $option = [])
@@ -129,52 +129,52 @@ class FreightModel extends \CI_Model
 
     public function includeFccVo()
     {
-        return $this->freightCatService->getFreightCatChargeDao()->get();
+        return $this->freightCatService->getDao('FreightCatCharge')->get();
     }
 
     public function includeWccVo()
     {
-        return $this->weightCatService->getWeightCatChargeDao()->get();
+        return $this->weightCatService->getDao('WeightCatCharge')->get();
     }
 
     public function getFccNearestAmount($fcat_id, $weight)
     {
-        return $this->freightCatService->getFreightCatChargeDao()->getNearestAmount($fcat_id, $weight);
+        return $this->freightCatService->getDao('FreightCatCharge')->getNearestAmount($fcat_id, $weight);
     }
 
     public function getWccNearestAmount($wcat_id, $weight)
     {
-        return $this->weightCatService->getWeightCatChargeDao()->getNearestAmount($wcat_id, $weight);
+        return $this->weightCatService->getDao('WeightCatCharge')->getNearestAmount($wcat_id, $weight);
     }
 
     public function addFcc($obj)
     {
-        return $this->freightCatService->getFreightCatChargeDao()->insert($obj);
+        return $this->freightCatService->getDao('FreightCatCharge')->insert($obj);
     }
 
     public function addWcc($obj)
     {
-        return $this->weightCatService->getWeightCatChargeDao()->insert($obj);
+        return $this->weightCatService->getDao('WeightCatCharge')->insert($obj);
     }
 
     public function updateFreightCat($obj)
     {
-        return $this->freightCatService->getDao()->update($obj);
+        return $this->freightCatService->getDao('FreightCategory')->update($obj);
     }
 
     public function updateWeightCat($obj)
     {
-        return $this->weightCatService->update($obj);
+        return $this->weightCatService->getDao('WeightCatCharge')->update($obj);
     }
 
     public function delFcc($where = [])
     {
-        return $this->freightCatService->getFreightCatChargeDao()->delete($where);
+        return $this->freightCatService->getDao('FreightCatCharge')->delete($where);
     }
 
     public function delWcc($where = [])
     {
-        return $this->weightCatService->getWeightCatChargeDao()->delete($where);
+        return $this->weightCatService->getDao('WeightCatCharge')->delete($where);
     }
 
     public function getOriginCountryList()

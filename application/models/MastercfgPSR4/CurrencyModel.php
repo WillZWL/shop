@@ -13,7 +13,7 @@ class CurrencyModel extends \CI_Model
 
     public function getNameWIdKey()
     {
-        return $this->currencyService->getNameWIdKey();
+        return $this->currencyService->getNameWithIdKey();
     }
 
     public function updateRoundUp(&$data)
@@ -27,6 +27,7 @@ class CurrencyModel extends \CI_Model
                 }
             }
         }
+
         return TRUE;
     }
 }

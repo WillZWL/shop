@@ -14,7 +14,7 @@ class Round_up extends MY_Controller
     {
         $sub_appId = $this->getAppId() . "00";
 
-        $data["currency_list"] = $this->sc['currencyModel']->currencyService->getListWithKey([], ["limit" => -1]);
+        $data["currency_list"] = $this->sc['Currency']->getListWithKey([], ["limit" => -1]);
 
         if ($this->input->post('posted')) {
             if ($this->sc['currencyModel']->updateRoundUp($data)) {

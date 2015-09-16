@@ -1,49 +1,11 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\CategoryDao;
-use ESG\Panther\Dao\ColourDao;
-use ESG\Panther\Dao\CategoryExtendDao;
-use ESG\Panther\Dao\CategoryContentDao;
-use ESG\Panther\Dao\CategoryBannerDao;
-use ESG\Panther\Service\BrandService;
-
 class CategoryService extends BaseService
 {
-    private $brand_service;
-    private $ext_dao;
-
     public function __construct()
     {
         parent::__construct();
-        $CI =& get_instance();
-        $this->load = $CI->load;
-        $this->setDao(new CategoryDao);
-        $this->setCategoryExtendDao(new CategoryExtendDao);
-        $this->setCategoryContentDao(new CategoryContentDao);
-        $this->setColourDao(new ColourDao);
-        $this->setCategoryBannerDao(new CategoryBannerDao);
-        $this->brandService = new BrandService;
-    }
-
-    public function setColourDao($value)
-    {
-        $this->colourDao = $value;
-    }
-
-    public function getColourDao()
-    {
-        return $this->colourDao;
-    }
-
-    public function setCategoryContentDao($dao)
-    {
-        $this->cc_dao = $dao;
-    }
-
-    public function setCategoryBannerDao($dao)
-    {
-        $this->cat_ban_dao = $dao;
     }
 
     public function getMenuListData($lang_id, $platform_id)
@@ -89,57 +51,56 @@ class CategoryService extends BaseService
 
     public function getMenuListWithPlatformId($lang_id = "", $platform_id = "")
     {
-        $this->sc['CategoryDao']->getMenuListWithPlatformId($lang_id, $platform_id);
-        return $this->getDao()->getMenuListWithPlatformId($lang_id, $platform_id);
+        return $this->getDao('Category')->getMenuListWithPlatformId($lang_id, $platform_id);
     }
 
     public function getMenuListWithLang($lang_id)
     {
-        return $this->getDao()->getMenuListWithLang($lang_id);
+        return $this->getDao('Category')->getMenuListWithLang($lang_id);
     }
 
     public function getListWithChildCount($level, $id = "", $classname = "CategoryCountDto")
     {
-        return $this->getDao()->getItemWithChildCount($level, $id, $classname);
+        return $this->getDao('Category')->getItemWithChildCount($level, $id, $classname);
     }
 
     public function getItemWithPopChildCount($level, $id = "")
     {
-        return $this->getDao()->getItemWithPopChildCount($level, $id, "CategoryCountDto");
+        return $this->getDao('Category')->getItemWithPopChildCount($level, $id, "CategoryCountDto");
     }
 
     public function getParent($level, $id, $classname = "ViewSubCatDto")
     {
-        return $this->getDao()->getParent($level, $id, $classname);
+        return $this->getDao('Category')->getParent($level, $id, $classname);
     }
 
     public function add($obj)
     {
-        return $this->getDao()->insert($obj);
+        return $this->getDao('Category')->insert($obj);
     }
 
     public function update($obj)
     {
-        return $this->getDao()->update($obj);
+        return $this->getDao('Category')->update($obj);
     }
 
     public function loadVo()
     {
-        $this->getDao()->get();
+        $this->getDao('Category')->get();
     }
 
     public function getCatListIndex($where, $option)
     {
-        $data["category_list"] = $this->getDao()->getListIndex($where, $option, $this->getDao()->getVoClassname());
+        $data["category_list"] = $this->getDao('Category')->getListIndex($where, $option, $this->getDao('Category')->getVoClassname());
 
-        $data["total"] = $this->getDao()->getListIndex($where, ["num_rows" => 1]);
+        $data["total"] = $this->getDao('Category')->getListIndex($where, ["num_rows" => 1]);
         return $data;
     }
 
     public function getMenuList($where = [], $option = [])
     {
         $data["list"] = $data["allcat"] = [];
-        $objlist = $this->getDao()->getList($where, $option);
+        $objlist = $this->getDao('Category')->getList($where, $option);
 
         if ($objlist) {
             foreach ($objlist as $obj) {
@@ -153,7 +114,7 @@ class CategoryService extends BaseService
 
     public function getDisplayList($catid, $type = "cat", $brand = "", $platform_id = "WSGB", $min_price = "", $max_price = "")
     {
-        $obj = $this->getDao()->get(["id" => $catid]);
+        $obj = $this->getDao('Category')->get(["id" => $catid]);
         if ($obj === FALSE) {
             return FALSE;
         }
@@ -163,28 +124,28 @@ class CategoryService extends BaseService
         } else {
             if ($obj->getLevel() == 1) {
                 if ($type == "cat") {
-                    return $this->getDao()->retrieveCatlistForScat($catid, $brand, $platform_id);
+                    return $this->getDao('Category')->retrieveCatlistForScat($catid, $brand, $platform_id);
                 } elseif ($type == "price") {
-                    return $this->getDao()->retrievePricelistForCat($catid, $brand, $platform_id, $min_price, $max_price);
+                    return $this->getDao('Category')->retrievePricelistForCat($catid, $brand, $platform_id, $min_price, $max_price);
                 } else {
-                    return $this->getDao()->retrieveBrandlistForCat($catid, $brand, $platform_id);
+                    return $this->getDao('Category')->retrieveBrandlistForCat($catid, $brand, $platform_id);
                 }
             } else if ($obj->getLevel() == 2) {
                 if ($type == "cat") {
-                    return $this->getDao()->retrieveCatlistForSscat($catid, $brand, $platform_id);
+                    return $this->getDao('Category')->retrieveCatlistForSscat($catid, $brand, $platform_id);
                 } elseif ($type == "price") {
-                    return $this->getDao()->retrievePricelistForScat($catid, $brand, $platform_id, $min_price, $max_price);
+                    return $this->getDao('Category')->retrievePricelistForScat($catid, $brand, $platform_id, $min_price, $max_price);
                 } else {
-                    return $this->getDao()->retrieveBrandlistForScat($catid, $brand, $platform_id);
+                    return $this->getDao('Category')->retrieveBrandlistForScat($catid, $brand, $platform_id);
                 }
 
             } else if ($obj->getLevel() == 3) {
                 if ($type == "cat") {
                     return NULL;
                 } elseif ($type == "price") {
-                    return $this->getDao()->retrievePricelistForSscat($catid, $brand, $platform_id, $min_price, $max_price);
+                    return $this->getDao('Category')->retrievePricelistForSscat($catid, $brand, $platform_id, $min_price, $max_price);
                 } else {
-                    return $this->getDao()->retrieveBrandlistForSscat($catid, $brand, $platform_id);
+                    return $this->getDao('Category')->retrieveBrandlistForSscat($catid, $brand, $platform_id);
                 }
             } else {
                 return NULL;
@@ -194,7 +155,7 @@ class CategoryService extends BaseService
 
     public function getDisplayCatlist($catid, $data = [])
     {
-        $obj = $this->getDao()->get(["id" => $catid]);
+        $obj = $this->getDao('Category')->get(["id" => $catid]);
         $data[$obj->getLevel()] = ["name" => $obj->getName(), "id" => $obj->getId()];
         if ($obj->getLevel() == 1) {
             return $data;
@@ -205,7 +166,7 @@ class CategoryService extends BaseService
 
     public function getColourList()
     {
-        $list = $this->getColourDao()->getList();
+        $list = $this->getDao('Colour')->getList();
 
         $ret = [];
 
@@ -218,12 +179,12 @@ class CategoryService extends BaseService
 
     public function getListedCat($platform_id = "")
     {
-        return $this->getDao()->getListedCat($platform_id);
+        return $this->getDao('Category')->getListedCat($platform_id);
     }
 
     public function getFullCatList()
     {
-        return $this->getDao()->getFullCatList();
+        return $this->getDao('Category')->getFullCatList();
     }
 
     public function getListedCatTree()
@@ -231,7 +192,7 @@ class CategoryService extends BaseService
         $sitemap = [];
         $depth = 0;
 
-        $list = $this->getDao()->getList(["level" => 1], ["result_type" => "array"]);
+        $list = $this->getDao('Category')->getList(["level" => 1], ["result_type" => "array"]);
 
         $sitemap = [];
         foreach ($list AS $item) {
@@ -270,21 +231,21 @@ class CategoryService extends BaseService
         }
 
         if (1 == 0) {
-            $row = $this->getDao()->getNumRows();
-            $list = $this->getDao()->getList();
+            $row = $this->getDao('Category')->getNumRows();
+            $list = $this->getDao('Category')->getList();
             foreach ($list as $obj) {
                 if ($obj->getLevel() == 1)
                     echo $obj->getId() . "<br>";
             }
         }
 
-        $cat_list = $this->getDao()->getCatListWithLang(get_lang_id());
+        $cat_list = $this->getDao('Category')->getCatListWithLang(get_lang_id());
         $sitemap = [];
         foreach ($cat_list AS $cat_arr) {
             $sitemap[$cat_arr["id"]] = $cat_arr["name"];
         }
 
-        $array = $this->getDao()->getListedCatTree(get_lang_id());
+        $array = $this->getDao('Category')->getListedCatTree(get_lang_id());
         $ret = [];
         foreach ($array AS $obj) {
             $ret[$obj["cat_name"]][$obj["sub_cat_name"]];
@@ -304,7 +265,7 @@ class CategoryService extends BaseService
                     $sub_cat['sub_sub_cat_list'] = $sub_sub_cat_list;
                     array_push($sub_cat_list, $sub_cat);
                     $cat['sub_cat_list'] = $sub_cat_list;
-                    $cat['brand_list'] = $this->brandService->getListedBrandByCat($cat['cat_id']);
+                    $cat['brand_list'] = $this->getDao('Brand')->getListedBrandByCat($cat['cat_id']);
                     array_push($cat_list, $cat);
                 }
 
@@ -326,7 +287,7 @@ class CategoryService extends BaseService
         $sub_cat['sub_sub_cat_list'] = $sub_sub_cat_list;
         array_push($sub_cat_list, $sub_cat);
         $cat['sub_cat_list'] = $sub_cat_list;
-        $cat['brand_list'] = $this->brandService->getListedBrandByCat($cat['cat_id']);
+        $cat['brand_list'] = $this->getDao('Brand')->getListedBrandByCat($cat['cat_id']);
         array_push($cat_list, $cat);
 
         return ['cat_list' => $cat_list];
@@ -334,7 +295,7 @@ class CategoryService extends BaseService
 
     private function buildCategoryTree($me, $parentID)
     {
-        $list = $this->getDao()->getList(["parent_cat_id" => $parentID], ["result_type" => "array"]);
+        $list = $this->getDao('Category')->getList(["parent_cat_id" => $parentID], ["result_type" => "array"]);
 
         $tempTree = NULL;
         foreach ($list AS $child) {
@@ -351,7 +312,7 @@ class CategoryService extends BaseService
 
     public function getFavouriteCategoryList($platform_id = "WSGB")
     {
-        return $this->getDao()->getFavouriteCategoryList(20, $platform_id);
+        return $this->getDao('Category')->getFavouriteCategoryList(20, $platform_id);
     }
 
     public function getListWithKey($where = [], $option = [])
@@ -379,7 +340,7 @@ class CategoryService extends BaseService
 
     public function getCatExtWithKey($where = [], $option = [])
     {
-        if ($obj_list = $this->getCategoryExtendDao()->getList($where, $option)) {
+        if ($obj_list = $this->getDao('CategoryExtend')->getList($where, $option)) {
             $data = [];
             foreach ($obj_list as $obj) {
                 $data[$obj->getCatId()][$obj->getLangId()] = $obj;
@@ -389,29 +350,19 @@ class CategoryService extends BaseService
         return FALSE;
     }
 
-    public function getCategoryExtendDao()
-    {
-        return $this->ext_dao;
-    }
-
-    public function setCategoryExtendDao($dao)
-    {
-        $this->ext_dao = $dao;
-    }
-
     public function getBestSellingCat($platform = "WEBGB", $lang_id = "en")
     {
-        return $this->getDao()->getBestSellingCat($platform, $lang_id);
+        return $this->getDao('Category')->getBestSellingCat($platform, $lang_id);
     }
 
     public function getCatExtDefaultWithKeyList($where = [], $option = [])
     {
-        return $this->getCategoryExtendDao()->getCatExtDefaultWithKeyList($where, $option);
+        return $this->getDao('CategoryExtend')->getCatExtDefaultWithKeyList($where, $option);
     }
 
     public function getCatBan($where)
     {
-        return $this->getCategoryBannerDao()->get($where);
+        return $this->getDao('CategoryBanner')->get($where);
     }
 
     public function getCategoryBannerDao()
@@ -421,33 +372,28 @@ class CategoryService extends BaseService
 
     public function getCatBanList($lang_id)
     {
-        return $this->getCategoryBannerDao()->getCatBanList($lang_id);
+        return $this->getDao('CategoryBanner')->getCatBanList($lang_id);
     }
 
     public function insertCatBan($obj)
     {
-        return $this->getCategoryBannerDao()->insert($obj);
+        return $this->getDao('CategoryBanner')->insert($obj);
     }
 
     public function updateCatBan($obj)
     {
-        return $this->getCategoryBannerDao()->update($obj);
+        return $this->getDao('CategoryBanner')->update($obj);
     }
 
     public function getCatContObj($where = [])
     {
-        return $this->getCategoryContentDao()->get($where);
-    }
-
-    public function getCategoryContentDao()
-    {
-        return $this->cc_dao;
+        return $this->getDao('CategoryContent')->get($where);
     }
 
     public function getCatContList($where = [], $option = [])
     {
         $ret = [];
-        $cc_list = $this->getCategoryContentDao()->getList($where, $option);
+        $cc_list = $this->getDao('CategoryContent')->getList($where, $option);
         foreach ($cc_list AS $cc_obj) {
             $ret[$cc_obj->getLangId()] = $cc_obj;
         }
@@ -457,41 +403,41 @@ class CategoryService extends BaseService
 
     public function getCatExtObj($where = [])
     {
-        return $this->getCategoryExtendDao()->get($where);
+        return $this->getDao('CategoryExtend')->get($where);
     }
 
     public function getCatExtList($where = [], $option = [])
     {
-        return $this->getCategoryExtendDao()->getList($where, $option);
+        return $this->getDao('CategoryExtend')->getList($where, $option);
     }
 
     public function getCategory($where = [])
     {
-        return $this->getDao()->get($where);
+        return $this->getDao('Category')->get($where);
     }
 
     public function getCatFilterGridInfo($level, $where = [], $option = [])
     {
-        return $this->getDao()->getCatFilterGridInfo($level, $where, $option);
+        return $this->getDao('Category')->getCatFilterGridInfo($level, $where, $option);
     }
 
     public function getBrandFilterGridInfo($where = [], $option = [])
     {
-        return $this->brand_service->getBrandFilterGridInfo($where, $option);
+        return $this->getDao('Brand')->getBrandFilterGridInfo($where, $option);
     }
 
     public function getParentCatId($cat_id)
     {
-        return $this->getDao()->getParentCatId($cat_id);
+        return $this->getDao('Category')->getParentCatId($cat_id);
     }
 
     public function getWarrantyCatList()
     {
-        return $this->getDao()->getList(["parent_cat_id" => 538], ["limit" => -1, "orderby" => "name ASC"]);
+        return $this->getDao('Category')->getList(["parent_cat_id" => 538], ["limit" => -1, "orderby" => "name ASC"]);
     }
 
     public function getCatInfoWithLang($where = [], $option = [])
     {
-        return $this->getDao()->getCatInfoWithLang($where, $option);
+        return $this->getDao('Category')->getCatInfoWithLang($where, $option);
     }
 }
