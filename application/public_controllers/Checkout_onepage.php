@@ -23,7 +23,6 @@ class Checkout_onepage extends Checkout_redirect_method
         $this->load->library('service/price_service');
         $this->load->library('service/platform_biz_var_service');
         $this->load->library('service/delivery_service');
-        $this->load->library('template');
         //$this->template->set_template('checkout');
         $this->load->helper('tbswrapper');
         $this->load->model('website/checkout_model');

@@ -8,7 +8,6 @@ class Search extends PUB_Controller
     public function Search()
     {
         parent::PUB_Controller();
-        $this->load->library('template');
         $this->load->helper(array('url', 'directory', 'tbswrapper'));
         $this->load->model("marketing/product_model");
         $this->load->model("marketing/category_model");

@@ -20,7 +20,6 @@ class Myaccount extends PUB_Controller
         $this->load->model('order/so_model');
         $this->load->model('mastercfg/courier_model');
         $this->load->model('mastercfg/country_model');
-        $this->load->library('template');
         $this->load->library('encrypt');
         $this->load->library('service/region_service');
         $this->load->library('service/client_service');
