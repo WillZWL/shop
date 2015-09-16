@@ -22,7 +22,7 @@ class Faqadmin extends MY_Controller
                     'lang_id'=>$this->input->post("lang_id"),
                     'faq_ver'=>$this->input->post("faq_ver")
                   ];
-            $this->container['faqadminModel']->save($wh);
+            $this->sc['faqadminModel']->save($wh);
 
             Redirect(base_url() . "cs/faqadmin/?" . $_SERVER["QUERY_STRING"]);
         }
@@ -58,7 +58,7 @@ class Faqadmin extends MY_Controller
         $option["orderby"] = $sort . " " . $order;
 
 
-        $data = $this->container['faqadminModel']->getListCnt($where, $option);
+        $data = $this->sc['faqadminModel']->getListCnt($where, $option);
 
         include_once APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php";
         $data["lang"] = $lang;

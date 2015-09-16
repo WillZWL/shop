@@ -1,91 +1,86 @@
 <?php
 namespace ESG\Panther\Models\Mastercfg;
 
-use ESG\Panther\Service\ExchangeRateService;
-use ESG\Panther\Service\CurrencyService;
-
 class ExchangeRateModel extends \CI_Model
 {
     public function __construct()
     {
         parent::__construct();
-        $this->exchangeRateService = new ExchangeRateService;
-        $this->currencyService = new CurrencyService;
     }
 
     public function alterExchangeRate($from, $to, $rate, $platform = "")
     {
         if ($platform == "approval") {
-            $dao = "ExchangeRateApprovalDao";
+            $dao = "ExchangeRateApproval";
         } else {
-            $dao = "ExchangeRateDao";
+            $dao = "ExchangeRate";
         }
-        return $this->exchangeRateService->alterExchangeRate($from, $to, $rate, $dao);
+        return $this->sc['ExchangeRate']->alterExchangeRate($from, $to, $rate, $dao);
     }
 
     public function getBasedRate($base, $currency_list, $platform = "")
     {
         if ($platform == "approval") {
-            $dao = "ExchangeRateApprovalDao";
+            $dao = "ExchangeRateApproval";
         } else {
-            $dao = "ExchangeRateDao";
+            $dao = "ExchangeRate";
         }
-        return $this->exchangeRateService->getBasedRate($base, $currency_list, $dao);
+        return $this->sc['ExchangeRate']->getBasedRate($base, $currency_list, $dao);
     }
 
     // public function getBasedApprovalRate($base, $currency_list)
     // {
-    //     return $this->exchangeRateService->getBasedApprovalRate($base, $currency_list);
+    //     return $this->sc['ExchangeRate']->getBasedApprovalRate($base, $currency_list);
     // }
 
     public function getCurrencyList($where = [], $option = [])
     {
-        return $this->exchangeRateService->getCurrencyList($where, $option);
+        return $this->sc['ExchangeRate']->getCurrencyList($where, $option);
     }
 
     public function getActiveCurrencyList($where = [], $option = [])
     {
-        return $this->exchangeRateService->getActiveCurrencyList($where, $option);
+        return $this->sc['ExchangeRate']->getActiveCurrencyList($where, $option);
     }
 
     public function getActiveCurrencyObjList($where = [], $option = [])
     {
-        return $this->exchangeRateService->getActiveCurrencyObjList($where, $option);
+        return $this->sc['ExchangeRate']->getActiveCurrencyObjList($where, $option);
     }
 
     public function getCurrencyFullList($where = [], $option = [])
     {
-        return $this->currencyService->getList($where, $option);
+        return $this->getDao('currency')->getList($where, $option);
     }
 
     public function getExchangeRateApprovalList($where = [], $option = [])
     {
-        return $this->exchangeRateService->getExchangeRateApprovalList($where, $option);
+        return $this->sc['ExchangeRate']->getExchangeRateApprovalList($where, $option);
     }
 
     public function notificationEmail($sent_to, $value)
     {
-        return $this->exchangeRateService->notificationEmail($sent_to, $value);
+        return $this->sc['ExchangeRate']->notificationEmail($sent_to, $value);
     }
 
     public function getSign($platform = "")
     {
-        return $this->currencyService->getSign($platform);
+        return $this->getDao('currency')->getSign($platform);
     }
 
     public function uploadExchangeRate()
     {
-        return $this->exchangeRateService->uploadExchangeRate();
+        return $this->sc['ExchangeRate']->uploadExchangeRate();
     }
 
     public function updateExchangeRateFromCv()
     {
-        return $this->exchangeRateService->updateExchangeRateFromCv();
+        return $this->sc['ExchangeRate']->updateExchangeRateFromCv();
     }
 
     public function compareDifference($from = "", $to = "", $rate = "")
     {
-        return $this->exchangeRateService->compareDifference($from, $to, $rate);
+        return $this->sc['ExchangeRate']->compareDifference($from, $to, $rate);
     }
 
     public function currencyExchange($from_currency, $to_currency, $amount)
@@ -96,7 +91,7 @@ class ExchangeRateModel extends \CI_Model
 
     public function getExchangeRate($from = "", $to = "")
     {
-        return $this->exchangeRateService->getExchangeRate($from, $to);
+        return $this->sc['ExchangeRate']->getExchangeRate($from, $to);
     }
 }
 

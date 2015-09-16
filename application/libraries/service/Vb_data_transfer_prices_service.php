@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-include_once(APPPATH . "libraries/Service/Vb_data_transfer_service.php");
+include_once(APPPATH . "libraries/service/Vb_data_transfer_service.php");
 
 class Vb_data_transfer_prices_service extends Vb_data_transfer_service
 {
@@ -11,10 +11,10 @@ class Vb_data_transfer_prices_service extends Vb_data_transfer_service
 				
 		include_once(APPPATH . 'libraries/dao/Price_dao.php');
 		$this->price_dao = new Price_dao();
-		include_once APPPATH . "libraries/Service/PriceService.php";
-        $this->price_service = new PriceService();
+		include_once APPPATH . "libraries/service/Price_service.php";
+        $this->price_service = new Price_service();
 		
-        include_once(APPPATH . "libraries/Service/Sku_mapping_service.php");		
+        include_once(APPPATH . "libraries/service/Sku_mapping_service.php");		
 		$this->sku_mapping_service = new Sku_mapping_service();
 	}
 	
@@ -41,10 +41,7 @@ class Vb_data_transfer_prices_service extends Vb_data_transfer_service
 		//Create return xml string
 		$xml = array();
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
-		$xml[] = '<no_updated_prices task_id="' . $task_id . '">';
-		
-		$error_nodes = array();	
-		$error_nodes[] = '<errors task_id="' . $task_id . '">';		
+		$xml[] = '<prices task_id="' . $task_id . '">';	
 				
 		$c = count($xml_vb->price);
 		foreach($xml_vb->price as $price)
@@ -65,36 +62,72 @@ class Vb_data_transfer_prices_service extends Vb_data_transfer_service
             if ($sku == "" || $sku == null) $fail_reason .= "SKU not specified, ";
             if ($required_selling_price == "" || $required_selling_price == null || $required_selling_price < 0) $fail_reason .= "Your required selling price $required_selling_price is not acceptable, ";
 
-			if ($fail_reason == "")
+			try
 			{
-				$commit = false;
-				// we only commit at the last update
-				if ($c <= 0) $commit = true;
-			
-				$affected = $this->price_service->update_sku_price($platform_id, $sku, $required_selling_price, $commit);
-			}
-			elseif ($sku == "" || $sku == null)
-			{				
-				//if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
+				if ($fail_reason == "")
+				{
+					$commit = false;
+					// we only commit at the last update
+					if ($c <= 0) $commit = true;
+				
+					$affected = $this->price_service->update_sku_price($platform_id, $sku, $required_selling_price, $commit);
+					
+					if ($affected)
+					{
+						$xml[] = '<price>';
+						$xml[] = '<sku>' . $price->sku . '</sku>';
+						$xml[] = '<master_sku>' . $price->master_sku . '</master_sku>';				
+						$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';		
+						$xml[] = '<status>5</status>'; //updated
+						$xml[] = '<is_error>' . $price->is_error . '</is_error>';
+						$xml[] = '</price>';
+					}
+					else
+					{
+						$xml[] = '<price>';
+						$xml[] = '<sku>' . $price->sku . '</sku>';
+						$xml[] = '<master_sku>' . $price->master_sku . '</master_sku>';				
+						$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';		
+						$xml[] = '<status>3</status>'; //not updated
+						$xml[] = '<is_error>' . $price->is_error . '</is_error>';
+						$xml[] = '</price>';
+					}
+				}
+				elseif ($sku == "" || $sku == null)
+				{				
+					//if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
+					$xml[] = '<price>';
+					$xml[] = '<sku>' . $price->sku . '</sku>';
+					$xml[] = '<master_sku>' . $price->master_sku . '</master_sku>';				
+					$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';		
+					$xml[] = '<status>2</status>'; //not found	
+					$xml[] = '<is_error>' . $price->is_error . '</is_error>';
+					$xml[] = '</price>';
+				}
+				else
+				{
+					$xml[] = '<price>';
+					$xml[] = '<sku>' . $price->sku . '</sku>';
+					$xml[] = '<master_sku>' . $price->master_sku . '</master_sku>';				
+					$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';		
+					$xml[] = '<status>3</status>'; //not updated
+					$xml[] = '<is_error>' . $price->is_error . '</is_error>';
+					$xml[] = '</price>';				
+				}
+			}	
+			catch(Exception $e)
+			{
 				$xml[] = '<price>';
 				$xml[] = '<sku>' . $price->sku . '</sku>';
 				$xml[] = '<master_sku>' . $price->master_sku . '</master_sku>';				
-				$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';		
+				$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';				
+				$xml[] = '<status>4</status>'; //error
+				$xml[] = '<is_error>' . $price->is_error . '</is_error>';
 				$xml[] = '</price>';
-			}
-			else
-			{
-				$error_nodes[] = '<error>';
-				$error_nodes[] = '<sku>' . $price->sku . '</sku>';
-				$error_nodes[] = '<description>' . $fail_reason . '</description>';				
-				$error_nodes[] = '</error>';				
-			}
+			} 
 		 }
 		 
-		$error_nodes[] = '</errors>';
-		$xml[] = '</no_updated_prices>';
-		
-		array_merge($xml, $error_nodes);
+		$xml[] = '</prices>';
 		
 		$return_feed = implode("\n", $xml);
 		//print $return_feed;

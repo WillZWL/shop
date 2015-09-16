@@ -8,16 +8,16 @@ class ProfitVarHelper extends MY_Controller
         parent::__construct(FALSE);
     }
 
-    public function js_platformlist()
+    public function jsPlatformlist()
     {
         header("Content-type: text/javascript; charset: UTF-8");
         header("Cache-Control: must-revalidate");
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->container['profitVarModel']->getSellingPlatformList();
+        $objlist = $this->sc['profitVarModel']->getSellingPlatformList();
         foreach ($objlist as $obj) {
-            $sid = str_replace("'", "\'", $obj->getId());
+            $sid = str_replace("'", "\'", $obj->getSellingPlatformId());
             $name = str_replace("'", "\'", $obj->getName());
             $slist[] = "'" . $sid . "':'" . $name . "'";
         }

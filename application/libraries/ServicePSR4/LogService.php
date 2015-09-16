@@ -35,7 +35,7 @@ class LogService extends BaseService
     public function getLogHeader()
     {
         $empty_field_array = array();
-        $logmessage_obj = $this->getDao()->get();
+        $logmessage_obj = $this->getDao('Logmessage')->get();
         $class_method = get_class_methods($logmessage_obj);
         foreach ($class_method as $fct_name) {
             if (substr($fct_name, 0, 3) == "get") {

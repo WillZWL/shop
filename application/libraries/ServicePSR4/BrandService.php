@@ -28,21 +28,21 @@ class BrandService extends BaseService
 
     public function getBrandListWRegion($where = [], $option = [])
     {
-        $data["brandlist"] = $this->getDao()->getBrandListWRegion($where, $option, "BrandWRegionDto");
-        $data["total"] = $this->getDao()->getBrandListWRegion($where, ["num_rows" => 1]);
+        $data["brandlist"] = $this->getDao('Brand')->getBrandListWRegion($where, $option, "BrandWRegionDto");
+        $data["total"] = $this->getDao('Brand')->getBrandListWRegion($where, ["num_rows" => 1]);
         return $data;
     }
 
     public function getListedBrandByCat($cat_id = '')
     {
-        return $this->getDao()->getListedBrandByCat($cat_id);
+        return $this->getDao('Brand')->getListedBrandByCat($cat_id);
     }
 
     public function getNameListWIdKey($where = [], $option = [])
     {
         $option["result_type"] = "array";
         $rslist = [];
-        if ($ar_list = $this->getDao()->getList($where, $option)) {
+        if ($ar_list = $this->getDao('Brnad')->getList($where, $option)) {
             foreach ($ar_list as $rsdata) {
                 $rslist[$rsdata["id"]] = $rsdata["brand_name"];
             }
@@ -52,7 +52,7 @@ class BrandService extends BaseService
 
     public function getBrandFilterGridInfo($where = [], $option = [])
     {
-        return $this->getDao()->getBrandFilterGridInfo($where, $option);
+        return $this->getDao('Brand')->getBrandFilterGridInfo($where, $option);
     }
 
 }

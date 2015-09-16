@@ -1,18 +1,20 @@
 <?php
-class ProductSpecDetailVo extends \BaseVo
+class SoItemVo extends \BaseVo
 {
     private $id;
-    private $ps_id;
-    private $cat_id;
+    private $so_no;
+    private $line_no;
     private $prod_sku;
-    private $lang_id;
-    private $cps_unit_id;
-    private $text;
-    private $start_value = '0.0000';
-    private $start_standardize_value = '0.0000';
-    private $end_value = '0.0000';
-    private $end_standardize_value = '0.0000';
-    private $status = '1';
+    private $prod_name;
+    private $ext_item_cd;
+    private $qty;
+    private $unit_price;
+    private $vat_total;
+    private $gst_total = '0.00';
+    private $amount;
+    private $website_status;
+    private $warranty_in_month;
+    private $status;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -33,24 +35,24 @@ class ProductSpecDetailVo extends \BaseVo
         return $this->id;
     }
 
-    public function setPsId($ps_id)
+    public function setSoNo($so_no)
     {
-        $this->ps_id = $ps_id;
+        $this->so_no = $so_no;
     }
 
-    public function getPsId()
+    public function getSoNo()
     {
-        return $this->ps_id;
+        return $this->so_no;
     }
 
-    public function setCatId($cat_id)
+    public function setLineNo($line_no)
     {
-        $this->cat_id = $cat_id;
+        $this->line_no = $line_no;
     }
 
-    public function getCatId()
+    public function getLineNo()
     {
-        return $this->cat_id;
+        return $this->line_no;
     }
 
     public function setProdSku($prod_sku)
@@ -63,74 +65,94 @@ class ProductSpecDetailVo extends \BaseVo
         return $this->prod_sku;
     }
 
-    public function setLangId($lang_id)
+    public function setProdName($prod_name)
     {
-        $this->lang_id = $lang_id;
+        $this->prod_name = $prod_name;
     }
 
-    public function getLangId()
+    public function getProdName()
     {
-        return $this->lang_id;
+        return $this->prod_name;
     }
 
-    public function setCpsUnitId($cps_unit_id)
+    public function setExtItemCd($ext_item_cd)
     {
-        $this->cps_unit_id = $cps_unit_id;
+        $this->ext_item_cd = $ext_item_cd;
     }
 
-    public function getCpsUnitId()
+    public function getExtItemCd()
     {
-        return $this->cps_unit_id;
+        return $this->ext_item_cd;
     }
 
-    public function setText($text)
+    public function setQty($qty)
     {
-        $this->text = $text;
+        $this->qty = $qty;
     }
 
-    public function getText()
+    public function getQty()
     {
-        return $this->text;
+        return $this->qty;
     }
 
-    public function setStartValue($start_value)
+    public function setUnitPrice($unit_price)
     {
-        $this->start_value = $start_value;
+        $this->unit_price = $unit_price;
     }
 
-    public function getStartValue()
+    public function getUnitPrice()
     {
-        return $this->start_value;
+        return $this->unit_price;
     }
 
-    public function setStartStandardizeValue($start_standardize_value)
+    public function setVatTotal($vat_total)
     {
-        $this->start_standardize_value = $start_standardize_value;
+        $this->vat_total = $vat_total;
     }
 
-    public function getStartStandardizeValue()
+    public function getVatTotal()
     {
-        return $this->start_standardize_value;
+        return $this->vat_total;
     }
 
-    public function setEndValue($end_value)
+    public function setGstTotal($gst_total)
     {
-        $this->end_value = $end_value;
+        $this->gst_total = $gst_total;
     }
 
-    public function getEndValue()
+    public function getGstTotal()
     {
-        return $this->end_value;
+        return $this->gst_total;
     }
 
-    public function setEndStandardizeValue($end_standardize_value)
+    public function setAmount($amount)
     {
-        $this->end_standardize_value = $end_standardize_value;
+        $this->amount = $amount;
     }
 
-    public function getEndStandardizeValue()
+    public function getAmount()
     {
-        return $this->end_standardize_value;
+        return $this->amount;
+    }
+
+    public function setWebsiteStatus($website_status)
+    {
+        $this->website_status = $website_status;
+    }
+
+    public function getWebsiteStatus()
+    {
+        return $this->website_status;
+    }
+
+    public function setWarrantyInMonth($warranty_in_month)
+    {
+        $this->warranty_in_month = $warranty_in_month;
+    }
+
+    public function getWarrantyInMonth()
+    {
+        return $this->warranty_in_month;
     }
 
     public function setStatus($status)

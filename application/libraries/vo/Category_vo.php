@@ -26,7 +26,7 @@ class Category_vo extends Base_vo
     private $primary_key = array("id");
 
     //auo increment
-    private $increment_field = "id";
+    private $increment_field = "";
 
     //instance method
     public function get_id()
