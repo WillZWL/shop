@@ -58,4 +58,4 @@ CREATE TABLE `so` (
   `modify_by` varchar(32) NOT NULL DEFAULT 'system',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_so` (`so_no`,`platform_id`,`currency_id`,`client_id`,`delivery_type_id`,`cc_reminder_schedule_date`,`parent_so_no`,`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=720886 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
