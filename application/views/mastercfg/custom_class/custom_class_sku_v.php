@@ -109,7 +109,7 @@
                 $is_edit = ($cmd == "edit" && $sku == $pcc->getSku());
                 ?>
 
-                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" <?=(!($is_edit)) ? "onClick=Redirect('". site_url('mastercfg/custom_class/sku/' . $country_id ."/".$pcc->getSku())."/?".$_SERVER['QUERY_STRING']."')" : ""?> onMouseOut="RemoveClassName(this, 'highlight')">
+                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" <?=(!($is_edit)) ? "onClick=Redirect('". site_url('mastercfg/custom_class/sku/' . $country_id ."/".$pcc->getSku())."/".$offset."/?".$_SERVER['QUERY_STRING']."')" : ""?> onMouseOut="RemoveClassName(this, 'highlight')">
                     <td height="20"><img src="<?= base_url() ?>images/info.gif"
                                          title='<?= $lang["create_on"] ?>:<?= $pcc->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $pcc->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $pcc->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $pcc->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $pcc->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $pcc->getModifyBy() ?>'>
                     </td>

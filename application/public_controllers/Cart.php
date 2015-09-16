@@ -6,13 +6,13 @@ Class Cart extends PUB_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->cart_session_model = new CartSessionModel;
+        $this->cartSessionModel = new CartSessionModel;
     }
 
     public function ajaxAddItem()
     {
-        $sku = $this->input->post('sku');
-        $qty = $this->input->post('qty') ? $this->input->post('qty') : 1;
+        $sku = $this->input->get('sku');
+        $qty = $this->input->get('qty') ? $this->input->post('get') : 1;
 
         $this->addItemQty($sku, $qty);
 
@@ -22,17 +22,22 @@ Class Cart extends PUB_Controller
 
     public function addItemQty($sku = "", $qty = 0, $quiet_return = false)
     {
+//        var_dump(_('Shopping Cart'));
+//        exit;
+/*
         $listing_status = [
             "I" => $data['data']['lang_text']['status_in_stock'],
             "O" => $data['data']['lang_text']['status_out_stock'],
             "P" => $data['data']['lang_text']['status_pre_order'],
             "A" => $data['data']['lang_text']['status_arriving']
         ];
-
-        $allow_result = $this->cart_session_model->cart_session_service->isAllowToAdd($sku, $qty, PLATFORM);
+*/
+/*
+        $allow_result = $this->cartSessionModel->cartSessionService->isAllowToAdd($sku, $qty, PLATFORM);
         if ($allow_result <= \ESG\Panther\Service\CartSessionService::DECISION_POINT) {
-            $result = $this->cart_session_model->addItemQty($sku, $qty, PLATFORM);
-        }
+*/
+            $result = $this->cartSessionModel->addItemQty($sku, $qty, $this->get_lang_id(), PLATFORM);
+//        }
 
         //if (($allow_result == Cart_session_service::ALLOW_AND_IS_PREORDER)
         //    || ($allow_result == Cart_session_service::ALLOW_AND_IS_ARRIVING)
@@ -62,7 +67,7 @@ Class Cart extends PUB_Controller
 
     public function info()
     {
-        $data['cart_info'] = $this->cart_session_model->get_cart_info();
+        $data['cart_info'] = $this->cartSessionModel->get_cart_info();
         $this->load->view('/default/cart/info', $data);
     }
 
@@ -78,7 +83,7 @@ Class Cart extends PUB_Controller
         }
 
         if (!empty($sku)) {
-            if (!($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORM))) {
+            if (!($chk_cart = $this->cartSessionModel->add($sku, 1, PLATFORM))) {
                 show_error("Product not found", "Product not found");
             }
         } else {
@@ -111,12 +116,12 @@ Class Cart extends PUB_Controller
         $image_url = get_image_file($prod_obj->get_image(), "m", $sku);
 
         if (!empty($sku)) {
-            if ($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORM)) {
+            if ($chk_cart = $this->cartSessionModel->add($sku, 1, PLATFORM)) {
                 $success = 1;
             }
         }
 
-        $cart_info = $this->cart_session_model->get_detail(PLATFORM);
+        $cart_info = $this->cartSessionModel->get_detail(PLATFORM);
         $cart["total"] = $cart["item"] = 0;
         if ($cart_info["cart"]) {
             foreach ($cart_info["cart"] AS $key => $arr) {
@@ -150,11 +155,11 @@ Class Cart extends PUB_Controller
                 $cur_cart_qty = $_SESSION["cart"][PLATFORM][$old_warranty];
                 $new_qty = $cur_cart_qty * 1 - 1;
                 if ($new_qty <= 0) {
-                    if ($chk_cart = $this->cart_session_model->remove($old_warranty)) {
+                    if ($chk_cart = $this->cartSessionModel->remove($old_warranty)) {
                         $success = 1;
                     }
                 } else {
-                    if ($chk_cart = $this->cart_session_model->update($old_warranty, $new_qty, PLATFORM)) {
+                    if ($chk_cart = $this->cartSessionModel->update($old_warranty, $new_qty, PLATFORM)) {
                         $success = 1;
                     }
                 }
@@ -162,12 +167,12 @@ Class Cart extends PUB_Controller
         }
 
         if (!empty($sku)) {
-            if ($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORM)) {
+            if ($chk_cart = $this->cartSessionModel->add($sku, 1, PLATFORM)) {
                 $success = 1;
             }
         }
 
-        $cart_info = $this->cart_session_model->get_detail(PLATFORM);
+        $cart_info = $this->cartSessionModel->get_detail(PLATFORM);
         $cart["total"] = $cart["item"] = 0;
         if ($cart_info["cart"]) {
             foreach ($cart_info["cart"] AS $key => $arr) {
@@ -210,17 +215,17 @@ Class Cart extends PUB_Controller
             }
             $new_qty = $cur_cart_qty * 1 - 1;
             if ($new_qty <= 0) {
-                if ($chk_cart = $this->cart_session_model->remove($sku)) {
+                if ($chk_cart = $this->cartSessionModel->remove($sku)) {
                     $success = 1;
                 }
             } else {
-                if ($chk_cart = $this->cart_session_model->update($sku, $new_qty, PLATFORM)) {
+                if ($chk_cart = $this->cartSessionModel->update($sku, $new_qty, PLATFORM)) {
                     $success = 1;
                 }
             }
         }
 
-        $cart_info = $this->cart_session_model->get_detail(PLATFORM);
+        $cart_info = $this->cartSessionModel->get_detail(PLATFORM);
         $cart["total"] = $cart["item"] = 0;
         if ($cart_info["cart"]) {
             foreach ($cart_info["cart"] AS $key => $arr) {

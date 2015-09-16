@@ -15,6 +15,8 @@ use ESG\Panther\Models\Mastercfg\UserModel;
 use ESG\Panther\Models\Mastercfg\ProfitVarModel;
 use ESG\Panther\Models\Marketing\CategoryModel;
 use ESG\Panther\Models\Marketing\RaProdCatModel;
+use ESG\Panther\Models\Order\SoModel;
+
 use ESG\Panther\Service as S;
 use ESG\Panther\Dao as D;
 
@@ -115,6 +117,10 @@ abstract class MY_Controller extends CI_Controller
 
         $this->sc['raProdCatModel'] = function ($c) {
             return new RaProdCatModel;
+        };
+
+        $this->sc['soModel'] = function ($c) {
+            return new SoModel;
         };
     }
 

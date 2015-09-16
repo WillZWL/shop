@@ -39,11 +39,6 @@ class ProductService extends BaseProductService
         $this->sc['skuMppingDao']->insert($obj);
     }
 
-
-
-
-
-
     public function getHomeProduct($where, $option)
     {
         return $this->getDao()->getHomeProduct($where, $option);
@@ -77,5 +72,10 @@ class ProductService extends BaseProductService
 
         $data["version_list"] = $this->product_model->get_list("version", array("status" => 'A'));
         $data["type_list"] = $this->subject_domain_service->get_subj_list_w_subj_lang("MKT.PROD_TYPE.PROD_TYPE_ID", "en");
+    }
+
+    public function isClearance($sku)
+    {
+        return $this->getDao()->isClearance($sku);
     }
 }

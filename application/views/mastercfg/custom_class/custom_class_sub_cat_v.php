@@ -86,7 +86,7 @@
                 $cur_code = $ccm_obj->getCode();
                 ?>
 
-                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" <?=(!($is_edit)) ? "onClick=Redirect('". site_url('mastercfg/custom_class/sub_cat/' . $country_id ."/".$ccm_obj->getSubCatId())."/?".$_SERVER['QUERY_STRING']."')" : ""?> onMouseOut="RemoveClassName(this, 'highlight')">
+                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" <?=(!($is_edit)) ? "onClick=Redirect('". site_url('mastercfg/custom_class/sub_cat/' . $country_id ."/".$ccm_obj->getSubCatId())."/".$offset."/?".$_SERVER['QUERY_STRING']."')" : ""?> onMouseOut="RemoveClassName(this, 'highlight')">
                     <td height="20"><img src="<?= base_url() ?>images/info.gif"
                                          title='<?= $lang["create_on"] ?>:<?= $ccm_obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $ccm_obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $ccm_obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $ccm_obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $ccm_obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $ccm_obj->getModifyBy() ?>'>
                     </td>

@@ -30,6 +30,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\ContextConfigService();
         };
 
+        $servcieContainer['Currency'] = function () {
+            return new S\CurrencyService();
+        };
+
         $servcieContainer['Language'] = function () {
             return new S\LanguageService();
         };
@@ -46,6 +50,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\LogService();
         };
 
+        $servcieContainer['IntegratedOrderFulfillment'] = function () {
+            return new S\IntegratedOrderFulfillmentService();
+        };
+
         $servcieContainer['DeliveryTime'] = function () {
             return new S\DeliveryTimeService();
         };
@@ -56,6 +64,30 @@ class ServiceProvider implements ServiceProviderInterface
 
         $servcieContainer['ProductCreation'] = function () {
             return new S\ProductCreationService();
+        };
+
+        $servcieContainer['ExchangeRate'] = function () {
+            return new S\ExchangeRateService();
+        };
+
+        $servcieContainer['User'] = function () {
+            return new S\UserService();
+        };
+
+        $servcieContainer['So'] = function () {
+            return new S\SoService();
+        };
+
+        $servcieContainer['Warehouse'] = function () {
+            return new S\WarehouseService();
+        };
+
+        $servcieContainer['CustomClass'] = function () {
+            return new S\CustomClassService();
+        };
+
+        $servcieContainer['CustomClassificationMapping'] = function () {
+            return new S\CustomClassificationMappingService();
         };
     }
 }

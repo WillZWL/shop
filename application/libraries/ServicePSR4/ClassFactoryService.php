@@ -13,7 +13,6 @@ class ClassFactoryService extends BaseService
 
     public function get_price_service($method = '', $set = [])
     {
-        die('1111111');
         /*
             array setting:  supplier_fc - Supplier Fulfillment Centre (Warehouse id)
                             customer_fc - Customer fulfillment Centre (Warehouse id)
@@ -40,7 +39,6 @@ class ClassFactoryService extends BaseService
 
     public function getPlatformPriceService($platform_id)
     {
-        die('2222222');
         $this->sellingPlatformService = new SellingPlatformService;
 
         if ($sp_obj = $this->sellingPlatformService->getDao()->get(["id" => $platform_id])) {

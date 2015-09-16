@@ -8,7 +8,6 @@ class WarehouseService extends BaseService
     public function __construct()
     {
         parent::__construct();
-        $this->setDao(new WarehouseDao);
     }
 
 }
