@@ -44,7 +44,7 @@ class SoVo extends \BaseVo
     private $order_create_date;
     private $dispatch_date = '0000-00-00 00:00:00';
     private $finance_dispatch_date = '0000-00-00 00:00:00';
-    private $fingerprintId;
+    private $fingerprint_id;
     private $cc_reminder_schedule_date = '0000-00-00 00:00:00';
     private $cc_reminder_type;
     private $cs_customer_query;
@@ -492,14 +492,14 @@ class SoVo extends \BaseVo
         return $this->finance_dispatch_date;
     }
 
-    public function setFingerprintId($fingerprintId)
+    public function setFingerprintId($fingerprint_id)
     {
-        $this->fingerprintId = $fingerprintId;
+        $this->fingerprint_id = $fingerprint_id;
     }
 
     public function getFingerprintId()
     {
-        return $this->fingerprintId;
+        return $this->fingerprint_id;
     }
 
     public function setCcReminderScheduleDate($cc_reminder_schedule_date)
