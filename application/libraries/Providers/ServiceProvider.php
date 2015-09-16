@@ -30,6 +30,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\ContextConfigService();
         };
 
+        $servcieContainer['Currency'] = function () {
+            return new S\CurrencyService();
+        };
+
         $servcieContainer['Language'] = function () {
             return new S\LanguageService();
         };

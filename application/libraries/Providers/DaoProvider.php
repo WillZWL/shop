@@ -301,5 +301,13 @@ class DaoProvider implements ServiceProviderInterface
             return new D\WarehouseDao();
         };
 
+        $daoContainer['WeightCategory'] = function () {
+            return new D\WeightCategoryDao();
+        };
+
+        $daoContainer['WeightCatCharge'] = function () {
+            return new D\WeightCatChargeDao();
+        };
+
     }
 }

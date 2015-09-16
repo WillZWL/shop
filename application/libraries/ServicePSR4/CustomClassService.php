@@ -37,9 +37,13 @@ class CustomClassService extends BaseService
     public function getProductCustomClassList($where = [], $option = [])
     {
         $data["pcclist"] = $this->getDao('ProductCustomClassification')->getProductCustomClassList($where, $option);
+
+        $option['count_row'] = 1;
         $option["limit"] = -1;
-        $allRecord = $this->getDao('ProductCustomClassification')->getProductCustomClassList($where, $option);
-        $data["total"] = count((array) $allRecord);
+        $rs = $this->getDao('ProductCustomClassification')->getProductCustomClassList($where, $option);
+        $rs = (array)$rs;
+
+        $data["total"] = $rs[0]->getTotal();
         return $data;
     }
 

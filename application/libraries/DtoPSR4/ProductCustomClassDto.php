@@ -9,6 +9,7 @@ class ProductCustomClassDto
     private $code;
     private $description;
     private $duty_pcent;
+    private $total;
     private $create_on;
     private $create_at;
     private $create_by;
@@ -94,6 +95,16 @@ class ProductCustomClassDto
     public function setDutyPcent($value)
     {
         $this->duty_pcent = $value;
+    }
+
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    public function setTotal($value)
+    {
+        $this->total = $value;
     }
 
     public function getCreateOn()
