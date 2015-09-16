@@ -1,5 +1,5 @@
 CREATE TABLE `so` (
-  `id` int not null auto_increment,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `so_no` char(8) NOT NULL,
   `platform_order_id` varchar(100) NOT NULL,
   `platform_id` varchar(7) NOT NULL,
@@ -36,13 +36,13 @@ CREATE TABLE `so` (
   `hold_status` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '0 = No / 1 = Requested / 2 = Manager Requested / 3 = APS need Payment order in Sales - APS area / 10 = Permanent Hold / 15 = Has Split Child',
   `promotion_code` varchar(20) NOT NULL DEFAULT '' COMMENT 'System Actual Promotion Code',
   `client_promotion_code` varchar(255) NOT NULL DEFAULT '' COMMENT 'Promotion code which inputed by client',
-  `expect_delivery_date` date NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `expect_delivery_date` date NOT NULL DEFAULT '0000-00-00',
   `expect_ship_days` varchar(11) NOT NULL DEFAULT '' COMMENT 'Expected shipping time frame (days)',
   `expect_del_days` varchar(11) NOT NULL DEFAULT '' COMMENT 'Expected delivery time frame (days); should be larger than expect_ship_days',
   `order_create_date` datetime NOT NULL,
   `dispatch_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `finance_dispatch_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `fingerprintId` varchar(128) NOT NULL DEFAULT '',
+  `fingerprint_id` varchar(128) NOT NULL DEFAULT '',
   `cc_reminder_schedule_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `cc_reminder_type` varchar(20) NOT NULL DEFAULT '',
   `cs_customer_query` smallint(3) DEFAULT '0' COMMENT 'Using bit operation 1 = chasing order, can have more value later',
@@ -57,5 +57,5 @@ CREATE TABLE `so` (
   `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
   `modify_by` varchar(32) NOT NULL DEFAULT 'system',
   PRIMARY KEY (`id`),
-  unique KEY idx_so (`so_no`,`platform_id`,`currency_id`,`client_id`,`delivery_type_id`,`cc_reminder_schedule_date`,`parent_so_no`,`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `idx_so` (`so_no`,`platform_id`,`currency_id`,`client_id`,`delivery_type_id`,`cc_reminder_schedule_date`,`parent_so_no`,`status`)
+) ENGINE=InnoDB AUTO_INCREMENT=720886 DEFAULT CHARSET=utf8;
