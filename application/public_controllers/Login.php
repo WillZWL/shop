@@ -13,7 +13,6 @@ class Login extends PUB_Controller
         $this->load->model('website/client_model');
         $this->load->model('mastercfg/country_model');
         $this->load->library('encrypt');
-        $this->load->library('template');
     }
 
     public function checkout_login()

@@ -12,7 +12,6 @@ class expect_delivery_date_report extends Base_report
         $this->load->model('report/expect_delivery_date_report_model');
         $this->load->helper(array('url', 'notice'));
         $this->load->library('service/pagination_service');
-        $this->load->library('template');
         $this->template->set_template('report');
     }
 
