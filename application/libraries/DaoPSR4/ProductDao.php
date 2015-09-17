@@ -23,12 +23,13 @@ class ProductDao extends BaseDao
 
     public function getCartData($where = [], $option = [], $className = "CartItemDto")
     {
-        $option = ["limit" => 1];
+//        $option = ["limit" => 1];
         $this->db->from("product AS p");
         $this->db->join("product_content AS pc", "pc.prod_sku=p.sku", 'LEFT');
         $this->db->join("price AS pr", "p.sku=pr.sku", 'INNER');
-        
-        $select = "p.sku, p.name, pc.prod_name as nameInLang, pr.price, pr.listing_status, p.website_status";
+        $this->db->join("product_image pi", "pi.sku=p.sku", 'LEFT');
+
+        $select = "p.sku, p.name, pc.prod_name as nameInLang, pr.price, pr.listing_status as listingStatus, p.website_status as websiteStatus, pi.alt_text as image";
         if (isset($option["supplierCost"]))
         {
             $this->db->join("supplier_prod AS sp", "sp.prod_sku=p.sku and sp.order_default=1", 'LEFT');

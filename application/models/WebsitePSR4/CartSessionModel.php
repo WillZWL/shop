@@ -17,21 +17,38 @@ class CartSessionModel extends \CI_Model
         // $this->load->library('service/warranty_service');
     }
 
-    public function addItemQty($sku, $qty, $langId, $platformId) {
-/*
-        if (isset($_SESSION['cart'][$platform][$sku])) {
-             return $this->cartSessionService->updateItemQty($sku, $qty, $platform);
-        } else {
-*/
-            return $this->cartSessionService->add($sku, $qty, $langId, $platformId);
-//        }
+    public function addItemQty($sku, $qty, $langId, $platformId, $currencyId) {
+        $this->cartSessionService->add($sku, $qty, $langId, $platformId, $currencyId);
+        $cart = $this->cartSessionService->getCart();
+        return $cart;
     }
 
-    public function get_cart_info()
+    public function minusItemQty($sku, $qty, $langId, $platformId, $currencyId) {
+        $this->cartSessionService->minus($sku, $qty, $langId, $platformId, $currencyId);
+        $cart = $this->cartSessionService->getCart();
+        return $cart;
+    }
+
+/********************************************
+**  setItemQty set the qty directly, instead of add of subtract the qty
+*********************************************/
+    public function setItemQty($sku, $qty, $langId, $platformId, $currencyId) {
+        $this->cartSessionService->setQty($sku, $qty, $langId, $platformId, $currencyId);
+        $cart = $this->cartSessionService->getCart();
+        return $cart;
+    }
+
+    public function removeItem($sku) {
+        $this->cartSessionService->removeItem($sku);
+        $cart = $this->cartSessionService->getCart();
+        return $cart;
+    }
+
+    public function getCartInfo($withImage = false)
     {
-        return $this->cartSessionService->get_cart_info();
+        return $this->cartSessionService->getCart($withImage);
     }
-
+/*
     public function get_detail($platform)
     {
         return $this->cartSessionService->get_detail($platform);
@@ -114,4 +131,5 @@ class CartSessionModel extends \CI_Model
     {
         return $this->product_model->get_product_content($where);
     }
+*/
 }

@@ -11,57 +11,62 @@ Class Cart extends PUB_Controller
 
     public function ajaxAddItem()
     {
-        $sku = $this->input->get('sku');
-        $qty = $this->input->get('qty') ? $this->input->post('get') : 1;
-
+        $sku = $this->input->post_get('sku');
+        $qty = $this->input->post_get('qty') ? $this->input->post_get('qty') : 1;
+// will need to put validation to sku, qty
         $this->addItemQty($sku, $qty);
 
         $return['redirect'] = '/ReviewOrder';
         echo json_encode($return);
     }
 
-    public function addItemQty($sku = "", $qty = 0, $quiet_return = false)
+    public function ajaxSetItem()
     {
-//        var_dump(_('Shopping Cart'));
-//        exit;
-/*
-        $listing_status = [
-            "I" => $data['data']['lang_text']['status_in_stock'],
-            "O" => $data['data']['lang_text']['status_out_stock'],
-            "P" => $data['data']['lang_text']['status_pre_order'],
-            "A" => $data['data']['lang_text']['status_arriving']
-        ];
-*/
-/*
-        $allow_result = $this->cartSessionModel->cartSessionService->isAllowToAdd($sku, $qty, PLATFORM);
-        if ($allow_result <= \ESG\Panther\Service\CartSessionService::DECISION_POINT) {
-*/
-            $result = $this->cartSessionModel->addItemQty($sku, $qty, $this->get_lang_id(), PLATFORM);
-//        }
+        $sku = $this->input->post_get('sku');
+        $qty = $this->input->post_get('qty') ? $this->input->post_get('qty') : 1;
+// will need to put validation to sku, qty
+        $this->setItemQty($sku, $qty);
 
-        //if (($allow_result == Cart_session_service::ALLOW_AND_IS_PREORDER)
-        //    || ($allow_result == Cart_session_service::ALLOW_AND_IS_ARRIVING)
-        //    || ($allow_result == Cart_session_service::SAME_PREORDER_ITEM)
-        //    || ($allow_result == Cart_session_service::SAME_ARRIVING_ITEM)
-        //) {
-        //    redirect(base_url() . "review_order");
-        //}
+        $return['redirect'] = '/ReviewOrder';
+        echo json_encode($return);
+    }
 
-        // if ($this->upselling_model->get_ra($data, $sku, PLATFORM, $this->get_lang_id(), $listing_status)) {
-        //     // TODO
-        //     //
-        //     // $this->template->add_title($data['data']['lang_text']['meta_title'].$data["prod_name"]. ' | ValueBasket');
-        //     // $this->template->add_meta(array('name'=>'description','content'=>$data['data']['lang_text']['meta_desc']));
-        //     // $this->template->add_meta(array('name'=>'keywords','content'=>$data['data']['lang_text']['meta_keyword']));
-        //     // $this->template->add_js("/js/common.js");
-        //     // $this->template->add_js("/resources/js/jquery.gritter.js");
-        //     // $this->template->add_css("resources/css/jquery.gritter.css");
-        //     // $this->template->add_js("/js/upselling.js", "import", TRUE);
-        //     // $this->load_tpl('content', 'tbs_cart', $data, TRUE);
-        // } else {
-        //     // redirect(base_url()."review_order");
-        // }
+    public function ajaxMinusItem()
+    {
+        $sku = $this->input->post_get('sku');
+        $qty = $this->input->post_get('qty') ? $this->input->post_get('qty') : 1;
+// will need to put validation to sku, qty
+        $this->minusItemQty($sku, $qty);
 
+        $return['redirect'] = '/ReviewOrder';
+        echo json_encode($return);
+    }
+
+    public function ajaxRemoveItem()
+    {
+        $sku = $this->input->post_get('sku');
+// will need to put validation to sku, qty
+        $result = $this->cartSessionModel->removeItem($sku);
+
+        $return['redirect'] = '/ReviewOrder';
+        echo json_encode($return);
+    }
+
+    public function setItemQty($sku = "", $qty = 0)
+    {
+        $result = $this->cartSessionModel->setItemQty($sku, $qty, $this->get_lang_id(), PLATFORM, $this->getSiteInfo()->getPlatformCurrencyId());
+        return $result;
+    }
+
+    public function minusItemQty($sku = "", $qty = 0)
+    {
+        $result = $this->cartSessionModel->minusItemQty($sku, $qty, $this->get_lang_id(), PLATFORM, $this->getSiteInfo()->getPlatformCurrencyId());
+        return $result;
+    }
+
+    public function addItemQty($sku = "", $qty = 0)
+    {
+        $result = $this->cartSessionModel->addItemQty($sku, $qty, $this->get_lang_id(), PLATFORM, $this->getSiteInfo()->getPlatformCurrencyId());
         return $result;
     }
 
