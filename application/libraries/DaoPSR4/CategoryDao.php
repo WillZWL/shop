@@ -852,7 +852,7 @@ class CategoryDao extends BaseDao
         }
     }
 
-    public function getCatInfoWithLang($where = [], $option = [], $classname = "Cat_info_w_lang_dto")
+    public function getCatInfoWithLang($where = [], $option = [], $classname = "CatInfoWithLangDto")
     {
         $this->db->from('category AS c');
         $this->db->join('category_extend AS ce', 'c.id = ce.cat_id', 'LEFT');
