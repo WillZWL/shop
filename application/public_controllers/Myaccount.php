@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 DEFINE ('ALLOW_REDIRECT_DOMAIN', 1);
-
 $ws_array = array(NULL, 'index', 'rma', 'rma_confirm', 'rma_edit', 'rma_print', 'update_password');
 if (in_array($GLOBALS["URI"]->segments[2], $ws_array)) {
     DEFINE ('PLATFORM_TYPE', 'SKYPE');
@@ -14,8 +12,8 @@ class Myaccount extends PUB_Controller
 
     public function Myaccount()
     {
-        parent::PUB_Controller(array('require_login' => 1, 'load_header' => 1));
-        $this->load->helper(array('url', 'object', 'notice', 'tbswrapper'));
+        parent::__construct(array('require_login' => 1, 'load_header' => 1));
+        $this->load->helper(array('url', 'object', 'notice', 'lang'));
         $this->load->model('website/client_model');
         $this->load->model('order/so_model');
         $this->load->model('mastercfg/courier_model');
@@ -27,28 +25,19 @@ class Myaccount extends PUB_Controller
         $this->load->library('service/event_service');
         $this->load->library('service/pdf_rendering_service');
         $this->load->library('service/courier_service');
-        $this->template->add_js("/js/checkform.js");
-//      $this->template->add_js("/myaccount/rma_addr_js");
     }
 
     public function profile()
     {
         $this->load->model('mastercfg/country_model');
         $this->load->library('encrypt');
-
         $data['display_id'] = 15;
-        /*      include_once(APPPATH . "language/WEB"
-                    . str_pad($data['display_id'], 6, '0', STR_PAD_LEFT)
-                    . "_" . get_lang_id() . ".php");
-        /       $data["lang"] = $lang;
-        */
         $data["back"] = $this->input->get("back");
         $data['data']['lang_text'] = $this->_get_language_file('', '', 'index');
         if ($this->input->post("posted")) {
             if (isset($_SESSION["client_vo"])) {
                 $this->client_model->client_service->get_dao()->include_vo();
                 $data["client_obj"] = unserialize($_SESSION["client_obj"]);
-
                 if (!empty($_POST["password"])) {
                     $old_password = $this->input->post("old_password");
                     $new_password = $this->input->post("password");
@@ -69,7 +58,6 @@ class Myaccount extends PUB_Controller
                     if (empty($_POST["subscriber"])) {
                         $_POST["subscriber"] = 0;
                     }
-
                     unset($_POST["password"]);
                     set_value($data["client_obj"], $_POST);
                     $data["client_obj"]->set_del_name($_POST["title"] . " " . $_POST["forename"] . " " . $_POST["surname"]);
@@ -111,54 +99,50 @@ class Myaccount extends PUB_Controller
     {
         // order history
         $client_id = $_SESSION["client"]["id"];
-        $orderlist = $this->so_model->so_service->get_dao()->get_order_history($client_id);
-
-        $data["show_bank_transfer_contact"] = FALSE;
-        $data["show_partial_ship_text"] = FALSE;
-        if ($orderlist) {
-            foreach ($orderlist AS $obj) {
-                $status = array();
-                $status = $this->so_model->get_order_status($obj);
-                $data['orderlist'][$obj->get_so_no()]['join_split_so_no'] = $obj->get_join_split_so_no();
-                $data['orderlist'][$obj->get_so_no()]['currency_id'] = $obj->get_currency_id();
-                $data['orderlist'][$obj->get_so_no()]['client_id'] = $obj->get_client_id();
-                $data['orderlist'][$obj->get_so_no()]['order_date'] = date("Y-m-d", strtotime($obj->get_order_create_date()));
-                $data['orderlist'][$obj->get_so_no()]['delivery_name'] = $obj->get_delivery_name();
-                $data['orderlist'][$obj->get_so_no()]['order_status_ini'] = $status["id"] . "_status";
-                $data['orderlist'][$obj->get_so_no()]['status_desc_ini'] = $status["id"] . "_desc";
-                $data['orderlist'][$obj->get_so_no()]["product_name"] .= $obj->get_prod_name() . "</br>";
-                $data['orderlist'][$obj->get_so_no()]["total_amount"] += $obj->get_amount();
-                $data['orderlist'][$obj->get_so_no()]["is_shipped"] = ($obj->get_status() == 6 && $obj->get_refund_status() == 0 && $obj->get_hold_status() == 0) ? TRUE : FALSE;
-
-                if ($obj->get_payment_gateway_id() == 'w_bank_transfer') {
-                    $data["show_bank_transfer_contact"] = TRUE;
-                }
-
-                $sosh_obj = $this->so_model->so_service->get_shipping_info(array("soal.so_no" => $obj->get_so_no()));
-                if ($sosh_obj)
-                    $data['orderlist'][$obj->get_so_no()]['tracking_link'] = $this->courier_service->get(array("id" => $sosh_obj->get_courier_id()));
-                else
-                    $data['orderlist'][$obj->get_so_no()]['tracking_link'] = "";
-
-                if (isset($status["courier_name"])) {
-                    $data['orderlist'][$obj->get_so_no()]["courier_name"] = $status["courier_name"];
-                }
-                if (isset($status["tracking_url"])) {
-                    $data['orderlist'][$obj->get_so_no()]["tracking_url"] = $status["tracking_url"];
-                }
-                if (isset($status["tracking_number"])) {
-                    $data['orderlist'][$obj->get_so_no()]["tracking_number"] = $status["tracking_number"];
-                }
-
-                // show split order text
-                $split_so_group = $obj->get_split_so_group();
-                if (isset($split_so_group) && $split_so_group != $obj->get_so_no()) {
-                    $data["show_partial_ship_text"] = TRUE;
-                }
+        $client_orders = $this->get_client_order_list($client_id);
+        $data["show_bank_transfer_contact"] = $client_orders['show_bank_transfer_contact'];
+        $data['show_partial_ship_text'] = $client_orders['show_partial_ship_text'];
+        $data['orderlist'] = $client_orders['orderlist'];
+        $unpaid_orderlist = $this->get_unpaid_orderlist($client_id);
+        $data['unpaid_orderlist'] = $unpaid_orderlist['unpaid_orderlist'];
+        if ($unpaid_orderlist['show_bank_transfer_contact']) {
+            $data['show_bank_transfer_contact'] = $unpaid_orderlist['show_bank_transfer_contact'];
+        }
+        // edit profile
+        if (($data["client_obj"] = $this->client_model->client_service->get_dao()->get(array("id" => $_SESSION["client"]["id"]))) === FALSE) {
+            $_SESSION["NOTICE"] = "Error: " . __LINE__;
+        } else {
+            $_SESSION["client_obj"] = serialize($data["client_obj"]);
+        }
+        $data["bill_to_list"] = $this->country_model->get_country_name_in_lang(get_lang_id(), 1);
+        // rma
+        $this->so_model->include_vo("rma_dao");
+        $data["rma_obj"] = unserialize($_SESSION["rma_obj"]);
+        if (empty($data["rma_obj"])) {
+            if (($data["rma_obj"] = $this->so_model->get("rma_dao")) === FALSE) {
+                $_SESSION["NOTICE"] = "Error: " . __LINE__;
+            } else {
+                $_SESSION["rma_vo"] = serialize($data["rma_obj"]);
             }
         }
+        // rma_confirm
+        $data["rma_confirm"] = 0;
+        if ($page == "rma" && $rma_no) {
+            if ($data["rma_obj"] = $this->so_model->get("rma_dao", array("id" => $rma_no, "client_id" => $_SESSION["client"]["id"]))) {
+                $data["rma_confirm"] = 1;
+            }
+        }
+        $data["notice"] = notice();
+        unset($_SESSION["NOTICE"]);
+        $data['page'] = $page;
+        $data['data']['lang_text'] = $this->_get_language_file('', '', 'index');
+        $data['lang_id'] = get_lang_id();
+        $this->load->view('/default/myaccount/index.php', $data);
+    }
 
-        # SBF #3591 show unpaid/underpaid bank transfers
+    public function get_unpaid_orderlist($client_id)
+    {
+         # SBF #3591 show unpaid/underpaid bank transfers
         $payment_gateway_arr = array("w_bank_transfer"); # determines what payment gateway will show
         $unpaid_orderlist = $this->so_model->so_service->get_dao()->get_unpaid_order_history($client_id, $payment_gateway_arr);
         if ($unpaid_orderlist) {
@@ -181,7 +165,6 @@ class Myaccount extends PUB_Controller
                         case 3:
                             $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]["unpaid_status"] = 1;
                             break;
-
                         default:
                             break;
                     }
@@ -191,50 +174,61 @@ class Myaccount extends PUB_Controller
                 }
             }
         }
+        return $data;
+    }
 
-        // edit profile
-        if (($data["client_obj"] = $this->client_model->client_service->get_dao()->get(array("id" => $_SESSION["client"]["id"]))) === FALSE) {
-            $_SESSION["NOTICE"] = "Error: " . __LINE__;
-        } else {
-            $_SESSION["client_obj"] = serialize($data["client_obj"]);
-        }
-        $data["bill_to_list"] = $this->country_model->get_country_name_in_lang(get_lang_id(), 1);
+    public function get_client_order_list($client_id)
+    {
+        $orderlist = $this->so_model->so_service->get_dao()->get_order_history($client_id);
+        $data["show_bank_transfer_contact"] = FALSE;
+        $data["show_partial_ship_text"] = FALSE;
+        if ($orderlist) {
+            foreach ($orderlist AS $obj) {
+                $status = array();
+                $status = $this->so_model->get_order_status($obj);
+                $data['orderlist'][$obj->get_so_no()]['join_split_so_no'] = $obj->get_join_split_so_no();
+                $data['orderlist'][$obj->get_so_no()]['currency_id'] = $obj->get_currency_id();
+                $data['orderlist'][$obj->get_so_no()]['client_id'] = $obj->get_client_id();
+                $data['orderlist'][$obj->get_so_no()]['order_date'] = date("Y-m-d", strtotime($obj->get_order_create_date()));
+                $data['orderlist'][$obj->get_so_no()]['delivery_name'] = $obj->get_delivery_name();
+                $data['orderlist'][$obj->get_so_no()]['order_status_ini'] = $status["id"] . "_status";
+                $data['orderlist'][$obj->get_so_no()]['status_desc_ini'] = $status["id"] . "_desc";
+                $data['orderlist'][$obj->get_so_no()]["product_name"] .= $obj->get_prod_name() . "</br>";
+                $data['orderlist'][$obj->get_so_no()]["total_amount"] += $obj->get_amount();
+                $data['orderlist'][$obj->get_so_no()]["is_shipped"] = ($obj->get_status() == 6 && $obj->get_refund_status() == 0 && $obj->get_hold_status() == 0) ? TRUE : FALSE;
+                if ($obj->get_payment_gateway_id() == 'w_bank_transfer') {
+                    $data["show_bank_transfer_contact"] = TRUE;
+                }
+                $sosh_obj = $this->so_model->so_service->get_shipping_info(array("soal.so_no" => $obj->get_so_no()));
+                if ($sosh_obj)
+                    $data['orderlist'][$obj->get_so_no()]['tracking_link'] = $this->courier_service->get(array("id" => $sosh_obj->get_courier_id()));
+                else
+                    $data['orderlist'][$obj->get_so_no()]['tracking_link'] = "";
 
-        // rma
-        $this->so_model->include_vo("rma_dao");
-        $data["rma_obj"] = unserialize($_SESSION["rma_obj"]);
-        if (empty($data["rma_obj"])) {
-            if (($data["rma_obj"] = $this->so_model->get("rma_dao")) === FALSE) {
-                $_SESSION["NOTICE"] = "Error: " . __LINE__;
-            } else {
-                $_SESSION["rma_vo"] = serialize($data["rma_obj"]);
+                if (isset($status["courier_name"])) {
+                    $data['orderlist'][$obj->get_so_no()]["courier_name"] = $status["courier_name"];
+                }
+                if (isset($status["tracking_url"])) {
+                    $data['orderlist'][$obj->get_so_no()]["tracking_url"] = $status["tracking_url"];
+                }
+                if (isset($status["tracking_number"])) {
+                    $data['orderlist'][$obj->get_so_no()]["tracking_number"] = $status["tracking_number"];
+                }
+                // show split order text
+                $split_so_group = $obj->get_split_so_group();
+                if (isset($split_so_group) && $split_so_group != $obj->get_so_no()) {
+                    $data["show_partial_ship_text"] = TRUE;
+                }
             }
         }
 
-        // rma_confirm
-        $data["rma_confirm"] = 0;
-        if ($page == "rma" && $rma_no) {
-            if ($data["rma_obj"] = $this->so_model->get("rma_dao", array("id" => $rma_no, "client_id" => $_SESSION["client"]["id"]))) {
-                $data["rma_confirm"] = 1;
-            }
-        }
-
-        // notice
-        $data["notice"] = notice();
-        unset($_SESSION["NOTICE"]);
-
-        $data['page'] = $page;
-
-        $data['data']['lang_text'] = $this->_get_language_file('', '', 'index');
-        $data['lang_id'] = get_lang_id();
-        $this->load_tpl('content', 'tbs_myaccount', $data, TRUE, TRUE);
+        return $data;
     }
 
     public function rma()
     {
         $data['display_id'] = 8;
         $this->load->model('order/so_model');
-
         unset($_SESSION["NOTICE"]);
         if ($this->input->post("posted")) {
             if (isset($_SESSION["rma_vo"])) {

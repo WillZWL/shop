@@ -17,7 +17,9 @@
 #pav-mainnav {
 	margin-left: -27px;
 }
-
+#account .account {
+    float:right;
+}
 .product-block .action > div {
 	width: 100px;
 }
@@ -109,6 +111,7 @@
     border: 1px solid;
     border-radius: 10px;
 }
+
 /*start category page*/
 .product-list .product-block .product-meta .action .cart{
     margin-right:20px;
@@ -171,6 +174,105 @@
 .product-list .product-block .action > div {
     float:left;
 }
-
 /*end category page*/
+
+.clear_b{
+    clear:both;
+}
+.clear_r{
+    clear:right;
+}
+.clear_l{
+    clear:left;
+}
+
+/*start login && register*/
+#content #register{width:100%;clear:both;overflow:hidden;zoom:1;margin-top:20px;}
+#content #register .side_title{padding-bottom:8px;}
+#content #register #left_side{float:left;width:40%;overflow:hidden;zoom:1;}
+#content #register #right_side{float:right;width:50%;overflow:hidden;zoom:1;}
+#content #register form{padding:20px 18px 34px 18px;border:solid 1px #d0d0d0;}
+#content #register form .subscribe{line-height:24px;padding:8px 0 16px 0;}
+#content #register #delivery_country{width:90px;}
+#content .checkbox-holder{float:left;display:block;cursor:pointer;width:22px;height:23px;background:url('../images/checkbox.jpg') no-repeat 0 0;}
+#content .checkbox-holder.checked {background-position: 0 -23px;}
+#content .checkbox-holder input{display:none;}
+#content #register form p{line-height:30px;overflow:hidden;zoom:1;display:block;width:100%;}
+#content #register form p a{line-height:30px;}
+#content #register form p button{float:left;margin-right:5px;}
+#content .form-holder{overflow:hidden;zoom:1;}
+#content .form-holder ul li{float:left;margin:0 20px 14px 0;display:inline;}
+#content .form-holder label{clear:left;font-size:12px;color:#373636;display:block;}
+#content .form-holder fieldset{width:334px;border:solid 1px #d0d0d0;background:#fff;display:block;-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;-moz-box-shadow: 0px 2px 4px #eee;-webkit-box-shadow: 0px 2px 4px #eee;box-shadow: 0px 2px 4px #eee;}
+#content .form-holder fieldset.big{width:209px;}
+#content .form-holder fieldset.medium{width:148px;}
+#content .form-holder fieldset.small{width:148px;}
+#content .form-holder fieldset.very_small{width:80px;}
+#content .form-holder fieldset.size_279{width:279px;}
+#content .form-holder fieldset.size_304{width:284px;}
+#content .form-holder fieldset.size_184{width:164px;}
+#content .form-holder fieldset.textarea{width:413px;height:72px;padding-bottom:5px;}
+#content .form-holder fieldset textarea{width:100%;height:72px;border:0;background:none;resize:none;}
+#content .form-holder fieldset input{clear:left;width:100%;border:0;background:none;}
+#content .form-holder select{margin-top:2px;height:28px;display:block;border:solid 1px #d0d0d0;}
+#content .form-holder button{background:url('../image/btn30-orange-back.jpg');height:30px;border:0;padding:0 25px 2px 25px;border-right:solid 1px #ff6d17;border-left:solid 1px #ff6d17;cursor:pointer;color:#fff;font-size:14px;}
+#content .form-holder button:hover{background-position:0 30px;}
+#content .form-holder .clear{clear:left;}
+#content .form-holder ins{text-transform:uppercase;clear:both;display:block;color:#000;font-size:14px;padding:10px 0 15px 0;text-decoration: none;}
+/*end login && register*/
+
+
+/*start myaccount */
+#content .silver_box{border:solid 1px #e4e4e4;}
+#content .silver_box iframe{float:right;margin-left:15px;}
+#content #my_acount{padding-top:18px;width:100%;margin:0;}
+#content #my_acount .acount-orders{width:100%;border:solid 1px #e4e4e4;border-bottom:0;}
+#content #my_acount .acount-orders tr th{font-size:11px;color:#000;text-transform:uppercase;padding:8px 0 0 0;height:32px;background:#f2f2f2;border-bottom:solid 1px #e4e4e4;}
+#content #my_acount .acount-orders tr td{height:55px;border-bottom:solid 1px #e4e4e4;}
+#content #my_acount .acount-orders tr td .more_info_btn23{float:left;margin:0 6px 0 0;border-left:solid 1px #969696;border-right:solid 1px #969696;padding:0 9px;}
+#content #my_acount .acount-orders tr td .add_to_basket_btn23{float:left;margin:0 0 0 0;border-left:solid 1px #ff6314;border-right:solid 1px #ff6314;padding:0 16px;}
+#content #my_acount .acount-orders tr td a{text-align:center;font-size:12px;}
+#content #my_acount .acount-orders tr td.btns{width:176px;}
+#content #my_acount .acount-orders tr td.btns a{text-decoration:none;text-indent:0;}
+
+#content #my_acount #edit_profile{}
+#content #my_acount #edit_profile .textarea{width:710px;}
+#content #my_acount #edit_profile .subscribe input{float:left;}
+#content #my_acount #edit_profile .subscribe var{float:left;margin-top:4px;font-family:Open Sans;}
+
+#content #edit_profile #sbOptions_profile_title,
+#content #edit_profile #sbSelector_profile_title,
+#content #edit_profile #sbHolder_profile_title{width:80px;}
+
+#content #edit_profile .width_800{width:800px;}
+
+#content #edit_profile .form-holder .select .sbOptions,
+#content #edit_profile .form-holder .select .sbSelector,
+#content #edit_profile .form-holder .select .sbHolder{width:353px;}
+
+#content #my_acount #returns_request{padding:26px 22px 26px 22px;}
+#content #my_acount #returns_request .form-holder fieldset.textarea{width:610px;}
+#content #my_acount #returns_request .form-holder label.checkbox{line-height:26px;margin-bottom:4px;}
+#content #my_acount #returns_request .form-holder fieldset#other_check{left:-80px;position:relative;width:130px;}
+#content #my_acount #returns_request .form-holder ul.checkboxes li{margin-right:38px;}
+
+#content #my_acount #returns_request .separator{float:left;height:1px;width:100%;display:block;margin:10px 0 20px 0;background:#e4e4e4;overflow:hidden;zoom:1;}
+
+#content #my_acount #returns_request .orange{padding-top:5px;}
+#content #my_acount #returns_request #return_checkbox_text{padding:6px 0 13px 0;}
+#content #my_acount #returns_request #country_in_text li label{float:left;margin-top:8px;margin-right:10px;}
+#content #my_acount #returns_request #country_in_text li div{float:left;}
+#content #my_acount #returns_request .upper{padding:0 0 14px 0;}
+
+#content .product-tabs-info{float:left;clear:left;margin:0 0 0 0;width:670px;}
+/*#content .product-tabs-info div.items{display:none;}*/
+#content .product-tabs-info ul.tabs{height:40px;}
+#content .product-tabs-info ul.tabs li{float:left;height:40px;margin-right:3px;background:#ccc url('../images/tab-nav-back.jpg') repeat-x center top;}
+#content .product-tabs-info ul.tabs li:hover{background:#ccc url('../images/tab-nav-back.jpg') repeat-x center bottom;}
+#content .product-tabs-info ul.tabs li.active{background:#fff;border:solid 1px #e4e4e4;margin-top:-1px;position:relative;border-bottom:solid 1px #fff;z-index:9;}
+#content .product-tabs-info ul.tabs li a{color:#fff;font-size:14px;line-height:40px;display:block;padding:0 20px;}
+#content .product-tabs-info ul.tabs li.active a{color:#000;}
+#content .product-tabs-info ul.tabs li a:hover{text-decoration:none;}
+#content .product-tabs-info .items{clear:both;padding:30px 15px;position:relative;z-index:8;top:-1px;line-height:18px;min-height:457px;}
+
 

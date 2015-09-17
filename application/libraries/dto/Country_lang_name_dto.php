@@ -3,7 +3,7 @@ include_once 'Base_dto.php';
 
 class Country_lang_name_dto extends Base_dto
 {
-    private $id;
+    private $country_id;
     private $name;
     private $lang_name;
     private $fc_id;
@@ -13,14 +13,14 @@ class Country_lang_name_dto extends Base_dto
         parent::__construct();
     }
 
-    public function get_id()
+    public function get_country_id()
     {
-        return $this->id;
+        return $this->country_id;
     }
 
-    public function set_id($id)
+    public function set_country_id($country_id)
     {
-        $this->id = $id;
+        $this->country_id = $country_id;
     }
 
     public function get_fc_id()

@@ -35,6 +35,7 @@
     <script type="text/javascript" src="/themes/default/asset/js/jquery.jscroll.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/raphael-min.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/jquery.easing.js"></script>
+    <script type="text/javascript" src="/themes/default/asset/js/checkform.js"></script>
     <!--<script type="text/javascript" src="/themes/default/asset/js/owl.carousel.min.js"></script>-->
     <script type="text/javascript" src="/themes/default/asset/js/iview.js"></script>
 </head>
@@ -53,16 +54,26 @@
                                     </a>
                                 </div>
                             </div>
-                            <!--<div id="search" class="pull-left col-lg-5 col-md-5 col-sm-12 col-xs-12">-->
-                            <!--    <div class="quick-access">-->
-                            <!--        <div class="input-group pull-right">-->
-                            <!--            <input type="text" name="search" value="" placeholder="Search" class="form-control" />-->
-                            <!--            <span class="input-group-btn">-->
-                            <!--                <button type="button" class="button-search"><i class="fa fa-search"></i></button>-->
-                            <!--            </span>-->
-                            <!--        </div>-->
-                            <!--    </div>-->
-                            <!--</div>-->
+                            <div id="search" class="pull-left col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                <div class="quick-access">
+                                    <div class="input-group pull-right">
+                                        <input type="text" name="search" value="" placeholder="Search" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="button-search"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="account" class="inner col-lg-4 col-md-4 col-sm-12">
+                                <div class="account">
+                                    <? if ($_SESSION["client"]["logged_in"]) { ?>
+                                        <a href="index.php/myaccount/index">
+                                    <? } else { ?>
+                                          <a href="index.php/login/index">
+                                    <? } ?>
+                                    <?= _("My Account") ?></a>
+                                </div>
+                            </div>
                             <div id="cart-top" class=" inner col-lg-4 col-md-4 col-sm-12 hidden-xs">
                                 <div class="cart-top">
                                     <div id="cart" class="pull-right clearfix">
