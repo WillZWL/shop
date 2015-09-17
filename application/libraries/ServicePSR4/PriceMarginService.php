@@ -23,7 +23,7 @@ class PriceMarginService extends BaseService
 
     public function refreshMarginForTopDeal()
     {
-        if ($obj_list = $this->platformBizVarService->getSellingPlatformDao()->getList(["status" => 1])) {
+        if ($obj_list = $this->platformBizVarService->getDao('SellingPlatform')->getList(["status" => 1])) {
             foreach ($obj_list as $obj) {
                 $this->refreshMargin($obj->getSellingPlatformId());
             }
@@ -65,7 +65,7 @@ class PriceMarginService extends BaseService
         $ret["status"] = FALSE;
         $platform_where["status"] = 1;
 
-        if ($sp_list = $this->platformBizVarService->getSellingPlatformDao()->getList($platform_where)) {
+        if ($sp_list = $this->platformBizVarService->getDao('SellingPlatform')->getList($platform_where)) {
             $updatelist = "";
             foreach ($sp_list as $key => $sellingplatform_obj) {
 
@@ -92,7 +92,7 @@ class PriceMarginService extends BaseService
             return $ret;
         } else {
             $ret["error_message"] = __LINE__ . "price_margin_service. Unable to retrieve sellling platform list. DB error "
-                . $platformBizVarService->getSellingPlatformDao()->db->_error_message();
+                . $platformBizVarService->getDao('SellingPlatform')->db->_error_message();
         }
 
         return $ret;

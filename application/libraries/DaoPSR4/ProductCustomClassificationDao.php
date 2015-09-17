@@ -27,7 +27,26 @@ class ProductCustomClassificationDao extends BaseDao
         $this->db->join("product AS p", "pcc.sku = p.sku", "INNER");
         $this->db->join("category AS sc", "sc.id = p.sub_cat_id", "INNER");
 
-        return $this->commonGetList($classname, $where, $option, 'pcc.sku, p.name prod_name, sc.id sub_cat_id, sc.name sub_cat_name, pcc.country_id, pcc.code, pcc.description, pcc.duty_pcent, pcc.create_on, pcc.create_at, pcc.create_by, pcc.modify_on, pcc.modify_at, pcc.modify_by');
+        if ($option['count_row']) {
+            $select_str = "count(*) AS total";
+        } else {
+            $select_str = "pcc.sku,
+                           p.name prod_name,
+                           sc.id sub_cat_id,
+                           sc.name sub_cat_name,
+                           pcc.country_id,
+                           pcc.code,
+                           pcc.description,
+                           pcc.duty_pcent,
+                           pcc.create_on,
+                           pcc.create_at,
+                           pcc.create_by,
+                           pcc.modify_on,
+                           pcc.modify_at,
+                           pcc.modify_by
+                        ";
+        }
+        return $this->commonGetList($classname, $where, $option, $select_str);
 
     }
 

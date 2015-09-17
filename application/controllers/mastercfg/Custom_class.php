@@ -49,7 +49,7 @@ class Custom_class extends MY_Controller
     {
         $sub_app_id = $this->getAppId() . "00";
 
-        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "index/" . $country_id) . ($cc_id == "" ? "" : "/" . $cc_id) . ($offset ? "/".$offset : "") ."?" . $_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "index/" . $country_id) . ($cc_id == "" ? "" : "/" . $cc_id) ."?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
         $option = array();
@@ -102,8 +102,8 @@ class Custom_class extends MY_Controller
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
-
-        $config['base_url'] = base_url("mastercfg/custom_class/index/$country_id/0/");
+        $ccid = $cc_id ? $cc_id : 0;
+        $config['base_url'] = base_url("mastercfg/custom_class/index/$country_id/$ccid/");
         $config['total_rows'] = $data["total"];
         $config['per_page'] = $limit;
 
@@ -138,6 +138,7 @@ class Custom_class extends MY_Controller
         $data["cmd"] = ($cc_id == "") ? $this->input->post("cmd") : "edit";
         $data["country_id"] = $country_id;
         $data["cc_id"] = $cc_id;
+        $data["offset"] = $offset;
 
         $this->load->view('mastercfg/custom_class/custom_class_index_v', $data);
     }
@@ -222,7 +223,7 @@ class Custom_class extends MY_Controller
         $submit_search = 0;
 
         if ($country_id != "") {
-            $where["country_id"] = $country_id;
+            $where["pcc.country_id"] = $country_id;
         }
         if ($this->input->get("sku") != "") {
             $where["pcc.sku LIKE "] = "%" . $this->input->get("sku") . "%";
@@ -261,7 +262,7 @@ class Custom_class extends MY_Controller
         $option["offset"] = $offset;
 
         if (empty($sort))
-            $sort = "sku";
+            $sort = "pcc.sku";
 
         if (empty($order))
             $order = "asc";
@@ -274,12 +275,12 @@ class Custom_class extends MY_Controller
             $data["total"] = 0;
         }
 
-        $data["countrylist"] = $this->sc['customClassModel']->getCountryList(array("status" => 1), array("limit" => -1, "orderby" => "name"));
+        $data["countrylist"] = $this->sc['Country']->getDao('Country')->getList(array("status" => 1), array("limit" => -1, "orderby" => "name"));
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
-        $config['base_url'] = base_url("mastercfg/custom_class/sku/$country_id/0/");
+        $config['base_url'] = base_url("mastercfg/custom_class/sku/$country_id/$sku/");
         $config['total_rows'] = $data["total"];
         $config['per_page'] = $limit;
 
@@ -314,6 +315,7 @@ class Custom_class extends MY_Controller
         $data["cmd"] = ($sku == "") ? $this->input->post("cmd") : "edit";
         $data["country_id"] = $country_id;
         $data["sku"] = $sku;
+        $data["offset"] = $offset;
 
         $this->load->view('mastercfg/custom_class/custom_class_sku_v', $data);
     }
@@ -426,7 +428,7 @@ class Custom_class extends MY_Controller
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
-        $config['base_url'] = base_url("mastercfg/custom_class/sub_cat/$country_id/0/");
+        $config['base_url'] = base_url("mastercfg/custom_class/sub_cat/$country_id/$sub_cat_id/");
         $config['total_rows'] = $data["total"];
         $config['per_page'] = $limit;
 
@@ -462,6 +464,7 @@ class Custom_class extends MY_Controller
         $data["cmd"] = ($sub_cat_id == "") ? $this->input->post("cmd") : "edit";
         $data["country_id"] = $country_id;
         $data["sub_cat_id"] = $sub_cat_id;
+        $data["offset"] = $offset;
 
         $this->load->view('mastercfg/custom_class/custom_class_sub_cat_v', $data);
     }

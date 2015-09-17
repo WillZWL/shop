@@ -12,18 +12,18 @@ class CurrencyService extends BaseService
         include_once(APPPATH . "helpers/price_helper.php");
     }
 
-    public function getSignWIdKey()
+    public function getSignWithIdKey()
     {
         $data = [];
         if ($objlist = $this->getDao('Currency')->getList([], ["limit" => -1])) {
             foreach ($objlist as $obj) {
-                $data[$obj->getId()] = $obj->getSign();
+                $data[$obj->getCurrencyId()] = $obj->getSign();
             }
         }
         return $data;
     }
 
-    public function getNameWIdKey()
+    public function getNameWithIdKey()
     {
         $data = [];
         if ($objlist = $this->getDao('Currency')->getList([], ["limit" => -1])) {
@@ -34,12 +34,12 @@ class CurrencyService extends BaseService
         return $data;
     }
 
-    public function getListWKey($where = [], $option = [])
+    public function getListWithKey($where = [], $option = [])
     {
         $data = [];
         if ($objlist = $this->getDao('Currency')->getList($where, $option)) {
             foreach ($objlist as $obj) {
-                $data[$obj->getId()] = $obj;
+                $data[$obj->getCurrencyId()] = $obj;
             }
         }
         return $data;
@@ -56,7 +56,7 @@ class CurrencyService extends BaseService
 
         if ($objlist = $this->getDao('Currency')->getList($where, ["limit" => -1])) {
             foreach ($objlist as $obj) {
-                $curr_id = $obj->getId();
+                $curr_id = $obj->getCurrencyId();
                 $data[$curr_id] = [
                     "sign" => $obj->getSign(),
                     "sign_pos" => $obj->getSignPos(),

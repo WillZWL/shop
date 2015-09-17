@@ -14,7 +14,6 @@ class Refund_reason_report extends Base_report
 //      $this->load->library('input');
 //      $this->load->library('service/context_config_service');
         // if use view template
-        //$this->load->library('template');
         //$this->template->set_template('report');
     }
 

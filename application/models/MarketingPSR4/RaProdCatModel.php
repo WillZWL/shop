@@ -44,7 +44,7 @@ class RaProdCatModel extends \CI_Model
 
     public function  getScatList()
     {
-        return $this->categoryService->getDao()->getList(["level" => "2"], ["limit" => -1]);
+        return $this->categoryService->getDao('Category')->getList(["level" => "2"], ["limit" => -1]);
     }
 
     public function  getSscatList()

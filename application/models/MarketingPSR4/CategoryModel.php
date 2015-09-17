@@ -116,11 +116,6 @@ class CategoryModel extends \CI_Model
         return array("total" => $total, "sku_list" => $sku_list, "obj_list" => $obj_list, "criteria" => $where);
     }
 
-    public function getCatObj($id)
-    {
-        return $this->categoryService->get($id ? ['id'=>$id] : []);
-    }
-
     public function getlistcount($level, $id = "")
     {
         return $this->categoryService->getListWithChildCount($level, $id);
@@ -158,12 +153,12 @@ class CategoryModel extends \CI_Model
 
     public function getProductBySscat($id)
     {
-        return $this->productService->getDao()->getList(["sub_sub_cat_id" => $id]);
+        return $this->productService->getDao('Product')->getList(["sub_sub_cat_id" => $id]);
     }
 
     public function countProduct($id)
     {
-        return $this->productService->getDao()->getNumRows(["sub_sub_cat_id" => $id]);
+        return $this->productService->getDao('Product')->getNumRows(["sub_sub_cat_id" => $id]);
     }
 
     public function getCatListIndex($where, $option)
@@ -173,27 +168,27 @@ class CategoryModel extends \CI_Model
 
     public function getScpvObj($where = [])
     {
-        return $this->subCatPlatformVarService->getDao()->get($where);
+        return $this->subCatPlatformVarService->getDao('SubCatPlatformVar')->get($where);
     }
 
     public function getReplaceScpvObj($where = [])
     {
-        return $this->platformBizVarService->getDao()->get($where);
+        return $this->platformBizVarService->getDao('PlatformBizVar')->get($where);
     }
 
     public function getScpvObjNew()
     {
-        return $this->subCatPlatformVarService->getDao()->get();
+        return $this->subCatPlatformVarService->getDao('SubCatPlatformVar')->get();
     }
 
     public function insertScpv($obj)
     {
-        return $this->subCatPlatformVarService->getDao()->insert($obj);
+        return $this->subCatPlatformVarService->getDao('SubCatPlatformVar')->insert($obj);
     }
 
     public function updateScpv($obj)
     {
-        return $this->subCatPlatformVarService->getDao()->update($obj);
+        return $this->subCatPlatformVarService->getDao('SubCatPlatformVar')->update($obj);
     }
 
     public function getSellingPlatform($where = [], $option = [])
@@ -203,17 +198,17 @@ class CategoryModel extends \CI_Model
 
     public function getCurrencyList()
     {
-        return $this->currencyService->getDao()->getList();
+        return $this->currencyService->getDao('Currency')->getList();
     }
 
     public function getCustomClassList()
     {
-        return $this->customClassService->getDao()->getList();
+        return $this->customClassService->getDao('CustomClassification')->getList();
     }
 
     public function getCustomClassListWithPlatformId($platform_id = "WEBHK")
     {
-        return $this->customClassService->getDao()->getCustomClassListWithPlatformId($platform_id);
+        return $this->customClassService->getDao('CustomClassification')->getCustomClassListWithPlatformId($platform_id);
     }
 
     public function getWebsiteCatPageProductList($where = [], $option = [])
@@ -248,7 +243,7 @@ class CategoryModel extends \CI_Model
 
     public function getlistcnt($level, $id, $status)
     {
-        return $this->categoryService->getDao()->getChildWithCount($level, $id, $status);
+        return $this->categoryService->getDao('Category')->getChildWithCount($level, $id, $status);
     }
 
     public function getColourCode()

@@ -28,11 +28,11 @@ class Category extends MY_Controller
         if ($this->input->get('id') == "") {
             return;
         } else {
-            $thisobj = $this->sc['categoryModel']->getCatObj($this->input->get('id'));
+            $thisobj = $this->sc['Category']->getDao('Category')->get(['id'=>$this->input->get('id')]);
             if ($thisobj->getLevel() < 3) {
                 $where["parent_cat_id"] = $this->input->get('id');
                 $option["sortby"] = "name ASC";
-                $data = $this->sc['categoryModel']->getCatListIndex($where, $option);
+                $data = $this->sc['Category']->getCatListIndex($where, $option);
 
             } else {
                 $data["category_list"] = $this->sc['categoryModel']->getProductBySscat($this->input->get('id'));
@@ -85,7 +85,7 @@ class Category extends MY_Controller
 
         $option["orderby"] = $sort . " " . $order;
 
-        $data = $this->sc['categoryModel']->getCatListIndex($where, $option);
+        $data = $this->sc['Category']->getCatListIndex($where, $option);
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
@@ -116,7 +116,7 @@ class Category extends MY_Controller
         $data = [];
         $data["added"] = 0;
         if ($this->input->post('add')) {
-            $cat_obj = $this->sc['categoryModel']->getCatObj();
+            $cat_obj = $this->sc['Category']->getDao('Category')->get();
 
             $cat_obj->setLevel($this->input->post('level'));
             $cat_obj->setStatus($this->input->post('status'));
@@ -141,7 +141,7 @@ class Category extends MY_Controller
         $data["parent"] = $this->input->get('parent');
         $data["notice"] = notice($lang);
         if ($this->input->get('level') == 2) {
-            $parent_obj = $this->sc['categoryModel']->getCatObj($this->input->get('parent'));
+            $parent_obj = $this->sc['Category']->getDao('Category')->get(['id'=>$this->input->get('parent')]);
         } else if ($this->input->get('level') == 3) {
             $parent_obj = $this->sc['categoryModel']->getParent(2, $this->input->get('parent'));
         } else {
@@ -164,9 +164,9 @@ class Category extends MY_Controller
         }
 
         if ($this->input->post('posted')) {
-            $this->sc['Category']->getCategoryExtendDao()->get();
+            $this->sc['Category']->getDao('CategoryExtend')->get();
             $data["cat_ext"] = unserialize($_SESSION["cat_ext"]);
-            $cat_ext_vo = $this->sc['Category']->getCategoryExtendDao()->get();
+            $cat_ext_vo = $this->sc['Category']->getDao('CategoryExtend')->get();
 
             foreach ($_POST["lang_name"] as $rs_lang_id => $rs_name) {
                 if ($rs_name) {
@@ -180,7 +180,7 @@ class Category extends MY_Controller
                     }
 
                     $data["cat_ext"][$value][$rs_lang_id]->setName($rs_name);
-                    if (!$this->sc['Category']->getCategoryExtendDao()->$action($data["cat_ext"][$value][$rs_lang_id])) {
+                    if (!$this->sc['Category']->getDao('CategoryExtend')->$action($data["cat_ext"][$value][$rs_lang_id])) {
                         $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
                     } else {
                         $config['upload_path'] = IMG_PH;
@@ -198,16 +198,16 @@ class Category extends MY_Controller
                                     $res = $this->upload->data();
                                     $ext = substr($res["file_ext"], 1);
                                     if (!$cat_cont_obj = $this->sc['categoryModel']->getCatContObj(["cat_id" => $value, "lang_id" => $rs_lang_id])) {
-                                        $cat_cont_obj = $this->sc['Category']->getCategoryContentDao()->get();
+                                        $cat_cont_obj = $this->sc['Category']->getDao('CategoryContent')->get();
                                         $cat_cont_obj->setCatId($value);
                                         $cat_cont_obj->setLangId($rs_lang_id);
                                         $cat_cont_obj->setImage($ext);
-                                        if (!$this->sc['Category']->getCategoryContentDao()->insert($cat_cont_obj)) {
+                                        if (!$this->sc['Category']->getDao('CategoryContent')->insert($cat_cont_obj)) {
                                             $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
                                         }
                                     } else {
                                         $cat_cont_obj->setImage($ext);
-                                        if (!$this->sc['Category']->getCategoryContentDao()->update($cat_cont_obj)) {
+                                        if (!$this->sc['Category']->getDao('CategoryContent')->update($cat_cont_obj)) {
                                             $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
                                         }
                                     }
@@ -228,16 +228,16 @@ class Category extends MY_Controller
                                     $res = $this->upload->data();
                                     $ext = substr($res["file_ext"], 1);
                                     if (!$cat_cont_obj = $this->sc['categoryModel']->getCatContObj(["cat_id" => $value, "lang_id" => $rs_lang_id])) {
-                                        $cat_cont_obj = $this->sc['Category']->getCategoryContentDao()->get();
+                                        $cat_cont_obj = $this->sc['Category']->getDao('CategoryContent')->get();
                                         $cat_cont_obj->setCatId($value);
                                         $cat_cont_obj->setLangId($rs_lang_id);
                                         $cat_cont_obj->setFlash($ext);
-                                        if (!$this->sc['Category']->getCategoryContentDao()->insert($cat_cont_obj)) {
+                                        if (!$this->sc['Category']->getDao('CategoryContent')->insert($cat_cont_obj)) {
                                             $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
                                         }
                                     } else {
                                         $cat_cont_obj->setFlash($ext);
-                                        if (!$this->sc['Category']->getCategoryContentDao()->update($cat_cont_obj)) {
+                                        if (!$this->sc['Category']->getDao('CategoryContent')->update($cat_cont_obj)) {
                                             $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
                                         }
                                     }
@@ -285,7 +285,7 @@ class Category extends MY_Controller
             $cccount = count($ccmap);
 
             for ($i = 0; $i < $cccount; $i++) {
-                $this->sc['customClassModel']->saveCustomClassMapping($ccmap, $i, $value, $this->input->post('name'));
+                $this->sc['CustomClass']->saveCustomClassMapping($ccmap, $i, $value, $this->input->post('name'));
             }
 
             if ($this->input->post('level') == 1) {
@@ -303,7 +303,7 @@ class Category extends MY_Controller
                 redirect(base_url() . "marketing/category/view/" . $value);
             }
         }
-        $cat_obj = $this->sc['categoryModel']->getCatObj($value);
+        $cat_obj = $this->sc['Category']->getDao('Category')->get(['id'=>$value]);
         $cat_cont_obj = $this->sc['categoryModel']->getCatContList(["cat_id" => $value]);
         $data["cat_obj"] = $cat_obj;
         $data["cat_cont_obj"] = $cat_cont_obj;
@@ -311,19 +311,18 @@ class Category extends MY_Controller
         $data["canedit"] = $canedit;
         $parent = $cat_obj->getParentCatId();
         $all = '1';
-        $data['optionhs'] = $this->sc['customClassModel']->getCustomClassOption($all);
-
+        $data['optionhs'] = $this->sc['CustomClass']->getDao('CustomClassification')->getOption($where);
         $parent_list = "";
         $child_list = "";
         $subcat_list = "";
         $uarr = "";
         $data['upcode'] = [];
         if ($cat_obj->getLevel() == "3") {
-            $parent_list = $this->sc['categoryModel']->categoryService->getList(["level" => "2", "id <>" => "0"], ["limit" => -1]);
+            $parent_list = $this->sc['Category']->getDao('Category')->getList(["level" => "2", "id <>" => "0"], ["limit" => -1]);
             $subcat_list = $this->sc['categoryModel']->getParent(3, $cat_obj->getId());
             if ($inherit == 1) {
-                $hs_obj = $this->sc['customClassModel']->getCustomClassByCatSubId($parent);
-                $data['hs'] = $this->sc['customClassModel']->getCustomClassByCatSubId($parent);
+                $hs_obj = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($parent);
+                $data['hs'] = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($parent);
                 $udesc = [];
                 for ($i = 0; $i < count($data['hs']); $i++) {
                     $udesc[$i]['code'] = $data['hs'][$i]['code'];
@@ -331,7 +330,7 @@ class Category extends MY_Controller
                 }
                 $data['ucode'] = $this->arrayUnique($udesc);
 
-                $data['parcode'] = $this->sc['customClassModel']->getCustomClassByCatSubId($parent);
+                $data['parcode'] = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($parent);
                 $updesc = [];
                 for ($i = 0; $i < count($data['parcode']); $i++) {
                     $updesc[$i]['code'] = $data['parcode'][$i]['code'];
@@ -345,8 +344,8 @@ class Category extends MY_Controller
                 }
                 $data['psarr'] = $uarr;
             } else {
-                $hs_obj = $this->sc['customClassModel']->getCustomClassByCatSubId($cat_obj->getId());
-                $data['hs'] = $this->sc['customClassModel']->getCustomClassByCatSubId($cat_obj->getId());
+                $hs_obj = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($cat_obj->getId());
+                $data['hs'] = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($cat_obj->getId());
                 $udesc = [];
                 for ($i = 0; $i < count($data['hs']); $i++) {
                     $udesc[$i]['code'] = $data['hs'][$i]['code'];
@@ -354,7 +353,7 @@ class Category extends MY_Controller
                 }
                 $data['ucode'] = $this->arrayUnique($udesc);
 
-                $data['parcode'] = $this->sc['customClassModel']->getCustomClassByCatSubId($parent);
+                $data['parcode'] = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($parent);
                 $updesc = [];
                 for ($i = 0; $i < count($data['parcode']); $i++) {
                     $updesc[$i]['code'] = $data['parcode'][$i]['code'];
@@ -370,11 +369,11 @@ class Category extends MY_Controller
             }
 
         } else if ($cat_obj->getLevel() == "2") {
-            $parent_list = $this->sc['categoryModel']->categoryService->getList(["level" => "1", "id <>" => "0"], ["limit" => -1]);
+            $parent_list = $this->sc['Category']->getDao('Category')->getList(["level" => "1", "id <>" => "0"], ["limit" => -1]);
             $subcat_list = $this->sc['categoryModel']->getParent(2, $cat_obj->getId());
             if ($inherit == 1) {
-                $hs_obj = $this->sc['customClassModel']->getCustomClassByCatSubId($parent);
-                $data['hs'] = $this->sc['customClassModel']->getCustomClassByCatSubId($parent);
+                $hs_obj = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($parent);
+                $data['hs'] = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($parent);
                 $udesc = [];
                 for ($i = 0; $i < count($data['hs']); $i++) {
                     $udesc[$i]['code'] = $data['hs'][$i]['code'];
@@ -382,7 +381,7 @@ class Category extends MY_Controller
                 }
                 $data['ucode'] = $this->arrayUnique($udesc);
 
-                $data['parcode'] = $this->sc['customClassModel']->getCustomClassByCatSubId($parent);
+                $data['parcode'] = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($parent);
                 $updesc = [];
                 for ($i = 0; $i < count($data['parcode']); $i++) {
                     $updesc[$i]['code'] = $data['parcode'][$i]['code'];
@@ -396,8 +395,8 @@ class Category extends MY_Controller
                 }
                 $data['psarr'] = $uarr;
             } else {
-                $hs_obj = $this->sc['customClassModel']->getCustomClassByCatSubId($cat_obj->getId());
-                $data['hs'] = $this->sc['customClassModel']->getCustomClassByCatSubId($cat_obj->getId());
+                $hs_obj = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($cat_obj->getId());
+                $data['hs'] = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($cat_obj->getId());
                 $udesc = [];
                 for ($i = 0; $i < count($data['hs']); $i++) {
                     $udesc[$i]['code'] = $data['hs'][$i]['code'];
@@ -405,7 +404,7 @@ class Category extends MY_Controller
                 }
                 $data['ucode'] = $this->arrayUnique($udesc);
 
-                $data['parcode'] = $this->sc['customClassModel']->getCustomClassByCatSubId($parent);
+                $data['parcode'] = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($parent);
                 $updesc = [];
                 for ($i = 0; $i < count($data['parcode']); $i++) {
                     $updesc[$i]['code'] = $data['parcode'][$i]['code'];
@@ -420,8 +419,8 @@ class Category extends MY_Controller
                 $data['psarr'] = $uarr;
             }
         } else {
-            $hs_obj = $this->sc['customClassModel']->getCustomClassByCatSubId($cat_obj->getId());
-            $data['hs'] = $this->sc['customClassModel']->getCustomClassByCatSubId($cat_obj->getId());
+            $hs_obj = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($cat_obj->getId());
+            $data['hs'] = $this->sc['CustomClassificationMapping']->getAllCustomClassMappingBySubCatId($cat_obj->getId());
             $udesc = [];
             for ($i = 0; $i < count($data['hs']); $i++) {
                 $udesc[$i]['code'] = $data['hs'][$i]['code'];
@@ -452,7 +451,7 @@ class Category extends MY_Controller
         $data["parent_list"] = $parent_list;
         $data["child_list"] = $child_list;
         $data["subcat_list"] = $subcat_list;
-        $data["lang_list"] = $this->sc['Language']->getList(["status" => 1], ["limit" => -1]);
+        $data["lang_list"] = $this->sc['Language']->getDao('Language')->getList(["status" => 1], ["limit" => -1]);
         $data["cat_id"] = $value;
         $_SESSION["category_edit"] = serialize($cat_obj);
         $this->load->view("marketing/category/category_view", $data);
@@ -498,7 +497,7 @@ class Category extends MY_Controller
         $data = [];
         $data['type'] = $this->input->post('type') ? $this->input->post('type') : "";
         $selling_platform_obj_list = $this->sc['categoryModel']->getSellingPlatform([], ["orderby" => "name", "limit" => -1]);
-        $cat_obj = $this->sc['categoryModel']->getCatObj($this->input->get("subcat_id"));
+        $cat_obj = $this->sc['Category']->getDao('Category')->get(['id'=>$this->input->get("subcat_id")]);
         $ccid_list = $this->sc['categoryModel']->getCustomClassListWithPlatformId($this->input->get('platform'));
         $currency_list = $this->sc['categoryModel']->getCurrencyList();
         $data["sp_list"] = $selling_platform_obj_list;

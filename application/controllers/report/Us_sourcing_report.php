@@ -11,7 +11,6 @@ class Us_sourcing_report extends Base_report
         parent::Base_report();
         $this->load->model('report/sourcing_region_report_model');
         $this->load->helper(array('url', 'notice'));
-        $this->load->library('template');
         $this->template->set_template('report');
     }
 

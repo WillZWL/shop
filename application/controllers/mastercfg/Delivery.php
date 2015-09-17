@@ -36,7 +36,7 @@ class Delivery extends MY_Controller
         $this->sc['deliveryModel']->checkSerialize('del_opt_list', $data);
 
 
-        $data["lang_list"] = $this->sc['deliveryModel']->languageService->getList(["status" => 1], ["limit" => -1]);
+        $data["lang_list"] = $this->sc['Language']->getDao('Language')->getList(["status" => 1], ["limit" => -1]);
         $data["delivery_type_list"] = $this->sc['deliveryModel']->deliveryService->getDeliveryTypeList();
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;

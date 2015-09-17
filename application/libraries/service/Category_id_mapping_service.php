@@ -1,7 +1,7 @@
 <?php
-include_once(APPPATH . "libraries/Service/BaseService.php");
+include_once "Base_service.php";
 
-class Category_id_mapping_service extends BaseService
+class Category_id_mapping_service extends Base_service
 {
     public function __construct()
     {

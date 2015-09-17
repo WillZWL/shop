@@ -79,7 +79,7 @@ class Country extends MY_Controller
         $data['links'] = $this->pagination->create_links();
 
         $data["ar_lang"] = $this->sc['languageModel']->getNameWIdKey();
-        $data["ar_currency"] = $this->sc['currencyModel']->getNameWIdKey();
+        $data["ar_currency"] = $this->sc['Currency']->getNameWithIdKey();
 
         include_once APPPATH . "language/" . $sub_id . ".php";
         $data["lang"] = $lang;
@@ -175,7 +175,7 @@ class Country extends MY_Controller
         $data["name"] = $name;
         $data["notice"] = notice($lang);
         $data["ar_lang"] = $this->sc['languageModel']->getNameWIdKey();
-        $data["ar_currency"] = $this->sc['currencyModel']->getNameWIdKey();
+        $data["ar_currency"] = $this->sc['Currency']->getNameWithIdKey();
         $data['rmaFcVo'] = $this->sc['Country']->getDao('RmaFc')->get(["cid" => $country]);
         // $data["rmaFcVo"] = $this->sc['Country']->getDao()->get('RmaFc', );
         $this->load->view("mastercfg/country/v_view", $data);
