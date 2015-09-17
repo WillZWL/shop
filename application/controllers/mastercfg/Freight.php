@@ -143,7 +143,7 @@ class Freight extends FreightHelper
             $sub_app_id = $this->getAppId() . "02";
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
-            if ($this->input->post("posted")) {die;
+            if ($this->input->post("posted")) {
                 $this->sc['freightModel']->saveFreightCatCharge($_POST["value"], $origin_country);
                 if (empty($_SESSION["NOTICE"])) {
                     redirect(current_url() . "?" . $_SERVER['QUERY_STRING']);
