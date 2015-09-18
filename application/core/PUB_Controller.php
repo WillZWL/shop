@@ -1,4 +1,5 @@
 <?php
+use ESG\Panther\Service\LoadSiteParameterService;
 use Pimple\Container;
 use ESG\Panther\Models\Marketing\CategoryModel;
 use ESG\Panther\Service as S;
@@ -49,7 +50,7 @@ class PUB_Controller extends CI_Controller
             $this->check_login();
         }
 */
-        // $this->loadSiteParameterService = new LoadSiteParameterService();
+        $this->loadSiteParameterService = new LoadSiteParameterService();
         $this->loadSiteInfo();
     }
 
@@ -62,7 +63,7 @@ class PUB_Controller extends CI_Controller
 
     protected function loadSiteInfo()
     {
-        $stieInfo = $this->sc['LoadSiteParameter']->initSite();
+        $stieInfo = $this->loadSiteParameterService->initSite();
         $this->set_lang_id($stieInfo->getLangId());
         $this->setSiteInfo($stieInfo);
     }
