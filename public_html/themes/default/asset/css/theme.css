@@ -125,7 +125,8 @@
 }
 .product-list .product-block .product-meta .action {
     border-style:none;
-    background-color:#fff;
+    width:220px;
+    background-color: #f6f6f6;
     font-family: "Open Sans Extrabold", sans-serif
 }
 .product-list .product-block .product-meta .btn {
@@ -166,6 +167,9 @@
 }
 .product-list .product-block .action > div:after {
     border:none;
+}
+.product-list .product-block .action > div {
+    float:left;
 }
 
 /*end category page*/
