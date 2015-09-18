@@ -14,6 +14,7 @@ class Category_vo extends Base_vo
     private $priority = '9';
     private $bundle_discount;
     private $min_display_qty;
+	private $sponsored;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '127.0.0.1';
@@ -125,6 +126,17 @@ class Category_vo extends Base_vo
     public function set_min_display_qty($value)
     {
         $this->min_display_qty = $value;
+        return $this;
+    }
+
+    public function get_sponsored()
+    {
+        return $this->sponsored;
+    }
+
+    public function set_sponsored($value)
+    {
+        $this->sponsored = $value;
         return $this;
     }
 

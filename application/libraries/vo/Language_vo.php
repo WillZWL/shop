@@ -7,6 +7,7 @@ class Language_vo extends Base_vo
     //class variable
     private $id;
     private $name;
+	private $lang_id;
     private $description;
     private $status = '1';
     private $char_set;
@@ -32,6 +33,17 @@ class Language_vo extends Base_vo
     public function set_id($value)
     {
         $this->id = $value;
+        return $this;
+    }
+	
+    public function get_lang_id()
+    {
+        return $this->lang_id;
+    }
+
+    public function set_lang_id($value)
+    {
+        $this->lang_id = $value;
         return $this;
     }
 

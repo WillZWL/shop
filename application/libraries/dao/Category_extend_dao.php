@@ -37,6 +37,14 @@ class Category_extend_dao extends Base_dao
         $this->include_vo($this->get_vo_classname());
         return $this->common_get_list($where, $option, $this->get_vo_classname(), 'c.id AS cat_id, l.id AS lang_id, COALESCE(ce.name, c.name) AS name');
     }
+	
+	public function get_menu_list($where = array(), $option = array())
+    {
+		$this->db->from('category AS c');
+        $this->db->join('category_extend AS ce', 'c.id = ce.cat_id', 'INNER');
+        $this->include_vo($this->get_vo_classname());
+        return $this->common_get_list($where, $option, $this->get_vo_classname(), 'ce.*');
+	}
 
     public function get_vo_classname()
     {

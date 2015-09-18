@@ -463,6 +463,11 @@ class CategoryService extends BaseService
     public function getCatExtList($where = [], $option = [])
     {
         return $this->getCategoryExtendDao()->getList($where, $option);
+    }	
+
+    public function getCatMenuList($where = array(), $option = array())
+    {
+        return $this->getCategoryExtendDao()->getMenuList($where, $option);
     }
 
     public function getCategory($where = [])

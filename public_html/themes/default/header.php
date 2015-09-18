@@ -87,7 +87,13 @@
                         </div>
                     </div>
                 </div>
-                <?php $this->load->view('/default/category'); ?>
+                <?php //$this->load->view('/default/category'); 
+					//$this->load->view( APPPATH."views/template/menu/".$lang_id."/menu_big_" . strtolower($platform_id)
+					//$this->load->view( "/views/template/menu/en/menu_webgb");
+					$lang_id = substr(SITE_LANG, 0, 2);
+					$menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
+					print $menu_script;
+				?>
             </header>
             <!-- /header -->
             <div class="main-columns container">
