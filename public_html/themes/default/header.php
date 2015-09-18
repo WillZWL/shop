@@ -66,28 +66,36 @@
                             <div id="cart-top" class=" inner col-lg-4 col-md-4 col-sm-12 hidden-xs">
                                 <div class="cart-top">
                                     <div id="cart" class="pull-right clearfix">
-                                        <div data-toggle="dropdown" data-loading-text="Loading..." class="heading media dropdown-toggle">
+<!--                                        <div data-toggle="dropdown" data-loading-text="Loading..." class="heading media dropdown-toggle">-->
                                             <div class="cart-inner media-body">
-                                                <a>
+                                                <a href="/ReviewOrder">
                                                     <i class="icon-cart fa fa-shopping-cart"></i>
                                                     <span class="text-cart"><?= _('Shopping Cart') ?></span>
-                                                    <span id="cart-total" class="cart-total"><?= sprintf(_('%s item(s) - %s%s'), "0", "$", "0.00") ?></span>
+                                                    <span id="cart-total" class="cart-total"><?= sprintf(_('%s item(s) - %s%s'), $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"], "$", $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"]) ?></span>
                                                     <i class="fa fa-angle-down"></i>
                                                 </a>
                                             </div>
-                                        </div>
+    <!--                                    </div> -->
+<!--
                                         <ul class="dropdown-menu content">
                                             <li>
                                                 <p class="text-center"><?= _('Your shopping cart is empty!') ?></p>
                                             </li>
                                         </ul>
+-->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <?php $this->load->view('/default/category'); ?>
+                <?php //$this->load->view('/default/category'); 
+					//$this->load->view( APPPATH."views/template/menu/".$lang_id."/menu_big_" . strtolower($platform_id)
+					//$this->load->view( "/views/template/menu/en/menu_webgb");
+					$lang_id = substr(SITE_LANG, 0, 2);
+					$menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
+					print $menu_script;
+				?>
             </header>
             <!-- /header -->
             <div class="main-columns container">

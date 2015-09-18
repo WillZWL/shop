@@ -319,6 +319,11 @@ class CategoryModel extends \CI_Model
     public function getCatExtList($where = [], $option = [])
     {
         return $this->categoryService->getCatExtList($where, $option);
+    }	
+
+    public function getCatMenuList($where = [], $option = [])
+    {
+        return $this->categoryService->getCatMenuList($where, $option);
     }
 
     public function getCatContObj($where = [])

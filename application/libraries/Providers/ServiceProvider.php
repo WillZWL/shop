@@ -89,5 +89,20 @@ class ServiceProvider implements ServiceProviderInterface
         $servcieContainer['CustomClassificationMapping'] = function () {
             return new S\CustomClassificationMappingService();
         };
+
+        $servcieContainer['LoadSiteParameter'] = function () {
+            return new S\LoadSiteParameterService();
+        };
+
+        $servcieContainer['Website'] = function () {
+            return new S\WebsiteService();
+        };
+
+        $servcieContainer['PriceWebsite'] = function () {
+            return new S\PriceWebsiteService();
+        };
+        $servcieContainer['PriceWebsite'] = function () {
+            return new S\PriceWebsiteService();
+        };
     }
 }

@@ -151,7 +151,7 @@ class CategoryDao extends BaseDao
 
     public function getListedCat($platform_id = "WEBHK")
     {
-        $this->db->select('DISTINCT c.id AS cat_id, sc.id AS sub_cat_id, ssc.id AS sub_sub_cat_id', FALSE);
+        $this->db->select('DISTINCT c.id AS cat_id, sc.id AS sub_cat_id, ssc.id AS sub_sub_cat_id, c.sponsored', FALSE);
         $this->db->from('product AS p');
         $this->db->join('price AS pr', 'pr.sku = p.sku AND pr.platform_id = "' . $platform_id . '" AND pr.listing_status = "L"');
         $this->db->join('platform_biz_var AS pbv', 'pbv.selling_platform_id = pr.platform_id');
@@ -159,7 +159,7 @@ class CategoryDao extends BaseDao
         $this->db->join('category AS sc', 'sc.id = p.sub_cat_id AND sc.id > 0 AND sc.status = 1');
         $this->db->join('category AS ssc', 'ssc.id = p.sub_sub_cat_id AND ssc.id > 0 AND ssc.status = 1', 'left');
         $this->db->where('p.status', 2);
-        $this->db->order_by('c.id, sc.id, ssc.id');
+        $this->db->order_by('c.sponsored DESC, c.id, sc.id, ssc.id');
 
         $result = $this->db->get();
 
@@ -852,7 +852,7 @@ class CategoryDao extends BaseDao
         }
     }
 
-    public function getCatInfoWithLang($where = [], $option = [], $classname = "Cat_info_w_lang_dto")
+    public function getCatInfoWithLang($where = [], $option = [], $classname = "CatInfoWithLangDto")
     {
         $this->db->from('category AS c');
         $this->db->join('category_extend AS ce', 'c.id = ce.cat_id', 'LEFT');

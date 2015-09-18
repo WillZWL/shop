@@ -1,9 +1,15 @@
 <?php
 use ESG\Panther\Service\LoadSiteParameterService;
+use Pimple\Container;
+use ESG\Panther\Models\Marketing\CategoryModel;
+use ESG\Panther\Service as S;
+use ESG\Panther\Dao as D;
 
 class PUB_Controller extends CI_Controller
 {
     private $lang_id = 'en';
+    protected $container;
+    private static $serviceContainer;
 
 //    private $allow_referer_host = '/^http[s]?:\/\/shop\.skype\.com/';
 //    private $require_login = 0;
@@ -13,7 +19,20 @@ class PUB_Controller extends CI_Controller
     function __construct()
     {
         parent::__construct();
+        $this->load->library('pagination');
+        if (!self::$serviceContainer) {
+            $sc = new \Pimple\Container;
+            $daoArr = (array) require APPPATH . 'libraries/ServicePSR4/providers.php';
+            array_walk($daoArr, function($class, $i, $sc) {
+                class_exists($class) AND $sc->register(new $class);
+            }, $sc);
+
+            self::$serviceContainer = true;
+            $this->sc = $sc;
+        }
+        $this->loadModelDependcy();
 /*
+
         if (is_array($params) && count($params) > 0) {
             $this->initialize($params);
 
@@ -35,12 +54,21 @@ class PUB_Controller extends CI_Controller
         $this->loadSiteInfo();
     }
 
+    public function loadModelDependcy()
+    {
+        $this->sc['categoryModel'] = function ($c) {
+            return new CategoryModel;
+        };
+    }
+
     protected function loadSiteInfo()
     {
         $stieInfo = $this->loadSiteParameterService->initSite();
         $this->set_lang_id($stieInfo->getLangId());
-        $this->setSiteInfo($stieInfo);        
+        $this->setSiteInfo($stieInfo);
     }
+
+
 /*
     function initialize($params = array())
     {
@@ -182,12 +210,8 @@ class PUB_Controller extends CI_Controller
     // 	$this->load->view($view, $data, $return);
     // }
 
-    public function get_language_file($directory = "", $i_class = "", $method = "")
-    {
-        return $this->_get_language_file($directory, $i_class, $method);
-    }
 
-    protected function _get_language_file($directory = "", $i_class = "", $method = "")
+    protected function getLanguageFile($directory = "", $i_class = "", $method = "")
     {
         return $this->load_template_language($this->load_view_language($directory, $i_class, $method));
     }
@@ -264,7 +288,7 @@ class PUB_Controller extends CI_Controller
         }
         //load default laguage file
         if (!isset($vars['data']['lang_text'])) {
-            $data['data']['lang_text'] = $this->_get_language_file();
+            $data['data']['lang_text'] = $this->getLanguageFile();
         } else {
             $data['data']['lang_text'] = $vars['data']['lang_text'];
         }
@@ -355,7 +379,7 @@ class PUB_Controller extends CI_Controller
         }
         //load default laguage file
         if (!isset($vars['lang_text'])) {
-            $params['lang_text'] = $this->_get_language_file();
+            $params['lang_text'] = $this->getLanguageFile();
         } else {
             $params['lang_text'] = $vars['lang_text'];
         }

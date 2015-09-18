@@ -67,13 +67,13 @@ class WebsiteService extends BaseService
             return false;
         }
 
-        if ($cat_obj = $this->category_service->get(array('id' => $cat_id))) {
-            $cat_name = str_replace(array(" ", "/", "."), "-", $cat_obj->get_name());
+        if ($cat_obj = $this->getDao('Category')->get(array('id' => $cat_id))) {
+            $cat_name = str_replace(array(" ", "/", "."), "-", $cat_obj->getName());
 
             if ($relative_path) {
-                return "/" . $cat_name . "/cat/view/" . $cat_obj->get_id();
+                return "/" . $cat_name . "/cat/view/" . $cat_obj->getId();
             } else {
-                return base_url() . $cat_name . "/cat/view/" . $cat_obj->get_id();
+                return base_url() . $cat_name . "/cat/view/" . $cat_obj->getId();
             }
         }
 

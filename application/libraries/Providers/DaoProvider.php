@@ -181,6 +181,14 @@ class DaoProvider implements ServiceProviderInterface
             return new D\PlatformCourierDao();
         };
 
+        $daoContainer['Price'] = function () {
+            return new D\PriceDao();
+        };
+
+        $daoContainer['PlatformCourier'] = function () {
+            return new D\PlatformCourierDao();
+        };
+
         $daoContainer['SubCatPlatformVar'] = function () {
             return new D\SubCatPlatformVarDao();
         };

@@ -16,6 +16,7 @@
                                 </div>
                                 <ul id="accordiondata" class="collapse accordion-body in">
                                     <?php
+                                    if ($brand_result) {
                                         foreach($brand_result as $brand) {
                                             break;
                                     ?>
@@ -24,6 +25,7 @@
                                         </li>
                                     <?php
                                         }
+                                    }
                                     ?>
                                 </ul>
                             </li>
@@ -86,39 +88,6 @@
                     <!--
                     <div class="product-compare pull-right"><a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/compare" class="btn btn-link" id="compare-total">Product Compare (0)</a></div>
                     -->
-                    <div class="pagination paging clearfix pull-right">
-                        <ul class="pagination" style="margin:0">
-                            <?php
-                                if($curr_page != 1) :
-                            ?>
-                                    <li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page-1));?>">&lt;&lt;</a></li>
-                            <?php
-                                endif;
-                                $start_page = floor($curr_page / $pagination) * $pagination + 1;
-                                if($curr_page % $pagination == 0){
-                                    $start_page = $curr_page - $pagination + 1;
-                                }
-                                for($i = $start_page; $i < ($start_page + $pagination); $i++) :
-                                    if($i > $total_page) continue;
-                                    if($i == $curr_page) :
-                            ?>
-                                        <li class="active"><span><?=$i?></span></li>
-                            <?php
-                                    else:
-                            ?>
-                                        <li><a href="<?=base_url('cat/view/' . $cat_id . '/' . $i);?>"><?=$i?></a></li>
-                            <?php
-                                    endif;
-                                endfor;
-
-                                if($curr_page != $total_page) :
-                            ?>
-                                    <li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page+1));?>">&gt;&gt;</a></li>
-                            <?php
-                                endif;
-                            ?>
-                        </ul>
-                    </div>
                 </div>
 
                 <div class="sort pull-right">
@@ -155,26 +124,26 @@
                         <div class="product-block">
                             <div class="image">
                                 <div class="product-img img">
-                                    <a class="img" title="<?= $prod_obj->get_prod_name(); ?>" href='<?= site_url("/mainproduct/view/$sku") ?>'>
-                                        <img class="img-responsive" src="<?= get_image_file($prod_obj->get_image_ext(), 'm', $prod_obj->get_sku()) ?>" title="<?= $prod_obj->get_prod_name(); ?>" alt="<?= $prod_obj->get_prod_name(); ?>" />
+                                    <a class="img" title="<?= $prod_obj->getProdName(); ?>" href='<?= site_url("/mainproduct/view/$sku") ?>'>
+                                        <img class="img-responsive" src="<?= get_image_file($prod_obj->getImageExt(), 'm', $prod_obj->getSku()) ?>" title="<?= $prod_obj->getProdName(); ?>" alt="<?= $prod_obj->getProdName(); ?>" />
                                     </a>
                                     <div class="quickview hidden-xs">
                                         <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="<?= site_url("/mainproduct/view/$sku/sv") ?>" title="Quick View"><i class="fa fa-eye"></i></a>
                                     </div>
                                     <div class="zoom hidden-xs">
-                                        <a data-toggle="tooltip" data-placement="top" href="<?= get_image_file($prod_obj->get_image_ext(), 'l', $prod_obj->get_sku()) ?>" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->get_prod_name(); ?>"><i class="fa fa-search-plus"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" href="<?= get_image_file($prod_obj->getImageExt(), 'l', $prod_obj->getSku()) ?>" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->getProdName(); ?>"><i class="fa fa-search-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="product-meta">
                                 <div class="left">
-                                    <h6 class="name"><a href='<?= site_url("/mainproduct/view/$sku") ?>'><?= $prod_obj->get_prod_name(); ?></a></h6>
+                                    <h6 class="name"><a href='<?= site_url("/mainproduct/view/$sku") ?>'><?= $prod_obj->getProdName(); ?></a></h6>
                                     <p class="description">
-                                    <?php print $prod_obj->get_short_desc(); ?>
+                                    <?php print $prod_obj->getShortDesc(); ?>
                                     </p>
                                     <div class="price">
-                                        <span class="price-new"><?= $prod_obj->get_price(); ?></span>
-                                        <span class="price-old"><?= $prod_obj->get_rrp_price(); ?></span>
+                                        <span class="price-old"><font class="list_price"><?= _('List Price') ?> :  </font><?= $prod_obj->getRrpPrice(); ?></span>
+                                        <span class="price-new"><font class="pay_price"><?= _('You Pay') ?> :  </font><?= $prod_obj->getPrice(); ?></span>
                                     </div>
                                     <div class="save_alter">
                                         Save -30%
@@ -185,11 +154,13 @@
                                         <div class="cart">
                                             <button data-loading-text="Loading..." class="btn btn-primary" type="button" onclick="cart.addcart('<?= $sku ?>');">
                                                 <i class="fa fa-shopping-cart"></i>
+                                                <span class="add-to-cart"><?= _("Add to Cart") ?></span>
                                             </button>
                                         </div>
                                         <div class="wishlist">
-                                            <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="Add to Wish List" onclick="wishlist.addwishlist('<?= $sku ?>');">
+                                            <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="More Info" onclick="wishlist.addwishlist('<?= $sku ?>');">
                                                 <i class="fa fa-heart"></i>
+                                                <span class="more-info"><?= _("More Info") ?></span>
                                             </button>
                                         </div>
                                     </div>
@@ -200,6 +171,39 @@
                     <?php endforeach ?>
             </div>
                 <?php endif; ?>
+        </div>
+        <div class="pagination paging clearfix pull-right">
+            <ul class="pagination" style="margin:0">
+                <?php
+                    if($curr_page != 1) :
+                ?>
+                        <li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page-1));?>">&lt;&lt;</a></li>
+                <?php
+                    endif;
+                    $start_page = floor($curr_page / $pagination) * $pagination + 1;
+                    if($curr_page % $pagination == 0){
+                        $start_page = $curr_page - $pagination + 1;
+                    }
+                    for($i = $start_page; $i < ($start_page + $pagination); $i++) :
+                        if($i > $total_page) continue;
+                        if($i == $curr_page) :
+                ?>
+                            <li class="active"><span><?=$i?></span></li>
+                <?php
+                        else:
+                ?>
+                            <li><a href="<?=base_url('cat/view/' . $cat_id . '/' . $i);?>"><?=$i?></a></li>
+                <?php
+                        endif;
+                    endfor;
+
+                    if($curr_page != $total_page) :
+                ?>
+                        <li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page+1));?>">&gt;&gt;</a></li>
+                <?php
+                    endif;
+                ?>
+            </ul>
         </div>
     </div>
 </div>

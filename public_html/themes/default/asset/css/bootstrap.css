@@ -1435,7 +1435,7 @@ a {
 }
 /* line 52, ../development/scss/bootstrap/_scaffolding.scss */
 a:hover, a:focus {
-  color: #f7c720;
+  color: #549B17;
   text-decoration: none;
 }
 /* line 58, ../development/scss/bootstrap/_scaffolding.scss */
@@ -1695,12 +1695,12 @@ mark,
 
 /* line 5, ../development/scss/mixins/mixins/_text-emphasis.scss */
 .text-primary {
-  color: #f7c720;
+  color: #549B17;
 }
 
 /* line 8, ../development/scss/mixins/mixins/_text-emphasis.scss */
 a.text-primary:hover {
-  color: #dcad08;
+  color: #417F0B;
 }
 
 /* line 5, ../development/scss/mixins/mixins/_text-emphasis.scss */
@@ -1750,12 +1750,12 @@ a.text-danger:hover {
 
 /* line 5, ../development/scss/mixins/mixins/_background-variant.scss */
 .bg-primary {
-  background-color: #f7c720;
+  background-color: #549B17;
 }
 
 /* line 8, ../development/scss/mixins/mixins/_background-variant.scss */
 a.bg-primary:hover {
-  background-color: #dcad08;
+  background-color: #417F0B;
 }
 
 /* line 5, ../development/scss/mixins/mixins/_background-variant.scss */
@@ -4107,14 +4107,14 @@ select[multiple].input-lg,
 /* line 64, ../development/scss/bootstrap/_buttons.scss */
 .btn-primary {
   color: #000;
-  background-color: #f7c720;
-  border-color: #f5c009;
+  background-color: #549B17;
+  border-color: #499209;
 }
 /* line 11, ../development/scss/mixins/mixins/_buttons.scss */
 .btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
   color: #000;
-  background-color: #dcad08;
-  border-color: #ba9207;
+  background-color: #417F0B;
+  border-color: #387006;
 }
 /* line 21, ../development/scss/mixins/mixins/_buttons.scss */
 .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
@@ -4122,12 +4122,12 @@ select[multiple].input-lg,
 }
 /* line 29, ../development/scss/mixins/mixins/_buttons.scss */
 .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled.active, .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary:hover, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary.active {
-  background-color: #f7c720;
-  border-color: #f5c009;
+  background-color: #549B17;
+  border-color: #499209;
 }
 /* line 40, ../development/scss/mixins/mixins/_buttons.scss */
 .btn-primary .badge {
-  color: #f7c720;
+  color: #549B17;
   background-color: #000;
 }
 
@@ -4257,7 +4257,7 @@ select[multiple].input-lg,
 }
 /* line 108, ../development/scss/bootstrap/_buttons.scss */
 .btn-link:hover, .btn-link:focus {
-  color: #f7c720;
+  color: #549B17;
   text-decoration: none;
   background-color: transparent;
 }
@@ -4425,7 +4425,7 @@ tbody.collapse.in {
 /* line 76, ../development/scss/bootstrap/_dropdowns.scss */
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
   text-decoration: none;
-  color: #f7c720;
+  color: #549B17;
   background-color: transparent;
 }
 
@@ -4434,7 +4434,7 @@ tbody.collapse.in {
   color: #fff;
   text-decoration: none;
   outline: 0;
-  background-color: #f7c720;
+  background-color: #549B17;
 }
 
 /* line 101, ../development/scss/bootstrap/_dropdowns.scss */
@@ -4993,7 +4993,7 @@ tbody.collapse.in {
   color: #555555;
   background-color: #fff;
   border-bottom-color: transparent;
-  border-top: 3px solid #f7c720;
+  border-top: 3px solid #549B17;
   cursor: default;
 }
 
@@ -5015,7 +5015,7 @@ tbody.collapse.in {
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
   color: #000;
   background-color: transparent;
-  border-bottom: 2px solid #f7c720;
+  border-bottom: 2px solid #549B17;
 }
 
 /* line 149, ../development/scss/bootstrap/_navs.scss */
@@ -5333,9 +5333,10 @@ tbody.collapse.in {
 }
 /* line 236, ../development/scss/bootstrap/_navbar.scss */
 .navbar-nav > li > a {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  line-height: 18px;
+  /*padding-top: 10px;
+  padding-bottom: 10px;*/
+  line-height: 15px;
+  margin-left: 8px;
 }
 @media (max-width: 767px) {
   /* line 244, ../development/scss/bootstrap/_navbar.scss */
@@ -5812,7 +5813,7 @@ tbody.collapse.in {
 .pagination > li > a:hover, .pagination > li > a:focus,
 .pagination > li > span:hover,
 .pagination > li > span:focus {
-  color: #f7c720;
+  color: #549B17;
   background-color: transparent;
   border-color: #fff;
 }
@@ -5822,7 +5823,7 @@ tbody.collapse.in {
 .pagination > .active > span:hover,
 .pagination > .active > span:focus {
   z-index: 2;
-  color: #f7c720;
+  color: #549B17;
   background-color: #fff;
   border-color: #fff;
   cursor: default;
@@ -5976,11 +5977,11 @@ a.label:hover, a.label:focus {
 
 /* line 48, ../development/scss/bootstrap/_labels.scss */
 .label-primary {
-  background-color: #f7c720;
+  background-color: #549B17;
 }
 /* line 7, ../development/scss/mixins/mixins/_labels.scss */
 .label-primary[href]:hover, .label-primary[href]:focus {
-  background-color: #dcad08;
+  background-color: #417F0B;
 }
 
 /* line 52, ../development/scss/bootstrap/_labels.scss */
@@ -6291,7 +6292,7 @@ a.thumbnail.active {
   line-height: 18px;
   color: #fff;
   text-align: center;
-  background-color: #f7c720;
+  background-color: #549B17;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   -webkit-transition: width 0.6s ease;
@@ -6471,8 +6472,8 @@ a.list-group-item:hover, a.list-group-item:focus {
 .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
   z-index: 2;
   color: #fff;
-  background-color: #f7c720;
-  border-color: #f7c720;
+  background-color: #549B17;
+  border-color: #549B17;
 }
 /* line 90, ../development/scss/bootstrap/_list-group.scss */
 .list-group-item.active .list-group-item-heading,
@@ -6925,7 +6926,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 }
 /* line 6, ../development/scss/mixins/mixins/_panels.scss */
 .panel-primary > .panel-heading {
-  color: #f7c720;
+  color: #549B17;
   background-color: transparent;
   border-color: transparent;
   position: relative;
@@ -6947,7 +6948,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 /* line 23, ../development/scss/mixins/mixins/_panels.scss */
 .panel-primary > .panel-heading .badge {
   color: transparent;
-  background-color: #f7c720;
+  background-color: #549B17;
 }
 /* line 29, ../development/scss/mixins/mixins/_panels.scss */
 .panel-primary > .panel-footer + .panel-collapse > .panel-body {
@@ -7737,9 +7738,9 @@ button.close {
 /* line 120, ../development/scss/bootstrap/_carousel.scss */
 .carousel-control:hover, .carousel-control:focus {
   outline: 0;
-  color: #f7c720;
-  -webkit-box-shadow: 0 0 0 0px #f7c720 inset;
-  box-shadow: 0 0 0 0px #f7c720 inset;
+  color: #549B17;
+  -webkit-box-shadow: 0 0 0 0px #549B17 inset;
+  box-shadow: 0 0 0 0px #549B17 inset;
   text-decoration: none;
   opacity: 0.9;
   filter: alpha(opacity=90);
@@ -7799,7 +7800,7 @@ button.close {
   margin: 0;
   width: 12px;
   height: 12px;
-  background-color: #f7c720;
+  background-color: #549B17;
 }
 
 /* line 215, ../development/scss/bootstrap/_carousel.scss */

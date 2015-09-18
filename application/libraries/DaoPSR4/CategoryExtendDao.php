@@ -29,4 +29,11 @@ class CategoryExtendDao extends BaseDao
 
         return $this->commonGetList($where, $option, $this->getVoClassname(), 'c.id AS cat_id, l.lang_id, COALESCE(ce.name, c.name) AS name');
     }
+	
+	public function getMenuList($where = array(), $option = array())
+    {
+		$this->db->from('category AS c');
+        $this->db->join('category_extend AS ce', 'c.id = ce.cat_id', 'INNER');
+        return $this->commonGetList($where, $option, $this->getVoClassname(), 'ce.*');
+	}
 }

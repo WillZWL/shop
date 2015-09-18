@@ -3,17 +3,17 @@ namespace ESG\Panther\Dao;
 
 class ProductDao extends BaseDao
 {
-    private $table_name = 'product';
-    private $vo_class_name = 'ProductVo';
+    private $tableName = 'product';
+    private $voClassName = 'ProductVo';
 
     public function getVoClassname()
     {
-        return $this->vo_class_name;
+        return $this->voClassName;
     }
 
     public function getTableName()
     {
-        return $this->table_name;
+        return $this->tableName;
     }
 
     public function __construct()
@@ -23,12 +23,13 @@ class ProductDao extends BaseDao
 
     public function getCartData($where = [], $option = [], $className = "CartItemDto")
     {
-        $option = ["limit" => 1];
+//        $option = ["limit" => 1];
         $this->db->from("product AS p");
         $this->db->join("product_content AS pc", "pc.prod_sku=p.sku", 'LEFT');
         $this->db->join("price AS pr", "p.sku=pr.sku", 'INNER');
-        
-        $select = "p.sku, p.name, pc.prod_name as nameInLang, pr.price, pr.listing_status, p.website_status";
+        $this->db->join("product_image pi", "pi.sku=p.sku", 'LEFT');
+
+        $select = "p.sku, p.name, pc.prod_name as nameInLang, pr.price, pr.listing_status as listingStatus, p.website_status as websiteStatus, pi.alt_text as image";
         if (isset($option["supplierCost"]))
         {
             $this->db->join("supplier_prod AS sp", "sp.prod_sku=p.sku and sp.order_default=1", 'LEFT');
@@ -181,7 +182,7 @@ class ProductDao extends BaseDao
         return $result_arr;
     }
 
-    public function getWebsiteCatPageProductList($where = [], $option = [])
+    public function getWebsiteCatPageProductList($where = [], $option = [], $classname = 'CatProductListDto')
     {
         $this->db->from('product AS p');
         $this->db->join('price AS pr', 'p.sku = pr.sku AND pr.listing_status = "L" AND p.status = "2"', 'INNER');
@@ -192,8 +193,6 @@ class ProductDao extends BaseDao
         $this->db->where($where);
 
         if (empty($option["num_rows"])) {
-            $this->include_dto($classname);
-
             if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
@@ -215,13 +214,10 @@ class ProductDao extends BaseDao
             $this->db->select("*, if(p.website_status = 'O','1','0') is_oos, if(p.website_status = 'A','1','0') is_arr");
 
             if ($query = $this->db->get()) {
-                $ret = [];
-                $result = $query->result_array();
-                foreach ($result as $row) {
-                    $ret[] = $row["sku"];
+                foreach ($query->result($this->getVoClassname()) as $obj) {
+                    $rs[] = $obj;
                 }
-
-                return $ret;
+                return (object)$rs;
             }
         } else {
             $this->db->select('COUNT(*) AS total');
