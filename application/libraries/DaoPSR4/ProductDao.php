@@ -3,17 +3,17 @@ namespace ESG\Panther\Dao;
 
 class ProductDao extends BaseDao
 {
-    private $table_name = 'product';
-    private $vo_class_name = 'ProductVo';
+    private $tableName = 'product';
+    private $voClassName = 'ProductVo';
 
     public function getVoClassname()
     {
-        return $this->vo_class_name;
+        return $this->voClassName;
     }
 
     public function getTableName()
     {
-        return $this->table_name;
+        return $this->tableName;
     }
 
     public function __construct()
@@ -182,7 +182,7 @@ class ProductDao extends BaseDao
         return $result_arr;
     }
 
-    public function getWebsiteCatPageProductList($where = [], $option = [])
+    public function getWebsiteCatPageProductList($where = [], $option = [], $classname = 'CatProductListDto')
     {
         $this->db->from('product AS p');
         $this->db->join('price AS pr', 'p.sku = pr.sku AND pr.listing_status = "L" AND p.status = "2"', 'INNER');
@@ -193,8 +193,6 @@ class ProductDao extends BaseDao
         $this->db->where($where);
 
         if (empty($option["num_rows"])) {
-            $this->include_dto($classname);
-
             if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
@@ -216,13 +214,10 @@ class ProductDao extends BaseDao
             $this->db->select("*, if(p.website_status = 'O','1','0') is_oos, if(p.website_status = 'A','1','0') is_arr");
 
             if ($query = $this->db->get()) {
-                $ret = [];
-                $result = $query->result_array();
-                foreach ($result as $row) {
-                    $ret[] = $row["sku"];
+                foreach ($query->result($this->getVoClassname()) as $obj) {
+                    $rs[] = $obj;
                 }
-
-                return $ret;
+                return (object)$rs;
             }
         } else {
             $this->db->select('COUNT(*) AS total');

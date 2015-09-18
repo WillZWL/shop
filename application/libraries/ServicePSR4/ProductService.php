@@ -41,27 +41,27 @@ class ProductService extends BaseProductService
 
     public function getHomeProduct($where, $option)
     {
-        return $this->getDao()->getHomeProduct($where, $option);
+        return $this->getDao('Product')->getHomeProduct($where, $option);
     }
 
     public function getListedProductList($platform_id = 'WSGB', $classname = 'WebsiteProdInfoDto')
     {
-        return $this->getDao()->getListedProductList($platform_id, $classname);
+        return $this->getDao('Product')->getListedProductList($platform_id, $classname);
     }
 
     public function getProductWPriceInfo($platform_id = 'WEBGB', $sku = "", $classname = 'WebsiteProdInfoDto')
     {
-        return $this->getDao()->getProductWPriceInfo($platform_id, $sku, $classname);
+        return $this->getDao('Product')->getProductWPriceInfo($platform_id, $sku, $classname);
     }
 
     public function getProductWMarginReqUpdate($where = [], $classname = 'WebsiteProdInfoDto')
     {
-        return $this->getDao()->getProductWMarginReqUpdate($where, $classname);
+        return $this->getDao('Product')->getProductWMarginReqUpdate($where, $classname);
     }
 
     public function getWebsiteCatPageProductList($where = array(), $option = array())
     {
-        return $this->getDao()->getWebsiteCatPageProductList($where, $option);
+        return $this->getDao('Product')->getWebsiteCatPageProductList($where, $option);
     }
 
     public function getCreateProductOptions()
@@ -76,6 +76,6 @@ class ProductService extends BaseProductService
 
     public function isClearance($sku)
     {
-        return $this->getDao()->isClearance($sku);
+        return $this->getDao('Product')->isClearance($sku);
     }
 }
