@@ -619,7 +619,7 @@ class PriceWebsiteService extends PriceService
         return $rrp_factor;
     }
 
-    public function is_display_saving_message($country_id = NULL)
+    public function isDisplaySavingMessage($country_id = NULL)
     {
         if (is_null($country_id)) {
             $country_id = PLATFORMCOUNTRYID;

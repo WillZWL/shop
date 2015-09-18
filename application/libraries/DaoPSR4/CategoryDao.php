@@ -729,8 +729,8 @@ class CategoryDao extends BaseDao
 
         if ($query = $this->db->query($sql, $lang_id)) {
             foreach ($query->result($classname) as $obj) {
-                $data["list"][$obj->get_level()][$obj->get_parent_cat_id()][] = $obj;
-                $data["allcat"][$obj->get_parent_cat_id()][] = $obj;
+                $data["list"][$obj->getLevel()][$obj->getParentCatId()][] = $obj;
+                $data["allcat"][$obj->getParentCatId()][] = $obj;
             }
             return $data;
         }
@@ -751,8 +751,8 @@ class CategoryDao extends BaseDao
 
         if ($query = $this->db->query($sql, $lang_id)) {
             foreach ($query->result($classname) as $obj) {
-                $data["list"][$obj->get_level()][$obj->get_parent_cat_id()][] = $obj;
-                $data["allcat"][$obj->get_parent_cat_id()][] = $obj;
+                $data["list"][$obj->getLevel()][$obj->getParentCatId()][] = $obj;
+                $data["allcat"][$obj->getParentCatId()][] = $obj;
             }
             return $data;
         }
@@ -852,7 +852,7 @@ class CategoryDao extends BaseDao
         }
     }
 
-    public function getCatInfoWithLang($where = [], $option = [], $classname = "Cat_info_w_lang_dto")
+    public function getCatInfoWithLang($where = [], $option = [], $classname = "CatInfoWithLangDto")
     {
         $this->db->from('category AS c');
         $this->db->join('category_extend AS ce', 'c.id = ce.cat_id', 'LEFT');

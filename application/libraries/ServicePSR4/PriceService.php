@@ -1,7 +1,6 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\PriceDao;
 use ESG\Panther\Dao\ProductComplementaryAccDao;
 use ESG\Panther\Service\FreightCatService;
 use ESG\Panther\Service\ProductService;
@@ -14,7 +13,6 @@ class PriceService extends BaseService
     public function __construct()
     {
         parent::__construct();
-        $this->setDao(new PriceDao);
         $this->setCaDao(new ProductComplementaryAccDao);
         $this->freightCatService = new FreightCatService;
         $this->productService = new ProductService;
@@ -36,10 +34,11 @@ class PriceService extends BaseService
             }
         }
 
-        if ($result = $this->getDao()->getListingInfo($sku_list, $platform_id, $lang_id, $option)) {
+        if ($result = $this->getDao('Price')->getListingInfo($sku_list, $platform_id, $lang_id, $option)) {
             if (is_array($result)) {
                 foreach ($result as $obj) {
                     $obj->setPrice(random_markup($obj->getPrice()));
+                    $obj->setRrpPrice(random_markup($this->calcWebsiteProductRrp($obj->getPrice(), $obj->getFixedRrp(), $obj->getRrpFactor())));
                 }
                 $rs = $result;
 
@@ -66,9 +65,9 @@ class PriceService extends BaseService
 
     public function getWDefaultPrice($sku, $platform_id)
     {
-        $price_obj = $this->getDao()->get(["sku" => $sku, "platform_id" => $platform_id]);
+        $price_obj = $this->getDao('Price')->get(["sku" => $sku, "platform_id" => $platform_id]);
         if (!$price_obj || !(call_user_func([$price_obj, "getPrice"]) * 1)) {
-            if (!($default_obj = $this->getDao()->getDefaultConvertedPrice(["sku" => $sku, "platform_id" => $platform_id]))) {
+            if (!($default_obj = $this->getDao('Price')->getDefaultConvertedPrice(["sku" => $sku, "platform_id" => $platform_id]))) {
                 return 0;
             }
             $defaultPlatformConvertedPrice = $default_obj->getDefaultPlatformConvertedPrice();
@@ -287,7 +286,7 @@ class PriceService extends BaseService
 
                 if ($mapped_ca_list = $this->getCaDao()->getMappedAccListWName($where)) {
                     foreach ($mapped_ca_list as $caobj) {
-                        $cadto = $this->getDao()->getPriceCostDto($caobj->getAccessorySku(), $dto->getPlatformId());
+                        $cadto = $this->getDao('Price')->getPriceCostDto($caobj->getAccessorySku(), $dto->getPlatformId());
                         $total_cost += $cadto->getSupplierCost();
                     }
                 }
@@ -322,12 +321,12 @@ class PriceService extends BaseService
         if ($dto->getPrice()) {
             $price = $dto->getPrice();
         } else {
-            $price_obj = $this->getDao()->get(["sku" => $dto->getSku(), "platform_id" => $dto->getPlatformId()]);
+            $price_obj = $this->getDao('Price')->get(["sku" => $dto->getSku(), "platform_id" => $dto->getPlatformId()]);
             if ($price_obj) {
                 $price = $price_obj->getPrice();
                 $dto->setCurrentPlatformPrice($price);
                 if (!($price * 1)) {
-                    if ($default_obj = $this->getDao()->getDefaultConvertedPrice(["sku" => $dto->getSku(), "platform_id" => $dto->getPlatformId()])) {
+                    if ($default_obj = $this->getDao('Price')->getDefaultConvertedPrice(["sku" => $dto->getSku(), "platform_id" => $dto->getPlatformId()])) {
                         $defaultPlatformConvertedPrice = $default_obj->getDefaultPlatformConvertedPrice();
                         $price = $defaultPlatformConvertedPrice;
                         $dto->setDefaultPlatformConvertedPrice($price);
@@ -861,5 +860,25 @@ class PriceService extends BaseService
     {
         $this->tool_path = $value;
         return $this;
+    }
+
+        public function calcWebsiteProductRrp($price = 0, $fixed_rrp = 'Y', $rrp_factor = 1.18)
+    {
+        if ($price > 0) {
+            if ($fixed_rrp == 'Y')
+                $markup = $price * 1.18;
+            else {
+                if ($rrp_factor < 10)
+                    $markup = $price * $rrp_factor;
+                else
+                    return number_format($rrp_factor, 2, ".", "");
+            }
+
+            $remainder = fmod($markup, 5);
+            $add_to = 5 - $remainder;
+            $rrp = number_format($markup - (-$add_to) - .01, 2, '.', '');
+            return number_format($rrp, 2, ".", "");
+        }
+        return 0;
     }
 }

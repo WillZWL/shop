@@ -44,7 +44,7 @@
                 foreach ($currency_list as $currency_obj) {
                     ?>
                     <tr>
-                        <td class="field"><?= $currency_id = $currency_obj->getId() ?>
+                        <td class="field"><?= $currency_id = $currency_obj->getCurrencyId() ?>
                             - <?= $currency_obj->getName() ?></td>
                         <td class="value"><input name="round_up[<?= $currency_id ?>]" class="input"
                                                  value="<?= htmlspecialchars($currency_obj->getRoundUp()) ?>"></td>

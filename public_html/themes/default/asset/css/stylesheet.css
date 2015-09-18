@@ -7916,7 +7916,7 @@ body.layout-boxed-lg #page {
   font-size: 14px;
   font-weight: 300;
   background: #323232;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 /* line 14, ../development/scss/mixins/mixins/_clearfix.scss */
 #footer:before, #footer:after {
@@ -8212,13 +8212,13 @@ body.layout-boxed-lg #page {
 }
 /* line 52, ../development/scss/app/_product.scss */
 .price .price-new {
-  color: #000;
+  color: #589B24;
   font-size: 18px;
 }
 /* line 56, ../development/scss/app/_product.scss */
 .price .price-old {
   font-size: 14px;
-  color: #589B24;
+  color: #000;
   text-decoration: line-through;
 }
 /* line 63, ../development/scss/app/_product.scss */
@@ -8272,11 +8272,12 @@ body.layout-boxed-lg #page {
 }
 /* line 104, ../development/scss/app/_product.scss */
 .product-block .name {
-  padding: 0 15px;
+  color:#999999;
+  padding-bottom:15px;
   line-height: 18px;
-  height: 111px;
+  height: 55px;
   margin-bottom: 0;
-  margin-top: 0;
+  margin-top: 10px;
   overflow: hidden;
 }
 /* line 110, ../development/scss/app/_product.scss */
@@ -8312,7 +8313,7 @@ body.layout-boxed-lg #page {
   padding: 0;
   position: relative;
   text-align: center;
-  padding: 20px 0;
+  padding: 10px 0;
   -webkit-transition: all 0.3s ease-out 0s;
   -o-transition: all 0.3s ease-out 0s;
   transition: all 0.3s ease-out 0s;
@@ -8338,10 +8339,6 @@ body.layout-boxed-lg #page {
   display: inline-block;
   *display: inline;
   zoom: 1;
-}
-/* line 156, ../development/scss/app/_product.scss */
-.product-block .product-meta .action button.btn {
-  width: 100%;
 }
 /* line 161, ../development/scss/app/_product.scss */
 .product-block .zoom, .product-block .quickview {
@@ -8390,6 +8387,10 @@ body.layout-boxed-lg #page {
 /* line 189, ../development/scss/app/_product.scss */
 .product-block .quickview {
   right: 50%;
+}
+
+.products-block .pagination {
+  margin:0;
 }
 
 /* line 193, ../development/scss/app/_product.scss */
@@ -9517,7 +9518,7 @@ body .owl-carousel .owl-wrapper-outer {
  */
 /* line 69, ../development/scss/opencart/_opencart-pages.scss */
 .product-filter {
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   background-color: #f6f6f6;
   font-size: 13px;
   color: #999;
@@ -9535,6 +9536,13 @@ body .owl-carousel .owl-wrapper-outer {
   margin: 10px;
   float: left;
 }
+.product-filter .sort {
+  margin:10px;
+}
+.product-filter .limit {
+  margin:10px;
+}
+
 /* line 305, ../development/scss/mixins/_app.scss */
 .rtl .product-filter .display {
   float: right;
@@ -9544,12 +9552,13 @@ body .owl-carousel .owl-wrapper-outer {
   display: inline-block;
   width: auto;
   box-shadow: none;
-  height: 36px;
+  height: 20px;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   -o-border-radius: 0;
   border-radius: 0;
+  background-color:#fff;
 }
 
 /* line 97, ../development/scss/opencart/_opencart-pages.scss */
@@ -9632,7 +9641,7 @@ body .owl-carousel .owl-wrapper-outer {
 }
 /* line 145, ../development/scss/opencart/_opencart-pages.scss */
 .product-list .product-block .product-meta .right {
-  bottom: 60px;
+  bottom: 70px;
   margin: 0;
   opacity: 1;
   padding: 0 20px;
