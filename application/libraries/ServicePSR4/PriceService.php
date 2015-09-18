@@ -1,6 +1,6 @@
 <?php
 namespace ESG\Panther\Service;
-
+use ESG\Panther\Dao\PriceDao;
 use ESG\Panther\Dao\ProductComplementaryAccDao;
 use ESG\Panther\Service\FreightCatService;
 use ESG\Panther\Service\ProductService;
@@ -13,6 +13,7 @@ class PriceService extends BaseService
     public function __construct()
     {
         parent::__construct();
+        $this->setDao(new PriceDao);
         $this->setCaDao(new ProductComplementaryAccDao);
         $this->freightCatService = new FreightCatService;
         $this->productService = new ProductService;
@@ -862,7 +863,7 @@ class PriceService extends BaseService
         return $this;
     }
 
-        public function calcWebsiteProductRrp($price = 0, $fixed_rrp = 'Y', $rrp_factor = 1.18)
+    public function calcWebsiteProductRrp($price = 0, $fixed_rrp = 'Y', $rrp_factor = 1.18)
     {
         if ($price > 0) {
             if ($fixed_rrp == 'Y')

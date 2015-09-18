@@ -17,8 +17,6 @@
                                 <ul id="accordiondata" class="collapse accordion-body in">
                                     <?php
                                     if ($brand_result) {
-                                        # code...
-                                    }
                                         foreach($brand_result as $brand) {
                                             break;
                                     ?>
@@ -27,6 +25,7 @@
                                         </li>
                                     <?php
                                         }
+                                    }
                                     ?>
                                 </ul>
                             </li>
