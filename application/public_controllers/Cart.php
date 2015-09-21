@@ -73,7 +73,7 @@ Class Cart extends PUB_Controller
     public function info()
     {
         $data['cart_info'] = $this->cartSessionModel->get_cart_info();
-        $this->load->view('/default/cart/info', $data);
+        $this->load->view('cart/info', $data);
     }
 
     public function add_item($sku = "")

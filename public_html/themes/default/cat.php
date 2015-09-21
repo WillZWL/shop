@@ -1,4 +1,4 @@
-<?php $this->load->view('/default/header') ?>
+<?php $this->load->view('header') ?>
 <div id="content" style="margin: 20px auto">
     <aside id="sidebar-right" class="col-md-3">
         <div id="column-right" class="hidden-xs sidebar">
@@ -208,4 +208,4 @@
     </div>
 </div>
 </div>
-<?php $this->load->view('/default/footer') ?>
+<?php $this->load->view('footer') ?>

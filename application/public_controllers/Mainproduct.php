@@ -29,6 +29,6 @@ class Mainproduct extends PUB_Controller
 
         $data['prod_info'] = $this->common_data_prepare_model->get_data_array($this, array("sku" => $sku, "type" => "web"));
 		$data['sv'] = $sv;
-		$this->load->view('/default/product', $data);
+		$this->load->view('product', $data);
     }
 }
