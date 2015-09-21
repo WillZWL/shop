@@ -111,6 +111,29 @@
 }
 
 /*start category page*/
+#sidebar-right .sidebar-right {
+    box-shadow:none;
+    background-color: #323232;
+}
+#column-right{
+    height:1080px;
+}
+.sidebar .list-group-item {
+    border:2px solid #474747;
+}
+.sidebar .list-group-item p{
+    color:#549B17;
+    margin:0;
+    font-family: "Open Sans Semibold", sans-serif;
+    font-size: 16px;
+}
+.sidebar .list-group-item-title{
+    color:#549B17;
+}
+.list-group-item .show-more {
+    color:#999;
+}
+
 .product-list .product-block .product-meta .action .cart{
     margin-right:20px;
 }
@@ -172,7 +195,6 @@
 .product-list .product-block .action > div {
     float:left;
 }
-
 /*end category page*/
 
 /* checkout page */

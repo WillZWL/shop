@@ -7898,9 +7898,13 @@ body.layout-boxed-lg #page {
   padding: 5px 0;
   display: inline-block;
 }
+.sidebar .collapse ul li a {
+   color:#fff;
+}
+
 /* line 362, ../development/scss/app/_layout.scss */
 .sidebar ul li ul li, .sidebar ol li ul li {
-  padding-left: 15px;
+  /*padding-left: 15px;*/
 }
 /* line 316, ../development/scss/mixins/_app.scss */
 .rtl .sidebar ul li ul li, .rtl .sidebar ol li ul li {
@@ -8056,10 +8060,25 @@ body.layout-boxed-lg #page {
   margin: 0;
 }
 /* line 23, ../development/scss/app/_block.scss */
-.sidebar .panel a {
-  font-family: "Open Sans Semibold", sans-serif;  
-  line-height: 140%;
+#list-group-item-title a{
+  color:#549B17;
 }
+.sidebar .panel a {
+  font-family: "Open Sans Semibold", sans-serif;
+  line-height: 140%;
+  color:#549B17;
+}
+.sidebar .panel .collapse a {
+  color:#fff;
+}
+.sidebar .panel #accordiondata1 a {
+  color:#fff;
+}
+.sidebar .panel #accordiondata a {
+  color:#fff;
+}
+
+
 /* line 27, ../development/scss/app/_block.scss */
 .sidebar .panel .panel-heading.nopadding {
   padding: 15px;
@@ -9458,8 +9477,11 @@ body .owl-carousel .owl-wrapper-outer {
 /* siderbar */
 /* line 2, ../development/scss/opencart/_opencart-pages.scss */
 .sidebar {
-  box-shadow: 0 0 0 2px #549B17 inset;
-  padding: 10px 2px 0 2px;
+  /*box-shadow: 0 0 0 2px #549B17 inset;
+  */
+  color:#fff;
+  padding: 10px 10px 0 10px;
+  background-color: #323232;
 }
 
 /* category */
@@ -11189,7 +11211,7 @@ body .owl-carousel .owl-wrapper-outer {
 
 .linksub {
   color: #5DA91B;/*549B17;*/
-  text-decoration: none;  
+  text-decoration: none;
 }
 /* line 52, ../development/scss/bootstrap/_scaffolding.scss */
 .linksub:hover, .linksub:focus {

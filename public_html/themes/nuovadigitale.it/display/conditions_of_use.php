@@ -60,7 +60,7 @@
                         <br /><br />
                         <?= _(' Possibili limitazioni nella quantità disponibile per la vendita o inesattezze o errori nelle informazioni riguardanti l’ articolo o il prezzo.') ?>
                         <br /><br />
-                        <?= _("Quando effettui un ordine per acquistare un prodotto da NuovaDigitale.it, ti invieremo un’ e-mail che conferma la ricezione del tuo ordine ed i dettagli. Il tuo ordine rappresenta un’ offerta  verso di noi per acquistare un prodotto, la quale è accettata da noi quando inviamo una conferma via e-mail riguardante la spedizione dell’ ordine  (l’ email "Conferma di Spedizione"). L’ accettazione dell’ ordine è da ritenersi completa quando ti inviamo l’ email "Conferma di Spedizione". Ogni articolo compreso nel medesimo ordine che non sia riportato sul l’ email "Conferma di Spedizione", non è da considerarsi incluso nel contratto.") ?>
+                        <?= _('Quando effettui un ordine per acquistare un prodotto da NuovaDigitale.it, ti invieremo un’ e-mail che conferma la ricezione del tuo ordine ed i dettagli. Il tuo ordine rappresenta un’ offerta  verso di noi per acquistare un prodotto, la quale è accettata da noi quando inviamo una conferma via e-mail riguardante la spedizione dell’ ordine  (l’ email "Conferma di Spedizione"). L’ accettazione dell’ ordine è da ritenersi completa quando ti inviamo l’ email "Conferma di Spedizione". Ogni articolo compreso nel medesimo ordine che non sia riportato sul l’ email "Conferma di Spedizione", non è da considerarsi incluso nel contratto.') ?>
                     </p>
                     <br /><br />
 
@@ -99,24 +99,24 @@
                         <br /><br />
                         <table border="1">
                         <tr>
-                          <th></th>
-                          <th colspan="5">Tipologia di prodotto</th>
+                          <td></td>
+                          <td colspan="5" align="center" style="width:630px; height: 21px;" valign="middle">Tipologia di prodotto</td>
                         </tr>
                         <tr>
-                          <th>Paese</th>
-                          <th>Accessori</th>
-                          <th>Waterproof</th>
-                          <th>Prodotto principale</th>
-                          <th>Action Camera</th>
-                          <th>Droni</th>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Paese</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Accessori</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Waterproof</td>
+                          <td align="center" style="width:150px; height: 21px;" valign="middle">Prodotto principale</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Action Camera</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Droni</td>
                         </tr>
                         <tr>
-                        <td>Italia</td>
-                        <td>0 mesi</td>
-                        <td>12 mesi</td>
-                        <td>24 mesi</td>
-                        <td>12 mesi</td>
-                        <td>12 mesi</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">Italia</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">0 mesi</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">12 mesi</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">24 mesi</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">12 mesi</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">12 mesi</td>
                         </tr>
                         </table>
                         <?= _('Questa garanzia non copre:
