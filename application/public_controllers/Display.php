@@ -20,7 +20,7 @@ class Display extends PUB_Controller
         if (($page != "shipping")
             && ($page != "conditions_of_use")
             && ($page != "about_us")
-            && ($page != "privacy_policy")
+            && ($page != "privacy_policy"))
         {
 //very important to do page parameter validation
             show_404();
