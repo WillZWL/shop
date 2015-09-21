@@ -109,6 +109,7 @@
     border: 1px solid;
     border-radius: 10px;
 }
+
 /*start category page*/
 .product-list .product-block .product-meta .action .cart{
     margin-right:20px;
@@ -174,3 +175,16 @@
 
 /*end category page*/
 
+/* checkout page */
+.form-group #billingTelCountryCode, .form-group #billingTelAreaCode
+{
+    width: 150px;
+    display: inline-block;
+    margin-left: 2px;
+}
+.form-group #billingTel
+{
+    width: 220px;
+    display: inline-block;
+}
+/* end checkout page */
