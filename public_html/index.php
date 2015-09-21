@@ -296,14 +296,14 @@ switch (ENVIRONMENT)
 			define('SITEVIEW', 'digitaldiscount.co.uk');
 			break;
 
-		case 'dev.aheaddigital.com.au':
-		case 'aheaddigital.com.au':
-			define('SITEVIEW', 'digitaldiscount.com.au');
+		case 'dev.aheaddigital.net':
+		case 'aheaddigital.net':
+			define('SITEVIEW', 'aheaddigital.net');
 			break;
 
 		case 'dev.aheaddigital.co.nz':
 		case 'aheaddigital.co.nz':
-			define('SITEVIEW', 'digitaldiscount.co.nz');
+			define('SITEVIEW', 'aheaddigital.co.nz');
 			break;
 
 		case 'dev.buholoco.es':
