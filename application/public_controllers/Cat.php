@@ -88,7 +88,7 @@ class Cat extends PUB_Controller
         // meta tag
         $data['data']['lang_text'] = $this->getLanguageFile();
         $data["tracking_data"] = array("category_name" => $cat_name['cat'], "category_id" => $cat_id);
-        $this->load->view('/default/cat', $data);
+        $this->load->view('cat', $data);
     }
 
     public function getCatFilterGridInfo($level, $sku_list)

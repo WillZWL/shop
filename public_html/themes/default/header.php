@@ -89,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                <?php //$this->load->view('/default/category'); 
+                <?php //$this->load->view('category');
 					//$this->load->view( APPPATH."views/template/menu/".$lang_id."/menu_big_" . strtolower($platform_id)
 					//$this->load->view( "/views/template/menu/en/menu_webgb");
 					$lang_id = substr(SITE_LANG, 0, 2);

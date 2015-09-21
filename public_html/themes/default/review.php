@@ -1,4 +1,4 @@
-<?php $this->load->view('/default/header') ?>
+<?php $this->load->view('header') ?>
 <!-- header -->
 <div id="review_order" class="col-md-12">
     <div id="content">
@@ -67,4 +67,4 @@
     </div>
 </div>
 <div class="clearfix"></div>
-<?php $this->load->view('/default/footer') ?>
+<?php $this->load->view('footer') ?>

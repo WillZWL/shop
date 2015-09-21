@@ -289,6 +289,53 @@ switch (ENVIRONMENT)
 	define('ENTRYPOINT', 'PUBLIC');
 	define('PLATFORM_TYPE', 'WEBSITE');
 	define('I18N', APPPATH . 'i18n/');
+
+	switch ($_SERVER['SERVER_NAME']) {
+		case 'dev.digitaldiscount.co.uk':
+		case 'digitaldiscount.co.uk':
+			define('SITEVIEW', 'digitaldiscount.co.uk');
+			break;
+
+		case 'dev.aheaddigital.com.au':
+		case 'aheaddigital.com.au':
+			define('SITEVIEW', 'digitaldiscount.com.au');
+			break;
+
+		case 'dev.aheaddigital.co.nz':
+		case 'aheaddigital.co.nz':
+			define('SITEVIEW', 'digitaldiscount.co.nz');
+			break;
+
+		case 'dev.buholoco.es':
+		case 'buholoco.es':
+			define('SITEVIEW', 'buholoco.es');
+			break;
+
+		case 'dev.nuovadigitale.it':
+		case 'nuovadigitale.it':
+			define('SITEVIEW', 'nuovadigitale.it');
+			break;
+
+		case 'dev.numeristock.fr':
+		case 'numeristock.fr':
+			define('SITEVIEW', 'numeristock.fr');
+			break;
+
+		case 'dev.numeristock.be':
+		case 'numeristock.be':
+			define('SITEVIEW', 'numeristock.be');
+			break;
+
+		case 'dev.elektroraj.pl':
+		case 'elektroraj.pl':
+			define('SITEVIEW', 'elektroraj.pl');
+			break;
+
+		default:
+			define('SITEVIEW', 'default');
+			break;
+	}
+
 	session_start();
 	// define('ENTRYPOINT', 'PUBLIC');
 	// var_dump($_SERVER);
