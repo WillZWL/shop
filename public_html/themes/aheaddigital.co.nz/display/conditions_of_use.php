@@ -101,24 +101,24 @@
                         <br /><br />
                         <table border="1">
                         <tr>
-                          <th></th>
-                          <th colspan="5">Type of product</th>
+                          <td></td>
+                          <td colspan="5" align="center" style="width:600px; height: 21px;" valign="middle">Type of product</td>
                         </tr>
                         <tr>
-                          <th>Country</th>
-                          <th>Accessories</th>
-                          <th>Waterproof</th>
-                          <th>Main items</th>
-                          <th>Action Camera</th>
-                          <th>Drones</th>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Country</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Accessories</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Waterproof</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Main items</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Action Camera</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Drones</td>
                         </tr>
                         <tr>
-                        <td>New Zealand</td>
-                        <td>6 months</td>
-                        <td>12 months</td>
-                        <td>12 months</td>
-                        <td>12 months</td>
-                        <td>12 months</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">New Zealand</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">6 months</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">12 months</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">12 months</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">12 months</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">12 months</td>
                         </tr>
                         </table>
                         <?= _('This warranty does not cover:

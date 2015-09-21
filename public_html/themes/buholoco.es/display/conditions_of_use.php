@@ -102,24 +102,24 @@
                         <br /><br />
                         <table border="1">
                         <tr>
-                          <th></th>
-                          <th colspan="5">Tipo de producto</th>
+                          <td></td>
+                          <td colspan="5" align="center" style="width:630px; height: 21px;" valign="middle">Tipo de producto</td>
                         </tr>
                         <tr>
-                          <th>Ciudad</th>
-                          <th>Accesorios</th>
-                          <th>Waterproof</th>
-                          <th>Producto principal</th>
-                          <th>Cámaras</th>
-                          <th>Drones</th>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Ciudad</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Accesorios</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Waterproof</td>
+                          <td align="center" style="width:150px; height: 21px;" valign="middle">Producto principal</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Cámaras</td>
+                          <td align="center" style="width:120px; height: 21px;" valign="middle">Drones</td>
                         </tr>
                         <tr>
-                        <td>ESPAÑA</td>
-                        <td>6 meses</td>
-                        <td>12 meses</td>
-                        <td>24 meses</td>
-                        <td>12 meses</td>
-                        <td>12 meses</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">ESPAÑA</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">6 meses</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">12 meses</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">24 meses</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">12 meses</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">12 meses</td>
                         </tr>
                         </table>
                         <?= _('Esta garantía no cubre:
