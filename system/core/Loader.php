@@ -64,6 +64,7 @@ class CI_Loader {
 	 * @var	array
 	 */
 	protected $_ci_view_paths =	array(
+		VIEWPATH => TRUE,
 		VIEWPATH. SITEVIEW . '/' 	=> TRUE,
 		VIEWPATH.'default/'		=> TRUE
 	);
