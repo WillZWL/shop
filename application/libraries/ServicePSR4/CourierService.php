@@ -25,4 +25,21 @@ class CourierService extends BaseService
     {
         $this->crcDao = $dao;
     }
+
+    public function saveCourierFeed($courier = "", $mawb = "", $so_no_str = "")
+    {
+        $courierFeedVo = $this->getDao('CourierFeed')->get();
+        $obj = clone $courierFeedVo;
+        $obj->setSoNoStr($so_no_str);
+        $obj->setCourierId($courier);
+        $obj->setMawb($mawb);
+        $obj->setExec(0);
+
+        $newObj = $this->getDao('CourierFeed')->insert($obj);
+        $newObj->setBatchId($obj->getId());
+        $this->getDao('CourierFeed')->update($newObj);
+        $batch_id = $newObj->getBatchId();
+
+        return $batch_id;
+    }
 }

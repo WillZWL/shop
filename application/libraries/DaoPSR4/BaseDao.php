@@ -269,35 +269,4 @@ abstract class BaseDao
 
         return false;
     }
-
-    public function transStart()
-    {
-        if (!$this->db->reged_function) {
-            register_shutdown_function(array($this, "fatalHandler"));
-            $this->db->reged_function = 1;
-        }
-        $this->db->trans_autocommit = 0;
-        $this->db->_trans_status = TRUE;
-        $this->db->trans_start();
-    }
-
-    public function transComplete()
-    {
-        $this->db->trans_complete();
-        $this->db->trans_autocommit = 1;
-    }
-
-    public function transRollback()
-    {
-        $this->db->trans_rollback();
-    }
-
-    public function fatalHandler()
-    {
-        $e = error_get_last();
-        if ($e["type"] == 1) {
-            $this->db->trans_rollback();
-        }
-        exit;
-    }
 }

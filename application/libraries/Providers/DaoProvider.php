@@ -13,6 +13,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\UserDao();
         };
 
+        $daoContainer['Attachment'] = function () {
+            return new D\AttachmentDao();
+        };
+
         $daoContainer['AuditLog'] = function () {
             return new D\AuditLogDao();
         };
@@ -97,6 +101,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\ProductContentExtendDao();
         };
 
+        $daoContainer['ProductComplementaryAcc'] = function () {
+            return new D\ProductComplementaryAccDao();
+        };
+
         $daoContainer['Faqadmin'] = function () {
             return new D\FaqadminDao();
         };
@@ -133,12 +141,20 @@ class DaoProvider implements ServiceProviderInterface
             return new D\CourierDao();
         };
 
+        $daoContainer['CourierFeed'] = function () {
+            return new D\CourierFeedDao();
+        };
+
         $daoContainer['CourierRegion'] = function () {
             return new D\CourierRegionDao();
         };
 
         $daoContainer['DeliveryType'] = function () {
             return new D\DeliveryTypeDao();
+        };
+
+        $daoContainer['DelayedOrder'] = function () {
+            return new D\DelayedOrderDao();
         };
 
         $daoContainer['Brand'] = function () {
@@ -181,6 +197,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\PlatformCourierDao();
         };
 
+        $daoContainer['PaymentGateway'] = function () {
+            return new D\PaymentGatewayDao();
+        };
+
         $daoContainer['SubCatPlatformVar'] = function () {
             return new D\SubCatPlatformVarDao();
         };
@@ -201,12 +221,20 @@ class DaoProvider implements ServiceProviderInterface
             return new D\ExchangeRateHistoryDao();
         };
 
+        $daoContainer['Template'] = function () {
+            return new D\TemplateDao();
+        };
+
         $daoContainer['TransmissionLog'] = function () {
             return new D\TransmissionLogDao();
         };
 
         $daoContainer['InterfaceExchangeRate'] = function () {
             return new D\InterfaceExchangeRateDao();
+        };
+
+        $daoContainer['IntegratedOrderFulfillment'] = function () {
+            return new D\IntegratedOrderFulfillmentDao();
         };
 
         $daoContainer['Batch'] = function () {
@@ -271,6 +299,10 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['OrderNotes'] = function () {
             return new D\OrderNotesDao();
+        };
+
+        $daoContainer['OrderStatusHistory'] = function () {
+            return new D\OrderStatusHistoryDao();
         };
 
         $daoContainer['Refund'] = function () {

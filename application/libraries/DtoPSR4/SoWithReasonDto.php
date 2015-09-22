@@ -1,31 +1,27 @@
 <?php
 class SoWithReasonDto
 {
-    private $so_no;
-    private $biz_type;
-    private $platform_id;
-    private $reason_id;
-    private $reason_display_name;
-    private $order_reason_note;
-    private $status;
-    private $refund_status;
-    private $hold_status;
-    private $hold_reason;
-    private $refund_status_progress;
-
-    public function setSoNo($so_no)
-    {
-        $this->so_no = $so_no;
-    }
+    protected $so_no;
+    protected $biz_type;
+    protected $platform_id;
+    protected $status;
+    protected $refund_status;
+    protected $hold_status;
+    protected $reason_id;
+    protected $reason_display_name;
+    protected $order_reason_note;
+    protected $hold_reason;
+    protected $refund_status_progress;
 
     public function getSoNo()
     {
         return $this->so_no;
     }
 
-    public function setBizType($biz_type)
+    public function setSoNo($value)
     {
-        $this->biz_type = $biz_type;
+        $this->so_no = $value;
+        return $this;
     }
 
     public function getBizType()
@@ -33,9 +29,10 @@ class SoWithReasonDto
         return $this->biz_type;
     }
 
-    public function setPlatformId($platform_id)
+    public function setBizType($value)
     {
-        $this->platform_id = $platform_id;
+        $this->biz_type = $value;
+        return $this;
     }
 
     public function getPlatformId()
@@ -43,9 +40,10 @@ class SoWithReasonDto
         return $this->platform_id;
     }
 
-    public function setReasonId($reason_id)
+    public function setPlatformId($value)
     {
-        $this->reason_id = $reason_id;
+        $this->platform_id = $value;
+        return $this;
     }
 
     public function getReasonId()
@@ -53,9 +51,10 @@ class SoWithReasonDto
         return $this->reason_id;
     }
 
-    public function setReasonDisplayName($reason_display_name)
+    public function setReasonId($value)
     {
-        $this->reason_display_name = $reason_display_name;
+        $this->reason_id = $value;
+        return $this;
     }
 
     public function getReasonDisplayName()
@@ -63,9 +62,10 @@ class SoWithReasonDto
         return $this->reason_display_name;
     }
 
-    public function setOrderReasonNote($order_reason_note)
+    public function setReasonDisplayName($value)
     {
-        $this->order_reason_note = $order_reason_note;
+        $this->reason_display_name = $value;
+        return $this;
     }
 
     public function getOrderReasonNote()
@@ -73,9 +73,10 @@ class SoWithReasonDto
         return $this->order_reason_note;
     }
 
-    public function setStatus($status)
+    public function setOrderReasonNote($value)
     {
-        $this->status = $status;
+        $this->order_reason_note = $value;
+        return $this;
     }
 
     public function getStatus()
@@ -83,9 +84,10 @@ class SoWithReasonDto
         return $this->status;
     }
 
-    public function setRefundStatus($refund_status)
+    public function setStatus($value)
     {
-        $this->refund_status = $refund_status;
+        $this->status = $value;
+        return $this;
     }
 
     public function getRefundStatus()
@@ -93,9 +95,10 @@ class SoWithReasonDto
         return $this->refund_status;
     }
 
-    public function setHoldStatus($hold_status)
+    public function setRefundStatus($value)
     {
-        $this->hold_status = $hold_status;
+        $this->refund_status = $value;
+        return $this;
     }
 
     public function getHoldStatus()
@@ -103,9 +106,10 @@ class SoWithReasonDto
         return $this->hold_status;
     }
 
-    public function setHoldReason($hold_reason)
+    public function setHoldStatus($value)
     {
-        $this->hold_reason = $hold_reason;
+        $this->hold_status = $value;
+        return $this;
     }
 
     public function getHoldReason()
@@ -113,9 +117,10 @@ class SoWithReasonDto
         return $this->hold_reason;
     }
 
-    public function setRefundStatusProgress($refund_status_progress)
+    public function setHoldReason($value)
     {
-        $this->refund_status_progress = $refund_status_progress;
+        $this->hold_reason = $value;
+        return $this;
     }
 
     public function getRefundStatusProgress()
@@ -123,4 +128,9 @@ class SoWithReasonDto
         return $this->refund_status_progress;
     }
 
+    public function setRefundStatusProgress($value)
+    {
+        $this->refund_status_progress = $value;
+        return $this;
+    }
 }

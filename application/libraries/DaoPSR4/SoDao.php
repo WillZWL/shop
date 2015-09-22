@@ -4,7 +4,7 @@ namespace ESG\Panther\Dao;
 class SoDao extends BaseDao
 {
     private $tableName = "so";
-    private $voClassName = "So_vo";
+    private $voClassName = "SoVo";
 
     public function __construct()
     {
@@ -28,7 +28,7 @@ class SoDao extends BaseDao
         return $this->commonGetList($classname, $where, $option, "p.sku,p.name,p.surplus_quantity");
     }
 
-    public function get_so_w_reason($where = [], $option = [], $classname = 'so_w_reason_dto')
+    public function getSoWithReason($where = [], $option = [], $classname = 'SoWithReasonDto')
     {
         $this->db->from("so");
         $this->db->join("so_extend soex", "soex.so_no = so.so_no", 'INNER');
@@ -181,7 +181,7 @@ SQL;
                 if ($query = $this->db->query($sql, [$sourcing['id']])) {
                     $orders = $query->result_array();
                     foreach ($orders as $key => $order) {
-                        $result = $this->get_order_item_num($order['Order number'], $sourcing['id']);
+                        $result = $this->getOrderItemNum($order['Order number'], $sourcing['id']);
                         if ($result['num'] > 1) {
                             $orders[$key]['Boundled'] = 'TRUE';
                         } else {
@@ -195,7 +195,7 @@ SQL;
         return FALSE;
     }
 
-    private function get_order_item_num($so_no, $supplier_id)
+    private function getOrderItemNum($so_no, $supplier_id)
     {
         $this->db->select('count(si.so_no) as num');
         $this->db->from('so_item as si');
@@ -316,7 +316,7 @@ SQL;
         return false;
     }
 
-    public function get_expect_delivery_date_report($where = [], $option = [], $classname = "Expect_delivery_date_report_dto")
+    public function get_expect_delivery_date_report($where = [], $option = [], $classname = "ExpectDeliveryDateReportDto")
     {
         $this->db->from("so");
         $this->db->join('client as c', "so.client_id = c.id", 'LEFT');
@@ -329,7 +329,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, "so.so_no, so.platform_id, `sops`.`payment_gateway_id`, so.platform_order_id, c.ext_client_id, so.txn_id, so.amount, so.order_create_date, so.expect_delivery_date, so.bill_name, c.email, CONCAT_WS('', `c`.`tel_1`, `c`.`tel_2`, `c`.`tel_3`) as contact_no, so.dispatch_date, so.status, so.hold_status, so.refund_status, sps.score, so.modify_by");
     }
 
-    public function get_compensation_report($where = [], $option = [], $classname = "Compensation_report_dto")
+    public function get_compensation_report($where = [], $option = [], $classname = "CompensationReportDto")
     {
         $this->db->from("so_compensation as soc");
         $this->db->join("(
@@ -347,10 +347,8 @@ SQL;
         return $this->commonGetList($classname, $where, $option, "so.platform_id, so.so_no, p.name prod_name, soc.item_sku,soc.create_by as request_by, soc.modify_on as approval_date, soc.modify_by as approved_by, soch.note as reason, soc.create_on as request_date");
     }
 
-    public function get_preorder_list($where = [], $option = [], $classname = "Preorder_list_dto")
+    public function getPreorderList($where = [], $option = [], $classname = "PreorderListDto")
     {
-
-
         $this->db->from("so");
         $this->db->join("so_item as soi", "soi.so_no=so.so_no", "INNER");
         $this->db->join("product p", "p.sku=soi.prod_sku", "INNER");
@@ -373,7 +371,7 @@ SQL;
         return false;
     }
 
-    public function get_sourcing_region_report($where = [], $option = [], $classname = "Sourcing_region_report_dto")
+    public function get_sourcing_region_report($where = [], $option = [], $classname = "SourcingRegionReportDto")
     {
         $this->db->from("so");
         $this->db->join("so_item as soi", "soi.so_no = so.so_no", "INNER");
@@ -388,7 +386,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, "so.platform_id, soex.conv_site_id, so.so_no, so.order_create_date, soi.prod_name, soi.prod_sku, soi.qty, (so.amount * so.rate) as order_amount, (soid.unit_price*so.rate) as unit_price, (soid.profit * so.rate) as profit");
     }
 
-    public function get_special_order_report($where = [], $option = [], $classname = "Special_order_report_dto")
+    public function get_special_order_report($where = [], $option = [], $classname = "SpecialOrderReportDto")
     {
         $this->db->from("so");
         $this->db->join("order_status_history as osh", "so.so_no = osh.so_no and osh.status=6", "LEFT");
@@ -401,7 +399,7 @@ SQL;
                             SELECT sops.so_no, pm.name
                             FROM so_payment_status sops
                             JOIN payment_gateway pm
-                                ON sops.payment_gateway_id = pm.id
+                                ON sops.payment_gateway_id = pm.payment_gateway_id
                         ) AS pmgw", "pmgw.so_no = so.so_no", "LEFT");
 
         $where['so.status >='] = 3;
@@ -409,7 +407,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, "so.biz_type, so.platform_id, pmgw.name pmgw_name, so.bill_country_id, so.txn_id, so.client_id, so.so_no, p.name prod_name, cat.name cat_name, soid.item_sku, so.dispatch_date, so.order_create_date, so.amount, so.delivery_type_id, so.currency_id, so.create_by as request_by, osh.create_on as approval_date, osh.create_by as approved_by, ore.reason_display_name as reason");
     }
 
-    public function get_all_orders_report($start_date, $end_date, $so_number = "", $order_type = "", $psp_gateway = "", $hold_reason = "", $currency = "", $classname = "So_screening_dto")
+    public function get_all_orders_report($start_date, $end_date, $so_number = "", $order_type = "", $psp_gateway = "", $hold_reason = "", $currency = "", $classname = "SoScreeningDto")
     {
         $current_so_number = "";
         $trace_back = 0;
@@ -535,24 +533,24 @@ SQL;
 
         foreach ($result->result("object", $classname) as $row) {
             $rs[$i] = $row;
-            $rs[$i]->set_order_quantity($rs[$i]->get_item_quantity());
-            if ($current_so_number == $row->get_so_no()) {
+            $rs[$i]->setOrderQuantity($rs[$i]->getItemQuantity());
+            if ($current_so_number == $row->getSoNo()) {
                 $trace_back++;
-                $total_quantity += $rs[$i]->get_item_quantity();
+                $total_quantity += $rs[$i]->getItemQuantity();
                 for ($j = ($i - $trace_back); $j <= $i; $j++) {
-                    $rs[$j]->set_order_quantity($total_quantity);
+                    $rs[$j]->setOrderQuantity($total_quantity);
                 }
             } else {
                 $trace_back = 0;
-                $total_quantity = $rs[$i]->get_item_quantity();
+                $total_quantity = $rs[$i]->getItemQuantity();
             }
-            $current_so_number = $row->get_so_no();
+            $current_so_number = $row->getSoNo();
             $i++;
         }
         return $rs;
     }
 
-    public function getCreditCheckList($where = [], $option = [], $type = "", $classname = "Credit_check_list_dto")
+    public function getCreditCheckList($where = [], $option = [], $type = "", $classname = "CreditCheckListDto")
     {
 
         $this->db->from('so');
@@ -774,14 +772,14 @@ SQL;
         return FALSE;
     }
 
-    public function orderQuickSearch($where = [], $option = [], $classname = "Quick_search_result_dto")
+    public function orderQuickSearch($where = [], $option = [], $classname = "QuickSearchResultDto")
     {
         $this->db->from('so');
         $this->db->join('client c', 'c.id = so.client_id', 'LEFT');
         $this->db->join('so_extend soe', 'soe.so_no = so.so_no', 'LEFT');
         $this->db->join('so_credit_chk socc', 'socc.so_no = so.so_no', 'LEFT');
         $this->db->join('so_payment_status sops', 'sops.so_no = so.so_no', 'LEFT');
-        $this->db->join('payment_gateway pmgw', 'pmgw.id = sops.payment_gateway_id', 'LEFT');
+        $this->db->join('payment_gateway pmgw', 'pmgw.payment_gateway_id = sops.payment_gateway_id', 'LEFT');
 
         if ($option["detail"] != "") {
             $this->db->join('(SELECT si.so_no, GROUP_CONCAT(CONCAT_WS(\'::\', si.prod_sku, p.name, CAST(si.qty AS CHAR), CAST(si.unit_price AS CHAR), CAST(si.amount AS CHAR),CAST(si.vat_total AS CHAR),IFNULL(p.image," "),si.warranty_in_month)
@@ -924,7 +922,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_orders_for_dm($where = [], $option = [], $classname = "So_w_client_and_item_dto")
+    public function get_orders_for_dm($where = [], $option = [], $classname = "SoWithClientAndItemDto")
     {
         $this->db->from("so");
         $this->db->join("so_payment_status as sps", "sps.so_no=so.so_no and sps.payment_status='S'", 'INNER');
@@ -932,7 +930,7 @@ SQL;
         $this->db->join("so_item as si", "si.so_no=so.so_no", 'INNER');
         $this->db->join("so_risk as sr", "sr.so_no=so.so_no and sr.risk_requested=0", 'INNER');
         $this->db->where($where);
-        $this->db->select("so.so_no, so.currency_id, so.amount, so.create_at, so.lang_id, so.fingerprintId, sps.payment_gateway_id, sps.risk_ref3, sps.risk_ref4, sps.payer_email,
+        $this->db->select("so.so_no, so.currency_id, so.amount, so.create_at, so.lang_id, so.fingerprint_id, sps.payment_gateway_id, sps.risk_ref3, sps.risk_ref4, sps.payer_email,
         si.line_no, si.prod_sku, si.prod_name, si.qty, si.unit_price,
         c.email, c.companyname, c.del_company, c.address_1, c.address_2, c.address_3, c.postcode, c.city, c.state, c.country_id, c.del_address_1, c.del_address_2, c.del_address_3, c.del_postcode, c.del_city, c.del_state, c.del_country_id, c.forename, c.surname, c.tel_1, c.tel_2, c.tel_3");
 
@@ -1269,7 +1267,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_ack_list($platform = "", $classname = "Amazon_ack_dto")
+    public function get_ack_list($platform = "", $classname = "AmazonAckDto")
     {
         if ($platform == "") {
             return FALSE;
@@ -1293,7 +1291,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_fulfillment_list($platform = "", $classname = "Amazon_fulfillment_dto")
+    public function get_fulfillment_list($platform = "", $classname = "AmazonFulfillmentDto")
     {
         if ($platform == "") {
             return FALSE;
@@ -1328,7 +1326,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_fnac_fulfillment_list($platform = "FNACFR", $classname = "Fnac_fulfillment_dto")
+    public function get_fnac_fulfillment_list($platform = "FNACFR", $classname = "FnacFulfillmentDto")
     {
         if ($platform == "") {
             return FALSE;
@@ -1799,7 +1797,7 @@ SQL;
         return $array;
     }
 
-    public function get_product_hscode_report($where = [], $option = [], $classname = "Product_hscode_report_dto")
+    public function get_product_hscode_report($where = [], $option = [], $classname = "ProductHscodeReportDto")
     {
         $sql = "SELECT smm.ext_sku AS mastersku, p.sku AS sku, p.name AS product,
             c.name category, sc.name subcategory, ssc.name sub_subcategory,
@@ -1849,7 +1847,7 @@ SQL;
         $this->db->join("client c", "c.id = so.client_id", "INNER");
     }
 
-    public function getShipmentDeliveryInfo($so_no = '', $classname = 'shipment_info_to_courier_dto')
+    public function getShipmentDeliveryInfo($so_no = '', $classname = 'ShipmentInfoToCourierDto')
     {
         $sql = "SELECT
                     so.platform_id, soa.sh_no, so.so_no, so.platform_order_id,
@@ -1896,7 +1894,7 @@ SQL;
         return $array;
     }
 
-    public function getShipmentDeliveryInfoDhl($so_no = '', $classname = 'shipment_info_to_courier_dhl_dto')
+    public function getShipmentDeliveryInfoDhl($so_no = '', $classname = 'ShipmentInfoToCourierDhlDto')
     {
         $sql = "
                 SELECT
@@ -1939,7 +1937,7 @@ SQL;
         return $array;
     }
 
-    public function getShipmentDeliveryInfoCourier($so_no = '', $classname = 'shipment_info_to_courier_dhl_dto')
+    public function getShipmentDeliveryInfoCourier($so_no = '', $classname = 'ShipmentInfoToCourierDhlDto')
     {
         $sql = "
                 SELECT CONCAT_WS('', c.tel_1, c.tel_2, c.tel_3) AS tel, so.delivery_name, so.delivery_company, so.delivery_address, so.delivery_postcode, so.delivery_city, so.delivery_state, so.delivery_country_id, soid.qty, vpo.prod_weight, soid.unit_price amount, so.rate, vpo.cc_desc, vpo.cc_code, so.so_no, vpo.price, vpo.free_delivery_limit, vpo.delivery_charge, vpo.platform_id, vpo.declared_pcent, so.currency_id, soid.item_sku prod_sku
@@ -1968,7 +1966,7 @@ SQL;
         return $array;
     }
 
-    public function getShipmentDeliveryInfoCourierForTnt($so_no = '', $classname = 'shipment_info_to_courier_dhl_dto')
+    public function getShipmentDeliveryInfoCourierForTnt($so_no = '', $classname = 'ShipmentInfoToCourierDhlDto')
     {
         $sql = "
                 SELECT so.so_no, so.delivery_name, so.delivery_address, so.delivery_city, so.delivery_state, so.delivery_postcode, so.delivery_country_id, so.delivery_name, CONCAT_WS('', c.tel_1, c.tel_2, c.tel_3) AS tel, vpo.prod_weight, soid.unit_price amount, so.currency_id, cat.name cat_name, cat2.name subcat, cat3.name subsubcat
@@ -2026,7 +2024,7 @@ SQL;
         return $array;
     }
 
-    public function get_wow_mail_list($where = [], $option = [], $classname = "wow_mail_list_dto")
+    public function getWowMailList($where = [], $option = [], $classname = "WowMailListDto")
     {
         $this->db->from('so');
         $this->db->join('so_payment_status sps', 'so.so_no = sps.so_no', 'LEFT');
@@ -2050,13 +2048,13 @@ SQL;
         if ($query = $this->db->get()) {
             foreach ($query->result($classname) as $obj) {
                 $found = false;
-                $dispatch_date = $obj->get_dispatch_date();
-                $pay_date = $obj->get_pay_date();
-                $order_create_date = $obj->get_order_create_date();
-                $expect_ship_days = $obj->get_expect_ship_days();
+                $dispatch_date = $obj->getDispatchDate();
+                $pay_date = $obj->getPayDate();
+                $order_create_date = $obj->getOrderCreateDate();
+                $expect_ship_days = $obj->getExpectShipDays();
 
                 if (!empty($expect_ship_days)) {
-                    $expect_ship_days = $obj->get_expect_ship_days();
+                    $expect_ship_days = $obj->getExpectShipDays();
                     $max_ship_day = trim(substr($expect_ship_days, strpos($expect_ship_days, '-') + 1));
 
                     if (ctype_digit($max_ship_day)) {
@@ -2099,7 +2097,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_so_w_payment($where = [], $option = [], $classname = "So_w_payment_dto")
+    public function get_so_w_payment($where = [], $option = [], $classname = "SoWithPaymentDto")
     {
 
         $this->db->from('so');
@@ -2151,7 +2149,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_cc_list($where = [], $option = [], $classname = '')
+    public function getCcList($where = [], $option = [], $classname = '')
     {
         $this->db->from('so');
 
@@ -2198,7 +2196,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_skype_report_list($start_date = "", $end_date = "", $where = [], $classname = "Skype_report_dto")
+    public function get_skype_report_list($start_date = "", $end_date = "", $where = [], $classname = "SkypeReportDto")
     {
         $join_clause = $where_clause = '';
         if (!empty($where)) {
@@ -2333,7 +2331,7 @@ SQL;
         return $rs;
     }
 
-    public function get_delay_report_item_list($start_date, $end_date, $where, $classname = 'Delay_report_item_list_dto')
+    public function get_delay_report_item_list($start_date, $end_date, $where, $classname = 'DelayReportItemListDto')
     {
         $sql = "
             SELECT
@@ -2411,7 +2409,7 @@ SQL;
         return $rs;
     }
 
-    public function get_customer_extraction_item_list($where, $where1, $where2, $curr, $classname = 'Customer_extraction_item_list_dto')
+    public function get_customer_extraction_item_list($where, $where1, $where2, $curr, $classname = 'CustomerExtractionItemListDto')
     {
         $sql = "
                 SELECT
@@ -2550,7 +2548,7 @@ SQL;
         return $rs;
     }
 
-    public function get_voucher_report_item_list($start_date, $end_date, $where, $classname = 'Voucher_report_item_list_dto')
+    public function get_voucher_report_item_list($start_date, $end_date, $where, $classname = 'VoucherReportItemListDto')
     {
         $sql = "SELECT so.platform_id, so.biz_type, so.so_no, so.create_on order_date, c.email, soex.voucher_code
                 FROM so
@@ -2576,7 +2574,7 @@ SQL;
         return $rs;
     }
 
-    public function getReevooCustomerFeedDto($last_access_time = "", $classname = "Reevoo_customer_feed_dto")
+    public function getReevooCustomerFeedDto($last_access_time = "", $classname = "ReevooCustomerFeedDto")
     {
         $option = ["limit" => -1];
         $this->db->from("so");
@@ -2599,7 +2597,7 @@ SQL;
         $this->db->from("so");
         $this->db->join("so_payment_status sops", "sops.so_no=so.so_no", "INNER");
         $this->db->join("so_extend soext", "soext.so_no=so.so_no", "LEFT");
-        $this->include_dto("dynamic_shipment_status_dto");
+
         $select_str = "
                     so.so_no as so_no, if(sops.pay_date, sops.pay_date, so.order_create_date) as pay_date,
                     so.status as order_status,
@@ -2613,7 +2611,7 @@ SQL;
         $this->db->where($where);
         $this->db->limit(1);
 
-        $classname = "dynamic_shipment_status_dto";
+        $classname = "DynamicShipmentStatusDto";
 
         if ($query = $this->db->get()) {
             foreach ($query->result($classname) as $obj) {
@@ -2645,7 +2643,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_order_history($client_id, $classname = "Order_history_dto")
+    public function get_order_history($client_id, $classname = "OrderHistoryDto")
     {
         # sbf #3746 don't include complementary accessory on front end
         $ca_catid_arr = implode(',', $this->getAccessoryCatidArr());
@@ -2683,7 +2681,7 @@ SQL;
         return $accessory_catid_arr = ["753"];
     }
 
-    public function get_unpaid_order_history($client_id, $payment_gateway_arr = [], $classname = "Order_history_dto")
+    public function get_unpaid_order_history($client_id, $payment_gateway_arr = [], $classname = "OrderHistoryDto")
     {
         # sbf #3746 don't include complementary accessory on front end
         $ca_catid_arr = implode(',', $this->getAccessoryCatidArr());
@@ -2714,7 +2712,7 @@ SQL;
         return $this->common_get_list($where, $option, $this->getVoClassname(), "so.*");
     }
 
-    public function getEbayFeedbackEmailContent($where = [], $option = [], $classname = "ebay_feedback_email_dto")
+    public function getEbayFeedbackEmailContent($where = [], $option = [], $classname = "EbayFeedbackEmailDto")
     {
         if (!isset($option["limit"])) {
             $option["limit"] = -1;
@@ -2729,7 +2727,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, "so.so_no, so.platform_id, c.email, so.delivery_name, GROUP_CONCAT(CONCAT(soi.ext_item_cd,',',soi.prod_name) SEPARATOR '||')item_list, pbv.language_id");
     }
 
-    public function get_flex_sales_invoice($where, $classname = "sales_invoice_dto")
+    public function get_flex_sales_invoice($where, $classname = "SalesInvoiceDto")
     {
         $option['limit'] = -1;
         $this->db->from("(select so.so_no, so.biz_type, so.parent_so_no, so.status, so.finance_dispatch_date,
@@ -2756,7 +2754,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'tbl_1.txn_id, tbl_1.biz_type, tbl_1.order_reason, tbl_1.parent_so_no, tbl_1.split_so_group, RIGHT(tbl_1.platform_id,2) as sm_code, SUBSTR(tbl_1.platform_id, 1, CHAR_LENGTH(tbl_1.platform_id) - 2) as contain_size, tbl_1.client_promotion_code as promotion_code, CONCAT(gm.gateway_code, "I") tran_type,date_format(tbl_1.finance_dispatch_date, "%Y-%m-%d") dispatch_date, date_format(tbl_1.txn_time, "%Y-%m-%d") txn_time, map.ext_sku product_code, tbl_1.platform_id, tbl_1.flex_batch_id, gm.gateway_code AS report_pmgw, if(tbl_1.gateway_id !="", tbl_1.gateway_id, sops.payment_gateway_id) as gateway_id, tbl_1.currency_id, map.ext_sku AS master_sku, soid.qty AS qty, soid.amount AS amount, tbl_1.order_create_date, c.email AS customer_email, tbl_1.so_no, if(soid.line_no = 1,tbl_1.delivery_charge,0) AS delivery_charge, soid.line_no as line_index');
     }
 
-    public function get_flex_refund_invoice($where, $classname = "refund_invoice_dto")
+    public function get_flex_refund_invoice($where, $classname = "RefundInvoiceDto")
     {
         $option['limit'] = -1;
         $this->db->from("flex_refund frf");
@@ -2804,7 +2802,7 @@ SQL;
         return FALSE;
     }
 
-    public function getEbayPendingShipmentUpdateOrders($where = [], $option = [], $classname = "ebay_pending_shipment_orders_dto")
+    public function getEbayPendingShipmentUpdateOrders($where = [], $option = [], $classname = "EbayPendingShipmentOrdersDto")
     {
         $option['limit'] = -1;
         $option['array_list'] = 1;
@@ -2821,7 +2819,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, soi.ext_item_cd , count(*) item_count, sosh.courier_id, sosh.tracking_no, so.dispatch_date, pbv.platform_country_id');
     }
 
-    public function getQoo10PendingShipmentUpdateOrders($where = [], $option = [], $classname = "qoo10_pending_shipment_orders_dto")
+    public function getQoo10PendingShipmentUpdateOrders($where = [], $option = [], $classname = "Qoo10PendingShipmentOrdersDto")
     {
         $option['limit'] = -1;
         $option['array_list'] = 1;
@@ -2839,7 +2837,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, so.txn_id, courier.courier_name, soi.ext_item_cd , count(*) item_count, sosh.courier_id, sosh.tracking_no, so.dispatch_date, pbv.platform_country_id');
     }
 
-    public function getRakutenPendingShipmentUpdateOrders($where = [], $option = [], $classname = "rakuten_pending_shipment_orders_dto")
+    public function getRakutenPendingShipmentUpdateOrders($where = [], $option = [], $classname = "RakutenPendingShipmentOrdersDto")
     {
         $option['limit'] = -1;
         $option['array_list'] = 1;
@@ -2857,7 +2855,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, so.txn_id, courier.courier_name, soi.ext_item_cd , count(*) item_count, sosh.courier_id, sosh.tracking_no, so.dispatch_date, pbv.platform_country_id');
     }
 
-    public function getAutomatedFeedbackEmailContent($where = [], $option = [], $classname = "Feedback_email_dto")
+    public function getAutomatedFeedbackEmailContent($where = [], $option = [], $classname = "FeedbackEmailDto")
     {
         $option['limit'] = -1;
         $this->db->from("so");
@@ -2961,7 +2959,7 @@ SQL;
         }
     }
 
-    public function get_pending_order_info($where = [], $option = [], $classname = "Pending_order_dto")
+    public function get_pending_order_info($where = [], $option = [], $classname = "PendingOrderDto")
     {
         $option['limit'] = -1;
         $this->db->from("flex_ria AS fr");
@@ -3018,7 +3016,7 @@ SQL;
         return $rs;
     }
 
-    public function getAftershipData($where = [], $option = [], $classname = "aftership_data_dto")
+    public function getAftershipData($where = [], $option = [], $classname = "AftershipDataDto")
     {
         $option['limit'] = -1;
         $this->db->from("so");
@@ -3030,7 +3028,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'sosh.courier_id courier, sosh.tracking_no trackingno, c.email clientemail, CONCAT_WS(" ",c.tel_1, c.tel_2,c.tel_3) as buyertel, so.so_no so_no, so.bill_name bill_name, cy.id_3_digit country_code, so.dispatch_date');
     }
 
-    public function getAftershipReportForFtp($where = [], $option = [], $classname = "aftership_data_dto")
+    public function getAftershipReportForFtp($where = [], $option = [], $classname = "AftershipDataDto")
     {
         $option['limit'] = -1;
         $this->db->from("so");
@@ -3043,7 +3041,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'sosh.tracking_no trackingno, if(sosh.courier_id="toll-global-expr","toll-global-express" , sosh.courier_id) courier, so.so_no so_no, so.bill_name bill_name, c.email clientemail, cy.id_3_digit country_code, so.dispatch_date');
     }
 
-    public function getWowEmailListData($where = [], $option = [], $classname = "aftership_data_dto")
+    public function getWowEmailListData($where = [], $option = [], $classname = "AftershipDataDto")
     {
         $this->db->from('so');
         $this->db->join('(
@@ -3071,7 +3069,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_thank_you_mail_list($where = [], &$replace_last_update = Null, $option = [], $classname = "aftership_mail_list_dto")
+    public function getThankYouMailList($where = [], &$replace_last_update = Null, $option = [], $classname = "AftershipMailListDto")
     {
         $this->db->from('so');
         $this->db->join('so_extend soext', 'so.so_no = soext.so_no', 'LEFT');
@@ -3096,13 +3094,13 @@ SQL;
         if ($query = $this->db->get()) {
             foreach ($query->result($classname) as $obj) {
                 $found = false;
-                $dispatch_date = $obj->get_dispatch_date();
-                $pay_date = $obj->get_pay_date();
-                $order_create_date = $obj->get_order_create_date();
-                $expect_ship_days = $obj->get_expect_ship_days();
-                $expect_del_days = $obj->get_expect_del_days();
-                $aftership_stat = $obj->get_aftership_status();
-                $aftership_cp = $obj->get_aftership_checkpoint();
+                $dispatch_date = $obj->getDispatchDate();
+                $pay_date = $obj->getPayDate();
+                $order_create_date = $obj->getOrderCreateDate();
+                $expect_ship_days = $obj->getExpectShipDays();
+                $expect_del_days = $obj->getExpectDelDays();
+                $aftership_stat = $obj->getAftershipStatus();
+                $aftership_cp = $obj->getAftershipCheckpoint();
                 $replace_last_update = date('d/m/Y H:i:s', strtotime($aftership_cp));
 
                 if (!empty($expect_del_days)) {
@@ -3139,11 +3137,11 @@ SQL;
 
     }
 
-    public function get_so_amount_by_pmgw_currency($where = [], $option = [], $classname = "so_amount_by_pmgw_currency_dto")
+    public function get_so_amount_by_pmgw_currency($where = [], $option = [], $classname = "SoAmountByPmgwCurrencyDto")
     {
         $this->db->from('so');
         $this->db->join('so_payment_status sops', 'so.so_no = sops.so_no', 'left');
-        $this->db->join('payment_gateway pmgw', 'pmgw.id = sops.payment_gateway_id', 'left');
+        $this->db->join('payment_gateway pmgw', 'pmgw.payment_gateway_id = sops.payment_gateway_id', 'left');
         $this->db->where($where);
         $this->db->group_by(['so.currency_id', 'sops.payment_gateway_id']);
 
@@ -3166,11 +3164,11 @@ SQL;
         return FALSE;
     }
 
-    public function get_so_amount_by_pmgw_currency_with_eur_country($where = [], $option = [], $classname = "so_amount_by_pmgw_currency_dto")
+    public function get_so_amount_by_pmgw_currency_with_eur_country($where = [], $option = [], $classname = "SoAmountByPmgwCurrencyDto")
     {
         $this->db->from('so');
         $this->db->join('so_payment_status sops', 'so.so_no = sops.so_no', 'left');
-        $this->db->join('payment_gateway pmgw', 'pmgw.id = sops.payment_gateway_id', 'left');
+        $this->db->join('payment_gateway pmgw', 'pmgw.payment_gateway_id = sops.payment_gateway_id', 'left');
         $this->db->join('platform_biz_var pbv', 'so.platform_id = pbv.selling_platform_id', 'left');
         $this->db->where($where);
         $this->db->group_by(['so.currency_id', 'sops.payment_gateway_id', 'pbv.platform_country_id']);
@@ -3336,7 +3334,7 @@ SQL;
     }
 
 
-    public function get_order_score_activity_log_report($where = [], $option = [], $classname = "So_w_margin_dto")
+    public function get_order_score_activity_log_report($where = [], $option = [], $classname = "SoWithMarginDto")
     {
         $this->db->from("so as s");
         $selectStr = "s.create_on as create_on, s.so_no as so_no, s.platform_id as platform_id, s.status as status, sps.modify_on as modify_on, sps.modify_by as modify_by, s.dispatch_date as dispatch_date, temp.margin as margin, sps.score as score";
@@ -3459,7 +3457,7 @@ SQL;
         return $this->common_get_list($where, $option, "so_vo", "so.so_no, so.platform_id, so.create_on, so.dispatch_date, so.finance_dispatch_date");
     }
 
-    public function get_order_not_in_ria_report($where = [], $option = [], $classname = 'Order_not_in_ria_report_dto')
+    public function get_order_not_in_ria_report($where = [], $option = [], $classname = 'OrderNotInRiaReportDto')
     {
         $this->db->from('so');
         $this->db->join('flex_ria ria', 'so.so_no = ria.so_no', 'LEFT');
@@ -3471,7 +3469,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'sps.payment_gateway_id, so.order_create_date, so.currency_id, so.so_no, so.amount');
     }
 
-    public function get_rakuten_shipped_order($where = [], $option = [], $classname = 'Rakuten_shipped_order_dto')
+    public function get_rakuten_shipped_order($where = [], $option = [], $classname = 'RakutenShippedOrderDto')
     {
         $this->db->from('so');
         $this->db->join('interface_flex_ria ifr', 'so.so_no = ifr.so_no', 'LEFT');
@@ -3479,7 +3477,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, so.platform_id, so.txn_id, so.currency_id, so.amount, so.order_create_date, so.dispatch_date, ifr.status');
     }
 
-    public function get_rakuten_shipped_order_from_interface($where, $option, $classname = 'Rakuten_shipped_order_dto')
+    public function get_rakuten_shipped_order_from_interface($where, $option, $classname = 'RakutenShippedOrderDto')
     {
         $this->db->from('interface_flex_ria ifr');
         $this->db->join('flex_ria fr', 'fr.so_no = ifr.so_no', 'LEFT');
@@ -3488,7 +3486,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, so.platform_id, so.txn_id, so.currency_id, so.amount, so.order_create_date, so.dispatch_date, ifr.status');
     }
 
-    public function get_sales_order($where = [], $option = [], $classname = 'Order_not_in_ria_report_dto')
+    public function get_sales_order($where = [], $option = [], $classname = 'OrderNotInRiaReportDto')
     {
         $option['limit'] = -1;
 
@@ -3597,7 +3595,7 @@ SQL;
         return $data;
     }
 
-    public function get_aps_direct_order_csv($where)
+    public function getApsDirectOrderCsv($where)
     {
         $first_line = [
             'order no.',
@@ -3640,7 +3638,7 @@ SQL;
         return false;
     }
 
-    public function getFulfillmentSo($where, $option, $classname = 'fulfillment_report_dto')
+    public function getFulfillmentSo($where, $option, $classname = 'FulfillmentReportDto')
     {
         $option['limit'] = -1;
         $this->db->from('integrated_order_fulfillment iof');
@@ -3653,7 +3651,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
-    public function getSalesVolumeSo($where, $option, $classname = 'sales_volume_report_dto')
+    public function getSalesVolumeSo($where, $option, $classname = 'SalesVolumeReportDto')
     {
         $option['limit'] = -1;
         $this->db->from('so_item si');
