@@ -4,13 +4,13 @@ namespace ESG\Panther\Dao;
 class ProductComplementaryAccDao extends BaseDao
 {
     private $tableName = "product_complementary_acc";
-    private $voClassname = "productComplementaryAccVo";
-    private $accessory_catid_arr;
+    private $voClassname = "ProductComplementaryAccVo";
+    private $accessoryCatidArr;
 
     public function __construct()
     {
         parent::__construct();
-        $this->set_accessory_catid_arr();
+        $this->setAccessoryCatidArr();
     }
 
     public function getTableName()
@@ -23,18 +23,27 @@ class ProductComplementaryAccDao extends BaseDao
         return $this->voClassname;
     }
 
-    public function get_accessory_catid_arr()
+    public function getAccessoryCatidArr()
     {
-        return $accessory_catid_arr = ["753"];
+        /* ======================================================================
+            IMPORTANT!
+            This will get all current category IDs that below to Complementary Accessories
+            if there are more accessory cat ids in future,
+            add it to this array $ca_catid_arr.
+        ========================================================================= */
+
+        return $accessoryCatidArr = array("753");
     }
 
-    public function set_accessory_catid_arr()
+    public function setAccessoryCatidArr()
     {
-        $this->accessory_catid_arr = $this->get_accessory_catid_arr();
+        $this->accessoryCatidArr = $this->getAccessoryCatidArr();
     }
 
     public function checkCat($sku = "", $is_ca = true)
     {
+        # if you want to check if product is NOT a complementary accessory,
+        # then set $is_ca to false
         $ret = [];
         $ret["status"] = false;
 
@@ -42,21 +51,20 @@ class ProductComplementaryAccDao extends BaseDao
             $sql = <<<SQL
                     SELECT * FROM product where sku = ? LIMIT 1
 SQL;
-            $query = $this->db->query($sql, [$sku]);
+            $query = $this->db->query($sql, array($sku));
             if ($query->num_rows() > 0) {
                 foreach ($query->result() as $row) {
                     $cat_id = $row->cat_id;
                 }
 
                 if ($is_ca) {
-
-                    if (in_array($cat_id, $this->accessory_catid_arr)) {
+                    // check if product SKU is in complementary accessory category
+                    if (in_array($cat_id, $this->accessoryCatidArr))
                         $ret["status"] = true;
-                    } else {
+                    else
                         $ret["message"] = __LINE__ . " product_complementary_acc_dao.php. SKU<$sku> is not a Complementary Accessory.";
-                    }
                 } else {
-                    if (in_array($cat_id, $this->accessory_catid_arr) === false)
+                    if (in_array($cat_id, $this->accessoryCatidArr) === false)
                         $ret["status"] = true;
                 }
             } else {
@@ -71,11 +79,11 @@ SQL;
     public function getMappedAccListWithName($where = [], $option = [], $active = true, $classname = "ComplementaryAccessoryListDto")
     {
         $this->db->from("product_complementary_acc AS pca");
-
-        if (empty($option["all_status"])) {
+        # default to only active mapped status
+        if (!$option["all_status"])
             $where["accmap.status"] = 1;
-        }
 
+        #sbf #3746 complementary accessory must be mapped
         $this->db->join("sku_mapping AS accmap", "accmap.sku = pca.accessory_sku AND accmap.ext_sys='WMS'", "INNER");
         $this->db->join("product AS p", "pca.accessory_sku = p.sku", "inner");
         $this->db->join('category AS c', 'p.cat_id = c.id', 'LEFT');
@@ -90,6 +98,7 @@ SQL;
         $this->db->where($where);
 
         if (empty($option["num_rows"])) {
+            $this->include_dto($classname);
             $this->db->select('
                                 pca.id, pca.mainprod_sku, pca.accessory_sku, pca.dest_country_id, pca.status AS ca_status,
                                 pca.modify_on, pca.modify_at, pca.modify_by, pca.create_on, pca.create_at, pca.create_by,
@@ -108,7 +117,7 @@ SQL;
                 $option["offset"] = 0;
             }
 
-            if (!empty($this->rows_limit)) {
+            if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
@@ -134,10 +143,11 @@ SQL;
 
     }
 
-    public function get_all_accessory($where = [], $option = [], $like = [], $classname = "ComplementaryAccessoryListDto")
+    public function getAllAccessory($where = [], $option = [], $like = [], $classname = "ComplementaryAccessoryListDto")
     {
-        $ca_catid = implode(',', $this->accessory_catid_arr);
+        $ca_catid = implode(',', $this->accessoryCatidArr);
 
+        $this->include_dto($classname);
         $this->db->from("product AS p");
         $this->db->join("sku_mapping AS map", "map.sku = p.sku AND map.ext_sys='WMS' AND map.status=1", "INNER");
         $this->db->join('category AS c', 'p.cat_id = c.id', 'INNER');
@@ -148,6 +158,7 @@ SQL;
 
         $like_clause = "";
         if (is_array($like)) {
+            # if more than one $like array passed in, then make it as OR WHERE $key LIKE '%$value%'
             $count = 0;
             foreach ($like as $key => $value) {
                 if ($count == 0)

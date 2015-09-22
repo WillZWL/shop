@@ -33,7 +33,7 @@ class RefundDao extends BaseDao
 
         $this->db->join("refund_reason rr", "rr.id = r.reason", "LEFT");
         $this->db->join("so_payment_status sops", "s.so_no = sops.so_no", "LEFT");
-        $this->db->join("payment_gateway pg", "sops.payment_gateway_id = pg.id", "LEFT");
+        $this->db->join("payment_gateway pg", "sops.payment_gateway_id = pg.payment_gateway_id", "LEFT");
         $this->db->join("so_refund_score sors", "sors.so_no = r.so_no", "LEFT");
 
 
@@ -245,9 +245,9 @@ class RefundDao extends BaseDao
                             SELECT sops.so_no, pm.name
                             FROM so_payment_status sops
                             JOIN payment_gateway pm
-                                ON sops.payment_gateway_id = pm.id
+                                ON sops.payment_gateway_id = pm.payment_gateway_id
                         ) AS pmgw", "pmgw.so_no = so.so_no", "LEFT");
-        return $this->common_get_list($where, $option, $classname, "r.id refund_id, so.biz_type, so.platform_id, pmgw.name pmgw_name, so.bill_country_id, so.txn_id, so.client_id, so.so_no, p.name prod_name, cat.name cat_name, soid.item_sku, so.dispatch_date, so.order_create_date, so.amount, so.delivery_type_id, r.create_on request_date, if(rh.app_status = 'A', rh.modify_on, null)approve_date, if(rh.app_status = 'A' AND rh.status = 'C', rh.modify_on, null) refund_date, ri.refund_type, so.currency_id, ri.refund_amount, r.create_by request_by, rr.reason_cat, rr.description, rh.notes, rh.status refund_status, cs_approval_date, cs_approved_by");
+        return $this->commonGetList($classname, $where, $option, "r.id refund_id, so.biz_type, so.platform_id, pmgw.name pmgw_name, so.bill_country_id, so.txn_id, so.client_id, so.so_no, p.name prod_name, cat.name cat_name, soid.item_sku, so.dispatch_date, so.order_create_date, so.amount, so.delivery_type_id, r.create_on request_date, if(rh.app_status = 'A', rh.modify_on, null)approve_date, if(rh.app_status = 'A' AND rh.status = 'C', rh.modify_on, null) refund_date, ri.refund_type, so.currency_id, ri.refund_amount, r.create_by request_by, rr.reason_cat, rr.description, rh.notes, rh.status refund_status, cs_approval_date, cs_approved_by");
     }
 
     public function getRefundAmountByPmgwCurrency($where = [], $option = [], $classname = "RefundAmountByPmgwCurrencyDto")
@@ -264,10 +264,10 @@ class RefundDao extends BaseDao
                          ) AS a', 'a.refund_id = rh.refund_id AND a.max_id = rh.id', 'inner');
         $this->db->join('refund_reason rr', 'rr.id = r.reason', 'inner');
         $this->db->join('(
-                          SELECT sops.so_no, pm.name, pm.id
+                          SELECT sops.so_no, pm.name, pm.payment_gateway_id
                           FROM so_payment_status sops
                           JOIN payment_gateway pm
-                          ON sops.payment_gateway_id = pm.id
+                          ON sops.payment_gateway_id = pm.payment_gateway_id
                          ) AS pmgw', 'pmgw.so_no = so.so_no', 'left');
         $this->db->where($where);
         $this->db->group_by(['so.currency_id', 'pmgw.id', 'rr.description']);
@@ -305,10 +305,10 @@ class RefundDao extends BaseDao
                          ) AS a', 'a.refund_id = rh.refund_id AND a.max_id = rh.id', 'inner');
         $this->db->join('refund_reason rr', 'rr.id = r.reason', 'inner');
         $this->db->join('(
-                          SELECT sops.so_no, pm.name, pm.id
+                          SELECT sops.so_no, pm.name, pm.payment_gateway_id
                           FROM so_payment_status sops
                           JOIN payment_gateway pm
-                          ON sops.payment_gateway_id = pm.id
+                          ON sops.payment_gateway_id = pm.payment_gateway_id
                          ) AS pmgw', 'pmgw.so_no = so.so_no', 'left');
         $this->db->where($where);
         $this->db->group_by(['so.currency_id', 'pmgw.id', 'pbv.platform_country_id', 'rr.description']);

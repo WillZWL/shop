@@ -1,4 +1,4 @@
-<?php $this->load->view('/default/header') ?>
+<?php $this->load->view('header') ?>
 <div id="content" style="margin: 20px auto">
     <aside id="sidebar-right" class="col-md-3">
         <div id="column-right" class="hidden-xs sidebar">
@@ -7,34 +7,10 @@
                 <div class="panel-body tree-menu">
                     <ul class="box-category list-group accordion">
                         <li class="list-group-item accordion-group">
+                            <p>Refine Search</p>
                             <li class="list-group-item accordion-group">
-                                <a href="" class="active"><?= _('BRANDS') ?></a>
-                                <div class="accordion-heading pull-right">
-                                    <span data-toggle="collapse"  data-target="#accordiondata" class="bg">
-                                        <i class="fa fa-angle-down"></i>
-                                    </span>
-                                </div>
-                                <ul id="accordiondata" class="collapse accordion-body in">
-                                    <?php
-                                    if ($brand_result) {
-                                        foreach($brand_result as $brand) {
-                                            break;
-                                    ?>
-                                        <li>
-                                            <a href="<?=$brand['id']?>"><?=$brand['name']?> (<?=$brand['total']?>)</a>
-                                        </li>
-                                    <?php
-                                        }
-                                    }
-                                    ?>
-                                </ul>
-                            </li>
-                            <li class="list-group-item accordion-group">
-                                <a href="" class="active"><?= _('Categories') ?></a>
-                                <div class="accordion-heading pull-right">
-                                    <span data-toggle="collapse" data-target="#accordiondata1" class="bg"><i class="fa fa-angle-down"></i></span>
-                                </div>
-                                <ul id="accordiondata1" class="collapse accordion-body in">
+                                <a href=""class="active"><span id="list-group-item-title" ><?= _('Categories') ?></span></a>
+                                <ul class="collapse accordion-body in">
                                     <li>
                                         <a href="<?=base_url('cat/view/1');?>"><?= _('SmartPhones') ?></a>
                                     </li>
@@ -48,6 +24,14 @@
                                         <a href="<?=base_url('cat/view/6');?>"><?= _('Accessories') ?></a>
                                     </li>
                                     <li>
+                                        <div class="show-more">
+                                            Show more
+                                            <span data-toggle="collapse" data-target="#accordiondata1" class="bg collapsed"><i class="fa fa-angle-down"></i></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul id="accordiondata1" class="collapse">
+                                    <li>
                                         <a href="<?=base_url('cat/view/29');?>"><?= _('Software') ?></a>
                                     </li>
                                     <li>
@@ -55,6 +39,46 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="list-group-item accordion-group">
+                                <a href="" class="active list-group-item-title"><?= _('BRANDS') ?></a>
+                                <ul class="collapse accordion-body in">
+                                    <?php
+                                    if ($brand_result) {
+                                        foreach($brand_result as $brand) {
+                                    ?>
+                                        <li>
+                                            <a href="<?=$brand['id']?>"><?=$brand['name']?> (<?=$brand['total']?>)</a>
+                                        </li>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+
+                                    <li>
+                                        <div class="show-more">
+                                            Show more
+                                            <span data-toggle="collapse"  data-target="#accordiondata" class="bg collapsed">
+                                                <i class="fa fa-angle-down"></i>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul id="accordiondata" class="collapse accordion-body">
+                                    <?php
+                                    if ($brand_result) {
+                                        foreach($brand_result as $brand) {
+                                    ?>
+                                        <li>
+                                            <a href="<?=$brand['id']?>"><?=$brand['name']?> (<?=$brand['total']?>)</a>
+                                        </li>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                    </li>
+                                </ul>
+                            </li>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -208,4 +232,4 @@
     </div>
 </div>
 </div>
-<?php $this->load->view('/default/footer') ?>
+<?php $this->load->view('footer') ?>

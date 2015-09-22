@@ -60,7 +60,7 @@ class SoItemDao extends BaseDao
         return false;
     }
 
-    public function getItemsWithName($where = [], $option = [], $classname = "So_item_w_name_dto")
+    public function getItemsWithName($where = [], $option = [], $classname = "SoItemWithNameDto")
     {
         if (!$option["show_ca"]) {
             # don't include complementary accessories
@@ -86,8 +86,6 @@ class SoItemDao extends BaseDao
         $this->db->where($where);
 
         if (empty($option["num_rows"])) {
-
-            $this->include_dto($classname);
 
             if ((!empty($option["lang_id"])) && ($option["lang_id"] != 'en')) {
                 $select_product_name = "COALESCE(p3.prod_name, soi.prod_name)";

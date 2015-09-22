@@ -52,7 +52,7 @@ class SellingPlatformDao extends BaseDao
             $rs = [];
 
             if ($query = $this->db->get()) {
-                foreach ($query->result($this->get_vo_classname()) as $obj) {
+                foreach ($query->result($this->getVoClassname()) as $obj) {
                     $rs[] = $obj;
                 }
                 return (object)$rs;
@@ -80,9 +80,8 @@ class SellingPlatformDao extends BaseDao
             $this->include_vo();
 
             $result_arr = [];
-            $classname = $this->get_vo_classname();
 
-            foreach ($result->result("object", $classname) as $obj) {
+            foreach ($result->result($classname) as $obj) {
                 $result_arr[$obj->get_type()][] = $obj;
             }
             return $result_arr;
@@ -106,9 +105,8 @@ class SellingPlatformDao extends BaseDao
             $this->include_vo();
 
             $result_arr = [];
-            $classname = $this->get_vo_classname();
 
-            foreach ($result->result("object", $classname) as $obj) {
+            foreach ($result->result($classname) as $obj) {
                 $result_arr[$obj->get_type()][] = $obj;
             }
             return $result_arr;
@@ -127,9 +125,8 @@ class SellingPlatformDao extends BaseDao
             $this->include_vo();
 
             $result_arr = [];
-            $classname = $this->get_vo_classname();
 
-            foreach ($result->result("object", $classname) as $obj) {
+            foreach ($result->result($classname) as $obj) {
                 $result_arr[] = $obj->get_type();
             }
             return $result_arr;
@@ -137,12 +134,12 @@ class SellingPlatformDao extends BaseDao
         return FALSE;
     }
 
-    public function getSellingPlatformWithLangId($where = [], $option = [], $classname = "selling_platform_w_lang_id_dto")
+    public function getSellingPlatformWithLangId($where = [], $option = [], $classname = "SellingPlatformWithLangIdDto")
     {
         $this->db->from("selling_platform AS sp");
         $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = sp.selling_platform_id", "INNER");
         $this->include_dto($classname);
-        return $this->common_get_list($where, $option, $classname, "sp.*, pbv.language_id lang_id");
+        return $this->common_get_list($classname, $where, $option, "sp.*, pbv.language_id lang_id");
     }
 
     public function getPlatformListWithAllowSellCountry($type = "")
@@ -173,10 +170,9 @@ class SellingPlatformDao extends BaseDao
             $this->include_vo();
 
             $result_arr = [];
-            $classname = $this->get_vo_classname();
 
             foreach ($result->result() as $row) {
-                $result_arr[] = array("platform_id" => $row->platform_id, "country_id" => $row->country_id);
+                $result_arr[] = ["platform_id" => $row->platform_id, "country_id" => $row->country_id];
             }
             return $result_arr;
         }

@@ -1,9 +1,10 @@
 <?php
 class TplMsgWithAttDto
 {
-    private $id;
+    private $template_by_platform_id;
     private $lang_id = "en";
     private $platform_id;
+    private $template_id;
     private $name;
     private $description;
     private $tpl_file;
@@ -15,14 +16,14 @@ class TplMsgWithAttDto
     private $message_html;
     private $message_alt;
 
-    public function setId($id)
+    public function setTemplateByPlatformId($template_by_platform_id)
     {
-        $this->id = $id;
+        $this->template_by_platform_id = $template_by_platform_id;
     }
 
-    public function getId()
+    public function getTemplateByPlatformId()
     {
-        return $this->id;
+        return $this->template_by_platform_id;
     }
 
     public function setLangId($lang_id)
@@ -43,6 +44,16 @@ class TplMsgWithAttDto
     public function getPlatformId()
     {
         return $this->platform_id;
+    }
+
+    public function setTemplateId($template_id)
+    {
+        $this->template_id = $template_id;
+    }
+
+    public function getTemplateId()
+    {
+        return $this->template_id;
     }
 
     public function setName($name)

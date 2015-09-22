@@ -27,7 +27,7 @@ class CategoryMappingDao extends BaseDao
         $this->db->join("product AS p", "p.sku = cm.category_mapping_id", "LEFT");
         $this->db->join("ext_category_mapping AS ecm", "ecm.country_id = cm.country_id AND ecm.category_id = if(p.sub_sub_cat_id = 0, if(p.sub_cat_id = 0, p.cat_id, p.sub_cat_id), p.sub_sub_cat_id)", "LEFT");
         $this->db->join("external_category AS ec", "ec.id = ecm.ext_id", "LEFT");
-        $this->include_vo($classname);
+
         return $this->commonGetList($classname, $where, $option, 'cm.category_mapping_id, cm.country_id, cm.ext_id, ec.ext_name, cm.product_name');
     }
 

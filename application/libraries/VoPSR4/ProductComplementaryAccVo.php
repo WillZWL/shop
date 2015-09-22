@@ -9,11 +9,12 @@ class ProductComplementaryAccVo extends \BaseVo
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
     private $create_by;
-    private $modify_on = '0000-00-00 00:00:00';
-    private $modify_at;
+    private $modify_on = '';
+    private $modify_at = '';
     private $modify_by;
 
     private $primary_key = ['id'];
+    private $increment_field = 'id';
 
     public function setId($id)
     {
@@ -128,5 +129,10 @@ class ProductComplementaryAccVo extends \BaseVo
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

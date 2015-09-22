@@ -21,12 +21,12 @@ class ClientDao extends BaseDao
         return $this->tableName;
     }
 
-    public function get_client_last_order($where, $option, $classname = 'so_last_order_w_client_dto')
+    public function get_client_last_order($where, $option, $classname = 'SoLastOrderWithClientDto')
     {
         $this->db->from("so");
         $this->db->join("client as c", "c.id = so.client_id", "INNER");
-        $this->include_dto($classname);
-        return $this->common_get_list($where, $option, $classname, "so.*, c.email, c.tel_1, c.tel_2, c.tel_3, c.title");
+
+        return $this->common_get_list($classname, $where, $option, "so.*, c.email, c.tel_1, c.tel_2, c.tel_3, c.title");
     }
 
     public function update_password($client_id = '', $new_en_password = '')
@@ -35,8 +35,7 @@ class ClientDao extends BaseDao
             return 0; // Means fail
         }
 
-        return $this->db->update($this->getTableName(),
-            array('id' => $client_id, 'password' => $new_en_password));
+        return $this->db->update($this->getTableName(), ['id' => $client_id, 'password' => $new_en_password]);
     }
 
     /*
@@ -57,11 +56,11 @@ class ClientDao extends BaseDao
                             group by client_id
                         )a");
         $this->db->join("client c", "c.id = a.client_id", "INNER");
-        $this->db->where(array("a.ttl >=" => 3, "a.ttl_amt >" => 50, "a.refund_status" => 0, "a.dispatch_date < NOW() - INTERVAL 3 WEEK" => null, "c.vip" => 0, "c.email NOT IN ('alice@eservicesgroup.net','fabrice.boissat@4d.com','garry@ortus.com.au','info@ortus.com.au','leo@eservicesgroup.net','marc.hilko@letsaskamerica.tv','nic@eservicesgroup.net','shakhil24@hotmail.com')" => null));
+        $this->db->where(["a.ttl >=" => 3, "a.ttl_amt >" => 50, "a.refund_status" => 0, "a.dispatch_date < NOW() - INTERVAL 3 WEEK" => null, "c.vip" => 0, "c.email NOT IN ('alice@eservicesgroup.net','fabrice.boissat@4d.com','garry@ortus.com.au','info@ortus.com.au','leo@eservicesgroup.net','marc.hilko@letsaskamerica.tv','nic@eservicesgroup.net','shakhil24@hotmail.com')" => null]);
         $this->db->select();
 
         if ($query = $this->db->get()) {
-            foreach ($query->result("array", $classname) as $obj) {
+            foreach ($query->result() as $obj) {
                 $rs[] = $obj['client_id'];
             }
             return $rs;

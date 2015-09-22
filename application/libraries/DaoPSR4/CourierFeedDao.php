@@ -4,7 +4,7 @@ namespace ESG\Panther\Dao;
 class CourierFeedDao extends BaseDao
 {
     private $tableName = "courier_feed";
-    private $voClassName = "CourierFeedVO";
+    private $voClassName = "CourierFeedVo";
 
     public function __construct()
     {

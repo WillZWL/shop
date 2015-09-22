@@ -44,6 +44,7 @@ class LoadSiteParameterService extends BaseService
         define('SITE_LANG', $site_config_obj->getLang());
         define('LANG_ID', $site_config_obj->getLangId());
         define('PLATFORM', $site_config_obj->getPlatform());
+        // define('SITEVIEW', $site_config_obj->getViewFolderPath());
 //        $this->set_lang_id($site_config_obj->getLangId());
         $this->setLocalization();
         return $site_config_obj;

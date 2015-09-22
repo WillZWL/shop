@@ -113,6 +113,29 @@
 }
 
 /*start category page*/
+#sidebar-right .sidebar-right {
+    box-shadow:none;
+    background-color: #323232;
+}
+#column-right{
+    height:1080px;
+}
+.sidebar .list-group-item {
+    border:2px solid #474747;
+}
+.sidebar .list-group-item p{
+    color:#549B17;
+    margin:0;
+    font-family: "Open Sans Semibold", sans-serif;
+    font-size: 16px;
+}
+.sidebar .list-group-item-title{
+    color:#549B17;
+}
+.list-group-item .show-more {
+    color:#999;
+}
+
 .product-list .product-block .product-meta .action .cart{
     margin-right:20px;
 }
@@ -278,4 +301,16 @@
 #content .product-tabs-info ul.tabs li a:hover{text-decoration:none;}
 #content .product-tabs-info .items{clear:both;padding:30px 15px;position:relative;z-index:8;top:-1px;min-height:457px;}
 
-
+/* checkout page */
+.form-group #billingTelCountryCode, .form-group #billingTelAreaCode
+{
+    width: 150px;
+    display: inline-block;
+    margin-left: 2px;
+}
+.form-group #billingTel
+{
+    width: 220px;
+    display: inline-block;
+}
+/* end checkout page */
