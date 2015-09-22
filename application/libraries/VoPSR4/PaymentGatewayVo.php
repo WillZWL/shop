@@ -1,13 +1,11 @@
 <?php
-class CourierFeedVo extends \BaseVo
+class PaymentGatewayVo extends \BaseVo
 {
     private $id;
-    private $batch_id = '0';
-    private $so_no_str;
-    private $courier_id = '';
-    private $mawb = '';
-    private $exec = '0';
-    private $comment = '';
+    private $payment_gateway_id;
+    private $name;
+    private $ref_id = '';
+    private $status = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -28,64 +26,44 @@ class CourierFeedVo extends \BaseVo
         return $this->id;
     }
 
-    public function setBatchId($batch_id)
+    public function setPaymentGatewayId($payment_gateway_id)
     {
-        $this->batch_id = $batch_id;
+        $this->payment_gateway_id = $payment_gateway_id;
     }
 
-    public function getBatchId()
+    public function getPaymentGatewayId()
     {
-        return $this->batch_id;
+        return $this->payment_gateway_id;
     }
 
-    public function setSoNoStr($so_no_str)
+    public function setName($name)
     {
-        $this->so_no_str = $so_no_str;
+        $this->name = $name;
     }
 
-    public function getSoNoStr()
+    public function getName()
     {
-        return $this->so_no_str;
+        return $this->name;
     }
 
-    public function setCourierId($courier_id)
+    public function setRefId($ref_id)
     {
-        $this->courier_id = $courier_id;
+        $this->ref_id = $ref_id;
     }
 
-    public function getCourierId()
+    public function getRefId()
     {
-        return $this->courier_id;
+        return $this->ref_id;
     }
 
-    public function setMawb($mawb)
+    public function setStatus($status)
     {
-        $this->mawb = $mawb;
+        $this->status = $status;
     }
 
-    public function getMawb()
+    public function getStatus()
     {
-        return $this->mawb;
-    }
-
-    public function setExec($exec)
-    {
-        $this->exec = $exec;
-    }
-
-    public function getExec()
-    {
-        return $this->exec;
-    }
-
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-    }
-
-    public function getComment()
-    {
-        return $this->comment;
+        return $this->status;
     }
 
     public function setCreateOn($create_on)
