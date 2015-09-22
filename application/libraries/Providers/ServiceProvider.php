@@ -10,9 +10,6 @@ class ServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $servcieContainer)
     {
-        $servcieContainer['Colour'] = function () {
-            return new S\ColourService();
-        };
 
         $servcieContainer['Authorization'] = function ($c) {
             return new S\AuthorizationService();
@@ -20,6 +17,10 @@ class ServiceProvider implements ServiceProviderInterface
 
         $servcieContainer['Authentication'] = function ($c) {
             return new S\AuthenticationService();
+        };
+
+        $servcieContainer['Batch'] = function ($c) {
+            return new S\BatchService();
         };
 
         $servcieContainer['Category'] = function () {
@@ -30,8 +31,28 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\ContextConfigService();
         };
 
+        $servcieContainer['Colour'] = function () {
+            return new S\ColourService();
+        };
+
+        $servcieContainer['Courier'] = function () {
+            return new S\CourierService();
+        };
+
+        $servcieContainer['Country'] = function () {
+            return new S\CountryService();
+        };
+
         $servcieContainer['Currency'] = function () {
             return new S\CurrencyService();
+        };
+
+        $servcieContainer['CustomClass'] = function () {
+            return new S\CustomClassService();
+        };
+
+        $servcieContainer['CustomClassificationMapping'] = function () {
+            return new S\CustomClassificationMappingService();
         };
 
         $servcieContainer['Language'] = function () {
@@ -58,10 +79,6 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\DeliveryTimeService();
         };
 
-        $servcieContainer['Country'] = function () {
-            return new S\CountryService();
-        };
-
         $servcieContainer['ProductCreation'] = function () {
             return new S\ProductCreationService();
         };
@@ -82,12 +99,8 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\WarehouseService();
         };
 
-        $servcieContainer['CustomClass'] = function () {
-            return new S\CustomClassService();
-        };
-
-        $servcieContainer['CustomClassificationMapping'] = function () {
-            return new S\CustomClassificationMappingService();
+        $servcieContainer['WmsInventory'] = function () {
+            return new S\WmsInventoryService();
         };
 
         $servcieContainer['LoadSiteParameter'] = function () {

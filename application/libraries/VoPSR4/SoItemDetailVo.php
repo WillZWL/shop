@@ -12,8 +12,8 @@ class SoItemDetailVo extends \BaseVo
     private $gst_total = '0.00';
     private $discount_total = '0.00';
     private $discount = '0.00';
-    private $bundle_core_id;
-    private $bundle_level;
+    private $bundle_core_id = '0';
+    private $bundle_level = "";
     private $amount;
     private $promo_disc_amt = '0.00';
     private $cost;

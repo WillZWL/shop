@@ -37,20 +37,22 @@ class EventService extends BaseService
             if ($acts = $this->getDao()->getEventAction($dto->getEventId(), "ActionVo")) {
                 foreach ($acts as $act_obj) {
                     $classname = $act_obj->getAction();
-                    $classfile = APPPATH . "libraries/service/" . strtolower($classname) . "_service.php";
+
+                    $classfile = APPPATH . "libraries/service/" . ucfirst(strtolower($classname)) . "Service.php";
+
                     if (file_exists($classfile)) {
                         include_once($classfile);
-                        $classname = ucfirst($classname) . "_service";
+                        $classname = ucfirst($classname) . "Service";
                         $obj_act = new $classname();
 
                         if ($get_email_html === FALSE) {
                             $obj_act->run($dto);
                         } else {
-                            if (method_exists($classname, "get_email_template")) {
-                                $email_msg = $obj_act->get_email_template($dto);
+                            if (method_exists($classname, "getEmailTemplate")) {
+                                $email_msg = $obj_act->getEmailTemplate($dto);
                                 return $email_msg;
                             } else {
-                                return "event_service.php Line " . __LINE__ . " function get_email_template()
+                                return "eventService.php Line " . __LINE__ . " function getEmailTemplate()
                                         does not exist in classname=$classname";
                             }
                         }

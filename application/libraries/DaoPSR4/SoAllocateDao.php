@@ -237,8 +237,6 @@ class SoAllocateDao extends BaseDao
 
             $this->db->select('soal.*', FALSE);
 
-            $this->include_vo();
-
             if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
@@ -288,7 +286,7 @@ class SoAllocateDao extends BaseDao
         }
     }
 
-    public function getAwaitingShipmentInfo($classname = 'So_awaiting_shipment_dto')
+    public function getAwaitingShipmentInfo($classname = 'SoAwaitingShipmentDto')
     {
         $sql = "SELECT soa.item_sku AS ext_ref_sku ,soa.item_sku AS log_sku ,SUM(soa.qty) AS qty,m.ext_sku AS sku
                 FROM so_allocate soa
@@ -310,7 +308,7 @@ class SoAllocateDao extends BaseDao
 
     }
 
-    public function getPurchaserFeedList($where = [], $option = [], $classname = "Purchaser_feed_dto")
+    public function getPurchaserFeedList($where = [], $option = [], $classname = "PurchaserFeedDto")
     {
         $this->db->from('so_allocate AS soal');
         $this->db->join('so_item_detail AS soid', 'soal.so_no = soid.so_no AND soal.line_no = soid.line_no AND soal.item_sku = soid.item_sku AND soal.status = 3', 'INNER');
@@ -384,15 +382,15 @@ class SoAllocateDao extends BaseDao
     public function getIntegratedAllocateList($where = [], $option = [], $classname = "SoListWithNameDto")
     {
         if ($option["list_type"] == "toship") {
-            $select_str = "iof.*,  `soal`.`warehouse_id`, soal.qty, sm.ext_sku as master_sku";
+            $select_str = "iof.*,  soal.warehouse_id, soal.qty, sm.ext_sku as master_sku";
             $this->db->from('integrated_order_fulfillment as iof');
-            $this->db->join('so_allocate as soal', 'iof.so_no = soal.so_no and iof.line_no = soal.line_no and iof.sku = soal.item_sku and soal.`status` = 1', 'INNER');
+            $this->db->join('so_allocate as soal', 'iof.so_no = soal.so_no and iof.line_no = soal.line_no and iof.sku = soal.item_sku and soal.status = 1', 'INNER');
             /*$this->db->join('inventory as inv', 'iof.sku=inv.prod_sku and soal.warehouse_id=inv.warehouse_id');*/
             $this->db->join('sku_mapping sm', "sm.sku = iof.sku and sm.ext_sys='WMS'", 'INNER');
         } elseif ($option["list_type"] == "dispatch") {
             $select_str = "iof.*, sosh.create_on as packing_date, sosh.courier_id, sosh.tracking_no, soal.warehouse_id, soal.sh_no, soal.qty, sm.ext_sku as master_sku";
             $this->db->from('so_shipment AS sosh');
-            $this->db->join('so_allocate as soal', 'sosh.sh_no = soal.sh_no and soal.`status`=2', 'LEFT');
+            $this->db->join('so_allocate as soal', 'sosh.sh_no = soal.sh_no and soal.status=2', 'LEFT');
             $this->db->join('integrated_order_fulfillment as iof', 'soal.so_no=iof.so_no and soal.line_no=iof.line_no and soal.item_sku=iof.sku', 'INNER');
             $this->db->join('sku_mapping sm', "sm.sku = iof.sku and sm.ext_sys='WMS'", 'INNER');
         }
@@ -444,7 +442,7 @@ class SoAllocateDao extends BaseDao
             }
 
         } else {
-            $this->db->select(($option["num_rows"] ? 'COUNT(distinct(iof.so_no))' : 'COALESCE(SUM(soal.qty),0)') . ' AS total');
+            $this->db->select(($option["num_rows"] ? "COUNT(distinct(iof.so_no))" : "COALESCE(SUM(soal.qty),'0')") . " AS total");
             if ($query = $this->db->get()) {
                 return $query->row()->total;
             }

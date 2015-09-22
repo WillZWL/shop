@@ -21,16 +21,9 @@ class SoItemDetailDao extends BaseDao
         return $this->tableName;
     }
 
-    public function getFulfil($where = [], $option = [], $classname = "Fulfil_list_dto")
+    public function getFulfil($where = [], $option = [], $classname = "FulfilListDto")
     {
         $this->db->from('so_item_detail AS soid');
-        $this->db->join("(
-                        SELECT prod_sku, GROUP_CONCAT(CONCAT_WS('::', prod_sku, CAST(inventory AS CHAR)) SEPARATOR '||') AS items
-                        FROM inventory AS inv
-                        WHERE warehouse_id = '{$option["warehouse_id"]}'
-                        AND inventory > 0
-                        GROUP BY prod_sku
-                        ) AS i", 'soid.item_sku = i.prod_sku', 'INNER');
 
         $this->db->join('so', 'so.so_no = soid.so_no', 'INNER');
 
@@ -52,8 +45,6 @@ class SoItemDetailDao extends BaseDao
         if (empty($option["num_rows"])) {
 
             $this->db->select('soid.*');
-
-            $this->include_dto($classname);
 
             if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
@@ -104,8 +95,6 @@ class SoItemDetailDao extends BaseDao
         }
 
         if (empty($option["num_rows"])) {
-
-            $this->include_dto($classname);
 
             $rs = [];
             if ($query = $this->db->get()) {
@@ -201,7 +190,6 @@ class SoItemDetailDao extends BaseDao
             $sql = $sql . $option_string;
 
             if ($query = $this->db->query($sql)) {
-                $this->include_dto($classname);
                 foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
@@ -257,7 +245,6 @@ class SoItemDetailDao extends BaseDao
             $rs = [];
 
             if ($query = $this->db->get()) {
-                $this->include_dto($classname);
                 foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
@@ -304,7 +291,6 @@ class SoItemDetailDao extends BaseDao
             $rs = [];
 
             if ($query = $this->db->get()) {
-                $this->include_dto($classname);
                 foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }

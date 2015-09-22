@@ -1,9 +1,15 @@
 <?php
 namespace ESG\Panther\Service;
 
+use PHPMailer;
+use EventEmailDto;
 use ESG\Panther\Service\ExchangeRateService;
 use ESG\Panther\Service\EventService;
 use ESG\Panther\Service\EntityService;
+use ESG\Panther\Service\DelayedOrderService;
+use ESG\Panther\Service\ReviewFianetService;
+use ESG\Panther\Service\PdfRenderingService;
+use ESG\Panther\Service\CurrencyService;
 
 class SoService extends BaseService
 {
@@ -18,6 +24,10 @@ class SoService extends BaseService
         $this->exchangeRateService = new ExchangeRateService;
         $this->eventService = new EventService;
         $this->entityService = new EntityService;
+        $this->delayedOrderService = new DelayedOrderService;
+        $this->reviewFianetService = new ReviewFianetService;
+        $this->pdfRenderingService = new PdfRenderingService;
+        $this->currencyService = new CurrencyService;
 
 
         // include_once(APPPATH . "libraries/service/Cart_session_service.php");
@@ -32,14 +42,6 @@ class SoService extends BaseService
         // $this->set_domain_platform_service(new Domain_platform_service());
         // include_once(APPPATH . 'libraries/service/Price_service.php');
         // $this->set_price_service(new Price_service());
-        // include_once(APPPATH . 'libraries/service/Wow_email_service.php');
-        // $this->set_wow_email_service(new Wow_email_service());
-
-        // include_once(APPPATH . 'libraries/service/Pdf_rendering_service.php');
-        // $this->set_pdf_rendering_srv(new Pdf_rendering_service());
-
-        // include_once APPPATH . "libraries/dao/Payment_gateway_dao.php";
-        // $this->set_payment_gateway_dao(new Payment_gateway_dao());
 
         // include_once APPPATH . "libraries/service/Subject_domain_service.php";
         // $this->set_sub_domain_srv(new Subject_domain_service());
@@ -51,17 +53,9 @@ class SoService extends BaseService
         // $this->set_email_referral_list_service(new Email_referral_list_service());
         // include_once APPPATH . "libraries/service/Fraudulent_order_service.php";
         // $this->set_fraudulent_order_service(new Fraudulent_order_service());
-        // include_once APPPATH . "libraries/service/Complementary_acc_service.php";
-        // $this->set_ca_service(new Complementary_acc_service());
 
-
-        // include_once APPPATH . "libraries/service/Review_fianet_service.php";
-        // $this->set_review_fianet_service(new Review_fianet_service());
         // include_once APPPATH . "libraries/service/Sequence_service.php";
         // $this->set_sequence_service(new Sequence_service());
-        // include_once APPPATH . "libraries/service/Delayed_order_service.php";
-        // $this->set_delay_order_service(new Delayed_order_service());
-
     }
 
     public function cart_to_so(&$vars)
@@ -208,7 +202,7 @@ class SoService extends BaseService
             }
         }
         $amount = $curr_line_no = 0;
-        $ca_soi_list = $all_del_info = array();
+        $ca_soi_list = $all_del_info = [];
         foreach ($cart_list["cart"] as $line_no => $soi) {
             $curr_line_no = $line_no + 1;
             $soi_obj = clone $soi_vo;
@@ -229,7 +223,7 @@ class SoService extends BaseService
             if ($get_ca === true) {
                 $where["dest_country_id"] = $del_country_id;
                 $where["mainprod_sku"] = $soi["sku"];
-                if ($mapped_ca_list = $this->get_ca_service()->get_mapped_acc_list_w_name($where, $option, true)) {
+                if ($mapped_ca_list = $this->getDao('ProductComplementaryAcc')->getMappedAccListWithName($where, $option, true)) {
                     foreach ($mapped_ca_list as $obj) {
                         $obj->set_quantity($soi["qty"]);
                         $ca_soi_list[$soi["sku"]][] = $obj;
@@ -259,7 +253,7 @@ class SoService extends BaseService
             $cost += $soi["cost"];
 
             # only create row / set other info if item is not complementary accessory
-            $is_complementary_acc = $this->get_ca_service()->check_cat($soi["sku"], true);
+            $is_complementary_acc = $this->getDao('ProductComplementaryAcc')->checkCat($soi["sku"], true);
             if ($is_complementary_acc["status"] !== true) {
                 if ($vars["payment_gateway"] == "bibit") {
                     $vars["ordercontent"] .= '<tr><td>' . $soi["name"] . '</td><td>' . $soi["qty"] . '</td><td>' . number_format($soi["total"], 2) . '</td></tr>';
@@ -325,7 +319,7 @@ class SoService extends BaseService
                 $soi_obj->set_prod_name($soi["name"]);
                 $soi_obj->set_qty($soi["qty"]);
 
-                if ($obj = $this->get_sub_domain_srv()->get(array("subject" => "MAX_DECLARE_VALUE.{$pbv_obj->get_platform_country_id()}"))) {
+                if ($obj = $this->get_sub_domain_srv()->get(array("subject" => "MAX_DECLARE_VALUE.{$pbv_obj->getPlatformCountryId()}"))) {
                     $max_value = $obj->get_value();
                     $declared = min($max_value, $soi["total"]);
                 } else {
@@ -487,7 +481,7 @@ class SoService extends BaseService
 
         if ($pbv_obj = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $vars["platform_id"]))) {
             $so_vo->set_vat_percent($pbv_obj->get_vat_percent());
-            $lang_id = $pbv_obj->get_language_id();
+            $lang_id = $pbv_obj->getLanguageId();
         }
 
         $type = $this->getDao('SellingPlatform')->get(array("id" => $vars["platform_id"]))->get_type();
@@ -509,7 +503,7 @@ class SoService extends BaseService
 
         $soid_dao = $this->getDao('SoItemDetail');
         $soid_vo = $soid_dao->get();
-        $dao->trans_start();
+        $dao->db->trans_start();
 
         if (!isset($_SESSION["so_no"])) {
             $next_val = $dao->seq_next_val();
@@ -552,7 +546,7 @@ class SoService extends BaseService
             }
             if (!$failed) {
                 if ($cart_list["detail"]) {
-                    $ca_soid_list = array();
+                    $ca_soid_list = [];
                     foreach ($cart_list["detail"] as $line_no => $soi) {
                         $curr_line_no = $line_no + 1;
                         foreach ($soi as $soid) {
@@ -661,7 +655,6 @@ class SoService extends BaseService
                         $soid_obj->set_so_no($so_no);
                         $soid_obj->set_line_no($soid->get_line_no());
                         $soid_obj->set_item_sku($soid->get_prod_sku());
-                        $soid_obj->set_item_sku($soid->get_prod_sku());
                         $soid_obj->set_qty($soid->get_qty());
                         $soid_obj->set_outstanding_qty($soid->get_qty());
                         $soid_obj->set_unit_price($soid->get_unit_price());
@@ -671,7 +664,7 @@ class SoService extends BaseService
                         $soid_obj->set_amount($soid->get_amount());
                         $soid_obj->set_cost($soid->get_vat_total());
 
-                        $is_complementary_acc = $this->get_ca_service()->check_cat($soid["sku"], true);
+                        $is_complementary_acc = $this->getDao('ProductComplementaryAcc')->checkCat($soid["sku"], true);
                         if ($is_complementary_acc["status"] === false) {
                             $this->set_profit_info($soid_obj);
                         }
@@ -751,8 +744,8 @@ class SoService extends BaseService
             $failed = 1;
         }
         if ($failed) {
-            $dao->trans_rollback();
-            $dao->trans_complete();
+            $dao->db->trans_rollback();
+            $dao->db->trans_complete();
             return FALSE;
         } else {
 
@@ -760,7 +753,7 @@ class SoService extends BaseService
                 $_SESSION["W_TRANSFER_ORDER"] = $vars;
                 $_SESSION["W_TRANSFER_ORDER"]["so_no"] = $so_no;
             }
-            $dao->trans_complete();
+            $dao->db->trans_complete();
             return isset($_SESSION["so_no"]) ? $so_vo : $new_so_vo;
         }
     }
@@ -774,16 +767,6 @@ class SoService extends BaseService
     public function set_cart_srv($value)
     {
         $this->cart_srv = $value;
-    }
-
-    public function get_ca_service()
-    {
-        return $this->ca_service;
-    }
-
-    public function set_ca_service($value)
-    {
-        $this->ca_service = $value;
     }
 
     public function get_price_service()
@@ -971,11 +954,11 @@ class SoService extends BaseService
 
             # If so_no is different from from split_so_group number, means this so_no is already a child of a previous split.
             # If so, get the real parent so_no
-            $split_so_group = $so_obj->get_split_so_group();
+            $split_so_group = $so_obj->getSplitSoGroup();
             if ($split_so_group != $so_no && !empty($split_so_group)) {
                 $input_so_obj = $so_obj;
-                $so_obj = $so_dao->get(array("so_no" => $so_obj->get_split_so_group()));
-                $so_no = $so_obj->get_so_no();
+                $so_obj = $so_dao->get(array("so_no" => $so_obj->getSplitSoGroup()));
+                $so_no = $so_obj->getSoNo();
             }
 
             // compile all the same SKUs for checking qty
@@ -1013,7 +996,7 @@ class SoService extends BaseService
             $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
             $ts = date('Y-m-d H:i:s');
             $failed = 0;
-            $so_dao->trans_start();
+            $so_dao->db->trans_start();
             foreach ($order_group as $group => $arr) {
                 // if failed on previous loops, don't bother going in
                 if ($failed == 0) {
@@ -1212,13 +1195,13 @@ class SoService extends BaseService
             }
 
             if ($failed) {
-                $so_dao->trans_rollback();
-                $so_dao->trans_complete();
+                $so_dao->db->trans_rollback();
+                $so_dao->db->trans_complete();
 
                 $ret["status"] = FALSE;
                 $ret["message"] = $message;
             } else {
-                $so_dao->trans_complete();
+                $so_dao->db->trans_complete();
                 $ret["status"] = TRUE;
                 $ret["message"] = "Success. Added so_no: $addedsolist";
             }
@@ -1229,7 +1212,7 @@ class SoService extends BaseService
         return $ret;
     }
 
-    public function get_refundable_list($where = array(), $option = array())
+    public function get_refundable_list($where = [], $option = [])
     {
         if ($option["num_row"] != "") {
             return $this->getDao('So')->getRefundableOrder($where, array("num_row" => 1, "create" => $option["create"]));
@@ -1248,30 +1231,30 @@ class SoService extends BaseService
         return $this->getDao('SoShipment')->getShNoList($type, $service);
     }
 
-    public function get_refund_item_w_name($where = array())
+    public function get_refund_item_w_name($where = [])
     {
         return $this->getDao('SoItemDetail')->getListWithProdname($where);
     }
 
-    public function getDispatchData($where = array(), $from_date = '', $to_date = '')
+    public function getDispatchData($where = [], $from_date = '', $to_date = '')
     {
         return $this->getDao('So')->getDispatchData($where, $from_date, $to_date);
     }
 
-    public function getItemsWithName($where = array(), $option = array(), $dto = "")
+    public function getItemsWithName($where = [], $option = [], $dto = "")
     {
         return $this->getDao('SoItem')->getItemsWithName($where, $option, $dto);
     }
 
-    public function get_print_invoice_content($so_no_list = array(), $gen_pdf = 0, $lang_id = "")
+    public function getPrintInvoiceContent($so_no_list = [], $gen_pdf = 0, $lang_id = "")
     {
         $run = 0;
         $website_domain = $this->getDao('Config')->valueOf('website_domain');
         $website_domain = base_url();
         $total_cnt = count($so_no_list);
-        $cursign_arr = $this->getDao('Currency')->getList([], ["limit" => -1]);
+        $cursign_arr = $this->currencyService->getNameWithIdKey();
         # sbf #3746 don't include complementary accessory on front end
-        $ca_catid_arr = implode(',', $this->get_ca_service()->get_accessory_catid_arr());
+        $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
 
         if (count($so_no_list)) {
             $valid = 0;
@@ -1284,17 +1267,17 @@ class SoService extends BaseService
                 if (!$so_obj) {
                     continue;
                 } else {
-                    $cur_platform_id = $so_obj->get_platform_id();
+                    $cur_platform_id = $so_obj->getPlatformId();
                     $pbv_obj = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $cur_platform_id));
                     if (empty($lang_id)) {
-                        $lang_id = $pbv_obj->get_language_id();
+                        $lang_id = $pbv_obj->getLanguageId();
                     }
 
-                    $replace = array();
+                    $replace = [];
 
                     // get language template
                     include_once(APPPATH . "hooks/country_selection.php");
-                    $country_id = $pbv_obj->get_platform_country_id();
+                    $country_id = $pbv_obj->getPlatformCountryId();
 
                     $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
 
@@ -1307,7 +1290,7 @@ class SoService extends BaseService
 
 #                   SBF #2960 Add NIF/CIF to invoice if info was supplied
 #                   SBF #4330 also for IT page
-                    $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->get_client_id()));
+                    $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
                     $client_id_no = $client_obj->get_client_id_no();
                     $replace["company_name"] = $client_obj->get_companyname();
                     if (($cur_platform_id == "WEBES" || $cur_platform_id == "WEBIT") && $client_id_no) {
@@ -1349,48 +1332,48 @@ html;
                             break;
                         default:
                             $replace["isAmazon"] = 0;
-                            $replace["sales_email"] = $this->get_sales_email($lang_id);
-                            $replace["csemail"] = $this->get_cs_support_email($lang_id);
-                            $replace["return_email"] = $this->get_return_email($lang_id);
+                            $replace["sales_email"] = $this->getSalesEmail($lang_id);
+                            $replace["csemail"] = $this->getCsSupportEmail($lang_id);
+                            $replace["return_email"] = $this->getReturnEmail($lang_id);
                             break;
                     }
 
                     $itemlist = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $obj, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
-                    $so_ext_obj = $this->getDao('SoExtend')->get(array("so_no" => $obj));
+                    $so_ext_obj = $this->getDao('SoExtend')->get(["so_no" => $obj]);
 
                     $replace["website_domain"] = base_url();
-                    $replace["cursign"] = $cursign = $cursign_arr[$so_obj->get_currency_id()];
+                    $replace["cursign"] = $cursign_arr[$so_obj->getCurrencyId()];
 
-                    if ($so_obj->get_split_so_group())
-                        $new_so_no = $so_obj->get_split_so_group() . "/" . $so_obj->get_so_no();
+                    if ($so_obj->getSplitSoGroup())
+                        $new_so_no = $so_obj->getSplitSoGroup() . "/" . $so_obj->getSoNo();
                     else
-                        $new_so_no = $so_obj->get_so_no();
+                        $new_so_no = $so_obj->getSoNo();
 
-                    $replace["order_no"] = $so_obj->get_client_id() . "-" . $new_so_no;
-                    $replace["amazon_order_no"] = $so_obj->get_platform_order_id();
-                    $replace["order_date"] = date("d/m/Y", strtotime($so_obj->get_order_create_date()));
-                    $bcountry_obj = $this->getDao('Country')->get(array("id" => $so_obj->get_bill_country_id()));
-                    list($bill_addr_1, $bill_addr_2, $bill_addr_3) = explode("|", $so_obj->get_bill_address());
-                    $bstatezip = trim($so_obj->get_bill_state() . ", " . $so_obj->get_bill_postcode());
+                    $replace["order_no"] = $so_obj->getClientId() . "-" . $new_so_no;
+                    $replace["amazon_order_no"] = $so_obj->getPlatformOrderId();
+                    $replace["order_date"] = date("d/m/Y", strtotime($so_obj->getOrderCreateDate()));
+                    $bcountry_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getBillCountryId()));
+                    list($bill_addr_1, $bill_addr_2, $bill_addr_3) = explode("|", $so_obj->getBillAddress());
+                    $bstatezip = trim($so_obj->getBillState() . ", " . $so_obj->getBillPostcode());
                     if ($bstatezip != ",") {
                         $bstatezip = ereg_replace("^, ", "", $bstatezip);
                         $bstatezip = ereg_replace(",$", "", $bstatezip) . "<br>";
                     } else {
                         $bstatezip = "";
                     }
-                    $replace["billing_name"] = $so_obj->get_bill_name();
-                    $replace["billing_address"] = ($so_obj->get_bill_company() == "" ? "" : $so_obj->get_bill_company() . "<br/>") . $bill_addr_1 . "<br/>" . ($bill_addr_2 == "" ? "" : $bill_addr_2 . "<br/>") . ($bill_addr_3 == "" ? "" : $bill_addr_3 . "<br/>") . $so_obj->get_bill_city() . "<br>" . $bstatezip . $bcountry_obj->get_name();
-                    list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("|", $so_obj->get_delivery_address());
-                    $dcountry_obj = $this->getDao('Country')->get(array("id" => $so_obj->get_delivery_country_id()));
-                    $dstatezip = trim($so_obj->get_delivery_state() . ", " . $so_obj->get_delivery_postcode());
+                    $replace["billing_name"] = $so_obj->getBillName();
+                    $replace["billing_address"] = ($so_obj->getBillCompany() == "" ? "" : $so_obj->getBillCompany() . "<br/>") . $bill_addr_1 . "<br/>" . ($bill_addr_2 == "" ? "" : $bill_addr_2 . "<br/>") . ($bill_addr_3 == "" ? "" : $bill_addr_3 . "<br/>") . $so_obj->getBillCity() . "<br>" . $bstatezip . $bcountry_obj->getName();
+                    list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("|", $so_obj->getDeliveryAddress());
+                    $dcountry_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
+                    $dstatezip = trim($so_obj->getDeliveryState() . ", " . $so_obj->getDeliveryPostcode());
                     if ($dstatezip != ",") {
                         $dstatezip = ereg_replace("^, ", "", $dstatezip);
                         $dstatezip = ereg_replace(",$", "", $dstatezip) . "<br>";
                     } else {
                         $dstatezip = "";
                     }
-                    $replace["delivery_name"] = $so_obj->get_delivery_name();
-                    $replace["delivery_address"] = ($so_obj->get_delivery_company() == "" ? "" : $so_obj->get_delivery_company() . "<br/>") . $delivery_addr_1 . "<br/>" . ($delivery_addr_2 == "" ? "" : $delivery_addr_2 . "<br/>") . ($delivery_addr_3 == "" ? "" : $delivery_addr_3 . "<br/>") . $so_obj->get_delivery_city() . "<br>" . $dstatezip . $dcountry_obj->get_name();
+                    $replace["delivery_name"] = $so_obj->getDeliveryName();
+                    $replace["delivery_address"] = ($so_obj->getDeliveryCompany() == "" ? "" : $so_obj->getDeliveryCompany() . "<br/>") . $delivery_addr_1 . "<br/>" . ($delivery_addr_2 == "" ? "" : $delivery_addr_2 . "<br/>") . ($delivery_addr_3 == "" ? "" : $delivery_addr_3 . "<br/>") . $so_obj->getDeliveryCity() . "<br>" . $dstatezip . $dcountry_obj->getName();
 
                     $item_information = "";
                     $bvat = 0;
@@ -1424,15 +1407,15 @@ html;
                     }
                     foreach ($itemlist as $item_obj) {
 
-                        $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->get_main_prod_sku()));
-                        $amount_total = $item_obj->get_amount();
-                        $vat_total = $item_obj->get_vat_total();
+                        $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
+                        $amount_total = $item_obj->getAmount();
+                        $vat_total = $item_obj->getVatTotal();
                         $amount_total_bvat = $amount_total - $vat_total;
-                        $unit_price_bvat = round(($amount_total - $vat_total) / $item_obj->get_qty(), 2);
-                        $tmp = $this->getDao('Product')->get(array("sku" => $item_obj->get_main_prod_sku()));
-                        $imagepath = get_image_file($tmp->get_image(), 's', $tmp->get_sku());
+                        $unit_price_bvat = round(($amount_total - $vat_total) / $item_obj->getQty(), 2);
+                        $tmp = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
+                        $imagepath = get_image_file($tmp->getImage(), 's', $tmp->getSku());
                         $width_col_1 = $width_col_2 = "";
-                        $warranty_month = $item_obj->get_warranty_in_month();
+                        $warranty_month = $item_obj->getWarrantyInMonth();
                         if ($warranty_month == null) {
                             $warranty_month = "None";
                         } else {
@@ -1445,9 +1428,9 @@ html;
 
                         $item_information .= '<tr>
                                                 <td ' . $width_col_1 . ' align="center"><img src="' . $imagepath . '"></td>
-                                                <td ' . $width_col_2 . ' align="left">' . $item_obj->get_prod_sku() . ' - ' . $item_obj->get_name() . '<br/><br/>' . $warrantyname . ': ' . $warranty_month . '</td>
-                                                <td align="right">' . platform_curr_format($cur_platform_id, $item_obj->get_unit_price()) . '</td>
-                                                <td align="right">' . $item_obj->get_qty() . '</td>
+                                                <td ' . $width_col_2 . ' align="left">' . $item_obj->getProdSku() . ' - ' . $item_obj->getName() . '<br/><br/>' . $warrantyname . ': ' . $warranty_month . '</td>
+                                                <td align="right">' . platform_curr_format($cur_platform_id, $item_obj->getUnitPrice()) . '</td>
+                                                <td align="right">' . $item_obj->getQty() . '</td>
                                                 <td align="right"><b>' . platform_curr_format($cur_platform_id, $amount_total) . '</b></td>
                                             </tr>';
                         $bvat += $amount_total_bvat;
@@ -1466,9 +1449,9 @@ html;
 
                     $sid_bvat = "";
                     $sid_vat = "";
-                    $sid = $so_obj->get_delivery_charge();
-                    if ($so_ext_obj && $so_ext_obj->get_vatexempt() == "0") {
-                        $sid_vat = $sid * $so_obj->get_vat_percent() / (100 + $so_obj->get_vat_percent());
+                    $sid = $so_obj->getDeliveryCharge();
+                    if ($so_ext_obj && $so_ext_obj->getVatexempt() == "0") {
+                        $sid_vat = $sid * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent());
 
                     } else {
                         $sid_vat = 0;
@@ -1476,52 +1459,52 @@ html;
                     $sid = platform_curr_round($cur_platform_id, $sid);
                     $sid_vat = platform_curr_round($cur_platform_id, $sid_vat);
                     $sid_bvat = platform_curr_round($cur_platform_id, $sid - $sid_vat);
-                    $replace["currency"] = $so_obj->get_currency_id();
-                    $replace["promotion_code"] = $so_obj->get_promotion_code();
+                    $replace["currency"] = $so_obj->getCurrencyId();
+                    $replace["promotion_code"] = $so_obj->getPromotionCode();
                     $replace["sid"] = platform_curr_format($cur_platform_id, $sid);
                     $replace["sid_vat"] = platform_curr_format($cur_platform_id, $sid_vat);
                     $replace["sid_bvat"] = platform_curr_format($cur_platform_id, $sid_bvat);
 
                     $ofee = $ofee_vat = $ofee_bvat = 0;
-                    $extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->get_so_no()));
+                    $extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
                     if ($extobj) {
-                        if ($extobj->get_offline_fee() > 0) {
+                        if ($extobj->getOfflineFee() > 0) {
                             $replace["offline_fee"] = '<tr>
                                 <td colspan="2">&nbsp;</td>
                                 <td colspan="2" align="right" bgcolor="#DDDDDD" style="border:1px solid #BBBBBB; border-width:0px 0px 1px 1px;"><b>' . $replace["offline_fee"] . '</b></td>
-                                <td align="right" bgcolor="#F0F0F0" valign="top" style="border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;"><b>' . platform_curr_format($cur_platform_id, $extobj->get_offline_fee()) . '</b></td>
+                                <td align="right" bgcolor="#F0F0F0" valign="top" style="border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;"><b>' . platform_curr_format($cur_platform_id, $extobj->getOfflineFee()) . '</b></td>
                             </tr>';
-                            $ofee = platform_curr_round($cur_platform_id, $extobj->get_offline_fee());
-                            $ofee_vat = platform_curr_round($cur_platform_id, $ofee * $so_obj->get_vat_percent() / (100 + $so_obj->get_vat_percent()));
+                            $ofee = platform_curr_round($cur_platform_id, $extobj->getOfflineFee());
+                            $ofee_vat = platform_curr_round($cur_platform_id, $ofee * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
                             $ofee_bvat = platform_curr_round($cur_platform_id, $ofee - $ofee_vat);
-                        } else if ($extobj->get_offline_fee() < 0) {
+                        } else if ($extobj->getOfflineFee() < 0) {
                             $replace["offline_fee"] = '<tr>
                                 <td colspan="2">&nbsp;</td>
                                 <td colspan="2" align="right" bgcolor="#DDDDDD" style="border:1px solid #BBBBBB; border-width:0px 0px 1px 1px;"><b>' . $replace["discount"] . '</b></td>
-                                <td align="right" bgcolor="#F0F0F0" valign="top" style="border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;"><b>' . platform_curr_format($cur_platform_id, $extobj->get_offline_fee()) . '</b></td>
+                                <td align="right" bgcolor="#F0F0F0" valign="top" style="border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;"><b>' . platform_curr_format($cur_platform_id, $extobj->getOfflineFee()) . '</b></td>
                             </tr>';
-                            $ofee = platform_curr_round($cur_platform_id, $extobj->get_offline_fee());
-                            $ofee_vat = platform_curr_round($cur_platform_id, $ofee * $so_obj->get_vat_percent() / (100 + $so_obj->get_vat_percent()));
+                            $ofee = platform_curr_round($cur_platform_id, $extobj->getOfflineFee());
+                            $ofee_vat = platform_curr_round($cur_platform_id, $ofee * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
                             $ofee_bvat = platform_curr_round($cur_platform_id, $ofee - $ofee_vat);
                         } else {
                             $replace["offline_fee"] = "";
                         }
                         //#2182 add the processing fee
-                        $processing_fee = $extobj->get_offline_fee();
+                        $processing_fee = $extobj->getOfflineFee();
                     }
                     if (is_null($processing_fee)) {
                         $processing_fee = 0;
                     }
 
                     $replace["processing_fee"] = platform_curr_format($cur_platform_id, $processing_fee);
-                    $replace["total"] = $so_obj->get_amount();
-                    $replace["total_vat"] = platform_curr_round($cur_platform_id, $replace["total"] * $so_obj->get_vat_percent() / (100 + $so_obj->get_vat_percent()));
+                    $replace["total"] = $so_obj->getAmount();
+                    $replace["total_vat"] = platform_curr_round($cur_platform_id, $replace["total"] * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
                     $replace["total_bvat"] = platform_curr_round($cur_platform_id, $replace["total"] - $replace["total_vat"]);
-                    if (!$replace["payment_method"] = $this->get_so_payment_gateway($so_obj->get_so_no())) {
+                    if (!$replace["payment_method"] = $this->getSoPaymentGateway($so_obj->getSoNo())) {
                         $replace["payment_method"] = "N/A";
                     }
                     //#2182 add the processing fee to the total, also add the delivery charge
-                    $replace["grand_total"] = platform_curr_format($cur_platform_id, $so_obj->get_amount());
+                    $replace["grand_total"] = platform_curr_format($cur_platform_id, $so_obj->getAmount());
 
                     if ($gen_pdf) {
                         $body_file = "customer_invoice_body_pdf.html";
@@ -1590,7 +1573,7 @@ html;
         return FALSE;
     }
 
-    public function get_sales_email($lang_id)
+    public function getSalesEmail($lang_id)
     {
         switch ($lang_id) {
             default:
@@ -1600,7 +1583,7 @@ html;
         return $email;
     }
 
-    public function get_cs_support_email($lang_id)
+    public function getCsSupportEmail($lang_id)
     {
         switch ($lang_id) {
             default:
@@ -1610,7 +1593,7 @@ html;
         return $email;
     }
 
-    public function get_return_email($lang_id)
+    public function getReturnEmail($lang_id)
     {
         switch ($lang_id) {
             default:
@@ -1620,12 +1603,12 @@ html;
         return $email;
     }
 
-    public function get_so_payment_gateway($so_no = '')
+    public function getSoPaymentGateway($so_no = '')
     {
         if ($so_no != '') {
-            if ($sops_obj = $this->getDao('SoPaymentStatus')->get(array('so_no' => $so_no))) {
-                if ($pg_obj = $this->get_payment_gateway_dao()->get(array('id' => $sops_obj->get_payment_gateway_id()))) {
-                    $payment_gateway = (is_null($pg_obj->get_name()) ? '' : $pg_obj->get_name());
+            if ($sops_obj = $this->getDao('SoPaymentStatus')->get(['so_no' => $so_no])) {
+                if ($pg_obj = $this->getDao('PaymentGateway')->get(['payment_gateway_id' => $sops_obj->getPaymentGatewayId()])) {
+                    $payment_gateway = (is_null($pg_obj->getName()) ? '' : $pg_obj->getName());
                     return $payment_gateway;
                 }
             }
@@ -1634,69 +1617,57 @@ html;
         return '';
     }
 
-    public function get_payment_gateway_dao()
-    {
-        return $this->payment_gateway_dao;
-    }
-
-    public function set_payment_gateway_dao($dao)
-    {
-        $this->payment_gateway_dao = $dao;
-        return $dao;
-    }
-
     public function fire_preorder_delay_email($so_no)
     {
         $so_obj = $this->getDao('So')->get(array("so_no" => $so_no));
-        $client = $this->getDao('Client')->get(array("id" => $so_obj->get_client_id()));
+        $client = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
 
         # sbf #3746 don't include complementary accessory on front end
-        $ca_catid_arr = implode(',', $this->get_ca_service()->get_accessory_catid_arr());
+        $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
 
-        $platform_id = $so_obj->get_platform_id();
+        $platform_id = $so_obj->getPlatformId();
         $pbv = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $platform_id));
         $lang_id = $pbv->get_language_id();
-        $so_items = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_obj->get_so_no(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL), array("lang_id" => $lang_id));
+        $so_items = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL), array("lang_id" => $lang_id));
 
         $old_edd = $so_obj->get_expect_delivery_date();
         $new_edd = "";
         foreach ($so_items as $item_obj) {
-            $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->get_main_prod_sku()));
+            $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
             $new_edd = $prod_obj->get_expected_delivery_date();
-            $prod_name .= $item_obj->get_name();
+            $prod_name .= $item_obj->getName();
         }
 
         $email_subject = "[VB] preorder delay email alert";
         $headers .= 'From: Admin <admin@valuebasket.com>' . "\r\n";
         if ($old_edd == $new_edd) {
 //alert
-            $message = "User sending wrong delay order, so_no:" . $so_obj->get_so_no();
+            $message = "User sending wrong delay order, so_no:" . $so_obj->getSoNo();
             $message .= ", old:" . $old_edd . "= new:" . $new_edd;
             mail("oswald-alert@eservicesgroup.com", $email_subject, $message, $headers);
         } else if ($new_edd == "") {
 //alert
-            $message = "User sending unexpected delay order email, so_no:" . $so_obj->get_so_no();
+            $message = "User sending unexpected delay order email, so_no:" . $so_obj->getSoNo();
             $message .= ", there is no new:" . $new_edd;
             $message .= ", please check the new product EDD";
             mail("oswald-alert@eservicesgroup.com", $email_subject, $message, $headers);
         } else if (strtotime($old_edd) > strtotime($new_edd)) {
 //EDD is earlier, alert
-            $message = "User sending wrong delay order, so_no:" . $so_obj->get_so_no();
+            $message = "User sending wrong delay order, so_no:" . $so_obj->getSoNo();
             $message .= ", old:" . $old_edd . "> new:" . $new_edd;
             $message .= ", please check the new product EDD";
             mail("oswald-alert@eservicesgroup.com", $email_subject, $message, $headers);
         } else {
-            $this->include_dto("Event_email_dto");
-            $dto = new Event_email_dto();
-            $dto->set_event_id("preorder_delay");
-            $dto->set_tpl_id("preorder_delay");
-            $dto->set_lang_id($lang_id);
+            $dto = new EventEmailDto;
+            $dto->setEventId("preorder_delay");
+            $dto->setTplId("preorder_delay");
+            $dto->setLangId($lang_id);
 
-            $replace["forename"] = $client->get_forename();
+            $replace["forename"] = $client->getForename();
             $replace["so_items_pre_order"] = $prod_name;
             $replace["expect_delivery_date"] = $new_edd;
-            $replace["client_id"] = $so_obj->get_client_id();
-            $replace["so_no"] = $so_obj->get_so_no();
+            $replace["client_id"] = $so_obj->getClientId();
+            $replace["so_no"] = $so_obj->getSoNo();
 
             include_once(APPPATH . "hooks/country_selection.php");
             $country_id = strtolower($pbv->get_platform_country_id());
@@ -1705,18 +1676,18 @@ html;
             $replace["image_url"] = $this->getDao('Config')->valueOf("default_url");
             $replace["logo_file_name"] = $this->getDao('Config')->valueOf("logo_file_name");
 
-            $dto->set_replace($replace);
-            $dto->set_mail_to($client->get_email());
+            $dto->setReplace($replace);
+            $dto->setMailTo($client->getEmail());
             $this->eventService->fireEvent($dto);
         }
     }
 
-    public function get_preorder_list($where = array(), $option = array())
+    public function getPreorderList($where = [], $option = [])
     {
-        return $this->get_so_dao()->get_preorder_list($where, $option);
+        return $this->getDao('So')->getPreorderList($where, $option);
     }
 
-    public function get_delivery_note_content($so_no_list = array())
+    public function getDeliveryNoteContent($so_no_list = [])
     {
         $content = "";
         if ($so_no_list) {
@@ -1727,35 +1698,35 @@ html;
 
             foreach ($so_no_list as $so_no) {
                 if ($so_obj = $this->get(array("so_no" => $so_no))) {
-                    $cur_platform_id = $so_obj->get_platform_id();
+                    $cur_platform_id = $so_obj->getPlatformId();
                     if (!isset($ar_pbv_obj[$cur_platform_id])) {
                         $ar_pbv_obj[$cur_platform_id] = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $cur_platform_id));
                     }
 
                     if ($pbv_obj = $ar_pbv_obj[$cur_platform_id]) {
-                        $replace = array();
+                        $replace = [];
 
-                        $cur_lang_id = $pbv_obj->get_language_id();
+                        $cur_lang_id = $pbv_obj->getLanguageId();
                         if (!isset($ar_lang[$cur_lang_id])) {
                             include_once APPPATH . "language/ORD001001_" . $cur_lang_id . ".php";
                             $ar_lang[$cur_lang_id] = $lang;
                         }
 
-                        if ($so_obj->get_split_so_group())
-                            $new_so_no = $so_obj->get_split_so_group() . "/$so_no";
+                        if ($so_obj->getSplitSoGroup())
+                            $new_so_no = $so_obj->getSplitSoGroup() . "/$so_no";
                         else
                             $new_so_no = $so_no;
 
                         $replace["so_no"] = $new_so_no;
-                        $replace["client_id"] = $so_obj->get_client_id();
-                        $replace["order_create_date"] = date("d/m/Y", strtotime($so_obj->get_order_create_date()));
-                        $replace["delivery_name"] = $so_obj->get_delivery_name();
-                        $country = $this->getDao('Country')->get(array("id" => $so_obj->get_delivery_country_id()));
-                        $billing_country = $this->getDao('Country')->get(array("id" => $so_obj->get_bill_country_id()));
-                        $replace["delivery_address_text"] = ($so_obj->get_delivery_company() ? $so_obj->get_delivery_company() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->get_delivery_address())) . "\n" . $so_obj->get_delivery_city() . " " . $so_obj->get_delivery_state() . " " . $so_obj->get_delivery_postcode() . "\n" . $country->get_name();
+                        $replace["client_id"] = $so_obj->getClientId();
+                        $replace["order_create_date"] = date("d/m/Y", strtotime($so_obj->getOrderCreateDate()));
+                        $replace["delivery_name"] = $so_obj->getDeliveryName();
+                        $country = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
+                        $billing_country = $this->getDao('Country')->get(array("country_id" => $so_obj->getBillCountryId()));
+                        $replace["delivery_address_text"] = ($so_obj->getDeliveryCompany() ? $so_obj->getDeliveryCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getDeliveryAddress())) . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState() . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
                         $replace["delivery_address"] = nl2br($replace["delivery_address_text"]);
-                        $replace["billing_name"] = $so_obj->get_bill_name();
-                        $replace["billing_address_text"] = ($so_obj->get_bill_company() ? $so_obj->get_bill_company() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->get_bill_address())) . "\n" . $so_obj->get_bill_city() . " " . $so_obj->get_bill_state() . " " . $so_obj->get_bill_postcode() . "\n" . $billing_country->get_name();
+                        $replace["billing_name"] = $so_obj->getBillName();
+                        $replace["billing_address_text"] = ($so_obj->getBillCompany() ? $so_obj->getBillCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getBillAddress())) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState() . " " . $so_obj->getBillPostcode() . "\n" . $billing_country->get_name();
                         $replace["billing_address"] = nl2br($replace["billing_address_text"]);
 
                         $replace["lang_order_no"] = $ar_lang[$cur_lang_id]["order_no"];
@@ -1770,22 +1741,22 @@ html;
                         $replace["lang_our_return_policy"] = $ar_lang[$cur_lang_id]["our_return_policy"];
                         $replace["lang_return_policy_part1"] = $ar_lang[$cur_lang_id]["return_policy_part1"];
                         $replace["lang_return_policy_part2"] = $ar_lang[$cur_lang_id]["return_policy_part2"];
-                        $replace["return_email"] = $this->get_return_email($cur_lang_id);
-                        $replace["cs_support_email"] = $this->get_cs_support_email($cur_lang_id);
+                        $replace["return_email"] = $this->getReturnEmail($cur_lang_id);
+                        $replace["cs_support_email"] = $this->getCsSupportEmail($cur_lang_id);
 
                         # sbf #3746 don't include complementary accessory on front end
-                        $ca_catid_arr = implode(',', $this->get_ca_service()->get_accessory_catid_arr());
+                        $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
                         $option["show_ca"] = 1; # 4404 - show CA on delivery note only
 
                         if ($itemlist = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_no), $option)) {
                             foreach ($itemlist as $item_obj) {
-                                $tmp = $this->getDao('Product')->get(array("sku" => $item_obj->get_main_prod_sku()));
-                                $imagepath = base_url() . get_image_file($tmp->get_image(), 's', $tmp->get_sku());
+                                $tmp = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
+                                $imagepath = base_url() . get_image_file($tmp->getImage(), 's', $tmp->getSku());
                                 $replace["so_items"] .= "
                     <tr>
                         <td align='center'><img src='{$imagepath}'></td>
-                        <td valign=top>{$item_obj->get_prod_sku()} - {$item_obj->get_name()}</td>
-                        <td valign=top>{$item_obj->get_qty()}</td>
+                        <td valign=top>{$item_obj->getProdSku()} - {$item_obj->getName()}</td>
+                        <td valign=top>{$item_obj->getQty()}</td>
                     </tr>";
                             }
                         }
@@ -1802,7 +1773,7 @@ html;
         return $content;
     }
 
-    public function get_order_packing_slip_content($so_no_list = array())
+    public function getOrderPackingSlipContent($so_no_list = [])
     {
         $content = "";
         if ($so_no_list) {
@@ -1813,13 +1784,13 @@ html;
 
             foreach ($so_no_list as $so_no) {
                 if ($so_obj = $this->get(array("so_no" => $so_no))) {
-                    $cur_platform_id = $so_obj->get_platform_id();
+                    $cur_platform_id = $so_obj->getPlatformId();
                     if (!isset($ar_pbv_obj[$cur_platform_id])) {
                         $ar_pbv_obj[$cur_platform_id] = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $cur_platform_id));
                     }
 
                     if ($pbv_obj = $ar_pbv_obj[$cur_platform_id]) {
-                        $replace = array();
+                        $replace = [];
 
                         $cur_lang_id = 'en';
                         if (!isset($ar_lang[$cur_lang_id])) {
@@ -1827,21 +1798,21 @@ html;
                             $ar_lang[$cur_lang_id] = $lang;
                         }
 
-                        if ($so_obj->get_split_so_group())
-                            $new_so_no = $so_obj->get_split_so_group() . "/$so_no";
+                        if ($so_obj->getSplitSoGroup())
+                            $new_so_no = $so_obj->getSplitSoGroup() . "/$so_no";
                         else
                             $new_so_no = $so_no;
 
                         $replace["so_no"] = $new_so_no;
-                        $replace["client_id"] = $so_obj->get_client_id();
-                        $replace["order_create_date"] = date("d/m/Y", strtotime($so_obj->get_order_create_date()));
-                        $replace["delivery_name"] = $so_obj->get_delivery_name();
-                        $country = $this->getDao('Country')->get(array("id" => $so_obj->get_delivery_country_id()));
-                        $billing_country = $this->getDao('Country')->get(array("id" => $so_obj->get_bill_country_id()));
-                        $replace["delivery_address_text"] = ($so_obj->get_delivery_company() ? $so_obj->get_delivery_company() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->get_delivery_address())) . "\n" . $so_obj->get_delivery_city() . " " . $so_obj->get_delivery_state() . " " . $so_obj->get_delivery_postcode() . "\n" . $country->get_name();
+                        $replace["client_id"] = $so_obj->getClientId();
+                        $replace["order_create_date"] = date("d/m/Y", strtotime($so_obj->getOrderCreateDate()));
+                        $replace["delivery_name"] = $so_obj->getDeliveryName();
+                        $country = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
+                        $billing_country = $this->getDao('Country')->get(array("country_id" => $so_obj->getBillCountryId()));
+                        $replace["delivery_address_text"] = ($so_obj->getDeliveryCompany() ? $so_obj->getDeliveryCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getDeliveryAddress())) . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState() . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
                         $replace["delivery_address"] = nl2br($replace["delivery_address_text"]);
-                        $replace["billing_name"] = $so_obj->get_bill_name();
-                        $replace["billing_address_text"] = ($so_obj->get_bill_company() ? $so_obj->get_bill_company() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->get_bill_address())) . "\n" . $so_obj->get_bill_city() . " " . $so_obj->get_bill_state() . " " . $so_obj->get_bill_postcode() . "\n" . $billing_country->get_name();
+                        $replace["billing_name"] = $so_obj->getBillName();
+                        $replace["billing_address_text"] = ($so_obj->getBillCompany() ? $so_obj->getBillCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getBillAddress())) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState() . " " . $so_obj->getBillPostcode() . "\n" . $billing_country->get_name();
                         $replace["billing_address"] = nl2br($replace["billing_address_text"]);
 
                         $replace["lang_order_no"] = $ar_lang[$cur_lang_id]["order_no"];
@@ -1856,8 +1827,8 @@ html;
                         $replace["lang_our_return_policy"] = $ar_lang[$cur_lang_id]["our_return_policy"];
                         $replace["lang_return_policy_part1"] = $ar_lang[$cur_lang_id]["return_policy_part1"];
                         $replace["lang_return_policy_part2"] = $ar_lang[$cur_lang_id]["return_policy_part2"];
-                        $replace["return_email"] = $this->get_return_email($cur_lang_id);
-                        $replace["cs_support_email"] = $this->get_cs_support_email($cur_lang_id);
+                        $replace["return_email"] = $this->getReturnEmail($cur_lang_id);
+                        $replace["cs_support_email"] = $this->getCsSupportEmail($cur_lang_id);
 
                         # also include complementary accessory
                         if ($itemlist = $this->getDao('SoItemDetail')->getListWithProdname(array("so_no" => $so_no))) {
@@ -1867,12 +1838,12 @@ html;
                                 $item_obj_sku = $item_obj->get_item_sku();
                                 if (in_array($item_obj_sku, $no_show_sku) === false) {
                                     $tmp = $this->getDao('Product')->get(array("sku" => $item_obj->get_item_sku()));
-                                    $imagepath = base_url() . get_image_file($tmp->get_image(), 's', $tmp->get_sku());
+                                    $imagepath = base_url() . get_image_file($tmp->getImage(), 's', $tmp->getSku());
                                     $replace["so_items"] .= "
                         <tr>
                             <td align='center'><img src='{$imagepath}'></td>
-                            <td valign=top style='font-size:20px'>{$item_obj->get_item_sku()} - {$item_obj->get_name()}</td>
-                            <td valign=top style='font-size:20px'>{$item_obj->get_qty()}</td>
+                            <td valign=top style='font-size:20px'>{$item_obj->get_item_sku()} - {$item_obj->getName()}</td>
+                            <td valign=top style='font-size:20px'>{$item_obj->getQty()}</td>
                             <td></td>
                             <td></td>
                         </tr>";
@@ -1893,7 +1864,7 @@ html;
         return $content;
     }
 
-    public function get_custom_invoice_content($so_no_list = array(), $new_shipper_name = "", $currency = "")
+    public function getCustomInvoiceContent($so_no_list = [], $new_shipper_name = "", $currency = "")
     {
         $so_lang_arr = array("AMUK" => "en", "WSGB" => "en", "AMFR" => "en", "AMDE" => "en", "AMUS" => "en");
         $run = 0;
@@ -1902,7 +1873,7 @@ html;
         $cursign_arr = array("GBP" => "GBP", "EUR" => "GBP");
 
         # sbf #3746 don't include complementary accessory on front end
-        $ca_catid_arr = implode(',', $this->get_ca_service()->get_accessory_catid_arr());
+        $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
 
         if (count($so_no_list)) {
             $valid = 0;
@@ -1917,19 +1888,19 @@ html;
                 if (!$so_obj) {
                     continue;
                 } else {
-                    $data = array();
+                    $data = [];
                     $itemlist = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $obj, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
 
-                    $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->get_client_id()));
+                    $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
 
                     for ($i = 1; $i < 7; $i++) {
                         ${"daddr_" . $i} = "&nbsp;";
                     }
 
-                    if ($so_obj->get_split_so_group())
-                        $new_so_no = $so_obj->get_split_so_group() . "/" . $so_obj->get_so_no();
+                    if ($so_obj->getSplitSoGroup())
+                        $new_so_no = $so_obj->getSplitSoGroup() . "/" . $so_obj->getSoNo();
                     else
-                        $new_so_no = $so_obj->get_so_no();
+                        $new_so_no = $so_obj->getSoNo();
 
                     $data["date_of_invoice"] = date("d/m/Y");
                     $data["shipper_name"] = $new_shipper_name ? strtoupper($new_shipper_name) : "VALUEBASKET.COM LIMITED";
@@ -1943,12 +1914,12 @@ html;
                     $data["saddr_6"] = "&nbsp;";
                     $data["date"] = date("d/m/Y");
                     $data["order_number"] = $new_so_no;
-                    $data["deliver_name"] = $so_obj->get_delivery_name();
-                    $data["client_id"] = $so_obj->get_client_id();
+                    $data["deliver_name"] = $so_obj->getDeliveryName();
+                    $data["client_id"] = $so_obj->getClientId();
 
 
                     $line_no = 1;
-                    list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("|", $so_obj->get_delivery_address());
+                    list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("|", $so_obj->getDeliveryAddress());
                     $data["daddr_" . $line_no] = $delivery_addr_1;
                     $line_no++;
                     if ($delivery_addr_2 != "" || $delivery_addr_3 != "") {
@@ -1964,24 +1935,24 @@ html;
                     }
 
                     $csz = "";
-                    if ($so_obj->get_delivery_city() != "") {
-                        $csz .= $so_obj->get_delivery_city() . ", ";
+                    if ($so_obj->getDeliveryCity() != "") {
+                        $csz .= $so_obj->getDeliveryCity() . ", ";
                     }
-                    if ($so_obj->get_delivery_state() != "") {
-                        $csz .= $so_obj->get_delivery_state();
+                    if ($so_obj->getDeliveryState() != "") {
+                        $csz .= $so_obj->getDeliveryState();
                     }
-                    if ($so_obj->get_delivery_postcode() != "") {
-                        $csz .= " " . $so_obj->get_delivery_postcode();
+                    if ($so_obj->getDeliveryPostcode() != "") {
+                        $csz .= " " . $so_obj->getDeliveryPostcode();
                     }
                     $csz = @preg_replace("{, $}", "", $csz);
                     if (trim($csz)) {
                         $data["daddr_" . $line_no] = $csz;
                         $line_no++;
                     }
-                    $data["daddr_" . $line_no] = $so_obj->get_delivery_country_id();
+                    $data["daddr_" . $line_no] = $so_obj->getDeliveryCountryId();
 
-                    $dcountry_obj = $this->getDao('Country')->get(array("id" => $so_obj->get_delivery_country_id()));
-                    $dstatezip = trim($so_obj->get_delivery_state() . ", " . $so_obj->get_delivery_postcode());
+                    $dcountry_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
+                    $dstatezip = trim($so_obj->getDeliveryState() . ", " . $so_obj->getDeliveryPostcode());
                     if ($dstatezip != ",") {
                         $dstatezip = @preg_replace("{^, }", "", $dstatezip);
                         $dstatezip = @preg_replace("{,$}", "", $dstatezip) . "<br>";
@@ -1990,25 +1961,25 @@ html;
                     }
 
                     $item_information = $declared_ratio = "";
-                    if (in_array($so_obj->get_delivery_country_id(), array("AU"))) {
+                    if (in_array($so_obj->getDeliveryCountryId(), array("AU"))) {
                         foreach ($itemlist AS $item_obj) {
-                            $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->get_main_prod_sku()));
-                            $value = round($item_obj->get_amount() / $item_obj->get_qty() * $so_obj->get_rate(), 2);
-                            $sum += $value * $item_obj->get_qty();
+                            $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
+                            $value = round($item_obj->getAmount() / $item_obj->getQty() * $so_obj->get_rate(), 2);
+                            $sum += $value * $item_obj->getQty();
                         }
-                        if ($obj = $this->get_sub_domain_srv()->get(array("subject" => "MAX_DECLARE_VALUE.{$so_obj->get_delivery_country_id()}"))) {
+                        if ($obj = $this->get_sub_domain_srv()->get(array("subject" => "MAX_DECLARE_VALUE.{$so_obj->getDeliveryCountryId()}"))) {
                             if ($obj->get_value() <= $sum) {
                                 $declared_ratio = $obj->get_value() / $sum;
                             }
                         }
                     }
-                    if (in_array($so_obj->get_delivery_country_id(), array("NZ"))) {
+                    if (in_array($so_obj->getDeliveryCountryId(), array("NZ"))) {
                         foreach ($itemlist AS $item_obj) {
-                            $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->get_main_prod_sku()));
-                            $value = round($item_obj->get_amount() / $item_obj->get_qty() * $so_obj->get_rate(), 2);
-                            $sum += $value * $item_obj->get_qty();
+                            $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
+                            $value = round($item_obj->getAmount() / $item_obj->getQty() * $so_obj->get_rate(), 2);
+                            $sum += $value * $item_obj->getQty();
                         }
-                        if ($obj = $this->get_sub_domain_srv()->get(array("subject" => "SELLING_PRICE_CEILING.{$so_obj->get_delivery_country_id()}"))) {
+                        if ($obj = $this->get_sub_domain_srv()->get(array("subject" => "SELLING_PRICE_CEILING.{$so_obj->getDeliveryCountryId()}"))) {
                             $declared_ratio = 1;
                             if ($obj->get_value() <= $sum) {
                                 $declared_ratio = 0.5;
@@ -2021,8 +1992,8 @@ html;
                     $total_piece = 0;
 
                     //#2182 add the processing fee
-                    if ($extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->get_so_no()))) {
-                        $processing_fee = $extobj->get_offline_fee();
+                    if ($extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()))) {
+                        $processing_fee = $extobj->getOfflineFee();
                     }
                     if (is_null($processing_fee)) {
                         $processing_fee = 0;
@@ -2030,34 +2001,34 @@ html;
 
                     foreach ($itemlist as $item_obj) {
                         $hs_desc = $code = null;
-                        $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->get_main_prod_sku()));
-                        $qty = $item_obj->get_qty();
-                        $amount_total = $item_obj->get_amount();
-                        if ($pcc_obj = $this->getDao('ProductCustomClassification')->get(array('sku' => $prod_obj->get_sku(), 'country_id' => $so_obj->get_delivery_country_id()))) {
+                        $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
+                        $qty = $item_obj->getQty();
+                        $amount_total = $item_obj->getAmount();
+                        if ($pcc_obj = $this->getDao('ProductCustomClassification')->get(array('sku' => $prod_obj->get_sku(), 'country_id' => $so_obj->getDeliveryCountryId()))) {
                             $hs_desc = $pcc_obj->get_description();
                             $code = $pcc_obj->get_code();
                         }
 
                         //SBF #4403 - If hs desc and code not found, get the hs desc and code from sub_cat_id of the product
                         if (!isset($hs_desc) || $hs_desc == '') {
-                            $where = array('ccm.sub_cat_id' => $prod_obj->get_sub_cat_id(), 'ccm.country_id' => $so_obj->get_delivery_country_id());
+                            $where = array('ccm.sub_cat_id' => $prod_obj->get_sub_cat_id(), 'ccm.country_id' => $so_obj->getDeliveryCountryId());
                             $hsDetails = $this->getDao('CustomClassificationMapping')->getHsBySubcatAndCountry($where, $option);
                             $hs_desc = $hsDetails[0]['description'];
                             $code = $hsDetails[0]['code'];
                         }
 
                         if ($declared_ratio) {
-                            $declared_value = round($amount_total / $item_obj->get_qty() * $so_obj->get_rate() * $declared_ratio, 2);
+                            $declared_value = round($amount_total / $item_obj->getQty() * $so_obj->get_rate() * $declared_ratio, 2);
                         } else {
-                            $declared_value = round($this->get_declared_value($prod_obj, $so_obj->get_delivery_country_id(), $amount_total / $item_obj->get_qty()), 2);
+                            $declared_value = round($this->get_declared_value($prod_obj, $so_obj->getDeliveryCountryId(), $amount_total / $item_obj->getQty()), 2);
                         }
 
                         # sbf 4145 - custom invoice in HKD
                         $declared_value_converted = $declared_value * $so_obj->get_rate();
-                        $delivery_charge_converted = $so_obj->get_delivery_charge() * $so_obj->get_rate();
+                        $delivery_charge_converted = $so_obj->getDeliveryCharge() * $so_obj->get_rate();
                         $processing_fee_converted = $processing_fee * $so_obj->get_rate();
                         if ($currency) {
-                            $original_currency = "USD"; // $so_obj->get_currency_id();
+                            $original_currency = "USD"; // $so_obj->getCurrencyId();
                             $declared_value_converted = $this->convertCurrency($original_currency, $currency, $declared_value_converted);
                             $delivery_charge_converted = $this->convertCurrency($original_currency, $currency, $delivery_charge_converted);
                             $processing_fee_converted = $this->convertCurrency($original_currency, $currency, $processing_fee_converted);
@@ -2070,7 +2041,7 @@ html;
                                                 <td width='1' class='tborder'></td>
                                                 <td class='value'>" . $hs_desc . "</td>
                                                 <td width='1' class='tborder'></td>
-                                                <td class='value'>" . $item_obj->get_qty() . "</td>
+                                                <td class='value'>" . $item_obj->getQty() . "</td>
                                                 <td width='1' class='tborder'></td>
                                                 <td class='value'>" . $code . "</td>
                                                 <td width='1' class='tborder'></td>
@@ -2085,14 +2056,14 @@ html;
                         $sum += $declared_value_converted * $qty;
                     }
                     $data["item_info"] = $item_information;
-                    //$data["total_cost"] = $so_obj->get_amount() *  $so_obj->get_rate();
+                    //$data["total_cost"] = $so_obj->getAmount() *  $so_obj->get_rate();
                     $data["total_cost"] = number_format($sum, 2);
                     $data["delivery"] = number_format($delivery_charge_converted, 2);
                     $data['processing_fee'] = number_format($processing_fee_converted, 2);
 
                     $data["total_value"] = number_format($sum + $data["delivery"] + $data['processing_fee'], 2);
 
-                    $content .= $this->get_custom_inv_body($data, $lang, $new_shipper_name);
+                    $content .= $this->getCustomInvBody($data, $lang, $new_shipper_name);
                     if ($run < $total_cnt) {
                         $content .= $pagebreak;
                     }
@@ -2109,7 +2080,7 @@ html;
         return FALSE;
     }
 
-    public function get_declared_value($prod_obj = "", $country_id = "", $price = "")
+    public function getDeclaredValue($prod_obj = "", $country_id = "", $price = "")
     {
         $max_declared_value = -1;
         $declared_pcent = 100;
@@ -2449,7 +2420,7 @@ html;
         return $rate * $original_value;
     }
 
-    private function get_custom_inv_body($data = array(), $lang = array(), $new_shipper_name = "")
+    private function getCustomInvBody($data = [], $lang = [], $new_shipper_name = "")
     {
         foreach ($data as $key => $value) {
             ${$key} = $value;
@@ -2481,20 +2452,20 @@ html;
                 }
 
                 $user_obj = $this->getDao('User')->get(array("id" => $sohr_obj->get_create_by()));
-                include_once APPPATH . "libraries/dto/event_email_dto.php";
-                $dto = new Event_email_dto();
+
+                $dto = new EventEmailDto;
 
                 $replace["so_no"] = $so_no;
-                $replace["client_id"] = $so_obj->get_client_id();
+                $replace["client_id"] = $so_obj->getClientId();
                 $replace["name"] = $user_obj->get_username();
                 $replace["create_date"] = $sohr_obj->get_create_on();
                 $replace["reason"] = ereg_replace('_log_app$', '', $sohr_obj->get_reason());
 
-                $dto->set_event_id("notification");
-                $dto->set_mail_from('logistics@valuebasket.com');
-                $dto->set_mail_to($user_obj->get_email());
-                $dto->set_tpl_id("log_reply_" . $option);
-                $dto->set_replace($replace);
+                $dto->setEventId("notification");
+                $dto->setMailFrom('logistics@valuebasket.com');
+                $dto->setMailTo($user_obj->get_email());
+                $dto->setTplId("log_reply_" . $option);
+                $dto->setReplace($replace);
                 $this->eventService->fireEvent($dto);
 
                 return TRUE;
@@ -2502,26 +2473,25 @@ html;
         }
     }
 
-    public function fire_cs2log_email($so_no = "", $reason = "", $user_info = array())
+    public function fire_cs2log_email($so_no = "", $reason = "", $user_info = [])
     {
         if ($so_no == "" || $reason == "" || empty($user_info)) {
             return;
         } else {
-            include_once APPPATH . "libraries/dto/event_email_dto.php";
-            $dto = new Event_email_dto();
+            $dto = new EventEmailDto;
 
             $so_obj = $this->get(array("so_no" => $so_no));
             $replace["so_no"] = $so_no;
-            $replace["client_id"] = $so_obj->get_client_id();
+            $replace["client_id"] = $so_obj->getClientId();
             $replace["name"] = $user_info["username"];
             $replace["create_date"] = date("Y-m-d H:i:s");
             $replace["reason"] = $reason;
 
-            $dto->set_event_id("notification");
-            $dto->set_mail_to('logistics@valuebasket.com');
-            $dto->set_mail_from($user_info["email"]);
-            $dto->set_tpl_id("log_notice");
-            $dto->set_replace($replace);
+            $dto->setEventId("notification");
+            $dto->setMailTo('logistics@valuebasket.com');
+            $dto->setMailFrom($user_info["email"]);
+            $dto->setTplId("log_notice");
+            $dto->setReplace($replace);
             $this->eventService->fireEvent($dto);
 
             return TRUE;
@@ -2535,54 +2505,53 @@ html;
             return;
         } else {
             # sbf #3746 don't include complementary accessory on front end
-            $ca_catid_arr = implode(',', $this->get_ca_service()->get_accessory_catid_arr());
+            $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
 
             $so_obj = $this->getDao('So')->get(array("so_no" => $so_no));
             if ($so_obj) {
-                $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->get_client_id()));
-                $pbv_obj = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $so_obj->get_platform_id()));
+                $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
+                $pbv_obj = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $so_obj->getPlatformId()));
                 if ($client_obj) {
                     $list = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_no, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
 
-                    $item_list = array();
+                    $item_list = [];
                     foreach ($list as $obj) {
                         $item_list[] = "- " . $obj->get_name();
                     }
 
-                    include_once APPPATH . "libraries/dto/event_email_dto.php";
-                    $dto = new Event_email_dto();
+                    $dto = new EventEmailDto;
 
                     $replace["order_number"] = $so_no;
-                    $replace["client_id"] = $so_obj->get_client_id();
+                    $replace["client_id"] = $so_obj->getClientId();
                     $replace["forename"] = $client_obj->get_forename();
-                    $replace["order_create_date"] = date("Y-m-d", strtotime($so_obj->get_order_create_date()));
+                    $replace["order_create_date"] = date("Y-m-d", strtotime($so_obj->getOrderCreateDate()));
                     $replace["item_list"] = implode("\n", $item_list);
 
                     include_once(APPPATH . "hooks/country_selection.php");
-                    $order_lang = $pbv_obj ? $pbv_obj->get_language_id() : "";
-                    $order_country = $pbv_obj ? $pbv_obj->get_platform_country_id() : "";
+                    $order_lang = $pbv_obj ? $pbv_obj->getLanguageId() : "";
+                    $order_country = $pbv_obj ? $pbv_obj->getPlatformCountryId() : "";
                     $replace = array_merge($replace, Country_selection::get_template_require_text($order_lang, $order_country));
                     $email_sender = "Agatha@" . strtolower($replace["site_name"]);
 
-                    $dto->set_event_id("notification");
-                    $dto->set_mail_to($client_obj->get_email());
-                    //$dto->set_mail_to('itsupport@eservicesgroup.net');
+                    $dto->setEventId("notification");
+                    $dto->setMailTo($client_obj->get_email());
+                    //$dto->setMailTo('itsupport@eservicesgroup.net');
                     $lang = get_lang_id();
-                    $support_email = $this->get_cs_support_email($lang);
+                    $support_email = $this->getCsSupportEmail($lang);
 
-                    $dto->set_mail_from($email_sender);
-                    $dto->set_tpl_id($reason . "_request");
-                    $dto->set_lang_id($pbv_obj ? $pbv_obj->get_language_id() : "");
-                    $dto->set_replace($replace);
+                    $dto->setMailFrom($email_sender);
+                    $dto->setTplId($reason . "_request");
+                    $dto->setLangId($pbv_obj ? $pbv_obj->getLanguageId() : "");
+                    $dto->setReplace($replace);
                     $this->eventService->fireEvent($dto);
                 }
             }
         }
     }
 
-    public function getCreditCheckList($where = array(), $option = array(), $type = "")
+    public function getCreditCheckList($where = [], $option = [], $type = "")
     {
-        $ret = array();
+        $ret = [];
 
         if ($obj_list = $this->getDao('So')->getCreditCheckList($where, $option, $type)) {
             foreach ($obj_list as $obj) {
@@ -2602,7 +2571,7 @@ html;
     public function get_track_order($so_no)
     {
         include_once(APPPATH . "helpers/object_helper.php");
-        $order["shipped"] = $order["processing"] = array();
+        $order["shipped"] = $order["processing"] = [];
         if ($soid_list = $this->getDao('SoItemDetail')->getListWithProdname(array("soid.so_no" => $so_no), array("limit" => -1))) {
             foreach ($soid_list as $soid_obj) {
                 $line_no = $soid_obj->get_line_no();
@@ -2631,13 +2600,6 @@ html;
             }
         }
         return $order;
-    }
-
-    public function getNextShNo($so_no)
-    {
-        $last_sh_no = $this->getDao('SoAllocate')->getLastShNo($so_no);
-        list($sno, $last_no) = @explode("-", $last_sh_no);
-        return $so_no . "-" . sprintf("%02d", $last_no * 1 + 1);
     }
 
     public function error_in_allocate_file()
@@ -2697,11 +2659,56 @@ html;
         $this->dex_service = $srv;
     }
 
-    public function generate_courier_file($checked = array(), $courier = "", $mawb = "", $debug_explain = false)
+
+    public function getGenerateCourierFile($batch_id)
+    {
+        if ($obj = $this->getDao('CourierFeed')->get(["batch_id" => $batch_id])) {
+            $so_no_list = json_decode($obj->getSoNoStr());
+            $mawb = $obj->getMawb();
+            $courier = $obj->getCourierId();
+            $ret = $this->generateCourierFile($so_no_list, $courier, $mawb);
+            $obj->setExec(1);
+            $name = $obj->getCreateBy();
+            $this->getDao('CourierFeed')->update($obj);
+
+            $file_path = $this->getDao('Config')->valueOf('courier_path') . $ret;
+
+            $bodytext = "";
+            if ($user_obj = $this->getDao('user')->get(["id" => $name])) {
+                $email_addr = $user_obj->getEmail();
+            } else {
+                $email_addr = "nero@eservicesgroup.com";
+                $bodytext .= "user email not found <br>";
+            }
+
+            foreach ($so_no_list as $o) {
+                $bodytext .= $o . "<br/>";
+            }
+
+            $phpmail = new PHPMailer;
+            $phpmail->IsSMTP();
+            $phpmail->From = "courier_feed@eservicesgroup.com";
+            $phpmail->Subject = "courier feed: $ret";
+            $phpmail->AddAddress($email_addr);
+            $phpmail->IsHTML(true);
+
+            if (file_exists($file_path)) {
+                $phpmail->AddAttachment($file_path);
+            } else {
+                $bodytext = "courier file can not be found<br />" . $bodytext;
+            }
+
+            $phpmail->Body = $bodytext;
+
+            $phpmail->Send();
+        }
+    }
+
+    public function generateCourierFile($checked = [], $courier = "", $mawb = "", $debug_explain = false)
     {
         $file_content = "";
         $output_path = $this->getDao('Config')->valueOf('courier_path');
-        $data_out = array();
+        $data_out = [];
         foreach ($checked as $key => $value) {
             switch ($courier) {
                 case "DHLHKD":
@@ -2990,7 +2997,7 @@ html;
                                     $row->set_prod_weight(min(2, $row->get_prod_weight()));
                                     $row->set_price($row->get_amount());
 
-                                    $countryObj = $this->getDao('Country')->get(array("id" => $row->get_delivery_country_id()));
+                                    $countryObj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()));
                                     $row->set_country_name($countryObj->get_name());
 
                                     $row->set_item_no($counter);
@@ -3030,7 +3037,7 @@ html;
                                 $row->set_prod_weight(min(2, $row->get_prod_weight()));
                                 $row->set_price($row->get_amount());
 
-                                $countryObj = $this->getDao('Country')->get(array("id" => $row->get_delivery_country_id()));
+                                $countryObj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()));
                                 $row->set_country_name($countryObj->get_name());
 
                                 $row->set_item_no($counter);
@@ -3072,7 +3079,7 @@ html;
                                 $row->set_prod_weight(min(2000, $row->get_prod_weight() * 1000));
                                 $row->set_price($row->get_amount());
 
-                                $countryObj = $this->getDao('Country')->get(array("id" => $row->get_delivery_country_id()));
+                                $countryObj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()));
                                 $row->set_country_name($countryObj->get_name());
 
                                 $row->set_item_no($counter);
@@ -3131,7 +3138,7 @@ html;
                             $declared_value = $this->get_declared_value($prod_obj, $row->get_delivery_country_id(), $row->get_price());
                             $row->set_declared_value(round($declared_value * $row->get_rate(), 2));
 
-                            if ($country_obj = $this->getDao('Country')->get(array("id" => $row->get_delivery_country_id()))) {
+                            if ($country_obj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()))) {
                                 $country_name = $country_obj->get_name();
                                 $row->set_delivery_country_id($country_name);
                             }
@@ -3180,7 +3187,7 @@ html;
                             $declared_value = $this->get_declared_value($prod_obj, $row->get_delivery_country_id(), $row->get_price());
                             $row->set_declared_value(round($declared_value * $row->get_rate(), 2));
 
-                            if ($country_obj = $this->getDao('Country')->get(array("id" => $row->get_delivery_country_id()))) {
+                            if ($country_obj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()))) {
                                 $country_name = $country_obj->get_name();
                                 $row->set_delivery_country_id($country_name);
                             }
@@ -3287,7 +3294,7 @@ html;
                             }
                             $row->set_declared_value($declared_value);
 
-                            if ($country_obj = $this->getDao('Country')->get(array("id" => $row->get_delivery_country_id()))) {
+                            if ($country_obj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()))) {
                                 $country_name = $country_obj->get_name();
                                 $row->set_delivery_country_id($country_name);
                             }
@@ -3323,7 +3330,7 @@ html;
                             $declared_value = $this->get_declared_value($prod_obj, $row->get_delivery_country_id(), $row->get_price());
                             $row->set_declared_value(round($declared_value * $row->get_rate(), 2));
 
-                            if ($country_obj = $this->getDao('Country')->get(array("id" => $row->get_delivery_country_id()))) {
+                            if ($country_obj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()))) {
                                 $country_name = $country_obj->get_name();
                                 $row->set_delivery_country_id($country_name);
                             }
@@ -3614,7 +3621,7 @@ html;
         }
     }
 
-    public function generate_metapack_file($checked = array(), $courier = "")
+    public function generate_metapack_file($checked = [], $courier = "")
     {
         if ($courier == "" || count($checked) == 0) {
             return;
@@ -3624,23 +3631,23 @@ html;
         $output_path = $this->getDao('Config')->valueOf('metapack_path');
         foreach ($checked as $key => $value) {
             $so_obj = $this->getDao('So')->get(array("so_no" => $value));
-            $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->get_client_id()));
+            $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
             $soa_obj = $this->getDao('SoAllocate')->get(array("so_no" => $value));
-            if ($country_obj = $this->getDao('Country')->get(array("id" => $so_obj->get_delivery_country_id()))) {
+            if ($country_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()))) {
                 $delcountry = $country_obj->get_name();
             }
-            $fullname = $so_obj->get_delivery_name();
+            $fullname = $so_obj->getDeliveryName();
             $ordernum = $soa_obj->get_sh_no();
-            $delpostcode = $so_obj->get_delivery_postcode();
+            $delpostcode = $so_obj->getDeliveryPostcode();
             $delemail = $client_obj->get_email();
             $mobiletel = $client_obj->get_tel_1() . " " . $client_obj->get_tel_2() . " " . $client_obj->get_tel_3();
-            $delcity = $so_obj->get_delivery_city();
-            $delstate = $so_obj->get_delivery_state();
-            $delcountry_id = $so_obj->get_delivery_country_id();
+            $delcity = $so_obj->getDeliveryCity();
+            $delstate = $so_obj->getDeliveryState();
+            $delcountry_id = $so_obj->getDeliveryCountryId();
             $weight = $so_obj->get_weight();
 
             $append = "";
-            $z = explode("|", $so_obj->get_delivery_address());
+            $z = explode("|", $so_obj->getDeliveryAddress());
             $cnt = count($z);
             for ($j = $cnt; $j < 3; $j++) {
                 $append .= "~";
@@ -3648,15 +3655,15 @@ html;
 
             switch ($courier) {
                 case 'DPD':
-                    $deladdress = explode("|", $so_obj->get_delivery_address());
+                    $deladdress = explode("|", $so_obj->getDeliveryAddress());
                     $deladdr1 = $deladdress[0];
                     $deladdr2 = $deladdress[1] . ", " . $deladdress[2];
                     $deladdr2 = ereg_replace("^, ", "", $deladdr2);
                     $deladdr2 = ereg_replace(", $", "", $deladdr2);
-                    if (in_array($so_obj->get_delivery_country_id(), array('IE', 'GB', 'UK'))) {
+                    if (in_array($so_obj->getDeliveryCountryId(), array('IE', 'GB', 'UK'))) {
                         $dpdobject = "1";
                         $dpdservicecode = "32";
-                        if ($so_obj->get_delivery_country_id() == IE) {
+                        if ($so_obj->getDeliveryCountryId() == IE) {
                             $dpdservicecode = "11";
                             if (stristr($deladdress, "dublin") === FALSE) {
                                 $delpostcode = "ZZ75";
@@ -3674,37 +3681,37 @@ html;
 
                 case 'RM1st':
 
-                    $deladdress = str_replace("|", "~", $so_obj->get_delivery_address()) . $append;
+                    $deladdress = str_replace("|", "~", $so_obj->getDeliveryAddress()) . $append;
                     $file_content .= "~2~~~" . $fullname . "~" . $fullname . "~" . $deladdress . "~~~~" . $delpostcode . "~~~~~456098002~~~STL01~~" . $ordernum . "~1~100~~~P~~~~\r\n";
                     break;
 
                 case 'RM1stRec';
-                    $deladdress = str_replace("|", "~", $so_obj->get_delivery_address()) . $append;
+                    $deladdress = str_replace("|", "~", $so_obj->getDeliveryAddress()) . $append;
                     $file_content .= "~2~~~" . $fullname . "~" . $fullname . "~" . $deladdress . "~~~~" . $delpostcode . "~~~~~456098002~~~STL01~~" . $ordernum . "~1~100~11~~P~~~~\r\n";
                     break;
 
                 case 'RMSD':
-                    $deladdress = str_replace("|", "~", $so_obj->get_delivery_address()) . $append;
+                    $deladdress = str_replace("|", "~", $so_obj->getDeliveryAddress()) . $append;
                     $file_content .= "~2~~~" . $fullname . "~" . $fullname . "~" . $deladdress . "~~~~" . $delpostcode . "~~~~~456098002~~~SD101~~" . $ordernum . "~1~1000~~~P~~~~\r\n";
                     break;
 
                 case 'RMAir':
-                    list($addr1, $addr2, $addr3) = explode("|", $so_obj->get_delivery_address());
-                    $addr1 = str_replace("|", ",", $so_obj->get_delivery_address());
+                    list($addr1, $addr2, $addr3) = explode("|", $so_obj->getDeliveryAddress());
+                    $addr1 = str_replace("|", ",", $so_obj->getDeliveryAddress());
                     $addr2 = ($delcity ? $delcity : "-");
                     $addr3 = ($delstate ? $delstate : "-");
                     $deladdress = $addr1 . "~" . $addr2 . "~" . $addr3;
-                    //$deladdress = str_replace("|","~",$so_obj->get_delivery_address());
+                    //$deladdress = str_replace("|","~",$so_obj->getDeliveryAddress());
                     $file_content .= "~2~~~" . $fullname . "~~" . $deladdress . "~~~~" . $delpostcode . "~" . $delcountry_id . "~~~~~~~~~" . $ordernum . "~~" . $weight . "~~\r\n";
                     break;
 
                 case 'RMInt':
-                    list($addr1, $addr2, $addr3) = explode("|", $so_obj->get_delivery_address());
-                    $addr1 = str_replace("|", ",", $so_obj->get_delivery_address());
+                    list($addr1, $addr2, $addr3) = explode("|", $so_obj->getDeliveryAddress());
+                    $addr1 = str_replace("|", ",", $so_obj->getDeliveryAddress());
                     $addr2 = ($delcity ? $delcity : "-");
                     $addr3 = ($delstate ? $delstate : "-");
                     $deladdress = $addr1 . "~" . $addr2 . "~" . $addr3;
-                    //$deladdress = str_replace("|","~",$so_obj->get_delivery_address());
+                    //$deladdress = str_replace("|","~",$so_obj->getDeliveryAddress());
                     $file_content .= "~2~~~" . $fullname . "~~" . $deladdress . "~~~~" . $delpostcode . "~" . $delcountry_id . "~~~~~~~~~" . $ordernum . "~~" . $weight . "~~\r\n";
                     break;
 
@@ -3742,75 +3749,76 @@ html;
         return $this->getDao('SoHoldReason')->getListWithUname(array("so_no" => $so_no), array("orderby" => "create_on DESC"));
     }
 
-    public function fire_dispatch($so_obj, $sh_no, $get_email_html = FALSE)
+    public function fireDispatch($so_obj, $sh_no, $get_email_html = FALSE)
     {
         # sbf #3746 don't include complementary accessory on front end
-        $ca_catid_arr = implode(',', $this->get_ca_service()->get_accessory_catid_arr());
+        $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
 
-        $country = $this->getDao('Country')->get(array("id" => $so_obj->get_delivery_country_id()));
-        $so_items = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_obj->get_so_no(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
-        $client = $this->getDao('Client')->get(array("id" => $so_obj->get_client_id()));
-        $currency_obj = $this->getDao('Currency')->get(['id' => $so_obj->get_currency_id()]);
+        $country = $this->getDao('Country')->get(["country_id" => $so_obj->getDeliveryCountryId()]);
+
+        $so_items = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
+        $client = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
+        $currency_obj = $this->getDao('Currency')->get(['currency_id' => $so_obj->getCurrencyId()]);
         $sh_obj = $this->getDao('SoShipment')->get(['sh_no' => $sh_no]);
-        if ($sh_obj->get_courier_id()) {
-            if ($courier_obj = $this->getDao('Courier')->get(array("id" => $sh_obj->get_courier_id()))) {
+        if ($sh_obj->getCourierId()) {
+            if ($courier_obj = $this->getDao('Courier')->get(array("id" => $sh_obj->getCourierId()))) {
                 $courier_id = $courier_obj->get_courier_name();
-                if ($sh_obj->get_courier_id() == 'DPD_NL' && $sh_obj->get_tracking_no() && $courier_obj->get_tracking_link()) {
-                    $tracking_no = '<a href="' . $courier_obj->get_tracking_link() . $sh_obj->get_tracking_no() . '" target="_blank">' . $sh_obj->get_tracking_no() . '</a>';
-                    $track_num = $sh_obj->get_tracking_no();
+                if ($sh_obj->getCourierId() == 'DPD_NL' && $sh_obj->getTrackingNo() && $courier_obj->getTrackingLink()) {
+                    $tracking_no = '<a href="' . $courier_obj->getTrackingLink() . $sh_obj->getTrackingNo() . '" target="_blank">' . $sh_obj->getTrackingNo() . '</a>';
+                    $track_num = $sh_obj->getTrackingNo();
                 } else {
-                    $tracking_no = (empty($sh_obj) ? '' : $sh_obj->get_tracking_no());
-                    $track_num = $sh_obj->get_tracking_no();
+                    $tracking_no = (empty($sh_obj) ? '' : $sh_obj->getTrackingNo());
+                    $track_num = $sh_obj->getTrackingNo();
                 }
             }
         }
-        $platform_id = $so_obj->get_platform_id();
+        $platform_id = $so_obj->getPlatformId();
         $pbv_obj = $this->getDao('PlatformBizVar')->get(array('selling_platform_id' => $platform_id));
-        $lang_id = $pbv_obj->get_language_id();
+        $lang_id = $pbv_obj->getLanguageId();
 
-        $replace["so_no"] = $so_obj->get_so_no();
+        $replace["so_no"] = $so_obj->getSoNo();
 
-        $split_so_group = $so_obj->get_split_so_group();
-        if (isset($split_so_group) && $split_so_group != $so_obj->get_so_no()) {
-            $replace["so_no"] = $split_so_group . '/' . $so_obj->get_so_no();
+        $split_so_group = $so_obj->getSplitSoGroup();
+        if (isset($split_so_group) && $split_so_group != $so_obj->getSoNo()) {
+            $replace["so_no"] = $split_so_group . '/' . $so_obj->getSoNo();
         }
 
-        $replace["client_id"] = $so_obj->get_client_id();
-        $replace["forename"] = $client->get_forename();
-        $replace["email"] = $client->get_email();
-        $replace["bill_name"] = $so_obj->get_bill_name();
-        $replace["purchase_date"] = $so_obj->get_order_create_date();
-        $replace["promotion_code"] = $so_obj->get_promotion_code();
+        $replace["client_id"] = $so_obj->getClientId();
+        $replace["forename"] = $client->getForename();
+        $replace["email"] = $client->getEmail();
+        $replace["bill_name"] = $so_obj->getBillName();
+        $replace["purchase_date"] = $so_obj->getOrderCreateDate();
+        $replace["promotion_code"] = $so_obj->getPromotionCode();
         $replace["delivery_days"] = "2-5";
-        $replace["delivery_name"] = $so_obj->get_delivery_name();
-        $replace["currency_id"] = $so_obj->get_currency_id();
-        if (($so_obj->get_delivery_country_id() == 'ES') || ($so_obj->get_delivery_country_id() == 'PT')) {
+        $replace["delivery_name"] = $so_obj->getDeliveryName();
+        $replace["currency_id"] = $so_obj->getCurrencyId();
+        if (($so_obj->getDeliveryCountryId() == 'ES') || ($so_obj->getDeliveryCountryId() == 'PT')) {
             $replace["aftership_url"] = 'envio.aftership.com';
-        } elseif (($so_obj->get_delivery_country_id() == 'FR') || ($so_obj->get_delivery_country_id() == 'BE')) {
+        } elseif (($so_obj->getDeliveryCountryId() == 'FR') || ($so_obj->getDeliveryCountryId() == 'BE')) {
             $replace["aftership_url"] = 'suivi.aftership.com';
-        } elseif ($so_obj->get_delivery_country_id() == 'IT') {
+        } elseif ($so_obj->getDeliveryCountryId() == 'IT') {
             $replace["aftership_url"] = 'spedizione.aftership.com';
         } else {
             $replace["aftership_url"] = 'shipment.aftership.com';
         }
 
-        $replace["delivery_address_text"] = str_replace("|", "\n", str_replace("||", "|", $so_obj->get_delivery_address()))
-            . "\n" . $so_obj->get_delivery_city() . " " . $so_obj->get_delivery_state()
-            . " " . $so_obj->get_delivery_postcode() . "\n" . $country->get_name();
+        $replace["delivery_address_text"] = str_replace("|", "\n", str_replace("||", "|", $so_obj->getDeliveryAddress()))
+            . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState()
+            . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
         $replace["delivery_address"] = nl2br($replace["delivery_address_text"]);
         $replace["billing_address_text"] = str_replace("|", "\n",
-                $so_obj->get_bill_address()) . "\n" . $so_obj->get_bill_city() . " " . $so_obj->get_bill_state()
-            . " " . $so_obj->get_bill_postcode() . "\n" . $country->get_name();
+                $so_obj->getBillAddress()) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState()
+            . " " . $so_obj->getBillPostcode() . "\n" . $country->getName();
         $replace["billing_address"] = nl2br($replace["billing_address_text"]);
-        $replace['currency_sign'] = (empty($currency_obj) ? $so_obj->get_currency_id() : $currency_obj->get_sign());
-        $currency_sign = (empty($currency_obj) ? $so_obj->get_currency_id() : $currency_obj->get_sign());
-        $replace["amount"] = platform_curr_format($platform_id, $so_obj->get_amount(), 0);
+        $replace['currency_sign'] = (empty($currency_obj) ? $so_obj->getCurrencyId() : $currency_obj->getSign());
+        $currency_sign = (empty($currency_obj) ? $so_obj->getCurrencyId() : $currency_obj->getSign());
+        $replace["amount"] = platform_curr_format($platform_id, $so_obj->getAmount(), 0);
         $replace["timestamp"] = date("d/m/Y");
         $replace["sh_no"] = $sh_no;
 
         // show text only if it is split order
         $replace["partial_ship_text"] = "";
-        if (isset($split_so_group) && $split_so_group != $so_obj->get_so_no()) {
+        if (isset($split_so_group) && $split_so_group != $so_obj->getSoNo()) {
             switch ($lang_id) {
                 case 'en':
                     $replace["partial_ship_text"] = 'Your order was partially split at no extra cost to ensure all item(s) purchased are received at the soonest available opportunity. The remaining items of your order will ship soon. You may refer to "Useful Information" section below to review /track your order progress.';
@@ -3945,11 +3953,11 @@ html;
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Courier:"; //Courier ID
                 break;
         }
-        include_once(APPPATH . "hooks/country_selection.php");
-        $country_id = $pbv_obj->get_platform_country_id();
-        $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
-        $email_sender = "no-reply@" . strtolower($replace["site_name"]);
-        $replace["support_email"] = $email_sender;
+        $country_id = $pbv_obj->getPlatformCountryId();
+        // include_once(APPPATH . "hooks/country_selection.php");
+        // $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
+        // $email_sender = "no-reply@" . strtolower($replace["site_name"]);
+        // $replace["support_email"] = $email_sender;
         $replace["image_url"] = $this->getDao('Config')->valueOf("default_url");
         $replace["logo_file_name"] = $this->getDao('Config')->valueOf("logo_file_name");
         if (!empty($courier_id)) {
@@ -3958,7 +3966,7 @@ html;
             $replace["track_no"] = $track_num;
             $courier_obj = $this->getDao('Courier')->get(array("id" => $courier_id));
             if ($courier_obj) {
-                $replace["tracking_link"] = $courier_obj->get_tracking_link();
+                $replace["tracking_link"] = $courier_obj->getTrackingLink();
             }
         } else {
             $replace["courier_id"] = "";
@@ -3971,16 +3979,17 @@ html;
         $i = 1;
 
         include_once(APPPATH . "helpers/image_helper.php");
+
         foreach ($so_items as $item) {
-            $cur_qty = $item->get_qty();
-            $cur_vat_total = $item->get_vat_total();
-            $cur_amount = $item->get_amount();
-            $price = $item->get_unit_price();
+            $cur_qty = $item->getQty();
+            $cur_vat_total = $item->getVatTotal();
+            $cur_amount = $item->getAmount();
+            $price = $item->getUnitPrice();
             $cur_sub_total = $price * $cur_qty;
             $sub_total += $cur_sub_total;
             $total_vat += $cur_vat_total;
             $total += $cur_amount;
-            $space_for_item_name = 52 - strlen($item->get_name());
+            $space_for_item_name = 52 - strlen($item->getName());
             if ($space_for_item_name > 0) {
                 $item_name_tab = "\t";
                 $num_of_tab = floor($space_for_item_name / 4);
@@ -3991,29 +4000,29 @@ html;
             }
 
             $replace["so_items_text"] .=
-                $item->get_name() . $item_name_tab . $cur_qty . "\t" . platform_curr_format($platform_id, $price, 0) . "\t" . platform_curr_format($platform_id, $cur_sub_total, 0) . "\r\n";
+                $item->getName() . $item_name_tab . $cur_qty . "\t" . platform_curr_format($platform_id, $price, 0) . "\t" . platform_curr_format($platform_id, $cur_sub_total, 0) . "\r\n";
             $replace["so_items"] .=
                 "<tr>
-                    <td style='padding:4px 20px; color:#444; font-family:Arial; font-size: 12px;'>" . $item->get_name() . "</td>
+                    <td style='padding:4px 20px; color:#444; font-family:Arial; font-size: 12px;'>" . $item->getName() . "</td>
                     <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>$cur_qty</td>
                     <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($platform_id, $price, 0) . "</td>
                     <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($platform_id, $cur_sub_total, 0) . "</td>
                 </tr>\n";
 
-            $replace["so_items_desc"] .= "<tr><td>$cur_qty x " . $item->get_name() . "</td></tr>\n";
+            $replace["so_items_desc"] .= "<tr><td>$cur_qty x " . $item->getName() . "</td></tr>\n";
 
             $i++;
         }
 
-        $dc = $so_obj->get_delivery_charge();
+        $dc = $so_obj->getDeliveryCharge();
         $total += $dc;
         $replace["subtotal"] = platform_curr_format($platform_id, $sub_total, 0);
         $replace["total_vat"] = platform_curr_format($platform_id, $total_vat, 0);
 
         //#2182 add the processing fee
-        $extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->get_so_no()));
+        $extobj = $this->getDao('SoExtend')->get(["so_no" => $so_obj->getSoNo()]);
         if ($extobj) {
-            $processing_fee = $extobj->get_offline_fee();
+            $processing_fee = $extobj->getOfflineFee();
         }
 
         if (is_null($processing_fee)) {
@@ -4024,9 +4033,9 @@ html;
         $total += $processing_fee;
         $replace["total"] = platform_curr_format($platform_id, $total, 0);
 
-        $dc = $so_obj->get_delivery_charge();
+        $dc = $so_obj->getDeliveryCharge();
         $total += $dc;
-        $dc_vat = $dc * ($so_obj->get_vat_percent() / (100 + $so_obj->get_vat_percent()));
+        $dc_vat = $dc * ($so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
         $dc_sub_total = $dc - $dc_vat;
         $replace["dc_sub_total"] = platform_curr_format($platform_id, $dc_sub_total, 0);
         $replace["dc_vat"] = platform_curr_format($platform_id, $dc_vat, 0);
@@ -4034,73 +4043,72 @@ html;
         $replace["total_sub_total"] = platform_curr_format($platform_id, $sub_total + $dc_sub_total, 0);
         $replace["total_total_vat"] = platform_curr_format($platform_id, $total_vat + $dc_vat, 0);
 
-        $this->include_dto("Event_email_dto");
-        $dto = new Event_email_dto();
+        $dto = new EventEmailDto;
 
-        if ($delay_order = $this->get_delay_order_service()->is_delay_order($so_obj->get_so_no())) {
-            $delay_type = $delay_order->status;
-            $delay_email_dispatch_id = "";
+        if ($delay_order = $this->delayedOrderService->isDelayOrder($so_obj->getSoNo())) {
+            $delay_type = $delay_order->getStatus();
+            $delayEmailDispatchId = "";
             if ($delay_type == 1) {
-                $delay_email_dispatch_id = 'minor_delay_dispatch_email';
+                $delayEmailDispatchId = 'minor_delay_dispatch_email';
             } elseif ($delay_type == 2) {
-                $delay_email_dispatch_id = 'major_delay_dispatch_email';
+                $delayEmailDispatchId = 'major_delay_dispatch_email';
             }
 
-            $dto->set_event_id($delay_email_dispatch_id);
-            $dto->set_mail_from("jenny.leung@valuebasket.com");
-            $dto->set_mail_to($client->get_email());
-            $dto->set_tpl_id($delay_email_dispatch_id);
-            $dto->set_lang_id($lang_id);
+            $dto->setEventId($delayEmailDispatchId);
+            $dto->setMailFrom("jenny.leung@valuebasket.com");
+            $dto->setMailTo($client->getEmail());
+            $dto->setTplId($delayEmailDispatchId);
+            $dto->setLangId($lang_id);
 
-            if (file_exists(APPPATH . "language/template_service/" . $lang_id . "/" . $delay_email_dispatch_id . ".ini")) {
-                $data_arr = parse_ini_file(APPPATH . "language/template_service/" . $lang_id . "/" . $delay_email_dispatch_id . ".ini");
+            if (file_exists(APPPATH . "language/template_service/" . $lang_id . "/" . $delayEmailDispatchId . ".ini")) {
+                $data_arr = parse_ini_file(APPPATH . "language/template_service/" . $lang_id . "/" . $delayEmailDispatchId . ".ini");
             }
 
             if (!is_null($data_arr)) {
                 $replace = array_merge($replace, $data_arr);
             }
-            $dto->set_replace($replace);
+            $dto->setReplace($replace);
 
-            if ($delay_order_obj = $this->get_delay_order_service()->get(array("so_no" => $so_obj->get_so_no()))) {
+            if ($delay_order_obj = $this->delayedOrderService->getDao('DelayedOrder')->get(["so_no" => $so_obj->getSoNo()])) {
                 $delay_status = $delay_type + 2;
-                $delay_order_obj->set_status($delay_status);
-                $this->get_delay_order_service()->get_dao()->update($delay_order_obj);
+                $delay_order_obj->setStatus($delay_status);
+                $this->delayedOrderService->getDao('DelayedOrder')->update($delay_order_obj);
             }
         } else {
 
-            if ($this->is_filfull_wow_email_criteria($so_obj->get_delivery_country_id(), $so_obj->get_so_no(), $replace['courier'])
+            if ($this->isFilfullWowEmailCriteria($so_obj->getDeliveryCountryId(), $so_obj->getSoNo(), $replace['courier'])
                 && is_file($this->config->valueOf("wow_tpl_path") . "wow_email.html")
             ) {
                 # SBF #4168 - if fulfill wow criteria, send info to FIANET
-                $this->get_review_fianet_service()->send_order_data($so_obj, $client);
+                $this->reviewFianetService->sendOrderData($so_obj, $client);
 
-                $dto->set_event_id("wow_email_dispatch");
-                $dto->set_mail_from($email_sender);
-                $dto->set_mail_to($client->get_email());
+                $dto->setEventId("wow_email_dispatch");
+                $dto->setMailFrom($email_sender);
+                $dto->setMailTo($client->getEmail());
                 // bcc send to eKomi
-                if (!$this->getDao('SoHoldReason')->getNumRows(array("so_no" => $so_obj->get_so_no(), "reason IN ('change_of_address', 'cscc', 'csvv')" => null))) {
+                if (!$this->getDao('SoHoldReason')->getNumRows(["so_no" => $so_obj->getSoNo(), "reason IN ('change_of_address', 'cscc', 'csvv')" => null])) {
                     switch ($lang_id) {
                         case 'fr':
-                            $dto->set_mail_bcc(array("36774-valuebasketcomfrfr-fr@connect.ekomi.de", "valuebasketbccemail@gmail.com", "ming@valuebasket.com", "a9a163bd@trustpilotservice.com"));
+                            $dto->setMailBcc(["36774-valuebasketcomfrfr-fr@connect.ekomi.de", "valuebasketbccemail@gmail.com", "ming@valuebasket.com", "a9a163bd@trustpilotservice.com"]);
                             break;
 
                         case 'en':
-                            $dto->set_mail_bcc(array("27426-valuebasket2-en@connect.ekomi.de", "valuebasketbccemail@gmail.com", "ming@valuebasket.com", "53b4e6ff@trustpilotservice.com"));
+                            $dto->setMailBcc(["27426-valuebasket2-en@connect.ekomi.de", "valuebasketbccemail@gmail.com", "ming@valuebasket.com", "53b4e6ff@trustpilotservice.com"]);
                             break;
 
                         case 'it':
-                            $dto->set_mail_bcc(array("44780-valuebasketltd-en@connect.ekomi.de", "valuebasketbccemail@gmail.com", "ming@valuebasket.com", "70039a72@trustpilotservice.com"));
+                            $dto->setMailBcc(["44780-valuebasketltd-en@connect.ekomi.de", "valuebasketbccemail@gmail.com", "ming@valuebasket.com", "70039a72@trustpilotservice.com"]);
                             break;
 
                         case 'es':
-                            $dto->set_mail_bcc(array("40754-valuebasketes-es@connect.ekomi.de", "valuebasketbccemail@gmail.com", "ming@valuebasket.com", "d4229d8b@trustpilotservice.com"));
+                            $dto->setMailBcc(["40754-valuebasketes-es@connect.ekomi.de", "valuebasketbccemail@gmail.com", "ming@valuebasket.com", "d4229d8b@trustpilotservice.com"]);
                             break;
 
                         default:
                             break;
                     }
                 }
-                $bcc = $dto->get_mail_bcc();
+                $bcc = $dto->getMailBcc();
 
                 # sbf #4349
                 switch ($platform_id) {
@@ -4152,46 +4160,46 @@ html;
                     else
                         $bcc = $wow_bcc;
 
-                    $dto->set_mail_bcc($bcc);
+                    $dto->setMailBcc($bcc);
                 }
 
                 $sendagain = "no-reply@feedback-valuebasket.com";
 
-                if (($so_obj->get_bill_country_id() == 'GB') || ($so_obj->get_delivery_country_id() == 'GB')) {
-                    $dto->set_mail_from($email_sender);
-                    $dto->set_tpl_id("wow_email_dispatch_gb");
-                    $dto->set_lang_id("en");
+                if (($so_obj->getBillCountryId() == 'GB') || ($so_obj->getDeliveryCountryId() == 'GB')) {
+                    $dto->setMailFrom($email_sender);
+                    $dto->setTplId("wow_email_dispatch_gb");
+                    $dto->setLangId("en");
                 } else {
-                    $dto->set_tpl_id("wow_email_dispatch");
-                    $dto->set_lang_id($lang_id);
+                    $dto->setTplId("wow_email_dispatch");
+                    $dto->setLangId($lang_id);
                 }
-                $dto->set_replace($replace);
+                $dto->setReplace($replace);
             } else {
-                $dto->set_event_id("confirm_dispatch");
-                $dto->set_mail_from($email_sender);
-                $dto->set_mail_to($client->get_email());
+                $dto->setEventId("confirm_dispatch");
+                $dto->setMailFrom($email_sender);
+                $dto->setMailTo($client->getEmail());
                 // bcc send to eKomi
-                $dto->set_mail_bcc(array("valuebasketbccemail@gmail.com"));
+                $dto->setMailBcc(array("valuebasketbccemail@gmail.com"));
 
-                if (($so_obj->get_bill_country_id() == 'GB') || ($so_obj->get_delivery_country_id() == 'GB')) {
-                    $dto->set_mail_from($email_sender);
-                    $dto->set_tpl_id("confirm_dispatch_gb");
-                    $dto->set_lang_id("en");
+                if (($so_obj->getBillCountryId() == 'GB') || ($so_obj->getDeliveryCountryId() == 'GB')) {
+                    $dto->setMailFrom($email_sender);
+                    $dto->setTplId("confirm_dispatch_gb");
+                    $dto->setLangId("en");
                 } else {
-                    $dto->set_tpl_id("confirm_dispatch");
-                    $dto->set_lang_id($lang_id);
+                    $dto->setTplId("confirm_dispatch");
+                    $dto->setLangId($lang_id);
                 }
-                $dto->set_replace($replace);
+                $dto->setReplace($replace);
             }
 
         }
         // attach invoice to dispatch email
         $data_path = $this->getDao('Config')->valueOf("data_path");
-        $html = $this->get_invoice_content(array($so_obj->get_so_no()), 1);
-        $so_no = $so_obj->get_so_no();
-        $att_file = $this->get_pdf_rendering_srv()->convert_html_to_pdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
+        $html = $this->getInvoiceContent([$so_obj->getSoNo()], 1);
+        $so_no = $so_obj->getSoNo();
+        $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
         $replace["att_file"] = $att_file;
-        $dto->set_replace($replace);
+        $dto->setReplace($replace);
 
         if ($get_email_html === FALSE) {
             $this->eventService->fireEvent($dto, FALSE);
@@ -4203,57 +4211,42 @@ html;
         unlink($att_file);
     }
 
-    public function get_delay_order_service()
-    {
-        return $this->delay_order_service;
-    }
-
-    public function set_delay_order_service($value)
-    {
-        $this->delay_order_service = $value;
-    }
-
-    function is_filfull_wow_email_criteria($delivery_country_id, $so_no, &$replace_courier = Null)
+    function isFilfullWowEmailCriteria($delivery_country_id, $so_no, &$replace_courier = Null)
     {
         //If country is MY, then skip
-        $skip_wow_mail_country_arr = array('MY');
+        $skipWowMailCountryArr = ['MY'];
 
-        if (in_array($delivery_country_id, $skip_wow_mail_country_arr)) {
+        if (in_array($delivery_country_id, $skipWowMailCountryArr)) {
             return false;
         }
         //SBF 5678 add courier NOT fulfill the wow_email criteria
         //if NOT fulfill the wow_email criteria, then skip
-        $wow_mail_obj = $this->wow_email_service->get_so_dao()->get_wow_mail_list(array("so.so_no" => $so_no, "a.courier_id <> 'deutsch-post'" => null, "a.courier_id <> 'HK_Post'" => null, "a.courier_id <> 'hong-kong-post'" => null, "a.courier_id <> 'Quantium'" => null, "a.courier_id <> 'royal-mail'" => null, "a.courier_id <> 'singapore-post'" => null, "a.courier_id <> 'swiss-post'" => null, "a.courier_id <> 'uk-mail'" => null, "a.courier_id <> 'USPS'" => null, "a.courier_id <> 'USPSPM'" => null, "so.biz_type NOT IN ('SPECIAL', 'MANUAL', 'EBAY')" => null));
+        $wow_mail_obj = $this->getDao('So')->getWowMailList(["so.so_no" => $so_no, "a.courier_id <> 'deutsch-post'" => null, "a.courier_id <> 'HK_Post'" => null, "a.courier_id <> 'hong-kong-post'" => null, "a.courier_id <> 'Quantium'" => null, "a.courier_id <> 'royal-mail'" => null, "a.courier_id <> 'singapore-post'" => null, "a.courier_id <> 'swiss-post'" => null, "a.courier_id <> 'uk-mail'" => null, "a.courier_id <> 'USPS'" => null, "a.courier_id <> 'USPSPM'" => null, "so.biz_type NOT IN ('SPECIAL', 'MANUAL', 'EBAY')" => null]);
 
         if (!$wow_mail_obj) {
             return false;
         } else {
-            $replace_courier = @call_user_func(array($wow_mail_obj[0], "get_courier_id"));
+            $replace_courier = @call_user_func(array($wow_mail_obj[0], "getCourierId"));
         }
         return true;
     }
 
-    public function get_review_fianet_service()
-    {
-        return $this->review_fianet_service;
-    }
-
-    public function get_invoice_content($so_no_list = array(), $gen_pdf = 0)
+    public function getInvoiceContent($so_no_list = [], $gen_pdf = 0)
     {
         # sbf #3746 don't include complementary accessory on front end
-        $ca_catid_arr = implode(',', $this->get_ca_service()->get_accessory_catid_arr());
+        $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
 
         $run = 0;
         $website_domain = $this->getDao('Config')->valueOf('website_domain');
         $website_domain = base_url();
         $total_cnt = count($so_no_list);
-        $cursign_arr = $this->getDao('Currency')->getList([], ["limit" => -1]);
+        $cursign_arr = $this->currencyService->getNameWithIdKey();
 
         if (count($so_no_list)) {
             $valid = 0;
             $content = "";
             if ($gen_pdf) {
-                include_once APPPATH . "data/invoice_pdf.php";
+                include_once APPPATH . "data/invoicePdf.php";
             } else {
                 include_once APPPATH . "data/invoice.php";
             }
@@ -4270,10 +4263,10 @@ html;
                 if (!$so_obj) {
                     continue;
                 } else {
-                    $cur_platform_id = $so_obj->get_platform_id();
+                    $cur_platform_id = $so_obj->getPlatformId();
                     $pbv_obj = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $cur_platform_id));
-                    $so_lang_id = $pbv_obj->get_language_id();
-                    $data = array();
+                    $so_lang_id = $pbv_obj->getLanguageId();
+                    $data = [];
                     $data["platform_id"] = $cur_platform_id;
 
                     switch ($cur_platform_id) {
@@ -4293,44 +4286,45 @@ html;
                             break;
                         default:
                             $data["isAmazon"] = 0;
-                            $data["sales_email"] = $this->get_sales_email($so_lang_id);
-                            $data["csemail"] = $this->get_cs_support_email($so_lang_id);
-                            $data["return_email"] = $this->get_return_email($so_lang_id);
+                            $data["sales_email"] = $this->getSalesEmail($so_lang_id);
+                            $data["csemail"] = $this->getCsSupportEmail($so_lang_id);
+                            $data["return_email"] = $this->getReturnEmail($so_lang_id);
                             break;
                     }
 
                     $itemlist = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $obj, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
-                    $so_ext_obj = $this->getDao('SoExtend')->get(array("so_no" => $obj));
+                    $so_ext_obj = $this->getDao('SoExtend')->get(["so_no" => $obj]);
 
                     $data["lang"] = $ar_lang[$so_lang_id];
                     $data["website_domain"] = base_url();
-                    $data["cursign"] = $cursign = $cursign_arr[$so_obj->get_currency_id()];
 
-                    $data["order_no"] = $so_obj->get_client_id() . "-" . $so_obj->get_so_no();
-                    $data["amazon_order_no"] = $so_obj->get_platform_order_id();
-                    $data["order_date"] = date("d/m/Y", strtotime($so_obj->get_order_create_date()));
-                    $bcountry_obj = $this->getDao('Country')->get(array("id" => $so_obj->get_bill_country_id()));
-                    list($bill_addr_1, $bill_addr_2, $bill_addr_3) = explode("|", $so_obj->get_bill_address());
-                    $bstatezip = trim($so_obj->get_bill_state() . ", " . $so_obj->get_bill_postcode());
+                    $data["cursign"] = $cursign_arr[$so_obj->getCurrencyId()];
+
+                    $data["order_no"] = $so_obj->getClientId() . "-" . $so_obj->getSoNo();
+                    $data["amazon_order_no"] = $so_obj->getPlatformOrderId();
+                    $data["order_date"] = date("d/m/Y", strtotime($so_obj->getOrderCreateDate()));
+                    $bcountry_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getBillCountryId()));
+                    list($bill_addr_1, $bill_addr_2, $bill_addr_3) = explode("|", $so_obj->getBillAddress());
+                    $bstatezip = trim($so_obj->getBillState() . ", " . $so_obj->getBillPostcode());
                     if ($bstatezip != ",") {
                         $bstatezip = ereg_replace("^, ", "", $bstatezip);
                         $bstatezip = ereg_replace(",$", "", $bstatezip) . "<br>";
                     } else {
                         $bstatezip = "";
                     }
-                    $data["billing_name"] = $so_obj->get_bill_name();
-                    $data["billing_address"] = ($so_obj->get_bill_company() == "" ? "" : $so_obj->get_bill_company() . "<br/>") . $bill_addr_1 . "<br/>" . ($bill_addr_2 == "" ? "" : $bill_addr_2 . "<br/>") . ($bill_addr_3 == "" ? "" : $bill_addr_3 . "<br/>") . $so_obj->get_bill_city() . "<br>" . $bstatezip . $bcountry_obj->get_name();
-                    list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("|", $so_obj->get_delivery_address());
-                    $dcountry_obj = $this->getDao('Country')->get(array("id" => $so_obj->get_delivery_country_id()));
-                    $dstatezip = trim($so_obj->get_delivery_state() . ", " . $so_obj->get_delivery_postcode());
+                    $data["billing_name"] = $so_obj->getBillName();
+                    $data["billing_address"] = ($so_obj->getBillCompany() == "" ? "" : $so_obj->getBillCompany() . "<br/>") . $bill_addr_1 . "<br/>" . ($bill_addr_2 == "" ? "" : $bill_addr_2 . "<br/>") . ($bill_addr_3 == "" ? "" : $bill_addr_3 . "<br/>") . $so_obj->getBillCity() . "<br>" . $bstatezip . $bcountry_obj->getName();
+                    list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("|", $so_obj->getDeliveryAddress());
+                    $dcountry_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
+                    $dstatezip = trim($so_obj->getDeliveryState() . ", " . $so_obj->getDeliveryPostcode());
                     if ($dstatezip != ",") {
                         $dstatezip = ereg_replace("^, ", "", $dstatezip);
                         $dstatezip = ereg_replace(",$", "", $dstatezip) . "<br>";
                     } else {
                         $dstatezip = "";
                     }
-                    $data["delivery_name"] = $so_obj->get_delivery_name();
-                    $data["delivery_address"] = ($so_obj->get_delivery_company() == "" ? "" : $so_obj->get_delivery_company() . "<br/>") . $delivery_addr_1 . "<br/>" . ($delivery_addr_2 == "" ? "" : $delivery_addr_2 . "<br/>") . ($delivery_addr_3 == "" ? "" : $delivery_addr_3 . "<br/>") . $so_obj->get_delivery_city() . "<br>" . $dstatezip . $dcountry_obj->get_name();
+                    $data["delivery_name"] = $so_obj->getDeliveryName();
+                    $data["delivery_address"] = ($so_obj->getDeliveryCompany() == "" ? "" : $so_obj->getDeliveryCompany() . "<br/>") . $delivery_addr_1 . "<br/>" . ($delivery_addr_2 == "" ? "" : $delivery_addr_2 . "<br/>") . ($delivery_addr_3 == "" ? "" : $delivery_addr_3 . "<br/>") . $so_obj->getDeliveryCity() . "<br>" . $dstatezip . $dcountry_obj->getName();
 
                     $item_information = "";
                     $bvat = 0;
@@ -4338,23 +4332,24 @@ html;
                     $sum = 0;
                     foreach ($itemlist as $item_obj) {
 
-                        $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->get_main_prod_sku()));
+                        $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
 
-                        $amount_total = $item_obj->get_amount();
-                        $vat_total = $item_obj->get_vat_total();
+                        $amount_total = $item_obj->getAmount();
+                        $vat_total = $item_obj->getVatTotal();
                         $amount_total_bvat = $amount_total - $vat_total;
-                        $unit_price_bvat = round(($amount_total - $vat_total) / $item_obj->get_qty(), 2);
-                        $tmp = $this->getDao('Product')->get(array("sku" => $item_obj->get_main_prod_sku()));
+                        $unit_price_bvat = round(($amount_total - $vat_total) / $item_obj->getQty(), 2);
+                        $tmp = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
                         if ($gen_pdf) {
-                            $imagepath = "/" . get_image_file($tmp->get_image(), 's', $tmp->get_sku());
+                            $imagepath = get_image_file($tmp->getImage(), 's', $tmp->getSku());
                         } else {
-                            $imagepath = base_url() . get_image_file($tmp->get_image(), 's', $tmp->get_sku());
+                            $imagepath = base_url() . get_image_file($tmp->getImage(), 's', $tmp->getSku());
                         }
+
                         $item_information .= '<tr>
                                                 <td align="center"><img src="' . $imagepath . '"></td>
-                                                <td align="left">' . $item_obj->get_prod_sku() . ' - ' . $item_obj->get_name() . '</td>
-                                                <td align="right">' . platform_curr_format($cur_platform_id, $item_obj->get_unit_price()) . '</td>
-                                                <td align="right">' . $item_obj->get_qty() . '</td>
+                                                <td align="left">' . $item_obj->getProdSku() . ' - ' . $item_obj->getName() . '</td>
+                                                <td align="right">' . platform_curr_format($cur_platform_id, $item_obj->getUnitPrice()) . '</td>
+                                                <td align="right">' . $item_obj->getQty() . '</td>
                                                 <td align="right"><b>' . platform_curr_format($cur_platform_id, $amount_total) . '</b></td>
                                             </tr>';
                         $bvat += $amount_total_bvat;
@@ -4372,9 +4367,9 @@ html;
 
                     $sid_bvat = "";
                     $sid_vat = "";
-                    $sid = $so_obj->get_delivery_charge();
-                    if ($so_ext_obj && $so_ext_obj->get_vatexempt() == "0") {
-                        $sid_vat = $sid * $so_obj->get_vat_percent() / (100 + $so_obj->get_vat_percent());
+                    $sid = $so_obj->getDeliveryCharge();
+                    if ($so_ext_obj && $so_ext_obj->getVatexempt() == "0") {
+                        $sid_vat = $sid * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent());
 
                     } else {
                         $sid_vat = 0;
@@ -4382,46 +4377,46 @@ html;
                     $sid = platform_curr_round($cur_platform_id, $sid);
                     $sid_vat = platform_curr_round($cur_platform_id, $sid_vat);
                     $sid_bvat = platform_curr_round($cur_platform_id, $sid - $sid_vat);
-                    $data["currency"] = $so_obj->get_currency_id();
-                    $data["promotion_code"] = $so_obj->get_promotion_code();
+                    $data["currency"] = $so_obj->getCurrencyId();
+                    $data["promotion_code"] = $so_obj->getPromotionCode();
                     $data["sid"] = $sid;
                     $data["sid_vat"] = $sid_vat;
                     $data["sid_bvat"] = $sid_bvat;
 
                     $ofee = $ofee_vat = $ofee_bvat = 0;
-                    $extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->get_so_no()));
+                    $extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
                     if ($extobj) {
-                        if ($extobj->get_offline_fee() > 0) {
+                        if ($extobj->getOfflineFee() > 0) {
                             $data["offline_fee"] = "<tr>
                                 <td colspan='2'>&nbsp;</td>
                                 <td colspan='2' align='right' bgcolor='#DDDDDD' style='border:1px solid #BBBBBB; border-width:0px 0px 1px 1px;'><b>" . $ar_lang[$so_lang_id]["offline_fee"] . "</b></td>
-                                <td align='right' bgcolor='#F0F0F0' valign='top' style='border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;'><b>" . platform_curr_format($cur_platform_id, $extobj->get_offline_fee()) . "</b></td>
+                                <td align='right' bgcolor='#F0F0F0' valign='top' style='border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;'><b>" . platform_curr_format($cur_platform_id, $extobj->getOfflineFee()) . "</b></td>
                             </tr>";
-                            $ofee = platform_curr_round($cur_platform_id, $extobj->get_offline_fee());
-                            $ofee_vat = platform_curr_round($cur_platform_id, $ofee * $so_obj->get_vat_percent() / (100 + $so_obj->get_vat_percent()));
+                            $ofee = platform_curr_round($cur_platform_id, $extobj->getOfflineFee());
+                            $ofee_vat = platform_curr_round($cur_platform_id, $ofee * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
                             $ofee_bvat = platform_curr_round($cur_platform_id, $ofee - $ofee_vat);
-                        } else if ($extobj->get_offline_fee() < 0) {
+                        } else if ($extobj->getOfflineFee() < 0) {
                             $data["offline_fee"] = "<tr>
                                 <td colspan='2'>&nbsp;</td>
                                 <td colspan='2' align='right' bgcolor='#DDDDDD' style='border:1px solid #BBBBBB; border-width:0px 0px 1px 1px;'><b>" . $ar_lang[$so_lang_id]["discount"] . "</b></td>
-                                <td align='right' bgcolor='#F0F0F0' valign='top' style='border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;'><b>" . platform_curr_format($cur_platform_id, $extobj->get_offline_fee()) . "</b></td>
+                                <td align='right' bgcolor='#F0F0F0' valign='top' style='border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;'><b>" . platform_curr_format($cur_platform_id, $extobj->getOfflineFee()) . "</b></td>
                             </tr>";
-                            $ofee = platform_curr_round($cur_platform_id, $extobj->get_offline_fee());
-                            $ofee_vat = platform_curr_round($cur_platform_id, $ofee * $so_obj->get_vat_percent() / (100 + $so_obj->get_vat_percent()));
+                            $ofee = platform_curr_round($cur_platform_id, $extobj->getOfflineFee());
+                            $ofee_vat = platform_curr_round($cur_platform_id, $ofee * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
                             $ofee_bvat = platform_curr_round($cur_platform_id, $ofee - $ofee_vat);
                         } else {
                             $data["offline_fee"] = "";
                         }
                     }
 
-                    $data["total"] = $so_obj->get_amount();
-                    $data["total_vat"] = platform_curr_round($cur_platform_id, $data["total"] * $so_obj->get_vat_percent() / (100 + $so_obj->get_vat_percent()));
+                    $data["total"] = $so_obj->getAmount();
+                    $data["total_vat"] = platform_curr_round($cur_platform_id, $data["total"] * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
                     $data["total_bvat"] = platform_curr_round($cur_platform_id, $data["total"] - $data["total_vat"]);
-                    if (!$data["payment_method"] = $this->get_so_payment_gateway($so_obj->get_so_no())) {
+                    if (!$data["payment_method"] = $this->getSoPaymentGateway($so_obj->getSoNo())) {
                         $data["payment_method"] = "N/A";
                     }
 
-                    $content .= $this->get_invoice_body($data, $gen_pdf);
+                    $content .= $this->getInvoiceBody($data, $gen_pdf);
                     if ($run < $total_cnt) {
                         $content .= $pagebreak;
                     }
@@ -4439,70 +4434,65 @@ html;
         return FALSE;
     }
 
-    private function get_invoice_body($data = array(), $gen_pdf = 0)
+    private function getInvoiceBody($data = [], $gen_pdf = 0)
     {
         foreach ($data as $key => $value) {
             ${$key} = $value;
         }
 
         if ($gen_pdf) {
-            include APPPATH . "data/inv_body_pdf.php";
+            include APPPATH . "data/invBodyPdf.php";
         } else {
-            include APPPATH . "data/inv_body.php";
+            include APPPATH . "data/invBody.php";
         }
         return $body;
-    }
-
-    public function get_pdf_rendering_srv()
-    {
-        return $this->pdf_rendering_srv;
     }
 
     public function fire_aftership_thank_you_email($so_obj, $sh_no, $ap_status)
     {
 
-        $country = $this->getDao('Country')->get(array("id" => $so_obj->get_delivery_country_id()));
-        $so_items = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_obj->get_so_no(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
-        $client = $this->getDao('Client')->get(array("id" => $so_obj->get_client_id()));
-        $currency_obj = $this->getDao('Currency')->get(['id' => $so_obj->get_currency_id()]);
+        $country = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
+        $so_items = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
+        $client = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
+        $currency_obj = $this->getDao('Currency')->get(['currency_id' => $so_obj->getCurrencyId()]);
         $sh_obj = $this->getDao('SoShipment')->get(['sh_no' => $sh_no]);
-        if ($sh_obj->get_courier_id()) {
-            if ($courier_obj = $this->getDao('Courier')->get(array("id" => $sh_obj->get_courier_id()))) {
+        if ($sh_obj->getCourierId()) {
+            if ($courier_obj = $this->getDao('Courier')->get(array("id" => $sh_obj->getCourierId()))) {
                 $courier_id = $courier_obj->get_courier_name();
-                if ($sh_obj->get_courier_id() == 'DPD_NL' && $sh_obj->get_tracking_no() && $courier_obj->get_tracking_link()) {
-                    $tracking_no = '<a href="' . $courier_obj->get_tracking_link() . $sh_obj->get_tracking_no() . '" target="_blank">' . $sh_obj->get_tracking_no() . '</a>';
+                if ($sh_obj->getCourierId() == 'DPD_NL' && $sh_obj->getTrackingNo() && $courier_obj->getTrackingLink()) {
+                    $tracking_no = '<a href="' . $courier_obj->getTrackingLink() . $sh_obj->getTrackingNo() . '" target="_blank">' . $sh_obj->getTrackingNo() . '</a>';
                 } else {
-                    $tracking_no = (empty($sh_obj) ? '' : $sh_obj->get_tracking_no());
+                    $tracking_no = (empty($sh_obj) ? '' : $sh_obj->getTrackingNo());
                 }
             }
         }
-        $platform_id = $so_obj->get_platform_id();
+        $platform_id = $so_obj->getPlatformId();
         $pbv_obj = $this->getDao('PlatformBizVar')->get(array('selling_platform_id' => $platform_id));
-        $lang_id = $pbv_obj->get_language_id();
+        $lang_id = $pbv_obj->getLanguageId();
 
-        $replace["so_no"] = $so_obj->get_so_no();
-        $replace["client_id"] = $so_obj->get_client_id();
-        $replace["forename"] = $client->get_forename();
-        $replace["email"] = $client->get_email();
-        $replace["bill_name"] = $so_obj->get_bill_name();
-        $replace["purchase_date"] = $so_obj->get_order_create_date();
-        $replace["promotion_code"] = $so_obj->get_promotion_code();
+        $replace["so_no"] = $so_obj->getSoNo();
+        $replace["client_id"] = $so_obj->getClientId();
+        $replace["forename"] = $client->getForename();
+        $replace["email"] = $client->getEmail();
+        $replace["bill_name"] = $so_obj->getBillName();
+        $replace["purchase_date"] = $so_obj->getOrderCreateDate();
+        $replace["promotion_code"] = $so_obj->getPromotionCode();
         $replace["delivery_days"] = $so_obj->get_expect_del_days();
-        $replace["delivery_name"] = $so_obj->get_delivery_name();
-        $replace["currency_id"] = $so_obj->get_currency_id();
+        $replace["delivery_name"] = $so_obj->getDeliveryName();
+        $replace["currency_id"] = $so_obj->getCurrencyId();
 
-        $replace["delivery_address_text"] = str_replace("|", "\n", str_replace("||", "|", $so_obj->get_delivery_address()))
-            . "\n" . $so_obj->get_delivery_city() . " " . $so_obj->get_delivery_state()
-            . " " . $so_obj->get_delivery_postcode() . "\n" . $country->get_name();
+        $replace["delivery_address_text"] = str_replace("|", "\n", str_replace("||", "|", $so_obj->getDeliveryAddress()))
+            . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState()
+            . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
         $replace["delivery_address"] = nl2br($replace["delivery_address_text"]);
         $replace["billing_address_text"] = str_replace("|", "\n",
-                $so_obj->get_bill_address()) . "\n" . $so_obj->get_bill_city() . " " . $so_obj->get_bill_state()
-            . " " . $so_obj->get_bill_postcode() . "\n" . $country->get_name();
+                $so_obj->getBillAddress()) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState()
+            . " " . $so_obj->getBillPostcode() . "\n" . $country->getName();
         $replace["billing_address"] = nl2br($replace["billing_address_text"]);
 
-        $replace['currency_sign'] = (empty($currency_obj) ? $so_obj->get_currency_id() : $currency_obj->get_sign());
-        $currency_sign = (empty($currency_obj) ? $so_obj->get_currency_id() : $currency_obj->get_sign());
-        $replace["amount"] = platform_curr_format($platform_id, $so_obj->get_amount(), 0);
+        $replace['currency_sign'] = (empty($currency_obj) ? $so_obj->getCurrencyId() : $currency_obj->getSign());
+        $currency_sign = (empty($currency_obj) ? $so_obj->getCurrencyId() : $currency_obj->getSign());
+        $replace["amount"] = platform_curr_format($platform_id, $so_obj->getAmount(), 0);
         $replace["timestamp"] = date("d/m/Y");
         $replace["sh_no"] = $sh_no;
 
@@ -4610,7 +4600,7 @@ html;
                 break;
         }
         include_once(APPPATH . "hooks/country_selection.php");
-        $country_id = $pbv_obj->get_platform_country_id();
+        $country_id = $pbv_obj->getPlatformCountryId();
         $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
         $email_sender = "no-reply@" . strtolower($replace["site_name"]);
         $replace["support_email"] = $email_sender;
@@ -4621,7 +4611,7 @@ html;
             $replace["tracking_id"] = $tracking_no;
             $courier_obj = $this->getDao('Courier')->get(array("id" => $courier_id));
             if ($courier_obj) {
-                $replace["tracking_link"] = $courier_obj->get_tracking_link();
+                $replace["tracking_link"] = $courier_obj->getTrackingLink();
             }
         } else {
             $replace["courier_id"] = "";
@@ -4635,15 +4625,15 @@ html;
 
         include_once(APPPATH . "helpers/image_helper.php");
 
-        $dc = $so_obj->get_delivery_charge();
+        $dc = $so_obj->getDeliveryCharge();
         $total += $dc;
         $replace["subtotal"] = platform_curr_format($platform_id, $sub_total, 0);
         $replace["total_vat"] = platform_curr_format($platform_id, $total_vat, 0);
 
         //#2182 add the processing fee
-        $extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->get_so_no()));
+        $extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
         if ($extobj) {
-            $processing_fee = $extobj->get_offline_fee();
+            $processing_fee = $extobj->getOfflineFee();
         }
 
         if (is_null($processing_fee)) {
@@ -4654,9 +4644,9 @@ html;
         $total += $processing_fee;
         $replace["total"] = platform_curr_format($platform_id, $total, 0);
 
-        $dc = $so_obj->get_delivery_charge();
+        $dc = $so_obj->getDeliveryCharge();
         $total += $dc;
-        $dc_vat = $dc * ($so_obj->get_vat_percent() / (100 + $so_obj->get_vat_percent()));
+        $dc_vat = $dc * ($so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
         $dc_sub_total = $dc - $dc_vat;
         $replace["dc_sub_total"] = platform_curr_format($platform_id, $dc_sub_total, 0);
         $replace["dc_vat"] = platform_curr_format($platform_id, $dc_vat, 0);
@@ -4665,40 +4655,39 @@ html;
         $replace["total_total_vat"] = platform_curr_format($platform_id, $total_vat + $dc_vat, 0);
         $replace["last_update_time"] = '';
 
-        $this->include_dto("Event_email_dto");
-        $dto = new Event_email_dto();
+        $dto = new EventEmailDto;
         if (($so_obj->get_biz_type() == 'ONLINE') && ($courier_id != 'HK POST') && ($courier_id != 'hong kong post') && ($courier_id != 'Quantium')) {
-            if ($this->is_filfull_aftership_thank_you_email_criteria($so_obj->get_delivery_country_id(), $so_obj->get_so_no(), $replace['last_update_time'], $ap_status)) {
+            if ($this->is_filfull_aftership_thank_you_email_criteria($so_obj->getDeliveryCountryId(), $so_obj->getSoNo(), $replace['last_update_time'], $ap_status)) {
                 # SBF #4740 - if fulfull thank you email - product delivered on time send info to FIANET
                 $send_mail = 1;
-                $this->get_review_fianet_service()->send_order_data($so_obj, $client);
+                $this->reviewFianetService->sendOrderData($so_obj, $client);
 
-                $dto->set_event_id("aftership_thank_you_mail");
-                $dto->set_mail_from($email_sender);
-                $dto->set_mail_to($client->get_email());
-                if (!$this->getDao('SoHoldReason')->getNumRows(array("so_no" => $so_obj->get_so_no(), "reason IN ('change_of_address', 'cscc', 'csvv')" => null))) {
+                $dto->setEventId("aftership_thank_you_mail");
+                $dto->setMailFrom($email_sender);
+                $dto->setMailTo($client->getEmail());
+                if (!$this->getDao('SoHoldReason')->getNumRows(array("so_no" => $so_obj->getSoNo(), "reason IN ('change_of_address', 'cscc', 'csvv')" => null))) {
                     switch ($lang_id) {
                         case 'fr':
-                            $dto->set_mail_bcc(array("valuebasketbccemail@gmail.com", "ming@valuebasket.com"));
+                            $dto->setMailBcc(array("valuebasketbccemail@gmail.com", "ming@valuebasket.com"));
                             break;
 
                         case 'en':
-                            $dto->set_mail_bcc(array("valuebasketbccemail@gmail.com", "ming@valuebasket.com"));
+                            $dto->setMailBcc(array("valuebasketbccemail@gmail.com", "ming@valuebasket.com"));
                             break;
 
                         case 'it':
-                            $dto->set_mail_bcc(array("valuebasketbccemail@gmail.com", "ming@valuebasket.com"));
+                            $dto->setMailBcc(array("valuebasketbccemail@gmail.com", "ming@valuebasket.com"));
                             break;
 
                         case 'es':
-                            $dto->set_mail_bcc(array("valuebasketbccemail@gmail.com", "ming@valuebasket.com"));
+                            $dto->setMailBcc(array("valuebasketbccemail@gmail.com", "ming@valuebasket.com"));
                             break;
 
                         default:
                             break;
                     }
                 }
-                $bcc = $dto->get_mail_bcc();
+                $bcc = $dto->getMailBcc();
 
                 # sbf #4349
                 switch ($platform_id) {
@@ -4744,41 +4733,41 @@ html;
 
                 $sendagain = "no-reply@feedback-valuebasket.com";
 
-                if (($so_obj->get_bill_country_id() == 'GB') || ($so_obj->get_delivery_country_id() == 'GB')) {
-                    $dto->set_mail_from($email_sender);
-                    $dto->set_tpl_id("aftership_thank_you_mail_gb");
-                    $dto->set_lang_id("en");
+                if (($so_obj->getBillCountryId() == 'GB') || ($so_obj->getDeliveryCountryId() == 'GB')) {
+                    $dto->setMailFrom($email_sender);
+                    $dto->setTplId("aftership_thank_you_mail_gb");
+                    $dto->setLangId("en");
                 } else {
-                    $dto->set_tpl_id("aftership_thank_you_mail");
-                    $dto->set_lang_id($lang_id);
+                    $dto->setTplId("aftership_thank_you_mail");
+                    $dto->setLangId($lang_id);
                 }
-                $dto->set_replace($replace);
+                $dto->setReplace($replace);
             } else {
-                $dto->set_event_id("aftership_late_delivery_mail");
-                $dto->set_mail_from($email_sender);
-                $dto->set_mail_to($client->get_email());
-                $dto->set_mail_bcc(array("valuebasketbccemail@gmail.com"));
+                $dto->setEventId("aftership_late_delivery_mail");
+                $dto->setMailFrom($email_sender);
+                $dto->setMailTo($client->getEmail());
+                $dto->setMailBcc(array("valuebasketbccemail@gmail.com"));
                 $dto->set_platform_id($platform_id);
 
-                if (($so_obj->get_bill_country_id() == 'GB') || ($so_obj->get_delivery_country_id() == 'GB')) {
-                    $dto->set_mail_from($email_sender);
-                    $dto->set_tpl_id("aftership_late_delivery_mail");
-                    $dto->set_lang_id("en");
+                if (($so_obj->getBillCountryId() == 'GB') || ($so_obj->getDeliveryCountryId() == 'GB')) {
+                    $dto->setMailFrom($email_sender);
+                    $dto->setTplId("aftership_late_delivery_mail");
+                    $dto->setLangId("en");
                 } else {
-                    $dto->set_tpl_id("aftership_late_delivery_mail");
-                    $dto->set_lang_id($lang_id);
+                    $dto->setTplId("aftership_late_delivery_mail");
+                    $dto->setLangId($lang_id);
                 }
-                $dto->set_replace($replace);
+                $dto->setReplace($replace);
             }
 
         }
         // attach invoice to dispatch email
         $data_path = $this->getDao('Config')->valueOf("data_path");
-        $html = $this->get_invoice_content(array($so_obj->get_so_no()), 1);
-        $so_no = $so_obj->get_so_no();
-        $att_file = $this->get_pdf_rendering_srv()->convert_html_to_pdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
+        $html = $this->getInvoiceContent([$so_obj->getSoNo()], 1);
+        $so_no = $so_obj->getSoNo();
+        $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
         $replace["att_file"] = $att_file;
-        $dto->set_replace($replace);
+        $dto->setReplace($replace);
         $this->eventService->fireEvent($dto);
 
         unlink($att_file);
@@ -4787,10 +4776,10 @@ html;
     function is_filfull_aftership_thank_you_email_criteria($delivery_country_id, $so_no, &$replace_last_update = Null, $ap_status)
     {
         if ($ap_status == '6') {
-            $aftship_thank_you_mail_obj = $this->wow_email_service->get_so_dao()->get_thank_you_mail_list(array("so.so_no" => $so_no, "a.courier_id NOT LIKE '%HK%POST%'" => null, "a.courier_id NOT LIKE '%hong-kong-post%'" => null, "a.courier_id NOT LIKE '%Quantium%'" => null, "so.biz_type NOT IN ('SPECIAL', 'MANUAL', 'EBAY', 'FNAC', 'RAKUTEN', 'QOO10')" => null), $replace_last_update, $ap_status);
+            $aftshipThankYouMailObj = $this->getDao('So')->getThankYouMailList(["so.so_no" => $so_no, "a.courier_id NOT LIKE '%HK%POST%'" => null, "a.courier_id NOT LIKE '%hong-kong-post%'" => null, "a.courier_id NOT LIKE '%Quantium%'" => null, "so.biz_type NOT IN ('SPECIAL', 'MANUAL', 'EBAY', 'FNAC', 'RAKUTEN', 'QOO10')" => null], $replace_last_update, $ap_status);
         }
 
-        $ontime = $aftship_thank_you_mail_obj['delivered_on_time'];
+        $ontime = $aftshipThankYouMailObj['delivered_on_time'];
 
         if ($ontime == 1) {
             return true;
@@ -4807,7 +4796,7 @@ html;
 
             $so_no = $so->get_so_no();
             $soid_list = $this->getDao('SoItemDetail')->getList(array("so_no" => $so_no));
-            $stock_alert = array();
+            $stock_alert = [];
             foreach ($soid_list as $soid) {
                 $prod_obj = $this->getDao('Product')->get(array("sku" => $soid->get_item_sku()));
                 $dqty = $prod_obj->get_display_quantity();
@@ -4833,10 +4822,7 @@ html;
 
 
             if (count($five_alert)) {
-                include_once(APPPATH . "libraries/service/Event_service.php");
-                $event = new Event_service();
-                include_once(APPPATH . "libraries/dto/event_email_dto.php");
-                $email_dto = new Event_email_dto();
+                $email_dto = new EventEmailDto();
                 $message .= "Please be advised that order number " . $so->get_client_id() . "-" . $so->get_so_no() . " platform " . $so->get_platform_id() . " has triggered the following product to control quantity 5:\n\n";
                 foreach ($five_alert as $key => $value) {
                     $message .= $key . " - " . $value . "\n";
@@ -4845,20 +4831,17 @@ html;
                 $message = preg_replace("{\n$}", "", $message);
                 $title = "[VB] Website Order Quantity Warning, QTY = 5";
                 $dto = clone $email_dto;
-                $dto->set_event_id("notification");
-                $dto->set_mail_to(array("bd@eservicesgroup.net"));
-                //$dto->set_mail_to("merchat@eservicesgroup.net");
-                $dto->set_mail_from("do_not_reply@valuebasket.com");
-                $dto->set_tpl_id("general_alert");
-                $dto->set_replace(array("title" => $title, "message" => $message));
-                $event->fire_event($dto);
+                $dto->setEventId("notification");
+                $dto->setMailTo(array("bd@eservicesgroup.net"));
+                //$dto->setMailTo("merchat@eservicesgroup.net");
+                $dto->setMailFrom("do_not_reply@valuebasket.com");
+                $dto->setTplId("general_alert");
+                $dto->setReplace(array("title" => $title, "message" => $message));
+                $this->eventService->fireEvent($dto);
             }
 
             if (count($stock_alert)) {
-                include_once(APPPATH . "libraries/service/Event_service.php");
-                $event = new Event_service();
-                include_once(APPPATH . "libraries/dto/event_email_dto.php");
-                $email_dto = new Event_email_dto();
+                $email_dto = new EventEmailDto();
                 $message .= "Please be advised that order number " . $so->get_client_id() . "-" . $so->get_so_no() . " platform " . $so->get_platform_id() . " has triggered the following product(s) to possibly be out of stock:\n\n";
                 foreach ($stock_alert as $key => $value) {
                     $message .= $key . " - " . $value . "\n";
@@ -4867,24 +4850,24 @@ html;
                 $message = preg_replace("{\n$}", "", $message);
                 $title = "[VB] Website Order Quantity Warning, QTY = 0";
                 $dto = clone $email_dto;
-                $dto->set_event_id("notification");
-                $dto->set_mail_to(array("bd@eservicesgroup.net"));
-                //$dto->set_mail_to("merchat@eservicesgroup.net");
-                $dto->set_mail_from("do_not_reply@valuebasket.com");
-                $dto->set_tpl_id("general_alert");
-                $dto->set_replace(array("title" => $title, "message" => $message));
-                $event->fire_event($dto);
+                $dto->setEventId("notification");
+                $dto->setMailTo(array("bd@eservicesgroup.net"));
+                //$dto->setMailTo("merchat@eservicesgroup.net");
+                $dto->setMailFrom("do_not_reply@valuebasket.com");
+                $dto->setTplId("general_alert");
+                $dto->setReplace(array("title" => $title, "message" => $message));
+                $this->eventService->fireEvent($dto);
             }
         }
     }
 
-    public function orderQuickSearch($where = array(), $option = array())
+    public function orderQuickSearch($where = [], $option = [])
     {
         if ($option["num_rows"] == 1) {
             return $this->getDao('So')->orderQuickSearch($where, $option);
         } else {
             $list = $this->getDao('So')->orderQuickSearch($where, $option);
-            $ret = array();
+            $ret = [];
             foreach ($list as $value) {
                 if ($value->get_status() < 6 && $value->get_status() > 2) {
                     $items = $this->getDao('So')->getOrderItemList($value->get_so_no());
@@ -4898,17 +4881,17 @@ html;
         }
     }
 
-    public function update_complete_order($so_obj, $trans_handle = 1)
+    public function updateCompleteOrder($so_obj, $trans_handle = 1)
     {
-        if ($soid_list = $this->getDao('SoItemDetail')->getList(array("so_no" => $so_obj->get_so_no()))) {
+        if ($soid_list = $this->getDao('SoItemDetail')->getList(["so_no" => $so_obj->getSoNo()])) {
             $success = 1;
 
             if ($trans_handle) {
-                $this->getDao('So')->trans_start();
+                $this->getDao('So')->db->trans_start();
             }
 
             foreach ($soid_list as $soid_obj) {
-                $soid_obj->set_status(1);
+                $soid_obj->setStatus(1);
                 if ($this->getDao('SoItemDetail')->update($soid_obj) === FALSE) {
                     $success = 0;
                     $error = __LINE__ . " " . $this->db->_error_message();
@@ -4916,18 +4899,21 @@ html;
                 }
             }
             if ($success) {
-                $so_obj->set_status(6);
-                $so_obj->set_dispatch_date(date("Y-m-d H:i:s"));
-                if ($this->update($so_obj) === FALSE) {
+                $so_obj->setStatus(6);
+                $status = 6;
+                $so_obj->setDispatchDate(date("Y-m-d H:i:s"));
+                if ($this->getDao('So')->update($so_obj) === FALSE) {
                     $success = 0;
                 }
+
+                $this->updateIofStatusBySo($so_obj->getSoNo(), $status);
             }
 
             if ($trans_handle) {
                 if (!$success) {
-                    $this->getDao('So')->trans_rollback();
+                    $this->getDao('So')->db->trans_rollback();
                 }
-                $this->getDao('So')->trans_complete();
+                $this->getDao('So')->db->trans_complete();
             }
 
             return $success;
@@ -4942,7 +4928,7 @@ html;
         if ((($so_obj->get_biz_type() != 'SPECIAL')
                 && ($so_ext_obj->get_offline_fee() == 15)
                 && ($sops_obj->get_payment_gateway_id() == "worldpay_moto")
-                && ($so_obj->get_platform_id() == "WEBSG"))
+                && ($so_obj->getPlatformId() == "WEBSG"))
             ||
             (($so_obj->get_biz_type() != 'SPECIAL') && ($sops_obj->get_payment_gateway_id() == "worldpay_moto_cash"))
             ||
@@ -4953,17 +4939,17 @@ html;
         return false;
     }
 
-    public function getSalesComparisonDataByPeriod($where = array(), $classname = '')
+    public function getSalesComparisonDataByPeriod($where = [], $classname = '')
     {
         return $this->getDao('So')->getSalesComparisonDataByPeriod($where, $classname);
     }
 
-    public function getConfirmedSo($where = array(), $from_date = '', $to_date = '', $is_light_version = false, $dispatch_report = false)
+    public function getConfirmedSo($where = [], $from_date = '', $to_date = '', $is_light_version = false, $dispatch_report = false)
     {
         return $this->getDao('So')->getConfirmedSo($where, $from_date, $to_date, $is_light_version, $dispatch_report);
     }
 
-    public function getSplitSoReport($where = array(), $option = array(), $from_date = '', $to_date = '')
+    public function getSplitSoReport($where = [], $option = [], $from_date = '', $to_date = '')
     {
         return $this->getDao('So')->getSplitSoReport($where, $option, $from_date, $to_date);
     }
@@ -4976,18 +4962,6 @@ html;
     public function set_domain_platform_service($srv)
     {
         $this->domain_platform_service = $srv;
-
-        return $srv;
-    }
-
-    public function get_wow_email_service()
-    {
-        return $this->wow_email_service;
-    }
-
-    public function set_wow_email_service(Base_service $srv)
-    {
-        $this->wow_email_service = $srv;
 
         return $srv;
     }
@@ -5032,17 +5006,17 @@ html;
         return $this->getDao('Rma')->insert($obj);
     }
 
-    public function getFnacPendingPaymentOrders($where = array(), $option = array())
+    public function getFnacPendingPaymentOrders($where = [], $option = [])
     {
         return $this->getDao('So')->getFnacPendingPaymentOrders($where, $option);
     }
 
-    public function getEbayFeedbackEmailContent($where = array(), $option = array())
+    public function getEbayFeedbackEmailContent($where = [], $option = [])
     {
         return $this->getDao('So')->getEbayFeedbackEmailContent($where, $option);
     }
 
-    function get_working_days($start_ts, $end_ts, $holidays = array())
+    function get_working_days($start_ts, $end_ts, $holidays = [])
     {
         foreach ($holidays as & $holiday) {
             $holiday = strtotime($holiday);
@@ -5061,9 +5035,9 @@ html;
 
     public function send_notification_to_cs($so_obj)
     {
-        $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->get_client_id()));
-        include_once APPPATH . "libraries/dto/event_email_dto.php";
-        $email_dto = new Event_email_dto();
+        $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
+
+        $email_dto = new EventEmailDto();
         $email_dto->set_event_id("special_aps_cs_notification");
         $email_dto->set_mail_from("do_not_reply@valuebasket.com");
         $email_dto->set_mail_to(array("salesteam@eservicesgroup.net", "EUTeam@eservicesgroup.com", "jesslyn@eservicesgroup.com"));
@@ -5071,11 +5045,11 @@ html;
         $email_dto->set_tpl_id("special_aps_cs_notification");
         $email_dto->set_lang_id("en");
 
-        $replace = array();
+        $replace = [];
 
         $replace["site_name"] = "VB";
-        $replace["so_no"] = $so_obj->get_so_no();
-        $replace["forename"] = $so_obj->get_bill_name();
+        $replace["so_no"] = $so_obj->getSoNo();
+        $replace["forename"] = $so_obj->getBillName();
         $replace["tel"] = $client_obj->get_tel_1() . $client_obj->get_tel_2() . $client_obj->get_tel_3();
         $replace["del_address"] = $client_obj->get_del_address_1() . " " . $client_obj->get_del_address_2() . " " . $client_obj->get_del_address_3();
         $replace["del_city"] = $client_obj->get_del_city();
@@ -5083,65 +5057,63 @@ html;
         $replace["default_url"] = $this->getDao('Config')->valueOf("default_url");
         $replace["logo_file_name"] = $this->getDao('Config')->valueOf("logo_file_name");
 
-        $so_ext_obj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->get_so_no()));
+        $so_ext_obj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
 
         $replace["order_reason"] = $so_ext_obj->get_order_reason();
         $replace["order_notes"] = $so_ext_obj->get_notes();
 
         $email_dto->set_replace($replace);
-        include_once(APPPATH . "libraries/service/Event_service.php");
-        $event = new Event_service();
-        $event->fire_event($email_dto);
+
+        $this->eventService->fireEvent($email_dto);
     }
 
     public function send_aps_order_client_notification_email($so_obj)
     {
-        $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->get_client_id()));
-        include_once APPPATH . "libraries/dto/event_email_dto.php";
-        $email_dto = new Event_email_dto();
+        $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
+
+        $email_dto = new EventEmailDto();
         $email_dto->set_event_id("special_aps_order_notification");
         $email_dto->set_mail_from("do_not_reply@valuebasket.com");
         $email_dto->set_mail_to($client_obj->get_email());
         $email_dto->set_tpl_id("special_aps_order_notification");
         $email_dto->set_lang_id("en");
 
-        $replace = array();
+        $replace = [];
         include_once(APPPATH . "hooks/country_selection.php");
 
-        $replace["site_url"] = Country_selection::rewrite_domain_by_country("www.valuebaset.com", $so_obj->get_bill_country_id());
+        $replace["site_url"] = Country_selection::rewrite_domain_by_country("www.valuebaset.com", $so_obj->getBillCountryId());
         $replace["site_name"] = Country_selection::rewrite_site_name($replace["site_url"]);
-        $replace["so_no"] = $so_obj->get_so_no();
-        $replace["forename"] = $so_obj->get_bill_name();
+        $replace["so_no"] = $so_obj->getSoNo();
+        $replace["forename"] = $so_obj->getBillName();
         $replace["default_url"] = $this->getDao('Config')->valueOf("default_url");
         $replace["logo_file_name"] = $this->getDao('Config')->valueOf("logo_file_name");
 
         $email_dto->set_replace($replace);
-        include_once(APPPATH . "libraries/service/Event_service.php");
-        $event = new Event_service();
-        $event->fire_event($email_dto);
+
+        $this->eventService->fireEvent($email_dto);
     }
 
-    public function getOrdersBySkuAndStatus($sku, $so_status = 2, $where = array(), $option = array())
+    public function getOrdersBySkuAndStatus($sku, $so_status = 2, $where = [], $option = [])
     {
         return $this->getDao('So')->getOrdersBySkuAndStatus($sku, $so_status, $where, $option);
     }
 
-    public function getEbayPendingShipmentUpdateOrders($where = array(), $option = array())
+    public function getEbayPendingShipmentUpdateOrders($where = [], $option = [])
     {
         return $this->getDao('So')->getEbayPendingShipmentUpdateOrders($where, $option);
     }
 
-    public function getQoo10PendingShipmentUpdateOrders($where = array(), $option = array())
+    public function getQoo10PendingShipmentUpdateOrders($where = [], $option = [])
     {
         return $this->getDao('So')->getQoo10PendingShipmentUpdateOrders($where, $option);
     }
 
-    public function getRakutenPendingShipmentUpdateOrders($where = array(), $option = array())
+    public function getRakutenPendingShipmentUpdateOrders($where = [], $option = [])
     {
         return $this->getDao('So')->getRakutenPendingShipmentUpdateOrders($where, $option);
     }
 
-    public function getAutomatedFeedbackEmailContent($where = array(), $option = array())
+    public function getAutomatedFeedbackEmailContent($where = [], $option = [])
     {
         return $this->getDao('So')->getAutomatedFeedbackEmailContent($where, $option);
     }
@@ -5334,7 +5306,7 @@ html;
         return $this->get_so_ps_srv()->get(array("so_no" => $so_no, "status" => 1));
     }
 
-    public function getShippingInfo($where = array())
+    public function getShippingInfo($where = [])
     {
         return $this->getDao('SoShipment')->getShippingInfo($where);
     }
@@ -5349,7 +5321,7 @@ html;
         return $this->getDao('So')->getLastTenTransactionInfoByClientId($client_id);
     }
 
-    public function getDistinctClientIdList($where = array(), $option = array())
+    public function getDistinctClientIdList($where = [], $option = [])
     {
         return $this->getDao('So')->getDistinctClientIdList($where, $option);
     }
@@ -5359,17 +5331,17 @@ html;
         return $this->getDao('So')->getRmaCustomerEmailAddress($past_day);
     }
 
-    public function getAftershipData($where = array(), $option = array())
+    public function getAftershipData($where = [], $option = [])
     {
         return $this->getDao('So')->getAftershipData($where, $option);
     }
 
-    public function getAftershipReportForFtp($where = array(), $option = array())
+    public function getAftershipReportForFtp($where = [], $option = [])
     {
         return $this->getDao('So')->getAftershipReportForFtp($where, $option);
     }
 
-    public function getWowEmailListData($where = array(), $option = array())
+    public function getWowEmailListData($where = [], $option = [])
     {
         return $this->getDao('So')->getWowEmailListData($where, $option);
     }
@@ -5379,8 +5351,8 @@ html;
         if (!$so_obj)
             return false;
 
-        $so_no = $so_obj->get_so_no();
-        if ($client_obj = $this->getDao('Client')->get(array("id" => $so_obj->get_client_id()))) {
+        $so_no = $so_obj->getSoNo();
+        if ($client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()))) {
             $client_email = $client_obj->get_email();
             if ($black_list_object = $this->get_email_referral_list_service()->get(array('email' => $client_email, '`status`' => 1))) {
                 return TRUE;
@@ -5407,8 +5379,8 @@ html;
         if (!$so_obj)
             return false;
 
-        $so_no = $so_obj->get_so_no();
-        if ($client_obj = $this->getDao('Client')->get(array("id" => $so_obj->get_client_id()))) {
+        $so_no = $so_obj->getSoNo();
+        if ($client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()))) {
             $client_email = $client_obj->get_email();
             if ($black_list_object = $this->get_email_referral_list_service()->get(array('email' => $client_email, '`status`' => 1))) {
                 //insert the order into the fraudulent order table
@@ -5431,15 +5403,15 @@ html;
                                         $socc_obj = $this->getDao('SoCreditChk')->get();
                                         $action = "insert";
                                     }
-                                    $this->getDao('SoCreditChk')->trans_start();
+                                    $this->getDao('SoCreditChk')->db->trans_start();
                                     $socc_obj->set_so_no($so_no);
                                     $socc_obj->set_fd_status(2);
                                     $this->getDao('SoCreditChk')->$action($socc_obj);
 
-                                    $so_obj->set_status(0);
+                                    $so_obj->setStatus(0);
                                     $so_obj->set_hold_status(0);
                                     $this->getDao('So')->update($so_obj);
-                                    $this->getDao('SoCreditChk')->trans_complete();
+                                    $this->getDao('SoCreditChk')->db->trans_complete();
 
                                     //add an order note
                                     $order_note_vo = $this->getDao('OrderNotes')->get();
@@ -5489,7 +5461,7 @@ html;
             if ($parent_so_obj->get_hold_status() != 0) {
                 $is_oos = $this->getDao('SoHoldReason')->get(array("so_no" => $parent_so_no, "reason" => "oos"));
                 if ($is_oos) {
-                    $so_ext_obj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->get_so_no()));
+                    $so_ext_obj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
                     if (($so_ext_obj->get_order_reason() >= 19) and ($so_ext_obj->get_order_reason() <= 22)) {
                         $requirePermanentHold = true;
                     }
@@ -5498,7 +5470,7 @@ html;
         }
         if ($requirePermanentHold) {
             $parent_so_obj->set_hold_status(self::PERMANENT_HOLD_STATUS);
-            $this->update($parent_so_obj);
+            $this->getDao('So')->update($parent_so_obj);
             if ($sohr_vo = $this->getDao('SoHoldReason')->get()) {
                 $sohr_vo->set_so_no($parent_so_no);
                 $sohr_vo->set_reason("perm_hold_sales_aps");
@@ -5519,7 +5491,7 @@ html;
         if ($so_obj) {
             $parent_so_no = $so_obj->get_parent_so_no();
 
-            $where["so.so_no"] = $so_obj->get_so_no();
+            $where["so.so_no"] = $so_obj->getSoNo();
             $option["so_item"] = "1";
             $option["hide_payment"] = "1";
             $option["notes"] = TRUE;
@@ -5549,7 +5521,7 @@ html;
                     $ret["update_message"] = "parent so_no <$parent_so_no> is already held for split order; no need to perm hold";
                 } else {
                     $parent_so_obj->set_hold_status(self::PERMANENT_HOLD_STATUS);
-                    if ($this->update($parent_so_obj) === FALSE) {
+                    if ($this->getDao('So')->update($parent_so_obj) === FALSE) {
                         $ret["status"] = false;
                         $ret["error_message"] = __LINE__ . "Cannot update so_no <$parent_so_no> with perm hold. SQL: " . $this->db->last_query() . " DBerror: " . $this->db->_error_message();
                     } else {
@@ -5595,5 +5567,463 @@ html;
     {
         return $this->getDao('So')->getSalesVolumeSo($where, $option);
     }
+
+    public function wmsAllocationPlanOrder($solist = [])
+    {
+        if (!empty($solist)) {
+            set_time_limit(300);
+            $bodytext = '';
+            $mail_send = FALSE;
+            $soid_vo = $this->getDao('SoItemDetail')->get();
+            foreach ($solist as $key => $so_no) {
+                if ($so_obj = $this->getDao('So')->get(["so_no" => $so_no])) {
+                    if (($so_obj->getStatus() > 2 && $so_obj->getStatus() < 5) && $so_obj->getRefundStatus() == 0 && $so_obj->getHoldStatus() == 0) {
+                        if ($ffi_objlist = $this->getDao('SoItemDetail')->getFulfil(["so.so_no" => $so_no])) {
+                            $update_so = [];
+                            $this->getDao('So')->db->trans_start();
+
+                            foreach ($ffi_objlist as $obj) {
+                                $new_obj = clone $soid_vo;
+                                set_value($new_obj, $obj);
+                                $so_no = $obj->getSoNo();
+                                $line_no = $obj->getLineNo();
+                                $item_sku = $obj->getItemSku();
+                                $update_so[$line_no][$item_sku] = $new_obj;
+                            }
+
+                            $error = 0;
+                            if ($update_so) {
+                                if ($this->saveSoAllocate($so_no, $update_so) === FALSE) {
+                                    $error +=1;
+                                }
+                            }
+
+                            if ($so_obj = $this->getDao('So')->get(["so_no" => $so_no])) {
+
+                                $so_obj->setStatus("5");
+                                if ($this->getDao('So')->update($so_obj)) {
+                                    $this->updateIofStatusBySo($so_no, 5);
+                                } else {
+                                    $error +=1;
+                                }
+
+                            } else {
+                                $error +=1;
+                            }
+
+                            if ($error) {
+                                $this->getDao('So')->db->trans_rollback();
+                            }
+
+                            $this->getDao('So')->db->trans_complete();
+                        }
+                    } else {
+
+                        $mail_send = TRUE;
+                        $bodytext .= "New order so_no {$so_no} > 'to ship' is abnormal, Order status: {$so_obj->getStatus()}, refund_status: {$so_obj->getRefundStatus()}, hold_status:{$so_obj->getHoldStatus()}<br />";
+                    }
+
+                }
+            }
+
+            if ($mail_send) {
+                $header = "From: admin@eservicesgroup.com\r\n";
+                $subject = "[VB] Alert, WMS Allocation Plan New order so_no > 'to ship' is abnormal";
+                mail("alice.wu@eservicesgroup.com", "{$subject}", "{$bodytext}", "{$header}");
+            }
+
+            return TRUE;
+        }
+
+        return FALSE;
+    }
+
+    public function saveSoAllocate($so_no, $update_so = []) {
+        $soal_vo = $this->getDao('SoAllocate')->get();
+        foreach ($update_so as $line_no => $soid_list) {
+            foreach ($soid_list as $item_sku => $soid_obj) {
+                $soid_obj->setOutstandingQty(0);
+                if ($this->getDao('SoItemDetail')->update($soid_obj)) {
+
+                    $this->updateIofOutstandingQtyBySoid($so_no, $line_no, $item_sku, $soid_obj);
+
+                    $action = "update";
+                    if (!($soal_obj = $this->getDao('SoAllocate')->get(['so_no'=>$so_no, 'line_no'=>$line_no, 'item_sku'=>$item_sku, 'warehouse_id'=>'HK', 'status'=>1]))) {
+                        unset($soal_obj);
+                        $soal_obj = clone $soal_vo;
+                        $action = "insert";
+                        set_value($soal_obj, $soid_obj);
+                        $soal_obj->setWarehouseId("HK");
+                        $soal_obj->setStatus("1");
+                        if ($this->getDao('SoAllocate')->$action($soal_obj) == false) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public function updateIofStatusBySo($so_no, $status)
+    {
+        $iofObjList = $this->getDao('IntegratedOrderFulfillment')->getList(['so_no'=>$so_no]);
+        if((array) $iofObjList) {
+            foreach ($iofObjList as $iofObj) {
+                $iofObj->setStatus($status);
+                $this->getDao('IntegratedOrderFulfillment')->update($iofObj);
+            }
+
+            $this->saveOrderStatusHistory($so_no, $status);
+        }
+    }
+
+    public function saveOrderStatusHistory($so_no, $status)
+    {
+        $oshVo = $this->getDao('OrderStatusHistory')->get();
+        $oshObj = clone $oshVo;
+        $oshObj->setSoNo($so_no);
+        $oshObj->setStatus($status);
+        $oshVo = $this->getDao('OrderStatusHistory')->insert($oshObj);
+    }
+
+    public function updateIofOutstandingQtyBySoid($so_no, $line_no, $item_sku, $soid_obj)
+    {
+        if ($iofObj = $this->getDao('IntegratedOrderFulfillment')->get(['so_no'=>$so_no, 'line_no'=>$line_no,'sku'=>$item_sku])) {
+            $iofObj->setOutstandingQty($soid_obj->getOutstandingQty());
+            $iofObj = $this->getDao('IntegratedOrderFulfillment')->update($iofObj);
+        }
+
+        return true;
+    }
+
+    public function dealOrderFulfilmentToShip($valueArr)
+    {
+        $rsresult = "";
+        $shownotice = 0;
+
+        $r_where["soal.status"] = 1;
+        if ($valueArr["dispatchType"] != 'r') {
+            $r_where["hold_status"] = "0";
+            $r_where["refund_status"] = "0";
+        }
+        $r_option["limit"] = -1;
+        $r_option["solist"] = $valueArr["checkSoNo"];
+        $rlist = $this->getDao('SoAllocate')->getInSoList($r_where, $r_option);
+
+        $success_so = $update_so = [];
+
+        foreach ($rlist as $obj) {
+            $so_no = $obj->getSoNo();
+            $line_no = $obj->getLineNo();
+            $item_sku = $obj->getItemSku();
+            $al_id = $obj->getId();
+            $update_so[$so_no][$al_id] = $obj;
+        }
+        if ($update_so) {
+            foreach ($valueArr["checkSoNo"] as $so_no) {
+                if (!isset($update_so[$so_no])) continue;
+
+                $soal_list = $update_so[$so_no];
+
+                $error = "";
+                $success = 1;
+                $this->getDao('So')->db->trans_start();
+
+                if ($valueArr["dispatchType"] == 'r') {
+                    foreach ($soal_list as $al_id => $soal_obj) {
+                        $soid_where["so_no"] = $so_no;
+                        $soid_where["line_no"] = $soal_obj->getLineNo();
+                        $soid_where["item_sku"] = $soal_obj->getItemSku();
+
+                        if ($soid_obj = $this->getDao('SoItemDetail')->get($soid_where)) {
+                            $soid_obj->setOutstandingQty($soid_obj->getQty());
+                            if ($this->getDao('SoItemDetail')->update($soid_obj)){
+                                $this->updateIofOutstandingQtyBySoid($so_no, $soal_obj->getLineNo(), $soal_obj->getItemSku(), $soid_obj);
+                            }
+
+                            $this->getDao('SoAllocate')->delete($soal_obj);
+                        } else {
+                            $success = 0;
+                            $error = __LINE__ . "[" . ($soid_obj ? 1 : 0) . "]" . $this->db->_error_message();
+                            break;
+                        }
+                    }
+                    if ($success) {
+                        $status = 5;
+                        $so_obj = $this->getDao('So')->get(["so_no" => $so_no]);
+                        if ($this->getDao('SoAllocate')->getNumRows(["so_no" => $so_no])) {
+                            $so_obj->setStatus("4");
+                            $status = 4;
+                            $so_obj->setFinanceDispatchDate(null);
+                        } else {
+                            $so_obj->setStatus("3");
+                            $status = 3;
+                            $so_obj->setFinanceDispatchDate(null);
+                        }
+                        if (!$this->getDao('So')->update($so_obj)) {
+                            $success = 0;
+                            $error = __LINE__ . " " . $this->db->_error_message();
+                        }
+
+                        $this->updateIofStatusBySo($so_no, $status);
+                    }
+                } else {
+                    $success = $this->moveOrderToDispatch($so_no, $soal_list, $valueArr["postCourierId"], $valueArr["postCourier"]);
+                }
+
+                if (!$success) {
+                    $this->getDao('So')->db->trans_rollback();
+                    $shownotice = 1;
+                } else {
+                    $success_so[] = $so_no;
+                }
+                $rsresult .= "{$so_no} -> {$success} " . ($success ? "" : "(error:{$error})") . "\\n";
+
+                $this->getDao('So')->db->trans_complete();
+            }
+        }
+        if ($shownotice) {
+            $_SESSION["NOTICE"] = $rsresult;
+        }
+
+        return $success_so;
+    }
+
+    public function getNextShNo($so_no)
+    {
+        $last_sh_no = $this->getDao('SoAllocate')->getLastShNo($so_no);
+        list($sno, $last_no) = @explode("-", $last_sh_no);
+        return $so_no . "-" . sprintf("%02d", $last_no * 1 + 1);
+    }
+
+    public function checkCourier($courier_id, $courier, $so_obj)
+    {
+        if ($courier == "") {
+            if ($courier_id == "AMS") {
+                $func_amount = $so_obj->getAmount() * $so_obj->getRate();
+                return ($func_amount < 80) ? "USPSPM" : "UPS";
+            } elseif ($courier_id == "ILG") {
+                return ($so_obj->getDeliveryTypeId() != $this->getDao['Config']->valueOf("default_delivery_type")) ? "trackable service" : $courier_id;
+            }
+
+            return $courier_id;
+        } else {
+            return $courier;
+        }
+    }
+
+    public function moveOrderToDispatch($so_no, $soal_list, $CourierIdVal, $courierVal)
+    {
+        $success = 1;
+        $so_obj = $this->getDao('So')->get(["so_no" => $so_no]);
+        $sh_no = $this->getNextShNo($so_no);
+
+        $courier_id = $this->checkCourier($CourierIdVal, $courierVal[$so_no], $so_obj);
+        $soshVo = $this->getDao('SoShipment')->get();
+        $soshObj = clone $soshVo;
+        $soshObj->setShNo($sh_no);
+        $soshObj->setCourierId($courier_id);
+        $soshObj->setStatus(1);
+        if ($rs1 = $this->getDao('SoShipment')->insert($soshObj)) {
+            foreach ($soal_list as $al_id => $soalObj) {
+                $soalObj->setShNo($sh_no);
+                $soalObj->setStatus(2);
+                if (!($rs2 = $this->getDao('SoAllocate')->update($soalObj))) {
+                    $success = 0;
+                    break;
+                }
+            }
+        } else {
+            $success = 0;
+        }
+
+        return $success;
+    }
+
+    public function dealOrderFulfilmentDispatch($valueArr)
+    {
+        $rsresult = "";
+        $shownotice = 0;
+
+        if ($valueArr["dispatchType"] == 'c') {
+            $success_so = $this->changeCourierOnDispatch($valueArr["checkSoNo"], $valueArr["postCourierId"], $valueArr["postCourier"], $valueArr["db_time"]);
+            return $success_so;
+        } else {
+            $u_where["modify_on <="] = date("Y-m-d H:i:s");
+            $r_where["soal.status"] = 2;
+            if ($valueArr["dispatchType"] != 'r') {
+                $r_where["so.hold_status"] = "0";
+                $r_where["so.refund_status"] = "0";
+            }
+            $r_option["limit"] = -1;
+            $r_option["shlist"] = array_keys($valueArr["checkSoNo"]);
+            $rlist = $this->getDao('SoAllocate')->getInSoList($r_where, $r_option);
+            $update_sh = [];
+            foreach ($rlist as $obj) {
+                $sh_no = $obj->getShNo();
+                $line_no = $obj->getLineNo();
+                $item_sku = $obj->getItemSku();
+                $al_id = $obj->getId();
+                $update_sh[$sh_no][$al_id] = $obj;
+            }
+
+            if ($update_sh) {
+                foreach ($update_sh as $sh_no => $soal_list) {
+                    $error = "";
+                    $success = 1;
+                    $this->getDao('So')->db->trans_start();
+                    $sosh_obj = $this->getDao('SoShipment')->get(["sh_no" => $sh_no]);
+
+                    if ($valueArr["dispatchType"] == 'r') {
+                        foreach ($soal_list as $al_id => $soal_obj) {
+                            $so_no = $soal_obj->getSoNo();
+                            $soid_where["so_no"] = $so_no;
+                            $soid_where["line_no"] = $soal_obj->getLineNo();
+                            $soid_where["item_sku"] = $soal_obj->getItemSku();
+
+                            $cur_u_where = isset($soid_u_where[$soid_where["so_no"]][$soid_where["line_no"]][$soid_where["item_sku"]]) ? ["modify_on <=" => $soid_u_where[$soid_where["so_no"]][$soid_where["line_no"]][$soid_where["item_sku"]]] : $u_where;
+                            if ($soid_obj = $this->getDao('SoItemDetail')->get($soid_where)) {
+                                $soid_obj->setOutstandingQty($soid_obj->getQty());
+                                if ($this->getDao('SoItemDetail')->update($soid_obj, $cur_u_where)){
+                                    $this->updateIofOutstandingQtyBySoid($so_no, $soal_obj->getLineNo(), $soal_obj->getItemSku(), $soid_obj);
+                                }
+
+                                if ($this->getDao('SoAllocate')->delete($soal_obj)) {
+                                    $soid_u_where[$soid_where["so_no"]][$soid_where["line_no"]][$soid_where["item_sku"]] = date("Y-m-d H:i:s");
+                                }
+                            } else {
+                                $success = 0;
+                                $error = __LINE__ . "[" . ($soid_obj ? 1 : 0) . "]" . $this->db->_error_message();
+                                break;
+                            }
+                        }
+                        if ($success) {
+                            $status = 5;
+                            $so_obj = $this->getDao('So')->get(["so_no" => $so_no]);
+                            if ($this->getDao('SoAllocate')->getNumRows(["so_no" => $so_no])) {
+                                $so_obj->setStatus("4");
+                                $status = 4;
+                                $so_obj->setFinanceDispatchDate(null);
+                            } else {
+                                $so_obj->setStatus("3");
+                                $status = 3;
+                                $so_obj->setFinanceDispatchDate(null);
+                            }
+
+
+                            if (!(($rs1 = $this->getDao('So')->update($so_obj)) && ($rs2 = $this->getDao('SoShipment')->delete($sosh_obj)))) {
+                                $success = 0;
+                                $error = __LINE__ . "[" . ($rs1 ? 1 : 0) . ($rs2 ? 1 : 0) . "]" . $this->db->_error_message();
+                            }
+
+                            $this->updateIofStatusBySo($so_no, $status);
+                        }
+                    } else {
+                        $sosh_obj->setStatus("2");
+                        $sosh_obj->setTrackingNo($_POST["tracking"][$sh_no]);
+                        if ($this->getDao('SoShipment')->update($sosh_obj)) {
+                            foreach ($soal_list as $al_id => $soal_obj) {
+                                $soal_obj->setStatus("3");
+                                if (!$this->getDao('SoAllocate')->update($soal_obj)) {
+                                    $success = 0;
+                                    $error = __LINE__ . " " . $this->db->_error_message();
+                                    break;
+                                }
+                            }
+                        } else {
+                            $success = 0;
+                            $error = __LINE__ . " " . $this->db->_error_message();
+                        }
+                        if ($success) {
+                            $so_obj = $this->getDao('So')->get(["so_no" => $soal_obj->getSoNo()]);
+                            if ($this->getDao('SoAllocate')->getNumRows(["so_no" => $so_no, "status" => 1]) == 0) {
+                                if (!$this->updateCompleteOrder($so_obj, 0)) {
+                                    $success = 0;
+                                    $error = __LINE__ . " " . $this->db->_error_message();
+                                }
+
+                                // todo
+                                if ($so_obj->getBizType() == 'SPECIAL') {
+                                    $special_orders[] = $so_obj->getSoNo();
+                                }
+                            }
+
+                            if (substr($so_obj->getPlatformId(), 0, 2) != "AM" && substr($so_obj->getPlatformId(), 0, 2) != "TS" && $so_obj->getBizType() != "SPECIAL") {
+                                $this->fireDispatch($so_obj, $sh_no);
+                            }
+                        }
+                    }
+                    if (!$success) {
+                        $this->getDao('So')->db->trans_rollback();
+                        $shownotice = 1;
+                    }
+                    $rsresult .= "{$sh_no} -> {$success} " . ($success ? "" : "(error:{$error})") . "\\n";
+                    $this->getDao('So')->db->trans_complete();
+                }
+                if ($special_orders) {
+                    foreach ($special_orders as $key => $so_no) {
+                        $so_w_reason = $this->getDao('So')->getSoWithReason(['so.so_no' => $so_no], ['limit' => 1]);
+
+                        if ($so_w_reason->getReasonId() == '34') {
+                            $aps_direct_order[] = $so_w_reason->getSoNo();
+                        }
+
+                    }
+
+                    $aps_direct_orders = implode(',', $aps_direct_order);
+                    $where = "where so.so_no in (" . $aps_direct_orders . ")";
+                    $content = $this->getDao('So')->getApsDirectOrderCsv($where);
+
+                    $phpmail = new PHPMailer;
+
+                    $phpmail->IsSMTP();
+                    $phpmail->From = "VB APS ORDER ALERT <do_not_reply@valuebasket.com>";
+                    // $phpmail->AddAddress("bd.platformteam@eservicesgroup.net");
+                    $phpmail->AddAddress("brave.liu@eservicesgroup.com");
+
+                    $phpmail->Subject = " DIRECT APS ORDERS";
+                    $phpmail->IsHTML(false);
+                    $phpmail->Body = "Attached: DIRECT APS ORDERS.";
+                    $phpmail->AddStringAttachment($content, "direct_aps_info.csv");
+                    $result = $phpmail->Send();
+
+                }
+            }
+        }
+
+        if ($shownotice) {
+            $_SESSION["NOTICE"] = $rsresult;
+        }
+    }
+
+    public function changeCourierOnDispatch($checkSoNo, $postCourierId, $postCourier, $db_time)
+    {
+        $success_so = [];
+        $u_where["modify_on <="] = $db_time;
+        $u_where["status"] = 1;
+        foreach ($checkSoNo as $sh_no => $so_no) {
+            $error = "";
+            $success = 1;
+            $u_where["sh_no"] = $sh_no;
+            if ($sh_obj = $this->getDao('SoShipment')->get($u_where)) {
+                $so_obj = $this->getDao('So')->get(["so_no" => $so_no]);
+                $courier_id = $this->checkCourier($postCourierId, $postCourier[$sh_no], $so_obj);
+                $sh_obj->setCourierId($courier_id);
+                $sh_obj->setTrackingNo("");
+                if ($this->getDao('SoShipment')->update($sh_obj) === FALSE) {
+                    $success = 0;
+                }
+            } else {
+                $success = 0;
+            }
+            if ($success) {
+                $success_so[] = $so_no;
+            }
+        }
+        return $success_so;
+    }
+
 }
 
