@@ -36,7 +36,7 @@ class Checkout extends PUB_Controller
         $data = array_merge($data
                 , $this->checkoutModel->getCheckoutFormCountryList($platformCountryId));
         $data["billingStateList"] = $this->checkoutModel->getCheckoutFormStateList($platformCountryId);
-        $this->load->view('/default/checkout/index', $data);
+        $this->load->view('checkout/index', $data);
     }
 
 //    public function js_credit_card($platform_curr, $total_amount, $seq = 1)
