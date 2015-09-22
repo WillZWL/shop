@@ -372,7 +372,7 @@
                                         <input type="button" value="<?= $lang['dispatch_selected'] ?>"
                                         onClick="if(document.getElementById('courier_id').value == 'DHLBBX') { set_mawb();} document.fm_edit.dispatch_type.value='d';document.fm_edit.submit();">
                                         <input type="button" value="<?= $lang['gen_csv'] ?>"
-                                        onClick="document.fm_edit.dispatch_type.value='c';document.fm_edit.submit(),Pop(this.form.action='<?= base_url() ?>order/integrated_order_fulfillment/error_in_allocate_file');">
+                                        onClick="document.fm_edit.dispatch_type.value='c';document.fm_edit.submit(),Pop(this.form.action='<?= base_url() ?>order/integrated_order_fulfillment/errorInAllocateFile');">
                                     </td>
                                 </tr>
                             </table>

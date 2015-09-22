@@ -91,7 +91,7 @@ class ShiptypeDao extends BaseDao
                 WHERE p.sku = ?
                 ";
 
-        if ($query = $this->db->query($sql, array($shiptype, $region_id, $sku))) {
+        if ($query = $this->db->query($sql, [$shiptype, $region_id, $sku])) {
             return $query->row()->freight_cost;
         } else {
             return FALSE;
@@ -101,14 +101,14 @@ class ShiptypeDao extends BaseDao
     public function getPlatformShiptypeList($platform_type = 'WEBSITE')
     {
         $this->include_vo();
-        $option = array("limit" => -1);
+        $option = ["limit" => -1];
         $this->db->from("shiptype st");
         $this->db->join("platform_shiptype pst", "st.id = pst.shiptype_id AND pst.platform_type = '$platform_type'", "INNER");
-        $this->db->where(array("pst.status" => 1));
-        $this->include_vo();
+        $this->db->where(["pst.status" => 1]);
+
         $classname = $this->getVoClassname();
 
-        return $this->common_get_list($where, $option, $classname, 'st.*');
+        return $this->common_get_list($classname, $where, $option, 'st.*');
     }
 }
 
