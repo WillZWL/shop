@@ -2,18 +2,43 @@
 <div id="content">
 	<div id="my_acount" class="product-tabs-info">
 		<h5 class="side_title"><?= _("My Account") ?></h5>
+		<?php
+			switch ($page) {
+				case 'profile':
+					$profile["active"] = 'class="active"';
+	 				$profile["block"] = 'style="display:block;"';
+					break;
+				case 'rma':
+					$rma["active"] = 'class="active"';
+					$rma["block"] = 'style="display:block;"';
+					break;
+				default:
+					$order["active"] = 'class="active"';
+					$order["block"] = 'style="display:block;"';
+					break;
+			}
+		?>
+
 		<ul class="tabs">
-			<li class="active"><a href="javascript:;" title=""><?= _("Order History") ?></a></li>
-			<li><a href="javascript:;" title=""><?= _("Returns Request") ?></a></li>
-			<li><a href="javascript:;" title=""><?= _("Edit Your Profile") ?></a></li>
+			<li <?=$order['active'];?>><a href="javascript:;" title=""><?= _("Order History") ?></a></li>
+			<li <?=$rma['active']?>><a href="javascript:;" title=""><?= _("Returns Request") ?></a></li>
+			<li <?=$profile['active']?>><a href="javascript:;" title=""><?= _("Edit Your Profile") ?></a></li>
 		</ul>
 
-		<div class="text silver_box items item1">
+		<div class="text silver_box items item1" <?=$order['block']?>>
 				<? if($show_partial_ship_text) { ?>
 					<?= _('Your order has been split at no extra cost to ensure all item(s) purchased are received at the soonest available opportunity.') ?>
-					<br>
+					<br><br>
 				<? } ?>
 			<table class="acount-orders" border="0">
+				<colgroup>
+					<col width="110">
+					<col width="80">
+					<col width="110">
+					<col width="450">
+					<col width="110">
+					<col width="240">
+				</colgroup>
 				<tr>
 					<th><?= _("Order") ?></th>
 					<th><?= _("Date") ?></th>
@@ -24,15 +49,15 @@
 				</tr>
 				<?
 				if ($orderlist) {
-					foreach ($orderlist as $order_obj) {
+					foreach ($orderlist as $order_arr) {
 				?>
 				<tr>
-					<td><?=$order_obj->getClientId();?> - <?=$orderlist->getJoinSplitSoNo();?><?=$orderlist->getPrintInvoiceHtml();?></td>
-					<td><?=$orderlist->getOrderDate();?></td>
-					<td><?=$orderlist->getDeliveryName();?></td>
-					<td><?=$orderlist->getProductName();?></td>
-					<td><?=$orderlist->getTotalAmount();?></td>
-					<td><b><?=$orderlist->getOrderStatus();?></b><br /><?=$orderlist->getStatusDesc();?></td>
+					<td><?=$order_arr['client_id']?>-<?=$order_arr['join_split_so_no']?><?=$order_arr['print_invoice_html']?></td>
+					<td><?=$order_arr['order_date']?></td>
+					<td><?=$order_arr['delivery_name']?></td>
+					<td><?=$order_arr['product_name']?></td>
+					<td><?=$order_arr['total_amount']?></td>
+					<td><b><?=$order_arr['order_status']?></b><br /><?=$order_arr['status_desc']?></td>
 				</tr>
 				<?
 					}
@@ -71,7 +96,7 @@
 				<? } ?>
 		</div>
 
-		<div class="silver_box items order_form item2" id="returns_request" style="display:none;">
+		<div class="silver_box items order_form item2" id="returns_request" <?=$rma['block']?>>
 			<form name="fm_rma" action="<?=base_url()?>myaccount/rma" method="post" class="form-holder" onSubmit="return (CheckForm(document.fm_rma) && CheckSubmit(this));">
 				<? if ($rma_confirm) { ?>
 					<p>
@@ -106,7 +131,7 @@
 						<select id="rma_country_id" name="country_id" dname="<?= _('Country') ?>" class="[select_box_style]"  notEmpty onchange="update_state_attribute('rma', this.value);update_postcode_attribute('rma', this.value);">
 							<option value=""></option>
 							<? foreach ($bill_to_list as $bill_country) { ?>
-							<option value="<?=$bill_country->getCountryId();?>"><?=$bill_country->getName();?></option>
+							<option value="<?=$bill_country->getCountryId();?>" <? if($rma_obj->getCountryId() == $bill_country->getCountryId()) { echo 'SELECTED'; } ?>><?=$bill_country->getName();?></option>
 							<? } ?>
 						</select>
 					</li>
@@ -157,7 +182,7 @@
 								$category_arr = array(0=>"Machine Only", 1=>"Accessory Only", 2=>"Machine and Accessory");
 								foreach($category_arr as $key => $value){
 							?>
-							<option value="<?=$key?>"><?=$value?></option>
+							<option value="<?=$key?>" <? if($rma_obj->getCategory() == $key){ echo 'SELECTED'; } ?>><?=$value?></option>
 							<? } ?>
 						</select>
 					</li>
@@ -178,7 +203,7 @@
 								$reason_arr = array(0=>"Needs Repair Under Warranty", 1=>"Wrong Product Delivered", 2=>"Wrong Product Purchased", 3=>"Accidently Purchased (conditions apply)");
 								foreach ($reason_arr as $key => $value) {
 							?>
-							<option value="<?=$key?>"><?=$value?></option>
+							<option value="<?=$key?>" <? if($rma_obj->getReason() == $key) { echo "SELECTED";}?>><?=$value?></option>
 							<?
 								}
 							?>
@@ -191,7 +216,7 @@
 								$action_request = array(0=>"Swap", 1=>"Refund", 2=>"Repair");
 								foreach ($action_request as $key => $value) {
 							?>
-							<option value="<?=$key?>"><?=$value?></option>
+							<option value="<?=$key?>" <? if($rma_obj->getActionRequest() == $key) {echo "SELECTED";} ?>><?=$value?></option>
 							<?
 								}
 							?>
@@ -246,7 +271,7 @@
 			</form>
 		</div>
 
-		<div class="text silver_box items item3" style="display:none;">
+		<div class="text silver_box items item3" <?=$profile['block']?>>
 			<form name="fm_edit_profile" action="<?=base_url()?>myaccount/profile" method="post" class="form-holder" onSubmit="return CheckForm(document.fm_edit_profile);">
 				<ins class="no_top_padding"><?= _('Profile') ?></ins>
 				<ul>

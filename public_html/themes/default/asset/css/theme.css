@@ -249,12 +249,12 @@
 .red {color: red;}
 .sbSelector{width:150px;}
 #content .silver_box{border:solid 1px #e4e4e4;}
-#content .silver_box iframe{float:right;margin-left:15px;font-family: "Open Sans Light", sans-serif;}
-#content #my_acount{padding-top:18px;margin-top:40px; width:100%;margin:0;font-family: "Open Sans Light", sans-serif;}
+#content .silver_box iframe{float:right;margin-left:15px;font-family: "Open Sans", sans-serif;}
+#content #my_acount{padding-top:18px;margin-top:40px; width:100%;margin:0;font-family: "Open Sans", sans-serif;}
 #content #my_acount .side_title{margin-bottom: 20px; font-size: 24px;}
 #content #my_acount .acount-orders{width:100%;border:solid 1px #e4e4e4;border-bottom:0;}
 #content #my_acount .acount-orders tr th{font-size:14px;color:#000;text-transform:uppercase;padding:10px;height:32px;background:#f2f2f2;border-bottom:solid 1px #e4e4e4;font-family: "Open Sans Light", sans-serif;}
-#content #my_acount .acount-orders tr td{height:55px;border-bottom:solid 1px #e4e4e4;}
+#content #my_acount .acount-orders tr td{height:45px;border-bottom:solid 1px #e4e4e4;font-size: 12px;padding:0 5px;color:#000;}
 #content #my_acount .acount-orders tr td .more_info_btn23{float:left;margin:0 6px 0 0;border-left:solid 1px #969696;border-right:solid 1px #969696;padding:0 9px;}
 #content #my_acount .acount-orders tr td .add_to_basket_btn23{float:left;margin:0 0 0 0;border-left:solid 1px #ff6314;border-right:solid 1px #ff6314;padding:0 16px;}
 #content #my_acount .acount-orders tr td a{text-align:center;font-size:14px;}
@@ -291,7 +291,7 @@
 #content #my_acount #returns_request .upper{padding:0 0 14px 0;}
 
 #content .product-tabs-info{float:left;clear:left;margin:0 0 0 0;width:670px;}
-/*#content .product-tabs-info div.items{display:none;}*/
+#content .product-tabs-info div.items{display:none;}
 #content .product-tabs-info ul.tabs{height:40px;padding:0;margin:0;}
 #content .product-tabs-info ul.tabs li{float:left;height:40px;margin-right:3px;background:#ccc url('../images/tab-nav-back.jpg') repeat-x center top;list-style:none;}
 #content .product-tabs-info ul.tabs li:hover{background:#ccc url('../images/tab-nav-back.jpg') repeat-x center bottom;}
@@ -300,6 +300,7 @@
 #content .product-tabs-info ul.tabs li.active a{color:#000;}
 #content .product-tabs-info ul.tabs li a:hover{text-decoration:none;}
 #content .product-tabs-info .items{clear:both;padding:30px 15px;position:relative;z-index:8;top:-1px;min-height:457px;}
+/*end myaccount */
 
 /* checkout page */
 .form-group #billingTelCountryCode, .form-group #billingTelAreaCode

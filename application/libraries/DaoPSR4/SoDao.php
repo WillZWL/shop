@@ -2661,6 +2661,7 @@ SQL;
 
         return $this->commonGetList($classname, $where, $option, "
                 pbv.platform_currency_id currency_id,
+                so.platform_id,
                 so.so_no,
                 IF(ISNULL(so.split_so_group), so.so_no, CONCAT_WS('/',so.split_so_group,so.so_no)) AS join_split_so_no,
                 so.split_so_group,

@@ -13,6 +13,7 @@ use ESG\Panther\Service\CurrencyService;
 use ESG\Panther\Service\TemplateService;
 use ESG\Panther\Service\SubjectDomainService;
 use ESG\Panther\Service\DataExchangeService;
+use ESG\Panther\Service\ComplementaryAccService;
 // use ESG\Panther\Service\VoToXml;
 // use ESG\Panther\Service\XmlToCsv;
 
@@ -39,6 +40,7 @@ class SoService extends BaseService
 
         // $this->voToXml = new VoToXml;
         // $this->xmlToCsv = new XmlToCsv;
+        $this->complementaryAccService = new ComplementaryAccService;
 
 
         // include_once(APPPATH . "libraries/service/Cart_session_service.php");
@@ -1248,7 +1250,7 @@ class SoService extends BaseService
         $total_cnt = count($so_no_list);
         $cursign_arr = $this->currencyService->getNameWithIdKey();
         # sbf #3746 don't include complementary accessory on front end
-        $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
+        $ca_catid_arr = implode(',', $this->complementaryAccService->getAccessoryCatidArr());
 
         if (count($so_no_list)) {
             $valid = 0;
@@ -1270,8 +1272,8 @@ class SoService extends BaseService
                     $replace = [];
 
                     // get language template
+                    include_once(APPPATH . "hooks/country_selection.php");
                     $country_id = $pbv_obj->getPlatformCountryId();
-                    // include_once(APPPATH . "hooks/country_selection.php");
 
                     // $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
 
@@ -5004,7 +5006,7 @@ print_r($out_xml);
         return $this->getDao('So')->getEbayFeedbackEmailContent($where, $option);
     }
 
-    function get_working_days($start_ts, $end_ts, $holidays = [])
+    function getWorkingDays($start_ts, $end_ts, $holidays = array())
     {
         foreach ($holidays as & $holiday) {
             $holiday = strtotime($holiday);

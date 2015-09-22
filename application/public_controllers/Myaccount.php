@@ -13,7 +13,7 @@ class Myaccount extends PUB_Controller
     public function __construct()
     {
         parent::__construct(array('require_login' => 1, 'load_header' => 1));
-        $this->load->helper(array('url', 'object', 'notice', 'lang'));
+        $this->load->helper(array('url', 'object', 'notice', 'lang', 'price'));
         $this->load->library('encrypt');
     }
 
@@ -30,14 +30,14 @@ class Myaccount extends PUB_Controller
                     $new_password = $this->input->post("password");
                     $reconfirm_password = $this->input->post("confirm_password");
                     $data['email'] = $_SESSION['client']['email'];
-                    if ($this->encrypt->encode(strtolower($this->input->post("old_password"))) != $data["client_obj"]->get_password()) {
-                        $_SESSION['NOTICE'] = $data['data']['lang_text']['enter_old_password_warning'];
+                    if (password_verify(strtolower($this->input->post("old_password")), $data["client_obj"]->get_password())) {
+                        $_SESSION['NOTICE'] = 'Please Enter Old Password.';
                     } elseif ($new_password != $reconfirm_password) {
-                        $_SESSION['NOTICE'] = $data['data']['lang_text']['confirm_password_mismatch_warning'];
+                        $_SESSION['NOTICE'] = 'Confirm Password mismatch.';
                     } elseif ($old_password == $new_password) {
-                        $_SESSION['NOTICE'] = $data['data']['lang_text']['new_password_same_old_warning'];
+                        $_SESSION['NOTICE'] = 'New Password is same as Old Password.';
                     } else {
-                        $update_password = $this->encrypt->encode(strtolower($this->input->post("password")));
+                        $update_password = password_hash($new_password, PASSWORD_DEFAULT);
                     }
                 }
 
@@ -68,12 +68,12 @@ class Myaccount extends PUB_Controller
                     $proc = $this->sc['Client']->getDao('Client')->get(array("email" => $email));
                     if (!empty($proc)) {
                         if (!$this->sc['Client']->getDao('Client')->update($data["client_obj"])) {
-                            $_SESSION['NOTICE'] = $data['data']['lang_text']['profile_update_fail_warning'];
+                            $_SESSION['NOTICE'] = 'Profile Update Failed.';
                         } else {
-                            $_SESSION["NOTICE"] = $data['data']['lang_text']['update_success_message'];
+                            $_SESSION["NOTICE"] = 'Update Success.';
                         }
                     } else {
-                        $_SESSION["NOTICE"] = $data['data']['lang_text']['client_does_not_exist_warning'];
+                        $_SESSION["NOTICE"] = 'Client does not exist.';
                     }
                 }
             }
@@ -120,7 +120,7 @@ class Myaccount extends PUB_Controller
         $data["notice"] = notice();
         unset($_SESSION["NOTICE"]);
         $data['page'] = $page;
-        $data['data']['lang_text'] = $this->get_language_file('', '', 'index');
+        $data['lang_text'] = $this->get_language_file('', '', 'index');
         $data['lang_id'] = get_lang_id();
         $data['title'] = array('Mr', 'Mrs', 'Miss', 'Dr');
         $show_unpaid_status = array(
@@ -173,40 +173,50 @@ class Myaccount extends PUB_Controller
         $data["show_partial_ship_text"] = FALSE;
         if ($orderlist) {
             foreach ($orderlist AS $obj) {
-                $status = array();
-                $status = $this->sc['soModel']->getOrderStatus($obj);
-                $data['orderlist'][$obj->getSoNo()]['join_split_so_no'] = $obj->getJoinSplitSoNo();
-                $data['orderlist'][$obj->getSoNo()]['currency_id'] = $obj->getCurrencyId();
-                $data['orderlist'][$obj->getSoNo()]['client_id'] = $obj->getClientId();
-                $data['orderlist'][$obj->getSoNo()]['order_date'] = date("Y-m-d", strtotime($obj->getOrderCreateDate()));
-                $data['orderlist'][$obj->getSoNo()]['delivery_name'] = $obj->getDeliveryName();
-                $data['orderlist'][$obj->getSoNo()]['order_status_ini'] = $status["id"] . "_status";
-                $data['orderlist'][$obj->getSoNo()]['status_desc_ini'] = $status["id"] . "_desc";
-                $data['orderlist'][$obj->getSoNo()]["product_name"] .= $obj->getProdName() . "</br>";
-                $data['orderlist'][$obj->getSoNo()]["total_amount"] += $obj->getAmount();
-                $data['orderlist'][$obj->getSoNo()]["is_shipped"] = ($obj->getStatus() == 6 && $obj->getRefundStatus() == 0 && $obj->getHoldStatus() == 0) ? TRUE : FALSE;
-                if ($obj->getPaymentGatewayId() == 'w_bank_transfer') {
-                    $data["show_bank_transfer_contact"] = TRUE;
-                }
-                $sosh_obj = $this->sc['So']->getShippingInfo(array("soal.so_no" => $obj->getSoNo()));
-                if ($sosh_obj)
-                    $data['orderlist'][$obj->getSoNo()]['tracking_link'] = $this->sc['Courier']->get(array("id" => $sosh_obj->getCourierId()));
-                else
-                    $data['orderlist'][$obj->getSoNo()]['tracking_link'] = "";
+                if(($obj->getStatus() != 2) && ($obj->getHoldStatus() != 10)){
+                    $status = array();
+                    $so_no = $obj->getSoNo();
+                    $status = $this->sc['soModel']->getOrderStatus($obj);
+                    $data['orderlist'][$obj->getSoNo()]['join_split_so_no'] = $obj->getJoinSplitSoNo();
+                    $data['orderlist'][$obj->getSoNo()]['currency_id'] = $obj->getCurrencyId();
+                    $data['orderlist'][$obj->getSoNo()]['client_id'] = $obj->getClientId();
+                    $data['orderlist'][$obj->getSoNo()]['order_date'] = date("Y-m-d", strtotime($obj->getOrderCreateDate()));
+                    $data['orderlist'][$obj->getSoNo()]['delivery_name'] = $obj->getDeliveryName();
+                    $data['orderlist'][$obj->getSoNo()]['order_status'] = $status["status"];
+                    $data['orderlist'][$obj->getSoNo()]['status_desc'] = $status["desc"];
+                    $data['orderlist'][$obj->getSoNo()]["product_name"] .= $obj->getProdName() . "</br>";
+                    $total_amount += $obj->getAmount();
+                    $is_shipped = ($obj->getStatus() == 6 && $obj->getRefundStatus() == 0 && $obj->getHoldStatus() == 0) ? TRUE : FALSE;
 
-                if (isset($status["courier_name"])) {
-                    $data['orderlist'][$obj->getSoNo()]["courier_name"] = $status["courier_name"];
-                }
-                if (isset($status["tracking_url"])) {
-                    $data['orderlist'][$obj->getSoNo()]["tracking_url"] = $status["tracking_url"];
-                }
-                if (isset($status["tracking_number"])) {
-                    $data['orderlist'][$obj->getSoNo()]["tracking_number"] = $status["tracking_number"];
-                }
-                // show split order text
-                $split_so_group = $obj->getSplitSoGroup();
-                if (isset($split_so_group) && $split_so_group != $obj->getSoNo()) {
-                    $data["show_partial_ship_text"] = TRUE;
+                    $data['orderlist'][$obj->getSoNo()]["total_amount"] = platform_curr_format($obj->getPlatformId(), $total_amount);
+                    if ($obj->getPaymentGatewayId() == 'w_bank_transfer') {
+                        $data["show_bank_transfer_contact"] = TRUE;
+                    }
+                    $sosh_obj = $this->sc['So']->getShippingInfo(array("soal.so_no" => $obj->getSoNo()));
+                    if ($sosh_obj)
+                        $data['orderlist'][$obj->getSoNo()]['tracking_link'] = $this->sc['Courier']->get(array("id" => $sosh_obj->getCourierId()));
+                    else
+                        $data['orderlist'][$obj->getSoNo()]['tracking_link'] = "";
+
+                    if (isset($status["courier_name"])) {
+                        $data['orderlist'][$obj->getSoNo()]["courier_name"] = $status["courier_name"];
+                    }
+                    if (isset($status["tracking_url"])) {
+                        $data['orderlist'][$obj->getSoNo()]["tracking_url"] = $status["tracking_url"];
+                    }
+                    if (isset($status["tracking_number"])) {
+                        $data['orderlist'][$obj->getSoNo()]["tracking_number"] = $status["tracking_number"];
+                    }
+                    // show split order text
+                    $split_so_group = $obj->getSplitSoGroup();
+                    if (isset($split_so_group) && $split_so_group != $obj->getSoNo()) {
+                        $data["show_partial_ship_text"] = TRUE;
+                    }
+                    $data['orderlist'][$obj->getSoNo()]["print_invoice_html"] = '<br /><a href="' . base_url() . 'myaccount/print_invoice/' . $so_no . '" target="_blank" style="font-size:10px;"><u>Print Invoice</u></a>';
+                    if($is_shipped && (strtotime($obj->getOrderCreateDate()) > strtotime('3 months ago')))
+                    {
+                        $data['orderlist'][$obj->getSoNo()]["print_invoice_html"] = '<br /><a href="' . base_url() . 'myaccount/print_invoice/' . $so_no . '" target="_blank" style="font-size:10px;"><u>Print Invoice</u></a>';
+                    }
                 }
             }
         }
@@ -241,7 +251,7 @@ class Myaccount extends PUB_Controller
                 $data["rma_obj"]->setSoNo($so_no_trim_split);
                 $data['data']['lang_text'] = $this->getLanguageFile('', '', 'index');
                 if (empty($proc)) {
-                    $_SESSION["NOTICE"] = $data['data']['lang_text']['rma_warning'];
+                    $_SESSION["NOTICE"] = 'This order has not been dispatched, please verify that the order number is correct, or contact our customer service team.';
                     $_SESSION["rma_obj"] = serialize($data["rma_obj"]);
                 } else {
                     if ($rma_obj = $this->sc['So']->getDao('Rma')->add($data["rma_obj"])) {
@@ -253,7 +263,6 @@ class Myaccount extends PUB_Controller
                 }
             }
         }
-
         $this->index("rma");
     }
 
@@ -429,13 +438,13 @@ class Myaccount extends PUB_Controller
         if (!$so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no, "client_id" => $client_id))) {
             show_404();
         }
-        $html = $this->so_service->get_print_invoice_content(array($so_no), 1, get_lang_id());
+        $html = $this->sc['So']->get_print_invoice_content(array($so_no), 1, get_lang_id());
         $u_agent = $_SERVER['HTTP_USER_AGENT'];
         if (preg_match('/MSIE/i', $u_agent)) {
             // Instead of opening the PDF in browser, prompt user to download file if it's IE.
-            $att_file = $this->pdf_rendering_service->convert_html_to_pdf($html, null, "D", "en");
+            $att_file = $this->sc['PdfRendering']->convert_html_to_pdf($html, null, "D", "en");
         } else {
-            $att_file = $this->pdf_rendering_service->convert_html_to_pdf($html, null, "I", "en");
+            $att_file = $this->sc['PdfRendering']->convert_html_to_pdf($html, null, "I", "en");
         }
     }
 
