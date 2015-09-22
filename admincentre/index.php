@@ -285,7 +285,8 @@ switch (ENVIRONMENT)
 	// define('VIEWPATH', $view_folder);
 
 define('CTRLPATH', APPPATH.'controllers/');
-define('VIEWPATH', APPPATH.'views/');
+define('VIEWPATH', APPPATH.'views');
+define('SITEVIEW', '');
 define('ENTRYPOINT', 'ADMINCENTRE');
 	session_start();
 
