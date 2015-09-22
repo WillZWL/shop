@@ -1,102 +1,84 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+namespace ESG\Panther\Service;
 
-include_once "Base_service.php";
+use ESG\Panther\Dao\ClientDao;
+use ESG\Panther\Dao\ClientLogDao;
+use ESG\Panther\Dao\CountryDao;
+use ESG\Panther\Service\EventService;
+use ESG\Panther\Service\ContextConfigService;
+use ESG\Panther\Service\ValidationService;
 
-class Client_service extends Base_service
+
+class ClientService extends BaseService
 {
-
-    private $cl_dao;
-    private $country_dao;
-    private $event_srv;
+    private $clientLogDao;
+    private $countryDao;
     private $reset_length = 10;
-    //private $encrypt;
 
     private $p_enc = NULL;
-
     public function __construct()
     {
         parent::__construct();
-        include_once(APPPATH . "libraries/dao/Client_dao.php");
-        $this->set_dao(new Client_dao());
-        include_once(APPPATH . "libraries/dao/Client_log_dao.php");
-        $this->set_cl_dao(new Client_log_dao());
-        include_once(APPPATH . "libraries/dao/Country_dao.php");
-        $this->set_country_dao(new Country_dao());
-        include_once(APPPATH . "libraries/service/Event_service.php");
-        $this->set_event_srv(new Event_service());
-        include_once(APPPATH . "libraries/service/Context_config_service.php");
-        $this->set_config(new Context_config_service());
-        include_once(APPPATH . "libraries/service/Validation_service.php");
-        $this->set_valid(new Validation_service());
-    }
-
-    public function set_config($value)
-    {
-        $this->config = $value;
-    }
-
-    public function set_valid($value)
-    {
-        $this->valid = $value;
+        $this->setDao(new ClientDao);
+        $this->setClientLogDao(new ClientLogDao);
+        $this->setCountryDao(new CountryDao);
+        $this->eventService = new EventService;
+        $this->contextConfigService = new ContextConfigService;
+        $this->validationService = new ValidationService;
     }
 
     public function login($email, $password)
     {
-        if ($this->validate_field($email, array("valid_email"))) {
-            $dao = $this->get_dao();
-            if ($client_obj = $dao->get(array("email" => $email, "status" => 1))) {
-                $password_hash = $client_obj->get_password();
-                if (password_verify($password, $password_hash)) {
-                    $this->object_login($client_obj, TRUE);
-                    return TRUE;
-                }
+        if ($this->validateField($email, array("valid_email"))) {
+            include_once(BASEPATH . "libraries/Encrypt.php");
+            $encrypt = new CI_Encrypt();
+            $dao = $this->getDao();
+            if ($client_obj = $dao->get(array("email" => $email, "password" => $encrypt->encode(strtolower($password)), "status" => 1))) {
+                $this->objectLogin($client_obj, TRUE);
+                return TRUE;
             } else {
-                $this->login_log($email, 0);
+                $this->loginLog($email, 0);
+                return FALSE;
             }
         }
         return FALSE;
     }
 
-    public function validate_field($val, $rules)
+    public function validateField($val, $rules)
     {
-        $valid = $this->get_valid();
-        $valid->set_data($val);
-        $valid->set_rules($rules);
+        $valid = $this->validationService;
+        $valid->setData($val);
+        $valid->setRules($rules);
         try {
             return $valid->run();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
+
         return false;
     }
 
-    public function get_valid()
-    {
-        return $this->valid;
-    }
-
-    public function object_login(Base_vo $obj, $logged_in = FALSE)
+    public function objectLogin(Base_vo $obj, $loggedIn = FALSE)
     {
         unset($_SESSION["client"]);
         $class_methods = get_class_methods($obj);
         foreach ($class_methods as $fct_name) {
-            if (substr($fct_name, 0, 4) == "get_") {
-                $rskey = substr($fct_name, 4);
+            if (substr($fct_name, 0, 3) == "get") {
+                $rskey = substr($fct_name, 3);
                 if ($rskey == "password")
                     continue;
                 $rsvalue = call_user_func(array($obj, $fct_name));
                 $_SESSION["client"][$rskey] = $rsvalue;
             }
         }
-        if ($logged_in) {
-            $_SESSION["client"]["logged_in"] = 1;
+        if ($loggedIn) {
+            $_SESSION["client"]["loggedIn"] = 1;
         }
-        $this->get_client_platform();
-        $this->login_log($obj->get_email(), 1);
+        $this->getClientPlatform();
+        $this->loginLog($obj->getEmail(), 1);
     }
 
-    public function get_client_platform()
+    public function getClientPlatform()
     {
         $platform_id = $_SESSION["domain_platform"]["platform_id"];
         if (isset($_SESSION["client"])) {
@@ -112,40 +94,39 @@ class Client_service extends Base_service
         return $platform_id;
     }
 
-    public function login_log($email, $status)
+    public function loginLog($email, $status)
     {
-        $cl_vo = $this->get_cl_dao()->get();
-        $cl_vo->set_email($email);
-        $cl_vo->set_ip_address($_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "0.0.0.0");
-        $cl_vo->set_status($status);
-        $cl_vo = $this->get_cl_dao()->insert($cl_vo);
+        $cl_vo = $this->getClientLogDao()->get();
+        $cl_vo->setEmail($email);
+        $cl_vo->setIpAddress($_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "0.0.0.0");
+        $cl_vo->setStatus($status);
+        $cl_vo = $this->getClientLogDao()->insert($cl_vo);
     }
 
-    public function get_cl_dao()
+    public function getClientLogDao()
     {
-        return $this->cl_dao;
+        return $this->clientLogDao;
     }
 
-    public function set_cl_dao(Base_dao $dao)
+    public function setClientLogDao($dao)
     {
-        $this->cl_dao = $dao;
+        $this->clientLogDao = $dao;
     }
 
-    public function get_client_last_order($email)
+    public function getClientLastOrder($email)
     {
         $where = array("email" => $email, "so.status >=" => 2);
         $option = array("limit" => 1, "orderby" => "so.create_on desc");
-        $last_order = $this->get_dao()->get_client_last_order($where, $option);
+        $last_order = $this->getDao()->getClientLastOrder($where, $option);
         return $last_order;
     }
 
-    public function check_email_login($vars)
+    public function checkEmailLogin($vars)
     {
         $vars["email"] = trim($vars["email"]);
         $this->p_enc = $vars["p_enc"];
-
         include_once(APPPATH . "helpers/object_helper.php");
-        $dao = $this->get_dao();
+        $dao = $this->getDao();
         if ($client_obj = $dao->get(array("email" => $vars["email"]))) {
             $action = "update";
             if ($vars["password"]) {
@@ -153,7 +134,7 @@ class Client_service extends Base_service
                 $encrypt = new CI_Encrypt();
                 $vars["password"] = $encrypt->encode(strtolower($vars["password"]));
             } else
-                $vars["password"] = $client_obj->get_password();
+                $vars["password"] = $client_obj->getPassword();
         } else {
             $client_obj = $dao->get();
             $action = "insert";
@@ -176,101 +157,94 @@ class Client_service extends Base_service
             $vars["postcode"] = $vars["del_postcode"];
             $vars["country_id"] = $vars["del_country_id"];
             $vars["companyname"] = $vars["del_company"];
-
             #SBF 2958
-            if ($vars["client_id_no"])
+            if ($vars["client_id_no"]) {
                 $vars["client_id_no"] = $vars["client_id_no"];
+            }
         }
-
-
         set_value($client_obj, $vars);
-        $client_obj->set_del_name($vars["del_first_name"] . " " . $vars["del_last_name"]);
-        $client_obj->set_party_subscriber(0);
-        $client_obj->set_status(1);
+        $client_obj->setDelName($vars["del_first_name"] . " " . $vars["del_last_name"]);
+        $client_obj->setPartySubscriber(0);
+        $client_obj->setStatus(1);
         if ($dao->$action($client_obj)) {
-            $this->object_login($client_obj, $_SESSION["client"]["logged_in"]);
+            $this->objectLogin($client_obj, $_SESSION["client"]["logged_in"]);
             return TRUE;
         }
 //      print "ERROR:" . $dao->db->_error_message();
         return FALSE;
     }
 
-    public function reset_password($email = '')
+    public function resetPassword($email = '')
     {
-        $new_password = substr(md5(time()), 0, $this->reset_length);
+        $newPassword = substr(md5(time()), 0, $this->reset_length);
 
         $client_obj = null;
 
-        $result = $this->update_password($email, $new_password, '', $client_obj);
+        $result = $this->updatePassword($email, $newPassword, '', $client_obj);
 
         if ($result) {
-            $client_name = implode(' ', array($client_obj->get_forename(), $client_obj->get_surname()));
-            $email_dto = $this->_get_email_dto();
-            $replace = array('password' => $new_password, 'mail_from' => $email_dto->get_mail_from(), 'client name' => $client_name, 'base_url' => base_url());
+            $client_name = implode(' ', array($client_obj->getForename(), $client_obj->getSurname()));
+
+            $email_dto = $this->getEmailDto();
+            $replace = array('password' => $newPassword, 'mail_from' => $email_dto->get_mail_from(), 'client name' => $client_name, 'base_url' => base_url());
             switch (get_lang_id()) {
                 default:
                     include_once(APPPATH . "hooks/country_selection.php");
                     $replace = array_merge($replace, Country_selection::get_template_require_text(get_lang_id(), PLATFORMCOUNTRYID));
                     $email_sender = "no-reply@" . strtolower($replace["site_name"]);
             }
-            $email_dto->set_lang_id(get_lang_id());
-            $email_dto->set_event_id('forget_password');
-            $email_dto->set_tpl_id('forget_password');
-            $email_dto->set_mail_to($client_obj->get_email());
-            $email_dto->set_mail_from($email_sender);
-            $email_dto->set_replace($replace);
-            $this->get_event_srv()->fire_event($email_dto);
+            $email_dto->setLangId(get_lang_id());
+            $email_dto->setEventId('forget_password');
+            $email_dto->setTplId('forget_password');
+            $email_dto->setMailTo($client_obj->getEmail());
+            $email_dto->setMailFrom($email_sender);
+            $email_dto->setReplace($replace);
+            $this->eventService->fireEvent($email_dto);
         }
 
         return $result;
     }
 
-    public function update_password($email = '', $new_password = '', $old_password = '', &$client_obj = '')
+    public function updatePassword($email = '', $newPassword = '', $oldPassword = '', &$client_obj = '')
     {
-        if (empty($email) || empty($new_password) || empty($old_password)) {
+        if (empty($email) || empty($newPassword)) {
             return 0; // Means fail
         }
+        include_once(BASEPATH . "libraries/Encrypt.php");
+        $encrypt = new CI_Encrypt();
+        if (empty($oldPassword)) {
+            $where = array('email' => $email);
+        } else {
+            $encrypted_oldPassword = $encrypt->encode($oldPassword);
+            $where = array('email' => $email, 'password' => $encrypted_oldPassword);
+        }
 
-        $where = array('email' => $email);
-        $client_obj = $this->get_dao()->get($where);
+        $client_obj = $this->getDao()->get($where);
+
         if (!$client_obj) {
             return 0; // Means fail
-        } else {
-            $password_hash = $client_obj->get_password();
-            if (password_verify($old_password, $password_hash)) {
-                $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
-                $client_obj->set_password($new_password_hash);
-                $result = $this->get_dao()->update($client_obj);
-                return $result;
-            } else {
-                return 0;
-            }
+        } else if ($client_obj->getStatus() == 0) {
+            return 0; // not allow to update
         }
+
+        $client_obj->setPassword($encrypt->encode($newPassword));
+        $result = $this->getDao()->update($client_obj);
+        return $result;
     }
 
-    private function _get_email_dto()
+    private function getEmailDto()
     {
         include_once APPPATH . "libraries/dto/event_email_dto.php";
         return new Event_email_dto();
     }
 
-    public function get_event_srv()
-    {
-        return $this->event_srv;
-    }
 
-    public function set_event_srv($srv)
-    {
-        $this->event_srv = $srv;
-    }
-
-    public function register_success_event($obj)
+    public function registerSuccessEvent($obj)
     {
         include_once(BASEPATH . "libraries/Encrypt.php");
         $encrypt = new CI_Encrypt();
-
-        $replace["name"] = $obj->get_forename();
-        $replace["email"] = $obj->get_email();
+        $replace["name"] = $obj->getForename();
+        $replace["email"] = $obj->getEmail();
         $replace["password"] = $encrypt->decode($obj->get_password());
         $replace["default_url"] = $this->get_config()->value_of("default_url");
         $replace["site_name"] = $this->get_config()->value_of("site_name");
@@ -293,7 +267,7 @@ class Client_service extends Base_service
         $dto = new Event_email_dto();
         $dto->set_event_id("register_success");
         $dto->set_mail_from($support_email);
-        $dto->set_mail_to($obj->get_email());
+        $dto->set_mail_to($obj->getEmail());
         //$dto->set_mail_to('steven@eservicesgroup.net');
         $dto->set_tpl_id("register_success");
         $dto->set_lang_id(get_lang_id());
@@ -312,12 +286,12 @@ class Client_service extends Base_service
         return $this->get_dao()->get_new_vip_customer_list();
     }
 
-    public function get_country_dao()
+    public function getCountryDao()
     {
         return $this->country_dao;
     }
 
-    public function set_country_dao(Base_dao $dao)
+    public function setCountryDao($dao)
     {
         $this->country_dao = $dao;
     }

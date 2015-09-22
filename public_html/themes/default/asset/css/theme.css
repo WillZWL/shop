@@ -213,7 +213,7 @@
 #content .form-holder fieldset.size_184{width:164px;}
 #content .form-holder fieldset.textarea{width:413px;height:72px;padding-bottom:5px;}
 #content .form-holder fieldset textarea{width:100%;height:72px;border:0;background:none;resize:none;}
-#content .form-holder fieldset input{clear:left;width:100%;border:0;background:none;}
+#content .form-holder fieldset input{clear:left;width:100%;border:0;background:none;padding-left:10px;}
 #content .form-holder select{margin-top:2px;height:28px;display:block;border:solid 1px #d0d0d0;}
 #content .form-holder button{background:url('../image/btn30-orange-back.jpg');height:30px;border:0;padding:0 25px 2px 25px;border-right:solid 1px #ff6d17;border-left:solid 1px #ff6d17;cursor:pointer;color:#fff;font-size:14px;}
 #content .form-holder button:hover{background-position:0 30px;}
@@ -223,15 +223,18 @@
 
 
 /*start myaccount */
+.red {color: red;}
+.sbSelector{width:150px;}
 #content .silver_box{border:solid 1px #e4e4e4;}
-#content .silver_box iframe{float:right;margin-left:15px;}
-#content #my_acount{padding-top:18px;width:100%;margin:0;}
+#content .silver_box iframe{float:right;margin-left:15px;font-family: "Open Sans Light", sans-serif;}
+#content #my_acount{padding-top:18px;margin-top:40px; width:100%;margin:0;font-family: "Open Sans Light", sans-serif;}
+#content #my_acount .side_title{margin-bottom: 20px; font-size: 24px;}
 #content #my_acount .acount-orders{width:100%;border:solid 1px #e4e4e4;border-bottom:0;}
-#content #my_acount .acount-orders tr th{font-size:11px;color:#000;text-transform:uppercase;padding:8px 0 0 0;height:32px;background:#f2f2f2;border-bottom:solid 1px #e4e4e4;}
+#content #my_acount .acount-orders tr th{font-size:14px;color:#000;text-transform:uppercase;padding:10px;height:32px;background:#f2f2f2;border-bottom:solid 1px #e4e4e4;font-family: "Open Sans Light", sans-serif;}
 #content #my_acount .acount-orders tr td{height:55px;border-bottom:solid 1px #e4e4e4;}
 #content #my_acount .acount-orders tr td .more_info_btn23{float:left;margin:0 6px 0 0;border-left:solid 1px #969696;border-right:solid 1px #969696;padding:0 9px;}
 #content #my_acount .acount-orders tr td .add_to_basket_btn23{float:left;margin:0 0 0 0;border-left:solid 1px #ff6314;border-right:solid 1px #ff6314;padding:0 16px;}
-#content #my_acount .acount-orders tr td a{text-align:center;font-size:12px;}
+#content #my_acount .acount-orders tr td a{text-align:center;font-size:14px;}
 #content #my_acount .acount-orders tr td.btns{width:176px;}
 #content #my_acount .acount-orders tr td.btns a{text-decoration:none;text-indent:0;}
 
@@ -266,13 +269,13 @@
 
 #content .product-tabs-info{float:left;clear:left;margin:0 0 0 0;width:670px;}
 /*#content .product-tabs-info div.items{display:none;}*/
-#content .product-tabs-info ul.tabs{height:40px;}
-#content .product-tabs-info ul.tabs li{float:left;height:40px;margin-right:3px;background:#ccc url('../images/tab-nav-back.jpg') repeat-x center top;}
+#content .product-tabs-info ul.tabs{height:40px;padding:0;margin:0;}
+#content .product-tabs-info ul.tabs li{float:left;height:40px;margin-right:3px;background:#ccc url('../images/tab-nav-back.jpg') repeat-x center top;list-style:none;}
 #content .product-tabs-info ul.tabs li:hover{background:#ccc url('../images/tab-nav-back.jpg') repeat-x center bottom;}
 #content .product-tabs-info ul.tabs li.active{background:#fff;border:solid 1px #e4e4e4;margin-top:-1px;position:relative;border-bottom:solid 1px #fff;z-index:9;}
 #content .product-tabs-info ul.tabs li a{color:#fff;font-size:14px;line-height:40px;display:block;padding:0 20px;}
 #content .product-tabs-info ul.tabs li.active a{color:#000;}
 #content .product-tabs-info ul.tabs li a:hover{text-decoration:none;}
-#content .product-tabs-info .items{clear:both;padding:30px 15px;position:relative;z-index:8;top:-1px;line-height:18px;min-height:457px;}
+#content .product-tabs-info .items{clear:both;padding:30px 15px;position:relative;z-index:8;top:-1px;min-height:457px;}
 
 

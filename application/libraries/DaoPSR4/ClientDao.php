@@ -4,7 +4,7 @@ namespace ESG\Panther\Dao;
 class ClientDao extends BaseDao
 {
     private $tableName = "client";
-    private $voClassName = "Client_vo";
+    private $voClassName = "ClientVo";
 
     public function __construct()
     {

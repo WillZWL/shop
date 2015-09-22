@@ -103,7 +103,7 @@ class Login extends PUB_Controller
     {
         $client_obj = $this->client_model->client_service->get_dao()->get();
         $client_vo = clone $client_obj;
-        $data["password"] = $this->encrypt->encode(strtolower($data["password"]));
+        $data["password"] = password_hash(strtolower($data["password"]));
         if (empty($data["subscriber"])) {
             $data["subscriber"] = 0;
         }

@@ -55,7 +55,7 @@ class CountryModel extends \CI_Model
 
     public function getCountryNameInLang($lang_id = "", $front_end = "", $platform_restricted = "")
     {
-        $where["l.id"] = $lang_id;
+        $where["l.lang_id"] = $lang_id;
 
         if ($front_end) {
             $where["c.status"] = 1;
@@ -72,7 +72,7 @@ class CountryModel extends \CI_Model
         $option["orderby"] = "ce.name, c.name";
         $option["limit"] = -1;
 
-        return $this->countryService->get_country_ext_dao()->getCountryNameInLang($where, $option);
+        return $this->countryService->getCountryExtDao()->getCountryNameInLang($where, $option);
     }
 
     public function getRmaFcList($lang = "en")

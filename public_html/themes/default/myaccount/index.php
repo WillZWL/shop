@@ -1,18 +1,19 @@
 <?php $this->load->view('/default/header') ?>
 <div id="content">
-	<h5 class="side_title"><?= _("My Account") ?></h5>
 	<div id="my_acount" class="product-tabs-info">
+		<h5 class="side_title"><?= _("My Account") ?></h5>
 		<ul class="tabs">
-			<li><a href="javascript:;" title=""><?= _("Order History") ?></a></li>
-			<!-- <li style="display:none"><a href="javascript:;" title=""><?= _("Returns Request") ?></a></li> -->
-			<li class="active"><a href="javascript:;" title=""><?= _("Edit Your Profile") ?></a></li>
+			<li class="active"><a href="javascript:;" title=""><?= _("Order History") ?></a></li>
+			<li><a href="javascript:;" title=""><?= _("Returns Request") ?></a></li>
+			<li><a href="javascript:;" title=""><?= _("Edit Your Profile") ?></a></li>
 		</ul>
 
-		<div class="text silver_box items item1" [order.block;noerr;htmlconv=no;]>
-				<?= _('Your order has been split at no extra cost to ensure all item(s) purchased are received at the soonest available opportunity.') ?>
-			<br><br>
+		<div class="text silver_box items item1">
+				<? if($show_partial_ship_text) { ?>
+					<?= _('Your order has been split at no extra cost to ensure all item(s) purchased are received at the soonest available opportunity.') ?>
+					<br>
+				<? } ?>
 			<table class="acount-orders" border="0">
-				<col width="120"><col width="70"><col width="100"><col><col width="70"><col width="250">
 				<tr>
 					<th><?= _("Order") ?></th>
 					<th><?= _("Date") ?></th>
@@ -26,12 +27,12 @@
 					foreach ($orderlist as $order_obj) {
 				?>
 				<tr>
-					<td><?=$order_obj->get_client_id();?> - <?=$orderlist->get_join_split_so_no();?><?=$orderlist->get_print_invoice_html();?></td>
-					<td><?=$orderlist->get_order_date();?></td>
-					<td><?=$orderlist->get_delivery_name();?></td>
-					<td><?=$orderlist->get_product_name();?></td>
-					<td><?=$orderlist->get_total_amount();?></td>
-					<td><b><?=$orderlist->get_order_status();?></b><br /><?=$orderlist->get_status_desc();?></td>
+					<td><?=$order_obj->getClientId();?> - <?=$orderlist->getJoinSplitSoNo();?><?=$orderlist->getPrintInvoiceHtml();?></td>
+					<td><?=$orderlist->getOrderDate();?></td>
+					<td><?=$orderlist->getDeliveryName();?></td>
+					<td><?=$orderlist->getProductName();?></td>
+					<td><?=$orderlist->getTotalAmount();?></td>
+					<td><b><?=$orderlist->getOrderStatus();?></b><br /><?=$orderlist->getStatusDesc();?></td>
 				</tr>
 				<?
 					}
@@ -45,14 +46,44 @@
 					</p>
 				<? } ?>
 				<? if ($unpaid_orderlist) { ?>
-
+						<table class="acount-orders" border="0">
+							<tr>
+								<th><?= _("Order") ?></th>
+								<th><?= _("Date") ?></th>
+								<th><?= _("Shipped to") ?></th>
+								<th><?= _("Product") ?></th>
+								<th><?= _("Order total") ?></th>
+								<th><?= _("Status") ?></th>
+							</tr>
+						<?
+							foreach ($unpaid_orderlist as $so_no => $unpaid_obj) {
+							$uniqid_status = $unpaid_obj->getUnpaidStatus();
+						?>
+							<tr>
+								<td><?=$unpaid_obj->getClientId()?> - $so_no</td>
+								<td><?=$unpaid_obj->getOrderDate();?></td>
+								<td><?=$unpaid_obj->getDeliveryName();?></td>
+								<td><?=$unpaid_obj->getProductName()?></td>
+								<td><?=$unpaid_obj->getTotalAmount();?></td>
+								<td><?=$show_unpaid_status["$uniqid_status"]?></td>
+							</tr>
+						<? } ?>
 				<? } ?>
 		</div>
 
-		<div class="silver_box items order_form item2" id="returns_request" style="display:none">
+		<div class="silver_box items order_form item2" id="returns_request" style="display:none;">
 			<form name="fm_rma" action="<?=base_url()?>myaccount/rma" method="post" class="form-holder" onSubmit="return (CheckForm(document.fm_rma) && CheckSubmit(this));">
-				<p>[confirm_notice;noerr;htmlconv=no;]</p>
-				<p class="red clear" style="font-size:14px"><?= _("Important Notice") ?></p><br />
+				<? if ($rma_confirm) { ?>
+					<p>
+							<p class="green">
+								<?= _("Your request has been submitted. Please kindly review the information below as your RMA confirmation.") ?><br />
+								<?= _("Please click") ?>
+								<a href="<?=base_url()?>myaccount/rma_print/<?=$rma_obj->getId();?>" target='rma_print' style='text-decoration:underline;'><?= _("here"); ?></a>
+								<?= _("to print this page and send it back to us together with the returned package. Items returned without this RMA form will not be processed.") ?>
+							</p>
+					</p>
+				<? } ?>
+				<p class="red clear" style="font-size:14px"><?= _("Important Notice") ?></p>
 				<p class="clear">
 					<b><?= _("Please read the following before filling in the web form below.") ?></b>
 				</p>
@@ -64,40 +95,40 @@
 				<ul>
 					<li class="clear">
 						<label><?= _("First Name") ?>: *</label>
-						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->get_forename();?>" name="forename" dname="<?= _('First Name') ?>" size="40"  notEmpty/></fieldset>
+						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->getForename();?>" name="forename" dname="<?= _('First Name') ?>" size="40"  notEmpty/></fieldset>
 					</li>
 					<li>
 						<label><?= _("Surname") ?>: *</label>
-						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->get_surname();?>" name="surname" dname="<?= _('Surname') ?>" size="40"  notEmpty/></fieldset>
+						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->getSurname();?>" name="surname" dname="<?= _('Surname') ?>" size="40"  notEmpty/></fieldset>
 					</li>
 					<li class="clear select">
 						<label><?= _("Country") ?>: *</label>
 						<select id="rma_country_id" name="country_id" dname="<?= _('Country') ?>" class="[select_box_style]"  notEmpty onchange="update_state_attribute('rma', this.value);update_postcode_attribute('rma', this.value);">
 							<option value=""></option>
-							[bill_country_arr2;block=begin;noerr;]
-							<option value="[bill_country_arr2.id]" [bill_country_arr2.selected]>[bill_country_arr2.display_name]</option>
-							[bill_country_arr2;block=end;noerr;]
+							<? foreach ($bill_to_list as $bill_country) { ?>
+							<option value="<?=$bill_country->getCountryId();?>"><?=$bill_country->getName();?></option>
+							<? } ?>
 						</select>
 					</li>
 					<li class="clear">
 						<label><?= _("City") ?>: *</label>
-						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->get_city();?>" name="city" dname="<?= _('City') ?>" size="40"  notEmpty isLatin/></fieldset>
+						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->getCity();?>" name="city" dname="<?= _('City') ?>" size="40"  notEmpty isLatin/></fieldset>
 					</li>
 					<li class="clear">
 						<label><?= _("State") ?>: <span id="rma_asterisk">*</span></label>
-						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->get_state();?>" name="state" dname="<?= _('State') ?>" id="rma_state" size="40"  notEmpty isLatin/></fieldset>
+						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->getState();?>" name="state" dname="<?= _('State') ?>" id="rma_state" size="40"  notEmpty isLatin/></fieldset>
 					</li>
 					<li class="clear">
 						<label><?= _("Address Line 1") ?>: *</label>
-						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->get_address_1();?>" name="address_1" dname="<?= _('Address Line 1') ?>" size="40"  notEmpty isLatin/></fieldset>
+						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->getAddress1();?>" name="address_1" dname="<?= _('Address Line 1') ?>" size="40"  notEmpty isLatin/></fieldset>
 					</li>
 					<li>
 						<label><?= _("Address Line 2") ?>: </label>
-						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->get_address_2();?>" name="address_2" dname="<?= _('Address Line 2') ?>" size="40"  isLatin/></fieldset>
+						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->getAddress2();?>" name="address_2" dname="<?= _('Address Line 2') ?>" size="40"  isLatin/></fieldset>
 					</li>
 					<li class="clear">
 						<label><?= _("Postcode") ?>: <span id="rma_postcode_asterisk">*</span></label>
-						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->get_postcode();?>" name="postcode" dname="<?= _('Postcode') ?>" id="rma_postcode" size="40" validPostal="country_id"  isLatin notEmpty/></fieldset>
+						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->getPostcode();?>" name="postcode" dname="<?= _('Postcode') ?>" id="rma_postcode" size="40" validPostal="country_id"  isLatin notEmpty/></fieldset>
 					</li>
 				</ul>
 
@@ -107,7 +138,7 @@
 				<ul>
 					<li>
 						<label><?= _("Order number") ?></label>
-						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->get_so_no();?>" dname="<?= _('Order number') ?>" name="so_no" size="40" /></fieldset>
+						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->getSoNo();?>" dname="<?= _('Order number') ?>" name="so_no" size="40" /></fieldset>
 					</li>
 				</ul>
 
@@ -117,19 +148,22 @@
 				<ul>
 					<li class="clear">
 						<label><?= _("Product Returned") ?>: *</label>
-						<fieldset class="size_304"><input type="text" dname="<?= _('Product Returned') ?>" value="<?=$rma_obj->get_product_returned();?>" name="product_returned" size="40" /></fieldset>
+						<fieldset class="size_304"><input type="text" dname="<?= _('Product Returned') ?>" value="<?=$rma_obj->getProductReturned();?>" name="product_returned" size="40" /></fieldset>
 					</li>
 					<li class="select">
 						<label><?= _("Categories") ?>: *</label>
 						<select name="category" dname="<?= _('Categories') ?>" class="[select_box_style]" id="return_categories" >
-							[category;block=begin;noerr;]
-							<option value="[category.key;noerr;htmlconv=no;]" [category.selected;noerr;]>[category.value;noerr;htmlconv=no;]</option>
-							[category;block=end;noerr;]
+							<?
+								$category_arr = array(0=>"Machine Only", 1=>"Accessory Only", 2=>"Machine and Accessory");
+								foreach($category_arr as $key => $value){
+							?>
+							<option value="<?=$key?>"><?=$value?></option>
+							<? } ?>
 						</select>
 					</li>
 					<li class="clear">
 						<label><?= _('Serial No') ?>: </label>
-						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->get_serial_no();?>" dname="[lang_text.serial_number;noerr;htmlconv=no;]" name="serial_no" size="40" [disabled;noerr;]/></fieldset>
+						<fieldset class="size_304"><input type="text" value="<?=$rma_obj->getSerialNo();?>" dname="[lang_text.serial_number;noerr;htmlconv=no;]" name="serial_no" size="40" [disabled;noerr;]/></fieldset>
 					</li>
 				</ul>
 
@@ -140,22 +174,32 @@
 					<li class="clear_left select">
 						<label><?= _("Reasons for Returns") ?> *</label>
 						<select name="reason" dname="<?= _('Reasons for Returns') ?>" class="[select_box_style]" id="return_reason" [disabled;noerr;]>
-							[reason;block=begin;noerr;]
-							<option value="[reason.key;noerr;htmlconv=no;]" [reason.selected;noerr;]>[reason.value;noerr;htmlconv=no;]</option>
-							[reason;block=end;noerr;]
+							<?
+								$reason_arr = array(0=>"Needs Repair Under Warranty", 1=>"Wrong Product Delivered", 2=>"Wrong Product Purchased", 3=>"Accidently Purchased (conditions apply)");
+								foreach ($reason_arr as $key => $value) {
+							?>
+							<option value="<?=$key?>"><?=$value?></option>
+							<?
+								}
+							?>
 						</select>
 					</li>
 					<li class="no_right_margin select">
 						<label><?= _("Action Required") ?> *</label>
-						<select name="action_request" dname="<?= _('Action Required') ?>" class="[select_box_style]" id="return_action" [disabled;noerr;]>
-							[action_request;block=begin;noerr;]
-							<option value="[action_request.key;noerr;htmlconv=no;]" [action_request.selected;noerr;]>[action_request.value;noerr;htmlconv=no;]</option>
-							[action_request;block=end;noerr;]
+						<select name="action_request" dname="<?= _('Action Required') ?>" class="sbSelector" id="return_action" [disabled;noerr;]>
+							<?
+								$action_request = array(0=>"Swap", 1=>"Refund", 2=>"Repair");
+								foreach ($action_request as $key => $value) {
+							?>
+							<option value="<?=$key?>"><?=$value?></option>
+							<?
+								}
+							?>
 						</select>
 					</li>
 					<li class="no_right_margin">
 						<label><?= _('Detailed Description of Fault') ?> *</label>
-						<fieldset class="textarea"><textarea name="details" dname="<?= _('Detailed Description of Fault') ?>" rows="6" cols="70" [disabled;noerr;]><?=$rma_obj->get_details();?></textarea></fieldset>
+						<fieldset class="textarea"><textarea name="details" dname="<?= _('Detailed Description of Fault') ?>" rows="6" cols="70" [disabled;noerr;]><?=$rma_obj->getDetails();?></textarea></fieldset>
 					</li>
 				</ul>
 
@@ -196,19 +240,19 @@
 						<br />
 					</p>
 				</div>
-				<input type="hidden" name="rma_id" value="<?=$rma_obj->get_id();?>">
+				<input type="hidden" name="rma_id" value="<?=$rma_obj->getId();?>">
 				<input type="hidden" name="posted" value="1">
 				<button type="submit"><?= _('Submit') ?></button>
 			</form>
 		</div>
 
-		<div class="text silver_box items item3" [profile.block;noerr;htmlconv=no;]>
-			<form name="fm_edit_profile" action="[base_url;noerr;]myaccount/profile" method="post" class="form-holder" onSubmit="return CheckForm(document.fm_edit_profile);">
+		<div class="text silver_box items item3" style="display:none;">
+			<form name="fm_edit_profile" action="<?=base_url()?>myaccount/profile" method="post" class="form-holder" onSubmit="return CheckForm(document.fm_edit_profile);">
 				<ins class="no_top_padding"><?= _('Profile') ?></ins>
 				<ul>
 					<li>
 						<label><?= _("Email Address") ?></label>
-						<fieldset><input type="text" name="email" value="<?=$client_obj->get_email();?>" disabled/></fieldset>
+						<fieldset><input type="text" name="email" value="<?=$client_obj->getEmail();?>" disabled/></fieldset>
 					</li>
 					<div class="clear"></div>
 					<li>
@@ -229,22 +273,22 @@
 					<li class="clear width_800">
 						<label><?= _('Title') ?> *</label>
 						<select name="name_prefix" class="[select_box_style]" id="profile_title">
-							[title;block=begin;noerr;]
-							<option value="[title.value;noerr;]" [title.selected;noerr;]>[title.value;noerr;]</option>
-							[title;block=end;noerr;]
+							 <?foreach ($title as $title_row) { ?>
+                                <option value="<?=$title_row?>"><?=$title_row?></option>
+                            <? } ?>
 						</select>
 					</li>
 					<li class="clear">
 						<label><?= _('First Name') ?> *</label>
-						<fieldset><input type="text" name="forename" dname="<?= _('First Name') ?>" size="10" value="<?=$client_obj->get_forename();?>" notEmpty/></fieldset>
+						<fieldset><input type="text" name="forename" dname="<?= _('First Name') ?>" size="10" value="<?=$client_obj->getForename();?>" notEmpty/></fieldset>
 					</li>
 					<li class="no_right_margin">
 						<label><?= _("Surname") ?> *</label>
-						<fieldset><input type="text" name="surname" dname="<?= _('Surname') ?>" size="10" value="<?=$client_obj->get_surname();?>" notEmpty/></fieldset>
+						<fieldset><input type="text" name="surname" dname="<?= _('Surname') ?>" size="10" value="<?=$client_obj->getSurname();?>" notEmpty/></fieldset>
 					</li>
 					<li class="clear">
 						<label><?= _('Company Name') ?></label>
-						<fieldset><input type="text" name="companyname" dname="<?= _('Company Name') ?>" value="<?=$client_obj->get_companyname();?>" size="40" /></fieldset>
+						<fieldset><input type="text" name="companyname" dname="<?= _('Company Name') ?>" value="<?=$client_obj->getCompanyname();?>" size="40" /></fieldset>
 					</li>
 				</ul>
 
@@ -254,42 +298,42 @@
 					<li class="select">
 						<label><?= _('Country') ?> *</label>
 						<select id="profile_country_id" name="country_id" class="[select_box_style]" id="profile_billing_country" onchange="update_state_attribute('profile', this.value);update_postcode_attribute('profile', this.value);">
-							[bill_country_arr;block=begin;noerr;]
-							<option value="[bill_country_arr.id]" [bill_country_arr.selected] >[bill_country_arr.display_name]</option>
-							[bill_country_arr;block=end;noerr;]
+							<? foreach ($bill_to_list as $bill_country) { ?>
+								<option value="<?=$bill_country->getCountryId()?>"><?=$bill_country->getName();?></option>
+							<? } ?>
 						</select>
 					</li>
 					<li class="no_right_margin select">
 						<label><?= _('City') ?> *</label>
-						<fieldset><input type="text" name="city" dname="<?= _('City') ?>" id="profile_billing_city" size="40" value="<?=$client_obj->get_city();?>" notEmpty isLatin/></fieldset>
+						<fieldset><input type="text" name="city" dname="<?= _('City') ?>" id="profile_billing_city" size="40" value="<?=$client_obj->getCity();?>" notEmpty isLatin/></fieldset>
 					</li>
 					<li class="clear width_800">
 						<label><?= _('State') ?> <span id="profile_asterisk">*</span></label>
-						<fieldset><input type="text" name="state" dname="<?= _('State') ?>" id="profile_state" size="40" value="<?=$client_obj->get_state();?>" notEmpty isLatin/></fieldset>
+						<fieldset><input type="text" name="state" dname="<?= _('State') ?>" id="profile_state" size="40" value="<?=$client_obj->getState();?>" notEmpty isLatin/></fieldset>
 					</li>
 					<li class="clear width_800">
 						<label><?= _('Address') ?> *</label>
-						<fieldset class="large"><input type="text" name="address_1" dname="<?= _('Address Line 1') ?>" size="40" value="<?=$client_obj->get_address_1();?>" notEmpty isLatin/></fieldset>
-						<fieldset class="large"><input type="text" name="address_2" dname="<?= _('Address Line 2') ?>" size="40" value="<?=$client_obj->get_address_2();?>" isLatin/></fieldset>
+						<fieldset class="large"><input type="text" name="address_1" dname="<?= _('Address Line 1') ?>" size="40" value="<?=$client_obj->getAddress1();?>" notEmpty isLatin/></fieldset><br />
+						<fieldset class="large"><input type="text" name="address_2" dname="<?= _('Address Line 2') ?>" size="40" value="<?=$client_obj->getAddress2();?>" isLatin/></fieldset>
 					</li>
 					<li class="clear">
 						<label><?= _('Postcode') ?> <span id="profile_postcode_asterisk">*</span></label>
-						<fieldset><input type="text" name="postcode" id="profile_postcode" size="40" value="<?=$client_obj->get_postcode();?>" validPostal="profile_country_id" dname="<?= _('Postcode') ?>" isLatin notEmpty/></fieldset>
+						<fieldset><input type="text" name="postcode" id="profile_postcode" size="40" value="<?=$client_obj->getPostcode();?>" validPostal="profile_country_id" dname="<?= _('Postcode') ?>" isLatin notEmpty/></fieldset>
 					</li>
 				</ul>
 					<ins><?= _('Phone') ?></ins>
 				<ul>
 					<li class="clear">
 						<label><?= _('Country Code') ?> *</label>
-						<fieldset class="very_small"><input type="text" name="tel_1" dname="<?= _('Country Code') ?>" size="16" value="<?=$client_obj->get_tel_1();?>" notEmpty /></fieldset>
+						<fieldset class="very_small"><input type="text" name="tel_1" dname="<?= _('Country Code') ?>" size="16" value="<?=$client_obj->getTel1();?>" notEmpty /></fieldset>
 					</li>
 					<li>
 						<label><?= _('Area Code') ?> *</label>
-						<fieldset class="very_small"><input type="text" name="tel_2" dname="<?= _('Area Code') ?>" size="16" value="<?=$client_obj->get_tel_2();?>" notEmpty /></fieldset>
+						<fieldset class="very_small"><input type="text" name="tel_2" dname="<?= _('Area Code') ?>" size="16" value="<?=$client_obj->getTel2();?>" notEmpty /></fieldset>
 					</li>
 					<li>
 						<label><?= _('Number') ?> *</label>
-						<fieldset class="medium"><input type="text" name="tel_3" dname="<?= _('Number') ?>" size="16" value="<?=$client_obj->get_tel_3();?>" notEmpty /></fieldset>
+						<fieldset class="medium"><input type="text" name="tel_3" dname="<?= _('Number') ?>" size="16" value="<?=$client_obj->getTel3();?>" notEmpty /></fieldset>
 					</li>
 					<li class="clear">
 						<button type="submit" class="border-radius-2"><?= _('Submit') ?></button>
@@ -302,10 +346,18 @@
 	</div>
 <script language="javascript">
 jQuery.noConflict();
+
+jQuery('.product-tabs-info > ul > li').click(function(){
+	jQuery('.product-tabs-info > ul > li').removeClass('active');
+	jQuery(this).addClass('active');
+	var index =  jQuery('.product-tabs-info > ul > li').index(this)+1;
+	jQuery('.product-tabs-info div.items').hide();
+	jQuery('.product-tabs-info div.item'+index).show();
+});
+
 //<!--
-document.getElementById('returns_request').innerText =' ';
-function CheckSubmit(f)
-{
+// document.getElementById('returns_request').innerText =' ';
+function CheckSubmit(f) {
 	var ret = true;
 	if (!f.agreed.checked) {
 		alert("[lang_text.alert_terms;noerr;htmlconv=no;]");

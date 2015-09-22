@@ -33,7 +33,7 @@ class ProductComplementaryAccDao extends BaseDao
         $this->accessory_catid_arr = $this->get_accessory_catid_arr();
     }
 
-    public function check_cat($sku = "", $is_ca = true)
+    public function checkCat($sku = "", $is_ca = true)
     {
         $ret = [];
         $ret["status"] = false;
@@ -68,7 +68,7 @@ SQL;
         return $ret;
     }
 
-    public function getMappedAccListWName($where = [], $option = [], $active = true, $classname = "ComplementaryAccessoryListDto")
+    public function getMappedAccListWithName($where = [], $option = [], $active = true, $classname = "ComplementaryAccessoryListDto")
     {
         $this->db->from("product_complementary_acc AS pca");
 

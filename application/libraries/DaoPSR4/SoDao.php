@@ -4,7 +4,7 @@ namespace ESG\Panther\Dao;
 class SoDao extends BaseDao
 {
     private $tableName = "so";
-    private $voClassName = "So_vo";
+    private $voClassName = "SoVo";
 
     public function __construct()
     {
@@ -2645,7 +2645,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_order_history($client_id, $classname = "Order_history_dto")
+    public function getOrderHistory($client_id, $classname = "OrderHistoryDto")
     {
         # sbf #3746 don't include complementary accessory on front end
         $ca_catid_arr = implode(',', $this->getAccessoryCatidArr());
@@ -2683,7 +2683,7 @@ SQL;
         return $accessory_catid_arr = ["753"];
     }
 
-    public function get_unpaid_order_history($client_id, $payment_gateway_arr = [], $classname = "Order_history_dto")
+    public function getUnpaidOrderHistory($client_id, $payment_gateway_arr = [], $classname = "OrderHistoryDto")
     {
         # sbf #3746 don't include complementary accessory on front end
         $ca_catid_arr = implode(',', $this->getAccessoryCatidArr());
