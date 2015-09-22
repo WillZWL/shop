@@ -2643,11 +2643,7 @@ SQL;
         return FALSE;
     }
 
-<<<<<<< HEAD
     public function getOrderHistory($client_id, $classname = "OrderHistoryDto")
-=======
-    public function get_order_history($client_id, $classname = "OrderHistoryDto")
->>>>>>> 8bef7079c4cf268d316823b4c2dd2f2ff4355367
     {
         # sbf #3746 don't include complementary accessory on front end
         $ca_catid_arr = implode(',', $this->getAccessoryCatidArr());
@@ -2684,12 +2680,7 @@ SQL;
 
         return $accessory_catid_arr = ["753"];
     }
-
-<<<<<<< HEAD
     public function getUnpaidOrderHistory($client_id, $payment_gateway_arr = [], $classname = "OrderHistoryDto")
-=======
-    public function get_unpaid_order_history($client_id, $payment_gateway_arr = [], $classname = "OrderHistoryDto")
->>>>>>> 8bef7079c4cf268d316823b4c2dd2f2ff4355367
     {
         # sbf #3746 don't include complementary accessory on front end
         $ca_catid_arr = implode(',', $this->getAccessoryCatidArr());
