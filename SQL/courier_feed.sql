@@ -1,8 +1,8 @@
 CREATE TABLE `courier_feed` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `batch_id` int(10) unsigned NOT NULL,
-  `so_no_str` text NOT NULL COMMENT 'order number separated by pile character |',
-  `courier_id` varchar(40) NOT NULL,
+  `batch_id` int(10) NOT NULL DEFAULT '0',
+  `so_no_str` text NOT NULL DEFAULT '' COMMENT 'order number separated by pile character |',
+  `courier_id` varchar(40) NOT NULL DEFAULT '',
   `mawb` varchar(40) NOT NULL DEFAULT '',
   `exec` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=not yet executed, 1=executed',
   `comment` varchar(255) NOT NULL DEFAULT '',
