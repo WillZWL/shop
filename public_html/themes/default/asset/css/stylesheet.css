@@ -4966,6 +4966,10 @@ hr.divider-snow {
   color: #FFFFFF;
 }
 
+.panel-gray {
+  color: #878787;
+}
+
 /* line 3050, ../development/scss/app/_elements.scss */
 .panel .panel-heading {
   /* 		&.hightlighted{

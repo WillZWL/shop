@@ -1,45 +1,28 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php 
+namespace ESG\Panther\Service;
 
-include_once(APPPATH . "libraries/service/Vb_data_transfer_service.php");
+use ESG\Panther\Dao\ProductDao;
+use ESG\Panther\Dao\SkuMappingDao;
+use ESG\Panther\Service\SkuMappingService;
+use ESG\Panther\Service\ProductIdentifierService;
 
-class Vb_data_transfer_products_service extends Vb_data_transfer_service
+class VbDataTransferProductsService extends VbDataTransferService
 {
 	
-	public function __construct($debug = 0)
+	public function __construct()
 	{
-		parent::__construct($debug);
-				
-		include_once(APPPATH . 'libraries/dao/Product_dao.php');
-		$this->product_dao = new Product_dao();
-		include_once(APPPATH . 'libraries/dao/Sku_mapping_dao.php');
-		$this->sku_mapping_dao = new Sku_mapping_dao();
-		
-        include_once(APPPATH . "libraries/service/Sku_mapping_service.php");		
-		$this->sku_mapping_service = new Sku_mapping_service();
-
-		include_once(APPPATH . 'libraries/service/Product_identifier_service.php');
-		$this->product_identifier_service = new Product_identifier_service();
+		parent::__construct();
 	}
 	
-	public function get_dao()
+	public function getDao()
 	{
 		return $this->product_dao;
 	}
-
-	public function set_dao(base_dao $dao)
-	{
-		$this->product_dao = $dao;
-	}
-	
-	public function get_sku_dao()
-	{
-		return $this->sku_mapping_dao;
-	}
 		
 	/*******************************************************************
-	*	process_vb_data, get the VB data to save it in the price table
+	*	processVbData, get the VB data to save it in the price table
 	********************************************************************/
-	public function process_vb_data ($feed)
+	public function processVbData ($feed)
 	{		
 		//print $feed; exit;
 		//Read the data sent from VB
@@ -62,7 +45,7 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 			$master_sku = $product->master_sku;
 						
 			$master_sku = strtoupper($master_sku);
-			$sku = $this->sku_mapping_service->get_local_sku($master_sku);
+			$sku = $this->SkuMappingService->getLocalSku($master_sku);
 			
 			$fail_reason = "";
             if ($master_sku == "" || $master_sku == null) $fail_reason .= "No master SKU mapped, ";
@@ -71,8 +54,8 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
             //if the sku is mapped, we get the atomv prod_gro_id
             $master_prod_grp_id = "";
             if ($fail_reason == "")
-            	$master_prod_grp_id = $this->product_identifier_service->get_prod_grp_cd_by_sku($master_sku);
-            
+            	$master_prod_grp_id = $this->ProductIdentifierService->getProdGrpCdBySku($sku);
+			
 			try
 			{
 				if ($fail_reason == "")
@@ -118,7 +101,7 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 					//$new_prod_obj["comments"] = $product->comments; 	
 					$new_prod_obj["status"] = $product->status; 		
 					
-					$this->get_dao()->q_update($where, $new_prod_obj);				
+					$this->getDao()->qUpdate($where, $new_prod_obj);				
 					
 					$xml[] = '<product>';
 					$xml[] = '<sku>' . $product->sku . '</sku>';
@@ -132,61 +115,63 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 					//TO DO --> Create product function
 					
 					//insert									
-					$new_prod_obj = $this->get_dao()->get();
+					$new_prod_obj = $this->getDao()->get();
 					
-					$sku = $this->get_dao()->getNewSku();
-					$prod_grp_cd = $this->get_dao()->getNewProductGroup();
+					$sku = $this->getDao()->getNewSku();
+					$prod_grp_cd = $this->getDao()->getNewProductGroup();
 					if ($sku != "" && $sku != null && $prod_grp_cd != "" && $prod_grp_cd != null)
 					{
 						//insert sku mapping
-						$new_sku_map_obj = $this->get_sku_dao()->get();
+						$new_sku_map_obj = $this->SkuMappingDao()->get();
 						
-						$new_sku_map_obj->set_ext_sku($master_sku);
-						$new_sku_map_obj->set_ext_sys("WMS");
-						$new_sku_map_obj->set_sku($sku);
-						$new_sku_map_obj->set_status(1);
+						$new_sku_map_obj->setExtSku($master_sku);
+						$new_sku_map_obj->setExtSys("WMS");
+						$new_sku_map_obj->setSku($sku);
+						$new_sku_map_obj->setStatus(1);
 						
-						$this->sku_mapping_service->get_dao()->insert($new_sku_map_obj);
+						$this->sku_mapping_service->getDao()->insert($new_sku_map_obj);
+						
+						//TO DO --> create product identifier
 						
 						//insert the product
-						$new_prod_obj->set_sku($sku);
-						$new_prod_obj->set_prod_grp_cd($prod_grp_cd);
-						$new_prod_obj->set_colour_id($product->colour_id); //FK colour
-						$new_prod_obj->set_version_id($product->version_id);	
-						$new_prod_obj->set_name($product->name);				
-						$new_prod_obj->set_freight_cat_id($product->freight_cat_id); //FK freight_category
-						$new_prod_obj->set_cat_id($product->cat_id); //FK category
-						$new_prod_obj->set_sub_cat_id($product->sub_cat_id); //FK category
-						$new_prod_obj->set_sub_sub_cat_id($product->sub_sub_cat_id); //FK category
-						$new_prod_obj->set_brand_id($product->brand_id); //FK brand
-						$new_prod_obj->set_clearance($product->clearance);
-						$new_prod_obj->set_surplus_quantity($product->surplus_quantity);
-						$new_prod_obj->set_slow_move_7_days($product->slow_move_7_days);
-						$new_prod_obj->set_quantity($product->quantity);
-						$new_prod_obj->set_display_quantity($product->display_quantity);
-						$new_prod_obj->set_website_quantity($product->website_quantity);
-						$new_prod_obj->set_china_oem($product->china_oem); 
-						$new_prod_obj->set_ex_demo($product->ex_demo);
-						$new_prod_obj->set_rrp($product->rrp);
-						$new_prod_obj->set_image($product->image);
-						$new_prod_obj->set_flash($product->flash);
-						$new_prod_obj->set_youtube_id($product->youtube_id);
-						$new_prod_obj->set_ean($product->ean);
-						$new_prod_obj->set_mpn($product->mpn);
-						$new_prod_obj->set_upc($product->upc);
-						$new_prod_obj->set_discount($product->discount);
-						$new_prod_obj->set_proc_status($product->proc_status);
-						$new_prod_obj->set_website_status($product->website_status);
-						$new_prod_obj->set_sourcing_status($product->sourcing_status);
-						$new_prod_obj->set_expected_delivery_date($product->expected_delivery_date);
-						$new_prod_obj->set_warranty_in_month($product->warranty_in_month);
-						$new_prod_obj->set_cat_upselling($product->cat_upselling);
-						$new_prod_obj->set_lang_restricted($product->lang_restricted);
-						$new_prod_obj->set_shipment_restricted_type($product->shipment_restricted_type); 
+						$new_prod_obj->setSku($sku);
+						$new_prod_obj->setProdGrpCd($prod_grp_cd);
+						$new_prod_obj->setColourId($product->colour_id); //FK colour
+						$new_prod_obj->setVersionId($product->version_id);	
+						$new_prod_obj->setName($product->name);				
+						$new_prod_obj->setFreightCatId($product->freight_cat_id); //FK freight_category
+						$new_prod_obj->setCatId($product->cat_id); //FK category
+						$new_prod_obj->setSubCatId($product->sub_cat_id); //FK category
+						$new_prod_obj->setSubSubCatId($product->sub_sub_cat_id); //FK category
+						$new_prod_obj->setBrandId($product->brand_id); //FK brand
+						$new_prod_obj->setClearance($product->clearance);
+						$new_prod_obj->setSurplusQuantity($product->surplus_quantity);
+						$new_prod_obj->setSlowMove7Days($product->slow_move_7_days);
+						$new_prod_obj->setQuantity($product->quantity);
+						$new_prod_obj->setDisplayQuantity($product->display_quantity);
+						$new_prod_obj->setWebsiteQuantity($product->website_quantity);
+						$new_prod_obj->setChinaOem($product->china_oem); 
+						$new_prod_obj->setExDemo($product->ex_demo);
+						$new_prod_obj->setRrp($product->rrp);
+						$new_prod_obj->setImage($product->image);
+						$new_prod_obj->setFlash($product->flash);
+						$new_prod_obj->setYoutubeId($product->youtube_id);
+						$new_prod_obj->setEan($product->ean);
+						$new_prod_obj->setMpn($product->mpn);
+						$new_prod_obj->setUpc($product->upc);
+						$new_prod_obj->setDiscount($product->discount);
+						$new_prod_obj->setProcStatus($product->proc_status);
+						$new_prod_obj->setWebsiteStatus($product->website_status);
+						$new_prod_obj->setSourcingStatus($product->sourcing_status);
+						$new_prod_obj->setExpectedDeliveryDate($product->expected_delivery_date);
+						$new_prod_obj->setWarrantyInMonth($product->warranty_in_month);
+						$new_prod_obj->setCatUpselling($product->cat_upselling);
+						$new_prod_obj->setLangRestricted($product->lang_restricted);
+						$new_prod_obj->setShipmentRestrictedType($product->shipment_restricted_type); 
 						//$new_prod_obj->set_comments($product->comments); 	
 						$new_prod_obj->set_status($product->status); 
 						
-						$this->get_dao()->insert($new_prod_obj);
+						$this->getDao()->insert($new_prod_obj);
 						
 						//if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
 						$xml[] = '<product>';

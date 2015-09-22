@@ -1,9 +1,4 @@
-<?php $this->load->view('/default/header') ?>
-<div class="bottom-offcanvas">
-    <div class="container">
-        <button data-toggle="offcanvas" class="btn btn-primary visible-xs visible-sm" type="button"><i class="fa fa-bars"></i></button>
-    </div>
-</div>
+<?php $this->load->view('header') ?>
 <!-- sys-notification -->
 <div id="sys-notification">
     <div class="container">
@@ -52,11 +47,11 @@
                     </div>
 
                     <?php if ($product) : ?>
-                        <?php $this->load->view('/default/product/grid.php', ['product' => $product]); ?>
+                        <?php $this->load->view('product/grid.php', ['product' => $product]); ?>
                     <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<?php $this->load->view('/default/footer') ?>
+<?php $this->load->view('footer') ?>

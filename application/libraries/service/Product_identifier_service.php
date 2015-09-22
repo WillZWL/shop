@@ -26,6 +26,19 @@ class Product_identifier_service extends Base_service
     {
         return $this->get_dao()->get_product_identifier_list_grouped_by_country($where);
     }
+
+    public function get_prod_grp_cd_by_sku ($sku)
+    {
+        $prod_grp_cd = "";
+        if ($sku != null && $sku != "")
+        {
+            $identifier = explode("-", $sku);
+            if (count($identifier) == 3)
+                $prod_grp_cd = $identifier[0];
+        }
+
+        return $prod_grp_cd;
+    }
 }
 
 
