@@ -1,10 +1,10 @@
 <?php
 namespace ESG\Panther\Dao;
 
-class CourierFeedDao extends BaseDao
+class TemplateDao extends BaseDao
 {
-    private $tableName = "courier_feed";
-    private $voClassName = "CourierFeedVo";
+    private $tableName = "template";
+    private $voClassName = "TemplateVo";
 
     public function __construct()
     {
@@ -20,4 +20,12 @@ class CourierFeedDao extends BaseDao
     {
         return $this->tableName;
     }
+
+    public function getTplWithMsg($where = "")
+    {
+        return $this->get($where, "TplMsgWithAttDto");
+    }
+
 }
+
+

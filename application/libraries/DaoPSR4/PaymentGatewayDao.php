@@ -1,10 +1,10 @@
 <?php
 namespace ESG\Panther\Dao;
 
-class CourierFeedDao extends BaseDao
+class PaymentGatewayDao extends BaseDao
 {
-    private $tableName = "courier_feed";
-    private $voClassName = "CourierFeedVo";
+    private $tableName = "payment_gateway";
+    private $voClassName = "PaymentGatewayVo";
 
     public function __construct()
     {
@@ -21,3 +21,5 @@ class CourierFeedDao extends BaseDao
         return $this->tableName;
     }
 }
+
+

@@ -54,11 +54,6 @@ class SoModel extends \CI_Model
         return $this->getDao($dao)->get();
     }
 
-    public function generateCourierFile($checked = [], $courier = '', $mawb = '', $debug_explain = false)
-    {
-        return $this->soService->generateCourierFile($checked, $courier, $mawb, $debug_explain);
-    }
-
     public function generateAllocateFile()
     {
         return $this->soService->generateAllocateFile();
@@ -111,16 +106,16 @@ class SoModel extends \CI_Model
         ];
         $now_time = mktime();
         $status = $working_days = "";
-        $time_diff = $now_time - strtotime($so_obj->get_order_create_date());
-        $order_status = $so_obj->get_status();
-        $hold_status = $so_obj->get_hold_status();
-        $refund_status = $so_obj->get_refund_status();
+        $time_diff = $now_time - strtotime($so_obj->getOrderCreateDate());
+        $order_status = $so_obj->getStatus();
+        $hold_status = $so_obj->getHoldStatus();
+        $refund_status = $so_obj->getRefundStatus();
 
         # hold_status = 15 refers to parent of split orders. It will have refund status but no refund history
         if ($refund_status > 0 && $hold_status != 15) {
-            $refund_obj = $this->refundService->get(["so_no" => $so_obj->get_so_no()]);
-            $refund_time_diff = $now_time - strtotime($refund_obj->get_create_on());
-            $refund_working_days = $this->soService->getWorkingDays(strtotime($refund_obj->get_create_on()), $now_time);
+            $refund_obj = $this->refundService->get(["so_no" => $so_obj->getSoNo()]);
+            $refund_time_diff = $now_time - strtotime($refund_obj->getCreateOn());
+            $refund_working_days = $this->soService->getWorkingDays(strtotime($refund_obj->getCreateOn()), $now_time);
             if ($refund_time_diff < 43200) {
                 $status = 'cancel_received';
             } else {
@@ -128,7 +123,7 @@ class SoModel extends \CI_Model
                     case 1:
                     case 2:
                     case 3:
-                        if ($refund_item_obj = $this->refundService->getRefundItem(["refund_id" => $refund_obj->get_id(), "status" => "N"])) {
+                        if ($refund_item_obj = $this->refundService->getRefundItem(["refund_id" => $refund_obj->getId(), "status" => "N"])) {
                             $status = 'cancel_to_delivery';
                         } else {
                             if ($refund_working_days < 3) {
@@ -145,8 +140,8 @@ class SoModel extends \CI_Model
                         }
                         break;
                     case 4:
-                        if ($complete_refund_obj = $this->refundService->getRefundHistory(["refund_id" => $refund_obj->get_id(), "status" => "C"])) {
-                            $refunded_date = $complete_refund_obj->get_create_on();
+                        if ($complete_refund_obj = $this->refundService->getRefundHistory(["refund_id" => $refund_obj->getId(), "status" => "C"])) {
+                            $refunded_date = $complete_refund_obj->getCreateOn();
                             $refunded_working_days = $this->soService->getWorkingDays(strtotime($refunded_date), $now_time);
                             if ($refunded_working_days < 2) {
                                 $status = 'refund_confirmed';
@@ -175,7 +170,7 @@ class SoModel extends \CI_Model
                     }
                     break;
                 case 3:
-                    $working_days = $this->soService->getWorkingDays(strtotime($so_obj->get_order_create_date()), $now_time);
+                    $working_days = $this->soService->getWorkingDays(strtotime($so_obj->getOrderCreateDate()), $now_time);
                     if ($working_days < 5) {
                         $status = 'order_approved';
                     } elseif ($working_days < 7) {
@@ -194,12 +189,12 @@ class SoModel extends \CI_Model
                     break;
                 case 6:
                     $status = 'shipped';
-                    if ($so_obj->get_dispatch_date()) {
-                        $working_days = $this->soService->getWorkingDays(strtotime($so_obj->get_dispatch_date()), $now_time);
+                    if ($so_obj->getDispatchDate()) {
+                        $working_days = $this->soService->getWorkingDays(strtotime($so_obj->getDispatchDate()), $now_time);
 
                         //SBF #5275 dynamic status based on aftership status
-                        $shipment_obj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->get_so_no()));
-                        $aftership = $shipment_obj->get_aftership_status();
+                        $shipment_obj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
+                        $aftership = $shipment_obj->getAftershipStatus();
 
                         if ($aftership == '') {
                             if ($working_days < 1) {
@@ -242,14 +237,14 @@ class SoModel extends \CI_Model
                         $status_details_arr[$status]['id'] = $status;
 
                         // this if statement NEEDS the courier_id to have an entry in courier table.
-                        if ($shipment_obj2 = $this->soService->getShippingInfo(array("soal.so_no" => $so_obj->get_so_no(), "soal.status" => 3))) {
-                            if ($courier_obj = $this->courierService->get(["id" => $shipment_obj2->get_courier_id()])) {
-                                $status_details_arr[$status]['courier_name'] = $shipment_obj2->get_courier_id();
+                        if ($shipment_obj2 = $this->soService->getShippingInfo(array("soal.so_no" => $so_obj->getSoNo(), "soal.status" => 3))) {
+                            if ($courier_obj = $this->courierService->get(["id" => $shipment_obj2->getCourierId()])) {
+                                $status_details_arr[$status]['courier_name'] = $shipment_obj2->getCourierId();
 
-                                if ($shipment_obj2->get_tracking_no() && $courier_obj->get_tracking_link()) {
-                                    $status_details_arr[$status]['courier_name'] = $courier_obj->get_courier_name();
-                                    $status_details_arr[$status]['tracking_url'] = $courier_obj->get_tracking_link();
-                                    $status_details_arr[$status]['tracking_number'] = $shipment_obj2->get_tracking_no();
+                                if ($shipment_obj2->getTrackingNo() && $courier_obj->getTrackingLink()) {
+                                    $status_details_arr[$status]['courier_name'] = $courier_obj->getCourierName();
+                                    $status_details_arr[$status]['tracking_url'] = $courier_obj->getTrackingLink();
+                                    $status_details_arr[$status]['tracking_number'] = $shipment_obj2->getTrackingNo();
                                 }
                             }
 
@@ -277,10 +272,5 @@ class SoModel extends \CI_Model
     public function getProductClearance($prod_sku)
     {
         return $this->productService->isClearance($prod_sku);
-    }
-
-    public function getWmsAllocationPlanOrder()
-    {
-        return $this->wmsInventoryService->getWmsSoNoList();
     }
 }

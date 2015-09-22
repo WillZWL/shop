@@ -140,6 +140,7 @@ function get_image_file($name = "", $size = "", $sku = "", $id = "")
     $path = "../public_html/images/product/";
     $admin_path = "../admincentre/images/product/";
     $file_exist = is_file($path . $filename) || is_file($admin_path . $filename);
+
     $rs_file = "/images/product/" . ($file_exist ? $filename : $default_name . $size . "." . $default_ext);
 
     return $rs_file;
