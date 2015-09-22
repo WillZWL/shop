@@ -301,11 +301,11 @@ class SoAllocateDao extends BaseDao
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $obj) {
+        foreach ($result->result($classname) as $obj) {
             $array[] = $obj;
         }
-        return $array;
 
+        return $array;
     }
 
     public function getPurchaserFeedList($where = [], $option = [], $classname = "PurchaserFeedDto")

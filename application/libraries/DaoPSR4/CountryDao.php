@@ -228,7 +228,7 @@ class CountryDao extends BaseDao
             $result_arr = [];
             $classname = $this->getVoClassname();
 
-            foreach ($result->result("object", $classname) as $obj) {
+            foreach ($result->result($classname) as $obj) {
                 $result_arr[] = $obj;
             }
             return $result_arr;
@@ -260,7 +260,7 @@ class CountryDao extends BaseDao
             $result_arr = [];
             $classname = $this->getVoClassname();
 
-            foreach ($result->result("object", $classname) as $obj) {
+            foreach ($result->result($classname) as $obj) {
                 $result_arr[] = $obj;
             }
             return $result_arr;

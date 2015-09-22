@@ -791,7 +791,7 @@ class CategoryDao extends BaseDao
 
         $result_arr = [];
 
-        foreach ($result->result("object", $classname) as $obj) {
+        foreach ($result->result($classname) as $obj) {
             array_push($result_arr, $obj);
         }
 

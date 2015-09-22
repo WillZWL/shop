@@ -10,6 +10,11 @@ use ESG\Panther\Service\DelayedOrderService;
 use ESG\Panther\Service\ReviewFianetService;
 use ESG\Panther\Service\PdfRenderingService;
 use ESG\Panther\Service\CurrencyService;
+use ESG\Panther\Service\TemplateService;
+use ESG\Panther\Service\SubjectDomainService;
+use ESG\Panther\Service\DataExchangeService;
+// use ESG\Panther\Service\VoToXml;
+// use ESG\Panther\Service\XmlToCsv;
 
 class SoService extends BaseService
 {
@@ -28,23 +33,23 @@ class SoService extends BaseService
         $this->reviewFianetService = new ReviewFianetService;
         $this->pdfRenderingService = new PdfRenderingService;
         $this->currencyService = new CurrencyService;
+        $this->templateService = new TemplateService;
+        $this->subjectDomainService = new SubjectDomainService;
+        $this->dataExchangeService = new DataExchangeService;
+
+        // $this->voToXml = new VoToXml;
+        // $this->xmlToCsv = new XmlToCsv;
 
 
         // include_once(APPPATH . "libraries/service/Cart_session_service.php");
         // $this->set_cart_srv(new Cart_session_service());
         // include_once(APPPATH . "helpers/image_helper.php");
-        //
-        // include_once(APPPATH . "libraries/service/Data_exchange_service.php");
-        // $this->set_dex_service(new Data_exchange_service());
-
 
         // include_once(APPPATH . 'libraries/service/Domain_platform_service.php');
         // $this->set_domain_platform_service(new Domain_platform_service());
         // include_once(APPPATH . 'libraries/service/Price_service.php');
         // $this->set_price_service(new Price_service());
 
-        // include_once APPPATH . "libraries/service/Subject_domain_service.php";
-        // $this->set_sub_domain_srv(new Subject_domain_service());
         // include_once APPPATH . "libraries/service/So_priority_score_service.php";
         // $this->set_so_ps_srv(new So_priority_score_service());
 
@@ -206,18 +211,18 @@ class SoService extends BaseService
         foreach ($cart_list["cart"] as $line_no => $soi) {
             $curr_line_no = $line_no + 1;
             $soi_obj = clone $soi_vo;
-            $soi_obj->set_line_no($line_no + 1);
-            $soi_obj->set_prod_sku($soi["sku"]);
-            $soi_obj->set_prod_name($soi["name"]);
-            $soi_obj->set_qty($soi["qty"]);
-            $soi_obj->set_vat_total($soi["vat_total"]);
-            $soi_obj->set_gst_total($soi["gst"]);
+            $soi_obj->setLineNo($line_no + 1);
+            $soi_obj->setProdSku($soi["sku"]);
+            $soi_obj->setProdName($soi["name"]);
+            $soi_obj->setQty($soi["qty"]);
+            $soi_obj->setVatTotal($soi["vat_total"]);
+            $soi_obj->setGstTotal($soi["gst"]);
             if ($vars["biz_type"] == "special") {
                 $soi["cost"] *= 1;
             }
 
-            $soi_obj->set_unit_price($soi["price"]);
-            $soi_obj->set_amount($soi["total"]);
+            $soi_obj->setUnitPrice($soi["price"]);
+            $soi_obj->setAmount($soi["total"]);
             $amount += ($soi["total"] + $soi["gst"]);
 
             if ($get_ca === true) {
@@ -281,14 +286,14 @@ class SoService extends BaseService
             foreach ($ca_soi_list as $arr) {
                 foreach ($arr as $obj) {
                     $soi_obj = clone $soi_vo;
-                    $soi_obj->set_line_no($ca_line_no);
-                    $soi_obj->set_prod_sku($obj->get_accessory_sku());
-                    $soi_obj->set_prod_name($obj->get_name());
-                    $soi_obj->set_qty($obj->get_quantity());
-                    $soi_obj->set_vat_total(0.00);
-                    $soi_obj->set_gst_total(0.00);
-                    $soi_obj->set_unit_price(0.00);
-                    $soi_obj->set_amount(0);
+                    $soi_obj->setLineNo($ca_line_no);
+                    $soi_obj->setProdSku($obj->get_accessory_sku());
+                    $soi_obj->setProdName($obj->get_name());
+                    $soi_obj->setQty($obj->get_quantity());
+                    $soi_obj->setVatTotal(0.00);
+                    $soi_obj->setGstTotal(0.00);
+                    $soi_obj->setUnitPrice(0.00);
+                    $soi_obj->setAmount(0);
 
                     $so_item_list[] = $soi_obj;
                     $ca_line_no++;
@@ -314,13 +319,13 @@ class SoService extends BaseService
             $declared_pcent = 20;
             foreach ($vars["special"] as $soi) {
                 $soi_obj = clone $soi_vo;
-                $soi_obj->set_line_no($line_no + 1);
-                $soi_obj->set_prod_sku($soi["sku"]);
-                $soi_obj->set_prod_name($soi["name"]);
-                $soi_obj->set_qty($soi["qty"]);
+                $soi_obj->setLineNo($line_no + 1);
+                $soi_obj->setProdSku($soi["sku"]);
+                $soi_obj->setProdName($soi["name"]);
+                $soi_obj->setQty($soi["qty"]);
 
-                if ($obj = $this->get_sub_domain_srv()->get(array("subject" => "MAX_DECLARE_VALUE.{$pbv_obj->getPlatformCountryId()}"))) {
-                    $max_value = $obj->get_value();
+                if ($obj = $this->subjectDomainService->getDao('SubjectDomain')->get(["subject" => "MAX_DECLARE_VALUE.{$pbv_obj->getPlatformCountryId()}"])) {
+                    $max_value = $obj->getValue();
                     $declared = min($max_value, $soi["total"]);
                 } else {
                     $declared = $soi["total"] * $declared_pcent / 100;
@@ -328,19 +333,19 @@ class SoService extends BaseService
 
                 $vat = round($declared * $vat_percent / 100, 2);
                 $pbvat = $soi["total"] - $vat;
-                $soi_obj->set_unit_price(round($pbvat, 2));
-                $soi_obj->set_vat_total(round($vat * $soi["qty"] * (1 - $vars["vat_exempt"]), 2));
-                $soi_obj->set_gst_total($soi["gst"]);
+                $soi_obj->setUnitPrice(round($pbvat, 2));
+                $soi_obj->setVatTotal(round($vat * $soi["qty"] * (1 - $vars["vat_exempt"]), 2));
+                $soi_obj->setGstTotal($soi["gst"]);
                 if ($vars["vat_exempt"]) {
-                    $soi_obj->set_amount(round($pbvat * $soi["qty"], 2));
+                    $soi_obj->setAmount(round($pbvat * $soi["qty"], 2));
                 } else {
-                    $soi_obj->set_amount(round($soi["total"] * $soi["qty"], 2));
+                    $soi_obj->setAmount(round($soi["total"] * $soi["qty"], 2));
                 }
                 $so_item_list[] = $soi_obj;
                 $special_list[] = $soi_obj;
                 $amount += ($vars["vat_exempt"] ? $pbvat * $soi["qty"] : $soi["total"] * $soi["qty"]);
                 $amount += $soi["gst"];
-                $cost += $soi_obj->get_vat_total();
+                $cost += $soi_obj->getVatTotal();
                 $line_no++;
             }
         }
@@ -488,12 +493,12 @@ class SoService extends BaseService
 
         $to_currency_id = $this->getDao('Config')->valueOf("func_curr_id");
         if ($er_obj = $this->getDao('ExchangeRate')->get(array("from_currency_id" => $vars["currency_id"], "to_currency_id" => $to_currency_id))) {
-            $so_vo->set_rate($er_obj->get_rate());
+            $so_vo->set_rate($er_obj->getRate());
         }
 
         //added by Jack for rate in EUR
         if ($er_eur_obj = $this->getDao('ExchangeRate')->get(array("from_currency_id" => $vars["currency_id"], "to_currency_id" => "EUR"))) {
-            $so_vo->set_ref_1($er_eur_obj->get_rate());
+            $so_vo->set_ref_1($er_eur_obj->getRate());
         }
 
         //Promotion Code
@@ -778,17 +783,6 @@ class SoService extends BaseService
     {
         $this->price_service = $srv;
 
-        return $srv;
-    }
-
-    public function get_sub_domain_srv()
-    {
-        return $this->sub_domain_srv;
-    }
-
-    public function set_sub_domain_srv($srv)
-    {
-        $this->sub_domain_srv = $srv;
         return $srv;
     }
 
@@ -1276,23 +1270,23 @@ class SoService extends BaseService
                     $replace = [];
 
                     // get language template
-                    include_once(APPPATH . "hooks/country_selection.php");
                     $country_id = $pbv_obj->getPlatformCountryId();
+                    // include_once(APPPATH . "hooks/country_selection.php");
 
-                    $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
+                    // $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
 
-                    if (file_exists(APPPATH . "language/template_service/" . $lang_id . "/customer_invoice.ini")) {
-                        $data_arr = parse_ini_file(APPPATH . "language/template_service/" . $lang_id . "/customer_invoice.ini");
-                    }
-                    if (!is_null($data_arr)) {
-                        $replace = array_merge($replace, $data_arr);
-                    }
+                    // if (file_exists(APPPATH . "language/template_service/" . $lang_id . "/customer_invoice.ini")) {
+                    //     $data_arr = parse_ini_file(APPPATH . "language/template_service/" . $lang_id . "/customer_invoice.ini");
+                    // }
+                    // if (!is_null($data_arr)) {
+                    //     $replace = array_merge($replace, $data_arr);
+                    // }
 
 #                   SBF #2960 Add NIF/CIF to invoice if info was supplied
 #                   SBF #4330 also for IT page
                     $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
-                    $client_id_no = $client_obj->get_client_id_no();
-                    $replace["company_name"] = $client_obj->get_companyname();
+                    $client_id_no = $client_obj->getClientIdNo();
+                    $replace["company_name"] = $client_obj->getCompanyname();
                     if (($cur_platform_id == "WEBES" || $cur_platform_id == "WEBIT") && $client_id_no) {
                         $replace["client_id_no"] = <<<html
                         <p>$client_id_no</p>
@@ -1305,12 +1299,11 @@ html;
                     }
 
                     $tpl_id = "shipped_invoice";
-                    include_once(APPPATH . "libraries/service/Template_service.php");
-                    $tpl_srv = new Template_service();
-                    $tpl_obj = $tpl_srv->get_msg_tpl_w_att(array("id" => $tpl_id, "lang_id" => $lang_id, "platform_id" => $cur_platform_id), $replace);
+
+                    $tpl_obj = $this->templateService->getMsgTplWithAtt(array("id" => $tpl_id, "lang_id" => $lang_id, "platform_id" => $cur_platform_id), $replace);
 
                     if ($tpl_obj != "") {
-                        $html = $tpl_obj->template->get_message();
+                        $html = $tpl_obj->template->getMessage();
                     } else {
                         $html = "";
                     }
@@ -1691,13 +1684,11 @@ html;
     {
         $content = "";
         if ($so_no_list) {
-            include_once(APPPATH . "libraries/service/Template_service.php");
-            $tpl_srv = new Template_service();
             $tpl_id = "delivery_note";
             $content .= @file_get_contents(APPPATH . $this->getDao('Config')->valueOf("tpl_path") . $tpl_id . "/" . $tpl_id . "_header.html");
 
             foreach ($so_no_list as $so_no) {
-                if ($so_obj = $this->get(array("so_no" => $so_no))) {
+                if ($so_obj = $this->getDao('So')->get(["so_no" => $so_no])) {
                     $cur_platform_id = $so_obj->getPlatformId();
                     if (!isset($ar_pbv_obj[$cur_platform_id])) {
                         $ar_pbv_obj[$cur_platform_id] = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $cur_platform_id));
@@ -1712,10 +1703,11 @@ html;
                             $ar_lang[$cur_lang_id] = $lang;
                         }
 
-                        if ($so_obj->getSplitSoGroup())
+                        if ($so_obj->getSplitSoGroup()) {
                             $new_so_no = $so_obj->getSplitSoGroup() . "/$so_no";
-                        else
+                        } else {
                             $new_so_no = $so_no;
+                        }
 
                         $replace["so_no"] = $new_so_no;
                         $replace["client_id"] = $so_obj->getClientId();
@@ -1726,7 +1718,7 @@ html;
                         $replace["delivery_address_text"] = ($so_obj->getDeliveryCompany() ? $so_obj->getDeliveryCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getDeliveryAddress())) . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState() . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
                         $replace["delivery_address"] = nl2br($replace["delivery_address_text"]);
                         $replace["billing_name"] = $so_obj->getBillName();
-                        $replace["billing_address_text"] = ($so_obj->getBillCompany() ? $so_obj->getBillCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getBillAddress())) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState() . " " . $so_obj->getBillPostcode() . "\n" . $billing_country->get_name();
+                        $replace["billing_address_text"] = ($so_obj->getBillCompany() ? $so_obj->getBillCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getBillAddress())) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState() . " " . $so_obj->getBillPostcode() . "\n" . $billing_country->getName();
                         $replace["billing_address"] = nl2br($replace["billing_address_text"]);
 
                         $replace["lang_order_no"] = $ar_lang[$cur_lang_id]["order_no"];
@@ -1748,9 +1740,9 @@ html;
                         $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
                         $option["show_ca"] = 1; # 4404 - show CA on delivery note only
 
-                        if ($itemlist = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_no), $option)) {
+                        if ($itemlist = $this->getDao('SoItem')->getItemsWithName(["so_no" => $so_no], $option)) {
                             foreach ($itemlist as $item_obj) {
-                                $tmp = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
+                                $tmp = $this->getDao('Product')->get(["sku" => $item_obj->getMainProdSku()]);
                                 $imagepath = base_url() . get_image_file($tmp->getImage(), 's', $tmp->getSku());
                                 $replace["so_items"] .= "
                     <tr>
@@ -1761,12 +1753,14 @@ html;
                             }
                         }
                         $replace["barcode"] = "<img src='" . base_url() . "order/integrated_order_fulfillment/get_barcode/$so_no' style='float:right'>";
-                        if ($tpl_obj = $tpl_srv->get_msg_tpl_w_att(array("id" => $tpl_id, "lang_id" => $cur_lang_id), $replace)) {
-                            $content .= $tpl_obj->template->get_message();
+
+                        if ($tpl_obj = $this->templateService->getMsgTplWithAtt(["id" => $tpl_id, "lang_id" => $cur_lang_id], $replace)) {
+                            $content .= $tpl_obj->template->getMessage();
                         }
                     }
                 }
             }
+
             $content .= @file_get_contents(APPPATH . $this->getDao('Config')->valueOf("tpl_path") . $tpl_id . "/" . $tpl_id . "_footer.html");
         }
 
@@ -1777,13 +1771,11 @@ html;
     {
         $content = "";
         if ($so_no_list) {
-            include_once(APPPATH . "libraries/service/Template_service.php");
-            $tpl_srv = new Template_service();
             $tpl_id = "order_packing_slip";
             $content .= @file_get_contents(APPPATH . $this->getDao('Config')->valueOf("tpl_path") . $tpl_id . "/" . $tpl_id . "_header.html");
 
             foreach ($so_no_list as $so_no) {
-                if ($so_obj = $this->get(array("so_no" => $so_no))) {
+                if ($so_obj = $this->getDao('So')->get(["so_no" => $so_no])) {
                     $cur_platform_id = $so_obj->getPlatformId();
                     if (!isset($ar_pbv_obj[$cur_platform_id])) {
                         $ar_pbv_obj[$cur_platform_id] = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $cur_platform_id));
@@ -1812,7 +1804,7 @@ html;
                         $replace["delivery_address_text"] = ($so_obj->getDeliveryCompany() ? $so_obj->getDeliveryCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getDeliveryAddress())) . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState() . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
                         $replace["delivery_address"] = nl2br($replace["delivery_address_text"]);
                         $replace["billing_name"] = $so_obj->getBillName();
-                        $replace["billing_address_text"] = ($so_obj->getBillCompany() ? $so_obj->getBillCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getBillAddress())) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState() . " " . $so_obj->getBillPostcode() . "\n" . $billing_country->get_name();
+                        $replace["billing_address_text"] = ($so_obj->getBillCompany() ? $so_obj->getBillCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getBillAddress())) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState() . " " . $so_obj->getBillPostcode() . "\n" . $billing_country->getName();
                         $replace["billing_address"] = nl2br($replace["billing_address_text"]);
 
                         $replace["lang_order_no"] = $ar_lang[$cur_lang_id]["order_no"];
@@ -1835,14 +1827,14 @@ html;
                             $no_show_sku = array('15772-AA-BK', '15772-AA-WH'); //those sku will not show on packing slip
 
                             foreach ($itemlist as $item_obj) {
-                                $item_obj_sku = $item_obj->get_item_sku();
+                                $item_obj_sku = $item_obj->getItemSku();
                                 if (in_array($item_obj_sku, $no_show_sku) === false) {
-                                    $tmp = $this->getDao('Product')->get(array("sku" => $item_obj->get_item_sku()));
+                                    $tmp = $this->getDao('Product')->get(array("sku" => $item_obj->getItemSku()));
                                     $imagepath = base_url() . get_image_file($tmp->getImage(), 's', $tmp->getSku());
                                     $replace["so_items"] .= "
                         <tr>
                             <td align='center'><img src='{$imagepath}'></td>
-                            <td valign=top style='font-size:20px'>{$item_obj->get_item_sku()} - {$item_obj->getName()}</td>
+                            <td valign=top style='font-size:20px'>{$item_obj->getItemSku()} - {$item_obj->getName()}</td>
                             <td valign=top style='font-size:20px'>{$item_obj->getQty()}</td>
                             <td></td>
                             <td></td>
@@ -1852,8 +1844,8 @@ html;
                             }
                         }
                         $replace["barcode"] = "<img src='" . base_url() . "order/integrated_order_fulfillment/get_barcode/$so_no' style='float:right'>";
-                        if ($tpl_obj = $tpl_srv->get_msg_tpl_w_att(array("id" => $tpl_id, "lang_id" => $cur_lang_id), $replace)) {
-                            $content .= $tpl_obj->template->get_message();
+                        if ($tpl_obj = $this->templateService->getMsgTplWithAtt(array("id" => $tpl_id, "lang_id" => $cur_lang_id), $replace)) {
+                            $content .= $tpl_obj->template->getMessage();
                         }
                     }
                 }
@@ -1878,7 +1870,7 @@ html;
         if (count($so_no_list)) {
             $valid = 0;
             $content = "";
-            include_once APPPATH . "data/custom_invoice.php";
+            include_once APPPATH . "data/customInvoice.php";
             $clean_body = $body;
             foreach ($so_no_list as $obj) {
                 $sum = 0;
@@ -1964,24 +1956,24 @@ html;
                     if (in_array($so_obj->getDeliveryCountryId(), array("AU"))) {
                         foreach ($itemlist AS $item_obj) {
                             $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
-                            $value = round($item_obj->getAmount() / $item_obj->getQty() * $so_obj->get_rate(), 2);
+                            $value = round($item_obj->getAmount() / $item_obj->getQty() * $so_obj->getRate(), 2);
                             $sum += $value * $item_obj->getQty();
                         }
-                        if ($obj = $this->get_sub_domain_srv()->get(array("subject" => "MAX_DECLARE_VALUE.{$so_obj->getDeliveryCountryId()}"))) {
-                            if ($obj->get_value() <= $sum) {
-                                $declared_ratio = $obj->get_value() / $sum;
+                        if ($obj = $this->subjectDomainService->getDao('SubjectDomain')->get(["subject" => "MAX_DECLARE_VALUE.{$so_obj->getDeliveryCountryId()}"])) {
+                            if ($obj->getValue() <= $sum) {
+                                $declared_ratio = $obj->getValue() / $sum;
                             }
                         }
                     }
                     if (in_array($so_obj->getDeliveryCountryId(), array("NZ"))) {
                         foreach ($itemlist AS $item_obj) {
                             $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
-                            $value = round($item_obj->getAmount() / $item_obj->getQty() * $so_obj->get_rate(), 2);
+                            $value = round($item_obj->getAmount() / $item_obj->getQty() * $so_obj->getRate(), 2);
                             $sum += $value * $item_obj->getQty();
                         }
-                        if ($obj = $this->get_sub_domain_srv()->get(array("subject" => "SELLING_PRICE_CEILING.{$so_obj->getDeliveryCountryId()}"))) {
+                        if ($obj = $this->subjectDomainService->getDao('SubjectDomain')->get(array("subject" => "SELLING_PRICE_CEILING.{$so_obj->getDeliveryCountryId()}"))) {
                             $declared_ratio = 1;
-                            if ($obj->get_value() <= $sum) {
+                            if ($obj->getValue() <= $sum) {
                                 $declared_ratio = 0.5;
                             }
                         }
@@ -2004,9 +1996,9 @@ html;
                         $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
                         $qty = $item_obj->getQty();
                         $amount_total = $item_obj->getAmount();
-                        if ($pcc_obj = $this->getDao('ProductCustomClassification')->get(array('sku' => $prod_obj->get_sku(), 'country_id' => $so_obj->getDeliveryCountryId()))) {
-                            $hs_desc = $pcc_obj->get_description();
-                            $code = $pcc_obj->get_code();
+                        if ($pcc_obj = $this->getDao('ProductCustomClassification')->get(array('sku' => $prod_obj->getSku(), 'country_id' => $so_obj->getDeliveryCountryId()))) {
+                            $hs_desc = $pcc_obj->getDescription();
+                            $code = $pcc_obj->getCode();
                         }
 
                         //SBF #4403 - If hs desc and code not found, get the hs desc and code from sub_cat_id of the product
@@ -2018,15 +2010,15 @@ html;
                         }
 
                         if ($declared_ratio) {
-                            $declared_value = round($amount_total / $item_obj->getQty() * $so_obj->get_rate() * $declared_ratio, 2);
+                            $declared_value = round($amount_total / $item_obj->getQty() * $so_obj->getRate() * $declared_ratio, 2);
                         } else {
-                            $declared_value = round($this->get_declared_value($prod_obj, $so_obj->getDeliveryCountryId(), $amount_total / $item_obj->getQty()), 2);
+                            $declared_value = round($this->getDeclaredValue($prod_obj, $so_obj->getDeliveryCountryId(), $amount_total / $item_obj->getQty()), 2);
                         }
 
                         # sbf 4145 - custom invoice in HKD
-                        $declared_value_converted = $declared_value * $so_obj->get_rate();
-                        $delivery_charge_converted = $so_obj->getDeliveryCharge() * $so_obj->get_rate();
-                        $processing_fee_converted = $processing_fee * $so_obj->get_rate();
+                        $declared_value_converted = $declared_value * $so_obj->getRate();
+                        $delivery_charge_converted = $so_obj->getDeliveryCharge() * $so_obj->getRate();
+                        $processing_fee_converted = $processing_fee * $so_obj->getRate();
                         if ($currency) {
                             $original_currency = "USD"; // $so_obj->getCurrencyId();
                             $declared_value_converted = $this->convertCurrency($original_currency, $currency, $declared_value_converted);
@@ -2056,7 +2048,7 @@ html;
                         $sum += $declared_value_converted * $qty;
                     }
                     $data["item_info"] = $item_information;
-                    //$data["total_cost"] = $so_obj->getAmount() *  $so_obj->get_rate();
+                    //$data["total_cost"] = $so_obj->getAmount() *  $so_obj->getRate();
                     $data["total_cost"] = number_format($sum, 2);
                     $data["delivery"] = number_format($delivery_charge_converted, 2);
                     $data['processing_fee'] = number_format($processing_fee_converted, 2);
@@ -2376,8 +2368,8 @@ html;
                 default:    # all other countries
                     $declared_pcent = 10;
                     break;
-                    if ($fc_obj = $this->getDao('FreightCategory')->get(array("id" => $prod_obj->get_freight_cat_id()))) {
-                        $declared_pcent = $fc_obj->get_declared_pcent();
+                    if ($fc_obj = $this->getDao('FreightCategory')->get(array("id" => $prod_obj->getFreightCatId()))) {
+                        $declared_pcent = $fc_obj->getDeclaredPcent();
                         $this->declared_value_debug .= "1. declared pcent is $declared_pcent\r\n";
                     } else {
                         // default value
@@ -2385,8 +2377,8 @@ html;
                         $this->declared_value_debug .= "2. declared pcent is $declared_pcent\r\n";
                     }
 
-                    if ($obj = $this->get_sub_domain_srv()->get(array("subject" => "MAX_DECLARE_VALUE.{$country_id}"))) {
-                        $max_value = $obj->get_value();
+                    if ($obj = $this->subjectDomainService->getDao('SubjectDomain')->get(["subject" => "MAX_DECLARE_VALUE.{$country_id}"])) {
+                        $max_value = $obj->getValue();
                         $declared = min($max_value, $price);
                         $this->declared_value_debug .= "3. (max, price, chosen) is ($max_value, $price, $declared)\r\n";
                     } else {
@@ -2416,7 +2408,7 @@ html;
 
     public function convertCurrency($original_currency, $new_currency, $original_value)
     {
-        $rate = $this->exchangeRateService->getExchangeRate($original_currency, $new_currency)->get_rate();
+        $rate = $this->exchangeRateService->getExchangeRate($original_currency, $new_currency)->getRate();
         return $rate * $original_value;
     }
 
@@ -2426,8 +2418,8 @@ html;
             ${$key} = $value;
         }
 
-        $logo_place_holder = $new_shipper_name ? "" : "<img src='" . base_url() . "/images/valuebasket_logo.png' border='0'><br/>";
-        include APPPATH . "data/cinv_body.php";
+        $logo_place_holder = $new_shipper_name ? "" : "<img src='" . base_url() . "images/logo/digitaldiscount.png' border='0'><br/>";
+        include APPPATH . "data/cinvBody.php";
 
         return $body;
     }
@@ -2480,7 +2472,7 @@ html;
         } else {
             $dto = new EventEmailDto;
 
-            $so_obj = $this->get(array("so_no" => $so_no));
+            $so_obj = $this->getDao('So')->get(["so_no" => $so_no]);
             $replace["so_no"] = $so_no;
             $replace["client_id"] = $so_obj->getClientId();
             $replace["name"] = $user_info["username"];
@@ -2602,14 +2594,17 @@ html;
         return $order;
     }
 
-    public function error_in_allocate_file()
+    public function errorInAllocateFile()
     {
         $arr = $this->getAwaitingShipmentInfo();
+
         echo "The following SKU does not have master SKU<br>";
         if ($arr) {
             foreach ($arr as $row) {
-                if (!$row->get_sku()) {
-                    echo $row->get_ext_ref_sku() . "<br>";
+                if ($row) {
+                    if (!$row->getSku()) {
+                        echo $row->getExtRefSku() . "<br>";
+                    }
                 }
             }
         }
@@ -2620,7 +2615,7 @@ html;
         return $this->getDao('SoAllocate')->getAwaitingShipmentInfo();
     }
 
-    public function generate_allocate_file()
+    public function generateAllocateFile()
     {
         $file_content = "";
         $output_path = $this->getDao('Config')->valueOf('courier_path');
@@ -2628,14 +2623,18 @@ html;
         $arr = $this->getAwaitingShipmentInfo();
         if ($arr) {
             foreach ($arr as $row) {
-                $row->set_warehouse("HK");
-                $row->set_ext_sys("CV");
+                $row->setWarehouse("HK");
+                $row->setExtSys("CV");
             }
         }
+        $this->voXml = new VoToXml;
+        $out_xml = $this->voXml->VoToXml($arr, '');
+print_r($out_xml);
+        $out_csv = new XmlToCsv('', APPPATH . 'data/awaitingShipmentToWms.txt', TRUE, ',');
 
-        $out_xml = new Vo_to_xml($arr, '');
-        $out_csv = new Xml_to_csv('', APPPATH . 'data/awaiting_shipment_to_wms.txt', TRUE, ',');
-        $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+        $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+        print_r($file_content);
+        die;
 
         if ($file_content != "") {
             $filename = "cs_awaiting_shipment_" . date("YmdHis") . ".csv";
@@ -2648,17 +2647,6 @@ html;
         }
         return;
     }
-
-    public function get_dex_service()
-    {
-        return $this->dex_service;
-    }
-
-    public function set_dex_service($srv)
-    {
-        $this->dex_service = $srv;
-    }
-
 
     public function getGenerateCourierFile($batch_id)
     {
@@ -2738,15 +2726,15 @@ html;
                                 $row->set_delivery_company($row->get_delivery_name());
                             }
                             $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $this->get_declared_value($prod_obj, $row->get_delivery_country_id(), $row->get_price());
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $row->get_price());
 
                             // #sbf4096 - Add DHLHKD
                             if ($courier === 'DHLHKD') {
                                 // If original (DHL)) is always in USD, then convert it from here
-                                $declared_value = $declared_value * $row->get_rate();
+                                $declared_value = $declared_value * $row->getRate();
                                 $declared_value = round($this->convertCurrency("USD", 'HKD', $declared_value), 2);
                             } else {
-                                $declared_value = round($declared_value * $row->get_rate(), 2);
+                                $declared_value = round($declared_value * $row->getRate(), 2);
                             }
 
                             $row->set_declared_value($declared_value);
@@ -2755,16 +2743,16 @@ html;
                             $counter++;
                         }
                     }
-                    $out_xml = new Vo_to_xml($data_out, '');
+                    $out_xml = new VoToXml($data_out, '');
 
                     // #sbf4096 - Add DHLHKD
                     if ($courier === 'DHLHKD') {
-                        $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_dhlhkd_xml2csv.txt', FALSE, '|');
+                        $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhlhkd_xml2csv.txt', FALSE, '|');
                     } else {
-                        $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_dhl_xml2csv.txt', FALSE, '|');
+                        $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhl_xml2csv.txt', FALSE, '|');
                     }
 
-                    $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
                     break;
                 case "DHLBBX":
                     if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
@@ -2791,8 +2779,8 @@ html;
                                 $row->set_delivery_company($row->get_delivery_name());
                             }
                             $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $this->get_declared_value($prod_obj, $row->get_delivery_country_id(), $row->get_price());
-                            $row->set_declared_value(round($declared_value * $row->get_rate(), 2));
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $row->get_price());
+                            $row->set_declared_value(round($declared_value * $row->getRate(), 2));
                             if (trim($mawb) != "") {
                                 $row->set_mawb("MAWB#: " . $mawb);
                             }
@@ -2800,9 +2788,9 @@ html;
                             $counter++;
                         }
                     }
-                    $out_xml = new Vo_to_xml($data_out, '');
-                    $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_dhlbbx_xml2csv.txt', FALSE, '|');
-                    $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+                    $out_xml = new VoToXml($data_out, '');
+                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhlbbx_xml2csv.txt', FALSE, '|');
+                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
                     break;
                 case "FEDEX":
                     if ($arr = $this->getShipmentDeliveryInfoCourier($value)) {
@@ -2821,8 +2809,8 @@ html;
                             }
 
                             $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $this->get_declared_value($prod_obj, $row->get_delivery_country_id(), $row->get_price());
-                            $row->set_declared_value(round($declared_value * $row->get_rate(), 2) * 100);
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $row->get_price());
+                            $row->set_declared_value(round($declared_value * $row->getRate(), 2) * 100);
 
                             $file_content .= "0,\"20\"\r\n" .
                                 "1,\"{$counter}\"\r\n" .
@@ -2839,7 +2827,7 @@ html;
                                 "18,\"{$row->get_tel()}\"\r\n" .
                                 "116,\"1\"\r\n" .
                                 "21,\"5\"\r\n" .
-                                "119,\"{$row->get_declared_value()}\"\r\n" .
+                                "119,\"{$row->getDeclaredValue()}\"\r\n" .
                                 "79-1,\"{$row->get_cc_desc()}\"\r\n" .
                                 "79-2,\"hscode {$row->get_cc_code()}\"\r\n" .
                                 "81,\"{$row->get_cc_code()}\"\r\n" .
@@ -2901,14 +2889,14 @@ html;
 
                             // we pass total_declared_value_to_6decimals in so that we will eventually calculate a declared value
                             // of all the items in the order, e.g. SKU-A: 649, SKU-B: 399, we will calculate declared value based on 649+399
-                            $declared_value = $this->get_declared_value($prod_obj, $row->get_delivery_country_id(), $total_declared_value);
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $total_declared_value);
                             $this->declared_value_debug .= "declared value: $declared_value\r\n";
                             $this->declared_value_debug .= "1total_declared_value_to_6decimals value: $total_declared_value_to_6decimals\r\n";
 
                             # convert to USD
                             $convert_to_usd = false;
                             if ($convert_to_usd) {
-                                $declared_value = round($declared_value * $row->get_rate(), 2);
+                                $declared_value = round($declared_value * $row->getRate(), 2);
                                 $row->set_declared_value($declared_value);
                             }
 
@@ -2934,7 +2922,7 @@ html;
                                     "18,\"{$row->get_tel()}\"\r\n" .
                                     "116,\"1\"\r\n" .
                                     "21,\"5\"\r\n" .
-                                    // "119,\"{$row->get_declared_value()}\"\r\n".
+                                    // "119,\"{$row->getDeclaredValue()}\"\r\n".
                                     "79-1,\"{$row->get_cc_desc()} hscode {$row->get_cc_code()}\"\r\n" .
                                     // "79-2,\"hscode {$row->get_cc_code()}\"\r\n".
                                     "81-1,\"{$row->get_cc_code()}\"\r\n" .
@@ -3015,9 +3003,9 @@ html;
                         }
                     }
 
-                    $out_xml = new Vo_to_xml($data_out, '');
-                    $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_tnt_xml2csv.txt', TRUE, '|');
-                    $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+                    $out_xml = new VoToXml($data_out, '');
+                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_tnt_xml2csv.txt', TRUE, '|');
+                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
                     break;
 
                 case "NEW_QUANTIUM":
@@ -3050,8 +3038,8 @@ html;
                                     $row->set_delivery_city('.');
                                 }
 
-                                $declared_value = $this->get_declared_value($row, $row->get_delivery_country_id(), $row->get_price());
-                                $row->set_declared_value(round($declared_value * $row->get_rate(), 2));
+                                $declared_value = $this->getDeclaredValue($row, $row->get_delivery_country_id(), $row->get_price());
+                                $row->set_declared_value(round($declared_value * $row->getRate(), 2));
 
                                 $prev_so_no = $row->get_so_no();
 
@@ -3060,9 +3048,9 @@ html;
                             }
                         }
                     }
-                    $out_xml = new Vo_to_xml($data_out, '');
-                    $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_new_quantium_xml2csv.txt', FALSE, '|');
-                    $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+                    $out_xml = new VoToXml($data_out, '');
+                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_new_quantium_xml2csv.txt', FALSE, '|');
+                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
                     break;
 
                 case "QUANTIUM":
@@ -3088,8 +3076,8 @@ html;
                                     $row->set_delivery_company($row->get_delivery_name());
                                 }
 
-                                $declared_value = $this->get_declared_value($row, $row->get_delivery_country_id(), $row->get_price());
-                                $row->set_declared_value(round($declared_value * $row->get_rate(), 2));
+                                $declared_value = $this->getDeclaredValue($row, $row->get_delivery_country_id(), $row->get_price());
+                                $row->set_declared_value(round($declared_value * $row->getRate(), 2));
 
                                 $prev_so_no = $row->get_so_no();
 
@@ -3098,9 +3086,9 @@ html;
                             }
                         }
                     }
-                    $out_xml = new Vo_to_xml($data_out, '');
-                    $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_quantium_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+                    $out_xml = new VoToXml($data_out, '');
+                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_quantium_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
                     break;
 
                 case "TOLL":
@@ -3135,8 +3123,8 @@ html;
                             }
 
                             $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $this->get_declared_value($prod_obj, $row->get_delivery_country_id(), $row->get_price());
-                            $row->set_declared_value(round($declared_value * $row->get_rate(), 2));
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $row->get_price());
+                            $row->set_declared_value(round($declared_value * $row->getRate(), 2));
 
                             if ($country_obj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()))) {
                                 $country_name = $country_obj->get_name();
@@ -3146,9 +3134,9 @@ html;
                             $counter++;
                         }
                     }
-                    $out_xml = new Vo_to_xml($data_out, '');
-                    $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_toll_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+                    $out_xml = new VoToXml($data_out, '');
+                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_toll_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
                     break;
 
                 case "TOLL2":   // SBF#1965
@@ -3184,8 +3172,8 @@ html;
                             }
 
                             $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $this->get_declared_value($prod_obj, $row->get_delivery_country_id(), $row->get_price());
-                            $row->set_declared_value(round($declared_value * $row->get_rate(), 2));
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $row->get_price());
+                            $row->set_declared_value(round($declared_value * $row->getRate(), 2));
 
                             if ($country_obj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()))) {
                                 $country_name = $country_obj->get_name();
@@ -3195,9 +3183,9 @@ html;
                             $counter++;
                         }
                     }
-                    $out_xml = new Vo_to_xml($data_out, '');
-                    $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_dpd_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+                    $out_xml = new VoToXml($data_out, '');
+                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dpd_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
                     break;
                 case "IM":
                 case "RMR":
@@ -3239,9 +3227,9 @@ html;
                         $data_out[] = $row;
                         $counter++;
                     }
-                    $out_xml = new Vo_to_xml($data_out, '');
-                    $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_' . strtolower($courier) . '_xml2csv.txt', TRUE, chr(9));
-                    $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+                    $out_xml = new VoToXml($data_out, '');
+                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_' . strtolower($courier) . '_xml2csv.txt', TRUE, chr(9));
+                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
 
                     // Prepare dispatch list data
                     $counter = 1;
@@ -3259,13 +3247,13 @@ html;
                         $dispatch_data_out[] = $row;
                         $counter++;
                     }
-                    $dispatch_out_xml = new Vo_to_xml($dispatch_data_out, '');
+                    $dispatch_out_xml = new VoToXml($dispatch_data_out, '');
                     if ($courier == "RMR")
                         $data_file = 'data/dispatch_list_rmr_xml2csv.txt';
                     else
                         $data_file = 'data/dispatch_list_xml2csv.txt';
-                    $dispatch_out_csv = new Xml_to_csv('', APPPATH . $data_file, TRUE, ',');
-                    $dispatch_content = $this->get_dex_service()->convert($dispatch_out_xml, $dispatch_out_csv);
+                    $dispatch_out_csv = new XmlToCsv('', APPPATH . $data_file, TRUE, ',');
+                    $dispatch_content = $this->dataExchangeService->convert($dispatch_out_xml, $dispatch_out_csv);
                     break;
                 case "ARAMEX_COD":
                     if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
@@ -3290,7 +3278,7 @@ html;
                             # convert to USD
                             $convert_to_usd = false;
                             if ($convert_to_usd) {
-                                $declared_value = round($declared_value * $row->get_rate(), 2);
+                                $declared_value = round($declared_value * $row->getRate(), 2);
                             }
                             $row->set_declared_value($declared_value);
 
@@ -3303,9 +3291,9 @@ html;
                         }
                     }
 
-                    $out_xml = new Vo_to_xml($data_out, '');
-                    $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_aramex_cod_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+                    $out_xml = new VoToXml($data_out, '');
+                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_aramex_cod_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
 
                     break;
 
@@ -3327,8 +3315,8 @@ html;
                             }
 
                             $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $this->get_declared_value($prod_obj, $row->get_delivery_country_id(), $row->get_price());
-                            $row->set_declared_value(round($declared_value * $row->get_rate(), 2));
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $row->get_price());
+                            $row->set_declared_value(round($declared_value * $row->getRate(), 2));
 
                             if ($country_obj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()))) {
                                 $country_name = $country_obj->get_name();
@@ -3338,9 +3326,9 @@ html;
                             $counter++;
                         }
                     }
-                    $out_xml = new Vo_to_xml($data_out, '');
-                    $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_aramex_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+                    $out_xml = new VoToXml($data_out, '');
+                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_aramex_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
                     break;
 
                 //#2507 add DPD_NL courier feed
@@ -3381,9 +3369,9 @@ html;
                             $counter++;
                         }
                     }
-                    $out_xml = new Vo_to_xml($data_out, '');
-                    $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_DPD_NL_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+                    $out_xml = new VoToXml($data_out, '');
+                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_DPD_NL_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
                     break;
                 // #2715 MRW's IT integration
                 case "MRW":
@@ -3494,9 +3482,9 @@ html;
                         $data_out[] = $row;
                         $counter++;
                     }
-                    $out_xml = new Vo_to_xml($data_out, '');
-                    $out_csv = new Xml_to_csv('', APPPATH . 'data/shipment_info_to_courier_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->get_dex_service()->convert($out_xml, $out_csv);
+                    $out_xml = new VoToXml($data_out, '');
+                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
 //create file for dispatch list import
                     $counter = 1;
                     if (($courier == "AMS")
@@ -3516,9 +3504,9 @@ html;
                             $dispatch_data_out[] = $row;
                             $counter++;
                         }
-                        $dispatch_out_xml = new Vo_to_xml($dispatch_data_out, '');
-                        $dispatch_out_csv = new Xml_to_csv('', APPPATH . 'data/dispatch_list_xml2csv.txt', TRUE, ',');
-                        $dispatch_content = $this->get_dex_service()->convert($dispatch_out_xml, $dispatch_out_csv);
+                        $dispatch_out_xml = new VoToXml($dispatch_data_out, '');
+                        $dispatch_out_csv = new XmlToCsv('', APPPATH . 'data/dispatch_list_xml2csv.txt', TRUE, ',');
+                        $dispatch_content = $this->dataExchangeService->convert($dispatch_out_xml, $dispatch_out_csv);
                     }
                     break;
             }
@@ -4197,7 +4185,7 @@ html;
         $data_path = $this->getDao('Config')->valueOf("data_path");
         $html = $this->getInvoiceContent([$so_obj->getSoNo()], 1);
         $so_no = $so_obj->getSoNo();
-        $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
+        // $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
         $replace["att_file"] = $att_file;
         $dto->setReplace($replace);
 
@@ -4765,7 +4753,7 @@ html;
         $data_path = $this->getDao('Config')->valueOf("data_path");
         $html = $this->getInvoiceContent([$so_obj->getSoNo()], 1);
         $so_no = $so_obj->getSoNo();
-        $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
+        // $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
         $replace["att_file"] = $att_file;
         $dto->setReplace($replace);
         $this->eventService->fireEvent($dto);
@@ -4812,10 +4800,10 @@ html;
                 $prod_obj->set_display_quantity($ndqty);
                 $prod_obj->set_website_quantity($nwqty);
                 if ($nwqty === 0) {
-                    $stock_alert[$prod_obj->get_sku()] = $prod_obj->get_name();
+                    $stock_alert[$prod_obj->getSku()] = $prod_obj->get_name();
                 }
                 if ($nwqty == 5) {
-                    $five_alert[$prod_obj->get_sku()] = $prod_obj->get_name();
+                    $five_alert[$prod_obj->getSku()] = $prod_obj->get_name();
                 }
                 $this->getDao('Product')->update($prod_obj);
             }
@@ -5199,7 +5187,7 @@ html;
     public function getPriorityScoreBase($so_no, $result = null)
     {
         if ($this->sub_domain_cache == null) {
-            foreach ($this->get_sub_domain_srv()->get_list() as $k => $v) {
+            foreach ($this->subjectDomainService->getDao('SubjectDomain')->getList() as $k => $v) {
                 $this->sub_domain_cache[$v->get_subject()] = $v->get_value();
             }
         }
