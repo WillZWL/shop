@@ -260,8 +260,7 @@ class VoToXml implements inConverter
     private $map_file;
 
     function VoToXml($input = "", $map_file = "")
-    {echo "string";
-        print_r($input);
+    {
         $CI =& get_instance();
         $this->load = $CI->load;
 

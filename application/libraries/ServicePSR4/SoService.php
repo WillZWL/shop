@@ -2629,12 +2629,12 @@ html;
         }
         $this->voXml = new VoToXml;
         $out_xml = $this->voXml->VoToXml($arr, '');
-print_r($out_xml);
-        $out_csv = new XmlToCsv('', APPPATH . 'data/awaitingShipmentToWms.txt', TRUE, ',');
 
-        $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
-        print_r($file_content);
-        die;
+        $this->xmlCsv = new XmlToCsv;
+        $out_csv = $this->xmlCsv->XmlToCsv('', APPPATH . 'data/awaitingShipmentToWms.txt', TRUE, ',');
+
+        // $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+
 
         if ($file_content != "") {
             $filename = "cs_awaiting_shipment_" . date("YmdHis") . ".csv";
@@ -4185,7 +4185,7 @@ print_r($out_xml);
         $data_path = $this->getDao('Config')->valueOf("data_path");
         $html = $this->getInvoiceContent([$so_obj->getSoNo()], 1);
         $so_no = $so_obj->getSoNo();
-        // $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
+        $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
         $replace["att_file"] = $att_file;
         $dto->setReplace($replace);
 
@@ -4753,7 +4753,7 @@ print_r($out_xml);
         $data_path = $this->getDao('Config')->valueOf("data_path");
         $html = $this->getInvoiceContent([$so_obj->getSoNo()], 1);
         $so_no = $so_obj->getSoNo();
-        // $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
+        $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
         $replace["att_file"] = $att_file;
         $dto->setReplace($replace);
         $this->eventService->fireEvent($dto);

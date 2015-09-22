@@ -213,6 +213,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\EntityDao();
         };
 
+        $daoContainer['Event'] = function () {
+            return new D\EventDao();
+        };
+
         $daoContainer['ExchangeRate'] = function () {
             return new D\ExchangeRateDao();
         };
