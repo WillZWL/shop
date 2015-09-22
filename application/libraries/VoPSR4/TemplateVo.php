@@ -1,12 +1,17 @@
 <?php
-class SoShipmentVo extends \BaseVo
+class TemplateVo extends \BaseVo
 {
     private $id;
-    private $sh_no = '';
-    private $courier_id;
-    private $tracking_no = '';
-    private $courier_feed_sent = '0';
-    private $status = '0';
+    private $template_id;
+    private $lang_id = 'en';
+    private $name = '';
+    private $description = '';
+    private $status = '1';
+    private $tpl_file;
+    private $tpl_alt_file;
+    private $subject = '';
+    private $message_html;
+    private $message_alt;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -27,44 +32,44 @@ class SoShipmentVo extends \BaseVo
         return $this->id;
     }
 
-    public function setShNo($sh_no)
+    public function setTemplateId($template_id)
     {
-        $this->sh_no = $sh_no;
+        $this->template_id = $template_id;
     }
 
-    public function getShNo()
+    public function getTemplateId()
     {
-        return $this->sh_no;
+        return $this->template_id;
     }
 
-    public function setCourierId($courier_id)
+    public function setLangId($lang_id)
     {
-        $this->courier_id = $courier_id;
+        $this->lang_id = $lang_id;
     }
 
-    public function getCourierId()
+    public function getLangId()
     {
-        return $this->courier_id;
+        return $this->lang_id;
     }
 
-    public function setTrackingNo($tracking_no)
+    public function setName($name)
     {
-        $this->tracking_no = $tracking_no;
+        $this->name = $name;
     }
 
-    public function getTrackingNo()
+    public function getName()
     {
-        return $this->tracking_no;
+        return $this->name;
     }
 
-    public function setCourierFeedSent($courier_feed_sent)
+    public function setDescription($description)
     {
-        $this->courier_feed_sent = $courier_feed_sent;
+        $this->description = $description;
     }
 
-    public function getCourierFeedSent()
+    public function getDescription()
     {
-        return $this->courier_feed_sent;
+        return $this->description;
     }
 
     public function setStatus($status)
@@ -75,6 +80,56 @@ class SoShipmentVo extends \BaseVo
     public function getStatus()
     {
         return $this->status;
+    }
+
+    public function setTplFile($tpl_file)
+    {
+        $this->tpl_file = $tpl_file;
+    }
+
+    public function getTplFile()
+    {
+        return $this->tpl_file;
+    }
+
+    public function setTplAltFile($tpl_alt_file)
+    {
+        $this->tpl_alt_file = $tpl_alt_file;
+    }
+
+    public function getTplAltFile()
+    {
+        return $this->tpl_alt_file;
+    }
+
+    public function setSubject($subject)
+    {
+        $this->subject = $subject;
+    }
+
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    public function setMessageHtml($message_html)
+    {
+        $this->message_html = $message_html;
+    }
+
+    public function getMessageHtml()
+    {
+        return $this->message_html;
+    }
+
+    public function setMessageAlt($message_alt)
+    {
+        $this->message_alt = $message_alt;
+    }
+
+    public function getMessageAlt()
+    {
+        return $this->message_alt;
     }
 
     public function setCreateOn($create_on)

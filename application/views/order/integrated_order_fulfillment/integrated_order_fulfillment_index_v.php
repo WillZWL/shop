@@ -32,7 +32,7 @@
             <td height="2" class="line"></td>
         </tr>
     </table>
-    <form name="fm" method="get" onSubmit="return CheckForm(this)">
+    <form name="fm" method="get" action="<?= site_url('order/integrated_order_fulfillment/index/'.$warehouse) ?>" onSubmit="return CheckForm(this)">
         <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
             <tr>
                 <td style="padding-left:8px">
@@ -54,7 +54,7 @@
                 <tr>
                     <td align="right" colspan=2>
                         <input type="button" value="<?= $lang["wms_allocation"] ?>"
-                        onClick="document.location.href='<?= base_url() ?>order/integrated_order_fulfillment/get_wms_allocation_plan_order'">
+                        onClick="document.location.href='<?= base_url() ?>order/integrated_order_fulfillment/getWmsAllocationPlanOrder'">
                     </td>
                 </tr>
             </table>

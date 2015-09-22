@@ -4,7 +4,7 @@ namespace ESG\Panther\Dao;
 class ClientDao extends BaseDao
 {
     private $tableName = "client";
-    private $voClassName = "Client_vo";
+    private $voClassName = "ClientVo";
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class ClientDao extends BaseDao
         return $this->tableName;
     }
 
-    public function get_client_last_order($where, $option, $classname = 'so_last_order_w_client_dto')
+    public function get_client_last_order($where, $option, $classname = 'SoLastOrderWithClientDto')
     {
         $this->db->from("so");
         $this->db->join("client as c", "c.id = so.client_id", "INNER");
