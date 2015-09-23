@@ -26,10 +26,10 @@
 		</ul>
 
 		<div class="text silver_box items item1" <?=$order['block']?>>
-				<? if($show_partial_ship_text) { ?>
+				<?php if($show_partial_ship_text) { ?>
 					<?= _('Your order has been split at no extra cost to ensure all item(s) purchased are received at the soonest available opportunity.') ?>
 					<br><br>
-				<? } ?>
+				<?php } ?>
 			<table class="acount-orders" border="0">
 				<colgroup>
 					<col width="110">
@@ -47,9 +47,9 @@
 					<th><?= _("Order total") ?></th>
 					<th><?= _("Status") ?></th>
 				</tr>
-				<?
-				if ($orderlist) {
-					foreach ($orderlist as $order_arr) {
+				<?php
+				if ($orderlist):
+					foreach ($orderlist as $order_arr):
 				?>
 				<tr>
 					<td><?=$order_arr['client_id']?>-<?=$order_arr['join_split_so_no']?><?=$order_arr['print_invoice_html']?></td>
@@ -59,18 +59,18 @@
 					<td><?=$order_arr['total_amount']?></td>
 					<td><b><?=$order_arr['order_status']?></b><br /><?=$order_arr['status_desc']?></td>
 				</tr>
-				<?
-					}
-				}
+				<?php
+					endforeach;
+				endif;
 				?>
 			</table>
 			<br><br>
-				<? if ($show_bank_transfer_contact) { ?>
+				<?php if ($show_bank_transfer_contact) { ?>
 					<p><?= _('Have you paid by bank transfer?<br>Contact us ') ?>
 						<a href="<?=base_url().'contact/show_enquiry/sales';?>"><?= _('here') ?></a>.
 					</p>
-				<? } ?>
-				<? if ($unpaid_orderlist) { ?>
+				<?php } ?>
+				<?php if ($unpaid_orderlist) { ?>
 						<table class="acount-orders" border="0">
 							<tr>
 								<th><?= _("Order") ?></th>
@@ -80,7 +80,7 @@
 								<th><?= _("Order total") ?></th>
 								<th><?= _("Status") ?></th>
 							</tr>
-						<?
+						<?php
 							foreach ($unpaid_orderlist as $so_no => $unpaid_obj) {
 							$uniqid_status = $unpaid_obj->getUnpaidStatus();
 						?>
@@ -92,13 +92,13 @@
 								<td><?=$unpaid_obj->getTotalAmount();?></td>
 								<td><?=$show_unpaid_status["$uniqid_status"]?></td>
 							</tr>
-						<? } ?>
-				<? } ?>
+						<?php } ?>
+				<?php } ?>
 		</div>
 
 		<div class="silver_box items order_form item2" id="returns_request" <?=$rma['block']?>>
 			<form name="fm_rma" action="<?=base_url()?>myaccount/rma" method="post" class="form-holder" onSubmit="return (CheckForm(document.fm_rma) && CheckSubmit(this));">
-				<? if ($rma_confirm) { ?>
+				<?php if ($rma_confirm) { ?>
 					<p>
 							<p class="green">
 								<?= _("Your request has been submitted. Please kindly review the information below as your RMA confirmation.") ?><br />
@@ -107,7 +107,7 @@
 								<?= _("to print this page and send it back to us together with the returned package. Items returned without this RMA form will not be processed.") ?>
 							</p>
 					</p>
-				<? } ?>
+				<?php } ?>
 				<p class="red clear" style="font-size:14px"><?= _("Important Notice") ?></p>
 				<p class="clear">
 					<b><?= _("Please read the following before filling in the web form below.") ?></b>
@@ -130,9 +130,9 @@
 						<label><?= _("Country") ?>: *</label>
 						<select id="rma_country_id" name="country_id" dname="<?= _('Country') ?>" class="[select_box_style]"  notEmpty onchange="update_state_attribute('rma', this.value);update_postcode_attribute('rma', this.value);">
 							<option value=""></option>
-							<? foreach ($bill_to_list as $bill_country) { ?>
-							<option value="<?=$bill_country->getCountryId();?>" <? if($rma_obj->getCountryId() == $bill_country->getCountryId()) { echo 'SELECTED'; } ?>><?=$bill_country->getName();?></option>
-							<? } ?>
+							<?php foreach ($bill_to_list as $bill_country): ?>
+							<option value="<?=$bill_country->getCountryId();?>" <?php if($rma_obj->getCountryId() == $bill_country->getCountryId()) { echo 'SELECTED'; } ?>><?=$bill_country->getName();?></option>
+							<?php endforeach ?>
 						</select>
 					</li>
 					<li class="clear">
@@ -182,8 +182,8 @@
 								$category_arr = array(0=>"Machine Only", 1=>"Accessory Only", 2=>"Machine and Accessory");
 								foreach($category_arr as $key => $value){
 							?>
-							<option value="<?=$key?>" <? if($rma_obj->getCategory() == $key){ echo 'SELECTED'; } ?>><?=$value?></option>
-							<? } ?>
+							<option value="<?=$key?>" <?php if($rma_obj->getCategory() == $key){ echo 'SELECTED'; } ?>><?=$value?></option>
+							<?php } ?>
 						</select>
 					</li>
 					<li class="clear">
@@ -203,7 +203,7 @@
 								$reason_arr = array(0=>"Needs Repair Under Warranty", 1=>"Wrong Product Delivered", 2=>"Wrong Product Purchased", 3=>"Accidently Purchased (conditions apply)");
 								foreach ($reason_arr as $key => $value) {
 							?>
-							<option value="<?=$key?>" <? if($rma_obj->getReason() == $key) { echo "SELECTED";}?>><?=$value?></option>
+							<option value="<?=$key?>" <?php if($rma_obj->getReason() == $key) { echo "SELECTED";}?>><?=$value?></option>
 							<?
 								}
 							?>
@@ -216,7 +216,7 @@
 								$action_request = array(0=>"Swap", 1=>"Refund", 2=>"Repair");
 								foreach ($action_request as $key => $value) {
 							?>
-							<option value="<?=$key?>" <? if($rma_obj->getActionRequest() == $key) {echo "SELECTED";} ?>><?=$value?></option>
+							<option value="<?=$key?>" <?php if($rma_obj->getActionRequest() == $key) {echo "SELECTED";} ?>><?=$value?></option>
 							<?
 								}
 							?>
@@ -298,9 +298,9 @@
 					<li class="clear width_800">
 						<label><?= _('Title') ?> *</label>
 						<select name="name_prefix" class="[select_box_style]" id="profile_title">
-							 <?foreach ($title as $title_row) { ?>
-                                <option value="<?=$title_row?>" <? if($client_obj->getTitle() == $title_row) { echo "SELECTED"; }?>><?=$title_row?></option>
-                            <? } ?>
+							 <?php foreach ($title as $title_row): ?>
+                                <option value="<?=$title_row?>" <?php if($client_obj->getTitle() == $title_row) { echo "SELECTED"; }?>><?=$title_row?></option>
+                            <?php endforeach ?>
 						</select>
 					</li>
 					<li class="clear">
@@ -323,9 +323,9 @@
 					<li class="select">
 						<label><?= _('Country') ?> *</label>
 						<select id="profile_country_id" name="country_id" class="[select_box_style]" id="profile_billing_country" onchange="update_state_attribute('profile', this.value);update_postcode_attribute('profile', this.value);">
-							<? foreach ($bill_to_list as $bill_country) { ?>
-								<option value="<?=$bill_country->getCountryId()?>" <? if($client_obj->getCountryId() == $bill_country->getCountryId()){ echo "SELECTED";} ?>><?=$bill_country->getName();?></option>
-							<? } ?>
+							<?php foreach ($bill_to_list as $bill_country): ?>
+								<option value="<?=$bill_country->getCountryId()?>" <?php if($client_obj->getCountryId() == $bill_country->getCountryId()){ echo "SELECTED";} ?>><?=$bill_country->getName();?></option>
+							<?php endforeach ?>
 						</select>
 					</li>
 					<li class="no_right_margin select">

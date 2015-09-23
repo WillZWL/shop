@@ -40,9 +40,10 @@
                             <li>
                                 <label><?= _('Country') ?> *</label>
                                 <select name="country_id" class="styled_select" id="delivery_country" onchange="update_field_attribute(this.value)">
-                                    <? foreach ($bill_to_list as $bill_country) { ?>
+                                    <?php foreach ($bill_to_list as $bill_country): ?>
                                     <option value="<?=$bill_country->get_country_id();?>"><?=$bill_country->get_name();?></option>
-                                    <? } ?>
+                                    <?php endforeach ?>
+
                                 </select>
                             </li>
                             <li>
@@ -83,9 +84,9 @@
                             <li>
                                 <label><?= _('Title') ?> *</label>
                                 <select name="title" class="styled_select" id="recipient_title">
-                                    <?foreach ($title as $title_row) { ?>
+                                    <?php foreach ($title as $title_row): ?>
                                     <option value="<?=$title_row?>"><?=$title_row?></option>
-                                    <? } ?>
+                                    <?php endforeach ?>
                                 </select>
                             </li>
                             <li>
