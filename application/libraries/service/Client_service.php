@@ -208,12 +208,13 @@ class Client_service extends Base_service
             $client_name = implode(' ', array($client_obj->get_forename(), $client_obj->get_surname()));
             $email_dto = $this->_get_email_dto();
             $replace = array('password' => $new_password, 'mail_from' => $email_dto->get_mail_from(), 'client name' => $client_name, 'base_url' => base_url());
-            switch (get_lang_id()) {
-                default:
-                    include_once(APPPATH . "hooks/country_selection.php");
-                    $replace = array_merge($replace, Country_selection::get_template_require_text(get_lang_id(), PLATFORMCOUNTRYID));
-                    $email_sender = "no-reply@" . strtolower($replace["site_name"]);
-            }
+            // switch (get_lang_id()) {
+            //     default:
+            //         include_once(APPPATH . "hooks/Country_selection.php");
+            //         $replace = array_merge($replace, Country_selection::get_template_require_text(get_lang_id(), PLATFORMCOUNTRYID));
+            //         $email_sender = "no-reply@" . strtolower($replace["site_name"]);
+            // }
+            $email_sender = "no-reply@digitaldiscount.co.uk";
             $email_dto->set_lang_id(get_lang_id());
             $email_dto->set_event_id('forget_password');
             $email_dto->set_tpl_id('forget_password');
@@ -228,7 +229,7 @@ class Client_service extends Base_service
 
     public function update_password($email = '', $new_password = '', $old_password = '', &$client_obj = '')
     {
-        if (empty($email) || empty($new_password) || empty($old_password)) {
+        if (empty($email) || empty($new_password)) {
             return 0; // Means fail
         }
 
@@ -237,21 +238,19 @@ class Client_service extends Base_service
         if (!$client_obj) {
             return 0; // Means fail
         } else {
-            $password_hash = $client_obj->get_password();
-            if (password_verify($old_password, $password_hash)) {
-                $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+            if ($client_obj->get_status() == 0) {
+                return 0;
+            } else {
                 $client_obj->set_password($new_password_hash);
                 $result = $this->get_dao()->update($client_obj);
                 return $result;
-            } else {
-                return 0;
             }
         }
     }
 
     private function _get_email_dto()
     {
-        include_once APPPATH . "libraries/dto/event_email_dto.php";
+        include_once APPPATH . "libraries/dto/Event_email_dto.php";
         return new Event_email_dto();
     }
 
