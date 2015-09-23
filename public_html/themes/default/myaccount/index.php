@@ -377,6 +377,7 @@
 		</div>
 		</div>
 	</div>
+<?=$notice['js']?>
 <script language="javascript">
 jQuery.noConflict();
 

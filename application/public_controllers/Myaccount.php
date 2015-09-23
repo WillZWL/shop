@@ -30,8 +30,8 @@ class Myaccount extends PUB_Controller
                     $new_password = $this->input->post("password");
                     $reconfirm_password = $this->input->post("confirm_password");
                     $data['email'] = $_SESSION['client']['email'];
-                    if (password_verify(strtolower($this->input->post("old_password")), $data["client_obj"]->getPassword())) {
-                        $_SESSION['NOTICE'] = 'Please Enter Old Password.';
+                    if (!password_verify(strtolower($this->input->post("old_password")), $data["client_obj"]->getPassword())) {
+                        $_SESSION['NOTICE'] = 'Please Enter Correct Old Password.';
                     } elseif ($new_password != $reconfirm_password) {
                         $_SESSION['NOTICE'] = 'Confirm Password mismatch.';
                     } elseif ($old_password == $new_password) {

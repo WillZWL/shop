@@ -68,7 +68,7 @@ class Login extends PUB_Controller
                         redirect(base_url());
                     }
                 } else {
-                    $SESSION['NOTICE'] = $data["register_failed_msg"] = $reg_res['data'];
+                    $_SESSION['NOTICE'] = $reg_res['data'];
                 }
             } else {
                 if ($this->input->post("password")) {
@@ -89,7 +89,7 @@ class Login extends PUB_Controller
         } else {
             $data["bill_to_list"] = $this->country_model->get_country_name_in_lang(get_lang_id(), 1);
             $data["lang_id"] = get_lang_id();
-            $data["notice"] = $_SESSION["NOTICE"];
+            $data["notice"] = notice();
             unset($_SESSION["NOTICE"]);
             $data["step"] = 2;
             $data["ajax"] = $this->input->get("x_sign_in") || strpos($this->input->get("back"), "x_sign_in") !== FALSE;
@@ -139,15 +139,15 @@ class Login extends PUB_Controller
         $proc = $this->client_model->client_service->get_dao()->get(array("email" => $email));
         $res = [];
         if (!empty($proc)) {
-            $notice = $this->get_fail_reg_msg();
-            $res = array('res'=>FALSE, 'data'=>$notice);
-        } else {
             if ($client_obj = $this->client_model->client_service->get_dao()->insert($client_vo)) {
                $res = array('res'=>TRUE, 'data'=>$client_obj);
             } else {
                 $notice = "Error: " . __LINE__;
                 $res = array('res'=>FALSE, 'data'=>$notice);
             }
+        } else {
+            $notice = $this->get_fail_reg_msg();
+            $res = array('res'=>FALSE, 'data'=>$notice);
         }
         return $res;
     }

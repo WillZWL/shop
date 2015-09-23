@@ -135,6 +135,7 @@
             </div>
         </div>
     </div>
+    <?=$notice['js']?>
     <script>
         if(document.getElementById("delivery_country").value == 'HK' || document.getElementById("delivery_country").value == 'IE') {
             jQuery("#postcode").removeAttr("notEmpty");

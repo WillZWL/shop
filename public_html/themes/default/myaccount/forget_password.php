@@ -48,15 +48,15 @@ $erray = array("", $not_long_enough, $email_no_at, $email_no_com, $email_invalid
             </td>
         </tr>
         <tr>
-            <? if($error != 0 && $displayn == 1){ ?>
+            <?php if($error != 0 && $displayn == 1){ ?>
                 <td width="50px" align="right"><?= _("Email") ?>:</td>
                 <td width="120px"><input name="email"  value="<?=$this->input->get("page")?"":htmlspecialchars($this->input->get("email"))?>" notEmpty><input type="submit" value="<?= _('Go') ?>"></td>
-            <? }else{ ?>
+            <?php }else{ ?>
                 <td align="center" style="border-left:1px solid #EF5F16;">
                     <?= _('An email containing a temporary password will be sent to your registered email shortly.') ?><br /><br />
                     <?= _('Kindly check your spam folder in the event our email is not received within a couple of minutes.') ?>
                 </td>
-            <? } ?>
+            <?php } ?>
         </tr>
     </table>
     <input name="back" type="hidden" value="<?=$back?>">
