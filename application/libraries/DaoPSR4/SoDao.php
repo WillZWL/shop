@@ -2643,7 +2643,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_order_history($client_id, $classname = "OrderHistoryDto")
+    public function getOrderHistory($client_id, $classname = "OrderHistoryDto")
     {
         # sbf #3746 don't include complementary accessory on front end
         $ca_catid_arr = implode(',', $this->getAccessoryCatidArr());
@@ -2661,6 +2661,7 @@ SQL;
 
         return $this->commonGetList($classname, $where, $option, "
                 pbv.platform_currency_id currency_id,
+                so.platform_id,
                 so.so_no,
                 IF(ISNULL(so.split_so_group), so.so_no, CONCAT_WS('/',so.split_so_group,so.so_no)) AS join_split_so_no,
                 so.split_so_group,
@@ -2680,8 +2681,7 @@ SQL;
 
         return $accessory_catid_arr = ["753"];
     }
-
-    public function get_unpaid_order_history($client_id, $payment_gateway_arr = [], $classname = "OrderHistoryDto")
+    public function getUnpaidOrderHistory($client_id, $payment_gateway_arr = [], $classname = "OrderHistoryDto")
     {
         # sbf #3746 don't include complementary accessory on front end
         $ca_catid_arr = implode(',', $this->getAccessoryCatidArr());
