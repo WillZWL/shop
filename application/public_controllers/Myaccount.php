@@ -83,49 +83,53 @@ class Myaccount extends PUB_Controller
     public function index($page = "order", $rma_no = "")
     {
         $client_id = $_SESSION["client"]["id"];
-        $client_orders = $this->getClientOrderList($client_id);
-        $data["show_bank_transfer_contact"] = $client_orders['show_bank_transfer_contact'];
-        $data['show_partial_ship_text'] = $client_orders['show_partial_ship_text'];
-        $data['orderlist'] = $client_orders['orderlist'];
-        $unpaid_orderlist = $this->getUnpaidOrderList($client_id);
-        $data['unpaid_orderlist'] = $unpaid_orderlist['unpaid_orderlist'];
-        if ($unpaid_orderlist['show_bank_transfer_contact']) {
-            $data['show_bank_transfer_contact'] = $unpaid_orderlist['show_bank_transfer_contact'];
-        }
-        // edit profile
-       if (($data["client_obj"] = $this->sc['Client']->getDao('Client')->get(array("id" => $_SESSION["client"]["id"]))) === FALSE) {
-            $_SESSION["NOTICE"] = "Error: " . __LINE__;
-        } else {
-            $_SESSION["client_obj"] = serialize($data["client_obj"]);
-        }
-        $data["bill_to_list"] = $this->sc['countryModel']->getCountryNameInLang(get_lang_id(), 1);
-        // rma
-
-        $data["rma_obj"] = unserialize($_SESSION["rma_obj"]);
-        if (empty($data["rma_obj"])) {
-            if (($data["rma_obj"] = $this->sc['So']->getDao("Rma")->get()) === FALSE) {
+        if ($client_id) {
+            $client_orders = $this->getClientOrderList($client_id);
+            $data["show_bank_transfer_contact"] = $client_orders['show_bank_transfer_contact'];
+            $data['show_partial_ship_text'] = $client_orders['show_partial_ship_text'];
+            $data['orderlist'] = $client_orders['orderlist'];
+            $unpaid_orderlist = $this->getUnpaidOrderList($client_id);
+            $data['unpaid_orderlist'] = $unpaid_orderlist['unpaid_orderlist'];
+            if ($unpaid_orderlist['show_bank_transfer_contact']) {
+                $data['show_bank_transfer_contact'] = $unpaid_orderlist['show_bank_transfer_contact'];
+            }
+            // edit profile
+           if (($data["client_obj"] = $this->sc['Client']->getDao('Client')->get(array("id" => $client_id))) === FALSE) {
                 $_SESSION["NOTICE"] = "Error: " . __LINE__;
             } else {
-                $_SESSION["rma_vo"] = serialize($data["rma_obj"]);
+                $_SESSION["client_obj"] = serialize($data["client_obj"]);
             }
-        }
-        // rma_confirm
-        $data["rma_confirm"] = 0;
-        if ($page == "rma" && $rma_no) {
-            if ($data["rma_obj"] = $this->sc['So']->getDao('Rma')->get(["id" => $rma_no, "client_id" => $_SESSION["client"]["id"]])) {
-                $data["rma_confirm"] = 1;
+            $data["bill_to_list"] = $this->sc['countryModel']->getCountryNameInLang(get_lang_id(), 1);
+            // rma
+
+            $data["rma_obj"] = unserialize($_SESSION["rma_obj"]);
+            if (empty($data["rma_obj"])) {
+                if (($data["rma_obj"] = $this->sc['So']->getDao("Rma")->get()) === FALSE) {
+                    $_SESSION["NOTICE"] = "Error: " . __LINE__;
+                } else {
+                    $_SESSION["rma_vo"] = serialize($data["rma_obj"]);
+                }
             }
+            // rma_confirm
+            $data["rma_confirm"] = 0;
+            if ($page == "rma" && $rma_no) {
+                if ($data["rma_obj"] = $this->sc['So']->getDao('Rma')->get(["id" => $rma_no, "client_id" => $client_id])) {
+                    $data["rma_confirm"] = 1;
+                }
+            }
+            $data["notice"] = notice();
+            unset($_SESSION["NOTICE"]);
+            $data['page'] = $page;
+            $data['lang_text'] = $this->get_language_file('', '', 'index');
+            $data['lang_id'] = get_lang_id();
+            $data['title'] = array('Mr', 'Mrs', 'Miss', 'Dr');
+            $show_unpaid_status = array(
+                0=>"<b>Pending Payment</b><br>We have not received the payment for your order.",
+                1=>"<b>Incomplete Payment</b><br>The amount received in our bank account does not correspond to the total amount of your order.");
+            $this->load->view('myaccount/index.php', $data);
+        } else {
+            redirect(base_url());
         }
-        $data["notice"] = notice();
-        unset($_SESSION["NOTICE"]);
-        $data['page'] = $page;
-        $data['lang_text'] = $this->get_language_file('', '', 'index');
-        $data['lang_id'] = get_lang_id();
-        $data['title'] = array('Mr', 'Mrs', 'Miss', 'Dr');
-        $show_unpaid_status = array(
-            0=>"<b>Pending Payment</b><br>We have not received the payment for your order.",
-            1=>"<b>Incomplete Payment</b><br>The amount received in our bank account does not correspond to the total amount of your order.");
-        $this->load->view('myaccount/index.php', $data);
     }
 
     public function getUnpaidOrderList($client_id)
@@ -135,14 +139,17 @@ class Myaccount extends PUB_Controller
         $unpaid_orderlist = $this->sc['So']->getDao('So')->getUnpaidOrderHistory($client_id, $payment_gateway_arr);
         if ($unpaid_orderlist) {
             foreach ($unpaid_orderlist as $unpaid_obj) {
+                $status = array();
+                $status = $this->sc['soModel']->getOrderStatus($unpaid_obj);
                 $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]['currency_id'] = $unpaid_obj->getCurrencyId();
                 $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]['client_id'] = $unpaid_obj->getClientId();
                 $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]['order_date'] = date("Y-m-d", strtotime($unpaid_obj->getOrderCreateDate()));
                 $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]['delivery_name'] = $unpaid_obj->getDeliveryName();
-                $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]['order_status_ini'] = $status["id"] . "_status";
-                $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]['status_desc_ini'] = $status["id"] . "_desc";
+                $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]['order_status'] = $status["status"];
+                $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]['status_desc'] = $status["desc"];
                 $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]["product_name"] .= $unpaid_obj->getProdName() . "</br>";
-                $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]["total_amount"] += $unpaid_obj->getAmount();
+                $total_amount += $unpaid_obj->getAmount();
+                $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]["total_amount"] = platform_curr_format($unpaid_obj->getPlatformId(), $total_amount);
                 $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]["net_diff_status"] = $unpaid_obj->getNetDiffStatus();
                 if ($unpaid_obj->getPaymentGatewayId() == 'w_bank_transfer') {
                     $data["show_bank_transfer_contact"] = TRUE;
@@ -283,7 +290,6 @@ class Myaccount extends PUB_Controller
     {
         $data["display_id"] = 8;
         if ($this->input->post("update")) {
-            $this->sc['soModel']->includeVo("rma_dao");
             $rma_obj = unserialize($_SESSION["rma_vo"]);
             $components_list = $_POST["components"];
             for ($i = 0; $i < 14; $i++) {

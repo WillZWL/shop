@@ -67,9 +67,9 @@
                             <div id="account" class="inner col-lg-4 col-md-4 col-sm-12">
                                 <div class="account">
                                     <?php if ($_SESSION["client"]["logged_in"]) { ?>
-                                        <a href="index.php/myaccount/index">
+                                        <a href="<?=base_url()?>myaccount/index">
                                     <?php } else { ?>
-                                          <a href="index.php/login/index">
+                                          <a href="<?=base_url()?>login/index">
                                     <?php } ?>
                                     <?= _("My Account") ?></a>
                                 </div>

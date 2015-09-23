@@ -65,35 +65,42 @@
 				?>
 			</table>
 			<br><br>
-				<?php if ($show_bank_transfer_contact) { ?>
-					<p><?= _('Have you paid by bank transfer?<br>Contact us ') ?>
-						<a href="<?=base_url().'contact/show_enquiry/sales';?>"><?= _('here') ?></a>.
-					</p>
-				<?php } ?>
-				<?php if ($unpaid_orderlist) { ?>
-						<table class="acount-orders" border="0">
-							<tr>
-								<th><?= _("Order") ?></th>
-								<th><?= _("Date") ?></th>
-								<th><?= _("Shipped to") ?></th>
-								<th><?= _("Product") ?></th>
-								<th><?= _("Order total") ?></th>
-								<th><?= _("Status") ?></th>
-							</tr>
-						<?php
-							foreach ($unpaid_orderlist as $so_no => $unpaid_obj) {
-							$uniqid_status = $unpaid_obj->getUnpaidStatus();
-						?>
-							<tr>
-								<td><?=$unpaid_obj->getClientId()?> - $so_no</td>
-								<td><?=$unpaid_obj->getOrderDate();?></td>
-								<td><?=$unpaid_obj->getDeliveryName();?></td>
-								<td><?=$unpaid_obj->getProductName()?></td>
-								<td><?=$unpaid_obj->getTotalAmount();?></td>
-								<td><?=$show_unpaid_status["$uniqid_status"]?></td>
-							</tr>
-						<?php } ?>
-				<?php } ?>
+			<?php if ($show_bank_transfer_contact) { ?>
+				<p><?= _('Have you paid by bank transfer?<br>Contact us ') ?>
+					<a href="<?=base_url().'contact/show_enquiry/sales';?>"><?= _('here') ?></a>.
+				</p>
+			<?php } ?>
+			<?php if ($unpaid_orderlist) { ?>
+					<table class="acount-orders" border="0">
+						<tr>
+							<th><?= _("Order") ?></th>
+							<th><?= _("Date") ?></th>
+							<th><?= _("Shipped to") ?></th>
+							<th><?= _("Product") ?></th>
+							<th><?= _("Order total") ?></th>
+							<th><?= _("Status") ?></th>
+						</tr>
+					<?php
+						foreach ($unpaid_orderlist as $so_no => $unpaid_arr) {
+					?>
+						<tr>
+							<td><?=$unpaid_arr['client_id']?>- <?=$so_no?></td>
+							<td><?=$unpaid_arr['order_date']?></td>
+							<td><?=$unpaid_arr['delivery_name']?></td>
+							<td><?=$unpaid_arr['product_name']?></td>
+							<td><?=$unpaid_arr['total_amount']?></td>
+							<td>
+								<?php if ($unpaid_arr['unpaid_status'] === 0): ?>
+									<?= _('<b>Pending Payment</b><br>We have not received the payment for your order.') ?>
+								<?php endif ?>
+								<?php if ($unpaid_arr['unpaid_status'] === 1): ?>
+									<?= _('<b>Incomplete Payment</b><br>The amount received in our bank account does not correspond to the total amount of your order.') ?>
+								<?php endif ?>
+							</b></td>
+						</tr>
+					<?php } ?>
+					</table>
+			<?php } ?>
 		</div>
 
 		<div class="silver_box items order_form item2" id="returns_request" <?=$rma['block']?>>
@@ -178,12 +185,12 @@
 					<li class="select">
 						<label><?= _("Categories") ?>: *</label>
 						<select name="category" dname="<?= _('Categories') ?>" class="[select_box_style]" id="return_categories" >
-							<?
+							<?php
 								$category_arr = array(0=>"Machine Only", 1=>"Accessory Only", 2=>"Machine and Accessory");
-								foreach($category_arr as $key => $value){
+								foreach($category_arr as $key => $value):
 							?>
 							<option value="<?=$key?>" <?php if($rma_obj->getCategory() == $key){ echo 'SELECTED'; } ?>><?=$value?></option>
-							<?php } ?>
+							<?php endforeach; ?>
 						</select>
 					</li>
 					<li class="clear">
@@ -199,12 +206,13 @@
 					<li class="clear_left select">
 						<label><?= _("Reasons for Returns") ?> *</label>
 						<select name="reason" dname="<?= _('Reasons for Returns') ?>" class="[select_box_style]" id="return_reason" [disabled;noerr;]>
-							<?
+							<?php
 								$reason_arr = array(0=>"Needs Repair Under Warranty", 1=>"Wrong Product Delivered", 2=>"Wrong Product Purchased", 3=>"Accidently Purchased (conditions apply)");
 								foreach ($reason_arr as $key => $value) {
 							?>
 							<option value="<?=$key?>" <?php if($rma_obj->getReason() == $key) { echo "SELECTED";}?>><?=$value?></option>
-							<?
+
+							<?php
 								}
 							?>
 						</select>
@@ -212,12 +220,12 @@
 					<li class="no_right_margin select">
 						<label><?= _("Action Required") ?> *</label>
 						<select name="action_request" dname="<?= _('Action Required') ?>" class="sbSelector" id="return_action" [disabled;noerr;]>
-							<?
+							<?php
 								$action_request = array(0=>"Swap", 1=>"Refund", 2=>"Repair");
 								foreach ($action_request as $key => $value) {
 							?>
 							<option value="<?=$key?>" <?php if($rma_obj->getActionRequest() == $key) {echo "SELECTED";} ?>><?=$value?></option>
-							<?
+							<?php
 								}
 							?>
 						</select>
