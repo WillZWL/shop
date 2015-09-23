@@ -1,0 +1,42 @@
+#Table name
+data
+
+#Input column name	Output column name
+platform_id	Site
+sh_no	Shipment_number
+so_no	So_number
+platform_order_id	Reference_Number
+order_create_date	PurchasedOn
+bill_name	BillingName
+bill_company	BillingCompany
+bill_address	BillingAddress
+bill_postcode	BillingPostalCode
+bill_city	BillingCity
+bill_state	BillingState
+bill_country_id	BillingCountry
+email	BuyerEmail
+tel	BuyerPhone
+bill_detail	ShowBillingDetails
+delivery_name	DeliveryName
+delivery_company	DeliveryCompany
+delivery_address	DeliveryAddress
+delivery_postcode	DeliveryPostalCode
+delivery_city	DeliveryCity
+delivery_state	DeliveryState
+delivery_country_id	DeliveryCountry
+tel	DeliveryPhone
+item_no	ProductNoOf
+total_item_count	Listings
+log_sku	ItemSKUs
+sku	OrderSKUs
+prod_name	ProductName
+currency_id	Currency
+unit_price	UnitPrice
+qty	ItemCount
+subtotal	SubTotal
+ship_option	ShippingOption
+delivery_charge	ShippingFee
+promotion_code	PromotionCode
+amount	TotalPaid
+courier_id	PrefCourier
+actual_cost	ActualCost

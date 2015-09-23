@@ -1,0 +1,27 @@
+#Table name
+data
+
+#Input column name	Output column name	Specify value 		70546720	Live Asset Logistics Limited
+	A/C No.	70546720
+	Shipper	Live Asset Logistics Limited
+	Shipper Address 1	Flat C5, 5/F
+	Shipper Address 2	Hankow Centre
+	Shipper Address 3	No.1C Middle Road
+	City	TsimSha Tsui
+	Country	HK
+	Shipper Contact	39043034
+delivery_name	Receiver
+delivery_address1	Receiver Address 1
+delivery_address2	Receiver Address 2
+delivery_address3	Receiver Address 3
+delivery_city	City
+delivery_postcode	ZipCode
+delivery_country_id	Country
+tel	Receiver Contact
+cc_desc	General Description
+cc_code	HS Code
+declared_value	Declare
+	Currency	USD
+qty	No. of Item
+prod_weight	Total kg
+so_no	Order Number

@@ -13,8 +13,6 @@ use ESG\Panther\Service\CurrencyService;
 use ESG\Panther\Service\TemplateService;
 use ESG\Panther\Service\SubjectDomainService;
 use ESG\Panther\Service\DataExchangeService;
-// use ESG\Panther\Service\VoToXml;
-// use ESG\Panther\Service\XmlToCsv;
 
 class SoService extends BaseService
 {
@@ -25,6 +23,9 @@ class SoService extends BaseService
     public function __construct()
     {
         parent::__construct();
+        $CI =& get_instance();
+        $CI->load->library('dao/sequence_dao');
+        $this->sequence_dao = $CI->sequence_dao;
 
         $this->exchangeRateService = new ExchangeRateService;
         $this->eventService = new EventService;
@@ -35,11 +36,10 @@ class SoService extends BaseService
         $this->currencyService = new CurrencyService;
         $this->templateService = new TemplateService;
         $this->subjectDomainService = new SubjectDomainService;
+
         $this->dataExchangeService = new DataExchangeService;
-
-        // $this->voToXml = new VoToXml;
-        // $this->xmlToCsv = new XmlToCsv;
-
+        $this->voToXml = new VoToXml;
+        $this->xmlToCsv = new XmlToCsv;
 
         // include_once(APPPATH . "libraries/service/Cart_session_service.php");
         // $this->set_cart_srv(new Cart_session_service());
@@ -58,9 +58,6 @@ class SoService extends BaseService
         // $this->set_email_referral_list_service(new Email_referral_list_service());
         // include_once APPPATH . "libraries/service/Fraudulent_order_service.php";
         // $this->set_fraudulent_order_service(new Fraudulent_order_service());
-
-        // include_once APPPATH . "libraries/service/Sequence_service.php";
-        // $this->set_sequence_service(new Sequence_service());
     }
 
     public function cart_to_so(&$vars)
@@ -2627,14 +2624,11 @@ html;
                 $row->setExtSys("CV");
             }
         }
-        $this->voXml = new VoToXml;
-        $out_xml = $this->voXml->VoToXml($arr, '');
 
-        $this->xmlCsv = new XmlToCsv;
-        $out_csv = $this->xmlCsv->XmlToCsv('', APPPATH . 'data/awaitingShipmentToWms.txt', TRUE, ',');
+        $this->voToXml->VoToXml($arr, '');
+        $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/awaiting_shipment_to_wms.txt', TRUE, ',');
 
-        // $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
-
+        $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
 
         if ($file_content != "") {
             $filename = "cs_awaiting_shipment_" . date("YmdHis") . ".csv";
@@ -2647,6 +2641,24 @@ html;
         }
         return;
     }
+
+    public function strpos_array($haystack, $needles) {
+        if ( is_array($needles) ) {
+            foreach ($needles as $str) {
+                if ( is_array($str) ) {
+                    $pos = $this->strpos_array($haystack, $str);
+                } else {
+                    $pos = strpos($haystack, $str);
+                }
+                if ($pos !== FALSE) {
+                    return $pos;
+                }
+            }
+        } else {
+            return strpos($haystack, $needles);
+        }
+    }
+
 
     public function getGenerateCourierFile($batch_id)
     {
@@ -2662,7 +2674,7 @@ html;
             $file_path = $this->getDao('Config')->valueOf('courier_path') . $ret;
 
             $bodytext = "";
-            if ($user_obj = $this->getDao('user')->get(["id" => $name])) {
+            if ($user_obj = $this->getDao('User')->get(["id" => $name])) {
                 $email_addr = $user_obj->getEmail();
             } else {
                 $email_addr = "nero@eservicesgroup.com";
@@ -2704,29 +2716,29 @@ html;
                     if ($arr = $this->getShipmentDeliveryInfoDhl($value))
                     {
                         foreach ($arr as $row) {
-                            $ar_address = @explode("|", $row->get_delivery_address());
-                            $row->set_delivery_address1($ar_address[0]);
+                            $ar_address = @explode("|", $row->getDeliveryAddress());
+                            $row->setDeliveryAddress1($ar_address[0]);
                             if (empty($ar_address[1]) && empty($ar_address[2])) {
-                                $row->set_delivery_address2('NA');
+                                $row->setDeliveryAddress2('NA');
                             } else {
-                                $row->set_delivery_address2(implode(" ", array($ar_address[1], $ar_address[2])));
+                                $row->setDeliveryAddress2(implode(" ", array($ar_address[1], $ar_address[2])));
                             }
-                            if (!$row->get_delivery_city()) {
-                                $row->set_delivery_address3('NA');
+                            if (!$row->getDeliveryCity()) {
+                                $row->setDeliveryAddress3('NA');
                             } else {
-                                $row->set_delivery_address3($row->get_delivery_city());
+                                $row->setDeliveryAddress3($row->getDeliveryCity());
                             }
-                            $row->set_qty(1);
-                            $row->set_prod_weight($row->get_prod_weight() * $row->get_qty());
-                            $row->set_price($row->get_amount());
-                            if ($row->get_tel() == "") {
-                                $row->set_tel("0");
+                            $row->setQty(1);
+                            $row->setProdWeight($row->getProdWeight() * $row->getQty());
+                            $row->setPrice($row->getAmount());
+                            if ($row->getTel() == "") {
+                                $row->setTel("0");
                             }
-                            if ($row->get_delivery_company() == "") {
-                                $row->set_delivery_company($row->get_delivery_name());
+                            if ($row->getDeliveryCompany() == "") {
+                                $row->setDeliveryCompany($row->getDeliveryName());
                             }
-                            $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $row->get_price());
+                            $prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
 
                             // #sbf4096 - Add DHLHKD
                             if ($courier === 'DHLHKD') {
@@ -2737,103 +2749,103 @@ html;
                                 $declared_value = round($declared_value * $row->getRate(), 2);
                             }
 
-                            $row->set_declared_value($declared_value);
+                            $row->setDeclaredValue($declared_value);
 
                             $data_out[] = $row;
                             $counter++;
                         }
                     }
-                    $out_xml = new VoToXml($data_out, '');
+                    $this->voToXml->VoToXml($data_out, '');
 
                     // #sbf4096 - Add DHLHKD
                     if ($courier === 'DHLHKD') {
-                        $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhlhkd_xml2csv.txt', FALSE, '|');
+                        $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhlhkd_xml2csv.txt', FALSE, '|');
                     } else {
-                        $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhl_xml2csv.txt', FALSE, '|');
+                        $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhl_xml2csv.txt', FALSE, '|');
                     }
 
-                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+                    $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
                     break;
                 case "DHLBBX":
                     if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
                         foreach ($arr as $row) {
-                            $ar_address = @explode("|", $row->get_delivery_address());
-                            $row->set_delivery_address1($ar_address[0]);
+                            $ar_address = @explode("|", $row->getDeliveryAddress());
+                            $row->setDeliveryAddress1($ar_address[0]);
                             if (empty($ar_address[1])) {
-                                $row->set_delivery_address2('NA');
+                                $row->setDeliveryAddress2('NA');
                             } else {
-                                $row->set_delivery_address2($ar_address[1]);
+                                $row->setDeliveryAddress2($ar_address[1]);
                             }
                             if (empty($ar_address[2])) {
-                                $row->set_delivery_address3('NA');
+                                $row->setDeliveryAddress3('NA');
                             } else {
-                                $row->set_delivery_address3($ar_address[2]);
+                                $row->setDeliveryAddress3($ar_address[2]);
                             }
-                            $row->set_qty(1);
-                            $row->set_prod_weight($row->get_prod_weight() * $row->get_qty());
-                            $row->set_price($row->get_amount());
-                            if ($row->get_tel() == "") {
-                                $row->set_tel("0");
+                            $row->setQty(1);
+                            $row->setProdWeight($row->getProdWeight() * $row->getQty());
+                            $row->setPrice($row->getAmount());
+                            if ($row->getTel() == "") {
+                                $row->setTel("0");
                             }
-                            if ($row->get_delivery_company() == "") {
-                                $row->set_delivery_company($row->get_delivery_name());
+                            if ($row->getDeliveryCompany() == "") {
+                                $row->setDeliveryCompany($row->getDeliveryName());
                             }
-                            $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $row->get_price());
-                            $row->set_declared_value(round($declared_value * $row->getRate(), 2));
+                            $prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
+                            $row->setDeclaredValue(round($declared_value * $row->getRate(), 2));
                             if (trim($mawb) != "") {
-                                $row->set_mawb("MAWB#: " . $mawb);
+                                $row->setMawb("MAWB#: " . $mawb);
                             }
                             $data_out[] = $row;
                             $counter++;
                         }
                     }
-                    $out_xml = new VoToXml($data_out, '');
-                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhlbbx_xml2csv.txt', FALSE, '|');
-                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+                    $this->voToXml->VoToXml($data_out, '');
+                    $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhlbbx_xml2csv.txt', FALSE, '|');
+                    $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
                     break;
                 case "FEDEX":
                     if ($arr = $this->getShipmentDeliveryInfoCourier($value)) {
                         $counter = 0;
                         foreach ($arr as $row) {
-                            $ar_address = @explode("|", $row->get_delivery_address());
-                            $row->set_delivery_address1($ar_address[0]);
+                            $ar_address = @explode("|", $row->getDeliveryAddress());
+                            $row->setDeliveryAddress1($ar_address[0]);
                             array_shift($ar_address);
-                            $row->set_delivery_address2(trim(@implode("|", $ar_address), "|"));
+                            $row->setDeliveryAddress2(trim(@implode("|", $ar_address), "|"));
 
-                            $row->set_prod_weight($row->get_prod_weight() * $row->get_qty() * 10);
-                            $row->set_price($row->get_amount());
+                            $row->setProdWeight($row->getProdWeight() * $row->getQty() * 10);
+                            $row->setPrice($row->getAmount());
 
-                            if ($row->get_delivery_company() == "") {
-                                $row->set_delivery_company($row->get_delivery_name());
+                            if ($row->getDeliveryCompany() == "") {
+                                $row->setDeliveryCompany($row->getDeliveryName());
                             }
 
-                            $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $row->get_price());
-                            $row->set_declared_value(round($declared_value * $row->getRate(), 2) * 100);
+                            $prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
+                            $row->setDeclaredValue(round($declared_value * $row->getRate(), 2) * 100);
 
                             $file_content .= "0,\"20\"\r\n" .
                                 "1,\"{$counter}\"\r\n" .
                                 "1274,\"3\"\r\n" .
                                 "31,\"VB\"\r\n" .
-                                "11,\"{$row->get_delivery_company()}\"\r\n" .
-                                "12,\"{$row->get_delivery_name()}\"\r\n" .
-                                "13,\"{$row->get_delivery_address1()}\"\r\n" .
-                                "14,\"{$row->get_delivery_address2()}\"\r\n" .
-                                "16,\"{$row->get_delivery_state()}\"\r\n" .
-                                "15,\"{$row->get_delivery_city()}\"\r\n" .
-                                "17,\"{$row->get_delivery_postcode()}\"\r\n" .
-                                "50,\"{$row->get_delivery_country_id()}\"\r\n" .
-                                "18,\"{$row->get_tel()}\"\r\n" .
+                                "11,\"{$row->getDeliveryCompany()}\"\r\n" .
+                                "12,\"{$row->getDeliveryName()}\"\r\n" .
+                                "13,\"{$row->getDeliveryAddress1()}\"\r\n" .
+                                "14,\"{$row->getDeliveryAddress2()}\"\r\n" .
+                                "16,\"{$row->getDeliveryState()}\"\r\n" .
+                                "15,\"{$row->getDeliveryCity()}\"\r\n" .
+                                "17,\"{$row->getDeliveryPostcode()}\"\r\n" .
+                                "50,\"{$row->getDeliveryCountryId()}\"\r\n" .
+                                "18,\"{$row->getTel()}\"\r\n" .
                                 "116,\"1\"\r\n" .
                                 "21,\"5\"\r\n" .
                                 "119,\"{$row->getDeclaredValue()}\"\r\n" .
-                                "79-1,\"{$row->get_cc_desc()}\"\r\n" .
-                                "79-2,\"hscode {$row->get_cc_code()}\"\r\n" .
-                                "81,\"{$row->get_cc_code()}\"\r\n" .
+                                "79-1,\"{$row->getCcDesc()}\"\r\n" .
+                                "79-2,\"hscode {$row->getCcCode()}\"\r\n" .
+                                "81,\"{$row->getCcCode()}\"\r\n" .
                                 "80-1,\"JP\"\r\n" .
                                 "80-2,\"JP\"\r\n" .
-                                "25,\"{$row->get_so_no()}\"\r\n" .
+                                "25,\"{$row->getSoNo()}\"\r\n" .
                                 "72,\"5\"\r\n" .
                                 "23,\"1\"\r\n" .
                                 "20,\"319974954\"\r\n" .
@@ -2860,19 +2872,19 @@ html;
                         $ts = "";
                         foreach ($arr as $row) {
                             $this->declared_value_debug .= "8total_declared_value_to_6decimals value: $total_declared_value_to_6decimals\r\n";
-                            $ar_address = @explode("|", $row->get_delivery_address());
-                            $row->set_delivery_address1($ar_address[0]);
+                            $ar_address = @explode("|", $row->getDeliveryAddress());
+                            $row->setDeliveryAddress1($ar_address[0]);
                             array_shift($ar_address);
-                            $row->set_delivery_address2(trim(@implode("|", $ar_address), "|"));
+                            $row->setDeliveryAddress2(trim(@implode("|", $ar_address), "|"));
 
-                            $row->set_prod_weight($row->get_prod_weight() * $row->get_qty() * 10);
-                            $row->set_price($row->get_amount());
+                            $row->setProdWeight($row->getProdWeight() * $row->getQty() * 10);
+                            $row->setPrice($row->getAmount());
 
-                            if ($row->get_delivery_company() == "") {
-                                $row->set_delivery_company($row->get_delivery_name());
+                            if ($row->getDeliveryCompany() == "") {
+                                $row->setDeliveryCompany($row->getDeliveryName());
                             }
 
-                            $cc = $row->get_currency_id();
+                            $cc = $row->getCurrencyId();
 
                             switch ($cc) {
                                 case "GBP":
@@ -2883,13 +2895,13 @@ html;
                                     break;
                             }
 
-                            if ($counter == 0) $total_declared_value = $row->get_price(); else $total_declared_value += $row->get_price();
+                            if ($counter == 0) $total_declared_value = $row->getPrice(); else $total_declared_value += $row->getPrice();
 
-                            $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
+                            $prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
 
                             // we pass total_declared_value_to_6decimals in so that we will eventually calculate a declared value
                             // of all the items in the order, e.g. SKU-A: 649, SKU-B: 399, we will calculate declared value based on 649+399
-                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $total_declared_value);
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $total_declared_value);
                             $this->declared_value_debug .= "declared value: $declared_value\r\n";
                             $this->declared_value_debug .= "1total_declared_value_to_6decimals value: $total_declared_value_to_6decimals\r\n";
 
@@ -2897,7 +2909,7 @@ html;
                             $convert_to_usd = false;
                             if ($convert_to_usd) {
                                 $declared_value = round($declared_value * $row->getRate(), 2);
-                                $row->set_declared_value($declared_value);
+                                $row->setDeclaredValue($declared_value);
                             }
 
                             $this->declared_value_debug .= "2total_declared_value_to_6decimals value: $total_declared_value_to_6decimals\r\n";
@@ -2911,24 +2923,24 @@ html;
                                     "1,\"{$counter}\"\r\n" .
                                     "1274,\"3\"\r\n" .
                                     "31,\"LIVE ASSET LOGISTICS\"\r\n" .
-                                    "11,\"{$row->get_delivery_company()}\"\r\n" .
-                                    "12,\"{$row->get_delivery_name()}\"\r\n" .
-                                    "13,\"{$row->get_delivery_address1()}\"\r\n" .
-                                    "14,\"{$row->get_delivery_address2()}\"\r\n" .
-                                    "16,\"{$row->get_delivery_state()}\"\r\n" .
-                                    "15,\"{$row->get_delivery_city()}\"\r\n" .
-                                    "17,\"{$row->get_delivery_postcode()}\"\r\n" .
-                                    "50,\"{$row->get_delivery_country_id()}\"\r\n" .
-                                    "18,\"{$row->get_tel()}\"\r\n" .
+                                    "11,\"{$row->getDeliveryCompany()}\"\r\n" .
+                                    "12,\"{$row->getDeliveryName()}\"\r\n" .
+                                    "13,\"{$row->getDeliveryAddress1()}\"\r\n" .
+                                    "14,\"{$row->getDeliveryAddress2()}\"\r\n" .
+                                    "16,\"{$row->getDeliveryState()}\"\r\n" .
+                                    "15,\"{$row->getDeliveryCity()}\"\r\n" .
+                                    "17,\"{$row->getDeliveryPostcode()}\"\r\n" .
+                                    "50,\"{$row->getDeliveryCountryId()}\"\r\n" .
+                                    "18,\"{$row->getTel()}\"\r\n" .
                                     "116,\"1\"\r\n" .
                                     "21,\"5\"\r\n" .
                                     // "119,\"{$row->getDeclaredValue()}\"\r\n".
-                                    "79-1,\"{$row->get_cc_desc()} hscode {$row->get_cc_code()}\"\r\n" .
-                                    // "79-2,\"hscode {$row->get_cc_code()}\"\r\n".
-                                    "81-1,\"{$row->get_cc_code()}\"\r\n" .
+                                    "79-1,\"{$row->getCcDesc()} hscode {$row->getCcCode()}\"\r\n" .
+                                    // "79-2,\"hscode {$row->getCcCode()}\"\r\n".
+                                    "81-1,\"{$row->getCcCode()}\"\r\n" .
                                     "80-1,\"JP\"\r\n" .
                                     // "80-2,\"JP\"\r\n".
-                                    "25,\"{$row->get_so_no()}\"\r\n" .
+                                    "25,\"{$row->getSoNo()}\"\r\n" .
                                     "72,\"6\"\r\n" .
                                     "23,\"3\"\r\n" .
                                     "20,\"319974954\"\r\n" .
@@ -2973,28 +2985,28 @@ html;
                         $prev_so_no = "";
                         if (is_array($arr)) {
                             foreach ($arr as $row) {
-                                if ($row->get_so_no() != $prev_so_no) {
-                                    $ar_address = @explode("|", $row->get_delivery_address());
-                                    $row->set_delivery_address1($ar_address[0]);
+                                if ($row->getSoNo() != $prev_so_no) {
+                                    $ar_address = @explode("|", $row->getDeliveryAddress());
+                                    $row->setDeliveryAddress1($ar_address[0]);
                                     array_shift($ar_address);
-                                    $row->set_delivery_address2(trim(@implode("|", $ar_address), "|"));
-                                    if ($row->get_delivery_address2() == "") {
-                                        $row->set_delivery_address2(".");
+                                    $row->setDeliveryAddress2(trim(@implode("|", $ar_address), "|"));
+                                    if ($row->getDeliveryAddress2() == "") {
+                                        $row->setDeliveryAddress2(".");
                                     }
 
-                                    $row->set_prod_weight(min(2, $row->get_prod_weight()));
-                                    $row->set_price($row->get_amount());
+                                    $row->setProdWeight(min(2, $row->getProdWeight()));
+                                    $row->setPrice($row->getAmount());
 
-                                    $countryObj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()));
-                                    $row->set_country_name($countryObj->get_name());
+                                    $countryObj = $this->getDao('Country')->get(["country_id" => $row->getDeliveryCountryId()]);
+                                    $row->setCountryName($countryObj->getName());
 
-                                    $row->set_item_no($counter);
+                                    $row->setItemNo($counter);
 
-                                    if ($row->get_delivery_city() == "") {
-                                        $row->set_delivery_city('.');
+                                    if ($row->getDeliveryCity() == "") {
+                                        $row->setDeliveryCity('.');
                                     }
 
-                                    $prev_so_no = $row->get_so_no();
+                                    $prev_so_no = $row->getSoNo();
 
                                     $data_out[] = $row;
                                     $counter++;
@@ -3003,9 +3015,9 @@ html;
                         }
                     }
 
-                    $out_xml = new VoToXml($data_out, '');
-                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_tnt_xml2csv.txt', TRUE, '|');
-                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+                    $this->voToXml->VoToXml($data_out, '');
+                    $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_tnt_xml2csv.txt', TRUE, '|');
+                    $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
                     break;
 
                 case "NEW_QUANTIUM":
@@ -3013,44 +3025,44 @@ html;
                     if ($arr = $this->getShipmentDeliveryInfoCourier($value)) {
                         $prev_so_no = "";
                         foreach ($arr as $row) {
-                            if ($row->get_so_no() != $prev_so_no) {
-                                $ar_address = @explode("|", $row->get_delivery_address());
-                                $row->set_delivery_address1($ar_address[0]);
+                            if ($row->getSoNo() != $prev_so_no) {
+                                $ar_address = @explode("|", $row->getDeliveryAddress());
+                                $row->setDeliveryAddress1($ar_address[0]);
                                 array_shift($ar_address);
-                                $row->set_delivery_address2(trim(@implode("|", $ar_address), "|"));
-                                if ($row->get_delivery_address2() == "") {
-                                    $row->set_delivery_address2(".");
+                                $row->setDeliveryAddress2(trim(@implode("|", $ar_address), "|"));
+                                if ($row->getDeliveryAddress2() == "") {
+                                    $row->setDeliveryAddress2(".");
                                 }
 
-                                $row->set_prod_weight(min(2, $row->get_prod_weight()));
-                                $row->set_price($row->get_amount());
+                                $row->setProdWeight(min(2, $row->getProdWeight()));
+                                $row->setPrice($row->getAmount());
 
-                                $countryObj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()));
-                                $row->set_country_name($countryObj->get_name());
+                                $countryObj = $this->getDao('Country')->get(["country_id" => $row->getDeliveryCountryId()]);
+                                $row->setCountryName($countryObj->getName());
 
-                                $row->set_item_no($counter);
+                                $row->setItemNo($counter);
 
-                                if ($row->get_delivery_company() == "") {
-                                    $row->set_delivery_company($row->get_delivery_name());
+                                if ($row->getDeliveryCompany() == "") {
+                                    $row->setDeliveryCompany($row->getDeliveryName());
                                 }
 
-                                if ($row->get_delivery_city() == "") {
-                                    $row->set_delivery_city('.');
+                                if ($row->getDeliveryCity() == "") {
+                                    $row->setDeliveryCity('.');
                                 }
 
-                                $declared_value = $this->getDeclaredValue($row, $row->get_delivery_country_id(), $row->get_price());
-                                $row->set_declared_value(round($declared_value * $row->getRate(), 2));
+                                $declared_value = $this->getDeclaredValue($row, $row->getDeliveryCountryId(), $row->getPrice());
+                                $row->setDeclaredValue(round($declared_value * $row->getRate(), 2));
 
-                                $prev_so_no = $row->get_so_no();
+                                $prev_so_no = $row->getSoNo();
 
                                 $data_out[] = $row;
                                 $counter++;
                             }
                         }
                     }
-                    $out_xml = new VoToXml($data_out, '');
-                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_new_quantium_xml2csv.txt', FALSE, '|');
-                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+                    $this->voToXml->VoToXml($data_out, '');
+                    $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_new_quantium_xml2csv.txt', FALSE, '|');
+                    $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
                     break;
 
                 case "QUANTIUM":
@@ -3058,138 +3070,138 @@ html;
                     if ($arr = $this->getShipmentDeliveryInfoCourier($value)) {
                         $prev_so_no = "";
                         foreach ($arr as $row) {
-                            if ($row->get_so_no() != $prev_so_no) {
-                                $ar_address = @explode("|", $row->get_delivery_address());
-                                $row->set_delivery_address1($ar_address[0]);
+                            if ($row->getSoNo() != $prev_so_no) {
+                                $ar_address = @explode("|", $row->getDeliveryAddress());
+                                $row->setDeliveryAddress1($ar_address[0]);
                                 array_shift($ar_address);
-                                $row->set_delivery_address2(trim(@implode("|", $ar_address), "|"));
+                                $row->setDeliveryAddress2(trim(@implode("|", $ar_address), "|"));
 
-                                $row->set_prod_weight(min(2000, $row->get_prod_weight() * 1000));
-                                $row->set_price($row->get_amount());
+                                $row->setProdWeight(min(2000, $row->getProdWeight() * 1000));
+                                $row->setPrice($row->getAmount());
 
-                                $countryObj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()));
-                                $row->set_country_name($countryObj->get_name());
+                                $countryObj = $this->getDao('Country')->get(["country_id" => $row->getDeliveryCountryId()]);
+                                $row->setCountryName($countryObj->getName());
 
-                                $row->set_item_no($counter);
+                                $row->setItemNo($counter);
 
-                                if ($row->get_delivery_company() == "") {
-                                    $row->set_delivery_company($row->get_delivery_name());
+                                if ($row->getDeliveryCompany() == "") {
+                                    $row->setDeliveryCompany($row->getDeliveryName());
                                 }
 
-                                $declared_value = $this->getDeclaredValue($row, $row->get_delivery_country_id(), $row->get_price());
-                                $row->set_declared_value(round($declared_value * $row->getRate(), 2));
+                                $declared_value = $this->getDeclaredValue($row, $row->getDeliveryCountryId(), $row->getPrice());
+                                $row->setDeclaredValue(round($declared_value * $row->getRate(), 2));
 
-                                $prev_so_no = $row->get_so_no();
+                                $prev_so_no = $row->getSoNo();
 
                                 $data_out[] = $row;
                                 $counter++;
                             }
                         }
                     }
-                    $out_xml = new VoToXml($data_out, '');
-                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_quantium_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+                    $this->voToXml->VoToXml($data_out, '');
+                    $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_quantium_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
                     break;
 
                 case "TOLL":
                     if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
                         foreach ($arr as $row) {
-                            $ar_address = @explode("|", $row->get_delivery_address());
-                            $row->set_delivery_address1($ar_address[0]);
+                            $ar_address = @explode("|", $row->getDeliveryAddress());
+                            $row->setDeliveryAddress1($ar_address[0]);
                             if (empty($ar_address[1]) && empty($ar_address[2])) {
-                                $row->set_delivery_address2('NA');
+                                $row->setDeliveryAddress2('NA');
                             } else {
-                                $row->set_delivery_address2(implode(" ", array($ar_address[1], $ar_address[2])));
+                                $row->setDeliveryAddress2(implode(" ", array($ar_address[1], $ar_address[2])));
                             }
-                            if (!$row->get_delivery_city()) {
-                                $row->set_delivery_address3('NA');
+                            if (!$row->getDeliveryCity()) {
+                                $row->setDeliveryAddress3('NA');
                             } else {
-                                $row->set_delivery_address3($row->get_delivery_city());
+                                $row->setDeliveryAddress3($row->getDeliveryCity());
                             }
-                            $row->set_qty($row->get_qty());
-                            $row->set_prod_weight($row->get_prod_weight() * $row->get_qty());
-                            $row->set_price($row->get_amount());
-                            if ($row->get_tel() == "") {
-                                $row->set_tel("0");
+                            $row->setQty($row->getQty());
+                            $row->setProdWeight($row->getProdWeight() * $row->getQty());
+                            $row->setPrice($row->getAmount());
+                            if ($row->getTel() == "") {
+                                $row->setTel("0");
                             }
-                            if ($row->get_delivery_company() == "") {
-                                $row->set_delivery_company($row->get_delivery_name());
+                            if ($row->getDeliveryCompany() == "") {
+                                $row->setDeliveryCompany($row->getDeliveryName());
                             }
-                            if ($row->get_delivery_country_id() == 'AU') {
+                            if ($row->getDeliveryCountryId() == 'AU') {
                                 $valid_city_arr = array("brisbane", "melbourne", "perth", "sydney");
-                                if (trim($row->get_delivery_city()) == "" || !in_array(trim(strtolower($row->get_delivery_city())), $valid_city_arr)) {
-                                    $row->set_delivery_city('Australia Other');
+                                if (trim($row->getDeliveryCity()) == "" || !in_array(trim(strtolower($row->getDeliveryCity())), $valid_city_arr)) {
+                                    $row->setDeliveryCity('Australia Other');
                                 }
                             }
 
-                            $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $row->get_price());
-                            $row->set_declared_value(round($declared_value * $row->getRate(), 2));
+                            $prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
+                            $row->setDeclaredValue(round($declared_value * $row->getRate(), 2));
 
-                            if ($country_obj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()))) {
-                                $country_name = $country_obj->get_name();
-                                $row->set_delivery_country_id($country_name);
+                            if ($country_obj = $this->getDao('Country')->get(["country_id" => $row->getDeliveryCountryId()])) {
+                                $country_name = $country_obj->getName();
+                                $row->setDeliveryCountryId($country_name);
                             }
                             $data_out[] = $row;
                             $counter++;
                         }
                     }
-                    $out_xml = new VoToXml($data_out, '');
-                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_toll_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+                    $this->voToXml->VoToXml($data_out, '');
+                    $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_toll_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
                     break;
 
                 case "TOLL2":   // SBF#1965
                 case "DPD":     // TOLL2 changed to DPD
                     if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
                         foreach ($arr as $row) {
-                            $ar_address = @explode("|", $row->get_delivery_address());
-                            $row->set_delivery_address1($ar_address[0]);
+                            $ar_address = @explode("|", $row->getDeliveryAddress());
+                            $row->setDeliveryAddress1($ar_address[0]);
                             if (empty($ar_address[1]) && empty($ar_address[2])) {
-                                $row->set_delivery_address2('NA');
+                                $row->setDeliveryAddress2('NA');
                             } else {
-                                $row->set_delivery_address2(implode(" ", array($ar_address[1], $ar_address[2])));
+                                $row->setDeliveryAddress2(implode(" ", array($ar_address[1], $ar_address[2])));
                             }
-                            if (!$row->get_delivery_city()) {
-                                $row->set_delivery_address3('NA');
+                            if (!$row->getDeliveryCity()) {
+                                $row->setDeliveryAddress3('NA');
                             } else {
-                                $row->set_delivery_address3($row->get_delivery_city());
+                                $row->setDeliveryAddress3($row->getDeliveryCity());
                             }
-                            $row->set_qty($row->get_qty());
-                            $row->set_prod_weight($row->get_prod_weight() * $row->get_qty());
-                            $row->set_price($row->get_amount());
-                            if ($row->get_tel() == "") {
-                                $row->set_tel("0");
+                            $row->setQty($row->getQty());
+                            $row->setProdWeight($row->getProdWeight() * $row->getQty());
+                            $row->setPrice($row->getAmount());
+                            if ($row->getTel() == "") {
+                                $row->setTel("0");
                             }
-                            if ($row->get_delivery_company() == "") {
-                                $row->set_delivery_company($row->get_delivery_name());
+                            if ($row->getDeliveryCompany() == "") {
+                                $row->setDeliveryCompany($row->getDeliveryName());
                             }
-                            if ($row->get_delivery_country_id() == 'AU') {
+                            if ($row->getDeliveryCountryId() == 'AU') {
                                 $valid_city_arr = array("brisbane", "melbourne", "perth", "sydney");
-                                if (trim($row->get_delivery_city()) == "" || !in_array(trim(strtolower($row->get_delivery_city())), $valid_city_arr)) {
-                                    $row->set_delivery_city('Australia Other');
+                                if (trim($row->getDeliveryCity()) == "" || !in_array(trim(strtolower($row->getDeliveryCity())), $valid_city_arr)) {
+                                    $row->setDeliveryCity('Australia Other');
                                 }
                             }
 
-                            $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $row->get_price());
-                            $row->set_declared_value(round($declared_value * $row->getRate(), 2));
+                            $prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
+                            $row->setDeclaredValue(round($declared_value * $row->getRate(), 2));
 
-                            if ($country_obj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()))) {
-                                $country_name = $country_obj->get_name();
-                                $row->set_delivery_country_id($country_name);
+                            if ($country_obj = $this->getDao('Country')->get(["country_id" => $row->getDeliveryCountryId()])) {
+                                $country_name = $country_obj->getName();
+                                $row->setDeliveryCountryId($country_name);
                             }
                             $data_out[] = $row;
                             $counter++;
                         }
                     }
-                    $out_xml = new VoToXml($data_out, '');
-                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dpd_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+                    $this->voToXml->VoToXml($data_out, '');
+                    $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dpd_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
                     break;
                 case "IM":
                 case "RMR":
-                    $arr = $this->getShipmentDeliveryInfo($value, 'dispatch_list_dto'); // Pass the SO #
+                    $arr = $this->getShipmentDeliveryInfo($value, 'DispatchListDto'); // Pass the SO #
 
                     if (!$arr || ($no_of_line = count($arr)) == 0) {
                         continue;  // No data is found.  It shouldn't happen.
@@ -3198,185 +3210,186 @@ html;
                     $counter = 1;
 
                     foreach ($arr as $row) {
-                        $row->set_total_item_count($no_of_line);
-                        $row->set_item_no($counter);
-                        if (($courier == "RMR") && ($row->get_delivery_country_id() != "US")) {
-                            $row->set_unit_price(number_format($row->get_unit_price() * 0.1, 2, '.', ''));
-                            $row->set_delivery_charge(number_format($row->get_delivery_charge() * 0.1, 2, '.', ''));
-                            $row->set_amount(number_format($row->get_amount() * 0.1, 2, '.', ''));
+                        $row->setTotalItemCount($no_of_line);
+                        $row->setItemNo($counter);
+                        if (($courier == "RMR") && ($row->getDeliveryCountryId() != "US")) {
+                            $row->setUnitPrice(number_format($row->getUnitPrice() * 0.1, 2, '.', ''));
+                            $row->setDeliveryCharge(number_format($row->getDeliveryCharge() * 0.1, 2, '.', ''));
+                            $row->setAmount(number_format($row->getAmount() * 0.1, 2, '.', ''));
                         }
-                        $row->set_subtotal(number_format(
-                            $row->get_unit_price() * $row->get_qty()
+                        $row->setSubtotal(number_format(
+                            $row->getUnitPrice() * $row->getQty()
                             , 2, '.', ''));
-                        $row->set_actual_cost(number_format(
-                            $row->get_amount() - $row->get_offline_fee()
+                        $row->setActualCost(number_format(
+                            $row->getAmount() - $row->getOfflineFee()
                             , 2, '.', ''));
-                        $row->set_bill_detail('N'); // Always 'N' at the beginning.
-                        list($del_address_1, $del_address_2, $del_address_3) = explode("|", $row->get_delivery_address());
-                        $row->set_delivery_address_1($del_address_1);
-                        $row->set_delivery_address_2($del_address_2);
-                        $row->set_delivery_address_3($del_address_3);
+                        $row->setBillDetail('N'); // Always 'N' at the beginning.
+                        list($del_address_1, $del_address_2, $del_address_3) = explode("|", $row->getDeliveryAddress());
+                        $row->setDeliveryAddress1($del_address_1);
+                        $row->setDeliveryAddress2($del_address_2);
+                        $row->setDeliveryAddress3($del_address_3);
                         if ($counter > 1) {
-                            $row->set_ship_option('');
-                            $row->set_delivery_charge(0.00);
-                            $row->set_promotion_code('');
-                            $row->set_amount(0.00);
-                            $row->set_delivery_type_id('');
-                            $row->set_actual_cost(0.00);
+                            $row->setShipOption('');
+                            $row->setDeliveryCharge(0.00);
+                            $row->setPromotionCode('');
+                            $row->setAmount(0.00);
+                            $row->setDeliveryTypeId('');
+                            $row->setActualCost(0.00);
                         }
                         $data_out[] = $row;
                         $counter++;
                     }
-                    $out_xml = new VoToXml($data_out, '');
-                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_' . strtolower($courier) . '_xml2csv.txt', TRUE, chr(9));
-                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+                    $this->voToXml->VoToXml($data_out, '');
+                    $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_' . strtolower($courier) . '_xml2csv.txt', TRUE, chr(9));
+                    $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
 
                     // Prepare dispatch list data
                     $counter = 1;
                     foreach ($arr as $row) {
-                        $row->set_total_item_count($no_of_line);
-                        $row->set_item_no($counter);
-                        $row->set_subtotal(number_format($row->get_unit_price() * $row->get_qty(), 2, '.', ''));
-                        $row->set_actual_cost(number_format($row->get_amount() - $row->get_offline_fee(), 2, '.', ''));
+                        $row->setTotalItemCount($no_of_line);
+                        $row->setItemNo($counter);
+                        $row->setSubtotal(number_format($row->getUnitPrice() * $row->getQty(), 2, '.', ''));
+                        $row->setActualCost(number_format($row->getAmount() - $row->getOfflineFee(), 2, '.', ''));
 
                         if ($counter > 1) {
                             # code
                         }
-                        $row->set_warehouse_id("VB_" . $courier);
-                        $row->set_bin("STAG");
+                        $row->setWarehouseId($courier);
+                        $row->setBin("STAG");
                         $dispatch_data_out[] = $row;
                         $counter++;
                     }
-                    $dispatch_out_xml = new VoToXml($dispatch_data_out, '');
+                    $this->voToXml->VoToXml($dispatch_data_out, '');
                     if ($courier == "RMR")
                         $data_file = 'data/dispatch_list_rmr_xml2csv.txt';
                     else
                         $data_file = 'data/dispatch_list_xml2csv.txt';
-                    $dispatch_out_csv = new XmlToCsv('', APPPATH . $data_file, TRUE, ',');
-                    $dispatch_content = $this->dataExchangeService->convert($dispatch_out_xml, $dispatch_out_csv);
+                    $this->xmlToCsv->XmlToCsv('', APPPATH . $data_file, TRUE, ',');
+                    $dispatch_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
                     break;
                 case "ARAMEX_COD":
                     if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
                         foreach ($arr as $row) {
-                            $ar_address = @explode("|", $row->get_delivery_address());
-                            $row->set_delivery_address1($ar_address[0]);
-                            $row->set_delivery_address2($ar_address[1]);
-                            $row->set_delivery_address3($ar_address[2]);
-                            $row->set_qty($row->get_qty());
-                            $row->set_prod_weight($row->get_prod_weight() * $row->get_qty());
-                            $row->set_price($row->get_amount());
-                            if ($row->get_tel() == "") {
-                                $row->set_tel("0");
+                            $ar_address = @explode("|", $row->getDeliveryAddress());
+                            $row->setDeliveryAddress1($ar_address[0]);
+                            $row->setDeliveryAddress2($ar_address[1]);
+                            $row->setDeliveryAddress3($ar_address[2]);
+                            $row->setQty($row->getQty());
+                            $row->setProdWeight($row->getProdWeight() * $row->getQty());
+                            $row->setPrice($row->getAmount());
+                            if ($row->getTel() == "") {
+                                $row->setTel("0");
                             }
-                            if ($row->get_delivery_company() == "") {
-                                $row->set_delivery_company($row->get_delivery_name());
+                            if ($row->getDeliveryCompany() == "") {
+                                $row->setDeliveryCompany($row->getDeliveryName());
                             }
 
-                            $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $row->get_price();
+                            $prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
+                            $declared_value = $row->getPrice();
 
                             # convert to USD
                             $convert_to_usd = false;
                             if ($convert_to_usd) {
                                 $declared_value = round($declared_value * $row->getRate(), 2);
                             }
-                            $row->set_declared_value($declared_value);
+                            $row->setDeclaredValue($declared_value);
 
-                            if ($country_obj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()))) {
-                                $country_name = $country_obj->get_name();
-                                $row->set_delivery_country_id($country_name);
+                            if ($country_obj = $this->getDao('Country')->get(["country_id" => $row->getDeliveryCountryId()])) {
+                                $country_name = $country_obj->getName();
+                                $row->setDeliveryCountryId($country_name);
                             }
                             $data_out[] = $row;
                             $counter++;
                         }
                     }
 
-                    $out_xml = new VoToXml($data_out, '');
-                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_aramex_cod_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+                    $this->voToXml->VoToXml($data_out, '');
+                    $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_aramex_cod_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
 
                     break;
 
                 case "ARAMEX":
                     if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
                         foreach ($arr as $row) {
-                            $ar_address = @explode("|", $row->get_delivery_address());
-                            $row->set_delivery_address1($ar_address[0]);
-                            $row->set_delivery_address2($ar_address[1]);
-                            $row->set_delivery_address3($ar_address[2]);
-                            $row->set_qty($row->get_qty());
-                            $row->set_prod_weight($row->get_prod_weight() * $row->get_qty());
-                            $row->set_price($row->get_amount());
-                            if ($row->get_tel() == "") {
-                                $row->set_tel("0");
+                            $ar_address = @explode("|", $row->getDeliveryAddress());
+                            $row->setDeliveryAddress1($ar_address[0]);
+                            $row->setDeliveryAddress2($ar_address[1]);
+                            $row->setDeliveryAddress3($ar_address[2]);
+                            $row->setQty($row->getQty());
+                            $row->setProdWeight($row->getProdWeight() * $row->getQty());
+                            $row->setPrice($row->getAmount());
+                            if ($row->getTel() == "") {
+                                $row->setTel("0");
                             }
-                            if ($row->get_delivery_company() == "") {
-                                $row->set_delivery_company($row->get_delivery_name());
+                            if ($row->getDeliveryCompany() == "") {
+                                $row->setDeliveryCompany($row->getDeliveryName());
                             }
 
-                            $prod_obj = $this->getDao('Product')->get(array("sku" => $row->get_prod_sku()));
-                            $declared_value = $this->getDeclaredValue($prod_obj, $row->get_delivery_country_id(), $row->get_price());
-                            $row->set_declared_value(round($declared_value * $row->getRate(), 2));
+                            $prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
+                            $declared_value = $this->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
+                            $row->setDeclaredValue(round($declared_value * $row->getRate(), 2));
 
-                            if ($country_obj = $this->getDao('Country')->get(array("country_id" => $row->get_delivery_country_id()))) {
-                                $country_name = $country_obj->get_name();
-                                $row->set_delivery_country_id($country_name);
+                            if ($country_obj = $this->getDao('Country')->get(["country_id" => $row->getDeliveryCountryId()])) {
+                                $country_name = $country_obj->getName();
+                                $row->setDeliveryCountryId($country_name);
                             }
                             $data_out[] = $row;
                             $counter++;
                         }
                     }
-                    $out_xml = new VoToXml($data_out, '');
-                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_aramex_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+                    $this->voToXml->VoToXml($data_out, '');
+                    $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_aramex_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
                     break;
 
                 //#2507 add DPD_NL courier feed
                 case "DPD_NL":
                     if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
                         foreach ($arr as $row) {
-                            $ar_address = @explode("|", $row->get_delivery_address());
+                            $ar_address = @explode("|", $row->getDeliveryAddress());
                             if ($ar_address[0] == '') {
                                 $ar_address[0] = '.';
                             }
                             if ($ar_address[1] == '') {
                                 $ar_address[1] = '.';
                             }
-                            $row->set_delivery_address2($ar_address[1]);
-                            $row->set_delivery_address1($ar_address[0]);
-                            $row->set_shipping_date(date('d.m.Y'));
+                            $row->setDeliveryAddress2($ar_address[1]);
+                            $row->setDeliveryAddress1($ar_address[0]);
+                            $row->setShippingDate(date('d.m.Y'));
 
-                            $row->set_prod_weight($row->get_prod_weight() * $row->get_qty());
+                            $row->setProdWeight($row->getProdWeight() * $row->getQty());
 
-                            if ($row->get_tel() == "") {
-                                $row->set_tel(".");
+                            if ($row->getTel() == "") {
+                                $row->setTel(".");
                             }
 
-                            if ($row->get_delivery_postcode() == "") {
-                                $row->set_delivery_postcode(".");
+                            if ($row->getDeliveryPostcode() == "") {
+                                $row->setDeliveryPostcode(".");
                             }
 
-                            $delivery_country_id = $row->get_delivery_country_id();
+                            $delivery_country_id = $row->getDeliveryCountryId();
                             //If delivery country is France,  pls enter FR.
                             //If delivery country is Nederland,  pls enter NL. For other country, pls enter EN
                             if (!in_array($delivery_country_id, array('FR', 'NL'))) {
-                                $row->set_delivery_country_id_2('EN');
+                                $row->setDeliveryCountryId2('EN');
                             } else {
-                                $row->set_delivery_country_id_2($delivery_country_id);
+                                $row->setDeliveryCountryId2($delivery_country_id);
                             }
 
                             $data_out[] = $row;
                             $counter++;
                         }
                     }
-                    $out_xml = new VoToXml($data_out, '');
-                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_DPD_NL_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
+                    $this->voToXml->VoToXml($data_out, '');
+                    $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_DPD_NL_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
                     break;
                 // #2715 MRW's IT integration
                 case "MRW":
                     if ($arr = $this->getShipmentDeliveryInfoCourier($value)) {
-                        $seqdao = $this->get_sequence_service()->get_dao();
+
+                        $seqdao = $this->sequence_dao;
                         $seqdao->set_seq_name("mrw_tracking_id");
 
                         $tracking_id = $seqdao->seq_next_val();
@@ -3394,51 +3407,51 @@ html;
                         $totalqty = 0;
 
                         foreach ($arr as $row) {
-                            $totalweight += $row->get_prod_weight() * $row->get_qty();
-                            $totalprice += $row->get_price() * $row->get_qty();
-                            $totalqty += $row->get_qty();
+                            $totalweight += $row->getProdWeight() * $row->getQty();
+                            $totalprice += $row->getPrice() * $row->getQty();
+                            $totalqty += $row->getQty();
                         }
 
                         foreach ($arr as $row) {
-                            $ar_address = @explode("|", $row->get_delivery_address());
+                            $ar_address = @explode("|", $row->getDeliveryAddress());
                             $ar_address = str_replace(";", " ", $ar_address);
-                            $row->set_delivery_address(trim(@implode(" ", $ar_address)));
-                            $row->set_shipping_date(date('dmY'));
-                            $tel = $row->get_tel();
+                            $row->setDeliveryAddress(trim(@implode(" ", $ar_address)));
+                            $row->setShippingDate(date('dmY'));
+                            $tel = $row->getTel();
                             if (strlen($tel) > 9)
                                 $tel = substr($tel, -9);
 
                             $file_content .= "\"H\";" .
                                 "\"E\";" .
-                                "\"0001{$row->get_so_no()}\";" .
+                                "\"0001{$row->getSoNo()}\";" .
                                 "\"00826\";" .
                                 "\"\";" .
-                                "\"{$row->get_shipping_date()}\";" .
+                                "\"{$row->getShippingDate()}\";" .
                                 "\"ALMACEN 1\";" .
-                                "\"" . ((strlen($row->get_delivery_name()) > 30) ? substr($row->get_delivery_name(), 0, 30) : $row->get_delivery_name()) . "\";" .
+                                "\"" . ((strlen($row->getDeliveryName()) > 30) ? substr($row->getDeliveryName(), 0, 30) : $row->getDeliveryName()) . "\";" .
                                 "\"\";" .
                                 "\"\";" .
-                                "\"" . ((strlen($row->get_delivery_address()) > 80) ? substr($row->get_delivery_address(), 0, 80) : $row->get_delivery_address()) . "\";" .
-                                "\"" . ((strlen($row->get_delivery_city()) > 20) ? substr($row->get_delivery_city(), 0, 20) : $row->get_delivery_city()) . "\";" .
-                                "\"{$row->get_delivery_postcode()}\";" .
+                                "\"" . ((strlen($row->getDeliveryAddress()) > 80) ? substr($row->getDeliveryAddress(), 0, 80) : $row->getDeliveryAddress()) . "\";" .
+                                "\"" . ((strlen($row->getDeliveryCity()) > 20) ? substr($row->getDeliveryCity(), 0, 20) : $row->getDeliveryCity()) . "\";" .
+                                "\"{$row->getDeliveryPostcode()}\";" .
                                 "\"{$tel}\";" .
                                 "\"{$tel}\";" .
-                                "\"" . ((strlen($row->get_delivery_city()) > 20) ? substr($row->get_delivery_city(), 0, 20) : $row->get_delivery_city()) . "\";" .
-                                "\"{$row->get_delivery_country_id()}\";" .
+                                "\"" . ((strlen($row->getDeliveryCity()) > 20) ? substr($row->getDeliveryCity(), 0, 20) : $row->getDeliveryCity()) . "\";" .
+                                "\"{$row->getDeliveryCountryId()}\";" .
                                 "\"\";" .
                                 "\"{$totalweight}\";" .
                                 "\"\";" .
                                 "\"1\";" .
                                 "\"N\";" .
                                 "\"\";" .
-                                "\"" . ((strlen($row->get_cc_desc()) > 24) ? substr($row->get_cc_desc(), 0, 24) : $row->get_cc_desc()) . "\";" .
+                                "\"" . ((strlen($row->getCcDesc()) > 24) ? substr($row->getCcDesc(), 0, 24) : $row->getCcDesc()) . "\";" .
                                 "\"0{$tracking_id}\";" .
                                 "\"D\";" .
                                 "\"\";" .
-                                "\"{$row->get_client_email()}\";" .
+                                "\"{$row->getClientEmail()}\";" .
                                 "\"VALUEBASKET\"\r\n" .
                                 "\"L\";" .
-                                "\"0001{$row->get_so_no()}\";" .
+                                "\"0001{$row->getSoNo()}\";" .
                                 "\"00826BULTOPAXD\";" .
                                 "\"{$totalqty}\";" .
                                 "\"{$totalprice}\";" .
@@ -3452,7 +3465,7 @@ html;
                     }
                     break;
                 default:
-                    $arr = $this->getShipmentDeliveryInfo($value, 'dispatch_list_dto'); // Pass the SO #
+                    $arr = $this->getShipmentDeliveryInfo($value, 'DispatchListDto'); // Pass the SO #
 
                     if (!$arr || ($no_of_line = count($arr)) == 0) {
                         continue;  // No data is found.  It shouldn't happen.
@@ -3461,52 +3474,51 @@ html;
                     $counter = 1;
 
                     foreach ($arr as $row) {
-                        $row->set_total_item_count($no_of_line);
-                        $row->set_item_no($counter);
-                        $row->set_subtotal(number_format(
-                            $row->get_unit_price() * $row->get_qty()
+                        $row->setTotalItemCount($no_of_line);
+                        $row->setItemNo($counter);
+                        $row->setSubtotal(number_format(
+                            $row->getUnitPrice() * $row->getQty()
                             , 2, '.', ''));
-                        $row->set_actual_cost(number_format(
-                            $row->get_amount() - $row->get_offline_fee()
+                        $row->setActualCost(number_format(
+                            $row->getAmount() - $row->getOfflineFee()
                             , 2, '.', ''));
-                        $row->set_bill_detail('N'); // Always 'N' at the beginning.
+                        $row->setBillDetail('N'); // Always 'N' at the beginning.
 
                         if ($counter > 1) {
-                            $row->set_ship_option('');
-                            $row->set_delivery_charge(0.00);
-                            $row->set_promotion_code('');
-                            $row->set_amount(0.00);
-                            $row->set_delivery_type_id('');
-                            $row->set_actual_cost(0.00);
+                            $row->setShipOption('');
+                            $row->setDeliveryCharge(0.00);
+                            $row->setPromotionCode('');
+                            $row->setAmount(0.00);
+                            $row->setDeliveryTypeId('');
+                            $row->setActualCost(0.00);
                         }
                         $data_out[] = $row;
                         $counter++;
                     }
-                    $out_xml = new VoToXml($data_out, '');
-                    $out_csv = new XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_xml2csv.txt', TRUE, ',');
-                    $file_content = $this->dataExchangeService->convert($out_xml, $out_csv);
-//create file for dispatch list import
+
+                    $this->voToXml->VoToXml($data_out, '');
+                    $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_xml2csv.txt', TRUE, ',');
+                    $file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+
                     $counter = 1;
-                    if (($courier == "AMS")
-                        || ($courier == "ILG")
-                    ) {
+                    if ($courier == "AMS" || $courier == "ILG") {
                         foreach ($arr as $row) {
-                            $row->set_total_item_count($no_of_line);
-                            $row->set_item_no($counter);
-                            $row->set_subtotal(number_format($row->get_unit_price() * $row->get_qty(), 2, '.', ''));
-                            $row->set_actual_cost(number_format($row->get_amount() - $row->get_offline_fee(), 2, '.', ''));
+                            $row->setTotalItemCount($no_of_line);
+                            $row->setItemNo($counter);
+                            $row->setSubtotal(number_format($row->getUnitPrice() * $row->getQty(), 2, '.', ''));
+                            $row->setActualCost(number_format($row->getAmount() - $row->getOfflineFee(), 2, '.', ''));
 
                             if ($counter > 1) {
                                 # code
                             }
-                            $row->set_warehouse_id("VB_" . $courier);
-                            $row->set_bin("STAG");
+                            $row->setWarehouseId($courier);
+                            $row->setBin("STAG");
                             $dispatch_data_out[] = $row;
                             $counter++;
                         }
-                        $dispatch_out_xml = new VoToXml($dispatch_data_out, '');
-                        $dispatch_out_csv = new XmlToCsv('', APPPATH . 'data/dispatch_list_xml2csv.txt', TRUE, ',');
-                        $dispatch_content = $this->dataExchangeService->convert($dispatch_out_xml, $dispatch_out_csv);
+                        $this->voToXml->VoToXml($dispatch_data_out, '');
+                        $this->xmlToCsv->XmlToCsv('', APPPATH . 'data/dispatch_list_xml2csv.txt', TRUE, ',');
+                        $dispatch_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
                     }
                     break;
             }
@@ -3517,11 +3529,7 @@ html;
             $path = $output_path;
 
 //create file for dispatch list import
-            if (($courier == "AMS")
-                || ($courier == "ILG")
-                || ($courier == "IM")
-                || ($courier == "RMR")
-            ) {
+            if ($courier == "AMS" || $courier == "ILG" || $courier == "IM" || $courier == "RMR") {
                 $dispatch_path = $this->getDao('Config')->valueOf('dispath_list_path');
                 $this->_create_folder($dispatch_path, date('Y'), date('F'));
                 $dispatch_filename = $courier . "_" . $filename . ".csv";
@@ -3566,19 +3574,9 @@ html;
         return $this->getDao('So')->getShipmentDeliveryInfoCourierForTnt($so_no);
     }
 
-    public function getShipmentDeliveryInfo($so_no = 'SO000001', $classname = 'shipment_info_to_courier_dto')
+    public function getShipmentDeliveryInfo($so_no = 'SO000001', $classname = 'ShipmentInfoToCourierDto')
     {
         return $this->getDao('So')->getShipmentDeliveryInfo($so_no, $classname);
-    }
-
-    public function get_sequence_service()
-    {
-        return $this->sequence_service;
-    }
-
-    public function set_sequence_service($value)
-    {
-        $this->sequence_service = $value;
     }
 
     private function _create_folder($upload_path, $this_year, $this_month)
@@ -3622,7 +3620,7 @@ html;
             $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
             $soa_obj = $this->getDao('SoAllocate')->get(array("so_no" => $value));
             if ($country_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()))) {
-                $delcountry = $country_obj->get_name();
+                $delcountry = $country_obj->getName();
             }
             $fullname = $so_obj->getDeliveryName();
             $ordernum = $soa_obj->get_sh_no();
@@ -3942,10 +3940,8 @@ html;
                 break;
         }
         $country_id = $pbv_obj->getPlatformCountryId();
-        // include_once(APPPATH . "hooks/country_selection.php");
-        // $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
-        // $email_sender = "no-reply@" . strtolower($replace["site_name"]);
-        // $replace["support_email"] = $email_sender;
+        $email_sender = "no-reply@digitaldiscount.co.uk";
+        $replace["support_email"] = $email_sender;
         $replace["image_url"] = $this->getDao('Config')->valueOf("default_url");
         $replace["logo_file_name"] = $this->getDao('Config')->valueOf("logo_file_name");
         if (!empty($courier_id)) {

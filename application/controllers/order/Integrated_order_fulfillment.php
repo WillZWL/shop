@@ -411,7 +411,7 @@ class Integrated_order_fulfillment extends MY_Controller
         }
     }
 
-    public function generateCourierFile($checked)
+    public function generateCourierFile($checked = "", $debug = 1)
     {
         if ($checked) {
             $courier = $this->input->post("courier_id");
@@ -419,7 +419,12 @@ class Integrated_order_fulfillment extends MY_Controller
             $so_no_str = json_encode($checked);
 
             $batch_id = $this->sc['Courier']->saveCourierFeed($courier, $mawb, $so_no_str);
-            $this->sc['Batch']->schedulePhpProcess(1, "order/integrated_order_fulfillment/cron_generate_courier_file/" . $batch_id);
+            if ($debug) {
+                $this->cron_generate_courier_file($batch_id);
+            } else {
+                $this->sc['Batch']->schedulePhpProcess(1, "order/integrated_order_fulfillment/cron_generate_courier_file/" . $batch_id);
+            }
+
         }
     }
 
@@ -612,7 +617,7 @@ class Integrated_order_fulfillment extends MY_Controller
             $_SESSION["LISTPAGE"] = base_url() . "order/integrated_order_fulfillment/add_note/$so_no/$line?" . $_SERVER['QUERY_STRING'];
             if ($this->input->post("posted")) {
                 if (isset($_SESSION["obj"])) {
-                    $this->sc['So']->getDao('OrderNotes')->include_vo();
+                    $this->sc['So']->getDao('OrderNotes')->get();
                     $data["obj"] = unserialize($_SESSION["obj"]);
                     $data["obj"]->setNote($this->input->post("note"));
                     if (!$this->sc['So']->getDao('OrderNotes')->insert($data["obj"])) {
