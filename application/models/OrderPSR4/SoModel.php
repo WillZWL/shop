@@ -249,10 +249,7 @@ class SoModel extends \CI_Model
                             }
 
                         }
-
-
                     }
-
                     break;
             }
         }

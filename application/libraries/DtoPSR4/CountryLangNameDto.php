@@ -2,6 +2,7 @@
 class CountryLangNameDto
 {
     private $id;
+    private $country_id;
     private $name;
     private $lang_name;
     private $fc_id;
@@ -14,6 +15,16 @@ class CountryLangNameDto
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    public function getCountryId()
+    {
+        return $this->country_id;
+    }
+
+    public function setCountryId($country_id)
+    {
+        $this->country_id = $country_id;
     }
 
     public function getFcId()

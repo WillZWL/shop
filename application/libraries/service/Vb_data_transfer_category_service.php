@@ -99,6 +99,7 @@ class Vb_data_transfer_category_service extends Vb_data_transfer_service
 					$new_cat_obj->set_priority($category->priority);
 					$new_cat_obj->set_bundle_discount($category->bundle_discount);
 					$new_cat_obj->set_min_display_qty($category->min_display_qty);
+					$new_cat_obj->set_sponsored(0);
 					$new_cat_obj->set_status($category->status);
 					
 					$this->get_dao()->insert($new_cat_obj);	

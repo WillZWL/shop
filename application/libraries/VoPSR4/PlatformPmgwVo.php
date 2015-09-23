@@ -6,7 +6,7 @@ class PlatformPmgwVo extends \Base_vo
     private $id;
     private $platform_id;
     private $sequence;
-    private $payment_gateway_id = 'mb';
+    private $payment_gateway_id = 'paypal';
     private $pmgw_ref_currency_id;
     private $ref_from_amt;
     private $ref_to_amt_exclusive;

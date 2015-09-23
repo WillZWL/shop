@@ -11,6 +11,12 @@ class Vb_data_transfer_product_identifier_service extends Vb_data_transfer_servi
 				
 		include_once(APPPATH . 'libraries/dao/Product_identifier_dao.php');
 		$this->product_identifier_dao = new Product_identifier_dao();
+		
+        include_once(APPPATH . "libraries/service/Sku_mapping_service.php");		
+		$this->sku_mapping_service = new Sku_mapping_service();
+
+		include_once(APPPATH . 'libraries/service/Product_identifier_service.php');
+		$this->product_identifier_service = new Product_identifier_service();
 	}
 	
 	public function get_dao()
@@ -42,8 +48,21 @@ class Vb_data_transfer_product_identifier_service extends Vb_data_transfer_servi
 		foreach($xml_vb->product_identifier as $product)
 		{
 			$c--;
+
+			//check if the sku is mapped in atomv2
+			$master_sku = $pc->master_sku;
+						
+			$master_sku = strtoupper($master_sku);
+			$sku = $this->sku_mapping_service->get_local_sku($master_sku);
+			if ($master_sku == "" || $master_sku == null) $fail_reason .= "No master SKU mapped, ";
+            if ($sku == "" || $sku == null) $fail_reason .= "SKU not specified, ";
+
+            //if the sku is mapped, we get the atomv prod_gro_id
+            $master_prod_grp_id = "";
+            if ($fail_reason == "")
+            	$master_prod_grp_id = $this->product_identifier_service->get_prod_grp_cd_by_sku($sku);
 			
-			if(!$pc_obj_atomv2 = $this->get_dao()->get(array("prod_grp_cd"=>$product->prod_grp_cd, "colour_id"=>$product->colour_id, "country_id"=>$product->country_id)))
+			if(!$pc_obj_atomv2 = $this->get_dao()->get(array("prod_grp_cd"=>$master_prod_grp_id, "colour_id"=>$product->colour_id, "country_id"=>$product->country_id)))
 			{
 				$fail_reason .= "Product identifier not specified, ";
 			}
@@ -53,7 +72,7 @@ class Vb_data_transfer_product_identifier_service extends Vb_data_transfer_servi
 				if ($fail_reason == "")
 				{
 					//Update the AtomV2 product data 					
-					$where = array("prod_grp_cd"=>$product->prod_grp_cd, "colour_id"=>$product->colour_id, "country_id"=>$product->country_id);
+					$where = array("prod_grp_cd"=>$master_prod_grp_id, "colour_id"=>$product->colour_id, "country_id"=>$product->country_id);
 					
 					$new_prod_obj = array();
 					
@@ -72,12 +91,13 @@ class Vb_data_transfer_product_identifier_service extends Vb_data_transfer_servi
 					$xml[] = '<is_error>' . $product->is_error . '</is_error>';
 					$xml[] = '</product_identifier>';
 				}
-				else
+				elseif ($sku != "" && $sku != null)
 				{
-					//insert				
+					//the identifier doesnt exist, but the sku is mapped in atomv2
+					//insert the product identifier				
 					$new_prod_obj = $this->get_dao()->get();
 					
-					$new_prod_obj->set_prod_grp_cd($product->prod_grp_cd); 
+					$new_prod_obj->set_prod_grp_cd($master_prod_grp_id); 
 					$new_prod_obj->set_colour_id($product->colour_id); 	
 					$new_prod_obj->set_country_id($product->country_id); 	
 					$new_prod_obj->set_ean($product->ean);
@@ -93,7 +113,29 @@ class Vb_data_transfer_product_identifier_service extends Vb_data_transfer_servi
 					$xml[] = '<country_id>' . $product->country_id . '</country_id>';
 					$xml[] = '<status>5</status>'; //updated
 					$xml[] = '<is_error>' . $product->is_error . '</is_error>';
-					$xml[] = '</product_identifier>';
+					$xml[] = '</product_identifier>';				
+				}
+				elseif ($sku == "" || $sku == null)
+				{				
+					//if the master_sku is not found in atomv2, we have to store that prod_grp_id in an xml string to send it to VB
+
+					$xml[] = '<product_identifier>';
+					$xml[] = '<prod_grp_cd>' . $product->prod_grp_cd . '</prod_grp_cd>';
+					$xml[] = '<colour_id>' . $product->colour_id . '</colour_id>';
+					$xml[] = '<country_id>' . $product->country_id . '</country_id>';
+					$xml[] = '<status>2</status>'; //not found
+					$xml[] = '<is_error>' . $product->is_error . '</is_error>';
+					$xml[] = '</product_identifier>';	
+				}
+				else
+				{
+					$xml[] = '<product_identifier>';
+					$xml[] = '<prod_grp_cd>' . $product->prod_grp_cd . '</prod_grp_cd>';
+					$xml[] = '<colour_id>' . $product->colour_id . '</colour_id>';
+					$xml[] = '<country_id>' . $product->country_id . '</country_id>';
+					$xml[] = '<status>3</status>'; //not updated
+					$xml[] = '<is_error>' . $product->is_error . '</is_error>';
+					$xml[] = '</product_identifier>';			
 				}
 			}	
 			catch(Exception $e)

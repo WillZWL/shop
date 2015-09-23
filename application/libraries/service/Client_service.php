@@ -29,8 +29,6 @@ class Client_service extends Base_service
         $this->set_config(new Context_config_service());
         include_once(APPPATH . "libraries/service/Validation_service.php");
         $this->set_valid(new Validation_service());
-        //include_once(BASEPATH."libraries/encrypt.php");
-        //$this->set_encrypt(new Encrypt());
     }
 
     public function set_config($value)
@@ -46,15 +44,16 @@ class Client_service extends Base_service
     public function login($email, $password)
     {
         if ($this->validate_field($email, array("valid_email"))) {
-            include_once(BASEPATH . "libraries/Encrypt.php");
-            $encrypt = new CI_Encrypt();
             $dao = $this->get_dao();
-            if ($client_obj = $dao->get(array("email" => $email, "password" => $encrypt->encode(strtolower($password)), "status" => 1))) {
-                $this->object_login($client_obj, TRUE);
-                return TRUE;
+            if ($client_obj = $dao->get(array("email" => $email, "status" => 1))) {
+                $_SESSION['client_obj'] = serialize($client_obj);
+                $password_hash = $client_obj->get_password();
+                if (password_verify($password, $password_hash)) {
+                    $this->object_login($client_obj, TRUE);
+                    return TRUE;
+                }
             } else {
                 $this->login_log($email, 0);
-                return FALSE;
             }
         }
         return FALSE;
@@ -67,10 +66,9 @@ class Client_service extends Base_service
         $valid->set_rules($rules);
         try {
             return $valid->run();
-        } catch (Exception $e) {
+        } catch(Exception $e) {
             return false;
         }
-
         return false;
     }
 
@@ -208,15 +206,15 @@ class Client_service extends Base_service
 
         if ($result) {
             $client_name = implode(' ', array($client_obj->get_forename(), $client_obj->get_surname()));
-
             $email_dto = $this->_get_email_dto();
             $replace = array('password' => $new_password, 'mail_from' => $email_dto->get_mail_from(), 'client name' => $client_name, 'base_url' => base_url());
-            switch (get_lang_id()) {
-                default:
-                    include_once(APPPATH . "hooks/country_selection.php");
-                    $replace = array_merge($replace, Country_selection::get_template_require_text(get_lang_id(), PLATFORMCOUNTRYID));
-                    $email_sender = "no-reply@" . strtolower($replace["site_name"]);
-            }
+            // switch (get_lang_id()) {
+            //     default:
+            //         include_once(APPPATH . "hooks/Country_selection.php");
+            //         $replace = array_merge($replace, Country_selection::get_template_require_text(get_lang_id(), PLATFORMCOUNTRYID));
+            //         $email_sender = "no-reply@" . strtolower($replace["site_name"]);
+            // }
+            $email_sender = "no-reply@digitaldiscount.co.uk";
             $email_dto->set_lang_id(get_lang_id());
             $email_dto->set_event_id('forget_password');
             $email_dto->set_tpl_id('forget_password');
@@ -235,34 +233,24 @@ class Client_service extends Base_service
             return 0; // Means fail
         }
 
-        include_once(BASEPATH . "libraries/Encrypt.php");
-        $encrypt = new CI_Encrypt();
-
-        if (empty($old_password)) {
-            $where = array('email' => $email);
-        } else {
-            $encrypted_old_password = $encrypt->encode($old_password);
-
-            $where = array('email' => $email, 'password' => $encrypted_old_password);
-        }
-
+        $where = array('email' => $email);
         $client_obj = $this->get_dao()->get($where);
-
         if (!$client_obj) {
             return 0; // Means fail
-        } else if ($client_obj->get_status() == 0) {
-            return 0; // not allow to update
+        } else {
+            if ($client_obj->get_status() == 0) {
+                return 0;
+            } else {
+                $client_obj->set_password($new_password_hash);
+                $result = $this->get_dao()->update($client_obj);
+                return $result;
+            }
         }
-
-        $client_obj->set_password($encrypt->encode($new_password));
-        $result = $this->get_dao()->update($client_obj);
-
-        return $result;
     }
 
     private function _get_email_dto()
     {
-        include_once APPPATH . "libraries/dto/event_email_dto.php";
+        include_once APPPATH . "libraries/dto/Event_email_dto.php";
         return new Event_email_dto();
     }
 
@@ -349,5 +337,3 @@ class Client_service extends Base_service
         $this->get_dao()->include_vo();
     }
 }
-
-

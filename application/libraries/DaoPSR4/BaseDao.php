@@ -84,7 +84,9 @@ abstract class BaseDao
         if (isset($option["orderby"])) {
             $this->db->order_by($option["orderby"]);
         }
-
+        if (isset($option["group_by"])) {
+            $this->db->group_by($option["group_by"]);
+        }
         if (empty($option["limit"])) {
             $option["limit"] = $this->rows_limit;
         } elseif ($option["limit"] == -1) {
@@ -226,6 +228,71 @@ abstract class BaseDao
             return $affected;
         } else {
             return false;
+        }
+    }
+
+    public function qInsert($data = array())
+    {
+        if (!empty($data)) {
+            if ($this->db->insert($this->getTableName(), $data)) {
+                if ($this->db->trans_autocommit) {
+                    $this->db->trans_commit();
+                }
+                return $this->db->insert_id();
+            } else {
+                if ($this->db->trans_autocommit) {
+                    $this->db->trans_rollback();
+                    $this->db->trans_commit();
+                }
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
+    }
+	
+	public function qUpdate($where = array(), $data = array())
+    {
+        if (!(empty($where) || empty($data))) {
+            $this->db->where($where);
+            if ($this->db->update($this->getTableName(), $data)) {
+                $affected = $this->db->affected_rows();
+                if ($this->db->trans_autocommit) {
+                    $this->db->trans_commit();
+                }
+                return $affected;
+            } else {
+                if ($this->db->trans_autocommit) {
+                    $this->db->trans_rollback();
+                    $this->db->trans_commit();
+                }
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function qDelete($where = array())
+    {
+        if (!empty($where)) {
+            $this->db->where($where);
+            echo $this->db->query;
+            if ($this->db->delete($this->getTableName())) {
+                $affected = $this->db->affected_rows();
+                if ($this->db->trans_autocommit) {
+                    $this->db->trans_commit();
+                }
+                return $affected;
+            } else {
+                if ($this->db->trans_autocommit) {
+                    $this->db->trans_rollback();
+                    $this->db->trans_commit();
+                }
+                return FALSE;
+            }
+        } else {
+            return FALSE;
         }
     }
 
