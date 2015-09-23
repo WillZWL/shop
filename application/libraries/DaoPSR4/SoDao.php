@@ -2700,7 +2700,7 @@ SQL;
             $this->db->where_in("sops.payment_gateway_id", $payment_gateway_arr);
         }
 
-        return $this->commonGetList($classname, $where, $option, "pbv.platform_currency_id currency_id, so.so_no, so.status, so.hold_status, so.refund_status, c.id client_id, so.order_create_date, so.delivery_name, p.sku, soi.prod_name, soi.amount, sbt.net_diff_status, so.status, so.refund_status, sops.payment_gateway_id");
+        return $this->commonGetList($classname, $where, $option, "pbv.platform_currency_id currency_id, so.so_no, so.status, so.hold_status, so.refund_status, c.id client_id, so.order_create_date, so.delivery_name, so.platform_id, p.sku, soi.prod_name, soi.amount, sbt.net_diff_status, so.status, so.refund_status, sops.payment_gateway_id");
     }
 
     public function getFnacPendingPaymentOrders($where = [], $option = [])
