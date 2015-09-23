@@ -1,43 +1,25 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php 
+namespace ESG\Panther\Service;
 
-include_once(APPPATH . "libraries/service/Vb_data_transfer_service.php");
+use ESG\Panther\Dao\CategoryDao;
 
-class Vb_data_transfer_category_service extends Vb_data_transfer_service
+class VbDataTransferCategoryService extends VbDataTransferService
 {
 	
-	public function __construct($debug = 0)
+	public function __construct()
 	{
-		parent::__construct($debug);
-				
-		include_once(APPPATH . 'libraries/dao/Category_dao.php');
-		$this->category_dao = new Category_dao();
-		
-        // include_once(APPPATH . "libraries/service/Category_id_mapping_service.php");		
-		// $this->category_id_mapping_service = new Category_id_mapping_service();
-		
-        // include_once(APPPATH . "libraries/dao/Category_id_mapping_dao.php");		
-		// $this->category_id_mapping_dao = new Category_id_mapping_dao();
+		parent::__construct();
 	}
 	
-	public function get_dao()
+	public function getDao()
 	{
-		return $this->category_dao;
-	}
-	
-	// public function get_map_dao()
-	// {
-		// return $this->category_id_mapping_dao;
-	// }
-
-	public function set_dao(base_dao $dao)
-	{
-		$this->category_dao = $dao;
+		return $this->CategoryDao;
 	}
 		
 	/**********************************************************************
 	*	process_vb_data, get the VB data to save it in the category table
 	***********************************************************************/
-	public function process_vb_data ($feed)
+	public function processVbData ($feed)
 	{		
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
@@ -59,7 +41,7 @@ class Vb_data_transfer_category_service extends Vb_data_transfer_service
             //if ($id == "" || $id == null)
 			try
 			{
-				if($this->get_dao()->get(array("id"=>$category->id)))
+				if($this->getDao()->get(array("id"=>$category->id)))
 				{
 					//Update the AtomV2 category data 					
 					$where = array("id"=>$category->id);
@@ -76,7 +58,7 @@ class Vb_data_transfer_category_service extends Vb_data_transfer_service
 					$new_cat_obj["min_display_qty"] = $category->min_display_qty;					
 					$new_cat_obj["status"] = $category->status;	
 					
-					$this->get_dao()->q_update($where, $new_cat_obj);
+					$this->getDao()->qUpdate($where, $new_cat_obj);
 					
 					$xml[] = '<category>';
 					$xml[] = '<id>' . $category->id . '</id>';
@@ -89,20 +71,20 @@ class Vb_data_transfer_category_service extends Vb_data_transfer_service
 					//insert category and mapping
 					$new_cat_obj = array();
 					
-					$new_cat_obj = $this->get_dao()->get();
-					$new_cat_obj->set_id($category->id);
-					$new_cat_obj->set_name($category->name);
-					$new_cat_obj->set_description($category->description);
-					$new_cat_obj->set_parent_cat_id($category->parent_cat_id);
-					$new_cat_obj->set_level($category->level);
-					$new_cat_obj->set_add_colour_name($category->add_colour_name);
-					$new_cat_obj->set_priority($category->priority);
-					$new_cat_obj->set_bundle_discount($category->bundle_discount);
-					$new_cat_obj->set_min_display_qty($category->min_display_qty);
-					$new_cat_obj->set_sponsored(0);
-					$new_cat_obj->set_status($category->status);
+					$new_cat_obj = $this->getDao()->get();
+					$new_cat_obj->setId($category->id);
+					$new_cat_obj->setName($category->name);
+					$new_cat_obj->setDescription($category->description);
+					$new_cat_obj->setParentCatId($category->parent_cat_id);
+					$new_cat_obj->setLevel($category->level);
+					$new_cat_obj->setAddColourName($category->add_colour_name);
+					$new_cat_obj->setPriority($category->priority);
+					$new_cat_obj->setBundleDiscount($category->bundle_discount);
+					$new_cat_obj->setMinDisplayQty($category->min_display_qty);
+					$new_cat_obj->setSponsored(0);
+					$new_cat_obj->setStatus($category->status);
 					
-					$this->get_dao()->insert($new_cat_obj);	
+					$this->getDao()->insert($new_cat_obj);	
 					
 					$xml[] = '<category>';
 					$xml[] = '<id>' . $category->id . '</id>';

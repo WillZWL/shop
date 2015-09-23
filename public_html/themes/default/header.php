@@ -100,13 +100,17 @@
                         </div>
                     </div>
                 </div>
-                <?php //$this->load->view('category');
-					//$this->load->view( APPPATH."views/template/menu/".$lang_id."/menu_big_" . strtolower($platform_id)
-					//$this->load->view( "/views/template/menu/en/menu_webgb");
+                <?php
 					$lang_id = substr(SITE_LANG, 0, 2);
 					$menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
+					//$menu_script = file_get_contents(APPPATH."views/template/menu/en/menu_webgb.html", true);
 					print $menu_script;
 				?>
             </header>
             <!-- /header -->
             <div class="main-columns container">
+				<div class="bottom-offcanvas">
+					<div class="container">
+						<button data-toggle="offcanvas" class="btn btn-primary visible-xs visible-sm" type="button"><i class="fa fa-bars"></i></button>
+					</div>
+				</div>
