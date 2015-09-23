@@ -66,11 +66,11 @@
                             </div>
                             <div id="account" class="inner col-lg-4 col-md-4 col-sm-12">
                                 <div class="account">
-                                    <? if ($_SESSION["client"]["logged_in"]) { ?>
+                                    <?php if ($_SESSION["client"]["logged_in"]) { ?>
                                         <a href="index.php/myaccount/index">
-                                    <? } else { ?>
+                                    <?php } else { ?>
                                           <a href="index.php/login/index">
-                                    <? } ?>
+                                    <?php } ?>
                                     <?= _("My Account") ?></a>
                                 </div>
                             </div>
