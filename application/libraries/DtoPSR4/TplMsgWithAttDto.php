@@ -4,6 +4,7 @@ class TplMsgWithAttDto
     private $template_by_platform_id;
     private $lang_id = "en";
     private $platform_id;
+    private $template_id;
     private $name;
     private $description;
     private $tpl_file;
@@ -43,6 +44,16 @@ class TplMsgWithAttDto
     public function getPlatformId()
     {
         return $this->platform_id;
+    }
+
+    public function setTemplateId($template_id)
+    {
+        $this->template_id = $template_id;
+    }
+
+    public function getTemplateId()
+    {
+        return $this->template_id;
     }
 
     public function setName($name)

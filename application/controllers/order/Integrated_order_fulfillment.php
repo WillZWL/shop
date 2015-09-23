@@ -385,7 +385,7 @@ class Integrated_order_fulfillment extends MY_Controller
         $option["hide_payment"] = 0;
 
         $temp_objlist = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, $option);
-        echo $this->sc['So']->getDao('SoAllocate')->db->last_query();
+
         $data["objlist"] = $this->sc['IntegratedOrderFulfillment']->renovateData($temp_objlist);
         $data["total_order"] = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, ["num_rows" => 1, "list_type" => "toship", "hide_client" => 1]);
         $data["total_item"] = $pconfig['total_rows'] = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, ["total_items" => 1, "list_type" => "toship"]);
@@ -425,7 +425,7 @@ class Integrated_order_fulfillment extends MY_Controller
 
     public function generate_allocate_file()
     {
-        $ret = $this->sc['soModel']->generateAllocateFile();
+        $ret = $this->sc['So']->generateAllocateFile();
         $_SESSION['allocate_file'] = $ret;
         redirect(current_url() . "?" . $_SERVER['QUERY_STRING']);
     }
@@ -647,9 +647,9 @@ class Integrated_order_fulfillment extends MY_Controller
         }
     }
 
-    public function error_in_allocate_file()
+    public function errorInAllocateFile()
     {
-        $ret = $this->sc['soModel']->errorInAllocateFile();
+        $ret = $this->sc['So']->errorInAllocateFile();
     }
 
     public function get_allocate_file($filename = "")

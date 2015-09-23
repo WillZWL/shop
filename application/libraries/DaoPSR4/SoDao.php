@@ -531,7 +531,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $row) {
+        foreach ($result->result($classname) as $row) {
             $rs[$i] = $row;
             $rs[$i]->setOrderQuantity($rs[$i]->getItemQuantity());
             if ($current_so_number == $row->getSoNo()) {
@@ -1887,7 +1887,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $obj) {
+        foreach ($result->result($classname) as $obj) {
             $array[] = $obj;
         }
 
@@ -1930,7 +1930,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $obj) {
+        foreach ($result->result($classname) as $obj) {
             $array[] = $obj;
         }
 
@@ -1959,7 +1959,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $obj) {
+        foreach ($result->result($classname) as $obj) {
             $array[] = $obj;
         }
 
@@ -1996,7 +1996,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $obj) {
+        foreach ($result->result($classname) as $obj) {
             $array[] = $obj;
         }
 
@@ -2325,7 +2325,7 @@ SQL;
                 ";
 
         $resultp = $this->db->query($sql, [$start_date, $end_date]);
-        foreach ($resultp->result("object", $classname) as $row) {
+        foreach ($resultp->result($classname) as $row) {
             $rs[] = $row;
         }
         return $rs;
@@ -2403,7 +2403,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $row) {
+        foreach ($result->result($classname) as $row) {
             $rs[] = $row;
         }
         return $rs;
@@ -2476,7 +2476,7 @@ SQL;
         if (!$result) {
             return FALSE;
         }
-        foreach ($result->result("object", $classname) as $row) {
+        foreach ($result->result($classname) as $row) {
             $rs[] = $row;
         }
         return $rs;
@@ -2568,7 +2568,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $row) {
+        foreach ($result->result($classname) as $row) {
             $rs[] = $row;
         }
         return $rs;
@@ -2643,7 +2643,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_order_history($client_id, $classname = "OrderHistoryDto")
+    public function getOrderHistory($client_id, $classname = "OrderHistoryDto")
     {
         # sbf #3746 don't include complementary accessory on front end
         $ca_catid_arr = implode(',', $this->getAccessoryCatidArr());
@@ -2661,6 +2661,7 @@ SQL;
 
         return $this->commonGetList($classname, $where, $option, "
                 pbv.platform_currency_id currency_id,
+                so.platform_id,
                 so.so_no,
                 IF(ISNULL(so.split_so_group), so.so_no, CONCAT_WS('/',so.split_so_group,so.so_no)) AS join_split_so_no,
                 so.split_so_group,
@@ -2680,8 +2681,7 @@ SQL;
 
         return $accessory_catid_arr = ["753"];
     }
-
-    public function get_unpaid_order_history($client_id, $payment_gateway_arr = [], $classname = "OrderHistoryDto")
+    public function getUnpaidOrderHistory($client_id, $payment_gateway_arr = [], $classname = "OrderHistoryDto")
     {
         # sbf #3746 don't include complementary accessory on front end
         $ca_catid_arr = implode(',', $this->getAccessoryCatidArr());
@@ -2700,7 +2700,7 @@ SQL;
             $this->db->where_in("sops.payment_gateway_id", $payment_gateway_arr);
         }
 
-        return $this->commonGetList($classname, $where, $option, "pbv.platform_currency_id currency_id, so.so_no, so.status, so.hold_status, so.refund_status, c.id client_id, so.order_create_date, so.delivery_name, p.sku, soi.prod_name, soi.amount, sbt.net_diff_status, so.status, so.refund_status, sops.payment_gateway_id");
+        return $this->commonGetList($classname, $where, $option, "pbv.platform_currency_id currency_id, so.so_no, so.status, so.hold_status, so.refund_status, c.id client_id, so.order_create_date, so.delivery_name, so.platform_id, p.sku, soi.prod_name, soi.amount, sbt.net_diff_status, so.status, so.refund_status, sops.payment_gateway_id");
     }
 
     public function getFnacPendingPaymentOrders($where = [], $option = [])
@@ -2899,7 +2899,7 @@ SQL;
         $this->db->select('so.biz_type, so.order_create_date, so.delivery_country_id, soext.conv_site_id');
 
         if ($query = $this->db->get()) {
-            foreach ($query->result("array", $classname) as $obj) {
+            foreach ($query->result() as $obj) {
                 $rs = $obj;
             }
             return $rs;
@@ -2921,7 +2921,7 @@ SQL;
         $this->db->select('CONCAT_WS(";", trim(cat.name), trim(sc.name), trim(ssc.name), trim(br.brand_name)) trans_product, so.order_create_date, soid.qty');
 
         if ($query = $this->db->get()) {
-            foreach ($query->result("array", $classname) as $obj) {
+            foreach ($query->result() as $obj) {
                 $rs[] = $obj;
             }
             return $rs;
@@ -2938,7 +2938,7 @@ SQL;
         $this->db->select('SUM(soid.qty) total');
 
         if ($query = $this->db->get()) {
-            foreach ($query->result("array", $classname) as $obj) {
+            foreach ($query->result() as $obj) {
                 $rs = $obj['total'];
             }
             return $rs;
@@ -2952,7 +2952,7 @@ SQL;
         $this->db->select('DISTINCT client_id', FALSE);
 
         if ($query = $this->db->get()) {
-            foreach ($query->result("array", $classname) as $obj) {
+            foreach ($query->result() as $obj) {
                 $rs[] = $obj['client_id'];
             }
             return $rs;

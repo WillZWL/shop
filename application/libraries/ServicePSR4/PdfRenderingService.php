@@ -1,11 +1,13 @@
 <?php
 namespace ESG\Panther\Service;
 
-class PdfRenderingService extends RenderingService
+class PdfRenderingService extends BaseService
 {
     public function __construct()
     {
         parent::__construct();
+        $CI =& get_instance();
+        $this->load = $CI->load;
     }
 
     public function convertHtmlToPdf($input_html = "", $output_name = "", $dest = "I", $lang = "en")
@@ -100,5 +102,3 @@ class PdfRenderingService extends RenderingService
         return $output_name;
     }
 }
-
-

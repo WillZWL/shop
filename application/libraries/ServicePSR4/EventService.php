@@ -1,17 +1,12 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\EventDao;
-use ESG\Panther\Dao\ActionDao;
-
 class EventService extends BaseService
 {
 
     function __construct()
     {
         parent::__construct();
-        $this->setDao(new EventDao);
-        $this->setActionDao(new ActionDao);
     }
 
     public function fireEvent($dto, $get_email_html = FALSE)
@@ -34,7 +29,7 @@ class EventService extends BaseService
     public function fireEventOnce($dto, $get_email_html = FALSE)
     {
         if ($dto) {
-            if ($acts = $this->getDao()->getEventAction($dto->getEventId(), "ActionVo")) {
+            if ($acts = $this->getDao('Event')->getEventAction($dto->getEventId(), "ActionVo")) {
                 foreach ($acts as $act_obj) {
                     $classname = $act_obj->getAction();
 
@@ -62,16 +57,6 @@ class EventService extends BaseService
         } else {
             return FALSE;
         }
-    }
-
-    public function setActionDao($value)
-    {
-        $this->actionDao = $value;
-    }
-
-    public function getActionDao()
-    {
-        return $this->actionDao;
     }
 }
 

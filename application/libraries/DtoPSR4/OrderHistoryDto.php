@@ -2,6 +2,7 @@
 class OrderHistoryDto
 {
     private $currency_id;
+    private $platform_id;
     private $so_no;
     private $client_id;
     private $order_create_date;
@@ -28,6 +29,16 @@ class OrderHistoryDto
     public function getCurrencyId()
     {
         return $this->currency_id;
+    }
+
+    public function setPlatformId($platform_id)
+    {
+        $this->platform_id = $platform_id;
+    }
+
+    public function getPlatformId()
+    {
+        return $this->platform_id;
     }
 
     public function setSoNo($so_no)

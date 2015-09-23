@@ -113,6 +113,11 @@ class Country_service extends Base_service
         return $this->get_dao()->is_allowed_postal($country_code, $postal_code);
     }
 
+    public function get_country_name_in_lang($where = '', $option = '')
+    {
+        return $this->get_country_ext_dao()->get_country_name_in_lang($where, $option);
+    }
+
 }
 
 

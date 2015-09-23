@@ -2,7 +2,7 @@
 	$body = "<table border='0' cellpadding='0' cellspacing='0' width='100%'>
 		<tr>
 			<td colspan='2' align='left'>
-				<p><img border=0 src='".$website_domain."images/valuebasket_logo.png'></p>
+				<p><img border=0 src='".$website_domain."images/logo/digitaldiscount.png'></p>
 			</td>
 		</tr>
 
