@@ -1,4 +1,9 @@
 <?php $this->load->view('header') ?>
+<div class="bottom-offcanvas">
+    <div class="container">
+        <button data-toggle="offcanvas" class="btn btn-primary visible-xs visible-sm" type="button"><i class="fa fa-bars"></i></button>
+    </div>
+</div>
 <!-- sys-notification -->
 <div id="sys-notification">
     <div class="container">

@@ -24,9 +24,9 @@ class ReviewOrder extends PUB_Controller
         $data['cartInfo'] = $this->cartSessionModel->getCartInfo(true);
 //        var_dump($data['cartInfo']);
         if ($data['cartInfo'])
-            $this->load->view('/default/review', $data);
+            $this->load->view('review', $data);
         else
-            $this->load->view('/default/reviewEmptyCart', $data);
+            $this->load->view('reviewEmptyCart', $data);
 //        $data['data']['lang_text'] = $this->_get_language_file('', '', 'index');
 //        $item_status = $this->input->get('item_status');
 //        $removed_sku = $this->input->get('not_valid_sku');

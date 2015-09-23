@@ -1,7 +1,7 @@
 <?php
 class TplMsgWithAttDto
 {
-    private $id;
+    private $template_by_platform_id;
     private $lang_id = "en";
     private $platform_id;
     private $name;
@@ -15,14 +15,14 @@ class TplMsgWithAttDto
     private $message_html;
     private $message_alt;
 
-    public function setId($id)
+    public function setTemplateByPlatformId($template_by_platform_id)
     {
-        $this->id = $id;
+        $this->template_by_platform_id = $template_by_platform_id;
     }
 
-    public function getId()
+    public function getTemplateByPlatformId()
     {
-        return $this->id;
+        return $this->template_by_platform_id;
     }
 
     public function setLangId($lang_id)

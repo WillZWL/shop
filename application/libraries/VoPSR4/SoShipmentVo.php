@@ -2,15 +2,15 @@
 class SoShipmentVo extends \BaseVo
 {
     private $id;
-    private $sh_no;
+    private $sh_no = '';
     private $courier_id;
-    private $tracking_no;
-    private $courier_feed_sent;
-    private $status;
+    private $tracking_no = '';
+    private $courier_feed_sent = '0';
+    private $status = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 

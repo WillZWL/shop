@@ -126,7 +126,31 @@
     border: 1px solid;
     border-radius: 10px;
 }
+
 /*start category page*/
+#sidebar-right .sidebar-right {
+    box-shadow:none;
+    background-color: #323232;
+}
+#column-right{
+    height:1080px;
+}
+.sidebar .list-group-item {
+    border:2px solid #474747;
+}
+.sidebar .list-group-item p{
+    color:#549B17;
+    margin:0;
+    font-family: "Open Sans Semibold", sans-serif;
+    font-size: 16px;
+}
+.sidebar .list-group-item-title{
+    color:#549B17;
+}
+.list-group-item .show-more {
+    color:#999;
+}
+
 .product-list .product-block .product-meta .action .cart{
     margin-right:20px;
 }
@@ -188,7 +212,6 @@
 .product-list .product-block .action > div {
     float:left;
 }
-
 /*end category page*/
 
 /*start footer*/
@@ -254,7 +277,7 @@
 }
 
 input.btn-newsletter {
-    
+
     border-top-right:  : 2px !important;
     border-bottom-right: 2px !important;
     float: left;
@@ -273,10 +296,10 @@ input.btn-newsletter {
 {
     background-color: #eaf8fc;
     background-image: linear-gradient(#fff, #d4e8ec);
-    border-radius: 35px;    
+    border-radius: 35px;
     border-width: 1px;
     border-style: solid;
-    border-color: #c4d9df #a4c3ca #83afb7;            
+    border-color: #c4d9df #a4c3ca #83afb7;
     width: 500px;
     height: 35px;
     padding: 10px;
@@ -286,3 +309,16 @@ input.btn-newsletter {
 
 /*end footer*/
 
+/* checkout page */
+.form-group #billingTelCountryCode, .form-group #billingTelAreaCode
+{
+    width: 150px;
+    display: inline-block;
+    margin-left: 2px;
+}
+.form-group #billingTel
+{
+    width: 220px;
+    display: inline-block;
+}
+/* end checkout page */

@@ -26,8 +26,8 @@ class Display extends PUB_Controller
             show_404();
         }
 
-        $data["content"] = "/default/display/" . $page;
-        $this->load->view('/default/display/view', $data);
+        $data["content"] = "display/" . $page;
+        $this->load->view('display/view', $data);
     }
 
     public function promotions($page = '')

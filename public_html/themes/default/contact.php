@@ -1,4 +1,4 @@
-<?php $this->load->view('/default/header') ?>
+<?php $this->load->view('header') ?>
     <div id="contact-container">
         <h1><?= _('CONTACT US') ?></h1>
         <h4><?= _("We're here to help you!") ?></h4>
@@ -43,4 +43,4 @@
             </form>
         </div>
     </div>
-<?php $this->load->view('/default/footer') ?>
+<?php $this->load->view('footer') ?>

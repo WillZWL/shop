@@ -89,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                <?php 
+                <?php
 					$lang_id = substr(SITE_LANG, 0, 2);
 					$menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
 					//$menu_script = file_get_contents(APPPATH."views/template/menu/en/menu_webgb.html", true);

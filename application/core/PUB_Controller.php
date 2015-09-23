@@ -211,9 +211,14 @@ class PUB_Controller extends CI_Controller
     // }
 
 
-    protected function getLanguageFile($directory = "", $i_class = "", $method = "")
+    public function getLanguageFile($directory = "", $i_class = "", $method = "")
     {
         return $this->load_template_language($this->load_view_language($directory, $i_class, $method));
+    }
+
+    public function get_language_file($directory = "", $i_class = "", $method = "")
+    {
+        return $this->getLanguageFile($directory, $i_class, $method);
     }
 
     protected function load_template_language($viewLanguageData = array())
