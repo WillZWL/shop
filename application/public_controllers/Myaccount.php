@@ -23,14 +23,14 @@ class Myaccount extends PUB_Controller
         $data["back"] = $this->input->get("back");
         $data['data']['lang_text'] = $this->getLanguageFile('', '', 'index');
         if ($this->input->post("posted")) {
-            if (isset($_SESSION["client_vo"])) {
+            if (isset($_SESSION["client_obj"])) {
                 $data["client_obj"] = unserialize($_SESSION["client_obj"]);
                 if (!empty($_POST["password"])) {
                     $old_password = $this->input->post("old_password");
                     $new_password = $this->input->post("password");
                     $reconfirm_password = $this->input->post("confirm_password");
                     $data['email'] = $_SESSION['client']['email'];
-                    if (password_verify(strtolower($this->input->post("old_password")), $data["client_obj"]->get_password())) {
+                    if (password_verify(strtolower($this->input->post("old_password")), $data["client_obj"]->getPassword())) {
                         $_SESSION['NOTICE'] = 'Please Enter Old Password.';
                     } elseif ($new_password != $reconfirm_password) {
                         $_SESSION['NOTICE'] = 'Confirm Password mismatch.';
@@ -40,7 +40,6 @@ class Myaccount extends PUB_Controller
                         $update_password = password_hash($new_password, PASSWORD_DEFAULT);
                     }
                 }
-
                 if (!$_SESSION['NOTICE']) {
                     if (empty($_POST["subscriber"])) {
                         $_POST["subscriber"] = 0;
@@ -126,7 +125,7 @@ class Myaccount extends PUB_Controller
         $show_unpaid_status = array(
             0=>"<b>Pending Payment</b><br>We have not received the payment for your order.",
             1=>"<b>Incomplete Payment</b><br>The amount received in our bank account does not correspond to the total amount of your order.");
-        $this->load->view('/default/myaccount/index.php', $data);
+        $this->load->view('myaccount/index.php', $data);
     }
 
     public function getUnpaidOrderList($client_id)
@@ -212,7 +211,6 @@ class Myaccount extends PUB_Controller
                     if (isset($split_so_group) && $split_so_group != $obj->getSoNo()) {
                         $data["show_partial_ship_text"] = TRUE;
                     }
-                    $data['orderlist'][$obj->getSoNo()]["print_invoice_html"] = '<br /><a href="' . base_url() . 'myaccount/print_invoice/' . $so_no . '" target="_blank" style="font-size:10px;"><u>Print Invoice</u></a>';
                     if($is_shipped && (strtotime($obj->getOrderCreateDate()) > strtotime('3 months ago')))
                     {
                         $data['orderlist'][$obj->getSoNo()]["print_invoice_html"] = '<br /><a href="' . base_url() . 'myaccount/print_invoice/' . $so_no . '" target="_blank" style="font-size:10px;"><u>Print Invoice</u></a>';

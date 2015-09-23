@@ -1,4 +1,4 @@
-<?php $this->load->view('/default/header') ?>
+<?php $this->load->view('header') ?>
 <div id="content">
 	<div id="my_acount" class="product-tabs-info">
 		<h5 class="side_title"><?= _("My Account") ?></h5>
@@ -299,7 +299,7 @@
 						<label><?= _('Title') ?> *</label>
 						<select name="name_prefix" class="[select_box_style]" id="profile_title">
 							 <?foreach ($title as $title_row) { ?>
-                                <option value="<?=$title_row?>"><?=$title_row?></option>
+                                <option value="<?=$title_row?>" <? if($client_obj->getTitle() == $title_row) { echo "SELECTED"; }?>><?=$title_row?></option>
                             <? } ?>
 						</select>
 					</li>
@@ -324,7 +324,7 @@
 						<label><?= _('Country') ?> *</label>
 						<select id="profile_country_id" name="country_id" class="[select_box_style]" id="profile_billing_country" onchange="update_state_attribute('profile', this.value);update_postcode_attribute('profile', this.value);">
 							<? foreach ($bill_to_list as $bill_country) { ?>
-								<option value="<?=$bill_country->getCountryId()?>"><?=$bill_country->getName();?></option>
+								<option value="<?=$bill_country->getCountryId()?>" <? if($client_obj->getCountryId() == $bill_country->getCountryId()){ echo "SELECTED";} ?>><?=$bill_country->getName();?></option>
 							<? } ?>
 						</select>
 					</li>
@@ -484,4 +484,4 @@ function update_postcode_attribute(f, country_id)
 	}
 }
 </script>
-<?php $this->load->view('/default/footer') ?>
+<?php $this->load->view('footer') ?>

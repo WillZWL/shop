@@ -95,7 +95,7 @@ class Login extends PUB_Controller
             $data["ajax"] = $this->input->get("x_sign_in") || strpos($this->input->get("back"), "x_sign_in") !== FALSE;
             $data["trackno"] = $_GET['tracknum'];
             $data['title'] = array('Mr', 'Mrs', 'Miss', 'Dr');
-            $this->load->view('/default/myaccount/login.php', $data);
+            $this->load->view('myaccount/login.php', $data);
         }
     }
 
@@ -103,7 +103,7 @@ class Login extends PUB_Controller
     {
         $client_obj = $this->client_model->client_service->get_dao()->get();
         $client_vo = clone $client_obj;
-        $data["password"] = password_hash(strtolower($data["password"]));
+        $data["password"] = password_hash(strtolower($data["password"]), PASSWORD_DEFAULT);
         if (empty($data["subscriber"])) {
             $data["subscriber"] = 0;
         }

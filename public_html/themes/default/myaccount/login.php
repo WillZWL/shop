@@ -1,4 +1,4 @@
-<?php $this->load->view('/default/header') ?>
+<?php $this->load->view('header') ?>
     <div id="contact-container">
         <!-- aftership widget -->
         <div id="as-root"></div><script>(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n))return;r=e.createElement(t);r.id=n;r.src="//apps.aftership.com/all.js";i.parentNode.insertBefore(r,i)})(document,"script","aftership-jssdk")</script>
@@ -174,4 +174,4 @@
         }
         update_field_attribute(document.getElementById("delivery_country").value);
     </script>
-<?php $this->load->view('/default/footer') ?>
+<?php $this->load->view('footer') ?>

@@ -46,6 +46,7 @@ class Client_service extends Base_service
         if ($this->validate_field($email, array("valid_email"))) {
             $dao = $this->get_dao();
             if ($client_obj = $dao->get(array("email" => $email, "status" => 1))) {
+                $_SESSION['client_obj'] = serialize($client_obj);
                 $password_hash = $client_obj->get_password();
                 if (password_verify($password, $password_hash)) {
                     $this->object_login($client_obj, TRUE);
