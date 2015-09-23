@@ -531,7 +531,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $row) {
+        foreach ($result->result($classname) as $row) {
             $rs[$i] = $row;
             $rs[$i]->setOrderQuantity($rs[$i]->getItemQuantity());
             if ($current_so_number == $row->getSoNo()) {
@@ -1887,7 +1887,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $obj) {
+        foreach ($result->result($classname) as $obj) {
             $array[] = $obj;
         }
 
@@ -1930,7 +1930,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $obj) {
+        foreach ($result->result($classname) as $obj) {
             $array[] = $obj;
         }
 
@@ -1959,7 +1959,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $obj) {
+        foreach ($result->result($classname) as $obj) {
             $array[] = $obj;
         }
 
@@ -1996,7 +1996,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $obj) {
+        foreach ($result->result($classname) as $obj) {
             $array[] = $obj;
         }
 
@@ -2325,7 +2325,7 @@ SQL;
                 ";
 
         $resultp = $this->db->query($sql, [$start_date, $end_date]);
-        foreach ($resultp->result("object", $classname) as $row) {
+        foreach ($resultp->result($classname) as $row) {
             $rs[] = $row;
         }
         return $rs;
@@ -2403,7 +2403,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $row) {
+        foreach ($result->result($classname) as $row) {
             $rs[] = $row;
         }
         return $rs;
@@ -2476,7 +2476,7 @@ SQL;
         if (!$result) {
             return FALSE;
         }
-        foreach ($result->result("object", $classname) as $row) {
+        foreach ($result->result($classname) as $row) {
             $rs[] = $row;
         }
         return $rs;
@@ -2568,7 +2568,7 @@ SQL;
             return FALSE;
         }
 
-        foreach ($result->result("object", $classname) as $row) {
+        foreach ($result->result($classname) as $row) {
             $rs[] = $row;
         }
         return $rs;
@@ -2899,7 +2899,7 @@ SQL;
         $this->db->select('so.biz_type, so.order_create_date, so.delivery_country_id, soext.conv_site_id');
 
         if ($query = $this->db->get()) {
-            foreach ($query->result("array", $classname) as $obj) {
+            foreach ($query->result() as $obj) {
                 $rs = $obj;
             }
             return $rs;
@@ -2921,7 +2921,7 @@ SQL;
         $this->db->select('CONCAT_WS(";", trim(cat.name), trim(sc.name), trim(ssc.name), trim(br.brand_name)) trans_product, so.order_create_date, soid.qty');
 
         if ($query = $this->db->get()) {
-            foreach ($query->result("array", $classname) as $obj) {
+            foreach ($query->result() as $obj) {
                 $rs[] = $obj;
             }
             return $rs;
@@ -2938,7 +2938,7 @@ SQL;
         $this->db->select('SUM(soid.qty) total');
 
         if ($query = $this->db->get()) {
-            foreach ($query->result("array", $classname) as $obj) {
+            foreach ($query->result() as $obj) {
                 $rs = $obj['total'];
             }
             return $rs;
@@ -2952,7 +2952,7 @@ SQL;
         $this->db->select('DISTINCT client_id', FALSE);
 
         if ($query = $this->db->get()) {
-            foreach ($query->result("array", $classname) as $obj) {
+            foreach ($query->result() as $obj) {
                 $rs[] = $obj['client_id'];
             }
             return $rs;

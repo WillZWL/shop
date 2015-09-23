@@ -23,7 +23,7 @@ class SoShipmentDao extends BaseDao
         return $this->tableName;
     }
 
-    public function getTrackingInfoList($where = [], $option = [], $classname = "So_shipment_vo")
+    public function getTrackingInfoList($where = [], $option = [], $classname = "SoShipmentVo")
     {
         $this->db->select('so.*');
         $this->db->from('so_shipment AS so');
@@ -98,7 +98,7 @@ class SoShipmentDao extends BaseDao
         }
     }
 
-    public function getShippedList($where = [], $option = [], $classname = "Soid_prodname_dto")
+    public function getShippedList($where = [], $option = [], $classname = "SoidProdnameDto")
     {
         $this->db->select('sosh.sh_no, soal.so_no, soal.line_no, soal.item_sku, soal.qty, sosh.tracking_no, sosh.create_on AS dispatch_date');
 
@@ -148,7 +148,7 @@ class SoShipmentDao extends BaseDao
         return FALSE;
     }
 
-    public function getShippingInfo($where = [], $option = [], $classname = "So_shipment_vo")
+    public function getShippingInfo($where = [], $option = [], $classname = "SoShipmentVo")
     {
         $this->db->select('sosh.*');
         $this->db->from('so_allocate AS soal');
@@ -221,7 +221,7 @@ class SoShipmentDao extends BaseDao
         return $rs;
     }
 
-    public function genDhlShipmentTrackingFeed($classname = "dhl_shipment_tracking_dto")
+    public function genDhlShipmentTrackingFeed($classname = "dhlShipmentTrackingDto")
     {
         $sql = "
                 select sosh.sh_no, sosh.tracking_no, so.delivery_name, so.delivery_address,  so.delivery_city as delivery_city, so.delivery_state as delivery_state,  so.delivery_postcode, so.delivery_country_id, vpo.cc_desc, so.cost as amount, so.so_no, so.currency_id

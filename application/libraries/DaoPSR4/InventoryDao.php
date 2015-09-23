@@ -21,7 +21,7 @@ class InventoryDao extends BaseDao
         return $this->voClassName;
     }
 
-    public function getBatchInventoryList($where = array(), $option = array(), $classname = "Inventory_vo")
+    public function getBatchInventoryList($where = [], $option = [], $classname = "InventoryVo")
     {
 
         $this->db->select('inv.*');
@@ -53,7 +53,7 @@ class InventoryDao extends BaseDao
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
-            $rs = array();
+            $rs = [];
 
             $this->db->select('inv.*');
 
@@ -73,7 +73,7 @@ class InventoryDao extends BaseDao
         return FALSE;
     }
 
-    public function getInventoryList($where = array())
+    public function getInventoryList($where = [])
     {
         if ($where["sku"] == "") {
             return FALSE;
@@ -86,9 +86,9 @@ class InventoryDao extends BaseDao
 
         $this->include_vo();
 
-        $rs = array();
+        $rs = [];
 
-        if ($query = $this->db->query($sql, array($where["sku"]))) {
+        if ($query = $this->db->query($sql, [$where["sku"]])) {
             foreach ($query->result($$this->getVoClassname()) as $obj) {
                 $rs[] = $obj;
             }
@@ -97,7 +97,7 @@ class InventoryDao extends BaseDao
         return FALSE;
     }
 
-    public function getListWithProdName($where = array(), $option = array(), $classname = "Inv_list_w_prod_name_dto")
+    public function getListWithProdName($where = [], $option = [], $classname = "Inv_list_w_prod_name_dto")
     {
 
         $this->db->from('inventory AS i');
@@ -130,7 +130,7 @@ class InventoryDao extends BaseDao
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
-            $rs = array();
+            $rs = [];
 
             if ($query = $this->db->get()) {
                 foreach ($query->result($classname) as $obj) {
@@ -149,7 +149,7 @@ class InventoryDao extends BaseDao
         return FALSE;
     }
 
-    public function getStockValuation($where = array(), $classname = 'stock_valuation_dto')
+    public function getStockValuation($where = [], $classname = 'stock_valuation_dto')
     {
         $table_alias = array('inventory' => 'inv', 'product' => 'p', 'category' => 'c',
             'sub_category' => 'sc');
@@ -207,16 +207,16 @@ class InventoryDao extends BaseDao
         $result = $this->db->query($sql, $replace_arr);
 
         $this->include_dto($classname);
-        $result_arr = array();
+        $result_arr = [];
 
-        foreach ($result->result("object", $classname) as $obj) {
+        foreach ($result->result($classname) as $obj) {
             array_push($result_arr, $obj);
         }
 
         if ($result_arr) {
             return $result_arr;
         } else {
-            return array();
+            return [];
         }
     }
 
@@ -232,7 +232,7 @@ class InventoryDao extends BaseDao
                 WHERE inv.prod_sku = ?
                 AND c.id = ?
                 ";
-        if ($query = $this->db->query($sql, array($sku, $country_id))) {
+        if ($query = $this->db->query($sql, [$sku, $country_id])) {
             return $query->row()->total;
         } else {
             return FALSE;
@@ -259,7 +259,7 @@ class InventoryDao extends BaseDao
                     AND so.refund_status = 0
                 ";
 
-        if ($query = $this->db->query($sql, array($country_id, $sku))) {
+        if ($query = $this->db->query($sql, [$country_id, $sku])) {
             return $query->row()->outstanding_qty;
         } else {
             return FALSE;
@@ -276,7 +276,7 @@ class InventoryDao extends BaseDao
             where 1
             and m.ext_sku = ?;
         ";
-        $query = $this->db->query($sql, array($qty, (string)$sku));
+        $query = $this->db->query($sql, [$qty, (string)$sku]);
 
         // var_dump($this->db->last_query());
 

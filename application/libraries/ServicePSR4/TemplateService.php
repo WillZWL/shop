@@ -25,7 +25,7 @@ class TemplateService extends BaseService
             return FALSE;
     }
 
-    public function get_tpl_w_att($where = [])
+    public function getTplWithAtt($where = [])
     {
         $tmp["attachment"] = "";
         if ($tmp["template"] = $this->getDao('Template')->get($where)) {
@@ -46,7 +46,7 @@ class TemplateService extends BaseService
 
             /* construct search terms for variables embedded in [::] */
             $value = $search = [];
-            $lang_id = $tmp["template"]->getLangId();
+            $lang_id = $tmp["template"]->getLangId() ? $tmp["template"]->getLangId() : "";
             if (!empty($replace)) {
                 # SBF #4020 - moving to dynamic order status, so for some orders, these may be empty
                 # these days below were original days (will be obsolete once shift is complete)
@@ -120,7 +120,7 @@ class TemplateService extends BaseService
             }
 
             /* set the subject with variables */
-            $tmp["template"]->set_subject(str_replace($search, $value, $tmp["template"]->getSubject()));
+            $tmp["template"]->setSubject(str_replace($search, $value, $tmp["template"]->getSubject()));
 
             /* previous codes for adding attachment using attachment table */
             if ($obj_att = $this->getDao('Attachment')->getList(array("tpl_id" => $tmp["template"]->getTemplateId(), "lang_id" => $tmp["template"]->getLangId()))) {
@@ -171,6 +171,7 @@ class TemplateService extends BaseService
                     }
                 }
             }
+
             return $obj = (object)$tmp;
 
         } else {
@@ -188,41 +189,69 @@ class TemplateService extends BaseService
         / ============================================================================= */
 
         # template by platform_id
-        $this->db->from('template_by_platform');
-        $this->db->where(array(
-                "status" => 1,
-                "template_by_platform_id" => $where["id"],
-                "platform_id" => $where["platform_id"]
-            )
-        );
-        $this->db->order_by("modify_on", "desc");
-        $this->db->limit(1);
 
-        if ($query = $this->db->get()) {
-            if ($query->num_rows() > 0) {
-                $this->filter = $where["platform_id"];
-                $obj = $query->result($classname);
-                return $obj[0];
-            }
+        // $this->db->from('template_by_platform');
+        // $this->db->where([
+        //         "status" => 1,
+        //         "template_by_platform_id" => $where["id"],
+        //         "platform_id" => $where["platform_id"]
+        //     ]
+        // );
+        // $this->db->order_by("modify_on", "desc");
+        // $this->db->limit(1);
+
+
+        // if ($query = $this->db->get()) {
+        //     if ($query->num_rows() > 0) {
+        //         $this->filter = $where["platform_id"];
+        //         $obj = $query->result($classname);
+        //         return $obj[0];
+        //     }
+        // }
+
+        // template by lang_id
+        // $this->db->from('template');
+        // $this->db->where([
+        //         "status" => 1,
+        //         "template_id" => $where["id"],
+        //         "lang_id" => $where["lang_id"]
+        //     ]
+        // );
+        // $this->db->order_by("modify_on", "desc");
+        // $this->db->limit(1);
+
+        // if ($query = $this->db->get()) {
+        //     if ($query->num_rows() > 0) {
+        //         $this->filter = $where["lang_id"];
+        //         $obj = $query->result($classname);
+        //         return $obj[0];
+        //     }
+        // }
+
+        if ($obj = $this->getDao('TemplateByPlatform')->getList([
+                                                        "status" => 1,
+                                                        "template_by_platform_id" => $where["id"],
+                                                        "platform_id" => $where["platform_id"]
+                                                     ],
+                                                     [
+                                                        'limit'=>1,
+                                                        'orderby'=> 'modify_on desc'
+                                                     ], $classname))
+        {
+            return $obj;
         }
 
-        # template by lang_id
-        $this->db->from('template');
-        $this->db->where(array(
-                "status" => 1,
-                "template_id" => $where["id"],
-                "lang_id" => $where["lang_id"]
-            )
-        );
-        $this->db->order_by("modify_on", "desc");
-        $this->db->limit(1);
-
-        if ($query = $this->db->get()) {
-            if ($query->num_rows() > 0) {
-                $this->filter = $where["lang_id"];
-                $obj = $query->result($classname);
-                return $obj[0];
-            }
+        if ($obj = $this->getDao('Template')->getList([
+                                                        "status" => 1,
+                                                        "template_id" => $where["id"],
+                                                        "lang_id" => $where["lang_id"]
+                                                     ],
+                                                     [
+                                                        'limit'=>1,
+                                                        'orderby'=> 'modify_on desc'
+                                                     ], $classname))
+        {
+            return $obj;
         }
 
         return FALSE;
@@ -238,39 +267,67 @@ class TemplateService extends BaseService
 
             *** name your pdf template id as (event_id)_pdf
         / ============================================================================= */
-        $this->include_dto($classname);
+
         $pdf_template_id = $where["id"] . "_pdf";
 
         # template by platform_id
-        $this->db->from('template_by_platform');
-        $this->db->where(array(
-                "status" => 1,
-                "template_by_platform_id" => $pdf_template_id,
-                "platform_id" => $where["platform_id"]
-            )
-        );
-        if ($query = $this->db->get()) {
-            if ($query->num_rows() > 0) {
-                $obj = $query->result($classname);
-                return $obj[0];
-            }
+        // $this->db->from('template_by_platform');
+        // $this->db->where(array(
+        //         "status" => 1,
+        //         "template_by_platform_id" => $pdf_template_id,
+        //         "platform_id" => $where["platform_id"]
+        //     )
+        // );
+        // if ($query = $this->db->get()) {
+        //     if ($query->num_rows() > 0) {
+        //         $obj = $query->result($classname);
+        //         return $obj[0];
+        //     }
+        // }
+
+        // # template by lang_id
+        // $this->db->from('template');
+        // $this->db->where(array(
+        //         "status" => 1,
+        //         "template_id" => $pdf_template_id,
+        //         "lang_id" => $where["lang_id"]
+        //     )
+        // );
+
+        // if ($query = $this->db->get()) {
+        //     if ($query->num_rows() > 0) {
+        //         $obj = $query->result($classname);
+        //         return $obj[0];
+        //     }
+        // }
+
+
+        if ($obj = $this->getDao('TemplateByPlatform')->getList([
+                                                        "status" => 1,
+                                                        "template_by_platform_id" => $pdf_template_id,
+                                                        "platform_id" => $where["platform_id"]
+                                                     ],
+                                                     [
+                                                        'limit'=>1,
+                                                        'orderby'=> 'modify_on desc'
+                                                     ]))
+        {
+            return $obj;
         }
 
-        # template by lang_id
-        $this->db->from('template');
-        $this->db->where(array(
-                "status" => 1,
-                "template_id" => $pdf_template_id,
-                "lang_id" => $where["lang_id"]
-            )
-        );
-
-        if ($query = $this->db->get()) {
-            if ($query->num_rows() > 0) {
-                $obj = $query->result($classname);
-                return $obj[0];
-            }
+        if ($obj = $this->getDao('Template')->getList([
+                                                        "status" => 1,
+                                                        "template_id" => $pdf_template_id,
+                                                        "lang_id" => $where["lang_id"]
+                                                     ],
+                                                     [
+                                                        'limit'=>1,
+                                                        'orderby'=> 'modify_on desc'
+                                                     ]))
+        {
+            return $obj;
         }
+
         return FALSE;
     }
 
@@ -295,7 +352,7 @@ class TemplateService extends BaseService
             if ($obj_tpl = $this->getDao('Template')->update($obj->template)) {
                 $obj->template = $obj_tpl;
                 foreach ($obj->attachment as $att) {
-                    if ($att->get_id() == 0)
+                    if ($att->getId() == 0)
                         $obj_att[] = $this->getDao('Attachment')->insert($att);
                     else
                         $obj_att[] = $this->getDao('Attachment')->update($att);

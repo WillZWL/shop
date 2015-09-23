@@ -78,7 +78,7 @@ class SoItemDetailDao extends BaseDao
         return FALSE;
     }
 
-    public function getListWithProdname($where = [], $option = [], $classname = "Soid_prodname_dto")
+    public function getListWithProdname($where = [], $option = [], $classname = "SoidProdnameDto")
     {
         $this->db->from('so_item_detail soid');
         $this->db->join('product p', 'soid.item_sku = p.sku', 'INNER');
@@ -129,7 +129,7 @@ class SoItemDetailDao extends BaseDao
         }
     }
 
-    public function getGenSourcingListWithPriority($where = [], $option = [], $classname = "Sourcing_list_dto")
+    public function getGenSourcingListWithPriority($where = [], $option = [], $classname = "SourcingListDto")
     {
         if (empty($option["num_rows"]))
             $sql = "select normal.*, priority_list.o_qty as prioritized_qty from ";
@@ -202,7 +202,7 @@ class SoItemDetailDao extends BaseDao
         }
     }
 
-    public function getGenSourcingList($where = [], $option = [], $classname = "Sourcing_list_dto")
+    public function getGenSourcingList($where = [], $option = [], $classname = "SourcingListDto")
     {
         $this->db->from('v_gen_sourcing_list AS vgsl');
         $this->db->join('(
@@ -260,7 +260,7 @@ class SoItemDetailDao extends BaseDao
         return FALSE;
     }
 
-    public function getCpsSourcingList($where = [], $option = [], $classname = "Cps_sourcing_list_dto")
+    public function getCpsSourcingList($where = [], $option = [], $classname = "CpsSourcingListDto")
     {
         $this->db->from('v_gen_sourcing_list_by_order AS vgsl');
         $this->db->join('(SELECT prod_sku, SUM(inventory+git) AS inventory
