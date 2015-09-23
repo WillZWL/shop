@@ -21,7 +21,7 @@ class PlatformBizVarDao extends BaseDao
         return $this->tableName;
     }
 
-    public function getListWithPlatformName($where = [], $option = [], $classname = "Platform_biz_var_w_platform_name_dto")
+    public function getListWithPlatformName($where = [], $option = [], $classname = "PlatformBizVarWithPlatformNameDto")
     {
         $select_str = "pbv.*, s.name AS platform_name";
         $this->db->from('platform_biz_var AS pbv');
@@ -29,7 +29,7 @@ class PlatformBizVarDao extends BaseDao
         return $this->commonCetList($classname, $where, $option, $select_str);
     }
 
-    public function getPricingToolPlatformList($sku, $platform_type, $classname = "Platform_biz_var_w_platform_name_dto")
+    public function getPricingToolPlatformList($sku, $platform_type, $classname = "PlatformBizVarWithPlatformNameDto")
     {
         $sql = "SELECT
                     pbv.*, s.name AS platform_name, c.name AS platform_country
@@ -43,10 +43,10 @@ class PlatformBizVarDao extends BaseDao
                 WHERE type = ? AND s.status = 1
                 ORDER BY pr.listing_status = 'L' DESC, s.selling_platform_id ASC";
 
-        if ($result = $this->db->query($sql, array($sku, $platform_type))) {
+        if ($result = $this->db->query($sql, [$sku, $platform_type])) {
             $result_arr = [];
 
-            foreach ($result->result("object", $classname) as $obj) {
+            foreach ($result->result($classname) as $obj) {
                 $result_arr[] = $obj;
             }
             return $result_arr;
@@ -55,7 +55,7 @@ class PlatformBizVarDao extends BaseDao
         return FALSE;
     }
 
-    public function getListWithCountryName($where = [], $option = [], $classname = "Platform_biz_var_w_platform_name_dto")
+    public function getListWithCountryName($where = [], $option = [], $classname = "PlatformBizVarWithPlatformNameDto")
     {
         $select_str = "pbv.*, c.name AS platform_country";
         $this->db->from('platform_biz_var AS pbv');
@@ -73,7 +73,7 @@ class PlatformBizVarDao extends BaseDao
                 ";
         if ($query = $this->db->query($sql)) {
             foreach ($query->result() as $row) {
-                $res[] = array("country_id" => $row->country_id, "country_name" => $row->country_name, "currency_id" => $row->platform_currency_id);
+                $res[] = ["country_id" => $row->country_id, "country_name" => $row->country_name, "currency_id" => $row->platform_currency_id];
             }
             return $res;
         }
@@ -91,7 +91,7 @@ class PlatformBizVarDao extends BaseDao
                 ";
         if ($query = $this->db->query($sql)) {
             foreach ($query->result() as $row) {
-                $res[$row->type][] = array("country_id" => $row->country_id, "country_name" => $row->country_name, "currency_id" => $row->platform_currency_id);
+                $res[$row->type][] = ["country_id" => $row->country_id, "country_name" => $row->country_name, "currency_id" => $row->platform_currency_id];
             }
             return $res;
         }
@@ -104,7 +104,7 @@ class PlatformBizVarDao extends BaseDao
                 FROM platform_biz_var
                 WHERE selling_platform_id = ?";
 
-        if ($query = $this->db->query($sql, array($platform_id))) {
+        if ($query = $this->db->query($sql, [$platform_id])) {
             return $query->row()->free_delivery_limit;
         }
     }

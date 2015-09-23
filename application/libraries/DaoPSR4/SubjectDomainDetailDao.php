@@ -27,8 +27,8 @@ class SubjectDomainDetailDao extends BaseDao
     {
         $this->db->from('subject_domain AS sd');
         $this->db->join('subject_domain_detail AS sdd', "sd.subject = sdd.subject", 'INNER');
-        $this->include_vo($classname = $this->getVoClassname());
-        return $this->common_get_list($where, $option, $classname, 'sdd.*');
+        $classname = $this->getVoClassname();
+        return $this->common_get_list($classname, $where, $option, 'sdd.*');
     }
 }
 

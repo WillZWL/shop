@@ -114,8 +114,33 @@ class ServiceProvider implements ServiceProviderInterface
         $servcieContainer['PriceWebsite'] = function () {
             return new S\PriceWebsiteService();
         };
+
         $servcieContainer['PriceWebsite'] = function () {
             return new S\PriceWebsiteService();
+        };
+
+        $servcieContainer['Region'] = function () {
+            return new S\regionService();
+        };
+
+        $servcieContainer['Courier'] = function () {
+            return new S\CourierService();
+        };
+
+        $servcieContainer['Client'] = function () {
+            return new S\ClientService();
+        };
+
+        $servcieContainer['ComplementaryAcc'] = function () {
+            return new S\ComplementaryAccService();
+        };
+
+        $servcieContainer['Event'] = function () {
+            return new S\EventService();
+        };
+
+        $servcieContainer['PdfRendering'] = function () {
+            return new S\PdfRenderingService();
         };
     }
 }

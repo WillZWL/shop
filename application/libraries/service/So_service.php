@@ -2864,7 +2864,7 @@ html;
             ${$key} = $value;
         }
 
-        $logo_place_holder = $new_shipper_name ? "" : "<img src='" . base_url() . "/images/valuebasket_logo.png' border='0'><br/>";
+        $logo_place_holder = $new_shipper_name ? "" : "<img src='" . base_url() . "/images/logo/digitaldiscount.png' border='0'><br/>";
         include APPPATH . "data/cinv_body.php";
 
         return $body;

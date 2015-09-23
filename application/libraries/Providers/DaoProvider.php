@@ -213,6 +213,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\EntityDao();
         };
 
+        $daoContainer['Event'] = function () {
+            return new D\EventDao();
+        };
+
         $daoContainer['ExchangeRate'] = function () {
             return new D\ExchangeRateDao();
         };
@@ -227,6 +231,10 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['Template'] = function () {
             return new D\TemplateDao();
+        };
+
+        $daoContainer['TemplateByPlatform'] = function () {
+            return new D\TemplateByPlatformDao();
         };
 
         $daoContainer['TransmissionLog'] = function () {
@@ -299,6 +307,18 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['SoShipment'] = function () {
             return new D\SoShipmentDao();
+        };
+
+        $daoContainer['SubjectDomain'] = function () {
+            return new D\SubjectDomainDao();
+        };
+
+        $daoContainer['SubjectDomainDetail'] = function () {
+            return new D\SubjectDomainDetailDao();
+        };
+
+        $daoContainer['SubjectDomainDetailLabel'] = function () {
+            return new D\SubjectDomainDetailLabelDao();
         };
 
         $daoContainer['OrderNotes'] = function () {

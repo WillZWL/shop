@@ -1,4 +1,4 @@
-<?php $this->load->view('/default/header') ?>
+<?php $this->load->view('header') ?>
 <!-- header -->
 <div class="main-columns container">
     <div class="row"> 
@@ -324,4 +324,4 @@ $('input[name=\'shipping_address\']').on('change', function() {
 });
 
 </script> 
-<?php $this->load->view('/default/footer') ?>
+<?php $this->load->view('footer') ?>

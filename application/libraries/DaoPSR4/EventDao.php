@@ -33,7 +33,7 @@ class EventDao extends BaseDao
                 AND a.status = 1
                 ";
 
-        $rs = array();
+        $rs = [];
         if ($query = $this->db->query($sql, $event_id)) {
             foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
