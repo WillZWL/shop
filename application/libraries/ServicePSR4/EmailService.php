@@ -33,8 +33,8 @@ class EmailService extends BaseService implements ActableService
             $platform_id = $dto->getPlatformId();
 
             if (!(empty($tpl_id))) {
-                $tpl_obj = $this->templateService->getMsgTplWithAtt(array("id" => $tpl_id, "lang_id" => $lang_id), $replace);
-                if ($tpl_obj = $this->templateService->getMsgTplWithAtt(array("id" => $tpl_id, "lang_id" => $lang_id, "platform_id" => $platform_id), $replace)) {
+                // $tpl_obj = $this->templateService->getMsgTplWithAtt(array("id" => $tpl_id, "lang_id" => $lang_id), $replace);
+                if ($tpl_obj = $this->templateService->getMsgTplWithAtt(array("id" => $tpl_id, "platform_id" => $platform_id), $replace)) {
                     if ($html_msg = $tpl_obj->template->getMessage()) {
                         return $html_msg;
                     } elseif ($text = $tpl_obj->template->getAltMessage()) {

@@ -1,12 +1,8 @@
 <?php
-
 class Email_management extends MY_Controller
 {
-
     private $appId = "MKT0077";
     private $lang_id = "en";
-
-    // private $
 
     public function __construct()
     {
@@ -125,22 +121,22 @@ class Email_management extends MY_Controller
             # get unique template IDs from both tables
             $result = array();
 
-            $this->db->select('id');
-            $this->db->distinct();
-            $this->db->from("template");
-            $this->db->where(array("message_html !=''" => NULL, "status" => 1));
-            $this->db->order_by("id", "ASC");
+            // $this->db->select('id');
+            // $this->db->distinct();
+            // $this->db->from("template");
+            // $this->db->where(array("message_html !=''" => NULL, "status" => 1));
+            // $this->db->order_by("id", "ASC");
 
-            if ($query = $this->db->get()) {
-                if ($query->num_rows() > 0) {
-                    $obj = $query->result("object");
-                    foreach ($query->result() as $row) {
-                        $result[] = $row->id;
-                    }
-                }
-            }
+            // if ($query = $this->db->get()) {
+            //     if ($query->num_rows() > 0) {
+            //         $obj = $query->result("object");
+            //         foreach ($query->result() as $row) {
+            //             $result[] = $row->id;
+            //         }
+            //     }
+            // }
 
-            $this->db->select('id');
+            $this->db->select('template_by_platform_id');
             $this->db->distinct();
             $this->db->from("template_by_platform");
             $this->db->where(array("message_html !=''" => NULL, "status" => 1));
@@ -150,7 +146,7 @@ class Email_management extends MY_Controller
                 if ($query->num_rows() > 0) {
                     $obj = $query->result("object");
                     foreach ($query->result() as $row) {
-                        $result[] = $row->id;
+                        $result[] = $row->template_by_platform_id;
                     }
                 }
             }
@@ -160,7 +156,7 @@ class Email_management extends MY_Controller
             # get list of templates from respective tables
             $this->db->select('*');
             $this->db->from($template_table);
-            $this->db->where(array("id" => $template_id, "message_html !=''" => NULL, "status" => 1));
+            $this->db->where(array("template_by_platform_id" => $template_id, "message_html !=''" => NULL, "status" => 1));
             $this->db->order_by("modify_on", "DESC");
 
             if ($query = $this->db->get()) {
@@ -187,7 +183,7 @@ class Email_management extends MY_Controller
             $not_table_field = array("tpl_id", "tpl_table", "filter_type", "selected_filter");
 
             $template_table_dao = $this->{$table_name . "_dao"};
-            if ($template_obj = $template_table_dao->get(array("id" => $tpl_id, $filter_type => $selected_filter))) {
+            if ($template_obj = $template_table_dao->get(array("template_by_platform_id" => $tpl_id, $filter_type => $selected_filter))) {
                 foreach ($_POST as $key => $value) {
                     $set = "";
 
@@ -202,13 +198,13 @@ class Email_management extends MY_Controller
                 }
 
                 if ($template_table_dao->update($template_obj) === FALSE) {
-                    $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot update template. \n DB error_msg: " . $this->db->_error_message();
+                    $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot update template. \n DB error_msg: " . $this->db->display_error();
                 } else {
                     return TRUE;
                 }
 
             } else {
-                $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->_error_message();
+                $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
             }
         }
 
@@ -224,24 +220,24 @@ class Email_management extends MY_Controller
         ====================================================================== */
         $result = $ret = array();
 
-        $this->db->select('id');
-        $this->db->distinct();
-        $this->db->from("template");
-        $this->db->where(array("status" => 1, "id" => $template_id));
-        if ($query = $this->db->get()) {
-            if ($query->num_rows() > 0) {
-                $obj = $query->result("object");
-                foreach ($query->result() as $row) {
-                    $result[] = "template";
-                    $ret["filter"] = "lang_id";
-                }
-            }
-        }
+        // $this->db->select('template_by_platform_id');
+        // $this->db->distinct();
+        // $this->db->from("template");
+        // $this->db->where(array("status" => 1, "template_by_platform_id" => $template_id));
+        // if ($query = $this->db->get()) {
+        //     if ($query->num_rows() > 0) {
+        //         $obj = $query->result("object");
+        //         foreach ($query->result() as $row) {
+        //             $result[] = "template";
+        //             $ret["filter"] = "lang_id";
+        //         }
+        //     }
+        // }
 
-        $this->db->select('id');
+        $this->db->select('template_by_platform_id');
         $this->db->distinct();
         $this->db->from("template_by_platform");
-        $this->db->where(array("status" => 1, "id" => $template_id));
+        $this->db->where(array("status" => 1, "template_by_platform_id" => $template_id));
 
         if ($query = $this->db->get()) {
             if ($query->num_rows() > 0) {
