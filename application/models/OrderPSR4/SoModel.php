@@ -193,7 +193,7 @@ class SoModel extends \CI_Model
                         $working_days = $this->soService->getWorkingDays(strtotime($so_obj->getDispatchDate()), $now_time);
 
                         //SBF #5275 dynamic status based on aftership status
-                        $shipment_obj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
+                        $shipment_obj = $this->soService->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
                         $aftership = $shipment_obj->getAftershipStatus();
 
                         if ($aftership == '') {

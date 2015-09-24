@@ -882,4 +882,72 @@ class PriceService extends BaseService
         }
         return 0;
     }
+
+    public function getProfitMarginJson($platform_id, $sku, $required_selling_price, $required_cost_price = -1, $throw_exception = true)
+    {
+        // var_dump("HI");
+        $this->set_tool_path('marketing/pricing_tool_' . strtolower(PLATFORM_TYPE));
+
+        $dto = $this->getDao('Price')->getPriceCostDto($sku, $platform_id);
+        if ($dto == null) {
+            if ($throw_exception)
+                throw new Exception("[$sku] on [$platform_id] cannot be found, unable to calculate profit/margin");
+            return false;
+        }
+
+        $this->perform_business_logic($dto, 5, $required_selling_price, $required_cost_price);
+        if (1 == 10) {
+            echo "<pre>";
+            var_dump("get_supplier_cost:          " . $dto->getSupplierCost());
+            var_dump("get_logistic_cost:          " . $dto->getLogisticCost());
+            var_dump("get_listing_fee:            " . $dto->getListingFee());
+            var_dump("get_payment_charge_percent: " . $dto->getPaymentChargePercent());
+            var_dump("get_vat_percent:            " . $dto->getVatPercent());
+            var_dump("get_complementary_acc_cost: " . $dto->getComplementaryAccCost());
+            var_dump("get_cost:                   " . $dto->getCost());
+            die();
+        }
+
+        // if ($dto->getMargin() >= -30)
+        {
+            $array = array(
+                "local_sku" => $sku,
+                "based_on" => $required_selling_price,
+                "get_margin" => $dto->getMargin(),
+
+                "get_price" => $dto->getPrice(),
+
+                "get_delivery_cost" => $dto->getDeliveryCost(),
+                "get_declared_value" => $this->to2Decimal($dto->getDeclaredValue()),
+
+                "get_vat_percent" => $dto->getVatPercent(),
+                "get_vat" => $dto->getVat(),
+
+                "get_sales_commission" => $dto->getSalesCommission(),
+
+                "get_duty_pcent" => $dto->getDutyPcent(),
+                "get_duty" => $dto->getDuty(),
+
+                "get_payment_charge_percent" => $dto->getPaymentChargePercent(),
+                "get_payment_charge" => $dto->getPaymentCharge(),
+
+                "get_forex_fee_percent" => $dto->getForexFeePercent(),
+                "get_forex_fee" => $dto->getForexFee(),
+
+                "get_listing_fee" => $dto->getListingFee(),
+
+                "get_logistic_cost" => $dto->getLogisticCost(),
+                "get_supplier_cost" => $dto->getSupplierCost(),
+
+                "get_complementary_acc_cost" => $dto->getComplementaryAccCost(),
+
+                "get_cost" => $dto->getCost(),
+                "get_price" => $this->to2Decimal($dto->getPrice()),
+                "get_profit" => $this->to2Decimal($dto->getPrice()) - $dto->getCost()
+
+            );
+        }
+
+        return json_encode($array);
+    }
 }

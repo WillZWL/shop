@@ -1,17 +1,6 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\DeliveryDao;
-use ESG\Panther\Service\ContextConfigService;
-use ESG\Panther\Service\CourierService;
-use ESG\Panther\Service\WeightCatService;
-use ESG\Panther\Service\ProductService;
-use ESG\Panther\Service\DeliveryOptionService;
-use ESG\Panther\Service\FuncOptionService;
-use ESG\Panther\Service\DeliveryTypeService;
-use ESG\Panther\Service\InventoryService;
-use ESG\Panther\Service\DeliverySurchargeService;
-
 class DeliveryService extends BaseService
 {
     public $platform_id;
@@ -79,7 +68,7 @@ class DeliveryService extends BaseService
 
     public function getLatency($delivery_type_id, $country_id)
     {
-        if (!($days = $this->getDao()->getLatency($delivery_type_id, $country_id))) {
+        if (!($days = $this->getDao('Delivery')->getLatency($delivery_type_id, $country_id))) {
             $days = $this->contextConfigService->valueOf("default_delivery_max_day");
         }
         return $days;
@@ -92,9 +81,9 @@ class DeliveryService extends BaseService
             return 0;
         } else {
             $max_day = $min_day = null;
-            if ($obj = $this->getDao()->getList(["delivery_type_id" => $delivery_type_id, "country_id" => $country_id], ["limit" => 1])) {
-                $min_day = $obj->get_min_day();
-                $max_day = $obj->get_max_day();
+            if ($obj = $this->getDao('Delivery')->getList(["delivery_type_id" => $delivery_type_id, "country_id" => $country_id], ["limit" => 1])) {
+                $min_day = $obj->getMinDay();
+                $max_day = $obj->getMaxDay();
             }
             return $this->correctWorkingDays($min_day, $max_day);
         }
@@ -161,7 +150,7 @@ class DeliveryService extends BaseService
             $skip_get_default_charge = 1;
         }
 
-        $delivery_list = $this->getDao()->getList($where, ["limit" => -1, "orderby" => "delivery_type_id <> '{$this->default_delivery}'"]);
+        $delivery_list = $this->getDao('Delivery')->getList($where, ["limit" => -1, "orderby" => "delivery_type_id <> '{$this->default_delivery}'"]);
 
         $this->validAllVirtualItems();
 
@@ -176,7 +165,7 @@ class DeliveryService extends BaseService
 
             $ret["dc"][$cur_courier] = array(
                 "display_name" => $del_opt_list[$lang_id][$cur_courier]->get_display_name(),
-                "working_days" => $this->all_virtual_valid ? 0 : $this->correctWorkingDays($obj->get_min_day(), $obj->get_max_day(), $this->default_delivery != $cur_courier)
+                "working_days" => $this->all_virtual_valid ? 0 : $this->correctWorkingDays($obj->getMinDay(), $obj->getMaxDay(), $this->default_delivery != $cur_courier)
             );
 
             if ($cur_courier == $this->default_delivery && $skip_get_default_charge) {
@@ -232,11 +221,11 @@ class DeliveryService extends BaseService
         if (!$this->valid_exp_check) {
             if ($this->item_list) {
                 foreach ($this->item_list as $sku => $value) {
-                    if ($sku_list = $this->productService->getDao()->get_item_contain($sku)) {
+                    if ($sku_list = $this->productService->getDao('Product')->getItemContain($sku)) {
                         foreach ($sku_list as $chk_sku) {
                             if (!isset($this->inv_list[$chk_sku])) {
-                                $this->inv_list[$chk_sku] = $this->inventoryService->getDao()->getProdSumInvGitByCountry($chk_sku, $this->delivery_country_id) * 1;
-                                $this->inv_list[$chk_sku] -= $this->inventoryService->getDao()->getFcPendingByCountry($chk_sku, $this->delivery_country_id) * 1;
+                                $this->inv_list[$chk_sku] = $this->inventoryService->getDao('inventory')->getProdSumInvGitByCountry($chk_sku, $this->delivery_country_id) * 1;
+                                $this->inv_list[$chk_sku] -= $this->inventoryService->getDao('inventory')->getFcPendingByCountry($chk_sku, $this->delivery_country_id) * 1;
                             }
                             if (is_array($value)) {
                                 $qty = $value["qty"];
@@ -275,15 +264,15 @@ class DeliveryService extends BaseService
     }
 
     public function update($obj, $where = []) {
-        return $this->getDao()->update($obj, $where);
+        return $this->getDao('Delivery')->update($obj, $where);
     }
 
     public function delete($obj) {
-        return $this->getDao()->delete($obj);
+        return $this->getDao('Delivery')->delete($obj);
     }
 
     public function insert($obj) {
-        return $this->getDao()->insert($obj);
+        return $this->getDao('Delivery')->insert($obj);
     }
 
 }

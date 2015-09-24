@@ -69,6 +69,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\ProductDao();
         };
 
+        $daoContainer['Supplier'] = function () {
+            return new D\SupplierDao();
+        };
+
         $daoContainer['SupplierProd'] = function () {
             return new D\SupplierProdDao();
         };
@@ -185,6 +189,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\CustomClassificationMappingDao();
         };
 
+        $daoContainer['DeliveryOption'] = function () {
+            return new D\DeliveryOptionDao();
+        };
+
         $daoContainer['SkuMapping'] = function () {
             return new D\SkuMappingDao();
         };
@@ -203,6 +211,10 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['PaymentGateway'] = function () {
             return new D\PaymentGatewayDao();
+        };
+
+        $daoContainer['PmgwCard'] = function () {
+            return new D\PmgwCardDao();
         };
 
         $daoContainer['SubCatPlatformVar'] = function () {
@@ -227,6 +239,10 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['ExchangeRateHistory'] = function () {
             return new D\ExchangeRateHistoryDao();
+        };
+
+        $daoContainer['RiskRef'] = function () {
+            return new D\RiskRefDao();
         };
 
         $daoContainer['Template'] = function () {
@@ -307,6 +323,30 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['SoShipment'] = function () {
             return new D\SoShipmentDao();
+        };
+
+        $daoContainer['SoPriorityScore'] = function () {
+            return new D\SoPriorityScoreDao();
+        };
+
+        $daoContainer['SoPriorityScoreHistory'] = function () {
+            return new D\SoPriorityScoreHistoryDao();
+        };
+
+        $daoContainer['SoRefundScore'] = function () {
+            return new D\SoRefundScoreDao();
+        };
+
+        $daoContainer['SoRefundScoreHistory'] = function () {
+            return new D\SoRefundScoreHistoryDao();
+        };
+
+        $daoContainer['SoReleaseOrder'] = function () {
+            return new D\SoReleaseOrderDao();
+        };
+
+        $daoContainer['SoHoldStatusHistory'] = function () {
+            return new D\SoHoldStatusHistoryDao();
         };
 
         $daoContainer['SubjectDomain'] = function () {

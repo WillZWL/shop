@@ -11,6 +11,10 @@ class ServiceProvider implements ServiceProviderInterface
     public function register(Container $servcieContainer)
     {
 
+        $servcieContainer['Aftership'] = function ($c) {
+            return new S\AftershipService();
+        };
+
         $servcieContainer['Authorization'] = function ($c) {
             return new S\AuthorizationService();
         };
@@ -55,6 +59,14 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\CustomClassificationMappingService();
         };
 
+        $servcieContainer['Clwms'] = function () {
+            return new S\ClwmsService();
+        };
+
+        $servcieContainer['DeliveryOption'] = function () {
+            return new S\DeliveryOptionService();
+        };
+
         $servcieContainer['Language'] = function () {
             return new S\LanguageService();
         };
@@ -91,8 +103,20 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\UserService();
         };
 
+        $servcieContainer['Refund'] = function () {
+            return new S\RefundService();
+        };
+
         $servcieContainer['So'] = function () {
             return new S\SoService();
+        };
+
+        $servcieContainer['SoPriorityScore'] = function () {
+            return new S\SoPriorityScoreService();
+        };
+
+        $servcieContainer['SoRefundScore'] = function () {
+            return new S\SoRefundScoreService();
         };
 
         $servcieContainer['Warehouse'] = function () {
@@ -117,6 +141,10 @@ class ServiceProvider implements ServiceProviderInterface
 
         $servcieContainer['PriceWebsite'] = function () {
             return new S\PriceWebsiteService();
+        };
+
+        $servcieContainer['QuickSearch'] = function () {
+            return new S\QuickSearchService();
         };
 
         $servcieContainer['Region'] = function () {
