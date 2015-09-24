@@ -7,7 +7,7 @@
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
 </head>
 <body
-    style="width:auto;margin:4px;"<?php if ($success) { ?> onLoad="UpdateBack();parent.document.getElementById('lbClose').onclick()"<?php } ?>>
+    style="width:auto;margin:4px;"<?php if ($success) : ?> onLoad="UpdateBack();parent.document.getElementById('lbClose').onclick()"<?php endif; ?>>
 <div style="width:auto;text-align:left">
     <?= $notice["img"] ?>
     <center>
@@ -20,15 +20,15 @@
     </center>
     <hr></hr>
     <?php
-    if ($objlist) {
-        foreach ($objlist as $note_obj) {
+    if ($objlist) :
+        foreach ($objlist as $note_obj) :
             ?>
             <p class="normal_p"><?= nl2br($note_obj->getNote()) ?></p><p
                 class="normal_p comment"><?= $lang["create_by"] ?>: <?= $note_obj->getCreateBy() ?> &nbsp;
                 &nbsp; <?= $lang["create_on"] ?>: <?= $note_obj->getCreateOn() ?><br><br></p>
         <?php
-        }
-    }
+        endforeach;
+    endif;
     ?>
 </div>
 <script>

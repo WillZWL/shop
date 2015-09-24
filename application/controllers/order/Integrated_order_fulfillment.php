@@ -411,20 +411,14 @@ class Integrated_order_fulfillment extends MY_Controller
         }
     }
 
-    public function generateCourierFile($checked = "", $debug = 1)
+    public function generateCourierFile($checked = "")
     {
         if ($checked) {
             $courier = $this->input->post("courier_id");
             $mawb = $this->input->post("mawb");
             $so_no_str = json_encode($checked);
 
-            $batch_id = $this->sc['Courier']->saveCourierFeed($courier, $mawb, $so_no_str);
-            if ($debug) {
-                $this->cron_generate_courier_file($batch_id);
-            } else {
-                $this->sc['Batch']->schedulePhpProcess(1, "order/integrated_order_fulfillment/cron_generate_courier_file/" . $batch_id);
-            }
-
+            $this->sc['Batch']->schedulePhpProcess(1, "order/integrated_order_fulfillment/cron_generate_courier_file/" . $batch_id);
         }
     }
 
