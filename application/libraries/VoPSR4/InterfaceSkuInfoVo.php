@@ -10,7 +10,7 @@ class InterfaceSkuInfoVo extends \BaseVo
     private $prod_sku;
     private $master_sku;
     private $mastersku_cached;
-    private $pricehkd;
+    private $pricehkd = '0.00';
     private $price;
     private $currency_id;
     private $region;

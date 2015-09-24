@@ -216,7 +216,7 @@ class ProductApiService extends BaseService
         }
         $sup_prod_obj->setCurrencyId((string)$sync_obj->getCurrencyId());
         $sup_prod_obj->setCost((double)$sync_obj->getPrice());
-        $sup_prod_obj->set_pricehkd((double)$sync_obj->getPricehkd());
+        $sup_prod_obj->setPricehkd((double)$sync_obj->getPricehkd());
         $sup_prod_obj->setLeadDay((int)$sync_obj->getLeadDays());
         $sup_prod_obj->setMoq((int)$sync_obj->getMoq());
         $sup_prod_obj->setRegion((string)$sync_obj->getRegion());
@@ -239,11 +239,11 @@ class ProductApiService extends BaseService
         }
         $sup_prod_obj = $this->getSupplierProdDao()->get();
         $sup_prod_vo = clone $sup_prod_obj;
-        $sup_prod_vo->set_supplier_id($supplier_id);
+        $sup_prod_vo->setSupplierId($supplier_id);
         $sup_prod_vo->setProdSku((string)$sku_obj->getProdSku());
         $sup_prod_vo->setCurrencyId((string)$sku_obj->getCurrencyId());
         $sup_prod_vo->setCost((double)$sku_obj->getPrice());
-        $sup_prod_vo->set_pricehkd((double)$sku_obj->getPricehkd());
+        $sup_prod_vo->setPricehkd((double)$sku_obj->getPricehkd());
         $sup_prod_vo->setLeadDay((int)$sku_obj->getLeadDays());
         $sup_prod_vo->setMoq((int)$sku_obj->getMoq());
         $sup_prod_vo->setOrderDefault('1');
