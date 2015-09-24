@@ -7,33 +7,33 @@
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
 </head>
 <body
-    style="width:auto;margin:4px;"<? if ($success) { ?> onLoad="UpdateBack();parent.document.getElementById('lbClose').onclick()"<? } ?>>
+    style="width:auto;margin:4px;"<?php if ($success) : ?> onLoad="UpdateBack();parent.document.getElementById('lbClose').onclick()"<?php endif; ?>>
 <div style="width:auto;text-align:left">
     <?= $notice["img"] ?>
     <center>
         <form name="fm" method="post">
             <textarea name="note" style="width:99%"
-                      rows="5"><?= htmlspecialchars(@call_user_func(array($obj, "get_note"))) ?></textarea>
+                      rows="5"><?= htmlspecialchars(@call_user_func(array($obj, "getNote"))) ?></textarea>
             <input type="submit" value="<?= $lang["add_note"] ?>">
             <input type="hidden" name="posted" value="1">
         </form>
     </center>
     <hr></hr>
     <?php
-    if ($objlist) {
-        foreach ($objlist as $note_obj) {
+    if ($objlist) :
+        foreach ($objlist as $note_obj) :
             ?>
-            <p class="normal_p"><?= nl2br($note_obj->get_note()) ?></p><p
-                class="normal_p comment"><?= $lang["create_by"] ?>: <?= $note_obj->get_create_by() ?> &nbsp;
-                &nbsp; <?= $lang["create_on"] ?>: <?= $note_obj->get_create_on() ?><br><br></p>
+            <p class="normal_p"><?= nl2br($note_obj->getNote()) ?></p><p
+                class="normal_p comment"><?= $lang["create_by"] ?>: <?= $note_obj->getCreateBy() ?> &nbsp;
+                &nbsp; <?= $lang["create_on"] ?>: <?= $note_obj->getCreateOn() ?><br><br></p>
         <?php
-        }
-    }
+        endforeach;
+    endif;
     ?>
 </div>
 <script>
     function UpdateBack() {
-        window.parent.document.getElementById('note_<?=$line?>').innerHTML = '<?=str_replace(array("'", "\n"), array("\'", "<br \>"), @call_user_func(array($obj, "get_note")))?>'
+        window.parent.document.getElementById('note_<?=$line?>').innerHTML = '<?=str_replace(array("'", "\n"), array("\'", "<br \>"), @call_user_func(array($obj, "getNote")))?>'
     }
 </script>
 <?= $notice["js"] ?>

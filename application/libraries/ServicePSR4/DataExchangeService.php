@@ -70,7 +70,7 @@ class CsvToXml implements inConverter
         $container = "data";
 
         $this->load->plugin('csv_parser');
-        $reader = new CSVFileLineIterator($this->input);
+        $reader = new \CSVFileLineIterator($this->input);
         $result = csv_parse($reader, $this->delimiter, FALSE, $this->checkQuote);
 
         if ($this->map_file != "") {
@@ -259,7 +259,7 @@ class VoToXml implements inConverter
     private $input;
     private $map_file;
 
-    function VoToXml($input = "", $map_file = "")
+    public function VoToXml($input = "", $map_file = "")
     {
         $CI =& get_instance();
         $this->load = $CI->load;
@@ -347,8 +347,8 @@ class VoToXml implements inConverter
                 } else {
                     $class_methods = get_class_methods($rsdata);
                     foreach ($class_methods as $fct_name) {
-                        if (substr($fct_name, 0, 4) == "get") {
-                            $field = camelcase2underscore(substr($fct_name, 4));
+                        if (substr($fct_name, 0, 3) == "get") {
+                            $field = camelcase2underscore(substr($fct_name, 3));
                             $rsvalue = call_user_func(array($rsdata, $fct_name));
                             $output .= "\t\t<{$field}>" . $cdata_open . strip_invalid_xml((string)$rsvalue) . $cdata_end . "</{$field}>\n";
                         }
@@ -426,7 +426,7 @@ class XmlToCsv implements outConverter
                             $rsvalue = trim($rsvalue);
                             $spec_value = trim($spec_value);
                             $mapping[] = array($rskey, $rsvalue, $spec_value);
-                            $heading[] = strpos((string)$rsvalue, array('"', $this->delimiter)) === FALSE ? $rsvalue : '"' . str_replace('"', '""', $rsvalue) . '"';
+                            $heading[] = $this->strpos_array((string)$rsvalue, array('"', $this->delimiter)) === FALSE ? $rsvalue : '"' . str_replace('"', '""', $rsvalue) . '"';
                         }
                     }
                 } else {
@@ -436,7 +436,7 @@ class XmlToCsv implements outConverter
                 $container = $this->map_file["container"];
                 foreach ($this->map_file["mapping"] as $rskey => $rsvalue) {
                     $mapping[] = array($rskey, $rsvalue);
-                    $heading[] = strpos((string)$rsvalue, array('"', $this->delimiter)) === FALSE ? $rsvalue : '"' . str_replace('"', '""', $rsvalue) . '"';
+                    $heading[] = $this->strpos_array((string)$rsvalue, array('"', $this->delimiter)) === FALSE ? $rsvalue : '"' . str_replace('"', '""', $rsvalue) . '"';
                 }
             }
         }
@@ -473,6 +473,22 @@ class XmlToCsv implements outConverter
         return ($this->first_line_heading) ? @implode($this->delimiter, $heading) . "\r\n" . $output : $output;
     }
 
+    public function strpos_array($haystack, $needles) {
+        if ( is_array($needles) ) {
+            foreach ($needles as $str) {
+                if ( is_array($str) ) {
+                    $pos = $this->strpos_array($haystack, $str);
+                } else {
+                    $pos = strpos($haystack, $str);
+                }
+                if ($pos !== FALSE) {
+                    return $pos;
+                }
+            }
+        } else {
+            return strpos($haystack, $needles);
+        }
+    }
 
     public function set_input($value)
     {
@@ -579,7 +595,7 @@ class XmlToXls implements outConverter
                             $rsvalue = trim($rsvalue);
                             $spec_value = trim($spec_value);
                             $sheet_mapping[] = array($rskey, $rsvalue, $spec_value);
-                            $heading[] = strpos((string)$rsvalue, array('"', $this->delimiter)) === FALSE ? $rsvalue : '"' . str_replace('"', '""', $rsvalue) . '"';
+                            $heading[] = $this->strpos_array((string)$rsvalue, array('"', $this->delimiter)) === FALSE ? $rsvalue : '"' . str_replace('"', '""', $rsvalue) . '"';
                         }
                     }
                 } else {
@@ -673,6 +689,23 @@ class XmlToXls implements outConverter
             $output = ob_get_contents();
             ob_end_clean();
             return $output;
+        }
+    }
+
+    public function strpos_array($haystack, $needles) {
+        if ( is_array($needles) ) {
+            foreach ($needles as $str) {
+                if ( is_array($str) ) {
+                    $pos = $this->strpos_array($haystack, $str);
+                } else {
+                    $pos = strpos($haystack, $str);
+                }
+                if ($pos !== FALSE) {
+                    return $pos;
+                }
+            }
+        } else {
+            return strpos($haystack, $needles);
         }
     }
 

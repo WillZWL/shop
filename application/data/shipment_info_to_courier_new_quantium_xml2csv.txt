@@ -1,0 +1,35 @@
+#Table name
+data
+
+#input column name	Output column name	Specify value
+delivery_company	DeliveryCompany
+delivery_name	DeliveryName
+delivery_address1	DeliveryAddress1
+delivery_address2	DeliveryAddress2
+delivery_address3	DeliveryAddress3
+delivery_city	DeliveryCity
+delivery_state	DeliveryState
+delivery_country_id	DeliveryCountry
+delivery_postcode	DeliveryPostalCode
+tel	DeliveryPhone
+client_email 	ClientEmail
+	Receiver VAT/GST number
+so_no	Order No
+	Field14	PACKAGE
+	Field15	G
+	Other
+prod_weight	Weight
+	Lenght
+	Width
+	Height
+	Field21	Mobile accessory
+qty	Item Quantity
+prod_weight	Item Weight
+	Field24	USD
+amount	Value
+	HS tariff number
+	Field27	JP
+	Enhanced Liability Amout
+	Field29	EZYPRICTC
+	Field30	S
+	Field31	NO
