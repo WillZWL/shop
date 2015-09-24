@@ -20,13 +20,8 @@ class Login extends PUB_Controller
     {
         $data["back"] = $this->input->get("back");
         if ($this->input->post("posted")) {
-            if ($_POST["password"] && $_POST['email']) {
-                if (!$this->client_model->client_service->login($_POST["email"], $_POST["password"])) {
-                    $_SESSION["NOTICE"] = $this->_get_fail_msg();
-                }
-            }
+            $this->index();
         }
-        redirect(base_url() . urldecode($data["back"]));
     }
 
     public function _get_fail_msg()
@@ -68,7 +63,7 @@ class Login extends PUB_Controller
                         redirect(base_url());
                     }
                 } else {
-                    $_SESSION['NOTICE'] = $reg_res['data'];
+                   $data['reg_failed_msg'] = $_SESSION['NOTICE'] = $reg_res['data'];
                 }
             } else {
                 if ($this->input->post("password")) {
@@ -138,8 +133,9 @@ class Login extends PUB_Controller
         $email = $client_obj->get_email();
         $proc = $this->client_model->client_service->get_dao()->get(array("email" => $email));
         $res = [];
-        if (!empty($proc)) {
-            if ($client_obj = $this->client_model->client_service->get_dao()->insert($client_vo)) {
+        if (empty($proc)) {
+            $client_obj = $this->client_model->client_service->get_dao()->insert($client_vo);
+            if ($client_obj) {
                $res = array('res'=>TRUE, 'data'=>$client_obj);
             } else {
                 $notice = "Error: " . __LINE__;

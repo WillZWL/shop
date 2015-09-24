@@ -34,7 +34,7 @@
                 <div id="right_side">
                     <h5 class="side_title"><?= _('New Customer') ?></h5>
                     <form name="fm_client" onSubmit="return CheckForm(this)" method="post" class="form-holder">
-                    <p style="color:red;"><?=$login_failed_msg?></p>
+                    <p style="color:red;"><?=$reg_failed_msg?></p>
                         <ins class="no_top_padding"><?= _('Delivery Address') ?></ins>
                         <ul>
                             <li>
