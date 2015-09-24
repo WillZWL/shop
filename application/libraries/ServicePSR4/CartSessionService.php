@@ -2,6 +2,7 @@
 namespace ESG\Panther\Service;
 
 use ESG\Panther\Service\ProductService;
+use ESG\Panther\Service\SoFactoryService;
 
 class CartSessionService extends BaseService
 {
@@ -22,13 +23,17 @@ class CartSessionService extends BaseService
     const CART_ACTION_SUBTRACTION = "MINUS";
     const CART_ACTION_SET = "SET";
     const CART_ACTION_REMOVE = "REMOVE";
+    const CART_TYPE_ONLINE = "ONLINE";
+    const CART_TYPE_OFFLINE = "OFFLINE";
+    const CART_TYPE_MANUAL = "MANUAL";
+    const CART_TYPE_SPECIAL = "SPECIAL";
 
     private $_cart = null;
     public $support_email = "oswald-alert@eservicesgroup.com";
 
     public function __construct() {
         parent::__construct();
-        $this->productService = new ProductService;
+        $this->soFactoryService = new SoFactoryService;
 //unset($_SESSION["cart"]);
         if (isset($_SESSION["cart"])) {
 /*
@@ -49,7 +54,7 @@ class CartSessionService extends BaseService
         }
     }
 
-    public function getCart() {
+    public function getCart($type = self::CART_TYPE_ONLINE) {
         $totalItems = 0;
         $totalAmount = 0.0;
         if ($this->_cart)
@@ -69,54 +74,10 @@ class CartSessionService extends BaseService
         }
         $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"] = $totalItems;
         $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"] = $totalAmount;
+        $this->_cart->setBizType($type);
         return $this->_cart;    //=return $_SESSION["cart"]
     }
-/*
-    public function isAllowToAdd($sku, $qty, $platform)
-    {
-        $product_obj = $this->productService->getDao()->get(["sku" => $sku]);
-        if (empty($product_obj)) {
-            return self::UNKNOWN_ITEM_STATUS;
-        }
 
-        $website_status = $product_obj->getWebsiteStatus();
-        if (count($_SESSION["cart"][$platform]) === 0) {
-            if ($website_status === 'I') {
-                return self::ALLOW_AND_IS_NORMAL_ITEM;
-            } elseif ($website_status === 'P') {
-                return self::ALLOW_AND_IS_PREORDER;
-            } elseif ($website_status === 'A') {
-                return self::ALLOW_AND_IS_ARRIVING;
-            }
-            return self::UNKNOWN_ITEM_STATUS;
-        } else {
-            if (isset($_SESSION['cart'][$platform][$sku])) {
-                if ($website_status === "P") {
-                    return self::SAME_PREORDER_ITEM;
-                } elseif ($website_status === "A") {
-                    return self::SAME_ARRIVING_ITEM;
-                } elseif ($website_status === "I") {
-                    return self::SAME_NORMAL_ITEM;
-                }
-
-                foreach ($_SESSION["cart"][$platform] as $key => $value) {
-                    $stored_website_status = $value["website_status"];
-                    if (($stored_website_status == "I") && (($website_status == "P") || ($website_status == "A")) ) {
-                        return self::NOT_ALLOW_PREORDER_ARRIVING_ITEM_AFTER_NORMAL_ITEM;
-                    } elseif ((($stored_website_status == "P") || ($stored_website_status == "A")) && ($website_status == "I") ) {
-                        return self::NOT_ALLOW_NORMAL_ITEM_AFTER_PREORDER_ARRIVING_ITEM;
-                    } elseif ((($stored_website_status == "P") && ($website_status == "P")) || (($stored_website_status == "P") && ($website_status == "A")) ) {
-                        return self::DIFFERENT_PREORDER_ITEM;
-                    } elseif ((($stored_website_status == "A") && ($website_status == "A")) || (($stored_website_status == "A") && ($website_status == "P")) ) {
-                        return self::DIFFERENT_ARRIVING_ITEM;
-                    }
-                }
-            }
-
-            return self::ALLOW_AND_IS_NORMAL_ITEM;
-        }
-    }
-*/
     public function add($sku, $qty, $lang, $platformId, $currencyId) {
         if (!$this->modifyItem(self::CART_ACTION_ADD, $sku, $qty, $lang, $platformId)) {
             $this->addItemToSession($sku, $qty, $lang, $platformId, $currencyId);
@@ -187,26 +148,6 @@ class CartSessionService extends BaseService
     }
 
     private function _createCartItem($sku, $lang, $platformId) {
-        $where = ["pr.platform_id" => $platformId
-                , "pc.lang_id" => $lang
-                , "p.sku" => $sku
-                , "p.status" => 2
-                , "pr.listing_status" => "L"
-                , "p.website_status in ('I', 'P')" => null];
-        $options = ["orderby" => "pi.priority"
-                    , "limit" => 1];
-        $productInfo = $this->productService->getDao()->getCartData($where, $options);
-//        print $this->productService->getDao()->db->last_query();
-        if ($productInfo) {
-            return $productInfo;
-        }
-        else
-        {
-//out of stock, or
-            $subject = "[Panther] Adding product which is not valid to the cart " . $sku . ":" . $platformId;
-            $message = $this->productService->getDao()->db->last_query();
-            mail($this->support_email, $subject, $message, "From: website@" . SITE_DOMAIN . "\r\n");
-        }
-        return false;
+        return $this->soFactoryService->getCartItemInfo($sku, $lang, $platformId);
     }
 }

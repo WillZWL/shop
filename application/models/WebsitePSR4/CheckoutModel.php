@@ -2,6 +2,9 @@
 namespace ESG\Panther\Models\Website;
 use ESG\Panther\Service\CountryService;
 use ESG\Panther\Service\CountryStateService;
+use ESG\Panther\Service\PaymentOptionService;
+use ESG\Panther\Service\SoFactoryService;
+use ESG\Panther\Service\CartSessionService;
 
 class CheckoutModel extends \CI_Model
 {
@@ -10,11 +13,27 @@ class CheckoutModel extends \CI_Model
 
     private $_countryService;
     private $_stateService;
+    private $_paymentOptionService;
+    private $_soFactoryService;
+    private $_cartSessionService;
 
     public function __construct() {
         parent::__construct();
         $this->setCountryService(new CountryService());
         $this->setCountryStateService(new CountryStateService());
+        $this->setPaymentOptionService(new PaymentOptionService());
+        $this->setSoFactoryService(new SoFactoryService());
+        $this->setCartSessionService(new CartSessionService());
+    }
+
+    public function createSaleOrder($formValue) {
+        $cart = $this->getCartSessionService()->getCart();
+        var_dump($cart);
+        $this->getSoFactoryService()->createSaleOrder($formValue, $cart);
+    }
+
+    public function getPaymentOption($platformId) {
+        return $this->getPaymentOptionService()->getPaymentOptionByPlatformId($platformId);    
     }
 
     public function getCheckoutFormCountryList($platformCountryId, $type = self::BILLING_COUNTRY) {
@@ -45,4 +64,29 @@ class CheckoutModel extends \CI_Model
     public function getCountryStateService() {
         return $this->_stateService;
     }
+
+    public function setPaymentOptionService($paymentOptionService) {
+        $this->_paymentOptionService = $paymentOptionService;
+    }
+
+    public function getPaymentOptionService() {
+        return $this->_paymentOptionService;
+    }
+
+    public function setSoFactoryService($soFactoryService) {
+        $this->_soFactoryService = $soFactoryService;
+    }
+
+    public function getSoFactoryService() {
+        return $this->_soFactoryService;
+    }
+
+    public function setCartSessionService($cartSessionService) {
+        $this->_cartSessionService = $cartSessionService;
+    }
+
+    public function getCartSessionService() {
+        return $this->_cartSessionService;
+    }
+
 }

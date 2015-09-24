@@ -8,7 +8,7 @@ if (in_array($GLOBALS["URI"]->segments[2], $ws_array)) {
 
 //require_once(BASEPATH . 'plugins/My_plugin/validator/postal_validator.php');
 use ESG\Panther\Models\Website\CheckoutModel;
-
+use ESG\Panther\Form\CheckoutFormFilter;
 
 class Checkout extends PUB_Controller
 {
@@ -36,9 +36,27 @@ class Checkout extends PUB_Controller
         $data = array_merge($data
                 , $this->checkoutModel->getCheckoutFormCountryList($platformCountryId));
         $data["billingStateList"] = $this->checkoutModel->getCheckoutFormStateList($platformCountryId);
+        $data["paymentOption"] = $this->checkoutModel->getPaymentOption($this->getSiteInfo()->getPlatform());
+        $encrypt = new CI_Encrypt();
+        $data["formSalt"] = $encrypt->encode($this->getSiteInfo()->getPlatform());
         $this->load->view('checkout/index', $data);
     }
 
+    public function payment() {
+        $data = [];
+        $filter = new CheckoutFormFilter();
+        $filterResult = $filter->isValidForm($this->input);
+        if ($filterResult["validInput"])
+        {
+            $this->checkoutModel->createSaleOrder($filterResult["value"]);
+            $data["url"] = "xxx";
+            echo json_encode($data);
+        }
+        else
+        {
+//mail alert to IT
+        }
+    }
 //    public function js_credit_card($platform_curr, $total_amount, $seq = 1)
 //    {
 //        $data['lang_text'] = $this->_get_language_file();

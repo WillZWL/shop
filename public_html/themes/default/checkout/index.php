@@ -4,6 +4,7 @@
     <div class="row"> 
     <div id="sidebar-main" class="col-md-12">
     <div id="content">
+    <form action="/Checkout/payment" method="POST" id="checkoutForm">
         <h1 class="page-title">Checkout</h1>
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
@@ -80,18 +81,18 @@
                               <div>
                                   <input type="text" maxlength=3 class="form-control" id="billingTelCountryCode" placeholder="Country Code" value="" name="billingTelCountryCode" />
                                   <input type="text" maxlength=3 class="form-control" id="billingTelAreaCode" placeholder="Area Code" value="" name="billingTelAreaCode" />
-                                  <input type="text" class="form-control" id="billingTel" placeholder="Telephone" value="" name="billingTel" />
+                                  <input type="text" class="form-control" id="billingTelNumber" placeholder="Telephone" value="" name="billingTelNumber" />
                               </div>
                           </div>
                         </fieldset>
                         <fieldset>
                           <legend>Your Password</legend>
                           <div class="form-group">
-                              <label for="password" class="control-label">Password</label> 
-                              <input type="password" class="form-control" id="password" placeholder="Password" value="" name="password" /></div>
+                              <label for="billingPassword" class="control-label">Password</label> 
+                              <input type="password" class="form-control" id="billingPassword" placeholder="Password" value="" name="billingPassword" /></div>
                           <div class="form-group">
-                              <label for="confirmPassword" class="control-label">Password Confirm</label> 
-                              <input type="password" class="form-control" id="confirmPassword" placeholder="Password Confirm" value="" name="confirmPassword" />
+                              <label for="billingConfirmPassword" class="control-label">Password Confirm</label> 
+                              <input type="password" class="form-control" id="billingConfirmPassword" placeholder="Password Confirm" value="" name="billingConfirmPassword" />
                           </div>
                         </fieldset>
                       </div>
@@ -115,8 +116,8 @@
                               <input type="text" class="form-control" id="billingCity" placeholder="City" value="" name="billingCity" />
                           </div>
                           <div class="form-group required">
-                              <label for="billingPostcode" class="control-label">Post Code</label> 
-                              <input type="text" class="form-control" id="billingPostcode" placeholder="Post Code" value="" name="billingPostcode" />
+                              <label for="billingPostal" class="control-label">Post Code</label> 
+                              <input type="text" class="form-control" id="billingPostal" placeholder="Post Code" value="" name="billingPostal" />
                           </div>
                           <div class="form-group required">
                               <label for="billingCountry" class="control-label">Country</label> 
@@ -273,7 +274,19 @@
           </div>
           <div class="panel-collapse collapse" id="collapse-payment-method">
             <div class="panel-body">
-            
+<?php foreach ($paymentOption as $card): ?>
+                <div style="float:left;padding-right:2px;">
+                    <input id="card_ay_VSA" type="radio" name="paymentCard" value="<?php print $card->getCardCode() . "%%" . $card->getCardId() . "%%" . $card->getPaymentGatewayId()?>">
+                    <?php print "<img alt='" . $card->getCardName() . "' title='" . $card->getCardName() . "' src='" . $card->getCardImage() . "'/>"; ?>
+                </div>
+<?php endforeach ?>
+                <div class="clearfix" />
+                <div class="buttons">
+                    <div class="pull-right">
+                        <input type="hidden" name="formSalt" id='formSalt' value="<?=$formSalt;?>">
+                        <input type="submit" class="btn btn-primary" data-loading-text="Loading..." id="submit" value="Continue" />
+                    </div>
+                </div>
             </div>
           </div>
         </div>
@@ -289,6 +302,28 @@ $(document).ready(function() {
         $('#billingState').prop('disabled', 'disabled');
         $('#billingState').parent().removeClass("required");
     }
+
+// submit the form
+    $("#checkoutForm").submit(function(event) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            type        : "POST",
+            url         : formURL,
+            data        : postData,
+            dataType    : "json",
+            encode      : true
+        })
+        .done(function(data) {
+            var url = data;
+            console.log(data.url);
+        })
+        .fail(function(data) {
+            if (data.responseCode)
+                console.log(data.responseCode);
+        });
+        event.preventDefault();
+    });
 });
 
 // Checkout

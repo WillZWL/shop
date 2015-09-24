@@ -5,6 +5,8 @@ use ESG\Panther\Dao as D;
 
 class BaseService
 {
+    const ALERT_HAZARD_LEVEL = "HAZARD";
+    const ALERT_GENERAL_LEVEL = "GENERAL";
     private $dao;
 
     private static $daoContainer;
@@ -58,5 +60,12 @@ class BaseService
     public function getList($where = [], $option = [], $className = "")
     {
         return $this->getDao()->getList($where, $option, $className);
+    }
+
+    public function sendAlert($subject, $message, $email, $type = self::ALERT_GENERAL_LEVEL)
+    {
+//        if ($type == self::ALERT_GENERAL_LEVEL)
+            //mail($email, $subject, $message, "From: website@" . strtolower(SITE_DOMAIN) . "\r\n");
+            print $message;
     }
 }
