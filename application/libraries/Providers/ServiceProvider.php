@@ -142,5 +142,9 @@ class ServiceProvider implements ServiceProviderInterface
         $servcieContainer['PdfRendering'] = function () {
             return new S\PdfRenderingService();
         };
+
+        $servcieContainer['ProductApi'] = function () {
+            return new S\ProductApiService();
+        };
     }
 }
