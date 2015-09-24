@@ -22,16 +22,11 @@ class VbDataTransferCategoryExtendService extends VbDataTransferService
 	{
 		return $this->CategoryDao;
 	}
-
-	public function setDao(BaseDao $dao)
-	{
-		$this->CategoryExtendDao = $dao;
-	}
 		
 	/**********************************************************************
 	*	process_vb_data, get the VB data to save it in the category table
 	***********************************************************************/
-	public function process_vb_data ($feed)
+	public function processVbData ($feed)
 	{		
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
@@ -55,9 +50,9 @@ class VbDataTransferCategoryExtendService extends VbDataTransferService
 			
 			try
 			{
-				if($cat_atomv2 = $this->category_dao->get(array("id"=>$category->cat_id)))
+				if($cat_atomv2 = $this->getCatDao->get(array("id"=>$category->cat_id)))
 				{
-					$id = $cat_atomv2->get_id();				
+					$id = $cat_atomv2->getId();				
 				}
 				else
 				{
@@ -71,7 +66,7 @@ class VbDataTransferCategoryExtendService extends VbDataTransferService
 					
 					if($cat_ext_atomv2 = $this->getDao()->get(array("cat_id"=>$id, "lang_id"=>$category->lang_id)))
 					{
-						$lang_id .= $cat_ext_atomv2->get_lang_id();
+						$lang_id .= $cat_ext_atomv2->getLangId();
 					}				
 					//if extend content exists, update
 					if ($lang_id != "" && $lang_id != null)
@@ -83,7 +78,7 @@ class VbDataTransferCategoryExtendService extends VbDataTransferService
 						
 						$new_cat_obj["name"] = $category->name;
 						
-						$this->getDao()->q_update($where, $new_cat_obj);*/				
+						$this->getDao()->qUpdate($where, $new_cat_obj);*/				
 						
 						//return result
 						$xml[] = '<category>';
@@ -100,9 +95,9 @@ class VbDataTransferCategoryExtendService extends VbDataTransferService
 						$new_cat_obj = array();
 						
 						$new_cat_obj = $this->getDao()->get();
-						$new_cat_obj->set_cat_id($category->cat_id);
-						$new_cat_obj->set_lang_id($category->lang_id);
-						$new_cat_obj->set_name($category->name);
+						$new_cat_obj->setCatId($category->cat_id);
+						$new_cat_obj->setLangId($category->lang_id);
+						$new_cat_obj->setName($category->name);
 						$this->getDao()->insert($new_cat_obj);		
 
 						$xml[] = '<category>';

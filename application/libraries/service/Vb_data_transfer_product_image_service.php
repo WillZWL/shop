@@ -103,7 +103,8 @@ class Vb_data_transfer_product_image_service extends Vb_data_transfer_service
 						
 						//$file_exist = file_exists($pc->imgurl . $pc->sku . "_" . $pc->id . "." . $pc->image);
 						
-						$file = "http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg";//$pc->imgurl . $pc->sku . "_" . $pc->id . "." . $pc->image;
+						$file = $pc->imgurl . $pc->sku . "_" . $pc->id . "." . $pc->image;
+						//$file = "http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg";
 						$file_headers = @get_headers($file);
 						if($file_headers[0] == 'HTTP/1.1 404 Not Found')
 							$file_exist = false;
@@ -116,37 +117,33 @@ class Vb_data_transfer_product_image_service extends Vb_data_transfer_service
 							
 							//delete old images 
 							$file_old = file_exists( $imgpath . $sku . "_" . $id . "." . $pc->image);						
-							// $file_old = base_url() . $imgpath . $sku . "_" . $id . "." . $pc->image;
-							// $file_headers = @get_headers($file);
-							// if($file_headers[0] != 'HTTP/1.1 404 Not Found')
 							if ($file_old)
 								@unlink($imgpath . $sku . "_" . $id . "." . $pc->image);
 							
 							//save VB image in AtomV2					
-							$image_content = file_get_contents("http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg");//($pc->imgurl . $pc->sku . "_" . $pc->id . "." . $pc->image);
+							$image_content = file_get_contents($pc->imgurl . $pc->sku . "_" . $pc->id . "." . $pc->image);
+							//$image_content = file_get_contents("http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg");
 							if (file_put_contents($imgpath . $sku . "_" . $new_id . "." . $pc->image, $image_content) === FALSE)
 							{
 								continue;
 							}						
 							
-							// list($width, $height) = explode("x", $this->context_config_service->value_of("thumb_w_x_h"));
-							// thumbnail($imgpath . $sku . "_" . $new_id . "." . $pc->image, $width, $height, $imgpath . $sku . "_" . $new_id . "." . $pc->image);
-							//watermark(IMG_PH . $sku . "." . $ext, "images/watermark.png", "B", "R", "", "#000000");
+							list($width, $height) = explode("x", $this->context_config_service->value_of("thumb_w_x_h"));
+							thumbnail($imgpath . $sku . "_" . $new_id . "." . $pc->image, $width, $height, $imgpath . $sku . "_" . $new_id . "." . $pc->image);
 							
-							// foreach ($img_size as $size) 
-							// {
-								// //delete old images 
-								// $img_old = is_file($imgpath . $sku . "_" . $id  . "_{$size}." . $pc->image);
-								// if ($img_old)
-								// {
-									// @unlink($imgpath . $sku . "_" . $id  . "_{$size}." . $pc->image);
-								// }
+							foreach ($img_size as $size) 
+							{
+								//delete old images 
+								$img_old = is_file($imgpath . $sku . "_" . $id  . "_{$size}." . $pc->image);
+								if ($img_old)
+								{
+									@unlink($imgpath . $sku . "_" . $id  . "_{$size}." . $pc->image);
+								}
 							
-								// list($width, $height) = explode("x", $this->context_config_service->value_of("thumb_{$size}_w_x_h"));
-								// thumbnail($pc->imgurl . $sku . "_" . $new_id . "." . $pc->image, $width, $height, $imgpath . $sku . "_" . $new_id . "_{$size}." . $pc->image);
-							// }
+								list($width, $height) = explode("x", $this->context_config_service->value_of("thumb_{$size}_w_x_h"));
+								thumbnail($imgpath . $sku . "_" . $new_id . "." . $pc->image, $width, $height, $imgpath . $sku . "_" . $new_id . "_{$size}." . $pc->image);
+							}
 						}
-					
 					
 						//return result
 						$xml[] = '<product_image>';

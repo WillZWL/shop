@@ -530,7 +530,7 @@ class Cron_draw_menu extends MY_Controller
 								<div id="pav-mainnav" class="hidden-xs hidden-sm pull-left">
 									<nav id="pav-megamenu" class="navbar">
 										<div class="navbar-header">
-											<button data-toggle="offcanvas" class="btn btn-primary canvas-menu hidden-lg hidden-md" type="button"><span class="fa fa-bars"></span> Menu</button>
+											<button data-toggle="offcanvas" class="btn btn-primary canvas-menu hidden-lg hidden-md" type="button"><span class="fa fa-bars">Menu</span></button>
 											<div class="canvas-menu hidden-lg hidden-md">
 											'.$mobileContent.'
 											</div>

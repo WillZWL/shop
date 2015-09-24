@@ -16,6 +16,9 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 		
         include_once(APPPATH . "libraries/service/Sku_mapping_service.php");		
 		$this->sku_mapping_service = new Sku_mapping_service();
+
+		include_once(APPPATH . 'libraries/service/Product_identifier_service.php');
+		$this->product_identifier_service = new Product_identifier_service();
 	}
 	
 	public function get_dao()
@@ -64,6 +67,12 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 			$fail_reason = "";
             if ($master_sku == "" || $master_sku == null) $fail_reason .= "No master SKU mapped, ";
             if ($sku == "" || $sku == null) $fail_reason .= "SKU not specified, ";
+
+            //if the sku is mapped, we get the atomv prod_gro_id
+            $master_prod_grp_id = "";
+            if ($fail_reason == "")
+            	$master_prod_grp_id = $this->product_identifier_service->get_prod_grp_cd_by_sku($master_sku);
+            
 			try
 			{
 				if ($fail_reason == "")
@@ -73,7 +82,7 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 					
 					$new_prod_obj = array();
 					
-					$new_prod_obj["prod_grp_cd"] = $product->prod_grp_cd;
+					$new_prod_obj["prod_grp_cd"] = $master_prod_grp_id;//$product->prod_grp_cd;
 					$new_prod_obj["colour_id"] = $product->colour_id; //FK colour
 					$new_prod_obj["version_id"] = $product->version_id;	
 					$new_prod_obj["name"] = $product->name;				

@@ -5,16 +5,16 @@ class CategoryMappingVo extends \BaseVo
     private $ext_party;
     private $level;
     private $category_mapping_id;
-    private $ext_id;
+    private $ext_id = '';
     private $ext_name;
-    private $lang_id;
-    private $country_id;
+    private $lang_id = '';
+    private $country_id = '';
     private $product_name;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 

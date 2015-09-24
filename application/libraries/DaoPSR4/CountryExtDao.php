@@ -23,7 +23,6 @@ class CountryExtDao extends BaseDao
 
     public function getCountryNameInLang($where = [], $option = [], $classname = "CountryLangNameDto")
     {
-        $this->db->_protect_identifiers = FALSE;
         $this->db->from('country AS c');
         $this->db->join('language AS l', 'l.status = 1', 'LEFT');
         $this->db->join('country_ext AS ce', 'ce.cid = c.id AND l.id = ce.lang_id', 'LEFT');
@@ -34,9 +33,7 @@ class CountryExtDao extends BaseDao
 
         if (empty($option["num_rows"])) {
 
-            $this->include_dto($classname);
-
-            $this->db->select("c.id, c.name, ce.name AS lang_name", FALSE);
+            $this->db->select("c.id, c.country_id, c.name, ce.name AS lang_name", FALSE);
 
             if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);

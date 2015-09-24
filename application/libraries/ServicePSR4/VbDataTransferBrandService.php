@@ -6,10 +6,9 @@ use ESG\Panther\Dao\BrandDao;
 class VbDataTransferBrandService extends VbDataTransferService
 {
 	
-	public function __construct($debug = 0)
+	public function __construct()
 	{
-		parent::__construct($debug);
-		
+		parent::__construct();
 	}
 	
 	public function getDao()
@@ -58,7 +57,7 @@ class VbDataTransferBrandService extends VbDataTransferService
 					$new_brand_obj["description"] = $brand->description;					
 					$new_brand_obj["status"] = $brand->status;	
 					
-					$this->getDao()->q_update($where, $new_brand_obj);
+					$this->getDao()->qUpdate($where, $new_brand_obj);
 
 					$xml[] = '<brand>';
 					$xml[] = '<id>' . $brand->id . '</id>';			
@@ -72,10 +71,10 @@ class VbDataTransferBrandService extends VbDataTransferService
 					$new_brand_obj = array();
 					
 					$new_brand_obj = $this->getDao()->get();
-					$new_brand_obj->set_id($brand->id);
-					$new_brand_obj->set_brand_name($brand->brand_name);
-					$new_brand_obj->set_description($brand->description);
-					$new_brand_obj->set_status($brand->status);
+					$new_brand_obj->setId($brand->id);
+					$new_brand_obj->setBrandName($brand->brand_name);
+					$new_brand_obj->setDescription($brand->description);
+					$new_brand_obj->setStatus($brand->status);
 					
 					$this->getDao()->insert($new_brand_obj);
 

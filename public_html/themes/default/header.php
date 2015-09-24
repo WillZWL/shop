@@ -35,6 +35,7 @@
     <script type="text/javascript" src="/themes/default/asset/js/jquery.jscroll.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/raphael-min.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/jquery.easing.js"></script>
+    <script type="text/javascript" src="/themes/default/asset/js/checkform.js"></script>
     <!--<script type="text/javascript" src="/themes/default/asset/js/owl.carousel.min.js"></script>-->
     <script type="text/javascript" src="/themes/default/asset/js/iview.js"></script>
 </head>
@@ -53,16 +54,26 @@
                                     </a>
                                 </div>
                             </div>
-                            <!--<div id="search" class="pull-left col-lg-5 col-md-5 col-sm-12 col-xs-12">-->
-                            <!--    <div class="quick-access">-->
-                            <!--        <div class="input-group pull-right">-->
-                            <!--            <input type="text" name="search" value="" placeholder="Search" class="form-control" />-->
-                            <!--            <span class="input-group-btn">-->
-                            <!--                <button type="button" class="button-search"><i class="fa fa-search"></i></button>-->
-                            <!--            </span>-->
-                            <!--        </div>-->
-                            <!--    </div>-->
-                            <!--</div>-->
+                            <div id="search" class="pull-left col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                <div class="quick-access">
+                                    <div class="input-group pull-right">
+                                        <input type="text" name="search" value="" placeholder="Search" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="button-search"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="account" class="inner col-lg-4 col-md-4 col-sm-12">
+                                <div class="account">
+                                    <?php if ($_SESSION["client"]["logged_in"]) { ?>
+                                        <a href="<?=base_url()?>myaccount/index">
+                                    <?php } else { ?>
+                                          <a href="<?=base_url()?>login/index">
+                                    <?php } ?>
+                                    <?= _("My Account") ?></a>
+                                </div>
+                            </div>
                             <div id="cart-top" class=" inner col-lg-4 col-md-4 col-sm-12 hidden-xs">
                                 <div class="cart-top">
                                     <div id="cart" class="pull-right clearfix">
@@ -89,13 +100,17 @@
                         </div>
                     </div>
                 </div>
-                <?php //$this->load->view('category');
-					//$this->load->view( APPPATH."views/template/menu/".$lang_id."/menu_big_" . strtolower($platform_id)
-					//$this->load->view( "/views/template/menu/en/menu_webgb");
+                <?php
 					$lang_id = substr(SITE_LANG, 0, 2);
 					$menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
+					//$menu_script = file_get_contents(APPPATH."views/template/menu/en/menu_webgb.html", true);
 					print $menu_script;
 				?>
             </header>
             <!-- /header -->
             <div class="main-columns container">
+				<div class="bottom-offcanvas">
+					<div class="container">
+						<button data-toggle="offcanvas" class="btn btn-primary visible-xs visible-sm" type="button"><i class="fa fa-bars"></i></button>
+					</div>
+				</div>

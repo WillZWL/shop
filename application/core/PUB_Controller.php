@@ -2,6 +2,10 @@
 use ESG\Panther\Service\LoadSiteParameterService;
 use Pimple\Container;
 use ESG\Panther\Models\Marketing\CategoryModel;
+use ESG\Panther\Models\Website\ClientModel;
+use ESG\Panther\Models\Order\SoModel;
+use ESG\Panther\Models\Website\CourierModel;
+use ESG\Panther\Models\Mastercfg\CountryModel;
 use ESG\Panther\Service as S;
 use ESG\Panther\Dao as D;
 
@@ -58,6 +62,21 @@ class PUB_Controller extends CI_Controller
     {
         $this->sc['categoryModel'] = function ($c) {
             return new CategoryModel;
+        };
+
+         $this->sc['soModel'] = function ($c) {
+            return new SoModel;
+        };
+
+        $this->sc['clientModel'] = function ($c) {
+            return new ClientModel;
+        };
+
+        $this->sc['courierModel'] = function ($c) {
+            return new CourierModel;
+        };
+        $this->sc['countryModel'] = function ($c) {
+            return new CountryModel;
         };
     }
 
