@@ -120,6 +120,136 @@ class ClientService extends BaseService
         $last_order = $this->getDao()->getClientLastOrder($where, $option);
         return $last_order;
     }
+/***************************************************
+**  createClient use by SoFactory
+**  We will better to use the same function for MyAcct page to create Client
+****************************************************/
+    public function createClient($clientInfo = [], $delegate = null, $requireLogin = false) {
+        $email = $clientInfo["email"];
+        if ($clientObj = $this->getDao()->get(array("email" => $email))) {
+            $action = "update";
+        } else {
+            $clientObj = $this->getDao()->get();
+            $action = "insert";
+        }
+        $this->setClientDetail($clientObj, $clientInfo);
+
+        if ($delegate instanceof CreateClientInterface)
+            $delegate->clientBeforeUpdateEvent($clientObj);
+
+        $actionResult = $this->getDao()->$action($clientObj);
+        if ($actionResult === false) {
+            $subject = "[Panther] Cannot create/update client:" . __METHOD__ . __LINE__;
+            $message = $this->getDao()->db->last_query() . "," . $this->getDao()->db->_error_message();
+            $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
+        } else {
+            if ($delegate instanceof CreateClientInterface)
+                $delegate->clientCreateSuccessEvent($clientObj);
+
+            if ($requireLogin)
+                $this->objectLogin($clientObj, $_SESSION["client"]["logged_in"]);
+            return $clientObj;
+        }
+        return false;
+    }
+
+    private function setClientDetail($clientObj, $clientInfo = []) {
+        $encrypt = new \CI_Encrypt();
+        $clientObj->setStatus(1);
+        if (isset($clientInfo["email"]))
+            $clientObj->setEmail($clientInfo["email"]);
+        if ($clientInfo["password"]) {
+            $clientObj->setPassword($encrypt->encode(strtolower($clientInfo["password"])));
+        } elseif (!$clientObj->getPassword())
+            $clientObj->setPassword($encrypt->encode(mktime()));
+
+        if (isset($clientInfo["extClientId"]))
+            $clientObj->setExtClientId($clientInfo["extClientId"]);
+        if (isset($clientInfo["clientIdNo"]))
+            $clientObj->setClientIdNo($clientInfo["clientIdNo"]);
+//billing info
+        if (isset($clientInfo["billFirstName"]))
+            $clientObj->setForename($clientInfo["billFirstName"]);
+        if (isset($clientInfo["billLastName"]))
+            $clientObj->setSurname($clientInfo["billLastName"]);
+        if (isset($clientInfo["billCompany"]))
+            $clientObj->setCompanyname($clientInfo["billCompany"]);
+        if (isset($clientInfo["billCountry"]))
+            $clientObj->setCountryId($clientInfo["billCountry"]);
+        if (isset($clientInfo["billAddress1"]))
+            $clientObj->setAddress1($clientInfo["billAddress1"]);
+        if (isset($clientInfo["billAddress2"]))
+            $clientObj->setAddress2($clientInfo["billAddress2"]);
+        if (isset($clientInfo["billAddress3"]))
+            $clientObj->setAddress3($clientInfo["billAddress3"]);
+        if (isset($clientInfo["billCity"]))
+            $clientObj->setCity($clientInfo["billCity"]);
+        if (isset($clientInfo["billPostal"]))
+            $clientObj->setPostcode($clientInfo["billPostal"]);
+        if (isset($clientInfo["billState"]))
+            $clientObj->setState($clientInfo["billState"]);
+        if (isset($clientInfo["billTelCountryCode"]))
+            $clientObj->setTel1($clientInfo["billTelCountryCode"]);
+        if (isset($clientInfo["billTelAreaCode"]))
+            $clientObj->setTel2($clientInfo["billTelAreaCode"]);
+        if (isset($clientInfo["billTelNumber"]))
+            $clientObj->setTel3($clientInfo["billTelNumber"]);
+        if (isset($clientInfo["billTelNumber"]))
+            $clientObj->setTel3($clientInfo["billTelNumber"]);
+//shipping info
+        $shipName = "";
+        if (isset($clientInfo["shipFirstName"]))
+            $shipName .= $clientInfo["shipFirstName"];
+        if (isset($clientInfo["shipLastName"]))
+        {
+            if ($shipName != "")
+                $shipName .= " ";
+            $shipName .= $clientInfo["shipLastName"];
+        }
+        if ($shipName != "")
+            $clientObj->setDelName($shipName);
+        if (isset($clientInfo["shipCompany"]))
+            $clientObj->setDelCompany($clientInfo["shipCompany"]);
+        if (isset($clientInfo["shipAddress1"]))
+            $clientObj->setDelAddress1($clientInfo["shipAddress1"]);
+        if (isset($clientInfo["shipAddress2"]))
+            $clientObj->setDelAddress2($clientInfo["shipAddress2"]);
+        if (isset($clientInfo["shipAddress3"]))
+            $clientObj->setDelAddress3($clientInfo["shipAddress3"]);
+        if (isset($clientInfo["shipCity"]))
+            $clientObj->setDelCity($clientInfo["shipCity"]);
+        if (isset($clientInfo["shipPostal"]))
+            $clientObj->setDelPostcode($clientInfo["shipPostal"]);
+        if (isset($clientInfo["shipState"]))
+            $clientObj->setDelState($clientInfo["shipState"]);
+        if (isset($clientInfo["shipCountry"]))
+            $clientObj->setDelCountryId($clientInfo["shipCountry"]);
+        if (isset($clientInfo["shipTelCountryCode"]))
+            $clientObj->setDelTel1($clientInfo["shipTelCountryCode"]);
+        if (isset($clientInfo["shipTelAreaCode"]))
+            $clientObj->setDelTel2($clientInfo["shipTelAreaCode"]);
+        if (isset($clientInfo["shipTelNumber"]))
+            $clientObj->setDelTel3($clientInfo["shipTelNumber"]);
+//other info
+        if (isset($clientInfo["subscriber"]))
+            $clientObj->setSubscriber($clientInfo["subscriber"]);
+        else
+            $clientObj->setSubscriber(1);
+        if (isset($clientInfo["subscriber"]))
+            $clientObj->setSubscriber($clientInfo["subscriber"]);
+        else
+            $clientObj->setSubscriber(1);
+        if (isset($clientInfo["partySubscriber"]))
+            $clientObj->setPartySubscriber($clientInfo["partySubscriber"]);
+        else
+            $clientObj->setPartySubscriber(0);
+        if (isset($clientInfo["vip"]))
+            $clientObj->setVip($clientInfo["vip"]);
+        else
+            $clientObj->setVip(0);
+
+        return $clientObj;
+    }
 
     public function checkEmailLogin($vars)
     {

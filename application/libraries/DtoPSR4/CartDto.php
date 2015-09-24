@@ -3,6 +3,7 @@ class CartDto
 {
     protected $platformId;
     public $items;  //CartItemDto
+    protected $bizType;
     protected $vatPercent;
     protected $vat;
     protected $cost;
@@ -11,8 +12,10 @@ class CartDto
     protected $paymentCharge;
     protected $adminFee;
     protected $deliveryCharge = 0;
+    protected $deliveryType = "STD";
     protected $deliveryCost;
     protected $totalNumberOfItems;
+    protected $orderCreateDate;
 
     public function getPlatformId() {
         return $this->platformId;
@@ -28,6 +31,14 @@ class CartDto
 
     public function setItems($items) {
         $this->items = $items;
+    }
+    
+    public function getBizType() {
+        return $this->bizType;
+    }
+
+    public function setBizType($bizType) {
+        $this->bizType = $bizType;
     }
 
     public function getVat() {
@@ -101,7 +112,15 @@ class CartDto
     public function setDeliveryCharge($deliveryCharge) {
         $this->deliveryCharge = $deliveryCharge;
     }
-    
+
+    public function getDeliveryType() {
+        return $this->deliveryType;
+    }
+
+    public function setDeliveryType($deliveryType) {
+        $this->deliveryType = $deliveryType;
+    }
+
     public function getDeliveryCost() {
         return $this->deliveryCost;
     }
@@ -116,5 +135,13 @@ class CartDto
 
     public function setTotalNumberOfItems($totalNumberOfItems) {
         $this->totalNumberOfItems = $totalNumberOfItems;
+    }
+
+    public function getOrderCreateDate() {
+        return $this->orderCreateDate;
+    }
+
+    public function setOrderCreateDate($orderCreateDate) {
+        $this->orderCreateDate = $orderCreateDate;
     }
 }
