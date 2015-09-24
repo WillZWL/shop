@@ -352,7 +352,7 @@ SQL;
         $this->db->from("so");
         $this->db->join("so_item as soi", "soi.so_no=so.so_no", "INNER");
         $this->db->join("product p", "p.sku=soi.prod_sku", "INNER");
-        $this->db->groupby("so.so_no");
+        $this->db->group_by("so.so_no");
         $this->db->where($where);
         $this->db->select("so.so_no, soi.prod_sku, soi.prod_name, soi.qty, so.expect_delivery_date, so.create_on, p.expected_delivery_date as current_expected_delivery_date, count(1) as multiple_items_count", FALSE);
         if (empty($option["num_rows"])) {
@@ -795,7 +795,7 @@ SQL;
                             WHERE sbt.so_no = \'' . $option["so_no"] . '\') as sobt', 'sobt.so_no = so.so_no', 'LEFT');
             $this->db->select('sobt.bt_total_received, sobt.bt_total_bank_charge', FALSE);
         }
-        $this->db->join('selling_platform sp', 'sp.id = so.platform_id', 'INNER');
+        $this->db->join('selling_platform sp', 'sp.selling_platform_id = so.platform_id', 'INNER');
 
         if ($where["tracking_no"] != "" || $where["tracking_no LIKE "] != "" || isset($option["detail"])) {
             $type = "INNER";
@@ -1518,7 +1518,7 @@ SQL;
                     ON(b.id = p.brand_id)
                 INNER JOIN platform_biz_var pbz
                     ON(pbz.selling_platform_id = so.platform_id)
-                INNER JOIN selling_platform sp on pbz.selling_platform_id = sp.id
+                INNER JOIN selling_platform sp on pbz.selling_platform_id = sp.selling_platform_id
                 LEFT JOIN
                 (
                     SELECT r.so_no, r.reason, r.total_refund_amount,
@@ -1690,7 +1690,7 @@ SQL;
                     LEFT JOIN so_payment_status sps ON(sps.so_no = so.so_no)
                     INNER JOIN product p ON(soid.item_sku = p.sku)
                     INNER JOIN platform_biz_var pbz ON(pbz.selling_platform_id = so.platform_id)
-                    INNER JOIN selling_platform sp on pbz.selling_platform_id = sp.id
+                    INNER JOIN selling_platform sp on pbz.selling_platform_id = sp.selling_platform_id
                     LEFT JOIN
                             (
                                 SELECT
@@ -2453,7 +2453,7 @@ SQL;
                             LEFT JOIN category ssc
                                 ON (ssc.id = p.sub_sub_cat_id)
                             INNER JOIN selling_platform as sp
-                                ON (so.platform_id = sp.id)
+                                ON (so.platform_id = sp.selling_platform_id)
                             INNER JOIN exchange_rate as ex
                                 ON (so.currency_id = ex.from_currency_id AND ex.to_currency_id = '$curr')
                             WHERE so.status >= 2 AND so.biz_type <> 'SPECIAL' $where
@@ -2592,7 +2592,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'so.dispatch_date, c.forename, c.surname, c.email, so.order_create_date purchase_date, c.id client_id, c.postcode, so.delivery_country_id, soid.so_no, soid.item_sku, so.currency_id, soid.amount');
     }
 
-    public function get_order_info_for_dynamic_shipment_status($where)
+    public function getOrderInfoForDynamicShipmentStatus($where)
     {
         $this->db->from("so");
         $this->db->join("so_payment_status sops", "sops.so_no=so.so_no", "INNER");
@@ -2814,7 +2814,7 @@ SQL;
         $this->db->join("so_shipment AS sosh", "sosh.sh_no = soal.sh_no", "INNER");
         $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = so.platform_id", "INNER");
         $this->db->where(["so.biz_type" => "EBAY", "soex.fulfilled" => "N", "sosh.status" => 2, "so.status" => 6, "soid.amount >" => 0]);
-        $this->db->groupby("so.so_no");
+        $this->db->group_by("so.so_no");
 
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, soi.ext_item_cd , count(*) item_count, sosh.courier_id, sosh.tracking_no, so.dispatch_date, pbv.platform_country_id');
     }
@@ -2832,7 +2832,7 @@ SQL;
         $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = so.platform_id", "INNER");
         $this->db->join("courier", "sosh.courier_id = courier.id", "INNER");
         $this->db->where(["so.biz_type" => "QOO10", "soex.fulfilled" => "N", "sosh.status" => 2, "so.status" => 6, "so.refund_status" => 0, "soid.amount >" => 0]);
-        $this->db->groupby("so.so_no");
+        $this->db->group_by("so.so_no");
 
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, so.txn_id, courier.courier_name, soi.ext_item_cd , count(*) item_count, sosh.courier_id, sosh.tracking_no, so.dispatch_date, pbv.platform_country_id');
     }
@@ -2850,7 +2850,7 @@ SQL;
         $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = so.platform_id", "INNER");
         $this->db->join("courier", "sosh.courier_id = courier.id", "INNER");
         $this->db->where(["(so.biz_type = 'RAKUTEN' OR so.biz_type = 'WEBSITE' OR so.biz_type = 'MANUAL')" => NULL, "soex.fulfilled" => "N", "sosh.status" => 2, "so.status" => 6, "so.refund_status" => 0, "soid.amount >" => 0]);
-        $this->db->groupby("so.so_no");
+        $this->db->group_by("so.so_no");
 
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, so.txn_id, courier.courier_name, soi.ext_item_cd , count(*) item_count, sosh.courier_id, sosh.tracking_no, so.dispatch_date, pbv.platform_country_id');
     }
@@ -2868,16 +2868,16 @@ SQL;
             "DATEDIFF(now(), so.dispatch_date) = (IF(DATE_FORMAT(now(), '%w') = 5, 4, 6))" => null,
             "so.biz_type IN ('ONLINE', 'MOBILE', 'EBAY', 'MANUAL', 'OFFLINE')" => null,
             "so.status" => 6, "sosh.status" => 2]);
-        $this->db->groupby("so.so_no, soal.warehouse_id");
+        $this->db->group_by("so.so_no, soal.warehouse_id");
 
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.biz_type, so.platform_id, so.delivery_country_id, soal.warehouse_id, sosh.courier_id, cl.forename, cl.email, soex.conv_site_id');
     }
 
-    public function get_profit_margin($so_no)
+    public function getProfitMargin($so_no)
     {
         $this->db->from("so_item_detail soid");
         $this->db->where(["soid.so_no" => $so_no, "soid.amount > 0" => null]);
-        $this->db->groupby("soid.so_no");
+        $this->db->group_by("soid.so_no");
         $this->db->limit(1);
         $this->db->select('soid.so_no, count(1) as number_of_items, sum(profit*qty)/sum(amount) as order_margin');
 
@@ -2895,7 +2895,7 @@ SQL;
         $this->db->from("so");
         $this->db->join("so_extend AS soext", "soext.so_no = so.so_no", "INNER");
         $this->db->where(["so.so_no" => $so_no]);
-        $this->db->groupby("so.so_no");
+        $this->db->group_by("so.so_no");
         $this->db->select('so.biz_type, so.order_create_date, so.delivery_country_id, soext.conv_site_id');
 
         if ($query = $this->db->get()) {
@@ -3486,13 +3486,11 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, so.platform_id, so.txn_id, so.currency_id, so.amount, so.order_create_date, so.dispatch_date, ifr.status');
     }
 
-    public function get_sales_order($where = [], $option = [], $classname = 'OrderNotInRiaReportDto')
+    public function getSalesOrder($where = [], $option = [], $classname = 'OrderNotInRiaReportDto')
     {
-        $option['limit'] = -1;
-
         $this->db->from('so');
         $this->db->join('integrated_order_fulfillment iof', 'iof.so_no = so.so_no', 'INNER');
-        $this->db->join('selling_platform sp', 'so.platform_id = sp.id', 'INNER');
+        $this->db->join('selling_platform sp', 'so.platform_id = sp.selling_platform_id', 'INNER');
         $this->db->join('so_item_detail soid', 'so.so_no = soid.so_no AND soid.item_sku = iof.sku and soid.line_no=iof.line_no', 'INNER');
         $this->db->join('product p', 'p.sku = soid.item_sku', 'INNER');
         $this->db->join('sku_mapping sm', 'sm.sku = p.sku', 'LEFT');
@@ -3506,7 +3504,7 @@ SQL;
                        so.platform_id,
                        soid.item_sku as merchant_sku,
                        so.order_create_date,
-                       concat_ws(" ", c.title, c.forename, c.surname) as name,
+                       concat_ws(" ", \'c.title\', \'c.forename\', \'c.surname\') as name,
                        so.delivery_address,
                        so.delivery_postcode,
                        so.delivery_city,

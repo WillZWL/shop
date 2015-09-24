@@ -423,20 +423,20 @@ class RefundService extends BaseService
         return FALSE;
     }
 
-    public function get_refund_for_order_detail($so_no)
+    public function getRefundForOrderDetail($so_no)
     {
         $ret = [];
         $err = 0;
-        $list = $this->getDao('Refund')->getList(array("so_no" => $so_no));
+        $list = $this->getDao('Refund')->getList(["so_no" => $so_no]);
         if ($list !== FALSE) {
             foreach ($list as $obj) {
-                $tmp = $this->getDao('RefundItem')->getList(array("refund_id" => $obj->get_id()));
-                $history = $this->getDao('RefundHistory')->getHistoryList(array("so_no" => $so_no, "refund_id" => $obj->get_id()));
+                $tmp = $this->getDao('RefundItem')->getList(["refund_id" => $obj->getId()]);
+                $history = $this->getDao('RefundHistory')->getHistoryList(["so_no" => $so_no, "refund_id" => $obj->getId()]);
                 if ($tmp !== FALSE) {
-                    $ret[$obj->get_id()]["item"] = $tmp;
-                    $ret[$obj->get_id()]["content"] = $obj;
-                    $ret[$obj->get_id()]["history"] = $history;
-                    $ret[$obj->get_id()]["reason"] = $this->getDao('RefundReason')->get(array("id" => $obj->get_reason()));
+                    $ret[$obj->getId()]["item"] = $tmp;
+                    $ret[$obj->getId()]["content"] = $obj;
+                    $ret[$obj->getId()]["history"] = $history;
+                    $ret[$obj->getId()]["reason"] = $this->getDao('RefundReason')->get(["id" => $obj->getReason()]);
                 } else {
                     $err++;
                     break;

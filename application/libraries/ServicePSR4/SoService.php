@@ -3,16 +3,6 @@ namespace ESG\Panther\Service;
 
 use PHPMailer;
 use EventEmailDto;
-use ESG\Panther\Service\ExchangeRateService;
-use ESG\Panther\Service\EventService;
-use ESG\Panther\Service\EntityService;
-use ESG\Panther\Service\DelayedOrderService;
-use ESG\Panther\Service\ReviewFianetService;
-use ESG\Panther\Service\PdfRenderingService;
-use ESG\Panther\Service\CurrencyService;
-use ESG\Panther\Service\TemplateService;
-use ESG\Panther\Service\SubjectDomainService;
-use ESG\Panther\Service\DataExchangeService;
 
 class SoService extends BaseService
 {
@@ -36,6 +26,8 @@ class SoService extends BaseService
         $this->currencyService = new CurrencyService;
         $this->templateService = new TemplateService;
         $this->subjectDomainService = new SubjectDomainService;
+        $this->priceService = new PriceService;
+        $this->soPriorityScoreService= new SoPriorityScoreService;
 
         $this->dataExchangeService = new DataExchangeService;
         $this->voToXml = new VoToXml;
@@ -49,10 +41,6 @@ class SoService extends BaseService
         // $this->set_domain_platform_service(new Domain_platform_service());
         // include_once(APPPATH . 'libraries/service/Price_service.php');
         // $this->set_price_service(new Price_service());
-
-        // include_once APPPATH . "libraries/service/So_priority_score_service.php";
-        // $this->set_so_ps_srv(new So_priority_score_service());
-
 
         // include_once APPPATH . "libraries/service/Email_referral_list_service.php";
         // $this->set_email_referral_list_service(new Email_referral_list_service());
@@ -71,7 +59,7 @@ class SoService extends BaseService
 
         if (isset($_SESSION["so_no"])) {
             if (($ps_obj = $this->getDao('SoPaymentStatus')->get(array("so_no" => $_SESSION["so_no"]))) !== FALSE) {
-                if (empty($ps_obj) || ($ps_obj->get_payment_status() == "N" && $ps_obj->get_payment_gateway_id() == "google")) {
+                if (empty($ps_obj) || ($ps_obj->getPaymentStatus() == "N" && $ps_obj->getPaymentGatewayId() == "google")) {
                     $so_no = $_SESSION["so_no"];
                     $so_vo = $dao->get(array("so_no" => $so_no));
                     $sops_vo = $sops_dao->get(array("so_no" => $so_no));
@@ -111,7 +99,7 @@ class SoService extends BaseService
                 }
                 break;
             default:
-                if (($sp_obj = $this->getDao('SellingPlatform')->get(array("selling_platform_id" => $vars["platform_id"]))) && $sp_obj->get_type() == "SKYPE") {
+                if (($sp_obj = $this->getDao('SellingPlatform')->get(array("selling_platform_id" => $vars["platform_id"]))) && $sp_obj->getType() == "SKYPE") {
                     $delivery_country = NULL;
                 } else {
                     $delivery_country = (isset($_SESSION["client"]["del_country_id"]) ? $_SESSION["client"]["del_country_id"] : NULL);
@@ -486,7 +474,7 @@ class SoService extends BaseService
             $lang_id = $pbv_obj->getLanguageId();
         }
 
-        $type = $this->getDao('SellingPlatform')->get(array("id" => $vars["platform_id"]))->get_type();
+        $type = $this->getDao('SellingPlatform')->get(array("selling_platform_id" => $vars["platform_id"]))->getType();
 
         $to_currency_id = $this->getDao('Config')->valueOf("func_curr_id");
         if ($er_obj = $this->getDao('ExchangeRate')->get(array("from_currency_id" => $vars["currency_id"], "to_currency_id" => $to_currency_id))) {
@@ -534,7 +522,7 @@ class SoService extends BaseService
             }
             if (!$failed) {
                 foreach ($so_item_list as $soi_obj) {
-                    $soi_obj->set_so_no($so_no);
+                    $soi_obj->setSoNo($so_no);
                     if (!$soi_dao->insert($soi_obj)) {
                         if ($so_vo->get_biz_type() == "ONLINE" || $so_vo->get_biz_type() == "MOBILE") {
                             $_SESSION["NOTICE"] = "Error: " . __LINE__;
@@ -558,19 +546,19 @@ class SoService extends BaseService
                                 $qty = $soid["qty"];
                             }
                             $soid_obj = clone $soid_vo;
-                            $soid_obj->set_so_no($so_no);
-                            $soid_obj->set_line_no($curr_line_no);
+                            $soid_obj->setSoNo($so_no);
+                            $soid_obj->setLineNo($curr_line_no);
                             $soid_obj->set_item_sku($soid["sku"]);
-                            $soid_obj->set_qty($qty);
-                            $soid_obj->set_outstanding_qty($qty);
+                            $soid_obj->setQty($qty);
+                            $soid_obj->setOutstandingQty($qty);
                             $soid_obj->set_unit_price($soid["price"] * 1);
-                            $soid_obj->set_vat_total($soid["vat_total"]);
-                            $soid_obj->set_gst_total($soid["gst"]);
-                            $soid_obj->set_discount($soid["discount"]);
-                            $soid_obj->set_amount($soid["total"]);
-                            $soid_obj->set_promo_disc_amt($soid["promo_disc_amt"] * 1);
-                            $soid_obj->set_cost($soid["cost"]);
-                            $soid_obj->set_item_unit_cost($soid["product_cost_obj"]->get_item_cost());
+                            $soid_obj->setVatTotal($soid["vat_total"]);
+                            $soid_obj->setGstTotal($soid["gst"]);
+                            $soid_obj->setDiscount($soid["discount"]);
+                            $soid_obj->setAmount($soid["total"]);
+                            $soid_obj->setPromoDiscAmt($soid["promo_disc_amt"] * 1);
+                            $soid_obj->setCost($soid["cost"]);
+                            $soid_obj->setItemUnitCost($soid["product_cost_obj"]->getItemCost());
 
                             if ($get_ca === true) {
                                 $where["dest_country_id"] = $del_country_id;
@@ -583,7 +571,7 @@ class SoService extends BaseService
                                 }
                             }
 
-                            $this->set_profit_info($soid_obj);
+                            $this->setProfitInfo($soid_obj);
 
                             #sbf #4424 - set raw profit info without promo codes
                             $this->set_profit_info_raw($soid_obj, $vars["platform_id"]);
@@ -607,28 +595,28 @@ class SoService extends BaseService
                     if ($ca_soid_list) {
                         $ca_line_no = $curr_line_no + 1;
                         foreach ($ca_soid_list as $obj) {
-                            $this->init_price_service($type);
+                            $this->initPriceService($type);
                             $soid_obj = clone $soid_vo;
                             # the cost for complementary accessory is supplier cost
                             $ca_priceobj = $this->price_service->get_dao()->get_list_with_bundle_checking($obj->get_accessory_sku(), $vars["platform_id"], $lang_id);
                             if ($ca_priceobj) {
                                 foreach ($ca_priceobj as $value) {
-                                    $soid_obj->set_item_unit_cost($value->get_item_cost());
+                                    $soid_obj->setItemUnitCost($value->getItemCost());
                                     $cost = $value->get_supplier_cost();
                                 }
                             }
-                            $soid_obj->set_so_no($so_no);
-                            $soid_obj->set_line_no($ca_line_no);
+                            $soid_obj->setSoNo($so_no);
+                            $soid_obj->setLineNo($ca_line_no);
                             $soid_obj->set_item_sku($obj->get_accessory_sku());
-                            $soid_obj->set_qty($obj->get_quantity());
-                            $soid_obj->set_outstanding_qty($obj->get_quantity());
+                            $soid_obj->setQty($obj->get_quantity());
+                            $soid_obj->setOutstandingQty($obj->get_quantity());
                             $soid_obj->set_unit_price(0.00);
-                            $soid_obj->set_vat_total(0.00);
-                            $soid_obj->set_gst_total(0.00);
-                            $soid_obj->set_discount(0.00);
-                            $soid_obj->set_amount(0);
-                            $soid_obj->set_promo_disc_amt(0.00);
-                            $soid_obj->set_cost($cost * $obj->get_quantity());
+                            $soid_obj->setVatTotal(0.00);
+                            $soid_obj->setGstTotal(0.00);
+                            $soid_obj->setDiscount(0.00);
+                            $soid_obj->setAmount(0);
+                            $soid_obj->setPromoDiscAmt(0.00);
+                            $soid_obj->setCost($cost * $obj->get_quantity());
                             $soid_obj->set_profit(0.00);
                             $soid_obj->set_margin(0.00);
 
@@ -654,21 +642,21 @@ class SoService extends BaseService
                 if ($special_list && !$failed) {
                     foreach ($special_list as $soid) {
                         $soid_obj = clone $soid_vo;
-                        $soid_obj->set_so_no($so_no);
-                        $soid_obj->set_line_no($soid->get_line_no());
+                        $soid_obj->setSoNo($so_no);
+                        $soid_obj->setLineNo($soid->get_line_no());
                         $soid_obj->set_item_sku($soid->get_prod_sku());
-                        $soid_obj->set_qty($soid->get_qty());
-                        $soid_obj->set_outstanding_qty($soid->get_qty());
+                        $soid_obj->setQty($soid->get_qty());
+                        $soid_obj->setOutstandingQty($soid->get_qty());
                         $soid_obj->set_unit_price($soid->get_unit_price());
-                        $soid_obj->set_vat_total($soid->get_vat_total());
-                        $soid_obj->set_gst_total($soid->get_gst_total());
-                        $soid_obj->set_discount(0);
-                        $soid_obj->set_amount($soid->get_amount());
-                        $soid_obj->set_cost($soid->get_vat_total());
+                        $soid_obj->setVatTotal($soid->get_vat_total());
+                        $soid_obj->setGstTotal($soid->get_gst_total());
+                        $soid_obj->setDiscount(0);
+                        $soid_obj->setAmount($soid->get_amount());
+                        $soid_obj->setCost($soid->get_vat_total());
 
                         $is_complementary_acc = $this->getDao('ProductComplementaryAcc')->checkCat($soid["sku"], true);
                         if ($is_complementary_acc["status"] === false) {
-                            $this->set_profit_info($soid_obj);
+                            $this->setProfitInfo($soid_obj);
                         }
 
                         if (!$soid_dao->insert($soid_obj)) {
@@ -713,7 +701,7 @@ class SoService extends BaseService
 
                         if ($vars["so_extend"]["order_reason"] == 31) {
                             #SBF #2450 auto update so_priority_score to 1000 when "bulk sales" selected on phone sales
-                            $this->get_so_ps_srv()->insert_sops($so_no, 1000);
+                            $this->getDao('SoPriorityScore')->insertSops($so_no, 1000);
                         }
                     }
                     if ($so_vo->get_biz_type() == "MANUAL" || $so_vo->get_biz_type() == "OFFLINE") {
@@ -783,7 +771,7 @@ class SoService extends BaseService
         return $srv;
     }
 
-    public function set_profit_info(Base_vo $prod)
+    public function setProfitInfo($prod)
     {
         if (!defined('PLATFORM_TYPE'))
             $use_new = true;
@@ -794,40 +782,38 @@ class SoService extends BaseService
                 $use_new = true;
         }
         if ($use_new) {
-            $cur_platform_id = $this->getDao('So')->get(["so_no" => $prod->get_so_no()])->get_platform_id();
-            $type = $this->getDao('SellingPlatform')->get(array("id" => $cur_platform_id))->get_type();
+            $cur_platform_id = $this->getDao('So')->get(["so_no" => $prod->getSoNo()])->getPlatformId();
+            $type = $this->getDao('SellingPlatform')->get(array("selling_platform_id" => $cur_platform_id))->getType();
 
-            $this->init_price_service($type);
-            $gst = @$prod->get_gst_total();
-            $selling_price = ($prod->get_amount() + $gst) / $prod->get_qty();
-            $json = $this->price_service->get_profit_margin_json($cur_platform_id, $prod->get_item_sku(), $selling_price);
-            file_put_contents("/var/log/vb-json", "{$prod->get_so_no()} || $json", FILE_APPEND);
+            $this->initPriceService($type);
+            $gst = @$prod->getGstTotal();
+            $selling_price = ($prod->getAmount() + $gst) / $prod->getQty();
+            $json = $this->priceService->getProfitMarginJson($cur_platform_id, $prod->getItemSku(), $selling_price);
+            file_put_contents("/var/log/vb-json", "{$prod->getSoNo()} || $json", FILE_APPEND);
 
             $jj = json_decode($json, true);
 
-            $prod->set_cost(round($jj["get_cost"], 2));
-            $prod->set_profit(round($jj["get_profit"], 2));
-            $prod->set_margin(round($jj["get_margin"], 2));
+            $prod->setCost(round($jj["get_cost"], 2));
+            $prod->setProfit(round($jj["get_profit"], 2));
+            $prod->setMargin(round($jj["get_margin"], 2));
         } else {
-            $prod->set_profit(round($prod->get_amount() - $prod->get_cost(), 2));
-            if ($prod->get_amount()) {
-                $prod->set_margin(round($prod->get_profit() / $prod->get_amount() * 100, 2));
+            $prod->setProfit(round($prod->getAmount() - $prod->getCost(), 2));
+            if ($prod->getAmount()) {
+                $prod->setMargin(round($prod->getProfit() / $prod->getAmount() * 100, 2));
             } else {
-                $prod->set_margin(0);
+                $prod->setMargin(0);
             }
         }
     }
 
-    public function init_price_service($platform_type)
+    public function initPriceService($platform_type)
     {
         if (is_null($platform_type)) {
-            include_once APPPATH . "libraries/service/Price_service.php";
-            $this->price_service = new Price_service();
+            $this->priceService = new PriceService;
         } else {
-            $filename = "price_" . strtolower($platform_type) . "_service";
+            $filename = "Price" . ucfirst(strtolower($platform_type)) . "Service";
             $classname = ucfirst($filename);
-            include_once APPPATH . "libraries/service/{$filename}.php";
-            $this->price_service = new $classname();
+            $this->priceService = new $classname;
         }
     }
 
@@ -846,16 +832,16 @@ class SoService extends BaseService
         if ($use_new) {
             // website orders come in here
 
-            $platform_id = $this->getDao('So')->get(array("so_no" => $prod->get_so_no()))->get_platform_id();
+            $platform_id = $this->getDao('So')->get(array("so_no" => $prod->getSoNo()))->getPlatformId();
 
             if ($platform_id) {
-                $type = $this->getDao('SellingPlatform')->get(array("id" => $platform_id))->get_type();
+                $type = $this->getDao('SellingPlatform')->get(array("selling_platform_id" => $platform_id))->getType();
 
-                $this->init_price_service($type);
-                $gst = @$prod->get_gst_total();
-                $unit_gst = $gst / $prod->get_qty();
+                $this->initPriceService($type);
+                $gst = @$prod->getGstTotal();
+                $unit_gst = $gst / $prod->getQty();
                 $unit_selling_price = ($prod->get_unit_price() + $unit_gst);
-                $json = $this->price_service->get_profit_margin_json($platform_id, $prod->get_item_sku(), $unit_selling_price);
+                $json = $this->price_service->get_profit_margin_json($platform_id, $prod->getItemSku(), $unit_selling_price);
 
                 $jj = json_decode($json, true);
 
@@ -866,13 +852,13 @@ class SoService extends BaseService
         } else {
             // mostly marketplaces orders come here. if via API, interface_so_item_detail doesn't have GST, so we calculate differently
             if (!$platform_id) {
-                $platform_id = $this->getDao('So')->get(array("so_no" => $prod->get_so_no()))->get_platform_id();
+                $platform_id = $this->getDao('So')->get(array("so_no" => $prod->getSoNo()))->getPlatformId();
             }
 
             if ($platform_id) {
-                $this->init_price_service(PLATFORM_TYPE);
+                $this->initPriceService(PLATFORM_TYPE);
                 $unit_selling_price = $prod->get_unit_price();
-                $json = $this->price_service->get_profit_margin_json($platform_id, $prod->get_item_sku(), $unit_selling_price);
+                $json = $this->price_service->get_profit_margin_json($platform_id, $prod->getItemSku(), $unit_selling_price);
                 $jj = json_decode($json, true);
 
                 # WE DO NOT UPDATE COST HERE
@@ -880,11 +866,6 @@ class SoService extends BaseService
                 $prod->set_margin_raw(round($jj["get_margin"], 2));
             }
         }
-    }
-
-    public function get_so_ps_srv()
-    {
-        return $this->so_ps_srv;
     }
 
     public function process_qoo10_manual_orders($so_no)
@@ -923,7 +904,7 @@ class SoService extends BaseService
         }
     }
 
-    public function split_order_to_so($so_no, $order_group)
+    public function splitOrderToSo($so_no, $order_group)
     {
         $so_dao = $this->getDao('So');
         $soext_dao = $this->getDao('SoExtend');
@@ -931,13 +912,13 @@ class SoService extends BaseService
         $soid_dao = $this->getDao('SoItemDetail');
         $so_payment_status_dao = $this->getDao('SoPaymentStatus');
         $ordernotes_dao = $this->getDao('OrderNotes');
-        $so_priority_score_dao = $this->get_so_ps_srv()->get_dao();
+        $so_priority_score_dao = $this->getDao('SoPriorityScore');
         $so_holdreason_dao = $this->getDao('SoHoldReason');
 
         $input_so_no = $so_no;
 
-        if ($so_obj = $so_dao->get(array("so_no" => $so_no))) {
-            if ($so_obj->get_status() == 0 || $so_obj->get_status() > 3 || $so_obj->get_hold_status() != 0 || $so_obj->get_refund_status() != 0) {
+        if ($so_obj = $so_dao->get(["so_no" => $so_no])) {
+            if ($so_obj->getStatus() == 0 || $so_obj->getStatus() > 3 || $so_obj->getHoldStatus() != 0 || $so_obj->getRefundStatus() != 0) {
                 $ret["status"] = FALSE;
                 $ret["message"] = __LINE__ . " so_service. Error: <$so_no> Order is inactive/not yet credit checked/allocated/shipped/on hold/has split child/refund.";
                 return $ret;
@@ -948,7 +929,7 @@ class SoService extends BaseService
             $split_so_group = $so_obj->getSplitSoGroup();
             if ($split_so_group != $so_no && !empty($split_so_group)) {
                 $input_so_obj = $so_obj;
-                $so_obj = $so_dao->get(array("so_no" => $so_obj->getSplitSoGroup()));
+                $so_obj = $so_dao->get(["so_no" => $so_obj->getSplitSoGroup()]);
                 $so_no = $so_obj->getSoNo();
             }
 
@@ -997,19 +978,25 @@ class SoService extends BaseService
                     $new_so_obj = $so_dao->get();
                     set_value($new_so_obj, $so_obj);
 
-                    $new_so_obj->set_so_no($new_so_no);
-                    $new_so_obj->set_split_so_group($so_no);
-                    $new_so_obj->set_split_status(2);
-                    $new_so_obj->set_split_create_on($ts);
-                    $new_so_obj->set_split_create_by($id);
+                    $new_so_obj->setSoNo($new_so_no);
+                    $new_so_obj->setSplitSoGroup($so_no);
+                    $new_so_obj->setSplitStatus(2);
+                    $new_so_obj->setSplitCreateOn($ts);
+                    $new_so_obj->setSplitCreateBy($id);
 
                     // if this parent has been split before, reset hold_status = 0
-                    if ($so_obj->get_hold_status() == 15)
-                        $new_so_obj->set_hold_status(0);
+                    if ($so_obj->getHoldStatus() == 15) {
+                        $new_so_obj->setHoldStatus(0);
+                        $sshVO = $this->getDao('SoHoldStatusHistory')->get();
+                        $sshDto = clone $sshVO;
+                        $sshDto->setSoNo($so_no);
+                        $sshDto->setHoldStatus(0);
+                        $this->getDao('SoHoldStatusHistory')->insert($sshDto);
+                    }
 
                     # temporarily set as 0
-                    $new_so_obj->set_amount(0.00);
-                    $new_so_obj->set_cost(0.00);
+                    $new_so_obj->setAmount(0.00);
+                    $new_so_obj->setCost(0.00);
                     if ($so_dao->insert($new_so_obj)) {
                         $so_amount = $so_cost = $line_no = 0;
 
@@ -1021,56 +1008,56 @@ class SoService extends BaseService
                             $sku = $v["sku"];
                             $line_no++;
 
-                            if (!($so_item = $soi_dao->get(array("so_no" => $so_no, "prod_sku" => $sku)))) {
+                            if (!($so_item = $soi_dao->get(["so_no" => $so_no, "prod_sku" => $sku]))) {
                                 $ret["status"] = FALSE;
                                 $ret["message"] = __LINE__ . " so_service. Error: SO item list not found for $so_no, sku $sku.";
                                 return $ret;
                             }
 
-                            if (!($so_item_detail = $soid_dao->get(array("so_no" => $so_no, "item_sku" => $sku)))) {
+                            if (!($so_item_detail = $soid_dao->get(["so_no" => $so_no, "item_sku" => $sku]))) {
                                 $ret["status"] = FALSE;
                                 $ret["message"] = __LINE__ . " so_service. Error: SO item detail list not found for $so_no, sku $sku.";
                                 return $ret;
                             }
 
-                            $unit_vat = number_format(($so_item->get_vat_total() / $so_item->get_qty()), 2, '.', '');
-                            $unit_gst = number_format(($so_item->get_gst_total() / $so_item->get_qty()), 2, '.', '');
-                            $unit_amount_paid = number_format(($so_item->get_amount() / $so_item->get_qty()), 2, '.', '');
+                            $unit_vat = number_format(($so_item->getVatTotal() / $so_item->getQty()), 2, '.', '');
+                            $unit_gst = number_format(($so_item->getGstTotal() / $so_item->getQty()), 2, '.', '');
+                            $unit_amount_paid = number_format(($so_item->getAmount() / $so_item->getQty()), 2, '.', '');
                             $so_amount += ($unit_amount_paid + $unit_gst);     # actual selling price
 
                             // split order logic splits all SKUs into single item
                             $qty = 1;
-                            $unit_cost = $so_item_detail->get_cost();
+                            $unit_cost = $so_item_detail->getCost();
                             $so_cost += ($unit_cost * $qty);
-                            $unit_profit = $so_item_detail->get_profit();
-                            $unit_promo_disc_amt = number_format(($so_item_detail->get_promo_disc_amt() / $so_item->get_qty()), 2, '.', '');
+                            $unit_profit = $so_item_detail->getProfit();
+                            $unit_promo_disc_amt = number_format(($so_item_detail->getPromoDiscAmt() / $so_item->getQty()), 2, '.', '');
 
-                            $unit_profit = $so_item_detail->get_profit();
-                            $unit_profit_raw = $so_item_detail->get_profit_raw();
+                            $unit_profit = $so_item_detail->getProfit();
+                            $unit_profit_raw = $so_item_detail->getProfitRaw();
 
                             $new_soi_obj = $soi_dao->get();
                             set_value($new_soi_obj, $so_item);
-                            $new_soi_obj->set_so_no($new_so_no);
-                            $new_soi_obj->set_line_no($line_no);
-                            $new_soi_obj->set_qty($qty);
-                            $new_soi_obj->set_vat_total($unit_vat);
-                            $new_soi_obj->set_gst_total($unit_gst);
-                            $new_soi_obj->set_amount($unit_amount_paid);
+                            $new_soi_obj->setSoNo($new_so_no);
+                            $new_soi_obj->setLineNo($line_no);
+                            $new_soi_obj->setQty($qty);
+                            $new_soi_obj->setVatTotal($unit_vat);
+                            $new_soi_obj->setGstTotal($unit_gst);
+                            $new_soi_obj->setAmount($unit_amount_paid);
 
                             if ($soi_dao->insert($new_soi_obj)) {
                                 $new_soid_obj = $soid_dao->get();
                                 set_value($new_soid_obj, $so_item_detail);
-                                $new_soid_obj->set_so_no($new_so_no);
-                                $new_soid_obj->set_line_no($line_no);
+                                $new_soid_obj->setSoNo($new_so_no);
+                                $new_soid_obj->setLineNo($line_no);
 
                                 # now each qty has single row, so we take the unit amount in soid as well
                                 # normal case: soid.amount = unit amount paid * qty
-                                $new_soid_obj->set_amount($unit_amount_paid);
-                                $new_soid_obj->set_qty($qty);
-                                $new_soid_obj->set_outstanding_qty($qty);
-                                $new_soid_obj->set_vat_total($unit_vat);
-                                $new_soid_obj->set_gst_total($unit_gst);
-                                $new_soid_obj->set_promo_disc_amt($unit_promo_disc_amt);
+                                $new_soid_obj->setAmount($unit_amount_paid);
+                                $new_soid_obj->setQty($qty);
+                                $new_soid_obj->setOutstandingQty($qty);
+                                $new_soid_obj->setVatTotal($unit_vat);
+                                $new_soid_obj->setGstTotal($unit_gst);
+                                $new_soid_obj->setPromoDiscAmt($unit_promo_disc_amt);
 
                                 if ($soid_dao->insert($new_soid_obj)) {
                                     // success adding so_item and so_item_detail
@@ -1087,10 +1074,10 @@ class SoService extends BaseService
                         // no fail for the whole so group, update amount and cost for this new so
                         if (!$failed) {
                             // check if previous has so_extend. If have, create new so_no with duplicated info
-                            if ($soext_obj = $soext_dao->get(array("so_no" => $so_no))) {
+                            if ($soext_obj = $soext_dao->get(["so_no" => $so_no])) {
                                 $new_soext_obj = $soext_dao->get();
                                 set_value($new_soext_obj, $soext_obj);
-                                $new_soext_obj->set_so_no($new_so_no);
+                                $new_soext_obj->setSoNo($new_so_no);
 
                                 if ($soext_dao->insert($new_soext_obj) === FALSE) {
                                     $message .= __LINE__ . " so_service. Failed so_extend. DB error: " . $soext_dao->db->_error_message() . "\n";
@@ -1099,10 +1086,10 @@ class SoService extends BaseService
                             }
 
                             // check if so_payment_status available
-                            if ($so_payment_status_obj = $so_payment_status_dao->get(array("so_no" => $so_no))) {
+                            if ($so_payment_status_obj = $so_payment_status_dao->get(["so_no" => $so_no])) {
                                 $new_so_pays_obj = $so_payment_status_dao->get();
                                 set_value($new_so_pays_obj, $so_payment_status_obj);
-                                $new_so_pays_obj->set_so_no($new_so_no);
+                                $new_so_pays_obj->setSoNo($new_so_no);
                                 if ($so_payment_status_dao->insert($new_so_pays_obj)) {
                                     // $order_notes, order_reason - did not add yet because specific to each new order
                                 } else {
@@ -1112,10 +1099,10 @@ class SoService extends BaseService
                             }
 
                             // check if previously has priority score
-                            if ($so_priority_score_obj = $so_priority_score_dao->get(array("so_no" => $so_no))) {
+                            if ($so_priority_score_obj = $so_priority_score_dao->get(["so_no" => $so_no])) {
                                 $new_so_prioritys_obj = $so_priority_score_dao->get();
                                 set_value($new_so_prioritys_obj, $so_priority_score_obj);
-                                $new_so_prioritys_obj->set_so_no($new_so_no);
+                                $new_so_prioritys_obj->setSoNo($new_so_no);
 
                                 if ($so_priority_score_dao->insert($new_so_prioritys_obj) === FALSE) {
                                     $message .= __LINE__ . " so_service. Failed so_priority_score. DB error: " . $so_priority_score_dao->db->_error_message() . "\n";
@@ -1124,10 +1111,10 @@ class SoService extends BaseService
                             }
 
                             // check if previously has order notes
-                            if ($ordernotes_obj = $ordernotes_dao->get_list(array("so_no" => $so_no), array("orderby" => "create_on desc", "limit" => 1))) {
+                            if ($ordernotes_obj = $ordernotes_dao->getList(array("so_no" => $so_no), array("orderby" => "create_on desc", "limit" => 1))) {
                                 $new_ordernotes_obj = $ordernotes_dao->get();
                                 set_value($new_ordernotes_obj, $ordernotes_obj);
-                                $new_ordernotes_obj->set_so_no($new_so_no);
+                                $new_ordernotes_obj->setSoNo($new_so_no);
 
                                 if ($ordernotes_dao->insert($new_ordernotes_obj) === FALSE) {
                                     $message .= __LINE__ . " so_service. Failed order_notes. DB error: " . $ordernotes_dao->db->_error_message() . "\n";
@@ -1137,9 +1124,9 @@ class SoService extends BaseService
 
                             if (!$failed) {
                                 // all done for this group, update amount and cost for the new so
-                                $new_so_obj->set_amount($so_amount);
-                                $new_so_obj->set_cost($so_cost);
-                                $new_so_obj->set_split_create_on($ts);
+                                $new_so_obj->setAmount($so_amount);
+                                $new_so_obj->setCost($so_cost);
+                                $new_so_obj->setSplitCreateOn($ts);
 
                                 if ($so_dao->update($new_so_obj)) {
                                     $addedsolist .= "$next_val, ";
@@ -1161,26 +1148,35 @@ class SoService extends BaseService
 
             if (!$failed) {
                 // all the groups have been procesed, update the parent so.status
-                $so_obj->set_hold_status(15);  # set to has split child
-                $so_obj->set_split_status(2);
-                $so_obj->set_split_create_by($id);
-                $so_obj->set_split_create_on($ts);
+                $so_obj->setHoldStatus(15);  # set to has split child
+                $so_obj->setSplitStatus(2);
+                $so_obj->setSplitCreateBy($id);
+                $so_obj->setSplitCreateOn($ts);
                 if ($so_dao->update($so_obj) === FALSE) {
                     $message .= __LINE__ . " so_service. Failed update parent so $so_no. DB error: " . $so_dao->db->_error_message() . "\n";
                     $failed = 1;
                 } else {
                     $sohr_vo = $so_holdreason_dao->get();
-                    $sohr_vo->set_so_no($so_no);
-                    $sohr_vo->set_reason("created_split");
+                    $sohr_vo->setSoNo($so_no);
+                    $sohr_vo->setReason("created_split");
                     $this->getDao('SoHoldReason')->insert($sohr_vo);
+
+                    $sshVO = $this->getDao('SoHoldStatusHistory')->get();
+                    $sshDto = clone $sshVO;
+                    $sshDto->setSoNo($so_no);
+                    $sshDto->setHoldStatus(15);
+                    $this->getDao('SoHoldStatusHistory')->insert($sshDto);
                 }
 
                 if (isset($input_so_obj)) {
                     // if we are splitting a child, then we set the child as inactive
-                    $input_so_obj->set_status(0);
+                    $input_so_obj->setStatus(0);
+                    $status = 0;
                     if ($so_dao->update($input_so_obj) === FALSE) {
-                        $message .= __LINE__ . " so_service. Failed update original input so_no {$input_so_obj->get_so_no()}. DB error: " . $so_dao->db->_error_message() . "\n";
+                        $message .= __LINE__ . " so_service. Failed update original input so_no {$input_so_obj->getSoNo()}. DB error: " . $so_dao->db->_error_message() . "\n";
                         $failed = 1;
+                    } else {
+                        updateIofStatusBySo($so_no, $status);
                     }
                 }
             }
@@ -2423,7 +2419,7 @@ html;
 
     public function set_pi($so_no)
     {
-        return $this->set_profit_info($this->getDao('So')->get(array("so_no" => $so_no)));
+        return $this->setProfitInfo($this->getDao('So')->get(array("so_no" => $so_no)));
     }
 
     public function fire_log_email_event($so_no = "", $template = "", $option = "")
@@ -3726,13 +3722,13 @@ html;
         return;
     }
 
-    public function get_hold_history($so_no = "")
+    public function getHoldHistory($so_no = "")
     {
         if ($so_no == "") {
             return FALSE;
         }
 
-        return $this->getDao('SoHoldReason')->getListWithUname(array("so_no" => $so_no), array("orderby" => "create_on DESC"));
+        return $this->getDao('SoHoldReason')->getListWithUname(["so_no" => $so_no], ["orderby" => "create_on DESC"]);
     }
 
     public function fireDispatch($so_obj, $sh_no, $get_email_html = FALSE)
@@ -4807,7 +4803,7 @@ html;
 
             if (count($five_alert)) {
                 $email_dto = new EventEmailDto();
-                $message .= "Please be advised that order number " . $so->get_client_id() . "-" . $so->get_so_no() . " platform " . $so->get_platform_id() . " has triggered the following product to control quantity 5:\n\n";
+                $message .= "Please be advised that order number " . $so->get_client_id() . "-" . $so->get_so_no() . " platform " . $so->getPlatformId() . " has triggered the following product to control quantity 5:\n\n";
                 foreach ($five_alert as $key => $value) {
                     $message .= $key . " - " . $value . "\n";
                 }
@@ -4826,7 +4822,7 @@ html;
 
             if (count($stock_alert)) {
                 $email_dto = new EventEmailDto();
-                $message .= "Please be advised that order number " . $so->get_client_id() . "-" . $so->get_so_no() . " platform " . $so->get_platform_id() . " has triggered the following product(s) to possibly be out of stock:\n\n";
+                $message .= "Please be advised that order number " . $so->get_client_id() . "-" . $so->get_so_no() . " platform " . $so->getPlatformId() . " has triggered the following product(s) to possibly be out of stock:\n\n";
                 foreach ($stock_alert as $key => $value) {
                     $message .= $key . " - " . $value . "\n";
                 }
@@ -4853,12 +4849,12 @@ html;
             $list = $this->getDao('So')->orderQuickSearch($where, $option);
             $ret = [];
             foreach ($list as $value) {
-                if ($value->get_status() < 6 && $value->get_status() > 2) {
-                    $items = $this->getDao('So')->getOrderItemList($value->get_so_no());
+                if ($value->getStatus() < 6 && $value->getStatus() > 2) {
+                    $items = $this->getDao('So')->getOrderItemList($value->getSoNo());
                 } else {
-                    $items = $this->getDao('So')->getOrderItemListDone($value->get_so_no());
+                    $items = $this->getDao('So')->getOrderItemListDone($value->getSoNo());
                 }
-                $value->set_items($items);
+                $value->setItems($items);
                 $ret[] = $value;
             }
             return $ret;
@@ -5000,7 +4996,7 @@ html;
         return $this->getDao('So')->getEbayFeedbackEmailContent($where, $option);
     }
 
-    function get_working_days($start_ts, $end_ts, $holidays = [])
+    function getWorkingDays($start_ts, $end_ts, $holidays = [])
     {
         foreach ($holidays as & $holiday) {
             $holiday = strtotime($holiday);
@@ -5108,10 +5104,14 @@ html;
         return $this->getDao('So')->getSoPriorityScoreInfo($so_no_list);
     }
 
-    public function getPriorityScore($so_no, $result = null)
+    public function getPriorityScore($so_no, $result = [])
     {
-        if ($result === null) {
+        if (empty($result)) {
+            $result = [];
             $result = $this->getDao('So')->getPriorityScore($so_no);
+            if ( !is_array($result) ) {
+                $result = (array) $result;
+            }
             $result["order_margin"] = null;
         }
         $score_christmas = $this->getPriorityScoreChristmas($so_no, $result);
@@ -5129,8 +5129,8 @@ html;
         $month = date("n");
         $day = date("j");
 
-        $eu_country_group = array("fr", "gb", "ie", "be", "nl", "pt", "se", "si", "de", "dk");
-        $apac_country_group = array("sg", "my", "th", "tw", "ph");
+        $eu_country_group = ["fr", "gb", "ie", "be", "nl", "pt", "se", "si", "de", "dk"];
+        $apac_country_group = ["sg", "my", "th", "tw", "ph"];
 
         $countryId = strtolower($result["delivery_country_id"]);
         if (($year == 2013) && ($month == 12)) {
@@ -5172,8 +5172,8 @@ html;
         }
 
         if ($score > 0) {
-            if ($manual = $this->get_so_ps_srv()->get(array("so_no" => $so_no, "status" => 1))) {
-                $score += $manual->get_score();
+            if ($manual = $this->getDao('SoPriorityScore')->get(["so_no" => $so_no, "status" => 1])) {
+                $score += $manual->getScore();
             }
         }
 
@@ -5184,12 +5184,12 @@ html;
     {
         if ($this->sub_domain_cache == null) {
             foreach ($this->subjectDomainService->getDao('SubjectDomain')->getList() as $k => $v) {
-                $this->sub_domain_cache[$v->get_subject()] = $v->get_value();
+                $this->sub_domain_cache[$v->getSubject()] = $v->getValue();
             }
         }
 
-        if ($manual = $this->get_so_ps_srv()->get(array("so_no" => $so_no, "status" => 1))) {
-            $score = $manual->get_score();
+        if ($manual = $this->getDao('SoPriorityScore')->get(["so_no" => $so_no, "status" => 1])) {
+            $score = $manual->getScore();
         } else {
             $score = 0;
 
@@ -5199,12 +5199,12 @@ html;
                 $result["order_margin"] = null;
             }
 
-            $days = $this->get_days(strtotime($result["order_create_date"]), mktime());
+            $days = $this->getDays(strtotime($result["order_create_date"]), mktime());
             if ((($ps_obj = $this->getDao('SoPaymentStatus')->get(array("so_no" => $so_no))) !== FALSE) && ($ps_obj))
-                $pay_to_account = $ps_obj->get_pay_to_account();
+                $pay_to_account = $ps_obj->getPayToAccount();
             else
                 $pay_to_account = "";
-            if ((($margin_score = $this->get_so_ps_srv()->hit_margin_rule($so_no, $result['biz_type'], $days, false, $result["order_margin"])) > 0)
+            if ((($margin_score = $this->soPriorityScoreService->hitMarginRule($so_no, $result['biz_type'], $days, false, $result["order_margin"])) > 0)
                 && ($pay_to_account != "paypal.au@valuebasket.com") && ($pay_to_account != "paypal.oce@valuebasket.com") && ($pay_to_account != "paypal.nz@valuebasket.com")
             ) {
                 // return $margin_score;
@@ -5244,10 +5244,10 @@ html;
 
                 if ($result['biz_type'] == "OFFLINE") {
 //OFFLINE BULK SALES
-                    if (($ps_obj) && ($ps_obj->get_payment_gateway_id() == "paypal")) {
+                    if (($ps_obj) && ($ps_obj->getPaymentGatewayId() == "paypal")) {
                         $platform_score = $this->sub_domain_cache["PRIORITY_SCORE.PAYMENT_GATEWAY.PAYPAL.HK"];
-                    } else if ((($soex_obj = $this->getDao('SoExtend')->get(array("so_no" => $so_no))) !== FALSE) && ($soex_obj)) {
-                        if ($soex_obj->get_order_reason() == 31) {
+                    } else if ((($soex_obj = $this->getDao('SoExtend')->get(["so_no" => $so_no])) !== FALSE) && ($soex_obj)) {
+                        if ($soex_obj->getOrderReason() == 31) {
                             $platform_score = $this->sub_domain_cache["PRIORITY_SCORE.BULK_SALES"];
                         }
                     }
@@ -5273,7 +5273,7 @@ html;
         return $score;
     }
 
-    function get_days($start_ts, $end_ts)
+    function getDays($start_ts, $end_ts)
     {
         $working_days = 0;
         $tmp_ts = $start_ts;
@@ -5287,7 +5287,7 @@ html;
 
     public function get_priority_score_obj($so_no)
     {
-        return $this->get_so_ps_srv()->get(array("so_no" => $so_no, "status" => 1));
+        return $this->getDao('SoPriorityScore')->get(["so_no" => $so_no, "status" => 1]);
     }
 
     public function getShippingInfo($where = [])
@@ -5370,15 +5370,15 @@ html;
                 //insert the order into the fraudulent order table
                 if (!$fraud_order_obj = $this->get_fraudulent_order_service()->get(array('so_no' => $so_no))) {
                     $new_fraud_order_obj = $this->get_fraudulent_order_service()->get();
-                    $new_fraud_order_obj->set_so_no($so_no);
+                    $new_fraud_order_obj->setSoNo($so_no);
                     $new_fraud_order_obj->set_status(1);
                     if ($this->get_fraudulent_order_service()->insert($new_fraud_order_obj)) {   //set order status as 1
                         if (($so_obj = $this->getDao('So')->get(array("so_no" => $so_no)))) {
-                            $so_obj->set_hold_status(1);
+                            $so_obj->setHoldStatus(1);
                             if ($this->getDao('So')->update($so_obj)) {   //set the so_hold_reason
                                 if ($sohr_vo = $this->getDao('SoHoldReason')->get()) {
-                                    $sohr_vo->set_so_no($so_no);
-                                    $sohr_vo->set_reason("confirmed_fraud");
+                                    $sohr_vo->setSoNo($so_no);
+                                    $sohr_vo->setReason("confirmed_fraud");
                                     $this->getDao('SoHoldReason')->insert($sohr_vo);
 
                                     $action = "update";
@@ -5388,13 +5388,15 @@ html;
                                         $action = "insert";
                                     }
                                     $this->getDao('SoCreditChk')->db->trans_start();
-                                    $socc_obj->set_so_no($so_no);
+                                    $socc_obj->setSoNo($so_no);
                                     $socc_obj->set_fd_status(2);
                                     $this->getDao('SoCreditChk')->$action($socc_obj);
 
                                     $so_obj->setStatus(0);
-                                    $so_obj->set_hold_status(0);
-                                    $this->getDao('So')->update($so_obj);
+                                    $so_obj->setHoldStatus(0);
+                                    if ($this->getDao('So')->update($so_obj)) {
+                                         $this->updateIofStatusBySo($so_no, 0);
+                                    }
                                     $this->getDao('SoCreditChk')->db->trans_complete();
 
                                     //add an order note
@@ -5456,8 +5458,8 @@ html;
             $parent_so_obj->set_hold_status(self::PERMANENT_HOLD_STATUS);
             $this->getDao('So')->update($parent_so_obj);
             if ($sohr_vo = $this->getDao('SoHoldReason')->get()) {
-                $sohr_vo->set_so_no($parent_so_no);
-                $sohr_vo->set_reason("perm_hold_sales_aps");
+                $sohr_vo->setSoNo($parent_so_no);
+                $sohr_vo->setReason("perm_hold_sales_aps");
                 $this->getDao('SoHoldReason')->insert($sohr_vo);
             }
         }
@@ -5510,8 +5512,8 @@ html;
                         $ret["error_message"] = __LINE__ . "Cannot update so_no <$parent_so_no> with perm hold. SQL: " . $this->db->last_query() . " DBerror: " . $this->db->_error_message();
                     } else {
                         if ($sohr_vo = $this->getDao('SoHoldReason')->get()) {
-                            $sohr_vo->set_so_no($parent_so_no);
-                            $sohr_vo->set_reason("perm_hold_sales_aps");
+                            $sohr_vo->setSoNo($parent_so_no);
+                            $sohr_vo->setReason("perm_hold_sales_aps");
                             if ($this->getDao('SoHoldReason')->insert($sohr_vo) === FALSE) {
                                 $ret["status"] = false;
                                 $ret["error_message"] = __LINE__ . "Cannot update so_hold_reason <$parent_so_no> with hold reason. SQL: "
