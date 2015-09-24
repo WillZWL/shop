@@ -6,8 +6,12 @@ class SupplierProdVo extends \BaseVo
     private $prod_sku;
     private $currency_id;
     private $cost;
+    private $pricehkd;
     private $lead_day;
     private $moq;
+    private $region = 'HK';
+    private $location = 'HK';
+    private $comments;
     private $order_default = '1';
     private $region_default;
     private $supplier_status = 'A';
@@ -71,6 +75,16 @@ class SupplierProdVo extends \BaseVo
         return $this->cost;
     }
 
+    public function getPricehkd()
+    {
+        return $this->pricehkd;
+    }
+
+    public function setPricehkd($pricehkd)
+    {
+        $this->pricehkd = $pricehkd;
+    }
+
     public function setLeadDay($lead_day)
     {
         $this->lead_day = $lead_day;
@@ -89,6 +103,36 @@ class SupplierProdVo extends \BaseVo
     public function getMoq()
     {
         return $this->moq;
+    }
+
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    public function setRegion($region)
+    {
+        $this->region = $region;
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
     }
 
     public function setOrderDefault($order_default)
