@@ -159,12 +159,11 @@
                         <option value="">
                             <?php
                             $wh_selected[$this->input->get("warehouse_id")] = " SELECTED";
-                            foreach ($whlist as $obj)
-                            {
+                            foreach ($whlist as $obj) :
                             ?>
                         <option value="<?= $obj->getWarehouseId() ?>"<?= $wh_selected[$obj->getWarehouseId()] ?>><?= $obj->getWarehouseId() ?>
                             <?php
-                            }
+                            endforeach;
                             ?>
                     </select>
                 </td>
@@ -176,15 +175,15 @@
                         <option value=""></option>
                         <?php
                         $html_courier = "";
-                        foreach ($courier_list as $key => $value) {
+                        foreach ($courier_list as $key => $value) :
                             $selected_courier = "";
-                            if ($this->input->get("rec_courier") == $value) {
+                            if ($this->input->get("rec_courier") == $value) :
                                 $selected_courier = " SELECTED";
-                            }
+                            endif;
                             $html_courier .= <<<html
                         <option value="$value" $selected_courier>$value</option>
 html;
-                        }
+                        endforeach;
                         echo $html_courier;
                         ?>
                     </select>
@@ -199,25 +198,25 @@ html;
     </form>
     <form name="fm_edit" method="post">
         <?php
-        if ($objlist) {
+        if ($objlist) :
             $allrowspan = array();
-            foreach ($objlist as $obj) {
+            foreach ($objlist as $obj) :
                 $current_split_so_group = $obj->getSplitSoGroup();
                 $rowspan = $obj->getOrderTotalSku();
 
-                if (isset($current_split_so_group)) {
-                    if (empty($last_split_so_group) || $current_split_so_group != $last_split_so_group) {
+                if (isset($current_split_so_group)) :
+                    if (empty($last_split_so_group) || $current_split_so_group != $last_split_so_group) :
                         $splitrowspan = 1;
-                    } else {
+                    else :
                         $splitrowspan++;
-                    }
+                    endif;
 
                     $so_list[$current_split_so_group] .= $obj->getSoNo() . ",";
                     $splitsogrp_html[$current_split_so_group] = "<td rowspan = '$splitrowspan'>$current_split_so_group</td>";
 
-                } else {
+                else :
                     $splitrowspan = "";
-                }
+                endif;
 
                 $last_split_so_group = $current_split_so_group;
 
@@ -225,50 +224,50 @@ html;
                     $allrowspan[$obj->getSoNo()]++;
                 else
                     $allrowspan[$obj->getSoNo()] = 1;
-            }
+            endforeach;
 
             $i = 0;
             $n = 0;
             $last_so_no = "";
-            foreach ($objlist as $obj) {
+            foreach ($objlist as $obj) :
                 $skip_this_column = false;
                 $current_so_no = $obj->getSoNo();
                 $order_total_sku = $obj->getOrderTotalSku();
                 // $row_span = "rowspan=".$order_total_sku;
                 $row_span = "rowspan=" . $allrowspan[$current_so_no];     # use loop instead of order_total_sku because those with missing master_sku does not match order_total_sku
 
-                if ($splitsogrp_html[$obj->getSplitSoGroup()] != "") {
+                if ($splitsogrp_html[$obj->getSplitSoGroup()] != "") :
                     // on the first line of split_so_group
                     $splitgrouprow = $splitsogrp_html[$obj->getSplitSoGroup()];
 
                     // we then set to empty string so that next row will not get pushed by rowspan
                     $splitsogrp_html[$obj->getSplitSoGroup()] = "";
-                } else {
-                    if ($obj->getSplitSoGroup()) {
+                else :
+                    if ($obj->getSplitSoGroup()) :
                         $splitgrouprow = $splitsogrp_html[$obj->getSplitSoGroup()];
-                    } else {
+                    else :
                         $splitgrouprow = "<td $row_span>&nbsp;</td>"; # rows without split_so_group
-                    }
-                }
+                    endif;
+                endif;
 
                 $check_html = $courier_html = "";
 
-                if ($current_so_no == $last_so_no) {
+                if ($current_so_no == $last_so_no) :
                     $skip_this_column = true;
-                } else {
+                else :
                     $n++;
-                }
+                endif;
 
                 $last_so_no = $current_so_no;
 
                 $row_style = "row" . $n % 2;
-                if ($obj->getRefundStatus() || $obj->getHoldStatus()) {
+                if ($obj->getRefundStatus() || $obj->getHoldStatus()) :
                     $row_style .= " notallow";
-                }
+                endif;
 
                 $td_style = $obj->getOutstandingQty() > $obj->getInventory() ? "row" . $n % 2 : "xrow0";
 
-                if ($skip_this_column) {
+                if ($skip_this_column) :
                     ?>
                     <tr name="row<?= $n ?>" class="<?= $row_style ?>"
                         onMouseOver="AddGroupClassName('row<?= $n ?>', 'highlight')"
@@ -280,8 +279,7 @@ html;
                     </tr>
 
 
-                <?php } else {
-                    ?>
+            <?php else : ?>
                     <tr name="row<?= $n ?>" class="<?= $row_style ?>" <?= $row_span ?>
                         onMouseOver="AddGroupClassName('row<?= $n ?>', 'highlight')"
                         onMouseOut="RemoveGroupClassName('row<?= $n ?>', 'highlight')" valign="top">
@@ -326,9 +324,9 @@ html;
                     <?php
 
                     $i++;
-                }
-            }
-        }
+                endif;
+            endforeach;
+        endif;
         ?>
         </table>
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-top:5px;">
@@ -351,11 +349,11 @@ html;
                     <select name="courier_id" id="courier_id">
                         <?php
                         $html_courier_bottom = "";
-                        foreach ($courier_list as $key => $value) {
+                        foreach ($courier_list as $key => $value) :
                             $html_courier_bottom .= <<<html
                         <option value="$value">$value</option>
 html;
-                        }
+                        endforeach;
                         echo $html_courier_bottom;
                         ?>
                     </select>
@@ -402,12 +400,11 @@ html;
     document.fm.platform_id.value = '<?=$this->input->get("platform_id")?>';
     //document.fm.platform_id.value = 'AMUK';
     <?php
-        if ($_SESSION["courier_file"])
-        {
+        if ($_SESSION["courier_file"]) :
     ?>
     top.frames["printframe"].window.location.href = '<?=base_url()?>order/integrated_order_fulfillment/get_courier_file/<?=$_SESSION["courier_file"]?>';
     <?php
-        }
+        endif;
     ?>
 </script>
 </body>
