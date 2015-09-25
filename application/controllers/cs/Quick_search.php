@@ -8,49 +8,12 @@ class Quick_search extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->helper(array('url', 'notice', 'object', 'operator', 'image'));
-        $this->load->model('cs/quick_search_model');
-        $this->load->library('service/pagination_service');
-        $this->load->library('service/aftership_service');
-        $this->load->library('service/split_order_service');
-        $this->load->library('service/supplier_service');
-        $this->load->library('service/product_service');
-        $this->load->library('encrypt');
     }
 
     public function update_edd($so_no = null)
     {
         if ($so_no) {
-            $expect_delivery_date = $_POST["expect_delivery_date"];
-            $inputValue = array("expect_delivery_date" => $expect_delivery_date);
-            $update_result = $this->quick_search_model->update_cs_order_query($so_no, $inputValue);
-
-            if ($expect_delivery_date !== false) {
-                $order_note_obj = $this->quick_search_model->get_order_notes();
-                $order_note_obj->set_so_no($so_no);
-                $order_note_obj->set_type("O");
-                $order_note_obj->set_note("FM New EDD - " . $expect_delivery_date);
-                $this->quick_search_model->add_notes($order_note_obj);
-
-                // duplicate to other split child orders
-                if ($so_obj = $this->so_service->get_dao()->get(array("so_no" => $so_no))) {
-                    $split_so_group = $so_obj->get_split_so_group();
-
-                    if ($split_so_group && $so_no != $split_so_group) {
-                        if ($split_child_list = $this->so_service->get_dao()->get_list(array("split_so_group" => $split_so_group, "so_no != $so_no" => null, "status != 0" => NULL))) {
-                            foreach ($split_child_list as $key => $childobj) {
-                                $update_result = $this->quick_search_model->update_cs_order_query($childobj->get_so_no(), $inputValue);
-
-                                $order_note_obj = $this->quick_search_model->get_order_notes();
-                                $order_note_obj->set_so_no($childobj->get_so_no());
-                                $order_note_obj->set_type("O");
-                                $order_note_obj->set_note("FM New EDD - " . $expect_delivery_date);
-                                $this->quick_search_model->add_notes($order_note_obj);
-                            }
-                        }
-                    }
-                }
-            }
+            $this->sc['QuickSearch']->saveExpectDeliveryDate($so_no, $_POST["expect_delivery_date"]);
         }
 
         Redirect(base_url() . "cs/quick_search/view/" . $so_no);
@@ -59,36 +22,20 @@ class Quick_search extends MY_Controller
     public function update_cs_order_query($so_no = null)
     {
         if ($so_no) {
-            $chasing_order = $_POST["chasing_order"];
-            $inputValue = array("chasing_order" => $chasing_order);
-            $this->quick_search_model->update_cs_order_query($so_no, $inputValue);
-
-            // duplicate to other split child orders
-            if ($so_obj = $this->so_service->get_dao()->get(array("so_no" => $so_no))) {
-                $split_so_group = $so_obj->get_split_so_group();
-
-                if ($split_so_group && $so_no != $split_so_group) {
-                    if ($split_child_list = $this->so_service->get_dao()->get_list(array("split_so_group" => $split_so_group, "so_no != $so_no" => null, "status != 0" => NULL))) {
-                        $error_mssage = "";
-                        foreach ($split_child_list as $key => $childobj) {
-                            $this->quick_search_model->update_cs_order_query($childobj->get_so_no(), $inputValue);
-                        }
-                    }
-                }
-            }
+            $this->sc['QuickSearch']->saveChasingOrder($so_no, $_POST["chasing_order"]);
         }
 
         Redirect(base_url() . "cs/quick_search/view/" . $so_no);
     }
 
-    public function index()
+    public function index($offset = 0)
     {
         $sub_app_id = $this->getAppId() . "01";
 
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
-        $where = array();
-        $option = array();
+        $where = [];
+        $option = [];
 
         $search = $this->input->get("search");
 
@@ -159,7 +106,7 @@ class Quick_search extends MY_Controller
             }
 
             if ($this->input->get("payment_gateway_id") != "") {
-                $where["payment_gateway_id"] = $this->input->get("payment_gateway_id");
+                $where["sops.payment_gateway_id"] = $this->input->get("payment_gateway_id");
             }
 
             if ($this->input->get("tel") != "") {
@@ -181,13 +128,11 @@ class Quick_search extends MY_Controller
             $sort = $this->input->get("sort");
             $order = $this->input->get("order");
 
-            $limit = $this->pagination_service->get_num_records_per_page();
+            $limit = '20';
 
-            $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-            $option["limit"] = $pconfig['per_page'] = $limit;
-            if ($option["limit"]) {
-                $option["offset"] = $this->input->get("per_page");
-            }
+            $option["limit"] = $limit;
+            $option["offset"] = $offset;
+
 
             if (empty($sort))
                 $sort = "so.so_no";
@@ -196,13 +141,16 @@ class Quick_search extends MY_Controller
                 $order = "asc";
 
             $option["orderby"] = $sort . " " . $order;
-            $data["result"] = $this->quick_search_model->search_order($where, $option);
-            $data["total"] = $this->quick_search_model->search_order($where, array("num_rows" => 1));
+            $data["result"] = $this->sc['So']->orderQuickSearch($where, $option);
+            $data["total"] = $this->sc['So']->orderQuickSearch($where, ["num_rows" => 1]);
 
 
-            $pconfig['total_rows'] = $data['total'];
-            $this->pagination_service->initialize($pconfig);
-            $this->pagination_service->set_show_count_tag(TRUE);
+            $config['base_url'] = base_url('cs/quick_search/index');
+            $config['total_rows'] = $data["total"];
+            $config['per_page'] = $limit;
+
+            $this->pagination->initialize($config);
+            $data['links'] = $this->pagination->create_links();
 
             $data["notice"] = notice($lang);
             $data["search"] = $search;
@@ -217,14 +165,14 @@ class Quick_search extends MY_Controller
         $data["display_finance_ship_date"] = false;
         if ($data["result"]) {
             $objectResult = (array)$data["result"];
-            $data["display_finance_ship_date"] = array();
+            $data["display_finance_ship_date"] = [];
             for ($i = 0; $i < sizeof($objectResult); $i++) {
                 $soResult = $objectResult[$i];
-                $data["display_finance_ship_date"][$soResult->get_so_no()] = (check_finance_role() && ($soResult->get_status() >= 5) && ($soResult->get_dispatch_date() != "") && ($soResult->get_dispatch_date() != null));
+                $data["display_finance_ship_date"][$soResult->getSoNo()] = (check_finance_role() && ($soResult->getStatus() >= 5) && ($soResult->getDispatchDate() != "") && ($soResult->getDispatchDate() != null));
             }
         }
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
         $data["app_id"] = $this->getAppId();
         $this->load->view('cs/quick_search/index', $data);
@@ -235,33 +183,28 @@ class Quick_search extends MY_Controller
         return $this->appId;
     }
 
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
-    }
-
     public function print_invoice()
     {
-        $data = array();
+        $data = [];
         if ($this->input->post('print_invoice') == 1) {
-            $data["invoice_content"] = $this->quick_search_model->get_invoice_content($this->input->post('order_no'));
+            $data["invoice_content"] = $this->sc['So']->getInvoiceContent($this->input->post('order_no'));
         }
 
         $this->load->view("cs/quick_search/invoice", $data);
     }
 
-    public function view($order_no, $viewtype = "")
+    public function view($order_no = "", $viewtype = "")
     {
         if (check_app_feature_access_right($this->getAppId(), 'CS000102_deactivate_client') === TRUE && $this->input->post('action') == 'deactivate_client') {
-            $client_ids = $this->quick_search_model->so_service->get_dao()->get_distinct_client_id_list(array('so_no' => $order_no));
+            $client_ids = $this->sc['So']->getDao('So')->getDistinctClientIdList(['so_no' => $order_no]);
 
-            if (!empty($client_ids[0]) && ($client = $this->quick_search_model->get_client(array('id' => $client_ids[0]))) != null) {
-                $client_email = $client->get_email();
+            if (!empty($client_ids[0]) && ($client = $this->sc['Client']->getDao('Client')->get(['id' => $client_ids[0]])) != null) {
+                $client_email = $client->getEmail();
 
-                $client->set_email($client_email . 'deactivate');
-                $client->set_status(0);
+                $client->setEmail($client_email . 'deactivate');
+                $client->setStatus(0);
 
-                if (($res = $this->quick_search_model->update_client($client)) !== FALSE) {
+                if (($res = $this->sc['Client']->getDao('Client')->update($client)) !== FALSE) {
                     mail('ming@valuebasket.com', '[VB] Client - ' . $client_email . ' is inactivate', 'Please inactivate ' . $client_email, "From: admin@valuebasket.com\r\n");
                 }
                 $_SESSION['NOTICE'] = ($res !== FALSE) ? 'client_account_deactivated' : $this->db->_error_message();
@@ -272,67 +215,57 @@ class Quick_search extends MY_Controller
         }
 
         if ($this->input->post('addnote') == 1) {
-            $obj = $this->quick_search_model->get_order_notes();
-            $obj->set_so_no($order_no);
-            $obj->set_type('O');
-            $obj->set_note($this->input->post('note'));
-
-            $ret = $this->quick_search_model->add_notes($obj);
-
-            if ($ret === FALSE) {
-                $_SESSION["NOTICE"] = "add_note_failed";
-            }
-
+            $this->sc['QuickSearch']->saveOrderNotes($order_no, $this->input->post('note'));
             Redirect(base_url() . "cs/quick_search/view/" . $order_no . "/" . $viewtype);
         }
 
         if (($this->input->post('ca') == 1) && (check_app_feature_access_right($this->getAppId(), "CS000102_change_delivery_addr"))) {
-            $obj = $this->quick_search_model->get(array("so_no" => $order_no));
+            $obj = $this->sc['So']->getDao('So')->get(["so_no" => $order_no]);
             if (!$obj) {
                 $_SESSION["NOTICE"] = $this->db->_error_message();
             } else {
 
-                $obj->set_delivery_name($this->input->post("dname"));
-                $obj->set_delivery_company($this->input->post("dcomp"));
-                $obj->set_delivery_address($this->input->post("daddr1") . "|" . $this->input->post("daddr2") . "|" . $this->input->post("daddr3"));
-                $obj->set_delivery_city($this->input->post("dcity"));
-                $obj->set_delivery_state($this->input->post("dstate"));
-                $obj->set_delivery_postcode($this->input->post("dpostcode"));
-                $obj->set_delivery_country_id($this->input->post("dcountry"));
+                $obj->setDeliveryName($this->input->post("dname"));
+                $obj->setDeliveryCompany($this->input->post("dcomp"));
+                $obj->setDeliveryAddress($this->input->post("daddr1") . "|" . $this->input->post("daddr2") . "|" . $this->input->post("daddr3"));
+                $obj->setDeliveryCity($this->input->post("dcity"));
+                $obj->setDeliveryState($this->input->post("dstate"));
+                $obj->setDeliveryPostcode($this->input->post("dpostcode"));
+                $obj->setDeliveryCountryId($this->input->post("dcountry"));
 
-                $ret = $this->quick_search_model->update_so($obj);
+                $ret = $this->sc['So']->getDao('So')->update($obj);
                 if ($ret !== FALSE) {
-                    $obj = $this->quick_search_model->get_order_notes();
-                    $obj->set_so_no($order_no);
-                    $obj->set_type('O');
-                    $obj->set_note("Delivery Address Updated");
+                    $obj = $this->sc['QuickSearch']->getOrderNotes();
+                    $obj->setSoNo($order_no);
+                    $obj->setType('O');
+                    $obj->setNote("Delivery Address Updated");
 
-                    $ret = $this->quick_search_model->add_notes($obj);
+                    $ret = $this->sc['So']->getDao('OrderNotes')->insert($obj);
 
                     if ($ret === FALSE) {
                         $_SESSION["NOTICE"] = "add_note_failed";
                     } else {
                         // if have split child, then duplicate the changed delivery address
-                        if ($split_child_list = $this->so_service->get_dao()->get_list(array("split_so_group" => $order_no, "status != 0" => NULL))) {
+                        if ($split_child_list = $this->sc['So']->getDao('So')->getList(["split_so_group" => $order_no, "status != 0" => NULL])) {
                             $error_mssage = "";
                             foreach ($split_child_list as $key => $childobj) {
-                                $child_so_no = $childobj->get_so_no();
-                                $childobj->set_delivery_name($this->input->post("dname"));
-                                $childobj->set_delivery_company($this->input->post("dcomp"));
-                                $childobj->set_delivery_address($this->input->post("daddr1") . "|" . $this->input->post("daddr2") . "|" . $this->input->post("daddr3"));
-                                $childobj->set_delivery_city($this->input->post("dcity"));
-                                $childobj->set_delivery_state($this->input->post("dstate"));
-                                $childobj->set_delivery_postcode($this->input->post("dpostcode"));
-                                $childobj->set_delivery_country_id($this->input->post("dcountry"));
+                                $child_so_no = $childobj->getSoNo();
+                                $childobj->setDeliveryName($this->input->post("dname"));
+                                $childobj->setDeliveryCompany($this->input->post("dcomp"));
+                                $childobj->setDeliveryAddress($this->input->post("daddr1") . "|" . $this->input->post("daddr2") . "|" . $this->input->post("daddr3"));
+                                $childobj->setDeliveryCity($this->input->post("dcity"));
+                                $childobj->setDeliveryState($this->input->post("dstate"));
+                                $childobj->setDeliveryPostcode($this->input->post("dpostcode"));
+                                $childobj->setDeliveryCountryId($this->input->post("dcountry"));
 
-                                $childret = $this->quick_search_model->update_so($childobj);
+                                $childret = $this->sc['So']->getDao('So')->update($childobj);
                                 if ($childret !== FALSE) {
-                                    $child_ordernotes_obj = $this->quick_search_model->get_order_notes();
-                                    $child_ordernotes_obj->set_so_no($child_so_no);
-                                    $child_ordernotes_obj->set_type('O');
-                                    $child_ordernotes_obj->set_note("Delivery Address Updated");
+                                    $child_ordernotes_obj = $this->sc['QuickSearch']->getOrderNotes();
+                                    $child_ordernotes_obj->setSoNo($child_so_no);
+                                    $child_ordernotes_obj->setType('O');
+                                    $child_ordernotes_obj->setNote("Delivery Address Updated");
 
-                                    $childnotesret = $this->quick_search_model->add_notes($child_ordernotes_obj);
+                                    $childnotesret = $this->sc['So']->getDao('OrderNotes')->insert($child_ordernotes_obj);
                                     if ($childnotesret === FALSE) {
                                         $error_mssage .= "add_note_failed for child $child_so_no \n";
                                     }
@@ -357,99 +290,86 @@ class Quick_search extends MY_Controller
 
         $sub_app_id = $this->getAppId() . "02";
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
-        $temp_obj = $this->quick_search_model->search_order(array("so.so_no" => $order_no), array("detail" => 1, "limit" => 1, "so_no" => $order_no));
+        $temp_obj = $this->sc['So']->orderQuickSearch(["so.so_no" => $order_no], ["detail" => 1, "limit" => 1, "so_no" => $order_no]);
 
         foreach ($temp_obj as $obj) {
             $order_obj = $obj;
         }
 
         $data["order_obj"] = $order_obj;
-        $data["so_obj"] = $this->quick_search_model->get(array("so_no" => $order_no));
-        $data["status"] = $this->quick_search_model->get_order_status($data["so_obj"]);
+        $data["so_obj"] = $this->sc['So']->getDao('So')->get(["so_no" => $order_no]);
+        $data["status"] = $this->sc['soModel']->getOrderStatus($data["so_obj"]);
 
         // if this is a split child, redirect to the parent split order
-        $split_so_group = $data["so_obj"]->get_split_so_group();
-        if (isset($split_so_group) && ($split_so_group != $order_no))
-            Redirect(base_url() . "cs/quick_search/view/" . $data["so_obj"]->get_split_so_group() . "/" . $viewtype);
+        $split_so_group = $data["so_obj"]->getSplitSoGroup();
+
+        if (isset($split_so_group) && ($split_so_group != $order_no)) {
+            Redirect(base_url() . "cs/quick_search/view/" . $data["so_obj"]->getSplitSoGroup() . "/" . $viewtype);
+        }
 
         //by Nero
-
-        //var_dump($obj);die();
-        $sosh_obj = $this->quick_search_model->so_service->get_shipping_info(array("soal.so_no" => $order_no));
-        $result = $this->aftership_service->get_dynamic_shipment_status($data["so_obj"]->get_so_no());
+        $sosh_obj = $this->sc['So']->getShippingInfo(["soal.so_no" => $order_no]);
+        $result = $this->sc['Aftership']->getDynamicShipmentStatus($data["so_obj"]->getSoNo());
         $dynamic_tag = "";
         $retry_api = 0;
-        // Change by Jerry, Not using Dynamic Tag anymore
-        // if($result)
-        // {
-        //  $dynamic_tag = $result["status"];
-        //  $retry_api =  $result["retry"];
-        // }
-
-        // if($lang[$dynamic_tag."_status"])
-        // {
-        //  $data["status"]["status"] = $lang[$dynamic_tag."_status"];
-        //  if($lang[$dynamic_tag."_desc"])
-        //  {
-        //      $data["status"]["desc"] = $lang[$dynamic_tag."_desc"];
-        //  }
-        // }
 
         $data["status"]["status"] = $lang[$data["status"]['id'] . "_status"];
         $data["status"]["desc"] = $lang[$data["status"]['id'] . "_desc"];
 
-        $data["so_extend_obj"] = $this->quick_search_model->so_service->get_soext_dao()->get_so_ext_w_reason(array("so_no" => $order_no), array("limit" => 1));
-        $data["socc_obj"] = $this->quick_search_model->so_service->get_socc_dao()->get(array("so_no" => $order_no));
-        $data["client_obj"] = $this->quick_search_model->get_client(array("id" => $order_obj->get_client_id()));
-        $data["item_list"] = $this->quick_search_model->get_ordered_item(array("so_no" => $order_no));
-        $data["item_profit"] = $this->quick_search_model->so_service->get_soid_dao()->get_list_w_prodname(array("soid.so_no" => $order_no), array("limit" => -1));
-        $data["order_note"] = $this->quick_search_model->get_order_notes(array("so_no" => $order_no, "type" => "O"));
-        $data["history_obj"] = $this->quick_search_model->get_order_history(array("so_no" => $order_no));
-        $scores = $this->quick_search_model->get_priority_score($order_no, $data["so_obj"]->get_biz_type());
+        $data["so_extend_obj"] = $this->sc['So']->getDao('SoExtend')->getSoExtWithReason(["so_no" => $order_no], ["limit" => 1]);
+        $data["socc_obj"] = $this->sc['So']->getDao('SoCreditChk')->get(["so_no" => $order_no]);
+        $data["client_obj"] = $this->sc['Client']->getDao('Client')->get(["id" => $order_obj->getClientId()]);
+        $data["item_list"] = $this->sc['So']->getDao('SoItem')->getList(["so_no" => $order_no]);
+        $data["item_profit"] = $this->sc['So']->getDao('SoItemDetail')->getListWithProdname(["soid.so_no" => $order_no], ["limit" => -1]);
+        $data["order_note"] = $this->sc['QuickSearch']->getOrderNotes(["so_no" => $order_no, "type" => "O"]);
+        $data["history_obj"] = $this->sc['QuickSearch']->getOrderHistory(["so_no" => $order_no]);
+        $scores = $this->sc['QuickSearch']->getPriorityScore($order_no, $data["so_obj"]->getBizType());
         $data["priority_score"] = $scores['score'];
         $data["priority_score_highlight"] = $scores["highlight"];
+        $data["sops_last_modify"] = $this->sc['SoPriorityScore']->getDao('SoPriorityScore')->get(["so_no" => $order_no, "status" => 1]);
+        $data["sops_history_obj"] = $this->sc['SoPriorityScore']->getPriorityScoreHistoryList(["so_no" => $order_no, "score !=" => $data["priority_score"]], ["orderby" => "id desc", "limit" => 1]);
 
-        $data["sops_last_modify"] = $this->quick_search_model->get_priority_score_obj($order_no);
-        $data["sops_history_obj"] = $this->quick_search_model->get_priority_score_history_list(array("so_no" => $order_no, "score !=" => $data["priority_score"]), array("orderby" => "id desc", "limit" => 1));
+        #       SBF #2250 insert history of agents changing order score
+        $data["sops_history_obj_list"] = $this->sc['SoPriorityScore']->getPriorityScoreHistoryList(["so_no" => $order_no], ["orderby" => "id desc"]);
 
-#       SBF #2250 insert history of agents changing order score
-        $data["sops_history_obj_list"] = $this->quick_search_model->get_priority_score_history_list(array("so_no" => $order_no), array("orderby" => "id desc"));
-
-        if ($data["sops_obj"] = $this->so_service->get_sops_dao()->get(array("so_no" => $order_no))) {
-            $data["rr_obj"] = $this->so_service->get_rr_dao()->get(array("payment_gateway_id" => $data["sops_obj"]->get_payment_gateway_id(), "risk_ref" => $data["sops_obj"]->get_risk_ref1()));
-            if ($data["sops_obj"]->get_payment_gateway_id() != "paypal") {
-                $data["pmgw_card_obj"] = $this->quick_search_service->get_pmgw_card_dao()->get(array("payment_gateway_id" => $data["sops_obj"]->get_payment_gateway_id(), "card_id" => $data["sops_obj"]->get_card_id()));
+        if ($data["sops_obj"] = $this->sc['So']->getDao('SoPaymentStatus')->get(["so_no" => $order_no])) {
+            $data["rr_obj"] = $this->sc['So']->getDao('RiskRef')->get(["payment_gateway_id" => $data["sops_obj"]->getPaymentGatewayId(), "risk_ref" => $data["sops_obj"]->getRiskRef1()]);
+            if ($data["sops_obj"]->getPaymentGatewayId() != "paypal") {
+                $data["pmgw_card_obj"] = $this->sc['QuickSearch']->getDao('PmgwCard')->get(["payment_gateway_id" => $data["sops_obj"]->getPaymentGatewayId(), "card_id" => $data["sops_obj"]->getCardId()]);
             }
-            $data["result_remark"] = $data["sops_obj"]->get_remark();
-        } else
+            $data["result_remark"] = $data["sops_obj"]->getRemark();
+        } else {
             $data["result_remark"] = "";
+        }
 
-        if ($order_obj->get_payment_gateway_id() == "inpendium_ctpe") {
+        if ($order_obj->getPaymentGatewayId() == "inpendium_ctpe") {
             $result_arr = parse_ini_file(APPPATH . "/libraries/service/ctpe/resultcodes.ini");
-            $extract_inpendium_result = explode('|', $data["sops_obj"]->get_remark());
+            $extract_inpendium_result = explode('|', $data["sops_obj"]->getRemark());
 
             if (sizeof($extract_inpendium_result) > 0) {
                 $data["inpendium_result"]['result'] = $result_arr[$extract_inpendium_result[0]];
                 $data["result_remark"] .= " " . $data["inpendium_result"]['result'];
             }
-            if ($data["sops_obj"]->get_risk_ref3()) {
-                $extract_3d_inpendium_result = explode('|', $data["sops_obj"]->get_risk_ref3());
+            if ($data["sops_obj"]->getRiskRef3()) {
+                $extract_3d_inpendium_result = explode('|', $data["sops_obj"]->getRiskRef3());
                 if (sizeof($extract_3d_inpendium_result) > 0) {
                     $data["inpendium_result"]['3d'] = $result_arr[$extract_3d_inpendium_result[0]];
                 }
-            } else
+            } else {
                 $data["inpendium_result"]['3d'] = "";
+            }
         }
+
         $item_website_status_when_order = "";
         $current_item_edd = "";
         foreach ($data["item_list"] as $item) {
-            $item_website_status_when_order = $data["lang"][$item->get_website_status()];
-            if (($item->get_website_status() == "P") || ($item->get_website_status() == "A")) {
-                $product_obj = $this->quick_search_model->so_service->get_prod_srv()->get(array("sku" => $item->get_prod_sku()));
-                $current_item_edd = $product_obj->get_expected_delivery_date();
+            $item_website_status_when_order = $data["lang"][$item->getWebsiteStatus()];
+            if (($item->getWebsiteStatus() == "P") || ($item->getWebsiteStatus() == "A")) {
+                $product_obj = $this->sc['Product']->getDao('Product')->get(["sku" => $item->getProdSku()]);
+                $current_item_edd = $product_obj->getExpectedDeliveryDate();
                 break;
             }
         }
@@ -458,10 +378,10 @@ class Quick_search extends MY_Controller
         $total_gst = 0;
         foreach ($data["item_profit"] as $value) {
             // var_dump($value);
-            $individual_sku = $value->get_item_sku();
-            $profit[$individual_sku] = $value->get_profit() * $value->get_qty();
-            $margin[$individual_sku] = $value->get_margin();
-            $gst_total[$individual_sku] = $value->get_gst_total();
+            $individual_sku = $value->getItemSku();
+            $profit[$individual_sku] = $value->getProfit() * $value->getQty();
+            $margin[$individual_sku] = $value->getMargin();
+            $gst_total[$individual_sku] = $value->getGstTotal();
 
             $total_profit += $profit[$individual_sku];
             $total_gst += $gst_total[$individual_sku];
@@ -469,82 +389,75 @@ class Quick_search extends MY_Controller
 
         $data["total_profit"] = $total_profit;
         $data["total_gst"] = $total_gst;
-
         $data["item_profit"] = $profit;
         $data["item_margin"] = $margin;
         $data["item_gst_total"] = $gst_total;
-
-//          $data["expected_delivery_date"] = $order_obj->get_expect_delivery_date() . (($current_item_edd != "") ? " (Current EDD: " . $current_item_edd . ")" : "");
         $data["website_status"] = $item_website_status_when_order;
-        include_once(APPPATH . "libraries/service/payment_gateway_redirect_cybersource_service.php");
-        $data["sor_obj"] = $this->quick_search_model->so_service->get_sor_dao()->get(array("so_no" => $order_no));
-        $cybs = new Payment_gateway_redirect_cybersource_service();
+        $data["sor_obj"] = $this->sc['So']->getDao('SoRisk')->get(["so_no" => $order_no]);
+
+        $cybs = $this->sc['PaymentGatewayRedirectCybersource'];
         if ($data["sor_obj"]) {
-            $data["risk1"] = $cybs->risk_indictor_risk1($data["sor_obj"]->get_risk_var1());
-            $data["risk2"] = $cybs->risk_indictor_avs_risk2($data["sor_obj"]->get_risk_var2());
-            $data["risk3"] = $cybs->risk_indictor_cvn_risk3($data["sor_obj"]->get_risk_var3());
-            $data["risk4"] = $cybs->risk_indictor_afs_factor_risk4($data["sor_obj"]->get_risk_var4());
-            $data["risk5"] = $cybs->risk_indictor_score_risk5($data["sor_obj"]->get_risk_var5());
-            $data["risk6"] = $cybs->risk_indictor_suspicious_risk6($data["sor_obj"]->get_risk_var6());
-            $data["risk7"] = $cybs->risk_indictor_velocity_risk7($data["sor_obj"]->get_risk_var7());
-            $data["risk8"] = $cybs->risk_indictor_internet_risk8($data["sor_obj"]->get_risk_var8());
-            $data["risk9"] = array(0 => array("style" => "normal", "value" => $data["sor_obj"]->get_risk_var9()));
+            $data["risk1"] = $cybs->riskIndictorRisk1($data["sor_obj"]->getRiskVar1());
+            $data["risk2"] = $cybs->riskIndictorAvsRisk2($data["sor_obj"]->getRiskVar2());
+            $data["risk3"] = $cybs->riskIndictorCvnRisk3($data["sor_obj"]->getRiskVar3());
+            $data["risk4"] = $cybs->riskIndictorAfsFactorRisk4($data["sor_obj"]->getRiskVar4());
+            $data["risk5"] = $cybs->riskIndictorScoreRisk5($data["sor_obj"]->getRiskVar5());
+            $data["risk6"] = $cybs->riskIndictorSuspiciousRisk6($data["sor_obj"]->getRiskVar6());
+            $data["risk7"] = $cybs->riskIndictorVelocityRisk7($data["sor_obj"]->getRiskVar7());
+            $data["risk8"] = $cybs->riskIndictorInternetRisk8($data["sor_obj"]->getRiskVar8());
+            $data["risk9"] = [0 => ["style" => "normal", "value" => $data["sor_obj"]->getRiskVar9()]];
         }
-//      var_dump($data["sor_obj"]);
-        $data["refund_history"] = $this->quick_search_model->get_refund_history($order_no);
+
+        $data["refund_history"] = $this->sc['Refund']->getRefundForOrderDetail($order_no);
         $data["viewtype"] = $viewtype;
-        $data["country_list"] = $this->quick_search_model->get_country_code();
-        $data["hold_history"] = $this->quick_search_model->get_hold_history($order_no);
-        $data["del_opt_list"] = end($this->delivery_option_service->get_list_w_key(array("lang_id" => "en")));
+        $data["country_list"] = $this->sc['Country']->getDao('Country')->getList([], ["limit" => "-1"]);
+        $data["hold_history"] = $this->sc['So']->getHoldHistory($order_no);
+        $data["del_opt_list"] = end($this->sc['DeliveryOption']->getListWithKey(["lang_id" => "en"]));
         $data["notice"] = notice($lang);
         $data["app_id"] = $this->getAppId();
 
         #sbf 2607
-        if ($sorf_obj = $this->quick_search_model->get_refund_score_vo($order_no)) {
-            $data["refund_score"] = $sorf_obj->get_score();
-            $data["sorf_history_obj_list"] = $this->quick_search_model->get_refund_score_history_list(array("so_no" => $order_no), array("orderby" => "id desc"));
-            $data["sorf_history_last_obj"] = $this->quick_search_model->get_refund_score_history_list(array("so_no" => $order_no, "score !=" => $data["refund_score"]), array("orderby" => "id desc", "limit" => 1));
-
+        if ($sorf_obj = $this->sc['SoRefundScore']->getRefundScoreVo($order_no)) {
+            $data["refund_score"] = $sorf_obj->getScore();
+            $data["sorf_history_obj_list"] = $this->sc['SoRefundScore']->getRefundScoreHistoryList(["so_no" => $order_no], ["orderby" => "id desc"]);
+            $data["sorf_history_last_obj"] = $this->sc['SoRefundScore']->getRefundScoreHistoryList(["so_no" => $order_no, "score !=" => $data["refund_score"]], ["orderby" => "id desc", "limit" => 1]);
         } else {
             $data["refund_score"] = null;
         }
 
-        $data["so_list"] = $this->quick_search_model->prepareLinkedOrders($data["so_obj"]);
+        $data["so_list"] = $this->sc['QuickSearch']->prepareLinkedOrders($data["so_obj"]);
 
-        if ($data["so_obj"]->get_hold_status() == 15) {
-            if ($split_child_list = $this->so_service->get_dao()->get_list(array("split_so_group" => $order_no, "status != 0" => NULL))) {
-                $data["child"] = $this->_prepareSplitChild((array)$split_child_list);
+        if ($data["so_obj"]->getHoldStatus() == 15) {
+            if ($split_child_list = $this->sc['So']->getDao('So')->getList(["split_so_group" => $order_no, "status != 0" => NULL])) {
+                $data["child"] = $this->prepareSplitChild((array)$split_child_list);
             }
         }
-        $data["base_split_url"] = base_url() . "cs/quick_search/process_split/";
 
-        #INSERT INTO `application_feature` (`feature_name`) VALUES ('CS000102_release_button')
-        #INSERT INTO `application_feature_right` (`app_id`, `app_feature_id`, `role_id`, `status`) VALUES ('CS0001', '20', 'cs_ext_man', '1');
+        $data["base_split_url"] = base_url() . "cs/quick_search/process_split/";
         $data["allow_release"] = check_app_feature_access_right($this->getAppId(), "CS000102_release_button");
         $data["allow_split"] = check_app_feature_access_right($this->getAppId(), "CS000102_process_split_order");
-        //echo $this->db->Last_query();die();
-        $data["release_history"] = $this->quick_search_model->get_release_order_history_list(array("so_no" => $order_no), array("orderby" => "modify_on desc"));
+        $data["release_history"] = $this->sc['So']->getDao('SoReleaseOrder')->getList(["so_no" => $order_no], ["orderby" => "modify_on desc"]);
         $this->load->view('cs/quick_search/view_detail', $data);
     }
 
-    private function _prepareSplitChild($split_child_list = array())
+    private function prepareSplitChild($split_child_list = [])
     {
-        $child = array();
+        $child = [];
         if (!empty($split_child_list)) {
             foreach ($split_child_list as $key => $child_so_obj) {
-                $child_so_no = $child_so_obj->get_so_no();
-                $temp_child_obj = $this->quick_search_model->search_order(array("so.so_no" => $child_so_no), array("detail" => 1, "limit" => 1, "so_no" => $child_so_no));
+                $child_so_no = $child_so_obj->getSoNo();
+                $temp_child_obj = $this->sc['So']->orderQuickSearch(["so.so_no" => $child_so_no], ["detail" => 1, "limit" => 1, "so_no" => $child_so_no]);
                 $child[$child_so_no]["order_obj"] = $order_obj = $temp_child_obj[0];
 
                 $courier = "<i>Not Yet Shipped</i>";
                 $tracking_no = "<i>Not Yet Shipped</i>";
                 $packed_on = "<i>Not Yet Shipped</i>";
                 $shipped_on = "<i>Not Yet Shipped</i>";
-                if ($order_obj->get_dispatch_date()) {
-                    $shipped_on = $order_obj->get_dispatch_date();
+                if ($order_obj->getDispatchDate()) {
+                    $shipped_on = $order_obj->getDispatchDate();
                 }
-                if ($order_obj->get_tracking_no()) {
-                    $tmp = explode("||", $order_obj->get_tracking_no());
+                if ($order_obj->getTrackingNo()) {
+                    $tmp = explode("||", $order_obj->getTrackingNo());
                     $tmp2 = explode("::", $tmp[0]);
 
 
@@ -563,10 +476,10 @@ class Quick_search extends MY_Controller
                 $child[$child_so_no]["shipped_on"] = $shipped_on;
 
                 $child[$child_so_no]["so_obj"] = $child_so_obj;
-                $child[$child_so_no]["status"] = $this->quick_search_model->get_order_status($child_so_obj);
+                $child[$child_so_no]["status"] = $this->sc['soModel']->getOrderStatus($child_so_obj);
 
-                $sosh_obj = $this->quick_search_model->so_service->get_shipping_info(array("soal.so_no" => $child_so_no));
-                $result = $this->aftership_service->get_dynamic_shipment_status($child[$child_so_no]["so_obj"]->get_so_no());
+                $sosh_obj = $this->sc['So']->getShippingInfo(["soal.so_no" => $child_so_no]);
+                $result = $this->sc['Aftership']->getDynamicShipmentStatus($child[$child_so_no]["so_obj"]->getSoNo());
                 $dynamic_tag = "";
                 $retry_api = 0;
                 if ($result) {
@@ -581,25 +494,25 @@ class Quick_search extends MY_Controller
                     }
                 }
 
-                $child[$child_so_no]["so_extend_obj"] = $this->quick_search_model->so_service->get_soext_dao()->get_so_ext_w_reason(array("so_no" => $child_so_no), array("limit" => 1));
-                $child[$child_so_no]["socc_obj"] = $this->quick_search_model->so_service->get_socc_dao()->get(array("so_no" => $child_so_no));
-                $child[$child_so_no]["item_list"] = $this->quick_search_model->get_ordered_item(array("so_no" => $child_so_no));
-                $child[$child_so_no]["order_note"] = $this->quick_search_model->get_order_notes(array("so_no" => $child_so_no, "type" => "O"));
-                $child[$child_so_no]["history_obj"] = $this->quick_search_model->get_order_history(array("so_no" => $child_so_no));
-                $scores = $this->quick_search_model->get_priority_score($child_so_no, $child[$child_so_no]["so_obj"]->get_biz_type());
+                $child[$child_so_no]["so_extend_obj"] = $this->sc['So']->getDao('SoExtend')->getSoExtWithReason(["so_no" => $child_so_no], ["limit" => 1]);
+                $child[$child_so_no]["socc_obj"] = $this->sc['So']->getDao('SoCreditChk')->get(["so_no" => $child_so_no]);
+                $child[$child_so_no]["item_list"] = $this->sc['So']->getDao('SoItem')->getList(["so_no" => $child_so_no]);
+                $child[$child_so_no]["order_note"] = $this->sc['QuickSearch']->getOrderNotes(["so_no" => $child_so_no, "type" => "O"]);
+                $child[$child_so_no]["history_obj"] = $this->sc['QuickSearch']->getOrderHistory(["so_no" => $child_so_no]);
+                $scores = $this->sc['QuickSearch']->getPriorityScore($child_so_no, $child[$child_so_no]["so_obj"]->getBizType());
                 $child[$child_so_no]["priority_score"] = $scores['score'];
                 $child[$child_so_no]["priority_score_highlight"] = $scores["highlight"];
-                $child[$child_so_no]["sops_last_modify"] = $this->quick_search_model->get_priority_score_obj($child_so_no);
-                $child[$child_so_no]["sops_history_obj"] = $this->quick_search_model->get_priority_score_history_list(array("so_no" => $child_so_no, "score !=" => $child[$child_so_no]["priority_score"]), array("orderby" => "id desc", "limit" => 1));
+                $child[$child_so_no]["sops_last_modify"] = $this->sc['SoPriorityScore']->getDao('SoPriorityScore')->get(["so_no" => $child_so_no, "status" => 1]);
+                $child[$child_so_no]["sops_history_obj"] = $this->sc['SoPriorityScore']->getPriorityScoreHistoryList(["so_no" => $child_so_no, "score !=" => $child[$child_so_no]["priority_score"]], ["orderby" => "id desc", "limit" => 1]);
 
-                $child[$child_so_no]["sops_history_obj_list"] = $this->quick_search_model->get_priority_score_history_list(array("so_no" => $child_so_no), array("orderby" => "id desc"));
-                $child[$child_so_no]["refund_history"] = $this->quick_search_model->get_refund_history($child_so_no);
-                $child[$child_so_no]["hold_history"] = $this->quick_search_model->get_hold_history($child_so_no);
+                $child[$child_so_no]["sops_history_obj_list"] = $this->sc['SoPriorityScore']->getPriorityScoreHistoryList(["so_no" => $child_so_no], ["orderby" => "id desc"]);
+                $child[$child_so_no]["refund_history"] = $this->sc['Refund']->getRefundForOrderDetail($child_so_no);
+                $child[$child_so_no]["hold_history"] = $this->sc['So']->getHoldHistory($child_so_no);
 
-                if ($sorf_obj = $this->quick_search_model->get_refund_score_vo($child_so_no)) {
-                    $child[$child_so_no]["refund_score"] = $sorf_obj->get_score();
-                    $child[$child_so_no]["sorf_history_obj_list"] = $this->quick_search_model->get_refund_score_history_list(array("so_no" => $child_so_no), array("orderby" => "id desc"));
-                    $child[$child_so_no]["sorf_history_last_obj"] = $this->quick_search_model->get_refund_score_history_list(array("so_no" => $child_so_no, "score !=" => $child[$child_so_no]["refund_score"]), array("orderby" => "id desc", "limit" => 1));
+                if ($sorf_obj = $this->sc['SoRefundScore']->getRefundScoreVo($child_so_no)) {
+                    $child[$child_so_no]["refund_score"] = $sorf_obj->getScore();
+                    $child[$child_so_no]["sorf_history_obj_list"] = $this->sc['SoRefundScore']->getRefundScoreHistoryList(["so_no" => $child_so_no], ["orderby" => "id desc"]);
+                    $child[$child_so_no]["sorf_history_last_obj"] = $this->sc['SoRefundScore']->getRefundScoreHistoryList(["so_no" => $child_so_no, "score !=" => $child[$child_so_no]["refund_score"]], ["orderby" => "id desc", "limit" => 1]);
                 } else {
                     $child[$child_so_no]["refund_score"] = null;
                 }
@@ -624,10 +537,10 @@ class Quick_search extends MY_Controller
             }
 
             // generate logic of the furthest split available for this order
-            $group_result = $this->split_order_service->gen_split_order_logic($order_no);
+            $group_result = $this->sc['SplitOrder']->genSplitOrderLogic($order_no);
 
             if ($group_result["status"] === FALSE) {
-                $_SESSION["NOTICE"] = "gen_split_order_logic fail. Message: {$group_result["message"]}.";
+                $_SESSION["NOTICE"] = "genSplitOrderLogic fail. Message: {$group_result["message"]}.";
             } else {
                 if ($group = $group_result["group"]) {
                     if (count($group) <= 1)
@@ -635,7 +548,7 @@ class Quick_search extends MY_Controller
 
                     foreach ($group as $grpkey => $grparr) {
                         $mainprod_sku = $grparr["sku"];
-                        $mainprodarr = $this->build_split_order_item_info($order_no, $mainprod_sku, "MAIN");
+                        $mainprodarr = $this->buildSplitOrderItemInfo($order_no, $mainprod_sku, "MAIN");
                         $mainprodarr["main_ca_uid"] = "$mainprod_sku::$grpkey";
 
                         # the unique ID that ties the CAs with this mainprod SKU. Pass it into the form so that link isn't broken after user change group
@@ -643,14 +556,14 @@ class Quick_search extends MY_Controller
 
                         if ($calist = $grparr["calist"]) {
                             foreach ($calist as $cakey => $ca_sku) {
-                                $ca_group = $this->build_split_order_item_info($order_no, $ca_sku, "CA");
+                                $ca_group = $this->buildSplitOrderItemInfo($order_no, $ca_sku, "CA");
                                 $ca_group["main_ca_uid"] = "$mainprod_sku::$grpkey";
                                 $order_group[$grpkey][] = $ca_group;
                             }
                         }
                         if ($ralist = $grparr["ralist"]) {
                             foreach ($ralist as $rakey => $ra_sku) {
-                                $ra_group = $this->build_split_order_item_info($order_no, $ra_sku, "RA");
+                                $ra_group = $this->buildSplitOrderItemInfo($order_no, $ra_sku, "RA");
                                 $order_group[$grpkey][] = $ra_group;
                             }
                         }
@@ -659,19 +572,18 @@ class Quick_search extends MY_Controller
                     // create HTML for each item row
                     $data["itemrow"] = $this->create_split_group_rows($order_no, $order_group, $reach_max_split);
                 }
-                // echo "<pre>"; var_dump($order_group);die();
             }
         }
 
-        $data["so_obj"] = $this->quick_search_model->so_service->get_dao()->get(array("so_no" => $order_no));
+        $data["so_obj"] = $this->sc['So']->getDao('So')->get(["so_no" => $order_no]);
 
         // the following are not allowed to split; we overwrite itemrow
         $quicksearchurl = base_url() . "cs/quick_search/view/$order_no";
-        if ($data["so_obj"]->get_hold_status() == 15) {
+        if ($data["so_obj"]->getHoldStatus() == 15) {
             $data["itemrow"] = "FORBIDDEN: THIS ORDER ALREADY CONTAINS SPLIT CHILD - <a href='$quicksearchurl'>$quicksearchurl</a><br><br>";
-        } elseif ($data["so_obj"]->get_hold_status() != 0 || $data["so_obj"]->get_refund_status() != 0 || $data["so_obj"]->get_status() < 3) {
+        } elseif ($data["so_obj"]->getHoldStatus() != 0 || $data["so_obj"]->getRefundStatus() != 0 || $data["so_obj"]->getStatus() < 3) {
             $data["itemrow"] = "FORBIDDEN: THIS ORDER IS / NOT CREDITCHECKED / ON HOLD / REFUND REQUEST - <a href='$quicksearchurl'>$quicksearchurl</a><br><br>";
-        } elseif (substr($data["so_obj"]->get_platform_id(), 0, 3) !== "WEB") {
+        } elseif (substr($data["so_obj"]->getPlatformId(), 0, 3) !== "WEB") {
             $data["itemrow"] = "FORBIDDEN: THIS IS MARKETPLACE ORDER - <a href='$quicksearchurl'>$quicksearchurl</a><br><br>";
         }
 
@@ -683,7 +595,7 @@ class Quick_search extends MY_Controller
     {
         $i = 0;
         $data = "";
-        $regroup = $order_group = array();
+        $regroup = $order_group = [];
         if ($postgroup = $_POST) {
             $order_no = $postgroup["so_no"];
             foreach ($postgroup["group"] as $row => $arr) {
@@ -722,7 +634,7 @@ class Quick_search extends MY_Controller
             return $data;
         } else {
 
-            $result = $this->quick_search_model->so_service->split_order_to_so($order_no, $order_group);
+            $result = $this->sc['So']->splitOrderToSo($order_no, $order_group);
             $_SESSION["NOTICE"] = $result["message"];
 
             if ($result["status"] === FALSE)
@@ -734,7 +646,7 @@ class Quick_search extends MY_Controller
         }
     }
 
-    private function create_split_group_rows($order_no, $order_group = array(), $reach_max_split = FALSE)
+    private function create_split_group_rows($order_no, $order_group = [], $reach_max_split = FALSE)
     {
         // construct html display
         $html = "";
@@ -838,22 +750,22 @@ html;
         return $html;
     }
 
-    private function build_split_order_item_info($order_no, $sku, $type = "MAIN")
+    private function buildSplitOrderItemInfo($order_no, $sku, $type = "MAIN")
     {
-        $iteminfo = array();
+        $iteminfo = [];
         $iteminfo["sku"] = $sku;
         $iteminfo["type"] = $type;
 
         # get supplier info
         $iteminfo["suppcountry"] = "";
-        if ($supplierinfo = $this->supplier_service->get_dao()->get_supplier($sku))
-            $iteminfo["suppcountry"] = $supplierinfo->get_origin_country();
+        if ($supplierinfo = $this->sc['So']->getDao('Supplier')->getSupplier($sku))
+            $iteminfo["suppcountry"] = $supplierinfo->getOriginCountry();
 
         # get prodict info
         $iteminfo["name"] = $iteminfo["slow_move_7_days"] = "";
-        if ($productinfo = $this->product_service->get_dao()->get(array("sku" => $sku))) {
-            $iteminfo["name"] = $productinfo->get_name();
-            $sourcingstatus = $productinfo->get_sourcing_status();
+        if ($productinfo = $this->sc['Product']->getDao('Product')->get(["sku" => $sku])) {
+            $iteminfo["name"] = $productinfo->getName();
+            $sourcingstatus = $productinfo->getSourcingStatus();
             switch ($sourcingstatus) {
                 case 'A':
                     $iteminfo["sourcingstatus"] = "Readily Available";
@@ -875,28 +787,26 @@ html;
                     $iteminfo["sourcingstatus"] = "";
                     break;
             }
-            $iteminfo["slow_move_7_days"] = $productinfo->get_slow_move_7_days();
-            $iteminfo["surplus"] = $productinfo->get_surplus_quantity();
+            $iteminfo["slow_move_7_days"] = $productinfo->getSlowMove7Days();
+            $iteminfo["surplus"] = $productinfo->getSurplusQuantity();
         }
 
         $iteminfo["mastersku"] = "";
-        if ($master_sku_obj = $this->product_service->get_master_sku(array("sku" => $sku, "ext_sys" => "WMS", "status" => 1))) {
-            $iteminfo["mastersku"] = $master_sku_obj->get_ext_sku();
+        if ($master_sku_obj = $this->sc['Product']->getDao('SkuMapping')->get(["sku" => $sku, "ext_sys" => "WMS", "status" => 1])) {
+            $iteminfo["mastersku"] = $master_sku_obj->getExtSku();
         }
 
         # get item_detail info
         $iteminfo["profit"] = $iteminfo["profit_raw"] = $iteminfo["margin"] = $iteminfo["profit_raw"] = "";
-        // if(count((array)$so_item_detail) > 0)
-        if ($so_item_detail = $this->quick_search_model->so_service->get_soid_dao()->get_list_w_prodname(array("soid.so_no" => $order_no, "soid.item_sku" => $sku))) {
+        if ($so_item_detail = $this->sc['So']->getDao('SoItemDetail')->getListWithProdname(["soid.so_no" => $order_no, "soid.item_sku" => $sku])) {
             foreach ($so_item_detail as $soid_obj) {
-                // $total_discount = $soid_obj->get_promo_disc_amt(); # total discount applied to this sku
-                $qty = $soid_obj->get_qty(); # total qty for this sku
-                $total_amount = $soid_obj->get_amount(); # total paid for this sku
+                $qty = $soid_obj->getQty(); # total qty for this sku
+                $total_amount = $soid_obj->getAmount(); # total paid for this sku
                 $iteminfo["unit_amt"] = number_format($total_amount / $qty, 2, '.', '');
-                $iteminfo["profit"] = $soid_obj->get_profit();
-                $iteminfo["profit_raw"] = $soid_obj->get_profit_raw();
-                $iteminfo["margin"] = $soid_obj->get_margin();
-                $iteminfo["margin_raw"] = $soid_obj->get_margin_raw();
+                $iteminfo["profit"] = $soid_obj->getProfit();
+                $iteminfo["profit_raw"] = $soid_obj->getProfitRaw();
+                $iteminfo["margin"] = $soid_obj->getMargin();
+                $iteminfo["margin_raw"] = $soid_obj->getMarginRaw();
                 break;
             }
         }
@@ -910,11 +820,11 @@ html;
         // this is for special cases where orders cannot be updated on marketplace, so we mark fulfill
         // and manually update on marketplace side.
 
-        $soext_dao = $this->quick_search_model->so_service->get_soext_dao();
+        $soext_dao = $this->sc['So']->getDao('SoExtend');
         $where["so_no"] = $so_no;
-        if ($so_extend_obj = $this->quick_search_model->so_service->get_soext_dao()->get($where)) {
-            if ($so_extend_obj->get_fulfilled() == "N") {
-                $so_extend_obj->set_fulfilled("Y");
+        if ($so_extend_obj = $this->sc['So']->getDao('SoExtend')->get($where)) {
+            if ($so_extend_obj->getFulfilled() == "N") {
+                $so_extend_obj->setFulfilled("Y");
                 if ($soext_dao->update($so_extend_obj) === FALSE) {
                     $_SESSION["NOTICE"] = "Cannot update so_extend as fulfilled. DB Error: " . $soext_dao->db->_error_message();
                 }
@@ -929,13 +839,13 @@ html;
 
     public function update_priority_score($so_no)
     {
-        $no = $this->quick_search_model->get_sops_history_number(array("so_no" => $so_no));
+        $no = $this->sc['SoPriorityScore']->getDao('SoPriorityScore')->getNumRows(["so_no" => $so_no]);
         if ($no == 0) {
-            $scores = $this->quick_search_model->get_priority_score($so_no, $_POST["biz_type"]);
+            $scores = $this->sc['QuickSearch']->getPriorityScore($so_no, $_POST["biz_type"]);
             $auto_score = $scores['score'];
-            $this->quick_search_model->insert_sops($so_no, $auto_score);
+            $this->sc['SoPriorityScore']->insertSops($so_no, $auto_score);
         }
-        $this->quick_search_model->update_sops($so_no, $_POST["priority_score"]);
+        $this->sc['SoPriorityScore']->updateSops($so_no, $_POST["priority_score"]);
         Redirect(base_url() . "cs/quick_search/view/" . $so_no);
     }
 
@@ -943,49 +853,21 @@ html;
     {
 
         $new_score = $_POST['new_refund_score'];
-        //var_dump($new_score);die();
-        if ($sorf_vo = $this->quick_search_model->get_refund_score_vo($so_no)) {
-            $current_score = $sorf_vo->get_score();
+        if ($sorf_vo = $this->sc['SoRefundScore']->getRefundScoreVo($so_no)) {
+            $current_score = $sorf_vo->getScore();
             if ($current_score == $new_score) {
                 Redirect(base_url() . "cs/quick_search/view/" . $so_no);
             }
-            if ($this->quick_search_model->update_refund_score($so_no, $new_score)) {
-                $this->quick_search_model->insert_refund_score_history($so_no, $new_score);
+            if ($this->$this->sc['SoRefundScore']->updateRefundScore($so_no, $new_score)) {
+                $this->sc['SoRefundScore']->insertRefundScoreHistory($so_no, $new_score);
             }
 
         } else {
-            if ($this->quick_search_model->insert_refund_score($so_no, $new_score)) {
-                $this->quick_search_model->insert_refund_score_history($so_no, $new_score);
+            if ($this->sc['SoRefundScore']->insertRefundScore($so_no, $new_score)) {
+                $this->sc['SoRefundScore']->insertRefundScoreHistory($so_no, $new_score);
             }
         }
         Redirect(base_url() . "cs/quick_search/view/" . $so_no);
     }
 
-    private function _prepareLinkedOrders($so_obj)
-    {
-        $where = array("status >=" => 1);
-        $option = array("limit" => -1, "orderby" => "so_no");
-        if (($so_obj->get_parent_so_no() != null) && ($so_obj->get_parent_so_no() != "")) {
-            $where["parent_so_no"] = $so_obj->get_parent_so_no();
-            $first_so = $this->so_model->so_service->get_dao()->get(array("so_no" => $so_obj->get_parent_so_no()));
-        } else {
-            $where["parent_so_no"] = $so_obj->get_so_no();
-        }
-        $so_list = $this->so_model->so_service->get_dao()->get_list($where, $option);
-
-        if ($first_so) {
-            if (sizeof((array)$so_list) > 0)
-                return array_merge(array(0 => $first_so), (array)$so_list);
-            else
-                return array();
-        } else {
-            if (sizeof((array)$so_list) > 0)
-                return array_merge(array(0 => $so_obj), (array)$so_list);
-            else
-                return array();
-        }
-    }
-
 }
-
-?>

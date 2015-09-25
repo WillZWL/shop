@@ -21,13 +21,13 @@ class OrderNotesDao extends BaseDao
         return $this->tableName;
     }
 
-    public function getListWithName($where, $classname = "Order_note_username_dto")
+    public function getListWithName($where, $classname = "OrderNoteUsernameDto")
     {
         $this->db->from('order_notes n');
         $this->db->join('user u', 'u.id = n.create_by', 'LEFT');
         $this->db->where($where);
         $this->db->select('n.note, n.create_on, COALESCE(u.username, n.create_by) AS username', FALSE);
-        $this->db->orderby('n.create_on DESC');
+        $this->db->order_by('n.create_on DESC');
 
         $rs = [];
 

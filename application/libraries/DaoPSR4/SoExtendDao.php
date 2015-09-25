@@ -21,12 +21,11 @@ class SoExtendDao extends BaseDao
         return $this->tableName;
     }
 
-    public function getSoExtWithReason($where = [], $option = [], $classname = 'so_ext_w_reason_dto')
+    public function getSoExtWithReason($where = [], $option = [], $classname = 'SoExtWithReasonDto')
     {
         $this->db->from("so_extend soex");
         $this->db->join('order_reason ore', 'ore.reason_id = soex.order_reason', 'LEFT');
         $this->db->where($where);
-        $this->include_dto($classname);
         if (isset($option["limit"])) {
             $this->db->limit($option["limit"]);
             if ($query = $this->db->get()) {
