@@ -2599,7 +2599,7 @@ SQL;
         $this->db->join("so_extend soext", "soext.so_no=so.so_no", "LEFT");
 
         $select_str = "
-                    so.so_no as so_no, if(sops.pay_date, sops.pay_date, so.order_create_date) as pay_date,
+                    so.so_no as so_no, if('sops.pay_date', 'sops.pay_date', 'so.order_create_date') as pay_date,
                     so.status as order_status,
                     soext.aftership_status as aftership_status,
                     soext.aftership_checkpoint as last_update_time,

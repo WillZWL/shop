@@ -52,7 +52,7 @@ class SoHoldReasonDao extends BaseDao
         return $obj;
     }
 
-    public function getListWithUname($where = [], $option = [], $classname = "Hold_history_uname_dto")
+    public function getListWithUname($where = [], $option = [], $classname = "HoldHistoryUnameDto")
     {
         $this->db->from("so_hold_reason sh");
 

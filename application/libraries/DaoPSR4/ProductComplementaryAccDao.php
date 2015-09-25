@@ -87,7 +87,7 @@ SQL;
         $this->db->join("sku_mapping AS accmap", "accmap.sku = pca.accessory_sku AND accmap.ext_sys='WMS'", "INNER");
         $this->db->join("product AS p", "pca.accessory_sku = p.sku", "inner");
         $this->db->join('category AS c', 'p.cat_id = c.id', 'LEFT');
-        $this->db->join('colour AS cl', 'p.colour_id = cl.id', 'LEFT');
+        $this->db->join('colour AS cl', 'p.colour_id = cl.colour_id', 'LEFT');
         $this->db->join('category AS sc', 'p.sub_cat_id = sc.id', 'LEFT');
         $this->db->join('category AS ssc', 'p.sub_sub_cat_id = ssc.id', 'LEFT');
         $this->db->join('brand AS b', 'p.brand_id = b.id', 'LEFT');
@@ -98,12 +98,11 @@ SQL;
         $this->db->where($where);
 
         if (empty($option["num_rows"])) {
-            $this->include_dto($classname);
             $this->db->select('
                                 pca.id, pca.mainprod_sku, pca.accessory_sku, pca.dest_country_id, pca.status AS ca_status,
                                 pca.modify_on, pca.modify_at, pca.modify_by, pca.create_on, pca.create_at, pca.create_by,
                                 p.name,
-                                c.name AS category, sc.name AS sub_cat, cl.name AS colour, ssc.name AS sub_sub_cat, b.brand_name AS brand, p.image AS image_file
+                                c.name AS category, sc.name AS sub_cat, cl.colour_name AS colour, ssc.name AS sub_sub_cat, b.brand_name AS brand, p.image AS image_file
                             ');
             $option["limit"] = "";
 
@@ -147,7 +146,6 @@ SQL;
     {
         $ca_catid = implode(',', $this->accessoryCatidArr);
 
-        $this->include_dto($classname);
         $this->db->from("product AS p");
         $this->db->join("sku_mapping AS map", "map.sku = p.sku AND map.ext_sys='WMS' AND map.status=1", "INNER");
         $this->db->join('category AS c', 'p.cat_id = c.id', 'INNER');

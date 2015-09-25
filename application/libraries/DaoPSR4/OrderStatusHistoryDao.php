@@ -27,7 +27,7 @@ class OrderStatusHistoryDao extends BaseDao
         $this->db->join('user u', 'u.id = osh.create_by', 'LEFT');
         $this->db->where($where);
         $this->db->select('osh.status,osh.create_on,u.username');
-        $this->db->orderby('osh.create_on ASC');
+        $this->db->order_by('osh.create_on ASC');
 
         $rs = [];
 

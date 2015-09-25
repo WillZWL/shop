@@ -27,7 +27,7 @@ class OrderNotesDao extends BaseDao
         $this->db->join('user u', 'u.id = n.create_by', 'LEFT');
         $this->db->where($where);
         $this->db->select('n.note, n.create_on, COALESCE(u.username, n.create_by) AS username', FALSE);
-        $this->db->orderby('n.create_on DESC');
+        $this->db->order_by('n.create_on DESC');
 
         $rs = [];
 

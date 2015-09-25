@@ -48,11 +48,9 @@ class SupplierDao extends BaseDao
                 LIMIT 1
                 ";
 
-        $this->include_vo();
-
         if($query = $this->db->query($sql, $prod))
         {
-            foreach($query->result("object", $this->get_vo_classname()) as $obj)
+            foreach($query->result($this->getVoClassname()) as $obj)
             {
                 $tmp = $obj;
             }

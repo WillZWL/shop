@@ -1,10 +1,10 @@
 <?php
 namespace ESG\Panther\Dao;
 
-class SoReleaseOrderDao extends BaseDao
+class AutoRefundDao extends BaseDao
 {
-    private $tableName = "release_order_history";
-    private $voClassname = "ReleaseOrderHistoryVo";
+    private $tableName = "auto_refund";
+    private $voClassname = "AutoRefundVo";
 
     public function __construct()
     {
@@ -20,7 +20,6 @@ class SoReleaseOrderDao extends BaseDao
     {
         return $this->voClassname;
     }
-
 }
 
 

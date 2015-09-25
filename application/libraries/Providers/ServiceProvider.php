@@ -119,6 +119,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\SoRefundScoreService();
         };
 
+        $servcieContainer['SplitOrder'] = function () {
+            return new S\SplitOrderService();
+        };
+
         $servcieContainer['Warehouse'] = function () {
             return new S\WarehouseService();
         };
@@ -173,6 +177,10 @@ class ServiceProvider implements ServiceProviderInterface
 
         $servcieContainer['ProductApi'] = function () {
             return new S\ProductApiService();
+        };
+
+        $servcieContainer['PaymentGatewayRedirectCybersource'] = function () {
+            return new S\PaymentGatewayRedirectCybersourceService();
         };
     }
 }

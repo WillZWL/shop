@@ -24,7 +24,7 @@ function fetch_operator(&$ar_array, $rskey, $rsvalue)
 {
     operator($rsvalue, $operator, $n_value);
     for ($i = 0; $i < count($operator); $i++) {
-        if (is_numeric($n_value[$i]) || strlen($n_value) > 10) {
+        if (is_numeric($n_value[$i]) || @strlen($n_value) > 10) {
             $ar_array[$rskey . $operator[$i]] = $n_value[$i];
         } else {
             switch (ltrim($operator[$i])) {
