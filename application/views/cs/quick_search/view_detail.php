@@ -154,7 +154,7 @@ function display_risk($title, $results)
             <td height="25" class="title"><?= $lang["subtitle"] ?></td>
             <td align="right" style="padding-right:10px;" class="title">
                 <form method='POST'>
-                    <?php if (!check_app_feature_access_right($app_id, "ORD000403_print_invoice")) :
+                    <?php if (check_app_feature_access_right($app_id, "ORD000403_print_invoice")) :
                         // #sbf 4145 - custom invoice in HKD ?>
                         <input type="button" value="<?= $lang["print_custom_invoice"] ?> (HKD)" onClick="this.form.action='<?= base_url() ?>order/integrated_order_fulfillment/custom_invoice/hkd';this.form.target='_blank';this.form.submit();this.form.target='';this.form.action='';">
                         &nbsp;&nbsp;&nbsp;
@@ -271,7 +271,7 @@ function display_risk($title, $results)
             <tr>
                 <td style="padding-left:8px" class="header3"><b style="font-size:11px;color:#000000"><?= $lang["order_deladdr"] ?></b>&nbsp;&nbsp;
                     <?php
-                    if (!($order_obj->getStatus() < 6) && !(check_app_feature_access_right($app_id, "CS000102_change_delivery_addr"))) :
+                    if (($order_obj->getStatus() < 6) && (check_app_feature_access_right($app_id, "CS000102_change_delivery_addr"))) :
                         ?>
                         <input type="button" value="<?= $lang["change_delivery_addr"] ?>" onClick="document.location.href='<?= base_url() . "cs/quick_search/view/" . $order_obj->getSoNo() . "/" . $viewtype . "?caddr=1" ?>';">
                     <?php
