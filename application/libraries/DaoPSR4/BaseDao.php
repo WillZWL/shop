@@ -250,7 +250,7 @@ abstract class BaseDao
             return FALSE;
         }
     }
-	
+
 	public function qUpdate($where = array(), $data = array())
     {
         if (!(empty($where) || empty($data))) {

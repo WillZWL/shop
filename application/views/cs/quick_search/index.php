@@ -41,31 +41,30 @@ $currency_arr = array("EUR" => "&euro;", "GBP" => "&pound;");
                     <table border="0" cellpadding="0" cellspacing="0" border="0" width="100%">
                         <tr>
                             <td height="25" width="10%" align="right"><?= $lang["surname"] ?></td>
-                            <td width="25%" align="left">&nbsp;&nbsp;<input class="input" type="text" name="surname"
-                                                                            value="<?= $this->input->get('surname') ?>">
+                            <td width="25%" align="left">&nbsp;&nbsp;
+                                <input class="input" type="text" name="surname" value="<?= $this->input->get('surname') ?>">
                             </td>
                             <td width="10%"
                                 align="right"><?= (check_app_feature_access_right($app_id, "CS000100_password")) ? $lang["password"] : "" ?></td>
-                            <? if (check_app_feature_access_right($app_id, "CS000100_password")) {
+                            <? if (check_app_feature_access_right($app_id, "CS000100_password")) :
                                 ?>
-                                <td width="25%" align="left">&nbsp;&nbsp;<input class="input" type="text"
-                                                                                name="password"
-                                                                                value="<?= $this->input->get('password') ?>">
+                                <td width="25%" align="left">&nbsp;&nbsp;
+                                    <input class="input" type="text" name="password" value="<?= $this->input->get('password') ?>">
                                 </td>
-                            <? } else { ?>
+                            <? else : ?>
                                 <td width="25%" align="left">&nbsp;</td>
-                            <? } ?>
-                            <td width="30%" rowspan="2">&nbsp;&nbsp;<input type="button" value="<?= $lang["submit"] ?>"
-                                                                           onClick="document.fm.submit();"></td>
+                            <? endif; ?>
+                            <td width="30%" rowspan="2">&nbsp;&nbsp;
+                                <input type="button" value="<?= $lang["submit"] ?>" onClick="document.fm.submit();"></td>
                         </tr>
                         <tr>
                             <td height="25" width="10%" align="right"><?= $lang["tracking_no"] ?></td>
-                            <td width="25%" align="left">&nbsp;&nbsp;<input class="input" type="text" name="tracking_no"
-                                                                            value="<?= $this->input->get('tracking_no') ?>">
+                            <td width="25%" align="left">&nbsp;&nbsp;
+                                <input class="input" type="text" name="tracking_no" value="<?= $this->input->get('tracking_no') ?>">
                             </td>
                             <td width="10%" align="right"><?= $lang["ip_address"] ?></td>
-                            <td width="25%" align="left">&nbsp;&nbsp;<input class="input" type="text" name="ip_address"
-                                                                            value="<?= $this->input->get('ip_address') ?>">
+                            <td width="25%" align="left">&nbsp;&nbsp;
+                                <input class="input" type="text" name="ip_address" value="<?= $this->input->get('ip_address') ?>">
                             </td>
                             <td>&nbsp;</td>
                         </tr>
@@ -166,46 +165,48 @@ $currency_arr = array("EUR" => "&euro;", "GBP" => "&pound;");
                 <td><input name="cemail" class="input"></td>
                 <td><input name="tel" class="input"></td>
                 <td><input name="dispatch_date" class="input"></td>
-                <td><select name="order_status" class="input">
+                <td>
+                    <select name="order_status" class="input">
                         <option value=""><?= $lang["please_select"] ?></option>
                         <?php
-                        foreach ($lang["status_name"] as $key => $value) {
+                        foreach ($lang["status_name"] as $key => $value) :
                             ?>
                             <option value="<?= $key ?>"><?= $value ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
-                    </select></td>
+                    </select>
+                </td>
                 <td><select name="hold_status" class="input">
                         <option value=""><?= $lang["please_select"] ?></option>
                         <?php
-                        foreach ($lang["hold_status_name"] as $key => $value) {
+                        foreach ($lang["hold_status_name"] as $key => $value) :
 
                             ?>
                             <option value="<?= $key ?>"><?= $value ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </select></td>
                 <td>
-                    <?php if (check_app_feature_access_right($app_id, "CS000100_refund_status")) { ?>
+                    <?php if (check_app_feature_access_right($app_id, "CS000100_refund_status")) : ?>
                         <select name="refund_status" class="input">
                             <option value=""><?= $lang["please_select"] ?></option>
                             <?php
-                            foreach ($lang["refund_status_name"] as $key => $value) {
+                            foreach ($lang["refund_status_name"] as $key => $value) :
 
                                 ?>
                                 <option value="<?= $key ?>"><?= $value ?></option>
                             <?php
-                            }
+                            endforeach;
                             ?>
                         </select>
-                    <?php } else {
+                    <?php else :
                         print "&nbsp;";
-                    } ?>
+                          endif;
+                    ?>
                 </td>
-                <td><input type="submit" name="searchsubmit" value="" class="search_button"
-                           style="background: url('<?= base_url() ?>images/find.gif') no-repeat;"></td>
+                <td><input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;"></td>
             </tr>
             <?php
             if ($search) :
@@ -256,7 +257,7 @@ $currency_arr = array("EUR" => "&euro;", "GBP" => "&pound;");
                             <td>&nbsp;</td>
                         </tr>
                         <tr class="detail">
-                            <td colspan="17" style="padding-left:20px;">
+                            <td colspan="18" style="padding-left:20px;">
                                 <?php
                                 $content = array();
                                 foreach ($item_arr as $line) {
@@ -273,10 +274,7 @@ $currency_arr = array("EUR" => "&euro;", "GBP" => "&pound;");
                 else :
                     ?>
                     <tr bgcolor="<?= $row_color[0] ?>">
-                        <td></td>
-                        <td width="1240" colspan="15" align="center"
-                            height="20"><?= $lang["no_matching_record_found"] ?></td>
-                        <td></td>
+                        <td width="1240" colspan="18" align="center" height="20"><?= $lang["no_matching_record_found"] ?></td>
                     </tr>
                 <?php
                 endif;

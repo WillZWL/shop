@@ -13,6 +13,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\UserDao();
         };
 
+        $daoContainer['AutoRefund'] = function () {
+            return new D\AutoRefundDao();
+        };
+
         $daoContainer['Attachment'] = function () {
             return new D\AttachmentDao();
         };
@@ -383,6 +387,10 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['RefundItem'] = function () {
             return new D\RefundItemDao();
+        };
+
+        $daoContainer['RaProduct'] = function () {
+            return new D\RaProductDao();
         };
 
         $daoContainer['Unit'] = function () {
