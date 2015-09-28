@@ -53,6 +53,7 @@ abstract class MY_Controller extends CI_Controller
             $this->checkAuthed();
             if ($checkAccessRights) {
                 $this->sc['Authorization']->checkAccessRights($this->getAppId(), "");
+                $feature_list = $this->sc['Authorization']->setApplicationFeatureRight($this->getAppId(), "");
             }
         }
     }
