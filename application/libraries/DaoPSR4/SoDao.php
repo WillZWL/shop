@@ -465,10 +465,10 @@ SQL;
                     , scc.card_bin
                     , scc.card_type
                     , sps.pay_to_account
-                    , sps.risk_ref1
-                    , sps.risk_ref2
-                    , sps.risk_ref3
-                    , sps.risk_ref4
+                    , sps.risk_ref_1
+                    , sps.risk_ref_2
+                    , sps.risk_ref_3
+                    , sps.risk_ref_4
                     , s.create_at as ip_address
                     , s.status as order_status
                     , s.dispatch_date
@@ -623,7 +623,7 @@ SQL;
 
         $this->db->join('so_credit_chk AS socc', 'so.so_no = socc.so_no', 'LEFT');
         $this->db->join('so_payment_status AS sops', 'sops.so_no = so.so_no', 'LEFT');
-        $this->db->join('risk_ref AS rr', 'rr.payment_gateway_id = sops.payment_gateway_id AND rr.risk_ref = sops.risk_ref1', 'LEFT');
+        $this->db->join('risk_ref AS rr', 'rr.payment_gateway_id = sops.payment_gateway_id AND rr.risk_ref = sops.risk_ref_1', 'LEFT');
         $this->db->join('so_risk as sor', 'sor.so_no = so.so_no', 'LEFT');
 
         $this->db->where($where);
@@ -633,7 +633,7 @@ SQL;
         $this->db->where("so.refund_status = '0'");
 
         if (empty($option["num_rows"])) {
-            $this->db->select('so.*, c.id, c.forename, c.surname, c.email, c.password, c.tel_1, c.tel_2, c.tel_3, c.del_tel_1, c.del_tel_2, c.del_tel_3,' . ($option["reason"] ? ', sohr.reason, sohr.create_on AS hold_date' : ', socc.t3m_is_sent, socc.t3m_in_file, socc.t3m_result, socc.fd_status, sops.payment_gateway_id, sops.payment_status, sops.card_id AS card_type, sops.risk_ref1, sops.risk_ref2, sops.risk_ref3, sops.risk_ref4, sops.pending_action, rr.risk_ref_desc'));
+            $this->db->select('so.*, c.id, c.forename, c.surname, c.email, c.password, c.tel_1, c.tel_2, c.tel_3, c.del_tel_1, c.del_tel_2, c.del_tel_3,' . ($option["reason"] ? ', sohr.reason, sohr.create_on AS hold_date' : ', socc.t3m_is_sent, socc.t3m_in_file, socc.t3m_result, socc.fd_status, sops.payment_gateway_id, sops.payment_status, sops.card_id AS card_type, sops.risk_ref_1, sops.risk_ref_2, sops.risk_ref_3, sops.risk_ref_4, sops.pending_action, rr.risk_ref_desc'));
 
             if ($type == "cs" || $type == "log_app" || $type == "oc" || $type == "ora") {
                 $this->db->select('sohr.reason');
@@ -930,7 +930,7 @@ SQL;
         $this->db->join("so_item as si", "si.so_no=so.so_no", 'INNER');
         $this->db->join("so_risk as sr", "sr.so_no=so.so_no and sr.risk_requested=0", 'INNER');
         $this->db->where($where);
-        $this->db->select("so.so_no, so.currency_id, so.amount, so.create_at, so.lang_id, so.fingerprint_id, sps.payment_gateway_id, sps.risk_ref3, sps.risk_ref4, sps.payer_email,
+        $this->db->select("so.so_no, so.currency_id, so.amount, so.create_at, so.lang_id, so.fingerprint_id, sps.payment_gateway_id, sps.risk_ref_3, sps.risk_ref_4, sps.payer_email,
         si.line_no, si.prod_sku, si.prod_name, si.qty, si.unit_price,
         c.email, c.companyname, c.del_company, c.address_1, c.address_2, c.address_3, c.postcode, c.city, c.state, c.country_id, c.del_address_1, c.del_address_2, c.del_address_3, c.del_postcode, c.del_city, c.del_state, c.del_country_id, c.forename, c.surname, c.tel_1, c.tel_2, c.tel_3");
 
