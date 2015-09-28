@@ -2952,7 +2952,7 @@ SQL;
         $this->db->select('DISTINCT client_id', FALSE);
 
         if ($query = $this->db->get()) {
-            foreach ($query->result() as $obj) {
+            foreach ($query->result('array') as $obj) {
                 $rs[] = $obj['client_id'];
             }
             return $rs;

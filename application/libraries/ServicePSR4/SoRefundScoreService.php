@@ -69,7 +69,7 @@ class SoRefundScoreService extends BaseService
 
     public function getRefundScoreHistoryList($where = [], $option = [])
     {
-        return $this->getDao('SoRefundScoreHistory')->get_list($where, $option);
+        return $this->getDao('SoRefundScoreHistory')->getList($where, $option);
     }
 }
 

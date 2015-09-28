@@ -124,13 +124,11 @@ class SoPriorityScoreService extends BaseService
 
     public function updateSops($so_no, $priority_score)
     {
-        $vo = $this->getDao('SoPriorityScore')->get();
-        $dao = clone $vo;
-        $dao->setSoNo($so_no);
-        $dao->setScore($priority_score);
-        $dao->setStatus(1);
-        $this->getDao('SoPriorityScore')->setCreate($dao);
-        $this->getDao('SoPriorityScore')->update($dao);
+        $dto = $this->getDao('SoPriorityScore')->get(['so_no'=>$so_no]);
+        $dto->setSoNo($so_no);
+        $dto->setScore($priority_score);
+        $dto->setStatus(1);
+        $this->getDao('SoPriorityScore')->update($dto);
     }
 }
 
