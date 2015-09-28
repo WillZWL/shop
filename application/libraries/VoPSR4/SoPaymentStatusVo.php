@@ -3,25 +3,25 @@ class SoPaymentStatusVo extends \BaseVo
 {
     private $id;
     private $so_no;
-    private $payment_gateway_id;
-    private $pay_to_account;
-    private $card_id;
+    private $payment_gateway_id = '';
+    private $pay_to_account = '';
+    private $card_id = '';
     private $payment_status = 'N';
     private $remark;
-    private $mac_token;
-    private $retry;
-    private $payer_email;
-    private $payer_ref;
-    private $risk_ref1;
-    private $risk_ref2;
-    private $risk_ref3;
-    private $risk_ref4;
+    private $mac_token = '';
+    private $retry = '0';
+    private $payer_email = '';
+    private $payer_ref = '';
+    private $risk_ref_1 = '';
+    private $risk_ref_2 = '';
+    private $risk_ref_3 = '';
+    private $risk_ref_4 = '';
     private $pay_date = '0000-00-00 00:00:00';
-    private $pending_action;
+    private $pending_action = '';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -138,44 +138,44 @@ class SoPaymentStatusVo extends \BaseVo
         return $this->payer_ref;
     }
 
-    public function setRiskRef1($risk_ref1)
+    public function setRiskRef1($risk_ref_1)
     {
-        $this->risk_ref1 = $risk_ref1;
+        $this->risk_ref_1 = $risk_ref_1;
     }
 
     public function getRiskRef1()
     {
-        return $this->risk_ref1;
+        return $this->risk_ref_1;
     }
 
-    public function setRiskRef2($risk_ref2)
+    public function setRiskRef2($risk_ref_2)
     {
-        $this->risk_ref2 = $risk_ref2;
+        $this->risk_ref_2 = $risk_ref_2;
     }
 
     public function getRiskRef2()
     {
-        return $this->risk_ref2;
+        return $this->risk_ref_2;
     }
 
-    public function setRiskRef3($risk_ref3)
+    public function setRiskRef3($risk_ref_3)
     {
-        $this->risk_ref3 = $risk_ref3;
+        $this->risk_ref_3 = $risk_ref_3;
     }
 
     public function getRiskRef3()
     {
-        return $this->risk_ref3;
+        return $this->risk_ref_3;
     }
 
-    public function setRiskRef4($risk_ref4)
+    public function setRiskRef4($risk_ref_4)
     {
-        $this->risk_ref4 = $risk_ref4;
+        $this->risk_ref_4 = $risk_ref_4;
     }
 
     public function getRiskRef4()
     {
-        return $this->risk_ref4;
+        return $this->risk_ref_4;
     }
 
     public function setPayDate($pay_date)

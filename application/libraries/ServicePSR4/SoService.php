@@ -496,7 +496,9 @@ class SoService extends BaseService
         $dao->db->trans_start();
 
         if (!isset($_SESSION["so_no"])) {
-            $next_val = $dao->seq_next_val();
+            $seqdao = $this->sequence_dao;
+            $seqdao->set_seq_name("customer_order");
+            $next_val = $seqdao->seq_next_val();
             $so_no = $next_val;
             $so_vo->set_so_no($so_no);
             if ($vars["biz_type"] == "manual") {
@@ -910,7 +912,6 @@ class SoService extends BaseService
         $soext_dao = $this->getDao('SoExtend');
         $soi_dao = $this->getDao('SoItem');
         $soid_dao = $this->getDao('SoItemDetail');
-        $so_payment_status_dao = $this->getDao('SoPaymentStatus');
         $ordernotes_dao = $this->getDao('OrderNotes');
         $so_priority_score_dao = $this->getDao('SoPriorityScore');
         $so_holdreason_dao = $this->getDao('SoHoldReason');
@@ -973,7 +974,9 @@ class SoService extends BaseService
                 // if failed on previous loops, don't bother going in
                 if ($failed == 0) {
                     // new so_no for each group
-                    $next_val = $so_dao->seq_next_val();
+                    $seqdao = $this->sequence_dao;
+                    $seqdao->set_seq_name("customer_order");
+                    $next_val = $seqdao->seq_next_val();
                     $new_so_no = $next_val;
                     $new_so_obj = $so_dao->get();
                     set_value($new_so_obj, $so_obj);
@@ -1086,14 +1089,14 @@ class SoService extends BaseService
                             }
 
                             // check if so_payment_status available
-                            if ($so_payment_status_obj = $so_payment_status_dao->get(["so_no" => $so_no])) {
-                                $new_so_pays_obj = $so_payment_status_dao->get();
+                            if ($so_payment_status_obj = $this->getDao('SoPaymentStatus')->get(["so_no" => $so_no])) {
+                                $new_so_pays_obj = $this->getDao('SoPaymentStatus')->get();
                                 set_value($new_so_pays_obj, $so_payment_status_obj);
                                 $new_so_pays_obj->setSoNo($new_so_no);
-                                if ($so_payment_status_dao->insert($new_so_pays_obj)) {
+                                if ($this->getDao('SoPaymentStatus')->insert($new_so_pays_obj)) {
                                     // $order_notes, order_reason - did not add yet because specific to each new order
                                 } else {
-                                    $message .= __LINE__ . " so_service. Failed so_payment_status. DB error: " . $so_payment_status_dao->db->_error_message() . "\n";
+                                    $message .= __LINE__ . " so_service. Failed so_payment_status. DB error: " . $this->getDao('SoPaymentStatus')->db->_error_message() . "\n";
                                     $failed = 1;
                                 }
                             }
@@ -1130,7 +1133,7 @@ class SoService extends BaseService
 
                                 if ($so_dao->update($new_so_obj)) {
                                     $addedsolist .= "$next_val, ";
-                                    $so_dao->update_seq($next_val);
+                                    $seqdao->update_seq($next_val);
 
                                 } else {
                                     $message .= __LINE__ . " so_service. Failed new so update so_no $so_no. DB error: " . $so_dao->db->_error_message() . "\n";

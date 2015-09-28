@@ -145,7 +145,7 @@ class Quick_search extends MY_Controller
             $data["total"] = $this->sc['So']->orderQuickSearch($where, ["num_rows" => 1]);
 
 
-            $config['base_url'] = base_url('cs/quick_search/index');
+            $config['base_url'] = base_url('cs/quick_search/index')."?" . $_SERVER['QUERY_STRING'];
             $config['total_rows'] = $data["total"];
             $config['per_page'] = $limit;
 
@@ -529,7 +529,7 @@ class Quick_search extends MY_Controller
         }
 
         if ($_POST) {
-            $data["itemrow"] = $this->process_post_data();
+            $data["itemrow"] = $this->processPostData();
         } else {
             if ($order_no == "") {
                 echo "Please input so_no.";
@@ -570,7 +570,7 @@ class Quick_search extends MY_Controller
                     }
 
                     // create HTML for each item row
-                    $data["itemrow"] = $this->create_split_group_rows($order_no, $order_group, $reach_max_split);
+                    $data["itemrow"] = $this->createSplitGroupRows($order_no, $order_group, $reach_max_split);
                 }
             }
         }
@@ -591,7 +591,7 @@ class Quick_search extends MY_Controller
         $this->load->view('cs/quick_search/split_order_view', $data);
     }
 
-    private function process_post_data()
+    private function processPostData()
     {
         $i = 0;
         $data = "";
@@ -630,23 +630,22 @@ class Quick_search extends MY_Controller
 
         if ($postgroup["submittype"] == "preview") {
             $order_group["preview"] = 1;
-            $data = $this->create_split_group_rows($order_no, $order_group);
+            $data = $this->createSplitGroupRows($order_no, $order_group);
             return $data;
         } else {
-
             $result = $this->sc['So']->splitOrderToSo($order_no, $order_group);
             $_SESSION["NOTICE"] = $result["message"];
 
-            if ($result["status"] === FALSE)
+            if ($result["status"] === FALSE) {
                 return $data;
-            else {
+            } else {
                 // everything success, redirect to OQS
                 Redirect(base_url() . "cs/quick_search/view/" . $order_no);
             }
         }
     }
 
-    private function create_split_group_rows($order_no, $order_group = [], $reach_max_split = FALSE)
+    private function createSplitGroupRows($order_no, $order_group = [], $reach_max_split = FALSE)
     {
         // construct html display
         $html = "";
@@ -858,7 +857,7 @@ html;
             if ($current_score == $new_score) {
                 Redirect(base_url() . "cs/quick_search/view/" . $so_no);
             }
-            if ($this->$this->sc['SoRefundScore']->updateRefundScore($so_no, $new_score)) {
+            if ($this->sc['SoRefundScore']->updateRefundScore($so_no, $new_score)) {
                 $this->sc['SoRefundScore']->insertRefundScoreHistory($so_no, $new_score);
             }
 
