@@ -1,36 +1,47 @@
 <?php
-include_once 'Base_vo.php';
-
-class PlatformPmgwVo extends \Base_vo
+class PlatformPmgwVo extends \BaseVo
 {
     private $id;
     private $platform_id;
-    private $sequence;
+    private $sequence = '1';
     private $payment_gateway_id = 'paypal';
-    private $pmgw_ref_currency_id;
-    private $ref_from_amt;
-    private $ref_to_amt_exclusive;
+    private $pmgw_ref_currency_id = '';
+    private $ref_from_amt = '0';
+    private $ref_to_amt_exclusive = '0';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
 
-    //instance method
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setPlatformId($platform_id)
+    {
+        $this->platform_id = $platform_id;
+    }
+
     public function getPlatformId()
     {
         return $this->platform_id;
     }
 
-    public function setPlatformId($value)
+    public function setSequence($sequence)
     {
-        $this->platform_id = $value;
-        return $this;
+        $this->sequence = $sequence;
     }
 
     public function getSequence()
@@ -38,10 +49,9 @@ class PlatformPmgwVo extends \Base_vo
         return $this->sequence;
     }
 
-    public function setSequence($value)
+    public function setPaymentGatewayId($payment_gateway_id)
     {
-        $this->sequence = $value;
-        return $this;
+        $this->payment_gateway_id = $payment_gateway_id;
     }
 
     public function getPaymentGatewayId()
@@ -49,10 +59,9 @@ class PlatformPmgwVo extends \Base_vo
         return $this->payment_gateway_id;
     }
 
-    public function setPaymentGatewayId($value)
+    public function setPmgwRefCurrencyId($pmgw_ref_currency_id)
     {
-        $this->payment_gateway_id = $value;
-        return $this;
+        $this->pmgw_ref_currency_id = $pmgw_ref_currency_id;
     }
 
     public function getPmgwRefCurrencyId()
@@ -60,10 +69,9 @@ class PlatformPmgwVo extends \Base_vo
         return $this->pmgw_ref_currency_id;
     }
 
-    public function setPmgwRefCurrencyId($value)
+    public function setRefFromAmt($ref_from_amt)
     {
-        $this->pmgw_ref_currency_id = $value;
-        return $this;
+        $this->ref_from_amt = $ref_from_amt;
     }
 
     public function getRefFromAmt()
@@ -71,21 +79,19 @@ class PlatformPmgwVo extends \Base_vo
         return $this->ref_from_amt;
     }
 
-    public function setRefFromAmt($value)
+    public function setRefToAmtExclusive($ref_to_amt_exclusive)
     {
-        $this->ref_from_amt = $value;
-        return $this;
+        $this->ref_to_amt_exclusive = $ref_to_amt_exclusive;
     }
 
-    public function getFefToAmtExclusive()
+    public function getRefToAmtExclusive()
     {
         return $this->ref_to_amt_exclusive;
     }
 
-    public function setFefToAmtExclusive($value)
+    public function setStatus($status)
     {
-        $this->ref_to_amt_exclusive = $value;
-        return $this;
+        $this->status = $status;
     }
 
     public function getStatus()
@@ -93,10 +99,9 @@ class PlatformPmgwVo extends \Base_vo
         return $this->status;
     }
 
-    public function setStatus($value)
+    public function setCreateOn($create_on)
     {
-        $this->status = $value;
-        return $this;
+        $this->create_on = $create_on;
     }
 
     public function getCreateOn()
@@ -104,10 +109,9 @@ class PlatformPmgwVo extends \Base_vo
         return $this->create_on;
     }
 
-    public function setCreateOn($value)
+    public function setCreateAt($create_at)
     {
-        $this->create_on = $value;
-        return $this;
+        $this->create_at = $create_at;
     }
 
     public function getCreateAt()
@@ -115,10 +119,9 @@ class PlatformPmgwVo extends \Base_vo
         return $this->create_at;
     }
 
-    public function setCreateAt($value)
+    public function setCreateBy($create_by)
     {
-        $this->create_at = $value;
-        return $this;
+        $this->create_by = $create_by;
     }
 
     public function getCreateBy()
@@ -126,10 +129,9 @@ class PlatformPmgwVo extends \Base_vo
         return $this->create_by;
     }
 
-    public function setCreateBy($value)
+    public function setModifyOn($modify_on)
     {
-        $this->create_by = $value;
-        return $this;
+        $this->modify_on = $modify_on;
     }
 
     public function getModifyOn()
@@ -137,10 +139,9 @@ class PlatformPmgwVo extends \Base_vo
         return $this->modify_on;
     }
 
-    public function setModifyOn($value)
+    public function setModifyAt($modify_at)
     {
-        $this->modify_on = $value;
-        return $this;
+        $this->modify_at = $modify_at;
     }
 
     public function getModifyAt()
@@ -148,21 +149,14 @@ class PlatformPmgwVo extends \Base_vo
         return $this->modify_at;
     }
 
-    public function setModifyAt($value)
+    public function setModifyBy($modify_by)
     {
-        $this->modify_at = $value;
-        return $this;
+        $this->modify_by = $modify_by;
     }
 
     public function getModifyBy()
     {
         return $this->modify_by;
-    }
-
-    public function setModifyBy($value)
-    {
-        $this->modify_by = $value;
-        return $this;
     }
 
     public function getPrimaryKey()
@@ -175,5 +169,3 @@ class PlatformPmgwVo extends \Base_vo
         return $this->increment_field;
     }
 }
-
-?>

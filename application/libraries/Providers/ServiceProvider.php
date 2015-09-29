@@ -179,6 +179,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\ProductApiService();
         };
 
+        $servcieContainer['PaymentGateway'] = function () {
+            return new S\PaymentGatewayService();
+        };
+
         $servcieContainer['PaymentGatewayRedirectCybersource'] = function () {
             return new S\PaymentGatewayRedirectCybersourceService();
         };

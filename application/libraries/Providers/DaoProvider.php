@@ -209,6 +209,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\PlatformCourierDao();
         };
 
+        $daoContainer['PlatformPmgw'] = function () {
+            return new D\PlatformPmgwDao();
+        };
+
         $daoContainer['Price'] = function () {
             return new D\PriceDao();
         };
@@ -287,6 +291,10 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['FulfillmentCentre'] = function () {
             return new D\FulfillmentCentreDao();
+        };
+
+        $daoContainer['ReleaseOrderReport'] = function () {
+            return new D\ReleaseOrderReportDao();
         };
 
         $daoContainer['So'] = function () {

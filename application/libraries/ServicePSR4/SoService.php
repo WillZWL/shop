@@ -186,7 +186,7 @@ class SoService extends BaseService
                 case "special":
                     include_once(APPPATH . "libraries/service/Client_service.php");
                     $client_service = new Client_service();
-                    $client_last_order = $client_service->get_client_last_order($vars["client"]->get_email());
+                    $client_last_order = $client_service->get_client_last_order($vars["client"]->getEmail());
                     $del_country_id = $client_last_order->get_delivery_country_id();
                     break;
             }
@@ -273,7 +273,7 @@ class SoService extends BaseService
                     $soi_obj = clone $soi_vo;
                     $soi_obj->setLineNo($ca_line_no);
                     $soi_obj->setProdSku($obj->get_accessory_sku());
-                    $soi_obj->setProdName($obj->get_name());
+                    $soi_obj->setProdName($obj->getName());
                     $soi_obj->setQty($obj->get_quantity());
                     $soi_obj->setVatTotal(0.00);
                     $soi_obj->setGstTotal(0.00);
@@ -395,7 +395,7 @@ class SoService extends BaseService
                         $so_vo->set_biz_type("SPECIAL");
                         include_once(APPPATH . "libraries/service/Client_service.php");
                         $client_service = new Client_service();
-                        $client_last_order = $client_service->get_client_last_order($vars["client"]->get_email());
+                        $client_last_order = $client_service->get_client_last_order($vars["client"]->getEmail());
                         $so_vo->set_parent_so_no($vars["parent_so_no"]);
                         $so_vo->set_split_so_group($vars["split_so_group"]);
                         $so_vo->set_bill_name($client_last_order->get_bill_name());
@@ -1213,7 +1213,7 @@ class SoService extends BaseService
 
     public function checkIfPacked($so_no = "")
     {
-        return $this->getDao('SoAllocate')->getList(array("so_no" => $so_no, "status <" => "3", "status >" => "0"));
+        return $this->getDao('SoAllocate')->getList(["so_no" => $so_no, "status <" => "3", "status >" => "0"]);
     }
 
     public function getShipNoList($type = "object", $service = "")
@@ -2425,7 +2425,7 @@ html;
         return $this->setProfitInfo($this->getDao('So')->get(array("so_no" => $so_no)));
     }
 
-    public function fire_log_email_event($so_no = "", $template = "", $option = "")
+    public function fireLogEmailEvent($so_no = "", $template = "", $option = "")
     {
         if ($so_no == "" || $template == "" || $option == "") {
             return FALSE;
@@ -2439,19 +2439,19 @@ html;
                     return FALSE;
                 }
 
-                $user_obj = $this->getDao('User')->get(array("id" => $sohr_obj->get_create_by()));
+                $user_obj = $this->getDao('User')->get(array("id" => $sohr_obj->getCreateBy()));
 
                 $dto = new EventEmailDto;
 
                 $replace["so_no"] = $so_no;
                 $replace["client_id"] = $so_obj->getClientId();
-                $replace["name"] = $user_obj->get_username();
-                $replace["create_date"] = $sohr_obj->get_create_on();
-                $replace["reason"] = ereg_replace('_log_app$', '', $sohr_obj->get_reason());
+                $replace["name"] = $user_obj->getUsername();
+                $replace["create_date"] = $sohr_obj->getCreateOn();
+                $replace["reason"] = ereg_replace('_log_app$', '', $sohr_obj->getReason());
 
                 $dto->setEventId("notification");
                 $dto->setMailFrom('logistics@valuebasket.com');
-                $dto->setMailTo($user_obj->get_email());
+                $dto->setMailTo($user_obj->getEmail());
                 $dto->setTplId("log_reply_" . $option);
                 $dto->setReplace($replace);
                 $this->eventService->fireEvent($dto);
@@ -2461,7 +2461,7 @@ html;
         }
     }
 
-    public function fire_cs2log_email($so_no = "", $reason = "", $user_info = [])
+    public function fireCs2logEmail($so_no = "", $reason = "", $user_info = [])
     {
         if ($so_no == "" || $reason == "" || empty($user_info)) {
             return;
@@ -2486,7 +2486,7 @@ html;
         }
     }
 
-    public function fire_cs_request($so_no = "", $reason = "")
+    public function fireCsRequest($so_no = "", $reason = "")
     {
 
         if ($so_no == "" || $reason == "") {
@@ -2504,7 +2504,7 @@ html;
 
                     $item_list = [];
                     foreach ($list as $obj) {
-                        $item_list[] = "- " . $obj->get_name();
+                        $item_list[] = "- " . $obj->getName();
                     }
 
                     $dto = new EventEmailDto;
@@ -2515,14 +2515,10 @@ html;
                     $replace["order_create_date"] = date("Y-m-d", strtotime($so_obj->getOrderCreateDate()));
                     $replace["item_list"] = implode("\n", $item_list);
 
-                    include_once(APPPATH . "hooks/country_selection.php");
-                    $order_lang = $pbv_obj ? $pbv_obj->getLanguageId() : "";
-                    $order_country = $pbv_obj ? $pbv_obj->getPlatformCountryId() : "";
-                    $replace = array_merge($replace, Country_selection::get_template_require_text($order_lang, $order_country));
-                    $email_sender = "Agatha@" . strtolower($replace["site_name"]);
+                    $email_sender = "Agatha@digitaldiscount.com";
 
                     $dto->setEventId("notification");
-                    $dto->setMailTo($client_obj->get_email());
+                    $dto->setMailTo($client_obj->getEmail());
                     //$dto->setMailTo('itsupport@eservicesgroup.net');
                     $lang = get_lang_id();
                     $support_email = $this->getCsSupportEmail($lang);
@@ -2542,13 +2538,14 @@ html;
         $ret = [];
 
         if ($obj_list = $this->getDao('So')->getCreditCheckList($where, $option, $type)) {
+            echo $this->getDao('So')->db->last_query();
             foreach ($obj_list as $obj) {
-                $cnt = $this->getDao('So')->getPwdCnt($obj->get_so_no(), $obj->get_client_id());
-                $obj->set_pw_count($cnt);
-                $item = $this->getDao('So')->getItemDetailStr($obj->get_so_no());
-                $obj->set_items($item);
-                $sor_obj = $this->getDao('SoRisk')->get(["so_no" => $obj->get_so_no()]);
-                $obj->set_sor_obj($sor_obj);
+                $cnt = $this->getDao('So')->getPwdCnt($obj->getSoNo(), $obj->getClientId());
+                $obj->setPwCount($cnt);
+                $item = $this->getDao('So')->getItemDetailStr($obj->getSoNo());
+                $obj->setItems($item);
+                $sor_obj = $this->getDao('SoRisk')->get(["so_no" => $obj->getSoNo()]);
+                $obj->setSorObj($sor_obj);
                 $ret[] = $obj;
             }
         }
@@ -3624,7 +3621,7 @@ html;
             $fullname = $so_obj->getDeliveryName();
             $ordernum = $soa_obj->get_sh_no();
             $delpostcode = $so_obj->getDeliveryPostcode();
-            $delemail = $client_obj->get_email();
+            $delemail = $client_obj->getEmail();
             $mobiletel = $client_obj->get_tel_1() . " " . $client_obj->get_tel_2() . " " . $client_obj->get_tel_3();
             $delcity = $so_obj->getDeliveryCity();
             $delstate = $so_obj->getDeliveryState();
@@ -4777,7 +4774,7 @@ html;
             include_once(APPPATH . "libraries/service/Display_qty_service.php");
             $display_qty_srv = new Display_qty_service();
 
-            $so_no = $so->get_so_no();
+            $so_no = $so->getSoNo();
             $soid_list = $this->getDao('SoItemDetail')->getList(array("so_no" => $so_no));
             $stock_alert = [];
             foreach ($soid_list as $soid) {
@@ -4795,10 +4792,10 @@ html;
                 $prod_obj->set_display_quantity($ndqty);
                 $prod_obj->set_website_quantity($nwqty);
                 if ($nwqty === 0) {
-                    $stock_alert[$prod_obj->getSku()] = $prod_obj->get_name();
+                    $stock_alert[$prod_obj->getSku()] = $prod_obj->getName();
                 }
                 if ($nwqty == 5) {
-                    $five_alert[$prod_obj->getSku()] = $prod_obj->get_name();
+                    $five_alert[$prod_obj->getSku()] = $prod_obj->getName();
                 }
                 $this->getDao('Product')->update($prod_obj);
             }
@@ -4806,7 +4803,7 @@ html;
 
             if (count($five_alert)) {
                 $email_dto = new EventEmailDto();
-                $message .= "Please be advised that order number " . $so->get_client_id() . "-" . $so->get_so_no() . " platform " . $so->getPlatformId() . " has triggered the following product to control quantity 5:\n\n";
+                $message .= "Please be advised that order number " . $so->getClientId() . "-" . $so->getSoNo() . " platform " . $so->getPlatformId() . " has triggered the following product to control quantity 5:\n\n";
                 foreach ($five_alert as $key => $value) {
                     $message .= $key . " - " . $value . "\n";
                 }
@@ -4825,7 +4822,7 @@ html;
 
             if (count($stock_alert)) {
                 $email_dto = new EventEmailDto();
-                $message .= "Please be advised that order number " . $so->get_client_id() . "-" . $so->get_so_no() . " platform " . $so->getPlatformId() . " has triggered the following product(s) to possibly be out of stock:\n\n";
+                $message .= "Please be advised that order number " . $so->getClientId() . "-" . $so->getSoNo() . " platform " . $so->getPlatformId() . " has triggered the following product(s) to possibly be out of stock:\n\n";
                 foreach ($stock_alert as $key => $value) {
                     $message .= $key . " - " . $value . "\n";
                 }
@@ -5057,7 +5054,7 @@ html;
         $email_dto = new EventEmailDto();
         $email_dto->set_event_id("special_aps_order_notification");
         $email_dto->set_mail_from("do_not_reply@valuebasket.com");
-        $email_dto->set_mail_to($client_obj->get_email());
+        $email_dto->set_mail_to($client_obj->getEmail());
         $email_dto->set_tpl_id("special_aps_order_notification");
         $email_dto->set_lang_id("en");
 
@@ -5340,7 +5337,7 @@ html;
 
         $so_no = $so_obj->getSoNo();
         if ($client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()))) {
-            $client_email = $client_obj->get_email();
+            $client_email = $client_obj->getEmail();
             if ($black_list_object = $this->get_email_referral_list_service()->get(array('email' => $client_email, '`status`' => 1))) {
                 return TRUE;
             } else {
@@ -5368,7 +5365,7 @@ html;
 
         $so_no = $so_obj->getSoNo();
         if ($client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()))) {
-            $client_email = $client_obj->get_email();
+            $client_email = $client_obj->getEmail();
             if ($black_list_object = $this->get_email_referral_list_service()->get(array('email' => $client_email, '`status`' => 1))) {
                 //insert the order into the fraudulent order table
                 if (!$fraud_order_obj = $this->get_fraudulent_order_service()->get(array('so_no' => $so_no))) {
@@ -6012,6 +6009,15 @@ html;
             }
         }
         return $success_so;
+    }
+
+    public function addOrderNote($so_no, $notes)
+    {
+        $obj = $this->quick_search_service->get_order_notes_dao()->get();
+        $obj->set_so_no($so_no);
+        $obj->set_type('O');
+        $obj->set_note($notes);
+        return $this->quick_search_service->get_order_notes_dao()->insert($obj);
     }
 
 }

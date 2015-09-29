@@ -437,6 +437,8 @@ class Quick_search extends MY_Controller
         $data["allow_release"] = check_app_feature_access_right($this->getAppId(), "CS000102_release_button");
         $data["allow_split"] = check_app_feature_access_right($this->getAppId(), "CS000102_process_split_order");
         $data["release_history"] = $this->sc['So']->getDao('SoReleaseOrder')->getList(["so_no" => $order_no], ["orderby" => "modify_on desc"]);
+// echo "<br/>=========";
+//         echo $this->encrypt->decode($data["client_obj"]->getPassword());
         $this->load->view('cs/quick_search/view_detail', $data);
     }
 
