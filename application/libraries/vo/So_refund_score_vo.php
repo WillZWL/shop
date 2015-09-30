@@ -1,9 +1,8 @@
 <?php
-include_once "base_vo.php";
+include_once "Base_vo.php";
 
 class So_refund_score_vo extends Base_vo
 {
-
     private $so_no;
 
     //class variable
@@ -19,13 +18,6 @@ class So_refund_score_vo extends Base_vo
 
     //primary key
     private $increment_field = "";
-
-    //auo increment
-
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
 
     //instance method
 

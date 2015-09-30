@@ -73,7 +73,7 @@ class Vb_data_transfer_product_custom_class_service extends Vb_data_transfer_ser
 					$new_pc_obj = array();
 									
 					$new_pc_obj["code"] = $pc->code; 
-					$new_pc_obj["description"] = $pc->description;	
+					$new_pc_obj["description"] = $this->replace_special_chars($pc->description);
 					$new_pc_obj["duty_pcent"] = $pc->duty_pcent;
 					
 					$this->get_dao()->q_update($where, $new_pc_obj);
@@ -94,7 +94,7 @@ class Vb_data_transfer_product_custom_class_service extends Vb_data_transfer_ser
 					$new_pc_obj->set_sku($sku);
 					$new_pc_obj->set_country_id($pc->country_id);
 					$new_pc_obj->set_code($pc->code);
-					$new_pc_obj->set_description($pc->description);
+					$new_pc_obj->set_description($this->replace_special_chars($pc->description));
 					$new_pc_obj->set_duty_pcent($pc->duty_pcent);
 					
 					$this->get_dao()->insert($new_pc_obj);

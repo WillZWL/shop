@@ -46,8 +46,8 @@ class So_vo extends Base_vo
     private $expect_del_days;
     private $order_create_date;
     private $dispatch_date;
-    private $finance_dispatch_date;
-    private $fingerprintId;
+    //private $finance_dispatch_date;
+    private $fingerprint_id;
     private $cc_reminder_type;
     private $cc_reminder_schedule_date;
     private $cs_customer_query;
@@ -522,7 +522,7 @@ class So_vo extends Base_vo
         return $this;
     }
 
-    public function get_finance_dispatch_date()
+    /*public function get_finance_dispatch_date()
     {
         return $this->finance_dispatch_date;
     }
@@ -531,16 +531,16 @@ class So_vo extends Base_vo
     {
         $this->finance_dispatch_date = $value;
         return $this;
+    }*/
+
+    public function get_fingerprint_id()
+    {
+        return $this->fingerprint_id;
     }
 
-    public function get_fingerprintId()
+    public function set_fingerprint_d($value)
     {
-        return $this->fingerprintId;
-    }
-
-    public function set_fingerprintId($value)
-    {
-        $this->fingerprintId = $value;
+        $this->fingerprint_id = $value;
         return $this;
     }
 

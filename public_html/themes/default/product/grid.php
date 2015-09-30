@@ -31,7 +31,7 @@
                                                     <div class="image">
                                                         <div class="product-img img">
                                                             <a class="img" title="<?= $prod_obj->getProdName(); ?>" href='<?= site_url("/mainproduct/view/$sku") ?>'>
-                                                                <img class="img-responsive" src="<?= get_image_file($prod_obj->getImageExt(), 'm', $prod_obj->getSku()) ?>" title="<?= $prod_obj->getProdName(); ?>" alt="<?= $prod_obj->getProdName(); ?>" />
+                                                                <img class="img-responsive" src="<?= base_url(get_image_file($prod_obj->getImageExt(), 'm', $prod_obj->getSku())) ?>" title="<?= $prod_obj->getProdName(); ?>" alt="<?= $prod_obj->getProdName(); ?>" />
                                                             </a>
                                                             <div class="quickview hidden-xs">
                                                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top" href='<?= site_url("/mainproduct/view/$sku/sv") ?>' title="Quick View"><i class="fa fa-eye"></i></a>

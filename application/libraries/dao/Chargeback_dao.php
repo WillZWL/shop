@@ -201,10 +201,10 @@ class Chargeback_dao extends Base_dao
                                 , scc.card_bin
                                 , scc.card_type
                                 , sps.pay_to_account
-                                , sps.risk_ref1
-                                , sps.risk_ref2
-                                , sps.risk_ref3
-                                , sps.risk_ref4
+                                , sps.risk_ref_1
+                                , sps.risk_ref_2
+                                , sps.risk_ref_3
+                                , sps.risk_ref_4
                                 , s.create_at as ip_address
                                 , s.status as order_status
                                 , s.dispatch_date
