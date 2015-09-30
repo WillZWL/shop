@@ -5,15 +5,16 @@ class SoItemDetailVo extends \BaseVo
     private $so_no;
     private $line_no;
     private $item_sku;
+    private $ext_item_cd = '';
+    private $prod_name = '';
     private $qty;
     private $outstanding_qty;
     private $unit_price;
     private $vat_total;
     private $gst_total = '0.00';
     private $discount_total = '0.00';
-    private $discount = '0.00';
     private $bundle_core_id = '0';
-    private $bundle_level = "";
+    private $bundle_level = '';
     private $amount;
     private $promo_disc_amt = '0.00';
     private $cost;
@@ -22,11 +23,14 @@ class SoItemDetailVo extends \BaseVo
     private $profit_raw = '0.00';
     private $margin = '0.00';
     private $margin_raw = '0.00';
-    private $status;
+    private $website_status = '';
+    private $warranty_in_month = '0';
+    private $supplier_status = '';
+    private $status = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -71,6 +75,26 @@ class SoItemDetailVo extends \BaseVo
     public function getItemSku()
     {
         return $this->item_sku;
+    }
+
+    public function setExtItemCd($ext_item_cd)
+    {
+        $this->ext_item_cd = $ext_item_cd;
+    }
+
+    public function getExtItemCd()
+    {
+        return $this->ext_item_cd;
+    }
+
+    public function setProdName($prod_name)
+    {
+        $this->prod_name = $prod_name;
+    }
+
+    public function getProdName()
+    {
+        return $this->prod_name;
     }
 
     public function setQty($qty)
@@ -131,16 +155,6 @@ class SoItemDetailVo extends \BaseVo
     public function getDiscountTotal()
     {
         return $this->discount_total;
-    }
-
-    public function setDiscount($discount)
-    {
-        $this->discount = $discount;
-    }
-
-    public function getDiscount()
-    {
-        return $this->discount;
     }
 
     public function setBundleCoreId($bundle_core_id)
@@ -241,6 +255,36 @@ class SoItemDetailVo extends \BaseVo
     public function getMarginRaw()
     {
         return $this->margin_raw;
+    }
+
+    public function setWebsiteStatus($website_status)
+    {
+        $this->website_status = $website_status;
+    }
+
+    public function getWebsiteStatus()
+    {
+        return $this->website_status;
+    }
+
+    public function setWarrantyInMonth($warranty_in_month)
+    {
+        $this->warranty_in_month = $warranty_in_month;
+    }
+
+    public function getWarrantyInMonth()
+    {
+        return $this->warranty_in_month;
+    }
+
+    public function setSupplierStatus($supplier_status)
+    {
+        $this->supplier_status = $supplier_status;
+    }
+
+    public function getSupplierStatus()
+    {
+        return $this->supplier_status;
     }
 
     public function setStatus($status)

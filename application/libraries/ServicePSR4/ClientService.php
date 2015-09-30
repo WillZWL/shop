@@ -58,7 +58,7 @@ class ClientService extends BaseService
         return false;
     }
 
-    public function objectLogin(Base_vo $obj, $loggedIn = FALSE)
+    public function objectLogin(\BaseVo $obj, $loggedIn = FALSE)
     {
         unset($_SESSION["client"]);
         $class_methods = get_class_methods($obj);
@@ -146,22 +146,21 @@ class ClientService extends BaseService
             if ($delegate instanceof CreateClientInterface)
                 $delegate->clientCreateSuccessEvent($clientObj);
 
-            if ($requireLogin)
-                $this->objectLogin($clientObj, $_SESSION["client"]["logged_in"]);
+//            if ($requireLogin)
+//                $this->objectLogin($clientObj, $_SESSION["client"]["logged_in"]);
             return $clientObj;
         }
         return false;
     }
 
     private function setClientDetail($clientObj, $clientInfo = []) {
-        $encrypt = new \CI_Encrypt();
         $clientObj->setStatus(1);
         if (isset($clientInfo["email"]))
             $clientObj->setEmail($clientInfo["email"]);
         if ($clientInfo["password"]) {
-            $clientObj->setPassword($encrypt->encode(strtolower($clientInfo["password"])));
+            $clientObj->setPassword(password_hash($clientInfo["password"], PASSWORD_DEFAULT));
         } elseif (!$clientObj->getPassword())
-            $clientObj->setPassword($encrypt->encode(mktime()));
+            $clientObj->setPassword(password_hash($clientInfo["password"], PASSWORD_DEFAULT(mktime())));
 
         if (isset($clientInfo["extClientId"]))
             $clientObj->setExtClientId($clientInfo["extClientId"]);

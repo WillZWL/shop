@@ -20,6 +20,22 @@ class ExchangeRateDao extends BaseDao
     {
         return $this->tableName;
     }
+    
+    public function getExchangeRateByPlatform($platformId, $targetCurrency)
+    {
+        $this->db->from("platform_biz_var AS pbv");
+        $this->db->join("exchange_rate AS er", "er.from_currency_id=pbv.platform_currency_id", 'INNER');
+        $this->db->where('pbv.selling_platform_id', $platformId);
+        $this->db->where('er.to_currency_id', $targetCurrency);
+        $this->db->select("er.rate");
+        $result = $this->db->get();
+
+        if (!$result) {
+            return FALSE;
+        }
+
+        return $result->result_array();
+    }
 }
 
 

@@ -5,12 +5,12 @@ class SoVo extends \BaseVo
     private $so_no;
     private $platform_order_id;
     private $platform_id;
-    private $txn_id;
-    private $client_id;
+    private $txn_id = '';
+    private $client_id = '0';
     private $biz_type;
     private $amount;
     private $cost;
-    private $vat_percent;
+    private $vat_percent = '0.00';
     private $rate = '1.000000';
     private $ref_1 = '1.000000';
     private $delivery_charge;
@@ -18,44 +18,42 @@ class SoVo extends \BaseVo
     private $weight;
     private $currency_id;
     private $lang_id = 'en';
-    private $bill_name;
-    private $bill_company;
+    private $bill_name = '';
+    private $bill_company = '';
     private $bill_address;
-    private $bill_postcode;
-    private $bill_city;
-    private $bill_state;
-    private $bill_country_id;
-    private $delivery_name;
-    private $delivery_company;
+    private $bill_postcode = '';
+    private $bill_city = '';
+    private $bill_state = '';
+    private $bill_country_id = '';
+    private $delivery_name = '';
+    private $delivery_company = '';
     private $delivery_address;
-    private $delivery_postcode;
-    private $delivery_city;
-    private $delivery_state;
-    private $delivery_country_id;
-    private $parent_so_no;
+    private $delivery_postcode = '';
+    private $delivery_city = '';
+    private $delivery_state = '';
+    private $delivery_country_id = '';
+    private $parent_so_no = '';
     private $status = '1';
-    private $refund_status;
-    private $hold_status;
-    private $promotion_code;
-    private $client_promotion_code;
+    private $refund_status = '0';
+    private $hold_status = '0';
+    private $promotion_code = '';
+    private $client_promotion_code = '';
     private $expect_delivery_date = '0000-00-00';
-    private $expect_ship_days;
-    private $expect_del_days;
+    private $expect_ship_days = '';
+    private $expect_del_days = '';
     private $order_create_date;
     private $dispatch_date = '0000-00-00 00:00:00';
-    //private $finance_dispatch_date = '0000-00-00 00:00:00';
-    private $fingerprint_id;
     private $cc_reminder_schedule_date = '0000-00-00 00:00:00';
-    private $cc_reminder_type;
-    private $cs_customer_query;
-    private $split_status;
+    private $cc_reminder_type = '';
+    private $cs_customer_query = '0';
+    private $split_status = '0';
     private $split_create_on = '0000-00-00 00:00:00';
-    private $split_create_by;
-    private $split_so_group;
+    private $split_create_by = '';
+    private $split_so_group = '';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -481,16 +479,6 @@ class SoVo extends \BaseVo
     {
         return $this->dispatch_date;
     }
-
-    /*public function setFinanceDispatchDate($finance_dispatch_date)
-    {
-        $this->finance_dispatch_date = $finance_dispatch_date;
-    }
-
-    public function getFinanceDispatchDate()
-    {
-        return $this->finance_dispatch_date;
-    }*/
 
     public function setFingerprintId($fingerprint_id)
     {

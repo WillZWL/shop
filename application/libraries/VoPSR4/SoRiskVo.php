@@ -2,22 +2,22 @@
 class SoRiskVo extends \BaseVo
 {
     private $id;
-    private $so_no;
-    private $risk_requested;
-    private $risk_var1;
-    private $risk_var2;
-    private $risk_var3;
-    private $risk_var4;
-    private $risk_var5;
-    private $risk_var6;
-    private $risk_var7;
-    private $risk_var8;
-    private $risk_var9;
-    private $risk_var10;
+    private $so_no = '';
+    private $risk_requested = '0';
+    private $risk_var1 = '';
+    private $risk_var2 = '';
+    private $risk_var3 = '';
+    private $risk_var4 = '';
+    private $risk_var5 = '';
+    private $risk_var6 = '';
+    private $risk_var7 = '';
+    private $risk_var8 = '';
+    private $risk_var9 = '';
+    private $risk_var10 = '';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 

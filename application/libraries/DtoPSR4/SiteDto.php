@@ -7,6 +7,7 @@ class SiteDto
     protected $logo;
     protected $email;
     protected $platform;
+    protected $platformType;
     protected $domainType;
     protected $siteStatus;
     protected $platformCountryId;
@@ -66,7 +67,15 @@ class SiteDto
     public function setPlatform($platform) {
         $this->platform = $platform;
     }
-    
+
+    public function getPlatformType() {
+        return $this->platformType;
+    }
+
+    public function setPlatformType($platformType) {
+        $this->platformType = $platformType;
+    }
+
     public function getDomainType() {
         return $this->domainType;
     }

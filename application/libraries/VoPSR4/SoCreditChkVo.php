@@ -3,26 +3,23 @@ class SoCreditChkVo extends \BaseVo
 {
     private $id;
     private $so_no;
-    private $t3m_is_sent = 'N';
-    private $t3m_in_file;
-    private $t3m_result;
-    private $card_holder;
-    private $card_type;
-    private $card_no;
-    private $card_bin;
-    private $card_last4;
-    private $card_exp_month;
-    private $card_exp_year;
-    private $card_start_month;
-    private $card_start_year;
-    private $card_issue_no;
-    private $fd_proc_status;
-    private $fd_status;
-    private $cc_action;
+    private $card_holder = '';
+    private $card_type = '';
+    private $card_no = '';
+    private $card_bin = '';
+    private $card_last4 = '';
+    private $card_exp_month = '';
+    private $card_exp_year = '';
+    private $card_start_month = '';
+    private $card_start_year = '';
+    private $card_issue_no = '';
+    private $fd_proc_status = '0';
+    private $fd_status = '0';
+    private $cc_action = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -47,36 +44,6 @@ class SoCreditChkVo extends \BaseVo
     public function getSoNo()
     {
         return $this->so_no;
-    }
-
-    public function setT3mIsSent($t3m_is_sent)
-    {
-        $this->t3m_is_sent = $t3m_is_sent;
-    }
-
-    public function getT3mIsSent()
-    {
-        return $this->t3m_is_sent;
-    }
-
-    public function setT3mInFile($t3m_in_file)
-    {
-        $this->t3m_in_file = $t3m_in_file;
-    }
-
-    public function getT3mInFile()
-    {
-        return $this->t3m_in_file;
-    }
-
-    public function setT3mResult($t3m_result)
-    {
-        $this->t3m_result = $t3m_result;
-    }
-
-    public function getT3mResult()
-    {
-        return $this->t3m_result;
     }
 
     public function setCardHolder($card_holder)
