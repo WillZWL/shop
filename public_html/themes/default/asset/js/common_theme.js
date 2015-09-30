@@ -272,7 +272,7 @@ var cart = {
     },
     'update': function(sku, qty) {
         $.ajax({
-            url: '/cart/ajax_update_item',
+            url: '/cart/ajaxSetItem',
             type: 'post',
             data: 'sku=' + sku + '&qty=' + (typeof(qty) != 'undefined' ? qty : 1),
             dataType: 'json',
@@ -280,6 +280,9 @@ var cart = {
                 $('#cart > button').button('loading');
             },
             success: function(json) {
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
                 $('#cart > button').button('reset');
 
                 $('#cart-total').html(json['total']);
@@ -293,7 +296,7 @@ var cart = {
     },
     'remove': function(sku) {
         $.ajax({
-            url: '/cart/ajax_remove_item',
+            url: '/cart/ajaxRemoveItem',
             type: 'post',
             data: 'sku=' + sku,
             dataType: 'json',
@@ -301,6 +304,9 @@ var cart = {
                 $('#cart > button').button('loading');
             },
             success: function(json) {
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
                 $('#cart > button').button('reset');
 
                 var out = (json['total']) ? json['total'] : '';

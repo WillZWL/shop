@@ -20,7 +20,7 @@
             <td height="30" class="title"><?= $lang["title"] ?></td>
             <td width="400" align="right" class="title"></td>
         </tr>
-        <? include("freight_header_button_v.php"); ?>
+        <?php include("freight_header_button_v.php"); ?>
         <tr>
             <td height="2" class="line"></td>
             <td height="2" class="line"></td>
@@ -34,6 +34,9 @@
         </tr>
     </table>
     <form name="fm_edit" method="post" onSubmit="return CheckForm(this)">
+        <input type="hidden" name="posted" value="1">
+        <input type="hidden" name="cmd" value="edit">
+        <input type="hidden" name="origin_country" value="<?= $origin_country ?>">
         <table border="0" cellpadding="0" cellspacing="0" class="tb_list" id="tb_data">
             <thead>
             <tr>
@@ -47,63 +50,48 @@
 
                 <?php
                 $cols = 2;
-                if ($key_country_list) {
+                if ($key_country_list) :
                     $i = 0;
-                    foreach ($key_country_list as $country_id => $country_name) {
+                    foreach ($key_country_list as $country_id => $country_name) :
                         ?>
                         <th width="90"<?= $cur_locked ?> title="<?= $country_name ?>"><?= $country_name ?></th>
                         <?php
                         $cols++;
                         $i++;
-                    }
-                }
+                    endforeach;
+                endif;
                 ?>
             </tr>
             </thead>
             <tbody>
             <?php
             $i = 0;
-            if ($key_freight_list) {
-                foreach ($key_freight_list as $cur_cat_id => $cur_cat_name) {
+            if ($key_freight_list) :
+                foreach ($key_freight_list as $cur_cat_id => $cur_cat_name) :
                     ?>
                     <tr>
                         <td height="22"></td>
                         <td nowrap style="white-space:nowrap;"><?= $cur_cat_name ?></td>
                         <?php
-                        foreach ($key_country_list as $country_id => $country_name) {
-                            if ($fcc_obj = $objlist[$cur_cat_id][$country_id]) {
-                                $cur_currency_id = $fcc_obj->get_currency_id();
-                                ?>
-                                <td nowrap style="white-space:nowrap;">
-                                    <!--<input name="value[<?= $cur_cat_id ?>][<?= $country_id ?>][currency]" type="hidden" value="<?= $cur_currency_id ?>">--><?= $cur_currency_id ?>
-                                    <input name="value[<?= $cur_cat_id ?>][<?= $country_id ?>]" class="int_input"
-                                           value="<?= $fcc_obj->get_amount() ?>" notEmpty isNumber min=0>
-                                </td>
-                            <?php
-                            }
-                        }
-                        /*
-                            if ($objlist[$cur_cat_id])
-                            {
-                                foreach ($objlist[$cur_cat_id] as $country_id=>$fcc_obj)
-                                {
-                                    var_dump($country_id, $fcc_obj);
-                                    $cur_currency_id = $fcc_obj->get_currency_id();
-                        ?>
-                        <td nowrap style="white-space:nowrap;">
-                            <input name="charge[<?=$cur_cat_id?>][<?=$fcc_obj->get_dest_country()?>]" type="hidden" value="<?=$cur_currency_id?>"><?=$cur_currency_id?>
-                            <input name="charge[<?=$cur_cat_id?>][<?=$fcc_obj->get_dest_country()?>]" class="int_input" value="<?=$fcc_obj->get_amount()?>" notEmpty isNumber min=0>
-                        </td>
-                        <?php
-                                }
-                            }
-                            */
+                        if ($key_country_list) :
+                            foreach ($key_country_list as $country_id => $country_name) :
+                                if ($fcc_obj = $objlist[$cur_cat_id][$country_id]) :
+                                    $cur_currency_id = $fcc_obj->getCurrencyId();
+                                    ?>
+                                    <td nowrap style="white-space:nowrap;">
+                                        <?= $cur_currency_id ?>
+                                        <input name="value[<?= $cur_cat_id ?>][<?= $country_id ?>]" class="int_input" value="<?= $fcc_obj->getAmount() ?>" notEmpty isNumber min=0>
+                                    </td>
+                                <?php
+                                endif;
+                            endforeach;
+                        endif;
                         ?>
                     </tr>
                     <?php
                     $i++;
-                }
-            }
+                endforeach;
+            endif;
             ?>
             </tbody>
         </table>
@@ -115,12 +103,8 @@
                 </td>
             </tr>
         </table>
-        <input type="hidden" name="posted" value="1">
-        <input type="hidden" name="cmd" value="edit">
-        <input type="hidden" name="origin_country" value="<?= $origin_country ?>">
     </form>
     <br>
-    <!--<p align="left" style="padding-left:6px"><a href="<?= base_url() ?>mastercfg/freight/region/<?= $courier_id ?>" target="region"><?= $lang["region_list"] ?></p>-->
     <?= $notice["js"] ?>
     <script>
         Ext.onReady(function () {

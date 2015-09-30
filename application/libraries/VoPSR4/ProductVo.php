@@ -3,6 +3,7 @@ class ProductVo extends \BaseVo
 {
     private $id;
     private $sku;
+    private $sku_bak = '';
     private $prod_grp_cd;
     private $colour_id;
     private $version_id;
@@ -10,52 +11,51 @@ class ProductVo extends \BaseVo
     private $freight_cat_id;
     private $cat_id;
     private $sub_cat_id;
-    private $sub_sub_cat_id;
-    private $brand_id;
-    private $clearance;
-    private $quantity;
-    private $display_quantity;
-    private $website_quantity;
-    private $ex_demo;
-    private $rrp;
-    private $image;
-    private $flash;
-    private $youtube_id;
-    private $ean;
-    private $mpn;
-    private $upc;
-    private $discount;
-    private $proc_status;
-    private $website_status;
-    private $sourcing_status;
-    private $status;
-    private $warranty_in_month;
-    private $expected_delivery_date;
-    private $lang_restricted;
-    private $cat_upselling;
+    private $sub_sub_cat_id = '0';
+    private $brand_id = '0';
+    private $clearance = '0';
+    private $surplus_quantity = '0';
+    private $slow_move_7_days = '0';
+    private $quantity = '0';
+    private $display_quantity = '0';
+    private $website_quantity = '0';
+    private $ex_demo = '0';
+    private $china_oem = '0';
+    private $rrp = '0.00';
+    private $image = '';
+    private $flash = '';
+    private $youtube_id = '';
+    private $ean = '';
+    private $mpn = '';
+    private $upc = '';
+    private $discount = '0.00';
+    private $proc_status = '0';
+    private $website_status = 'I';
+    private $sourcing_status = 'A';
+    private $expected_delivery_date = '0000-00-00 00:00:00';
+    private $warranty_in_month = '0';
+    private $cat_upselling = '0';
+    private $lang_restricted = '1';
+    private $shipment_restricted_type = '0';
+    private $status = '1';
+    private $create_on = '0000-00-00 00:00:00';
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    private $create_on;
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
-
-    private $primary_key = array("id");
-
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $primary_key = ['id'];
+    private $increment_field = 'id';
 
     public function setId($id)
     {
         $this->id = $id;
     }
 
-    public function getSku()
+    public function getId()
     {
-        return $this->sku;
+        return $this->id;
     }
 
     public function setSku($sku)
@@ -63,9 +63,19 @@ class ProductVo extends \BaseVo
         $this->sku = $sku;
     }
 
-    public function getProdGrpCd()
+    public function getSku()
     {
-        return $this->prod_grp_cd;
+        return $this->sku;
+    }
+
+    public function setSkuBak($sku_bak)
+    {
+        $this->sku_bak = $sku_bak;
+    }
+
+    public function getSkuBak()
+    {
+        return $this->sku_bak;
     }
 
     public function setProdGrpCd($prod_grp_cd)
@@ -73,9 +83,9 @@ class ProductVo extends \BaseVo
         $this->prod_grp_cd = $prod_grp_cd;
     }
 
-    public function getColourId()
+    public function getProdGrpCd()
     {
-        return $this->colour_id;
+        return $this->prod_grp_cd;
     }
 
     public function setColourId($colour_id)
@@ -83,9 +93,9 @@ class ProductVo extends \BaseVo
         $this->colour_id = $colour_id;
     }
 
-    public function getVersionId()
+    public function getColourId()
     {
-        return $this->version_id;
+        return $this->colour_id;
     }
 
     public function setVersionId($version_id)
@@ -93,9 +103,9 @@ class ProductVo extends \BaseVo
         $this->version_id = $version_id;
     }
 
-    public function getName()
+    public function getVersionId()
     {
-        return $this->name;
+        return $this->version_id;
     }
 
     public function setName($name)
@@ -103,9 +113,9 @@ class ProductVo extends \BaseVo
         $this->name = $name;
     }
 
-    public function getFreightCatId()
+    public function getName()
     {
-        return $this->freight_cat_id;
+        return $this->name;
     }
 
     public function setFreightCatId($freight_cat_id)
@@ -113,9 +123,9 @@ class ProductVo extends \BaseVo
         $this->freight_cat_id = $freight_cat_id;
     }
 
-    public function getCatId()
+    public function getFreightCatId()
     {
-        return $this->cat_id;
+        return $this->freight_cat_id;
     }
 
     public function setCatId($cat_id)
@@ -123,9 +133,9 @@ class ProductVo extends \BaseVo
         $this->cat_id = $cat_id;
     }
 
-    public function getSubCatId()
+    public function getCatId()
     {
-        return $this->sub_cat_id;
+        return $this->cat_id;
     }
 
     public function setSubCatId($sub_cat_id)
@@ -133,9 +143,9 @@ class ProductVo extends \BaseVo
         $this->sub_cat_id = $sub_cat_id;
     }
 
-    public function getSubSubCatId()
+    public function getSubCatId()
     {
-        return $this->sub_sub_cat_id;
+        return $this->sub_cat_id;
     }
 
     public function setSubSubCatId($sub_sub_cat_id)
@@ -143,9 +153,9 @@ class ProductVo extends \BaseVo
         $this->sub_sub_cat_id = $sub_sub_cat_id;
     }
 
-    public function getBrandId()
+    public function getSubSubCatId()
     {
-        return $this->brand_id;
+        return $this->sub_sub_cat_id;
     }
 
     public function setBrandId($brand_id)
@@ -153,9 +163,9 @@ class ProductVo extends \BaseVo
         $this->brand_id = $brand_id;
     }
 
-    public function getClearance()
+    public function getBrandId()
     {
-        return $this->clearance;
+        return $this->brand_id;
     }
 
     public function setClearance($clearance)
@@ -163,9 +173,29 @@ class ProductVo extends \BaseVo
         $this->clearance = $clearance;
     }
 
-    public function getQuantity()
+    public function getClearance()
     {
-        return $this->quantity;
+        return $this->clearance;
+    }
+
+    public function setSurplusQuantity($surplus_quantity)
+    {
+        $this->surplus_quantity = $surplus_quantity;
+    }
+
+    public function getSurplusQuantity()
+    {
+        return $this->surplus_quantity;
+    }
+
+    public function setSlowMove7Days($slow_move_7_days)
+    {
+        $this->slow_move_7_days = $slow_move_7_days;
+    }
+
+    public function getSlowMove7Days()
+    {
+        return $this->slow_move_7_days;
     }
 
     public function setQuantity($quantity)
@@ -173,9 +203,9 @@ class ProductVo extends \BaseVo
         $this->quantity = $quantity;
     }
 
-    public function getDisplayQuantity()
+    public function getQuantity()
     {
-        return $this->display_quantity;
+        return $this->quantity;
     }
 
     public function setDisplayQuantity($display_quantity)
@@ -183,9 +213,9 @@ class ProductVo extends \BaseVo
         $this->display_quantity = $display_quantity;
     }
 
-    public function getWebsiteQuantity()
+    public function getDisplayQuantity()
     {
-        return $this->website_quantity;
+        return $this->display_quantity;
     }
 
     public function setWebsiteQuantity($website_quantity)
@@ -193,9 +223,9 @@ class ProductVo extends \BaseVo
         $this->website_quantity = $website_quantity;
     }
 
-    public function getExDemo()
+    public function getWebsiteQuantity()
     {
-        return $this->ex_demo;
+        return $this->website_quantity;
     }
 
     public function setExDemo($ex_demo)
@@ -203,9 +233,19 @@ class ProductVo extends \BaseVo
         $this->ex_demo = $ex_demo;
     }
 
-    public function getRrp()
+    public function getExDemo()
     {
-        return $this->rrp;
+        return $this->ex_demo;
+    }
+
+    public function setChinaOem($china_oem)
+    {
+        $this->china_oem = $china_oem;
+    }
+
+    public function getChinaOem()
+    {
+        return $this->china_oem;
     }
 
     public function setRrp($rrp)
@@ -213,9 +253,9 @@ class ProductVo extends \BaseVo
         $this->rrp = $rrp;
     }
 
-    public function getImage()
+    public function getRrp()
     {
-        return $this->image;
+        return $this->rrp;
     }
 
     public function setImage($image)
@@ -223,9 +263,9 @@ class ProductVo extends \BaseVo
         $this->image = $image;
     }
 
-    public function getFlash()
+    public function getImage()
     {
-        return $this->flash;
+        return $this->image;
     }
 
     public function setFlash($flash)
@@ -233,9 +273,9 @@ class ProductVo extends \BaseVo
         $this->flash = $flash;
     }
 
-    public function getYoutubeId()
+    public function getFlash()
     {
-        return $this->youtube_id;
+        return $this->flash;
     }
 
     public function setYoutubeId($youtube_id)
@@ -243,9 +283,9 @@ class ProductVo extends \BaseVo
         $this->youtube_id = $youtube_id;
     }
 
-    public function getEan()
+    public function getYoutubeId()
     {
-        return $this->ean;
+        return $this->youtube_id;
     }
 
     public function setEan($ean)
@@ -253,9 +293,9 @@ class ProductVo extends \BaseVo
         $this->ean = $ean;
     }
 
-    public function getMpn()
+    public function getEan()
     {
-        return $this->mpn;
+        return $this->ean;
     }
 
     public function setMpn($mpn)
@@ -263,9 +303,9 @@ class ProductVo extends \BaseVo
         $this->mpn = $mpn;
     }
 
-    public function getUpc()
+    public function getMpn()
     {
-        return $this->upc;
+        return $this->mpn;
     }
 
     public function setUpc($upc)
@@ -273,9 +313,9 @@ class ProductVo extends \BaseVo
         $this->upc = $upc;
     }
 
-    public function getDiscount()
+    public function getUpc()
     {
-        return $this->discount;
+        return $this->upc;
     }
 
     public function setDiscount($discount)
@@ -283,9 +323,9 @@ class ProductVo extends \BaseVo
         $this->discount = $discount;
     }
 
-    public function getProcStatus()
+    public function getDiscount()
     {
-        return $this->proc_status;
+        return $this->discount;
     }
 
     public function setProcStatus($proc_status)
@@ -293,9 +333,9 @@ class ProductVo extends \BaseVo
         $this->proc_status = $proc_status;
     }
 
-    public function getWebsiteStatus()
+    public function getProcStatus()
     {
-        return $this->website_status;
+        return $this->proc_status;
     }
 
     public function setWebsiteStatus($website_status)
@@ -303,9 +343,9 @@ class ProductVo extends \BaseVo
         $this->website_status = $website_status;
     }
 
-    public function getSourcingStatus()
+    public function getWebsiteStatus()
     {
-        return $this->sourcing_status;
+        return $this->website_status;
     }
 
     public function setSourcingStatus($sourcing_status)
@@ -313,29 +353,9 @@ class ProductVo extends \BaseVo
         $this->sourcing_status = $sourcing_status;
     }
 
-    public function getStatus()
+    public function getSourcingStatus()
     {
-        return $this->status;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    public function getWarrantyInMonth()
-    {
-        return $this->warranty_in_month;
-    }
-
-    public function setWarrantyInMonth($warranty_in_month)
-    {
-        $this->warranty_in_month = $warranty_in_month;
-    }
-
-    public function getExpectedDeliveryDate()
-    {
-        return $this->expected_delivery_date;
+        return $this->sourcing_status;
     }
 
     public function setExpectedDeliveryDate($expected_delivery_date)
@@ -343,19 +363,19 @@ class ProductVo extends \BaseVo
         $this->expected_delivery_date = $expected_delivery_date;
     }
 
-    public function getLangRestricted()
+    public function getExpectedDeliveryDate()
     {
-        return $this->lang_restricted;
+        return $this->expected_delivery_date;
     }
 
-    public function setLangRestricted($lang_restricted)
+    public function setWarrantyInMonth($warranty_in_month)
     {
-        $this->lang_restricted = $lang_restricted;
+        $this->warranty_in_month = $warranty_in_month;
     }
 
-    public function getCatUpselling()
+    public function getWarrantyInMonth()
     {
-        return $this->cat_upselling;
+        return $this->warranty_in_month;
     }
 
     public function setCatUpselling($cat_upselling)
@@ -363,9 +383,39 @@ class ProductVo extends \BaseVo
         $this->cat_upselling = $cat_upselling;
     }
 
-    public function getCreateOn()
+    public function getCatUpselling()
     {
-        return $this->create_on;
+        return $this->cat_upselling;
+    }
+
+    public function setLangRestricted($lang_restricted)
+    {
+        $this->lang_restricted = $lang_restricted;
+    }
+
+    public function getLangRestricted()
+    {
+        return $this->lang_restricted;
+    }
+
+    public function setShipmentRestrictedType($shipment_restricted_type)
+    {
+        $this->shipment_restricted_type = $shipment_restricted_type;
+    }
+
+    public function getShipmentRestrictedType()
+    {
+        return $this->shipment_restricted_type;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     public function setCreateOn($create_on)
@@ -373,9 +423,9 @@ class ProductVo extends \BaseVo
         $this->create_on = $create_on;
     }
 
-    public function getCreateAt()
+    public function getCreateOn()
     {
-        return $this->create_at;
+        return $this->create_on;
     }
 
     public function setCreateAt($create_at)
@@ -383,9 +433,9 @@ class ProductVo extends \BaseVo
         $this->create_at = $create_at;
     }
 
-    public function getCreateBy()
+    public function getCreateAt()
     {
-        return $this->create_by;
+        return $this->create_at;
     }
 
     public function setCreateBy($create_by)
@@ -393,9 +443,9 @@ class ProductVo extends \BaseVo
         $this->create_by = $create_by;
     }
 
-    public function getModifyOn()
+    public function getCreateBy()
     {
-        return $this->modify_on;
+        return $this->create_by;
     }
 
     public function setModifyOn($modify_on)
@@ -403,9 +453,9 @@ class ProductVo extends \BaseVo
         $this->modify_on = $modify_on;
     }
 
-    public function getModifyAt()
+    public function getModifyOn()
     {
-        return $this->modify_at;
+        return $this->modify_on;
     }
 
     public function setModifyAt($modify_at)
@@ -413,9 +463,9 @@ class ProductVo extends \BaseVo
         $this->modify_at = $modify_at;
     }
 
-    public function getModifyBy()
+    public function getModifyAt()
     {
-        return $this->modify_by;
+        return $this->modify_at;
     }
 
     public function setModifyBy($modify_by)
@@ -423,8 +473,18 @@ class ProductVo extends \BaseVo
         $this->modify_by = $modify_by;
     }
 
+    public function getModifyBy()
+    {
+        return $this->modify_by;
+    }
+
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

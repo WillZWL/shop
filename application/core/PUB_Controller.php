@@ -1,45 +1,94 @@
 <?php
+use ESG\Panther\Service\LoadSiteParameterService;
+use Pimple\Container;
+use ESG\Panther\Models\Marketing\CategoryModel;
+use ESG\Panther\Models\Website\ClientModel;
+use ESG\Panther\Models\Order\SoModel;
+use ESG\Panther\Models\Website\CourierModel;
+use ESG\Panther\Models\Mastercfg\CountryModel;
+use ESG\Panther\Service as S;
+use ESG\Panther\Dao as D;
 
 class PUB_Controller extends CI_Controller
 {
     private $lang_id = 'en';
+    protected $container;
+    private static $serviceContainer;
 
-    private $allow_referer_host = '/^http[s]?:\/\/shop\.skype\.com/';
-    private $require_login = 0;
-    private $load_header = 1;
-    private $get_currency_list = 1;
+//    private $allow_referer_host = '/^http[s]?:\/\/shop\.skype\.com/';
+//    private $require_login = 0;
+//    private $load_header = 1;
+//    private $get_currency_list = 1;
 
-    function __construct($params = array())
+    function __construct()
     {
         parent::__construct();
+        $this->load->library('pagination');
+        if (!self::$serviceContainer) {
+            $sc = new \Pimple\Container;
+            $daoArr = (array) require APPPATH . 'libraries/ServicePSR4/providers.php';
+            array_walk($daoArr, function($class, $i, $sc) {
+                class_exists($class) AND $sc->register(new $class);
+            }, $sc);
+
+            self::$serviceContainer = true;
+            $this->sc = $sc;
+        }
+        $this->loadModelDependcy();
+/*
 
         if (is_array($params) && count($params) > 0) {
             $this->initialize($params);
+
         } elseif ($params) {
             $this->require_login = $params;
         }
 
-        # SBF #2284 this adds fixed portion of Tradedouble tracking code to all required pages
-        // $this->load->library('service/tradedoubler_tracking_script_service');
-        # SBF #2247
-        // $this->load->library('service/adroll_tracking_script_service');
-
-        // $this->_get_platform();
-        // $this->load->helper(array('url', 'image'));
-
-        // $_SESSION["CURRPAGE"] = str_replace($_SESSION['lang_id'] . "_" . $_SESSION['country_code_from_hook'] . "/", "", $_SERVER['REQUEST_URI']);
         $_SESSION["CURRPAGE"] = $_SERVER['REQUEST_URI'];
         $ref = isset($_SERVER['HTTP_REFERER']) ? $_SESSION['HTTP_REFERER'] : '';
 
         if ($this->is_allow_referer($ref)) {
             $_SESSION['GOBACK_URL'] = $ref;
         }
-
         if ($this->require_login) {
             $this->check_login();
         }
+*/
+        $this->loadSiteParameterService = new LoadSiteParameterService();
+        $this->loadSiteInfo();
     }
 
+    public function loadModelDependcy()
+    {
+        $this->sc['categoryModel'] = function ($c) {
+            return new CategoryModel;
+        };
+
+         $this->sc['soModel'] = function ($c) {
+            return new SoModel;
+        };
+
+        $this->sc['clientModel'] = function ($c) {
+            return new ClientModel;
+        };
+
+        $this->sc['courierModel'] = function ($c) {
+            return new CourierModel;
+        };
+        $this->sc['countryModel'] = function ($c) {
+            return new CountryModel;
+        };
+    }
+
+    protected function loadSiteInfo()
+    {
+        $stieInfo = $this->loadSiteParameterService->initSite();
+        $this->set_lang_id($stieInfo->getLangId());
+        $this->setSiteInfo($stieInfo);
+    }
+
+
+/*
     function initialize($params = array())
     {
         if (count($params) > 0) {
@@ -122,17 +171,32 @@ class PUB_Controller extends CI_Controller
             exit;
         }
     }
+*/
+    public function setSiteInfo($siteInfo)
+    {
+        $this->siteInfo = $siteInfo;
+    }
+
+    public function getSiteInfo()
+    {
+        return $this->siteInfo;
+    }
+
+    public function set_lang_id($langId)
+    {
+        $this->lang_id = $langId;
+    }
 
     public function get_lang_id()
     {
         return $this->lang_id;
     }
-
+/*
     protected function is_allow_referer($url)
     {
         return preg_match($this->allow_referer_host, $url);
     }
-
+*/
     public function check_login($back = "")
     {
         $login_url = "login";
@@ -165,14 +229,15 @@ class PUB_Controller extends CI_Controller
     // 	$this->load->view($view, $data, $return);
     // }
 
-    public function get_language_file($directory = "", $i_class = "", $method = "")
-    {
-        return $this->_get_language_file($directory, $i_class, $method);
-    }
 
-    protected function _get_language_file($directory = "", $i_class = "", $method = "")
+    public function getLanguageFile($directory = "", $i_class = "", $method = "")
     {
         return $this->load_template_language($this->load_view_language($directory, $i_class, $method));
+    }
+
+    public function get_language_file($directory = "", $i_class = "", $method = "")
+    {
+        return $this->getLanguageFile($directory, $i_class, $method);
     }
 
     protected function load_template_language($viewLanguageData = array())
@@ -247,7 +312,7 @@ class PUB_Controller extends CI_Controller
         }
         //load default laguage file
         if (!isset($vars['data']['lang_text'])) {
-            $data['data']['lang_text'] = $this->_get_language_file();
+            $data['data']['lang_text'] = $this->getLanguageFile();
         } else {
             $data['data']['lang_text'] = $vars['data']['lang_text'];
         }
@@ -338,7 +403,7 @@ class PUB_Controller extends CI_Controller
         }
         //load default laguage file
         if (!isset($vars['lang_text'])) {
-            $params['lang_text'] = $this->_get_language_file();
+            $params['lang_text'] = $this->getLanguageFile();
         } else {
             $params['lang_text'] = $vars['lang_text'];
         }

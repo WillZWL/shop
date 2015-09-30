@@ -1,11 +1,10 @@
 <?php
-namespace AtomV2\Models\Mastercfg;
+namespace ESG\Panther\Models\Mastercfg;
 
-use AtomV2\Service\CurrencyService;
+use ESG\Panther\Service\CurrencyService;
 
 class CurrencyModel extends \CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -14,7 +13,7 @@ class CurrencyModel extends \CI_Model
 
     public function getNameWIdKey()
     {
-        return $this->currencyService->getNameWIdKey();
+        return $this->currencyService->getNameWithIdKey();
     }
 
     public function updateRoundUp(&$data)
@@ -22,12 +21,13 @@ class CurrencyModel extends \CI_Model
         foreach ($_POST["round_up"] as $currency_id => $round_up) {
             if (isset($data["currency_list"][$currency_id]) && $data["currency_list"][$currency_id]->getRoundUp() != $round_up) {
                 $data["currency_list"][$currency_id]->setRoundUp($round_up);
-                if (!$this->currencyService->getDao()->update($data["currency_list"][$currency_id])) {
+                if (!$this->currencyService->getDao('Currency')->update($data["currency_list"][$currency_id])) {
                     $_SESSION["NOTICE"] = "ERROR: " . str_replace(APPPATH, "", __FILE__) . "@" . __LINE__ . " " . $this->db->_error_message();
                     return FALSE;
                 }
             }
         }
+
         return TRUE;
     }
 }

@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-include_once(APPPATH . "libraries/Service/Vb_data_transfer_service.php");
+include_once(APPPATH . "libraries/service/Vb_data_transfer_service.php");
 
 class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 {
@@ -11,9 +11,12 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 				
 		include_once(APPPATH . 'libraries/dao/Category_extend_dao.php');
 		$this->category_extend_dao = new Category_extend_dao();
+				
+		include_once(APPPATH . 'libraries/dao/Category_dao.php');
+		$this->category_dao = new Category_dao();
 		
-        include_once(APPPATH . "libraries/Service/Category_id_mapping_service.php");		
-		$this->category_id_mapping_service = new Category_id_mapping_service();
+        // include_once(APPPATH . "libraries/service/Category_id_mapping_service.php");		
+		// $this->category_id_mapping_service = new Category_id_mapping_service();
 	}
 	
 	public function get_dao()
@@ -21,10 +24,15 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 		return $this->category_extend_dao;
 	}
 	
-	public function get_map_dao()
+	public function get_cat_dao()
 	{
-		return $this->category_id_mapping_service;
+		return $this->category_dao;
 	}
+	
+	// public function get_map_dao()
+	// {
+		// return $this->category_id_mapping_service;
+	// }
 
 	public function set_dao(base_dao $dao)
 	{
@@ -44,62 +52,101 @@ class Vb_data_transfer_category_extend_service extends Vb_data_transfer_service
 		//Create return xml string
 		$xml = array();
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
-		$xml[] = '<no_updated_categories task_id="' . $task_id . '">';
+		$xml[] = '<categories task_id="' . $task_id . '">';
 					
 		$c = count($xml_vb->category);
 		foreach($xml_vb->category as $category)
 		{
 			$c--;			
-				
-			//Get the external (VB) category id to search the corresponding id in atomv2 database
-			$ext_id = $category->cat_id;
 						
-			$id = $this->category_id_mapping_service->get_local_id($ext_id);
+			//$id = $this->category_id_mapping_service->get_local_id($ext_id);
 			
-			if ($id != "" && $id != null)
+			//We look if the category exists
+			//$id = $category->cat_id;
+			
+			try
 			{
-				//category exists
-				$lang_id = "";
-				
-				if($cat_ext_atomv2 = $this->get_dao()->get(array("cat_id"=>$id, "lang_id"=>$category->lang_id)))
+				if($cat_atomv2 = $this->category_dao->get(array("id"=>$category->cat_id)))
 				{
-					$lang_id .= $cat_ext_atomv2["lang_id"];
-				}				
-				//if extend content exists, update
-				if ($lang_id != "" && $lang_id != null)
-				{
-					//Update the AtomV2 category extend data 					
-					$where = array("cat_id"=>$id, "lang_id"=>$lang_id);
-					
-					$new_cat_obj = array();
-					
-					$new_cat_obj["name"] = $category->name;
-					
-					$this->get_dao()->q_update($where, $new_cat_obj);
+					$id = $cat_atomv2->get_id();				
 				}
-				//if not exists, insert
 				else
 				{
-					$new_cat_obj = array();
-					
-					$new_cat_obj["cat_id"] = $id;
-					$new_cat_obj["lang_id"] = $lang_id;
-					$new_cat_obj["name"] = $category->name;
-					
-					$this->get_dao()->q_insert($new_cat_obj);
+					$id = "";
 				}
-			}
-			elseif ($id == "" || $id == null)
+				
+				if ($id != "" && $id != null)
+				{
+					//category exists
+					$lang_id = "";
+					
+					if($cat_ext_atomv2 = $this->get_dao()->get(array("cat_id"=>$id, "lang_id"=>$category->lang_id)))
+					{
+						$lang_id .= $cat_ext_atomv2->get_lang_id();
+					}				
+					//if extend content exists, update
+					if ($lang_id != "" && $lang_id != null)
+					{
+						/*//Update the AtomV2 category extend data 					
+						$where = array("cat_id"=>$id, "lang_id"=>$lang_id);
+						
+						$new_cat_obj = array();
+						
+						$new_cat_obj["name"] = $category->name;
+						
+						$this->get_dao()->q_update($where, $new_cat_obj);*/				
+						
+						//return result
+						$xml[] = '<category>';
+						$xml[] = '<id>' . $category->cat_id . '</id>';
+						$xml[] = '<lang_id>' . $category->lang_id . '</lang_id>';
+						$xml[] = '<status>2</status>'; //we dont update the display name of the category (only insert) --> not updated
+						$xml[] = '<is_error>' . $category->is_error . '</is_error>';
+						$xml[] = '</category>';		
+					}
+					//if not exists, insert
+					else
+					{
+						//insert				
+						$new_cat_obj = array();
+						
+						$new_cat_obj = $this->get_dao()->get();
+						$new_cat_obj->set_cat_id($category->cat_id);
+						$new_cat_obj->set_lang_id($category->lang_id);
+						$new_cat_obj->set_name($category->name);
+						$this->get_dao()->insert($new_cat_obj);		
+
+						$xml[] = '<category>';
+						$xml[] = '<id>' . $category->cat_id . '</id>';
+						$xml[] = '<lang_id>' . $category->lang_id . '</lang_id>';
+						$xml[] = '<status>5</status>'; //updated
+						$xml[] = '<is_error>' . $category->is_error . '</is_error>';
+						$xml[] = '</category>';						
+					}
+				}
+				elseif ($id == "" || $id == null)
+				{
+					//if the ext_id is not changed in atomv2, we store it in an xml string to send it to VB
+					$xml[] = '<category>';
+					$xml[] = '<id>' . $category->cat_id . '</id>';
+					$xml[] = '<lang_id>' . $category->lang_id . '</lang_id>';
+					$xml[] = '<status>2</status>'; //category not found
+					$xml[] = '<is_error>' . $category->is_error . '</is_error>';
+					$xml[] = '</category>';
+				}	
+			}	
+			catch(Exception $e)
 			{
-				//if the ext_id is not changed in atomv2, we store it in an xml string to send it to VB
 				$xml[] = '<category>';
 				$xml[] = '<id>' . $category->cat_id . '</id>';
 				$xml[] = '<lang_id>' . $category->lang_id . '</lang_id>';
+				$xml[] = '<status>4</status>'; //error
+				$xml[] = '<is_error>' . $category->is_error . '</is_error>';
 				$xml[] = '</category>';
 			}
 		 }
 		 
-		$xml[] = '</no_updated_categories>';
+		$xml[] = '</categories>';
 		
 		
 		$return_feed = implode("\n", $xml);	

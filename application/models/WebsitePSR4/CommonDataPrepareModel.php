@@ -1,8 +1,8 @@
 <?php
-namespace AtomV2\Models\Website;
+namespace ESG\Panther\Models\Website;
 
-use AtomV2\Models\Marketing\ProductModel;
-use AtomV2\Models\Marketing\PriceModel;
+use ESG\Panther\Models\Marketing\ProductModel;
+use ESG\Panther\Models\Marketing\PriceModel;
 
 class CommonDataPrepareModel extends \CI_Model
 {
@@ -81,6 +81,8 @@ class CommonDataPrepareModel extends \CI_Model
             $data["overview"] = nl2br(trim($prodInfo->get_detail_desc()));
             $data["lang_restricted"] = trim($prodInfo->get_lang_restricted());
             $data['image'] = $prodInfo->get_image();
+            $data['prod_image'] = $prod_image;
+            $data['default_image'] = $prod_image["0"]["image"];
             $data["osd_lang_list"] = $this->product_model->product_service->get_lang_osd_list();
             $data["website_status_long_text"] = trim($prodInfo->get_website_status_long_text());
             $data["website_status_short_text"] = trim($prodInfo->get_website_status_short_text());

@@ -1,82 +1,53 @@
 <?php
-namespace AtomV2\Service;
-
-use AtomV2\Dao\RegionDao;
-use AtomV2\Dao\CountryDao;
-use AtomV2\Dao\RegionCountryDao;
+namespace ESG\Panther\Service;
 
 class RegionService extends BaseService
 {
     public function __construct()
     {
-        $CI =& get_instance();
-        $CI->load->library('service/pagination_service');
-        $this->setDao(new RegionDao);
-        $this->setCountryDao(new CountryDao);
-        $this->setRegionCountryDao(new RegionCountryDao);
-        $this->pagination_service = $CI->pagination_service;
-    }
-
-    public function getCountryDao()
-    {
-        return $this->countryDao;
-    }
-
-    public function setCountryDao($dao)
-    {
-        $this->countryDao = $dao;
-    }
-
-    public function getRegionCountryDao()
-    {
-        return $this->regionCountryDao;
-    }
-
-    public function setRegionCountryDao($dao)
-    {
-        $this->regionCountryDao = $dao;
+        parent::__construct();
     }
 
     public function getRegion($id = "")
     {
         if ($id != "") {
-            $ret = $this->getDao()->get(['id' => $id]);
+            $ret = $this->getDao('Region')->get(['id' => $id]);
         } else {
-            $ret = $this->getDao()->get();
+            $ret = $this->getDao('Region')->get();
         }
         return $ret;
     }
 
     public function updateRegion($data)
     {
-        return $this->getDao()->update($data);
+        return $this->getDao('Region')->update($data);
     }
 
     public function add_region($data)
     {
-        return $this->getDao()->insert($data);
+        return $this->getDao('Region')->insert($data);
     }
 
     public function delete_region($id)
     {
-        return $this->getDao()->q_delete(["id" => "$id"]);
+        return $this->getDao('Region')->q_delete(["id" => "$id"]);
     }
 
     public function get_all_region($offset = "")
     {
-        return $this->getDao()->get([], ["offset" => $offset, "limit" => $this->pagination->get_num_records_per_page()]);
+        return $this->getDao('Region')->get([], ["offset" => $offset, "limit" => $this->pagination->get_num_records_per_page()]);
     }
 
     public function getRegionByCountryAndName($countryid, $region_name, $classname)
     {
-        return $this->getRegionCountryDao()->getRegionByCountryAndName($countryid, $region_name, $classname);
+        return $this->getDao('RegionCountry')->getRegionByCountryAndName($countryid, $region_name, $classname);
     }
 
 
     public function getCountryInRegion($value)
     {
         $rtn = [];
-        $obj_array = $this->getRegionCountryDao()->getRegionidCountryname($value, "RegionCountrynameDto");
+        $obj_array = $this->getDao('RegionCountry')->getRegionidCountryname($value, "RegionCountrynameDto");
         foreach ($obj_array as $obj) {
             $rtn[$obj->getCountryId()] = $obj->getName();
         }
@@ -97,7 +68,7 @@ class RegionService extends BaseService
     {
         $rtn = [];
         $option["limit"] = -1;
-        if ($obj_array = $this->getCountryDao()->getList($where, $option)) {
+        if ($obj_array = $this->getDao('Country')->getList($where, $option)) {
             foreach ($obj_array as $obj) {
                 $rtn[$obj->getId()] = $obj->getName();
             }
@@ -109,12 +80,12 @@ class RegionService extends BaseService
     public function addRegionCountry($region_id, $country)
     {
         $result = TRUE;
-        $obj = $this->getRegionCountryDao()->get();
+        $obj = $this->getDao('RegionCountry')->get();
         $obj->setRegionId($region_id);
         if ($country) {
             foreach ($country as $value) {
                 $obj->setCountryId($value);
-                $result = $result && $this->getRegionCountryDao()->insert($obj);
+                $result = $result && $this->getDao('RegionCountry')->insert($obj);
             }
         }
 
@@ -123,9 +94,9 @@ class RegionService extends BaseService
 
     public function delRegionCountry($region_id)
     {
-        if ($objList = $this->getRegionCountryDao()->getList(["region_id" => $region_id], ['limit' => -1])) {
+        if ($objList = $this->getDao('RegionCountry')->getList(["region_id" => $region_id], ['limit' => -1])) {
             foreach ($objList as $obj) {
-                $this->getRegionCountryDao()->delete($obj);
+                $this->getDao('RegionCountry')->delete($obj);
             }
         }
         return;
@@ -133,21 +104,21 @@ class RegionService extends BaseService
 
     public function getRegionByName($region_name = "", $type = "", $option = [])
     {
-        return $this->getDao()->getRegionByNameAndType($region_name, $type, $option);
+        return $this->getDao('Region')->getRegionByNameAndType($region_name, $type, $option);
     }
 
     public function getSellCountryList($detail = 1)
     {
         if ($detail) {
             $rs = [];
-            if ($objlist = $this->getCountryDao()->getSellCountryList($detail)) {
+            if ($objlist = $this->getDao('Country')->getSellCountryList($detail)) {
                 foreach ($objlist as $obj) {
                     $rs[$obj->getId()] = $obj->getName();
                 }
             }
             return $rs;
         } else {
-            return $this->getCountryDao()->getSellCountryList($detail);
+            return $this->getDao('Country')->getSellCountryList($detail);
         }
     }
 
@@ -155,14 +126,14 @@ class RegionService extends BaseService
     {
         if ($detail) {
             $rs = [];
-            if ($objlist = $this->getCountryDao()->getFullCountryList($detail)) {
+            if ($objlist = $this->getDao('Country')->getFullCountryList($detail)) {
                 foreach ($objlist as $obj) {
                     $rs[$obj->getId()] = $obj->getName();
                 }
             }
             return $rs;
         } else {
-            return $this->getCountryDao()->getFullCountryList($detail);
+            return $this->getDao('Country')->getFullCountryList($detail);
         }
     }
 

@@ -14,7 +14,6 @@ class aps_report extends Base_report
         $this->load->helper(array('url', 'notice'));
         $this->load->library('service/so_service');
         $this->load->library('service/price_service');
-        $this->load->library('template');
         $this->template->set_template('report');
     }
 

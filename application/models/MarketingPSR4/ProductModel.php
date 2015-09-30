@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Models\Marketing;
+namespace ESG\Panther\Models\Marketing;
 
-use AtomV2\Service\ProductService;
+use ESG\Panther\Service\ProductService;
 
 class ProductModel extends \CI_Model
 {
@@ -17,4 +17,10 @@ class ProductModel extends \CI_Model
     {
         return $this->productService->getProductInfo($where, $option);
     }
+
+    public function getCreateProductOptions()
+    {
+        return $this->productService->getCreateProductOptions();
+    }
+
 }

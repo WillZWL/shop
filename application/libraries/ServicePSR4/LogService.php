@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\LogmessageDao;
+use ESG\Panther\Dao\LogmessageDao;
 
 class LogService extends BaseService
 {
@@ -27,15 +27,15 @@ class LogService extends BaseService
         $this->setDao(new LogmessageDao);
     }
 
-    public function get_loglevel()
+    public function getLoglevel()
     {
         return $this->loglevel;
     }
 
-    public function get_log_header()
+    public function getLogHeader()
     {
         $empty_field_array = array();
-        $logmessage_obj = $this->getDao()->get();
+        $logmessage_obj = $this->getDao('Logmessage')->get();
         $class_method = get_class_methods($logmessage_obj);
         foreach ($class_method as $fct_name) {
             if (substr($fct_name, 0, 3) == "get") {
@@ -46,7 +46,7 @@ class LogService extends BaseService
         return $empty_field_array;
     }
 
-    public function write_log($data)
+    public function writeLog($data)
     {
         if ($this->logmedia["file"] == 1) {
             $this->write_log_to_file($data);
@@ -68,7 +68,7 @@ class LogService extends BaseService
         }
     }
 
-    private function write_log_to_file($data, $error = 0)
+    private function writeLogToFile($data, $error = 0)
     {
         $str = $this->logformat;
         //print_r($data);
@@ -105,7 +105,7 @@ class LogService extends BaseService
         };
     }
 
-    private function write_log_to_database($data)
+    private function writeLogToDatabase($data)
     {
         $log_message_vo = $this->getDao()->get();
         $class_methods = get_class_methods($log_message_vo);
@@ -119,8 +119,6 @@ class LogService extends BaseService
 
         try {
             $return_obj = $this->getDao()->insert($log_message_vo);
-
-//          if(!($return_obj = $this->getDao()->insert($log_message_vo)))
             if (!$return_obj) {
                 throw new Exception("Fail adding log records to database, dumping records into log file");
             }

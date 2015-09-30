@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\ApplicationFeatureDao;
+use ESG\Panther\Dao\ApplicationFeatureDao;
 
 class ApplicationFeatureService extends BaseService
 {
@@ -15,6 +15,6 @@ class ApplicationFeatureService extends BaseService
         $where = array();
         $where['role_id'] = $_SESSION['user']['role_id'];
         $where['app_id'] = $appId;
-        return $this->getDao()->getApplicationFeatureAccessRight($where);
+        return $this->getDao('ApplicationFeature')->getApplicationFeatureAccessRight($where);
     }
 }

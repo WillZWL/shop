@@ -38,6 +38,121 @@
                                                 <li class="">
                                                     <a href="<?=base_url('cat/view/44');?>"><i class=""></i><span class="menu-title"><?= _('Computing') ?></span></a>
                                                 </li>
+												<li class="bg1 topdropdow parent dropdown " >
+												   <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=45" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">Home &amp; Garden</span><b class="caret"></b></a>
+												   <div class="dropdown-menu"  style="width:700px" >
+													  <div class="dropdown-menu-inner">
+														 <div class="row">
+															<div class="mega-col col-md-6 " >
+															   <div class="mega-col-inner">
+																  <div class="pavo-widget">
+																	 <div class="pavo-widget">
+																		<h4 class="widget-heading title">Electronics</h4>
+																		<div class="">
+																		   <ul class="content list-unstyled">
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_63">
+																				 <span>Camera &amp; Photo</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_36">
+																				 <span>Computer Peripherals</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_60">
+																				 <span>Mouse &amp; Keyboards</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_35">
+																				 <span>Networking</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_61">
+																				 <span>Tablet Accessories</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_62">
+																				 <span>Wireless Routers</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_28">
+																				 <span>Monitors</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_30">
+																				 <span>Printers</span>
+																				 </a>
+																			  </li>
+																		   </ul>
+																		</div>
+																	 </div>
+																  </div>
+															   </div>
+															</div>
+															<div class="mega-col col-md-6 " >
+															   <div class="mega-col-inner">
+																  <div class="pavo-widget">
+																	 <div class="pavo-widget">
+																		<h4 class="widget-heading title">Electronics</h4>
+																		<div class="">
+																		   <ul class="content list-unstyled">
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_63">
+																				 <span>Camera &amp; Photo</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_36">
+																				 <span>Computer Peripherals</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_60">
+																				 <span>Mouse &amp; Keyboards</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_35">
+																				 <span>Networking</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_61">
+																				 <span>Tablet Accessories</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_62">
+																				 <span>Wireless Routers</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_28">
+																				 <span>Monitors</span>
+																				 </a>
+																			  </li>
+																			  <li>
+																				 <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=product/category&amp;path=25_30">
+																				 <span>Printers</span>
+																				 </a>
+																			  </li>
+																		   </ul>
+																		</div>
+																	 </div>
+																  </div>
+															   </div>
+															</div>
+														 </div>
+													  </div>
+												   </div>
+												</li>
                                             </ul>
                                         </div>
                                     </div>

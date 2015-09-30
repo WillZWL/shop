@@ -249,7 +249,6 @@ abstract class Base_dao
                     }
                 }
 
-
                 if ($this->db->insert($this->get_table_name())) {
                     if ($ic_field != "" && call_user_func(array($obj, "get_" . $ic_field)) == 0) {
                         call_user_func(array($obj, "set_" . $ic_field), $this->db->insert_id());
@@ -271,10 +270,10 @@ abstract class Base_dao
         }
     }
 
-    public function set_create(&$obj, $value = array())
+    public function set_create(&$obj, $value = [])
     {
         $ts = date("Y-m-d H:i:s");
-        $ip = $_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "127.0.0.1";
+        $ip = $_SERVER["REMOTE_ADDR"] ? ip2long($_SERVER["REMOTE_ADDR"]) : ip2long("127.0.0.1");
         $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
         @call_user_func(array($obj, "set_create_on"), $ts);
         @call_user_func(array($obj, "set_create_at"), $ip);
@@ -344,7 +343,7 @@ abstract class Base_dao
     public function set_modify(&$obj, $value = array())
     {
         $ts = date("Y-m-d H:i:s");
-        $ip = $_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "127.0.0.1";
+        $ip = $_SERVER["REMOTE_ADDR"] ? ip2long($_SERVER["REMOTE_ADDR"]) : ip2long("127.0.0.1");
         $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
         @call_user_func(array($obj, "set_modify_on"), $ts);
         @call_user_func(array($obj, "set_modify_at"), $ip);

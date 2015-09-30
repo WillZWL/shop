@@ -42,15 +42,15 @@
 </head>
 <body>
 <?php
-if ($so_obj) {
-    $so_no = $so_obj->get_so_no();
-    $split_so_group = $so_obj->get_split_so_group();
+if ($so_obj) :
+    $so_no = $so_obj->getSoNo();
+    $split_so_group = $so_obj->getSplitSoGroup();
     $splitgrouphtml = ($split_so_group) ? "<font style=\"color:red;\">(Split Group: $split_so_group)</font>" : "";
-    $curr = $so_obj->get_currency_id();
-    $so_amount = $so_obj->get_amount();
-    $delivery_country_id = $so_obj->get_delivery_country_id();
-    $promocode = $so_obj->get_promotion_code();
-}
+    $curr = $so_obj->getCurrencyId();
+    $so_amount = $so_obj->getAmount();
+    $delivery_country_id = $so_obj->getDeliveryCountryId();
+    $promocode = $so_obj->getPromotionCode();
+endif;
 ?>
 <div id="splitprocessor"
      style="width:900px;margin:auto;overflow:auto;padding:0px 50px;background-color:#FCFCFC;box-shadow:0 5px 10px rgba(0, 0, 0, 0.5);">

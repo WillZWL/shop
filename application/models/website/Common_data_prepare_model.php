@@ -1400,6 +1400,8 @@ salecycle_script;
         $sku = $url_paras["sku"];
         $type = $url_paras["type"];
 
+        $abc = $this->product_model->price_service->get(array("sku" => $sku, "listing_status" => "L", "platform_id" => PLATFORM));
+
         if (!$this->product_model->price_service->get(array("sku" => $sku, "listing_status" => "L", "platform_id" => PLATFORM))) {
             return false;
         }
@@ -1439,6 +1441,8 @@ salecycle_script;
             $data["overview"] = nl2br(trim($prod_info->get_detail_desc()));
             $data["lang_restricted"] = trim($prod_info->get_lang_restricted());
             $data['image'] = $prod_info->get_image();
+            $data['prod_image'] = $prod_image;
+            $data['default_image'] = $prod_image["0"]["image"];
             $data["osd_lang_list"] = $this->product_model->product_service->get_lang_osd_list();
             $data["website_status_long_text"] = trim($prod_info->get_website_status_long_text());
             $data["website_status_short_text"] = trim($prod_info->get_website_status_short_text());
@@ -1537,7 +1541,6 @@ salecycle_script;
                 }
             }
 
-
             if (!$sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
                 $sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
                 if ($sc_obj) {
@@ -1573,7 +1576,6 @@ salecycle_script;
                 $content = "Buy the " . $listing_info->get_prod_name() . " from ValueBasket " . PLATFORMCOUNTRYID . " with free shipping.";
                 // $listing_info->get_short_desc();
             }
-
             //
             $hcb20130830_img_tag = "";
             if (PLATFORMCOUNTRYID == 'AU' || PLATFORMCOUNTRYID == 'SG' || PLATFORMCOUNTRYID == 'MY' || PLATFORMCOUNTRYID == 'NZ' || PLATFORMCOUNTRYID == 'GB' || PLATFORMCOUNTRYID == 'PH') {
@@ -1610,31 +1612,28 @@ salecycle_script;
 
             $data["gst_msg_type"] = '';
 
-
-
-            $cross_sell_product_list = array();
             $price = $listing_info->get_price();
             //Loop 10 times.
-            for($price_adjustment = $price * 0.1, $n=0; count($cross_sell_product_list) < 6 && $n < 10; $price_adjustment += $price_adjustment)
-            {
-                $cross_sell_product_list = $this->price_margin_service->get_cross_sell_product($prod_info, PLATFORM, $this->get_lang_id(), $price, $price_adjustment);
-                $n++;
-            }
+            // for($price_adjustment = $price * 0.1, $n=0; count($cross_sell_product_list) < 6 && $n < 10; $price_adjustment += $price_adjustment)
+            // {
+            //     $cross_sell_product_list = $this->price_margin_service->get_cross_sell_product($prod_info, PLATFORM, $this->get_lang_id(), $price, $price_adjustment);
+            //     $n++;
+            // }
 
-            if(count($cross_sell_product_list) > 0)
-            {
-                foreach($cross_sell_product_list as $obj)
-                {
-                    $csp_arr[$obj->get_sku()]["sku"] = $obj->get_sku();
-                    $csp_arr[$obj->get_sku()]["prod_name"] = $obj->get_prod_name();
-                    $csp_arr[$obj->get_sku()]["stock_status"] =  $obj->get_status() == 'I'?$obj->get_qty()." ".$listing_status[$obj->get_status()]:$listing_status[$obj->get_status()];
-                    $csp_arr[$obj->get_sku()]["prod_price"] = $obj->get_price();
-                    $csp_arr[$obj->get_sku()]["prod_rrp_price"] = $this->product_model->price_service->calc_website_product_rrp($obj->get_price(), $obj->get_fixed_rrp(), $obj->get_rrp_factor());
-                    $csp_arr[$obj->get_sku()]["prod_url"] = $this->website_model->get_prod_url($obj->get_sku());
-                    $csp_arr[$obj->get_sku()]["image"] = get_image_file($obj->get_image_ext(), "s", $obj->get_sku());
-                }
-            }
-            $data["cross_sell_product_list"] = $csp_arr;
+            // if(count($cross_sell_product_list) > 0)
+            // {
+            //     foreach($cross_sell_product_list as $obj)
+            //     {
+            //         $csp_arr[$obj->get_sku()]["sku"] = $obj->get_sku();
+            //         $csp_arr[$obj->get_sku()]["prod_name"] = $obj->get_prod_name();
+            //         $csp_arr[$obj->get_sku()]["stock_status"] =  $obj->get_status() == 'I'?$obj->get_qty()." ".$listing_status[$obj->get_status()]:$listing_status[$obj->get_status()];
+            //         $csp_arr[$obj->get_sku()]["prod_price"] = $obj->get_price();
+            //         $csp_arr[$obj->get_sku()]["prod_rrp_price"] = $this->product_model->price_service->calc_website_product_rrp($obj->get_price(), $obj->get_fixed_rrp(), $obj->get_rrp_factor());
+            //         $csp_arr[$obj->get_sku()]["prod_url"] = $this->website_model->get_prod_url($obj->get_sku());
+            //         $csp_arr[$obj->get_sku()]["image"] = get_image_file($obj->get_image_ext(), "s", $obj->get_sku());
+            //     }
+            // }
+            // $data["cross_sell_product_list"] = $csp_arr;
 
             return $data;
         }

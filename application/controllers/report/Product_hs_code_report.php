@@ -15,7 +15,6 @@ class product_hs_code_report extends Base_report
         $this->load->library('service/so_service');
         $this->load->library('service/price_service');
         $this->load->library('service/category_service');
-        $this->load->library('template');
         $this->template->set_template('report');
     }
 

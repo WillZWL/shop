@@ -1,0 +1,23 @@
+CREATE TABLE `so_risk` (
+  `id` int not null auto_increment,
+  `so_no` char(8) NOT NULL DEFAULT '',
+  `risk_requested` smallint(1) NOT NULL DEFAULT '0' COMMENT '0 = waiting to request, 1=requested, 2=no need to request',
+  `risk_var1` varchar(64) NOT NULL DEFAULT '',
+  `risk_var2` varchar(64) NOT NULL DEFAULT '',
+  `risk_var3` varchar(64) NOT NULL DEFAULT '',
+  `risk_var4` varchar(64) NOT NULL DEFAULT '',
+  `risk_var5` varchar(64) NOT NULL DEFAULT '',
+  `risk_var6` varchar(64) NOT NULL DEFAULT '',
+  `risk_var7` varchar(64) NOT NULL DEFAULT '',
+  `risk_var8` varchar(64) NOT NULL DEFAULT '',
+  `risk_var9` varchar(64) NOT NULL DEFAULT '',
+  `risk_var10` varchar(1024) NOT NULL DEFAULT '',
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`id`),
+  unique KEY idx_so_risk (`so_no`,`create_on`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

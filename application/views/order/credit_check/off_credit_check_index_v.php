@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
-    <script type="text/javascript" src="<?= base_url() ?>mastercfg/payment_gateway/js_pmgwlist"></script>
+    <script type="text/javascript" src="<?= base_url() ?>mastercfg/PaymentGateway/jsPmgwlist"></script>
     <script type="text/javascript" language="javascript" src="<?= base_url() ?>js/lytebox.js"></script>
     <link rel="stylesheet" href="<?= base_url() ?>css/lytebox.css" type="text/css" media="screen"/>
 </head>

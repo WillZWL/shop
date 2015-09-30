@@ -1,7 +1,7 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Dao\SiteConfigDao;
+use ESG\Panther\Dao\SiteConfigDao;
 
 class SiteConfigService extends BaseService
 {

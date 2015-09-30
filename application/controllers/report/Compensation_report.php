@@ -12,7 +12,6 @@ class Compensation_report extends Base_report
         $this->load->model('report/compensation_report_model');
         $this->load->helper(array('url', 'notice'));
         $this->load->library('service/pagination_service');
-        $this->load->library('template');
         $this->template->set_template('report');
     }
 

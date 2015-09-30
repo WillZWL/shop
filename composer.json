@@ -1,9 +1,11 @@
 {
-    "name": "esg/atomv2",
+    "name": "esg/panther",
     "description": "Do eCommerce better :)",
     "license": "MIT",
     "require": {
-        "geoip2/geoip2": "2.3.1"
+        "geoip2/geoip2": "2.3.1",
+        "pimple/pimple": "~3.0",
+        "phpmailer/phpmailer": "~5.2"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.7"
@@ -25,7 +27,6 @@
             "ESG\\Panther\\Models\\Marketing\\": "application/models/MarketingPSR4",
             "ESG\\Panther\\Models\\CustomerService\\": "application/models/CustomerServicePSR4",
             "ESG\\Panther\\Models\\Order\\": "application/models/OrderPSR4",
-            "ESG\\Panther\\Form\\": "application/form",
             "": ["application/libraries/VoPSR4/", "application/libraries/DtoPSR4/"]
         },
         "classmap" : ["system/core/"]

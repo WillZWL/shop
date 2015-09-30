@@ -1,8 +1,9 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
-use AtomV2\Service\UserService;
-use AtomV2\Service\ApplicationFeatureService;
+use ESG\Panther\Dao\BaseDao;
+use ESG\Panther\Service\UserService;
+use ESG\Panther\Service\ApplicationFeatureService;
 
 class AuthorizationService extends BaseService
 {
@@ -12,6 +13,7 @@ class AuthorizationService extends BaseService
 
     public function __construct()
     {
+        parent::__construct();
         $this->userService = new UserService;
         $this->_appFeatureService = new ApplicationFeatureService;
     }

@@ -5,22 +5,23 @@ class Refund_item_vo extends Base_vo
 {
 
     //class variable
+    private $id;
     private $refund_id;
     private $line_no;
-    private $item_sku;
+    private $item_sku = '';
     private $qty;
     private $refund_amount = '0.00';
     private $status = 'CS';
     private $refund_type = 'C';
-    private $item_status;
-    private $stockback_date;
-    private $stockback_warehouse;
+    private $item_status = '';
+    private $stockback_date = '0000-00-00';
+    private $stockback_warehouse = '';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     //primary key
     private $primary_key = array("refund_id", "line_no");

@@ -1,8 +1,4 @@
 <?php
-use AtomV2\Models\Mastercfg\CountryModel;
-use AtomV2\Models\Mastercfg\LanguageModel;
-use AtomV2\Models\Mastercfg\CurrencyModel;
-
 class Country extends MY_Controller
 {
     private $langId = "en";
@@ -11,14 +7,9 @@ class Country extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->countryModel = new CountryModel;
-        $this->languageModel = new LanguageModel;
-        $this->currencyModel = new CurrencyModel;
-        $this->load->library("service/pagination_service");
-        $this->load->helper(["url", "notice", "object"]);
     }
 
-    public function index()
+    public function index($offset = 0)
     {
         $sub_id = $this->getAppId() . "01_" . $this->getLangId();
 
@@ -26,7 +17,7 @@ class Country extends MY_Controller
 
         $where = $option = [];
         if ($this->input->get("id") != "") {
-            $where["id LIKE"] = '%' . $this->input->get("id") . '%';
+            $where["country_id LIKE"] = '%' . $this->input->get("id") . '%';
         }
 
         if ($this->input->get("id_3_digit") != "") {
@@ -67,11 +58,8 @@ class Country extends MY_Controller
         $limit = '20';
 
         $pconfig['base_url'] = $_SESSION["clist_page"];
-        $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"]) {
-            $option["offset"] = $this->input->get("per_page");
-        }
-
+        $option["limit"] = $limit;
+        $option["offset"] = $offset;
         if (empty($sort))
             $sort = "status";
 
@@ -80,15 +68,18 @@ class Country extends MY_Controller
 
         $option["orderby"] = $sort . " " . $order;
 
-        $clist = $this->countryModel->getListWRmaFc($where, $option);
-        $data["total"] = $this->countryModel->getListWRmaFc($where, ["num_rows" => 1]);
+        $clist = $this->sc['Country']->getDao('Country')->getListWRmaFc($where, $option);
+        $total = $this->sc['Country']->getDao('Country')->getListWRmaFc($where, ["num_rows" => 1]);
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
+        $config['base_url'] = base_url('mastercfg/country/index');
+        $config['total_rows'] = $total;
+        $config['per_page'] = $limit;
 
-        $data["ar_lang"] = $this->languageModel->getNameWIdKey();
-        $data["ar_currency"] = $this->currencyModel->getNameWIdKey();
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
+
+        $data["ar_lang"] = $this->sc['languageModel']->getNameWIdKey();
+        $data["ar_currency"] = $this->sc['Currency']->getNameWithIdKey();
 
         include_once APPPATH . "language/" . $sub_id . ".php";
         $data["lang"] = $lang;
@@ -115,43 +106,42 @@ class Country extends MY_Controller
         $sub_id = $this->getAppId() . "02_" . $this->getLangId();
 
         if ($this->input->post('posted')) {
-            $cobj = $this->countryModel->get('Country', ["id" => $country]);
+            $cobj = $this->sc['Country']->getDao('Country')->get(["country_id" => $country]);
             $cobj->setId3Digit($this->input->post("id_3_digit"));
             $cobj->setStatus($this->input->post("status"));
             $cobj->setCurrencyId($this->input->post("currency_id"));
             $cobj->setLanguageId($this->input->post("language_id"));
-            $cobj->setFcId(NULL);
+            $cobj->setFcId("");
             $cobj->setAllowSell($this->input->post("allow_sell"));
-            // $cobj->setUrlEnable($this->input->post("url_enable"));
 
-            if ($this->countryModel->update('Country', $cobj) === FALSE) {
-                $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->_error_message();
+            if ($this->sc['Country']->getDao('Country')->update($cobj) === FALSE) {
+                $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->display_error();
             } else {
                 //continue updating country name in different country
                 $error = 0;
                 foreach ($_POST["langname"] as $key => $name) {
-                    $ceobj = $this->countryModel->get('CountryExt', ["lang_id" => $key, "cid" => $country]);
+                    $ceobj = $this->sc['Country']->getDao('CountryExt')->get(["lang_id" => $key, "cid" => $country]);
                     if ($ceobj) {
                         $ceobj->setName($name);
                         $action = "update";
                     } else {
-                        $ceobj = $this->countryModel->get('CountryExt');
+                        $ceobj = $this->sc['Country']->getDao('CountryExt')->get();
                         $ceobj->setCid($country);
                         $ceobj->setLangId($key);
                         $ceobj->setName($name);
                         $action = "insert";
                     }
 
-                    if ($this->countryModel->$action('CountryExt', $ceobj) === FALSE) {
+                    if ($this->sc['Country']->getDao('CountryExt')->$action($ceobj) === FALSE) {
                         $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->_error_message();
                         $error++;
                     }
                 }
 
-                if ($rma_fc_obj = $this->countryModel->get('RmaFc', ["cid" => $country])) {
+                if ($rma_fc_obj = $this->sc['Country']->getDao('RmaFc')->get(["cid" => $country])) {
                     $rma_fc_obj->setRmaFc($this->input->post('rma_fc'));
 
-                    if ($this->countryModel->update('RmaFc', $rma_fc_obj) === FALSE) {
+                    if ($this->sc['Country']->getDao('RmaFc')->update($rma_fc_obj) === FALSE) {
                         $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->_error_message();
                         $error++;
                     }
@@ -171,12 +161,12 @@ class Country extends MY_Controller
         }
 
 
-        $country_vo = $this->countryModel->get('Country', ["id" => $country]);
-        $lang_list = $this->languageModel->getList();
+        $country_vo = $this->sc['Country']->getDao('Country')->get(["country_id" => $country]);
+        $lang_list = $this->sc['languageModel']->getList();
         $name = [];
         foreach ($lang_list as $lobj) {
-            $tmp = $this->countryModel->get('CountryExt', ['cid' => $country, 'lang_id' => $lobj->getId()]);
-            $name[$lobj->getId()] = $tmp ? $tmp->getName() : "";
+            $tmp = $this->sc['Country']->getDao('CountryExt')->get(['cid' => $country, 'lang_id' => $lobj->getLangId()]);
+            $name[$lobj->getLangId()] = $tmp ? $tmp->getName() : "";
         }
 
         include_once APPPATH . "language/" . $sub_id . ".php";
@@ -184,12 +174,11 @@ class Country extends MY_Controller
         $data["country_vo"] = $country_vo;
         $data["name"] = $name;
         $data["notice"] = notice($lang);
-        $data["ar_lang"] = $this->languageModel->getNameWIdKey();
-        $data["ar_currency"] = $this->currencyModel->getNameWIdKey();
-        $data["rma_fc_vo"] = $this->countryModel->get('RmaFc', ["cid" => $country]);
+        $data["ar_lang"] = $this->sc['languageModel']->getNameWIdKey();
+        $data["ar_currency"] = $this->sc['Currency']->getNameWithIdKey();
+        $data['rmaFcVo'] = $this->sc['Country']->getDao('RmaFc')->get(["cid" => $country]);
+        // $data["rmaFcVo"] = $this->sc['Country']->getDao()->get('RmaFc', );
         $this->load->view("mastercfg/country/v_view", $data);
     }
 }
 
-
-?>

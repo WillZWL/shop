@@ -1,5 +1,5 @@
 <?php
-namespace AtomV2\Service;
+namespace ESG\Panther\Service;
 
 abstract class LandpageListingService extends BaseService
 {

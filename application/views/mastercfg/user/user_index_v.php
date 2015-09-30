@@ -110,7 +110,7 @@
         <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
     </form>
-    <?= $this->paginationService->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>

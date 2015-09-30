@@ -6,6 +6,7 @@ class Selling_platform_vo extends Base_vo
 
     //class variable
     private $id;
+	private $selling_platform_id;
     private $type = 'WEBSITE';
     private $name;
     private $description;
@@ -32,6 +33,17 @@ class Selling_platform_vo extends Base_vo
     public function set_id($value)
     {
         $this->id = $value;
+        return $this;
+    }
+	
+	public function get_selling_platform_id()
+    {
+        return $this->selling_platform_id;
+    }
+
+    public function set_selling_platform_id($value)
+    {
+        $this->selling_platform_id = $value;
         return $this;
     }
 

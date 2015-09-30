@@ -8,7 +8,6 @@ class Display extends PUB_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('template');
         $this->load->helper(array('url', 'directory', 'datetime', 'tbswrapper'));
         $this->load->model("website/home_model");
         $this->load->library('service/affiliate_service');
@@ -27,8 +26,8 @@ class Display extends PUB_Controller
             show_404();
         }
 
-        $data["content"] = "/default/display/" . $page;
-        $this->load->view('/default/display/view', $data);
+        $data["content"] = "display/" . $page;
+        $this->load->view('display/view', $data);
     }
 
     public function promotions($page = '')
