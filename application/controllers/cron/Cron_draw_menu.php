@@ -337,10 +337,11 @@ class Cron_draw_menu extends MY_Controller
 				$CategoriesTitle = "Categories";
 				//Menu header
 				$content_v2 = 
-					'<div id="header-bot">
+					//in the header.php file
+					/*'<div id="header-bot">
 					   <div class="container">
-						  <div class="row">
-							 <div class="col-lg-3 col-sm-3 col-md-3 hidden-xs hidden-sm top-verticalmenu">
+						  <div class="row">*/
+							 '<div class="col-lg-3 col-sm-3 col-md-3 hidden-xs hidden-sm top-verticalmenu">
 								<div class="menu-heading d-heading">
 								   <h4>
 									  ' . $CategoriesTitle .  '<span class="fa fa-angle-down pull-right"></span>
@@ -526,7 +527,7 @@ class Cron_draw_menu extends MY_Controller
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+							<div class="hidden-lg hidden-md col-sm-12 col-xs-12">
 								<div id="pav-mainnav" class="hidden-xs hidden-sm pull-left">
 									<nav id="pav-megamenu" class="navbar">
 										<div class="navbar-header">
@@ -537,10 +538,11 @@ class Cron_draw_menu extends MY_Controller
 										</div>
 									</nav>
 								</div>
-							</div>
-						</div>
-					</div>
-				</div>'.$eol;
+							</div>'.$eol;
+				//in the header.php file
+						// </div>
+					// </div>
+				// </div>'.$eol;
 				
 				$mobileContent .= '</ul>
 								</div>'.$eol;

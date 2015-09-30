@@ -47,65 +47,98 @@
                 <div id="header-main">
                     <div class="container">
                         <div class="row">
-                            <div class="logo inner  col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="logo inner  col-lg-3 col-md-3 col-sm-4 col-xs-4">
                                 <div class="logo-store pull-left">
                                     <a href="/">
                                         <img src='<?=base_url("/images/logo/" . SITE_LOGO)?>' class="img-responsive img-logo">
                                     </a>
                                 </div>
                             </div>
-                            <div id="search" class="pull-left col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                                <div class="quick-access">
-                                    <div class="input-group pull-right">
-                                        <input type="text" name="search" value="" placeholder="Search" class="form-control" />
-                                        <span class="input-group-btn">
-                                            <button type="button" class="button-search"><i class="fa fa-search"></i></button>
-                                        </span>
+                            <div class="logo inner col-lg-9 col-md-9 col-sm-8 col-xs-8">                                    
+                                <div class="row">
+                                    <div class="pull-left top-desc col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                       <span style="margin-left: 10px;">
+                                          We won't be beaten on electronics!
+                                       </span>
+                                       <img src="/themes/default/asset/image/icon-bag.png">
+                                    </div>   
+                                    <div class="header-links col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                        <a href="/warranty"><span class=""><?= _('Warranty') ?></span></a>&nbsp;&nbsp;&nbsp;
+                                        <a href="/contact"><span class="desc-about"><?= _('Contact Us') ?></span></a>&nbsp;&nbsp;&nbsp;
+                                        <a href="<?=base_url()?>faq/index"><span class="desc-about"><?= _('Help') ?></span></a>&nbsp;&nbsp;&nbsp;
+                                        <a href="/clearance"><span class="clearance"><?= _('Clearance') ?></span></a>&nbsp;&nbsp;&nbsp;
+                                        <?php if ($_SESSION["client"]["logged_in"]) { ?>
+                                            <a class="link-account" href="<?=base_url()?>myaccount/index">
+                                                <?= _("My Account") ?></a>
+                                        <?php } else { ?>
+                                              <a  class="link-account" href="<?=base_url()?>login/index">
+                                                <?= _("Sign in") ?></a>
+                                        <?php } ?>
+                                        
+                                    </div> 
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <ul class="list-inline header-desc">
+                                            <li >
+                                                <img src="/themes/default/asset/image/icon-refund.png">
+                                                <span><?= _("14 Days Money Back Guarantee") ?></span>
+                                            </li>
+                                            <li >
+                                                <img src="/themes/default/asset/image/icon-truck.png">
+                                                <span><?= _("Free Delivery For All Orders") ?></span>
+                                            </li>
+                                            <li >
+                                                <img src="/themes/default/asset/image/icon-win.png">
+                                                <span><?= _("Up to 2 Years Warranty") ?></span>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="account" class="inner col-lg-4 col-md-4 col-sm-12">
-                                <div class="account">
-                                    <?php if ($_SESSION["client"]["logged_in"]) { ?>
-                                        <a href="<?=base_url()?>myaccount/index">
-                                    <?php } else { ?>
-                                          <a href="<?=base_url()?>login/index">
-                                    <?php } ?>
-                                    <?= _("My Account") ?></a>
+                            </div>                            
+                        </div>
+                        <div class="row">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div id="header-bot">
+                       <div class="container">
+                          <div class="row">
+                <?php
+					$lang_id = substr(SITE_LANG, 0, 2);
+					//$menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
+					$menu_script = file_get_contents(APPPATH."views/template/menu/en/menu_webgb.html", true);
+					print $menu_script;
+				?>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 top-verticalmenu">
+                                <div class="quick-access col-lg-10 col-md-10 col-sm-8 col-xs-8">
+                                    <div id="search" class="input-group pull-right" style="margin-top: 4px;height: 24px !important;">                                        
+                                        <input type="text" name="search" value="" placeholder="Search" class="form-control"  style="height: 24px !important;" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="button-search" style="height: 24px !important;"><i class="fa fa-search"></i></button>
+                                        </span>                                 
+                                    </div> 
+                                    <span class="suggestions-title">Top search:</span>
+                                    <span class="suggestions">Sleepace, New tab s2, ghostdrone, iPhone 5c</span>
                                 </div>
-                            </div>
-                            <div id="cart-top" class=" inner col-lg-4 col-md-4 col-sm-12 hidden-xs">
-                                <div class="cart-top">
-                                    <div id="cart" class="pull-right clearfix">
-<!--                                        <div data-toggle="dropdown" data-loading-text="Loading..." class="heading media dropdown-toggle">-->
+                                <div id="cart-top" class=" inner">
+                                    <div class="cart-top">
+                                        <div id="cart" class="pull-right clearfix">
                                             <div class="cart-inner media-body">
                                                 <a href="/ReviewOrder">
-                                                    <i class="icon-cart fa fa-shopping-cart"></i>
-                                                    <span class="text-cart"><?= _('Shopping Cart') ?></span>
+                                                    <img src="/themes/default/asset/image/icon-cart.png">
                                                     <span id="cart-total" class="cart-total"><?= sprintf(_('%s item(s) - %s%s'), $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"], "$", $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"]) ?></span>
                                                     <i class="fa fa-angle-down"></i>
                                                 </a>
                                             </div>
-    <!--                                    </div> -->
-<!--
-                                        <ul class="dropdown-menu content">
-                                            <li>
-                                                <p class="text-center"><?= _('Your shopping cart is empty!') ?></p>
-                                            </li>
-                                        </ul>
--->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <?php
-					$lang_id = substr(SITE_LANG, 0, 2);
-					$menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
-					//$menu_script = file_get_contents(APPPATH."views/template/menu/en/menu_webgb.html", true);
-					print $menu_script;
-				?>
             </header>
             <!-- /header -->
             <div class="main-columns container">

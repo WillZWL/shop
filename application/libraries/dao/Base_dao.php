@@ -249,7 +249,6 @@ abstract class Base_dao
                     }
                 }
 
-
                 if ($this->db->insert($this->get_table_name())) {
                     if ($ic_field != "" && call_user_func(array($obj, "get_" . $ic_field)) == 0) {
                         call_user_func(array($obj, "set_" . $ic_field), $this->db->insert_id());

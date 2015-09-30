@@ -230,6 +230,78 @@
 }
 /*end category page*/
 
+/*start header*/
+.top-desc {
+    background: #549B17;
+    color: white !important;
+    font-family: "Oswald Regular", sans-serif;
+    text-align: center;
+    font-size: 18px !important;
+    line-height: 40px;
+}
+
+.header-desc {
+    font-family: "Oswald Normal", sans-serif;
+    color:black;
+    text-align: center;
+    font-size: 14px !important;
+    margin-top: 15px;
+}
+
+.clearance {
+    background: #549B17;
+    color: white !important;
+    text-align: center;
+    line-height: 40px;
+    padding-left:4px; 
+    padding-right:4px;
+}
+
+.header-links {
+    margin-top: 4px;
+}
+
+.header-links  .link-account {
+  color: #549B17;
+}
+
+.header-links  .link-account:hover {
+  color: white;
+}
+
+.input-search {
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 175px;
+    margin-bottom: 0;
+    height: 24px;
+    padding: 5px;
+    font-size: 11px;
+    color: #323232;
+    border: 1px solid white !important;
+    background-color: white;
+}
+
+input.btn-search {
+
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+    float: left;
+    background-color: #549B17;
+    color: white;
+    height: 24px;
+    padding: 0px !important;
+    width: 60px;
+
+    font-size: 12px;
+    font-family: "Open Sans Semibold", sans-serif;
+    border:0;
+}
+/*end header*/
+
 /*start footer*/
 .footer-fieldset {
   border-radius: 10px !important;
@@ -241,13 +313,29 @@
   border: 2px solid white !important;
 }
 
+.footer-fieldset li:first-child {
+    margin-left: 10px
+}
+.footer-fieldset li:last-child {
+     margin-right: 10px
+}
+
+.footer-fieldsetitem img {    
+  border-radius: 10px !important;
+}
+
 .footer-legend {
   font-size: 21px;
   color: white;
   border-bottom: 0;
+  margin-bottom: 0;
   padding: 5px;
   width: auto;
-  font-family: "Open Sans Semibold", sans-serif;
+  font-family: "Oswald Regular", sans-serif;
+}
+.footer-center .container .column {
+    padding-top: 30px !important;
+    padding-bottom: 0px !important;
 }
 
 .footer-center .desc-sm {
@@ -270,18 +358,16 @@
     margin: 0 auto;
 }
 .footer-center .img-footer {
-    width: 85px;
-    height: 85px;
+    vertical-align: top;
 }
 
 .input-newsletter {
-
-    border-top-left:  : 2px !important;
-    border-bottom-left: 2px !important;
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
     position: relative;
     z-index: 2;
     float: left;
-    width: 150px;
+    width: 175px;
     margin-bottom: 0;
     height: 24px;
     padding: 5px;
@@ -293,8 +379,8 @@
 
 input.btn-newsletter {
 
-    border-top-right:  : 2px !important;
-    border-bottom-right: 2px !important;
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
     float: left;
     background-color: #549B17;
     color: white;

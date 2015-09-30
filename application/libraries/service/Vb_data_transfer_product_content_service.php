@@ -87,8 +87,8 @@ class Vb_data_transfer_product_content_service extends Vb_data_transfer_service
 					$new_pc_obj["model_3"] = $pc->model_3;
 					$new_pc_obj["model_4"] = $pc->model_4;
 					$new_pc_obj["model_5"] = $pc->model_5;
-					$new_pc_obj["detail_desc"] = $pc->detail_desc;
-					$new_pc_obj["detail_desc_original"] = $pc->detail_desc_original;
+					$new_pc_obj["detail_desc"] = $this->replace_special_chars($pc->detail_desc);
+					$new_pc_obj["detail_desc_original"] = $this->replace_special_chars($pc->detail_desc_original);
 					$new_pc_obj["extra_info"] = $pc->extra_info;				
 					$new_pc_obj["website_status_long_text"] = $pc->website_status_long_text;
 					$new_pc_obj["website_status_short_text"] = $pc->website_status_short_text;
@@ -129,8 +129,8 @@ class Vb_data_transfer_product_content_service extends Vb_data_transfer_service
 					$new_pc_obj->set_model_3($pc->model_3);
 					$new_pc_obj->set_model_4($pc->model_4);
 					$new_pc_obj->set_model_5($pc->model_5);
-					$new_pc_obj->set_detail_desc($pc->detail_desc);
-					$new_pc_obj->set_detail_desc_original($pc->detail_desc_original);
+					$new_pc_obj->set_detail_desc($this->replace_special_chars($pc->detail_desc));
+					$new_pc_obj->set_detail_desc_original($this->replace_special_chars($pc->detail_desc_original));
 					$new_pc_obj->set_extra_info($pc->extra_info);				
 					$new_pc_obj->set_website_status_long_text($pc->website_status_long_text);
 					$new_pc_obj->set_website_status_short_text($pc->website_status_short_text);
