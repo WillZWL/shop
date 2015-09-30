@@ -142,15 +142,20 @@
                        $keyword_limit = ($keyword ? "&w=" . $keyword : "") . ($limit ? "&limit=" . $limit : "");
                     ?>
                     <select id="input-sort" class="form-control" onchange="location = this.value;">
-                        <option value="<?=base_url('search/index/')?>?sort=sort_order&order=ASC<?= $keyword_limit ?>" selected="selected"><?= _('Default') ?></option>
-                        <option value="<?=base_url('search/index/')?>?sort=name&order=ASC<?= $keyword_limit ?>"><?= _('Name (A - Z)') ?></option>
-                        <option value="<?=base_url('search/index/')?>?sort=name&order=DESC<?= $keyword_limit ?>"><?= _('Name (Z - A)') ?></option>
-                        <option value="<?=base_url('search/index/')?>?sort=price&order=ASC<?= $keyword_limit ?>"><?= _('Price (Low to High)') ?></option>
-                        <option value="<?=base_url('search/index/')?>?sort=price&order=DESC<?= $keyword_limit ?>"><?= _('Price (High to Low)') ?></option>
-                        <option value="<?=base_url('search/index/')?>?sort=rating&order=DESC<?= $keyword_limit ?>"><?= _('Rating (Highest)') ?></option>
-                        <option value="<?=base_url('search/index/')?>?sort=rating&order=ASC<?= $keyword_limit ?>"><?= _('Rating (Lowest)') ?></option>
-                        <option value="<?=base_url('search/index/')?>?sort=p.model&order=ASC<?= $keyword_limit ?>"><?= _('Model (A - Z)') ?></option>
-                        <option value="<?=base_url('search/index/')?>?sort=p.model&order=DESC<?= $keyword_limit ?>"><?= _('Model (Z - A)') ?></option>
+                        <option value="<?=base_url('search/index/')?>?sort=&order=<?= $keyword_limit ?>"
+                            <?= (empty($sort) && empty($order)) ? "selected='selected'" : ""?>><?= _('Default') ?></option>
+                        <option value="<?=base_url('search/index/')?>?sort=name&order=ASC<?= $keyword_limit ?>"
+                            <?= ($sort == 'name' && $order == 'ASC') ? "selected='selected'" : ""?>><?= _('Name (A - Z)') ?></option>
+                        <option value="<?=base_url('search/index/')?>?sort=name&order=DESC<?= $keyword_limit ?>"
+                            <?= ($sort == 'name' && $order == 'DESC') ? "selected='selected'" : ""?>><?= _('Name (Z - A)') ?></option>
+                        <option value="<?=base_url('search/index/')?>?sort=price&order=ASC<?= $keyword_limit ?>"
+                            <?= ($sort == 'price' && $order == 'ASC') ? "selected='selected'" : ""?>><?= _('Price (Low to High)') ?></option>
+                        <option value="<?=base_url('search/index/')?>?sort=price&order=DESC<?= $keyword_limit ?>"
+                            <?= ($sort == 'price' && $order == 'DESC') ? "selected='selected'" : ""?>><?= _('Price (High to Low)') ?></option>
+                        <option value="<?=base_url('search/index/')?>?sort=b.create_on&order=DESC<?= $keyword_limit ?>"
+                            <?= ($sort == 'b.create_on' && $order == 'DESC') ? "selected='selected'" : ""?>><?= _('New Arrivals') ?></option>
+                        <option value="<?=base_url('search/index/')?>?sort=b.modify_on&order=DESC<?= $keyword_limit ?>"
+                            <?= ($sort == 'b.modify_on' && $order == 'DESC') ? "selected='selected'" : ""?>><?= _('Last Updated') ?></option>
                     </select>
                 </div>
                 <div class="limit pull-right">
