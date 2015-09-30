@@ -70,6 +70,7 @@ class Search extends PUB_Controller
             $option['split_keyword'] = true;
             $res = $this->sc['ProductSearch']->getProductSearchList($where, $option);
             $search_list = $res['objlist'];
+            $data['skey'] = implode($res['skey']['unformated'], ',');
 
 
             $option["num_rows"] = 1;

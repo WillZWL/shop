@@ -36,7 +36,6 @@ class ProductSearchService extends BaseService
          *
          */
         $uf_arr = explode(" ", $skey);
-
         foreach ($uf_arr as $k => $v) {
             if ($v != "") {
                 $v = trim(preg_replace('/[.,`\[\]\(\)\"\';\/\\\\?*\+]/', "$replace", $v));
