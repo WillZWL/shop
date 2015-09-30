@@ -148,6 +148,6 @@ class CartSessionService extends BaseService
     }
 
     private function _createCartItem($sku, $lang, $platformId) {
-        return $this->soFactoryService->getCartItemInfo($sku, $lang, $platformId);
+        return $this->soFactoryService->getCartItemInfoLite($sku, $lang, $platformId);
     }
 }

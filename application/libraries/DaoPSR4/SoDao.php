@@ -3667,4 +3667,10 @@ SQL;
                 si.prod_sku ,si.qty ,sm.ext_sku, pr.name ,pr.create_on as sku_create_on';
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
+    
+    public function getNewSoNo()
+    {
+        return $this->db->query("SELECT next_value('so_no') as so_no")->row('so_no');
+    }
+
 }

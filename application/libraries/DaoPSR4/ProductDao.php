@@ -21,7 +21,37 @@ class ProductDao extends BaseDao
         parent::__construct();
     }
 
-    public function getCartData($where = [], $option = [], $className = "CartItemDto")
+    public function getCartDataDetail($where = [], $option = [], $className = "CartItemDto")
+    {
+        $this->db->from("product AS p");
+        $this->db->join("product_content AS pc", "pc.prod_sku=p.sku", 'LEFT');
+        $this->db->join("price AS pr", "p.sku=pr.sku", 'INNER');
+        $this->db->join("platform_biz_var pbv", "pbv.selling_platform_id=pr.platform_id", 'INNER');
+        $this->db->join("supplier_prod AS sp", "sp.prod_sku=p.sku and sp.order_default=1", 'LEFT');
+        $this->db->join("exchange_rate er", "er.from_currency_id=sp.currency_id and er.to_currency_id=pbv.platform_currency_id", 'INNER');
+        $this->db->join("freight_category fc", "p.freight_cat_id=fc.id", 'LEFT');
+
+        $select = "pbv.dec_place as decPlace, fc.weight as unitWeight, pbv.vat_percent as vatPercent, pbv.admin_fee
+                , ROUND((pbv.vat_percent * er.rate * pr.price), pbv.dec_place) as vatTotal
+                , er.rate as supplierProdExRate, pbv.platform_currency_id as platformCurrency
+                , p.sku, p.name, pc.prod_name as nameInLang
+                , pr.price, pr.listing_status as listingStatus
+                , p.website_status as websiteStatus, sp.currency_id
+                , p.warranty_in_month as warrantyInMonth
+                , ROUND((sp.cost * er.rate), pbv.dec_place) as unitCost
+                , sp.cost as supplierUnitCost
+                , sp.pricehkd as supplierUnitCostInHkd
+                , sp.supplier_status as sourcingStatus";
+
+        if (isset($option["productImage"]))
+        {
+            $this->db->join("product_image pi", "pi.sku=p.sku", 'LEFT');
+            $select .= ", pi.alt_text as image";
+        }
+        return $this->commonGetList($className, $where, $option, $select);
+    }
+
+    public function getCartDataLite($where = [], $option = [], $className = "CartItemDto")
     {
 //        $option = ["limit" => 1];
         $this->db->from("product AS p");
@@ -30,11 +60,7 @@ class ProductDao extends BaseDao
         $this->db->join("product_image pi", "pi.sku=p.sku", 'LEFT');
 
         $select = "p.sku, p.name, pc.prod_name as nameInLang, pr.price, pr.listing_status as listingStatus, p.website_status as websiteStatus, pi.alt_text as image";
-        if (isset($option["supplierCost"]))
-        {
-            $this->db->join("supplier_prod AS sp", "sp.prod_sku=p.sku and sp.order_default=1", 'LEFT');
-            $select .= ", sp.currency_id, sp.cost";
-        }
+
         return $this->commonGetList($className, $where, $option, $select);
     }
 

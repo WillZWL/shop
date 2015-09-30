@@ -28,7 +28,7 @@ class CheckoutModel extends \CI_Model
 
     public function createSaleOrder($formValue) {
         $cart = $this->getCartSessionService()->getCart();
-        var_dump($cart);
+//        var_dump($cart);
         $this->getSoFactoryService()->createSaleOrder($formValue, $cart);
     }
 
