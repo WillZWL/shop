@@ -223,7 +223,7 @@ class RefundService extends BaseService
         return false;
     }
 
-    public function create_refund($so_no)
+    public function createRefund($so_no)
     {
         $so_obj = $this->getDao('So')->get(array("so_no" => $so_no));
 

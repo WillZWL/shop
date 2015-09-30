@@ -19,10 +19,17 @@
                 <div class="product-info">
                     <div class="row">
                         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 image-container">
-                            <div class="image">
+                            <!--<div class="image">
                                 <span class="product-label exist"><span class="product-label-special"><?= _('Sale') ?></span></span>
                                 <a href="<?= get_image_file($image, 'l', $sku)?>" class="imagezoom">
                                     <img src="<?= get_image_file($image, 'l', $sku)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" class="product-image-zoom img-responsive">
+                                </a>
+                            </div>-->
+                            <div class="image">
+                                <!--<span><?= var_dump($prod_info) ?></span>-->
+                                <span class="product-label exist"><span class="product-label-special"><?= _('Sale') ?></span></span>
+                                <a href="<?= base_url($default_image)?>" class="imagezoom">
+                                    <img src="<?= base_url($default_image)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" class="product-image-zoom img-responsive">
                                 </a>
                             </div>
                             <div class="thumbs-preview horizontal">
@@ -30,55 +37,17 @@
                                     <div id="image-additional-carousel" class="owl-carousel owl-theme" style="opacity: 1; display: block;">
                                         <div class="owl-wrapper-outer">
                                             <div class="owl-wrapper" style="width: 1456px; left: 0px; display: block;">
-                                                <div class="owl-item" style="width: 104px;">
-                                                    <div class="item clearfix active">
-                                                        <a href="<?= get_image_file($image, 'l', $sku)?>" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" data-image="<?= get_image_file($image, 'l', $sku)?>">
-                                                            <img src="<?= get_image_file($image, 'l', $sku)?>" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" class="product-image-zoom img-responsive">
-                                                        </a>
+                                                <?php
+                                                    foreach ($prod_image as $img):
+                                                ?>
+                                                    <div class="owl-item" style="width: 104px;">
+                                                        <div class="item clearfix active">
+                                                            <a href="<?= base_url($img['image'])?>" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" data-image="<?= get_image_file($image, 'l', $sku)?>">
+                                                                <img src="<?= base_url($img['image'])?>" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" class="product-image-zoom img-responsive">
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                </div>
-<!--                                                 <div class="owl-item" style="width: 104px;">
-                                                    <div class="item clearfix">
-                                                        <a href="/themes/default/asset/image/demo/15-500x500.jpg" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/15-500x500.jpg" data-image="/themes/default/asset/image/demo/15-500x500.jpg">
-                                                            <img src="/themes/default/asset/image/demo/15-80x80.jpg" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="/themes/default/asset/image/demo/15-500x500.jpg" class="product-image-zoom img-responsive">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="owl-item" style="width: 104px;">
-                                                    <div class="item clearfix">
-                                                        <a href="/themes/default/asset/image/demo/16-500x500.jpg" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/16-500x500.jpg" data-image="/themes/default/asset/image/demo/16-500x500.jpg">
-                                                            <img src="/themes/default/asset/image/demo/16-80x80.jpg" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="/themes/default/asset/image/demo/16-500x500.jpg" class="product-image-zoom img-responsive">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="owl-item" style="width: 104px;">
-                                                    <div class="item clearfix">
-                                                        <a href="/themes/default/asset/image/demo/17-500x500.jpg" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/17-500x500.jpg" data-image="/themes/default/asset/image/demo/17-500x500.jpg">
-                                                            <img src="/themes/default/asset/image/demo/17-80x80.jpg" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="/themes/default/asset/image/demo/17-500x500.jpg" class="product-image-zoom img-responsive">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="owl-item" style="width: 104px;">
-                                                    <div class="item clearfix">
-                                                        <a href="/themes/default/asset/image/demo/18-500x500.jpg" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/18-500x500.jpg" data-image="/themes/default/asset/image/demo/18-500x500.jpg">
-                                                            <img src="/themes/default/asset/image/demo/18-80x80.jpg" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="/themes/default/asset/image/demo/18-500x500.jpg" class="product-image-zoom img-responsive">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="owl-item" style="width: 104px;">
-                                                    <div class="item clearfix">
-                                                        <a href="/themes/default/asset/image/demo/19-500x500.jpg" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/19-500x500.jpg" data-image="/themes/default/asset/image/demo/19-500x500.jpg">
-                                                            <img src="/themes/default/asset/image/demo/19-80x80.jpg" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="/themes/default/asset/image/demo/19-500x500.jpg" class="product-image-zoom img-responsive">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="owl-item" style="width: 104px;">
-                                                    <div class="item clearfix">
-                                                        <a href="/themes/default/asset/image/demo/20-500x500.jpg" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="/themes/default/asset/image/demo/20-500x500.jpg" data-image="/themes/default/asset/image/demo/20-500x500.jpg">
-                                                            <img src="/themes/default/asset/image/demo/20-80x80.jpg" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="/themes/default/asset/image/demo/20-500x500.jpg" class="product-image-zoom img-responsive">
-                                                        </a>
-                                                    </div>
-                                                </div> -->
+                                                <?php endforeach ?>
                                             </div>
                                         </div>
                                     </div>

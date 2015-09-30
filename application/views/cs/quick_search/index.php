@@ -6,7 +6,7 @@
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>mastercfg/profitVarHelper/jsPlatformlist"></script>
-    <script type="text/javascript" src="<?= base_url() ?>mastercfg/payment_gateway/js_pmgwlist"></script>
+    <script type="text/javascript" src="<?= base_url() ?>mastercfg/PaymentGateway/jsPmgwlist"></script>
     <script language="javascript">
         <!--
         function drawList(value) {

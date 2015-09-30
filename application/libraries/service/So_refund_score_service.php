@@ -28,10 +28,16 @@ class So_refund_score_service extends Base_service
         $this->sops_dao = $dao;
         return $dao;
     }
-
-    public function set_so_dao($dao)
+	
+	public function set_so_dao($dao)
     {
         $this->so_dao = $dao;
+        return $dao;
+    }
+
+    public function set_dao($dao)
+    {
+        $this->so_refund_score_dao = $dao;
         return $dao;
     }
 
@@ -50,10 +56,14 @@ class So_refund_score_service extends Base_service
         } else {
             $refund_score = 0;
         }
+		
+			print "1";
+		
         if (!$this->get_refund_score_vo($orderid)) {
-            $this->insert_refund_score($orderid, $refund_score);
-            $this->insert_refund_score_history($orderid, $refund_score);
-        }
+			print "2";
+            $this->insert_refund_score($orderid, $refund_score);		
+			$this->insert_refund_score_history($orderid, $refund_score);
+		}
     }
 
     public function get_so_payment_gateway_id($so_no)
@@ -63,6 +73,11 @@ class So_refund_score_service extends Base_service
         } else {
             return FALSE;
         }
+    }
+	
+	public function get_dao()
+    {
+        return $this->so_refund_score_dao;
     }
 
     public function get_sops_dao()
@@ -82,11 +97,16 @@ class So_refund_score_service extends Base_service
 
     public function insert_refund_score($so_no, $new_score)
     {
-        $new_sorf_vo = $this->get_dao()->get();
+		print $so_no;
+        $new_sorf_vo = $this->get_dao()->get();		
+		
+		print "4";
+		print $so_no;
         $new_sorf_vo->set_so_no($so_no);
+		
+		print $new_score;
         $new_sorf_vo->set_score($new_score);
         return $this->get_dao()->insert($new_sorf_vo);
-
     }
 
     public function insert_refund_score_history($so_no, $new_score)

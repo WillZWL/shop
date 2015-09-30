@@ -23,16 +23,16 @@
                                     <div class="row">
                                         <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                                             <fieldset class="footer-fieldset">
-                                              <legend class="footer-legend"><?= _(' Shop with confidence ') ?></legend>
+                                              <legend class="footer-legend"><?= _(' SHOP WITH CONFIDENCE ') ?></legend>
                                                 <ul class="list-inline">
-                                                    <li class="item-confidencebox">
-                                                        <img src="/themes/default/asset/image/thawte.png">
+                                                    <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/Confidence_thawte_EN.jpg">
                                                     </li>
-                                                    <li class="item-confidencebox">
-                                                        <img src="/themes/default/asset/image/thawte.png">
+                                                    <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/Confidence_chat_EN.jpg">
                                                     </li>
-                                                    <li class="item-confidencebox">
-                                                        <img src="/themes/default/asset/image/thawte.png">
+                                                    <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/Confidence_safe_EN.jpg">
                                                     </li>
                                                 </ul>
                                            </fieldset>
@@ -73,33 +73,33 @@
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 column">  
                                             <ul class="list-inline guarantee">
-                                                <li>
+                                                <li style="vertical-align: top;">
                                                     <div class="image-wrap">
-                                                        <img src="/themes/default/asset/image/dataprotection.png" class="img-footer">
+                                                        <img src="/themes/default/asset/image/ssl.jpg" class="img-footer">
                                                     </div>
                                                     <p class="desc-sm">
                                                         <?= _('100% Secure ') ?><br /> <?= _('with SSL encryption') ?>
                                                     </p>
                                                 </li>
-                                                <li>
+                                                <li style="vertical-align: top;">
                                                     <div class="image-wrap">
-                                                        <img src="/themes/default/asset/image/freedelivery.png" class="img-footer">
+                                                        <img src="/themes/default/asset/image/shipping.jpg" class="img-footer">
                                                     </div>
                                                     <p class="desc-sm">
                                                         <?= _('Free Delivery') ?><br /><?= _('For All Orders*') ?><br /><?= _('Shipping:') ?><br /><?= _('3-5 Working Days') ?>
                                                     </p>
                                                 </li>
-                                                <li>
+                                                <li style="vertical-align: top;">
                                                     <div class="image-wrap">
-                                                        <img src="/themes/default/asset/image/moneyback.png" class="img-footer">
+                                                        <img src="/themes/default/asset/image/moneyback.jpg" class="img-footer">
                                                     </div>
                                                     <p class="desc-sm">
                                                         <?= _('14 days ') ?><br/> <?= _('Money Back') ?><br /><?= _('Guarantee') ?><br />
                                                     </p>
                                                 </li>
-                                                <li>
+                                                <li style="vertical-align: top;">
                                                     <div class="image-wrap">
-                                                        <img src="/themes/default/asset/image/warranty.png" class="img-footer">
+                                                        <img src="/themes/default/asset/image/warranty.jpg" class="img-footer">
                                                     </div>
                                                     <p class="desc-sm">
                                                         <?= _('Warranty ') ?><br/> <?= _('Up to 2 Years') ?>
@@ -116,11 +116,11 @@
                                 <div class="panel-gray">
                                     <span class="desc-about" style="font-weight: 400;"><?= _('2015 All Right reserved') ?></span></br>
                                     <a href="/conditions"><span class="desc-about"><?= _('Conditions of Use') ?></span></a>&nbsp;|&nbsp;
-                                    <a href="/shipping"><span class="desc-about"><?= _('Shipping') ?></span></a>&nbsp;|&nbsp;
+                                    <a href='<?= site_url("/display/index/") ?>'><span class="desc-about"><?= _('Shipping') ?></span></a>&nbsp;|&nbsp;
                                     <a href="/privacy"><span class="desc-about"><?= _('Privacy Policy') ?></span></a>
                                 </div>    
                             </div>
-                            <div class="column col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <!--<div class="column col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="panel-white">
                                         <h4 class="panel-title"><?= _('SELECT SHIPPING COUNTRY') ?></h4>
                                     <div>
@@ -134,7 +134,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>

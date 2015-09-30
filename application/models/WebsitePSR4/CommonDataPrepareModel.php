@@ -81,6 +81,8 @@ class CommonDataPrepareModel extends \CI_Model
             $data["overview"] = nl2br(trim($prodInfo->get_detail_desc()));
             $data["lang_restricted"] = trim($prodInfo->get_lang_restricted());
             $data['image'] = $prodInfo->get_image();
+            $data['prod_image'] = $prod_image;
+            $data['default_image'] = $prod_image["0"]["image"];
             $data["osd_lang_list"] = $this->product_model->product_service->get_lang_osd_list();
             $data["website_status_long_text"] = trim($prodInfo->get_website_status_long_text());
             $data["website_status_short_text"] = trim($prodInfo->get_website_status_short_text());

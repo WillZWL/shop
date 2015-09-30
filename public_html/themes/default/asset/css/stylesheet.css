@@ -8070,7 +8070,7 @@ body.layout-boxed-lg #page {
 .sidebar .panel a {
   font-family: "Open Sans Semibold", sans-serif;
   line-height: 140%;
-  color:#549B17;
+  color: #549B17;
 }
 .sidebar .panel .collapse a {
   color:#fff;
@@ -8562,23 +8562,44 @@ body.layout-boxed-lg #page {
   border: 1px solid #e5e5e5;
   background: #FFFFFF;
   padding: 0 0 0 20px;
+  line-height: 100%;
 }
 /* line 54, ../development/scss/app/_modules.scss */
 #search input {
   background: transparent;
   border: none;
-  color: #000;
+  color: #878787;
   padding: 0;
   text-align: left;
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: Normal;
+  height: 32px;
+  vertical-align: center;
 }
+
+#search button {
+  line-height: 140%;
+}
+
+.suggestions-title{  
+    padding-left: 4px;
+    font-size: 11px !important;
+    font-family: "Open Sans Semibold", sans-serif;
+    color: #878787;
+}
+
+.suggestions{  
+    font-size: 11px !important;
+    font-family: "Open Sans Semibold", sans-serif;
+    color: #549B17;
+}
+
 /* line 305, ../development/scss/mixins/_app.scss */
 .rtl #search input {
   text-align: right;
 }
 /* line 63, ../development/scss/app/_modules.scss */
-#search .button-search {
+/*#search .button-search {
   color: #000;
   background: transparent;
   border: none;
@@ -8586,7 +8607,49 @@ body.layout-boxed-lg #page {
   padding: 0;
   width: 37px;
   height: 37px;
+}*/
+
+#search .button-search {
+  -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+  box-shadow:inset 0px 1px 0px 0px #ffffff;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+  background:-moz-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+  background:-webkit-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+  background:-o-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+  background:-ms-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+  background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0);
+  background-color:#ffffff;
+  border-left:1px solid #dcdcdc;
+  border-right:0;
+  border-top:0;
+  border-bottom:0;
+  display:inline-block;
+  cursor:pointer;
+  color:#559b17;
+  font-family:Arial;
+  font-size:12px;
+  font-weight:bold;
+  padding:4px 24px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #ffffff;
 }
+#search .button-search:hover {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f6f6f6), color-stop(1, #ffffff));
+  background:-moz-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+  background:-webkit-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+  background:-o-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+  background:-ms-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+  background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0);
+  background-color:#f6f6f6;
+}
+#search .button-search:active {
+  position:relative;
+  top:1px;
+}
+
 /* line 72, ../development/scss/app/_modules.scss */
 #search.search-v2 input {
   height: 60px;
@@ -11198,12 +11261,12 @@ body .owl-carousel .owl-wrapper-outer {
 }
 
 .linkcat {
-  color: white;
+  color: white !important;
   text-decoration: none;
 }
 /* line 52, ../development/scss/bootstrap/_scaffolding.scss */
 .linkcat:hover, .linkcat:focus {
-  color: #447E12;
+  color: #447E12 !important;
   text-decoration: none;
 }
 /* line 58, ../development/scss/bootstrap/_scaffolding.scss */
