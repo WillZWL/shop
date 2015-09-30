@@ -105,6 +105,20 @@
 	text-align: center;
     margin: auto;
 }
+
+/* search page */
+.no-results {
+    font-size: 14px;
+    text-align: center;
+}
+.no-results h5 {
+    color:red;
+}
+
+/* place span*/
+.span-lowercase {
+    text-transform: lowercase;
+}
 /*.guarantee li:first-child {
 	float: left;
 }

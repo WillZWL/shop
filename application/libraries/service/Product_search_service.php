@@ -80,51 +80,7 @@ class Product_search_service extends Base_service
                 var_dump($rs);
                 echo "<br>";
             }
-            /*
-            $rs2 = $this->search_by_keyword_full_match($where, $option);
 
-            if($debug == 1)
-            {
-                echo "<br>Second Level Result Set<br>";
-                var_dump($rs2);
-                echo "<br>";
-            }
-
-            if(!$option['num_rows'])
-            {
-                if($rs)
-                {
-
-                    if($rs2)
-                    {
-                        $rs = $this->merge_search_result_object($rs, $rs2);
-                    }
-                }
-                else
-                {
-                    $rs = $rs2;
-                }
-            }
-
-            if($debug == 1)
-            {
-                echo "<br>Combined Result Set<br>";
-                var_dump($rs);
-                echo "<br>";
-            }
-
-            if(!$rs || $rs == 0)
-            {
-                $rs = $this->search_by_keyword_partial_match($where, $option);
-
-                if($debug == 1)
-                {
-                    echo "<br>Third Level Result Set<br>";
-                    var_dump($rs);
-                    echo "<br>";
-                }
-            }
-            */
             return $rs;
         }
     }
