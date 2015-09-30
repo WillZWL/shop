@@ -94,6 +94,162 @@ class ProductDao extends BaseDao
         return $result_arr;
     }
 
+
+    public function searchByProductName($where, $option, $classname = "ProductSearchListDto")
+    {
+        $platform_id = $where['platform_id'];
+        $limit = $where['limit'];
+        $offset = $where['offset'];
+
+        $to_date = date("Y-m-d", time());
+        $subtract = time() - (86400 * 7);
+        $from_date = date("Y-m-d", $subtract);
+
+        $sql = "SELECT
+                    p.sku, p.prod_grp_cd, p.colour_id, p.version_id, p.name, p.freight_cat_id, p.cat_id, p.sub_cat_id, p.sub_sub_cat_id, p.brand_id, p.clearance, p.quantity,
+                    p.display_quantity, p.website_quantity, p.ex_demo, p.rrp, p.image, p.flash, p.youtube_id, p.ean, p.mpn, p.upc, p.discount, p.proc_status, p.website_status,
+                    p.sourcing_status, p.status, pc.create_on, p.create_at, p.create_by, p.modify_on, p.modify_at, p.modify_by,
+                    IFNULL(pc.prod_name, p.name) prod_name, cat.name cat_name, br.brand_name, pc.short_desc, pc.detail_desc,
+                    pr.platform_id, ex.from_currency_id, IFNULL(pr2.platform_id, '$platform_id') site_platform_id, ex.to_currency_id,
+                    ROUND(IF(pr2.price>0, pr2.price, pr.price*ex.rate),2) price, vpb.with_bundle ";
+
+        if ($option['orderby'] == 'b.sold_amount') {
+            $sql .= ",a.sold_amount";
+        }
+
+        $sql .= "
+                FROM v_product p
+                JOIN product_content pc
+                    ON (pc.prod_sku = p.sku AND p.status = 2 AND pc.lang_id = '" . $where['lang_id'] . "')
+                JOIN category cat
+                    ON (p.cat_id = cat.id)
+                JOIN brand br
+                    ON (p.brand_id = br.id)
+                LEFT JOIN (price pr, v_default_platform_id vdp)
+                    ON (p.sku = pr.sku AND pr.platform_id = vdp.platform_id AND pr.listing_status = 'L')
+                LEFT JOIN price pr2
+                    ON (p.sku = pr2.sku AND pr2.platform_id = '$platform_id')
+                JOIN platform_biz_var pbv
+                    ON (pbv.selling_platform_id = pr2.platform_id)
+                JOIN exchange_rate ex
+                    ON (pbv.platform_currency_id = ex.to_currency_id AND ex.from_currency_id = 'GBP')
+                JOIN v_product_w_bundle vpb
+                    ON (p.sku = vpb.sku)
+                ";
+
+        if ($option['orderby'] == 'b.sold_amount') {
+            $sql .= "
+                LEFT JOIN
+                (
+                    SELECT soid.item_sku, SUM(soid.qty) as sold_amount
+                    FROM so
+                    JOIN so_item_detail soid
+                        ON (so.so_no  = soid.so_no)
+                    WHERE so.create_on > '$from_date 00:00:00' AND so.create_on < '$to_date 23:59:59'
+                    GROUP BY soid.item_sku
+                )a
+                    ON (a.item_sku = p.sku)
+                ";
+        }
+        if ($option['split_keyword']) {
+            $uf_arr = $where['skey']['unformated'];
+            foreach ($uf_arr AS $key) {
+                $reg_arr[] = "pc.prod_name REGEXP '" . $key . "'";
+            }
+            $reg_script = implode(" OR ", $reg_arr);
+            $sql .= "WHERE ({$reg_script})";
+        } else {
+            $sql .= "WHERE (pc.prod_name like '%" . $where['keyword'] . "%')";
+        }
+
+        $sql .= " AND (pr2.listing_status = 'L') AND ((pr2.price OR pr.price) > 0)";
+
+        if ($where['cat_name']) {
+            $sql .= " AND cat.name = '" . $where['cat_name'] . "'";
+        }
+
+        if ($where['brand_name']) {
+            $sql .= " AND br.brand_name = '" . $where['brand_name'] . "'";
+        }
+
+        if ($where['brand_id']) {
+            $sql .= " AND br.id = '" . $where['brand_id'] . "'";
+        }
+
+        if ($where['min_price'] || $where['max_price']) {
+            $sql .= " AND (ROUND(IF(pr2.price>0, pr2.price, pr.price*ex.rate),2) > " . $where['min_price'];
+            if ($where['max_price']) {
+                $sql .= " AND ROUND(IF(pr2.price>0, pr2.price, pr.price*ex.rate),2) <= " . $where['max_price'];
+            }
+            $sql .= ")";
+        }
+
+        if ($where['with_bundle']) {
+            $sql .= " AND vpb.with_bundle = '1'";
+        }
+
+        $sql .= "
+                GROUP BY p.sku, p.prod_grp_cd, p.colour_id, p.version_id, p.name, p.freight_cat_id, p.cat_id, p.sub_cat_id, p.brand_id, p.clearance, p.quantity, p.display_quantity, p.website_quantity,
+                        p.ex_demo, p.rrp, p.image, p.flash, p.youtube_id, p.ean, p.mpn, p.upc, p.discount, p.proc_status, p.website_status, p.sourcing_status, p.status, p.create_on
+                ORDER BY pc.prod_name
+                ";
+
+        if (!$option['num_rows']) {
+            if ($option['orderby']) {
+                $sql = "SELECT *
+                        FROM
+                        (
+                            $sql
+                        )b
+                        ORDER BY " . $option['orderby'];
+            }
+
+            if ($option['groupby']) {
+                $sql = "
+                    SELECT c.sku, c.prod_name, c.price, c.brand_id, brand_name, cat_name, count(*) as num
+                    FROM
+                    (
+                        $sql
+                    )c
+                    GROUP BY " . $option['groupby'];
+            }
+
+            if ($limit) {
+                $sql .= " LIMIT $limit";
+            }
+            if ($offset) {
+                $sql .= " OFFSET $offset";
+            }
+
+            $rs = [];
+
+            if ($query = $this->db->query($sql)) {
+                if ($this->debug == 1) {
+                    echo "<br>First Level Search<br>";
+                    echo $this->db->last_query();
+                    echo "<br>";
+                }
+                foreach ($query->result($classname) as $obj) {
+                    $rs[] = $obj;
+                }
+                return $rs;
+            }
+        } else {
+            $sql = "
+                    SELECT COUNT(*) AS total
+                    FROM
+                    (
+                        $sql
+                    )t
+                    ";
+            if ($query = $this->db->query($sql)) {
+                return $query->row()->total;
+            }
+        }
+
+        return FALSE;
+    }
+
     public function getProductWPriceInfo($platform_id = 'WEBGB', $sku = "", $classname = 'WebsiteProdInfoDto')
     {
 
