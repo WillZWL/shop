@@ -17,7 +17,7 @@ class Review_order extends PUB_Controller
     public function index()
     {
         $data['cart_info'] = $this->cart_session_model->get_cart_info();
-        $this->load->view('/default/review', $data);
+        $this->load->view('review', $data);
 //        $data['data']['lang_text'] = $this->_get_language_file('', '', 'index');
 //        $item_status = $this->input->get('item_status');
 //        $removed_sku = $this->input->get('not_valid_sku');

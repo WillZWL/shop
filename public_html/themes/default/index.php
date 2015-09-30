@@ -1,9 +1,4 @@
-<?php $this->load->view('/default/header') ?>
-<div class="bottom-offcanvas">
-    <div class="container">
-        <button data-toggle="offcanvas" class="btn btn-primary visible-xs visible-sm" type="button"><i class="fa fa-bars"></i></button>
-    </div>
-</div>
+<?php $this->load->view('header') ?>
 <!-- sys-notification -->
 <div id="sys-notification">
     <div class="container">
@@ -52,11 +47,77 @@
                     </div>
 
                     <?php if ($product) : ?>
-                        <?php $this->load->view('/default/product/grid.php', ['product' => $product]); ?>
+                        <?php $this->load->view('product/grid.php', ['product' => $product]); ?>
+                    <?php endif; ?>
+                    </br>
+                    <div class="pav-container ">
+                        <div class="pav-inner container ">
+                            <div class="row row-level-1 ">
+                                <div class="row-inner clearfix">
+                                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                        <div class="col-inner ">
+                                            <div class="panel-left panel panel-default">
+                                                <div class="panel-heading nopadding hightlight text-left">
+                                                    <h3 class="panel-title">Collections</h3>  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pav-container ">
+                        <div class="pav-inner container space-40">
+                            <div class="row row-level-1 ">
+                                <div class="row-inner clearfix">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                        <div class="col-inner wow bounceInLeft">
+                                            <div class="interactive-banner space-15 interactive-banner-v1 effect-default center">
+                                                <div class="interactive-banner-body">
+                                                    <img alt="" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/banners/collection2-h3-576x320.jpg" class="img-responsive">        
+                                                    <div class="interactive-banner-profile text-center">
+                                                        <div class="banner-title">
+                                                            <h2>street collection</h2>
+                                                        </div>
+                                                        <div class="light-style">
+                                                        </div>
+                                                        <p class="action">Aenean adipiscing purus in odio aliquet gravida convallis metus.</p>
+                                                    </div>
+                                                    <a class="mask-link" href="#"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                        <div class="col-inner wow bounceInRight">
+                                            <div class="interactive-banner space-15 interactive-banner-v1 effect-default center">
+                                                <div class="interactive-banner-body">
+                                                    <img alt="" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/banners/collection1-h3-576x320.jpg" class="img-responsive">        
+                                                    <div class="interactive-banner-profile text-center">
+                                                        <div class="banner-title">
+                                                            <h2>touring collection</h2>
+                                                        </div>
+                                                        <div class="light-style">
+                                                        </div>
+                                                        <p class="action">Aenean adipiscing purus in odio aliquet gravida convallis metus.</p>
+                                                    </div>
+                                                    <a class="mask-link" href="#"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </br>
+                    <?php if ($product) : ?>
+                        <?php $this->load->view('product/grid.php', ['product' => $product]); ?>
                     <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<?php $this->load->view('/default/footer') ?>
+<?php $this->load->view('footer') ?>

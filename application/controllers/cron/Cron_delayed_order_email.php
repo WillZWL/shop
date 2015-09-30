@@ -24,7 +24,7 @@ class Cron_delayed_order_email extends MY_Controller
         include_once(APPPATH . "hooks/country_selection.php");
     }
 
-    public function get_all_minor_delay_order()
+    public function getAllMinorDelayOrder()
     {               //var_dump($this->db->last_query());
         $where = $option = array();
         $option["limit"] = -1;
@@ -37,12 +37,12 @@ class Cron_delayed_order_email extends MY_Controller
         $where["sops.payment_status"] = 'S';
         $where["sops.pay_to_account in ('paypal.value@valuebasket.com', 'paypal.au@valuebasket.com')"] = NULL;
         $where ['DATEDIFF(NOW(), so.order_create_date) > ' . MINOR_DELAY_DAY] = null;
-        if ($minor_delay_order_list = $this->delayed_order_service->get_all_minor_delay_order($where, $option)) {
+        if ($minor_delay_order_list = $this->delayed_order_service->getAllMinorDelayOrder($where, $option)) {
             foreach ((array)$minor_delay_order_list as $obj) {
                 $where_2 = $optoin_2 = array();
                 $where_2["sohr.so_no"] = $obj->so_no;
                 $where_2["sohr.reason"] = "oos";
-                if (!$this->delayed_order_service->has_oos_status($where_2, $option_2)) {
+                if (!$this->delayed_order_service->hasOosStatus($where_2, $option_2)) {
                     $delayed_order = $this->delayed_order_service->get();
                     $delayed_order->set_so_no($obj->so_no);
                     $delayed_order->set_status(INITIAL_STATUS);
@@ -66,7 +66,7 @@ class Cron_delayed_order_email extends MY_Controller
         $where["so.refund_status"] = 0;
         $optoin['limit'] = -1;
 
-        if ($minor_delay_order = $this->delayed_order_service->get_delay_order($where, $option)) {
+        if ($minor_delay_order = $this->delayed_order_service->getDelayOrder($where, $option)) {
             foreach ($minor_delay_order as $obj) {
                 $so_no = $obj->so_no;
                 $platform_id = $obj->platform_id;
@@ -92,7 +92,7 @@ class Cron_delayed_order_email extends MY_Controller
         $where_2['DATEDIFF(NOW(), deor.modify_on) > 7'] = null;
         $optoin_2['limit'] = -1;
 
-        if ($major_delay_order = $this->delayed_order_service->get_delay_order($where_2, $optoin_2)) {
+        if ($major_delay_order = $this->delayed_order_service->getDelayOrder($where_2, $optoin_2)) {
             foreach ($major_delay_order as $obj) {
                 $so_no = $obj->so_no;
                 $platform_id = $obj->platform_id;

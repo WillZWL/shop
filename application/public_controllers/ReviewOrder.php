@@ -1,23 +1,32 @@
 <?php
 
+use ESG\Panther\Models\Website\CartSessionModel;
+
 class ReviewOrder extends PUB_Controller
 {
 
     public function __construct()
     {
         parent::__construct();
+/*
         $this->load->model('website/cart_session_model');
         $this->load->model('website/checkout_model');
         $this->load->library('service/context_config_service');
         $this->load->library('service/complementary_acc_service');
         $this->load->library('service/affiliate_service');
         $this->load->library('service/tradedoubler_tracking_script_service');
+*/
+        $this->cartSessionModel = new CartSessionModel;
     }
 
     public function index()
     {
-        $data['cart_info'] = $this->cart_session_model->get_cart_info();
-        $this->load->view('/default/review', $data);
+        $data['cartInfo'] = $this->cartSessionModel->getCartInfo(true);
+//        var_dump($data['cartInfo']);
+        if ($data['cartInfo'])
+            $this->load->view('review', $data);
+        else
+            $this->load->view('reviewEmptyCart', $data);
 //        $data['data']['lang_text'] = $this->_get_language_file('', '', 'index');
 //        $item_status = $this->input->get('item_status');
 //        $removed_sku = $this->input->get('not_valid_sku');

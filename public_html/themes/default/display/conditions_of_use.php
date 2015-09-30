@@ -1,5 +1,5 @@
                 <div class="contacts">
-                    <h2><?= _('Terms and Conditions') ?></h2>
+                    <h2><?= _('Term and Conditions') ?></h2>
                     <h3><?= _('DigitalDiscount.co.uk Conditions of Use and Sale') ?></h3>
                     <br />
 
@@ -12,6 +12,7 @@
                         <li><a href="#delivery"><?= _('DELIVERY') ?></a></li>
                         <li><a href="#cancel_order"><?= _('CANCELLING YOUR ORDER') ?></a></li>
                         <li><a href="#defective"><?= _('DEFECTIVE ITEM') ?></a></li>
+                        <li><a href="#warranties"><?= _('PRODUCT WARRANTIES') ?></a></li>
                         <li><a href="#liability"><?= _('DISCLAIMER OF LIABILITY') ?></a></li>
                         <li><a href="#security"><?= _('SECURITY') ?></a></li>
                         <li><a href="#revisions"><?= _('CONDITIONS OF USE REVISIONS') ?></a></li>
@@ -92,6 +93,41 @@
                     <br />
                     <p><?= _('During the RMA process, ChatandVision Ltd will follow up with you via email on issues requiring your clarification and agreement, using the trading name DigitalDiscount. If no response is received from you within 7 days from the date of emailing, ChatandVision will follow up with a kind reminder in the form of a 1st and 2nd email at 7 day intervals. In the event no response is received within 7 days of the 2nd email being sent, ChatandVision will send a 3rd and final reminder email together with a recorded letter. Should no response be received within 2 weeks from date of final reminders, ChatandVision reserves the right to dispose of the RMA item(s) at its discretion in any way seen fit.') ?></p>
 
+                    <br /><br />
+
+                    <h3 id="warranties"><?= _('PRODUCT WARRANTIES') ?></h3>
+                    <p>
+                        <?= _('All products, unless otherwise stated in the product listing, are supplied with an in-house warranty where our facilities are able to process all returns for a quick and efficient all-round service. The warranty period may vary for different product categories. The table below sets out the applicable warranty period commencing from the date of receipt for the Product.') ?>
+                        <br /><br />
+                        <table border="1">
+                        <tr>
+                          <th></th>
+                          <th colspan="5">Type of product</th>
+                        </tr>
+                        <tr>
+                          <th>Country</th>
+                          <th>Accessories</th>
+                          <th>Waterproof</th>
+                          <th>Main items</th>
+                          <th>Action Camera</th>
+                          <th>Drones</th>
+                        </tr>
+                        <tr>
+                        <td>Great Britain</td>
+                        <td>0 months</td>
+                        <td>12 months</td>
+                        <td>12 months</td>
+                        <td>12 months</td>
+                        <td>12 months</td>
+                        </tr>
+                        </table>
+                        <?= _('This warranty does not cover:
+                                - Damage, fault or failure due to alteration or repairs made by anyone other than us
+                                - Dents, scratches, and other conditions to the product that occur over time considered as normal wear and tear
+                                - Accidental damage (including but not limited to shock, impact, dropping, water damage or sand damage)
+                                - Not satisfied with the product
+                            ') ?>
+                    </p>
                     <br /><br />
 
                     <h3 id="liability"><?= _('DISCLAIMER OF LIABILITY') ?></h3>

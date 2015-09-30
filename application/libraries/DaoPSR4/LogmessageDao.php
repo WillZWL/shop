@@ -1,5 +1,5 @@
 <?php
-namespace AtomV2\Dao;
+namespace ESG\Panther\Dao;
 
 Class LogmessageDao extends BaseDao
 {

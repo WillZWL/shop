@@ -1,0 +1,28 @@
+#Table name
+data
+
+#Input column name	Output column name	Specify value
+	A/C No.	70546452
+	Shipper	ValueBasket.com Limited
+	Shipper Address 1	BLOCK B 7/F.
+	Shipper Address 2	Great Wall Factory Building
+	Shipper Address 3	11 Cheung Shun Street
+	City	Lai Chi Kok
+	Country	HK
+	Shipper Contact	39043034
+delivery_name	Receiver
+delivery_address1	Receiver Address 1
+delivery_address2	Receiver Address 2
+delivery_address3	Receiver Address 3
+delivery_city	City
+delivery_postcode	ZipCode
+delivery_country_id	Country
+tel	Receiver Contact
+cc_desc	General Description
+cc_code	HS Code
+order_cost	Total Collect
+declared_value	Declare
+currency_id	Currency
+qty	No. of Item
+prod_weight	Total kg
+added_service	Added Services

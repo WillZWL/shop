@@ -1,5 +1,5 @@
 <?php
-namespace AtomV2\Dao;
+namespace ESG\Panther\Dao;
 
 class UserDao extends BaseDao
 {
@@ -23,7 +23,6 @@ class UserDao extends BaseDao
 
     public function getMenuByUserId($user_id, $app_group_id, $classname = "RoleAppDto")
     {
-        // $this->includeDto($classname);
         $sql = "
                     select
                         distinct a.*
@@ -36,7 +35,6 @@ class UserDao extends BaseDao
                     a.app_group_id = '" . $app_group_id . "' and a.status=1 and display_row=1 order by a.display_order;";
         $rs = array();
         if ($query = $this->db->query($sql, $user_id)) {
-            // var_dump($this->db->last_query());
             foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
@@ -48,7 +46,6 @@ class UserDao extends BaseDao
 
     public function isAllowedToCancelOrderByRole($user_id, $classname = "RoleAppDto")
     {
-        // $this->includeDto($classname);
         $sql = "
                     SELECT role_id FROM user_role WHERE user_id =? AND (role_id = 'admin' OR role_id = 'com_lead' OR role_id = 'com_man' OR role_id = 'com_staff')
                 ";
@@ -65,9 +62,6 @@ class UserDao extends BaseDao
 
     public function getMenuItem($user_id = "", $classname = "")
     {
-
-        // $this->includeDto($classname);
-
         $sql = "
                 SELECT DISTINCT a.id AS app_id, a.app_name, a.parent_app_id, a.description, a.display_order
                 FROM user_role ur
@@ -99,9 +93,6 @@ class UserDao extends BaseDao
 
     public function getAppRights($user_id = "", $app_id = "", $classname = "")
     {
-
-        // $this->includeDto($classname);
-
         $sql = "
                 SELECT DISTINCT r.app_id, r.id AS rights_id, r.rights
                 FROM user_role ur
@@ -193,37 +184,17 @@ class UserDao extends BaseDao
                     GROUP BY us.id
                 ) AS rn', 'u.id = rn.id', 'LEFT');
 
-        if (!empty($where["id"])) {
-            $this->db->like('u.id', $where["id"]);
-        }
-
-        if (!empty($where["username"])) {
-            $this->db->like('u.username', $where["username"]);
-        }
-
-        if (!empty($where["email"])) {
-            $this->db->like('u.email', $where["email"]);
-        }
-
-        if (isset($where["status"]) && is_integer($where["status"])) {
-            $this->db->where('u.status', $where["status"]);
-        }
-
-        if (!empty($where["roles"])) {
-            $this->db->like('rn.roles', $where["roles"]);
-        }
-
         if (empty($option["orderby"])) {
             $option["orderby"] = "u.id ASC";
         }
 
         if (empty($option["num_rows"])) {
 
-            // $this->includeDto($classname);
-
             $this->db->select('u.id, u.username, u.email, u.status, rn.roles, u.create_on, u.create_at, u.create_by, u.modify_on, u.modify_at, u.modify_by');
 
-            $this->db->order_by($option["orderby"]);
+            if (isset($option["orderby"])) {
+                $this->db->order_by($option["orderby"]);
+            }
 
             if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
@@ -235,20 +206,20 @@ class UserDao extends BaseDao
                 $option["offset"] = 0;
             }
 
-            if (!empty($this->rows_limit)) {
-                $this->db->limit($option["limit"], $option["offset"]);
-            }
-
-            $rs = array();
-
-            if ($query = $this->db->get()) {
+            if ($query = $this->db->get_where('', $where, $option["limit"], $option["offset"])) {
+                $classname = ($classname) ? : $this->getVoClassname();
+                $rs = [];
                 foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
-                return (object)$rs;
-            }
 
+                return $rs;
+            }
         } else {
+            if ($where !== NULL)
+            {
+                $this->db->where($where);
+            }
             $this->db->select('COUNT(*) AS total');
             if ($query = $this->db->get()) {
                 return $query->row()->total;

@@ -33,26 +33,24 @@
                 <select name="country_id"
                         onChange="Redirect('<?= base_url() ?>mastercfg/custom_class/index/'+this.value)">
                     <option value="">
-                        <?php
-                        if ($countrylist){
+                    <?php
+                    if ($countrylist) :
                         $selected[$country_id] = "SELECTED";
-                        foreach ($countrylist as $country)
-                        {
+                        foreach ($countrylist as $country) :
                         ?>
                     <option
-                        value="<?= $country->get_id() ?>" <?= $selected[$country->get_id()] ?>><?= $country->get_name() ?>
+                        value="<?= $country->getCountryId() ?>" <?= @$selected[$country->getCountryId()] ?>><?= $country->getName() ?>
                         <?php
-                        }
-                        }
-                        ?>
+                        endforeach;
+                    endif;
+                    ?>
                 </select>
             </td>
         </tr>
     </table>
-    <?php
-    if ($country_id)
-    {
-    ?>
+<?php
+if ($country_id) :
+?>
     <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
         <col width="20">
         <col width="120">
@@ -73,7 +71,7 @@
             <tr class="add_row">
                 <td></td>
                 <?php
-                if ($cmd == "add") {
+                if ($cmd == "add") :
                     ?>
                     <td></td>
                     <td><input name="code" class="input" value="<?= $this->input->post("code") ?>" notEmpty maxLen=20>
@@ -83,14 +81,14 @@
                     <td><input name="duty_pcent" class="input" value="<?= $this->input->post("duty_pcent") ?>" notEmpty
                                isNumber min=0></td>
                 <?php
-                } else {
+                else :
                     ?>
                     <td></td>
                     <td><input name="code" class="input" notEmpty maxLen=20></td>
                     <td><input name="description" class="input" maxLen=255></td>
                     <td><input name="duty_pcent" class="input" notEmpty isNumber min=0></td>
                 <?php
-                }
+                endif;
                 ?>
                 <td align="center"><input type="submit" value="<?= $lang["add"] ?>"></td>
             </tr>
@@ -108,16 +106,16 @@
                 <td height="20"><img src="<?= base_url() ?>images/expand.png" class="pointer"
                                      onClick="Expand(document.getElementById('tr_search'));"></td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'id', '<?= $xsort["id"] ?>')"><?= $lang["id"] ?> <?= $sortimg["id"] ?></a>
+                       onClick="SortCol(document.fm, 'id', '<?= @$xsort["id"] ?>')"><?= $lang["id"] ?> <?= @$sortimg["id"] ?></a>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'code', '<?= $xsort["code"] ?>')"><?= $lang["code"] ?> <?= $sortimg["code"] ?></a>
+                       onClick="SortCol(document.fm, 'code', '<?= @$xsort["code"] ?>')"><?= $lang["code"] ?> <?= @$sortimg["code"] ?></a>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'description', '<?= $xsort["description"] ?>')"><?= $lang["description"] ?> <?= $sortimg["description"] ?></a>
+                       onClick="SortCol(document.fm, 'description', '<?= @$xsort["description"] ?>')"><?= $lang["description"] ?> <?= @$sortimg["description"] ?></a>
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'duty_pcent', '<?= $xsort["duty_pcent"] ?>')"><?= $lang["duty_pcent"] ?> <?= $sortimg["duty_pcent"] ?></a>
+                       onClick="SortCol(document.fm, 'duty_pcent', '<?= @$xsort["duty_pcent"] ?>')"><?= $lang["duty_pcent"] ?> <?= @$sortimg["duty_pcent"] ?></a>
                 </td>
                 <td></td>
             </tr>
@@ -137,31 +135,29 @@
         </form>
         <?php
         $i = 0;
-        if (!empty($cclist)) {
-            foreach ($cclist as $cc) {
-                $is_edit = ($cmd == "edit" && $cc_id == $cc->get_id());
+        if (!empty($cclist)) :
+            foreach ($cclist as $cc) :
+                $is_edit = ($cmd == "edit" && $cc_id == $cc->getId());
                 ?>
 
-                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
-                    onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){
-                ?>onClick="Redirect('<?= site_url('mastercfg/custom_class/index/' . $country_id . '/' . $cc->get_id()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"<?
-                }?>>
+                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" <?=(!($is_edit)) ? "onClick=Redirect('". site_url('mastercfg/custom_class/index/' . $country_id ."/".$cc->getId())."/". $offset ."/?".$_SERVER['QUERY_STRING']."')" : ""?> onMouseOut="RemoveClassName(this, 'highlight')">
+
                     <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                         title='<?= $lang["create_on"] ?>:<?= $cc->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $cc->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $cc->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $cc->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $cc->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $cc->get_modify_by() ?>'>
+                                         title='<?= $lang["create_on"] ?>:<?= $cc->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $cc->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $cc->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $cc->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $cc->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $cc->getModifyBy() ?>'>
                     </td>
-                    <td><?= $cc->get_id() ?></td>
+                    <td><?= $cc->getId() ?></td>
                     <?php
-                    if ($is_edit) {
+                    if ($is_edit) :
                         ?>
                         <form name="fm_edit"
-                              action="<?= base_url() ?>mastercfg/custom_class/edit/<?= $cc->get_id() ?>/?<?= $_SERVER['QUERY_STRING'] ?>"
+                              action="<?= base_url() ?>mastercfg/custom_class/edit/<?= $cc->getId() ?>/?<?= $_SERVER['QUERY_STRING'] ?>"
                               method="post" onSubmit="return CheckForm(this)">
                             <input type="hidden" name="posted" value="1">
                             <input type="hidden" name="cmd" value="edit">
-                            <input type="hidden" name="id" value="<?= $cc->get_id() ?>">
+                            <input type="hidden" name="id" value="<?= $cc->getId() ?>">
                             <input type="hidden" name="country_id" value="<?= $country_id ?>">
                             <?php
-                            if ($this->input->post("posted")) {
+                            if ($this->input->post("posted")) :
                                 ?>
                                 <td><input name="code" class="input" value="<?= $this->input->post("code") ?>" notEmpty
                                            maxLen=20></td>
@@ -170,16 +166,16 @@
                                 <td><input name="duty_pcent" class="input"
                                            value="<?= $this->input->post("duty_pcent") ?>" notEmpty isNumber min=0></td>
                             <?php
-                            } else {
+                            else :
                                 ?>
-                                <td><input name="code" class="input" value="<?= $cc->get_code() ?>" notEmpty maxLen=20>
+                                <td><input name="code" class="input" value="<?= $cc->getCode() ?>" notEmpty maxLen=20>
                                 </td>
-                                <td><input name="description" class="input" value="<?= $cc->get_description() ?>"
+                                <td><input name="description" class="input" value="<?= $cc->getDescription() ?>"
                                            maxLen=255></td>
-                                <td><input name="duty_pcent" class="input" value="<?= $cc->get_duty_pcent() ?>" notEmpty
+                                <td><input name="duty_pcent" class="input" value="<?= $cc->getDutyPcent() ?>" notEmpty
                                            isNumber min=0></td>
                             <?php
-                            }
+                            endif;
                             ?>
                             <td align="center"><input type="submit" value="<?= $lang["update"] ?>"> &nbsp; <input
                                     type="button" value="<?= $lang["back"] ?>"
@@ -187,26 +183,25 @@
                             </td>
                         </form>
                     <?php
-                    } else {
+                    else :
                         ?>
-                        <td><?= $cc->get_code() ?></td>
-                        <td><?= $cc->get_description() ?></td>
-                        <td><?= $cc->get_duty_pcent() ?></td>
+                        <td><?= $cc->getCode() ?></td>
+                        <td><?= $cc->getDescription() ?></td>
+                        <td><?= $cc->getDutyPcent() ?></td>
                         <td>&nbsp;</td>
                     <?php
-                    }
+                    endif;
                     ?>
                 </tr>
                 <?php
                 $i++;
-            }
-        }
-        ?>
-        <?php
-        }
-        ?>
+            endforeach;
+        endif;
+
+    endif;
+    ?>
     </table>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>

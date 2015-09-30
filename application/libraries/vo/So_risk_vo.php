@@ -1,5 +1,5 @@
 <?php
-include_once "base_vo.php";
+include_once "Base_vo.php";
 
 class So_risk_vo extends Base_vo
 {
@@ -29,12 +29,6 @@ class So_risk_vo extends Base_vo
     //primary key
     private $increment_field = "";
 
-    //auo increment
-
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
 
     //instance method
 

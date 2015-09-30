@@ -13,7 +13,6 @@ class Special_order_report extends Base_report
         $this->load->helper(array('url', 'notice'));
 //      $this->load->library('input');
 //      $this->load->library('service/context_config_service');
-        $this->load->library('template');
         $this->template->set_template('report');
     }
 

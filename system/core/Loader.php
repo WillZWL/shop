@@ -63,7 +63,10 @@ class CI_Loader {
 	 *
 	 * @var	array
 	 */
-	protected $_ci_view_paths =	array(VIEWPATH	=> TRUE);
+	protected $_ci_view_paths =	array(
+		VIEWPATH. SITEVIEW . '/' 	=> TRUE,
+		VIEWPATH.'default/'		=> TRUE
+	);
 
 	/**
 	 * List of paths to load libraries from

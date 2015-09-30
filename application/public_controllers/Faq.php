@@ -8,7 +8,6 @@ class Faq extends PUB_Controller
     public function Faq()
     {
         parent::PUB_Controller();
-        $this->load->library('template');
         $this->load->library('service/kayako_service');
         $this->load->model('cs/faqadmin_model');
         $this->load->helper(array("url", "tbswrapper"));

@@ -11,4 +11,23 @@ function lang($str, $lang)
     return $newstr;
 }
 
+/**
+* Gets currenct lang id
+* @access   public
+* @return   string
+*/
+function get_lang_id()
+{
+    static $lang_id = "";
+    if (isset($_SESSION["lang_id"])) {
+        $lang_id = $_SESSION["lang_id"];
+    } else {
+        $lang_id = $CI->config->config['lang_id'];
+        if (!isset($lang_id)) {
+            $lang_id = 'en';
+        }
+    }
+    return $lang_id;
+}
+
 

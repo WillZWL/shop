@@ -30,29 +30,24 @@
             <td height="70" style="padding-left:8px"><b
                     style="font-size:14px"><?= $lang["header"] ?></b><br><?= $lang["header_message"] ?><br>
                 <?= $lang["country"] ?>:
-                <select name="country_id"
-                        onChange="Redirect('<?= base_url() ?>mastercfg/custom_class/sub_cat/'+this.value)">
+                <select name="country_id" onChange="Redirect('<?= base_url() ?>mastercfg/custom_class/sub_cat/'+this.value)">
                     <option value="">
-                        <?php
-                        if ($countrylist)
-                        {
+                    <?php
+                    if ($countrylist) :
                         $selected[$country_id] = "SELECTED";
-                        foreach ($countrylist as $country)
-                        {
+                        foreach ($countrylist as $country) :
                         ?>
-                    <option
-                        value="<?= $country->get_id() ?>" <?= $selected[$country->get_id()] ?>><?= $country->get_name() ?>
+                    <option value="<?= $country->getCountryId() ?>" <?= @$selected[$country->getCountryId()] ?>><?= $country->getName() ?>
                         <?php
-                        }
-                        }
-                        ?>
+                        endforeach;
+                    endif;
+                    ?>
                 </select>
             </td>
         </tr>
     </table>
     <?php
-    if ($country_id)
-    {
+    if ($country_id) :
     ?>
     <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
         <col width="20">
@@ -62,93 +57,77 @@
         <col width="130">
         <form name="fm" method="get" onSubmit="return CheckForm(this)">
             <tr class="header">
-                <td height="20"><img src="<?= base_url() ?>images/expand.png" class="pointer"
-                                     onClick="Expand(document.getElementById('tr_search'));"></td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'cat_name', '<?= $xsort["cat_name"] ?>')"><?= $lang["cat_name"] ?> <?= $sortimg["cat_name"] ?></a>
+                <td height="20"><img src="<?= base_url() ?>images/expand.png" class="pointer" onClick="Expand(document.getElementById('tr_search'));"></td>
+                <td><a href="#" onClick="SortCol(document.fm, 'cat_name', '<?= @$xsort["cat_name"] ?>')"><?= $lang["cat_name"] ?> <?= @$sortimg["cat_name"] ?></a>
                 </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'sub_cat_name', '<?= $xsort["sub_cat_name"] ?>')"><?= $lang["sub_cat_name"] ?> <?= $sortimg["sub_cat_name"] ?></a>
+                <td><a href="#" onClick="SortCol(document.fm, 'sub_cat_name', '<?= @$xsort["sub_cat_name"] ?>')"><?= $lang["sub_cat_name"] ?> <?= @$sortimg["sub_cat_name"] ?></a>
                 </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'code', '<?= $xsort["code"] ?>')"><?= $lang["mapping"] ?> <?= $sortimg["code"] ?></a>
+                <td><a href="#" onClick="SortCol(document.fm, 'code', '<?= @$xsort["code"] ?>')"><?= $lang["mapping"] ?> <?= @$sortimg["code"] ?></a>
                 </td>
-                <!--<td><a href="#" onClick="SortCol(document.fm, 'description', '<?= $xsort["description"] ?>')"><?= $lang["description"] ?> <?= $sortimg["description"] ?></a></td>-->
+
                 <td></td>
             </tr>
             <tr class="search" id="tr_search" <?= $searchdisplay ?>>
                 <td></td>
                 <td><input name="cat_name" class="input" value="<?= htmlspecialchars($this->input->get("cat_name")) ?>">
                 </td>
-                <td><input name="sub_cat_name" class="input"
-                           value="<?= htmlspecialchars($this->input->get("sub_cat_name")) ?>"></td>
+                <td><input name="sub_cat_name" class="input" value="<?= htmlspecialchars($this->input->get("sub_cat_name")) ?>"></td>
                 <td>
-                    <!--<input name="code" class="input" value="<?= htmlspecialchars($this->input->get("code")) ?>">--></td>
-                <!--<td><input name="description" class="input" value="<?= htmlspecialchars($this->input->get("description")) ?>"></td>-->
-                <td align="center"><input type="submit" name="searchsubmit" value="" class="search_button"
-                                          style="background: url('<?= base_url() ?>images/find.gif') no-repeat;"></td>
+                <td align="center"><input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;"></td>
             </tr>
             <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
             <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
         </form>
         <?php
         $i = 0;
-        if (!empty($ccmlist)) {
-            foreach ($ccmlist as $ccm_obj) {
-                $is_edit = ($cmd == "edit" && $sub_cat_id == $ccm_obj->get_sub_cat_id());
-                $cur_code = $ccm_obj->get_code();
+        if (!empty($ccmlist)) :
+            foreach ($ccmlist as $ccm_obj) :
+                $is_edit = ($cmd == "edit" && $sub_cat_id == $ccm_obj->getSubCatId());
+                $cur_code = $ccm_obj->getCode();
                 ?>
 
-                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
-                    onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){
-                ?>onClick="Redirect('<?= site_url('mastercfg/custom_class/sub_cat/' . $country_id . '/' . $ccm_obj->get_sub_cat_id()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"<?
-                }?>>
+                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" <?=(!($is_edit)) ? "onClick=Redirect('". site_url('mastercfg/custom_class/sub_cat/' . $country_id ."/".$ccm_obj->getSubCatId())."/".$offset."/?".$_SERVER['QUERY_STRING']."')" : ""?> onMouseOut="RemoveClassName(this, 'highlight')">
                     <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                         title='<?= $lang["create_on"] ?>:<?= $ccm_obj->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $ccm_obj->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $ccm_obj->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $ccm_obj->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $ccm_obj->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $ccm_obj->get_modify_by() ?>'>
+                                         title='<?= $lang["create_on"] ?>:<?= $ccm_obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $ccm_obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $ccm_obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $ccm_obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $ccm_obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $ccm_obj->getModifyBy() ?>'>
                     </td>
-                    <td><?= $ccm_obj->get_cat_name() ?></td>
-                    <td><?= $ccm_obj->get_sub_cat_name() ?></td>
+                    <td><?= $ccm_obj->getCatName() ?></td>
+                    <td><?= $ccm_obj->getSubCatName() ?></td>
                     <?php
-                    if ($is_edit) {
+                    if ($is_edit) :
                         ?>
                         <form name="fm_edit"
-                              action="<?= base_url() ?>mastercfg/custom_class/edit_sub_cat/<?= $ccm_obj->get_sub_cat_id() ?>/?<?= $_SERVER['QUERY_STRING'] ?>"
+                              action="<?= base_url() ?>mastercfg/custom_class/edit_sub_cat/<?= $ccm_obj->getSubCatId() ?>/?<?= $_SERVER['QUERY_STRING'] ?>"
                               method="post" onSubmit="return CheckForm(this)">
                             <input type="hidden" name="posted" value="1">
                             <input type="hidden" name="cmd" value="edit">
-                            <input type="hidden" name="sub_cat_id" value="<?= $ccm_obj->get_sub_cat_id() ?>">
+                            <input type="hidden" name="sub_cat_id" value="<?= $ccm_obj->getSubCatId() ?>">
                             <input type="hidden" name="country_id" value="<?= $country_id ?>">
                             <input type="hidden" id="custom_class_id" name="custom_class_id" value="">
                             <?php
-                            if ($this->input->post("posted")) {
+                            if ($this->input->post("posted")) :
                                 ?>
-                                <td><input name="code" class="input" value="<?= $this->input->post("code") ?>" notEmpty
-                                           maxLen=20></td>
-                                <!--<td><input name="description" class="input" value="<?= $this->input->post("description") ?>" maxLen=255></td>-->
+                                <td><input name="code" class="input" value="<?= $this->input->post("code") ?>" notEmpty maxLen=20></td>
                             <?php
-                            } else {
+                            else :
                                 ?>
                                 <td>
                                     <select name="custom_class_id" dname="HS Code" notEmpty>
                                         <option value="">
-                                            <?php
-                                            if ($custom_class_list)
-                                            {
+                                        <?php
+                                        if ($custom_class_list) :
                                             $selected[$cur_code] = "SELECTED";
-                                            foreach ($custom_class_list as $cc)
-                                            {
+                                            foreach ($custom_class_list as $cc) :
                                             ?>
                                         <option
-                                            value="<?= $cc->get_id() ?>" <?= $selected[$cc->get_code()] ?>><?= $cc->get_code() . " - " . $cc->get_description() ?>
+                                            value="<?= $cc->getId() ?>" <?= @$selected[$cc->getCode()] ?>><?= $cc->getCode() . " - " . $cc->getDescription() ?>
                                             <?php
-                                            }
-                                            }
-                                            ?>
+                                            endforeach;
+                                        endif;
+                                        ?>
                                     </select>
                                 </td>
-                                <!--<td><?= $ccm_obj->get_description() ?></td>-->
                             <?php
-                            }
+                            endif;
                             ?>
                             <td align="center"><input type="submit" value="<?= $lang["update"] ?>"> &nbsp; <input
                                     type="button" value="<?= $lang["back"] ?>"
@@ -156,25 +135,24 @@
                             </td>
                         </form>
                     <?php
-                    } else {
+                    else :
                         ?>
-                        <td><?= $ccm_obj->get_code() ? ($ccm_obj->get_code() . " - " . $ccm_obj->get_description()) : "" ?></td>
-                        <!--<td><?= $ccm_obj->get_description() ?></td>-->
+                        <td><?= $ccm_obj->getCode() ? ($ccm_obj->getCode() . " - " . $ccm_obj->getDescription()) : "" ?></td>
                         <td>&nbsp;</td>
                     <?php
-                    }
+                    endif;
                     ?>
                 </tr>
                 <?php
                 $i++;
-            }
-        }
+            endforeach;
+        endif;
         ?>
-        <?php
-        }
-        ?>
+    <?php
+    endif;
+    ?>
     </table>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>

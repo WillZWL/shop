@@ -1,6 +1,4 @@
 <?php
-use AtomV2\Models\Mastercfg\CurrencyModel;
-
 class Round_up extends MY_Controller
 {
 
@@ -10,17 +8,16 @@ class Round_up extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->currencyModel = new CurrencyModel;
     }
 
     public function index()
     {
         $sub_appId = $this->getAppId() . "00";
 
-        $data["currency_list"] = $this->currencyModel->currencyService->getListWKey([], ["limit" => -1]);
+        $data["currency_list"] = $this->sc['Currency']->getListWithKey([], ["limit" => -1]);
 
         if ($this->input->post('posted')) {
-            if ($this->currencyModel->updateRoundUp($data)) {
+            if ($this->sc['currencyModel']->updateRoundUp($data)) {
                 redirect($this->getRu());
             }
         }

@@ -137,7 +137,7 @@ class Credit_check extends MY_Controller
         }
 
         if ($data["objlist"]) {
-            include_once(APPPATH . "libraries/service/payment_gateway_redirect_cybersource_service.php");
+            include_once(APPPATH . "libraries/service/Payment_gateway_redirect_cybersource_service.php");
             $cybs = new Payment_gateway_redirect_cybersource_service();
 
             foreach ($data["objlist"] AS $obj) {
@@ -452,7 +452,7 @@ class Credit_check extends MY_Controller
             $lang_id = trim($pbv_obj->get_language_id());
             $country_id = trim($pbv_obj->get_platform_country_id());
         }
-        include_once(APPPATH . "hooks/country_selection.php");
+        include_once(APPPATH . "hooks/Country_selection.php");
         $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
 
         $client = $this->credit_check_model->get_client(array("id" => $so_obj->get_client_id()));
@@ -588,7 +588,7 @@ class Credit_check extends MY_Controller
                 }
 
                 // Add notes
-                $this->credit_check_model->add_order_note($so_no, 'Fail CC email send');
+                $this->credit_check_model->add_order_note($so_no, 'Fail CC email send');				
                 //SBF #2607 add the default refund score when order funded
                 $this->so_refund_score_service->insert_initial_refund_score($so_no);
 

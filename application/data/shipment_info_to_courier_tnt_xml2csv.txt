@@ -1,0 +1,19 @@
+#Table name
+data
+
+#Input column name	Output column name
+so_no	OrderNumber
+delivery_name	CustomerName
+delivery_address1	Address1
+delivery_address2	Address2
+delivery_address3	Address3
+delivery_city	Town
+delivery_state	State
+delivery_postcode	postcode
+delivery_country_id	CountryCode
+delivery_name	ContactPerson
+tel	ContactNumber
+prod_weight	TotalWeight
+amount	TotalValue
+currency_id	Currency
+cat_name	GoodDesc

@@ -65,7 +65,7 @@
                     ?>
                     <select name="status" class="input">
                         <option value="1"><?= $lang["active"] ?>
-                        <option value="0" <?= $selected[0] ?>><?= $lang["inactive"] ?>
+                        <option value="0" <?= @$selected[0] ?>><?= $lang["inactive"] ?>
                     </select>
                 </td>
             </tr>
@@ -77,13 +77,12 @@
                             <td align="center"><?= $lang["existing_roles"] ?><br>
                                 <select name="full_list[]" multiple='multiple' class="multi_select">
                                     <?php
-                                    foreach ($role_list as $role)
-                                    {
+                                    foreach ($role_list as $role) :
                                     ?>
                                     <option value="<?= $role->getId() ?>"><?= $role->getRoleName() ?>
-                                        <?php
-                                        }
-                                        ?>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </select>
                             </td>
                             <td align="center">
@@ -103,13 +102,12 @@
                             <td align="center"><?= $lang["joined_roles"] ?><br>
                                 <select name="joined_list[]" multiple='multiple' class="multi_select" selectAll>
                                     <?php
-                                    foreach ($joined_list as $role)
-                                    {
+                                    foreach ($joined_list as $role) :
                                     ?>
                                     <option value="<?= $role->getId() ?>"><?= $role->getRoleName() ?>
-                                        <?php
-                                        }
-                                        ?>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </select>
                             </td>
                         </tr>
@@ -117,7 +115,7 @@
                 </td>
             </tr>
             <?php
-            if ($cmd != "add") {
+            if ($cmd != "add") :
                 ?>
                 <tr>
                     <td class="field"><?= $lang["create_on"] ?></td>
@@ -136,7 +134,7 @@
                     <td class="value"><?= $user->getModifyBy() ?></td>
                 </tr>
             <?php
-            }
+            endif;
             ?>
             <tr class="tb_detail">
                 <td colspan="3" height="40"><input type="button" name="back" value="<?= $lang['back_list'] ?>"
@@ -144,15 +142,15 @@
                 </td>
                 <td colspan="3" align="right" style="padding-right:8px;">
                     <?php
-                    if ($cmd == "add") {
+                    if ($cmd == "add") :
                         ?>
                         <input type="submit" value="<?= $lang['header'] ?>">
                     <?php
-                    } elseif ($cmd == "edit") {
+                    elseif ($cmd == "edit") :
                         ?>
                         <input type="submit" value="<?= $lang['update_button'] ?>">
                     <?php
-                    }
+                    endif;
                     ?>
                 </td>
             </tr>
@@ -160,7 +158,6 @@
 
         <input type="hidden" name="posted" value="1">
     </form>
-    <?= $this->paginationService->create_links_with_style() ?>
     <?= $notice["js"] ?>
 </div>
 </body>

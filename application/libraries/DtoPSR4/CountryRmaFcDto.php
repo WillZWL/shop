@@ -4,6 +4,7 @@ class CountryRmaFcDto
 
     //class variable
     private $id;
+    private $country_id;
     private $id_3_digit;
     private $name;
     private $description;
@@ -29,6 +30,17 @@ class CountryRmaFcDto
     public function setId($value)
     {
         $this->id = $value;
+        return $this;
+    }
+
+    public function getCountryId()
+    {
+        return $this->country_id;
+    }
+
+    public function setCountryId($value)
+    {
+        $this->country_id = $value;
         return $this;
     }
 

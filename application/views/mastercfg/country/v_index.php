@@ -84,9 +84,9 @@
                 <td><input name="name" class="input" value="<?= htmlspecialchars($this->input->get("name")) ?>"></td>
                 <td>
                     <?php
-                    if ($this->input->get("status") !== FALSE) {
+                    if ($this->input->get("status") !== FALSE) :
                         $selected[$this->input->get("status")] = " SELECTED";
-                    }
+                    endif;
                     ?>
                     <select name="status" class="input">
                         <option value="">
@@ -98,11 +98,11 @@
                     <select name="currency_id" class="input">
                         <option value=""></option>
                         <?php
-                        foreach ($ar_currency as $key => $cur) {
+                        foreach ($ar_currency as $key => $cur) :
                             ?>
                             <option value="<?= $key ?>"<?= $this->input->get("currency_id") == $key ? ' SELECTED' : '' ?>><?= $cur ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </select>
                 </td>
@@ -122,19 +122,19 @@
                     <select name="rma_fc" class="input">
                         <option value=""></option>
                         <?php
-                        foreach ($ar_fcid as $key => $fcname) {
+                        foreach ($ar_fcid as $key => $fcname) :
                             ?>
                             <option value="<?= $key ?>"<?= $this->input->get("rma_fc") == $key ? ' SELECTED' : '' ?>><?= $fcname ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </select>
                 </td>
                 <td>
                     <?php
-                    if ($this->input->get("allow_sell") !== FALSE) {
+                    if ($this->input->get("allow_sell") !== FALSE) :
                         $selected[$this->input->get("allow_sell")] = " SELECTED";
-                    }
+                    endif;
                     ?>
                     <select name="allow_sell" class="input">
                         <option value="">
@@ -147,17 +147,17 @@
             </tr>
             <?php
             $i = 0;
-            if ($clist) {
-                foreach ($clist as $cobj) {
+            if ($clist) :
+                foreach ($clist as $cobj) :
                     ?>
 
                     <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
                         onMouseOut="RemoveClassName(this, 'highlight')"
-                        onClick="Redirect('<?= site_url('mastercfg/country/view/' . $cobj->getId()) ?>')">
+                        onClick="Redirect('<?= site_url('mastercfg/country/view/' . $cobj->getCountryId()) ?>')">
                         <td height="20"><img src="<?= base_url() ?>images/info.gif"
                                              title='<?= $lang["create_on"] ?>:<?= $cobj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $cobj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $cobj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $cobj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $cobj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $cobj->getModifyBy() ?>'>
                         </td>
-                        <td><?= $cobj->getId() ?></td>
+                        <td><?= $cobj->getCountryId() ?></td>
                         <td><?= $cobj->getId3Digit() ?></td>
                         <td><?= $cobj->getName() ?></td>
                         <td><?= $ar_status[$cobj->getStatus()] ?></td>
@@ -169,15 +169,15 @@
                     </tr>
                     <?php
                     $i++;
-                }
-            }
+                endforeach;
+            endif;
             ?>
         </table>
         <input type="hidden" name="showall" value='<?= $this->input->get("showall") ?>'>
         <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>

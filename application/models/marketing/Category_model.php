@@ -311,6 +311,11 @@ class Category_model extends CI_Model
         return $this->category_service->get_cat_ext_list($where, $option);
     }
 
+    public function get_cat_menu_list($where = array(), $option = array())
+    {
+        return $this->category_service->get_cat_menu_list($where, $option);
+    }
+
     public function get_cat_cont_obj($where = array())
     {
         return $this->category_service->get_cat_cont_obj($where);

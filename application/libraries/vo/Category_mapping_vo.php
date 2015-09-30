@@ -3,23 +3,22 @@ include_once 'Base_vo.php';
 
 class Category_mapping_vo extends Base_vo
 {
-
-    //class variable
+    private $id;
     private $ext_party;
     private $level;
-    private $id;
-    private $ext_id;
+    private $category_mapping_id = '';
+    private $ext_id = '';
     private $ext_name;
     private $lang_id = '';
     private $country_id = '';
-    private $product_name = null;
+    private $product_name;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     //primary key
     private $primary_key = array("ext_party", "level", "id", "lang_id", "country_id");
@@ -27,7 +26,17 @@ class Category_mapping_vo extends Base_vo
     //auo increment
     private $increment_field = "";
 
-    //instance method
+    public function get_id()
+    {
+        return $this->id;
+    }
+
+    public function set_id($value)
+    {
+        $this->id = $value;
+        return $this;
+    }
+
     public function get_ext_party()
     {
         return $this->ext_party;
@@ -50,15 +59,14 @@ class Category_mapping_vo extends Base_vo
         return $this;
     }
 
-    public function get_id()
+    public function get_category_mapping_id()
     {
-        return $this->id;
+        return $this->category_mapping_id;
     }
 
-    public function set_id($value)
+    public function set_category_mapping_id($category_mapping_id)
     {
-        $this->id = $value;
-        return $this;
+        $this->category_mapping_id = $category_mapping_id;
     }
 
     public function get_ext_id()
@@ -202,7 +210,4 @@ class Category_mapping_vo extends Base_vo
     {
         return $this->increment_field;
     }
-
 }
-
-?>

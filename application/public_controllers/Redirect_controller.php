@@ -1,6 +1,6 @@
 <?php
 
-use AtomV2\Models\Website\HomeModel;
+use ESG\Panther\Models\Website\HomeModel;
 
 class Redirect_controller extends PUB_Controller
 {
@@ -21,7 +21,7 @@ class Redirect_controller extends PUB_Controller
 
         $data['product'] = $this->home_model->getContent();
 
-        $this->load->view('/default/index', $data);
+        $this->load->view('index', $data);
 
 
         // $this->template->set_view('index');

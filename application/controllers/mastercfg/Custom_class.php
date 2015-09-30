@@ -1,5 +1,4 @@
 <?php
-
 class Custom_class extends MY_Controller
 {
 
@@ -10,9 +9,6 @@ class Custom_class extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('mastercfg/custom_class_model');
-        $this->load->helper(array('url', 'notice', 'object', 'operator'));
-        $this->load->library('service/pagination_service');
     }
 
     public function add()
@@ -23,16 +19,15 @@ class Custom_class extends MY_Controller
         if ($this->input->post("posted")) {
 
             if (isset($_SESSION["cc_vo"])) {
-                $this->custom_class_model->include_cc_vo();
                 $data["cc"] = unserialize($_SESSION["cc_vo"]);
 
                 set_value($data["cc"], $_POST);
-                $proc = $this->custom_class_model->get_cc(array("region_id" => $data["cc"]->get_country_id(), "code" => $data["cc"]->get_code()));
+                $proc = $this->sc['customClassModel']->getCustomClass(["country_id" => $data["cc"]->getCountryId(), "code" => $data["cc"]->getCode()]);
                 if (!empty($proc)) {
                     $_SESSION["NOTICE"] = "code_existed";
                 } else {
 
-                    if ($new_obj = $this->custom_class_model->add_cc($data["cc"])) {
+                    if ($new_obj = $this->sc['customClassModel']->addCustomClass($data["cc"])) {
                         unset($_SESSION["cc_vo"]);
                         redirect(base_url() . "mastercfg/custom_class/index/" . $this->input->post("country_id") . "/?" . $_SERVER['QUERY_STRING']);
                     } else {
@@ -42,7 +37,7 @@ class Custom_class extends MY_Controller
             }
         }
 
-        $this->index($this->input->post("region_id"));
+        $this->index($this->input->post("country_id"));
     }
 
     public function getAppId()
@@ -50,11 +45,11 @@ class Custom_class extends MY_Controller
         return $this->appId;
     }
 
-    public function index($country_id = "", $cc_id = "")
+    public function index($country_id = "", $cc_id = "", $offset = 0)
     {
         $sub_app_id = $this->getAppId() . "00";
 
-        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($region_id == "" ? "" : "index/" . $region_id) . ($cc_id == "" ? "" : "/" . $cc_id) . "?" . $_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "index/" . $country_id) . ($cc_id == "" ? "" : "/" . $cc_id) ."?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
         $option = array();
@@ -86,11 +81,8 @@ class Custom_class extends MY_Controller
 
         $limit = '20';
 
-        $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-        $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"]) {
-            $option["offset"] = $this->input->get("per_page");
-        }
+        $option["limit"] = $limit;
+        $option["offset"] = $offset;
 
         if (empty($sort))
             $sort = "id";
@@ -101,28 +93,33 @@ class Custom_class extends MY_Controller
         $option["orderby"] = $sort . " " . $order;
 
         if ($country_id) {
-            $data = $this->custom_class_model->get_cc_list($where, $option);
+            $data = $this->sc['customClassModel']->getCustomClassObjList($where, $option);
+        } else {
+            $data['total'] = 0;
         }
 
-        $data["countrylist"] = $this->custom_class_model->get_country_list(array("status" => 1), array("limit" => -1, "orderby" => "name"));
+        $data["countrylist"] = $this->sc['customClassModel']->getCountryList(array("status" => 1), array("limit" => -1, "orderby" => "name"));
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
+        $ccid = $cc_id ? $cc_id : 0;
+        $config['base_url'] = base_url("mastercfg/custom_class/index/$country_id/$ccid/");
+        $config['total_rows'] = $data["total"];
+        $config['per_page'] = $limit;
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
 
         $data["notice"] = notice($lang);
 
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
-//      $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
+
         $data["searchdisplay"] = "";
 
 
         if (empty($_SESSION["cc_vo"])) {
-            if (($cc_vo = $this->custom_class_model->get_cc()) === FALSE) {
+            if (($cc_vo = $this->sc['customClassModel']->getCustomClass()) === FALSE) {
                 $_SESSION["NOTICE"] = "sql_error";
             } else {
                 $_SESSION["cc_vo"] = serialize($cc_vo);
@@ -130,7 +127,7 @@ class Custom_class extends MY_Controller
         }
 
         if (empty($_SESSION["cc_obj"][$cc_id])) {
-            if (($data["cc_obj"] = $this->custom_class_model->get_cc(array("id" => $cc_id))) === FALSE) {
+            if (($data["cc_obj"] = $this->sc['customClassModel']->getCustomClass(array("id" => $cc_id))) === FALSE) {
                 $_SESSION["NOTICE"] = "sql_error";
             } else {
                 unset($_SESSION["cc_obj"]);
@@ -141,13 +138,9 @@ class Custom_class extends MY_Controller
         $data["cmd"] = ($cc_id == "") ? $this->input->post("cmd") : "edit";
         $data["country_id"] = $country_id;
         $data["cc_id"] = $cc_id;
+        $data["offset"] = $offset;
 
         $this->load->view('mastercfg/custom_class/custom_class_index_v', $data);
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
     }
 
     public function edit($id)
@@ -158,10 +151,9 @@ class Custom_class extends MY_Controller
             unset($_SESSION["NOTICE"]);
 
             if (isset($_SESSION["cc_obj"][$id])) {
-                $this->custom_class_model->include_cc_vo();
                 $data["cc"] = unserialize($_SESSION["cc_obj"][$id]);
-                if ($data["cc"]->get_id() != $_POST["id"]) {
-                    $proc = $this->custom_class_model->get_cc(array("id" => $_POST["id"]));
+                if ($data["cc"]->getId() != $_POST["id"]) {
+                    $proc = $this->sc['customClassModel']->getCustomClass(array("id" => $_POST["id"]));
                     if (!empty($proc)) {
                         $_SESSION["NOTICE"] = "custom_classification_existed";
                     }
@@ -169,7 +161,7 @@ class Custom_class extends MY_Controller
                 if (empty($_SESSION["NOTICE"])) {
                     set_value($data["cc"], $_POST);
 
-                    if ($this->custom_class_model->update_cc($data["cc"])) {
+                    if ($this->sc['customClassModel']->updateCustomClass($data["cc"])) {
                         unset($_SESSION["cc_obj"]);
                         redirect(base_url() . "mastercfg/custom_class/index/" . $this->input->post("country_id") . "/?" . $_SERVER['QUERY_STRING']);
                     } else {
@@ -179,7 +171,7 @@ class Custom_class extends MY_Controller
             }
         }
 
-        $this->index($this->input->post("region_id"), $_POST["id"]);
+        $this->index($this->input->post("country_id"), $_POST["id"]);
 
     }
 
@@ -196,10 +188,9 @@ class Custom_class extends MY_Controller
             unset($_SESSION["NOTICE"]);
 
             if (isset($_SESSION["pcc_obj"][$sku])) {
-                $this->custom_class_model->include_pcc_vo();
                 $data["pcc"] = unserialize($_SESSION["pcc_obj"][$sku]);
-                if ($data["pcc"]->get_sku() != $_POST["sku"]) {
-                    $proc = $this->custom_class_model->get_pcc(array("sku" => $_POST["sku"], "country_id" => $_POST["country_id"]));
+                if ($data["pcc"]->getSku() != $_POST["sku"]) {
+                    $proc = $this->sc['customClassModel']->getProductCustomClass(array("sku" => $_POST["sku"], "country_id" => $_POST["country_id"]));
                     if (!empty($proc)) {
                         $_SESSION["NOTICE"] = "custom_classification_existed";
                     }
@@ -207,7 +198,7 @@ class Custom_class extends MY_Controller
                 if (empty($_SESSION["NOTICE"])) {
                     set_value($data["pcc"], $_POST);
 
-                    if ($this->custom_class_model->update_pcc($data["pcc"])) {
+                    if ($this->sc['customClassModel']->updateProductCustomClass($data["pcc"])) {
                         unset($_SESSION["pcc_obj"]);
                         redirect(base_url() . "mastercfg/custom_class/sku/" . $this->input->post("country_id") . "/?" . $_SERVER['QUERY_STRING']);
                     } else {
@@ -220,11 +211,11 @@ class Custom_class extends MY_Controller
         $this->sku($this->input->post("country_id"), $_POST["sku"]);
     }
 
-    public function sku($country_id = "", $sku = "")
+    public function sku($country_id = "", $sku = "", $offset = 0)
     {
         $sub_app_id = $this->getAppId() . "00";
 
-        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "sku/" . $country_id) . ($sku == "" ? "" : "/" . $sku) . "?" . $_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "sku/" . $country_id) . ($sku == "" ? "" : "/" . $sku) . ($offset ? "/".$offset : "") . "?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
         $option = array();
@@ -232,7 +223,7 @@ class Custom_class extends MY_Controller
         $submit_search = 0;
 
         if ($country_id != "") {
-            $where["country_id"] = $country_id;
+            $where["pcc.country_id"] = $country_id;
         }
         if ($this->input->get("sku") != "") {
             $where["pcc.sku LIKE "] = "%" . $this->input->get("sku") . "%";
@@ -254,7 +245,7 @@ class Custom_class extends MY_Controller
             $submit_search = 1;
         }
         if ($this->input->get("description") != "") {
-            $where["description LIKE "] = "%" . $this->input->get("description") . "%";
+            $where["pcc.description LIKE "] = "%" . $this->input->get("description") . "%";
             $submit_search = 1;
         }
         if ($this->input->get("duty_pcent") != "") {
@@ -267,14 +258,11 @@ class Custom_class extends MY_Controller
 
         $limit = '20';
 
-        $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-        $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"]) {
-            $option["offset"] = $this->input->get("per_page");
-        }
+        $option["limit"] = $limit;
+        $option["offset"] = $offset;
 
         if (empty($sort))
-            $sort = "sku";
+            $sort = "pcc.sku";
 
         if (empty($order))
             $order = "asc";
@@ -282,28 +270,33 @@ class Custom_class extends MY_Controller
         $option["orderby"] = $sort . " " . $order;
 
         if ($country_id) {
-            $data = $this->custom_class_model->get_pcc_list($where, $option);
+            $data = $this->sc['customClassModel']->getProductCustomClassList($where, $option);
+        } else {
+            $data["total"] = 0;
         }
 
-        $data["countrylist"] = $this->custom_class_model->get_country_list(array("status" => 1), array("limit" => -1, "orderby" => "name"));
+        $data["countrylist"] = $this->sc['Country']->getDao('Country')->getList(array("status" => 1), array("limit" => -1, "orderby" => "name"));
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
+        $config['base_url'] = base_url("mastercfg/custom_class/sku/$country_id/$sku/");
+        $config['total_rows'] = $data["total"];
+        $config['per_page'] = $limit;
+
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
+        $data["notice"] = notice($lang);
 
         $data["notice"] = notice($lang);
 
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
-//      $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
         $data["searchdisplay"] = "";
 
 
         if (empty($_SESSION["pcc_vo"])) {
-            if (($cc_vo = $this->custom_class_model->get_pcc()) === FALSE) {
+            if (($cc_vo = $this->sc['customClassModel']->getProductCustomClass()) === FALSE) {
                 $_SESSION["NOTICE"] = "sql_error";
             } else {
                 $_SESSION["pcc_vo"] = serialize($pcc_vo);
@@ -311,7 +304,7 @@ class Custom_class extends MY_Controller
         }
 
         if (empty($_SESSION["pcc_obj"][$sku])) {
-            if (($data["pcc_obj"] = $this->custom_class_model->get_pcc(array("country_id" => $country_id, "sku" => $sku))) === FALSE) {
+            if (($data["pcc_obj"] = $this->sc['customClassModel']->getProductCustomClass(array("country_id" => $country_id, "sku" => $sku))) === FALSE) {
                 $_SESSION["NOTICE"] = "sql_error";
             } else {
                 unset($_SESSION["pcc_obj"]);
@@ -322,6 +315,7 @@ class Custom_class extends MY_Controller
         $data["cmd"] = ($sku == "") ? $this->input->post("cmd") : "edit";
         $data["country_id"] = $country_id;
         $data["sku"] = $sku;
+        $data["offset"] = $offset;
 
         $this->load->view('mastercfg/custom_class/custom_class_sku_v', $data);
     }
@@ -334,11 +328,10 @@ class Custom_class extends MY_Controller
             unset($_SESSION["NOTICE"]);
 
             if (isset($_SESSION["ccm_obj"][$sub_cat_id])) {
-                $this->custom_class_model->include_ccm_vo();
                 $data["ccm"] = unserialize($_SESSION["ccm_obj"][$sub_cat_id]);
 
-                if ($data["ccm"]->get_sub_cat_id() != $_POST["sub_cat_id"]) {
-                    $proc = $this->custom_class_model->get_ccm(array("sub_cat_id" => $_POST["sub_cat_id"], "country_id" => $_POST["country_id"]));
+                if ($data["ccm"]->getSubCatId() != $_POST["sub_cat_id"]) {
+                    $proc = $this->sc['customClassModel']->getCustomClassMapping(array("sub_cat_id" => $_POST["sub_cat_id"], "country_id" => $_POST["country_id"]));
                     if (!empty($proc)) {
                         $_SESSION["NOTICE"] = "custom_classification_existed";
                     }
@@ -346,14 +339,14 @@ class Custom_class extends MY_Controller
                 if (empty($_SESSION["NOTICE"])) {
                     set_value($data["ccm"], $_POST);
 
-                    $ccm_obj = $this->custom_class_model->get_ccm(array("sub_cat_id" => $_POST["sub_cat_id"], "country_id" => $_POST["country_id"]));
+                    $ccm_obj = $this->sc['customClassModel']->getCustomClassMapping(array("sub_cat_id" => $_POST["sub_cat_id"], "country_id" => $_POST["country_id"]));
                     if (empty($ccm_obj)) {
                         $action = "insert";
                     } else {
                         $action = "update";
                     }
 
-                    if ($this->custom_class_model->{$action . "_ccm"}($data["ccm"])) {
+                    if ($this->sc['customClassModel']->{$action . "CustomClassMapping"}($data["ccm"])) {
                         unset($_SESSION["pcc_obj"]);
                         redirect(base_url() . "mastercfg/custom_class/sub_cat/" . $this->input->post("country_id") . "/?" . $_SERVER['QUERY_STRING']);
                     } else {
@@ -367,11 +360,11 @@ class Custom_class extends MY_Controller
 
     }
 
-    public function sub_cat($country_id = "", $sub_cat_id = "")
+    public function sub_cat($country_id = "", $sub_cat_id = "", $offset = 0)
     {
         $sub_app_id = $this->getAppId() . "00";
 
-        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "sub_cat/" . $country_id) . ($sub_cat_id == "" ? "" : "/" . $sub_cat_id) . "?" . $_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "sub_cat/" . $country_id) . ($sub_cat_id == "" ? "" : "/" . $sub_cat_id) . ($offset ? "/".$offset : "") . "?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
         $option = array();
@@ -411,11 +404,8 @@ class Custom_class extends MY_Controller
 
         $limit = '20';
 
-        $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-        $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"]) {
-            $option["offset"] = $this->input->get("per_page");
-        }
+        $option["limit"] = $limit;
+        $option["offset"] = $offset;
 
         if (empty($sort))
             $sort = "sub_cat_id";
@@ -426,30 +416,33 @@ class Custom_class extends MY_Controller
         $option["orderby"] = $sort . " " . $order;
 
         if ($country_id) {
-            $data = $this->custom_class_model->get_ccm_list($where, $option);
+            $data = $this->sc['customClassModel']->getCustomClassMappingList($where, $option);
+        } else {
+            $data['total'] = 0;
         }
 
-        $data["countrylist"] = $this->custom_class_model->get_country_list(array("status" => 1), array("limit" => -1, "orderby" => "name"));
-        $data["subcatlist"] = $this->custom_class_model->get_sub_cat_list(array("level" => 2), array("limit" => -1, "orderby" => "name"));
-        $data["custom_class_list"] = $this->custom_class_model->get_custom_class_list(array("country_id" => $country_id), array("limit" => -1, "orderby" => "id"));
+        $data["countrylist"] = $this->sc['customClassModel']->getCountryList(array("status" => 1), array("limit" => -1, "orderby" => "name"));
+        $data["subcatlist"] = $this->sc['customClassModel']->getSubCatList(array("level" => 2), array("limit" => -1, "orderby" => "name"));
+        $data["custom_class_list"] = $this->sc['customClassModel']->getCustomClassList(array("country_id" => $country_id), array("limit" => -1, "orderby" => "id"));
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
+        $config['base_url'] = base_url("mastercfg/custom_class/sub_cat/$country_id/$sub_cat_id/");
+        $config['total_rows'] = $data["total"];
+        $config['per_page'] = $limit;
 
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
         $data["notice"] = notice($lang);
 
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
-//      $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
         $data["searchdisplay"] = "";
 
 
         if (empty($_SESSION["ccm_vo"])) {
-            if (($ccm_vo = $this->custom_class_model->get_ccm()) === FALSE) {
+            if (($ccm_vo = $this->sc['customClassModel']->getCustomClassMapping()) === FALSE) {
                 $_SESSION["NOTICE"] = "sql_error";
             } else {
                 $_SESSION["ccm_vo"] = serialize($ccm_vo);
@@ -457,11 +450,11 @@ class Custom_class extends MY_Controller
         }
 
         if (empty($_SESSION["ccm_obj"][$sub_cat_id])) {
-            if (($data["ccm_obj"] = $this->custom_class_model->get_ccm(array("country_id" => $country_id, "sub_cat_id" => $sub_cat_id))) === FALSE) {
+            if (($data["ccm_obj"] = $this->sc['customClassModel']->getCustomClassMapping(array("country_id" => $country_id, "sub_cat_id" => $sub_cat_id))) === FALSE) {
                 $_SESSION["NOTICE"] = "sql_error";
             } else {
                 if (empty($data["ccm_obj"])) {
-                    $data["ccm_obj"] = $this->custom_class_model->get_ccm(array());
+                    $data["ccm_obj"] = $this->sc['customClassModel']->getCustomClassMapping(array());
                 }
                 unset($_SESSION["ccm_obj"]);
                 $_SESSION["ccm_obj"][$sub_cat_id] = serialize($data["ccm_obj"]);
@@ -471,6 +464,7 @@ class Custom_class extends MY_Controller
         $data["cmd"] = ($sub_cat_id == "") ? $this->input->post("cmd") : "edit";
         $data["country_id"] = $country_id;
         $data["sub_cat_id"] = $sub_cat_id;
+        $data["offset"] = $offset;
 
         $this->load->view('mastercfg/custom_class/custom_class_sub_cat_v', $data);
     }

@@ -1,5 +1,5 @@
 <?php
-include_once "base_vo.php";
+include_once "Base_vo.php";
 
 class Ra_group_vo extends Base_vo
 {
@@ -19,13 +19,6 @@ class Ra_group_vo extends Base_vo
 
     //primary key
     private $increment_field = "group_id";
-
-    //auo increment
-
-    public function __construct()
-    {
-        parent::Base_vo();
-    }
 
     //instance method
 

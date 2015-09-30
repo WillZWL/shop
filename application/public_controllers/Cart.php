@@ -1,69 +1,79 @@
 <?php
-use AtomV2\Models\Website\CartSessionModel;
+use ESG\Panther\Models\Website\CartSessionModel;
 
 Class Cart extends PUB_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->cart_session_model = new CartSessionModel;
+        $this->cartSessionModel = new CartSessionModel;
     }
 
     public function ajaxAddItem()
     {
-        $sku = $this->input->post('sku');
-        $qty = $this->input->post('qty') ? $this->input->post('qty') : 1;
-
+        $sku = $this->input->post_get('sku');
+        $qty = $this->input->post_get('qty') ? $this->input->post_get('qty') : 1;
+// will need to put validation to sku, qty
         $this->addItemQty($sku, $qty);
 
         $return['redirect'] = '/ReviewOrder';
         echo json_encode($return);
     }
 
-    public function addItemQty($sku = "", $qty = 0, $quiet_return = false)
+    public function ajaxSetItem()
     {
-        $listing_status = [
-            "I" => $data['data']['lang_text']['status_in_stock'],
-            "O" => $data['data']['lang_text']['status_out_stock'],
-            "P" => $data['data']['lang_text']['status_pre_order'],
-            "A" => $data['data']['lang_text']['status_arriving']
-        ];
+        $sku = $this->input->post_get('sku');
+        $qty = $this->input->post_get('qty') ? $this->input->post_get('qty') : 1;
+// will need to put validation to sku, qty
+        $this->setItemQty($sku, $qty);
 
-        $allow_result = $this->cart_session_model->cart_session_service->isAllowToAdd($sku, $qty, PLATFORM);
-        if ($allow_result <= \AtomV2\Service\CartSessionService::DECISION_POINT) {
-            $result = $this->cart_session_model->addItemQty($sku, $qty, PLATFORM);
-        }
+        $return['redirect'] = '/ReviewOrder';
+        echo json_encode($return);
+    }
 
-        //if (($allow_result == Cart_session_service::ALLOW_AND_IS_PREORDER)
-        //    || ($allow_result == Cart_session_service::ALLOW_AND_IS_ARRIVING)
-        //    || ($allow_result == Cart_session_service::SAME_PREORDER_ITEM)
-        //    || ($allow_result == Cart_session_service::SAME_ARRIVING_ITEM)
-        //) {
-        //    redirect(base_url() . "review_order");
-        //}
+    public function ajaxMinusItem()
+    {
+        $sku = $this->input->post_get('sku');
+        $qty = $this->input->post_get('qty') ? $this->input->post_get('qty') : 1;
+// will need to put validation to sku, qty
+        $this->minusItemQty($sku, $qty);
 
-        // if ($this->upselling_model->get_ra($data, $sku, PLATFORM, $this->get_lang_id(), $listing_status)) {
-        //     // TODO
-        //     //
-        //     // $this->template->add_title($data['data']['lang_text']['meta_title'].$data["prod_name"]. ' | ValueBasket');
-        //     // $this->template->add_meta(array('name'=>'description','content'=>$data['data']['lang_text']['meta_desc']));
-        //     // $this->template->add_meta(array('name'=>'keywords','content'=>$data['data']['lang_text']['meta_keyword']));
-        //     // $this->template->add_js("/js/common.js");
-        //     // $this->template->add_js("/resources/js/jquery.gritter.js");
-        //     // $this->template->add_css("resources/css/jquery.gritter.css");
-        //     // $this->template->add_js("/js/upselling.js", "import", TRUE);
-        //     // $this->load_tpl('content', 'tbs_cart', $data, TRUE);
-        // } else {
-        //     // redirect(base_url()."review_order");
-        // }
+        $return['redirect'] = '/ReviewOrder';
+        echo json_encode($return);
+    }
 
+    public function ajaxRemoveItem()
+    {
+        $sku = $this->input->post_get('sku');
+// will need to put validation to sku, qty
+        $result = $this->cartSessionModel->removeItem($sku);
+
+        $return['redirect'] = '/ReviewOrder';
+        echo json_encode($return);
+    }
+
+    public function setItemQty($sku = "", $qty = 0)
+    {
+        $result = $this->cartSessionModel->setItemQty($sku, $qty, $this->get_lang_id(), PLATFORM, $this->getSiteInfo()->getPlatformCurrencyId());
+        return $result;
+    }
+
+    public function minusItemQty($sku = "", $qty = 0)
+    {
+        $result = $this->cartSessionModel->minusItemQty($sku, $qty, $this->get_lang_id(), PLATFORM, $this->getSiteInfo()->getPlatformCurrencyId());
+        return $result;
+    }
+
+    public function addItemQty($sku = "", $qty = 0)
+    {
+        $result = $this->cartSessionModel->addItemQty($sku, $qty, $this->get_lang_id(), PLATFORM, $this->getSiteInfo()->getPlatformCurrencyId());
         return $result;
     }
 
     public function info()
     {
-        $data['cart_info'] = $this->cart_session_model->get_cart_info();
-        $this->load->view('/default/cart/info', $data);
+        $data['cart_info'] = $this->cartSessionModel->get_cart_info();
+        $this->load->view('cart/info', $data);
     }
 
     public function add_item($sku = "")
@@ -78,7 +88,7 @@ Class Cart extends PUB_Controller
         }
 
         if (!empty($sku)) {
-            if (!($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORM))) {
+            if (!($chk_cart = $this->cartSessionModel->add($sku, 1, PLATFORM))) {
                 show_error("Product not found", "Product not found");
             }
         } else {
@@ -111,12 +121,12 @@ Class Cart extends PUB_Controller
         $image_url = get_image_file($prod_obj->get_image(), "m", $sku);
 
         if (!empty($sku)) {
-            if ($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORM)) {
+            if ($chk_cart = $this->cartSessionModel->add($sku, 1, PLATFORM)) {
                 $success = 1;
             }
         }
 
-        $cart_info = $this->cart_session_model->get_detail(PLATFORM);
+        $cart_info = $this->cartSessionModel->get_detail(PLATFORM);
         $cart["total"] = $cart["item"] = 0;
         if ($cart_info["cart"]) {
             foreach ($cart_info["cart"] AS $key => $arr) {
@@ -150,11 +160,11 @@ Class Cart extends PUB_Controller
                 $cur_cart_qty = $_SESSION["cart"][PLATFORM][$old_warranty];
                 $new_qty = $cur_cart_qty * 1 - 1;
                 if ($new_qty <= 0) {
-                    if ($chk_cart = $this->cart_session_model->remove($old_warranty)) {
+                    if ($chk_cart = $this->cartSessionModel->remove($old_warranty)) {
                         $success = 1;
                     }
                 } else {
-                    if ($chk_cart = $this->cart_session_model->update($old_warranty, $new_qty, PLATFORM)) {
+                    if ($chk_cart = $this->cartSessionModel->update($old_warranty, $new_qty, PLATFORM)) {
                         $success = 1;
                     }
                 }
@@ -162,12 +172,12 @@ Class Cart extends PUB_Controller
         }
 
         if (!empty($sku)) {
-            if ($chk_cart = $this->cart_session_model->add($sku, 1, PLATFORM)) {
+            if ($chk_cart = $this->cartSessionModel->add($sku, 1, PLATFORM)) {
                 $success = 1;
             }
         }
 
-        $cart_info = $this->cart_session_model->get_detail(PLATFORM);
+        $cart_info = $this->cartSessionModel->get_detail(PLATFORM);
         $cart["total"] = $cart["item"] = 0;
         if ($cart_info["cart"]) {
             foreach ($cart_info["cart"] AS $key => $arr) {
@@ -210,17 +220,17 @@ Class Cart extends PUB_Controller
             }
             $new_qty = $cur_cart_qty * 1 - 1;
             if ($new_qty <= 0) {
-                if ($chk_cart = $this->cart_session_model->remove($sku)) {
+                if ($chk_cart = $this->cartSessionModel->remove($sku)) {
                     $success = 1;
                 }
             } else {
-                if ($chk_cart = $this->cart_session_model->update($sku, $new_qty, PLATFORM)) {
+                if ($chk_cart = $this->cartSessionModel->update($sku, $new_qty, PLATFORM)) {
                     $success = 1;
                 }
             }
         }
 
-        $cart_info = $this->cart_session_model->get_detail(PLATFORM);
+        $cart_info = $this->cartSessionModel->get_detail(PLATFORM);
         $cart["total"] = $cart["item"] = 0;
         if ($cart_info["cart"]) {
             foreach ($cart_info["cart"] AS $key => $arr) {

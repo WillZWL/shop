@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-include_once(APPPATH . "libraries/Service/Vb_data_transfer_service.php");
+include_once(APPPATH . "libraries/service/Vb_data_transfer_service.php");
 
 class Vb_data_transfer_category_service extends Vb_data_transfer_service
 {
@@ -12,8 +12,11 @@ class Vb_data_transfer_category_service extends Vb_data_transfer_service
 		include_once(APPPATH . 'libraries/dao/Category_dao.php');
 		$this->category_dao = new Category_dao();
 		
-        include_once(APPPATH . "libraries/Service/Category_id_mapping_service.php");		
-		$this->category_id_mapping_service = new Category_id_mapping_service();
+        // include_once(APPPATH . "libraries/service/Category_id_mapping_service.php");		
+		// $this->category_id_mapping_service = new Category_id_mapping_service();
+		
+        // include_once(APPPATH . "libraries/dao/Category_id_mapping_dao.php");		
+		// $this->category_id_mapping_dao = new Category_id_mapping_dao();
 	}
 	
 	public function get_dao()
@@ -21,10 +24,10 @@ class Vb_data_transfer_category_service extends Vb_data_transfer_service
 		return $this->category_dao;
 	}
 	
-	public function get_map_dao()
-	{
-		return $this->category_id_mapping_service;
-	}
+	// public function get_map_dao()
+	// {
+		// return $this->category_id_mapping_dao;
+	// }
 
 	public function set_dao(base_dao $dao)
 	{
@@ -44,77 +47,80 @@ class Vb_data_transfer_category_service extends Vb_data_transfer_service
 		//Create return xml string
 		$xml = array();
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
-		$xml[] = '<no_updated_categories task_id="' . $task_id . '">';
+		$xml[] = '<categories task_id="' . $task_id . '">';
 					
 		$c = count($xml_vb->category);
 		foreach($xml_vb->category as $category)
 		{
 			$c--;			
-				
-			//Get the external (VB) category id to search the corresponding id in atomv2 database
-			$ext_id = $category->id;
 						
-			$id = $this->category_id_mapping_service->get_local_id($ext_id);
+			//$id = $this->category_id_mapping_service->get_local_id($ext_id);			
 			
-            if ($id == "" || $id == null)
+            //if ($id == "" || $id == null)
+			try
 			{
-				//insert category and mapping
-				$new_cat_obj = array();
-				
-				$new_id = $this->get_dao()->seq_next_val();
-				
-				$new_cat_obj["name"] = $category->name;
-				$new_cat_obj["description"] = $category->description;	
-				$new_cat_obj["parent_cat_id"] = $category->parent_cat_id;				
-				$new_cat_obj["level"] = $category->level;
-				$new_cat_obj["add_colour_name"] = $category->add_colour_name;	
-				$new_cat_obj["priority"] = $category->priority;	
-				$new_cat_obj["bundle_discount"] = $category->bundle_discount;					
-				$new_cat_obj["min_display_qty"] = $category->min_display_qty;					
-				$new_cat_obj["status"] = $category->status;	
-				
-				if ($this->get_dao()->q_insert($new_cat_obj))
+				if($this->get_dao()->get(array("id"=>$category->id)))
 				{
-					$this->get_dao()->update_seq($new_id);
+					//Update the AtomV2 category data 					
+					$where = array("id"=>$category->id);
 					
-					//Insert mapping 
-					$new_map_obj["id"] = $new_id;
-					$new_map_obj["ext_id"] = $ext_id;
-					$new_map_obj["status"] = $category->status; //same status of the category ????
+					$new_cat_obj = array();
 					
-					$this->get_map_dao()->q_insert($new_map_obj);
+					$new_cat_obj["name"] = $category->name;
+					$new_cat_obj["description"] = $category->description;	
+					$new_cat_obj["parent_cat_id"] = $category->parent_cat_id;				
+					$new_cat_obj["level"] = $category->level;
+					$new_cat_obj["add_colour_name"] = $category->add_colour_name;	
+					$new_cat_obj["priority"] = $category->priority;	
+					$new_cat_obj["bundle_discount"] = $category->bundle_discount;					
+					$new_cat_obj["min_display_qty"] = $category->min_display_qty;					
+					$new_cat_obj["status"] = $category->status;	
+					
+					$this->get_dao()->q_update($where, $new_cat_obj);
+					
+					$xml[] = '<category>';
+					$xml[] = '<id>' . $category->id . '</id>';
+					$xml[] = '<status>5</status>'; //updated
+					$xml[] = '<is_error>' . $category->is_error . '</is_error>';
+					$xml[] = '</category>';
 				}
-				
-			}
-			elseif ($id != "" && $id != null)
+				else
+				{				
+					//insert category and mapping
+					$new_cat_obj = array();
+					
+					$new_cat_obj = $this->get_dao()->get();
+					$new_cat_obj->set_id($category->id);
+					$new_cat_obj->set_name($category->name);
+					$new_cat_obj->set_description($category->description);
+					$new_cat_obj->set_parent_cat_id($category->parent_cat_id);
+					$new_cat_obj->set_level($category->level);
+					$new_cat_obj->set_add_colour_name($category->add_colour_name);
+					$new_cat_obj->set_priority($category->priority);
+					$new_cat_obj->set_bundle_discount($category->bundle_discount);
+					$new_cat_obj->set_min_display_qty($category->min_display_qty);
+					$new_cat_obj->set_sponsored(0);
+					$new_cat_obj->set_status($category->status);
+					
+					$this->get_dao()->insert($new_cat_obj);	
+					
+					$xml[] = '<category>';
+					$xml[] = '<id>' . $category->id . '</id>';
+					$xml[] = '<status>5</status>'; //updated
+					$xml[] = '<is_error>' . $category->is_error . '</is_error>';
+					$xml[] = '</category>';
+				}
+			}	
+			catch(Exception $e)
 			{
-				//Update the AtomV2 category data 					
-				$where = array("id"=>$id);
-				
-				$new_cat_obj = array();
-				
-				$new_cat_obj["name"] = $category->name;
-				$new_cat_obj["description"] = $category->description;	
-				$new_cat_obj["parent_cat_id"] = $category->parent_cat_id;				
-				$new_cat_obj["level"] = $category->level;
-				$new_cat_obj["add_colour_name"] = $category->add_colour_name;	
-				$new_cat_obj["priority"] = $category->priority;	
-				$new_cat_obj["bundle_discount"] = $category->bundle_discount;					
-				$new_cat_obj["min_display_qty"] = $category->min_display_qty;					
-				$new_cat_obj["status"] = $category->status;	
-				
-				$this->get_dao()->q_update($where, $new_cat_obj);
-			}
-			else
-			{
-				//if the ext_id is not changed in atomv2, we store it in an xml string to send it to VB
 				$xml[] = '<category>';
 				$xml[] = '<id>' . $category->id . '</id>';
+				$xml[] = '<is_error>' . $category->is_error . '</is_error>';
 				$xml[] = '</category>';
 			}
 		 }
 		 
-		$xml[] = '</no_updated_categories>';
+		$xml[] = '</categories>';
 		
 		
 		$return_feed = implode("\n", $xml);	

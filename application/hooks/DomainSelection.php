@@ -26,7 +26,11 @@ class DomainSelection
     {
         $countryCode = '';
 
-        $ip = $_GET['ip'];
+        if ($ip == "")
+        {
+            if (isset($_GET['ip']))
+                $ip = $_GET['ip'];
+        }
 
         try {
             $reader = new Reader(config_item('maxmind_db_path'));
@@ -58,7 +62,7 @@ class DomainSelection
 
     public function getCountryCode()
     {
-        if ($_GET['ip']) {
+        if (isset($_GET['ip']) && $_GET['ip']) {
             $this->setCountryCode($this->convertIp2Country());
         } elseif (isset($_COOKIE['countryCode'])) {
             $this->setCountryCode($_COOKIE['countryCode']);

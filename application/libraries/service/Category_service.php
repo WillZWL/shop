@@ -507,6 +507,11 @@ class Category_service extends Base_service
     public function get_cat_ext_list($where = array(), $option = array())
     {
         return $this->get_ext_dao()->get_list($where, $option);
+    }	
+
+    public function get_cat_menu_list($where = array(), $option = array())
+    {
+        return $this->get_ext_dao()->get_menu_list($where, $option);
     }
 
     public function get_category($where = array())
