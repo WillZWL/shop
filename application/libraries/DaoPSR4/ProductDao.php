@@ -157,6 +157,7 @@ class ProductDao extends BaseDao
                 $reg_arr[] = "pc.prod_name REGEXP '" . $key . "'";
             }
             $reg_script = implode(" OR ", $reg_arr);
+
             $sql .= "WHERE ({$reg_script})";
         } else {
             $sql .= "WHERE (pc.prod_name like '%" . $where['keyword'] . "%')";

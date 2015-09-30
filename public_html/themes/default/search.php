@@ -121,7 +121,7 @@
         }
     ?>
     <div class="products-block  col-lg-9 col-sm-9 col-xs-12">
-        <div class="category_title"><h3><?= $curr_number . _(' Search Results for ') . '"' . $keyword . '"'?></h3></div>
+        <div class="category_title"><h3><?= $curr_number . _(' Search Results for ') . '"' . ($skey ? $skey :$keyword) . '"'?></h3></div>
         <div class="product-filter no-shadow" style="margin:20px auto">
             <div class="inner clearfix">
                 <div class="display">
