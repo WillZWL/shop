@@ -16,12 +16,16 @@
     ],
     "autoload": {
         "psr-4": {
-            "AtomV2\\": "application/libraries/",
-            "AtomV2\\Service\\": "application/libraries/ServicePSR4",
-            "AtomV2\\Dao\\": "application/libraries/DaoPSR4",
-            "AtomV2\\Service\\": "application/libraries/ServicePSR4",
-            "AtomV2\\Models\\Website\\": "application/models/WebsitePSR4",
-            "AtomV2\\Models\\Mastercfg\\": "application/models/MastercfgPSR4",
+            "ESG\\Panther\\": "application/libraries/",
+            "ESG\\Panther\\Dao\\": "application/libraries/DaoPSR4",
+            "ESG\\Panther\\Models\\Auth\\": "application/models/AuthPSR4",
+            "ESG\\Panther\\Service\\": "application/libraries/ServicePSR4",
+            "ESG\\Panther\\Models\\Website\\": "application/models/WebsitePSR4",
+            "ESG\\Panther\\Models\\Mastercfg\\": "application/models/MastercfgPSR4",
+            "ESG\\Panther\\Models\\Marketing\\": "application/models/MarketingPSR4",
+            "ESG\\Panther\\Models\\CustomerService\\": "application/models/CustomerServicePSR4",
+            "ESG\\Panther\\Models\\Order\\": "application/models/OrderPSR4",
+            "ESG\\Panther\\Form\\": "application/form",
             "": ["application/libraries/VoPSR4/", "application/libraries/DtoPSR4/"]
         },
         "classmap" : ["system/core/"]
