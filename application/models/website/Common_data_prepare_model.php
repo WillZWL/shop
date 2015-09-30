@@ -1441,6 +1441,8 @@ salecycle_script;
             $data["overview"] = nl2br(trim($prod_info->get_detail_desc()));
             $data["lang_restricted"] = trim($prod_info->get_lang_restricted());
             $data['image'] = $prod_info->get_image();
+            $data['prod_image'] = $prod_image;
+            $data['default_image'] = $prod_image["0"]["image"];
             $data["osd_lang_list"] = $this->product_model->product_service->get_lang_osd_list();
             $data["website_status_long_text"] = trim($prod_info->get_website_status_long_text());
             $data["website_status_short_text"] = trim($prod_info->get_website_status_short_text());

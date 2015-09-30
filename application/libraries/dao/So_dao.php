@@ -492,10 +492,10 @@ SQL;
                     , scc.card_bin
                     , scc.card_type
                     , sps.pay_to_account
-                    , sps.risk_ref1
-                    , sps.risk_ref2
-                    , sps.risk_ref3
-                    , sps.risk_ref4
+                    , sps.risk_ref_1
+                    , sps.risk_ref_2
+                    , sps.risk_ref_3
+                    , sps.risk_ref_4
                     , s.create_at as ip_address
                     , s.status as order_status
                     , s.dispatch_date
@@ -594,12 +594,15 @@ SQL;
         }
 
         if ($type == "cs") {
-            $this->db->join('( SELECT a.so_no, a.reason
+            /*$this->db->join('( SELECT a.so_no, a.reason
                                 FROM so_hold_reason a
                                 JOIN (SELECT so_no, max(create_on) as create_on
                                       FROM so_hold_reason
                                       GROUP BY so_no) AS c
                                 ON a.create_on = c.create_on AND a.so_no = c.so_no
+                                ) AS sohr', 'sohr.so_no = so.so_no', 'INNER');*/
+			$this->db->join('( SELECT a.so_no, a.reason
+                                FROM so_hold_reason a
                                 ) AS sohr', 'sohr.so_no = so.so_no', 'INNER');
             $this->db->where("(sohr.reason = 'csvv' OR sohr.reason = 'cscc')");
 
@@ -607,13 +610,17 @@ SQL;
         }
 
         if (($type == "oc") || ($type == "comcenter")) {
-            $this->db->join('( SELECT a.so_no, a.reason
+            /*$this->db->join('( SELECT a.so_no, a.reason
                                 FROM so_hold_reason a
                                 JOIN (SELECT so_no, max(create_on) as create_on
                                       FROM so_hold_reason
                                       GROUP BY so_no) AS c
                                 ON a.create_on = c.create_on AND a.so_no = c.so_no
+                                ) AS sohr', 'sohr.so_no = so.so_no', 'INNER');*/
+			$this->db->join('( SELECT a.so_no, a.reason
+                                FROM so_hold_reason a                               
                                 ) AS sohr', 'sohr.so_no = so.so_no', 'INNER');
+								
             /*$pw_where = " `so1`.`status` > '2'
                             AND `sol`.`status` < '6'
                             AND `so1`.hold_status` = '1'
@@ -621,22 +628,28 @@ SQL;
         }
 
         if ($type == "ora") {
-            $this->db->join('( SELECT a.so_no, a.reason
+            /*$this->db->join('( SELECT a.so_no, a.reason
                                 FROM so_hold_reason a
                                 JOIN (SELECT so_no, max(create_on) as create_on
                                       FROM so_hold_reason
                                       GROUP BY so_no) AS c
                                 ON a.create_on = c.create_on AND a.so_no = c.so_no
+                                ) AS sohr', 'sohr.so_no = so.so_no', 'LEFT');*/
+			$this->db->join('( SELECT a.so_no, a.reason
+                                FROM so_hold_reason a
                                 ) AS sohr', 'sohr.so_no = so.so_no', 'LEFT');
         }
 
         if ($type == "log_app") {
-            $this->db->join('( SELECT a.so_no, a.reason
+            /*$this->db->join('( SELECT a.so_no, a.reason
                                 FROM so_hold_reason a
                                 JOIN (SELECT so_no, max(create_on) as create_on
                                       FROM so_hold_reason
                                       GROUP BY so_no) AS c
                                 ON a.create_on = c.create_on AND a.so_no = c.so_no
+                                ) AS sohr', 'sohr.so_no = so.so_no', 'INNER');*/
+			$this->db->join('( SELECT a.so_no, a.reason
+                                FROM so_hold_reason a
                                 ) AS sohr', 'sohr.so_no = so.so_no', 'INNER');
             $this->db->where("sohr.reason LIKE '%_log_app'");
 
@@ -665,7 +678,7 @@ SQL;
 
         $this->db->join('so_credit_chk AS socc', 'so.so_no = socc.so_no', 'LEFT');
         $this->db->join('so_payment_status AS sops', 'sops.so_no = so.so_no', 'LEFT');
-        $this->db->join('risk_ref AS rr', 'rr.payment_gateway_id = sops.payment_gateway_id AND rr.risk_ref = sops.risk_ref1', 'LEFT');
+        $this->db->join('risk_ref AS rr', 'rr.payment_gateway_id = sops.payment_gateway_id AND rr.risk_ref = sops.risk_ref_1', 'LEFT');
 
         //#2309 cybs accept/review/reject, the so_risk_vo is already included in so_service. To enable searching by this field, JOIN the so_risk here
         $this->db->join('so_risk as sor', 'sor.so_no = so.so_no', 'LEFT');
@@ -677,7 +690,7 @@ SQL;
         $this->db->where("so.refund_status = '0'");
 
         if (empty($option["num_rows"])) {
-            $this->db->select('so.*, c.id, c.forename, c.surname, c.email, c.password, c.tel_1, c.tel_2, c.tel_3, c.del_tel_1, c.del_tel_2, c.del_tel_3,' . ($option["reason"] ? ', sohr.reason, sohr.create_on AS hold_date' : ', socc.t3m_is_sent, socc.t3m_in_file, socc.t3m_result, socc.fd_status, sops.payment_gateway_id, sops.payment_status, sops.card_id AS card_type, sops.risk_ref1, sops.risk_ref2, sops.risk_ref3, sops.risk_ref4, sops.pending_action, rr.risk_ref_desc'));
+            $this->db->select('so.*, c.id, c.forename, c.surname, c.email, c.password, c.tel_1, c.tel_2, c.tel_3, c.del_tel_1, c.del_tel_2, c.del_tel_3,' . ($option["reason"] ? ', sohr.reason, sohr.create_on AS hold_date' : ', socc.t3m_is_sent, socc.t3m_in_file, socc.t3m_result, socc.fd_status, sops.payment_gateway_id, sops.payment_status, sops.card_id AS card_type, sops.risk_ref_1, sops.risk_ref_2, sops.risk_ref_3, sops.risk_ref_4, sops.pending_action, rr.risk_ref_desc'));
             //$this->db->select('p.pw_count');
             //$this->db->select('soi.items');
             if ($type == "cs" || $type == "log_app" || $type == "oc" || $type == "ora") {
@@ -995,7 +1008,7 @@ SQL;
         $this->db->join("so_item as si", "si.so_no=so.so_no", 'INNER');
         $this->db->join("so_risk as sr", "sr.so_no=so.so_no and sr.risk_requested=0", 'INNER');
         $this->db->where($where);
-        $this->db->select("so.so_no, so.currency_id, so.amount, so.create_at, so.lang_id, so.fingerprintId, sps.payment_gateway_id, sps.risk_ref3, sps.risk_ref4, sps.payer_email,
+        $this->db->select("so.so_no, so.currency_id, so.amount, so.create_at, so.lang_id, so.fingerprint_id, sps.payment_gateway_id, sps.risk_ref3, sps.risk_ref4, sps.payer_email,
         si.line_no, si.prod_sku, si.prod_name, si.qty, si.unit_price,
         c.email, c.companyname, c.del_company, c.address_1, c.address_2, c.address_3, c.postcode, c.city, c.state, c.country_id, c.del_address_1, c.del_address_2, c.del_address_3, c.del_postcode, c.del_city, c.del_state, c.del_country_id, c.forename, c.surname, c.tel_1, c.tel_2, c.tel_3");
         $this->include_dto($classname);
@@ -3080,7 +3093,7 @@ ORDER BY so.so_no, soid.line_no
     public function get_flex_sales_invoice($where, $classname = "sales_invoice_dto")
     {
         $option['limit'] = -1;
-        $this->db->from("(select so.so_no, so.biz_type, so.parent_so_no, so.status, so.finance_dispatch_date,
+        $this->db->from("(select so.so_no, so.biz_type, so.parent_so_no, so.status, 
         so.client_id, so.currency_id, so.platform_id,so.client_promotion_code,so.dispatch_date,so.order_create_date,so.delivery_charge,so.split_so_group,soex.order_reason,
         sum(fr.amount) as amount, fr.txn_id, fr.txn_time, fr.flex_batch_id, fr.gateway_id from so
         INNER JOIN so_extend soex on so.so_no = soex.so_no LEFT JOIN flex_ria fr ON so.so_no = fr.so_no group by so.so_no) tbl_1");
@@ -3097,6 +3110,7 @@ ORDER BY so.so_no, soid.line_no
 
         unset($where["start_date"]);
         unset($where["end_date"]);
+
 //      if (check_finance_role())
         $dispatch_string = "tbl_1.finance_dispatch_date";
 //      else

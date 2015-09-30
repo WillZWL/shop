@@ -36,6 +36,19 @@ abstract class Vb_data_transfer_service implements Vb_data_transfer_service_inte
 		//print $new_feed;
 		 return $new_feed;
 	}
+	
+	
+	
+	public function replace_special_chars($replaced_data)
+	{
+		$original_data = "";
+		
+		$original_data = str_replace('&amp;', '&', $replaced_data);
+		$original_data = str_replace('&gt;', '>', $replaced_data);				
+		$original_data = str_replace('&lt;', '>', $replaced_data);
+		
+		return $original_data;
+	}
 }
 
 /* End of file vb_data_transfer_service.php */

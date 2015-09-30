@@ -50,13 +50,13 @@ class Fraudulent_order_dao extends Base_dao
                 c.mobile, so.platform_id, sops.card_id, socc.card_type, sor.risk_var1, sor.risk_var2, sor.risk_var3, sor.risk_var4, sor.risk_var5,
                 sor.risk_var6, sor.risk_var7, sor.risk_var8, sor.risk_var9, sor.risk_var10,
                 socc.card_bin,
-                if(sops.card_id='MoneyBookers', sops.risk_ref1, '') as verification_level,
-                if(sops.card_id='GlobalCollect', sops.risk_ref2, '') as fraud_result,
-                if(sops.card_id='GlobalCollect', sops.risk_ref1, '') as AVS_result,
-                if(sops.card_id='PayPal', sops.risk_ref1, '') as protection_eligibility,
-                if(sops.card_id='PayPal', sops.risk_ref2, '') as protection_eligibility_type,
-                if(sops.card_id='PayPal', sops.risk_ref3, '') as address_status,
-                if(sops.card_id='PayPal', sops.risk_ref4, '') as payer_status,
+                if(sops.card_id='MoneyBookers', sops.risk_ref_1, '') as verification_level,
+                if(sops.card_id='GlobalCollect', sops.risk_ref_2, '') as fraud_result,
+                if(sops.card_id='GlobalCollect', sops.risk_ref_1, '') as AVS_result,
+                if(sops.card_id='PayPal', sops.risk_ref_1, '') as protection_eligibility,
+                if(sops.card_id='PayPal', sops.risk_ref_2, '') as protection_eligibility_type,
+                if(sops.card_id='PayPal', sops.risk_ref_3, '') as address_status,
+                if(sops.card_id='PayPal', sops.risk_ref_4, '') as payer_status,
                 so.create_at, so.dispatch_date, so.refund_status, temp_rf.create_on as refund_date, rr.description
             FROM fraudulent_order as fo
             INNER JOIN so

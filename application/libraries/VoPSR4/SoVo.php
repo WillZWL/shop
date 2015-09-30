@@ -43,7 +43,7 @@ class SoVo extends \BaseVo
     private $expect_del_days;
     private $order_create_date;
     private $dispatch_date = '0000-00-00 00:00:00';
-    private $finance_dispatch_date = '0000-00-00 00:00:00';
+    //private $finance_dispatch_date = '0000-00-00 00:00:00';
     private $fingerprint_id;
     private $cc_reminder_schedule_date = '0000-00-00 00:00:00';
     private $cc_reminder_type;
@@ -482,7 +482,7 @@ class SoVo extends \BaseVo
         return $this->dispatch_date;
     }
 
-    public function setFinanceDispatchDate($finance_dispatch_date)
+    /*public function setFinanceDispatchDate($finance_dispatch_date)
     {
         $this->finance_dispatch_date = $finance_dispatch_date;
     }
@@ -490,7 +490,7 @@ class SoVo extends \BaseVo
     public function getFinanceDispatchDate()
     {
         return $this->finance_dispatch_date;
-    }
+    }*/
 
     public function setFingerprintId($fingerprint_id)
     {
