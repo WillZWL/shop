@@ -114,7 +114,6 @@ VALUES
 
 update payment_option_card set card_image='90x45/btn_paypal.png' where code='paypal';
 
-/* above is LIVE */
 
 ALTER TABLE `so`
 DROP COLUMN `finance_dispatch_date`,
@@ -153,3 +152,16 @@ DROP COLUMN `t3m_in_file`,
 DROP COLUMN `t3m_result`,
 MODIFY COLUMN `card_holder`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `so_no`;
 
+ALTER TABLE `so_risk`
+CHANGE COLUMN `risk_var1` `risk_var_1`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_requested`,
+CHANGE COLUMN `risk_var2` `risk_var_2`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_1`,
+CHANGE COLUMN `risk_var3` `risk_var_3`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_2`,
+CHANGE COLUMN `risk_var4` `risk_var_4`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_3`,
+CHANGE COLUMN `risk_var5` `risk_var_5`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_4`,
+CHANGE COLUMN `risk_var6` `risk_var_6`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_5`,
+CHANGE COLUMN `risk_var7` `risk_var_7`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_6`,
+CHANGE COLUMN `risk_var8` `risk_var_8`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_7`,
+CHANGE COLUMN `risk_var9` `risk_var_9`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_8`,
+CHANGE COLUMN `risk_var10` `risk_var_10`  varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_9`;
+
+/* above is LIVE */
