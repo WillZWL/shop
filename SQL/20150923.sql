@@ -114,10 +114,6 @@ VALUES
 
 update payment_option_card set card_image='90x45/btn_paypal.png' where code='paypal';
 
-<<<<<<< HEAD
-/* above is LIVE */
-=======
->>>>>>> hotfix/so_risk
 
 ALTER TABLE `so`
 DROP COLUMN `finance_dispatch_date`,
@@ -155,7 +151,6 @@ DROP COLUMN `t3m_is_sent`,
 DROP COLUMN `t3m_in_file`,
 DROP COLUMN `t3m_result`,
 MODIFY COLUMN `card_holder`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `so_no`;
-
 
 ALTER TABLE `so_risk`
 CHANGE COLUMN `risk_var1` `risk_var_1`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_requested`,
