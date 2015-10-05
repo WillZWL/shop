@@ -10,7 +10,9 @@ use ESG\Panther\Service\SubjectDomainService;
 
 class PriceService extends BaseService
 {
-    public function __construct()
+    public $platformType = null;
+
+    public function __construct($platformType = null)
     {
         parent::__construct();
         $this->setDao(new PriceDao);
@@ -20,6 +22,11 @@ class PriceService extends BaseService
         $this->weightCatService = new WeightCatService;
         $this->configService = new ContextConfigService;
         $this->subjectDomainService = new SubjectDomainService;
+        
+        if ($platformType)
+            $this->platformType = $platformType;
+        elseif (defined(PLATFORM_TYPE))
+            $this->platformType = PLATFORM_TYPE;
     }
 
     public function getListingInfoList($sku_arr = [], $platform_id = "", $lang_id = 'en', $option = [])
@@ -78,7 +85,7 @@ class PriceService extends BaseService
 
     public function calcLogisticCost(&$dto)
     {
-        if ($lc = $this->freightCatService->getFccDao()->calcLogisticCost($dto->getPlatformId(), $dto->getSku())) {
+        if ($lc = $this->freightCatService->getDao('FreightCatCharge')->calcLogisticCost($dto->getPlatformId(), $dto->getSku())) {
             $dto->setLogisticCost($lc['converted_amount']);
         } else {
             $dto->setLogisticCost(0);
@@ -285,7 +292,7 @@ class PriceService extends BaseService
                 $where["pca.mainprod_sku"] = $mainprod_sku;
                 $where["pca.status"] = 1;
 
-                if ($mapped_ca_list = $this->getCaDao()->getMappedAccListWName($where)) {
+                if ($mapped_ca_list = $this->getCaDao()->getMappedAccListWithName($where)) {
                     foreach ($mapped_ca_list as $caobj) {
                         $cadto = $this->getDao('Price')->getPriceCostDto($caobj->getAccessorySku(), $dto->getPlatformId());
                         $total_cost += $cadto->getSupplierCost();
@@ -376,7 +383,7 @@ class PriceService extends BaseService
         $markup_percent = $dto->getSubCatMargin() + $dto->getPlatformCommission() + $dto->getPaymentChargePercent() + $dto->getForexFeePercent();
         $auto_declared = $tmp_cost / (1 - ($markup_percent / 100)) * ($dto->getDeclaredPcent() / 100);
         $country_id = substr($dto->getPlatformId(), -2);
-        if ($obj = $this->subjectDomainService->getDao()->get(["subject" => "MAX_DECLARE_VALUE.{$country_id}"])) {
+        if ($obj = $this->subjectDomainService->getDao("SubjectDomain")->get(["subject" => "MAX_DECLARE_VALUE.{$country_id}"])) {
             $max_value = $obj->getValue();
             $auto_declared = min($max_value, $auto_declared);
         }
@@ -895,7 +902,7 @@ class PriceService extends BaseService
             return false;
         }
 
-        $this->perform_business_logic($dto, 5, $required_selling_price, $required_cost_price);
+        $this->performBusinessLogic($dto, 5, $required_selling_price, $required_cost_price);
         if (1 == 10) {
             echo "<pre>";
             var_dump("get_supplier_cost:          " . $dto->getSupplierCost());

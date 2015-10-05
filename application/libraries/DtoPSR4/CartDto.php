@@ -2,15 +2,18 @@
 class CartDto
 {
     protected $platformId;
+    protected $platformOrderId;
     public $items;  //CartItemDto
     protected $bizType;
     protected $vatPercent;
     protected $vat;
+    protected $platformCurrency;
     protected $cost;
     protected $subtotal;
     protected $grandTotal;
     protected $paymentCharge;
     protected $adminFee;
+    protected $totalWeight;
     protected $deliveryCharge = 0;
     protected $deliveryType = "STD";
     protected $deliveryCost;
@@ -23,6 +26,14 @@ class CartDto
 
     public function setPlatformId($platformId) {
         $this->platformId = $platformId;
+    }
+
+    public function getPlatformOrderId() {
+        return $this->platformOrderId;
+    }
+
+    public function setPlatformOrderId($platformOrderId) {
+        $this->platformOrderId = $platformOrderId;
     }
 
     public function getItems() {
@@ -81,12 +92,12 @@ class CartDto
         $this->grandTotal = $grandTotal;
     }
 
-    public function getCurrency() {
-        return $this->currency;
+    public function getPlatformCurrency() {
+        return $this->platformCurrency;
     }
 
-    public function setCurrency($currency) {
-        $this->currency = $currency;
+    public function setPlatformCurrency($platformCurrency) {
+        $this->platformCurrency = $platformCurrency;
     }
 
     public function getPaymentCharge() {
@@ -95,6 +106,14 @@ class CartDto
 
     public function setDeclaredValue($paymentCharge) {
         $this->paymentCharge = $paymentCharge;
+    }
+
+    public function getTotalWeight() {
+        return $this->totalWeight;
+    }
+
+    public function setTotalWeight($totalWeight) {
+        $this->totalWeight = $totalWeight;
     }
 
     public function getAdminFee() {

@@ -4,15 +4,13 @@ namespace ESG\Panther\Service;
 use ESG\Panther\Service\WmsWarehouseService;
 use ESG\Panther\Service\ExtCategoryMappingService;
 
-include_once "PriceService.php";
-
 class PriceWebsiteService extends PriceService
 {
     private $wms_wh_srv;
 
-    public function __construct()
+    public function __construct($platformType = null)
     {
-        parent::__construct();
+        parent::__construct($platformType);
         $this->wmsWarehouseService = new WmsWarehouseService;
         $this->extCategoryMappingService = new ExtCategoryMappingService;
     }
@@ -75,8 +73,8 @@ class PriceWebsiteService extends PriceService
                     $supplier_status = "";
                 }
                 $country_obj = $this->get_country_service()->get(array("id" => $obj->get_platform_country_id()));
-                $this->calc_logistic_cost($obj);
-                $this->calculate_profit($obj);
+                $this->calcLogisticCost($obj);
+                $this->calculateProfit($obj);
                 unset($supplier_obj);
                 unset($country_obj);
                 $cur_row = $i % 2;

@@ -10,8 +10,9 @@ CREATE TABLE `payment_option` (
   `modify_at` varchar(16) COLLATE utf8_bin NOT NULL,
   `modify_by` varchar(32) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `idx_platform_id` (`platform_id`,`page`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  KEY `idx_platform_id` (`platform_id`,`page`) USING BTREE,
+  KEY `idx_set_id` (`set_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `payment_option_set` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -27,7 +28,7 @@ CREATE TABLE `payment_option_set` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_payment_set` (`set_id`) USING BTREE,
   KEY `idx_status` (`status`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `payment_option_set_content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -47,8 +48,9 @@ CREATE TABLE `payment_option_set_content` (
   KEY `idx_set_id` (`set_id`) USING BTREE,
   KEY `idx_card_code` (`card_code`) USING BTREE,
   KEY `idx_currency` (`ref_currency`) USING BTREE,
+  KEY `idx_set_id_status` (`set_id`,`status`),
   CONSTRAINT `fk_set_id` FOREIGN KEY (`set_id`) REFERENCES `payment_option_set` (`set_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `payment_option_card` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -64,8 +66,10 @@ CREATE TABLE `payment_option_card` (
   `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modify_at` varchar(16) NOT NULL,
   `modify_by` varchar(32) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_code` (`code`) USING BTREE,
+  KEY `idx_code_status` (`code`,`status`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*
 ALTER TABLE `payment_gateway`
@@ -108,13 +112,56 @@ VALUES
 (3, 1, "paypal", "GBP", 0, 20000, 1, now(), '127.0.0.1', 'oswald', '127.0.0.1', 'oswald');
 
 
-select platform_id, po.set_id, pos.name, posc.card_code, poc.payment_gateway_id, poc.card_id, poc.card_name, poc.card_image 
-from payment_option po
-inner join payment_option_set pos on pos.set_id=po.set_id and pos.status=1
-inner join payment_option_set_content posc on posc.set_id=pos.set_id and posc.status=1
-inner join payment_option_card poc on poc.code=posc.card_code and poc.status=1
-inner join payment_gateway pg on pg.payment_gateway_id=poc.payment_gateway_id and pg.status=1
-where po.platform_id='WEBGB' and po.page='checkout' group by poc.code;
-
-
 update payment_option_card set card_image='90x45/btn_paypal.png' where code='paypal';
+
+
+ALTER TABLE `so`
+DROP COLUMN `finance_dispatch_date`,
+MODIFY COLUMN `fingerprint_id`  varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `dispatch_date`;
+
+ALTER TABLE `so`
+MODIFY COLUMN `vat_percent`  double(5,2) UNSIGNED NOT NULL DEFAULT '0.00' AFTER `cost`;
+
+ALTER TABLE `so`
+ADD INDEX `idx_create` (`order_create_date`) USING BTREE ;
+
+ALTER TABLE `so_item`
+ADD INDEX `idx_create_on` (`create_on`) USING BTREE ;
+
+ALTER TABLE `so_item_detail`
+ADD INDEX `idx_create_on` (`create_on`) USING BTREE ;
+
+ALTER TABLE `so_item_detail`
+ADD COLUMN `prod_name`  varchar(255) NOT NULL DEFAULT '' AFTER `item_sku`,
+ADD COLUMN `ext_item_cd`  varchar(255) NOT NULL DEFAULT '' AFTER `prod_name`,
+ADD COLUMN `website_status`  varchar(2) NOT NULL DEFAULT '' AFTER `margin_raw`,
+ADD COLUMN `warranty_in_month`  smallint(2) NOT NULL DEFAULT 0 AFTER `website_status`,
+ADD COLUMN `supplier_status`  varchar(2) NOT NULL DEFAULT '' COMMENT 'A = Readily Available / O = Temp Out of Stock' AFTER `warranty_in_month`;
+
+ALTER TABLE `so_item_detail`
+DROP COLUMN `discount`,
+MODIFY COLUMN `bundle_core_id`  bigint(20) NOT NULL DEFAULT 0 COMMENT 'bundle_core_id used' AFTER `discount_total`;
+
+ALTER TABLE `so_item_detail`
+MODIFY COLUMN `profit`  double(15,2) NOT NULL DEFAULT 0.00 COMMENT '//unit profit' AFTER `item_unit_cost`,
+MODIFY COLUMN `profit_raw`  double(15,2) NOT NULL DEFAULT 0.00 COMMENT 'profit w/o promo, unit profit' AFTER `profit`;
+
+ALTER TABLE `so_credit_chk`
+DROP COLUMN `t3m_is_sent`,
+DROP COLUMN `t3m_in_file`,
+DROP COLUMN `t3m_result`,
+MODIFY COLUMN `card_holder`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `so_no`;
+
+ALTER TABLE `so_risk`
+CHANGE COLUMN `risk_var1` `risk_var_1`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_requested`,
+CHANGE COLUMN `risk_var2` `risk_var_2`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_1`,
+CHANGE COLUMN `risk_var3` `risk_var_3`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_2`,
+CHANGE COLUMN `risk_var4` `risk_var_4`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_3`,
+CHANGE COLUMN `risk_var5` `risk_var_5`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_4`,
+CHANGE COLUMN `risk_var6` `risk_var_6`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_5`,
+CHANGE COLUMN `risk_var7` `risk_var_7`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_6`,
+CHANGE COLUMN `risk_var8` `risk_var_8`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_7`,
+CHANGE COLUMN `risk_var9` `risk_var_9`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_8`,
+CHANGE COLUMN `risk_var10` `risk_var_10`  varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_9`;
+
+/* above is LIVE */

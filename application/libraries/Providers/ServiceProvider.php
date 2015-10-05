@@ -79,6 +79,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\ProductService();
         };
 
+        $servcieContainer['ProductSearch'] = function () {
+            return new S\ProductSearchService();
+        };
+
         $servcieContainer['Log'] = function () {
             return new S\LogService();
         };
@@ -139,8 +143,8 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\WebsiteService();
         };
 
-        $servcieContainer['PriceWebsite'] = function () {
-            return new S\PriceWebsiteService();
+        $servcieContainer['Price'] = function () {
+            return new S\PriceService();
         };
 
         $servcieContainer['PriceWebsite'] = function () {

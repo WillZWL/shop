@@ -27,6 +27,7 @@
             "ESG\\Panther\\Models\\Marketing\\": "application/models/MarketingPSR4",
             "ESG\\Panther\\Models\\CustomerService\\": "application/models/CustomerServicePSR4",
             "ESG\\Panther\\Models\\Order\\": "application/models/OrderPSR4",
+            "ESG\\Panther\\Form\\": "application/form",
             "": ["application/libraries/VoPSR4/", "application/libraries/DtoPSR4/"]
         },
         "classmap" : ["system/core/"]

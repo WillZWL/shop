@@ -3,20 +3,29 @@
 class CartItemDto
 {
     private $sku;
-    private $name;
+    private $extItemCd;
+    private $name;    
     private $nameInLang;
     private $qty;
+    private $platformCurrency;
     private $unitCost;
     private $price;
+    private $discountTotal;
+    private $promoDiscAmt;
     private $amount;  //subtotal
-    private $imageUrl = null;  //subtotal
+    private $imageUrl = null;
     private $image;
     private $supplierUnitCost;
     private $supplierCostCurrency;
     private $supplierUnitCostInHkd;
+    private $vatTotal;
+    private $vatPercent;
+    private $unitWeight;
     private $listingStatus;
     private $websiteStatus;
     private $sourcingStatus;
+    private $warrantyInMonth;
+    private $decPlace;
 
     public function __construct()
     {
@@ -37,6 +46,22 @@ class CartItemDto
 
     public function setSku($sku) {
         $this->sku = $sku;
+    }
+
+    public function getExtItemCd() {
+        return $this->extItemCd;
+    }
+
+    public function setExtItemCd($extItemCd) {
+        $this->extItemCd = $extItemCd;
+    }
+
+    public function getPlatformCurrency() {
+        return $this->platformCurrency;
+    }
+
+    public function setPlatformCurrency($platformCurrency) {
+        $this->platformCurrency = $platformCurrency;
     }
 
     public function getPrice() {
@@ -86,6 +111,30 @@ class CartItemDto
     public function setSupplierUnitCostInHkd($supplierUnitCostInHkd) {
         $this->supplierUnitCostInHkd = $supplierUnitCostInHkd;
     }
+    
+    public function getVatTotal() {
+        return $this->vatTotal;
+    }
+
+    public function setVatTotal($vatTotal) {
+        $this->vatTotal = $vatTotal;
+    }
+    
+    public function getVatPercent() {
+        return $this->vatPercent;
+    }
+
+    public function setVatPercent($vatPercent) {
+        $this->vatPercent = $vatPercent;
+    }
+
+    public function getUnitWeight() {
+        return $this->unitWeight;
+    }
+
+    public function setUnitWeight($unitWeight) {
+        $this->unitWeight = $unitWeight;
+    }
 
     public function getQty() {
         return $this->qty;
@@ -101,6 +150,22 @@ class CartItemDto
 
     public function setUnitCost($unitCost) {
         $this->unitCost = $unitCost;
+    }
+
+    public function getDiscountTotal() {
+        return $this->discountTotal;
+    }
+
+    public function setDiscountTotal($discountTotal) {
+        $this->discountTotal = $discountTotal;
+    }
+
+    public function getPromoDiscAmt() {
+        return $this->promoDiscAmt;
+    }
+
+    public function setPromoDiscAmt($promoDiscAmt) {
+        $this->promoDiscAmt = $promoDiscAmt;
     }
 
     public function getAmount() {
@@ -133,6 +198,22 @@ class CartItemDto
 
     public function setSourcingStatus($sourcingStatus) {
         $this->sourcingStatus = $sourcingStatus;
+    }
+
+    public function getWarrantyInMonth() {
+        return $this->warrantyInMonth;
+    }
+
+    public function setWarrantyInMonth($warrantyInMonth) {
+        $this->warrantyInMonth = $warrantyInMonth;
+    }
+
+    public function getDecPlace() {
+        return $this->decPlace;
+    }
+
+    public function setDecPlace($decPlace) {
+        $this->decPlace = $decPlace;
     }
 
     public function getImageUrl() {

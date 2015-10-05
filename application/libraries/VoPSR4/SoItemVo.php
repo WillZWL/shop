@@ -5,20 +5,20 @@ class SoItemVo extends \BaseVo
     private $so_no;
     private $line_no;
     private $prod_sku;
-    private $prod_name;
-    private $ext_item_cd;
+    private $prod_name = '';
+    private $ext_item_cd = '';
     private $qty;
     private $unit_price;
     private $vat_total;
     private $gst_total = '0.00';
     private $amount;
-    private $website_status;
-    private $warranty_in_month;
-    private $status;
+    private $website_status = '';
+    private $warranty_in_month = '0';
+    private $status = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 

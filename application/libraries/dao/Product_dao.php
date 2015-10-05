@@ -33,7 +33,7 @@ class Product_dao extends Base_dao
     {
         return $this->seq_mapping_field;
     }
-	
+
     public function getNewSku()
     {
         return $this->db->query("SELECT next_value('sku') as sku")->row('sku');
