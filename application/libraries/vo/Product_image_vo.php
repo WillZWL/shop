@@ -10,6 +10,8 @@ class Product_image_vo extends Base_vo
     private $priority = '1';
     private $image;
     private $alt_text;
+    private $image_saved = '1';
+    private $VB_alt_text;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '127.0.0.1';
@@ -78,6 +80,26 @@ class Product_image_vo extends Base_vo
     {
         $this->alt_text = $value;
         return $this;
+    }
+
+    public function set_image_saved($image_saved)
+    {
+        $this->image_saved = $image_saved;
+    }
+
+    public function get_image_saved()
+    {
+        return $this->image_saved;
+    }
+
+    public function set_VB_alt_text($VB_alt_text)
+    {
+        $this->VB_alt_text = $VB_alt_text;
+    }
+
+    public function get_VB_alt_text()
+    {
+        return $this->VB_alt_text;
     }
 
     public function get_status()

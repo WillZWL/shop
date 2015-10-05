@@ -20,7 +20,9 @@ class Vbdatatransfer extends PUB_Controller
 		$this->load->library('service/vb_data_transfer_product_warranty_service');		
 		$this->load->library('service/vb_data_transfer_product_identifier_service');	
 		$this->load->library('service/vb_data_transfer_product_image_service');
-		$this->load->library('service/vb_data_transfer_supplier_product_service');
+		$this->load->library('service/vb_data_transfer_supplier_product_service');		
+		
+		$this->load->library('service/vb_product_image_service');
 		
 		//master tables
 		$this->load->library('service/vb_data_transfer_category_service');		
@@ -109,6 +111,12 @@ class Vbdatatransfer extends PUB_Controller
 		// exit;
 		$feed =$this->vb_data_transfer_product_image_service->start_process($xml);
 		print $feed;
+	}
+	
+	public function productimagetransfer()
+	{			
+		$num_img =$this->vb_product_image_service->transfer_images();
+		print $num_img;
 	}
 	
 	public function productkeyword()

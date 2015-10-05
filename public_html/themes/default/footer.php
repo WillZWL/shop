@@ -51,7 +51,7 @@
                                     <div class="row">
                                         <div class="column col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                             <div class="panel-gray">
-                                                <a href="/contact"><h4 class="panel-title"><?= _('About Us') ?></h4></a>
+                                                <a href="<?= site_url('display/view/about_us') ?>"><h4 class="panel-title"><?= _('About Us') ?></h4></a>
                                             </div>
                                             <p class="desc-about">
                                                 <?= _('DigitalDiscount prides itself on great deals without compromise on service! ') ?><br /> <?= _('Feel free to contact us anytime for more information') ?>
@@ -115,9 +115,9 @@
                             <div class="column col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="panel-gray">
                                     <span class="desc-about" style="font-weight: 400;"><?= _('2015 All Right reserved') ?></span></br>
-                                    <a href="/conditions"><span class="desc-about"><?= _('Conditions of Use') ?></span></a>&nbsp;|&nbsp;
-                                    <a href='<?= site_url("/display/index/") ?>'><span class="desc-about"><?= _('Shipping') ?></span></a>&nbsp;|&nbsp;
-                                    <a href="/privacy"><span class="desc-about"><?= _('Privacy Policy') ?></span></a>
+                                    <a href="<?= site_url('display/view/conditions_of_use') ?>"><span class="desc-about"><?= _('Conditions of Use') ?></span></a>&nbsp;|&nbsp;
+                                    <a href='<?= site_url("display/view/shipping") ?>'><span class="desc-about"><?= _('Shipping') ?></span></a>&nbsp;|&nbsp;
+                                    <a href="<?= site_url('display/view/privacy_policy') ?>"><span class="desc-about"><?= _('Privacy Policy') ?></span></a>
                                 </div>    
                             </div>
                             <!--<div class="column col-xs-12 col-sm-6 col-md-6 col-lg-6">

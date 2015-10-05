@@ -88,7 +88,10 @@ class ProductDao extends BaseDao
         $this->db->group_by('ll.selection');
         $this->db->order_by("ll.mode = 'M' DESC, ll.rank");
 
-        return $this->commonGetList($class_name, [], $option, 'pd.sku');
+        $obj = $this->commonGetList($class_name, [], $option, 'pd.sku');
+		
+		//print $this->db->last_query();
+		return $obj;
     }
 
     public function getProductOverview($where = [], $option = [], $class_name = "ProductOverviewDto")
