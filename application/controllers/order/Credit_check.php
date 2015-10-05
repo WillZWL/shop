@@ -90,10 +90,10 @@ class Credit_check extends MY_Controller
             $submit_search = 1;
         }
 
-        if ($this->input->get("t3m_result") != "") {
-            fetch_operator($where, "t3m_result", $this->input->get("t3m_result"));
-            $submit_search = 1;
-        }
+        // if ($this->input->get("t3m_result") != "") {
+            // fetch_operator($where, "t3m_result", $this->input->get("t3m_result"));
+            // $submit_search = 1;
+        // }
 
         if ($this->input->get("currency_id") != "") {
             $where["so.currency_id"] = $this->input->get("currency_id");

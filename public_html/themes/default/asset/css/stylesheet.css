@@ -85,6 +85,12 @@ div.required .control-label:before {
   font-weight: bold;
 }
 
+div.norequired .control-label:before {
+  color: #f00;
+  content: "  ";
+  font-weight: bold;
+}
+
 /* line 8, ../development/scss/app/_base.scss */
 .modal-open {
   margin-right: 13px;
@@ -4970,6 +4976,11 @@ hr.divider-snow {
   color: #878787;
 }
 
+.panel-gray a:hover {
+  color: white;
+}
+
+
 /* line 3050, ../development/scss/app/_elements.scss */
 .panel .panel-heading {
   /* 		&.hightlighted{
@@ -4998,8 +5009,10 @@ hr.divider-snow {
 /* line 3051, ../development/scss/app/_elements.scss */
 .panel .panel-heading .panel-title {
   position: relative;
-  padding-left: 38px;
-  letter-spacing: 2px;
+  /*padding-left: 38px;*/  
+  padding-left: 10px !important;
+  color: #085004;
+  /*letter-spacing: 2px;*/
 }
 /* line 316, ../development/scss/mixins/_app.scss */
 .rtl .panel .panel-heading .panel-title {
@@ -5011,7 +5024,7 @@ hr.divider-snow {
   position: absolute;
   top: 2px;
   background-color: #589B24;
-  content: "";
+  /*content: "";*/
   width: 7px;
   height: 21px;
   line-height: 21px;
