@@ -29,13 +29,14 @@
                                                     });
                                                 });
                                             </script>
-                                            <div class="layerslider-wrapper carousel slide pavcontentslider" style="max-width:1170px;">
-                                                <div class="fix-margin-right" style="padding: 0;margin: 18px 0 50px 0px !important;">
-                                                    <div id="iview" class="hidden-xs" style="width:100%;height:300px; ">
-                                                        <div data-iview-thumbnail="/images/banner/summer_1170X300.jpg" data-iview-image="/images/banner/summer_1170X300.jpg" data-iview-transition="slice-top-fade,slice-right-fade">
+                                            <div class="layerslider-wrapper carousel slide pavcontentslider">
+                                                <div class="fix-margin-right" style="padding: 0;margin: 0 0 50px !important;">
+                                                      <div id="iview" class="hidden-xs" style="width:100%;height:300px; " >
+                                                        <div data-iview-thumbnail="/images/banner/banner.jpg" data-iview-image="/images/banner/banner.jpg" data-iview-transition="slice-top-fade,slice-right-fade">
                                                         </div>
-                                                        <div data-iview-thumbnail="/images/banner/easter_1170X300.jpg" data-iview-image="/images/banner/easter_1170X300.jpg" data-iview-transition="slice-top-fade,slice-right-fade">
-                                                        </div>
+                                                        <!--<div class="iview-caption tp-caption " data-start="632" data-x="299" data-y="172" data-width="600" data-transition="fade">
+                                                           <img src="<?= base_url('/images/banner/banner.jpg') ?>" alt="catalog/demo/slider1/skyline-psyco.png" />
+                                                        </div>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -49,7 +50,6 @@
                     <?php if ($product) : ?>
                         <?php $this->load->view('product/grid.php', ['product' => $product]); ?>
                     <?php endif; ?>
-                    </br>
                     <div class="pav-container ">
                         <div class="pav-inner container ">
                             <div class="row row-level-1 ">
@@ -111,10 +111,6 @@
                             </div>
                         </div>
                     </div>
-                    </br>
-                    <?php if ($product) : ?>
-                        <?php $this->load->view('product/grid.php', ['product' => $product]); ?>
-                    <?php endif; ?>
                 </div>
             </div>
         </div>

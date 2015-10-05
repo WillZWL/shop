@@ -510,4 +510,15 @@ input.btn-newsletter {
     width: 220px;
     display: inline-block;
 }
+
+
 /* end checkout page */
+
+/* contact us */
+
+.form-group-contact {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+/* end contact us */

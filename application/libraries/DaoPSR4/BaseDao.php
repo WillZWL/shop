@@ -104,6 +104,8 @@ abstract class BaseDao
         if ($select != '') {
             $this->db->select($select, false);
         }
+		
+		//print $this->db->last_query();
 
         $rs = [];
         if ($query = $this->db->get()) {

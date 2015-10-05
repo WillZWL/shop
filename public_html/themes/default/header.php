@@ -10,8 +10,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= SITE_NAME ?></title>
-    <meta name="description" content="Lexus Motozz - Responsive Opencart Theme" />
-    <meta name="keywords" content="Lexus Motozz - Responsive Opencart Theme" />
+    <meta name="description" content="Digital discount" />
+    <meta name="keywords" content="Digital discount" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="/themes/default/asset/image/catalog/cart.png" rel="icon" />
     <link href="/themes/default/asset/css/bootstrap.css" rel="stylesheet" />
@@ -36,7 +36,7 @@
     <script type="text/javascript" src="/themes/default/asset/js/raphael-min.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/jquery.easing.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/checkform.js"></script>
-    <!--<script type="text/javascript" src="/themes/default/asset/js/owl.carousel.min.js"></script>-->
+    <script type="text/javascript" src="/themes/default/asset/js/owl.carousel.min.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/iview.js"></script>
 </head>
 <body class="common-home page-common-home layout-fullwidth ">
@@ -63,10 +63,10 @@
                                        <img src="/themes/default/asset/image/icon-bag.png">
                                     </div>   
                                     <div class="header-links col-lg-7 col-md-7 col-sm-12 col-xs-12">
-                                        <a href="/warranty"><span class=""><?= _('Warranty') ?></span></a>&nbsp;&nbsp;&nbsp;
-                                        <a href="/contact"><span class="desc-about"><?= _('Contact Us') ?></span></a>&nbsp;&nbsp;&nbsp;
-                                        <a href="<?=base_url()?>faq/index"><span class="desc-about"><?= _('Help') ?></span></a>&nbsp;&nbsp;&nbsp;
-                                        <a href="/clearance"><span class="clearance"><?= _('Clearance') ?></span></a>&nbsp;&nbsp;&nbsp;
+                                        <!--<a href="/warranty"><span class=""><?= _('Warranty') ?></span></a>&nbsp;&nbsp;&nbsp;-->
+                                        <a href="<?=base_url()?>display/view/contact"><span class="desc-about"><?= _('Contact Us') ?></span></a>&nbsp;&nbsp;&nbsp;
+                                        <a href="<?=base_url()?>display/view/conditions_of_use"><span class="desc-about"><?= _('Help') ?></span></a>&nbsp;&nbsp;&nbsp;
+                                        <!--<a href="/clearance"><span class="clearance"><?= _('Clearance') ?></span></a>&nbsp;&nbsp;&nbsp;-->
                                         <?php if ($_SESSION["client"]["logged_in"]) { ?>
                                             <a class="link-account" href="<?=base_url()?>myaccount/index">
                                                 <?= _("My Account") ?></a>

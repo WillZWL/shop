@@ -17,8 +17,8 @@ class WebsiteService extends BaseService
 
     public function getHomeContent($lang_id = 'en')
     {
-        $grid_display_limit = 6;
-        $option = ['limit' => $grid_display_limit];
+        //$grid_display_limit = 10;
+        //$option = ['limit' => $grid_display_limit];
         $where = ['ll.platform_id' => PLATFORM];
         $where['ll.type'] = 'LA';
 

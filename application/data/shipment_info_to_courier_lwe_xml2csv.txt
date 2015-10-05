@@ -2,7 +2,7 @@
 data
 
 #Input column name	Output column name	Specify value
-shipping_date	SHIPMENT DATE
+shipping_date	SHIPMENT DATE (YYYY-MM-DD)
 so_no	SHIPPER REFERENCE NO
 	SHIPPER NAME	Samuel Leung
 	SHIPPER ADDRESS 1	Workshop A 10/F 
@@ -20,7 +20,7 @@ so_no	SHIPPER REFERENCE NO
 	SHIPPER EMAIL	logistics@valuebasket.com
 	SHIPPER URL	.
 delivery_name	CONSIGNEE NAME
-	CONSIGNEE CONTACT	.
+	CONSIGNEE CONTACT PERSON	.
 delivery_address1	CONSIGNEE ADDRESS 1
 delivery_address2	CONSIGNEE ADDRESS 2
 delivery_address3	CONSIGNEE ADDRESS 3
@@ -41,3 +41,4 @@ prod_weight	ACTUAL WEIGHT
 cc_desc	NATURE OF GOODS
 	PACKAGE TYPE	Parcel
 declared_value	SHIPMENT VALUE
+currency_id	CURRENCY CODE

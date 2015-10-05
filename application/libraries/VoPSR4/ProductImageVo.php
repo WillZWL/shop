@@ -6,12 +6,15 @@ class ProductImageVo extends \BaseVo
     private $priority = '1';
     private $image = '';
     private $alt_text = '';
+    private $image_saved = '1';
+    private $VB_alt_text;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
+    private $modify_by = '';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
@@ -64,6 +67,26 @@ class ProductImageVo extends \BaseVo
     public function getAltText()
     {
         return $this->alt_text;
+    }
+
+    public function setImageSaved($image_saved)
+    {
+        $this->image_saved = $image_saved;
+    }
+
+    public function getImageSaved()
+    {
+        return $this->image_saved;
+    }
+
+    public function setVBAltText($VB_alt_text)
+    {
+        $this->VB_alt_text = $VB_alt_text;
+    }
+
+    public function getVBAltText()
+    {
+        return $this->VB_alt_text;
     }
 
     public function setStatus($status)
@@ -124,6 +147,16 @@ class ProductImageVo extends \BaseVo
     public function getModifyAt()
     {
         return $this->modify_at;
+    }
+
+    public function setModifyBy($modify_by)
+    {
+        $this->modify_by = $modify_by;
+    }
+
+    public function getModifyBy()
+    {
+        return $this->modify_by;
     }
 
     public function getPrimaryKey()

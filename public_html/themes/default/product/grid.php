@@ -13,19 +13,33 @@
                             <div class="widget-heading panel-heading nopadding hightlight space-10">
                                 <h3 class="panel-title"><?= str_replace('_', ' ', $title) ?></h3>
                             </div>
-                            <div class="list box-products slide" id="product_list137567524">
+                            <div class="list box-products slide" id=<?= 'product_list' . $title ?>>
                                 <div class="carousel-controls">
-                                    <a class="carousel-control left center" href="#product_list137567524" data-slide="prev">
+                                    <a class="carousel-control left center" href=<?= '#product_list' . $title ?> data-slide="prev">
                                         <i class="fa fa-angle-left"></i>
                                     </a>
-                                    <a class="carousel-control right center" href="#product_list137567524" data-slide="next">
+                                    <a class="carousel-control right center" href=<?= '#product_list' . $title ?> data-slide="next">
                                         <i class="fa fa-angle-right"></i>
                                     </a>
                                 </div>
-                                <div class="carousel-inner product-grid">
-                                    <div class="item active products-block">
-                                        <div class="row products-row last">
-                                            <?php foreach ($prod as $sku => $prod_obj): ?>
+                                   <?php
+                                        $i = 1; 
+                                        foreach ($prod as $sku => $prod_obj):
+                                            if ($i == 1):
+                                    ?>
+                                                <div class="carousel-inner product-grid">
+                                                    <div class="item active products-block">
+                                                        <div class="row products-row last">
+                                    <?php    
+                                            
+                                            elseif ($i == 7):
+                                    ?>
+                                                <div class="carousel-inner product-grid">
+                                                    <div class="item products-block">
+                                                        <div class="row products-row last">
+                                    <?php 
+                                            endif;
+                                    ?>
                                             <div class="col-lg-2 col-sm-2 col-xs-12  product-col border">
                                                 <div class="product-block">
                                                     <div class="image">
@@ -66,19 +80,24 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <?php endforeach ?>
+                                    <?php  
+                                        if ($i == 6 or $i == count($prod)):
+                                    ?>
                                         </div>
                                     </div>
                                 </div>
+                                <?php  endif; 
+                                    $i = $i + 1; 
+                                    endforeach;?>
                             </div>
                         </div>
                         <script type="text/javascript">
                             <!--
-                            $('#product_list1375675222').carousel({
+                            $(<?= '#product_list' . $title ?>).carousel({
                                 interval: false,
                                 pause: 'hover'
                             });
-                            $('#product_list137567524').carousel({
+                            $(<?= '#product_list' . $title ?>).carousel({
                                 interval: false,
                                 pause: 'hover'
                             });

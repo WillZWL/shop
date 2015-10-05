@@ -45,7 +45,7 @@ abstract class Vb_data_transfer_service implements Vb_data_transfer_service_inte
 		
 		$original_data = str_replace('&amp;', '&', $replaced_data);
 		$original_data = str_replace('&gt;', '>', $replaced_data);				
-		$original_data = str_replace('&lt;', '>', $replaced_data);
+		$original_data = str_replace('&lt;', '<', $replaced_data);
 		
 		return $original_data;
 	}
