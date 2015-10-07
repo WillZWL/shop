@@ -5,6 +5,9 @@ use ESG\Panther\Service\CountryStateService;
 use ESG\Panther\Service\PaymentOptionService;
 use ESG\Panther\Service\SoFactoryService;
 use ESG\Panther\Service\CartSessionService;
+use ESG\Panther\Service\PaymentGatewayRedirectService;
+use ESG\Panther\Service\PaymentGatewayRedirectPaypalService;
+use ESG\Panther\Service\PaymentGatewayRedirectMoneybookersService;
 
 class CheckoutModel extends \CI_Model
 {
@@ -29,7 +32,55 @@ class CheckoutModel extends \CI_Model
     public function createSaleOrder($formValue) {
         $cart = $this->getCartSessionService()->getCart();
 //        var_dump($cart);
-        $this->getSoFactoryService()->createSaleOrder($formValue, $cart);
+        if ($cart)
+        {
+            $soObj = $this->getSoFactoryService()->createSaleOrder($formValue, $cart);
+            if ($soObj)
+            {
+                $paymentGatewayId = $formValue["paymentGatewayId"];
+                $gatewayRedirectService = $this->_createPaymentGatewayRedirectService($paymentGatewayId, $soObj, ((isset($formValue["debug"]))?$formValue["debug"]:0));
+                if ($gatewayRedirectService)
+                    return $gatewayRedirectService->checkout($formValue);
+                else
+                {
+                    error_log("Payment Gateway Service-" . $paymentGatewayId . " not found " . __METHOD__ . __LINE__);
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            return ("ERROR=" . _("Session timeout, please check your cart!"));
+        }
+    }
+
+    public function notification($paymentGatewayId, $data, $debug)
+    {
+error_log(__METHOD__ . __LINE__);
+        $gatewayRedirectService = $this->_createPaymentGatewayRedirectService($paymentGatewayId, null, $debug);
+        if ($gatewayRedirectService) {
+            $gatewayRedirectService->notification($data);
+        }
+        else
+        {
+            error_log("Payment Gateway Service in notification -" . $paymentGatewayId . " not found " . __METHOD__ . __LINE__);
+            return false;
+        }
+    }
+
+    public function response($paymentGatewayId, $debug = 0)
+    {
+        $gatewayRedirectService = $this->_createPaymentGatewayRedirectService($paymentGatewayId, null, $debug);
+        if ($gatewayRedirectService) {
+//prevent to rebuild session after unset when payment success
+            CartSessionService::setNoRebuildCart();
+            $gatewayRedirectService->processPaymentStatusInGeneral($_POST, $_GET);
+        }
+        else
+        {
+            error_log("Payment Gateway Service-" . $paymentGatewayId . " not found " . __METHOD__ . __LINE__);
+            return false;
+        }
     }
 
     public function getPaymentOption($platformId) {
@@ -47,6 +98,15 @@ class CheckoutModel extends \CI_Model
     public function getCheckoutFormStateList($platformCountryId, $type = self::BILLING_COUNTRY) {
         $stateList = $this->getCountryStateService()->getDao()->getList(["country_id" => $platformCountryId, "status" => 1], ["limit" => -1]);
         return $stateList;
+    }
+
+    private function _createPaymentGatewayRedirectService($paymentGatewayId, $soObj, $debug = 0) {
+        $classname = "ESG\Panther\Service\PaymentGatewayRedirect" . ucfirst(strtolower($paymentGatewayId)) . "Service";
+        if (file_exists(APPPATH . "/libraries/ServicePSR4/PaymentGatewayRedirect" . ucfirst(strtolower($paymentGatewayId)) . "Service.php")) {
+            $gatewayRedirectService = new $classname($soObj, $debug);
+            return $gatewayRedirectService;
+        }
+        return false;
     }
 
     public function setCountryService($countryService) {

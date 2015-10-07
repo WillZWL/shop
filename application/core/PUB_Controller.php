@@ -14,6 +14,7 @@ class PUB_Controller extends CI_Controller
     private $lang_id = 'en';
     protected $container;
     private static $serviceContainer;
+    public static $siteInfo = null;
 
 //    private $allow_referer_host = '/^http[s]?:\/\/shop\.skype\.com/';
 //    private $require_login = 0;
@@ -84,9 +85,8 @@ class PUB_Controller extends CI_Controller
     {
         $stieInfo = $this->loadSiteParameterService->initSite();
         $this->set_lang_id($stieInfo->getLangId());
-        $this->setSiteInfo($stieInfo);
+        PUB_Controller::setSiteInfo($stieInfo);
     }
-
 
 /*
     function initialize($params = array())
@@ -172,14 +172,14 @@ class PUB_Controller extends CI_Controller
         }
     }
 */
-    public function setSiteInfo($siteInfo)
+    public static function setSiteInfo($siteInfo)
     {
-        $this->siteInfo = $siteInfo;
+        PUB_Controller::$siteInfo = $siteInfo;
     }
 
-    public function getSiteInfo()
+    public static function getSiteInfo()
     {
-        return $this->siteInfo;
+        return PUB_Controller::$siteInfo;
     }
 
     public function set_lang_id($langId)

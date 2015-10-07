@@ -54,26 +54,22 @@ if (!function_exists('average_divide')) {
 if (!function_exists('platform_curr_format')) {
     function platform_curr_format($platform_id, $amount, $show_currency = 1)
     {
-        if (isset($_SESSION["PLATFORM_CURRENCY"][$platform_id])) {
-            return curr_format($_SESSION["PLATFORM_CURRENCY"][$platform_id]["currency_id"], $amount, $show_currency, $_SESSION["PLATFORM_CURRENCY"][$platform_id]);
+        if (isset(PUB_Controller::$siteInfo)) {
+            return curr_format(PUB_Controller::$siteInfo->getPlatformCurrencyId(), $amount, $show_currency, PUB_Controller::$siteInfo);
         }
         return number_format($amount, 2, ".", "");
     }
 }
 
 if (!function_exists('curr_format')) {
-    function curr_format($currency_id, $amount, $show_currency = 1, $config = array())
+    function curr_format($currency_id, $amount, $show_currency = 1, $siteObj)
     {
-        if (empty($config) && isset($_SESSION["CURRENCY"][$currency_id])) {
-            $config = $_SESSION["CURRENCY"][$currency_id];
-        }
-
-        if ($config) {
-            $sign = $config["sign"];
-            $sign_pos = $config["sign_pos"];
-            $dec_place = $config["dec_place"];
-            $dec_point = $config["dec_point"];
-            $thousands_sep = $config["thousands_sep"];
+        if ($siteObj) {
+            $sign = $siteObj->getSign();
+            $sign_pos = $siteObj->getSignPos();
+            $dec_place = $siteObj->getDecPlace();
+            $dec_point = $siteObj->getDecPoint();
+            $thousands_sep = $siteObj->getThousandsSep();
 
             $amount_str = number_format($amount, $dec_place, $dec_point, $thousands_sep);
 

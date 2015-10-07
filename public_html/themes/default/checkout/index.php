@@ -4,7 +4,7 @@
     <div class="row"> 
     <div id="sidebar-main" class="col-md-12">
     <div id="content">
-    <form action="/Checkout/payment" method="POST" id="checkoutForm">
+    <form action="/Checkout/payment<?php print (($debug)?"/1":"")?>" method="POST" id="checkoutForm">
         <h1 class="page-title">Checkout</h1>
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
@@ -316,7 +316,7 @@ $(document).ready(function() {
         })
         .done(function(data) {
             var url = data;
-            console.log(data.url);
+            location.href = data.url;
         })
         .fail(function(data) {
             if (data.responseCode)

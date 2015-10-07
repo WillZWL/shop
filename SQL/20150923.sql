@@ -165,3 +165,9 @@ CHANGE COLUMN `risk_var9` `risk_var_9`  varchar(64) CHARACTER SET utf8 COLLATE u
 CHANGE COLUMN `risk_var10` `risk_var_10`  varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_9`;
 
 /* above is LIVE */
+
+ALTER TABLE `so_payment_log` DROP FOREIGN KEY `fk_sopl_so_no`;
+ALTER TABLE `so_payment_query_log` DROP FOREIGN KEY `fk_sopql_so_no`;
+
+ALTER TABLE `so_item_detail`
+ADD COLUMN `product_type`  int(11) NOT NULL DEFAULT 0 AFTER `qty`;

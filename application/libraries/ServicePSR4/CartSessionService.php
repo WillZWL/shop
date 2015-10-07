@@ -29,11 +29,13 @@ class CartSessionService extends BaseService
     const CART_TYPE_SPECIAL = "SPECIAL";
 
     private $_cart = null;
+    public static $noRebuild = false;
     public $support_email = "oswald-alert@eservicesgroup.com";
 
     public function __construct() {
         parent::__construct();
         $this->soFactoryService = new SoFactoryService;
+//var_dump($_SESSION["cart"]);
 //unset($_SESSION["cart"]);
         if (isset($_SESSION["cart"])) {
 /*
@@ -48,9 +50,16 @@ class CartSessionService extends BaseService
         }
     }
 
+    public static function setNoRebuildCart()
+    {
+        CartSessionService::$noRebuild = true;
+    }
+
     public function __destruct () {
         if ($this->_cart) {
-            $_SESSION["cart"] = serialize($this->_cart);
+            if (!CartSessionService::$noRebuild) {
+                $_SESSION["cart"] = serialize($this->_cart);
+            }
         }
     }
 
@@ -71,10 +80,10 @@ class CartSessionService extends BaseService
             {
                 $this->_cart->setTotalNumberOfItems($totalItems);
             }
+            $this->_cart->setBizType($type);
         }
         $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"] = $totalItems;
         $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"] = $totalAmount;
-        $this->_cart->setBizType($type);
         return $this->_cart;    //=return $_SESSION["cart"]
     }
 
@@ -135,7 +144,7 @@ class CartSessionService extends BaseService
             $this->_cart = [];
             $this->_cart = new \CartDto();
             $this->_cart->setPlatformId($platformId);
-            $this->_cart->setCurrency($currencyId);
+            $this->_cart->setPlatformCurrency($currencyId);
             $this->_cart->items = [];
         }
         if ($productDetails = $this->_createCartItem($sku, $lang, $platformId)) {
