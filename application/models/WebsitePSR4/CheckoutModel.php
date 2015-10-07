@@ -56,7 +56,6 @@ class CheckoutModel extends \CI_Model
 
     public function notification($paymentGatewayId, $data, $debug)
     {
-error_log(__METHOD__ . __LINE__);
         $gatewayRedirectService = $this->_createPaymentGatewayRedirectService($paymentGatewayId, null, $debug);
         if ($gatewayRedirectService) {
             $gatewayRedirectService->notification($data);

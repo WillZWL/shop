@@ -24,7 +24,8 @@ class Checkout extends PUB_Controller
             if ($_SERVER['QUERY_STRING'] != "") {
                 $httpsUrl .= "?" . $_SERVER['QUERY_STRING'];
             }
-            redirect($httpsUrl);
+            if (strpos($_SERVER["REQUEST_URI"], "notification") === false)
+                redirect($httpsUrl);
         }
         $this->cartSessionModel = new CartSessionModel;
     }
@@ -81,7 +82,6 @@ class Checkout extends PUB_Controller
 
     public function notification($gatewayId)
     {
-error_log(__METHOD__ . __LINE__);
         $debug = ($this->input->get("debug") ? $this->input->get("debug"):0);
         $data = file_get_contents("php://input");
         $this->checkoutModel->notification($gatewayId, $data, $debug);

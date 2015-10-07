@@ -159,34 +159,36 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
         $result = FALSE;
 
         $encodedData = "cmd=_notify-validate&" . $data;
-error_log(__METHOD__ . __LINE__ . $encodedData);
+//error_log(__METHOD__ . __LINE__ . $encodedData);
         $dataFromPmgw = $data;
+        $this->_setAccount("", "");
 
         $verifedResult = $this->_paypalRequest->verifyNotification($encodedData);
-error_log(__METHOD__ . __LINE__ . $verifedResult["response"]);
+//error_log(__METHOD__ . __LINE__ . $verifedResult["response"]);
         if (strpos($verifedResult["response"], "VERIFIED") !== false)
         {
             $soNo = $_POST["invoice"];
             $this->so = $this->getSo($soNo);
             $this->sops = $this->getSoPaymentStatus($soNo);
-            $this->_setAccount($this->so->getBillCountryId(), $this->so->getCurrencyId());
-            $paymentStatus = $_POST["payment_status"];
 
             if ($this->so && $this->sops)
             {
+                $this->_setAccount($this->so->getBillCountryId(), $this->so->getCurrencyId());
+                $paymentStatus = $_POST["payment_status"];
                 if ($paymentStatus == "Completed")
                 {
                     $this->so->setTxnId($_POST["txn_id"]);
                     if (isset($_POST["receiver_email"]))
                         $this->sops->setPayerEmail($_POST["receiver_email"]);
                     if (isset($_POST["payer_id"]))
-                        $this->sops->setPayerId($_POST["payer_id"]);
+                        $this->sops->setPayerRef($_POST["payer_id"]);
                     if (isset($_POST["address_status"]))
                         $this->sops->setRiskRef3($_POST["address_status"]);
                     if (isset($_POST["payer_status"]))
                         $this->sops->setRiskRef4($_POST["payer_status"]);
                     if (isset($_POST["protection_eligibility"]))
                         $this->sops->setRiskRef1($_POST["protection_eligibility"]);
+                    $this->sops->setPayToAccount($this->_activeAcct["paypalEmailAddress"]);
                     $result = PaymentGatewayRedirectService::PAYMENT_STATUS_SUCCESS;
                 }
                 else if ($paymentStatus == "Reversed")
@@ -214,7 +216,7 @@ error_log(__METHOD__ . __LINE__ . $verifedResult["response"]);
                     $this->sendAlert($subject, $data);                
                 }
             }
-error_log(__METHOD__ . __LINE__);
+//error_log(__METHOD__ . __LINE__);
             $subject = "[Panther] Paypal notification - " . $paymentStatus . ", soNo:" . $soNo;
             $this->sendAlert($subject, $data, BaseService::ALERT_GENERAL_LEVEL);
         }
@@ -223,7 +225,7 @@ error_log(__METHOD__ . __LINE__);
             $subject = "[Panther] Paypal Verify notification fail";
             $this->sendAlert($subject, $verifedResult["response"] . $data, BaseService::ALERT_GENERAL_LEVEL);
         }
-error_log(__METHOD__ . __LINE__ . $result);
+//error_log(__METHOD__ . __LINE__ . $result);
         return $result;
     }
 

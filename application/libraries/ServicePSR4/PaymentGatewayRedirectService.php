@@ -197,8 +197,9 @@ implements PaymentGatewayRedirectServiceInterface
         if ($sopsPara)
             set_value($this->sops, $sopsPara);
         $this->sops->setPaymentStatus("S");
-        if (!$this->sops->getPayDate())
-            $this->sops->set_pay_date(date('Y-m-d H:i:s'));
+        if ((!$this->sops->getPayDate())
+            || ($this->sops->getPayDate() == "0000-00-00 00:00:00"))
+            $this->sops->setPayDate(date('Y-m-d H:i:s'));
         $this->soFactoryService->getSoPaymentStatusDao()->update($this->sops);
 
 #2494 do the fraud oder checking
@@ -362,7 +363,6 @@ implements PaymentGatewayRedirectServiceInterface
 
     public function notification($data)
     {
-error_log(__METHOD__ . __LINE__);
         $fullResult = $this->processNotification($data, $soNo, $soPara, $sopsPara, $soccPara, $sorData, $dataToPmgw, $dataFromPmgw);
 
         if ($fullResult)
