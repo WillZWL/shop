@@ -101,7 +101,7 @@ class Login extends PUB_Controller
     {
         $client_obj = $this->sc['Client']->getDao()->get();
         $client_vo = clone $client_obj;
-        $data["password"] = $this->encryption->encrypt(strtolower($data["password"]));
+        $data["password"] = $this->encryption->encrypt(trim($data["password"]));
         if (empty($data["subscriber"])) {
             $data["subscriber"] = 0;
         }
@@ -132,6 +132,7 @@ class Login extends PUB_Controller
         $client_vo->setPostcode($data['postcode']);
         $client_vo->setClientIdNo($data["client_id_no"]);
         $client_vo->setPartySubscriber(0);
+        $client_vo->setSubscriber($data['subscriber']);
         $client_vo->setStatus(1);
         $email = $client_obj->getEmail();
         $proc = $this->sc['Client']->getDao()->get(array("email" => $email));
