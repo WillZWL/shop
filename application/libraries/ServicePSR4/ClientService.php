@@ -36,7 +36,7 @@ class ClientService extends BaseService
             $dao = $this->getDao();
             if ($client_obj = $dao->get(array("email" => $email, "status" => 1))) {
                 $client_password = $client_obj->getPassword();
-                if ($this->encryption->decrypt($client_password) === $password) {
+                if ($this->encryption->decrypt($client_password) === trim($password)) {
                     $this->objectLogin($client_obj, TRUE);
                     return TRUE;
                 }
