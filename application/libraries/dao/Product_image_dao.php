@@ -41,7 +41,7 @@ class Product_image_dao extends Base_dao
 					(select min(pi2.priority) from product_image pi2 where pi2.sku = pi.sku ) as min_priority
 				from product_image pi
 				where pi.image_saved = 0 and pi.VB_alt_text <> '' and pi.VB_alt_text is not null 
-				 limit 100";
+				  ";
         
 
         if ($query = $this->db->query($sql)) {
