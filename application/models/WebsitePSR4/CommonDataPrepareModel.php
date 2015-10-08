@@ -62,6 +62,11 @@ class CommonDataPrepareModel extends \CI_Model
                     $prod_image[$key]["image"] = get_image_file($prod_img_obj->get_image(), "l", $prod_img_obj->get_sku(), $prod_img_obj->get_id());
                 }
             }
+            else
+            {
+                $prod_image[$key]["image_icon"] = get_image_file("", "s", $sku);
+                $prod_image[$key]["image"] = get_image_file("", "l", $sku);
+            }
 
             // gather product info
             $data["sku"] = $sku;

@@ -52,6 +52,7 @@ class Vb_product_image_service extends Base_service
 
 				//get the image from VB
 				$file = "http://www.valuebasket.com/images/product/" . $img->VB_alt_text;
+				//print $file;
 				//$file = "http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg";
 				$file_headers = @get_headers($file);
 				if($file_headers[0] == 'HTTP/1.1 404 Not Found')
@@ -60,8 +61,9 @@ class Vb_product_image_service extends Base_service
 					$file_exist = true;
 
 				if ($file_exist)
-				{
-					$imgpath = $this->context_config_service->value_of("prod_img_path");
+				{					
+            		//$website_domain = $this->context_config_service->value_of("website_domain");
+					$imgpath = FCPATH . "../public_html/" . $this->context_config_service->value_of("prod_img_path");
 
 					//delete old images
 					$file_old = file_exists( $imgpath . $img->alt_text);
@@ -70,7 +72,6 @@ class Vb_product_image_service extends Base_service
 
 					//save VB image in AtomV2
 					//print $file; 
-					print "id " . $id . " img" . $img->VB_alt_text;
 					$image_content = file_get_contents($file);
 					//$image_content = file_get_contents("http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg");
 					if (file_put_contents($imgpath . $img->alt_text, $image_content) === FALSE)
@@ -86,6 +87,7 @@ class Vb_product_image_service extends Base_service
 					{
 						//delete old images
 						$img_old = is_file($imgpath . $img->sku . "_" . $img->id . "_{$size}." . $img->image);
+						//print "   " . $imgpath . $img->sku . "_" . $img->id . "_{$size}." . $img->image . "   ";
 						if ($img_old)
 						{
 							@unlink($imgpath . $img->sku . "_" . $img->id  . "_{$size}." . $img->image);

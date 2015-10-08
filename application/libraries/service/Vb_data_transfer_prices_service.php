@@ -80,6 +80,7 @@ class Vb_data_transfer_prices_service extends Vb_data_transfer_service
 						$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';		
 						$xml[] = '<status>5</status>'; //updated
 						$xml[] = '<is_error>' . $price->is_error . '</is_error>';
+						$xml[] = '<reason></reason>';
 						$xml[] = '</price>';
 					}
 					else
@@ -90,6 +91,7 @@ class Vb_data_transfer_prices_service extends Vb_data_transfer_service
 						$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';		
 						$xml[] = '<status>3</status>'; //not updated
 						$xml[] = '<is_error>' . $price->is_error . '</is_error>';
+						$xml[] = '<reason>Affected:' . $affected . '</reason>';
 						$xml[] = '</price>';
 					}
 				}
@@ -102,6 +104,7 @@ class Vb_data_transfer_prices_service extends Vb_data_transfer_service
 					$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';		
 					$xml[] = '<status>2</status>'; //not found	
 					$xml[] = '<is_error>' . $price->is_error . '</is_error>';
+					$xml[] = '<reason>' . $fail_reason . '</reason>';
 					$xml[] = '</price>';
 				}
 				else
@@ -112,6 +115,7 @@ class Vb_data_transfer_prices_service extends Vb_data_transfer_service
 					$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';		
 					$xml[] = '<status>3</status>'; //not updated
 					$xml[] = '<is_error>' . $price->is_error . '</is_error>';
+					$xml[] = '<reason>' . $fail_reason . '</reason>';
 					$xml[] = '</price>';				
 				}
 			}	
@@ -123,6 +127,7 @@ class Vb_data_transfer_prices_service extends Vb_data_transfer_service
 				$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';				
 				$xml[] = '<status>4</status>'; //error
 				$xml[] = '<is_error>' . $price->is_error . '</is_error>';
+				$xml[] = '<reason>' . $e->getMessage() . '</reason>';
 				$xml[] = '</price>';
 			} 
 		 }
