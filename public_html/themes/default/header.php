@@ -141,7 +141,7 @@
                 </div>
             </header>
             <!-- /header -->
-            <div class="main-columns container">
+            <div class="main-columns">
 				<div class="bottom-offcanvas">
 					<div class="container">
 						<button data-toggle="offcanvas" class="btn btn-primary visible-xs visible-sm" type="button"><i class="fa fa-bars"></i></button>

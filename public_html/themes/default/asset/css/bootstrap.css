@@ -7734,6 +7734,13 @@ button.close {
 .carousel-control.right {
   right: 0;
   left: auto;
+  margin-right: -45px; 
+  font-size: 40px;
+}
+
+.carousel-control.left {
+  margin-left: -45px; 
+  font-size: 40px;
 }
 /* line 120, ../development/scss/bootstrap/_carousel.scss */
 .carousel-control:hover, .carousel-control:focus {

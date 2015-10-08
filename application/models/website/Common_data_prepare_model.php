@@ -1417,10 +1417,10 @@ salecycle_script;
             // $this->affiliate_service->add_af_cookie($_GET);
 
             if ($prod_image_list = $this->product_model->product_service->get_pi_dao()->get_list(array("sku" => $sku, "status" => 1), array("orderby" => "priority ASC, create_on DESC"))) {
-                foreach ($prod_image_list AS $key => $prod_img_obj) {
-                    $prod_image[$key]["image_icon"] = get_image_file($prod_img_obj->get_image(), "s", $prod_img_obj->get_sku(), $prod_img_obj->get_id());
-                    $prod_image[$key]["image"] = get_image_file($prod_img_obj->get_image(), "l", $prod_img_obj->get_sku(), $prod_img_obj->get_id());
-                }
+                    foreach ($prod_image_list AS $key => $prod_img_obj) {
+                        $prod_image[$key]["image_icon"] = get_image_file($prod_img_obj->get_image(), "s", $prod_img_obj->get_sku(), $prod_img_obj->get_id());
+                        $prod_image[$key]["image"] = get_image_file($prod_img_obj->get_image(), "l", $prod_img_obj->get_sku(), $prod_img_obj->get_id());
+                    }
             }
 
             // gather product info

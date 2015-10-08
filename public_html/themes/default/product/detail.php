@@ -12,7 +12,7 @@
     }
 ?>
 
-<div class="main-columns container">
+
     <div class="row">
         <div id="product-detail" class="col-md-12">
             <div id="content">
@@ -25,31 +25,37 @@
                                     <img src="<?= get_image_file($image, 'l', $sku)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" class="product-image-zoom img-responsive">
                                 </a>
                             </div>-->
+                            <?php
+                                if (count($prod_image) != 0) {
+                            ?>
+
                             <div class="image">
                                 <!--<span><?= var_dump($prod_info) ?></span>-->
                                 <span class="product-label exist"><span class="product-label-special"><?= _('Sale') ?></span></span>
                                 <a href="<?= base_url($default_image)?>" class="imagezoom">
-                                    <img src="<?= base_url($default_image)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" class="product-image-zoom img-responsive">
+                                    <img src="<?= base_url($default_image)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image" 
+                                    data-zoom-image="<?= base_url($default_image) ?>" class="product-image-zoom img-responsive">
                                 </a>
                             </div>
                             <div class="thumbs-preview horizontal">
                                 <div class="image-additional olw-carousel horical" id="image-additional">
-                                    <div id="image-additional-carousel" class="owl-carousel owl-theme" style="opacity: 1; display: block;">
-                                        <div class="owl-wrapper-outer">
-                                            <div class="owl-wrapper" style="width: 1456px; left: 0px; display: block;">
-                                                <?php
-                                                    foreach ($prod_image as $img):
-                                                ?>
-                                                    <div class="owl-item" style="width: 104px;">
-                                                        <div class="item clearfix active">
-                                                            <a href="<?= base_url($img['image'])?>" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" data-image="<?= get_image_file($image, 'l', $sku)?>">
-                                                                <img src="<?= base_url($img['image'])?>" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" class="product-image-zoom img-responsive">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                <?php endforeach ?>
+                                    <div id="image-additional-carousel">
+                                        <?php
+                                            //var_dump($prod_image);
+                                            //if (count($prod_image) != 0) {
+                                            foreach ($prod_image as $img){
+                                        ?>
+                                            <div class="item clearfix">
+                                                <a href="<?= base_url($img['image'])?>" title="<?= $prod_name ?>" class="imagezoom" 
+                                                    data-zoom-image="<?= base_url($img['image'])?>" data-image="<?= base_url($img['image'])?>">
+                                                    <img src="<?= base_url($img['image'])?>" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" 
+                                                        data-zoom-image="<?= base_url($img['image'])?>" class="product-image-zoom img-responsive"/>
+                                                </a>
                                             </div>
-                                        </div>
+                                        <?php 
+                                                }
+                                            //} 
+                                        ?>
                                     </div>
                                     <script type="text/javascript">
                                     $(document).ready(function() {
@@ -61,13 +67,41 @@
                                         });
                                         $("#image-additional .carousel-control.left").click(function() {
                                             $carousel.trigger('owl.prev');
-                                        })
+                                        });
                                         $("#image-additional .carousel-control.right").click(function() {
                                             $carousel.trigger('owl.next');
-                                        })
+                                        });
+
+                                        $('.product-info .image a').click(
+                                            function(){  
+                                                $.magnificPopup.open({
+                                                  items: {
+                                                    src:  $('img',this).attr('src')
+                                                  },
+                                                  type: 'image'
+                                                }); 
+                                                return false;
+                                            }
+                                        );
+
                                     });
+
                                     </script>
-                                    <!-- Controls -->
+
+                                    <script type="text/javascript" src="http://www.themelexus.com/demo/opencart/motozz/demo3/catalog/view/javascript/jquery/elevatezoom/elevatezoom-min.js"></script>
+                                    <script type="text/javascript">
+                                            var zoomCollection = '#image';
+                                            $( zoomCollection ).elevateZoom({
+                                                    lensShape : "basic",
+                                            lensSize    : 150,
+                                            easing:true,
+                                            gallery:'image-additional-carousel',
+                                            cursor: 'pointer',
+                                            galleryActiveClass: "active"
+                                        });
+                                     
+                                    </script>
+                                                                        <!-- Controls -->
                                     <!-- <div class="carousel-controls"> -->
                                     <a class="carousel-control left carousel-sm" href="#image-additional" data-slide="next">
                                         <i class="fa fa-angle-left"></i>
@@ -84,6 +118,9 @@
                                 })
                                 </script>
                             </div>
+                             <?php 
+                                    }
+                            ?>
                         </div>
                         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
                             <div class="product-info-bg">
@@ -212,3 +249,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
