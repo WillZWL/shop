@@ -19,27 +19,30 @@ class ClientService extends BaseService
     public function __construct()
     {
         parent::__construct();
+        $CI =& get_instance();
         $this->setDao(new ClientDao);
         $this->setClientLogDao(new ClientLogDao);
         $this->setCountryDao(new CountryDao);
         $this->eventService = new EventService;
         $this->contextConfigService = new ContextConfigService;
         $this->validationService = new ValidationService;
+        $CI->load->library('encryption');
+        $this->encryption = $CI->encryption;
     }
 
     public function login($email, $password)
     {
         if ($this->validateField($email, array("valid_email"))) {
-            include_once(BASEPATH . "libraries/Encrypt.php");
-            $encrypt = new CI_Encrypt();
             $dao = $this->getDao();
-            if ($client_obj = $dao->get(array("email" => $email, "password" => $encrypt->encode(strtolower($password)), "status" => 1))) {
-                $this->objectLogin($client_obj, TRUE);
-                return TRUE;
-            } else {
-                $this->loginLog($email, 0);
-                return FALSE;
+            if ($client_obj = $dao->get(array("email" => $email, "status" => 1))) {
+                $client_password = $client_obj->getPassword();
+                if ($this->encryption->decrypt($client_password) === $password) {
+                    $this->objectLogin($client_obj, TRUE);
+                    return TRUE;
+                }
             }
+            $this->loginLog($email, 0);
+            return FALSE;
         }
         return FALSE;
     }
@@ -84,9 +87,7 @@ class ClientService extends BaseService
         if (isset($_SESSION["client"])) {
             //reserved
             if ($this->p_enc) {
-                include_once(BASEPATH . "libraries/Encrypt.php");
-                $encrypt = new CI_Encrypt();
-                $_SESSION["client"]["platform_id"] = $encrypt->decode($this->p_enc);
+                $_SESSION["client"]["platform_id"] = $this->encryption->decrypt($this->p_enc);
             } else {
                 $_SESSION["client"]["platform_id"] = $_SESSION["domain_platform"]["platform_id"];
             }
@@ -158,9 +159,9 @@ class ClientService extends BaseService
         if (isset($clientInfo["email"]))
             $clientObj->setEmail($clientInfo["email"]);
         if ($clientInfo["password"]) {
-            $clientObj->setPassword(password_hash($clientInfo["password"], PASSWORD_DEFAULT));
+            $clientObj->setPassword($this->encryption->encrypt($clientInfo["password"]));
         } elseif (!$clientObj->getPassword())
-            $clientObj->setPassword(password_hash($clientInfo["password"], PASSWORD_DEFAULT(mktime())));
+            $clientObj->setPassword($this->encryption->encrypt($clientInfo["password"]));
 
         if (isset($clientInfo["extClientId"]))
             $clientObj->setExtClientId($clientInfo["extClientId"]);
@@ -259,20 +260,16 @@ class ClientService extends BaseService
         if ($client_obj = $dao->get(array("email" => $vars["email"]))) {
             $action = "update";
             if ($vars["password"]) {
-                include_once(BASEPATH . "libraries/Encrypt.php");
-                $encrypt = new CI_Encrypt();
-                $vars["password"] = $encrypt->encode(strtolower($vars["password"]));
+                $vars["password"] = $this->encryption->encrypt(strtolower($vars["password"]));
             } else
                 $vars["password"] = $client_obj->getPassword();
         } else {
             $client_obj = $dao->get();
             $action = "insert";
-            include_once(BASEPATH . "libraries/Encrypt.php");
-            $encrypt = new CI_Encrypt();
             if ($vars["password"]) {
-                $vars["password"] = $encrypt->encode(strtolower($vars["password"]));
+                $vars["password"] = $this->encryption->encrypt(strtolower($vars["password"]));
             } else {
-                $vars["password"] = $encrypt->encode(mktime());
+                $vars["password"] = $this->encryption->encrypt(mktime());
             }
         }
 
@@ -316,12 +313,13 @@ class ClientService extends BaseService
 
             $email_dto = $this->getEmailDto();
             $replace = array('password' => $newPassword, 'mail_from' => $email_dto->get_mail_from(), 'client name' => $client_name, 'base_url' => base_url());
-            switch (get_lang_id()) {
-                default:
-                    include_once(APPPATH . "hooks/country_selection.php");
-                    $replace = array_merge($replace, Country_selection::get_template_require_text(get_lang_id(), PLATFORMCOUNTRYID));
-                    $email_sender = "no-reply@" . strtolower($replace["site_name"]);
-            }
+            // switch (get_lang_id()) {
+            //     default:
+            //         include_once(APPPATH . "hooks/country_selection.php");
+            //         $replace = array_merge($replace, Country_selection::get_template_require_text(get_lang_id(), PLATFORMCOUNTRYID));
+            //         $email_sender = "no-reply@" . strtolower($replace["site_name"]);
+            // }
+            $email_sender = "no-reply@digitaldiscount.co.uk";
             $email_dto->setLangId(get_lang_id());
             $email_dto->setEventId('forget_password');
             $email_dto->setTplId('forget_password');
@@ -339,12 +337,10 @@ class ClientService extends BaseService
         if (empty($email) || empty($newPassword)) {
             return 0; // Means fail
         }
-        include_once(BASEPATH . "libraries/Encrypt.php");
-        $encrypt = new CI_Encrypt();
         if (empty($oldPassword)) {
             $where = array('email' => $email);
         } else {
-            $encrypted_oldPassword = $encrypt->encode($oldPassword);
+            $encrypted_oldPassword = $this->encryption->encrypt($oldPassword);
             $where = array('email' => $email, 'password' => $encrypted_oldPassword);
         }
 
@@ -356,7 +352,7 @@ class ClientService extends BaseService
             return 0; // not allow to update
         }
 
-        $client_obj->setPassword($encrypt->encode($newPassword));
+        $client_obj->setPassword($this->encryption->encrypt($newPassword));
         $result = $this->getDao()->update($client_obj);
         return $result;
     }
@@ -370,13 +366,11 @@ class ClientService extends BaseService
 
     public function registerSuccessEvent($obj)
     {
-        include_once(BASEPATH . "libraries/Encrypt.php");
-        $encrypt = new CI_Encrypt();
         $replace["name"] = $obj->getForename();
         $replace["email"] = $obj->getEmail();
-        $replace["password"] = $encrypt->decode($obj->get_password());
-        $replace["default_url"] = $this->get_config()->value_of("default_url");
-        $replace["site_name"] = $this->get_config()->value_of("site_name");
+        $replace["password"] = $this->encryption->encrypt($obj->getPassword());
+        $replace["default_url"] = $this->contextConfigService->valueOf("default_url");
+        $replace["site_name"] = $this->contextConfigService->valueOf("site_name");
 
         switch (get_lang_id()) {
             case 'en':
@@ -392,17 +386,15 @@ class ClientService extends BaseService
                 break;
         }
         $replace["support_email"] = $support_email;
-        $this->include_dto("Event_email_dto");
-        $dto = new Event_email_dto();
-        $dto->set_event_id("register_success");
-        $dto->set_mail_from($support_email);
-        $dto->set_mail_to($obj->getEmail());
+        $dto = new \EventEmailDto();
+        $dto->setEventId("register_success");
+        $dto->setMailFrom($support_email);
+        $dto->setMailTo($obj->getEmail());
         //$dto->set_mail_to('steven@eservicesgroup.net');
-        $dto->set_tpl_id("register_success");
-        $dto->set_lang_id(get_lang_id());
-        $dto->set_replace($replace);
-
-        $this->get_event_srv()->fire_event($dto);
+        $dto->setTplId("register_success");
+        $dto->setLangId(get_lang_id());
+        $dto->setReplace($replace);
+        $this->eventService->fireEvent($dto);
     }
 
     public function get_config()

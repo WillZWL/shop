@@ -54,28 +54,28 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="logo inner col-lg-9 col-md-9 col-sm-8 col-xs-8">                                    
+                            <div class="logo inner col-lg-9 col-md-9 col-sm-8 col-xs-8">
                                 <div class="row">
                                     <div class="pull-left top-desc col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                        <span style="margin-left: 10px;">
                                           We won't be beaten on electronics!
                                        </span>
                                        <img src="/themes/default/asset/image/icon-bag.png">
-                                    </div>   
+                                    </div>
                                     <div class="header-links col-lg-7 col-md-7 col-sm-12 col-xs-12">
                                         <!--<a href="/warranty"><span class=""><?= _('Warranty') ?></span></a>&nbsp;&nbsp;&nbsp;-->
                                         <a href="<?=base_url()?>display/view/contact"><span class="desc-about"><?= _('Contact Us') ?></span></a>&nbsp;&nbsp;&nbsp;
                                         <a href="<?=base_url()?>display/view/conditions_of_use"><span class="desc-about"><?= _('Help') ?></span></a>&nbsp;&nbsp;&nbsp;
                                         <!--<a href="/clearance"><span class="clearance"><?= _('Clearance') ?></span></a>&nbsp;&nbsp;&nbsp;-->
-                                        <?php if ($_SESSION["client"]["logged_in"]) { ?>
-                                            <a class="link-account" href="<?=base_url()?>myaccount/index">
+                                        <?php if ($_SESSION["client"]["loggedIn"]) { ?>
+                                            <a class="desc-about" href="<?=base_url()?>myaccount/index">
                                                 <?= _("My Account") ?></a>
                                         <?php } else { ?>
-                                              <a  class="link-account" href="<?=base_url()?>login/index">
+                                              <a  class="desc-about" href="<?=base_url()?>login/index">
                                                 <?= _("Sign in") ?></a>
                                         <?php } ?>
-                                        
-                                    </div> 
+
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -95,10 +95,10 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                         <div class="row">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -113,12 +113,12 @@
 				?>
                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 top-verticalmenu">
                                 <div class="quick-access col-lg-10 col-md-10 col-sm-8 col-xs-8">
-                                    <div id="search" class="input-group pull-right" style="margin-top: 4px;height: 24px !important;">                                        
+                                    <div id="search" class="input-group pull-right" style="margin-top: 4px;height: 24px !important;">
                                         <input type="text" name="search" value="" placeholder="Search" class="form-control"  style="height: 24px !important;" />
                                         <span class="input-group-btn">
                                             <button type="button" class="button-search" style="height: 24px !important;"><i class="fa fa-search"></i></button>
-                                        </span>                                 
-                                    </div> 
+                                        </span>
+                                    </div>
                                     <span class="suggestions-title">Top search:</span>
                                     <span class="suggestions">Sleepace, New tab s2, ghostdrone, iPhone 5c</span>
                                 </div>

@@ -82,7 +82,7 @@ class Myaccount extends PUB_Controller
 
     public function index($page = "order", $rma_no = "")
     {
-        $client_id = $_SESSION["client"]["id"];
+        $client_id = $_SESSION["client"]["Id"];
         if ($client_id) {
             $client_orders = $this->getClientOrderList($client_id);
             $data["show_bank_transfer_contact"] = $client_orders['show_bank_transfer_contact'];

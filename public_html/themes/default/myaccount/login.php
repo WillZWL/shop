@@ -41,9 +41,8 @@
                                 <label><?= _('Country') ?> *</label>
                                 <select name="country_id" class="styled_select" id="delivery_country" onchange="update_field_attribute(this.value)">
                                     <?php foreach ($bill_to_list as $bill_country): ?>
-                                    <option value="<?=$bill_country->get_country_id();?>"><?=$bill_country->get_name();?></option>
+                                    <option value="<?=$bill_country->getCountryId();?>"><?=$bill_country->getName();?></option>
                                     <?php endforeach ?>
-
                                 </select>
                             </li>
                             <li>
