@@ -110,12 +110,12 @@ class ClientLogVo extends \BaseVo
         $this->modify_by = $modify_by;
     }
 
-    public function _get_primary_key()
+    public function getPrimaryKey()
     {
         return $this->primary_key;
     }
 
-    public function _get_increment_field()
+    public function getIncrementField()
     {
         return $this->increment_field;
     }

@@ -10,10 +10,8 @@ class Login extends PUB_Controller
     {
         DEFINE("SKIPCUR", 1);
         parent::__construct();
-        $this->load->helper(array('url', 'object', 'lang'));
-        $this->load->model('website/client_model');
-        $this->load->model('mastercfg/country_model');
-        $this->load->library('encrypt');
+        $this->load->helper(array('url', 'object', 'lang','notice'));
+        $this->load->library('encryption');
     }
 
     public function checkout_login()
@@ -51,23 +49,28 @@ class Login extends PUB_Controller
         if ($this->input->post("posted")) {
             if ($this->input->post("page") == "register") {
                 $post_data = $this->input->post();
-                $reg_res = $this->register($post_data);
-                if ($reg_res['res'] === TRUE) {
-                    $client_obj = $reg_res['data'];
-                    $this->client_model->client_service->object_login($client_obj, TRUE);
-                    $this->client_model->register_success_event($client_obj);
-                    $_SESSION["client_vo"] = serialize($data["client_obj"]);
-                    if ($data["back"]) {
-                        echo "<script>parent.document.location.href='" . base_url() . urldecode($data["back"]) . "'</script>";
-                    } else {
-                        redirect(base_url());
-                    }
+                if ($this->sc['Client']->getDao()->get(array('email'=>$post_data['email'])))
+                {
+                    $_SESSION['NOTICE'] = 'The Email Exist, Please Login or Change another email to Register';
                 } else {
-                   $data['reg_failed_msg'] = $_SESSION['NOTICE'] = $reg_res['data'];
+                    $reg_res = $this->register($post_data);
+                    if ($reg_res['res'] === TRUE) {
+                        $client_obj = $reg_res['data'];
+                        $this->sc['Client']->objectLogin($client_obj, TRUE);
+                        $this->sc['Client']->registerSuccessEvent($client_obj);
+                        $_SESSION["client_vo"] = serialize($data["client_obj"]);
+                        if ($data["back"]) {
+                            echo "<script>parent.document.location.href='" . base_url() . urldecode($data["back"]) . "'</script>";
+                        } else {
+                            redirect(base_url());
+                        }
+                    } else {
+                       $data['reg_failed_msg'] = $_SESSION['NOTICE'] = $reg_res['data'];
+                    }
                 }
             } else {
                 if ($this->input->post("password")) {
-                    if ($this->client_model->client_service->login($this->input->post("email"), $this->input->post("password"))) {
+                    if ($this->sc['Client']->login($this->input->post("email"), $this->input->post("password"))) {
                         if ($data["back"]) {
                             redirect(base_url() . urldecode($data["back"]));
                         } else {
@@ -82,7 +85,7 @@ class Login extends PUB_Controller
         if ($_SESSION["client"]["logged_in"]) {
             redirect(base_url() . ($data["back"] ? urldecode($data["back"]) : ""));
         } else {
-            $data["bill_to_list"] = $this->country_model->get_country_name_in_lang(get_lang_id(), 1);
+            $data["bill_to_list"] = $this->sc['countryModel']->getCountryNameInLang(get_lang_id(), 1);
             $data["lang_id"] = get_lang_id();
             $data["notice"] = notice();
             unset($_SESSION["NOTICE"]);
@@ -96,45 +99,45 @@ class Login extends PUB_Controller
 
     public function register($data)
     {
-        $client_obj = $this->client_model->client_service->get_dao()->get();
+        $client_obj = $this->sc['Client']->getDao()->get();
         $client_vo = clone $client_obj;
-        $data["password"] = password_hash(strtolower($data["password"]), PASSWORD_DEFAULT);
+        $data["password"] = $this->encryption->encrypt(strtolower($data["password"]));
         if (empty($data["subscriber"])) {
             $data["subscriber"] = 0;
         }
-        $client_vo->set_email($data['email']);
-        $client_vo->set_password($data['password']);
-        $client_vo->set_title($data['title']);
-        $client_vo->set_forename($data['forename']);
-        $client_vo->set_surname($data['surname']);
-        $client_vo->set_companyname($data['companyname']);
-        $client_vo->set_address_1($data['address_1']);
-        $client_vo->set_address_2($data['address_2']);
-        $client_vo->set_del_name($data["title"] . " " . $data["forename"] . " " . $data["surname"]);
-        $client_vo->set_del_company($data["company_name"]);
-        $client_vo->set_del_address_1($data["address_1"]);
-        $client_vo->set_del_address_2($data["address_2"]);
-        $client_vo->set_del_city($data["city"]);
-        $client_vo->set_del_state($data["state"]);
-        $client_vo->set_del_country_id($data["country_id"]);
-        $client_vo->set_del_tel_1($data["tel_1"]);
-        $client_vo->set_del_tel_2($data["tel_2"]);
-        $client_vo->set_del_tel_3($data["tel_3"]);
-        $client_vo->set_tel_1($data["tel_1"]);
-        $client_vo->set_tel_2($data["tel_2"]);
-        $client_vo->set_tel_3($data["tel_3"]);
-        $client_vo->set_state($data['state']);
-        $client_vo->set_city($data['city']);
-        $client_vo->set_country_id($data['country_id']);
-        $client_vo->set_postcode($data['postcode']);
-        $client_vo->set_client_id_no($data["client_id_no"]);
-        $client_vo->set_party_subscriber(0);
-        $client_vo->set_status(1);
-        $email = $client_obj->get_email();
-        $proc = $this->client_model->client_service->get_dao()->get(array("email" => $email));
+        $client_vo->setEmail($data['email']);
+        $client_vo->setPassword($data['password']);
+        $client_vo->setTitle($data['title']);
+        $client_vo->setForename($data['forename']);
+        $client_vo->setSurname($data['surname']);
+        $client_vo->setCompanyname($data['companyname']);
+        $client_vo->setAddress1($data['address_1']);
+        $client_vo->setAddress2($data['address_2']);
+        $client_vo->setDelName($data["title"] . " " . $data["forename"] . " " . $data["surname"]);
+        $client_vo->setDelCompany($data["company_name"]);
+        $client_vo->setDelAddress1($data["address_1"]);
+        $client_vo->setDelAddress2($data["address_2"]);
+        $client_vo->setDelCity($data["city"]);
+        $client_vo->setDelState($data["state"]);
+        $client_vo->setDelCountryId($data["country_id"]);
+        $client_vo->setDelTel1($data["tel_1"]);
+        $client_vo->setDelTel2($data["tel_2"]);
+        $client_vo->setDelTel3($data["tel_3"]);
+        $client_vo->setTel1($data["tel_1"]);
+        $client_vo->setTel2($data["tel_2"]);
+        $client_vo->setTel3($data["tel_3"]);
+        $client_vo->setState($data['state']);
+        $client_vo->setCity($data['city']);
+        $client_vo->setCountryId($data['country_id']);
+        $client_vo->setPostcode($data['postcode']);
+        $client_vo->setClientIdNo($data["client_id_no"]);
+        $client_vo->setPartySubscriber(0);
+        $client_vo->setStatus(1);
+        $email = $client_obj->getEmail();
+        $proc = $this->sc['Client']->getDao()->get(array("email" => $email));
         $res = [];
         if (empty($proc)) {
-            $client_obj = $this->client_model->client_service->get_dao()->insert($client_vo);
+            $client_obj = $this->sc['Client']->getDao()->insert($client_vo);
             if ($client_obj) {
                $res = array('res'=>TRUE, 'data'=>$client_obj);
             } else {
@@ -191,7 +194,7 @@ class Login extends PUB_Controller
             $this->load->library('xajax');
             $this->objResponse = new xajaxResponse();
         }
-        if (!($rs = $this->client_model->client_service->login($value["email"], $value["password"]))) {
+        if (!($rs = $this->sc['Client']->login($value["email"], $value["password"]))) {
             $this->objResponse->alert($this->_get_fail_msg());
         }
         $this->objResponse->setReturnValue($rs);
@@ -208,7 +211,7 @@ class Login extends PUB_Controller
         if (empty($email)) {
             $no_user= 1;
         } else {
-            $no_user = abs($this->client_model->forget_password($email) - 1);
+            $no_user = abs($this->sc['Client']->resetPassword($email) - 1);
         }
         $data['invalchars'] = $invalchars = array("{","}",":","]","[","!","?","&",")","(","?",";","#",);
         $thisemail = $this->input->get("email");

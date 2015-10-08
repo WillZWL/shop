@@ -34,9 +34,9 @@ class ClientVo extends \BaseVo
     private $del_tel_2;
     private $del_tel_3;
     private $del_mobile;
-    private $subscriber;
+    private $subscriber = 0;
     private $party_subscriber;
-    private $vip;
+    private $vip = 0;
     private $vip_joined_date;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
