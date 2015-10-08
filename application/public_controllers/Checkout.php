@@ -8,29 +8,33 @@ if (in_array($GLOBALS["URI"]->segments[2], $ws_array)) {
 
 //require_once(BASEPATH . 'plugins/My_plugin/validator/postal_validator.php');
 use ESG\Panther\Models\Website\CheckoutModel;
+use ESG\Panther\Models\Website\CartSessionModel;
 use ESG\Panther\Form\CheckoutFormFilter;
 
 class Checkout extends PUB_Controller
 {
     public $checkoutModel;
+    public $cartSessionModel;
 
     public function __construct($allow_force_https = true) {
         parent::__construct();
         $this->checkoutModel = new CheckoutModel();
-/*
-        if ($allow_force_https && ($this->context_config_service->value_of("force_https"))) {
-            if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") {
-                $httpsurl = str_replace("http://", "https://", current_url());
-                if ($_SERVER['QUERY_STRING'] != "") {
-                    $httpsurl .= "?" . $_SERVER['QUERY_STRING'];
-                }
-                redirect($httpsurl);
+        if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") {
+            $httpsUrl = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+            if ($_SERVER['QUERY_STRING'] != "") {
+                $httpsUrl .= "?" . $_SERVER['QUERY_STRING'];
             }
+            if (strpos($_SERVER["REQUEST_URI"], "notification") === false)
+                redirect($httpsUrl);
         }
-*/
+        $this->cartSessionModel = new CartSessionModel;
     }
 
     public function index() {
+        $cart = $this->cartSessionModel->getCartInfo(true);
+        if (!$cart) {
+            redirect("/ReviewOrder");
+        }
         $data = [];
         $platformCountryId = $this->getSiteInfo()->getPlatformCountryId();
         $data = array_merge($data
@@ -39,23 +43,48 @@ class Checkout extends PUB_Controller
         $data["paymentOption"] = $this->checkoutModel->getPaymentOption($this->getSiteInfo()->getPlatform());
         $encrypt = new CI_Encrypt();
         $data["formSalt"] = $encrypt->encode($this->getSiteInfo()->getPlatform());
+        $data["debug"] = $this->input->get("debug");
         $this->load->view('checkout/index', $data);
     }
 
-    public function payment() {
+    public function payment($debug = 0) {
         $data = [];
         $filter = new CheckoutFormFilter();
         $filterResult = $filter->isValidForm($this->input);
-        if ($filterResult["validInput"])
-        {
-            $this->checkoutModel->createSaleOrder($filterResult["value"]);
-            $data["url"] = "xxx";
+        if ($filterResult["validInput"]) {
+            $filterResult["value"]["debug"] = $debug;
+            $redirectUrl = $this->checkoutModel->createSaleOrder($filterResult["value"]);
+            if ($redirectUrl) {
+                if (substr($redirectUrl, 0, 4) == "ERROR") {
+                    parse_str($redirectUrl, $actionResult);
+                    $data["url"] = $actionResult["URL"];
+                    $data["errorMessage"] = $actionResult["ERROR"];
+                }
+                else
+                    $data["url"] = $redirectUrl;
+            } else {
+                $data["errorMessage"] = _("Unknown error: Please contact CS");            
+            }
+
             echo json_encode($data);
         }
         else
         {
 //mail alert to IT
         }
+    }
+    
+    public function response($gatewayId)
+    {
+        $debug = ($this->input->get("debug") ? $this->input->get("debug"):0);
+        $this->checkoutModel->response($gatewayId, $debug);
+    }
+
+    public function notification($gatewayId)
+    {
+        $debug = ($this->input->get("debug") ? $this->input->get("debug"):0);
+        $data = file_get_contents("php://input");
+        $this->checkoutModel->notification($gatewayId, $data, $debug);
     }
 //    public function js_credit_card($platform_curr, $total_amount, $seq = 1)
 //    {

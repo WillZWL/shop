@@ -8,6 +8,7 @@ class SoItemDetailVo extends \BaseVo
     private $ext_item_cd = '';
     private $prod_name = '';
     private $qty;
+    private $product_type = '0';
     private $outstanding_qty;
     private $unit_price;
     private $vat_total;
@@ -105,6 +106,16 @@ class SoItemDetailVo extends \BaseVo
     public function getQty()
     {
         return $this->qty;
+    }
+
+    public function setProductType($product_type)
+    {
+        $this->product_type = $product_type;
+    }
+
+    public function getProductType()
+    {
+        return $this->product_type;
     }
 
     public function setOutstandingQty($outstanding_qty)

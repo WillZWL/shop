@@ -9,17 +9,17 @@ class EmailService extends BaseService implements ActableService
 
     private $event_dto;
 
-    function EmailService($dto = "")
+    public function __construct($dto = "")
     {
         parent::__construct();
 
         if ($dto) {
             $this->event_dto = $dto;
         }
+        $this->templateService = new TemplateService;
     }
 
-    public function init()
-    {
+    public function init() {
     }
 
     public function getEmailTemplate($dto = "")
@@ -129,18 +129,6 @@ class EmailService extends BaseService implements ActableService
 
                 $phpmail->Subject = $tpl_obj->template->get_subject();
 
-                foreach ($tpl_obj->attachment as $att) {
-                    $attpath = "";
-
-                    if (is_file($att->getAttFile())) {
-                        $attpath = $att->getAttFile();
-                    } elseif (is_file($this->getDao('config')->valueOf("tpl_path") . $tpl_obj->template->getTemplateByPlatformId() . "/" . $att->getAttFile())) {
-                        $attpath = $this->getDao('config')->valueOf("tpl_path") . $tpl_obj->template->getTemplateByPlatformId() . "/" . $att->getAttFile();
-                    }
-                    if ($attpath) {
-                        $phpmail->AddAttachment($attpath);
-                    }
-                }
                 return $phpmail->Send();
             } else {
                 return FALSE;

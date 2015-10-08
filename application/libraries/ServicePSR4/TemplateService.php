@@ -123,12 +123,14 @@ class TemplateService extends BaseService
             $tmp["template"]->setSubject(str_replace($search, $value, $tmp["template"]->getSubject()));
 
             /* previous codes for adding attachment using attachment table */
+/*
             if ($obj_att = $this->getDao('Attachment')->getList(array("tpl_id" => $tmp["template"]->getTemplateId(), "lang_id" => $tmp["template"]->getLangId()))) {
                 foreach ($obj_att as $obj) {
                     $obj->setAttFile(str_replace($search, $value, $obj->getAttFile()));
                 }
                 $tmp["attachment"] = $obj_att;
             }
+*/
             /*
                 SBF #3315 - if need to attach pdf, use html template, name file as [event_id]_pdf.html
                 17/03/14: we are moving towards putting template in database, if needs pdf attachment,

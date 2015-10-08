@@ -36,6 +36,7 @@ class SoVo extends \BaseVo
     private $status = '1';
     private $refund_status = '0';
     private $hold_status = '0';
+    private $hold_reason;
     private $promotion_code = '';
     private $client_promotion_code = '';
     private $expect_delivery_date = '0000-00-00';
@@ -43,6 +44,7 @@ class SoVo extends \BaseVo
     private $expect_del_days = '';
     private $order_create_date;
     private $dispatch_date = '0000-00-00 00:00:00';
+    private $fingerprint_id = '';
     private $cc_reminder_schedule_date = '0000-00-00 00:00:00';
     private $cc_reminder_type = '';
     private $cs_customer_query = '0';
@@ -408,6 +410,16 @@ class SoVo extends \BaseVo
     public function getHoldStatus()
     {
         return $this->hold_status;
+    }
+
+    public function setHoldReason($hold_reason)
+    {
+        $this->hold_reason = $hold_reason;
+    }
+
+    public function getHoldReason()
+    {
+        return $this->hold_reason;
     }
 
     public function setPromotionCode($promotion_code)

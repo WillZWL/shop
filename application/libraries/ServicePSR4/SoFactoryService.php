@@ -29,7 +29,7 @@ use ESG\Panther\Service\PriceService;;
 
 class SoFactoryService extends BaseService
 {
-    const ENABLE_SO_ITEM = TRUE;
+    const ENABLE_SO_ITEM = FALSE;
     public $injectObj = null;
     public $clientService = null;
 
@@ -39,6 +39,7 @@ class SoFactoryService extends BaseService
         $this->clientService = new ClientService;
         $this->productService = new ProductService;
         $this->exchangeRateService = new ExchangeRateService;
+        $this->emailReferralListService = new emailReferralListService;
         $this->setDao(new SoDao());
         $this->setSoItemDao(new SoItemDao());
         $this->setSoItemDetailDao(new SoItemDetailDao());
@@ -62,6 +63,7 @@ class SoFactoryService extends BaseService
     }
 
     public function createSaleOrder($clientAndCheckoutInfo = [], $orderInfo) {
+        $soObj = null;
 //create client
         $clientInfo = $clientAndCheckoutInfo;
         $clientObj = $this->_createClient($clientInfo);
@@ -82,7 +84,9 @@ class SoFactoryService extends BaseService
                 }
                 if ($this->_createSoItemDetailAndUpdateSo($soObj, $newCart)) {
                     if ($this->_createSoPaymentStatus($soObj, $clientAndCheckoutInfo)) {
-                        $this->_createSoExtend($soObj, $clientAndCheckoutInfo);
+                        if (!$this->_createSoExtend($soObj, $clientAndCheckoutInfo)) {
+                            $this->getDao()->db->trans_rollback();
+                        }
                     } else {
                         $this->getDao()->db->trans_rollback();
                     }
@@ -90,18 +94,45 @@ class SoFactoryService extends BaseService
                     $this->getDao()->db->trans_rollback();
                 }
             }
-            $this->getDao()->db->trans_complete();
+            $transCompleteResult = $this->getDao()->db->trans_complete();
+            if ($transCompleteResult === false)
+            {
+                $subject = "[Panther] Rollback Create so:(" . (($soObj) ? $soObj->getSoNo():"") . ") " . __METHOD__ . __LINE__;
+                $message = $this->getDao()->db->last_query() . "," . $this->getDao()->db->_error_message();
+                $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
+                return false;
+            }
         } else {
 //no need to send email alert, as Client Service handle it already
         }
+        return $soObj;
     }
+/*
+    public function storeAfInfo($soExtObj, $af = NULL)
+    {
+        if (is_null($af)) {
+            $af_data = $this->get_af_srv()->get_af_record();
+        } else {
+            $af_data = is_array($af) ? $af : array("af" => $af);
+        }
 
+        if ($af_data) {
+            $soExtendObj->setConvSiteId($af_data["af"]);
+            if (is_array($af_data) && !is_null($af_data["af_ref"])) {
+                $soExtendObj->setConvSiteRef($af_data["af_ref"]);
+            }
+        }
+    }
+*/
     private function _createSoExtend($soObj, $checkoutInfo)
     {
         $soExtendObj = $this->getSoExtendDao()->get();
         $soExtendObj->setSoNo($soObj->getSoNo());
         if (isset($checkoutInfo["convSiteId"]))
+        {
+//            $this->storeAfInfo($soExtendObj, $checkoutInfo["convSiteId"]);
             $soExtendObj->setConvSiteId($checkoutInfo["convSiteId"]);
+        }
         if (isset($checkoutInfo["convSiteRef"]))
             $soExtendObj->setConvSiteRef($checkoutInfo["convSiteRef"]);
         
@@ -480,6 +511,24 @@ class SoFactoryService extends BaseService
             mail($this->support_email, $subject, $message, "From: website@" . SITE_DOMAIN . "\r\n");
         }
         return false;
+    }
+
+    public function isFraudOrder($soObj = '')
+    {
+        if (!$soObj)
+            return false;
+
+        $so_no = $soObj->getSoNo();
+        if ($clientObj = $this->clientService->getDao()->get(array("id" => $soObj->getClientId()))) {
+            $clientEmail = $clientObj->getEmail();
+            if ($blackListObject = $this->emailReferralListService->get(array('email' => $clientEmail, '`status`' => 1))) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
     }
 
     private function _initPriceService($platformType = null) {

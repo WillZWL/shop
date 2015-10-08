@@ -59,7 +59,7 @@ CREATE TABLE `payment_option_card` (
   `card_id` varchar(20) NOT NULL,
   `card_name` varchar(64) NOT NULL,
   `card_image` varchar(64) DEFAULT NULL,
-  `status` tinyint(2) unsigned NOT NULL DEFAULT '1' COMMENT '0 = Inactive / 1 = Active',
+  `status` tinyint(2) unsigned NOT NULL DE'1' COMMENT '0 = Inactive / 1 = Active',
   `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `create_at` varchar(16) NOT NULL,
   `create_by` varchar(32) NOT NULL,
@@ -164,4 +164,8 @@ CHANGE COLUMN `risk_var8` `risk_var_8`  varchar(64) CHARACTER SET utf8 COLLATE u
 CHANGE COLUMN `risk_var9` `risk_var_9`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_8`,
 CHANGE COLUMN `risk_var10` `risk_var_10`  varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `risk_var_9`;
 
-/* above is LIVE */
+ALTER TABLE `so_payment_log` DROP FOREIGN KEY `fk_sopl_so_no`;
+ALTER TABLE `so_payment_query_log` DROP FOREIGN KEY `fk_sopql_so_no`;
+
+ALTER TABLE `so_item_detail`
+ADD COLUMN `product_type`  int(11) NOT NULL DEFAULT 0 AFTER `qty`;

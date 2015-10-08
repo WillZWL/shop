@@ -32,13 +32,14 @@ class EventService extends BaseService
             if ($acts = $this->getDao('Event')->getEventAction($dto->getEventId(), "ActionVo")) {
                 foreach ($acts as $act_obj) {
                     $classname = $act_obj->getAction();
-
+/*
                     $classfile = APPPATH . "libraries/service/" . ucfirst(strtolower($classname)) . "Service.php";
 
                     if (file_exists($classfile)) {
                         include_once($classfile);
-                        $classname = ucfirst($classname) . "Service";
-                        $obj_act = new $classname();
+*/
+                        $classname = 'ESG\Panther\Service' . "\\" . ucfirst($classname) . "Service";
+                        $obj_act = new $classname($dto);
 
                         if ($get_email_html === FALSE) {
                             $obj_act->run($dto);
@@ -51,7 +52,7 @@ class EventService extends BaseService
                                         does not exist in classname=$classname";
                             }
                         }
-                    }
+//                    }
                 }
             }
         } else {
