@@ -44,7 +44,7 @@
                                                                 <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/catalog/demo/slider1/skyline-psyco.png" alt="catalog/demo/slider1/skyline-psyco.png" />
                                                             </div>
                                                             <div class="iview-caption tp-caption softred2" data-start="1291" data-x="300" data-y="220" data-width="600" data-transition="fade">
-                                                                specifically<br>design                                  
+                                                                specifically<br>design
                                                             </div>
                                                             <div class="iview-caption tp-caption " data-start="2000" data-x="301" data-y="408" data-width="600" data-transition="fade">
                                                                 <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/catalog/demo/slider1/true-performance.png" alt="catalog/demo/slider1/true-performance.png" />
@@ -71,20 +71,20 @@
         <div id="sidebar-main" class="col-md-12">
             <div id="content">
                 <div id="pav-homebuilder1802001919" class="homebuilder clearfix header-v3" data-home="header-v3">
-                    
+
 
                     <?php if ($product) : ?>
                         <?php $this->load->view('product/grid.php', ['product' => $product]); ?>
                     <?php endif; ?>
                     <div class="pav-container ">
-                        <div class="pav-inner container ">
+                        <div class="pav-inner">
                             <div class="row row-level-1 ">
                                 <div class="row-inner clearfix">
                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                         <div class="col-inner ">
                                             <div class="panel-left panel panel-default">
                                                 <div class="panel-heading nopadding text-left">
-                                                    <h3 class="panel-title">Collections</h3>  
+                                                    <h3 class="panel-title">Collections</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,14 +94,14 @@
                         </div>
                     </div>
                     <div class="pav-container ">
-                        <div class="pav-inner container space-40">
+                        <div class="pav-inner space-40">
                             <div class="row row-level-1 ">
                                 <div class="row-inner clearfix">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="col-inner wow bounceInLeft">
                                             <div class="interactive-banner space-15 interactive-banner-v1 effect-default center">
                                                 <div class="interactive-banner-body">
-                                                    <img alt="" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/banners/collection2-h3-576x320.jpg" class="img-responsive">        
+                                                    <img alt="" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/banners/collection2-h3-576x320.jpg" class="img-responsive">
                                                     <div class="interactive-banner-profile text-center">
                                                         <div class="banner-title">
                                                             <h2>street collection</h2>
@@ -119,7 +119,7 @@
                                         <div class="col-inner wow bounceInRight">
                                             <div class="interactive-banner space-15 interactive-banner-v1 effect-default center">
                                                 <div class="interactive-banner-body">
-                                                    <img alt="" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/banners/collection1-h3-576x320.jpg" class="img-responsive">        
+                                                    <img alt="" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/banners/collection1-h3-576x320.jpg" class="img-responsive">
                                                     <div class="interactive-banner-profile text-center">
                                                         <div class="banner-title">
                                                             <h2>touring collection</h2>
