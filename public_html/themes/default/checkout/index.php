@@ -4,14 +4,14 @@
     <div class="row"> 
     <div id="sidebar-main" class="col-md-12">
     <div id="content">
-    <form action="/Checkout/payment<?php print (($debug)?"/1":"")?>" method="POST" id="checkoutForm">
-        <h1 class="page-title">Checkout</h1>
+    <form action="/Checkout/payment<?php print (($debug)?"/1":"")?>" method="POST" id="checkoutForm" name="checkoutForm">
+        <h1 class="page-title"><?=_("Checkout")?></h1>
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
             <div class="panel-heading noicon">
                 <h4 class="panel-title">
                     <a class="accordion-toggle" data-parent="#accordion" data-toggle="collapse" href="#collapse-checkout-option">
-                        Step 1: Checkout Options
+                        <?=_("Step 1: Checkout Options")?>
                         <i class="fa fa-caret-down"></i>
                     </a>
                 </h4>
@@ -20,8 +20,8 @@
                 <div class="panel-body">
                     <div class="row">
                       <div class="col-sm-6">
-                        <h2>New Customer</h2>
-                        <p>Guest Checkout:</p>
+                        <h2><?=_("New Customer")?></h2>
+                        <p><?=_("Guest Checkout")?>:</p>
                         <div class="radio">
                         </div>
                         <input type="button" class="btn btn-primary" data-loading-text="Loading..." id="button-account" value="Continue">
@@ -284,7 +284,7 @@
                 <div class="buttons">
                     <div class="pull-right">
                         <input type="hidden" name="formSalt" id='formSalt' value="<?=$formSalt;?>">
-                        <input type="submit" class="btn btn-primary" data-loading-text="Loading..." id="submit" value="Continue" />
+                        <input type="submit" class="btn btn-primary" data-loading-text="Loading..." id="checkoutNow" value="Continue" />
                     </div>
                 </div>
             </div>
@@ -297,6 +297,14 @@
 </div>
 </div>
 <script type="text/javascript">
+function displayCheckoutNowButton($show)
+{
+    if ($show == 1)
+        $("#checkoutNow").show();
+    else
+        $("#checkoutNow").hide();
+}
+
 $(document).ready(function() {
     if ($("#billingState").length == 1) {
         $('#billingState').prop('disabled', 'disabled');
@@ -305,6 +313,8 @@ $(document).ready(function() {
 
 // submit the form
     $("#checkoutForm").submit(function(event) {
+        standardWaitingScreen.showPleaseWait();
+        displayCheckoutNowButton(0);
         var postData = $(this).serializeArray();
         var formURL = $(this).attr("action");
         $.ajax({
@@ -315,15 +325,22 @@ $(document).ready(function() {
             encode      : true
         })
         .done(function(data) {
+            standardWaitingScreen.hidePleaseWait();
             var url = data;
             location.href = data.url;
         })
         .fail(function(data) {
             if (data.responseCode)
                 console.log(data.responseCode);
+            var url = data;
+            location.href = data.url;
+            displayCheckoutNowButton(1);
+            standardWaitingScreen.hidePleaseWait();
         });
         event.preventDefault();
     });
+    
+    validateCheckout();
 });
 
 // Checkout
@@ -333,10 +350,12 @@ $(document).delegate('#button-account', 'click', function() {
 });
 $(document).delegate('#button-payment-address', 'click', function() {
     var targBlock = $('a[href=\'#collapse-shipping-address\']');
-    activatedBlock(targBlock);
+    if (validateBlock("collapse-payment-address"))
+        activatedBlock(targBlock);
 });
 $(document).delegate('#button-shipping-address', 'click', function() {
     var targBlock = $('a[href=\'#collapse-payment-method\']');
+    displayCheckoutNowButton(1);
     activatedBlock(targBlock);
 });
 function activatedBlock(obj)
@@ -358,5 +377,208 @@ $('input[name=\'shipping_address\']').on('change', function() {
     }
 });
 
+function validateBlock(blockId)
+{
+    var fv = $("#checkoutForm").data("formValidation") // FormValidation instance
+    $checkoutformBlock = $("#" + blockId);
+
+    // Validate the container
+    fv.validateContainer($checkoutformBlock);
+
+    var isValidStep = fv.isValidContainer($checkoutformBlock);
+    if (isValidStep === false || isValidStep === null)
+    {
+        $fieldLists = fv.getInvalidFields();
+        $fieldLists.each(function() {
+            $(this).focus();
+            return false;
+        });
+        return false;
+    }
+
+    return true;
+}
+
+function validateCheckout()
+{
+    $("#checkoutForm").formValidation({
+        framework: "bootstrap",
+        icon: {
+            valid: "glyphicon",
+            invalid: "glyphicon",
+            validating: "glyphicon glyphicon-refresh"
+        },
+        excluded: ":disabled",
+        fields: {
+            billingFirstName: {
+                row: ".form-group",
+                validators: {
+                    notEmpty: {
+                        message: "The billing first name is required"
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 128,
+                        message: "The billing first name must be more than 1 and less than 128 characters long"
+                    },
+                    regexp: {
+                        regexp: /^([ \u00c0-\u01ffa-zA-Z0-9'\-])+$/,
+                        message: "The billing first name can only consist of alphabetical, number"
+                    }
+                }
+            },
+            billingLastName: {
+                row: ".form-group",
+                validators: {
+                    notEmpty: {
+                        message: "The billing last name is required"
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 128,
+                        message: "The billing last name must be more than 1 and less than 128 characters long"
+                    },
+                    regexp: {
+                        regexp: /^([ \u00c0-\u01ffa-zA-Z0-9'\-])+$/,
+                        message: "The billing last name can only consist of alphabetical, number"
+                    }
+                }
+            },
+            billingCompany: {
+                row: ".form-group",
+                validators: {
+                    stringLength: {
+                        max: 128,
+                        message: "The billing company name cannot be longer than 128 characters"
+                    },
+                    regexp: {
+                        regexp: /^([ \u00c0-\u01ffa-zA-Z0-9'\-])+$/,
+                        message: "The billing company name can only consist of alphabetical, number"
+                    }
+                }
+            },
+            billingAddress1: {
+                row: ".form-group",
+                validators: {
+                    notEmpty: {
+                        message: "The billing address is required"
+                    },
+                    regexp: {
+                        regexp: /^([ \u00c0-\u01ffa-zA-Z0-9,'\-\/#])+$/,
+                        message: "The billing company name can only consist of alphabetical, number"
+                    },                    
+                    stringLength: {
+                        min: 1,
+                        max: 256,
+                        message: "The billing address must be more than 1 and less than 256 characters long"
+                    }
+                }
+            },
+            billingCity: {
+                row: ".form-group",
+                validators: {
+                    notEmpty: {
+                        message: "The billing city is required"
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 128,
+                        message: "The billing city must be more than 1 and less than 128 characters long"
+                    },
+                    regexp: {
+                        regexp: /^([ \u00c0-\u01ffa-zA-Z0-9'\-])+$/,
+                        message: "The billing city can only consist of alphabetical, number"
+                    }
+                }
+            },
+            billingPostal: {
+                row: ".form-group",
+                validators: {
+                    notEmpty: {
+                        message: "The Zip/Postal Code is required"
+                    },
+                    zipCode: {
+                        country: "billingCountry",
+                        message: "The value is not valid %s Zip/Postal Code"
+                    }
+                }
+            },
+            billingTelNumber: {
+                row: ".form-group",
+                validators: {
+                    notEmpty: {
+                        message: "The billing telephone number is required"
+                    }
+                }
+            },
+            billingEmail: {
+                row: ".form-group",
+                validators: {
+                    notEmpty: {
+                        message: "The email is required"
+                    },
+                    stringLength: {
+                        min: 3,
+                        max: 256,
+                        message: "Email must be more than 3 and less than 256 characters long"
+                    },
+                    emailAddress: {
+                        message: "The value is not a valid email address"
+                    }
+                }
+            },
+            billingConfirmPassword: {
+                row: ".form-group",
+                validators: {
+                    identical: {
+                        field: "billingPassword",
+                        message: "The password and its confirm are not the same"
+                    }
+                }
+            },
+        }
+    })
+    .on("success.form.fv", function(e)
+    {
+// Prevent form submission
+        e.preventDefault();
+        var $form = $(e.target);
+//        fv = $form.data("formValidation");
+
+//        $("#pleaseWaitDialog").modal("show");
+        displayLoading(true);
+// Use Ajax to submit form data
+        $.ajax({
+            url: $form.attr("action"),
+            type: "POST",
+            data: $form.serialize(),
+            success: function(result)
+            {
+//                $("#pleaseWaitDialog").modal("hide");
+                displayLoading(false);
+                if (result.substring(0, 5) == "error")
+                {
+                    alert(result);
+                }
+                if (result.substring(0, 3) == "url")
+                {
+                    top.location.href = result.substr(4);
+                }
+                activatePaypal();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown)
+            {
+                alert(textStatus);
+                displayLoading(false);
+//                $("#pleaseWaitDialog").modal("hide");
+//                $form.data("formValidation").resetForm();
+                activatePaypal();
+            }
+        });
+    });
+}
 </script> 
+<script type="text/javascript" src="/themes/default/asset/formvalidation/js/formValidation.min.js"></script>
+<script type="text/javascript" src="/themes/default/asset/formvalidation/js/framework/bootstrap.min.js"></script>
+<link href="/themes/default/asset/formvalidation/css/formValidation.min.css" rel="stylesheet" />
 <?php $this->load->view('footer') ?>

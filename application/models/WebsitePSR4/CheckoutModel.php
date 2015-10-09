@@ -82,6 +82,28 @@ class CheckoutModel extends \CI_Model
         }
     }
 
+    public function verifyAndGetOrderDetails($paymentResult, $soNo)
+    {
+        $valid = false;
+        $so = null;
+        $soItem = null;
+
+        if (intval($soNo) == $soNo) {
+            $soObj = $this->_soFactoryService->getDao()->get(["so_no" => $soNo]);
+            if (($paymentResult == 1) && ($soObj->getStatus() >= 2)) {
+                if (($soObj->getCreateAt() == ip2long($_SERVER["REMOTE_ADDR"]))
+                    || (isset($_GET["debug"]) && ($_GET["debug"] == 1))) {
+                    $soItemDetail = $this->_soFactoryService->getSoItemDetailDao()->getList(["so_no" => $soNo], ["limit" => -1]);
+                    $valid = true;
+                }
+            }
+        }
+
+        return ["valid" => $valid
+                , "so" => $soObj
+                , "soItemDetail" => $soItemDetail];
+    }
+
     public function getPaymentOption($platformId) {
         return $this->getPaymentOptionService()->getPaymentOptionByPlatformId($platformId);    
     }

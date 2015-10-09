@@ -64,10 +64,10 @@ class EmailService extends BaseService implements ActableService
     public function sendmailTemplate($from = "", $to = "", $tpl_id = "", $replace = "", $lang_id = "en", $cc = "", $bcc = "", $platform_id = "WEBGB")
     {
         if ($bcc) {
-            $default_bcc = array('valuebasketbccemail@gmail.com');
+            $default_bcc = array('pantherbccemail@gmail.com');
             $bcc = array_merge($bcc, $default_bcc);
         } else {
-            $bcc = array('valuebasketbccemail@gmail.com');
+            $bcc = array('pantherbccemail@gmail.com');
         }
         $CI =& get_instance();
         if (!$CI->config->item('allow_email_sending')) {
@@ -81,11 +81,11 @@ class EmailService extends BaseService implements ActableService
                 $phpmail->IsSMTP();
                 $phpmail->From = $from;
 
-                if ($smtphost = $this->getDao('config')->valueOf("smtp_host")) {
+                if ($smtphost = $this->getDao('Config')->valueOf("smtp_host")) {
                     $phpmail->Host = $smtphost;
-                    $phpmail->SMTPAuth = $this->getDao('config')->valueOf("smtp_auth");
-                    $phpmail->Username = $this->getDao('config')->valueOf("smtp_user");
-                    $phpmail->Password = $this->getDao('config')->valueOf("smtp_pass");
+                    $phpmail->SMTPAuth = $this->getDao('Config')->valueOf("smtp_auth");
+                    $phpmail->Username = $this->getDao('Config')->valueOf("smtp_user");
+                    $phpmail->Password = $this->getDao('Config')->valueOf("smtp_pass");
                 }
 
                 if (is_array($to)) {
@@ -127,7 +127,7 @@ class EmailService extends BaseService implements ActableService
                     $phpmail->Body = $text;
                 }
 
-                $phpmail->Subject = $tpl_obj->template->get_subject();
+                $phpmail->Subject = $tpl_obj->template->getSubject();
 
                 return $phpmail->Send();
             } else {

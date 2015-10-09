@@ -40,6 +40,22 @@
     <script type="text/javascript" src="/themes/default/asset/js/iview.js"></script>
 </head>
 <body class="common-home page-common-home layout-fullwidth ">
+    <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true" id="pleaseWaitDialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="pleaseWaitDialogHeader">Processing ...</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row-offcanvas row-offcanvas-left">
         <div id="page">
             <!-- header -->

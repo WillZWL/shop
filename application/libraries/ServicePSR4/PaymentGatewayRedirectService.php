@@ -158,7 +158,6 @@ implements PaymentGatewayRedirectServiceInterface
                 $this->processCancelAction();
             } else if ($result == PaymentGatewayRedirectService::PAYMENT_STATUS_SUCCESS) {
                 $this->paymentSuccessOperation($soData, $sopsData, $soccData, $sorData);
-                $this->processSuccessAction();
             } else if ($result == PaymentGatewayRedirectService::PAYMENT_STATUS_REVIEW) {
 //paypal will review order
                 $this->processReviewAction();
@@ -231,7 +230,7 @@ implements PaymentGatewayRedirectServiceInterface
                 }
 //update promotion code
                 $this->updatePromo($this->so->getPromotionCode());
-                print $this->sendConfirmationEmail($this->so, true);
+                $this->processSuccessAction();
             } else if ($this->so->getStatus() == 2) {
 //status from 2 to 3 because of 3D info
                 if (!$this->isPaymentNeedCreditCheck($isFraud)) {
@@ -376,7 +375,6 @@ implements PaymentGatewayRedirectServiceInterface
                 if ($fullResult == PaymentGatewayRedirectService::PAYMENT_STATUS_SUCCESS)
                 {
                     $this->paymentSuccessOperation($soData, $sopsData, $soccData, $sorData);
-                    $this->processSuccessAction();
                 }
                 else if ($fullResult == PaymentGatewayRedirectService::PAYMENT_STATUS_REVERSE) {
                     $message = "Payment Reversed";
