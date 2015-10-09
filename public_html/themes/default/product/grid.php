@@ -14,18 +14,18 @@
                                 <h3 class="panel-title"><?= str_replace('_', ' ', $title) ?></h3>
                             </div>
                             <div class="list box-products slide" id=<?= 'product_list' . $title ?>>
-                               
+
                                 <div class="carousel-inner product-grid">
                                 <?php
-                                        $i = 1; 
+                                        $i = 1;
                                         foreach ($prod as $sku => $prod_obj):
                                             if ($i == 1):
-                                ?> 
+                                ?>
                                     <div class="item active products-block">
                                             <div class="row products-row last">
-                                <?php   
+                                <?php
                                             elseif (($i-1) % 6 === 0):
-                                ?> 
+                                ?>
                                     <div class="item products-block">
                                         <div class="row products-row last">
                                 <?php       endif; ?>
@@ -71,16 +71,16 @@
                                                 </div>
                                             </div>
 
-                                <?php   
+                                <?php
                                             if ($i % 6 === 0 || $i == count($prod)):
-                                ?> 
+                                ?>
                                         </div>
-                                    </div>       
-                                <?php       endif; 
-                                        $i = $i + 1; 
+                                    </div>
+                                <?php       endif;
+                                        $i = $i + 1;
                                         endforeach;?>
 
-                                </div> 
+                                </div>
 
                                 <a class="carousel-control left center" href=<?= '#product_list' . $title ?> data-slide="prev">
                                         <i class="fa fa-angle-left"></i>
@@ -91,18 +91,16 @@
                             </div>
                         </div>
                         <script type="text/javascript">
-                            <!--
-                            $(<?= '#product_list' . $title ?>).carousel({
+                            $("<?= '#product_list' . $title ?>").carousel({
                                 interval: false,
                                 pause: 'hover',
                                 wrap: true
                             });
-                            $(<?= '#product_list' . $title ?>).carousel({
+                            $("<?= '#product_list' . $title ?>").carousel({
                                 interval: false,
                                 pause: 'hover',
                                 wrap: true
                             });
-                            -->
                         </script>
                     </div>
                 </div>
