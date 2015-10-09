@@ -39,7 +39,6 @@ class SoFactoryService extends BaseService
         $this->clientService = new ClientService;
         $this->productService = new ProductService;
         $this->exchangeRateService = new ExchangeRateService;
-        $this->emailReferralListService = new emailReferralListService;
         $this->cartSessionService = new CartSessionService;
         $this->setDao(new SoDao());
         $this->setSoItemDao(new SoItemDao());
@@ -471,6 +470,7 @@ class SoFactoryService extends BaseService
 
         $so_no = $soObj->getSoNo();
         if ($clientObj = $this->clientService->getDao()->get(array("id" => $soObj->getClientId()))) {
+            $this->emailReferralListService = new EmailReferralListService;
             $clientEmail = $clientObj->getEmail();
             if ($blackListObject = $this->emailReferralListService->get(array('email' => $clientEmail, '`status`' => 1))) {
                 return TRUE;
