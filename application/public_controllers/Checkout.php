@@ -73,7 +73,35 @@ class Checkout extends PUB_Controller
 //mail alert to IT
         }
     }
-    
+
+    public function paymentResult($result, $soNo)
+    {
+        $data = [];
+        if ($result == 1) {
+//Success
+            if ($soNo) {
+                $verifyData = $this->checkoutModel->verifyAndGetOrderDetails($result, $soNo);
+                if ($verifyData["valid"]) {
+                    $data["so"] = $verifyData["so"];
+                    $data["soItemDetail"] = $verifyData["soItemDetail"];
+                    $this->load->view('checkout/paymentSuccess', $data);
+                } else {
+                    show_404();
+                }
+            } else {
+                show_404();
+            }
+        }
+        else if ($result == 4) {
+//Review
+            $this->load->view('checkout/paymentReview', $data);
+        }
+        else {
+//Fail
+            $this->load->view('checkout/paymentFail', $data);
+        }
+    }
+
     public function response($gatewayId)
     {
         $debug = ($this->input->get("debug") ? $this->input->get("debug"):0);

@@ -7,7 +7,7 @@ class SoCreditChkVo extends \BaseVo
     private $card_type = '';
     private $card_no = '';
     private $card_bin = '';
-    private $card_last4 = '';
+    private $card_last_4 = '';
     private $card_exp_month = '';
     private $card_exp_year = '';
     private $card_start_month = '';
@@ -86,14 +86,14 @@ class SoCreditChkVo extends \BaseVo
         return $this->card_bin;
     }
 
-    public function setCardLast4($card_last4)
+    public function setCardLast4($card_last_4)
     {
-        $this->card_last4 = $card_last4;
+        $this->card_last_4 = $card_last_4;
     }
 
     public function getCardLast4()
     {
-        return $this->card_last4;
+        return $this->card_last_4;
     }
 
     public function setCardExpMonth($card_exp_month)

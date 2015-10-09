@@ -37,8 +37,6 @@ class SoFactoryService extends BaseService
         parent::__construct();
         $this->injectObj = $injectObj;
         $this->clientService = new ClientService;
-        $this->productService = new ProductService;
-        $this->exchangeRateService = new ExchangeRateService;
         $this->cartSessionService = new CartSessionService;
         $this->setDao(new SoDao());
         $this->setSoItemDao(new SoItemDao());
@@ -399,6 +397,7 @@ class SoFactoryService extends BaseService
 ***************************************************/
     public function setOrderInfoDetail($platformId, $soObj) {
 //rate, ref_1, expect_delivery_date
+        $this->exchangeRateService = new ExchangeRateService;
         list($usdArr) = $this->exchangeRateService->getDao("ExchangeRate")->getExchangeRateByPlatform($platformId, "USD");
         list($eurArr) = $this->exchangeRateService->getDao("ExchangeRate")->getExchangeRateByPlatform($platformId, "EUR");
 

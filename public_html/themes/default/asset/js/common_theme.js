@@ -352,3 +352,11 @@ var wishlist = {
 
     }
 }
+var standardWaitingScreen = {
+    "showPleaseWait": function() {
+        $("#pleaseWaitDialog").modal("show");
+    },
+    "hidePleaseWait": function() {
+        $("#pleaseWaitDialog").modal("hide");
+    }
+};

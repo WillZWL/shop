@@ -104,7 +104,7 @@ abstract class BaseDao
         if ($select != '') {
             $this->db->select($select, false);
         }
-		
+
 		//print $this->db->last_query();
 
         $rs = [];
@@ -168,6 +168,10 @@ abstract class BaseDao
                     call_user_func(array($obj, "set" . underscore2camelcase($ic_field)), $this->db->insert_id());
                 }
 
+                if (($this instanceof HooksInsert) && method_exists($this, 'insertAfterExecute')) {
+                    $this->insertAfterExecute($obj);
+                }
+
                 return $obj;
             } else {
                 return false;
@@ -175,6 +179,33 @@ abstract class BaseDao
         } else {
             return false;
         }
+    }
+
+    public function updateTables($data_arr)
+    {
+        if (isset($data_arr) && $data_arr) {
+            foreach ($data_arr as $arr) {
+                if (isset($arr['table']) && $arr['table']) {
+                    $currDao = 'ESG\Panther\Dao' . "\\" . ucfirst(underscore2camelcase($arr['table'])) . "Dao";
+                    $dao = new $currDao;
+
+                    if ($obj = $dao->get($arr['where'])) {
+                        if (isset($arr['keyValue']) && $arr['keyValue']) {
+                            foreach ($arr['keyValue'] as $rskey => $value) {
+                               call_user_func([$obj, "set" . underscore2camelcase($rskey)], $value);
+                            }
+                        }
+
+                        $dao->update($obj);
+                    }
+                }
+            }
+        }
+    }
+
+    public function insertTables($data_arr)
+    {
+
     }
 
     public function setCreate(&$obj, $value = [])
@@ -226,6 +257,10 @@ abstract class BaseDao
 
         if ($this->db->update($this->getTableName())) {
             $affected = $this->db->affected_rows();
+
+            if (($this instanceof HooksUpdate) && method_exists($this, 'updateAfterExecute')) {
+                $this->updateAfterExecute($obj);
+            }
 
             return $affected;
         } else {

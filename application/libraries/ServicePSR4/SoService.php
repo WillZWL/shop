@@ -2434,7 +2434,8 @@ html;
             if ($so_obj === FALSE || !$so_obj) {
                 return FALSE;
             } else {
-                $sohr_obj = $this->getDao('SoHoldReason')->getLatestRequest(array("so_no" => $so_no));
+                $shr_Id = $so_obj->getHoldReason();
+                $sohr_obj = $this->getDao('SoHoldReason')->get(array("id" => $shr_Id));
                 if (!$sohr_obj) {
                     return FALSE;
                 }

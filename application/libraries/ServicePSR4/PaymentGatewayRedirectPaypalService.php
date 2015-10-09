@@ -383,16 +383,20 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
     }
 
     public function processFailureAction() {
+        header("Location:" . $this->getFailUrl());
     }
 
     public function processCancelAction() {
-    
+        header("Location:" . $this->getCancelUrl());
     }
 
     public function processSuccessAction() {
+        $this->sendConfirmationEmail($this->so);
+        header("Location:" . $this->getSuccessfulUrl($this->so->getSoNo()));
     }
 
     public function processReviewAction() {
+        header("Location:" . $this->getReviewUrl());
     }
 
     public function isPaymentNeedCreditCheck($isFraud = false) {

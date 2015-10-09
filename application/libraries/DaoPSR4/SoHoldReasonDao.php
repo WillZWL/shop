@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Dao;
 
-class SoHoldReasonDao extends BaseDao
+class SoHoldReasonDao extends BaseDao implements HooksInsert
 {
     private $tableName = "so_hold_reason";
     private $voClassName = "SoHoldReasonVo";
@@ -21,23 +21,20 @@ class SoHoldReasonDao extends BaseDao
         return $this->tableName;
     }
 
-    public function getLatestRequest($where = [])
+    public function insertAfterExecute($obj)
     {
-        $sql = "SELECT *
-                FROM so_hold_reason
-                WHERE so_no = ?
-                AND reason LIKE '%_log_app'
-                ORDER BY create_on DESC
-                LIMIT 1";
+        $this->tableFieldsHooksInsert($obj);
+    }
 
-        if ($query = $this->db->query($sql, [$where["so_no"]])) {
-            foreach ($query->result($$this->getVoClassname()) as $tmp) {
-                $obj = $tmp;
-            }
+    public function tableFieldsHooksInsert($obj)
+    {
+        $table1 = [
+                    'table' => 'so',
+                    'where' => ['so_no'=>$obj->getSoNo(),],
+                    'keyValue'=>['hold_reason' => $obj->getId(),]
+                  ];
 
-            return $obj;
-        }
-        return FALSE;
+        $this->updateTables([$table1,]);
     }
 
     public function getReasonList()
