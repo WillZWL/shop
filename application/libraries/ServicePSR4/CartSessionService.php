@@ -2,7 +2,7 @@
 namespace ESG\Panther\Service;
 
 use ESG\Panther\Service\ProductService;
-use ESG\Panther\Service\SoFactoryService;
+use ESG\Panther\Dao\SoDao;
 
 class CartSessionService extends BaseService
 {
@@ -34,7 +34,8 @@ class CartSessionService extends BaseService
 
     public function __construct() {
         parent::__construct();
-        $this->soFactoryService = new SoFactoryService;
+        $this->productService = new ProductService;
+        $this->setSoDao(new SoDao);
 //var_dump($_SESSION["cart"]);
 //unset($_SESSION["cart"]);
         if (isset($_SESSION["cart"])) {
@@ -157,6 +158,66 @@ class CartSessionService extends BaseService
     }
 
     private function _createCartItem($sku, $lang, $platformId) {
-        return $this->soFactoryService->getCartItemInfoLite($sku, $lang, $platformId);
+        return $this->getCartItemInfoLite($sku, $lang, $platformId);
+    }
+
+    private function _getCommonCartParameter($sku, $lang, $platformId) {
+        $where = ["pr.platform_id" => $platformId
+                , "pc.lang_id" => $lang
+                , "p.sku" => $sku
+                , "p.status" => 2
+                , "pr.listing_status" => "L"
+                , "p.website_status in ('I', 'P')" => null];
+        $options["limit"] = 1;
+        return ["where" => $where, "options" => $options];
+    }
+
+    public function getCartItemInDetail($sku, $lang, $platformId) {
+        $para = $this->_getCommonCartParameter($sku, $lang, $platformId);
+
+        $productInfo = $this->productService->getDao()->getCartDataDetail($para["where"], $para["options"]);
+//        print $this->productService->getDao()->db->last_query();
+//        var_dump($productInfo);
+//        exit;
+        if ($productInfo) {
+            return $productInfo;
+        }
+        else
+        {
+//out of stock, or
+            $subject = "[Panther] Adding product which is not valid to the cart " . $sku . ":" . $platformId . " " . __METHOD__ . __LINE__;
+            $message = $this->productService->getDao()->db->last_query();
+            mail($this->support_email, $subject, $message, "From: website@" . SITE_DOMAIN . "\r\n");
+        }
+        return false;
+    }
+
+    public function getCartItemInfoLite($sku, $lang, $platformId) {
+        $para = $this->_getCommonCartParameter($sku, $lang, $platformId);
+        $para["options"]["orderby"] = "pi.priority";
+
+        $productInfo = $this->productService->getDao()->getCartDataLite($para["where"], $para["options"]);
+//        print $this->productService->getDao()->db->last_query();
+        if ($productInfo) {
+            return $productInfo;
+        }
+        else
+        {
+//out of stock, or
+            $subject = "[Panther] Adding product which is not valid to the cart " . $sku . ":" . $platformId . " " . __METHOD__ . __LINE__;
+            $message = $this->productService->getDao()->db->last_query();
+            mail($this->support_email, $subject, $message, "From: website@" . SITE_DOMAIN . "\r\n");
+        }
+        return false;
+    }
+
+    public function getSoDao()
+    {
+        return $this->soDao;
+    }
+
+    public function setSoDao($value)
+    {
+        $this->soDao = $value;
     }
 }
