@@ -31,8 +31,8 @@ class Vb_data_transfer_product_content_service extends Vb_data_transfer_service
 	********************************************************************/
 	public function process_vb_data ($feed)
 	{	
-		// print $feed;
-		// exit;
+		print $feed;
+		exit;
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
 		
@@ -74,14 +74,14 @@ class Vb_data_transfer_product_content_service extends Vb_data_transfer_service
 					
 					$new_pc_obj = array();
 					
-					$new_pc_obj["prod_name"] = $pc->prod_name; 
-					$new_pc_obj["prod_name_original"] = $pc->prod_name_original;	
+					$new_pc_obj["prod_name"] = $this->replace_special_chars($pc->prod_name); 
+					$new_pc_obj["prod_name_original"] = $this->replace_special_chars($pc->prod_name_original);	
 					$new_pc_obj["short_desc"] = $pc->short_desc;	
-					$new_pc_obj["contents"]  = $pc->contents;	  
-					$new_pc_obj["contents_original"] = $pc->contents_original;
+					$new_pc_obj["contents"]  = $this->replace_special_chars($pc->contents);	  
+					$new_pc_obj["contents_original"] = $this->replace_special_chars($pc->contents_original);
 					$new_pc_obj["series"] = $pc->series;
-					$new_pc_obj["keywords"] = $pc->keywords;
-					$new_pc_obj["keywords_original"] = $pc->keywords_original;	
+					$new_pc_obj["keywords"] = $this->replace_special_chars($pc->keywords);
+					$new_pc_obj["keywords_original"] = $this->replace_special_chars($pc->keywords_original);	
 					$new_pc_obj["model_1"] = $pc->model_1;
 					$new_pc_obj["model_2"] = $pc->model_2;
 					$new_pc_obj["model_3"] = $pc->model_3;
@@ -94,8 +94,8 @@ class Vb_data_transfer_product_content_service extends Vb_data_transfer_service
 					$new_pc_obj["website_status_short_text"] = $pc->website_status_short_text;
 					$new_pc_obj["youtube_id_1"] = $pc->youtube_id_1;
 					$new_pc_obj["youtube_id_2"] = $pc->youtube_id_2;
-					$new_pc_obj["youtube_caption_1"] = $pc->youtube_caption_1;			
-					$new_pc_obj["youtube_caption_2"] = $pc->youtube_caption_2;
+					$new_pc_obj["youtube_caption_1"] = $this->replace_special_chars($pc->youtube_caption_1);			
+					$new_pc_obj["youtube_caption_2"] = $this->replace_special_chars($pc->youtube_caption_2);
 					
 					$this->get_dao()->q_update($where, $new_pc_obj);
 					
@@ -116,14 +116,14 @@ class Vb_data_transfer_product_content_service extends Vb_data_transfer_service
 					$new_pc_obj = $this->get_dao()->get();
 					$new_pc_obj->set_prod_sku($sku);
 					$new_pc_obj->set_lang_id($pc->lang_id);
-					$new_pc_obj->set_prod_name($pc->prod_name);
-					$new_pc_obj->set_prod_name_original($pc->prod_name_original);
+					$new_pc_obj->set_prod_name($this->replace_special_chars($pc->prod_name));
+					$new_pc_obj->set_prod_name_original($this->replace_special_chars($pc->prod_name_original));
 					$new_pc_obj->set_short_desc($pc->short_desc);	
-					$new_pc_obj->set_contents($pc->contents);	  
-					$new_pc_obj->set_contents_original($pc->contents_original);
+					$new_pc_obj->set_contents($this->replace_special_chars($pc->contents));	  
+					$new_pc_obj->set_contents_original($this->replace_special_chars($pc->contents_original));
 					$new_pc_obj->set_series($pc->series);
-					$new_pc_obj->set_keywords($pc->keywords);
-					$new_pc_obj->set_keywords_original($pc->keywords_original);	
+					$new_pc_obj->set_keywords($this->replace_special_chars($pc->keywords));
+					$new_pc_obj->set_keywords_original($this->replace_special_chars($pc->keywords_original));	
 					$new_pc_obj->set_model_1($pc->model_1);
 					$new_pc_obj->set_model_2($pc->model_2);
 					$new_pc_obj->set_model_3($pc->model_3);
@@ -136,8 +136,8 @@ class Vb_data_transfer_product_content_service extends Vb_data_transfer_service
 					$new_pc_obj->set_website_status_short_text($pc->website_status_short_text);
 					$new_pc_obj->set_youtube_id_1($pc->youtube_id_1);
 					$new_pc_obj->set_youtube_id_2($pc->youtube_id_2);
-					$new_pc_obj->set_youtube_caption_1($pc->youtube_caption_1);			
-					$new_pc_obj->set_youtube_caption_2($pc->youtube_caption_2);
+					$new_pc_obj->set_youtube_caption_1($this->replace_special_chars($pc->youtube_caption_1));			
+					$new_pc_obj->set_youtube_caption_2($this->replace_special_chars($pc->youtube_caption_2));
 					
 					$this->get_dao()->insert($new_pc_obj);	
 					
