@@ -40,6 +40,7 @@ class SoFactoryService extends BaseService
         $this->productService = new ProductService;
         $this->exchangeRateService = new ExchangeRateService;
         $this->emailReferralListService = new emailReferralListService;
+        $this->cartSessionService = new CartSessionService;
         $this->setDao(new SoDao());
         $this->setSoItemDao(new SoItemDao());
         $this->setSoItemDetailDao(new SoItemDetailDao());
@@ -426,7 +427,7 @@ class SoFactoryService extends BaseService
             $langId = "en";
         foreach($skuInfo as $sku => $item)
         {
-            $newProductInfo = $this->getCartItemInDetail($sku, $langId, $platformId);
+            $newProductInfo = $this->cartSessionService->getCartItemInDetail($sku, $langId, $platformId);
             $newProductInfo->setQty($item["qty"]);
             $newProductInfo->setUnitCost(round($newProductInfo->getUnitCost(), $newProductInfo->getDecPlace()));
             $newProductInfo->setVatTotal(round($newProductInfo->getVatTotal(), $newProductInfo->getDecPlace()));
@@ -461,56 +462,6 @@ class SoFactoryService extends BaseService
         $newCart->setTotalWeight($totalWeight);
 
         return $newCart;
-    }
-
-    private function _getCommonCartParameter($sku, $lang, $platformId) {
-        $where = ["pr.platform_id" => $platformId
-                , "pc.lang_id" => $lang
-                , "p.sku" => $sku
-                , "p.status" => 2
-                , "pr.listing_status" => "L"
-                , "p.website_status in ('I', 'P')" => null];
-        $options["limit"] = 1;
-        return ["where" => $where, "options" => $options];
-    }
-
-    public function getCartItemInDetail($sku, $lang, $platformId) {
-        $para = $this->_getCommonCartParameter($sku, $lang, $platformId);
-
-        $productInfo = $this->productService->getDao()->getCartDataDetail($para["where"], $para["options"]);
-//        print $this->productService->getDao()->db->last_query();
-//        var_dump($productInfo);
-//        exit;
-        if ($productInfo) {
-            return $productInfo;
-        }
-        else
-        {
-//out of stock, or
-            $subject = "[Panther] Adding product which is not valid to the cart " . $sku . ":" . $platformId . " " . __METHOD__ . __LINE__;
-            $message = $this->productService->getDao()->db->last_query();
-            mail($this->support_email, $subject, $message, "From: website@" . SITE_DOMAIN . "\r\n");
-        }
-        return false;
-    }
-
-    public function getCartItemInfoLite($sku, $lang, $platformId) {
-        $para = $this->_getCommonCartParameter($sku, $lang, $platformId);
-        $para["options"]["orderby"] = "pi.priority";
-
-        $productInfo = $this->productService->getDao()->getCartDataLite($para["where"], $para["options"]);
-//        print $this->productService->getDao()->db->last_query();
-        if ($productInfo) {
-            return $productInfo;
-        }
-        else
-        {
-//out of stock, or
-            $subject = "[Panther] Adding product which is not valid to the cart " . $sku . ":" . $platformId . " " . __METHOD__ . __LINE__;
-            $message = $this->productService->getDao()->db->last_query();
-            mail($this->support_email, $subject, $message, "From: website@" . SITE_DOMAIN . "\r\n");
-        }
-        return false;
     }
 
     public function isFraudOrder($soObj = '')
