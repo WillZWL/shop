@@ -10,7 +10,6 @@ class ServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $servcieContainer)
     {
-
         $servcieContainer['Aftership'] = function ($c) {
             return new S\AftershipService();
         };
@@ -189,6 +188,10 @@ class ServiceProvider implements ServiceProviderInterface
 
         $servcieContainer['PaymentGatewayRedirectCybersource'] = function () {
             return new S\PaymentGatewayRedirectCybersourceService();
+        };
+
+        $servcieContainer['EmailTemplate'] = function () {
+            return new S\EmailTemplateService();
         };
     }
 }

@@ -43,6 +43,10 @@ abstract class BaseDao
             $this->db->order_by($option["orderby"]);
         }
 
+        if (isset($option['groupby'])) {
+            $this->db->group_by($option['groupby']);
+        }
+
         if (empty($option["limit"])) {
             $option["limit"] = $this->rows_limit;
         } elseif ($option["limit"] == -1) {

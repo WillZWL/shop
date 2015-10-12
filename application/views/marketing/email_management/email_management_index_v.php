@@ -7,10 +7,7 @@
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
 </head>
 <body>
-<?php
-?>
-<div id="template"
-     style="width:770px;margin:auto;overflow:auto;padding:20px 50px;background-color:#FCFCFC;box-shadow:0 5px 10px rgba(0, 0, 0, 0.5);">
+<div id="template" style="width:770px;margin:auto;overflow:auto;padding:20px 50px;background-color:#FCFCFC;box-shadow:0 5px 10px rgba(0, 0, 0, 0.5);">
     <div style="padding:10px 15px;text-align:left;">
         <h2><?= $lang["title"] ?></h2>
 
@@ -24,25 +21,13 @@
                     <tr>
                         <td>
                             <?= $lang["template"] ?>
-                            <select id="tpl" name="tpl" onchange="showdescription();clearselect('filter');">
+                            <select id="tpl_name" name="tpl_name" onchange="showdescription();clearselect('filter');">
                                 <option></option>
-                                <?php
-                                $option = "";
-                                foreach ($tpl_list as $value) {
-                                    $selected = "";
-                                    if ($_GET["tpl"]) {
-                                        if ($_GET["tpl"] == $value)
-                                            $selected = "SELECTED";
-                                    }
-
-                                    $option .= <<<html
-            <option value=$value $selected>$value</option>
-html;
-                                }
-                                echo $option;
-                                ?>
+                                <?php foreach ($tpl_list as $tpl_obj): ?>
+                                <option value="<?=$tpl_obj->getTemplateName()?>" <?= ($tpl_obj->getTemplateName() === $_GET['tpl_name']) ? 'selected' : '' ?>><?=$tpl_obj->getTemplateName() ?></option>
+                                <?php endforeach ?>
                             </select>
-                            &nbsp;&nbsp;<input type="submit" value="Submit">
+                            <input type="submit" value="Submit">
                         </td>
                         <td id="description">
                             <!-- description will appear here when template selected -->
@@ -50,47 +35,21 @@ html;
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <?php
-                            if ($filter_arr) {
-                                $option = $selected_filter = "";
-
-                                ?>
-                                <?= $lang["filter"] ?> <select id="filter" name="filter">
-                                    <option></option>
-                                    <?php
-                                    foreach ($filter_arr as $value) {
-                                        $selected = "";
-                                        if ($_GET["filter"]) {
-                                            if ($_GET["filter"] == $value) {
-                                                $selected = "SELECTED";
-                                                $selected_filter = $value;
-                                            }
-                                        } else {
-                                            if ($tpl_edit["selected_filter"] == $value) {
-                                                $selected = "SELECTED";
-                                                $selected_filter = $value;
-                                            }
-                                        }
-                                        $option .= <<<html
-                <option value=$value $selected>$value</option>
-html;
-
-                                    }
-                                    echo $option;
-                                    ?>
-                                </select>
-                                &nbsp;&nbsp;&nbsp;<input type="submit" value="Apply Filter">
-                            <?php
-                            }
-                            ?>
+                            <?= $lang["filter"] ?>
+                            <select id="platform" name="platform">
+                                <option></option>
+                                <?php foreach ($tpl_list as $tpl_obj): ?>
+                                <option value="<?=$tpl_obj->getPlatformId()?>" <?= ($tpl_obj->getPlatformId() === $_GET['platform']) ? 'selected' : '' ?>><?=$tpl_obj->getPlatformId()?></option>
+                                <?php endforeach ?>
+                            </select>
+                            <input type="submit" value="Apply Filter">
                         </td>
                     </tr>
                 </table>
             </div>
         </form>
-        <?php
-        if ($_GET["tpl"]) {
-            ?>
+
+        <?php if ($_GET['tpl_name']): ?>
             <form name="save" id="save" method="post" onsubmit="return check_missing_variable('save')">
                 <div>
                     <br><i><b><?= $lang["note"] ?></b></i><br>
@@ -130,9 +89,7 @@ html;
                     </fieldset>
                 </div>
             </form>
-        <?php
-        }
-        ?>
+        <?php endif ?>
     </div>
 </div>
 <?= $notice["js"] ?>
@@ -142,16 +99,16 @@ html;
     function showdescription() {
         // get selected template's description
 
-        var tplselect = document.getElementById('tpl');
-        var tpl = tplselect.options[tplselect.selectedIndex].value;
-        if (tpl != "") {
+        var tplselect = document.getElementById('tpl_name');
+        var tpl_name = tplselect.options[tplselect.selectedIndex].value;
+        if (tpl_name != "") {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     document.getElementById("description").innerHTML = xmlhttp.responseText;
                 }
             }
-            xmlhttp.open("GET", "<?=base_url()?>marketing/email_management/get_description?tpl=" + tpl, true);
+            xmlhttp.open("GET", "<?=base_url()?>marketing/EmailManagement/getDescription?tpl=" + tpl, true);
             xmlhttp.send();
         }
         else {
