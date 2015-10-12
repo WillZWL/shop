@@ -63,13 +63,9 @@ abstract class BaseDao
 
             if ($option["limit"] == 1) {
                 return $rs[0];
-            } else {
-                if (empty($option["result_type"]) && empty($option["array_list"])) {
-                    return (object)$rs;
-                } else {
-                    return $rs;
-                }
             }
+
+            return $rs;
         }
 
         return false;
@@ -105,22 +101,17 @@ abstract class BaseDao
             $this->db->select($select, false);
         }
 
-		//print $this->db->last_query();
-
         $rs = [];
         if ($query = $this->db->get()) {
+            $rs = [];
             foreach ($query->result($class_name) as $obj) {
                 $rs[] = $obj;
             }
             if ($option["limit"] == 1) {
                 return $rs[0];
-            } else {
-                if ($rs && empty($option["result_type"]) && empty($option["array_list"])) {
-                    return (object)$rs;
-                } else {
-                    return $rs;
-                }
             }
+
+            return $rs;
         }
 
         return false;
