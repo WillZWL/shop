@@ -6,11 +6,6 @@ class EventDao extends BaseDao
     private $tableName = "event";
     private $voClassName = "EventVo";
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getVoClassname()
     {
         return $this->voClassName;
@@ -21,27 +16,14 @@ class EventDao extends BaseDao
         return $this->tableName;
     }
 
-    public function getEventAction($event_id = "", $classname = "")
+    public function getEventAction($where = [], $option = [], $className = 'ActionVo')
     {
-        $sql = "
-                SELECT a.*
-                FROM action a
-                INNER JOIN event e
-                    ON (a.event_id = e.event_id)
-                WHERE e.event_id = ?
-                AND e.status = 1
-                AND a.status = 1
-                ";
+        $where['e.status'] = 1;
+        $where['a.status'] = 1;
 
-        $rs = [];
-        if ($query = $this->db->query($sql, $event_id)) {
-            foreach ($query->result($classname) as $obj) {
-                $rs[] = $obj;
-            }
-            return (object)$rs;
-        } else
-            return FALSE;
+        $this->db->from('action a');
+        $this->db->join('event e', 'a.event_id = e.event_id', 'inner');
+
+        return $this->db->commonGetList($className, $where, $option, 'a.event_id, a.action');
     }
 }
-
-

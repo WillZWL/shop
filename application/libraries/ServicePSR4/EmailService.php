@@ -2,11 +2,9 @@
 namespace ESG\Panther\Service;
 
 use PHPMailer;
-use ESG\Panther\Service\TemplateService;
 
 class EmailService extends BaseService implements ActableService
 {
-
     private $event_dto;
 
     public function __construct($dto = "")
@@ -19,37 +17,14 @@ class EmailService extends BaseService implements ActableService
         $this->templateService = new TemplateService;
     }
 
-    public function init() {
+    public function init()
+    {
     }
 
-    public function getEmailTemplate($dto = "")
+    public function run(EventEmailDto $obj)
     {
-        # new function to return html output of emails for testing.
-        # currently used in \valuebasket.com\app\libraries\service\event_service.php
-        if ($dto) {
-            $tpl_id = $dto->getTplId();
-            $replace = $dto->getReplace();
-            $lang_id = $dto->getLangId();
-            $platform_id = $dto->getPlatformId();
+        $tempalte = $this->getEmailTemplate($obj);
 
-            if (!(empty($tpl_id))) {
-                $tpl_obj = $this->templateService->getMsgTplWithAtt(array("id" => $tpl_id, "lang_id" => $lang_id), $replace);
-                if ($tpl_obj = $this->templateService->getMsgTplWithAtt(array("id" => $tpl_id, "lang_id" => $lang_id, "platform_id" => $platform_id), $replace)) {
-                    if ($html_msg = $tpl_obj->template->getMessage()) {
-                        return $html_msg;
-                    } elseif ($text = $tpl_obj->template->getAltMessage()) {
-                        return $html_msg;
-                    }
-                }
-            } else {
-                echo "EmailService.php - Line " . __LINE__ . " No tpl_id found.";
-            }
-        } else
-            echo "EmailService.php - Line " . __LINE__ . " No dto found.";
-    }
-
-    public function run($dto)
-    {
         if ($dto) {
             $event_id = $dto->getEventId();
             switch ($event_id) {
@@ -59,6 +34,35 @@ class EmailService extends BaseService implements ActableService
         } else {
             return FALSE;
         }
+    }
+
+    public function send()
+    {
+        // TODO $bcc
+
+        //
+    }
+
+    public function getEmailTemplate(EventEmailDto $obj)
+    {
+        $result = ['subject', 'bcc', 'cc', 'reply_to', 'content'];
+
+        $where = [
+            'template_name' => $obj->getTemplateName(),
+            'platform_id' => $obj->getPlatformId()
+        ];
+
+        if ($template_obj = $this->getDao('EmailTemplate')->getTemplate($where)) {
+            try {
+                $email_content = file_get_contents(APPPATH . $this->getDao('Config')->valueOf("tpl_path") . $template_obj->getPlatformId() . "/" . $template_obj->getTplFileName());
+            } catch (Exception $e) {
+                // not found email template file
+            }
+
+            $result['subject'] =
+
+        }
+
     }
 
     public function sendmailTemplate($from = "", $to = "", $tpl_id = "", $replace = "", $lang_id = "en", $cc = "", $bcc = "", $platform_id = "WEBGB")
@@ -138,5 +142,3 @@ class EmailService extends BaseService implements ActableService
         }
     }
 }
-
-
