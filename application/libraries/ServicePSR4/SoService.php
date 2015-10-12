@@ -5953,7 +5953,6 @@ html;
                         if ($so_w_reason->getReasonId() == '34') {
                             $aps_direct_order[] = $so_w_reason->getSoNo();
                         }
-
                     }
 
                     $aps_direct_orders = implode(',', $aps_direct_order);

@@ -1,11 +1,9 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Service\PdfRenderingService;
-
-class TemplateService extends BaseService
+class EmailTemplateService extends BaseService
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->pdfRenderingService = new PdfRenderingService;
@@ -13,17 +11,27 @@ class TemplateService extends BaseService
 
     public function get_tpl_list($where = null)
     {
-        if ($where == null)
-            $a = $this->getDao('Template')->getList();
-        else
-            // this will read the template from message_alt column
-            $a = $this->getDao('Template')->getList($where);
-
-        if ($a)
-            return $a;
-        else
-            return FALSE;
+        return $this->getDao('Template')->getList($where);;
     }
+
+    public function getTemplate($where = [], $replace = [])
+    {
+        $mailObj = $this->getDao('template_by_platform')->get($where);
+
+        if ($template_obj) {
+
+        }
+
+
+        $value = $search = [];
+        if (!empty($replace)) {
+            foreach ($replace as $rskey => $rsvalue) {
+                $search[] = "[:" . $rskey . ":]";
+                $value[] = $rsvalue;
+            }
+        }
+    }
+
 
     public function getTplWithAtt($where = [])
     {
@@ -32,9 +40,11 @@ class TemplateService extends BaseService
             if ($obj_att = $this->getDao('Attachment')->getList(array("tpl_id" => $tmp["template"]->getTemplateId())))
                 $tmp["attachment"] = $obj_att;
             return $obj = (object)$tmp;
-        } else
+        } else {
             return FALSE;
+        }
     }
+
 
     public function getMsgTplWithAtt($where = [], $replace = [])
     {
@@ -46,55 +56,7 @@ class TemplateService extends BaseService
 
             /* construct search terms for variables embedded in [::] */
             $value = $search = [];
-            $lang_id = $tmp["template"]->getLangId() ? $tmp["template"]->getLangId() : "";
             if (!empty($replace)) {
-                # SBF #4020 - moving to dynamic order status, so for some orders, these may be empty
-                # these days below were original days (will be obsolete once shift is complete)
-                if (array_key_exists("expect_ship_days", $replace)) {
-                    if (empty($replace["expect_ship_days"])) {
-                        switch ($lang_id) {
-                            case 'en':
-                            case 'fr':
-                            case 'it':
-                                $replace["expect_ship_days"] = '2 - 4';
-                                break;
-
-                            case 'es':
-                                $replace["expect_ship_days"] = '3 - 6';
-                                break;
-
-                            case 'ru':
-                                $replace["expect_ship_days"] = '3 - 5';
-                                break;
-
-                            default:
-                                $replace["expect_ship_days"] = '2 - 4';
-                                break;
-                        }
-                    }
-                }
-
-                if (array_key_exists("expect_del_days", $replace)) {
-                    if (empty($replace["expect_del_days"])) {
-                        switch ($lang_id) {
-                            case 'en':
-                            case 'es':
-                            case 'fr':
-                            case 'it':
-                                $replace["expect_del_days"] = '6 - 9';
-                                break;
-
-                            case 'ru':
-                                $replace["expect_del_days"] = '6 - 26';
-                                break;
-
-                            default:
-                                $replace["expect_del_days"] = '6 - 9';
-                                break;
-                        }
-                    }
-                }
-
                 foreach ($replace as $rskey => $rsvalue) {
                     $search[] = "[:" . $rskey . ":]";
                     $value[] = $rsvalue;
@@ -105,6 +67,7 @@ class TemplateService extends BaseService
             if (!($msg = $obj_tpl->getMessageHtml())) {
                 $msg = @file_get_contents(APPPATH . $this->getDao('Config')->valueOf("tpl_path") . $tmp["template"]->getTemplateId() . "/" . $tmp["template"]->getTplFile());
             }
+
             if ($msg) {
                 $tmp["template"]->setMessage(str_replace($search, $value, $msg));
             }
@@ -115,6 +78,7 @@ class TemplateService extends BaseService
                     $msg = @file_get_contents(APPPATH . $this->getDao('Config')->valueOf("tpl_path") . $tmp["template"]->getTemplateId() . "/" . $tmp["template"]->getTplAltFile());
                 }
             }
+
             if ($msg) {
                 $tmp["template"]->setAltMessage(str_replace($search, $value, $msg));
             }
@@ -181,52 +145,7 @@ class TemplateService extends BaseService
 
     private function getDatabaseTemplate($where = [], $classname = "TplMsgWithAttDto")
     {
-        /* ============================================================================= /
-            This function checks whether we have template by language or platform_id.
-            Most cases by default goes by language. We check for platform template
-            first as users usually move from language template to platform (thus platform
-            will the latter / more updated).
-        / ============================================================================= */
 
-        # template by platform_id
-
-        // $this->db->from('template_by_platform');
-        // $this->db->where([
-        //         "status" => 1,
-        //         "template_by_platform_id" => $where["id"],
-        //         "platform_id" => $where["platform_id"]
-        //     ]
-        // );
-        // $this->db->order_by("modify_on", "desc");
-        // $this->db->limit(1);
-
-
-        // if ($query = $this->db->get()) {
-        //     if ($query->num_rows() > 0) {
-        //         $this->filter = $where["platform_id"];
-        //         $obj = $query->result($classname);
-        //         return $obj[0];
-        //     }
-        // }
-
-        // template by lang_id
-        // $this->db->from('template');
-        // $this->db->where([
-        //         "status" => 1,
-        //         "template_id" => $where["id"],
-        //         "lang_id" => $where["lang_id"]
-        //     ]
-        // );
-        // $this->db->order_by("modify_on", "desc");
-        // $this->db->limit(1);
-
-        // if ($query = $this->db->get()) {
-        //     if ($query->num_rows() > 0) {
-        //         $this->filter = $where["lang_id"];
-        //         $obj = $query->result($classname);
-        //         return $obj[0];
-        //     }
-        // }
 
         if ($obj = $this->getDao('TemplateByPlatform')->getList([
                                                         "status" => 1,
@@ -241,95 +160,82 @@ class TemplateService extends BaseService
             return $obj;
         }
 
-        if ($obj = $this->getDao('Template')->getList([
-                                                        "status" => 1,
-                                                        "template_id" => $where["id"],
-                                                        "lang_id" => $where["lang_id"]
-                                                     ],
-                                                     [
-                                                        'limit'=>1,
-                                                        'orderby'=> 'modify_on desc'
-                                                     ], $classname))
-        {
-            return $obj;
-        }
-
         return FALSE;
     }
 
-    private function getDatabasePdfTemplate($where = [], $classname = "TplMsgWithAttDto")
-    {
-        /* ============================================================================= /
-            This function checks whether we have pdf template by language or platform_id.
-            Most cases by default goes by language. We check for platform template
-            first as users usually move from language template to platform (thus platform
-            will the latter / more updated).
+    // private function getDatabasePdfTemplate($where = [], $classname = "TplMsgWithAttDto")
+    // {
+    //     /* ============================================================================= /
+    //         This function checks whether we have pdf template by language or platform_id.
+    //         Most cases by default goes by language. We check for platform template
+    //         first as users usually move from language template to platform (thus platform
+    //         will the latter / more updated).
 
-            *** name your pdf template id as (event_id)_pdf
-        / ============================================================================= */
+    //         *** name your pdf template id as (event_id)_pdf
+    //     / ============================================================================= */
 
-        $pdf_template_id = $where["id"] . "_pdf";
+    //     $pdf_template_id = $where["id"] . "_pdf";
 
-        # template by platform_id
-        // $this->db->from('template_by_platform');
-        // $this->db->where(array(
-        //         "status" => 1,
-        //         "template_by_platform_id" => $pdf_template_id,
-        //         "platform_id" => $where["platform_id"]
-        //     )
-        // );
-        // if ($query = $this->db->get()) {
-        //     if ($query->num_rows() > 0) {
-        //         $obj = $query->result($classname);
-        //         return $obj[0];
-        //     }
-        // }
+    //     # template by platform_id
+    //     // $this->db->from('template_by_platform');
+    //     // $this->db->where(array(
+    //     //         "status" => 1,
+    //     //         "template_by_platform_id" => $pdf_template_id,
+    //     //         "platform_id" => $where["platform_id"]
+    //     //     )
+    //     // );
+    //     // if ($query = $this->db->get()) {
+    //     //     if ($query->num_rows() > 0) {
+    //     //         $obj = $query->result($classname);
+    //     //         return $obj[0];
+    //     //     }
+    //     // }
 
-        // # template by lang_id
-        // $this->db->from('template');
-        // $this->db->where(array(
-        //         "status" => 1,
-        //         "template_id" => $pdf_template_id,
-        //         "lang_id" => $where["lang_id"]
-        //     )
-        // );
+    //     // # template by lang_id
+    //     // $this->db->from('template');
+    //     // $this->db->where(array(
+    //     //         "status" => 1,
+    //     //         "template_id" => $pdf_template_id,
+    //     //         "lang_id" => $where["lang_id"]
+    //     //     )
+    //     // );
 
-        // if ($query = $this->db->get()) {
-        //     if ($query->num_rows() > 0) {
-        //         $obj = $query->result($classname);
-        //         return $obj[0];
-        //     }
-        // }
+    //     // if ($query = $this->db->get()) {
+    //     //     if ($query->num_rows() > 0) {
+    //     //         $obj = $query->result($classname);
+    //     //         return $obj[0];
+    //     //     }
+    //     // }
 
 
-        if ($obj = $this->getDao('TemplateByPlatform')->getList([
-                                                        "status" => 1,
-                                                        "template_by_platform_id" => $pdf_template_id,
-                                                        "platform_id" => $where["platform_id"]
-                                                     ],
-                                                     [
-                                                        'limit'=>1,
-                                                        'orderby'=> 'modify_on desc'
-                                                     ]))
-        {
-            return $obj;
-        }
+    //     if ($obj = $this->getDao('TemplateByPlatform')->getList([
+    //                                                     "status" => 1,
+    //                                                     "template_by_platform_id" => $pdf_template_id,
+    //                                                     "platform_id" => $where["platform_id"]
+    //                                                  ],
+    //                                                  [
+    //                                                     'limit'=>1,
+    //                                                     'orderby'=> 'modify_on desc'
+    //                                                  ]))
+    //     {
+    //         return $obj;
+    //     }
 
-        if ($obj = $this->getDao('Template')->getList([
-                                                        "status" => 1,
-                                                        "template_id" => $pdf_template_id,
-                                                        "lang_id" => $where["lang_id"]
-                                                     ],
-                                                     [
-                                                        'limit'=>1,
-                                                        'orderby'=> 'modify_on desc'
-                                                     ]))
-        {
-            return $obj;
-        }
+    //     if ($obj = $this->getDao('Template')->getList([
+    //                                                     "status" => 1,
+    //                                                     "template_id" => $pdf_template_id,
+    //                                                     "lang_id" => $where["lang_id"]
+    //                                                  ],
+    //                                                  [
+    //                                                     'limit'=>1,
+    //                                                     'orderby'=> 'modify_on desc'
+    //                                                  ]))
+    //     {
+    //         return $obj;
+    //     }
 
-        return FALSE;
-    }
+    //     return FALSE;
+    // }
 
     public function insert($obj = NULL)
     {
@@ -375,4 +281,3 @@ class TemplateService extends BaseService
     }
 
 }
-

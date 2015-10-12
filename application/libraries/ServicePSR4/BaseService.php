@@ -13,7 +13,6 @@ class BaseService
 
     public function __construct()
     {
-
         if (!self::$daoContainer) {
             $dc = new \Pimple\Container;
             $daoArr = (array) require APPPATH . 'libraries/DaoPSR4/providers.php';
@@ -23,10 +22,6 @@ class BaseService
 
             self::$daoContainer = $dc;
         }
-
-        // self::$daoContainer['Current'] = function () {
-        //     return new $dao();
-        // };
     }
 
     public function getDao($dao = null)
