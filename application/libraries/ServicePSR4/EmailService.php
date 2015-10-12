@@ -14,7 +14,7 @@ class EmailService extends BaseService implements ActableService
         if ($dto) {
             $this->event_dto = $dto;
         }
-        $this->templateService = new TemplateService;
+        $this->templateService = new EmailTemplateService;
     }
 
     public function init()

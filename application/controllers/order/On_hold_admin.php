@@ -23,8 +23,8 @@ class On_hold_admin extends MY_Controller
 
             $_SESSION["LISTPAGE"] = base_url() . "order/on_hold_admin/?" . $_SERVER['QUERY_STRING'];
 
-            $where = array();
-            $option = array();
+            $where = [];
+            $option = [];
 
             $where["so.hold_status"] = "0";
             $where["so.status >"] = "2";
@@ -41,7 +41,7 @@ class On_hold_admin extends MY_Controller
             }
 
             if ($this->input->get("payment_gateway_id") != "") {
-                $where["payment_gateway_id"] = $this->input->get("payment_gateway_id");
+                $where["sops.payment_gateway_id"] = $this->input->get("payment_gateway_id");
                 $submit_search = 1;
             }
 
@@ -75,7 +75,6 @@ class On_hold_admin extends MY_Controller
                 $order = "desc";
 
             $option["orderby"] = $sort . " " . $order;
-
             $data["objlist"] = $this->sc['So']->getCreditCheckList($where, $option, "hold");
             if ($data["objlist"]) {
 
@@ -88,7 +87,8 @@ class On_hold_admin extends MY_Controller
                     }
                 }
             }
-            $data["total"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, array("num_rows" => 1), "hold");
+
+            $data["total"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, ["num_rows" => 1], "hold");
 
             $config['base_url'] = base_url('cs/order/on_hold_admin/'.$pmghold)."?" . $_SERVER['QUERY_STRING'];
             $config['total_rows'] = $data["total"];
@@ -103,7 +103,7 @@ class On_hold_admin extends MY_Controller
             $data["searchdisplay"] = "";
         }
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
         $data["notice"] = notice($lang);
@@ -116,19 +116,14 @@ class On_hold_admin extends MY_Controller
         return $this->appId;
     }
 
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
-    }
-
     public function log_approval_page($pmghold = 0)
     {
         $sub_app_id = $this->getAppId() . "02";
 
         $_SESSION["LISTPAGE"] = base_url() . "order/on_hold_admin/log_approval_page/?" . $_SERVER['QUERY_STRING'];
 
-        $where = array();
-        $option = array();
+        $where = [];
+        $option = [];
 
         $where["so.hold_status"] = "1";
         $where["so.status >"] = "2";
@@ -186,9 +181,9 @@ class On_hold_admin extends MY_Controller
         $option["orderby"] = $sort . " " . $order;
 
         $data["objlist"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, $option, "log_app");
-        $data["total"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, array("num_rows" => 1), "log_app");
+        $data["total"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, ["num_rows" => 1], "log_app");
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
         $pconfig['total_rows'] = $data['total'];
@@ -199,13 +194,11 @@ class On_hold_admin extends MY_Controller
 
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
-//      $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
         $data["searchdisplay"] = "";
-        //$this->load->view('order/credit_check/off_credit_check_index_v', $data);
         $this->load->view('order/on_hold_admin/log_approve_index', $data);
     }
 
-    public function oc_index($type = "")
+    public function oc_index($type = "", $offset = 0)
     {
         if ($type != "" && $type != "cc" && $type != "vv") {
             Redirect(base_url() . "order/on_hold_admin/oc_index/");
@@ -214,16 +207,16 @@ class On_hold_admin extends MY_Controller
 
             $_SESSION["LISTPAGE"] = base_url() . "order/on_hold_admin/oc_index" . ($type == "" ? "" : "/" . $type) . "/?" . $_SERVER['QUERY_STRING'];
 
-            $where = array();
-            $option = array();
+            $where = [];
+            $option = [];
 
             $where["so.hold_status"] = "1";
             $where["so.status >"] = "1";
             $where["so.status <"] = "6";
-            $where["sohr.reason NOT LIKE"] = '%_log_app';
+            $where["so.hold_reason NOT LIKE"] = '%_log_app';
 
             if ($type != "") {
-                $where["sohr.reason"] = "cs" . $type;
+                $where["so.hold_reason"] = "cs" . $type;
             }
 
             if ($this->input->get("so_no") != "") {
@@ -261,12 +254,8 @@ class On_hold_admin extends MY_Controller
 
             $limit = '20';
 
-            $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-            $option["limit"] = $pconfig['per_page'] = $limit;
-
-            if ($option["limit"]) {
-                $option["offset"] = $this->input->get("per_page");
-            }
+            $option["limit"] = $limit;
+            $option["offset"] = $offset;
 
             if (empty($sort))
                 $sort = "so_no";
@@ -289,10 +278,10 @@ class On_hold_admin extends MY_Controller
                 }
             }
 
-            $data["total"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, array("num_rows" => 1), "oc");
+            $data["total"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, ["num_rows" => 1], "oc");
 
 
-            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
 
             if ($this->allowed_to_cancel_order()) {
                 $lang["cancel_order"] = "Cancel Order";
@@ -302,17 +291,18 @@ class On_hold_admin extends MY_Controller
 
             $data["lang"] = $lang;
 
-            $pconfig['total_rows'] = $data['total'];
-            $this->pagination_service->set_show_count_tag(TRUE);
-            $this->pagination_service->initialize($pconfig);
+            $config['base_url'] = base_url('cs/order/on_hold_admin/oc_index'.$type)."?" . $_SERVER['QUERY_STRING'];
+            $config['total_rows'] = $data["total"];
+            $config['per_page'] = $limit;
+
+            $this->pagination->initialize($config);
+            $data['links'] = $this->pagination->create_links();
 
             $data["notice"] = notice($lang);
             $data["type"] = $type;
             $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
             $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
-            //      $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
             $data["searchdisplay"] = "";
-            //$this->load->view('order/credit_check/off_credit_check_index_v', $data);
             $this->load->view('order/on_hold_admin/index_' . ($type == "" ? "oc" : $type), $data);  #index_oc.php
         }
     }
@@ -331,8 +321,8 @@ class On_hold_admin extends MY_Controller
 
             $_SESSION["LISTPAGE"] = base_url() . "order/on_hold_admin/chk_pw/" . $password . "/?" . $_SERVER['QUERY_STRING'];
 
-            $where = array();
-            $option = array();
+            $where = [];
+            $option = [];
 
             $where["c.password"] = $password;
 
@@ -359,9 +349,9 @@ class On_hold_admin extends MY_Controller
             $option["item"] = 1;
 
             $data["objlist"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, $option);
-            $data["total"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, array("num_rows" => 1));
+            $data["total"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, ["num_rows" => 1]);
 
-            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
 
             $pconfig['total_rows'] = $data['total'];
@@ -372,7 +362,6 @@ class On_hold_admin extends MY_Controller
 
             $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
             $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
-            //      $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
             $data["searchdisplay"] = "";
             $this->load->view('order/credit_check/credit_check_chk_pw_v', $data);
         }
@@ -392,9 +381,9 @@ class On_hold_admin extends MY_Controller
                     $this->_create_release_order_record($so_no, 'request refund');
                 }
 
-                if (!is_null($so_obj->get_cc_reminder_schedule_date())) {
-                    $so_obj->set_cc_reminder_schedule_date(NULL);
-                    $so_obj->set_cc_reminder_type(NULL);
+                if (!is_null($so_obj->getCcReminderScheduleDate())) {
+                    $so_obj->setCcReminderScheduleDate(NULL);
+                    $so_obj->setCcReminderType(NULL);
                     if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
@@ -413,8 +402,8 @@ class On_hold_admin extends MY_Controller
     public function _create_release_order_record($so_no, $reason)
     {
         $release_order_vo = $this->sc['So']->getDao('ReleaseOrderReport')->get();
-        $release_order_vo->set_so_no($so_no);
-        $release_order_vo->set_release_reason("$reason");
+        $release_order_vo->setSoNo($so_no);
+        $release_order_vo->setReleaseReason("$reason");
         if (!$this->sc['So']->getDao('ReleaseOrderReport')->insert($release_order_vo)) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         }
@@ -452,8 +441,8 @@ class On_hold_admin extends MY_Controller
                     $_SESSION["NOTICE"] = "so_not_found";
                 } else {
                     $so_obj->set_status(0);
-                    $so_obj->set_hold_status(0);
-                    $so_obj->set_refund_status(0);
+                    $so_obj->setHoldStatus(0);
+                    $so_obj->setRefundStatus(0);
                     if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     } else {
@@ -483,28 +472,28 @@ class On_hold_admin extends MY_Controller
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
                 if (($sohr_vo = $this->sc['So']->getDao('SoHoldReason')->get()) !== FALSE) {
-                    $sohr_vo->set_so_no($so_no);
-                    $sohr_vo->set_reason($reason);
+                    $sohr_vo->setSoNo($so_no);
+                    $sohr_vo->setReason($reason);
                     if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_vo)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
 
                     if ($reason == "confirmed_fraud") {
                         $action = "update";
-                        $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get(array("so_no" => $so_no));
+                        $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get(["so_no" => $so_no]);
                         if (!$socc_obj) {
                             $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get();
                             $action = "insert";
                         }
                         $this->sc['So']->getDao('SoCreditChk')->db->trans_start();
-                        $socc_obj->set_so_no($so_no);
+                        $socc_obj->setSoNo($so_no);
                         $socc_obj->set_fd_status(2);
                         $this->sc['So']->getDao('SoCreditChk')->$action($socc_obj);
                         $so_obj->set_status(0);
 
-                        if (!is_null($so_obj->get_cc_reminder_schedule_date())) {
-                            $so_obj->set_cc_reminder_schedule_date(NULL);
-                            $so_obj->set_cc_reminder_type(NULL);
+                        if (!is_null($so_obj->getCcReminderScheduleDate())) {
+                            $so_obj->setCcReminderScheduleDate(NULL);
+                            $so_obj->setCcReminderType(NULL);
                         }
 
                         if (!$this->sc['So']->getDao('So')->update($so_obj)) {
@@ -518,9 +507,9 @@ class On_hold_admin extends MY_Controller
                     if (($reason == "cscc") || ($reason == "csvv")) {
                         $this->sc['So']->fireCsRequest($so_no, $reason);
 
-                        if (!is_null($so_obj->get_cc_reminder_schedule_date())) {
-                            $so_obj->set_cc_reminder_schedule_date(NULL);
-                            $so_obj->set_cc_reminder_type(NULL);
+                        if (!is_null($so_obj->getCcReminderScheduleDate())) {
+                            $so_obj->setCcReminderScheduleDate(NULL);
+                            $so_obj->setCcReminderType(NULL);
 
                             if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                                 $_SESSION["NOTICE"] = $this->db->_error_message();
@@ -553,14 +542,14 @@ class On_hold_admin extends MY_Controller
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
-                $so_obj->set_hold_status(0);
+                $so_obj->setHoldStatus(0);
                 if ($so_obj->get_status() < 3) {
                     $so_obj->set_status(3);
                 }
 
-                if (!is_null($so_obj->get_cc_reminder_schedule_date())) {
-                    $so_obj->set_cc_reminder_schedule_date(NULL);
-                    $so_obj->set_cc_reminder_type(NULL);
+                if (!is_null($so_obj->getCcReminderScheduleDate())) {
+                    $so_obj->setCcReminderScheduleDate(NULL);
+                    $so_obj->setCcReminderType(NULL);
                 }
 
                 if (!$this->sc['So']->getDao('So')->update($so_obj)) {
@@ -596,8 +585,8 @@ class On_hold_admin extends MY_Controller
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
                 if (($sohr_vo = $this->sc['So']->getDao('SoHoldReason')->get()) !== FALSE) {
-                    $sohr_vo->set_so_no($so_no);
-                    $sohr_vo->set_reason($reason);
+                    $sohr_vo->setSoNo($so_no);
+                    $sohr_vo->setReason($reason);
 
                     if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_vo)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
@@ -627,29 +616,29 @@ class On_hold_admin extends MY_Controller
             } else {
                 $packed_item = $this->sc['So']->checkIfPacked($so_no);
 
-                $so_obj->set_hold_status(1);
+                $so_obj->setHoldStatus(1);
 
                 if ($this->sc['So']->getDao('So')->update($so_obj)) {
                     if (($sohr_vo = $this->sc['So']->getDao('SoHoldReason')->get()) !== FALSE) {
-                        $sohr_vo->set_so_no($so_no);
+                        $sohr_vo->setSoNo($so_no);
                         if (count((array)$packed_item)) {
                             if ($reason == '') {
                                 $this->sc['So']->fireCs2logEmail($so_no, $this->input->post("reason"), $_SESSION["user"]);
-                                $sohr_vo->set_reason($this->input->post("reason") . "_log_app");
+                                $sohr_vo->setReason($this->input->post("reason") . "_log_app");
                             } else {
-                                $sohr_vo->set_reason($reason . "_log_app");
+                                $sohr_vo->setReason($reason . "_log_app");
                             }
 
                         } else {
                             if ($reason == '') {
-                                $sohr_vo->set_reason($this->input->post("reason"));
+                                $sohr_vo->setReason($this->input->post("reason"));
                             } else {
-                                $sohr_vo->set_reason($reason);
+                                $sohr_vo->setReason($reason);
                                 $this->sc['So']->addOrderNote($so_no, 'Saved from CC, held wait for customer\'s decision');
 
-                                $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get(array("so_no" => $so_no));
-                                $socc_obj->set_cc_action(2);  // 0010 = 2, bit 1 is save order
-                                $this->sc['So']->getDao('SoCreditChk')->update($socc_obj, array('so_no' => $so_no));
+                                $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get(["so_no" => $so_no]);
+                                $socc_obj->setCcAction(2);  // 0010 = 2, bit 1 is save order
+                                $this->sc['So']->getDao('SoCreditChk')->update($socc_obj, ['so_no' => $so_no]);
                             }
                         }
 

@@ -500,7 +500,7 @@ class SoService extends BaseService
             $seqdao->set_seq_name("customer_order");
             $next_val = $seqdao->seq_next_val();
             $so_no = $next_val;
-            $so_vo->set_so_no($so_no);
+            $so_vo->setSoNo($so_no);
             if ($vars["biz_type"] == "manual") {
                 if ($vars["platform_order_id"]) {
                     $so_vo->set_platform_order_id($vars["platform_order_id"]);
@@ -675,7 +675,7 @@ class SoService extends BaseService
                 if (!$failed) {
                     if ($so_vo->get_biz_type() == "ONLINE" || $so_vo->get_biz_type() == "MOBILE") {
                         if (!($so_vo->get_amount() == 0 && $vars["all_trial"] && $vars["all_virtual"])) {
-                            $sops_vo->set_so_no($so_no);
+                            $sops_vo->setSoNo($so_no);
                             $sops_vo->set_payment_gateway_id($vars["payment_gateway"]);
                             $sops_vo->set_payment_status('N');
                             if ($card_id) {
@@ -689,9 +689,9 @@ class SoService extends BaseService
                     } elseif ($so_vo->get_biz_type() == "OFFLINE" || $so_vo->get_biz_type() == "SPECIAL" || $so_vo->get_biz_type() == "MANUAL") {
                         $entity_id = $this->entityService->getEntityId($so_vo->get_amount(), $so_vo->get_currency_id());
                         $soext_vo->set_entity_id($entity_id);
-                        $soext_vo->set_so_no($so_no);
-                        $son_vo->set_so_no($so_no);
-                        $son_vo->set_note($vars["so_extend"]["notes"]);
+                        $soext_vo->setSoNo($so_no);
+                        $son_vo->setSoNo($so_no);
+                        $son_vo->setNote($vars["so_extend"]["notes"]);
 
                         if ($soext_dao->insert($soext_vo) === FALSE) {
                             $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $son_dao->db->_error_message();
@@ -708,7 +708,7 @@ class SoService extends BaseService
                     }
                     if ($so_vo->get_biz_type() == "MANUAL" || $so_vo->get_biz_type() == "OFFLINE") {
                         if (!($so_vo->get_amount() == 0 && $vars["all_trial"] && $vars["all_virtual"])) {
-                            $sops_vo->set_so_no($so_no);
+                            $sops_vo->setSoNo($so_no);
                             $sops_vo->set_payment_gateway_id($vars["payment_gateway"]);
                             $sops_vo->set_pay_date($vars["payment_date"]);
                             $sops_vo->set_pay_to_account($vars["pay_to_account"]);
@@ -1736,7 +1736,7 @@ html;
                         $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
                         $option["show_ca"] = 1; # 4404 - show CA on delivery note only
 
-                        if ($itemlist = $this->getDao('SoItem')->getItemsWithName(["so_no" => $so_no], $option)) {
+                        if ($itemlist = $this->getDao('SoItemDetail')->getItemsWithName(["so_no" => $so_no], $option)) {
                             foreach ($itemlist as $item_obj) {
                                 $tmp = $this->getDao('Product')->get(["sku" => $item_obj->getMainProdSku()]);
                                 $imagepath = base_url() . get_image_file($tmp->getImage(), 's', $tmp->getSku());
@@ -1854,11 +1854,11 @@ html;
 
     public function getCustomInvoiceContent($so_no_list = [], $new_shipper_name = "", $currency = "")
     {
-        $so_lang_arr = array("AMUK" => "en", "WSGB" => "en", "AMFR" => "en", "AMDE" => "en", "AMUS" => "en");
+        $so_lang_arr = ["AMUK" => "en", "WSGB" => "en", "AMFR" => "en", "AMDE" => "en", "AMUS" => "en"];
         $run = 0;
         $website_domain = $this->getDao('Config')->valueOf('website_domain');
         $total_cnt = count($so_no_list);
-        $cursign_arr = array("GBP" => "GBP", "EUR" => "GBP");
+        $cursign_arr = ["GBP" => "GBP", "EUR" => "GBP"];
 
         # sbf #3746 don't include complementary accessory on front end
         $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
@@ -1872,14 +1872,14 @@ html;
                 $sum = 0;
 
                 $run++;
-                $so_obj = $this->getDao('So')->get(array("so_no" => $obj));
+                $so_obj = $this->getDao('So')->get(["so_no" => $obj]);
                 if (!$so_obj) {
                     continue;
                 } else {
                     $data = [];
-                    $itemlist = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $obj, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
+                    $itemlist = $this->getDao('SoItemDetail')->getItemsWithName(["so_no" => $obj, "p.cat_id NOT IN ($ca_catid_arr)" => NULL]);
 
-                    $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
+                    $client_obj = $this->getDao('Client')->get(["id" => $so_obj->getClientId()]);
 
                     for ($i = 1; $i < 7; $i++) {
                         ${"daddr_" . $i} = "&nbsp;";
@@ -1939,7 +1939,7 @@ html;
                     }
                     $data["daddr_" . $line_no] = $so_obj->getDeliveryCountryId();
 
-                    $dcountry_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
+                    $dcountry_obj = $this->getDao('Country')->get(["country_id" => $so_obj->getDeliveryCountryId()]);
                     $dstatezip = trim($so_obj->getDeliveryState() . ", " . $so_obj->getDeliveryPostcode());
                     if ($dstatezip != ",") {
                         $dstatezip = @preg_replace("{^, }", "", $dstatezip);
@@ -1949,9 +1949,9 @@ html;
                     }
 
                     $item_information = $declared_ratio = "";
-                    if (in_array($so_obj->getDeliveryCountryId(), array("AU"))) {
+                    if (in_array($so_obj->getDeliveryCountryId(), ["AU"])) {
                         foreach ($itemlist AS $item_obj) {
-                            $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
+                            $prod_obj = $this->getDao('Product')->get(["sku" => $item_obj->getMainProdSku()]);
                             $value = round($item_obj->getAmount() / $item_obj->getQty() * $so_obj->getRate(), 2);
                             $sum += $value * $item_obj->getQty();
                         }
@@ -1961,13 +1961,13 @@ html;
                             }
                         }
                     }
-                    if (in_array($so_obj->getDeliveryCountryId(), array("NZ"))) {
+                    if (in_array($so_obj->getDeliveryCountryId(), ["NZ"])) {
                         foreach ($itemlist AS $item_obj) {
-                            $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
+                            $prod_obj = $this->getDao('Product')->get(["sku" => $item_obj->getMainProdSku()]);
                             $value = round($item_obj->getAmount() / $item_obj->getQty() * $so_obj->getRate(), 2);
                             $sum += $value * $item_obj->getQty();
                         }
-                        if ($obj = $this->subjectDomainService->getDao('SubjectDomain')->get(array("subject" => "SELLING_PRICE_CEILING.{$so_obj->getDeliveryCountryId()}"))) {
+                        if ($obj = $this->subjectDomainService->getDao('SubjectDomain')->get(["subject" => "SELLING_PRICE_CEILING.{$so_obj->getDeliveryCountryId()}"])) {
                             $declared_ratio = 1;
                             if ($obj->getValue() <= $sum) {
                                 $declared_ratio = 0.5;
@@ -1980,7 +1980,7 @@ html;
                     $total_piece = 0;
 
                     //#2182 add the processing fee
-                    if ($extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()))) {
+                    if ($extobj = $this->getDao('SoExtend')->get(["so_no" => $so_obj->getSoNo()])) {
                         $processing_fee = $extobj->getOfflineFee();
                     }
                     if (is_null($processing_fee)) {
@@ -1989,17 +1989,17 @@ html;
 
                     foreach ($itemlist as $item_obj) {
                         $hs_desc = $code = null;
-                        $prod_obj = $this->getDao('Product')->get(array("sku" => $item_obj->getMainProdSku()));
+                        $prod_obj = $this->getDao('Product')->get(["sku" => $item_obj->getMainProdSku()]);
                         $qty = $item_obj->getQty();
                         $amount_total = $item_obj->getAmount();
-                        if ($pcc_obj = $this->getDao('ProductCustomClassification')->get(array('sku' => $prod_obj->getSku(), 'country_id' => $so_obj->getDeliveryCountryId()))) {
+                        if ($pcc_obj = $this->getDao('ProductCustomClassification')->get(['sku' => $prod_obj->getSku(), 'country_id' => $so_obj->getDeliveryCountryId()])) {
                             $hs_desc = $pcc_obj->getDescription();
                             $code = $pcc_obj->getCode();
                         }
 
                         //SBF #4403 - If hs desc and code not found, get the hs desc and code from sub_cat_id of the product
                         if (!isset($hs_desc) || $hs_desc == '') {
-                            $where = array('ccm.sub_cat_id' => $prod_obj->get_sub_cat_id(), 'ccm.country_id' => $so_obj->getDeliveryCountryId());
+                            $where = ['ccm.sub_cat_id' => $prod_obj->get_sub_cat_id(), 'ccm.country_id' => $so_obj->getDeliveryCountryId()];
                             $hsDetails = $this->getDao('CustomClassificationMapping')->getHsBySubcatAndCountry($where, $option);
                             $hs_desc = $hsDetails[0]['description'];
                             $code = $hsDetails[0]['code'];
@@ -2539,7 +2539,6 @@ html;
         $ret = [];
 
         if ($obj_list = $this->getDao('So')->getCreditCheckList($where, $option, $type)) {
-            echo $this->getDao('So')->db->last_query();
             foreach ($obj_list as $obj) {
                 $cnt = $this->getDao('So')->getPwdCnt($obj->getSoNo(), $obj->getClientId());
                 $obj->setPwCount($cnt);
@@ -5402,8 +5401,8 @@ html;
 
                                     //add an order note
                                     $order_note_vo = $this->getDao('OrderNotes')->get();
-                                    $order_note_vo->set_so_no($so_no);
-                                    $order_note_vo->set_note("system inactivate, blacklisted client");
+                                    $order_note_vo->setSoNo($so_no);
+                                    $order_note_vo->setNote("system inactivate, blacklisted client");
                                     $this->getDao('OrderNotes')->insert($order_note_vo);
 
 
@@ -6013,11 +6012,11 @@ html;
 
     public function addOrderNote($so_no, $notes)
     {
-        $obj = $this->quick_search_service->get_order_notes_dao()->get();
-        $obj->set_so_no($so_no);
-        $obj->set_type('O');
-        $obj->set_note($notes);
-        return $this->quick_search_service->get_order_notes_dao()->insert($obj);
+        $obj = $this->getDao('OrderNotes')->get();
+        $obj->setSoNo($so_no);
+        $obj->setType('O');
+        $obj->setNote($notes);
+        return $this->getDao('OrderNotes')->insert($obj);
     }
 
 }

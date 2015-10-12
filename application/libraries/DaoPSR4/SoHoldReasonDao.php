@@ -31,7 +31,7 @@ class SoHoldReasonDao extends BaseDao implements HooksInsert
         $table1 = [
                     'table' => 'so',
                     'where' => ['so_no'=>$obj->getSoNo(),],
-                    'keyValue'=>['hold_reason' => $obj->getId(),]
+                    'keyValue'=>['hold_reason' => $obj->getReason(),]
                   ];
 
         $this->updateTables([$table1,]);
@@ -70,7 +70,7 @@ class SoHoldReasonDao extends BaseDao implements HooksInsert
 
             return $ret;
         }
-        echo $this->db->last_query() . " " . $this->db->_error_message();
+
         return FALSE;
     }
 }
