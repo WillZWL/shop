@@ -3,7 +3,7 @@ class SoItemWithNameDto
 {
     private $so_no;
     private $line_no;
-    private $prod_sku;
+    private $item_sku;
     private $qty;
     private $unit_price;
     private $vat_total;
@@ -43,14 +43,14 @@ class SoItemWithNameDto
         return $this->line_no;
     }
 
-    public function setProdSku($prod_sku)
+    public function setitemSku($item_sku)
     {
-        $this->prod_sku = $prod_sku;
+        $this->item_sku = $item_sku;
     }
 
-    public function getProdSku()
+    public function getitemSku()
     {
-        return $this->prod_sku;
+        return $this->item_sku;
     }
 
     public function setQty($qty)

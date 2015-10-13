@@ -243,7 +243,7 @@ class RefundService extends BaseService
                 $reason_code = $reason->getId();
             }
 
-            $status = $so_obj->getStatus() > 5 ? 1 : 2;
+            $status = ($so_obj->getStatus() > 5) ? 1 : 2;
             $so_obj->setRefundStatus($status);
 
             $refund_obj->setSoNo($so_obj->getSoNo());
@@ -279,6 +279,7 @@ class RefundService extends BaseService
             }
 
             $this->getDao('Refund')->db->trans_start();
+
             $r = $this->getDao('So')->update($so_obj);
             if ($r !== FALSE) {
                 $r = $this->getDao('Refund')->insert($refund_obj);

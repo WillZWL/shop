@@ -26,7 +26,6 @@ class DeliveryService extends BaseService
     public function __construct()
     {
         parent::__construct();
-        $this->setDao(new DeliveryDao);
         $this->contextConfigService = new ContextConfigService;
         $this->courierService = new CourierService;
         $this->WeightCatService = new WeightCatService;
@@ -43,7 +42,7 @@ class DeliveryService extends BaseService
     public function getListWithKey($where = [], $option = [])
     {
         $data = [];
-        if ($objList = $this->getList($where, $option)) {
+        if ($objList = $this->getDao('Delivery')->getList($where, $option)) {
             foreach ($objList as $obj) {
                 $data[$obj->getDeliveryTypeId()][$obj->getCountryId()] = $obj;
             }

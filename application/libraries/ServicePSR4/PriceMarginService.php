@@ -91,8 +91,7 @@ class PriceMarginService extends BaseService
             $ret["updatelist"] = $updatelist;
             return $ret;
         } else {
-            $ret["error_message"] = __LINE__ . "price_margin_service. Unable to retrieve sellling platform list. DB error "
-                . $platformBizVarService->getDao('SellingPlatform')->db->_error_message();
+            $ret["error_message"] = __LINE__ . "price_margin_service. Unable to retrieve sellling platform list. DB error ";
         }
 
         return $ret;

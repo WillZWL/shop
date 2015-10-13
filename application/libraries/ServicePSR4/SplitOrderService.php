@@ -23,12 +23,12 @@ class SplitOrderService extends BaseService
 
         $delivery_country_id = $so_obj->getDeliveryCountryId();
 
-        if ($soilist = $this->getDao('SoItem')->getList(["so_no" => $so_no])) {
-            foreach ($soilist as $key => $soi_obj) {
-                $qty = $soi_obj->getQty();
+        if ($soidlist = $this->getDao('SoItemDetail')->getList(["so_no" => $so_no])) {
+            foreach ($soidlist as $key => $soid_obj) {
+                $qty = $soid_obj->getQty();
                 for ($i = 0; $i < $qty; $i++) {
                     # split out into 1 sku x 1 qty
-                    $single_qty_list[]["sku"] = $soi_obj->getProdSku();
+                    $single_qty_list[]["sku"] = $soid_obj->getItemSku();
                 }
             }
 
