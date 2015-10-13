@@ -29,36 +29,36 @@
         </tr>
         <?php
         $i = 0;
-        if ($objlist) {
-            foreach ($objlist as $obj) {
+        if ($objlist) :
+            foreach ($objlist as $obj) :
                 ?>
 
                 <tr class="bvalue<?= $i % 2 ?>">
-                    <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                         title='<?= $lang["create_on"] ?>:<?= $obj->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->get_modify_by() ?>'>
+                    <td height="20">
+                        <img src="<?= base_url() ?>images/info.gif" title='<?= $lang["create_on"] ?>:<?= $obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->getModifyBy() ?>'>
                     </td>
-                    <td><?= $obj->get_so_no() ?></td>
-                    <td><?= $obj->get_txn_id() ?></td>
-                    <td><?= $obj->get_create_on() ?></td>
-                    <td><?= $obj->get_email() ?></td>
+                    <td><?= $obj->getSoNo() ?></td>
+                    <td><?= $obj->getTxnId() ?></td>
+                    <td><?= $obj->getCreateOn() ?></td>
+                    <td><?= $obj->getEmail() ?></td>
                     <td style="line-height:14px;">
-                        <?= $obj->get_hold_status() ? $lang[$obj->get_reason()] . "<br><br>" . $lang["fraud_suspicion"] . "<br>" . $obj->get_hold_date() : $ar_ostatus[$obj->get_status()] ?>
+                        <?= $obj->getHoldStatus() ? $lang[$obj->getReason()] . "<br><br>" . $lang["fraud_suspicion"] . "<br>" . $obj->getHoldDate() : $ar_ostatus[$obj->getStatus()] ?>
                     </td>
                 </tr>
                 <tr class="row<?= $i % 2 ?>">
                     <td height="20"></td>
                     <td colspan="5">
                         <?php
-                        if ($obj->get_items()) {
-                            $items = explode("||", $obj->get_items());
-                            foreach ($items as $item) {
+                        if ($obj->getItems()) :
+                            $items = explode("||", $obj->getItems());
+                            foreach ($items as $item) :
                                 list($sku, $name, $qty, $u_p, $amount) = @explode("::", $item);
                                 ?>
                                 <p class="normal_p">[<?= $sku ?>] <?= $name ?> x<?= $qty ?> @<?= $u_p ?>
                                     = <?= $amount ?></p>
                             <?php
-                            }
-                        }
+                            endforeach;
+                        endif;
                         ?>
                     </td>
                 </tr>
@@ -69,15 +69,15 @@
                 </tr>
                 <?php
                 $i++;
-            }
-        }
+            endforeach;
+        endif;
         ?>
     </table>
     <script>
         InitPMGW(document.fm.payment_gateway_id);
         document.fm.payment_gateway_id.value = '<?=$this->input->get("payment_gateway_id")?>';
     </script>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>

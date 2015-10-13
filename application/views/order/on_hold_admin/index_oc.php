@@ -16,12 +16,11 @@
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td height="30" class="title"><?= $lang["title"] . ($type != "" ? " (" . $lang[$type] . ")" : "") ?></td>
-            <td width="400" align="right" class="title"><input type="button" value="<?= $lang["oc_page"] ?>"
-                                                               onClick="Redirect('<?= base_url() . "order/on_hold_admin/oc_index/" ?>')">&nbsp;<input
-                    type="button" value="<?= $lang["cc_page"] ?>"
-                    onClick="Redirect('<?= base_url() . "order/on_hold_admin/oc_index/cc/" ?>')">&nbsp;<input
-                    type="button" value="<?= $lang["vv_page"] ?>"
-                    onClick="Redirect('<?= base_url() . "order/on_hold_admin/oc_index/vv/" ?>')"></td>
+            <td width="400" align="right" class="title">
+                <input type="button" value="<?= $lang["oc_page"] ?>" onClick="Redirect('<?= base_url() . "order/on_hold_admin/oc_index/" ?>')">&nbsp;
+                <input type="button" value="<?= $lang["cc_page"] ?>" onClick="Redirect('<?= base_url() . "order/on_hold_admin/oc_index/cc/" ?>')">&nbsp;
+                <input type="button" value="<?= $lang["vv_page"] ?>" onClick="Redirect('<?= base_url() . "order/on_hold_admin/oc_index/vv/" ?>')">
+            </td>
         </tr>
         <tr>
             <td height="2" class="line"></td>
@@ -39,25 +38,26 @@
             <col width="140">
             <col width="27">
             <tr class="header">
-                <td height="20"><img src="<?= base_url() ?>images/expand.png" class="pointer"
-                                     onClick="Expand(document.getElementById('tr_search'));"></td>
-                <td style="white-space:nowrap"><a href="#"
-                                                  onClick="SortCol(document.fm, 'so_no', '<?= $xsort["so_no"] ?>')"><?= $lang["order_id"] ?> <?= $sortimg["so_no"] ?></a>
+                <td height="20">
+                    <img src="<?= base_url() ?>images/expand.png" class="pointer" onClick="Expand(document.getElementById('tr_search'));">
                 </td>
-                <td style="white-space:nowrap"><a href="#"
-                                                  onClick="SortCol(document.fm, 'platform_order_id', '<?= $xsort["platform_order_id"] ?>')"><?= $lang["platform_order_id"] ?> <?= $sortimg["platform_order_id"] ?></a>
+                <td style="white-space:nowrap">
+                    <a href="#" onClick="SortCol(document.fm, 'so_no', '<?= $xsort["so_no"] ?>')"><?= $lang["order_id"] ?> <?= $sortimg["so_no"] ?></a>
                 </td>
-                <td style="white-space:nowrap"><a href="#"
-                                                  onClick="SortCol(document.fm, 'payment_gateway_id', '<?= $xsort["payment_gateway_id"] ?>')"><?= $lang["payment_gateway"] ?> <?= $sortimg["payment_gateway_id"] ?></a>
+                <td style="white-space:nowrap">
+                    <a href="#" onClick="SortCol(document.fm, 'platform_order_id', '<?= $xsort["platform_order_id"] ?>')"><?= $lang["platform_order_id"] ?> <?= $sortimg["platform_order_id"] ?></a>
                 </td>
-                <td style="white-space:nowrap"><a href="#"
-                                                  onClick="SortCol(document.fm, 'txn_id', '<?= $xsort["txn_id"] ?>')"><?= $lang["gateway_txn_id"] ?> <?= $sortimg["txn_id"] ?></a>
+                <td style="white-space:nowrap">
+                    <a href="#" onClick="SortCol(document.fm, 'payment_gateway_id', '<?= $xsort["payment_gateway_id"] ?>')"><?= $lang["payment_gateway"] ?> <?= $sortimg["payment_gateway_id"] ?></a>
                 </td>
-                <td style="white-space:nowrap"><a href="#"
-                                                  onClick="SortCol(document.fm, 'amount', '<?= $xsort["amount"] ?>')"><?= $lang["order_amount"] ?> <?= $sortimg["amount"] ?></a>
+                <td style="white-space:nowrap">
+                    <a href="#" onClick="SortCol(document.fm, 'txn_id', '<?= $xsort["txn_id"] ?>')"><?= $lang["gateway_txn_id"] ?> <?= $sortimg["txn_id"] ?></a>
                 </td>
-                <td style="white-space:nowrap"><a href="#"
-                                                  onClick="SortCol(document.fm, 't3m_result', '<?= $xsort["t3m_result"] ?>')"><?= $lang["t3m"] ?> <?= $sortimg["t3m_result"] ?></a>
+                <td style="white-space:nowrap">
+                    <a href="#" onClick="SortCol(document.fm, 'amount', '<?= $xsort["amount"] ?>')"><?= $lang["order_amount"] ?> <?= $sortimg["amount"] ?></a>
+                </td>
+                <td style="white-space:nowrap">
+                    <a href="#" onClick="SortCol(document.fm, 't3m_result', '<?= $xsort["t3m_result"] ?>')"><?= $lang["t3m"] ?> <?= $sortimg["t3m_result"] ?></a>
                 </td>
                 <td></td>
             </tr>
@@ -71,14 +71,12 @@
                         <option value="">
                     </select>
                 </td>
-                <td><input name="txn_id" class="input" value="<?= htmlspecialchars($this->input->get("txn_id")) ?>">
+                <td><input name="txn_id" class="input" value="<?= htmlspecialchars($this->input->get("txn_id")) ?>"></td>
+                <td><input name="amount" class="input" value="<?= htmlspecialchars($this->input->get("amount")) ?>"></td>
+                <td><input name="t3m_result" class="input" value="<?= htmlspecialchars($this->input->get("t3m_result")) ?>"></td>
+                <td align="center">
+                    <input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">
                 </td>
-                <td><input name="amount" class="input" value="<?= htmlspecialchars($this->input->get("amount")) ?>">
-                </td>
-                <td><input name="t3m_result" class="input"
-                           value="<?= htmlspecialchars($this->input->get("t3m_result")) ?>"></td>
-                <td align="center"><input type="submit" name="searchsubmit" value="" class="search_button"
-                                          style="background: url('<?= base_url() ?>images/find.gif') no-repeat;"></td>
             </tr>
             <input type="hidden" name="showall" value='<?= $this->input->get("showall") ?>'>
             <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
@@ -86,8 +84,8 @@
     </form>
     <?php
     $i = 0;
-    if ($objlist) {
-        foreach ($objlist as $obj) {
+    if ($objlist) :
+        foreach ($objlist as $obj) :
             list($d1, $d2, $d3) = explode("|", $obj->getDeliveryAddress());
             list($b1, $b2, $b3) = explode("|", $obj->getBillAddress());
 
@@ -111,20 +109,20 @@
                 <td><?= $obj->getTxnId() ?></td>
                 <td><?= $obj->getCurrencyId() ?> <?= $obj->getAmount() ?></td>
                 <?php
-                if ($risk2[$obj->getSoNo()]) {
+                if ($risk2[$obj->getSoNo()]) :
                     $risk_style = "";
-                    if (($risk2[$obj->getSoNo()][0]['style'] == "bad") || ($risk3[$obj->getSoNo()][0]['style'] == "bad")) {
+                    if (($risk2[$obj->getSoNo()][0]['style'] == "bad") || ($risk3[$obj->getSoNo()][0]['style'] == "bad")) :
                         $risk_style = "class='risk_bad'";
-                    }
+                    endif;
                     ?>
                     <td <?= $risk_style ?>>AVS:<?= $risk2[$obj->getSoNo()][0]['value'] ?>,
                         CVN: <?= $risk3[$obj->getSoNo()][0]['value'] ?></td>
                 <?php
-                } else {
+                else :
                     ?>
                     <td><?= $obj->getT3MResult() ?></td>
                 <?php
-                }
+                endif;
                 ?>
                 <td></td>
             </tr>
@@ -132,19 +130,19 @@
                 <td height="20"></td>
                 <td><?= $obj->getForename() ?> <?= $obj->getSurname() ?></td>
                 <td><?= $obj->getEmail() ?></td>
-                <td><?= $lang["password"] ?>: <a
-                        href="<?= base_url() ?>order/on_hold_admin/chk_pw/?pw=<?= urlencode($obj->getPassword()) ?>"
+                <td>
+                    <?= $lang["password"] ?>:
+                    <a href="<?= base_url() ?>order/on_hold_admin/chk_pw/?pw=<?= urlencode($obj->getPassword()) ?>"
                         rel="lyteframe[check_password]" rev="width: 1024px; height: 500px; scrolling: auto;"
                         title="<?= $lang["password"] ?> - <?= $rspw = $this->encrypt->decode($obj->getPassword()) ?>"><?= $rspw ?></a>
                     (<?= $obj->getPwCount() ?>)
                 </td>
                 <td class="bfield<?= $i % 2 ?>"><?= $lang["billing_address"] ?></td>
                 <td class="bfield<?= $i % 2 ?>"><?= $lang["delivery_address"] ?></td>
-                <td align="center"><?= $lang["previous_request"] . ":<br>" . $lang[$obj->getReason()] ?><br><input
-                        type="button" value="<?= $lang["request_refund"] ?>"
-                        onClick="Redirect('<?= base_url() ?>order/on_hold_admin/refund/<?= $obj->getSoNo() ?>')"><br><input
-                        type="button" value="<?= $lang["approve_for_fulfillment"] ?>"
-                        onClick="Redirect('<?= base_url() ?>order/on_hold_admin/oc_approve/<?= $obj->getSoNo() ?>')">
+                <td align="center">
+                    <?= $lang["previous_request"] . ":<br>" . $lang[$obj->getReason()] ?><br>
+                    <input type="button" value="<?= $lang["request_refund"] ?>" onClick="Redirect('<?= base_url() ?>order/on_hold_admin/refund/<?= $obj->getSoNo() ?>')"><br>
+                    <input type="button" value="<?= $lang["approve_for_fulfillment"] ?>" onClick="Redirect('<?= base_url() ?>order/on_hold_admin/oc_approve/<?= $obj->getSoNo() ?>')">
                 </td>
                 </td>
                 <td></td>
@@ -153,16 +151,16 @@
                 <td height="20"></td>
                 <td colspan="3">
                     <?php
-                    if ($obj->getItems()) {
+                    if ($obj->getItems()) :
                         $items = explode("||", $obj->getItems());
-                        foreach ($items as $item) {
+                        foreach ($items as $item) :
                             list($sku, $name, $qty, $u_p, $amount) = @explode("::", $item);
                             ?>
                             <p class="normal_p">[<?= $sku ?>] <?= $name ?> x<?= $qty ?> @<?= $u_p ?>
                                 = <?= $amount ?></p>
                         <?php
-                        }
-                    }
+                        endforeach;
+                    endif;
                     ?>
                 </td>
                 <td class="bvalue<?= $i % 2 ?>"><?= $bill_addr ?></td>
@@ -172,13 +170,13 @@
                            onclick="Redirect('<?= base_url() . "order/on_hold_admin/oc_contacted/" . $obj->getSoNo() ?>')" <?= $obj->getReason() == "contacted" ? "DISABLED" : "" ?>>
                     <input type="button" value="<?= $lang["confirmed_fraud"] ?>"
                            onclick="Redirect('<?= base_url() . "order/on_hold_admin/oc_fraud/" . $obj->getSoNo() ?>')">
-                    <?php if ($lang["cancel_order"]) {
+                    <?php if ($lang["cancel_order"]) :
                         # only users with rights in allowed_to_cancel_order() can see cancel_order button
                         ?>
                         <input type="button" value="<?= $lang["cancel_order"] ?>"
                                onclick="Redirect('<?= base_url() . "order/on_hold_admin/oc_cancel_order/" . $obj->getSoNo() ?>')">
                     <?php
-                    }
+                    endif;
                     ?>
                 </td>
                 <td></td>
@@ -190,8 +188,8 @@
             </tr>
             <?php
             $i++;
-        }
-    }
+        endforeach;
+    endif;
     ?>
     </table>
     <script>

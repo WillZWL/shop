@@ -48,9 +48,9 @@ class SoDao extends BaseDao
                 sops.pay_date,
                 DATEDIFF(NOW(),sops.pay_date) AS pay_day_diff,
                 soprs.score AS priority_score,
-                soid.line_no, skum.ext_sku AS master_sku, soid.item_sku, p.`name`,
-                soid.qty,
-                so.currency_id, soid.amount,
+                soi.line_no, skum.ext_sku AS master_sku, soi.prod_sku, p.`name`,
+                soi.qty,
+                so.currency_id, soi.amount,
                 so.expect_del_days,
                 p.surplus_quantity, p.slow_move_7_days,
                 s.origin_country AS sourcing_country,
@@ -69,14 +69,14 @@ class SoDao extends BaseDao
                 coalesce(wmsi.inventory, 0) as ALN_inventory
 
             FROM so
-            INNER JOIN so_item_detail soid on soid.so_no = so.so_no
+            INNER JOIN so_item soi on soi.so_no = so.so_no
             LEFT JOIN so_payment_status sops ON sops.so_no = so.so_no
-            LEFT JOIN sku_mapping skum ON skum.sku = soid.item_sku AND skum.ext_sys = 'WMS' AND skum.`status` = 1
+            LEFT JOIN sku_mapping skum ON skum.sku = soi.prod_sku AND skum.ext_sys = 'WMS' AND skum.`status` = 1
             LEFT JOIN so_priority_score soprs ON soprs.so_no = so.so_no
-            INNER JOIN product p ON p.sku = soid.item_sku
+            INNER JOIN product p ON p.sku = soi.prod_sku
             INNER JOIN category c ON c.id = p.cat_id
-            LEFT JOIN (SELECT DISTINCT(sku) FROM ra_group_product) AS ragp ON ragp.sku = soid.item_sku
-            LEFT JOIN supplier_prod sp ON sp.prod_sku = soid.item_sku AND sp.order_default = 1
+            LEFT JOIN (SELECT DISTINCT(sku) FROM ra_group_product) AS ragp ON ragp.sku = soi.prod_sku
+            LEFT JOIN supplier_prod sp ON sp.prod_sku = soi.prod_sku AND sp.order_default = 1
             LEFT JOIN supplier s ON s.id = sp.supplier_id
             LEFT JOIN wms_inventory wmsi ON wmsi.master_sku = skum.ext_sku AND wmsi.warehouse_id = 'ALN'
             WHERE
@@ -87,9 +87,9 @@ class SoDao extends BaseDao
                     (
                         # Orders that have more than one item after excluding CAs
                         SELECT soitem.so_no, COUNT(*) as soicnt
-                        FROM so_item_detail soitem
+                        FROM so_item soitem
                         INNER JOIN so AS sso ON sso.so_no = soitem.so_no
-                        INNER JOIN product p1 ON p1.sku = soitem.item_sku AND p1.cat_id != 753
+                        INNER JOIN product p1 ON p1.sku = soitem.prod_sku AND p1.cat_id != 753
                         where sso.`status` = 3 AND sso.refund_status = 0 AND sso.hold_status = 0
                         GROUP BY soitem.so_no
                         HAVING soicnt > 1
@@ -102,10 +102,10 @@ class SoDao extends BaseDao
                 (
                     SELECT
                     soi2.so_no
-                    FROM so_item_detail soi2
+                    FROM so_item soi2
                     INNER JOIN so AS so2 ON so2.so_no = soi2.so_no
-                    INNER JOIN product p2 on p2.sku = soi2.item_sku
-                    LEFT JOIN supplier_prod sp2 ON sp2.prod_sku = soi2.item_sku AND sp2.order_default = 1
+                    INNER JOIN product p2 on p2.sku = soi2.prod_sku
+                    LEFT JOIN supplier_prod sp2 ON sp2.prod_sku = soi2.prod_sku AND sp2.order_default = 1
                     LEFT JOIN supplier s2 ON s2.id = sp2.supplier_id
                     WHERE
                         (p2.sourcing_status = 'o' OR s2.origin_country = 'US' OR s2.origin_country = 'C1' OR s2.origin_country = 'C2' )
@@ -113,7 +113,7 @@ class SoDao extends BaseDao
                 )
 
                 AND so.split_so_group IS NULL
-            ORDER BY soid.so_no DESC, soid.line_no ASC
+            ORDER BY soi.so_no DESC, soi.line_no ASC
 SQL;
         $query = $this->db->query($sql);
 
@@ -197,10 +197,10 @@ SQL;
 
     private function getOrderItemNum($so_no, $supplier_id)
     {
-        $this->db->select('count(sid.so_no) as num');
-        $this->db->from('so_item_detail as sid');
-        $this->db->join('supplier_prod as sp', 'sid.item_sku = sp.prod_sku', 'LEFT');
-        $this->db->where('sid.so_no = ', $so_no);
+        $this->db->select('count(si.so_no) as num');
+        $this->db->from('so_item as si');
+        $this->db->join('supplier_prod as sp', 'si.prod_sku = sp.prod_sku', 'LEFT');
+        $this->db->where('si.so_no = ', $so_no);
         $this->db->where('sp.supplier_id = ', $supplier_id);
         $this->db->where('sp.order_default = 1');
 
@@ -352,7 +352,7 @@ SQL;
         $this->db->from("so");
         $this->db->join("so_item as soi", "soi.so_no=so.so_no", "INNER");
         $this->db->join("product p", "p.sku=soi.prod_sku", "INNER");
-        $this->db->group_by("so.so_no");
+        $this->db->groupby("so.so_no");
         $this->db->where($where);
         $this->db->select("so.so_no, soi.prod_sku, soi.prod_name, soi.qty, so.expect_delivery_date, so.create_on, p.expected_delivery_date as current_expected_delivery_date, count(1) as multiple_items_count", FALSE);
         if (empty($option["num_rows"])) {
@@ -450,16 +450,16 @@ SQL;
                     , s.delivery_charge as delivery_cost
                     , s.promotion_code
                     , sps.card_id as payment_type
-                    , sor.risk_var_1
-                    , sor.risk_var_2
-                    , sor.risk_var_3
-                    , sor.risk_var_4
-                    , sor.risk_var_5
-                    , sor.risk_var_6
-                    , sor.risk_var_7
-                    , sor.risk_var_8
-                    , sor.risk_var_9
-                    , sor.risk_var_10
+                    , sor.risk_var1
+                    , sor.risk_var2
+                    , sor.risk_var3
+                    , sor.risk_var4
+                    , sor.risk_var5
+                    , sor.risk_var6
+                    , sor.risk_var7
+                    , sor.risk_var8
+                    , sor.risk_var9
+                    , sor.risk_var10
                     , scc.card_bin
                     , scc.card_type
                     , sps.pay_to_account
@@ -560,37 +560,63 @@ SQL;
         }
 
         if ($type == "cs") {
-            $this->db->where("(so.hold_reason = 'csvv' OR so.hold_reason = 'cscc')");
+            $this->db->join('( SELECT a.so_no, a.reason
+                                FROM so_hold_reason a
+                                JOIN (SELECT so_no, max(create_on) as create_on
+                                      FROM so_hold_reason
+                                      GROUP BY so_no) AS c
+                                ON a.create_on = c.create_on AND a.so_no = c.so_no
+                                ) AS sohr', 'sohr.so_no = so.so_no', 'INNER');
+            $this->db->where("(sohr.reason = 'csvv' OR sohr.reason = 'cscc')");
 
 
         }
 
         if (($type == "oc") || ($type == "comcenter")) {
-            // $this->db->join('so_hold_reason sohr', 'sohr.id = so.hold_reason', 'INNER');
+            $this->db->join('( SELECT a.so_no, a.reason
+                                FROM so_hold_reason a
+                                JOIN (SELECT so_no, max(create_on) as create_on
+                                      FROM so_hold_reason
+                                      GROUP BY so_no) AS c
+                                ON a.create_on = c.create_on AND a.so_no = c.so_no
+                                ) AS sohr', 'sohr.so_no = so.so_no', 'INNER');
         }
 
         if ($type == "ora") {
-            // $this->db->join('so_hold_reason sohr', 'sohr.id = so.hold_reason', 'LEFT');
+            $this->db->join('( SELECT a.so_no, a.reason
+                                FROM so_hold_reason a
+                                JOIN (SELECT so_no, max(create_on) as create_on
+                                      FROM so_hold_reason
+                                      GROUP BY so_no) AS c
+                                ON a.create_on = c.create_on AND a.so_no = c.so_no
+                                ) AS sohr', 'sohr.so_no = so.so_no', 'LEFT');
         }
 
         if ($type == "log_app") {
-            $this->db->where("so.hold_reason LIKE '%_log_app'");
+            $this->db->join('( SELECT a.so_no, a.reason
+                                FROM so_hold_reason a
+                                JOIN (SELECT so_no, max(create_on) as create_on
+                                      FROM so_hold_reason
+                                      GROUP BY so_no) AS c
+                                ON a.create_on = c.create_on AND a.so_no = c.so_no
+                                ) AS sohr', 'sohr.so_no = so.so_no', 'INNER');
+            $this->db->where("sohr.reason LIKE '%_log_app'");
         }
 
         if ($option["item"]) {
             $this->db->join('(
-                        SELECT sid.so_no, GROUP_CONCAT(CONCAT_WS("::", sid.prod_sku, p.name, CAST(sid.qty AS CHAR), CAST(sid.unit_price AS CHAR), CAST(sid.amount AS CHAR)) ORDER BY sid.line_no SEPARATOR "||") AS items
-                        FROM so_item_detail AS sid
+                        SELECT si.so_no, GROUP_CONCAT(CONCAT_WS("::", si.prod_sku, p.name, CAST(si.qty AS CHAR), CAST(si.unit_price AS CHAR), CAST(si.amount AS CHAR)) ORDER BY si.line_no SEPARATOR "||") AS items
+                        FROM so_item AS si
                         INNER JOIN product AS p
-                            ON (sid.prod_sku = p.sku)
+                            ON (si.prod_sku = p.sku)
                         GROUP BY so_no
-                        ) AS soid', 'so.so_no = soid.so_no', 'LEFT');
+                        ) AS soi', 'so.so_no = soi.so_no', 'LEFT');
 
-            $this->db->select('soid.items');
+            $this->db->select('soi.items');
         }
 
         if ($option["reason"]) {
-            $this->db->join('so_hold_reason AS sohr', 'so.hold_reason = sohr.id', 'LEFT');
+            $this->db->join('so_hold_reason AS sohr', 'so.so_no = sohr.so_no', 'LEFT');
         }
 
         $this->db->join('so_credit_chk AS socc', 'so.so_no = socc.so_no', 'LEFT');
@@ -605,10 +631,10 @@ SQL;
         $this->db->where("so.refund_status = '0'");
 
         if (empty($option["num_rows"])) {
-            $this->db->select('so.*, c.id, c.forename, c.surname, c.email, c.password, c.tel_1, c.tel_2, c.tel_3, c.del_tel_1, c.del_tel_2, c.del_tel_3,' . ($option["reason"] ? ', so.hold_reason reason, sohr.create_on AS hold_date' : ', socc.fd_status, sops.payment_gateway_id, sops.payment_status, sops.card_id AS card_type, sops.risk_ref_1, sops.risk_ref_2, sops.risk_ref_3, sops.risk_ref_4, sops.pending_action, rr.risk_ref_desc'));
+            $this->db->select('so.*, c.id, c.forename, c.surname, c.email, c.password, c.tel_1, c.tel_2, c.tel_3, c.del_tel_1, c.del_tel_2, c.del_tel_3,' . ($option["reason"] ? ', sohr.reason, sohr.create_on AS hold_date' : ', socc.fd_status, sops.payment_gateway_id, sops.payment_status, sops.card_id AS card_type, sops.risk_ref_1, sops.risk_ref2, sops.risk_ref3, sops.risk_ref4, sops.pending_action, rr.risk_ref_desc'));
 
             if ($type == "cs" || $type == "log_app" || $type == "oc" || $type == "ora") {
-                $this->db->select('so.hold_reason reason');
+                $this->db->select('sohr.reason');
             }
 
             if (isset($option["orderby"])) {
@@ -652,12 +678,12 @@ SQL;
 
     public function getOrderItemListDone($so_no)
     {
-        $sql = "SELECT GROUP_CONCAT(CONCAT_WS('::',soid.item_sku, COALESCE(soid.prod_name,' '), p.name, CAST(soid.qty as CHAR), CAST(soid.unit_price AS CHAR), CAST(soid.amount AS CHAR),CAST(soid.vat_total AS CHAR),IFNULL(p.image,' '),soid.warranty_in_month) ORDER BY soid.line_no SEPARATOR '||' ) as items
-                FROM so_item_detail soid
+        $sql = "SELECT GROUP_CONCAT(CONCAT_WS('::',soi.prod_sku, COALESCE(soi.prod_name,' '), p.name, CAST(soi.qty as CHAR), CAST(soi.unit_price AS CHAR), CAST(soi.amount AS CHAR),CAST(soi.vat_total AS CHAR),IFNULL(p.image,' '),soi.warranty_in_month) ORDER BY soi.line_no SEPARATOR '||' ) as items
+                FROM so_item soi
                 JOIN product p
-                    ON soid.item_sku = p.sku
-                WHERE soid.so_no = ?
-                GROUP BY soid.so_no";
+                    ON soi.prod_sku = p.sku
+                WHERE soi.so_no = ?
+                GROUP BY soi.so_no";
 
         if ($query = $this->db->query($sql, $so_no)) {
             return $query->row()->items;
@@ -668,10 +694,10 @@ SQL;
     public function getOrderItemList($so_no)
     {
         $sql = "
-                SELECT GROUP_CONCAT(CONCAT_WS('::',soid.item_sku, COALESCE(soid.prod_name,' '), p.name, CAST(soid.qty as CHAR), CAST(soid.unit_price AS CHAR), CAST(soid.amount AS CHAR),CAST(soid.vat_total AS CHAR),IFNULL(p.image,' '),soid.warranty_in_month,CAST(o.inventory AS CHAR),CAST(o.outstanding AS CHAR),CAST(o.outorder AS CHAR)) ORDER BY soid.line_no SEPARATOR '||' ) as items
-                FROM so_item_detail soid
+                SELECT GROUP_CONCAT(CONCAT_WS('::',soi.prod_sku, COALESCE(soi.prod_name,' '), p.name, CAST(soi.qty as CHAR), CAST(soi.unit_price AS CHAR), CAST(soi.amount AS CHAR),CAST(soi.vat_total AS CHAR),IFNULL(p.image,' '),soi.warranty_in_month,CAST(o.inventory AS CHAR),CAST(o.outstanding AS CHAR),CAST(o.outorder AS CHAR)) ORDER BY soi.line_no SEPARATOR '||' ) as items
+                FROM so_item soi
                 JOIN product p
-                    ON soid.item_sku = p.sku
+                    ON soi.prod_sku = p.sku
                 LEFT JOIN
                 (
                     SELECT item_sku, IFNULL(inv.inventory,0) AS inventory, sum(so_item_detail.outstanding_qty) AS outstanding, COUNT(so_item_detail.so_no) AS outorder
@@ -692,9 +718,9 @@ SQL;
                                                     )
                     GROUP BY so_item_detail.item_sku
                 ) AS o
-                    ON o.item_sku = soid.item_sku
-                WHERE soid.so_no = ?
-                GROUP BY soid.so_no";
+                    ON o.item_sku = soi.prod_sku
+                WHERE soi.so_no = ?
+                GROUP BY soi.so_no";
 
         if ($query = $this->db->query($sql, [$so_no, $so_no])) {
             return $query->row()->items;
@@ -731,11 +757,11 @@ SQL;
             return FALSE;
         }
 
-        $sql = "SELECT GROUP_CONCAT(CONCAT_WS('::', sid.item_sku, p.name, CAST(sid.qty AS CHAR), CAST(sid.unit_price AS CHAR), CAST(sid.amount AS CHAR)) ORDER BY sid.line_no SEPARATOR '||') AS items
-                FROM so_item_detail AS sid
+        $sql = "SELECT GROUP_CONCAT(CONCAT_WS('::', si.prod_sku, p.name, CAST(si.qty AS CHAR), CAST(si.unit_price AS CHAR), CAST(si.amount AS CHAR)) ORDER BY si.line_no SEPARATOR '||') AS items
+                FROM so_item AS si
                 INNER JOIN product AS p
-                    ON (sid.item_sku = p.sku)
-                WHERE sid.so_no = ?
+                    ON (si.prod_sku = p.sku)
+                WHERE si.so_no = ?
                 GROUP BY so_no";
 
         if ($query = $this->db->query($sql, [$so_no])) {
@@ -754,12 +780,12 @@ SQL;
         $this->db->join('payment_gateway pmgw', 'pmgw.payment_gateway_id = sops.payment_gateway_id', 'LEFT');
 
         if ($option["detail"] != "") {
-            $this->db->join('(SELECT sid.so_no, GROUP_CONCAT(CONCAT_WS(\'::\', sid.item_sku, p.name, CAST(sid.qty AS CHAR), CAST(sid.unit_price AS CHAR), CAST(sid.amount AS CHAR),CAST(sid.vat_total AS CHAR),IFNULL(p.image," "),sid.warranty_in_month)
-                            ORDER BY sid.line_no SEPARATOR \'||\') AS items
-                            FROM so_item_detail AS sid
+            $this->db->join('(SELECT si.so_no, GROUP_CONCAT(CONCAT_WS(\'::\', si.prod_sku, p.name, CAST(si.qty AS CHAR), CAST(si.unit_price AS CHAR), CAST(si.amount AS CHAR),CAST(si.vat_total AS CHAR),IFNULL(p.image," "),si.warranty_in_month)
+                            ORDER BY si.line_no SEPARATOR \'||\') AS items
+                            FROM so_item AS si
                             JOIN product AS p
-                                ON (sid.item_sku = p.sku)
-                            WHERE sid.so_no = \'' . $option["so_no"] . '\'
+                                ON (si.prod_sku = p.sku)
+                            WHERE si.so_no = \'' . $option["so_no"] . '\'
                             GROUP BY so_no) as soi', 'soi.so_no = so.so_no', 'INNER');
             $this->db->select('soi.items, soe.fulfilled', FALSE);
             $this->db->join('(SELECT sbt.so_no, SUM(sbt.received_amt_localcurr) AS bt_total_received, SUM(sbt.bank_charge) AS bt_total_bank_charge
@@ -767,7 +793,7 @@ SQL;
                             WHERE sbt.so_no = \'' . $option["so_no"] . '\') as sobt', 'sobt.so_no = so.so_no', 'LEFT');
             $this->db->select('sobt.bt_total_received, sobt.bt_total_bank_charge', FALSE);
         }
-        $this->db->join('selling_platform sp', 'sp.selling_platform_id = so.platform_id', 'INNER');
+        $this->db->join('selling_platform sp', 'sp.id = so.platform_id', 'INNER');
 
         if ($where["tracking_no"] != "" || $where["tracking_no LIKE "] != "" || isset($option["detail"])) {
             $type = "INNER";
@@ -899,11 +925,11 @@ SQL;
         $this->db->from("so");
         $this->db->join("so_payment_status as sps", "sps.so_no=so.so_no and sps.payment_status='S'", 'INNER');
         $this->db->join("client as c", "c.id=so.client_id and so.status in (2, 3)", 'INNER');
-        $this->db->join("so_item_detail as sid", "sid.so_no=so.so_no", 'INNER');
+        $this->db->join("so_item as si", "si.so_no=so.so_no", 'INNER');
         $this->db->join("so_risk as sr", "sr.so_no=so.so_no and sr.risk_requested=0", 'INNER');
         $this->db->where($where);
         $this->db->select("so.so_no, so.currency_id, so.amount, so.create_at, so.lang_id, so.fingerprint_id, sps.payment_gateway_id, sps.risk_ref3, sps.risk_ref4, sps.payer_email,
-        sid.line_no, sid.item_sku, sid.prod_name, sid.qty, sid.unit_price,
+        si.line_no, si.prod_sku, si.prod_name, si.qty, si.unit_price,
         c.email, c.companyname, c.del_company, c.address_1, c.address_2, c.address_3, c.postcode, c.city, c.state, c.country_id, c.del_address_1, c.del_address_2, c.del_address_3, c.del_postcode, c.del_city, c.del_state, c.del_country_id, c.forename, c.surname, c.tel_1, c.tel_2, c.tel_3");
 
 
@@ -940,13 +966,13 @@ SQL;
         $select_str = "so.so_no, so.platform_id, so.order_create_date, so.delivery_name, so.delivery_country_id, ore.reason, ore.require_payment, so.currency_id, so.amount, so.create_by";
         if ($option["so_item"]) {
             $this->db->join('(
-                            SELECT sid.so_no, GROUP_CONCAT(CONCAT_WS("::", sid.prod_sku, p.name, CAST(sid.qty AS CHAR), CAST(sid.unit_price AS CHAR), CAST(sid.amount AS CHAR)) ORDER BY sid.line_no SEPARATOR "||") AS items
-                            FROM so_item_detail AS sid
+                            SELECT si.so_no, GROUP_CONCAT(CONCAT_WS("::", si.prod_sku, p.name, CAST(si.qty AS CHAR), CAST(si.unit_price AS CHAR), CAST(si.amount AS CHAR)) ORDER BY si.line_no SEPARATOR "||") AS items
+                            FROM so_item AS si
                             LEFT JOIN product AS p
-                                ON (sid.item_sku = p.sku)
+                                ON (si.prod_sku = p.sku)
                             GROUP BY so_no
-                            ) AS soid', 'so.so_no = soid.so_no', 'INNER');
-            $select_str .= ", soid.items";
+                            ) AS soi', 'so.so_no = soi.so_no', 'INNER');
+            $select_str .= ", soi.items";
         } elseif (empty($option["num_rows"]) || isset($where["multiple"])) {
             $where_str = $option["hide_shipped_item"] ? "WHERE sid.status = 0" : "";
             $this->db->join("(
@@ -995,7 +1021,7 @@ SQL;
 
         if ($option["credit_chk"]) {
             $this->db->join('so_credit_chk socc', 'socc.so_no = so.so_no', 'LEFT');
-            $select_str .= "";
+            $select_str .= ", socc.t3m_result";
         }
 
         if ($option["solist"] != "") {
@@ -1046,8 +1072,8 @@ SQL;
             }
 
         } else {
-            if ($where["sid.website_status"]) {
-                $this->db->join("so_item_detail AS sid", "sid.so_no = so.so_no", "LEFT");
+            if ($where["si.website_status"]) {
+                $this->db->join("so_item AS si", "si.so_no = so.so_no", "LEFT");
             }
             $this->db->select(($option["num_rows"] ? 'COUNT(*)' : 'SUM(soid.sum_oqty)') . ' AS total');
 
@@ -1148,9 +1174,9 @@ SQL;
             }
 
         } else {
-            // if ($where["sid.website_status"]) {
-            //     $this->db->join('so_item AS si', 'soid.so_no = si.so_no and soid.line_no = si.line_no and soid.item_sku = si.prod_sku', 'INNER');
-            // }
+            if ($where["si.website_status"]) {
+                $this->db->join('so_item AS si', 'soid.so_no = si.so_no and soid.line_no = si.line_no and soid.item_sku = si.prod_sku', 'INNER');
+            }
             $this->db->select(($option["num_rows"] ? 'COUNT(*)' : 'SUM(soid.outstanding_qty)') . ' AS total');
             if ($query = $this->db->get()) {
                 return $query->row()->total;
@@ -1246,9 +1272,9 @@ SQL;
         }
 
         $this->db->from('so');
-        $this->db->join('so_item_detail soid', 'so.so_no = soid.so_no', 'LEFT');
+        $this->db->join('so_item soi', 'so.so_no = soi.so_no', 'LEFT');
         $this->db->where(["so.status" => 1, "so.platform_id" => $platform, "so.biz_type" => "AMAZON"]);
-        $this->db->select('so.platform_order_id, so.so_no, \'Success\' as status_code, soid.ext_item_cd, soid.item_sku', FALSE);
+        $this->db->select('so.platform_order_id, so.so_no, \'Success\' as status_code, soi.ext_item_cd, soi.prod_sku', FALSE);
 
         $rs = [];
 
@@ -1270,19 +1296,19 @@ SQL;
         }
 
         $this->db->from('so');
-        $this->db->join('so_item_detail soid', 'so.so_no = soid.so_no', 'LEFT');
+        $this->db->join('so_item soi', 'so.so_no = soi.so_no', 'LEFT');
         $this->db->join('so_extend soext', 'so.so_no = soext.so_no AND soext.fulfilled=\'N\'', 'INNER');
         $this->db->join('(SELECT soa.so_no, soa.line_no, sosh.courier_id, sosh.tracking_no
                             FROM so_shipment sosh
                             JOIN so_allocate soa
                                 ON soa.sh_no = sosh.sh_no
                             WHERE soa.status = \'3\'
-                            AND sosh.status=\'2\') AS soash', 'soash.so_no = soid.so_no ', 'INNER');
+                            AND sosh.status=\'2\') AS soash', 'soash.so_no = soi.so_no ', 'INNER');
 
         $this->db->where(["so.status" => 6, "so.platform_id" => $platform]);
-        $this->db->select('so.platform_order_id, so.so_no, so.dispatch_date as shipdate, soid.ext_item_cd, soid.item_sku, soid.qty, soash.courier_id, soash.tracking_no', FALSE);
+        $this->db->select('so.platform_order_id, so.so_no, so.dispatch_date as shipdate, soi.ext_item_cd, soi.prod_sku, soi.qty, soash.courier_id, soash.tracking_no', FALSE);
 
-        $this->db->group_by("soid.ext_item_cd");
+        $this->db->group_by("soi.ext_item_cd");
         $this->db->order_by("so.so_no", "ASC");
 
         $rs = [];
@@ -1305,9 +1331,9 @@ SQL;
         }
 
         $this->db->from('so');
-        $this->db->join('so_item_detail soid', 'so.so_no = soid.so_no', 'LEFT');
+        $this->db->join('so_item soi', 'so.so_no = soi.so_no', 'LEFT');
         $this->db->join('so_extend soext', 'so.so_no = soext.so_no AND soext.fulfilled=\'N\'', 'INNER');
-        $this->db->join('so_allocate soa', "soa.so_no = so.so_no AND soa.line_no = soid.line_no AND soa.item_sku = soid.item_sku", 'INNER');
+        $this->db->join('so_allocate soa', "soa.so_no = so.so_no AND soa.line_no = soi.line_no AND soa.item_sku = soi.prod_sku", 'INNER');
         $this->db->join('so_shipment sosh', "sosh.sh_no = soa.sh_no", 'INNER');
         $this->db->where(["so.status" => 6, "so.refund_status" => 0, "so.platform_id" => $platform, "sosh.status" => 2, "soa.status" => 3]);
         $this->db->select('so.platform_order_id, so.so_no, so.dispatch_date as shipdate, sosh.courier_id, sosh.tracking_no', FALSE);
@@ -1490,7 +1516,7 @@ SQL;
                     ON(b.id = p.brand_id)
                 INNER JOIN platform_biz_var pbz
                     ON(pbz.selling_platform_id = so.platform_id)
-                INNER JOIN selling_platform sp on pbz.selling_platform_id = sp.selling_platform_id
+                INNER JOIN selling_platform sp on pbz.selling_platform_id = sp.id
                 LEFT JOIN
                 (
                     SELECT r.so_no, r.reason, r.total_refund_amount,
@@ -1588,16 +1614,16 @@ SQL;
         }
 
         $sql = "SELECT
-                so.so_no, soa.warehouse_id, smm.ext_sku, soid.prod_name, soid.qty, pcc.`code`, so.order_create_date, soh.create_on pack_date,
+                so.so_no, soa.warehouse_id, smm.ext_sku, soi.prod_name, soi.qty, pcc.`code`, so.order_create_date, soh.create_on pack_date,
                 so.dispatch_date, so.amount, fc.country_id fc_country, so.delivery_country_id, soh.courier_id, soh.tracking_no, so.rate, so.currency_id
                 from so so
-                INNER JOIN so_item_detail soid on so.so_no = soid.so_no
-                INNER JOIN so_allocate soa on soa.so_no = so.so_no and soid.line_no = soa.line_no
+                INNER JOIN so_item soi on so.so_no = soi.so_no
+                INNER JOIN so_allocate soa on soa.so_no = so.so_no and soi.line_no = soa.line_no
                 INNER JOIN so_shipment soh on soa.sh_no = soh.sh_no
                 LEFT JOIN warehouse wh on wh.id = soa.warehouse_id
                 LEFT JOIN fulfillment_centre fc on fc.id = wh.fc_id
-                LEFT JOIN product_custom_classification pcc on soid.item_sku = pcc.sku and so.delivery_country_id = pcc.country_id
-                LEFT JOIN sku_mapping smm on soid.item_sku = smm.sku and smm.status ='1' and smm.ext_sys ='WMS'
+                LEFT JOIN product_custom_classification pcc on soi.prod_sku = pcc.sku and so.delivery_country_id = pcc.country_id
+                LEFT JOIN sku_mapping smm on soi.prod_sku = smm.sku and smm.status ='1' and smm.ext_sys ='WMS'
                 $where_clause2
                 $where_clause";
 
@@ -1662,7 +1688,7 @@ SQL;
                     LEFT JOIN so_payment_status sps ON(sps.so_no = so.so_no)
                     INNER JOIN product p ON(soid.item_sku = p.sku)
                     INNER JOIN platform_biz_var pbz ON(pbz.selling_platform_id = so.platform_id)
-                    INNER JOIN selling_platform sp on pbz.selling_platform_id = sp.selling_platform_id
+                    INNER JOIN selling_platform sp on pbz.selling_platform_id = sp.id
                     LEFT JOIN
                             (
                                 SELECT
@@ -1711,12 +1737,12 @@ SQL;
 
         $sql = <<<SQL
                     SELECT
-                        so.platform_id, soex.conv_site_id, so.so_no, so.create_on, sid.prod_name,
-                        sid.prod_sku, sid.qty, c.email, c.forename, c.surname,so.refund_status, so.hold_status, so.status
+                        so.platform_id, soex.conv_site_id, so.so_no, so.create_on, si.prod_name,
+                        si.prod_sku, si.qty, c.email, c.forename, c.surname,so.refund_status, so.hold_status, so.status
                     FROM so
                     inner join so_extend soex on soex.so_no = so.so_no
                     inner join so_hold_reason sr on sr.so_no = so.so_no
-                    inner join so_item_detail sid on sid.so_no = so.so_no
+                    inner join so_item si on si.so_no = so.so_no
                     inner join client c on c.id = so.client_id
                     WHERE
                         so.status >= '2' AND so.status <= '5' AND so.hold_status = '0' AND so.refund_status = '0'
@@ -2254,8 +2280,10 @@ SQL;
                                 FROM so
                                 JOIN platform_biz_var pbv
                                     ON (pbv.platform_country_id = so.bill_country_id)
+                                JOIN so_item soi
+                                    ON (soi.so_no = so.so_no)
                                 JOIN so_item_detail soid
-                                    ON (soid.so_no = so.so_no)" .
+                                    ON (soid.so_no = soi.so_no AND soid.line_no = soi.line_no)" .
             $join_clause .
             "WHERE so.status >= 2 AND so.biz_type = 'SKYPE' AND (so.order_create_date > ? AND so.order_create_date < ?)" .
             $where_clause .
@@ -2423,7 +2451,7 @@ SQL;
                             LEFT JOIN category ssc
                                 ON (ssc.id = p.sub_sub_cat_id)
                             INNER JOIN selling_platform as sp
-                                ON (so.platform_id = sp.selling_platform_id)
+                                ON (so.platform_id = sp.id)
                             INNER JOIN exchange_rate as ex
                                 ON (so.currency_id = ex.from_currency_id AND ex.to_currency_id = '$curr')
                             WHERE so.status >= 2 AND so.biz_type <> 'SPECIAL' $where
@@ -2562,16 +2590,16 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'so.dispatch_date, c.forename, c.surname, c.email, so.order_create_date purchase_date, c.id client_id, c.postcode, so.delivery_country_id, soid.so_no, soid.item_sku, so.currency_id, soid.amount');
     }
 
-    public function getOrderInfoForDynamicShipmentStatus($where)
+    public function get_order_info_for_dynamic_shipment_status($where)
     {
         $this->db->from("so");
         $this->db->join("so_payment_status sops", "sops.so_no=so.so_no", "INNER");
         $this->db->join("so_extend soext", "soext.so_no=so.so_no", "LEFT");
 
         $select_str = "
-                    so.so_no as so_no, if('sops.pay_date', 'sops.pay_date', 'so.order_create_date') as pay_date,
+                    so.so_no as so_no, if(sops.pay_date, sops.pay_date, so.order_create_date) as pay_date,
                     so.status as order_status,
-                    soext.aftership_status,
+                    soext.aftership_status as aftership_status,
                     soext.aftership_checkpoint as last_update_time,
                     so.dispatch_date,
                     so.delivery_country_id
@@ -2594,11 +2622,12 @@ SQL;
 
     public function getSoItemTotalQtyBySku($so_no, $sku, $where = [], $option = [])
     {
-        $select_str = "soid.so_no, soid.item_sku, sum(soid.qty) as soi_qty, sum(soid.qty) as soid_qty";
-        $this->db->from("so_item_detail AS soid");
+        $select_str = "soi.so_no, soi.prod_sku, sum(soi.qty) as soi_qty, sum(soid.qty) as soid_qty";
+        $this->db->from("so_item AS soi");
+        $this->db->join("so_item_detail AS soid", "soid.so_no = soi.so_no AND soid.line_no = soi.line_no AND soid.item_sku = soi.prod_sku", "LEFT");
 
-        $where["soid.so_no"] = $so_no;
-        $where["soid.item_sku"] = $sku;
+        $where["soi.so_no"] = $so_no;
+        $where["soi.prod_sku"] = $sku;
         $this->db->select($select_str);
         $this->db->where($where);
 
@@ -2619,10 +2648,10 @@ SQL;
 
         $option = ["limit" => -1];
         $this->db->from("so");
-        $this->db->join("so_item_detail AS soid", "soid.so_no = so.so_no", "INNER");
+        $this->db->join("so_item AS soi", "soi.so_no = so.so_no", "INNER");
         $this->db->join("so_payment_status as sops", "so.so_no = sops.so_no", "LEFT");
         $this->db->join("client AS c", "c.id = so.client_id", "INNER");
-        $this->db->join("product AS p", "p.sku = soid.item_sku", "INNER");
+        $this->db->join("product AS p", "p.sku = soi.prod_sku", "INNER");
         $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = so.platform_id", "INNER");
 
         # so.hold_status = 15 means this is parent of order with split. We exclude parent and use each split child with concatenated so_no with split_so_group
@@ -2635,7 +2664,7 @@ SQL;
                 IF(ISNULL(so.split_so_group), so.so_no, CONCAT_WS('/',so.split_so_group,so.so_no)) AS join_split_so_no,
                 so.split_so_group,
                 c.id client_id,
-                so.order_create_date, so.delivery_name, p.sku, soid.prod_name, soid.amount,
+                so.order_create_date, so.delivery_name, p.sku, soi.prod_name, soi.amount,
                 so.status, so.refund_status, so.hold_status, so.dispatch_date, sops.payment_gateway_id");
     }
 
@@ -2699,7 +2728,7 @@ SQL;
     public function get_flex_sales_invoice($where, $classname = "SalesInvoiceDto")
     {
         $option['limit'] = -1;
-        $this->db->from("(select so.so_no, so.biz_type, so.parent_so_no, so.status,
+        $this->db->from("(select so.so_no, so.biz_type, so.parent_so_no, so.status, 
         so.client_id, so.currency_id, so.platform_id,so.client_promotion_code,so.dispatch_date,so.order_create_date,so.delivery_charge,so.split_so_group,soex.order_reason,
         sum(fr.amount) as amount, fr.txn_id, fr.txn_time, fr.flex_batch_id, fr.gateway_id from so
         INNER JOIN so_extend soex on so.so_no = soex.so_no LEFT JOIN flex_ria fr ON so.so_no = fr.so_no group by so.so_no) tbl_1");
@@ -2783,7 +2812,7 @@ SQL;
         $this->db->join("so_shipment AS sosh", "sosh.sh_no = soal.sh_no", "INNER");
         $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = so.platform_id", "INNER");
         $this->db->where(["so.biz_type" => "EBAY", "soex.fulfilled" => "N", "sosh.status" => 2, "so.status" => 6, "soid.amount >" => 0]);
-        $this->db->group_by("so.so_no");
+        $this->db->groupby("so.so_no");
 
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, soi.ext_item_cd , count(*) item_count, sosh.courier_id, sosh.tracking_no, so.dispatch_date, pbv.platform_country_id');
     }
@@ -2801,7 +2830,7 @@ SQL;
         $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = so.platform_id", "INNER");
         $this->db->join("courier", "sosh.courier_id = courier.id", "INNER");
         $this->db->where(["so.biz_type" => "QOO10", "soex.fulfilled" => "N", "sosh.status" => 2, "so.status" => 6, "so.refund_status" => 0, "soid.amount >" => 0]);
-        $this->db->group_by("so.so_no");
+        $this->db->groupby("so.so_no");
 
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, so.txn_id, courier.courier_name, soi.ext_item_cd , count(*) item_count, sosh.courier_id, sosh.tracking_no, so.dispatch_date, pbv.platform_country_id');
     }
@@ -2819,7 +2848,7 @@ SQL;
         $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = so.platform_id", "INNER");
         $this->db->join("courier", "sosh.courier_id = courier.id", "INNER");
         $this->db->where(["(so.biz_type = 'RAKUTEN' OR so.biz_type = 'WEBSITE' OR so.biz_type = 'MANUAL')" => NULL, "soex.fulfilled" => "N", "sosh.status" => 2, "so.status" => 6, "so.refund_status" => 0, "soid.amount >" => 0]);
-        $this->db->group_by("so.so_no");
+        $this->db->groupby("so.so_no");
 
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, so.txn_id, courier.courier_name, soi.ext_item_cd , count(*) item_count, sosh.courier_id, sosh.tracking_no, so.dispatch_date, pbv.platform_country_id');
     }
@@ -2837,16 +2866,16 @@ SQL;
             "DATEDIFF(now(), so.dispatch_date) = (IF(DATE_FORMAT(now(), '%w') = 5, 4, 6))" => null,
             "so.biz_type IN ('ONLINE', 'MOBILE', 'EBAY', 'MANUAL', 'OFFLINE')" => null,
             "so.status" => 6, "sosh.status" => 2]);
-        $this->db->group_by("so.so_no, soal.warehouse_id");
+        $this->db->groupby("so.so_no, soal.warehouse_id");
 
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.biz_type, so.platform_id, so.delivery_country_id, soal.warehouse_id, sosh.courier_id, cl.forename, cl.email, soex.conv_site_id');
     }
 
-    public function getProfitMargin($so_no)
+    public function get_profit_margin($so_no)
     {
         $this->db->from("so_item_detail soid");
         $this->db->where(["soid.so_no" => $so_no, "soid.amount > 0" => null]);
-        $this->db->group_by("soid.so_no");
+        $this->db->groupby("soid.so_no");
         $this->db->limit(1);
         $this->db->select('soid.so_no, count(1) as number_of_items, sum(profit*qty)/sum(amount) as order_margin');
 
@@ -2864,7 +2893,7 @@ SQL;
         $this->db->from("so");
         $this->db->join("so_extend AS soext", "soext.so_no = so.so_no", "INNER");
         $this->db->where(["so.so_no" => $so_no]);
-        $this->db->group_by("so.so_no");
+        $this->db->groupby("so.so_no");
         $this->db->select('so.biz_type, so.order_create_date, so.delivery_country_id, soext.conv_site_id');
 
         if ($query = $this->db->get()) {
@@ -3461,7 +3490,7 @@ SQL;
 
         $this->db->from('so');
         $this->db->join('integrated_order_fulfillment iof', 'iof.so_no = so.so_no', 'INNER');
-        $this->db->join('selling_platform sp', 'so.platform_id = sp.selling_platform_id', 'INNER');
+        $this->db->join('selling_platform sp', 'so.platform_id = sp.id', 'INNER');
         $this->db->join('so_item_detail soid', 'so.so_no = soid.so_no AND soid.item_sku = iof.sku and soid.line_no=iof.line_no', 'INNER');
         $this->db->join('product p', 'p.sku = soid.item_sku', 'INNER');
         $this->db->join('sku_mapping sm', 'sm.sku = p.sku', 'LEFT');
@@ -3636,7 +3665,7 @@ SQL;
                 si.prod_sku ,si.qty ,sm.ext_sku, pr.name ,pr.create_on as sku_create_on';
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
-
+    
     public function getNewSoNo()
     {
         return $this->db->query("SELECT next_value('so_no') as so_no")->row('so_no');

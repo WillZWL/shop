@@ -129,6 +129,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\ClientDao();
         };
 
+        $daoContainer['Delivery'] = function () {
+            return new D\DeliveryDao();
+        };
+
         $daoContainer['DeliveryTime'] = function () {
             return new D\DeliveryTimeDao();
         };

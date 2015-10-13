@@ -3,6 +3,7 @@ class ProductVo extends \BaseVo
 {
     private $id;
     private $sku;
+    private $sku_vb = '';
     private $sku_bak = '';
     private $prod_grp_cd;
     private $colour_id;
@@ -66,6 +67,16 @@ class ProductVo extends \BaseVo
     public function getSku()
     {
         return $this->sku;
+    }
+
+    public function setSkuVb($sku_vb)
+    {
+        $this->sku_vb = $sku_vb;
+    }
+
+    public function getSkuVb()
+    {
+        return $this->sku_vb;
     }
 
     public function setSkuBak($sku_bak)

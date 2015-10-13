@@ -6,7 +6,7 @@ class ReleaseOrderReportDao extends BaseDao
     private $tableName = "release_order_history";
     private $voClassName = "ReleaseOrderHistoryVo";
 
-    public function get_vo_classname()
+    public function getVoClassname()
     {
         return $this->voClassName;
     }

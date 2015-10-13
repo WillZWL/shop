@@ -24,6 +24,6 @@ class EventDao extends BaseDao
         $this->db->from('action a');
         $this->db->join('event e', 'a.event_id = e.event_id', 'inner');
 
-        return $this->db->commonGetList($className, $where, $option, 'a.event_id, a.action');
+        return $this->commonGetList($className, $where, $option, 'a.event_id, a.action');
     }
 }
