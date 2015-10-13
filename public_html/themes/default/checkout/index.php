@@ -24,20 +24,20 @@
                         <p><?=_("Guest Checkout")?>:</p>
                         <div class="radio">
                         </div>
-                        <input type="button" class="btn btn-primary" data-loading-text="Loading..." id="button-account" value="Continue">
+                        <input type="button" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="button-account" value="<?=_("Continue")?>">
                       </div>
                       <div class="col-sm-6">
-                        <h2>Returning Customer</h2>
-                        <p>I am a returning customer</p>
+                        <h2><?=_("Returning Customer")?></h2>
+                        <p><?=_("I am a returning customer")?></p>
                         <div class="form-group">
-                          <label for="input-email" class="control-label">E-Mail</label>
-                          <input type="text" class="form-control" id="input-email" placeholder="E-Mail" value="" name="email">
+                          <label for="input-email" class="control-label"><?=_("E-Mail")?></label>
+                          <input type="text" class="form-control" id="input-email" placeholder="<?=_("E-Mail")?>" value="" name="email">
                         </div>
                         <div class="form-group">
-                          <label for="input-password" class="control-label">Password</label>
-                          <input type="password" class="form-control" id="input-password" placeholder="Password" value="" name="password">
-                          <a href="http://www.themelexus.com/demo/opencart/motozz/demo3/index.php?route=account/forgotten">Forgotten Password</a></div>
-                        <input type="button" class="btn btn-primary" data-loading-text="Loading..." id="button-login" value="Login">
+                          <label for="input-password" class="control-label"><?=_("Password")?></label>
+                          <input type="password" class="form-control" id="input-password" placeholder="<?=_("Password")?>" value="" name="password">
+                          <a href=""><?=_("Forgotten Password")?></a></div>
+                        <input type="button" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="button-login" value="Login">
                       </div>
                     </div>            
                 </div>
@@ -47,7 +47,7 @@
             <div class="panel-heading noicon">
                 <h4 class="panel-title">
                     <a class="accordion-toggle" href="#collapse-payment-address">
-                        Step 2: Account &amp; Billing Details
+                        <?=_("Step 2: Account &amp; Billing Details")?>
                         <i class=""></i>
                     </a>
                 </h4>
@@ -57,80 +57,73 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <fieldset id="account">
-                          <legend>Your Personal Details</legend>
-                          <div style="display: none;" class="form-group">
-                            <label class="control-label">Customer Group</label>
-                            <div class="radio">
-                              <label>
-                              <input type="radio" checked="checked" value="1" name="customer_group_id" /> Default</label>
-                            </div>
+                          <legend><?=_("Your Personal Details")?></legend>
+                          <div class="form-group required">
+                              <label for="billingFirstName" class="control-label"><?=_("First Name")?></label> 
+                              <input type="text" class="form-control" maxlength=50 id="billingFirstName" placeholder="<?=_("First Name")?>" value="" name="billingFirstName" />
                           </div>
                           <div class="form-group required">
-                              <label for="billingFirstName" class="control-label">First Name</label> 
-                              <input type="text" class="form-control" id="billingFirstName" placeholder="First Name" value="" name="billingFirstName" />
+                              <label for="billingLastName" class="control-label"><?=_("Last Name")?></label> 
+                              <input type="text" class="form-control" maxlength=50 id="billingLastName" placeholder="<?=_("Last Name")?>" value="" name="billingLastName" />
                           </div>
                           <div class="form-group required">
-                              <label for="billingLastName" class="control-label">Last Name</label> 
-                              <input type="text" class="form-control" id="billingLastName" placeholder="Last Name" value="" name="billingLastName" />
-                          </div>
+                          <label for="billingEmail" class="control-label"><?=_("E-Mail")?></label> 
+                          <input type="text" class="form-control" id="billingEmail" placeholder="<?=_("E-Mail")?>" value="" name="billingEmail" /></div>
                           <div class="form-group required">
-                          <label for="billingEmail" class="control-label">E-Mail</label> 
-                          <input type="text" class="form-control" id="billingEmail" placeholder="E-Mail" value="" name="billingEmail" /></div>
-                          <div class="form-group required">
-                              <label class="control-label">Telephone</label> 
+                              <label class="control-label"><?=_("Telephone")?></label> 
                               <div>
-                                  <input type="text" maxlength=3 class="form-control" id="billingTelCountryCode" placeholder="Country Code" value="" name="billingTelCountryCode" />
-                                  <input type="text" maxlength=3 class="form-control" id="billingTelAreaCode" placeholder="Area Code" value="" name="billingTelAreaCode" />
-                                  <input type="text" class="form-control" id="billingTelNumber" placeholder="Telephone" value="" name="billingTelNumber" />
+                                  <input type="text" maxlength=3 class="form-control" id="billingTelCountryCode" placeholder="<?=_("Country Code")?>" value="" name="billingTelCountryCode" />
+                                  <input type="text" maxlength=3 class="form-control" id="billingTelAreaCode" placeholder="<?=_("Area Code")?>" value="" name="billingTelAreaCode" />
+                                  <input type="text" maxlength=32 class="form-control" id="billingTelNumber" placeholder="<?=_("Telephone")?>" value="" name="billingTelNumber" />
                               </div>
                           </div>
                         </fieldset>
                         <fieldset>
-                          <legend>Your Password</legend>
+                          <legend><?=_("Your Password")?></legend>
                           <div class="form-group">
-                              <label for="billingPassword" class="control-label">Password</label> 
-                              <input type="password" class="form-control" id="billingPassword" placeholder="Password" value="" name="billingPassword" /></div>
+                              <label for="billingPassword" class="control-label"><?=_("Password")?></label> 
+                              <input type="password" class="form-control" id="billingPassword" placeholder="<?=_("Password")?>" value="" name="billingPassword" /></div>
                           <div class="form-group">
-                              <label for="billingConfirmPassword" class="control-label">Password Confirm</label> 
-                              <input type="password" class="form-control" id="billingConfirmPassword" placeholder="Password Confirm" value="" name="billingConfirmPassword" />
+                              <label for="billingConfirmPassword" class="control-label"><?=_("Password Confirm")?></label> 
+                              <input type="password" class="form-control" id="billingConfirmPassword" placeholder="<?=_("Password Confirm")?>" value="" name="billingConfirmPassword" />
                           </div>
                         </fieldset>
                       </div>
                       <div class="col-sm-6">
                         <fieldset id="address" class="required">
-                          <legend>Your Address</legend>
+                          <legend><?=_("Your Address")?></legend>
                           <div class="form-group">
-                              <label for="billingCompany" class="control-label">Company</label> 
-                              <input type="text" class="form-control" id="billingCompany" placeholder="Company" value="" name="billingCompany" />
+                              <label for="billingCompany" class="control-label"><?=_("Company")?></label> 
+                              <input type="text" class="form-control" maxlength=50 id="billingCompany" placeholder="<?=_("Company")?>" value="" name="billingCompany" />
                           </div>
                           <div class="form-group required">
-                              <label for="billingAddress1" class="control-label">Address 1</label> 
-                              <input type="text" class="form-control" id="billingAddress1" placeholder="Address 1" value="" name="billingAddress1" />
+                              <label for="billingAddress1" class="control-label"><?=_("Address 1")?></label> 
+                              <input type="text" class="form-control" maxlength=1024 id="billingAddress1" placeholder="<?=_("Address 1")?>" value="" name="billingAddress1" />
                           </div>
                           <div class="form-group">
-                              <label for="billingAddress2" class="control-label">Address 2</label> 
-                              <input type="text" class="form-control" id="billingAddress2" placeholder="Address 2" value="" name="billingAddress2" />
+                              <label for="billingAddress2" class="control-label"><?=_("Address 2")?></label> 
+                              <input type="text" class="form-control" maxlength=1024 id="billingAddress2" placeholder="<?=_("Address 2")?>" value="" name="billingAddress2" />
                           </div>
                           <div class="form-group required">
-                              <label for="billingCity" class="control-label">City</label> 
-                              <input type="text" class="form-control" id="billingCity" placeholder="City" value="" name="billingCity" />
+                              <label for="billingCity" class="control-label"><?=_("City")?></label> 
+                              <input type="text" class="form-control" id="billingCity" placeholder="<?=_("City")?>" value="" name="billingCity" />
                           </div>
                           <div class="form-group required">
-                              <label for="billingPostal" class="control-label">Post Code</label> 
-                              <input type="text" class="form-control" id="billingPostal" placeholder="Post Code" value="" name="billingPostal" />
+                              <label for="billingPostal" class="control-label"><?=_("Post Code")?></label> 
+                              <input type="text" class="form-control" id="billingPostal" placeholder="<?=_("Post Code")?>" value="" name="billingPostal" />
                           </div>
                           <div class="form-group required">
-                              <label for="billingCountry" class="control-label">Country</label> 
+                              <label for="billingCountry" class="control-label"><?=_("Country")?></label> 
                               <select class="form-control" id="billingCountry" name="billingCountry">
                                 <option value="<?php print $billing["countryId"]?>"><?php print $billing["countryName"]?></option>
                               </select>
                           </div>
                           <div class="form-group required">
-                              <label for="billingState" class="control-label">County / State</label> 
+                              <label for="billingState" class="control-label"><?=_("County / State")?></label> 
                               <select class="form-control" id="billingState" name="billingState">
-                                  <option value="-1"> -- select County / State -- </option>
+                                  <option value=""> -- <?=_("select County / State")?> -- </option>
                                   <?php foreach ($billingStateList as $stateObj): ?>
-                                    <option value="<?php print $stateObj->getCountryId();?>"><?php print $stateObj->getName();?>"</option>
+                                    <option value="<?php print $stateObj->getStateId();?>"><?php print $stateObj->getName();?></option>
                                   <?php endforeach ?>
                               </select>
                           </div>
@@ -147,7 +140,7 @@
                     </div>
                     <div class="buttons">
                         <div class="pull-right">
-                            <input id="button-payment-address" class="btn btn-primary" type="button" data-loading-text="Loading..." value="Continue">
+                            <input id="button-payment-address" class="btn btn-primary" type="button" data-loading-text="<?=_("Loading...")?>" value="<?=_("Continue")?>">
                         </div>
                     </div>
                 </div>
@@ -157,7 +150,7 @@
           <div class="panel-heading noicon">
             <h4 class="panel-title">
                 <a class="accordion-toggle" data-parent="#accordion" data-toggle="collapse" href="#collapse-shipping-address">
-                    Step 3: Delivery Details
+                    <?=_("Step 3: Delivery Details")?>
                     <i class=""></i>
                 </a>
             </h4>
@@ -167,7 +160,7 @@
                 <form class="form-horizontal">
                   <div class="radio">
                     <label>
-                    <!-- <input type="radio" checked="checked" value="existing" name="shipping_address" />--> We could only ship to the billing address!</label>
+                    <!-- <input type="radio" checked="checked" value="existing" name="shipping_address" />--> <?=_("We could only ship to the billing address!")?></label>
                   </div>
                   <div class="radio">
                     <label>
@@ -241,7 +234,7 @@
                   </div>
                   <div class="buttons clearfix">
                     <div class="pull-right">
-                      <input type="button" class="btn btn-primary" data-loading-text="Loading..." id="button-shipping-address" value="Continue" />
+                      <input type="button" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="button-shipping-address" value="<?=_("Continue")?>" />
                     </div>
                   </div>
                 </form>
@@ -267,7 +260,7 @@
           <div class="panel-heading noicon">
             <h4 class="panel-title">
                 <a class="accordion-toggle" data-parent="#accordion" data-toggle="collapse" href="#collapse-payment-method">
-                   Step 4: Payment Method
+                   <?=_("Step 4: Payment Method")?>
                    <i class=""></i>
                 </a>
             </h4>
@@ -284,7 +277,7 @@
                 <div class="buttons">
                     <div class="pull-right">
                         <input type="hidden" name="formSalt" id='formSalt' value="<?=$formSalt;?>">
-                        <input type="submit" class="btn btn-primary" data-loading-text="Loading..." id="checkoutNow" value="Continue" />
+                        <input type="submit" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="checkoutNow" value="<?=_("Continue")?>" />
                     </div>
                 </div>
             </div>
@@ -306,7 +299,7 @@ function displayCheckoutNowButton($show)
 }
 
 $(document).ready(function() {
-    if ($("#billingState").length == 1) {
+    if ($("#billingState option").length == 1) {
         $('#billingState').prop('disabled', 'disabled');
         $('#billingState').parent().removeClass("required");
     }
@@ -409,21 +402,22 @@ function validateCheckout()
             validating: "glyphicon glyphicon-refresh"
         },
         excluded: ":disabled",
+        live: "submitted", /*enabled, submitted, disabled*/
         fields: {
             billingFirstName: {
                 row: ".form-group",
                 validators: {
                     notEmpty: {
-                        message: "The billing first name is required"
+                        message: "<?=_("The billing first name is required")?>"
                     },
                     stringLength: {
                         min: 1,
-                        max: 128,
-                        message: "The billing first name must be more than 1 and less than 128 characters long"
+                        max: 50,
+                        message: "<?=_("The billing first name must be more than 1 and less than 50 characters long")?>"
                     },
                     regexp: {
                         regexp: /^([ \u00c0-\u01ffa-zA-Z0-9'\-])+$/,
-                        message: "The billing first name can only consist of alphabetical, number"
+                        message: "<?=_("The billing first name can only consist of alphabetical, number")?>"
                     }
                 }
             },
@@ -431,16 +425,16 @@ function validateCheckout()
                 row: ".form-group",
                 validators: {
                     notEmpty: {
-                        message: "The billing last name is required"
+                        message: "<?=_("The billing last name is required") ?>"
                     },
                     stringLength: {
                         min: 1,
-                        max: 128,
-                        message: "The billing last name must be more than 1 and less than 128 characters long"
+                        max: 50,
+                        message: "<?=_("The billing last name must be more than 1 and less than 50 characters long")?>"
                     },
                     regexp: {
                         regexp: /^([ \u00c0-\u01ffa-zA-Z0-9'\-])+$/,
-                        message: "The billing last name can only consist of alphabetical, number"
+                        message: "<?=_("The billing last name can only consist of alphabetical, number")?>"
                     }
                 }
             },
@@ -448,12 +442,12 @@ function validateCheckout()
                 row: ".form-group",
                 validators: {
                     stringLength: {
-                        max: 128,
-                        message: "The billing company name cannot be longer than 128 characters"
+                        max: 50,
+                        message: "<?=_("The billing company name cannot be longer than 50 characters")?>"
                     },
                     regexp: {
                         regexp: /^([ \u00c0-\u01ffa-zA-Z0-9'\-])+$/,
-                        message: "The billing company name can only consist of alphabetical, number"
+                        message: "<?=_("The billing company name can only consist of alphabetical, number")?>"
                     }
                 }
             },
@@ -461,16 +455,30 @@ function validateCheckout()
                 row: ".form-group",
                 validators: {
                     notEmpty: {
-                        message: "The billing address is required"
+                        message: "<?=_("The billing address 1 is required")?>"
                     },
                     regexp: {
                         regexp: /^([ \u00c0-\u01ffa-zA-Z0-9,'\-\/#])+$/,
-                        message: "The billing company name can only consist of alphabetical, number"
+                        message: "<?=_("The billing address1 name can only consist of alphabetical, number")?>"
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 1024,
+                        message: "<?=_("The billing address must be more than 1 and less than 1024 characters long")?>"
+                    }
+                }
+            },
+            billingAddress2: {
+                row: ".form-group",
+                validators: {
+                    regexp: {
+                        regexp: /^([ \u00c0-\u01ffa-zA-Z0-9,'\-\/#])+$/,
+                        message: "<?=_("The billing address2 name can only consist of alphabetical, number")?>"
                     },                    
                     stringLength: {
                         min: 1,
-                        max: 256,
-                        message: "The billing address must be more than 1 and less than 256 characters long"
+                        max: 1024,
+                        message: "<?=_("The billing address must be more than 1 and less than 1024 characters long")?>"
                     }
                 }
             },
@@ -478,16 +486,16 @@ function validateCheckout()
                 row: ".form-group",
                 validators: {
                     notEmpty: {
-                        message: "The billing city is required"
+                        message: "<?=_("The billing city is required")?>"
                     },
                     stringLength: {
                         min: 1,
-                        max: 128,
-                        message: "The billing city must be more than 1 and less than 128 characters long"
+                        max: 80,
+                        message: "<?=_("The billing city must be more than 1 and less than 128 characters long")?>"
                     },
                     regexp: {
                         regexp: /^([ \u00c0-\u01ffa-zA-Z0-9'\-])+$/,
-                        message: "The billing city can only consist of alphabetical, number"
+                        message: "<?=_("The billing city can only consist of alphabetical, number")?>"
                     }
                 }
             },
@@ -495,11 +503,11 @@ function validateCheckout()
                 row: ".form-group",
                 validators: {
                     notEmpty: {
-                        message: "The Zip/Postal Code is required"
+                        message: "<?=_("The Zip/Postal Code is required")?>"
                     },
                     zipCode: {
                         country: "billingCountry",
-                        message: "The value is not valid %s Zip/Postal Code"
+                        message: "<?=_("The value is not valid %s Zip/Postal Code")?>"
                     }
                 }
             },
@@ -507,7 +515,11 @@ function validateCheckout()
                 row: ".form-group",
                 validators: {
                     notEmpty: {
-                        message: "The billing telephone number is required"
+                        message: "<?=_("The billing telephone number is required")?>"
+                    },
+                    regexp: {
+                        regexp: /^\+?(\(?\+?(\s*)?\d{1,3}\)?\s)?\(?\d{3}\)?[\s\d.-]{1,20}\d*$/,
+                        message: "<?=_("The billing telephone is not valid")?>"
                     }
                 }
             },
@@ -515,15 +527,15 @@ function validateCheckout()
                 row: ".form-group",
                 validators: {
                     notEmpty: {
-                        message: "The email is required"
+                        message: "<?=_("The email is required")?>"
                     },
                     stringLength: {
                         min: 3,
                         max: 256,
-                        message: "Email must be more than 3 and less than 256 characters long"
+                        message: "<?=_("Email must be more than 3 and less than 256 characters long")?>"
                     },
                     emailAddress: {
-                        message: "The value is not a valid email address"
+                        message: "<?=_("The value is not a valid email address")?>"
                     }
                 }
             },
@@ -532,10 +544,20 @@ function validateCheckout()
                 validators: {
                     identical: {
                         field: "billingPassword",
-                        message: "The password and its confirm are not the same"
+                        message: "<?=_("The password and its confirm are not the same")?>"
                     }
                 }
             },
+<?php if ($billingStateList): ?>
+            billingState: {
+                row: ".form-group",
+                validators: {
+                    notEmpty: {
+                        message: "<?=_("Please Select a state")?>"
+                    },
+                }
+            },
+<?php endif; ?>
         }
     })
     .on("success.form.fv", function(e)

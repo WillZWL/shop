@@ -134,11 +134,13 @@ class Quick_search extends MY_Controller
             $option["offset"] = $offset;
 
 
-            if (empty($sort))
+            if (empty($sort)) {
                 $sort = "so.so_no";
+            }
 
-            if (empty($order))
+            if (empty($order)) {
                 $order = "asc";
+            }
 
             $option["orderby"] = $sort . " " . $order;
             $data["result"] = $this->sc['So']->orderQuickSearch($where, $option);
@@ -322,7 +324,7 @@ class Quick_search extends MY_Controller
         $data["so_extend_obj"] = $this->sc['So']->getDao('SoExtend')->getSoExtWithReason(["so_no" => $order_no], ["limit" => 1]);
         $data["socc_obj"] = $this->sc['So']->getDao('SoCreditChk')->get(["so_no" => $order_no]);
         $data["client_obj"] = $this->sc['Client']->getDao('Client')->get(["id" => $order_obj->getClientId()]);
-        $data["item_list"] = $this->sc['So']->getDao('SoItem')->getList(["so_no" => $order_no]);
+        $data["item_list"] = $this->sc['So']->getDao('SoItemDetail')->getList(["so_no" => $order_no]);
         $data["item_profit"] = $this->sc['So']->getDao('SoItemDetail')->getListWithProdname(["soid.so_no" => $order_no], ["limit" => -1]);
         $data["order_note"] = $this->sc['QuickSearch']->getOrderNotes(["so_no" => $order_no, "type" => "O"]);
         $data["history_obj"] = $this->sc['QuickSearch']->getOrderHistory(["so_no" => $order_no]);
@@ -498,7 +500,7 @@ class Quick_search extends MY_Controller
 
                 $child[$child_so_no]["so_extend_obj"] = $this->sc['So']->getDao('SoExtend')->getSoExtWithReason(["so_no" => $child_so_no], ["limit" => 1]);
                 $child[$child_so_no]["socc_obj"] = $this->sc['So']->getDao('SoCreditChk')->get(["so_no" => $child_so_no]);
-                $child[$child_so_no]["item_list"] = $this->sc['So']->getDao('SoItem')->getList(["so_no" => $child_so_no]);
+                $child[$child_so_no]["item_list"] = $this->sc['So']->getDao('SoItemDetail')->getList(["so_no" => $child_so_no]);
                 $child[$child_so_no]["order_note"] = $this->sc['QuickSearch']->getOrderNotes(["so_no" => $child_so_no, "type" => "O"]);
                 $child[$child_so_no]["history_obj"] = $this->sc['QuickSearch']->getOrderHistory(["so_no" => $child_so_no]);
                 $scores = $this->sc['QuickSearch']->getPriorityScore($child_so_no, $child[$child_so_no]["so_obj"]->getBizType());

@@ -50,7 +50,7 @@ class Checkout extends PUB_Controller
     public function payment($debug = 0) {
         $data = [];
         $filter = new CheckoutFormFilter();
-        $filterResult = $filter->isValidForm($this->input);
+        $filterResult = $filter->isValidForm($this->input, $this->getSiteInfo());
         if ($filterResult["validInput"]) {
             $filterResult["value"]["debug"] = $debug;
             $redirectUrl = $this->checkoutModel->createSaleOrder($filterResult["value"]);

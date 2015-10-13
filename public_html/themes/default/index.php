@@ -101,10 +101,10 @@
                                         <div class="col-inner wow bounceInLeft">
                                             <div class="interactive-banner space-15 interactive-banner-v1 effect-default center">
                                                 <div class="interactive-banner-body">
-                                                    <img alt="" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/banners/collection2-h3-576x320.jpg" class="img-responsive">
+                                                    <img alt="" src="<?= base_url('/images/banner/camera.jpg') ?>" class="img-responsive">
                                                     <div class="interactive-banner-profile text-center">
                                                         <div class="banner-title">
-                                                            <h2>street collection</h2>
+                                                            <h2>camera collection</h2>
                                                         </div>
                                                         <div class="light-style">
                                                         </div>
@@ -119,10 +119,10 @@
                                         <div class="col-inner wow bounceInRight">
                                             <div class="interactive-banner space-15 interactive-banner-v1 effect-default center">
                                                 <div class="interactive-banner-body">
-                                                    <img alt="" src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/cache/catalog/demo/banners/collection1-h3-576x320.jpg" class="img-responsive">
+                                                    <img alt="" src="<?= base_url('/images/banner/mobile.jpg') ?>" class="img-responsive">
                                                     <div class="interactive-banner-profile text-center">
                                                         <div class="banner-title">
-                                                            <h2>touring collection</h2>
+                                                            <h2>mobile collection</h2>
                                                         </div>
                                                         <div class="light-style">
                                                         </div>

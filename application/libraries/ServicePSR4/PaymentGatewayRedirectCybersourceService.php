@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Service;
 
-class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectPostSubmitService
+class PaymentGatewayRedirectCybersourceService extends BaseService
 {
     public function __construct()
     {

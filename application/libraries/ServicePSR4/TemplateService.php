@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Service;
 
-class EmailTemplateService extends BaseService
+class TemplateService extends BaseService
 {
     public function __construct()
     {

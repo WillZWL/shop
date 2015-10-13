@@ -1,14 +1,11 @@
 CREATE TABLE `so_credit_chk` (
-  `id` int not null auto_increment,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `so_no` char(8) NOT NULL,
-  `t3m_is_sent` varchar(2) NOT NULL DEFAULT 'N' COMMENT 'Y = Yes / N = No / I = Invalid',
-  `t3m_in_file` varchar(7) NOT NULL DEFAULT '',
-  `t3m_result` varchar(10) NOT NULL DEFAULT '',
   `card_holder` varchar(64) NOT NULL DEFAULT '',
   `card_type` varchar(16) NOT NULL DEFAULT '',
   `card_no` varchar(255) NOT NULL DEFAULT '',
   `card_bin` char(6) NOT NULL DEFAULT '',
-  `card_last4` char(4) NOT NULL DEFAULT '',
+  `card_last_4` char(4) NOT NULL DEFAULT '',
   `card_exp_month` varchar(2) NOT NULL DEFAULT '',
   `card_exp_year` char(4) NOT NULL DEFAULT '',
   `card_start_month` varchar(2) NOT NULL DEFAULT '',
@@ -24,5 +21,5 @@ CREATE TABLE `so_credit_chk` (
   `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
   `modify_by` varchar(32) NOT NULL DEFAULT 'system',
   PRIMARY KEY (`id`),
-  unique KEY idx_so_credit_chk_so_no (`so_no`)
+  UNIQUE KEY `idx_so_credit_chk_so_no` (`so_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -51,7 +51,7 @@ class UserDao extends BaseDao
                 ";
         if ($query = $this->db->query($sql, $user_id)) {
             foreach ($query->result($classname) as $obj) {
-                if ($obj->get_role_id()) {
+                if ($obj->getRoleId()) {
                     return TRUE;
                 }
             }
