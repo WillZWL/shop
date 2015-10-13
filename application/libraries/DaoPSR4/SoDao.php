@@ -460,8 +460,6 @@ SQL;
                     , sor.risk_var8
                     , sor.risk_var9
                     , sor.risk_var10
-                    , scc.t3m_is_sent as t3m_resp
-                    , scc.t3m_result as t3m_score
                     , scc.card_bin
                     , scc.card_type
                     , sps.pay_to_account
@@ -633,7 +631,7 @@ SQL;
         $this->db->where("so.refund_status = '0'");
 
         if (empty($option["num_rows"])) {
-            $this->db->select('so.*, c.id, c.forename, c.surname, c.email, c.password, c.tel_1, c.tel_2, c.tel_3, c.del_tel_1, c.del_tel_2, c.del_tel_3,' . ($option["reason"] ? ', sohr.reason, sohr.create_on AS hold_date' : ', socc.t3m_is_sent, socc.t3m_in_file, socc.t3m_result, socc.fd_status, sops.payment_gateway_id, sops.payment_status, sops.card_id AS card_type, sops.risk_ref_1, sops.risk_ref2, sops.risk_ref3, sops.risk_ref4, sops.pending_action, rr.risk_ref_desc'));
+            $this->db->select('so.*, c.id, c.forename, c.surname, c.email, c.password, c.tel_1, c.tel_2, c.tel_3, c.del_tel_1, c.del_tel_2, c.del_tel_3,' . ($option["reason"] ? ', sohr.reason, sohr.create_on AS hold_date' : ', socc.fd_status, sops.payment_gateway_id, sops.payment_status, sops.card_id AS card_type, sops.risk_ref_1, sops.risk_ref2, sops.risk_ref3, sops.risk_ref4, sops.pending_action, rr.risk_ref_desc'));
 
             if ($type == "cs" || $type == "log_app" || $type == "oc" || $type == "ora") {
                 $this->db->select('sohr.reason');

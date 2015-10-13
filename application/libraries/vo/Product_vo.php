@@ -5,6 +5,8 @@ class Product_vo extends Base_vo
 {
     //class variable
     private $sku;
+    private $sku_vb= '';
+    private $sku_bak = '';
     private $prod_grp_cd;
     private $colour_id;
     private $version_id;
@@ -61,6 +63,28 @@ class Product_vo extends Base_vo
     public function set_sku($value)
     {
         $this->sku = $value;
+        return $this;
+    }
+	
+    public function get_sku_vb()
+    {
+        return $this->sku_vb;
+    }
+
+    public function set_sku_vb($value)
+    {
+        $this->sku_vb = $value;
+        return $this;
+    }
+	
+    public function get_sku_bak()
+    {
+        return $this->sku_bak;
+    }
+
+    public function set_sku_bak($value)
+    {
+        $this->sku_bak = $value;
         return $this;
     }
 

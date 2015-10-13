@@ -59,29 +59,80 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 			$c--;
 				
 			//Get the master sku to search the corresponding sku in atomv2 database
-			$master_sku = $product->master_sku;
-						
-			$master_sku = strtoupper($master_sku);
+			$master_sku = strtoupper($product->master_sku);						
 			$sku = $this->sku_mapping_service->get_local_sku($master_sku);
 			
 			$fail_reason = "";
             if ($master_sku == "" || $master_sku == null) $fail_reason .= "No master SKU mapped, ";
             if ($sku == "" || $sku == null) $fail_reason .= "SKU not specified, ";
-
+			
+			/*
+				MASTER SKU VALIDATION
+				1.- sku from VB exists in AV2 product table in the sku_vb field
+					1.1.- Look for the master sku un AV2, get the local sku
+					1.2.- Compare the local sku in mapping table with local sku in product table
+						1.2.1.- Both skus are equal -> update product
+						1.2.2.- Different skus -> update mapping with the new master, update product
+				2.- sku from VB doesnt exist in AV2 product table in the sku_vb field
+					Normal process - Look for the master sku un AV2:
+						2.1.- exists -> if the product exists, update, if the product doesnt exist, insert product
+						2.2.- doesnt exist: no update
+			*/				
+			
+			//get the sku for the product table with the VB sku
+			$sku_table = "";
+			if(!$pc_obj_atomv2 = $this->get_dao()->get(array("sku_vb"=> $product->sku)))
+			{
+				$sku_table = $pc_obj_atomv2["sku"];
+			}
+			
+			$berror_mapping = false;
+			//if the VB sku exists in product table
+			if ($sku_table != "" && $sku_table != null)
+			{
+				//if the mapping for the new master sku doesnt exist, we change the mapping and continue the update
+				if ($sku == "" || $sku == null) 
+				{
+					$bchange_mapping = true;
+					$sku = $sku_table;
+					$master_sku = $product->master_sku;
+					$fail_reason = "";
+				}
+				//if the new mapping has a different sku, we dont continue with the update, we return a message error
+				elseif($sku != $sku_table)
+				{
+					$fail_reason = "Different master sku. Sku exists, ";
+					$berror_mapping = true;
+				}
+				//elseif $sku == $sku_table --> normal update
+			}		
+			
             //if the sku is mapped, we get the atomv prod_gro_id
             $master_prod_grp_id = "";
             if ($fail_reason == "")
-            	$master_prod_grp_id = $this->product_identifier_service->get_prod_grp_cd_by_sku($master_sku);
+            	$master_prod_grp_id = $this->product_identifier_service->get_prod_grp_cd_by_sku($master_sku);			
             
 			try
 			{
 				if ($fail_reason == "")
 				{
+					if ($bchange_mapping == true)
+					{						
+						//update sku mapping						
+						$where = array("sku"=>$sku_table);					
+						$sku_map_obj = array();
+						
+						$sku_map_obj["ext_sku"] = $product->master_sku; 	
+					
+						$this->sku_mapping_service->get_dao()->q_update($where, $sku_map_obj);
+					}
+				
 					//Update the AtomV2 product data 					
 					$where = array("sku"=>$sku);
 					
 					$new_prod_obj = array();
 					
+					$new_prod_obj["sku_vb"] = $product->sku; //sku from VB
 					$new_prod_obj["prod_grp_cd"] = $master_prod_grp_id;//$product->prod_grp_cd;
 					$new_prod_obj["colour_id"] = $product->colour_id; //FK colour
 					$new_prod_obj["version_id"] = $product->version_id;	
@@ -124,7 +175,18 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 					$xml[] = '<sku>' . $product->sku . '</sku>';
 					$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';					
 					$xml[] = '<status>5</status>';	 //updated				
-					$xml[] = '<is_error>' . $product->is_error . '</is_error>';		
+					$xml[] = '<is_error>' . $product->is_error . '</is_error>';	
+					$xml[] = '<reason></reason>';		
+					$xml[] = '</product>';
+				}
+				elseif ($berror_mapping == true)
+				{
+					$xml[] = '<product>';
+					$xml[] = '<sku>' . $product->sku . '</sku>';
+					$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';				
+					$xml[] = '<status>6</status>'; //mapping error	
+					$xml[] = '<is_error>' . $product->is_error . '</is_error>';	
+					$xml[] = '<reason>' . $fail_reason . '</reason>';		
 					$xml[] = '</product>';
 				}
 				elseif ($sku == "" || $sku == null)
@@ -150,6 +212,7 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 						
 						//insert the product
 						$new_prod_obj->set_sku($sku);
+						$new_prod_obj->set_sku_vb($product->sku); // Sku from VB
 						$new_prod_obj->set_prod_grp_cd($prod_grp_cd);
 						$new_prod_obj->set_colour_id($product->colour_id); //FK colour
 						$new_prod_obj->set_version_id($product->version_id);	
@@ -193,7 +256,8 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 						$xml[] = '<sku>' . $product->sku . '</sku>';
 						$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';				
 						$xml[] = '<status>5</status>'; //inserted	
-						$xml[] = '<is_error>' . $product->is_error . '</is_error>';			
+						$xml[] = '<is_error>' . $product->is_error . '</is_error>';	
+						$xml[] = '<reason></reason>';			
 						$xml[] = '</product>';
 					}
 					else
@@ -203,6 +267,7 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 						$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';					
 						$xml[] = '<status>2</status>'; //not found	
 						$xml[] = '<is_error>' . $product->is_error . '</is_error>';
+						$xml[] = '<reason>' . $fail_reason . '</reason>';	
 						$xml[] = '</product>';	
 					}
 				}
@@ -213,6 +278,7 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 					$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';					
 					$xml[] = '<status>3</status>'; //not updated	
 					$xml[] = '<is_error>' . $product->is_error . '</is_error>';
+					$xml[] = '<reason>' . $fail_reason . '</reason>';	
 					$xml[] = '</product>';				
 				}	
 			}	
@@ -223,6 +289,7 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 				$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';					
 				$xml[] = '<status>4</status>';	//error		
 				$xml[] = '<is_error>' . $product->is_error . '</is_error>';
+				$xml[] = '<reason>' . $e->getMessage() . '</reason>';	
 				$xml[] = '</product>';	
 			}
 		 }
