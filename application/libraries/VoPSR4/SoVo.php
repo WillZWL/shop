@@ -36,7 +36,7 @@ class SoVo extends \BaseVo
     private $status = '1';
     private $refund_status = '0';
     private $hold_status = '0';
-    private $hold_reason;
+    private $hold_reason = '';
     private $promotion_code = '';
     private $client_promotion_code = '';
     private $expect_delivery_date = '0000-00-00';

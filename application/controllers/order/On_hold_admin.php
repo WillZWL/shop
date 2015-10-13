@@ -10,11 +10,9 @@ class On_hold_admin extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        // $this->load->model('order/on_hold_admin_model');
-        // $this->load->model('order/credit_check_model');
     }
 
-    public function index($pmghold = 0, $offset = 0)
+    public function index($offset = 0)
     {
         $search = $this->input->get('search');
         $sub_app_id = $this->getAppId() . "01";
@@ -68,11 +66,13 @@ class On_hold_admin extends MY_Controller
             $option["limit"] = $limit;
             $option["offset"] = $offset;
 
-            if (empty($sort))
+            if (empty($sort)) {
                 $sort = "so_no";
+            }
 
-            if (empty($order))
+            if (empty($order)) {
                 $order = "desc";
+            }
 
             $option["orderby"] = $sort . " " . $order;
             $data["objlist"] = $this->sc['So']->getCreditCheckList($where, $option, "hold");
@@ -90,7 +90,7 @@ class On_hold_admin extends MY_Controller
 
             $data["total"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, ["num_rows" => 1], "hold");
 
-            $config['base_url'] = base_url('cs/order/on_hold_admin/'.$pmghold)."?" . $_SERVER['QUERY_STRING'];
+            $config['base_url'] = base_url('order/on_hold_admin/index/');
             $config['total_rows'] = $data["total"];
             $config['per_page'] = $limit;
 
@@ -116,7 +116,7 @@ class On_hold_admin extends MY_Controller
         return $this->appId;
     }
 
-    public function log_approval_page($pmghold = 0)
+    public function log_approval_page($offset = 0)
     {
         $sub_app_id = $this->getAppId() . "02";
 
@@ -128,7 +128,7 @@ class On_hold_admin extends MY_Controller
         $where["so.hold_status"] = "1";
         $where["so.status >"] = "2";
         $where["so.status <"] = "6";
-        $where["sohr.reason LIKE"] = '%_log_app';
+        $where["so.hold_reason LIKE"] = '%_log_app';
 
         if ($this->input->get("so_no") != "") {
             $where["so.so_no LIKE "] = "%" . $this->input->get("so_no") . "%";
@@ -155,28 +155,26 @@ class On_hold_admin extends MY_Controller
             $submit_search = 1;
         }
 
-        if ($this->input->get("t3m_result") != "") {
-            fetch_operator($where, "t3m_result", $this->input->get("t3m_result"));
-            $submit_search = 1;
-        }
+        // if ($this->input->get("t3m_result") != "") {
+        //     fetch_operator($where, "t3m_result", $this->input->get("t3m_result"));
+        //     $submit_search = 1;
+        // }
 
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
         $limit = '20';
 
-        $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-        $option["limit"] = $pconfig['per_page'] = $limit;
+        $option["limit"] = $limit;
+        $option["offset"] = $offset;
 
-        if ($option["limit"]) {
-            $option["offset"] = $this->input->get("per_page");
+        if (empty($sort)) {
+            $sort = "so_no";
         }
 
-        if (empty($sort))
-            $sort = "so_no";
-
-        if (empty($order))
+        if (empty($order)) {
             $order = "desc";
+        }
 
         $option["orderby"] = $sort . " " . $order;
 
@@ -186,9 +184,12 @@ class On_hold_admin extends MY_Controller
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
+        $config['base_url'] = base_url('order/on_hold_admin/log_approval_page/');
+        $config['total_rows'] = $data["total"];
+        $config['per_page'] = $limit;
+
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
 
         $data["notice"] = notice($lang);
 
@@ -257,11 +258,13 @@ class On_hold_admin extends MY_Controller
             $option["limit"] = $limit;
             $option["offset"] = $offset;
 
-            if (empty($sort))
+            if (empty($sort)) {
                 $sort = "so_no";
+            }
 
-            if (empty($order))
+            if (empty($order)) {
                 $order = "desc";
+            }
 
             $option["orderby"] = $sort . " " . $order;
             $data["objlist"] = $this->sc['So']->getCreditCheckList($where, $option, "oc");
@@ -291,7 +294,7 @@ class On_hold_admin extends MY_Controller
 
             $data["lang"] = $lang;
 
-            $config['base_url'] = base_url('cs/order/on_hold_admin/oc_index'.$type)."?" . $_SERVER['QUERY_STRING'];
+            $config['base_url'] = base_url('order/on_hold_admin/oc_index/'.$type);
             $config['total_rows'] = $data["total"];
             $config['per_page'] = $limit;
 
@@ -313,7 +316,7 @@ class On_hold_admin extends MY_Controller
         return $this->sc['User']->isAllowedToCancelOrder();
     }
 
-    public function chk_pw()
+    public function chk_pw($offset = 0)
     {
         $password = $this->input->get("pw");
         if ($password) {
@@ -331,18 +334,16 @@ class On_hold_admin extends MY_Controller
 
             $limit = '20';
 
-            $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-            $option["limit"] = $pconfig['per_page'] = $limit;
+            $option["limit"] = $limit;
+            $option["offset"] = $offset;
 
-            if ($option["limit"]) {
-                $option["offset"] = $this->input->get("per_page");
+            if (empty($sort)) {
+                $sort = "so_no";
             }
 
-            if (empty($sort))
-                $sort = "so_no";
-
-            if (empty($order))
+            if (empty($order)) {
                 $order = "DESC";
+            }
 
             $option["orderby"] = $sort . " " . $order;
             $option["reason"] = 1;
@@ -354,9 +355,12 @@ class On_hold_admin extends MY_Controller
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
 
-            $pconfig['total_rows'] = $data['total'];
-            $this->pagination_service->set_show_count_tag(TRUE);
-            $this->pagination_service->initialize($pconfig);
+            $config['base_url'] = base_url('order/on_hold_admin/chk_pw/index');
+            $config['total_rows'] = $data["total"];
+            $config['per_page'] = $limit;
+
+            $this->pagination->initialize($config);
+            $data['links'] = $this->pagination->create_links();
 
             $data["notice"] = notice($lang);
 
@@ -370,7 +374,7 @@ class On_hold_admin extends MY_Controller
     public function refund($so_no = "")
     {
         if (($so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $so_no])) === FALSE) {
-            $_SESSION["NOTICE"] = $this->db->_error_message();
+            $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
         } else {
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
@@ -385,7 +389,7 @@ class On_hold_admin extends MY_Controller
                     $so_obj->setCcReminderScheduleDate(NULL);
                     $so_obj->setCcReminderType(NULL);
                     if (!$this->sc['So']->getDao('So')->update($so_obj)) {
-                        $_SESSION["NOTICE"] = $this->db->_error_message();
+                        $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                     }
                 }
             }
@@ -405,21 +409,21 @@ class On_hold_admin extends MY_Controller
         $release_order_vo->setSoNo($so_no);
         $release_order_vo->setReleaseReason("$reason");
         if (!$this->sc['So']->getDao('ReleaseOrderReport')->insert($release_order_vo)) {
-            $_SESSION["NOTICE"] = $this->db->_error_message();
+            $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
         }
     }
 
     public function delete($so_no = "")
     {
         if (($so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $so_no])) === FALSE) {
-            $_SESSION["NOTICE"] = $this->db->_error_message();
+            $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
         } else {
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
-                $so_obj->set_status(0);
+                $so_obj->setStatus(0);
                 if (!$this->sc['So']->getDao('So')->update($so_obj)) {
-                    $_SESSION["NOTICE"] = $this->db->_error_message();
+                    $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                 }
             }
         }
@@ -435,16 +439,16 @@ class On_hold_admin extends MY_Controller
 #       SBF #2396 to allow user to cancel test orders
         if ($this->allowed_to_cancel_order()) {
             if (($so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $so_no])) === FALSE) {
-                $_SESSION["NOTICE"] = $this->db->_error_message();
+                $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
             } else {
                 if (empty($so_obj)) {
                     $_SESSION["NOTICE"] = "so_not_found";
                 } else {
-                    $so_obj->set_status(0);
+                    $so_obj->setStatus(0);
                     $so_obj->setHoldStatus(0);
                     $so_obj->setRefundStatus(0);
                     if (!$this->sc['So']->getDao('So')->update($so_obj)) {
-                        $_SESSION["NOTICE"] = $this->db->_error_message();
+                        $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                     } else {
                         $this->_create_release_order_record($so_no, $reason = 'cancel order');
                     }
@@ -466,7 +470,7 @@ class On_hold_admin extends MY_Controller
     public function oc_contacted($so_no = "", $reason = "contacted")
     {
         if (($so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $so_no])) === FALSE) {
-            $_SESSION["NOTICE"] = $this->db->_error_message();
+            $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
         } else {
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
@@ -475,7 +479,7 @@ class On_hold_admin extends MY_Controller
                     $sohr_vo->setSoNo($so_no);
                     $sohr_vo->setReason($reason);
                     if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_vo)) {
-                        $_SESSION["NOTICE"] = $this->db->_error_message();
+                        $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                     }
 
                     if ($reason == "confirmed_fraud") {
@@ -487,9 +491,9 @@ class On_hold_admin extends MY_Controller
                         }
                         $this->sc['So']->getDao('SoCreditChk')->db->trans_start();
                         $socc_obj->setSoNo($so_no);
-                        $socc_obj->set_fd_status(2);
+                        $socc_obj->setFdStatus(2);
                         $this->sc['So']->getDao('SoCreditChk')->$action($socc_obj);
-                        $so_obj->set_status(0);
+                        $so_obj->setStatus(0);
 
                         if (!is_null($so_obj->getCcReminderScheduleDate())) {
                             $so_obj->setCcReminderScheduleDate(NULL);
@@ -497,7 +501,7 @@ class On_hold_admin extends MY_Controller
                         }
 
                         if (!$this->sc['So']->getDao('So')->update($so_obj)) {
-                            $_SESSION["NOTICE"] = $this->db->_error_message();
+                            $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                         } else {
                             $this->_create_release_order_record($so_no, $reason);
                         }
@@ -505,14 +509,14 @@ class On_hold_admin extends MY_Controller
                     }
 
                     if (($reason == "cscc") || ($reason == "csvv")) {
-                        $this->sc['So']->fireCsRequest($so_no, $reason);
+                        $this->sc['So']->fireCsRequest($so_no, $reason, $this->getLangId());
 
                         if (!is_null($so_obj->getCcReminderScheduleDate())) {
                             $so_obj->setCcReminderScheduleDate(NULL);
                             $so_obj->setCcReminderType(NULL);
 
                             if (!$this->sc['So']->getDao('So')->update($so_obj)) {
-                                $_SESSION["NOTICE"] = $this->db->_error_message();
+                                $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                             }
                         }
                     }
@@ -537,14 +541,14 @@ class On_hold_admin extends MY_Controller
     public function log_decline($so_no = "", $from_oc = "")
     {
         if (($so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $so_no])) === FALSE) {
-            $_SESSION["NOTICE"] = $this->db->_error_message();
+            $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
         } else {
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
                 $so_obj->setHoldStatus(0);
-                if ($so_obj->get_status() < 3) {
-                    $so_obj->set_status(3);
+                if ($so_obj->getStatus() < 3) {
+                    $so_obj->setStatus(3);
                 }
 
                 if (!is_null($so_obj->getCcReminderScheduleDate())) {
@@ -553,7 +557,7 @@ class On_hold_admin extends MY_Controller
                 }
 
                 if (!$this->sc['So']->getDao('So')->update($so_obj)) {
-                    $_SESSION["NOTICE"] = $this->db->_error_message();
+                    $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                 } else {
                     $this->_create_release_order_record($so_no, 'approve for fulfillment');
                 }
@@ -579,7 +583,7 @@ class On_hold_admin extends MY_Controller
     public function log_approve($so_no = "", $reason = "")
     {
         if (($so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $so_no])) === FALSE) {
-            $_SESSION["NOTICE"] = $this->db->_error_message();
+            $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
         } else {
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
@@ -589,7 +593,7 @@ class On_hold_admin extends MY_Controller
                     $sohr_vo->setReason($reason);
 
                     if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_vo)) {
-                        $_SESSION["NOTICE"] = $this->db->_error_message();
+                        $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                     }
 
                     //mail_event
@@ -609,7 +613,7 @@ class On_hold_admin extends MY_Controller
         #SBF #4646 using $_GET['cf'] to get the varible value that is pass thorugh the url from credit_check_index_v.php
         $reason = $_GET["cf"];
         if (($so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $so_no])) === FALSE) {
-            $_SESSION["NOTICE"] = $this->db->_error_message();
+            $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
         } else {
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
@@ -643,13 +647,13 @@ class On_hold_admin extends MY_Controller
                         }
 
                         if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_vo)) {
-                            $_SESSION["NOTICE"] = $this->db->_error_message();
+                            $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                         }
                     } else {
-                        $_SESSION["NOTICE"] = $this->db->_error_message();
+                        $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                     }
                 } else {
-                    $_SESSION["NOTICE"] = $this->db->_error_message();
+                    $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                 }
             }
         }

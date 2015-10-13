@@ -566,31 +566,38 @@ SQL;
         }
 
         if (($type == "oc") || ($type == "comcenter")) {
-            // $this->db->join('so_hold_reason sohr', 'sohr.id = so.hold_reason', 'INNER');
+            // $this->db->join('so_hold_reason sohr', 'sohr.so_no = so.so_no', 'INNER');
         }
 
         if ($type == "ora") {
-            // $this->db->join('so_hold_reason sohr', 'sohr.id = so.hold_reason', 'LEFT');
+            // $this->db->join('so_hold_reason sohr', 'sohr.so_no = so.so_no', 'LEFT');
         }
 
         if ($type == "log_app") {
-            $this->db->where("so.hold_reason LIKE '%_log_app'");
+            $this->db->join('so_hold_reason sohr', 'sohr.so_no = so.so_no', 'INNER');
+            $this->db->where("sohr.reason LIKE '%_log_app'");
         }
 
         if ($option["item"]) {
-            $this->db->join('(
-                        SELECT sid.so_no, GROUP_CONCAT(CONCAT_WS("::", sid.prod_sku, p.name, CAST(sid.qty AS CHAR), CAST(sid.unit_price AS CHAR), CAST(sid.amount AS CHAR)) ORDER BY sid.line_no SEPARATOR "||") AS items
-                        FROM so_item_detail AS sid
-                        INNER JOIN product AS p
-                            ON (sid.prod_sku = p.sku)
-                        GROUP BY so_no
-                        ) AS soid', 'so.so_no = soid.so_no', 'LEFT');
+            // $this->db->join('(
+            //             SELECT sid.so_no, GROUP_CONCAT(CONCAT_WS("::", sid.item_sku, p.name, CAST(sid.qty AS CHAR), CAST(sid.unit_price AS CHAR), CAST(sid.amount AS CHAR)) ORDER BY sid.line_no SEPARATOR "||") AS items
+            //             FROM so_item_detail AS sid
+            //             INNER JOIN product AS p
+            //                 ON (sid.item_sku = p.sku)
+            //             GROUP BY so_no
+            //             ) AS soid', 'so.so_no = soid.so_no', 'LEFT');
+            // $this->db->select('soid.items');
 
-            $this->db->select('soid.items');
+            $this->db->join('so_item_detail AS sid', 'so.so_no = sid.so_no', 'LEFT');
+            $this->db->join('product AS p', 'sid.item_sku = p.sku', 'INNER');
+
+            $this->db->select('GROUP_CONCAT(CONCAT_WS("::", sid.item_sku, p.name, CAST(sid.qty AS CHAR), CAST(sid.unit_price AS CHAR), CAST(sid.amount AS CHAR)) ORDER BY sid.line_no SEPARATOR "||") AS items');
+
+            $this->db->group_by("so_no");
         }
 
         if ($option["reason"]) {
-            $this->db->join('so_hold_reason AS sohr', 'so.hold_reason = sohr.id', 'LEFT');
+            $this->db->join('so_hold_reason AS sohr', 'so.so_no = sohr.so_no', 'LEFT');
         }
 
         $this->db->join('so_credit_chk AS socc', 'so.so_no = socc.so_no', 'LEFT');
@@ -632,7 +639,7 @@ SQL;
             $rs = [];
 
             if ($query = $this->db->get()) {
-
+                // echo $this->db->last_query();die;
                 foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
@@ -940,7 +947,7 @@ SQL;
         $select_str = "so.so_no, so.platform_id, so.order_create_date, so.delivery_name, so.delivery_country_id, ore.reason, ore.require_payment, so.currency_id, so.amount, so.create_by";
         if ($option["so_item"]) {
             $this->db->join('(
-                            SELECT sid.so_no, GROUP_CONCAT(CONCAT_WS("::", sid.prod_sku, p.name, CAST(sid.qty AS CHAR), CAST(sid.unit_price AS CHAR), CAST(sid.amount AS CHAR)) ORDER BY sid.line_no SEPARATOR "||") AS items
+                            SELECT sid.so_no, GROUP_CONCAT(CONCAT_WS("::", sid.item_sku, p.name, CAST(sid.qty AS CHAR), CAST(sid.unit_price AS CHAR), CAST(sid.amount AS CHAR)) ORDER BY sid.line_no SEPARATOR "||") AS items
                             FROM so_item_detail AS sid
                             LEFT JOIN product AS p
                                 ON (sid.item_sku = p.sku)
@@ -1712,7 +1719,7 @@ SQL;
         $sql = <<<SQL
                     SELECT
                         so.platform_id, soex.conv_site_id, so.so_no, so.create_on, sid.prod_name,
-                        sid.prod_sku, sid.qty, c.email, c.forename, c.surname,so.refund_status, so.hold_status, so.status
+                        sid.item_sku, sid.qty, c.email, c.forename, c.surname,so.refund_status, so.hold_status, so.status
                     FROM so
                     inner join so_extend soex on soex.so_no = so.so_no
                     inner join so_hold_reason sr on sr.so_no = so.so_no
@@ -3186,8 +3193,8 @@ SQL;
         if ($option["show_so"] != "") {
             $this->db->join("so so", "so.so_no = iof.so_no", "INNER");
             $this->db->join("exchange_rate ex", "ex.from_currency_id = so.currency_id AND to_currency_id = 'USD'", "INNER");
-            $this->db->join("so_item soi", "soi.so_no = iof.so_no AND soi.prod_sku = iof.sku", "INNER");
-            $select_str .= ", ex.rate AS rate, so.currency_id, so.delivery_state, soi.amount AS so_item_amount";
+            $this->db->join("so_item_detail soid", "soid.so_no = iof.so_no AND soid.item_sku = iof.sku", "INNER");
+            $select_str .= ", ex.rate AS rate, so.currency_id, so.delivery_state, soid.amount AS so_item_amount";
         }
 
         if ($where) {

@@ -910,7 +910,6 @@ class SoService extends BaseService
     {
         $so_dao = $this->getDao('So');
         $soext_dao = $this->getDao('SoExtend');
-        $soi_dao = $this->getDao('SoItem');
         $soid_dao = $this->getDao('SoItemDetail');
         $ordernotes_dao = $this->getDao('OrderNotes');
         $so_priority_score_dao = $this->getDao('SoPriorityScore');
@@ -1011,12 +1010,6 @@ class SoService extends BaseService
                             $sku = $v["sku"];
                             $line_no++;
 
-                            if (!($so_item = $soi_dao->get(["so_no" => $so_no, "prod_sku" => $sku]))) {
-                                $ret["status"] = FALSE;
-                                $ret["message"] = __LINE__ . " so_service. Error: SO item list not found for $so_no, sku $sku.";
-                                return $ret;
-                            }
-
                             if (!($so_item_detail = $soid_dao->get(["so_no" => $so_no, "item_sku" => $sku]))) {
                                 $ret["status"] = FALSE;
                                 $ret["message"] = __LINE__ . " so_service. Error: SO item detail list not found for $so_no, sku $sku.";
@@ -1038,38 +1031,24 @@ class SoService extends BaseService
                             $unit_profit = $so_item_detail->getProfit();
                             $unit_profit_raw = $so_item_detail->getProfitRaw();
 
-                            $new_soi_obj = $soi_dao->get();
-                            set_value($new_soi_obj, $so_item);
-                            $new_soi_obj->setSoNo($new_so_no);
-                            $new_soi_obj->setLineNo($line_no);
-                            $new_soi_obj->setQty($qty);
-                            $new_soi_obj->setVatTotal($unit_vat);
-                            $new_soi_obj->setGstTotal($unit_gst);
-                            $new_soi_obj->setAmount($unit_amount_paid);
+                            $new_soid_obj = $soid_dao->get();
+                            set_value($new_soid_obj, $so_item_detail);
+                            $new_soid_obj->setSoNo($new_so_no);
+                            $new_soid_obj->setLineNo($line_no);
 
-                            if ($soi_dao->insert($new_soi_obj)) {
-                                $new_soid_obj = $soid_dao->get();
-                                set_value($new_soid_obj, $so_item_detail);
-                                $new_soid_obj->setSoNo($new_so_no);
-                                $new_soid_obj->setLineNo($line_no);
+                            # now each qty has single row, so we take the unit amount in soid as well
+                            # normal case: soid.amount = unit amount paid * qty
+                            $new_soid_obj->setAmount($unit_amount_paid);
+                            $new_soid_obj->setQty($qty);
+                            $new_soid_obj->setOutstandingQty($qty);
+                            $new_soid_obj->setVatTotal($unit_vat);
+                            $new_soid_obj->setGstTotal($unit_gst);
+                            $new_soid_obj->setPromoDiscAmt($unit_promo_disc_amt);
 
-                                # now each qty has single row, so we take the unit amount in soid as well
-                                # normal case: soid.amount = unit amount paid * qty
-                                $new_soid_obj->setAmount($unit_amount_paid);
-                                $new_soid_obj->setQty($qty);
-                                $new_soid_obj->setOutstandingQty($qty);
-                                $new_soid_obj->setVatTotal($unit_vat);
-                                $new_soid_obj->setGstTotal($unit_gst);
-                                $new_soid_obj->setPromoDiscAmt($unit_promo_disc_amt);
-
-                                if ($soid_dao->insert($new_soid_obj)) {
-                                    // success adding so_item and so_item_detail
-                                } else {
-                                    $message .= __LINE__ . " so_service. Failed so_item. DB error: " . $soid_dao->db->_error_message() . "\n";
-                                    $failed = 1;
-                                }
+                            if ($soid_dao->insert($new_soid_obj)) {
+                                // success adding so_item and so_item_detail
                             } else {
-                                $message .= __LINE__ . " so_service. Failed so_item. DB error: " . $soi_dao->db->_error_message() . "\n";
+                                $message .= __LINE__ . " so_service. Failed so_item. DB error: " . $soid_dao->db->_error_message() . "\n";
                                 $failed = 1;
                             }
                         }
@@ -1233,7 +1212,7 @@ class SoService extends BaseService
 
     public function getItemsWithName($where = [], $option = [], $dto = "")
     {
-        return $this->getDao('SoItem')->getItemsWithName($where, $option, $dto);
+        return $this->getDao('SoItemDetail')->getItemsWithName($where, $option, $dto);
     }
 
     public function getPrintInvoiceContent($so_no_list = [], $gen_pdf = 0, $lang_id = "")
@@ -1327,7 +1306,7 @@ html;
                             break;
                     }
 
-                    $itemlist = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $obj, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
+                    $itemlist = $this->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $obj, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
                     $so_ext_obj = $this->getDao('SoExtend')->get(["so_no" => $obj]);
 
                     $replace["website_domain"] = base_url();
@@ -1417,7 +1396,7 @@ html;
 
                         $item_information .= '<tr>
                                                 <td ' . $width_col_1 . ' align="center"><img src="' . $imagepath . '"></td>
-                                                <td ' . $width_col_2 . ' align="left">' . $item_obj->getProdSku() . ' - ' . $item_obj->getName() . '<br/><br/>' . $warrantyname . ': ' . $warranty_month . '</td>
+                                                <td ' . $width_col_2 . ' align="left">' . $item_obj->getItemSku() . ' - ' . $item_obj->getName() . '<br/><br/>' . $warrantyname . ': ' . $warranty_month . '</td>
                                                 <td align="right">' . platform_curr_format($cur_platform_id, $item_obj->getUnitPrice()) . '</td>
                                                 <td align="right">' . $item_obj->getQty() . '</td>
                                                 <td align="right"><b>' . platform_curr_format($cur_platform_id, $amount_total) . '</b></td>
@@ -1617,7 +1596,7 @@ html;
         $platform_id = $so_obj->getPlatformId();
         $pbv = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $platform_id));
         $lang_id = $pbv->get_language_id();
-        $so_items = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL), array("lang_id" => $lang_id));
+        $so_items = $this->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL), array("lang_id" => $lang_id));
 
         $old_edd = $so_obj->get_expect_delivery_date();
         $new_edd = "";
@@ -2487,7 +2466,7 @@ html;
         }
     }
 
-    public function fireCsRequest($so_no = "", $reason = "")
+    public function fireCsRequest($so_no = "", $reason = "", $lang = "en")
     {
 
         if ($so_no == "" || $reason == "") {
@@ -2501,7 +2480,7 @@ html;
                 $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
                 $pbv_obj = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $so_obj->getPlatformId()));
                 if ($client_obj) {
-                    $list = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_no, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
+                    $list = $this->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $so_no, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
 
                     $item_list = [];
                     foreach ($list as $obj) {
@@ -2512,7 +2491,7 @@ html;
 
                     $replace["order_number"] = $so_no;
                     $replace["client_id"] = $so_obj->getClientId();
-                    $replace["forename"] = $client_obj->get_forename();
+                    $replace["forename"] = $client_obj->getForename();
                     $replace["order_create_date"] = date("Y-m-d", strtotime($so_obj->getOrderCreateDate()));
                     $replace["item_list"] = implode("\n", $item_list);
 
@@ -2520,8 +2499,6 @@ html;
 
                     $dto->setEventId("notification");
                     $dto->setMailTo($client_obj->getEmail());
-                    //$dto->setMailTo('itsupport@eservicesgroup.net');
-                    $lang = get_lang_id();
                     $support_email = $this->getCsSupportEmail($lang);
 
                     $dto->setMailFrom($email_sender);
@@ -3738,7 +3715,7 @@ html;
 
         $country = $this->getDao('Country')->get(["country_id" => $so_obj->getDeliveryCountryId()]);
 
-        $so_items = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
+        $so_items = $this->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
         $client = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
         $currency_obj = $this->getDao('Currency')->get(['currency_id' => $so_obj->getCurrencyId()]);
         $sh_obj = $this->getDao('SoShipment')->get(['sh_no' => $sh_no]);
@@ -4272,7 +4249,7 @@ html;
                             break;
                     }
 
-                    $itemlist = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $obj, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
+                    $itemlist = $this->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $obj, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
                     $so_ext_obj = $this->getDao('SoExtend')->get(["so_no" => $obj]);
 
                     $data["lang"] = $ar_lang[$so_lang_id];
@@ -4327,7 +4304,7 @@ html;
 
                         $item_information .= '<tr>
                                                 <td align="center"><img src="' . $imagepath . '"></td>
-                                                <td align="left">' . $item_obj->getProdSku() . ' - ' . $item_obj->getName() . '</td>
+                                                <td align="left">' . $item_obj->getItemSku() . ' - ' . $item_obj->getName() . '</td>
                                                 <td align="right">' . platform_curr_format($cur_platform_id, $item_obj->getUnitPrice()) . '</td>
                                                 <td align="right">' . $item_obj->getQty() . '</td>
                                                 <td align="right"><b>' . platform_curr_format($cur_platform_id, $amount_total) . '</b></td>
@@ -4432,7 +4409,7 @@ html;
     {
 
         $country = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
-        $so_items = $this->getDao('SoItem')->getItemsWithName(array("so_no" => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
+        $so_items = $this->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
         $client = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
         $currency_obj = $this->getDao('Currency')->get(['currency_id' => $so_obj->getCurrencyId()]);
         $sh_obj = $this->getDao('SoShipment')->get(['sh_no' => $sh_no]);
@@ -5742,11 +5719,9 @@ html;
                         if ($this->getDao('SoAllocate')->getNumRows(["so_no" => $so_no])) {
                             $so_obj->setStatus("4");
                             $status = 4;
-                            $so_obj->setFinanceDispatchDate(null);
                         } else {
                             $so_obj->setStatus("3");
                             $status = 3;
-                            $so_obj->setFinanceDispatchDate(null);
                         }
                         if (!$this->getDao('So')->update($so_obj)) {
                             $success = 0;
@@ -5891,11 +5866,9 @@ html;
                             if ($this->getDao('SoAllocate')->getNumRows(["so_no" => $so_no])) {
                                 $so_obj->setStatus("4");
                                 $status = 4;
-                                $so_obj->setFinanceDispatchDate(null);
                             } else {
                                 $so_obj->setStatus("3");
                                 $status = 3;
-                                $so_obj->setFinanceDispatchDate(null);
                             }
 
 
