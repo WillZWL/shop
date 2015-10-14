@@ -20,12 +20,12 @@ use ESG\Panther\Dao\SoPaymentStatusDao;
 use ESG\Panther\Dao\SoExtendDao;
 use ESG\Panther\Dao\SoCreditChkDao;
 use ESG\Panther\Dao\SoRiskDao;
-use ESG\Panther\Service\ClientService;
-use ESG\Panther\Service\ProductService;
-use ESG\Panther\Service\CreateClientInterface;
-use ESG\Panther\Service\ExchangeRateService;;
-use ESG\Panther\Service\PriceWebsiteService;;
-use ESG\Panther\Service\PriceService;;
+//use ESG\Panther\Service\ClientService;
+//use ESG\Panther\Service\ProductService;
+//use ESG\Panther\Service\CreateClientInterface;
+//use ESG\Panther\Service\ExchangeRateService;
+//use ESG\Panther\Service\PriceWebsiteService;
+//use ESG\Panther\Service\PriceService;
 
 class SoFactoryService extends BaseService
 {
