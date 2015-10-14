@@ -72,12 +72,12 @@ class Vb_data_transfer_product_content_extend_service extends Vb_data_transfer_s
 					
 					$new_pc_obj = array();
 					
-					$new_pc_obj["feature"] = $pc->feature; 
-					$new_pc_obj["feature_original"] = $pc->feature_original;	
+					$new_pc_obj["feature"] = $this->replace_special_chars($pc->feature); 
+					$new_pc_obj["feature_original"] = $this->replace_special_chars($pc->feature_original);	
 					$new_pc_obj["specification"] = $pc->specification;	
 					$new_pc_obj["spec_original"]  = $pc->spec_original;	  
-					$new_pc_obj["requirement"] = $pc->requirement;
-					$new_pc_obj["instruction"] = $pc->instruction;
+					$new_pc_obj["requirement"] = $this->replace_special_chars($pc->requirement);
+					$new_pc_obj["instruction"] = $this->replace_special_chars($pc->instruction);
 					$new_pc_obj["apply_enhanced_listing"] = $pc->apply_enhanced_listing;
 					$new_pc_obj["enhanced_listing"] = $pc->enhanced_listing;	
 					
@@ -100,12 +100,12 @@ class Vb_data_transfer_product_content_extend_service extends Vb_data_transfer_s
 					
 					$new_pc_obj->set_prod_sku($sku); 
 					$new_pc_obj->set_lang_id($pc->lang_id); 				
-					$new_pc_obj->set_feature($pc->feature); 
-					$new_pc_obj->set_feature_original($pc->feature_original);	
+					$new_pc_obj->set_feature($this->replace_special_chars($pc->feature)); 
+					$new_pc_obj->set_feature_original($this->replace_special_chars($pc->feature_original));	
 					$new_pc_obj->set_specification($pc->specification);	
 					$new_pc_obj->set_spec_original($pc->spec_original);	  
-					$new_pc_obj->set_requirement($pc->requirement);
-					$new_pc_obj->set_instruction($pc->instruction);
+					$new_pc_obj->set_requirement($this->replace_special_chars($pc->requirement));
+					$new_pc_obj->set_instruction($this->replace_special_chars($pc->instruction));
 					$new_pc_obj->set_apply_enhanced_listing($pc->apply_enhanced_listing);
 					$new_pc_obj->set_enhanced_listing($pc->enhanced_listing);	
 					
