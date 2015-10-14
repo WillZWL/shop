@@ -10,9 +10,6 @@ class EmailManagement extends MY_Controller
 
     public function index()
     {
-        // $data["filter_arr"] = $data["tpl_edit"] = $subject_var_arr = $html_var_arr = $alt_var_arr = array();
-        // $data["subject_var"] = $data["html_var"] = $data["alt_var"] = "";
-
         $sub_app_id = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
@@ -33,15 +30,15 @@ class EmailManagement extends MY_Controller
 
         if (count($data['tpl_list']) === 1) {
             $data['tpl_edit']['subject'] = $data['tpl_list'][0]->getSubject();
-            $data['tpl_edit']['message_html'] = $data['tpl_list'][0]->getSubject();
-            $data['tpl_edit']['message_alt'] = $data['tpl_list'][0]->getSubject();
+            $data['tpl_edit']['message_html'] = $data['tpl_list'][0]->getTplFileName();
+            $data['tpl_edit']['message_alt'] = $data['tpl_list'][0]->getTplAltFileName();
 
             $subject_vars = $this->sc['EmailTemplate']->getVariablesInTemplate($data["tpl_edit"]["subject"], "[:", ":]");
             $html_vars = $this->sc['EmailTemplate']->getVariablesInTemplate($data["tpl_edit"]["message_html"], "[:", ":]");
             $alt_vars = $this->sc['EmailTemplate']->getVariablesInTemplate($data["tpl_edit"]["message_alt"], "[:", ":]");
-            $data["textarea"]["subject"] = $this->construct_textarea("subject", $data["tpl_edit"]["subject"], $subject_var_arr, FALSE);
-            $data["textarea"]["message_html"] = $this->construct_textarea("message_html", $data["tpl_edit"]["message_html"], $html_var_arr, TRUE);
-            $data["textarea"]["message_alt"] = $this->construct_textarea("message_alt", $data["tpl_edit"]["message_alt"], $alt_var_arr, FALSE);
+            $data["textarea"]["subject"] = $this->construct_textarea("subject", $data["tpl_edit"]["subject"], $subject_vars, FALSE);
+            $data["textarea"]["message_html"] = $this->construct_textarea("message_html", $data["tpl_edit"]["message_html"], $html_vars, TRUE);
+            $data["textarea"]["message_alt"] = $this->construct_textarea("message_alt", $data["tpl_edit"]["message_alt"], $alt_vars, FALSE);
         }
 
         $data["notice"] = notice($lang);
