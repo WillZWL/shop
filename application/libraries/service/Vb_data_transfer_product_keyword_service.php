@@ -78,7 +78,7 @@ class Vb_data_transfer_product_keyword_service extends Vb_data_transfer_service
 					
 					$new_pc_obj->set_sku($sku);
 					$new_pc_obj->set_lang_id($pc->lang_id); 
-					$new_pc_obj->set_keyword($pc->keyword); 
+					$new_pc_obj->set_keyword($this->replace_special_chars($pc->keyword)); 
 					$new_pc_obj->set_type($pc->type);	
 					
 					$this->get_dao()->insert($new_pc_obj);
