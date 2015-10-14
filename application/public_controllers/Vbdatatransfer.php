@@ -5,7 +5,9 @@ class Vbdatatransfer extends PUB_Controller
 {
 	
 	public function  __construct()
-	{		
+	{	
+		ini_set('memory_limit', '1024M');
+			
         parent::__construct();
 		//price
 		$this->load->library('service/vb_data_transfer_prices_service');
