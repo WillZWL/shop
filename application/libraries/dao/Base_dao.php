@@ -207,16 +207,8 @@ abstract class Base_dao
     {
         $this->db->where('seq_name', $this->get_seq_name());
         if ($this->db->update($this->sequence_table, array('value' => $new_value))) {
-            //Tommy added: commit
-            if ($this->db->trans_autocommit) {
-                $this->db->trans_commit();
-            }
             return TRUE;
         } else {
-            if ($this->db->trans_autocommit) {
-                $this->db->trans_rollback();
-                $this->db->trans_commit();
-            }
             return FALSE;
         }
     }
