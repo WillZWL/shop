@@ -82,16 +82,7 @@ class Cache_product_feed_dao extends Base_dao
             $data['listing_status'], $data['cache_time']
         );
 
-        if ($result = $this->db->query($sql, $input)) {
-            if ($this->db->trans_autocommit) {
-                $this->db->trans_commit();
-            }
-        } else {
-            if ($this->db->trans_autocommit) {
-                $this->db->trans_rollback();
-                $this->db->trans_commit();
-            }
-        }
+        $this->db->query($sql, $input);
     }
 
     public function get_xml_skype_feed($data = NULL)
