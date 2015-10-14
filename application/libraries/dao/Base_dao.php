@@ -354,91 +354,60 @@ abstract class Base_dao
     {
         $class_methods = get_class_methods($obj);
         foreach ($class_methods as $fct_name) {
-
             if (substr($fct_name, 0, 4) == "get_") {
                 $rsvalue = call_user_func(array($obj, $fct_name));
                 $rskey = substr($fct_name, 4);
                 $this->db->where($rskey, $rsvalue);
             }
         }
+
         if ($this->db->delete($this->get_table_name())) {
-            $affected = $this->db->affected_rows();
-            if ($this->db->trans_autocommit) {
-                $this->db->trans_commit();
-            }
-            return $affected;
+            return $this->db->affected_rows();
         } else {
-            if ($this->db->trans_autocommit) {
-                $this->db->trans_rollback();
-                $this->db->trans_commit();
-            }
-            return FALSE;
+            return false;
         }
     }
 
     public function q_delete($where = array())
     {
+        if (empty($where)) {
+            return false;
+        }
 
-        if (!empty($where)) {
-            $this->db->where($where);
-            echo $this->db->query;
-            if ($this->db->delete($this->get_table_name())) {
-                $affected = $this->db->affected_rows();
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_commit();
-                }
-                return $affected;
-            } else {
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_rollback();
-                    $this->db->trans_commit();
-                }
-                return FALSE;
-            }
+        $this->db->where($where);
+
+        if ($this->db->delete($this->get_table_name())) {
+            return  $this->db->affected_rows();
         } else {
-            return FALSE;
+            return false;
         }
     }
 
     public function q_insert($data = array())
     {
-        if (!empty($data)) {
-            if ($this->db->insert($this->get_table_name(), $data)) {
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_commit();
-                }
-                return $this->db->insert_id();
-            } else {
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_rollback();
-                    $this->db->trans_commit();
-                }
-                return FALSE;
-            }
+        if (empty($data)) {
+           return false;
+        }
+
+        if ($this->db->insert($this->get_table_name(), $data)) {
+            return $this->db->insert_id();
         } else {
-            return FALSE;
+            return false;
         }
     }
 
     public function q_update($where = array(), $data = array())
     {
-        if (!(empty($where) || empty($data))) {
-            $this->db->where($where);
-            if ($this->db->update($this->get_table_name(), $data)) {
-                $affected = $this->db->affected_rows();
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_commit();
-                }
-                return $affected;
-            } else {
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_rollback();
-                    $this->db->trans_commit();
-                }
-                return FALSE;
-            }
+        if (empty($where) || empty($data)) {
+            return false;
+        }
+
+        $this->db->where($where);
+
+        if ($this->db->update($this->get_table_name(), $data)) {
+            return $this->db->affected_rows();
         } else {
-            return FALSE;
+            return false;
         }
     }
 
