@@ -267,19 +267,12 @@ abstract class BaseDao
     {
         if (!empty($data)) {
             if ($this->db->insert($this->getTableName(), $data)) {
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_commit();
-                }
                 return $this->db->insert_id();
             } else {
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_rollback();
-                    $this->db->trans_commit();
-                }
-                return FALSE;
+                return false;
             }
         } else {
-            return FALSE;
+            return false;
         }
     }
 
@@ -288,43 +281,26 @@ abstract class BaseDao
         if (!(empty($where) || empty($data))) {
             $this->db->where($where);
             if ($this->db->update($this->getTableName(), $data)) {
-                $affected = $this->db->affected_rows();
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_commit();
-                }
-                return $affected;
+                return $this->db->affected_rows();
             } else {
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_rollback();
-                    $this->db->trans_commit();
-                }
-                return FALSE;
+                return false;
             }
         } else {
-            return FALSE;
+            return false;
         }
     }
 
     public function qDelete($where = array())
     {
-        if (!empty($where)) {
-            $this->db->where($where);
-            echo $this->db->query;
-            if ($this->db->delete($this->getTableName())) {
-                $affected = $this->db->affected_rows();
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_commit();
-                }
-                return $affected;
-            } else {
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_rollback();
-                    $this->db->trans_commit();
-                }
-                return FALSE;
-            }
+        if (empty($where)) {
+            return false;
+        }
+
+        $this->db->where($where);
+        if ($this->db->delete($this->getTableName())) {
+            return $this->db->affected_rows();
         } else {
-            return FALSE;
+            return false;
         }
     }
 
@@ -351,8 +327,7 @@ abstract class BaseDao
             }
         }
         if ($this->db->delete($this->getTableName())) {
-            $affected = $this->db->affected_rows();
-            return $affected;
+            return $this->db->affected_rows();
         } else {
             return false;
         }
