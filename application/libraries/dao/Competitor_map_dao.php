@@ -267,13 +267,8 @@ class Competitor_map_dao extends Base_dao
                     ";
 
             if ($query = $this->db->query($sql, array($country_id))) {
-                $this->db->query("commit;");
                 return TRUE;
             } else {
-                if ($this->db->trans_autocommit) {
-                    $this->db->trans_rollback();
-                    $this->db->trans_commit();
-                }
                 return FALSE;
             }
         } else {
