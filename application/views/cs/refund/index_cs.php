@@ -5,20 +5,7 @@
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
-    <script type="text/javascript" src="<?= base_url() ?>mastercfg/selling_platform/get_js"></script>
-    <script language="javascript">
-        <!--
-        function drawList(value) {
-            var selected = "";
-            var output = "";
-            for (var i in platform) {
-                selected = platform[i][0] == value ? "SELECTED" : "";
-                output = "<option value='" + platform[i][0] + "' " + selected + ">" + platform[i][0] + "</option>";
-                document.write(output);
-            }
-        }
-        -->
-    </script>
+    <script type="text/javascript" src="<?= base_url() ?>mastercfg/profitVarHelper/jsPlatformlist"></script>
 </head>
 <body>
 <div id="main">
@@ -151,54 +138,57 @@
         <?php
         $soldprice = array();
         $i = 0;
-        if (!empty($list))
-        {
-        foreach ($list as $obj)
-        {
+        if (!empty($list)) :
+        foreach ($list as $obj) :
         ?>
 
         <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
-            onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){
-        ?>onClick="Pop('<?= site_url('cs/refund/cs_view/' . $obj->get_id()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>', 'refund_<?= $obj->get_id() ?>')"<?
-        }?>>
+            onMouseOut="RemoveClassName(this, 'highlight')" <?php if (!($is_edit)):
+        ?>onClick="Pop('<?= site_url('cs/refund/cs_view/' . $obj->getId()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>', 'refund_<?= $obj->getId() ?>')"<?php
+        endif;?>>
             <td height="20"></td>
-            <td><?= $obj->get_id() ?></td>
-            <td><?= $obj->get_so_no() ?></td>
-            <td><?= $obj->get_platform_order_id() ?></td>
-            <td><?= $obj->get_payment_gateway() ?></td>
-            <td><?= $obj->get_platform_id() ?></td>
-            <td><?= $obj->get_currency_id() . " " . $obj->get_total_refund_amount() ?></td>
-            <td><?= $obj->get_order_date() ?></td>
+            <td><?= $obj->getId() ?></td>
+            <td><?= $obj->getSoNo() ?></td>
+            <td><?= $obj->getPlatformOrderId() ?></td>
+            <td><?= $obj->getPaymentGateway() ?></td>
+            <td><?= $obj->getPlatformId() ?></td>
+            <td><?= $obj->getCurrencyId() . " " . $obj->getTotalRefundAmount() ?></td>
+            <td><?= $obj->getOrderDate() ?></td>
 
-            <td><?= $obj->get_dispatch_date() ?></td>
+            <td><?= $obj->getDispatchDate() ?></td>
 
-            <td><?= $obj->get_create_on() ?></td>
-            <td><?= $obj->get_create_by() ?></td>
+            <td><?= $obj->getCreateOn() ?></td>
+            <td><?= $obj->getCreateBy() ?></td>
 
-            <td><?php if ($obj->get_special_order() != 0) echo "Y";?></td>
-            <td><?= $obj->get_refund_reason() ?></td>
+            <td><?php if ($obj->getSpecialOrder() != 0) echo "Y";?></td>
+            <td><?= $obj->getRefundReason() ?></td>
 
-            <td><?= $obj->get_refund_score() ?></td>
+            <td><?= $obj->getRefundScore() ?></td>
 
-            <td><?= $obj->get_refund_score_date() ?></td>
+            <td><?= $obj->getRefundScoreDate() ?></td>
 
-            <td><?= $obj->get_pack_date() ?></td>
+            <td><?= $obj->getPackDate() ?></td>
 
             <td>&nbsp;</td>
             <?php
 
             $i++;
-            }
-            }
-            ?>
+            endforeach;
+        endif;
+        ?>
         <tr class="header">
             <td></td>
-            <td colspan="10><input type=" button
-            " onClick="Redirect('<?= base_url() ?>cs/refund/');" value="<?= $lang["back_to_main"] ?>"></td>
+            <td colspan="16">
+                <input type="button" onClick="Redirect('<?= base_url() ?>cs/refund/');" value="<?= $lang["back_to_main"] ?>">
+            </td>
         </tr>
     </table>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
+<script type="text/javascript">
+    InitPlatform(document.fm.platform_id);
+    document.fm.platform_id.value = '<?=$this->input->get("platform_id")?>';
+</script>
 </body>
 </html>

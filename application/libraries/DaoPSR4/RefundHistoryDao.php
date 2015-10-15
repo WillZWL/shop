@@ -40,8 +40,6 @@ class RefundHistoryDao extends BaseDao
         }
         $sql .= " ORDER BY h.create_on ASC";
 
-        $this->include_dto($classname);
-
         $rs = [];
 
         if ($query = $this->db->query($sql, $where["so_no"])) {
@@ -50,7 +48,7 @@ class RefundHistoryDao extends BaseDao
             }
             return $rs;
         }
-        echo $this->db->last_query() . " " . $this->db->_error_message();
+
         return FALSE;
     }
 }

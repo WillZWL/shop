@@ -37,35 +37,35 @@
             <tr class="add_row">
                 <td>&nbsp;</td>
                 <?php
-                if ($action == "add") {
+                if ($action == "add") :
                     ?>
                     <td><select name="r_cat" class="input">
                             <?php
-                            foreach ($lang["category"] as $key => $value) {
+                            foreach ($lang["category"] as $key => $value) :
                                 ?>
                                 <option
                                     value="<?= $key ?>" <?= $this->input->post('r_cat') == $key ? "SELECTED" : "" ?>><?= $value ?></option>
                             <?php
-                            }
+                            endforeach;
                             ?>
                         </select></td>
                     <td><input name="r_desc" class="input" value="<?= $this->input->post("r_desc") ?>" notEmpty
                                maxLen=255></td>
                 <?php
-                } else {
+                else :
                     ?>
                     <td><select name="r_cat" class="input">
                             <?php
-                            foreach ($lang["category"] as $key => $value) {
+                            foreach ($lang["category"] as $key => $value) :
                                 ?>
                                 <option value="<?= $key ?>"><?= $value ?></option>
                             <?php
-                            }
+                            endforeach;
                             ?>
                         </select></td>
                     <td><input name="r_desc" class="input" notEmpty maxLen=255></td>
                 <?php
-                }
+                endif;
                 ?>
                 <td align="center"><input type="submit" value="<?= $lang["add"] ?>"></td>
             </tr>
@@ -79,13 +79,14 @@
         </form>
         <form name="fm" method="get" onSubmit="return CheckForm(this)">
             <tr class="header">
-                <td height="20"><img src="<?= base_url() ?>images/expand.png" class="pointer"
-                                     onClick="Expand(document.getElementById('tr_search'));"></td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'cat', '<?= $xsort["cat"] ?>')"><?= $lang["reason_category"] ?> <?= $sortimg["cat"] ?></a>
+                <td height="20">
+                    <img src="<?= base_url() ?>images/expand.png" class="pointer" onClick="Expand(document.getElementById('tr_search'));">
                 </td>
                 <td><a href="#"
-                       onClick="SortCol(document.fm, 'desc', '<?= $xsort["desc"] ?>')"><?= $lang["reason_description"] ?> <?= $sortimg["desc"] ?></a>
+                       onClick="SortCol(document.fm, 'reason_cat', '<?= $xsort["reason_cat"] ?>')"><?= $lang["reason_category"] ?> <?= $sortimg["reason_cat"] ?></a>
+                </td>
+                <td><a href="#"
+                       onClick="SortCol(document.fm, 'description', '<?= $xsort["description"] ?>')"><?= $lang["reason_description"] ?> <?= $sortimg["description"] ?></a>
                 </td>
                 <td></td>
             </tr>
@@ -94,12 +95,12 @@
                 <td><select name="cat" class="input">
                         <option value=""></option>
                         <?php
-                        foreach ($lang["category"] as $key => $value) {
+                        foreach ($lang["category"] as $key => $value) :
                             ?>
                             <option
                                 value="<?= $key ?>" <?= $this->input->get('cat') == $key ? "SELECTED" : "" ?>><?= $value ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </select></td>
                 <td><input name="desc" class="input" value="<?= htmlspecialchars($this->input->get("desc")) ?>"></td>
@@ -111,61 +112,65 @@
         </form>
         <?php
         $i = 0;
-        if (!empty($reason_list)) {
-            foreach ($reason_list as $obj) {
-                $is_edit = ($action == "edit" && $eid == $obj->get_id());
+        if (!empty($reason_list)) :
+            foreach ($reason_list as $obj) :
+                $is_edit = ($action == "edit" && $eid == $obj->getId());
                 ?>
 
                 <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
-                    onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){
-                ?>onClick="Redirect('<?= site_url('cs/refund/reason/' . $obj->get_id()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"<?
-                }?>>
+                    onMouseOut="RemoveClassName(this, 'highlight')"
+                <?php
+                    if (!($is_edit)):
+                ?>onClick="Redirect('<?= site_url('cs/refund/reason/' . $obj->getId()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"
+                <?php
+                    endif;
+                ?>>
                     <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                         title='<?= $lang["create_on"] ?>:<?= $obj->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->get_modify_by() ?>'>
+                                         title='<?= $lang["create_on"] ?>:<?= $obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->getModifyBy() ?>'>
                     </td>
                     <?php
-                    if ($is_edit) {
+                    if ($is_edit) :
                         ?>
                         <form name="fm_edit" action="<?= base_url() ?>cs/refund/reason/?<?= $_SERVER['QUERY_STRING'] ?>"
                               method="post" onSubmit="return CheckForm(this)">
                             <input type="hidden" name="posted" value="1">
                             <input type="hidden" id="action" name="action" value="edit">
-                            <input type="hidden" name="id" value="<?= $obj->get_id() ?>">
+                            <input type="hidden" name="id" value="<?= $obj->getId() ?>">
                             <?php
-                            if ($this->input->post("posted")) {
+                            if ($this->input->post("posted")) :
                                 ?>
                                 <td><select name="ecat" class="input">
                                         <?php
-                                        foreach ($lang["category"] as $key => $value) {
+                                        foreach ($lang["category"] as $key => $value) :
                                             ?>
                                             <option
                                                 value="<?= $key ?>" <?= $this->input->post('ecat') == $key ? "SELECTED" : "" ?>><?= $value ?></option>
                                         <?php
-                                        }
+                                        endforeach;
                                         ?>
                                     </select></td>
                                 <td><input name="edesc" class="input" value="<?= $this->input->post("edesc") ?>"
                                            notEmpty maxLen=255></td>
                             <?php
-                            } else {
+                            else :
                                 ?>
                                 <td><select name="ecat" class="input">
                                         <?php
-                                        foreach ($lang["category"] as $key => $value) {
+                                        foreach ($lang["category"] as $key => $value) :
                                             ?>
                                             <option
                                                 value="<?= $key ?>" <?= $this->input->post('ecat') == $key ? "SELECTED" : "" ?>><?= $value ?></option>
                                         <?php
-                                        }
+                                        endforeach;
                                         ?>
                                     </select></td>
-                                <td><input name="edesc" class="input" value="<?= $obj->get_description() ?>" notEmpty
+                                <td><input name="edesc" class="input" value="<?= $obj->getDescription() ?>" notEmpty
                                            maxLen=255></td>
                             <?php
-                            }
-                            if (!check_app_feature_access_right($app_id, "CS000201_delete_btn")) {
+                            endif;
+                            if (!check_app_feature_access_right($app_id, "CS000201_delete_btn")) :
                                 $disabled_button = "disabled";
-                            }
+                            endif;
                             ?>
                             <td align="center"><input type="submit"
                                                       value="<?= $lang["update"] ?>"><input <?= $disabled_button ?>
@@ -176,19 +181,19 @@
                             </td>
                         </form>
                     <?php
-                    } else {
+                    else :
                         ?>
-                        <td><?= $lang["category"][$obj->get_reason_cat()] ?></td>
-                        <td><?= $obj->get_description() ?></td>
+                        <td><?= $lang["category"][$obj->getReasonCat()] ?></td>
+                        <td><?= $obj->getDescription() ?></td>
                         <td>&nbsp;</td>
                     <?php
-                    }
+                    endif;
                     ?>
                 </tr>
                 <?php
                 $i++;
-            }
-        }
+            endforeach;
+        endif;
         ?>
         <tr class="header">
             <td></td>
@@ -196,7 +201,7 @@
                                    value="<?= $lang["back_to_main"] ?>"></td>
         </tr>
     </table>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>

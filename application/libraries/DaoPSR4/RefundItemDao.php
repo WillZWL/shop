@@ -35,8 +35,6 @@ class RefundItemDao extends BaseDao
 
         $this->db->order_by($option["sortby"]);
 
-        $this->include_dto($classname);
-
         $rs = [];
 
         if ($query = $this->db->get()) {

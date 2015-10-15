@@ -425,6 +425,9 @@ class On_hold_admin extends MY_Controller
                 if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                     $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                 }
+
+                $status = 0;
+                $this->sc['So']->updateIofStatusBySo($so_no, $status);
             }
         }
         if (isset($_SESSION["LISTPAGE"])) {
@@ -450,6 +453,8 @@ class On_hold_admin extends MY_Controller
                     if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                     } else {
+                        $status = 0;
+                        $this->sc['So']->updateIofStatusBySo($so_no, $status);
                         $this->_create_release_order_record($so_no, $reason = 'cancel order');
                     }
                 }
@@ -503,6 +508,8 @@ class On_hold_admin extends MY_Controller
                         if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                             $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                         } else {
+                            $status = 0;
+                            $this->sc['So']->updateIofStatusBySo($so_no, $status);
                             $this->_create_release_order_record($so_no, $reason);
                         }
                         $this->sc['So']->getDao('SoCreditChk')->db->trans_complete();
@@ -547,8 +554,10 @@ class On_hold_admin extends MY_Controller
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
                 $so_obj->setHoldStatus(0);
+                $status = "";
                 if ($so_obj->getStatus() < 3) {
                     $so_obj->setStatus(3);
+                    $status = 3;
                 }
 
                 if (!is_null($so_obj->getCcReminderScheduleDate())) {
@@ -559,6 +568,10 @@ class On_hold_admin extends MY_Controller
                 if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                     $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                 } else {
+                    if ($status == 3) {
+                        $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                    }
+
                     $this->_create_release_order_record($so_no, 'approve for fulfillment');
                 }
 

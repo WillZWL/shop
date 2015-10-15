@@ -8,7 +8,7 @@ class SoRefundScoreService extends BaseService
         parent::__construct();
     }
 
-    public function insert_initial_refund_score($orderid)
+    public function insertInitialRefundScore($orderid)
     {
         $payment_gateway_id = strtolower($this->getSoPaymentGatewayId($orderid));
         $payment_gateway_list = ["paypal", "w_bank_transfer"];
@@ -23,6 +23,7 @@ class SoRefundScoreService extends BaseService
         } else {
             $refund_score = 0;
         }
+
         if (!$this->getRefundScoreVo($orderid)) {
             $this->insertRefundScore($orderid, $refund_score);
             $this->insertRefundScoreHistory($orderid, $refund_score);

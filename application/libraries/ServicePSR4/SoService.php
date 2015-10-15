@@ -515,7 +515,7 @@ class SoService extends BaseService
         if ($new_so_vo = $dao->$process($so_vo)) {
             $failed = 0;
             if (isset($_SESSION["so_no"]) && ($soid_dao->q_delete(array("so_no" => $_SESSION["so_no"])) === FALSE || $soi_dao->q_delete(array("so_no" => $_SESSION["so_no"])) === FALSE || $sops_dao->q_delete(array("so_no" => $_SESSION["so_no"])) === FALSE)) {
-                if ($so_vo->get_biz_type() == "ONLINE" || $so_vo->get_biz_type() == "MOBILE") {
+                if ($so_vo->getBizType() == "ONLINE" || $so_vo->getBizType() == "MOBILE") {
                     $_SESSION["NOTICE"] = "Error: " . __LINE__;
                 } else {
                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . $dao->db->_error_message();
@@ -526,7 +526,7 @@ class SoService extends BaseService
                 foreach ($so_item_list as $soi_obj) {
                     $soi_obj->setSoNo($so_no);
                     if (!$soi_dao->insert($soi_obj)) {
-                        if ($so_vo->get_biz_type() == "ONLINE" || $so_vo->get_biz_type() == "MOBILE") {
+                        if ($so_vo->getBizType() == "ONLINE" || $so_vo->getBizType() == "MOBILE") {
                             $_SESSION["NOTICE"] = "Error: " . __LINE__;
                         } else {
                             $_SESSION["NOTICE"] = "Error: " . __LINE__ . $dao->db->_error_message();
@@ -580,7 +580,7 @@ class SoService extends BaseService
 
                             if (!$soid_dao->insert($soid_obj)) {
                                 // Front End don't show db error
-                                if ($so_vo->get_biz_type() == "ONLINE" || $so_vo->get_biz_type() == "MOBILE") {
+                                if ($so_vo->getBizType() == "ONLINE" || $so_vo->getBizType() == "MOBILE") {
                                     $_SESSION["NOTICE"] = "Error: " . __LINE__;
                                 } else {
                                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . $dao->db->_error_message();
@@ -626,7 +626,7 @@ class SoService extends BaseService
 
                             if (!$soid_dao->insert($soid_obj)) {
                                 // Front End don't show db error
-                                if ($so_vo->get_biz_type() == "ONLINE" || $so_vo->get_biz_type() == "MOBILE") {
+                                if ($so_vo->getBizType() == "ONLINE" || $so_vo->getBizType() == "MOBILE") {
                                     $_SESSION["NOTICE"] = "Error: " . __LINE__;
                                 } else {
                                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . $dao->db->_error_message();
@@ -673,7 +673,7 @@ class SoService extends BaseService
                 }
 
                 if (!$failed) {
-                    if ($so_vo->get_biz_type() == "ONLINE" || $so_vo->get_biz_type() == "MOBILE") {
+                    if ($so_vo->getBizType() == "ONLINE" || $so_vo->getBizType() == "MOBILE") {
                         if (!($so_vo->get_amount() == 0 && $vars["all_trial"] && $vars["all_virtual"])) {
                             $sops_vo->setSoNo($so_no);
                             $sops_vo->set_payment_gateway_id($vars["payment_gateway"]);
@@ -686,7 +686,7 @@ class SoService extends BaseService
                                 $failed = 1;
                             }
                         }
-                    } elseif ($so_vo->get_biz_type() == "OFFLINE" || $so_vo->get_biz_type() == "SPECIAL" || $so_vo->get_biz_type() == "MANUAL") {
+                    } elseif ($so_vo->getBizType() == "OFFLINE" || $so_vo->getBizType() == "SPECIAL" || $so_vo->getBizType() == "MANUAL") {
                         $entity_id = $this->entityService->getEntityId($so_vo->get_amount(), $so_vo->get_currency_id());
                         $soext_vo->set_entity_id($entity_id);
                         $soext_vo->setSoNo($so_no);
@@ -706,7 +706,7 @@ class SoService extends BaseService
                             $this->getDao('SoPriorityScore')->insertSops($so_no, 1000);
                         }
                     }
-                    if ($so_vo->get_biz_type() == "MANUAL" || $so_vo->get_biz_type() == "OFFLINE") {
+                    if ($so_vo->getBizType() == "MANUAL" || $so_vo->getBizType() == "OFFLINE") {
                         if (!($so_vo->get_amount() == 0 && $vars["all_trial"] && $vars["all_virtual"])) {
                             $sops_vo->setSoNo($so_no);
                             $sops_vo->set_payment_gateway_id($vars["payment_gateway"]);
@@ -728,7 +728,7 @@ class SoService extends BaseService
                 }
             }
         } else {
-            if ($so_vo->get_biz_type() == "ONLINE" || $so_vo->get_biz_type() == "MOBILE") {
+            if ($so_vo->getBizType() == "ONLINE" || $so_vo->getBizType() == "MOBILE") {
                 $_SESSION["NOTICE"] = "Error: " . __LINE__;
             } else {
                 $_SESSION["NOTICE"] = "Error: " . __LINE__ . " " . $dao->db->_error_message();
@@ -1181,10 +1181,10 @@ class SoService extends BaseService
         return $ret;
     }
 
-    public function get_refundable_list($where = [], $option = [])
+    public function getRefundableList($where = [], $option = [])
     {
         if ($option["num_row"] != "") {
-            return $this->getDao('So')->getRefundableOrder($where, array("num_row" => 1, "create" => $option["create"]));
+            return $this->getDao('So')->getRefundableOrder($where, ["num_row" => 1, "create" => $option["create"]]);
         } else {
             return $this->getDao('So')->getRefundableOrder($where, $option);
         }
@@ -4613,7 +4613,7 @@ html;
         $replace["last_update_time"] = '';
 
         $dto = new EventEmailDto;
-        if (($so_obj->get_biz_type() == 'ONLINE') && ($courier_id != 'HK POST') && ($courier_id != 'hong kong post') && ($courier_id != 'Quantium')) {
+        if (($so_obj->getBizType() == 'ONLINE') && ($courier_id != 'HK POST') && ($courier_id != 'hong kong post') && ($courier_id != 'Quantium')) {
             if ($this->is_filfull_aftership_thank_you_email_criteria($so_obj->getDeliveryCountryId(), $so_obj->getSoNo(), $replace['last_update_time'], $ap_status)) {
                 # SBF #4740 - if fulfull thank you email - product delivered on time send info to FIANET
                 $send_mail = 1;
@@ -4877,19 +4877,19 @@ html;
         }
     }
 
-    public function is_cod_order($so_no)
+    public function isCodOrder($so_no)
     {
-        $so_ext_obj = $this->getDao('SoExtend')->get(array("so_no" => $so_no));
-        $sops_obj = $this->getDao('SoPaymentStatus')->get(array("so_no" => $so_no));
-        $so_obj = $this->getDao('So')->get(array("so_no" => $so_no));
-        if ((($so_obj->get_biz_type() != 'SPECIAL')
-                && ($so_ext_obj->get_offline_fee() == 15)
-                && ($sops_obj->get_payment_gateway_id() == "worldpay_moto")
+        $so_ext_obj = $this->getDao('SoExtend')->get(["so_no" => $so_no]);
+        $sops_obj = $this->getDao('SoPaymentStatus')->get(["so_no" => $so_no]);
+        $so_obj = $this->getDao('So')->get(["so_no" => $so_no]);
+        if ((($so_obj->getBizType() != 'SPECIAL')
+                && ($so_ext_obj->getOfflineFee() == 15)
+                && ($sops_obj->getPaymentGatewayId() == "worldpay_moto")
                 && ($so_obj->getPlatformId() == "WEBSG"))
             ||
-            (($so_obj->get_biz_type() != 'SPECIAL') && ($sops_obj->get_payment_gateway_id() == "worldpay_moto_cash"))
+            (($so_obj->getBizType() != 'SPECIAL') && ($sops_obj->getPaymentGatewayId() == "worldpay_moto_cash"))
             ||
-            (($so_obj->get_biz_type() != 'SPECIAL') && ($sops_obj->get_payment_gateway_id() == "paypal_cash"))
+            (($so_obj->getBizType() != 'SPECIAL') && ($sops_obj->getPaymentGatewayId() == "paypal_cash"))
         ) {
             return true;
         }
