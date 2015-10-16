@@ -93,7 +93,7 @@
         <col width="20">
 
         <?php
-        if (count($history)) {
+        if (count($history)) :
             ?>
             <tr class="header">
                 <td height="20">&nbsp;</td>
@@ -107,28 +107,28 @@
             </tr>
             <?php
             $i = 0;
-            foreach ($history as $obj) {
+            foreach ($history as $obj) :
                 ?>
                 <tr class="row<?= $i % 2 ?>">
                     <td>&nbsp;</td>
-                    <td><?= $obj->get_create_on() ?></td>
-                    <td><?= $lang["ristatus"][$obj->get_status()] ?></td>
-                    <td><?= $lang["rcategory"][$obj->get_reason_cat()] . " - " . $obj->get_description() ?></td>
-                    <td><?= $obj->get_notes() ?></td>
-                    <td><?= $obj->get_name() ?></td>
-                    <td><?= $lang["app_status"][$obj->get_app_status()] ?></td>
+                    <td><?= $obj->getCreateOn() ?></td>
+                    <td><?= $lang["ristatus"][$obj->getStatus()] ?></td>
+                    <td><?= $lang["rcategory"][$obj->getReasonCat()] . " - " . $obj->getDescription() ?></td>
+                    <td><?= $obj->getNotes() ?></td>
+                    <td><?= $obj->getName() ?></td>
+                    <td><?= $lang["app_status"][$obj->getAppStatus()] ?></td>
                     <td>&nbsp;</td>
                 </tr>
                 <?php
                 $i++;
-            }
-        } else {
+            endforeach;
+        else :
             ?>
             <tr class="row0">
                 <td align="center" colspan="7" height="20"><?= $lang["no_history"] ?></td>
             </tr>
         <?php
-        }
+        endif;
         ?>
     </table>
     <table border="0" cellpadding="0" cellspacing="0" class="page_header" width="100%">
@@ -152,7 +152,7 @@
             <td width="15%" height="20" align="right" class="field"
                 style="padding-right:10px;"><?= $lang["order_status"] ?></td>
             <td width="35%" align="left" class="value"
-                style="padding-left:10px;"><?= $lang["so_status"][$orderobj->get_status()] ?></td>
+                style="padding-left:10px;"><?= $lang["so_status"][$orderobj->getStatus()] ?></td>
         </tr>
         <tr>
             <td width="15%" height="20" align="right" class="field" style="padding-right:10px;">Refundable orders in
@@ -166,50 +166,50 @@
             <td width="15%" height="20" align="right" class="field"
                 style="padding-right:10px;"><?= $lang["platform"] ?></td>
             <td width="35%" align="left" class="value"
-                style="padding-left:10px;"><?= $lang["so_platform"][$orderobj->get_platform_id()] ?></td>
+                style="padding-left:10px;"><?= $lang["so_platform"][$orderobj->getPlatformId()] ?></td>
             <td width="15%" height="20" align="right" class="field"
                 style="padding-right:10px;"><?= $lang["order_amount"] ?></td>
             <td width="35%" align="left" class="value"
-                style="padding-left:10px;"><?= $orderobj->get_currency_id() . " " . number_format(($orderobj->get_amount() - $orderobj->get_delivery_charge()), 2) ?></td>
+                style="padding-left:10px;"><?= $orderobj->getCurrencyId() . " " . number_format(($orderobj->getAmount() - $orderobj->getDeliveryCharge()), 2) ?></td>
         </tr>
         <?php
-        if (ereg('^WS', $orderobj->get_platform_id())) {
+        if (ereg('^WS', $orderobj->getPlatformId())) :
             ?>
             <tr>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["biztype"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $orderobj->get_biz_type() ?></td>
+                    style="padding-left:10px;"><?= $orderobj->getBizType() ?></td>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["order_delivery_charge"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $orderobj->get_currency_id() . " " . number_format($orderobj->get_delivery_charge(), 2) ?></td>
+                    style="padding-left:10px;"><?= $orderobj->getCurrencyId() . " " . number_format($orderobj->getDeliveryCharge(), 2) ?></td>
             </tr>
         <?php
-        } else {
+        else :
             ?>
             <tr>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["platform_order_id"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $orderobj->get_platform_order_id() ?></td>
+                    style="padding-left:10px;"><?= $orderobj->getPlatformOrderId() ?></td>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["order_delivery_charge"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $orderobj->get_currency_id() . " " . $orderobj->get_delivery_charge() ?></td>
+                    style="padding-left:10px;"><?= $orderobj->getCurrencyId() . " " . $orderobj->getDeliveryCharge() ?></td>
             </tr>
         <?php
-        }
+        endif;
         ?>
         <tr>
             <td width="15%" height="20" align="right" class="field"
                 style="padding-right:10px;"><?= $lang["client_id_and_name"] ?></td>
             <td width="35%" align="left" class="value"
-                style="padding-left:10px;"><?= $orderobj->get_client_id() . " - " . $orderobj->get_bill_name() ?></td>
+                style="padding-left:10px;"><?= $orderobj->getClientId() . " - " . $orderobj->getBillName() ?></td>
             <td width="15%" height="20" align="right" class="field"
                 style="padding-right:10px;"><?= $lang["order_total"] ?></td>
             <td width="35%" align="left" class="value"
-                style="padding-left:10px;"><?= $orderobj->get_currency_id() . " " . number_format(($orderobj->get_amount()), 2) ?></td>
+                style="padding-left:10px;"><?= $orderobj->getCurrencyId() . " " . number_format(($orderobj->getAmount()), 2) ?></td>
         </tr>
 
     </table>
@@ -245,36 +245,36 @@
             </tr>
             <?php
             $i = 0;
-            foreach ($itemlist as $obj) {
+            foreach ($itemlist as $obj) :
                 ?>
                 <tr class="row<?= $i % 2 ?>">
                     <td height="20"></td>
-                    <td style="padding-left:4px;"><?= $obj->get_item_sku() ?><input type="hidden" name="rsku[<?= $i ?>]"
-                                                                                    value="<?= $obj->get_item_sku() ?>"
+                    <td style="padding-left:4px;"><?= $obj->getItemSku() ?><input type="hidden" name="rsku[<?= $i ?>]"
+                                                                                    value="<?= $obj->getItemSku() ?>"
                                                                                     DISABLED></td>
-                    <td style="padding-left:4px;"><?= $obj->get_name() ?></td>
-                    <td style="padding-left:4px;"><?= $orderobj->get_currency_id() . " " . number_format($obj->get_unit_price(), 2) ?></td>
-                    <td style="padding-left:4px;"><?= $orderobj->get_currency_id() . " " . $obj->get_amount() ?><input
+                    <td style="padding-left:4px;"><?= $obj->getName() ?></td>
+                    <td style="padding-left:4px;"><?= $orderobj->getCurrencyId() . " " . number_format($obj->getUnitPrice(), 2) ?></td>
+                    <td style="padding-left:4px;"><?= $orderobj->getCurrencyId() . " " . $obj->getAmount() ?><input
                             type="hidden" name="price[<?= $i ?>]"
-                            value="<?= $obj->get_amount() + $obj->get_gst_total() ?>"></td>
-                    <td style="padding-left:4px;"><?= $orderobj->get_currency_id() . " " . $obj->get_gst_total() ?></td>
-                    <td style="padding-left:4px;"><?= $obj->get_qty() ?><input type="hidden" name="pqty[<?= $i ?>]"
-                                                                               value="<?= $obj->get_qty() ?>"></td>
+                            value="<?= $obj->getAmount() + $obj->getGstTotal() ?>"></td>
+                    <td style="padding-left:4px;"><?= $orderobj->getCurrencyId() . " " . $obj->getGstTotal() ?></td>
+                    <td style="padding-left:4px;"><?= $obj->getQty() ?><input type="hidden" name="pqty[<?= $i ?>]"
+                                                                               value="<?= $obj->getQty() ?>"></td>
                     <td style="padding-left:4px;">
                         <?php
-                        if ($orderobj->get_status() < 6) {
+                        if ($orderobj->getStatus() < 6) :
                             ?>
                             <input type="checkbox" name="refund[<?= $i ?>]" value="1"
                                    onClick="changeRowStatus('<?= $i ?>')">
                         <?php
-                        }
+                        endif;
                         ?>
                     </td>
                     <td style="padding-left:4px;"><input type="text" id="rqty[<?= $i ?>]" name="rqty[<?= $i ?>]"
-                                                         value="<?= $obj->get_qty() ?>" class="int_input" min=0
-                                                         isInteger max=<?= $obj->get_qty() ?> DISABLED
+                                                         value="<?= $obj->getQty() ?>" class="int_input" min=0
+                                                         isInteger max=<?= $obj->getQty() ?> DISABLED
                                                          onChange="changeRowStatus('<?= $i ?>');"></td>
-                    <td style="padding-left:4px;"><?= $orderobj->get_currency_id() ?>&nbsp;<input type="text"
+                    <td style="padding-left:4px;"><?= $orderobj->getCurrencyId() ?>&nbsp;<input type="text"
                                                                                                   id="ramount[<?= $i ?>]"
                                                                                                   name="ramount[<?= $i ?>]"
                                                                                                   value="0.00"
@@ -283,15 +283,15 @@
                                                                                                   DISABLED
                                                                                                   onChange="updateTotal();">
                     </td>
-                    <td style="padding-left:4px;"><?= $orderobj->get_currency_id() ?>&nbsp;<span
-                            id="rt[<?= $i ?>]"><?= number_format(($obj->get_amount() + $obj->get_gst_total()), 2) ?></span>
+                    <td style="padding-left:4px;"><?= $orderobj->getCurrencyId() ?>&nbsp;<span
+                            id="rt[<?= $i ?>]"><?= number_format(($obj->getAmount() + $obj->getGstTotal()), 2) ?></span>
                     </td>
-                    <td style="padding-left:4px;"><?= $orderobj->get_dispatch_date() ?></td>
+                    <td style="padding-left:4px;"><?= $orderobj->getDispatchDate() ?></td>
                     <td></td>
                 </tr>
                 <?php
                 $i++;
-            }
+            endforeach;
             ?>
         </table>
         <table border="0" cellpadding="0" cellspacing="1" width="100%" bgcolor="#cccccc">
@@ -311,13 +311,13 @@
                 <td width="70%" align="left" style="padding-left:10px;" class="value"><select name="reason"
                                                                                               class="input">
                         <?php
-                        foreach ($reason["reason_list"] as $robj) {
+                        foreach ($reason["reason_list"] as $robj) :
 
                             ?>
                             <option
-                                value="<?= $robj->get_id() ?>"><?= $lang["rcategory"][$robj->get_reason_cat()] . " - " . $robj->get_description() ?></option>
+                                value="<?= $robj->getId() ?>"><?= $lang["rcategory"][$robj->getReasonCat()] . " - " . $robj->getDescription() ?></option>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </select></td>
             </tr>
@@ -333,9 +333,7 @@
                 <td width="30%" height="20" align="right" style="padding-right:10px;" class="field">&nbsp;</td>
 
                 <?php
-                #   SBF #2348 Pop-up confirmation for special order refund
-                // test url for special order: http://admindev.valuebasket.com/cs/refund/create_view/133617/
-                if ($orderobj->get_biz_type() == "SPECIAL") {
+                if ($orderobj->getBizType() == "SPECIAL") :
                     ?>
                     <td width="70%" align="left" style="padding-left:10px;" class="value">&nbsp;<input type="button"
                                                                                                        onClick="if(confirm('***ALERT*** \nYou are about to cancel a Special order. \nDo you wish to proceed?') && CheckForm(this.form)) document.fm.submit();"
@@ -343,7 +341,7 @@
                             type="reset" value="<?= $lang["reset_form"] ?>"></td>
                     <?php
                     ;
-                } else {
+                else :
                     ?>
                     <td width="70%" align="left" style="padding-left:10px;" class="value">&nbsp;<input type="button"
                                                                                                        onClick="if(CheckForm(this.form)) document.fm.submit();"
@@ -351,7 +349,7 @@
                             type="reset" value="<?= $lang["reset_form"] ?>"></td>
                     <?php
                     ;
-                }
+                endif;
                 ?>
 
 

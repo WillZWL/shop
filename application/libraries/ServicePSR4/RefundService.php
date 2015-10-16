@@ -164,7 +164,7 @@ class RefundService extends BaseService
 
                     $client_obj = $this->getDao('Client')->get(["id" => $so_obj->getClientId()]);
                     $mail_to = $client_obj->getEmail();
-                    $replace = array("forename" => $client_obj->getForename(), "order_number" => $so_obj->getSoNo(), "order_create_date" => $so_obj->getOrderCreateDate());
+                    $replace = ["forename" => $client_obj->getForename(), "order_number" => $so_obj->getSoNo(), "order_create_date" => $so_obj->getOrderCreateDate()];
                     $replace["so_no"] = $so_obj->getSoNo();
                     $replace["client_id"] = $so_obj->getClientId();
                     $replace["image_url"] = $this->getDao('Config')->valueOf("default_url");
@@ -196,7 +196,7 @@ class RefundService extends BaseService
 
     public function isRequireAutoRefund($refundid, $so_obj, $refund_obj, $auto_refund)
     {
-        $so_ps_obj = $this->getDao('SoPaymentStatus')->get(array("so_no" => $so_obj->getSoNo()));
+        $so_ps_obj = $this->getDao('SoPaymentStatus')->get(["so_no" => $so_obj->getSoNo()]);
         if (($auto_refund) && ($so_ps_obj)) {
             $auto_refund = $this->getDao('AutoRefund')->get();
             $auto_refund_obj = clone $auto_refund;
@@ -232,11 +232,11 @@ class RefundService extends BaseService
             $refund_obj = $this->getDao('Refund')->get();
             $refund_item = $this->getDao('RefundItem')->get();
             $refund_history = $this->getDao('RefundHistory')->get();
-            $reason = $this->getDao('RefundReason')->get(array("description LIKE" => "Fraudulent Orders"));
+            $reason = $this->getDao('RefundReason')->get(["description LIKE" => "Fraudulent Orders"]);
             $refund_item_arr = [];
 
             if (!$reason) {
-                $reason = $this->getDao('RefundReason')->get(array("reason_cat" => "O"));
+                $reason = $this->getDao('RefundReason')->get(["reason_cat" => "O"]);
 
                 $reason_code = $reason->getId();
             } else {
@@ -320,18 +320,18 @@ class RefundService extends BaseService
 
     public function create_refund_from_communication_center($so_no, $refund_parameter)
     {
-        $so_obj = $this->getDao('So')->get(array("so_no" => $so_no));
+        $so_obj = $this->getDao('So')->get(["so_no" => $so_no]);
 
         if ($so_obj) {
             $ret = TRUE;
             $refund_obj = $this->getDao('Refund')->get();
             $refund_item = $this->getDao('RefundItem')->get();
             $refund_history = $this->getDao('RefundHistory')->get();
-            $reason = $this->getDao('RefundReason')->get(array("description LIKE" => $refund_parameter["refund_reason_description"]));
+            $reason = $this->getDao('RefundReason')->get(["description LIKE" => $refund_parameter["refund_reason_description"]]);
             $refund_item_arr = [];
 
             if (!$reason) {
-                $reason = $this->getDao('RefundReason')->get(array("reason_cat" => "O"));
+                $reason = $this->getDao('RefundReason')->get(["reason_cat" => "O"]);
                 $reason_code = $reason->getId();
             } else {
                 $reason_code = $reason->getId();
@@ -499,6 +499,24 @@ class RefundService extends BaseService
     public function getRefundItem($where = [])
     {
         return $this->getDao('RefundItem')->get($where);
+    }
+
+    public function getOrderList($where = [], $option = [])
+    {
+        return ["list" => $this->soService->getRefundableList($where, $option),
+                "total" => $this->soService->getRefundableList($where, ["num_row" => 1, "create" => $option["create"]])];
+    }
+
+    public function getReasonList($where, $option)
+    {
+        return ["reason_list" => $this->getDao('RefundReason')->getList($where, $option),
+            "cnt" => $this->getDao('RefundReason')->getNumRows($where)];
+    }
+
+    public function getRefundSoList($where = [], $option = [])
+    {
+        return ["list" => $this->getDao('Refund')->getRefundList($where, $option),
+            "total" => $this->getDao('Refund')->getRefundList($where, ["num_row" => 1])];
     }
 }
 

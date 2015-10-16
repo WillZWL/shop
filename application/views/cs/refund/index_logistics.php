@@ -5,20 +5,7 @@
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
-    <script type="text/javascript" src="<?= base_url() ?>mastercfg/selling_platform/get_js"></script>
-    <script language="javascript">
-        <!--
-        function drawList(value) {
-            var selected = "";
-            var output = "";
-            for (var i in platform) {
-                selected = platform[i][0] == value ? "SELECTED" : "";
-                output = "<option value='" + platform[i][0] + "' " + selected + ">" + platform[i][0] + "</option>";
-                document.write(output);
-            }
-        }
-        -->
-    </script>
+    <script type="text/javascript" src="<?= base_url() ?>mastercfg/profitVarHelper/jsPlatformlist"></script>
 </head>
 <body>
 <div id="main">
@@ -46,25 +33,25 @@
         <col width="20">
         <form name="fm" method="get" onSubmit="return CheckForm(this)">
             <tr class="header">
-                <td height="20"><img src="<?= base_url() ?>images/expand.png" class="pointer"
-                                     onClick="Expand(document.getElementById('tr_search'));"></td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'r.id', '<?= $xsort["r.id"] ?>')"><?= $lang["refund_id"] ?> <?= $sortimg["r.id"] ?></a>
+                <td height="20">
+                    <img src="<?= base_url() ?>images/expand.png" class="pointer" onClick="Expand(document.getElementById('tr_search'));"></td>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 'r.id', '<?= $xsort["r.id"] ?>')"><?= $lang["refund_id"] ?> <?= $sortimg["r.id"] ?></a>
                 </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'r.so_no', '<?= $xsort["r.so_no"] ?>')"><?= $lang["so_no"] ?> <?= $sortimg["r.so_no"] ?></a>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 'r.so_no', '<?= $xsort["r.so_no"] ?>')"><?= $lang["so_no"] ?> <?= $sortimg["r.so_no"] ?></a>
                 </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 's.platform_order_id', '<?= $xsort["s.platform_order_id"] ?>')"><?= $lang["platform_order_id"] ?> <?= $sortimg["s.platform_order_id"] ?></a>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 's.platform_order_id', '<?= $xsort["s.platform_order_id"] ?>')"><?= $lang["platform_order_id"] ?> <?= $sortimg["s.platform_order_id"] ?></a>
                 </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 's.platform_id', '<?= $xsort["s.platform_id"] ?>')"><?= $lang["platform_id"] ?> <?= $sortimg["s.platform_id"] ?></a>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 's.platform_id', '<?= $xsort["s.platform_id"] ?>')"><?= $lang["platform_id"] ?> <?= $sortimg["s.platform_id"] ?></a>
                 </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'r.total_refund_amount', '<?= $xsort["r.total_refund_amount"] ?>')"><?= $lang["amount"] ?> <?= $sortimg["r.total_refund_amount"] ?></a>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 'r.total_refund_amount', '<?= $xsort["r.total_refund_amount"] ?>')"><?= $lang["amount"] ?> <?= $sortimg["r.total_refund_amount"] ?></a>
                 </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'r.create_on', '<?= $xsort["r.create_on"] ?>')"><?= $lang["create_on"] ?> <?= $sortimg["r.create_on"] ?></a>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 'r.create_on', '<?= $xsort["r.create_on"] ?>')"><?= $lang["create_on"] ?> <?= $sortimg["r.create_on"] ?></a>
                 </td>
                 <td></td>
             </tr>
@@ -76,7 +63,6 @@
                            value="<?= $this->input->get("platform_order_id") ?>"></td>
                 <td><select name="platform_id" class="input">
                         <option value=""></option>
-                        <script language="javascript">drawList("<?=$this->input->get('platform_id')?>");</script>
                     </select></td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
@@ -88,28 +74,26 @@
         </form>
         <?php
         $i = 0;
-        if (!empty($list))
-        {
-        foreach ($list as $obj)
-        {
+    if (!empty($list)) :
+        foreach ($list as $obj) :
         ?>
 
         <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
-            onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){
-        ?>onClick="Redirect('<?= site_url('cs/refund/logistics_view/' . $obj->get_id()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"<?
-        }?>>
+            onMouseOut="RemoveClassName(this, 'highlight')" <?php if (!($is_edit)):
+        ?>onClick="Redirect('<?= site_url('cs/refund/logistics_view/' . $obj->getId()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"<?php
+        endif;?>>
             <td height="20"></td>
-            <td><?= $obj->get_id() ?></td>
-            <td><?= $obj->get_so_no() ?></td>
-            <td><?= $obj->get_platform_order_id() ?></td>
-            <td><?= $obj->get_platform_id() ?></td>
-            <td><?= $obj->get_currency_id() . " " . $obj->get_total_refund_amount() ?></td>
-            <td><?= $obj->get_create_on() ?></td>
+            <td><?= $obj->getId() ?></td>
+            <td><?= $obj->getSoNo() ?></td>
+            <td><?= $obj->getPlatformOrderId() ?></td>
+            <td><?= $obj->getPlatformId() ?></td>
+            <td><?= $obj->getCurrencyId() . " " . $obj->getTotalRefundAmount() ?></td>
+            <td><?= $obj->getCreateOn() ?></td>
             <td>&nbsp;</td>
             <?php
             $i++;
-            }
-            }
+            endforeach;
+        endif;
             ?>
         <tr class="header">
             <td></td>
@@ -117,8 +101,12 @@
                                    value="<?= $lang["back_to_main"] ?>"></td>
         </tr>
     </table>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
+<script type="text/javascript">
+    InitPlatform(document.fm.platform_id);
+    document.fm.platform_id.value = '<?=$this->input->get("platform_id")?>';
+</script>
 </body>
 </html>

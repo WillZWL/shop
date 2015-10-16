@@ -253,7 +253,7 @@
     color: white !important;
     text-align: center;
     line-height: 40px;
-    padding-left:4px; 
+    padding-left:4px;
     padding-right:4px;
 }
 
@@ -320,7 +320,7 @@ input.btn-search {
      margin-right: 10px
 }
 
-.footer-fieldsetitem img {    
+.footer-fieldsetitem img {
   border-radius: 10px !important;
 }
 
@@ -452,6 +452,7 @@ input.btn-newsletter {
 #content .form-holder button:hover{background-position:0 30px;}
 #content .form-holder .clear{clear:left;}
 #content .form-holder ins{text-transform:uppercase;clear:both;display:block;color:#000;font-size:14px;padding:10px 0 15px 0;text-decoration: none;}
+#content #register .log_btn{cursor:pointer;text-align: center}
 /*end login && register*/
 
 

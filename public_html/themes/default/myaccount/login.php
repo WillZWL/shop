@@ -19,7 +19,7 @@
                                 <fieldset><input type="password" name="password" /></fieldset>
                             </li>
                              <p>
-                                <button style="cursor:pointer;" onclick="return SubmitLogin();" class="btn"><?= _('Log In') ?></button> |
+                                <input value="<?= _('Log In') ?>" onclick="return SubmitLogin();" class="btn btn-primary log_btn"> |
                                 <a href="<?=base_url()?>login/forget_password?back=checkout" rel="lyteframe" rev="width: 600px; height:240px; scrolling: auto;padding: 40px;" title=""><?= _('Forgotten Password') ?></a>
                             </p>
                         </ul>
@@ -124,7 +124,7 @@
                                 <label><?= _('Confirm Password') ?> *</label>
                                 <fieldset><input type="password" name="confirm_password" dname="<?= _('Confirm Password') ?>" match="password"  onpaste="return false;"/></fieldset>
                             </li>
-                            <p><button type="submit" class="border-radius-2"><?= _('Submit') ?></button></p>
+                            <p><input value="<?= _('Submit') ?>" class="btn btn-primary log_btn"></p>
                         </ul>
                         <input type="hidden" name="posted" value="1">
                         <input type="hidden" name="page" value="register">

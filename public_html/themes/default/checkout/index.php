@@ -319,8 +319,14 @@ $(document).ready(function() {
         })
         .done(function(data) {
             standardWaitingScreen.hidePleaseWait();
-            var url = data;
-            location.href = data.url;
+//            displayCheckoutNowButton(1);
+            if (data.url.substring(0, 5) == "ERROR")
+            {
+                alert(data.url.substring(6, data.length));
+                displayCheckoutNowButton(1);
+            }
+            else
+                location.href = data.url;
         })
         .fail(function(data) {
             if (data.responseCode)
@@ -560,44 +566,6 @@ function validateCheckout()
 <?php endif; ?>
         }
     })
-    .on("success.form.fv", function(e)
-    {
-// Prevent form submission
-        e.preventDefault();
-        var $form = $(e.target);
-//        fv = $form.data("formValidation");
-
-//        $("#pleaseWaitDialog").modal("show");
-        displayLoading(true);
-// Use Ajax to submit form data
-        $.ajax({
-            url: $form.attr("action"),
-            type: "POST",
-            data: $form.serialize(),
-            success: function(result)
-            {
-//                $("#pleaseWaitDialog").modal("hide");
-                displayLoading(false);
-                if (result.substring(0, 5) == "error")
-                {
-                    alert(result);
-                }
-                if (result.substring(0, 3) == "url")
-                {
-                    top.location.href = result.substr(4);
-                }
-                activatePaypal();
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown)
-            {
-                alert(textStatus);
-                displayLoading(false);
-//                $("#pleaseWaitDialog").modal("hide");
-//                $form.data("formValidation").resetForm();
-                activatePaypal();
-            }
-        });
-    });
 }
 </script> 
 <script type="text/javascript" src="/themes/default/asset/formvalidation/js/formValidation.min.js"></script>

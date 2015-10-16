@@ -37,19 +37,19 @@ class RefundDao extends BaseDao
         $this->db->join("so_refund_score sors", "sors.so_no = r.so_no", "LEFT");
 
 
-        $ri_join = "ri.refund_id = r.id AND ";
+        $ri_join = "ri.refund_id = r.id";
 
         if ($where["check_cb"] != "") {
             if (is_array($where["rstatus"])) {
-                $ri_join .= "( ri.status in ('" . implode("','", $where["rstatus"]) . "') OR (ri.status = 'N' AND ri.refund_type='C')) ";
+                $this->db->where("( ri.status in ('" . implode("','", $where["rstatus"]) . "') OR (ri.status = 'N' AND ri.refund_type='C')) ");
             } else {
-                $ri_join .= "( ri.status = '" . $where["rstatus"] . "' OR (ri.status = 'N' AND ri.refund_type='C')) ";
+                $this->db->where("( ri.status = '" . $where["rstatus"] . "' OR (ri.status = 'N' AND ri.refund_type='C')) ");
             }
         } else {
             if (is_array($where["rstatus"])) {
-                $ri_join .= "ri.status in ('" . implode("','", $where["rstatus"]) . "') ";
+                $this->db->where("ri.status in ('" . implode("','", $where["rstatus"]) . "') ");
             } else {
-                $ri_join .= "ri.status = '" . $where["rstatus"] . "' ";
+                $this->db->where("ri.status = '" . $where["rstatus"] . "' ");
             }
         }
 
@@ -103,12 +103,30 @@ class RefundDao extends BaseDao
         }
 
         if ($option["num_row"] == "") {
-            $this->db->groupby("r.id");
+            $this->db->group_by("r.id");
 
-            $this->db->select
+            // $this->db->select
+            // ("
+            //     rr.description as refund_reason,
+            //     (select count(*) from so ss inner join client c on c.id = ss.client_id where ss.biz_type = 'SPECIAL' and ss.client_id = s.client_id) as special_order,
+            //     r.create_by,
+            //     r.id,
+            //     r.so_no,
+            //     s.platform_order_id,
+            //     s.platform_id,
+            //     s.txn_id,
+            //     r.total_refund_amount,
+            //     s.currency_id,
+            //     s.dispatch_date,
+            //     r.create_on,
+            //     pg.name payment_gateway,
+            //     s.create_on as order_date,
+            //     sors.score as refund_score,
+            //     sors.modify_on as refund_score_date
+            // " . $pack_date_select_str);
+             $this->db->select
             ("
                 rr.description as refund_reason,
-                (select count(*) from so ss inner join client c on c.id = ss.client_id where ss.biz_type = 'SPECIAL' and ss.client_id = s.client_id) as special_order,
                 r.create_by,
                 r.id,
                 r.so_no,

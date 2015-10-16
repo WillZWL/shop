@@ -29,6 +29,8 @@ class Client_service extends Base_service
         $this->set_config(new Context_config_service());
         include_once(APPPATH . "libraries/service/Validation_service.php");
         $this->set_valid(new Validation_service());
+        $CI->load->library('encryption');
+        $this->encryption = $CI->encryption;
     }
 
     public function set_config($value)
@@ -47,9 +49,9 @@ class Client_service extends Base_service
             $dao = $this->get_dao();
             if ($client_obj = $dao->get(array("email" => $email, "status" => 1))) {
                 $_SESSION['client_obj'] = serialize($client_obj);
-                $password_hash = $client_obj->get_password();
-                if (password_verify($password, $password_hash)) {
-                    $this->object_login($client_obj, TRUE);
+                $client_password = $client_obj->getPassword();
+                if ($this->encryption->decrypt($client_password) === trim($password)) {
+                    $this->objectLogin($client_obj, TRUE);
                     return TRUE;
                 }
             } else {
@@ -241,7 +243,8 @@ class Client_service extends Base_service
             if ($client_obj->get_status() == 0) {
                 return 0;
             } else {
-                $client_obj->set_password($new_password_hash);
+                $client_obj->set_password($this->encryption->encrypt($new_password));
+//               $client_obj->set_password($new_password_hash);
                 $result = $this->get_dao()->update($client_obj);
                 return $result;
             }

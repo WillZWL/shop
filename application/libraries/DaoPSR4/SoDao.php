@@ -1199,12 +1199,10 @@ SQL;
                 $this->db->limit($option["limit"], $option["offset"]);
             }
 
-            $this->include_vo();
-
             $rs = [];
 
             if ($query = $this->db->get()) {
-                foreach ($query->result($$this->getVoClassname()) as $obj) {
+                foreach ($query->result($this->getVoClassname()) as $obj) {
                     $rs[] = $obj;
                 }
 
