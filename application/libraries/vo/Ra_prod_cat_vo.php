@@ -5,6 +5,7 @@ class Ra_prod_cat_vo extends Base_vo
 {
 
     //class variable
+    private $id;
     private $ss_cat_id;
     private $rcm_ss_cat_id_1;
     private $rcm_ss_cat_id_2;
@@ -24,12 +25,22 @@ class Ra_prod_cat_vo extends Base_vo
     private $modify_by;
 
     //primary key
-    private $primary_key = array("ss_cat_id");
+    private $primary_key = array("id");
 
     //auo increment
     private $increment_field = "";
 
     //instance method
+    public function get_id()
+    {
+        return $this->id;
+    }
+
+    public function set_id($id)
+    {
+        $this->id = $id;
+    }
+
     public function get_ss_cat_id()
     {
         return $this->ss_cat_id;
@@ -38,7 +49,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_ss_cat_id($value)
     {
         $this->ss_cat_id = $value;
-        return $this;
     }
 
     public function get_rcm_ss_cat_id_1()
@@ -49,7 +59,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_rcm_ss_cat_id_1($value)
     {
         $this->rcm_ss_cat_id_1 = $value;
-        return $this;
     }
 
     public function get_rcm_ss_cat_id_2()
@@ -60,7 +69,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_rcm_ss_cat_id_2($value)
     {
         $this->rcm_ss_cat_id_2 = $value;
-        return $this;
     }
 
     public function get_rcm_ss_cat_id_3()
@@ -71,7 +79,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_rcm_ss_cat_id_3($value)
     {
         $this->rcm_ss_cat_id_3 = $value;
-        return $this;
     }
 
     public function get_rcm_ss_cat_id_4()
@@ -82,7 +89,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_rcm_ss_cat_id_4($value)
     {
         $this->rcm_ss_cat_id_4 = $value;
-        return $this;
     }
 
     public function get_rcm_ss_cat_id_5()
@@ -93,7 +99,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_rcm_ss_cat_id_5($value)
     {
         $this->rcm_ss_cat_id_5 = $value;
-        return $this;
     }
 
     public function get_rcm_ss_cat_id_6()
@@ -104,7 +109,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_rcm_ss_cat_id_6($value)
     {
         $this->rcm_ss_cat_id_6 = $value;
-        return $this;
     }
 
     public function get_rcm_ss_cat_id_7()
@@ -115,7 +119,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_rcm_ss_cat_id_7($value)
     {
         $this->rcm_ss_cat_id_7 = $value;
-        return $this;
     }
 
     public function get_rcm_ss_cat_id_8()
@@ -126,7 +129,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_rcm_ss_cat_id_8($value)
     {
         $this->rcm_ss_cat_id_8 = $value;
-        return $this;
     }
 
     public function get_warranty_cat()
@@ -137,7 +139,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_warranty_cat($value)
     {
         $this->warranty_cat = $value;
-        return $this;
     }
 
     public function get_status()
@@ -148,7 +149,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_status($value)
     {
         $this->status = $value;
-        return $this;
     }
 
     public function get_create_on()
@@ -159,7 +159,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_create_on($value)
     {
         $this->create_on = $value;
-        return $this;
     }
 
     public function get_create_at()
@@ -170,7 +169,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_create_at($value)
     {
         $this->create_at = $value;
-        return $this;
     }
 
     public function get_create_by()
@@ -181,7 +179,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_create_by($value)
     {
         $this->create_by = $value;
-        return $this;
     }
 
     public function get_modify_on()
@@ -192,7 +189,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_modify_on($value)
     {
         $this->modify_on = $value;
-        return $this;
     }
 
     public function get_modify_at()
@@ -203,7 +199,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_modify_at($value)
     {
         $this->modify_at = $value;
-        return $this;
     }
 
     public function get_modify_by()
@@ -214,7 +209,6 @@ class Ra_prod_cat_vo extends Base_vo
     public function set_modify_by($value)
     {
         $this->modify_by = $value;
-        return $this;
     }
 
     public function _get_primary_key()
@@ -226,7 +220,4 @@ class Ra_prod_cat_vo extends Base_vo
     {
         return $this->increment_field;
     }
-
 }
-
-?>
