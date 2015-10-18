@@ -9,6 +9,7 @@ class Ra_group_vo extends Base_vo
     private $group_name;
     private $status = '1';
     private $warranty = '0';
+    private $ignore_qty_bundle = 0;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
     private $create_by;
@@ -63,6 +64,16 @@ class Ra_group_vo extends Base_vo
     public function set_warranty($value)
     {
         $this->warranty = $value;
+    }
+
+    public function get_ignore_qty_bundle()
+    {
+        return $this->ignore_qty_bundle;
+    }
+
+    public function set_ignore_qty_bundle($ignore_qty_bundle)
+    {
+        $this->ignore_qty_bundle = $ignore_qty_bundle;
     }
 
     public function get_create_on()
