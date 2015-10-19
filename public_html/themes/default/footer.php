@@ -1,13 +1,69 @@
             </div>
             <footer id="footer" class="nostylingboxs">
-                <div class="footer-top " id="pavo-footer-top">
+                <div class="footer-middle " id="pavo-footer-middle">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                 <div class="panel panel-white pavreassurances margin_top">
                                     <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
-                                            <img src="/themes/default/asset/image/payment.png" style="width:581px;display:block;margin-left:auto;margin-right:auto;">
+                                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                                            <span class="footer-legend"><?= _(' PAY WITH CONFIDENCE ') ?></span>
+                                            <fieldset class="footer-fieldset" style="background-color: #999 !important;">
+                                             
+                                                <ul class="list-inline" style="margin-top:8px;">                                                    
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/paypal.png">
+                                                        </li>
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/visa.png">
+                                                        </li>
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/visa-debit.png">
+                                                        </li>
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/mastercard.png">
+                                                        </li>
+                                                    <?php 
+                                                        $siteobj = \PUB_Controller::$siteInfo;
+                                                        $countryid = $siteobj->getPlatformCountryId();
+
+                                                        if ($countryid == "IT") {  ?>      
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/postepay.png">
+                                                        </li>
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/cartasi.png">
+                                                        </li>
+                                                    <?php } elseif ($countryid == "FR") {  ?>    
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/carte-bleue.png">
+                                                        </li>                                                        
+                                                    <?php } elseif ($countryid == "ES") {  ?>    
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/maestro.png">
+                                                        </li>                                                     
+                                                    <?php } elseif ($countryid == "PL") {  ?>    
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/Przelewy24.png">
+                                                        </li>
+                                                    <?php } ?> 
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/postepay.png">
+                                                        </li>
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/cartasi.png">
+                                                        </li>
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/carte-bleue.png">
+                                                        </li> 
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/maestro.png">
+                                                        </li>  
+                                                         <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/Przelewy24.png">
+                                                        </li>
+                                                </ul>
+                                           </fieldset>
                                         </div>
                                     </div>
                                 </div>
@@ -21,10 +77,11 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                 <div class="panel panel-white pavreassurances margin_top">
                                     <div class="row">
-                                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-                                            <fieldset class="footer-fieldset">
-                                              <legend class="footer-legend"><?= _(' SHOP WITH CONFIDENCE ') ?></legend>
-                                                <ul class="list-inline">
+                                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">                                            
+                                            <span class="footer-legend"><?= _(' SHOP WITH CONFIDENCE ') ?></span>
+                                        </br>
+                                            <fieldset class="footer-fieldset" style="background-color: #999 !important;">
+                                                <ul class="list-inline" style="margin-top:8px;">
                                                     <li class="footer-fieldsetitem">
                                                         <img src="/themes/default/asset/image/Confidence_thawte_EN.jpg">
                                                     </li>
@@ -91,7 +148,16 @@
                                                 </li>
                                                 <li style="vertical-align: top;">
                                                     <div class="image-wrap">
-                                                        <img src="/themes/default/asset/image/moneyback.jpg" class="img-footer">
+                                                        <?php 
+                                                            $siteobj = \PUB_Controller::$siteInfo;
+                                                            $currencyId = $siteobj->getPlatformCurrencyId();
+                                                            //var_dump($siteobj);
+                                                            if (in_array($currencyId, array("GBP", "AUD", "EUR", "NZD"))) { 
+                                                        ?>
+                                                            <img src=<?= '/themes/default/asset/image/moneyback_' . strtolower($currencyId) . ".jpg" ?>>
+                                                        <?php } else {  ?>
+                                                            <img src="/themes/default/asset/image/moneyback.jpg" class="img-footer">
+                                                        <?php } ?>  
                                                     </div>
                                                     <p class="desc-sm">
                                                         <?= _('14 days ') ?><br/> <?= _('Money Back') ?><br /><?= _('Guarantee') ?><br />

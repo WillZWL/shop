@@ -217,6 +217,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\PlatformPmgwDao();
         };
 
+        $daoContainer['PricingRules'] = function () {
+            return new D\PricingRulesDao();
+        };
+
         $daoContainer['Price'] = function () {
             return new D\PriceDao();
         };

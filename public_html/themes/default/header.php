@@ -97,7 +97,16 @@
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <ul class="list-inline header-desc">
                                             <li >
+                                            <?php 
+                                                $siteobj = \PUB_Controller::$siteInfo;
+                                                $currencyId = $siteobj->getPlatformCurrencyId();
+                                                //var_dump($siteobj);
+                                                if (in_array($currencyId, array("GBP", "AUD", "EUR", "NZD"))) { 
+                                            ?>
+                                                <img src=<?= '/themes/default/asset/image/icon-refund_' . strtolower($currencyId) . ".png" ?>>
+                                            <?php } else {  ?>
                                                 <img src="/themes/default/asset/image/icon-refund.png">
+                                            <?php } ?>                                                
                                                 <span><?= _("14 Days Money Back Guarantee") ?></span>
                                             </li>
                                             <li >
@@ -122,9 +131,9 @@
                        <div class="container">
                           <div class="row">
                 <?php
-					$lang_id = substr(SITE_LANG, 0, 2);
-					//$menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
-					$menu_script = file_get_contents(APPPATH."views/template/menu/en/menu_webgb.html", true);
+					$lang_id = $siteobj->getLangId();
+                   $menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
+					//$menu_script = file_get_contents(APPPATH."views/template/menu/en/menu_webgb.html", true);
 					print $menu_script;
 				?>
                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 top-verticalmenu">

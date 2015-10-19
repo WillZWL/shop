@@ -15,6 +15,7 @@ use ESG\Panther\Models\Mastercfg\UserModel;
 use ESG\Panther\Models\Mastercfg\ProfitVarModel;
 use ESG\Panther\Models\Marketing\CategoryModel;
 use ESG\Panther\Models\Marketing\RaProdCatModel;
+use ESG\Panther\Models\Marketing\PricingRulesModel;
 use ESG\Panther\Models\Order\SoModel;
 
 use ESG\Panther\Service as S;
@@ -112,12 +113,16 @@ abstract class MY_Controller extends CI_Controller
             return new ProfitVarModel;
         };
 
-        $this->sc['categoryModel'] = function ($c) {
-            return new CategoryModel;
+        $this->sc['pricingRulesModel'] = function ($c) {
+            return new PricingRulesModel;
         };
 
         $this->sc['raProdCatModel'] = function ($c) {
             return new RaProdCatModel;
+        };
+		
+		$this->sc['categoryModel'] = function ($c) {
+            return new CategoryModel;
         };
 
         $this->sc['soModel'] = function ($c) {
