@@ -108,7 +108,7 @@
                                                         </div>
                                                         <div class="light-style">
                                                         </div>
-                                                        <p class="action">Aenean adipiscing purus in odio aliquet gravida convallis metus.</p>
+                                                        <p class="action">Shop now</p>
                                                     </div>
                                                     <a class="mask-link" href="#"></a>
                                                 </div>
@@ -126,7 +126,7 @@
                                                         </div>
                                                         <div class="light-style">
                                                         </div>
-                                                        <p class="action">Aenean adipiscing purus in odio aliquet gravida convallis metus.</p>
+                                                        <p class="action">Shop now</p>
                                                     </div>
                                                     <a class="mask-link" href="#"></a>
                                                 </div>
