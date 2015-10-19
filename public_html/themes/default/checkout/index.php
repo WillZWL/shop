@@ -4,7 +4,6 @@
     <div class="row"> 
     <div id="sidebar-main" class="col-md-12">
     <div id="content">
-    <form action="/Checkout/payment<?php print (($debug)?"/1":"")?>" method="POST" id="checkoutForm" name="checkoutForm">
         <h1 class="page-title"><?=_("Checkout")?></h1>
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
@@ -19,7 +18,7 @@
             <div class="panel-collapse collapse in" id="collapse-checkout-option">
                 <div class="panel-body">
                     <div class="row">
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" id="newCustomerBlock">
                         <h2><?=_("New Customer")?></h2>
                         <p><?=_("Guest Checkout")?>:</p>
                         <div class="radio">
@@ -27,26 +26,30 @@
                         <input type="button" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="button-account" value="<?=_("Continue")?>">
                       </div>
                       <div class="col-sm-6">
-                        <h2><?=_("Returning Customer")?></h2>
-                        <p><?=_("I am a returning customer")?></p>
-                        <div class="form-group">
-                          <label for="input-email" class="control-label"><?=_("E-Mail")?></label>
-                          <input type="text" class="form-control" id="input-email" placeholder="<?=_("E-Mail")?>" value="" name="email">
-                        </div>
-                        <div class="form-group">
-                          <label for="input-password" class="control-label"><?=_("Password")?></label>
-                          <input type="password" class="form-control" id="input-password" placeholder="<?=_("Password")?>" value="" name="password">
-                          <a href=""><?=_("Forgotten Password")?></a></div>
-                        <input type="button" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="button-login" value="Login">
+                        <form action="/Checkout/login" method="post" id="loginForm" name="loginForm">
+                            <h2><?=_("Returning Customer")?></h2>
+                            <p><?=_("I am a returning customer")?></p>
+                            <div class="form-group">
+                              <label for="loginEmail" class="control-label"><?=_("E-Mail")?></label>
+                              <input type="text" class="form-control" id="loginEmail" placeholder="<?=_("E-Mail")?>" value="" name="loginEmail">
+                            </div>
+                            <div class="form-group">
+                              <label for="loginPassword" class="control-label"><?=_("Password")?></label>
+                              <input type="password" class="form-control" id="loginPassword" placeholder="<?=_("Password")?>" value="" name="loginPassword">
+                              <a href=""><?=_("Forgotten Password")?></a></div>
+                            <input type="submit" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="loginButton" value="<?=_("Login")?>">
+                            <input type="button" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="loggedInButton" value="<?=_("You have logged in, please click here to continue")?>">
+                        </form>
                       </div>
                     </div>            
                 </div>
             </div>
         </div>
+        <form action="/Checkout/payment<?php print (($debug)?"/1":"")?>" method="POST" id="checkoutForm" name="checkoutForm">
         <div class="panel panel-default">
             <div class="panel-heading noicon">
                 <h4 class="panel-title">
-                    <a class="accordion-toggle" href="#collapse-payment-address">
+                    <a id="payment-address-header" class="accordion-toggle" href="#collapse-payment-address">
                         <?=_("Step 2: Account &amp; Billing Details")?>
                         <i class=""></i>
                     </a>
@@ -78,7 +81,7 @@
                               </div>
                           </div>
                         </fieldset>
-                        <fieldset>
+                        <fieldset id="passwordSection">
                           <legend><?=_("Your Password")?></legend>
                           <div class="form-group">
                               <label for="billingPassword" class="control-label"><?=_("Password")?></label> 
@@ -149,7 +152,7 @@
         <div class="panel panel-default">
           <div class="panel-heading noicon">
             <h4 class="panel-title">
-                <a class="accordion-toggle" data-parent="#accordion" data-toggle="collapse" href="#collapse-shipping-address">
+                <a id="shipping-address-header" class="accordion-toggle" data-parent="#accordion" data-toggle="collapse" href="#collapse-shipping-address">
                     <?=_("Step 3: Delivery Details")?>
                     <i class=""></i>
                 </a>
@@ -157,7 +160,6 @@
           </div>
           <div class="panel-collapse collapse" id="collapse-shipping-address">
             <div class="panel-body">
-                <form class="form-horizontal">
                   <div class="radio">
                     <label>
                     <!-- <input type="radio" checked="checked" value="existing" name="shipping_address" />--> <?=_("We could only ship to the billing address!")?></label>
@@ -191,15 +193,13 @@
                     <div class="form-group required">
                       <label for="input-shipping-address-1" class="col-sm-2 control-label">Address 1</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="input-shipping-address-1" placeholder="Address 1" value=""
-                        name="address_1" />
+                        <input type="text" class="form-control" id="input-shipping-address-1" placeholder="Address 1" value="" name="address_1" />
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="input-shipping-address-2" class="col-sm-2 control-label">Address 2</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="input-shipping-address-2" placeholder="Address 2" value=""
-                        name="address_2" />
+                        <input type="text" class="form-control" id="input-shipping-address-2" placeholder="Address 2" value="" name="address_2" />
                       </div>
                     </div>
                     <div class="form-group required">
@@ -237,7 +237,6 @@
                       <input type="button" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="button-shipping-address" value="<?=_("Continue")?>" />
                     </div>
                   </div>
-                </form>
             </div>
           </div>
         </div>
@@ -259,7 +258,7 @@
         <div class="panel panel-default">
           <div class="panel-heading noicon">
             <h4 class="panel-title">
-                <a class="accordion-toggle" data-parent="#accordion" data-toggle="collapse" href="#collapse-payment-method">
+                <a id="payment-method-header" class="accordion-toggle" data-parent="#accordion" data-toggle="collapse" href="#collapse-payment-method">
                    <?=_("Step 4: Payment Method")?>
                    <i class=""></i>
                 </a>
@@ -267,6 +266,7 @@
           </div>
           <div class="panel-collapse collapse" id="collapse-payment-method">
             <div class="panel-body">
+                <div class="form-group required">
 <?php foreach ($paymentOption as $card): ?>
                 <div style="float:left;padding-right:2px;">
                     <input id="card_ay_VSA" type="radio" name="paymentCard" value="<?php print $card->getCardCode() . "%%" . $card->getCardId() . "%%" . $card->getPaymentGatewayId()?>">
@@ -277,92 +277,90 @@
                 <div class="buttons">
                     <div class="pull-right">
                         <input type="hidden" name="formSalt" id='formSalt' value="<?=$formSalt;?>">
-                        <input type="submit" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="checkoutNow" value="<?=_("Continue")?>" />
+                        <input type="submit" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" name="checkoutNow" id="checkoutNow" value="<?=_("Continue")?>" />
                     </div>
+                </div>
                 </div>
             </div>
           </div>
         </div>
-
+        </form>
       </div>
       </div>
    </div> 
 </div>
 </div>
 <script type="text/javascript">
-function displayCheckoutNowButton($show)
+function displayButton(id, show)
 {
-    if ($show == 1)
-        $("#checkoutNow").show();
+    if (show == 1)
+    {
+        $("#" + id).show();
+        $("#" + id).attr("disabled", false);
+        $("#" + id).removeClass("disabled");
+    }
     else
-        $("#checkoutNow").hide();
+        $("#" + id).hide();
+}
+
+function displayCheckoutNowButton(show)
+{
+    displayButton("checkoutNow", show);
+}
+
+function displayLoginButton(show)
+{
+    displayButton("loginButton", show);
 }
 
 $(document).ready(function() {
     if ($("#billingState option").length == 1) {
-        $('#billingState').prop('disabled', 'disabled');
+        $('#billingState').prop("disabled", "disabled");
         $('#billingState').parent().removeClass("required");
     }
-
-// submit the form
-    $("#checkoutForm").submit(function(event) {
-        standardWaitingScreen.showPleaseWait();
-        displayCheckoutNowButton(0);
-        var postData = $(this).serializeArray();
-        var formURL = $(this).attr("action");
-        $.ajax({
-            type        : "POST",
-            url         : formURL,
-            data        : postData,
-            dataType    : "json",
-            encode      : true
-        })
-        .done(function(data) {
-            standardWaitingScreen.hidePleaseWait();
-//            displayCheckoutNowButton(1);
-            if (data.url.substring(0, 5) == "ERROR")
-            {
-                alert(data.url.substring(6, data.length));
-                displayCheckoutNowButton(1);
-            }
-            else
-                location.href = data.url;
-        })
-        .fail(function(data) {
-            if (data.responseCode)
-                console.log(data.responseCode);
-            var url = data;
-            location.href = data.url;
-            displayCheckoutNowButton(1);
-            standardWaitingScreen.hidePleaseWait();
-        });
-        event.preventDefault();
-    });
-    
+    $("#loggedInButton").hide();
+//not allow to toggle block by skipping step
+    $("#payment-method-header").attr("data-toggle", "");
+    $("#payment-address-header").attr("data-toggle", "");
+    $("#shipping-address-header").attr("data-toggle", "");
     validateCheckout();
+    validateLogin();
+<?php if ($client): ?>
+    populateClientData(<?=$client?>);
+<?php endif; ?>
 });
+
+function activatePaymentBlock()
+{
+    var targetBlock = $('a[href=\'#collapse-payment-address\']');
+    activatedBlock(targetBlock, $("#collapse-checkout-option"));
+}
 
 // Checkout
 $(document).delegate('#button-account', 'click', function() {
-    var targBlock = $('a[href=\'#collapse-payment-address\']');
-    activatedBlock(targBlock);
+    activatePaymentBlock();
+});
+$(document).delegate('#loggedInButton', 'click', function() {
+    activatePaymentBlock();
 });
 $(document).delegate('#button-payment-address', 'click', function() {
-    var targBlock = $('a[href=\'#collapse-shipping-address\']');
-    if (validateBlock("collapse-payment-address"))
-        activatedBlock(targBlock);
+    var targetBlock = $('a[href=\'#collapse-shipping-address\']');
+//    if (validateBlock("collapse-payment-address"))
+        activatedBlock(targetBlock, $("#collapse-payment-address"));
 });
 $(document).delegate('#button-shipping-address', 'click', function() {
-    var targBlock = $('a[href=\'#collapse-payment-method\']');
+    var targetBlock = $('a[href=\'#collapse-payment-method\']');
     displayCheckoutNowButton(1);
-    activatedBlock(targBlock);
+    activatedBlock(targetBlock, $("#collapse-shipping-address"));
 });
-function activatedBlock(obj)
+function activatedBlock(obj, hideBlock)
 {
+    $(".accordion-toggle").addClass("collapsed");
+    $(".in").removeClass("in");
     obj.attr("data-parent", "#accordion");
     obj.attr("data-toggle", "collapse");
-//    obj.find("i").removeClass("fa fa-caret-down");
-    obj.find("i").addClass("fa fa-caret-down");    
+    hideBlock.removeClass("in");
+    obj.find("i").addClass("fa fa-caret-down");
     obj.trigger('click');
 }
 
@@ -396,6 +394,118 @@ function validateBlock(blockId)
     }
 
     return true;
+}
+
+function loginSuccessful(email)
+{
+    $("#billingEmail").val(email);
+    $("#billingEmail").attr("disabled", true);
+    $("#loginEmail").attr("disabled", true);
+    $("#loginPassword").attr("disabled", true);
+    $("#passwordSection").hide();
+    activatePaymentBlock($("#collapse-checkout-option"));
+    $("#newCustomerBlock").hide();
+    $("#loggedInButton").show();
+    $("#loginButton").hide();
+}
+
+function populateClientData(data)
+{
+    if (data.Forename)
+        $("#billingFirstName").val(data.Forename);
+    if (data.Surname)
+        $("#billingLastName").val(data.Surname);
+    if (data.Companyname)
+        $("#billingCompany").val(data.Companyname);
+    if (data.Address1)
+        $("#billingAddress1").val(data.Address1);
+    if (data.Address2)
+        $("#billingAddress2").val(data.Address2);
+    if (data.Postcode)
+        $("#billingPostal").val(data.Postcode);
+    if (data.City)
+        $("#billingCity").val(data.City);
+    if (data.State)
+        $("#billingState").val(data.State);
+    if (data.Tel1)
+        $("#billingTelCountryCode").val(data.Tel1);
+    if (data.Tel2)
+        $("#billingTelAreaCode").val(data.Tel2);
+    if (data.Tel3)
+        $("#billingTelNumber").val(data.Tel3);
+
+    if (data.Email) {
+        loginSuccessful(data.Email);
+    }
+}
+
+function validateLogin()
+{
+    $("#loginForm").formValidation({
+        framework: "bootstrap",
+        icon: {
+            valid: "glyphicon",
+            invalid: "glyphicon",
+            validating: "glyphicon glyphicon-refresh"
+        },
+        excluded: ":disabled",
+        live: "submitted", /*enabled, submitted, disabled*/
+        fields: {
+            loginEmail: {
+                row: ".form-group",
+                validators: {
+                    notEmpty: {
+                        message: "<?=_("The email is required")?>"
+                    },
+                    emailAddress: {
+                        message: "<?=_("The value is not a valid email address")?>"
+                    }
+                }
+            },
+            loginPassword: {
+                row: ".form-group",
+                validators: {
+                    notEmpty: {
+                        message: "<?=_("Please input a password")?>"
+                    }
+                }
+            }
+        }
+    })
+    .on("success.form.fv", function(event)
+    {
+        event.preventDefault();
+        standardWaitingScreen.showPleaseWait();
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            type        : "POST",
+            url         : formURL,
+            data        : postData,
+            dataType    : "json",
+            encode      : true
+        })
+        .done(function(data) {
+            standardWaitingScreen.hidePleaseWait();
+            if (data.responseCode < 0) {
+//                console.log(data.responseCode);
+                if (data.error) {
+                    alert(data.error);
+                }
+            } else {
+                populateClientData(data);
+            }
+            displayLoginButton(1);
+        })
+        .fail(function(data) {
+            if (data.responseCode)
+                console.log(data.responseCode);
+            if (data.error)
+                alert(data.error);
+            standardWaitingScreen.hidePleaseWait();
+            displayLoginButton(1);
+        });
+    });
 }
 
 function validateCheckout()
@@ -564,8 +674,47 @@ function validateCheckout()
                 }
             },
 <?php endif; ?>
+            paymentCard: {
+                row: ".form-group",
+                validators: {
+                    notEmpty: {
+                        message: "<?=_("Please select a card")?>"
+                    },
+                }
+            },
         }
     })
+    .on("success.form.fv", function(event)
+    {
+        event.preventDefault();
+        standardWaitingScreen.showPleaseWait();
+//        displayCheckoutNowButton(0);
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            type        : "POST",
+            url         : formURL,
+            data        : postData,
+            dataType    : "json",
+            encode      : true
+        })
+        .done(function(data) {
+            standardWaitingScreen.hidePleaseWait();
+            displayCheckoutNowButton(1);
+            if (data.url.substring(0, 5) == "ERROR")
+            {
+                alert(data.url.substring(6, data.length));
+                displayCheckoutNowButton(1);
+            }
+            else
+                location.href = data.url;
+        })
+        .fail(function(data) {
+            displayCheckoutNowButton(1);
+            standardWaitingScreen.hidePleaseWait();
+            location.href = data.url;
+        });
+    });
 }
 </script> 
 <script type="text/javascript" src="/themes/default/asset/formvalidation/js/formValidation.min.js"></script>

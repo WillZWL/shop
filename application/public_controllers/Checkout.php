@@ -30,6 +30,15 @@ class Checkout extends PUB_Controller
         $this->cartSessionModel = new CartSessionModel;
     }
 
+    public function login() {
+        if ($result = $this->checkoutModel->clientLogin($this->input->post("loginEmail"), $this->input->post("loginPassword"))) {
+            $result["responseCode"] = 0;
+            print json_encode($result);
+        }
+        else
+            print json_encode(["responseCode" => -1, "error" => _("Login Fail")]);
+    }
+
     public function index() {
         $cart = $this->cartSessionModel->getCartInfo(true);
         if (!$cart) {
@@ -43,6 +52,9 @@ class Checkout extends PUB_Controller
         $data["paymentOption"] = $this->checkoutModel->getPaymentOption($this->getSiteInfo()->getPlatform());
         $encrypt = new CI_Encrypt();
         $data["formSalt"] = $encrypt->encode($this->getSiteInfo()->getPlatform());
+        $client = $this->checkoutModel->isLoggedIn();
+        if ($client)
+            $data["client"] = json_encode($client);
         $data["debug"] = $this->input->get("debug");
         $this->load->view('checkout/index', $data);
     }
@@ -50,7 +62,9 @@ class Checkout extends PUB_Controller
     public function payment($debug = 0) {
         $data = [];
         $filter = new CheckoutFormFilter();
-        $filterResult = $filter->isValidForm($this->input, $this->getSiteInfo());
+        $client = $this->checkoutModel->isLoggedIn();
+
+        $filterResult = $filter->isValidForm($this->input, $this->getSiteInfo(), ["loggedIn" => true, "email" => $client["Email"]]);
         if ($filterResult["validInput"]) {
             $filterResult["value"]["debug"] = $debug;
             $redirectUrl = $this->checkoutModel->createSaleOrder($filterResult["value"]);
@@ -70,6 +84,7 @@ class Checkout extends PUB_Controller
         }
         else
         {
+            echo json_encode($filterResult);
 //mail alert to IT
         }
     }

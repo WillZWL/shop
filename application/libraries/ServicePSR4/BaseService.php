@@ -57,10 +57,11 @@ class BaseService
         return $this->getDao()->getList($where, $option, $className);
     }
 
-    public function sendAlert($subject, $message, $email, $type = self::ALERT_GENERAL_LEVEL)
+    public function sendAlert($subject, $message, $email = null, $type = self::ALERT_GENERAL_LEVEL)
     {
-//        if ($type == self::ALERT_GENERAL_LEVEL)
-            //mail($email, $subject, $message, "From: website@" . strtolower(SITE_DOMAIN) . "\r\n");
-            print $message;
+        //if ($type == self::ALERT_GENERAL_LEVEL)
+        if ($email != null)
+            mail($email, $subject, $message, "From: website@" . strtolower(SITE_DOMAIN) . "\r\n");
+        //print $message;
     }
 }

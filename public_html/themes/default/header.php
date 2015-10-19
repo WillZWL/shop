@@ -74,7 +74,7 @@
                                 <div class="row">
                                     <div class="pull-left top-desc col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                        <span style="margin-left: 10px;">
-                                          We won't be beaten on electronics!
+                                          <?=_("We won't be beaten on electronics!")?>
                                        </span>
                                        <img src="/themes/default/asset/image/icon-bag.png">
                                     </div>

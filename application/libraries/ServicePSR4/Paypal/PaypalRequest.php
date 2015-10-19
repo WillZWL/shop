@@ -92,7 +92,7 @@ class PaypalRequest
     public function executeSetExpressChecout($postData = array())
     {
 		$postData["METHOD"] = "SetExpressCheckout";
-        
+
         $result = $this->_submit($postData);
         if ($result["response"])
         {

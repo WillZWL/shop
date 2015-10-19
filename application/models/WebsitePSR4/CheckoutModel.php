@@ -8,6 +8,8 @@ use ESG\Panther\Service\CartSessionService;
 use ESG\Panther\Service\PaymentGatewayRedirectService;
 use ESG\Panther\Service\PaymentGatewayRedirectPaypalService;
 use ESG\Panther\Service\PaymentGatewayRedirectMoneybookersService;
+use ESG\Panther\Form\GeneralInputFilter;
+use ESG\Panther\Service\ClientService;
 
 class CheckoutModel extends \CI_Model
 {
@@ -29,7 +31,28 @@ class CheckoutModel extends \CI_Model
         $this->setCartSessionService(new CartSessionService());
     }
 
+    public function isLoggedIn() {
+        if (isset($_SESSION["client"])) {
+            if ($_SESSION["client"]["loggedIn"] == 1)
+                return $_SESSION["client"];
+        }
+        return false;
+    }
+
+    public function clientLogin($email, $password) {
+        $filter = new GeneralInputFilter();
+        $clientService = new ClientService();
+        if ($filter->isValidEmail($email) && ($password != "")) {
+            $loginResult = $clientService->login($email, $password);
+            if ($loginResult) {
+               return $_SESSION["client"];
+            }
+        }
+        return false;
+    }
+
     public function createSaleOrder($formValue) {
+//                return ("ERROR=" . _("Session timeout, please check your cart!"));
         $cart = $this->getCartSessionService()->getCart();
 //        var_dump($cart);
         if ($cart)

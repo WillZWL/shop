@@ -33,7 +33,7 @@ class LoadSiteParameterService extends BaseService
 
         // set default site
         if (empty($site_config_obj)) {
-            $where['sc.domain'] = 'digitaldiscount.co.uk';
+            $where['sc.domain'] = 'www.digitaldiscount.co.uk';
             $site_config_obj = $this->getSiteConfigService()->getDao()->getSiteInitialParameter($where);
         }
 

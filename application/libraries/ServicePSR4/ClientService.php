@@ -75,6 +75,7 @@ class ClientService extends BaseService
             }
         }
         if ($loggedIn) {
+//            $_SESSION["client"]["obj"] = $obj;
             $_SESSION["client"]["loggedIn"] = 1;
         }
         $this->getClientPlatform();
@@ -158,10 +159,11 @@ class ClientService extends BaseService
         $clientObj->setStatus(1);
         if (isset($clientInfo["email"]))
             $clientObj->setEmail($clientInfo["email"]);
-        if ($clientInfo["password"]) {
-            $clientObj->setPassword($this->encryption->encrypt($clientInfo["password"]));
+
+        if (isset($clientInfo["billPassword"])) {
+            $clientObj->setPassword($this->encryption->encrypt($clientInfo["billPassword"]));
         } elseif (!$clientObj->getPassword())
-            $clientObj->setPassword($this->encryption->encrypt($clientInfo["password"]));
+            $clientObj->setPassword($this->encryption->encrypt(mktime()));
 
         if (isset($clientInfo["extClientId"]))
             $clientObj->setExtClientId($clientInfo["extClientId"]);
