@@ -1,6 +1,6 @@
                 <div class="contacts">
                     <h2><?= _('Term and Conditions') ?></h2>
-                    <h3><?= _('aheaddigital.net Conditions of Use and Sale') ?></h3>
+                    <h3><?= _('aheaddigital.com.au Conditions of Use and Sale') ?></h3>
                     <br />
 
                     <h3><?= _('CONTENTS') ?></h3>
@@ -20,7 +20,7 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDITIONS OF USE') ?></h3>
                     <p>
-<?= _('aheaddigital.net (AheadDigital) is wholly owned and operated by ChatandVision Ltd (ChatandVision). By visiting or shopping at the AheadDigital website, you agree to accept and be bound by these conditions of use, as well as any other policies posted on the website, as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN PLEASE DO NOT USE THE SITE.') ?>
+<?= _('aheaddigital.com.au (AheadDigital) is wholly owned and operated by ChatandVision Ltd (ChatandVision). By visiting or shopping at the AheadDigital website, you agree to accept and be bound by these conditions of use, as well as any other policies posted on the website, as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN PLEASE DO NOT USE THE SITE.') ?>
 <br /><br />
 <?= _('AheadDigital  is a trading name owned by ChatandVision Ltd with registered offices at Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong. Through its websites, ChatandVision Ltd offers consumer electronics hardware, and services. ') ?>
 <br /><br />
@@ -33,7 +33,7 @@
                         <br /><br />
                         <?= _('Permission is granted to display, copy, distribute, download, and print in hard copy portions of this Site for the purposes of: ') ?>
                         <ul>
-                            <li><?= _('placing an order with aheaddigital.net or') ?></li>
+                            <li><?= _('placing an order with aheaddigital.com.au or') ?></li>
                             <li><?= _('using this Site as a shopping resource, provided you do not modify the Site and that you retain all copyright and other proprietary notices contained in the Contents.') ?></li>
                         </ul>
                         <?= _('Except in connection with shopping or placing an order, none of the Contents may be copied, reproduced, distributed, re-published, downloaded, displayed, posted electronically or mechanically, transmitted, recorded, in any manner mirrored, photocopied, or reproduced without the prior written permission of ChatandVision or the applicable copyright owner. ') ?>
@@ -58,7 +58,7 @@
                         <br /><br />
                         <?= _('There may be certain orders that we are either unable to accept or must cancel. We reserve the right, at our sole discretion, to refuse or cancel any order for any reason. Possible circumstances involving cancellation of orders may be limitations on quantities available for purchases or inaccuracies or errors in product or pricing information.') ?>
                         <br /><br />
-                        <?= _("When you place an order to purchase a product from aheaddigital.net, we will send you an e-mail confirming receipt of your order and containing the details of your order. Your order represents an offer to us to purchase a product which is accepted by us when we send e-mail confirmation to you that we've dispatched that product to you (the \"Dispatch Confirmation E-mail\"). That acceptance will be complete at the time we send the Dispatch Confirmation E-mail to you. Any products on the same order which we have not confirmed in a Dispatch Confirmation E-mail to have been dispatched do not form part of that contract.") ?>
+                        <?= _("When you place an order to purchase a product from aheaddigital.com.au, we will send you an e-mail confirming receipt of your order and containing the details of your order. Your order represents an offer to us to purchase a product which is accepted by us when we send e-mail confirmation to you that we've dispatched that product to you (the \"Dispatch Confirmation E-mail\"). That acceptance will be complete at the time we send the Dispatch Confirmation E-mail to you. Any products on the same order which we have not confirmed in a Dispatch Confirmation E-mail to have been dispatched do not form part of that contract.") ?>
                     </p>
                     <br /><br />
 
