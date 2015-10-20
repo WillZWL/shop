@@ -121,7 +121,7 @@
                     onMouseOut="RemoveClassName(this, 'highlight')"
                 <?php
                     if (!($is_edit)):
-                ?>onClick="Redirect('<?= site_url('cs/refund/reason/' . $obj->getId()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"
+                ?>onClick="Redirect('<?= site_url('cs/refund/reason/'.$offset.'/' . $obj->getId()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"
                 <?php
                     endif;
                 ?>>
@@ -131,7 +131,7 @@
                     <?php
                     if ($is_edit) :
                         ?>
-                        <form name="fm_edit" action="<?= base_url() ?>cs/refund/reason/?<?= $_SERVER['QUERY_STRING'] ?>"
+                        <form name="fm_edit" action="<?= base_url() ?>cs/refund/reason/<?= $offset ?>/?<?= $_SERVER['QUERY_STRING'] ?>"
                               method="post" onSubmit="return CheckForm(this)">
                             <input type="hidden" name="posted" value="1">
                             <input type="hidden" id="action" name="action" value="edit">
@@ -177,7 +177,7 @@
                                     onclick="document.getElementById('action').value = 'delete';" type="submit"
                                     value="<?= $lang["delete"] ?>"> &nbsp; <input type="button"
                                                                                   value="<?= $lang["back"] ?>"
-                                                                                  onClick="Redirect('<?= site_url('cs/refund/reason/') ?>?<?= $_SERVER['QUERY_STRING'] ?>')">
+                                                                                  onClick="Redirect('<?= site_url('cs/refund/reason/'.$offset.'/') ?>?<?= $_SERVER['QUERY_STRING'] ?>')">
                             </td>
                         </form>
                     <?php

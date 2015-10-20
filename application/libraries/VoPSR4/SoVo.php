@@ -37,6 +37,8 @@ class SoVo extends \BaseVo
     private $refund_status = '0';
     private $hold_status = '0';
     private $hold_reason = '';
+    private $refund_reason = '';
+    private $order_note = '';
     private $promotion_code = '';
     private $client_promotion_code = '';
     private $expect_delivery_date = '0000-00-00';
@@ -420,6 +422,26 @@ class SoVo extends \BaseVo
     public function getHoldReason()
     {
         return $this->hold_reason;
+    }
+
+    public function setRefundReason($refund_reason)
+    {
+        $this->refund_reason = $refund_reason;
+    }
+
+    public function getRefundReason()
+    {
+        return $this->refund_reason;
+    }
+
+    public function setOrderNote($order_note)
+    {
+        $this->order_note = $order_note;
+    }
+
+    public function getOrderNote()
+    {
+        return $this->order_note;
     }
 
     public function setPromotionCode($promotion_code)

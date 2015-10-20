@@ -62,12 +62,7 @@ class SoAllocateDao extends BaseDao
         }
 
         if ($option["notes"]) {
-            $this->db->join('(
-                                    SELECT so_no, note, MAX(create_on) AS mco
-                                    FROM order_notes
-                                    GROUP BY so_no
-                            ) AS so_n', 'so_n.so_no = so.so_no', 'LEFT');
-            $select_str .= ", so_n.note";
+            $select_str .= ", so.order_note note";
         }
 
         if (!$option["hide_payment"]) {
@@ -158,12 +153,7 @@ class SoAllocateDao extends BaseDao
         }
 
         if ($option["notes"]) {
-            $this->db->join('(
-                                    SELECT so_no, note, MAX(create_on) AS mco
-                                    FROM order_notes
-                                    GROUP BY so_no
-                            ) AS so_n', 'so_n.so_no = so.so_no', 'LEFT');
-            $select_str .= ", so_n.note";
+            $select_str .= ", so.order_note note";
         }
 
         if (!$option["hide_payment"]) {

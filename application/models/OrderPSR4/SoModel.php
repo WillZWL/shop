@@ -113,7 +113,7 @@ class SoModel extends \CI_Model
 
         # hold_status = 15 refers to parent of split orders. It will have refund status but no refund history
         if ($refund_status > 0 && $hold_status != 15) {
-            $refund_obj = $this->refundService->get(["so_no" => $so_obj->getSoNo()]);
+            $refund_obj = $this->refundService->getDao('Refund')->get(["so_no" => $so_obj->getSoNo()]);
             $refund_time_diff = $now_time - strtotime($refund_obj->getCreateOn());
             $refund_working_days = $this->soService->getWorkingDays(strtotime($refund_obj->getCreateOn()), $now_time);
             if ($refund_time_diff < 43200) {
@@ -140,7 +140,7 @@ class SoModel extends \CI_Model
                         }
                         break;
                     case 4:
-                        if ($complete_refund_obj = $this->refundService->getRefundHistory(["refund_id" => $refund_obj->getId(), "status" => "C"])) {
+                        if ($complete_refund_obj = $this->refundService->getDao('RefundHistory')->getRefundHistory(["refund_id" => $refund_obj->getId(), "status" => "C"])) {
                             $refunded_date = $complete_refund_obj->getCreateOn();
                             $refunded_working_days = $this->soService->getWorkingDays(strtotime($refunded_date), $now_time);
                             if ($refunded_working_days < 2) {

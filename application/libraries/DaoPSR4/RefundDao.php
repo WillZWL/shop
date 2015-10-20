@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Dao;
 
-class RefundDao extends BaseDao
+class RefundDao extends BaseDao implements HooksInsert
 {
     private $tableName = "refund";
     private $voClassName = "RefundVo";
@@ -19,6 +19,42 @@ class RefundDao extends BaseDao
     public function getTableName()
     {
         return $this->tableName;
+    }
+
+    public function insertAfterExecute($obj)
+    {
+        $this->tableFieldsHooksInsert($obj);
+    }
+
+    public function tableFieldsHooksInsert($obj)
+    {
+        $table1 = [
+                    'table' => 'so',
+                    'where' => ['so_no'=>$obj->getSoNo(),],
+                    'keyValue'=>['refund_reason' => $this->getRefundReasonById($obj->getReason()),]
+                  ];
+
+        $this->updateTables([$table1,]);
+    }
+
+    public function getRefundReasonById($id = "")
+    {
+        if ($id == "") {
+            return FALSE;
+        }
+
+        $sql = "SELECT reason_cat cat, description reason from refund_reason WHERE id = ?";
+
+        if ($query = $this->db->query($sql, $id)) {
+            $cat = $query->row()->cat;
+            $reason = $query->row()->reason;
+            $rcategory = ["C"=>"Customer","I"=>"Internal","3"=>"3rd Party","M"=>"Miscellaneous","R"=>"RMA","O"=>"Others"];
+            $refund_reason = $rcategory[$cat] ." - ". $reason;
+
+            return $refund_reason;
+        }
+
+        return FALSE;
     }
 
     public function getRefundList($where = [], $option = [], $classname = "RefundSoDto")

@@ -209,9 +209,9 @@ class Quick_search extends MY_Controller
                 if (($res = $this->sc['Client']->getDao('Client')->update($client)) !== FALSE) {
                     mail('ming@valuebasket.com', '[VB] Client - ' . $client_email . ' is inactivate', 'Please inactivate ' . $client_email, "From: admin@valuebasket.com\r\n");
                 }
-                $_SESSION['NOTICE'] = ($res !== FALSE) ? 'client_account_deactivated' : $this->db->_error_message();
+                $_SESSION['NOTICE'] = ($res !== FALSE) ? 'client_account_deactivated' : $this->db->display_error();
             } else {
-                $_SESSION['NOTICE'] = $this->db->_error_message();
+                $_SESSION['NOTICE'] = $this->db->display_error();
             }
             redirect('cs/quick_search/view/' . $order_no . '/' . $viewtype);
         }
@@ -224,7 +224,7 @@ class Quick_search extends MY_Controller
         if (($this->input->post('ca') == 1) && (check_app_feature_access_right($this->getAppId(), "CS000102_change_delivery_addr"))) {
             $obj = $this->sc['So']->getDao('So')->get(["so_no" => $order_no]);
             if (!$obj) {
-                $_SESSION["NOTICE"] = $this->db->_error_message();
+                $_SESSION["NOTICE"] = $this->db->display_error();
             } else {
 
                 $obj->setDeliveryName($this->input->post("dname"));
@@ -272,7 +272,7 @@ class Quick_search extends MY_Controller
                                         $error_mssage .= "add_note_failed for child $child_so_no \n";
                                     }
                                 } else {
-                                    $error_mssage .= "Error update del add for child $child_so_no. DB error: " . $this->db->_error_message() . "\n";
+                                    $error_mssage .= "Error update del add for child $child_so_no. DB error: " . $this->db->display_error() . "\n";
                                 }
                             }
                             if ($error_mssage)
@@ -280,7 +280,7 @@ class Quick_search extends MY_Controller
                         }
                     }
                 } else {
-                    $_SESSION["NOTICE"] = $this->db->_error_message();
+                    $_SESSION["NOTICE"] = $this->db->display_error();
                 }
             }
             Redirect(base_url() . "cs/quick_search/view/" . $order_no . "/" . $viewtype);
@@ -829,7 +829,7 @@ html;
             if ($so_extend_obj->getFulfilled() == "N") {
                 $so_extend_obj->setFulfilled("Y");
                 if ($soext_dao->update($so_extend_obj) === FALSE) {
-                    $_SESSION["NOTICE"] = "Cannot update so_extend as fulfilled. DB Error: " . $soext_dao->db->_error_message();
+                    $_SESSION["NOTICE"] = "Cannot update so_extend as fulfilled. DB Error: " . $soext_dao->db->display_error();
                 }
             }
 

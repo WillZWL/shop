@@ -44,7 +44,7 @@ class RefundService extends BaseService
 
         $this->getDao('Refund')->db->trans_start();
         $result = $this->getDao('Refund')->insert($refund_obj);
-        error_log(__METHOD__ . __LINE__ . $this->getDao('Refund')->db->_error_message());
+        error_log(__METHOD__ . __LINE__ . $this->getDao('Refund')->db->display_error());
         if ($result !== FALSE) {
             $refund_id = $result->getId();
             $refund_history->setRefundId($refund_id);
@@ -53,7 +53,7 @@ class RefundService extends BaseService
             $refund_history->setNotes($notes);
 
             $history_result = $this->getDao('RefundHistory')->insert($refund_history);
-            error_log(__METHOD__ . __LINE__ . $this->getDao('RefundHistory')->db->_error_message());
+            error_log(__METHOD__ . __LINE__ . $this->getDao('RefundHistory')->db->display_error());
             if ($history_result != FALSE) {
                 $refund_item->setRefundId($refund_id);
                 $refund_item->setLineNo(1);
@@ -63,7 +63,7 @@ class RefundService extends BaseService
                 $refund_item->setRefundType('C');
 
                 $refund_item_result = $this->getDao('RefundItem')->insert($refund_item);
-                error_log(__METHOD__ . __LINE__ . $this->getDao('RefundItem')->db->_error_message());
+                error_log(__METHOD__ . __LINE__ . $this->getDao('RefundItem')->db->display_error());
                 if ($refund_item_result !== FALSE) {
                     $refund_history_cs = $this->getDao('RefundHistory')->get();
                     $refund_history_cs->setRefundId($refund_id);
@@ -72,7 +72,7 @@ class RefundService extends BaseService
                     $refund_history_cs->setNotes($notes);
 
                     $history_result = $this->getDao('RefundHistory')->insert($refund_history_cs);
-                    error_log(__METHOD__ . __LINE__ . $this->getDao('RefundHistory')->db->_error_message());
+                    error_log(__METHOD__ . __LINE__ . $this->getDao('RefundHistory')->db->display_error());
 
                     if ($history_result !== FALSE) {
                         $refund_history_acc = $this->getDao('RefundHistory')->get();
@@ -82,12 +82,12 @@ class RefundService extends BaseService
                         $refund_history_acc->setNotes('Completed:' . $notes);
 
                         $history_result = $this->getDao('RefundHistory')->insert($refund_history_acc);
-                        error_log(__METHOD__ . __LINE__ . $this->getDao('RefundHistory')->db->_error_message());
+                        error_log(__METHOD__ . __LINE__ . $this->getDao('RefundHistory')->db->display_error());
                         if ($history_result !== FALSE) {
                             $so_obj->setStatus(3);
                             $so_obj->setRefundStatus(4);
                             $so_result = $this->getDao('So')->update($so_obj);
-                            error_log(__METHOD__ . __LINE__ . $this->getDao('So')->db->_error_message());
+                            error_log(__METHOD__ . __LINE__ . $this->getDao('So')->db->display_error());
 
                             if ($so_result !== FALSE) {
                                 $this->getDao('Refund')->db->trans_complete();
@@ -143,14 +143,13 @@ class RefundService extends BaseService
                 $so_obj->setRefundStatus('4');
                 $ret = $this->getDao('So')->update($so_obj);
 
-                $m1 = $this->getDao('So')->db->_error_message();
+                $m1 = $this->getDao('So')->db->display_error();
             }
 
             $refund_obj->setStatus('C');
             $ret2 = $this->getDao('Refund')->update($refund_obj);
-
-            $m2 = $this->getDao('Refund')->db->_error_message();
             if ($ret === FALSE || $ret2 === FALSE) {
+                $m2 = $this->getDao('Refund')->db->display_error();
                 $_SESSION["NOTICE"] = $m1 . " " . $m2;
                 $this->getDao('Refund')->db->trans_rollback();
                 return FALSE;
@@ -208,7 +207,7 @@ class RefundService extends BaseService
                 $auto_refund_obj->setAmount($refund_obj->getTotalRefundAmount());
                 $result = $this->getDao('AutoRefund')->insert($auto_refund_obj);
                 if ($result === FALSE) {
-                    $message = $this->getDao('AutoRefund')->db->_error_message() . ", " . $this->getDao('AutoRefund')->db->last_query();
+                    $message = $this->getDao('AutoRefund')->db->display_error() . ", " . $this->getDao('AutoRefund')->db->last_query();
                     mail("oswald-alert@eservicesgroup.com", "[VB]" . $so_ps_obj->getPaymentGatewayId() . " setup auto refund error, so_no:" . $so_obj->getSoNo(), $message, "From: website@digitaldiscount.com");
                     return false;
                 }
@@ -510,7 +509,7 @@ class RefundService extends BaseService
     public function getReasonList($where, $option)
     {
         return ["reason_list" => $this->getDao('RefundReason')->getList($where, $option),
-            "cnt" => $this->getDao('RefundReason')->getNumRows($where)];
+            "total" => $this->getDao('RefundReason')->getNumRows($where)];
     }
 
     public function getRefundSoList($where = [], $option = [])
