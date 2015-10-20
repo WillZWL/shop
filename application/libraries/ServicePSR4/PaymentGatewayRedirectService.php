@@ -116,10 +116,18 @@ implements PaymentGatewayRedirectServiceInterface
             $redirectUrl = $callResult["url"];
             if (($responseData != null) && (!empty($responseData)))
                 $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "I", str_replace("&", "\n&", $responseData));
-            if (!$redirectUrl) {
-                $subject = "[Panther] fail to get " . $this->getPaymentGatewayName() . " return URL, so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
-                $this->sendAlert($subject, $responseData, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
-                return $this->checkoutFailureHandler(_("Please contact our CS"));
+            if (!$callResult["result"]) {
+                if (!$callResult["siteDown"]) {
+                    $subject = "[Panther] fail to get " . $this->getPaymentGatewayName() . " return URL, so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
+                    $alertMessage = $responseData;
+                    $messageToUser = $callResult["errorMessageToClient"];
+                } else {
+                    $subject = "[Panther] " . $this->getPaymentGatewayName() . " site down, so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
+                    $alertMessage = $callResult["siteDownErrorMessage"];
+                    $messageToUser = _("Please contact our CS");
+                }
+                $this->sendAlert($subject, $alertMessage, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
+                return $this->checkoutFailureHandler($messageToUser);
             } else {
                 if ($orderFormInfo["paymentGatewayId"] == 'w_bank_transfer') {
                     $this->sops->setPaymentStatus('N');
@@ -132,13 +140,13 @@ implements PaymentGatewayRedirectServiceInterface
                 if (!$updateResult) {
                     $subject = "[Panther] fail to update so payment status" . $this->getPaymentGatewayName() . ", so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
                     $message = $this->soFactoryService->getSoPaymentStatusDao()->db->last_query() . "," . $this->soFactoryService->getSoPaymentStatusDao()->db->_error_message();
-                    $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
+                    $this->sendAlert($subject, $message, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
                     return $this->checkoutFailureHandler(_("Please contact our CS"));
                 }
                 return $redirectUrl;
             }
         }
-        return $this->checkoutFailureHandler(_("Please contact our CS!"));
+        return $this->checkoutFailureHandler(_("Please contact our CS"));
     }
 
     public function processPaymentStatusInGeneral($generalData = array(), $getData = array())
@@ -326,7 +334,7 @@ implements PaymentGatewayRedirectServiceInterface
         {
             $subject = "[Panther] fail to insert/update so_rsik" . $this->getPaymentGatewayName() . ", so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
             $message = $this->soFactoryService->getSoRiskDao()->db->last_query() . "," . $this->soFactoryService->getSoRiskDao()->db->_error_message();
-            $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
+            $this->sendAlert($subject, $message, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
             return false;
         }
     }
@@ -354,7 +362,7 @@ implements PaymentGatewayRedirectServiceInterface
             {
                 $subject = "[Panther] fail to add so_credit_chk" . $this->getPaymentGatewayName() . ", so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
                 $message = $this->soFactoryService->getSoCreditChkDao()->db->last_query() . "," . $this->soFactoryService->getSoCreditChkDao()->db->_error_message();
-                $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
+                $this->sendAlert($subject, $message, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
                 return false;
             }
         }
@@ -382,7 +390,7 @@ implements PaymentGatewayRedirectServiceInterface
                     {
                         $subject = "[Panther] Order from Paid to reverse so_no:" . $this->so->getSoNo();
                         $message = "Order auto hold";
-                        $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup, complaince@eservicesgroup.net");
+                        $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com, complaince@eservicesgroup.net");
     //the idea is to do auto hold and set a reason to so.hold_status in common for this case
                         if (($this->so->getStatus() == 3) && ($this->so->getHoldStatus() == 0)) {
     //auto hold

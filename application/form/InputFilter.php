@@ -6,7 +6,9 @@ use Zend\Validator\ValidatorChain;
 use Zend\Validator\Regex;
 use Zend\Validator\StringLength;
 use Zend\Validator\EmailAddress;
-
+/***************
+**  class to do filter + validation
+*****************/
 abstract class InputFilter {
     public $validInput = true;
 
@@ -21,7 +23,7 @@ abstract class InputFilter {
 **  errorMessage: errorMessage
 **  value: value after filter
 ********************************************/
-    abstract public function isValidForm($input, $siteInfo = []);
+    abstract public function isValidForm($input, $siteInfo = [], $option = []);
 
     public function isValidEuropean($input, $length) {
         if ((!is_null($input)) && (trim($input) != ""))
@@ -122,7 +124,7 @@ abstract class InputFilter {
                                                      'max' => 32)));
         return $this->validInput = $validatorChain->isValid($countryCode . $areaCode . $number);    
     }
-    
+
     public function isValidEmail($email)
     {
         $validatorChain = new ValidatorChain();

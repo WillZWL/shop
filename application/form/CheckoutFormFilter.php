@@ -8,7 +8,7 @@ class CheckoutFormFilter extends InputFilter
         parent::__construct();
     }
 
-    public function isValidForm($input, $siteInfo = [])
+    public function isValidForm($input, $siteInfo = [], $option = [])
     {
         $message = [];
         $value = [];
@@ -63,26 +63,31 @@ class CheckoutFormFilter extends InputFilter
             $message["billNumber"] = _("Not a valid billing phone number");
         }
 
-        $value["email"] = trim($input->post("billingEmail"));
-        if (!$this->isValidEmail($value["email"])) {
-            $message["email"] = _("Not a valid email address");
-        }
-        if ($input->post("billingPassword"))
-            $value["billPassword"] = trim($input->post("billingPassword"));
-        else
+        if ($option["loggedIn"]) {
+            $value["email"] = $option["email"];
             $value["billPassword"] = null;
-        if ($input->post("billingConfirmPassword"))
-            $value["billConfirmPassword"] = trim($input->post("billingConfirmPassword"));
-        else
             $value["billConfirmPassword"] = null;
-        if (($value["billPassword"] != null)
-            || ($value["billConfirmPassword"] != null)) {
-            if ($value["billPassword"] != $value["billConfirmPassword"]) {
-                $this->validInput = false;
-                $message["billPassword"] = _("Password not match");
+        } else {
+            $value["email"] = trim($input->post("billingEmail"));
+            if (!$this->isValidEmail($value["email"])) {
+                $message["email"] = _("Not a valid email address");
+            }
+            if ($input->post("billingPassword"))
+                $value["billPassword"] = trim($input->post("billingPassword"));
+            else
+                $value["billPassword"] = null;
+            if ($input->post("billingConfirmPassword"))
+                $value["billConfirmPassword"] = trim($input->post("billingConfirmPassword"));
+            else
+                $value["billConfirmPassword"] = null;
+            if (($value["billPassword"] != null)
+                || ($value["billConfirmPassword"] != null)) {
+                if ($value["billPassword"] != $value["billConfirmPassword"]) {
+                    $this->validInput = false;
+                    $message["billPassword"] = _("Password not match");
+                }
             }
         }
-
         $value["shipFirstName"] = $value["billFirstName"];
         $value["shipLastName"] = $value["billLastName"];
         $value["shipCompany"] = $value["billCompany"];

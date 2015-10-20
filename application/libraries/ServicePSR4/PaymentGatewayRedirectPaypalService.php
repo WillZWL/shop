@@ -8,10 +8,10 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
     const MAXIMUM_NUMBER_OF_RETRIES = 3;
     private $_activeAcct = "";
     private $_ppAcct = ["HK" => [
-                                    "userName" => "paypal.value_api1.valuebasket.com",
-                                    "password" => "MFPNL4R3L4RZMMD9",
-                                    "signature" => "AcAzi6cdOUqlwwNTQdJJvBYf50OGANNcCBDh6bcE3STN3dw3Y6NhEhiB",
-                                    "paypalEmailAddress" => "paypal.value@valuebasket.com"
+                                    "userName" => "paypal_api1.chatandvision.com",
+                                    "password" => "G75Z557HZLN3YCZG",
+                                    "signature" => "AfVaGWFlnJfCnZKqutSM-9.NQVccAN06nZTH8yJna9A2K6B-9iJC-.F3",
+                                    "paypalEmailAddress" => "paypal@chatandvision.com"
                                 ]
                              , "apiUrl" => "https://api-3t.paypal.com/nvp"
                              , "paypalUrl" => "https://www.paypal.com/cgi-bin/webscr?"
@@ -210,20 +210,21 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
             }
             else
             {
-                if (!$this->sops)
+                if ((!$this->sops)
+                    || (!$this->so))
                 {
-                    $subject = "[Panther] Paypal notification no sops- " . $paymentStatus . ", soNo:" . $soNo;
-                    $this->sendAlert($subject, $data);                
+                    $subject = "[Panther] Paypal notification no so or sops - " . $paymentStatus . ", soNo:" . $soNo . ", " . __METHOD__ . __LINE__;
+                    $this->sendAlert($subject, str_replace("&", "\n&", $data), $this->getTechnicalSupportEmail());                
                 }
             }
 //error_log(__METHOD__ . __LINE__);
             $subject = "[Panther] Paypal notification - " . $paymentStatus . ", soNo:" . $soNo;
-            $this->sendAlert($subject, $data, BaseService::ALERT_GENERAL_LEVEL);
+            $this->sendAlert($subject, str_replace("&", "\n&", $data), $this->getTechnicalSupportEmail(), BaseService::ALERT_GENERAL_LEVEL);
         }
         else
         {
-            $subject = "[Panther] Paypal Verify notification fail";
-            $this->sendAlert($subject, $verifedResult["response"] . $data, BaseService::ALERT_GENERAL_LEVEL);
+            $subject = "[Panther] Paypal Verify notification fail" . ", " . __METHOD__ . __LINE__;
+            $this->sendAlert($subject, $verifedResult["response"] . $data, $this->getTechnicalSupportEmail(), BaseService::ALERT_GENERAL_LEVEL);
         }
 //error_log(__METHOD__ . __LINE__ . $result);
         return $result;
@@ -237,6 +238,8 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
         $url = "";
         $errorMessage = "";
         $callResult = false;
+        $siteDown = false;
+
         $getUrlResult = $this->_paypalRequest->executeSetExpressChecout($requestData);
         if ($getUrlResult["result"])
         {
@@ -260,10 +263,13 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
         else
         {
 //need to pass the error
-            $errorMessage = $response;
+            $siteDownErrorMessage = "error:" . $response["erroNo"] . ", info:" . $response["errorMessage"];
+            $siteDown = true;
         }
-        return ["errorMessage" => $errorMessage
-                , "result" => $callResult
+        return ["result" => $callResult
+                ,"errorMessageToClient" => $errorMessage
+                , "siteDown" => $siteDown
+                , "siteDownErrorMessage" => $siteDownErrorMessage
                 , "url" => $url];
     }
 
@@ -308,14 +314,14 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
             else
             {
                 $subject = "[Panther] Not a valid Paypal token return";
-                $this->sendAlert($subject, $dataFromPmgw, BaseService::ALERT_GENERAL_LEVEL);
+                $this->sendAlert($subject, $dataFromPmgw, $this->getTechnicalSupportEmail(), BaseService::ALERT_GENERAL_LEVEL);
                 return PaymentGatewayRedirectService::PAYMENT_WITH_INVALID_RESPONSE;
             }
         }
         else
         {
             $subject = "[Panther] Paypal invalid SoNo return";
-            $this->sendAlert($subject, $dataFromPmgw, BaseService::ALERT_GENERAL_LEVEL);
+            $this->sendAlert($subject, $dataFromPmgw, $this->getTechnicalSupportEmail(), BaseService::ALERT_GENERAL_LEVEL);
             return PaymentGatewayRedirectService::PAYMENT_WITH_INVALID_RESPONSE;
         }
         return PaymentGatewayRedirectService::PAYMENT_STATUS_FAIL;
