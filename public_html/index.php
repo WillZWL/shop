@@ -292,42 +292,42 @@ switch (ENVIRONMENT)
 
 	switch ($_SERVER['SERVER_NAME']) {
 		case 'dev.digitaldiscount.co.uk':
-		case 'digitaldiscount.co.uk':
+		case 'www.digitaldiscount.co.uk':
 			define('SITEVIEW', 'digitaldiscount.co.uk');
 			break;
 
 		case 'dev.aheaddigital.com.au':
-		case 'aheaddigital.com.au':
+		case 'www.aheaddigital.com.au':
 			define('SITEVIEW', 'aheaddigital.com.au');
 			break;
 
 		case 'dev.aheaddigital.co.nz':
-		case 'aheaddigital.co.nz':
+		case 'www.aheaddigital.co.nz':
 			define('SITEVIEW', 'aheaddigital.co.nz');
 			break;
 
 		case 'dev.buholoco.es':
-		case 'buholoco.es':
+		case 'www.buholoco.es':
 			define('SITEVIEW', 'buholoco.es');
 			break;
 
 		case 'dev.nuovadigitale.it':
-		case 'nuovadigitale.it':
+		case 'www.nuovadigitale.it':
 			define('SITEVIEW', 'nuovadigitale.it');
 			break;
 
 		case 'dev.numeristock.fr':
-		case 'numeristock.fr':
+		case 'www.numeristock.fr':
 			define('SITEVIEW', 'numeristock.fr');
 			break;
 
 		case 'dev.numeristock.be':
-		case 'numeristock.be':
+		case 'www.numeristock.be':
 			define('SITEVIEW', 'numeristock.be');
 			break;
 
 		case 'dev.elektroraj.pl':
-		case 'elektroraj.pl':
+		case 'www.elektroraj.pl':
 			define('SITEVIEW', 'elektroraj.pl');
 			break;
 
