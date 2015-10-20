@@ -64,7 +64,7 @@ class Checkout extends PUB_Controller
         $filter = new CheckoutFormFilter();
         $client = $this->checkoutModel->isLoggedIn();
 
-        $filterResult = $filter->isValidForm($this->input, $this->getSiteInfo(), ["loggedIn" => true, "email" => $client["Email"]]);
+        $filterResult = $filter->isValidForm($this->input, $this->getSiteInfo(), ["loggedIn" => (($client)?true:false), "email" => (($client)?$client["Email"]:"")]);
         if ($filterResult["validInput"]) {
             $filterResult["value"]["debug"] = $debug;
             $redirectUrl = $this->checkoutModel->createSaleOrder($filterResult["value"]);
