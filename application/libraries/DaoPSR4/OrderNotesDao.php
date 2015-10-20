@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Dao;
 
-class OrderNotesDao extends BaseDao
+class OrderNotesDao extends BaseDao implements HooksInsert
 {
     private $tableName = "order_notes";
     private $voClassName = "OrderNotesVo";
@@ -19,6 +19,22 @@ class OrderNotesDao extends BaseDao
     public function getTableName()
     {
         return $this->tableName;
+    }
+
+    public function insertAfterExecute($obj)
+    {
+        $this->tableFieldsHooksInsert($obj);
+    }
+
+    public function tableFieldsHooksInsert($obj)
+    {
+        $table1 = [
+                    'table' => 'so',
+                    'where' => ['so_no'=>$obj->getSoNo(),],
+                    'keyValue'=>['order_note' => $obj->getNote(),]
+                  ];
+
+        $this->updateTables([$table1,]);
     }
 
     public function getListWithName($where, $classname = "OrderNoteUsernameDto")

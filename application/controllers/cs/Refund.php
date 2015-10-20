@@ -37,7 +37,7 @@ class Refund extends MY_Controller
         return $this->appId;
     }
 
-    public function reason($id = "", $offset = 0)
+    public function reason($offset = 0, $id = "")
     {
         if (check_app_feature_access_right($this->getAppId(), "CS000200_refund_btn")) {
             if ($this->input->post('posted')) {
@@ -110,9 +110,13 @@ class Refund extends MY_Controller
             $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
             $option["orderby"] = $sort . " " . $order;
 
-            $config['base_url'] = base_url('cs/refund/reason/$id');
+            $config['base_url'] = base_url("cs/refund/reason/");
             $config['total_rows'] = $data["total"];
             $config['per_page'] = $limit;
+
+            $this->pagination->initialize($config);
+            $data['links'] = $this->pagination->create_links();
+            $data['offset'] = $offset;
 
             $data["notice"] = notice($lang);
 
@@ -1076,7 +1080,6 @@ class Refund extends MY_Controller
                         $denial = 1;
                     }
                 }
-
 
                 $hobj = $this->sc['Refund']->getDao('RefundHistory')->get();
                 $hobj->setRefundId($refundid);
