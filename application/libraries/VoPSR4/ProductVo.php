@@ -4,7 +4,6 @@ class ProductVo extends \BaseVo
     private $id;
     private $sku;
     private $sku_vb = '';
-    private $sku_bak = '';
     private $prod_grp_cd;
     private $colour_id;
     private $version_id;
@@ -77,16 +76,6 @@ class ProductVo extends \BaseVo
     public function getSkuVb()
     {
         return $this->sku_vb;
-    }
-
-    public function setSkuBak($sku_bak)
-    {
-        $this->sku_bak = $sku_bak;
-    }
-
-    public function getSkuBak()
-    {
-        return $this->sku_bak;
     }
 
     public function setProdGrpCd($prod_grp_cd)
