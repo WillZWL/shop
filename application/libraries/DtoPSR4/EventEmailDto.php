@@ -11,19 +11,6 @@ class EventEmailDto
     private $platform_id;
     private $replace;
 
-    private $template_name;
-
-
-    public function getTemplateName()
-    {
-        return $this->template_name;
-    }
-
-    public function setTemplateName($template_name)
-    {
-        $this->template_name = $template_name;
-    }
-
     public function getEventId()
     {
         return $this->event_id;

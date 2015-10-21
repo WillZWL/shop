@@ -9,9 +9,30 @@ class TemplateService extends BaseService
         $this->pdfRenderingService = new PdfRenderingService;
     }
 
-    public function getEmail($where, $replace = '')
+    public function getEmail($where, array $replace = [])
     {
-        return $this->getDao('Template')->get($where);
+        $tpl_obj = $this->getDao('Template')->get($where);
+
+        if (empty($tpl_obj)) {
+            // TODO
+            // info IT no template
+            // write a common function,
+            // contains $this->getDao('Template')->db->last_query();
+            return false;
+        }
+
+        if (!empty($replace)) {
+            foreach ($replace as $key => $value) {
+                $search[] = '[:' . $key . ':]';
+                $replace_value[] = $value;
+            }
+
+            $tpl_obj->setSubject(str_replace($search, $replace_value, $tpl_obj->getSubject()));
+            $tpl_obj->setMessageHtml(str_replace($search, $replace_value, $tpl_obj->getMessageHtml()));
+            $tpl_obj->setMessageAlt(str_replace($search, $replace_value, $tpl_obj->getMessageAlt()));
+        }
+
+        return $tpl_obj;
     }
 
 

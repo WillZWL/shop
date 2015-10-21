@@ -24,9 +24,11 @@ class EmailService extends BaseService
     public function run(\EventEmailDto $obj)
     {
         $email = $this->getEmail($obj);
-
         $result = $this->sendEmail($email);
-        var_dump($result);die;
+        if (! $result) {
+            // TODO
+            // should report to IT
+        }
     }
 
     private function getEmail($obj)
@@ -40,14 +42,16 @@ class EmailService extends BaseService
 
         $email = $this->templateService->getEmail($where, $obj->getReplace());
 
-        $result['from'] = $email->getFrom();
-        $result['subject'] = $email->getSubject();
-        $result['bcc'] = $email->getBcc();
-        $result['cc'] = $email->getCc();
-        $result['reply_to'] = $email->getReplyTo();
-        $result['body'] = $email->getMessageHtml();
-        $result['alt_body'] = $email->getMessageAlt();
-        $result['to'] = $obj->getMailTo();
+        if ($email) {
+            $result['from'] = $email->getFrom();
+            $result['subject'] = $email->getSubject();
+            $result['bcc'] = $email->getBcc();
+            $result['cc'] = $email->getCc();
+            $result['reply_to'] = $email->getReplyTo();
+            $result['body'] = $email->getMessageHtml();
+            $result['alt_body'] = $email->getMessageAlt();
+            $result['to'] = $obj->getMailTo();
+        }
 
         return $result;
     }
