@@ -2,7 +2,8 @@
 class EmailTemplateVo extends \BaseVo
 {
     private $id;
-    private $template_name = '';
+    private $tpl_id;
+    private $tpl_name;
     private $platform_id;
     private $description = '';
     private $subject = '';
@@ -13,7 +14,6 @@ class EmailTemplateVo extends \BaseVo
     private $tpl_file_name = '';
     private $tpl_alt_file_name = '';
     private $status = '1';
-    private $editable = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -34,14 +34,24 @@ class EmailTemplateVo extends \BaseVo
         return $this->id;
     }
 
-    public function setTemplateName($template_name)
+    public function setTplId($tpl_id)
     {
-        $this->template_name = $template_name;
+        $this->tpl_id = $tpl_id;
     }
 
-    public function getTemplateName()
+    public function getTplId()
     {
-        return $this->template_name;
+        return $this->tpl_id;
+    }
+
+    public function setTplName($tpl_name)
+    {
+        $this->tpl_name = $tpl_name;
+    }
+
+    public function getTplName()
+    {
+        return $this->tpl_name;
     }
 
     public function setPlatformId($platform_id)
@@ -142,16 +152,6 @@ class EmailTemplateVo extends \BaseVo
     public function getStatus()
     {
         return $this->status;
-    }
-
-    public function setEditable($editable)
-    {
-        $this->editable = $editable;
-    }
-
-    public function getEditable()
-    {
-        return $this->editable;
     }
 
     public function setCreateOn($create_on)

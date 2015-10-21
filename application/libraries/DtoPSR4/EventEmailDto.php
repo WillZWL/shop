@@ -24,7 +24,6 @@ class EventEmailDto
         $this->template_name = $template_name;
     }
 
-
     public function getEventId()
     {
         return $this->event_id;

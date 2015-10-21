@@ -25,7 +25,4 @@ class TemplateDao extends BaseDao
     {
         return $this->get($where, "TplMsgWithAttDto");
     }
-
 }
-
-

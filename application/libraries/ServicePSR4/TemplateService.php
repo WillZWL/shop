@@ -9,14 +9,20 @@ class TemplateService extends BaseService
         $this->pdfRenderingService = new PdfRenderingService;
     }
 
+    public function getEmail($where, $replace = '')
+    {
+        return $this->getDao('Template')->get($where);
+    }
+
+
     public function get_tpl_list($where = null)
     {
         return $this->getDao('Template')->getList($where);;
     }
 
-    public function getTemplate($where = [], $replace = [])
+    public function getEmailTemplate($where = [], $option = [])
     {
-        $mailObj = $this->getDao('template_by_platform')->get($where);
+        $mail_obj = $this->getDao('Tempalte')->get($where);
 
         if ($template_obj) {
 

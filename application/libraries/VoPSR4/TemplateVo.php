@@ -2,16 +2,20 @@
 class TemplateVo extends \BaseVo
 {
     private $id;
-    private $template_id;
-    private $lang_id = 'en';
-    private $name = '';
+    private $tpl_id;
+    private $tpl_name;
+    private $platform_id;
     private $description = '';
-    private $status = '1';
-    private $tpl_file;
-    private $tpl_alt_file;
     private $subject = '';
+    private $bcc = '';
+    private $cc = '';
+    private $reply_to = '';
+    private $from = '';
+    private $tpl_file_name = '';
+    private $tpl_alt_file_name = '';
     private $message_html;
     private $message_alt;
+    private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -32,34 +36,34 @@ class TemplateVo extends \BaseVo
         return $this->id;
     }
 
-    public function setTemplateId($template_id)
+    public function setTplId($tpl_id)
     {
-        $this->template_id = $template_id;
+        $this->tpl_id = $tpl_id;
     }
 
-    public function getTemplateId()
+    public function getTplId()
     {
-        return $this->template_id;
+        return $this->tpl_id;
     }
 
-    public function setLangId($lang_id)
+    public function setTplName($tpl_name)
     {
-        $this->lang_id = $lang_id;
+        $this->tpl_name = $tpl_name;
     }
 
-    public function getLangId()
+    public function getTplName()
     {
-        return $this->lang_id;
+        return $this->tpl_name;
     }
 
-    public function setName($name)
+    public function setPlatformId($platform_id)
     {
-        $this->name = $name;
+        $this->platform_id = $platform_id;
     }
 
-    public function getName()
+    public function getPlatformId()
     {
-        return $this->name;
+        return $this->platform_id;
     }
 
     public function setDescription($description)
@@ -72,36 +76,6 @@ class TemplateVo extends \BaseVo
         return $this->description;
     }
 
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    public function setTplFile($tpl_file)
-    {
-        $this->tpl_file = $tpl_file;
-    }
-
-    public function getTplFile()
-    {
-        return $this->tpl_file;
-    }
-
-    public function setTplAltFile($tpl_alt_file)
-    {
-        $this->tpl_alt_file = $tpl_alt_file;
-    }
-
-    public function getTplAltFile()
-    {
-        return $this->tpl_alt_file;
-    }
-
     public function setSubject($subject)
     {
         $this->subject = $subject;
@@ -110,6 +84,66 @@ class TemplateVo extends \BaseVo
     public function getSubject()
     {
         return $this->subject;
+    }
+
+    public function setBcc($bcc)
+    {
+        $this->bcc = $bcc;
+    }
+
+    public function getBcc()
+    {
+        return $this->bcc;
+    }
+
+    public function setCc($cc)
+    {
+        $this->cc = $cc;
+    }
+
+    public function getCc()
+    {
+        return $this->cc;
+    }
+
+    public function setReplyTo($reply_to)
+    {
+        $this->reply_to = $reply_to;
+    }
+
+    public function getReplyTo()
+    {
+        return $this->reply_to;
+    }
+
+    public function setFrom($from)
+    {
+        $this->from = $from;
+    }
+
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    public function setTplFileName($tpl_file_name)
+    {
+        $this->tpl_file_name = $tpl_file_name;
+    }
+
+    public function getTplFileName()
+    {
+        return $this->tpl_file_name;
+    }
+
+    public function setTplAltFileName($tpl_alt_file_name)
+    {
+        $this->tpl_alt_file_name = $tpl_alt_file_name;
+    }
+
+    public function getTplAltFileName()
+    {
+        return $this->tpl_alt_file_name;
     }
 
     public function setMessageHtml($message_html)
@@ -130,6 +164,16 @@ class TemplateVo extends \BaseVo
     public function getMessageAlt()
     {
         return $this->message_alt;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     public function setCreateOn($create_on)
