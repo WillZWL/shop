@@ -21,13 +21,12 @@
                     <tr>
                         <td>
                             <?= $lang["template"] ?>
-                            <select id="tpl_name" name="tpl_name" onchange="showdescription();clearselect('filter');">
+                            <select id="tpl_id" name="tpl_id" onchange="showdescription();clearselect('filter');">
                                 <option></option>
                                 <?php foreach ($tpl_list as $tpl_obj): ?>
-                                <option value="<?=$tpl_obj->getTemplateName()?>" <?= ($tpl_obj->getTemplateName() === $_GET['tpl_name']) ? 'selected' : '' ?>><?=$tpl_obj->getTemplateName() ?></option>
+                                <option value="<?=$tpl_obj->getTplId()?>" <?= ($tpl_obj->getTplId() === $_GET['tpl_id']) ? 'selected' : '' ?>><?=$tpl_obj->getTplName() ?></option>
                                 <?php endforeach ?>
                             </select>
-                            <input type="submit" value="Submit">
                         </td>
                         <td id="description">
                             <!-- description will appear here when template selected -->
@@ -35,29 +34,28 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <?= $lang["filter"] ?>
+                            <?= $lang["platform"] ?>
                             <select id="platform" name="platform">
                                 <option></option>
-                                <?php foreach ($tpl_list as $tpl_obj): ?>
-                                <option value="<?=$tpl_obj->getPlatformId()?>" <?= ($tpl_obj->getPlatformId() === $_GET['platform']) ? 'selected' : '' ?>><?=$tpl_obj->getPlatformId()?></option>
+                                <?php foreach ($platform_list as $plform_obj): ?>
+                                <option value="<?=$plform_obj->getSellingPlatformId()?>" <?= ($plform_obj->getSellingPlatformId() === $_GET['platform']) ? 'selected' : '' ?>><?=$plform_obj->getSellingPlatformId()?></option>
                                 <?php endforeach ?>
                             </select>
-                            <input type="submit" value="Apply Filter">
+                            <input type="submit" value="Submit">
                         </td>
                     </tr>
                 </table>
             </div>
         </form>
 
-        <?php if ($_GET['tpl_name']): ?>
-            <form name="save" id="save" method="post" onsubmit="return check_missing_variable('save')">
+        <?php if ($_GET['tpl_id']): ?>
+            <form name="save" id="save" method="post" action="<?= site_url('marketing/emailManagement/saveTemplate')?>" onsubmit="return check_missing_variable('save')">
                 <div>
                     <br><i><b><?= $lang["note"] ?></b></i><br>
                     <fieldset style="border-width:2px;margin-left:6px;margin-right:6px;padding:0 8px 15px;">
                         <legend><font style="color:red;"><h1><?= "[$selected_filter] - {$_GET["tpl"]}" ?></h1></font>
                         </legend>
-                        <table width="100%" style="text-align=left;font-family: Lucida Sans Unicode,sans-serif;"
-                               cellpadding="10">
+                        <table width="100%" style="text-align=left;font-family: Lucida Sans Unicode,sans-serif;" cellpadding="10">
                             <!-- <col width="60%"><col width="40%"> -->
                             <tr>
                                 <td>
@@ -76,12 +74,8 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="hidden" name="filter_type" id="filter_type"
-                                           value="<?= $filter_type ?>">
-                                    <input type="hidden" name="selected_filter" id="selected_filter"
-                                           value="<?= $selected_filter ?>">
-                                    <input type="hidden" name="tpl_id" id="tpl_id" value="<?= $_GET["tpl"] ?>">
-                                    <input type="hidden" name="tpl_table" id="tpl_table" value="<?= $tpl_table ?>">
+                                    <input type="hidden" name="platform" id="platform" value="<?= $_GET['platform'] ?>">
+                                    <input type="hidden" name="tpl_id" id="tpl_id" value="<?= $_GET["tpl_id"] ?>">
                                     <input type="submit" value="Save Template Details" style="padding:5px 20px;">
                                 </td>
                             </tr>
@@ -99,9 +93,9 @@
     function showdescription() {
         // get selected template's description
 
-        var tplselect = document.getElementById('tpl_name');
-        var tpl_name = tplselect.options[tplselect.selectedIndex].value;
-        if (tpl_name != "") {
+        var tplselect = document.getElementById('tpl_id');
+        var tpl_id = tplselect.options[tplselect.selectedIndex].value;
+        if (tpl_id != "") {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {

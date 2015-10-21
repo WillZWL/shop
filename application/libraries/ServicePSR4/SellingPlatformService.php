@@ -5,7 +5,6 @@ use ESG\Panther\Dao\SellingPlatformDao;
 
 class SellingPlatformService extends BaseService
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -41,7 +40,4 @@ class SellingPlatformService extends BaseService
     {
         return $this->getDao()->getPlatformListWithAllowSellCountry($type);
     }
-
 }
-
-?>
