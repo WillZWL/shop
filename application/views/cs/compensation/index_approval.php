@@ -86,47 +86,44 @@
             <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
             <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
         </form>
-        <?php
-        $i = 0;
-        if (!empty($list))
-        {
-        foreach ($list as $obj)
-        {
+    <?php
+    $i = 0;
+    if (!empty($list)) :
+        foreach ($list as $obj) :
         ?>
 
         <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
-            onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){
-        ?>onClick="Pop('<?= site_url('cs/compensation/manager_approval_view/' . $obj->get_compensation_id() . '/' . $obj->get_so_no()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"<?
-        }?>>
+            onMouseOut="RemoveClassName(this, 'highlight')" <?php if (!($is_edit)):
+        ?>onClick="Pop('<?= site_url('cs/compensation/manager_approval_view/' . $obj->getCompensationId() . '/' . $obj->getSoNo()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"<?php
+        endif;?>>
 
 
             <td height="20"></td>
-            <td><?= $obj->get_so_no() ?></td>
-            <td><?= $obj->get_platform_id() ?></td>
-            <td><?= $obj->get_item_sku() ?></td>
-            <td><?= $obj->get_prod_name() ?></td>
-            <td><?= $obj->get_note() ?></td>
-            <td><?= $obj->get_request_on() ?></td>
+            <td><?= $obj->getSoNo() ?></td>
+            <td><?= $obj->getPlatformId() ?></td>
+            <td><?= $obj->getItemSku() ?></td>
+            <td><?= $obj->getProdName() ?></td>
+            <td><?= $obj->getNote() ?></td>
+            <td><?= $obj->getRequestOn() ?></td>
             <td>&nbsp;</td>
             <?php
             $i++;
-            }
-            }
-            ?>
+        endforeach;
+    endif;
+    ?>
             <?php
-            if (check_app_feature_access_right($app_id, "CS000405_back_to_list_btn"))
-            {
+            if (check_app_feature_access_right($app_id, "CS000405_back_to_list_btn")) :
             ?>
         <tr class="header">
             <td></td>
             <td colspan="9"><input type="button" onClick="Redirect('<?= base_url() ?>cs/compensation/');"
                                    value="<?= $lang["back_to_main"] ?>"></td>
         </tr>
-    <?php
-    }
-    ?>
+            <?php
+            endif;
+            ?>
     </table>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>

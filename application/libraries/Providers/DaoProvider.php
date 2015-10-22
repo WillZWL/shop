@@ -61,6 +61,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\CountryExtDao();
         };
 
+        $daoContainer['CompensationReason'] = function () {
+            return new D\CompensationReasonDao();
+        };
+
         $daoContainer['Rma'] = function () {
             return new D\RmaDao();
         };
@@ -111,6 +115,10 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['ProductComplementaryAcc'] = function () {
             return new D\ProductComplementaryAccDao();
+        };
+
+        $daoContainer['ProductType'] = function () {
+            return new D\ProductTypeDao();
         };
 
         $daoContainer['Faqadmin'] = function () {
@@ -369,6 +377,14 @@ class DaoProvider implements ServiceProviderInterface
             return new D\SoHoldStatusHistoryDao();
         };
 
+        $daoContainer['SoCompensation'] = function () {
+            return new D\SoCompensationDao();
+        };
+
+        $daoContainer['SoCompensationHistory'] = function () {
+            return new D\SoCompensationHistoryDao();
+        };
+
         $daoContainer['SubjectDomain'] = function () {
             return new D\SubjectDomainDao();
         };
@@ -379,6 +395,10 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['SubjectDomainDetailLabel'] = function () {
             return new D\SubjectDomainDetailLabelDao();
+        };
+
+        $daoContainer['Shiptype'] = function () {
+            return new D\ShiptypeDao();
         };
 
         $daoContainer['OrderNotes'] = function () {

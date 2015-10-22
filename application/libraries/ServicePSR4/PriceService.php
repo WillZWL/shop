@@ -1,12 +1,5 @@
 <?php
 namespace ESG\Panther\Service;
-use ESG\Panther\Dao\PriceDao;
-use ESG\Panther\Dao\ProductComplementaryAccDao;
-use ESG\Panther\Service\FreightCatService;
-use ESG\Panther\Service\ProductService;
-use ESG\Panther\Service\WeightCatService;
-use ESG\Panther\Service\ContextConfigService;
-use ESG\Panther\Service\SubjectDomainService;
 
 class PriceService extends BaseService
 {
@@ -15,18 +8,12 @@ class PriceService extends BaseService
     public function __construct($platformType = null)
     {
         parent::__construct();
-        $this->setDao(new PriceDao);
-        $this->setCaDao(new ProductComplementaryAccDao);
-        $this->freightCatService = new FreightCatService;
-        $this->productService = new ProductService;
-        $this->weightCatService = new WeightCatService;
-        $this->configService = new ContextConfigService;
-        $this->subjectDomainService = new SubjectDomainService;
-        
-        if ($platformType)
+
+        if ($platformType) {
             $this->platformType = $platformType;
-        elseif (defined(PLATFORM_TYPE))
+        } elseif (defined(PLATFORM_TYPE)) {
             $this->platformType = PLATFORM_TYPE;
+        }
     }
 
     public function getListingInfoList($sku_arr = [], $platform_id = "", $lang_id = 'en', $option = [])
@@ -85,7 +72,7 @@ class PriceService extends BaseService
 
     public function calcLogisticCost(&$dto)
     {
-        if ($lc = $this->freightCatService->getDao('FreightCatCharge')->calcLogisticCost($dto->getPlatformId(), $dto->getSku())) {
+        if ($lc = $this->getDao('FreightCatCharge')->calcLogisticCost($dto->getPlatformId(), $dto->getSku())) {
             $dto->setLogisticCost($lc['converted_amount']);
         } else {
             $dto->setLogisticCost(0);
@@ -292,7 +279,7 @@ class PriceService extends BaseService
                 $where["pca.mainprod_sku"] = $mainprod_sku;
                 $where["pca.status"] = 1;
 
-                if ($mapped_ca_list = $this->getCaDao()->getMappedAccListWithName($where)) {
+                if ($mapped_ca_list = $this->getDao('ProductComplementaryAcc')->getMappedAccListWithName($where)) {
                     foreach ($mapped_ca_list as $caobj) {
                         $cadto = $this->getDao('Price')->getPriceCostDto($caobj->getAccessorySku(), $dto->getPlatformId());
                         $total_cost += $cadto->getSupplierCost();
@@ -308,10 +295,10 @@ class PriceService extends BaseService
     {
         $this->initDto($dto);
 
-        if ($this->productService->getProductTypeDao()->getNumRows(["sku" => $dto->getSku(), "type_id" => "VIRTUAL"])) {
+        if ($this->getDao('ProductType')->getNumRows(["sku" => $dto->getSku(), "type_id" => "VIRTUAL"])) {
             $delivery_charge = 0;
         } else {
-            $delivery_charge = $this->weightCatService->getWccDao()->getCountryWeightChargeByPlatform($dto->getPlatformId(), $dto->getProdWeight(), $this->configService->valueOf("default_delivery_type"));
+            $delivery_charge = $this->getDao('WeightCatCharge')->getCountryWeightChargeByPlatform($dto->getPlatformId(), $dto->getProdWeight(), $this->getDao('Config')->valueOf("default_delivery_type"));
         }
         $dto->setDefaultDeliveryCharge($delivery_charge);
         $fdl = $dto->getFreeDeliveryLimit();
@@ -383,7 +370,7 @@ class PriceService extends BaseService
         $markup_percent = $dto->getSubCatMargin() + $dto->getPlatformCommission() + $dto->getPaymentChargePercent() + $dto->getForexFeePercent();
         $auto_declared = $tmp_cost / (1 - ($markup_percent / 100)) * ($dto->getDeclaredPcent() / 100);
         $country_id = substr($dto->getPlatformId(), -2);
-        if ($obj = $this->subjectDomainService->getDao("SubjectDomain")->get(["subject" => "MAX_DECLARE_VALUE.{$country_id}"])) {
+        if ($obj = $this->getDao("SubjectDomain")->get(["subject" => "MAX_DECLARE_VALUE.{$country_id}"])) {
             $max_value = $obj->getValue();
             $auto_declared = min($max_value, $auto_declared);
         }
@@ -487,7 +474,7 @@ class PriceService extends BaseService
             } else {
                 $declared = $value * $dto->getDeclaredPcent() / 100;
             }
-        } elseif ($obj = $this->subjectDomainService->getDao()->get(["subject" => "MAX_DECLARE_VALUE.{$dto->getPlatformCountryId()}"])) {
+        } elseif ($obj = $this->getDao("SubjectDomain")->get(["subject" => "MAX_DECLARE_VALUE.{$dto->getPlatformCountryId()}"])) {
             $dto->setDeclaredPcent(100);
             $max_value = $obj->getValue();
             $declared = min($max_value, $value);
@@ -792,16 +779,16 @@ class PriceService extends BaseService
                 default:    # all other countries
                     $declared_pcent = 10;
                     break;
-                    if ($fc_obj = $this->freightCatService->getDao()->get(["id" => $prod_obj->getFreightCatId()])) {
+                    if ($fc_obj = $this->getDao('FreightCatCharge')->get(["id" => $prod_obj->getFreightCatId()])) {
                         $declared_pcent = $fc_obj->getDeclaredPcent();
                         $this->declared_value_debug .= "1. declared pcent is $declared_pcent\r\n";
                     } else {
                         // default value
-                        $declared_pcent = $this->configService->valueOf("default_declared_pcent");
+                        $declared_pcent = $this->getDao('Config')->valueOf("default_declared_pcent");
                         $this->declared_value_debug .= "2. declared pcent is $declared_pcent\r\n";
                     }
 
-                    if ($obj = $this->subjectDomainService->getDao()->get(["subject" => "MAX_DECLARE_VALUE.{$country_id}"])) {
+                    if ($obj = $this->getDao("SubjectDomain")->get(["subject" => "MAX_DECLARE_VALUE.{$country_id}"])) {
                         $max_value = $obj->getValue();
                         $declared = min($max_value, $price);
                         $this->declared_value_debug .= "3. (max, price, chosen) is ($max_value, $price, $declared)\r\n";
@@ -837,16 +824,6 @@ class PriceService extends BaseService
         } else {
             $this->setDto($dto);
         }
-    }
-
-    public function getCaDao()
-    {
-        return $this->caDao;
-    }
-
-    public function setCaDao($value)
-    {
-        $this->caDao = $value;
     }
 
     public function getDto()

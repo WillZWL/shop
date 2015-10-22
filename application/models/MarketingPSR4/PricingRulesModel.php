@@ -15,6 +15,11 @@ class PricingRulesModel extends \CI_Model
     {
         return $this->pricingRulesService->getPricingRules($where, $option);
     }
+	
+	public function getExistingRule($where = [], $option = [])
+    {
+        return $this->pricingRulesService->getExistingRule($where);
+    }
 
     public function getPricingRule($where = [])
     {

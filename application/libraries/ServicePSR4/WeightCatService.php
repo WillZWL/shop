@@ -1,10 +1,6 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\WeightCategoryDao;
-use ESG\Panther\Dao\WeightCatChargeDao;
-use ESG\Panther\Service\ColourService;
-
 class WeightCatService extends BaseService
 {
 
@@ -13,18 +9,15 @@ class WeightCatService extends BaseService
     public function __construct()
     {
         parent::__construct();
-        $this->setDao(new WeightCategoryDao);
-        $this->setWeightCatChargeDao(new WeightCatChargeDao);
-        $this->colourService = new ColourService;
     }
 
     public function getWccWithRegList($where = [], $option = [])
     {
         $option["limit"] = -1;
-        $cat_w_reg_list = $this->getDao()->get_cat_w_region([], $option, "Freight_cat_w_region_dto");
-        $courier_reg_list = $this->colourService->getCrcDao()->getList(["courier_id" => $where["courier_id"]], ["orderby" => "region_id ASC", "limit" => -1]);
-        $wcc_list = $this->getWeightCatChargeDao()->getList($where, ["orderby" => "wcat_id ASC, region_id ASC", "limit" => -1]);
-        $wcc_vo = $this->getWeightCatChargeDao()->get();
+        $cat_w_reg_list = $this->getDao('WeightCategory')->get_cat_w_region([], $option, "Freight_cat_w_region_dto");
+        $courier_reg_list = $this->getDao('Colour')->getList(["courier_id" => $where["courier_id"]], ["orderby" => "region_id ASC", "limit" => -1]);
+        $wcc_list = $this->getDao('WeightCatCharge')->getList($where, ["orderby" => "wcat_id ASC, region_id ASC", "limit" => -1]);
+        $wcc_vo = $this->getDao('WeightCatCharge')->get();
 
         foreach ($wcc_list as $wcc) {
             $new_wcc[$wcc->getWcatId()][$wcc->getRegionId()] = $wcc;
@@ -50,19 +43,9 @@ class WeightCatService extends BaseService
         return $new_cat;
     }
 
-    public function getWeightCatChargeDao()
-    {
-        return $this->wcc_dao;
-    }
-
-    public function setWeightCatChargeDao($dao)
-    {
-        $this->wcc_dao = $dao;
-    }
-
     public function getFullWeightCatChargeList($where = [], $option = [])
     {
-        if ($objlist = $this->getWeightCatChargeDao()->getFullWeightCatChargeList($where, $option)) {
+        if ($objlist = $this->getDao('WeightCatCharge')->getFullWeightCatChargeList($where, $option)) {
             foreach ($objlist as $obj) {
                 $rs[$obj->getWcatId()][$obj->getDestCountry()] = $obj;
             }
@@ -73,7 +56,7 @@ class WeightCatService extends BaseService
 
     public function getDefaultDeliveryCharge($platform_id, $shiptype, $weight)
     {
-        $dao = $this->getDao();
+        $dao = $this->getDao('WeightCategory');
         return $dao->getDefaultDeliveryCharge($platform_id, $shiptype, $weight);
     }
 
@@ -85,17 +68,17 @@ class WeightCatService extends BaseService
 
     public function get_wc_from_fc($fc = "")
     {
-        return $this->getDao()->getFromFc($fc);
+        return $this->getDao('WeightCategory')->getFromFc($fc);
     }
 
     public function insertWcc($obj)
     {
-        return $this->getWeightCatChargeDao()->insert($obj);
+        return $this->getDao('WeightCatCharge')->insert($obj);
     }
 
     public function updateWcc($obj)
     {
-        return $this->getWeightCatChargeDao()->update($obj);
+        return $this->getDao('WeightCatCharge')->update($obj);
     }
 }
 

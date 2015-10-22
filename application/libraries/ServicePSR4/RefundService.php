@@ -84,12 +84,32 @@ class RefundService extends BaseService
                         $history_result = $this->getDao('RefundHistory')->insert($refund_history_acc);
                         error_log(__METHOD__ . __LINE__ . $this->getDao('RefundHistory')->db->display_error());
                         if ($history_result !== FALSE) {
+                            $update_status = false;
+                            if ($so_obj->getStatus() <> 3) {
+                                $update_status = true;
+                                $status = 3;
+                            }
+
+                            $update_refund_status = false;
+                            if ($so_obj->getRefundStatus() <> 4) {
+                                $update_refund_status = true;
+                                $refundStatus = 4;
+                            }
+
                             $so_obj->setStatus(3);
                             $so_obj->setRefundStatus(4);
                             $so_result = $this->getDao('So')->update($so_obj);
                             error_log(__METHOD__ . __LINE__ . $this->getDao('So')->db->display_error());
 
                             if ($so_result !== FALSE) {
+                                if ($update_status) {
+                                    $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                                }
+
+                                if ($update_refund_status) {
+                                    $this->soService->updateIofRefundStatusBySo($so_no, $refundStatus);
+                                }
+
                                 $this->getDao('Refund')->db->trans_complete();
                                 $this->checkAction($refund_id, 'A');
                                 return true;
@@ -140,8 +160,18 @@ class RefundService extends BaseService
                 if ($so_obj === FALSE) {
                     return $so_obj;
                 }
+
+                $update_refund_status = false;
+                if ($so_obj->getRefundStatus() <> 4) {
+                    $update_refund_status = true;
+                    $refundStatus = 4;
+                }
+
                 $so_obj->setRefundStatus('4');
                 $ret = $this->getDao('So')->update($so_obj);
+                if ($update_refund_status) {
+                    $this->soService->updateIofRefundStatusBySo($refund_obj->getSoNo(), $refundStatus);
+                }
 
                 $m1 = $this->getDao('So')->db->display_error();
             }
@@ -243,6 +273,12 @@ class RefundService extends BaseService
             }
 
             $status = ($so_obj->getStatus() > 5) ? 1 : 2;
+            $update_refund_status = false;
+            if ($so_obj->getRefundStatus() <> $status) {
+                $update_refund_status = true;
+                $refundStatus = $status;
+            }
+
             $so_obj->setRefundStatus($status);
 
             $refund_obj->setSoNo($so_obj->getSoNo());
@@ -281,6 +317,10 @@ class RefundService extends BaseService
 
             $r = $this->getDao('So')->update($so_obj);
             if ($r !== FALSE) {
+                if ($update_refund_status) {
+                    $this->soService->updateIofRefundStatusBySo($so_obj->getSoNo(), $refundStatus);
+                }
+
                 $r = $this->getDao('Refund')->insert($refund_obj);
                 if ($r !== FALSE) {
                     $refund_id = $r->getId();
@@ -337,6 +377,12 @@ class RefundService extends BaseService
             }
 
             $status = $so_obj->getStatus() > 5 ? 1 : 2;
+            $update_refund_status = false;
+            if ($so_obj->getRefundStatus() <> $status) {
+                $update_refund_status = true;
+                $refundStatus = $status;
+            }
+
             $so_obj->setRefundStatus($status);
 
             $refund_obj->setSoNo($so_obj->getSoNo());
@@ -374,6 +420,10 @@ class RefundService extends BaseService
             $this->getDao('Refund')->db->trans_start();
             $r = $this->getDao('So')->update($so_obj);
             if ($r !== FALSE) {
+                if ($update_refund_status) {
+                    $this->soService->updateIofRefundStatusBySo($so_obj->getSoNo(), $refundStatus);
+                }
+
                 $r = $this->getDao('Refund')->insert($refund_obj);
                 if ($r !== FALSE) {
                     $refund_id = $r->getId();

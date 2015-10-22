@@ -76,7 +76,32 @@ class PricingRulesDao extends BaseDao
         return FALSE;
     }
 	
-	public function getExistingRule ()
+	public function getPricingRulesByPlatform($where = [], $classname = 'PricingRulesDto')
+    {
+		$this->db->from('pricing_rules AS pr');		
+        $this->db->join('platform_biz_var AS pbv', 'pbv.platform_country_id = pr.country_id', 'INNER');
+	
+		 
+		$this->db->select('pr.id, pr.country_id, pr.range_min, pr.range_max, pr.mark_up_value, pr.mark_up_type');
+								
+
+		
+		$this->db->where($where);
+		
+		if ($query = $this->db->get()) {
+			$classname = ($classname) ? : $this->getVoClassname();
+			$rs = [];
+			foreach ($query->result($classname) as $obj) {
+				$rs[] = $obj;
+			}
+
+			return $rs;
+		}
+		
+        return FALSE;
+    }
+	
+	public function getExistingRule ($where)
 	{
 		/*select count(*) as total
 			from pricing_rules
@@ -87,9 +112,12 @@ class PricingRulesDao extends BaseDao
 				or (1 and wednesday = 1)
 				or (1 and thursday= 1)
 				or (1 and saturday = 1))*/
+				
 		$this->db->from('pricing_rules');
 		$this->db->select('COUNT(*) AS total');
+		$this->db->where($where);
 		if ($query = $this->db->get()) {
+			//print $this->db->last_query();
 			return $query->row()->total;
 		}
 	}

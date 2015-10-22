@@ -421,13 +421,20 @@ class On_hold_admin extends MY_Controller
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
+                $update_status = false;
+                if ($so_obj->getStatus() <> 0) {
+                    $update_status = true;
+                    $status = 0;
+                }
+
                 $so_obj->setStatus(0);
                 if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                     $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                 }
 
-                $status = 0;
-                $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                if ($update_status) {
+                    $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                }
             }
         }
         if (isset($_SESSION["LISTPAGE"])) {
@@ -447,14 +454,42 @@ class On_hold_admin extends MY_Controller
                 if (empty($so_obj)) {
                     $_SESSION["NOTICE"] = "so_not_found";
                 } else {
+                    $update_status = false;
+                    if ($so_obj->getStatus() <> 0) {
+                        $update_status = true;
+                        $status = 0;
+                    }
+
+                    $update_hold_status = false;
+                    if ($so_obj->getHoldStatus() <> 0) {
+                        $update_hold_status = true;
+                        $holdStatus = 0;
+                    }
+
+                    $update_refund_status = false;
+                    if ($so_obj->getRefundStatus() <> 0) {
+                        $update_refund_status = true;
+                        $refundStatus = 0;
+                    }
+
                     $so_obj->setStatus(0);
                     $so_obj->setHoldStatus(0);
                     $so_obj->setRefundStatus(0);
                     if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                     } else {
-                        $status = 0;
-                        $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                        if ($update_status) {
+                            $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                        }
+
+                        if ($update_hold_status) {
+                            $this->sc['So']->updateIofHoldStatusBySo($so_no, $holdStatus);
+                        }
+
+                        if ($update_refund_status) {
+                            $this->sc['So']->updateIofRefundStatusBySo($so_no, $refundStatus);
+                        }
+
                         $this->_create_release_order_record($so_no, $reason = 'cancel order');
                     }
                 }
@@ -498,6 +533,13 @@ class On_hold_admin extends MY_Controller
                         $socc_obj->setSoNo($so_no);
                         $socc_obj->setFdStatus(2);
                         $this->sc['So']->getDao('SoCreditChk')->$action($socc_obj);
+
+                        $update_status = false;
+                        if ($so_obj->getStatus() <> 0) {
+                            $update_status = true;
+                            $status = 0;
+                        }
+
                         $so_obj->setStatus(0);
 
                         if (!is_null($so_obj->getCcReminderScheduleDate())) {
@@ -508,8 +550,9 @@ class On_hold_admin extends MY_Controller
                         if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                             $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                         } else {
-                            $status = 0;
-                            $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                            if ($update_status) {
+                                $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                            }
                             $this->_create_release_order_record($so_no, $reason);
                         }
                         $this->sc['So']->getDao('SoCreditChk')->db->trans_complete();
@@ -553,12 +596,20 @@ class On_hold_admin extends MY_Controller
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
-                $so_obj->setHoldStatus(0);
-                $status = "";
+                $update_status = false;
                 if ($so_obj->getStatus() < 3) {
                     $so_obj->setStatus(3);
+                    $update_status = true;
                     $status = 3;
                 }
+
+                $update_hold_status = false;
+                if ($so_obj->getHoldStatus() <> 0) {
+                    $update_hold_status = true;
+                    $holdStatus = 0;
+                }
+
+                $so_obj->setHoldStatus(0);
 
                 if (!is_null($so_obj->getCcReminderScheduleDate())) {
                     $so_obj->setCcReminderScheduleDate(NULL);
@@ -568,8 +619,12 @@ class On_hold_admin extends MY_Controller
                 if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                     $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                 } else {
-                    if ($status == 3) {
+                    if ($update_status) {
                         $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                    }
+
+                    if ($update_hold_status) {
+                        $this->sc['So']->updateIofHoldStatusBySo($so_no, $holdStatus);
                     }
 
                     $this->_create_release_order_record($so_no, 'approve for fulfillment');
@@ -633,9 +688,19 @@ class On_hold_admin extends MY_Controller
             } else {
                 $packed_item = $this->sc['So']->checkIfPacked($so_no);
 
+                $update_hold_status = false;
+                if ($so_obj->getHoldStatus() <> 1) {
+                    $update_hold_status = true;
+                    $holdStatus = 1;
+                }
+
                 $so_obj->setHoldStatus(1);
 
                 if ($this->sc['So']->getDao('So')->update($so_obj)) {
+                    if ($update_hold_status) {
+                        $this->sc['So']->updateIofHoldStatusBySo($so_no, $holdStatus);
+                    }
+
                     if (($sohr_vo = $this->sc['So']->getDao('SoHoldReason')->get()) !== FALSE) {
                         $sohr_vo->setSoNo($so_no);
                         if (count((array)$packed_item)) {

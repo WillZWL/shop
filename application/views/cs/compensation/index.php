@@ -29,7 +29,7 @@
         </tr>
         <?php
         if (check_app_feature_access_right($app_id, "CS000400_man_approve_btn")) {
-            if (!$this->authorization_service->user_app_rights('CS000405')) {
+            if (!$this->sc['Authorization']->userAppRights('CS000405')) {
                 $disable_approve = "disabled";
             }
             ?>

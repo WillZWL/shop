@@ -6,7 +6,7 @@ class ProductDao extends BaseDao
     private $tableName = 'product';
     private $voClassName = 'ProductVo';
 
-    public function getVoClassname()
+    public function getVoClassName()
     {
         return $this->voClassName;
     }
@@ -74,7 +74,7 @@ class ProductDao extends BaseDao
         return $this->db->query("SELECT next_value('prod_grp_cd') as prod_grp_cd")->row('prod_grp_cd');
     }
 
-    public function getHomeProduct($where = [], $option = [], $class_name = 'SimpleProductDto')
+    public function getHomeProduct($where = [], $option = [], $className = 'SimpleProductDto')
     {
         $where['pd.status'] = 2;
         $where['pr.listing_status'] = 'L';
@@ -88,23 +88,172 @@ class ProductDao extends BaseDao
         $this->db->group_by('ll.selection');
         $this->db->order_by("ll.mode = 'M' DESC, ll.rank");
 
-        $obj = $this->commonGetList($class_name, [], $option, 'pd.sku');
-		
+        $obj = $this->commonGetList($className, [], $option, 'pd.sku');
+
 		//print $this->db->last_query();
 		return $obj;
     }
 
-    public function getProductOverview($where = [], $option = [], $class_name = "ProductOverviewDto")
+    public function getBundleComponentsOverview($where = [], $option = [], $className = "ProductCostDto")
     {
         $option = ['limit' => 1];
         $this->db->from('v_prod_items AS vpi');
         $this->db->join('product AS p', 'vpi.prod_sku = p.sku', 'INNER');
         $this->db->join('v_prod_overview_wo_cost AS vpo', 'vpi.item_sku = vpo.sku', 'INNER');
 
-        return $this->commonGetList($class_name, $where, $option, 'vpo.*, p.expected_delivery_date, p.warranty_in_month');
+        return $this->commonGetList($className, $where, $option, 'vpo.*, p.expected_delivery_date, p.warranty_in_month');
     }
 
-    public function getListedProductList($platform_id = 'WEBGB', $classname = 'WebsiteProdInfoDto')
+    public function getProductOverview($where = [], $option = [], $className = "ProductOverviewDto")
+    {
+        $this->db->from('v_prod_overview_wo_shiptype');
+        $select_str = "v_prod_overview_wo_shiptype.*";
+
+        if ($option["master_sku"]) {
+            $this->db->join('sku_mapping AS map', "v_prod_overview_wo_shiptype.sku = map.sku AND map.ext_sys = 'wms' AND map.status = 1", "LEFT");
+            $select_str .= ", map.ext_sku master_sku";
+        }
+
+        if ($option["delivery_time"]) {
+            $this->db->join('price AS pr', "v_prod_overview_wo_shiptype.sku = pr.sku AND pr.platform_id = v_prod_overview_wo_shiptype.platform_id", "LEFT");
+            $this->db->join('delivery_time AS dt', "v_prod_overview_wo_shiptype.platform_country_id = dt.country_id AND pr.delivery_scenarioid = dt.scenarioid", "LEFT");
+            $select_str .= ", pr.delivery_scenarioid, CONCAT_WS(' - ', dt.ship_min_day, dt.ship_max_day) AS ship_day, CONCAT_WS(' - ', dt.del_min_day, dt.del_max_day) AS delivery_day ";
+        } elseif (isset($where["pr.listing_status"])) {
+            $this->db->join('price AS pr', "v_prod_overview_wo_shiptype.sku = pr.sku AND pr.platform_id = v_prod_overview_wo_shiptype.platform_id", "LEFT");
+        }
+
+        if ($option["desc_lang"]) {
+            $this->db->join('product_content AS pc', "v_prod_overview_wo_shiptype.sku = pc.prod_sku AND pc.lang_id = '{$option["desc_lang"]}'", 'LEFT');
+            $select_str .= ", pc.prod_name AS content_prod_name, pc.detail_desc";
+        }
+
+        if ($option["inventory"]) {
+            $this->db->join('product p', 'p.sku = v_prod_overview_wo_shiptype.sku', 'INNER');
+            $this->db->join('v_prod_inventory AS vpi', "v_prod_overview_wo_shiptype.sku = vpi.prod_sku", 'LEFT');
+            $select_str .= ", vpi.inventory, p.surplus_quantity";
+        }
+
+        if ($option["product_feed"]) {
+            $this->db->join('(SELECT sku, GROUP_CONCAT(CONCAT_WS("::", feeder, IF(ISNULL(value_1), "", value_1), IF(ISNULL(value_2), "", value_2), IF(ISNULL(value_3), "", value_3), CAST(status AS CHAR)) SEPARATOR "||") AS feeds
+                            FROM product_feed
+                            GROUP BY sku) AS pf', "v_prod_overview_wo_shiptype.sku = pf.sku", 'LEFT');
+            $select_str .= ", pf.feeds";
+        }
+
+        if ($option["refresh_margin"]) {
+            $this->db->join('price_margin pm', 'pm.sku = v_prod_overview_wo_shiptype.sku  AND v_prod_overview_wo_shiptype.platform_id = pm.platform_id', 'INNER');
+            $select_str .= ", pm.profit, pm.margin";
+        }
+
+        if ($option["frontend"]) {
+            $this->db->join('product p', 'p.sku = v_prod_overview_wo_shiptype.sku', 'INNER');
+            $this->db->join('product_content pc', "pc.prod_sku = p.sku AND pc.lang_id='" . ($option["language"] ? $option["language"] : "en") . "'", 'LEFT');
+            $select_str .= ", p.image,p.display_quantity,p.youtube_id, pc.prod_name AS content_prod_name, pc.extra_info";
+        }
+
+        if ($option["price_extend"]) {
+            $this->db->join('price_extend prext', 'prext.sku = v_prod_overview_wo_shiptype.sku AND prext.platform_id = v_prod_overview_wo_shiptype.platform_id', 'LEFT');
+            $select_str .= ", prext.ext_qty, prext.fulfillment_centre_id, prext.amazon_reprice_name";
+        }
+
+        if (isset($where["platform_id"])) {
+            $where["v_prod_overview_wo_shiptype.platform_id"] = $where["platform_id"];
+            unset($where["platform_id"]);
+        }
+
+        if ($option["affiliate_feed"]) {
+            $criteria = "asp.sku = map.sku and asp.affiliate_id = '{$option['affiliate_feed']}'";
+            if ($option["feed_status"] > 0) $criteria .= " and asp.`status` = {$option['feed_status']}";
+
+            $this->db->join("affiliate_sku_platform as asp", $criteria, "inner");
+        }
+
+        if ($option["show_name"]) {
+            $this->db->join('category AS c', 'v_prod_overview_wo_shiptype.cat_id = c.id', 'LEFT');
+            $this->db->join('category AS sc', 'v_prod_overview_wo_shiptype.sub_cat_id = sc.id', 'LEFT');
+            $this->db->join('category AS ssc', 'v_prod_overview_wo_shiptype.sub_sub_cat_id = ssc.id', 'LEFT');
+            $this->db->join('brand AS b', 'v_prod_overview_wo_shiptype.brand_id = b.id', 'LEFT');
+            $select_str .= ", c.name AS category, sc.name AS sub_category, ssc.name AS sub_sub_category, b.brand_name";
+        } else {
+            if (!isset($option["skip_prod_status_checking"])) {
+                $this->db->where('v_prod_overview_wo_shiptype.prod_status !=', 0);
+            } else {
+                unset($option["skip_prod_status_checking"]);
+            }
+        }
+
+        if ($option["active_supplier"]) {
+            $option["supplier_prod"] = 1;
+        }
+
+        if ($option["supplier_prod"]) {
+            $this->db->join('supplier_prod sp', 'sp.supplier_id = v_prod_overview_wo_shiptype.supplier_id AND sp.prod_sku = v_prod_overview_wo_shiptype.sku', 'LEFT');
+            $select_str .= ", sp.supplier_status";
+        }
+
+        if ($option["active_supplier"]) {
+            $this->db->join('supplier s', 's.id = sp.supplier_id', 'INNER');
+            $this->db->where(array("s.status" => 1, "sp.order_default" => 1));
+        }
+
+        if ($option["wms_inventory"]) {
+            $join_sql = "(
+                                SELECT inv.master_sku, group_concat(concat(inv.warehouse_id, ',', cast(inv.inventory as char), ',', cast(inv.git as char)) separator '|') wms_inv FROM
+                                (
+                                    SELECT warehouse_id, master_sku, SUM(inventory) as inventory, SUM(git) as git
+                                    FROM wms_inventory
+                                    GROUP BY warehouse_id, master_sku
+                                ) inv
+                                GROUP BY inv.master_sku
+                            ) wms ";
+            $this->db->join($join_sql, 'map.ext_sku = wms.master_sku', 'LEFT');
+            $select_str .= ", wms.wms_inv";
+        }
+
+        $this->db->select($select_str);
+
+        $this->db->where($where);
+
+        if (empty($option["num_rows"])) {
+
+            if (isset($option["orderby"])) {
+                $this->db->order_by($option["orderby"]);
+            }
+
+            if (empty($option["limit"])) {
+                $option["limit"] = $this->rows_limit;
+            } elseif ($option["limit"] == -1) {
+                $option["limit"] = "";
+            }
+
+            if (!isset($option["offset"])) {
+                $option["offset"] = 0;
+            }
+
+            if ($this->rows_limit != "") {
+                $this->db->limit($option["limit"], $option["offset"]);
+            }
+
+            $rs = array();
+
+            if ($query = $this->db->get()) {
+                foreach ($query->result($className) as $obj) {
+                    $rs[] = $obj;
+                }
+                return $rs ? ($option["limit"] == 1 ? $rs[0] : (object)$rs) : $rs;
+            }
+
+        } else {
+            $this->db->select('COUNT(*) AS total');
+            if ($query = $this->db->get()) {
+                return $query->row()->total;
+            }
+        }
+
+        return FALSE;
+    }
+
+    public function getListedProductList($platform_id = 'WEBGB', $className = 'WebsiteProdInfoDto')
     {
         $sql = "SELECT * FROM v_prod_overview_wo_shiptype vpo
                 WHERE vpo.platform_id = ?
@@ -115,7 +264,7 @@ class ProductDao extends BaseDao
         $result_arr = [];
 
         if ($result) {
-            foreach ($result->result($classname) as $obj) {
+            foreach ($result->result($className) as $obj) {
                 $result_arr[] = $obj;
             }
         }
@@ -124,7 +273,7 @@ class ProductDao extends BaseDao
     }
 
 
-    public function searchByProductName($where, $option, $classname = "ProductSearchListDto")
+    public function searchByProductName($where, $option, $className = "ProductSearchListDto")
     {
         $platform_id = $where['platform_id'];
         $limit = $where['limit'];
@@ -259,7 +408,7 @@ class ProductDao extends BaseDao
                     echo $this->db->last_query();
                     echo "<br>";
                 }
-                foreach ($query->result($classname) as $obj) {
+                foreach ($query->result($className) as $obj) {
                     $rs[] = $obj;
                 }
                 return $rs;
@@ -280,7 +429,7 @@ class ProductDao extends BaseDao
         return FALSE;
     }
 
-    public function getProductWPriceInfo($platform_id = 'WEBGB', $sku = "", $classname = 'WebsiteProdInfoDto')
+    public function getProductWPriceInfo($platform_id = 'WEBGB', $sku = "", $className = 'WebsiteProdInfoDto')
     {
 
         $sql = "SELECT * FROM v_prod_overview_wo_shiptype vpo WHERE vpo.platform_id = ? AND sku = ?";
@@ -289,7 +438,7 @@ class ProductDao extends BaseDao
         $result_arr = [];
 
         if ($result->num_rows() > 0) {
-            foreach ($result->result($classname) as $obj) {
+            foreach ($result->result($className) as $obj) {
                 $result_arr[$obj->get_sku()] = $obj;
             }
         }
@@ -298,7 +447,7 @@ class ProductDao extends BaseDao
     }
 
 
-    public function getProductWMarginReqUpdate($where = [], $classname = 'WebsiteProdInfoDto')
+    public function getProductWMarginReqUpdate($where = [], $className = 'WebsiteProdInfoDto')
     {
         $table_alias = [
                 'v_prod_overview_w_update_time' => 'vpo',
@@ -361,14 +510,14 @@ class ProductDao extends BaseDao
 
         $result_arr = [];
 
-        foreach ($result->result($classname) as $obj) {
+        foreach ($result->result($className) as $obj) {
             $result_arr[] = $obj;
         }
 
         return $result_arr;
     }
 
-    public function getWebsiteCatPageProductList($where = [], $option = [], $classname = 'CatProductListDto')
+    public function getWebsiteCatPageProductList($where = [], $option = [], $className = 'CatProductListDto')
     {
         $this->db->from('product AS p');
         $this->db->join('price AS pr', 'p.sku = pr.sku AND pr.listing_status = "L" AND p.status = "2"', 'INNER');
@@ -400,7 +549,7 @@ class ProductDao extends BaseDao
             $this->db->select("*, if(p.website_status = 'O','1','0') is_oos, if(p.website_status = 'A','1','0') is_arr");
 
             if ($query = $this->db->get()) {
-                foreach ($query->result($this->getVoClassname()) as $obj) {
+                foreach ($query->result($this->getVoClassName()) as $obj) {
                     $rs[] = $obj;
                 }
                 return (object)$rs;
@@ -415,7 +564,7 @@ class ProductDao extends BaseDao
         return FALSE;
     }
 
-    public function getRaProductOverview($sku = "", $platform_id = "", $classname = "ProductCostDto")
+    public function getRaProductOverview($sku = "", $platform_id = "", $className = "ProductCostDto")
     {
         $sql = "
                 SELECT vpo.*
@@ -440,7 +589,7 @@ class ProductDao extends BaseDao
 
         $rs = [];
         if ($query = $this->db->query($sql, [$sku, $sku, $platform_id])) {
-            foreach ($query->result($classname) as $obj) {
+            foreach ($query->result($className) as $obj) {
                 $rs[] = $obj;
             }
             return (object)$rs;
@@ -450,7 +599,7 @@ class ProductDao extends BaseDao
     }
 
 
-    public function getComponentsWithName($where = [], $option = [], $classname = "ProductCostDto")
+    public function getComponentsWithName($where = [], $option = [], $className = "ProductCostDto")
     {
 
         $this->db->from('bundle AS b');
@@ -474,7 +623,7 @@ class ProductDao extends BaseDao
 
         if ($query = $this->db->get()) {
             $rs = [];
-            foreach ($query->result($classname) as $obj) {
+            foreach ($query->result($className) as $obj) {
                 $rs[] = $obj;
             }
             if ($option["limit"] == 1) {

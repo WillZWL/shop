@@ -150,7 +150,7 @@ class WsgbPriceService extends PlatformPriceService
 
     public function getProductOverviewTr($where = [], $option = [], $classname = "ProductCostDto", $lang = [])
     {
-        if ($objlist = $this->productService->getDao()->getProductOverview($where, $option, $classname)) {
+        if ($objlist = $this->productService->getDao('Product')->getProductOverview($where, $option, $classname)) {
             include_once BASEPATH . "helpers/url_helper.php";
             $data["tr"] = $data["js"] = "";
 
@@ -344,7 +344,7 @@ class WsgbPriceService extends PlatformPriceService
             $this->priceMarginService->refreshLatestMargin(["v_prod_overview_w_update_time.platform_id" => "WSGB"]);
         }
 
-        if ($objlist = $this->productService->getDao()->getComponentsWithName($where, $option, $classname)) {
+        if ($objlist = $this->productService->getDao('Product')->getComponentsWithName($where, $option, $classname)) {
             $data = "";
             $main_qty = $i = 0;
             $outstock = [];
@@ -410,12 +410,12 @@ class WsgbPriceService extends PlatformPriceService
 
     public function getProductOverview($where = [], $option = [], $classname = "ProductCostDto")
     {
-        return $this->productService->getDao()->getProductOverview($where, $option, $classname);
+        return $this->productService->getDao('Product')->getProductOverview($where, $option, $classname);
     }
 
     public function getProductListWithProfit($where = [], $option = [], $classname = "ProductCostDto")
     {
-        if ($objlist = $this->productService->getDao()->getProductOverview($where, $option, $classname)) {
+        if ($objlist = $this->productService->getDao('Product')->getProductOverview($where, $option, $classname)) {
             foreach ($objlist as $obj) {
                 $this->setDto($obj);
                 $this->calcProfit();
@@ -427,7 +427,7 @@ class WsgbPriceService extends PlatformPriceService
 
     public function getProductShiptype($where = [], $option = [], $classname = "ProductCostDto")
     {
-        if ($objlist = $this->shiptypeService->getDao()->getProductShiptype($where, $option, $classname)) {
+        if ($objlist = $this->shiptypeService->getDao('Shiptype')->getProductShiptype($where, $option, $classname)) {
             foreach ($objlist as $obj) {
                 $this->setDto($obj);
                 $this->calcProfit();
@@ -440,7 +440,7 @@ class WsgbPriceService extends PlatformPriceService
     public function getProdStProfit($where = [], $option = [], $classname = "ProductCostDto")
     {
         $where["platform_id"] = "WSGB";
-        if ($objlist = $this->shiptypeService->getDao()->getProductShiptype($where, $option, $classname)) {
+        if ($objlist = $this->shiptypeService->getDao('Shiptype')->getProductShiptype($where, $option, $classname)) {
             $data["low_profit"] = $data["max_cost"] = [];
             foreach ($objlist as $obj) {
                 $this->setDto($obj);
@@ -476,7 +476,7 @@ class WsgbPriceService extends PlatformPriceService
             $dto = $this->getDto();
         }
 
-        $fc = $this->shiptypeService->getDao()->getFreightRegProdShiptype($dto->getShiptype(), $region_id, $dto->getSku());
+        $fc = $this->shiptypeService->getDao('Shiptype')->getFreightRegProdShiptype($dto->getShiptype(), $region_id, $dto->getSku());
         $dto->setFreightCost(round($fc, 2));
     }
 
@@ -499,7 +499,7 @@ class WsgbPriceService extends PlatformPriceService
 
     public function getRaProdTr($prod_sku = "", $platform_id = "", $classname = "ProductCostDto", $lang = [])
     {
-        if ($objlist = $this->productService->getDao()->getRaProductOverview($prod_sku, $platform_id, $classname)) {
+        if ($objlist = $this->productService->getDao('Product')->getRaProductOverview($prod_sku, $platform_id, $classname)) {
             $data = [];
             $i = 1;
             foreach ($objlist as $obj) {
@@ -568,7 +568,7 @@ class WsgbPriceService extends PlatformPriceService
         $where["platform_id"] = "WSGB";
         $where["prod_sku"] = $sku;
         $total = 0;
-        if ($objlist = $this->priceService->getDao()->getItemsWithPrice($where)) {
+        if ($objlist = $this->priceService->getDao('Price')->getItemsWithPrice($where)) {
             foreach ($objlist as $obj) {
                 if (($cur_price = $this->getItemPrice($obj)) !== FALSE) {
                     $total += $cur_price;

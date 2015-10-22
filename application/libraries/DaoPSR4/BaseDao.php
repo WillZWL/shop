@@ -81,41 +81,48 @@ abstract class BaseDao
             $this->db->where($where);
         }
 
-        if (isset($option["orderby"])) {
-            $this->db->order_by($option["orderby"]);
-        }
-        if (isset($option["group_by"])) {
-            $this->db->group_by($option["group_by"]);
-        }
-        if (empty($option["limit"])) {
-            $option["limit"] = $this->rows_limit;
-        } elseif ($option["limit"] == -1) {
-            $option["limit"] = "";
-        }
+        if (empty($option["num_rows"])) {
+            if (isset($option["orderby"])) {
+                $this->db->order_by($option["orderby"]);
+            }
+            if (isset($option["group_by"])) {
+                $this->db->group_by($option["group_by"]);
+            }
+            if (empty($option["limit"])) {
+                $option["limit"] = $this->rows_limit;
+            } elseif ($option["limit"] == -1) {
+                $option["limit"] = "";
+            }
 
-        if (!isset($option["offset"])) {
-            $option["offset"] = 0;
-        }
+            if (!isset($option["offset"])) {
+                $option["offset"] = 0;
+            }
 
-        if ($this->rows_limit != "") {
-            $this->db->limit($option["limit"], $option["offset"]);
-        }
+            if ($this->rows_limit != "") {
+                $this->db->limit($option["limit"], $option["offset"]);
+            }
 
-        if ($select != '') {
-            $this->db->select($select, false);
-        }
+            if ($select != '') {
+                $this->db->select($select, false);
+            }
 
-        $rs = [];
-        if ($query = $this->db->get()) {
             $rs = [];
-            foreach ($query->result($class_name) as $obj) {
-                $rs[] = $obj;
-            }
-            if ($option["limit"] == 1) {
-                return $rs[0];
-            }
+            if ($query = $this->db->get()) {
+                $rs = [];
+                foreach ($query->result($class_name) as $obj) {
+                    $rs[] = $obj;
+                }
+                if ($option["limit"] == 1) {
+                    return $rs[0];
+                }
 
-            return $rs;
+                return $rs;
+            }
+        } else {
+            $this->db->select('COUNT(*) AS total');
+            if ($query = $this->db->get()) {
+                return $query->row()->total;
+            }
         }
 
         return false;
