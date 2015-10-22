@@ -76,12 +76,12 @@
 					<tr>
 						<td colspan='2' rowspan='4' valign='top'>&nbsp;</td>
 						<td colspan='2' valign='top' bgcolor='#CCCCCC'><b>".$lang["cost_of_item"]."</b></td>
-						<td valign='top'><b>".platform_curr_format($platform_id, $sum_total)."</b></td>
+						<td valign='top'><b>".platform_curr_format($sum_total)."</b></td>
 					</tr>
 
 					<tr>
 						<td colspan='2' valign='top' bgcolor='#CCCCCC'><b>".$lang["standard_insured_delivery"]."</b></td>
-						<td valign='top'><b>".platform_curr_format($platform_id, $sid)."</b></td>
+						<td valign='top'><b>".platform_curr_format($sid)."</b></td>
 					</tr>
 
 					<tr>
@@ -91,7 +91,7 @@
 
 					<tr>
 						<td colspan='2' valign='top' bgcolor='#CCCCCC'><b>".$lang["grand_total"]."</b></td>
-						<td valign='top'><b>".platform_curr_format($platform_id, $total)."</b></td>
+						<td valign='top'><b>".platform_curr_format($total)."</b></td>
 					</tr>
 			</table>
 		</td>

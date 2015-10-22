@@ -149,7 +149,7 @@ class Myaccount extends PUB_Controller
                 $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]['status_desc'] = $status["desc"];
                 $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]["product_name"] .= $unpaid_obj->getProdName() . "</br>";
                 $total_amount += $unpaid_obj->getAmount();
-                $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]["total_amount"] = platform_curr_format($unpaid_obj->getPlatformId(), $total_amount);
+                $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]["total_amount"] = platform_curr_format($total_amount);
                 $data['unpaid_orderlist'][$unpaid_obj->getSoNo()]["net_diff_status"] = $unpaid_obj->getNetDiffStatus();
                 if ($unpaid_obj->getPaymentGatewayId() == 'w_bank_transfer') {
                     $data["show_bank_transfer_contact"] = TRUE;
@@ -194,7 +194,7 @@ class Myaccount extends PUB_Controller
                     $total_amount += $obj->getAmount();
                     $is_shipped = ($obj->getStatus() == 6 && $obj->getRefundStatus() == 0 && $obj->getHoldStatus() == 0) ? TRUE : FALSE;
 
-                    $data['orderlist'][$obj->getSoNo()]["total_amount"] = platform_curr_format($obj->getPlatformId(), $total_amount);
+                    $data['orderlist'][$obj->getSoNo()]["total_amount"] = platform_curr_format($total_amount);
                     if ($obj->getPaymentGatewayId() == 'w_bank_transfer') {
                         $data["show_bank_transfer_contact"] = TRUE;
                     }

@@ -4,7 +4,7 @@ namespace ESG\Panther\Service;
 //use ESG\Panther\Service\SoFactoryService
 use ESG\Panther\Dao\CountryDao;
 
-abstract class PaymentGatewayRedirectService extends BaseService 
+abstract class PaymentGatewayRedirectService extends BaseService
 implements PaymentGatewayRedirectServiceInterface
 {
     const PAYMENT_WITH_INVALID_RESPONSE = 999;
@@ -214,7 +214,7 @@ implements PaymentGatewayRedirectServiceInterface
 /*
         if ($isFraud = $this->soFactoryService->isFraudOrder($this->so)) {
             $this->soFactoryService->processFraudOrder($this->so);
-        } else 
+        } else
 */
 //temporary set to no fraud order
         $isFraud = false;
@@ -435,7 +435,7 @@ implements PaymentGatewayRedirectServiceInterface
         $replace['currency_sign'] = $siteObj->getSign();
         $currencySign = $replace['currency_sign'];
         $replace["order_create_date"] = date("d/m/Y", strtotime($soObj->getOrderCreateDate()));
-        $replace["amount"] = platform_curr_format($platformId, $soObj->getAmount(), 0);
+        $replace["amount"] = platform_curr_format($soObj->getAmount(), 0);
         $replace["expect_ship_days"] = "";//$soObj->get_expect_ship_days();
         $replace["expect_del_days"] = "";//$soObj->get_expect_del_days();
 
@@ -457,17 +457,17 @@ implements PaymentGatewayRedirectServiceInterface
                 "<tr>
                     <td style='padding:4px 20px; color:#444; font-family:Arial; font-size: 12px;'>" . $item->getProdName() . "</td>
                     <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $item->getQty() . "</td>
-                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currencySign . " " . platform_curr_format($platformId, $item->getUnitPrice(), 0) . "</td>
-                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currencySign . " " . platform_curr_format($platformId, ($item->getUnitPrice() * $item->getQty()), 0) . "</td>
+                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currencySign . " " . platform_curr_format($item->getUnitPrice(), 0) . "</td>
+                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currencySign . " " . platform_curr_format(($item->getUnitPrice() * $item->getQty()), 0) . "</td>
                 </tr>\n";
         }
 
         #SBF #2789 user input fixed delivery days
         // $replace["delivery_days"] = $this->get_del_srv()->get_working_days($soObj->get_delivery_type_id(), $soObj->get_delivery_country_id());
         $replace["delivery_days"] = "";
-        $replace["total"] = platform_curr_format($platform_id, $total, 0);
+        $replace["total"] = platform_curr_format($total, 0);
 
-        $replace["delivery_charge"] = platform_curr_format($platform_id, $soObj->getDeliveryCharge(), 0);
+        $replace["delivery_charge"] = platform_curr_format($soObj->getDeliveryCharge(), 0);
         $replace["email"] = $client->getEmail();
         $encrypt = new \CI_Encrypt();
         $replace["password"] = $encrypt->decode($client->getPassword());
@@ -507,7 +507,7 @@ implements PaymentGatewayRedirectServiceInterface
             $processingFee = 0;
         }
 
-        $replace['processing_fee'] = platform_curr_format($platformId, $processingFee, 0);
+        $replace['processing_fee'] = platform_curr_format($processingFee, 0);
 
         $dto->setReplace($replace);
         if ($getEmailHtml === FALSE) {
@@ -623,7 +623,7 @@ implements PaymentGatewayRedirectServiceInterface
         $url = "https://" . $_SERVER['HTTP_HOST'] . "/images/logo/" . SITE_LOGO;
         return $url;
     }
-    
+
     public function getSoPaymentLogService()
     {
         return $this->soPaymentLogService;

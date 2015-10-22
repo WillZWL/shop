@@ -307,9 +307,9 @@ class CommonDataPrepareModel extends \CI_Model
 
         $result = $this->checkout_onepage__calculate_delivery_surcharge($controller, $URLParas);
         if ($result !== FALSE) {
-            echo platform_curr_format(PLATFORM, $result['surcharge']) . '||' . platform_curr_format(PLATFORM, ($grand_total + $result['surcharge']));
+            echo platform_curr_format($result['surcharge']) . '||' . platform_curr_format(($grand_total + $result['surcharge']));
         } else {
-            echo '||' . platform_curr_format(PLATFORM, $grand_total);
+            echo '||' . platform_curr_format($grand_total);
         }
     }
 
@@ -1006,13 +1006,13 @@ salecycle_script;
         foreach ($result["cart"] AS $key => $val) {
             $item_total += $val["total"];
             $data["cart"][$val["sku"]]["prod_name"] = $val["name"];
-            $data["cart"][$val["sku"]]["price"] = platform_curr_format(PLATFORM, $val["price"]);
+            $data["cart"][$val["sku"]]["price"] = platform_curr_format($val["price"]);
             $data["cart"][$val["sku"]]["qty"] = $val["qty"];
             $data["cart"][$val["sku"]]["increase_url"] = base_url() . "review_order/update/" . $val["sku"] . "/" . ($val["qty"] + 1);
             if ($val["qty"] - 1 > 0) {
                 $data["cart"][$val["sku"]]["decrease_url"] = base_url() . "review_order/update/" . $val["sku"] . "/" . ($val["qty"] - 1);
             }
-            $data["cart"][$val["sku"]]["sub_total"] = platform_curr_format(PLATFORM, $val["total"]);
+            $data["cart"][$val["sku"]]["sub_total"] = platform_curr_format($val["total"]);
             $data["cart"][$val["sku"]]["remove_url"] = base_url() . "review_order/remove/" . $val["sku"];
             $data["cart"][$val["sku"]]["prod_url"] = $this->cart_session_model->get_prod_url($val["sku"]);
 
@@ -1021,17 +1021,17 @@ salecycle_script;
                 $data["allow_bulk_sales"] = TRUE;  #meets bulk sale criteria - show popup to contact us
             }
         }
-        $data["delivery_charge"] = platform_curr_format(PLATFORM, $result["dc_default"]["charge"]);
-        $data["item_amount"] = platform_curr_format(PLATFORM, $item_total);
-        $data["gst_total"] = platform_curr_format(PLATFORM, $gst_total);
+        $data["delivery_charge"] = platform_curr_format($result["dc_default"]["charge"]);
+        $data["item_amount"] = platform_curr_format($item_total);
+        $data["gst_total"] = platform_curr_format($gst_total);
         $total = $item_total - $result["dc_default"]["charge"] * 1;
         if ($result['promo']['disc_amount']) {
             $total = $item_total - $result['promo']['disc_amount'];
             if ($result['promo']['disc_amount'] > 0) {
-                $result['promo']['display_disc_amount'] = "-" . platform_curr_format(PLATFORM, $result['promo']["disc_amount"]);
+                $result['promo']['display_disc_amount'] = "-" . platform_curr_format($result['promo']["disc_amount"]);
             }
         }
-        $data["total"] = platform_curr_format(PLATFORM, $total + $gst_total);
+        $data["total"] = platform_curr_format($total + $gst_total);
         $data['promo'] = $result['promo'];
 
         foreach ($result["cart"] as $key => $cart_obj) {
@@ -1412,8 +1412,8 @@ salecycle_script;
                     $product_list[$key]["listing_status_text"] = $data['lang_text'][$obj->get_status()];
                     $product_list[$key]["listing_status"] = $obj->get_status();
                     $product_list[$key]["qty"] = $obj->get_qty();
-                    $product_list[$key]["price"] = platform_curr_format(PLATFORM, $obj->get_price());
-                    $product_list[$key]["rrp_price"] = platform_curr_format(PLATFORM, $obj->get_rrp_price());
+                    $product_list[$key]["price"] = platform_curr_format($obj->get_price());
+                    $product_list[$key]["rrp_price"] = platform_curr_format($obj->get_rrp_price());
                     $product_list[$key]["discount"] = number_format(($obj->get_rrp_price() == 0 ? 0 : ($obj->get_rrp_price() - $obj->get_price()) / $obj->get_rrp_price() * 100), 0);
                     $product_list[$key]["prod_url"] = $this->category_model->get_prod_url($obj->get_sku());
                     $product_list[$key]["short_desc"] = $obj->get_short_desc();
@@ -1539,8 +1539,8 @@ salecycle_script;
                 $best_seller[$key]["prod_name"] = $obj->get_prod_name();
                 $best_seller[$key]["listing_status"] = $obj->get_status();
                 $best_seller[$key]["stock_status"] = ($obj->get_status() == 'I') ? $obj->get_qty() . " " . $listing_status[$obj->get_status()] : $listing_status[$obj->get_status()];
-                $best_seller[$key]["price"] = platform_curr_format(PLATFORM, $obj->get_price());
-                $best_seller[$key]["rrp_price"] = platform_curr_format(PLATFORM, $obj->get_rrp_price());
+                $best_seller[$key]["price"] = platform_curr_format($obj->get_price());
+                $best_seller[$key]["rrp_price"] = platform_curr_format($obj->get_rrp_price());
                 $best_seller[$key]["discount"] = number_format(($obj->get_rrp_price() == 0 ? 0 : ($obj->get_rrp_price() - $obj->get_price()) / $obj->get_rrp_price() * 100), 0);
                 $best_seller[$key]["prod_url"] = $controller->home_model->get_prod_url($obj->get_sku());
                 $best_seller[$key]["short_desc"] = $obj->get_short_desc();

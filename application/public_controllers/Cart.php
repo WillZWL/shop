@@ -134,7 +134,7 @@ Class Cart extends PUB_Controller
                 $cart["item"] += $arr["qty"];
             }
         }
-        $cart["total"] = platform_curr_format(PLATFORM, $cart["total"]);
+        $cart["total"] = platform_curr_format($cart["total"]);
 
         if ($success) {
             $_SESSION["ra_items"][PLATFORM][$parent_sku][$sku] = 1;
@@ -185,7 +185,7 @@ Class Cart extends PUB_Controller
                 $cart["item"] += $arr["qty"];
             }
         }
-        $cart["total"] = platform_curr_format(PLATFORM, $cart["total"]);
+        $cart["total"] = platform_curr_format($cart["total"]);
 
         if ($success) {
             $_SESSION["warranty"][PLATFORM][$parent_sku] = $sku;
@@ -238,7 +238,7 @@ Class Cart extends PUB_Controller
                 $cart["item"] += $arr["qty"];
             }
         }
-        $cart["total"] = platform_curr_format(PLATFORM, $cart["total"]);
+        $cart["total"] = platform_curr_format($cart["total"]);
 
         if ($success) {
             if (isset($_SESSION["ra_items"][PLATFORM][$parent_sku][$sku])) {

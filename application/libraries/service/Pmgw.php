@@ -271,7 +271,7 @@ class Pmgw extends Base_service
         $replace['currency_sign'] = (empty($currency_obj) ? $this->so->get_currency_id() : $currency_obj->get_sign());
         $currency_sign = (empty($currency_obj) ? $this->so->get_currency_id() : $currency_obj->get_sign());
         $replace["order_create_date"] = date("d/m/Y", strtotime($this->so->get_order_create_date()));
-        $replace["amount"] = platform_curr_format($platform_id, $this->so->get_amount(), 0);
+        $replace["amount"] = platform_curr_format($this->so->get_amount(), 0);
         $replace["tel"] = $client->get_tel_1() . " " . $client->get_tel_2() . " " . $client->get_tel_3();
 
 
@@ -334,20 +334,20 @@ class Pmgw extends Base_service
             // "<tr>
             //  <td valign=top>".$item->get_name()."<br>".$item_text[$item->get_line_no()]['text']."</td>
             //  <td valign=top>".$cur_qty."</td>
-            //  <td valign=top>".platform_curr_format($platform_id, $item->get_unit_price(), 0)."</td>
-            //  <td valign=top><b>".platform_curr_format($platform_id, $cur_amount, 0)."</b></td>
+            //  <td valign=top>".platform_curr_format($item->get_unit_price(), 0)."</td>
+            //  <td valign=top><b>".platform_curr_format($cur_amount, 0)."</b></td>
             // </tr>";
 
             $replace["so_items"] .=
                 "<tr>
                     <td style='padding:4px 20px; color:#444; font-family:Arial; font-size: 12px;'>" . $item->get_name() . "<br>" . $item_text[$item->get_line_no()]['text'] . "</td>
                     <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>$cur_qty</td>
-                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($platform_id, $item->get_unit_price(), 0) . "</td>
-                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($platform_id, $cur_amount, 0) . "</td>
+                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($item->get_unit_price(), 0) . "</td>
+                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($cur_amount, 0) . "</td>
                 </tr>\n";
 
             $replace["so_items_pre_order"] .= $cur_qty . " x " . $item->get_name() . "<br>";
-            $replace["so_items_text"] .= $item->get_name() . " @" . platform_curr_format($platform_id, $item->get_unit_price(), 0) . " x {$cur_qty} = " . platform_curr_format($platform_id, $cur_amount, 0) . "\n\n";
+            $replace["so_items_text"] .= $item->get_name() . " @" . platform_curr_format($item->get_unit_price(), 0) . " x {$cur_qty} = " . platform_curr_format($cur_amount, 0) . "\n\n";
             $i++;
         }
 
@@ -357,9 +357,9 @@ class Pmgw extends Base_service
         // $replace["delivery_days"] = $this->get_del_srv()->get_working_days($this->so->get_delivery_type_id(), $this->so->get_delivery_country_id());
         $replace["delivery_days"] = "";
 
-        $replace["subtotal"] = platform_curr_format($platform_id, $sub_total, 0);
-        $replace["total_vat"] = platform_curr_format($platform_id, $total_vat, 0);
-        $replace["total"] = platform_curr_format($platform_id, $total, 0);
+        $replace["subtotal"] = platform_curr_format($sub_total, 0);
+        $replace["total_vat"] = platform_curr_format($total_vat, 0);
+        $replace["total"] = platform_curr_format($total, 0);
         $dc = $this->so->get_delivery_charge();
         $dc_vat = $dc * ($this->so->get_vat_percent() / (100 + $this->so->get_vat_percent()));
         $dc_sub_total = $dc - $dc_vat;
@@ -380,30 +380,30 @@ class Pmgw extends Base_service
                     $replace["bank_transfer_details"] .=
                         "<tr>
                         <td valign=top>" . $payment_date . "</td>
-                        <td valign=top>" . platform_curr_format($platform_id, $received_amt, 0) . "</td>
-                        <td valign=top>" . platform_curr_format($platform_id, $sbt_bank_charge[$key], 0) . "</td>
-                        <td valign=top>" . platform_curr_format($platform_id, $net_received, 0) . "</td>
+                        <td valign=top>" . platform_curr_format($received_amt, 0) . "</td>
+                        <td valign=top>" . platform_curr_format($sbt_bank_charge[$key], 0) . "</td>
+                        <td valign=top>" . platform_curr_format($net_received, 0) . "</td>
                     </tr>";
 
-                    $replace["bank_transfer_details_text"] .= $payment_date . " @" . platform_curr_format($platform_id, $received_amt, 0) . " - " . platform_curr_format($platform_id, $sbt_bank_charge[$key], 0) . " = " . platform_curr_format($platform_id, $net_received, 0) . "\n\n";
+                    $replace["bank_transfer_details_text"] .= $payment_date . " @" . platform_curr_format($received_amt, 0) . " - " . platform_curr_format($sbt_bank_charge[$key], 0) . " = " . platform_curr_format($net_received, 0) . "\n\n";
 
                 }
                 $total_net_received = number_format($total_net_received, 2, '.', '');
                 $total_payment_outstanding = $this->so->get_amount() - $total_net_received;
 
-                $replace["total_net_received"] = platform_curr_format($platform_id, $total_net_received, 0);
-                $replace["total_payment_outstanding"] = platform_curr_format($platform_id, ($this->so->get_amount() - $total_net_received), 0);
+                $replace["total_net_received"] = platform_curr_format($total_net_received, 0);
+                $replace["total_payment_outstanding"] = platform_curr_format(($this->so->get_amount() - $total_net_received), 0);
 
 
             }
         }
 
         // $replace["courier"] = @call_user_func($courier, "get_name");
-        $replace["dc_sub_total"] = platform_curr_format($platform_id, $dc_sub_total, 0);
-        $replace["dc_vat"] = platform_curr_format($platform_id, $dc_vat, 0);
-        $replace["delivery_charge"] = platform_curr_format($platform_id, $dc, 0);
-        $replace["total_sub_total"] = platform_curr_format($platform_id, $sub_total + $dc_sub_total, 0);
-        $replace["total_total_vat"] = platform_curr_format($platform_id, $total_vat + $dc_vat, 0);
+        $replace["dc_sub_total"] = platform_curr_format($dc_sub_total, 0);
+        $replace["dc_vat"] = platform_curr_format($dc_vat, 0);
+        $replace["delivery_charge"] = platform_curr_format($dc, 0);
+        $replace["total_sub_total"] = platform_curr_format($sub_total + $dc_sub_total, 0);
+        $replace["total_total_vat"] = platform_curr_format($total_vat + $dc_vat, 0);
         $replace["email"] = $client->get_email();
         include_once(BASEPATH . "libraries/Encrypt.php");
         $encrypt = new CI_Encrypt();
@@ -448,7 +448,7 @@ class Pmgw extends Base_service
             $processing_fee = 0;
         }
 
-        $replace['processing_fee'] = platform_curr_format($platform_id, $processing_fee, 0);
+        $replace['processing_fee'] = platform_curr_format($processing_fee, 0);
         $replace['licence_key'] = "";
 
         # get all language files
@@ -601,7 +601,7 @@ class Pmgw extends Base_service
         $replace['currency_sign'] = (empty($currency_obj) ? $this->so->get_currency_id() : $currency_obj->get_sign());
         $currency_sign = (empty($currency_obj) ? $this->so->get_currency_id() : $currency_obj->get_sign());
         $replace["order_create_date"] = date("d/m/Y", strtotime($this->so->get_order_create_date()));
-        $replace["amount"] = platform_curr_format($platform_id, $this->so->get_amount(), 0);
+        $replace["amount"] = platform_curr_format($this->so->get_amount(), 0);
         $replace["tel"] = $client->get_tel_1() . " " . $client->get_tel_2() . " " . $client->get_tel_3();
         $replace["image_url"] = $this->get_config()->value_of("default_url");
         $replace["logo_file_name"] = $this->get_config()->value_of("logo_file_name");
@@ -663,12 +663,12 @@ class Pmgw extends Base_service
                 "<tr>
                     <td style='padding:4px 20px; color:#444; font-family:Arial; font-size: 12px;'>" . $item->get_name() . "<br>" . $item_text[$item->get_line_no()]['text'] . "</td>
                     <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>$cur_qty</td>
-                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($platform_id, $item->get_unit_price(), 0) . "</td>
-                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($platform_id, $cur_amount, 0) . "</td>
+                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($item->get_unit_price(), 0) . "</td>
+                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($cur_amount, 0) . "</td>
                 </tr>\n";
 
             $replace["so_items_pre_order"] .= $cur_qty . " x " . $item->get_name() . "<br>";
-            $replace["so_items_text"] .= $item->get_name() . " @" . platform_curr_format($platform_id, $item->get_unit_price(), 0) . " x {$cur_qty} = " . platform_curr_format($platform_id, $cur_amount, 0) . "\n\n";
+            $replace["so_items_text"] .= $item->get_name() . " @" . platform_curr_format($item->get_unit_price(), 0) . " x {$cur_qty} = " . platform_curr_format($cur_amount, 0) . "\n\n";
             $i++;
         }
 
@@ -678,19 +678,19 @@ class Pmgw extends Base_service
         // $replace["delivery_days"] = $this->get_del_srv()->get_working_days($this->so->get_delivery_type_id(), $this->so->get_delivery_country_id());
         $replace["delivery_days"] = "";
 
-        $replace["subtotal"] = platform_curr_format($platform_id, $sub_total, 0);
-        $replace["total_vat"] = platform_curr_format($platform_id, $total_vat, 0);
-        $replace["total"] = platform_curr_format($platform_id, $total, 0);
+        $replace["subtotal"] = platform_curr_format($sub_total, 0);
+        $replace["total_vat"] = platform_curr_format($total_vat, 0);
+        $replace["total"] = platform_curr_format($total, 0);
         $dc = $this->so->get_delivery_charge();
         $dc_vat = $dc * ($this->so->get_vat_percent() / (100 + $this->so->get_vat_percent()));
         $dc_sub_total = $dc - $dc_vat;
 
         // $replace["courier"] = @call_user_func($courier, "get_name");
-        $replace["dc_sub_total"] = platform_curr_format($platform_id, $dc_sub_total, 0);
-        $replace["dc_vat"] = platform_curr_format($platform_id, $dc_vat, 0);
-        $replace["delivery_charge"] = platform_curr_format($platform_id, $dc, 0);
-        $replace["total_sub_total"] = platform_curr_format($platform_id, $sub_total + $dc_sub_total, 0);
-        $replace["total_total_vat"] = platform_curr_format($platform_id, $total_vat + $dc_vat, 0);
+        $replace["dc_sub_total"] = platform_curr_format($dc_sub_total, 0);
+        $replace["dc_vat"] = platform_curr_format($dc_vat, 0);
+        $replace["delivery_charge"] = platform_curr_format($dc, 0);
+        $replace["total_sub_total"] = platform_curr_format($sub_total + $dc_sub_total, 0);
+        $replace["total_total_vat"] = platform_curr_format($total_vat + $dc_vat, 0);
         $replace["email"] = $client->get_email();
         include_once(BASEPATH . "libraries/Encrypt.php");
         $encrypt = new CI_Encrypt();
@@ -733,7 +733,7 @@ class Pmgw extends Base_service
             $processing_fee = 0;
         }
 
-        $replace['processing_fee'] = platform_curr_format($platform_id, $processing_fee, 0);
+        $replace['processing_fee'] = platform_curr_format($processing_fee, 0);
         $replace['licence_key'] = "";
 
         # get all language files
@@ -799,7 +799,7 @@ class Pmgw extends Base_service
         $replace['currency_sign'] = (empty($currency_obj) ? $this->so->get_currency_id() : $currency_obj->get_sign());
         $currency_sign = (empty($currency_obj) ? $this->so->get_currency_id() : $currency_obj->get_sign());
         $replace["order_create_date"] = date("d/m/Y", strtotime($this->so->get_order_create_date()));
-        $replace["amount"] = platform_curr_format($platform_id, $this->so->get_amount(), 0);
+        $replace["amount"] = platform_curr_format($this->so->get_amount(), 0);
         $replace["expect_ship_days"] = $this->so->get_expect_ship_days();
         $replace["expect_del_days"] = $this->so->get_expect_del_days();
 
@@ -916,12 +916,12 @@ class Pmgw extends Base_service
                 "<tr>
                     <td style='padding:4px 20px; color:#444; font-family:Arial; font-size: 12px;'>" . $item->get_name() . "<br>" . $item_text[$item->get_line_no()]['text'] . "</td>
                     <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>$cur_qty</td>
-                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($platform_id, $item->get_unit_price(), 0) . "</td>
-                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($platform_id, $cur_amount, 0) . "</td>
+                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($item->get_unit_price(), 0) . "</td>
+                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($cur_amount, 0) . "</td>
                 </tr>\n";
 
             $replace["so_items_pre_order"] .= $cur_qty . " x " . $item->get_name() . "<br>";
-            $replace["so_items_text"] .= $item->get_name() . " @" . platform_curr_format($platform_id, $item->get_unit_price(), 0) . " x {$cur_qty} = " . platform_curr_format($platform_id, $cur_amount, 0) . "\n\n";
+            $replace["so_items_text"] .= $item->get_name() . " @" . platform_curr_format($item->get_unit_price(), 0) . " x {$cur_qty} = " . platform_curr_format($cur_amount, 0) . "\n\n";
             $i++;
         }
 
@@ -931,19 +931,19 @@ class Pmgw extends Base_service
         // $replace["delivery_days"] = $this->get_del_srv()->get_working_days($this->so->get_delivery_type_id(), $this->so->get_delivery_country_id());
         $replace["delivery_days"] = "";
 
-        $replace["subtotal"] = platform_curr_format($platform_id, $sub_total, 0);
-        $replace["total_vat"] = platform_curr_format($platform_id, $total_vat, 0);
-        $replace["total"] = platform_curr_format($platform_id, $total, 0);
+        $replace["subtotal"] = platform_curr_format($sub_total, 0);
+        $replace["total_vat"] = platform_curr_format($total_vat, 0);
+        $replace["total"] = platform_curr_format($total, 0);
         $dc = $this->so->get_delivery_charge();
         $dc_vat = $dc * ($this->so->get_vat_percent() / (100 + $this->so->get_vat_percent()));
         $dc_sub_total = $dc - $dc_vat;
 
         $replace["courier"] = @call_user_func($courier, "get_name");
-        $replace["dc_sub_total"] = platform_curr_format($platform_id, $dc_sub_total, 0);
-        $replace["dc_vat"] = platform_curr_format($platform_id, $dc_vat, 0);
-        $replace["delivery_charge"] = platform_curr_format($platform_id, $dc, 0);
-        $replace["total_sub_total"] = platform_curr_format($platform_id, $sub_total + $dc_sub_total, 0);
-        $replace["total_total_vat"] = platform_curr_format($platform_id, $total_vat + $dc_vat, 0);
+        $replace["dc_sub_total"] = platform_curr_format($dc_sub_total, 0);
+        $replace["dc_vat"] = platform_curr_format($dc_vat, 0);
+        $replace["delivery_charge"] = platform_curr_format($dc, 0);
+        $replace["total_sub_total"] = platform_curr_format($sub_total + $dc_sub_total, 0);
+        $replace["total_total_vat"] = platform_curr_format($total_vat + $dc_vat, 0);
         $replace["email"] = $client->get_email();
         include_once(BASEPATH . "libraries/Encrypt.php");
         $encrypt = new CI_Encrypt();
@@ -992,7 +992,7 @@ class Pmgw extends Base_service
             $processing_fee = 0;
         }
 
-        $replace['processing_fee'] = platform_curr_format($platform_id, $processing_fee, 0);
+        $replace['processing_fee'] = platform_curr_format($processing_fee, 0);
 
 
         $replace['licence_key'] = "";
