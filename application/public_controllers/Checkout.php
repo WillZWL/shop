@@ -50,7 +50,7 @@ class Checkout extends PUB_Controller
                 , $this->checkoutModel->getCheckoutFormCountryList($platformCountryId));
         $data["billingStateList"] = $this->checkoutModel->getCheckoutFormStateList($platformCountryId);
         $data["paymentOption"] = $this->checkoutModel->getPaymentOption($this->getSiteInfo()->getPlatform());
-        $encrypt = new CI_Encrypt();
+        $encrypt = new \CI_Encrypt();
         $data["formSalt"] = $encrypt->encode($this->getSiteInfo()->getPlatform());
         $client = $this->checkoutModel->isLoggedIn();
         if ($client)

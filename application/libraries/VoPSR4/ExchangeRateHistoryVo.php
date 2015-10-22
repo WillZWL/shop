@@ -5,10 +5,11 @@ class ExchangeRateHistoryVo extends \BaseVo
     private $from_currency_id;
     private $to_currency_id;
     private $rate = '1.000000';
+    private $date;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -53,6 +54,16 @@ class ExchangeRateHistoryVo extends \BaseVo
     public function getRate()
     {
         return $this->rate;
+    }
+
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
     }
 
     public function setCreateOn($create_on)
