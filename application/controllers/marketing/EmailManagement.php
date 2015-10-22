@@ -10,18 +10,18 @@ class EmailManagement extends MY_Controller
 
     public function index()
     {
-        // $data["filter_arr"] = $data["tpl_edit"] = $subject_var_arr = $html_var_arr = $alt_var_arr = array();
-        // $data["subject_var"] = $data["html_var"] = $data["alt_var"] = "";
-
         $sub_app_id = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
-        $data["lang"] = $lang;
+        $data['lang'] = $lang;
 
         $where = ['status' => 1];
-        $option = ['limit' => -1, 'groupby' => 'template_name'];
+        $option = ['limit' => -1, 'groupby' => 'tpl_id'];
 
-        if (isset($_GET['tpl_name'])) {
-            $where['template_name'] = $_GET['tpl_name'];
+        $data['tpl_list'] = $this->sc['Email']->getDao('Template')->getList($where, $option);
+        $data['platform_list'] = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList();
+
+        if (isset($_GET['tpl_id'])) {
+            $where['tpl_id'] = $_GET['tpl_id'];
             unset($option['groupby']);
         }
 
@@ -29,19 +29,17 @@ class EmailManagement extends MY_Controller
             $where['platform_id'] = $_GET['platform'];
         }
 
-        $data["tpl_list"] = $this->sc['EmailTemplate']->getDao('EmailTemplate')->getList($where, $option);
+        if ($tpl_obj = $this->sc['Email']->getDao('Template')->get($where)) {
+            $data['tpl_edit']['subject'] = $tpl_obj->getSubject();
+            $data['tpl_edit']['message_html'] = $tpl_obj->getMessageHtml();
+            $data['tpl_edit']['message_alt'] = $tpl_obj->getMessageAlt();
 
-        if (count($data['tpl_list']) === 1) {
-            $data['tpl_edit']['subject'] = $data['tpl_list'][0]->getSubject();
-            $data['tpl_edit']['message_html'] = $data['tpl_list'][0]->getSubject();
-            $data['tpl_edit']['message_alt'] = $data['tpl_list'][0]->getSubject();
-
-            $subject_vars = $this->sc['EmailTemplate']->getVariablesInTemplate($data["tpl_edit"]["subject"], "[:", ":]");
-            $html_vars = $this->sc['EmailTemplate']->getVariablesInTemplate($data["tpl_edit"]["message_html"], "[:", ":]");
-            $alt_vars = $this->sc['EmailTemplate']->getVariablesInTemplate($data["tpl_edit"]["message_alt"], "[:", ":]");
-            $data["textarea"]["subject"] = $this->construct_textarea("subject", $data["tpl_edit"]["subject"], $subject_var_arr, FALSE);
-            $data["textarea"]["message_html"] = $this->construct_textarea("message_html", $data["tpl_edit"]["message_html"], $html_var_arr, TRUE);
-            $data["textarea"]["message_alt"] = $this->construct_textarea("message_alt", $data["tpl_edit"]["message_alt"], $alt_var_arr, FALSE);
+            $subject_vars = $this->sc['Template']->getVariablesInTemplate($data["tpl_edit"]["subject"], "[:", ":]");
+            $html_vars = $this->sc['Template']->getVariablesInTemplate($data["tpl_edit"]["message_html"], "[:", ":]");
+            $alt_vars = $this->sc['Template']->getVariablesInTemplate($data["tpl_edit"]["message_alt"], "[:", ":]");
+            $data["textarea"]["subject"] = $this->construct_textarea("subject", $data["tpl_edit"]["subject"], $subject_vars, false);
+            $data["textarea"]["message_html"] = $this->construct_textarea("message_html", $data["tpl_edit"]["message_html"], $html_vars, true);
+            $data["textarea"]["message_alt"] = $this->construct_textarea("message_alt", $data["tpl_edit"]["message_alt"], $alt_vars, false);
         }
 
         $data["notice"] = notice($lang);
@@ -53,50 +51,33 @@ class EmailManagement extends MY_Controller
         return $this->appId;
     }
 
-    private function save_template()
+    public function saveTemplate()
     {
         $variable_arr = $content_arr = $not_table_field = array();
 
         if ($_POST) {
-            $tpl_id = $_POST["tpl_id"];
-            $table_name = $_POST["tpl_table"];
-            $filter_type = $_POST["filter_type"];
-            $selected_filter = $_POST["selected_filter"];
-            $not_table_field = array("tpl_id", "tpl_table", "filter_type", "selected_filter");
+            $where = [
+                'tpl_id' => $_POST['tpl_id'],
+                'platform_id' => $_POST['platform']
+            ];
 
-            $template_table_dao = $this->{$table_name . "_dao"};
-            if ($template_obj = $template_table_dao->get(array("template_by_platform_id" => $tpl_id, $filter_type => $selected_filter))) {
-                foreach ($_POST as $key => $value) {
-                    $set = "";
+            $tpl_obj = $this->sc['Email']->getDao('Template')->get($where);
+            if ($tpl_obj) {
+                $tpl_obj->setSubject($_POST['subject']);
+                $tpl_obj->setMessageHtml($_POST['message_html']);
+                $tpl_obj->setMessageAlt($_POST['message_alt']);
 
-                    if (in_array($value, $not_table_field) === FALSE) {
-                        if ($this->db->field_exists($key, $table_name)) {
-                            $set = "set_$key";
-                            $template_obj->$set($value);
-                        } else {
-                            $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Input id $key does not exist in db table <$table_name>";
-                        }
-                    }
-                }
-
-                if ($template_table_dao->update($template_obj) === FALSE) {
-                    $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot update template. \n DB error_msg: " . $this->db->display_error();
-                } else {
-                    return TRUE;
-                }
-
-            } else {
-                $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
+                $this->sc['Email']->getDao('Template')->update($tpl_obj);
             }
         }
 
-        return FALSE;
+        redirect(site_url().'/marketing/emailManagement?tpl_id='.$_POST['tpl_id']."&platform=".$_POST['platform']);
     }
 
-    private function construct_textarea($type = "", $template_string = "", $variable_arr = array(), $enable_preview = FALSE)
+    private function construct_textarea($type = "", $template_string = "", $variable_arr = array(), $enable_preview = false)
     {
         if (!$type || !$template_string) {
-            return FALSE;
+            return false;
         }
 
         $title = ucfirst($type);
@@ -159,5 +140,3 @@ HTML;
         return $textarea;
     }
 }
-
-

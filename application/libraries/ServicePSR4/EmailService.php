@@ -3,7 +3,7 @@ namespace ESG\Panther\Service;
 
 use PHPMailer;
 
-class EmailService extends BaseService implements ActableService
+class EmailService extends BaseService
 {
     private $event_dto;
 
@@ -14,131 +14,96 @@ class EmailService extends BaseService implements ActableService
         if ($dto) {
             $this->event_dto = $dto;
         }
-        $this->templateService = new EmailTemplateService;
+        $this->templateService = new TemplateService;
     }
 
     public function init()
     {
     }
 
-    public function run(EventEmailDto $obj)
+    public function run(\EventEmailDto $obj)
     {
-        $tempalte = $this->getEmailTemplate($obj);
-
-        if ($dto) {
-            $event_id = $dto->getEventId();
-            switch ($event_id) {
-                default:
-                    $this->sendmailTemplate($dto->getMailFrom(), $dto->getMailTo(), $dto->getTplId(), $dto->getReplace(), $dto->getLangId(), $dto->getMailCc(), $dto->getMailBcc(), $dto->getPlatformId());
-            }
-        } else {
-            return FALSE;
+        $email = $this->getEmail($obj);
+        $result = $this->sendEmail($email);
+        if (! $result) {
+            // TODO
+            // should report to IT
         }
     }
 
-    public function send()
+    private function getEmail($obj)
     {
-        // TODO $bcc
-
-        //
-    }
-
-    public function getEmailTemplate(EventEmailDto $obj)
-    {
-        $result = ['subject', 'bcc', 'cc', 'reply_to', 'content'];
+        $result = ['from', 'subject', 'bcc', 'cc', 'reply_to', 'body', 'to'];
 
         $where = [
-            'template_name' => $obj->getTemplateName(),
+            'tpl_id' => $obj->getTplId(),
             'platform_id' => $obj->getPlatformId()
         ];
 
-        if ($template_obj = $this->getDao('EmailTemplate')->getTemplate($where)) {
-            try {
-                $email_content = file_get_contents(APPPATH . $this->getDao('Config')->valueOf("tpl_path") . $template_obj->getPlatformId() . "/" . $template_obj->getTplFileName());
-            } catch (Exception $e) {
-                // not found email template file
-            }
+        $email = $this->templateService->getEmail($where, $obj->getReplace());
 
-            $result['subject'] =
-
+        if ($email) {
+            $result['from'] = $email->getFrom();
+            $result['subject'] = $email->getSubject();
+            $result['bcc'] = $email->getBcc();
+            $result['cc'] = $email->getCc();
+            $result['reply_to'] = $email->getReplyTo();
+            $result['body'] = $email->getMessageHtml();
+            $result['alt_body'] = $email->getMessageAlt();
+            $result['to'] = $obj->getMailTo();
         }
 
+        return $result;
     }
 
-    public function sendmailTemplate($from = "", $to = "", $tpl_id = "", $replace = "", $lang_id = "en", $cc = "", $bcc = "", $platform_id = "WEBGB")
+    private function sendEmail($email)
     {
-        if ($bcc) {
-            $default_bcc = array('pantherbccemail@gmail.com');
-            $bcc = array_merge($bcc, $default_bcc);
-        } else {
-            $bcc = array('pantherbccemail@gmail.com');
+        $phpmail = new PHPMailer;
+
+        $phpmail->IsSMTP();
+        if ($smtphost = $this->getDao('Config')->valueOf("smtp_host")) {
+            $phpmail->Host = $smtphost;
+            $phpmail->SMTPAuth = $this->getDao('Config')->valueOf("smtp_auth");
+            $phpmail->Username = $this->getDao('Config')->valueOf("smtp_user");
+            $phpmail->Password = $this->getDao('Config')->valueOf("smtp_pass");
         }
-        $CI =& get_instance();
-        if (!$CI->config->item('allow_email_sending')) {
-            return TRUE;
-        }
-        if (!(empty($from) || empty($to) || empty($tpl_id))) {
-            if ($tpl_obj = $this->templateService->getMsgTplWithAtt(array("id" => $tpl_id,
-                "lang_id" => $lang_id, "platform_id" => $platform_id), $replace, $platform_id)
-            ) {
-                $phpmail = new phpmailer;
-                $phpmail->IsSMTP();
-                $phpmail->From = $from;
 
-                if ($smtphost = $this->getDao('Config')->valueOf("smtp_host")) {
-                    $phpmail->Host = $smtphost;
-                    $phpmail->SMTPAuth = $this->getDao('Config')->valueOf("smtp_auth");
-                    $phpmail->Username = $this->getDao('Config')->valueOf("smtp_user");
-                    $phpmail->Password = $this->getDao('Config')->valueOf("smtp_pass");
-                }
-
-                if (is_array($to)) {
-                    foreach ($to as $to_address) {
-                        $phpmail->AddAddress($to_address);
-                    }
-                } else {
-                    $phpmail->AddAddress($to);
-                }
-
-                if ($cc) {
-                    if (is_array($cc)) {
-                        foreach ($cc AS $cc_address) {
-                            $phpmail->AddCC($cc_address);
-                        }
-                    } else {
-                        $phpmail->AddCC($cc);
-                    }
-                }
-
-                if ($bcc) {
-                    if (is_array($bcc)) {
-                        foreach ($bcc AS $bcc_address) {
-                            $phpmail->AddBCC($bcc_address);
-                        }
-                    } else {
-                        $phpmail->AddBCC($bcc);
-                    }
-                }
-
-                if ($html_msg = $tpl_obj->template->getMessage()) {
-                    $phpmail->IsHTML(true);
-                    $phpmail->Body = $html_msg;
-                    if ($text = $tpl_obj->template->getAltMessage()) {
-                        $phpmail->AltBody = $text;
-                    }
-                } elseif ($text = $tpl_obj->template->getAltMessage()) {
-                    $phpmail->IsHTML(false);
-                    $phpmail->Body = $text;
-                }
-
-                $phpmail->Subject = $tpl_obj->template->getSubject();
-
-                return $phpmail->Send();
-            } else {
-                return FALSE;
+        $phpmail->From = $email['from'];
+        if (is_array($email['to'])) {
+            foreach ($email['to'] as $to_address) {
+                $phpmail->AddAddress($to_address);
             }
         } else {
-            return FALSE;
+            $phpmail->AddAddress($email['to']);
         }
+
+        if (is_array($email['cc'])) {
+            foreach ($email['cc'] AS $cc_address) {
+                $phpmail->AddCC($cc_address);
+            }
+        } else {
+            $phpmail->AddCC($email['cc']);
+        }
+
+        if (is_array($email['bcc'])) {
+            foreach ($email['bcc'] AS $bcc_address) {
+                $phpmail->AddBCC($bcc_address);
+            }
+        } else {
+            $phpmail->AddBCC($email['bcc']);
+        }
+
+        if ($email['body']) {
+            $phpmail->IsHTML(true);
+            $phpmail->Body = $email['body'];
+        }
+
+        if ($email['alt_body']) {
+            $phpmail->AltBody = $email['alt_body'];
+        }
+
+        $phpmail->Subject = $email['subject'];
+
+        return $phpmail->Send();
     }
 }
