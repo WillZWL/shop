@@ -122,6 +122,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\SoRefundScoreService();
         };
 
+        $servcieContainer['SoCompensation'] = function () {
+            return new S\SoCompensationService();
+        };
+
         $servcieContainer['SplitOrder'] = function () {
             return new S\SplitOrderService();
         };

@@ -12,8 +12,8 @@
 <div style="width:auto">
     <?= $notice["img"] ?>
     <?php
-    $ar_status = array("I" => "instock4.gif", "O" => "outofstock4.gif", "P" => "preorder4.gif", "A" => "1-3days4.gif");
-    $ar_ws_status = array("I" => $lang["instock"], "O" => $lang["outstock"], "P" => $lang["pre-order"], "A" => $lang["arriving"]);
+    $ar_status = ["I" => "instock4.gif", "O" => "outofstock4.gif", "P" => "preorder4.gif", "A" => "1-3days4.gif"];
+    $ar_ws_status = ["I" => $lang["instock"], "O" => $lang["outstock"], "P" => $lang["pre-order"], "A" => $lang["arriving"]];
     ?>
     <form name="fm" method="get">
         <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
@@ -30,14 +30,10 @@
             <col width="26">
             <tr class="header">
                 <td height="20">
-                    <?php
-                    if ($prod_grp_cd == "") {
-                        ?>
+                    <?php if ($prod_grp_cd == "") :?>
                         <img src="<?= base_url() ?>images/expand.png" class="pointer"
                              onClick="Expand(document.getElementById('tr_search'));">
-                    <?php
-                    }
-                    ?>
+                    <?php endif; ?>
                 </td>
                 <td></td>
                 <td><a href="#"
@@ -64,9 +60,7 @@
                 </td>
                 <td></td>
             </tr>
-            <?php
-            if ($prod_grp_cd == "") {
-                ?>
+            <?php if ($prod_grp_cd == "") :?>
                 <tr class="search" id="tr_search" <?= $searchdisplay ?>>
                     <td></td>
                     <td></td>
@@ -101,12 +95,11 @@
                             <option value="">
                                 <?php
                                 $selected_wss[$this->input->get("website_status")] = "SELECTED";
-                                foreach ($ar_ws_status as $rskey => $rsvalue)
-                                {
+                                foreach ($ar_ws_status as $rskey => $rsvalue) :
                                 ?>
                             <option value="<?= $rskey ?>" <?= $selected_wss[$rskey] ?>><?= $rsvalue ?>
                                 <?php
-                                }
+                                endforeach;
                                 ?>
                         </select>
                     </td>
@@ -114,62 +107,56 @@
                                               style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">
                     </td>
                 </tr>
-            <?php
-            }
-            ?>
+            <?php endif; ?>
             <?php
             $i = 0;
-            if ($objlist) {
-                foreach ($objlist as $obj) {
+            if ($objlist) :
+                foreach ($objlist as $obj) :
                     ?>
 
                     <tr class="row<?= $i % 2 ?>" onMouseOver="AddClassName(this, 'highlight')"
                         onMouseOut="RemoveClassName(this, 'highlight')">
                         <td height="20"></td>
-                        <td><img src="<?= get_image_file($obj->get_image(), 's', $obj->get_sku()) ?>"></td>
-                        <td><?= $obj->get_sku() ?></td>
-                        <td><?= $obj->get_prod_name() ?></td>
-                        <td><?= $obj->get_category() ?></td>
-                        <td><?= $obj->get_sub_category() ?></td>
-                        <td><?= $obj->get_sub_sub_category() ?></td>
-                        <td><?= $obj->get_brand_name() ?></td>
-                        <?$wsstatus = ($obj->get_website_status() == "I" && $obj->get_website_quantity() < 1) ? "O" : $obj->get_website_status()?>
-                        <td><?= number_format($curprice = $obj->get_price(), 2, ".", "") ?></td>
+                        <td><img src="<?= get_image_file($obj->getImage(), 's', $obj->getSku()) ?>"></td>
+                        <td><?= $obj->getSku() ?></td>
+                        <td><?= $obj->getProdName() ?></td>
+                        <td><?= $obj->getCategory() ?></td>
+                        <td><?= $obj->getSubCat() ?></td>
+                        <td><?= $obj->getSubSubCategory() ?></td>
+                        <td><?= $obj->getBrandName() ?></td>
+                        <?php $wsstatus = ($obj->getWebsiteStatus() == "I" && $obj->getWebsiteQuantity() < 1) ? "O" : $obj->getWebsiteStatus()?>
+                        <td><?= number_format($curprice = $obj->getPrice(), 2, ".", "") ?></td>
                         <td><img src="/images/<?= $ar_status[$wsstatus] ?>"></td>
                         <td>
-                            <?php
-                            //       if ($wsstatus == "I")
-                            //      {
-                            ?>
                             <input type="button" value="<?= $lang["select"] ?>"
                                    onClick="window.parent.additem('<?= obj_to_query($obj) ?>', <?= $line ?>, '<?= $curprice ?>');parent.document.getElementById('lbClose').onclick()">
-                            <?php
-                            //      }
-                            ?>
                         </td>
                     </tr>
                     <?php
                     $i++;
-                }
-            }
+                endforeach;
+            endif;
             ?>
         </table>
         <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
         <input type="hidden" name="search" value='1'>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 <script>
     InitBrand(document.fm.brand_id);
     document.fm.brand_id.value = '<?=$this->input->get("brand_id")?>';
+
     ChangeCat('0', document.fm.cat_id);
     document.fm.cat_id.value = '<?=$this->input->get("cat_id")?>';
-    ChangeCat('<?=$this->input->get("cat_id")?>', document.fm.sub_category_id);
-    document.fm.sub_category_id.value = '<?=$this->input->get("sub_category_id")?>';
-    ChangeCat('<?=$this->input->get("sub_category_id")?>', document.fm.sub_sub_category_id);
-    document.fm.sub_sub_category_id.value = '<?=$this->input->get("sub_sub_category_id")?>';
+
+    ChangeCat('<?=$this->input->get("cat_id")?>', document.fm.sub_cat_id);
+    document.fm.sub_cat_id.value = '<?=$this->input->get("sub_cat_id")?>';
+
+    ChangeCat('<?=$this->input->get("sub_cat_id")?>', document.fm.sub_sub_cat_id);
+    document.fm.sub_sub_cat_id.value = '<?=$this->input->get("sub_sub_cat_id")?>';
 </script>
 </body>
 </html>

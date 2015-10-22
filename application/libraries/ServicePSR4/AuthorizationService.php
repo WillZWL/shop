@@ -25,7 +25,7 @@ class AuthorizationService extends BaseService
 
     public function userAppRights($appId = "")
     {
-        return $this->userService->appRights($_SESSION["user"]["id"], $appId, "Role_access_dto");
+        return $this->userService->appRights($_SESSION["user"]["id"], $appId, "RoleAccessDto");
     }
 
     public function checkAccessRights($service = "", $rights = "", $show_error = 1)

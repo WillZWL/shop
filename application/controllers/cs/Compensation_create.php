@@ -8,24 +8,12 @@ class Compensation_create extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->helper(array('url', 'notice', 'object', 'operator'));
-        $this->load->model('cs/compensation_model');
-        $this->load->library('service/pagination_service');
-        $this->load->library('service/event_service');
-        $this->load->library('service/product_service');
-        $this->load->library('service/price_service');
-        $this->load->library('service/platform_biz_var_service');
-        $this->load->library('service/authorization_service');
-        $this->load->library('service/order_notes_service');
     }
 
-    public function create()
+    public function create($offset = 0)
     {
-        //$sub_app_id = $this->getAppId()."02";
-        //$this->authorization_service->check_access_rights($sub_app_id, "List");
-
-        $where = array();
-        $option = array();
+        $where = [];
+        $option = [];
 
         $search = $this->input->get('search');
         if ($search) {
@@ -57,40 +45,36 @@ class Compensation_create extends MY_Controller
             if (empty($order)) {
                 $order = "asc";
             }
-
-            $option["limit"] = $pconfig['per_page'] = 20;
-
-            if ($option["limit"]) {
-                $option["offset"] = $this->input->get("per_page");
-            }
+            $limit = 20;
+            $option["limit"] = $limit;
+            $option["offset"] = $offset;
 
             $_SESSION["LISTPAGE"] = base_url() . "cs/compensation/create?" . $_SERVER['QUERY_STRING'];
 
             $option["orderby"] = $sort . " " . $order;
 
-            $data = $this->compensation_model->get_orders_eligible_for_compensation($where, $option);
+            $data['list'] = $this->sc['So']->getDao('SoCompensation')->getOrdersEligibleForCompensation($where, $option);
+
+            $data['total'] = $this->sc['So']->getDao('SoCompensation')->getOrdersEligibleForCompensation($where, array_merge($option, ['num_rows'=>1]));
+
             $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
             $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
-            $option["orderby"] = $sort . " " . $order;
 
-            $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-            $pconfig['total_rows'] = $data['total'];
-            $this->pagination_service->set_show_count_tag(TRUE);
-            $this->pagination_service->initialize($pconfig);
+            $config['base_url'] = base_url("cs/compensation/create/");
+            $config['total_rows'] = $data["total"];
+            $config['per_page'] = $limit;
+
+            $this->pagination->initialize($config);
+            $data['links'] = $this->pagination->create_links();
         }
 
-        $langfile = "CS000403_" . $this->_get_lang_id() . ".php";
+        $langfile = "CS000403_" . $this->getLangId() . ".php";
         include_once APPPATH . "language/" . $langfile;
 
         $data["notice"] = notice($lang);
         $data["lang"] = $lang;
 
         $this->load->view('cs/compensation/index_create', $data);
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
     }
 
     public function create_view($orderid = "")
@@ -100,62 +84,69 @@ class Compensation_create extends MY_Controller
             exit;
         }
 
-        //$sub_app_id = $this->getAppId()."03";
-        //$this->authorization_service->check_access_rights($sub_app_id, "Edit");
         if ($this->input->post('posted')) {
             $success = 1;
             $cp_sku = $this->input->post('compensate_sku');
             if ($cp_sku) {
-                if ($num_rows = $this->compensation_model->get_num_rows_compensation(array("so_no" => $orderid, "status" => 2))) {
+                if ($num_rows = $this->sc['So']->getDao('SoCompensation')->getNumRows(["so_no" => $orderid, "status" => 2])) {
                     $_SESSION["NOTICE"] = "The order has already been compensated.";
                     Redirect(base_url() . "cs/compensation_create/create/?so_no=" . $orderid . "&search=1");
                 }
-                $cp_obj = $this->compensation_model->get_compensation();
-                $cp_obj->set_so_no($orderid);
-                $cp_obj->set_line_no(1);
-                $cp_obj->set_item_sku($cp_sku);
-                $cp_obj->set_qty(1);
-                $cp_obj->set_status(1);
-                if (!$ret = $this->compensation_model->insert_compensation($cp_obj)) {
+                $cp_obj = $this->sc['So']->getDao('SoCompensation')->get();
+                $cp_obj->setSoNo($orderid);
+                $cp_obj->setLineNo(1);
+                $cp_obj->setItemSku($cp_sku);
+                $cp_obj->setQty(1);
+                $cp_obj->setStatus(1);
+                if (!$ret = $this->sc['So']->getDao('SoCompensation')->insert($cp_obj)) {
                     $success = 0;
-                    $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " " . $this->db->_error_message() . "\n";
+                    $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " " . $this->db->display_error() . "\n";
                 }
 
                 if ($success) {
-                    if ($reason_obj = $this->compensation_model->get_compensation_reason(array("id" => $this->input->post("cnotes")))) {
-                        if ($reason_obj->get_id() == 13) {
-                            $reason = $reason_obj->get_reason_cat() . " - " . $reason_obj->get_description() . ": " . $this->input->post("others_reason");
+                    if ($reason_obj = $this->sc['So']->getDao('CompensationReason')->get(["id" => $this->input->post("cnotes")])) {
+                        if ($reason_obj->getId() == 13) {
+                            $reason = $reason_obj->getReasonCat() . " - " . $reason_obj->getDescription() . ": " . $this->input->post("others_reason");
                         } else {
-                            $reason = $reason_obj->get_reason_cat() . " - " . $reason_obj->get_description();
+                            $reason = $reason_obj->getReasonCat() . " - " . $reason_obj->getDescription();
                         }
                     }
-                    $cph_obj = $this->compensation_model->get_history();
-                    $cph_obj->set_compensation_id($ret->get_id());
-                    $cph_obj->set_so_no($orderid);
-                    $cph_obj->set_item_sku($cp_sku);
-                    $cph_obj->set_note($reason);
-                    $cph_obj->set_status(1);
-                    if (!$this->compensation_model->insert_history($cph_obj)) {
+                    $cph_obj = $this->sc['So']->getDao('SoCompensationHistory')->get();
+                    $cph_obj->setCompensationId($ret->getId());
+                    $cph_obj->setSoNo($orderid);
+                    $cph_obj->setItemSku($cp_sku);
+                    $cph_obj->setNote($reason);
+                    $cph_obj->setStatus(1);
+                    if (!$this->sc['So']->getDao('SoCompensationHistory')->insert($cph_obj)) {
                         $success = 0;
-                        $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " " . $this->db->_error_message() . "\n";
+                        $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " " . $this->db->display_error() . "\n";
                     }
 
-                    $sohr_obj = $this->compensation_model->get_reason();
-                    $sohr_obj->set_so_no($orderid);
-                    $sohr_obj->set_reason("compensation");
-                    if (!$this->compensation_model->insert_reason($sohr_obj)) {
+                    $sohr_obj = $this->sc['So']->getDao('SoHoldReason')->get();
+                    $sohr_obj->setSoNo($orderid);
+                    $sohr_obj->setReason("compensation");
+                    if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_obj)) {
                         $success = 0;
-                        $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " " . $this->db->_error_message() . "\n";
+                        $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " " . $this->db->display_error() . "\n";
                     }
                 }
 
                 if ($success) {
-                    $so_obj = $this->compensation_model->get_so(array("so_no" => $orderid));
-                    $so_obj->set_hold_status(1);
-                    if (!$this->compensation_model->update_so($so_obj)) {
+                    $so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $orderid]);
+                    $update_hold_status = false;
+                    if ($so_obj->getHoldStatus() <> 1) {
+                        $update_hold_status = true;
+                        $holdStatus = 1;
+                    }
+                    $so_obj->setHoldStatus(1);
+                    if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $success = 0;
-                        $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " " . $this->db->_error_message() . "\n";
+                        $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " " . $this->db->display_error() . "\n";
                     } else {
+                        if ($update_hold_status) {
+                            $this->sc['So']->updateIofHoldStatusBySo($so_no, $holdStatus);
+                        }
+
                         Redirect(base_url() . "cs/compensation_create/create/");
                     }
                 }
@@ -164,23 +155,23 @@ class Compensation_create extends MY_Controller
             }
         }
 
-        $history_list = $this->compensation_model->get_history_list(array("so_no" => $orderid), array("array_list" => 1));
+        $history_list = $this->sc['So']->getDao('SoCompensationHistory')->getList(["so_no" => $orderid], ["lmit" => -1]);
         $data["history"] = $history_list;
         $data["itemcnt"] = count((array)$data["itemlist"]);
-        $data["orderobj"] = $so = $this->compensation_model->get_so(array("so_no" => $orderid, "refund_status" => 0, "hold_status" => 0, "status" => 3));
+        $data["orderobj"] = $so = $this->sc['So']->getDao('So')->get(["so_no" => $orderid, "refund_status" => 0, "hold_status" => 0, "status" => 3]);
         if (!count($so)) {
             $_SESSION["NOTICE"] = "Order No. " . $orderid . " is not eligible for compensation.";
             Redirect(base_url() . "cs/compensation_create/create/");
             exit;
         }
 
-        $langfile = "CS000403_" . $this->_get_lang_id() . ".php";
+        $langfile = "CS000403_" . $this->getLangId() . ".php";
         include_once APPPATH . "language/" . $langfile;
 
-        $order_item_list = $this->compensation_model->get_item_list(array("so_no" => $orderid));
+        $order_item_list = $this->sc['So']->getDao('SoItemDetail')->getListWithProdname(["so_no" => $orderid], ["sortby" => "line_no ASC"]);
         $data['order_item_list'] = $order_item_list;
 
-        $reason_list = $this->compensation_model->get_compensation_reason_list();
+        $reason_list = $this->sc['So']->getDao('CompensationReason')->getList([], ['limit'=>-1]);
         $data['reason_list'] = $reason_list;
 
         $data["lang"] = $lang;
@@ -190,7 +181,7 @@ class Compensation_create extends MY_Controller
         $this->load->view('cs/compensation/view_create', $data);
     }
 
-    public function prod_list($line = "", $platform_id = "")
+    public function prod_list($line = "", $platform_id = "", $offset = 0)
     {
         if ($platform_id == "") {
             show_404();
@@ -199,8 +190,8 @@ class Compensation_create extends MY_Controller
         $sub_app_id = $this->getAppId() . "01";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
-        $where = array();
-        $option = array();
+        $where = [];
+        $option = [];
         $where["platform_id"] = $platform_id;
         $submit_search = 0;
 
@@ -254,10 +245,8 @@ class Compensation_create extends MY_Controller
         $limit = '20';
 
         $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-        $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"]) {
-            $option["offset"] = $this->input->get("per_page");
-        }
+        $option["limit"] = $limit;
+        $option["offset"] = $offset;
 
         if (empty($sort)) {
             $sort = "prod_name";
@@ -271,26 +260,28 @@ class Compensation_create extends MY_Controller
 
         if ($this->input->get("search")) {
             $option["show_name"] = 1;
-            $data["objlist"] = $this->product_service->get_dao()->get_product_overview($where, $option);
-            $data["total"] = $this->product_service->get_dao()->get_product_overview($where, array("num_rows" => 1));
+            $data["objlist"] = $this->sc['Product']->getDao('Product')->getProductOverview($where, $option);
+
+            $data["total"] = $this->sc['Product']->getDao('Product')->getProductOverview($where, array("num_rows" => 1));
         }
 
-        include_once(APPPATH . "language/CS000401_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/CS000401_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
+        $config['base_url'] = base_url("cs/compensation_create/prod_list/$line/$platform_id");
+        $config['total_rows'] = $data["total"];
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
 
         $data["notice"] = notice($lang);
 
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
-//      $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
         $data["searchdisplay"] = "";
         $data["line"] = $line;
-        $data["pbv_obj"] = $this->platform_biz_var_service->get(array("selling_platform_id" => $platform_id));
-        $data["default_curr"] = $data["pbv_obj"]->get_platform_currency_id();
+        $data["pbv_obj"] = $this->sc['So']->getDao('PlatformBizVar')->get(array("selling_platform_id" => $platform_id));
+        $data["default_curr"] = $data["pbv_obj"]->getPlatformCurrencyId();
         $this->load->view('cs/compensation/view_prod_list', $data);
     }
 
@@ -299,5 +290,3 @@ class Compensation_create extends MY_Controller
         return $this->appId;
     }
 }
-
-?>

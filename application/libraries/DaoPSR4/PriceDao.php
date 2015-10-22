@@ -116,4 +116,32 @@ class PriceDao extends BaseDao
             return false;
         }
     }
+
+    public function getListWithBundleChecking($sku, $platform = 'WEBHK', $lang_id = 'en', $classname = 'ProductCostDto')
+    {
+        $sql = "SELECT p.expected_delivery_date,COALESCE(pw.warranty_in_month, p.warranty_in_month) AS warranty_in_month, a.discount, COALESCE(pc.prod_name, p.name) AS bundle_name, a.component_order, b.*
+                FROM v_prod_items a
+                JOIN v_prod_overview_wo_shiptype b
+                    ON a.item_sku = b.sku
+                INNER JOIN product AS p
+                    ON a.prod_sku = p.sku
+                LEFT JOIN product_warranty pw
+                    ON pw.sku = p.sku and pw.platform_id = ?
+                LEFT JOIN product_content pc
+                    ON a.prod_sku = pc.prod_sku AND pc.lang_id = ?
+                WHERE a.prod_sku = ?
+                AND b.platform_id= ?
+                ORDER BY a.component_order";
+
+        $rs = [];
+        if ($query = $this->db->query($sql, [$platform, $lang_id, $sku, $platform])) {
+            foreach ($query->result($classname) as $obj) {
+                $rs[] = $obj;
+            }
+
+            return empty($rs) ? $rs : (object)$rs;
+        } else {
+            return false;
+        }
+    }
 }

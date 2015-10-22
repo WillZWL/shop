@@ -988,12 +988,11 @@ class SoService extends BaseService
 
                     // if this parent has been split before, reset hold_status = 0
                     if ($so_obj->getHoldStatus() == 15) {
+
                         $new_so_obj->setHoldStatus(0);
-                        $sshVO = $this->getDao('SoHoldStatusHistory')->get();
-                        $sshDto = clone $sshVO;
-                        $sshDto->setSoNo($so_no);
-                        $sshDto->setHoldStatus(0);
-                        $this->getDao('SoHoldStatusHistory')->insert($sshDto);
+
+                        $holdStatus = 0;
+                        $this->updateIofHoldStatusBySo($so_no, $holdStatus);
                     }
 
                     # temporarily set as 0
@@ -1130,6 +1129,11 @@ class SoService extends BaseService
 
             if (!$failed) {
                 // all the groups have been procesed, update the parent so.status
+                $update_hold_status = false;
+                if ($so_obj->getHoldStatus() <> 15) {
+                    $update_hold_status = true;
+                    $holdStatus = 15;
+                }
                 $so_obj->setHoldStatus(15);  # set to has split child
                 $so_obj->setSplitStatus(2);
                 $so_obj->setSplitCreateBy($id);
@@ -1138,27 +1142,32 @@ class SoService extends BaseService
                     $message .= __LINE__ . " so_service. Failed update parent so $so_no. DB error: " . $so_dao->db->_error_message() . "\n";
                     $failed = 1;
                 } else {
+                    if ($update_hold_status) {
+                        $this->updateIofHoldStatusBySo($so_no, $holdStatus);
+                    }
+
                     $sohr_vo = $so_holdreason_dao->get();
                     $sohr_vo->setSoNo($so_no);
                     $sohr_vo->setReason("created_split");
                     $this->getDao('SoHoldReason')->insert($sohr_vo);
-
-                    $sshVO = $this->getDao('SoHoldStatusHistory')->get();
-                    $sshDto = clone $sshVO;
-                    $sshDto->setSoNo($so_no);
-                    $sshDto->setHoldStatus(15);
-                    $this->getDao('SoHoldStatusHistory')->insert($sshDto);
                 }
 
                 if (isset($input_so_obj)) {
                     // if we are splitting a child, then we set the child as inactive
+                    $update_status = false;
+                    if ($input_so_obj->getStatus() <> 0) {
+                        $update_status = true;
+                        $status = 0;
+                    }
+
                     $input_so_obj->setStatus(0);
-                    $status = 0;
                     if ($so_dao->update($input_so_obj) === FALSE) {
                         $message .= __LINE__ . " so_service. Failed update original input so_no {$input_so_obj->getSoNo()}. DB error: " . $so_dao->db->_error_message() . "\n";
                         $failed = 1;
                     } else {
-                        updateIofStatusBySo($so_no, $status);
+                        if ($update_status) {
+                            $this->updateIofStatusBySo($so_no, $status);
+                        }
                     }
                 }
             }
@@ -4856,14 +4865,19 @@ html;
                 }
             }
             if ($success) {
+                $update_status = false;
+                if ($so_obj->getStatus() <> 6) {
+                    $update_status = true;
+                    $status = 6;
+                }
                 $so_obj->setStatus(6);
-                $status = 6;
                 $so_obj->setDispatchDate(date("Y-m-d H:i:s"));
                 if ($this->getDao('So')->update($so_obj) === FALSE) {
                     $success = 0;
                 }
-
-                $this->updateIofStatusBySo($so_obj->getSoNo(), $status);
+                if ($update_status) {
+                    $this->updateIofStatusBySo($so_obj->getSoNo(), $status);
+                }
             }
 
             if ($trans_handle) {
@@ -5351,6 +5365,11 @@ html;
                     $new_fraud_order_obj->set_status(1);
                     if ($this->get_fraudulent_order_service()->insert($new_fraud_order_obj)) {   //set order status as 1
                         if (($so_obj = $this->getDao('So')->get(array("so_no" => $so_no)))) {
+                            $update_hold_status = false;
+                            if ($so_obj->getHoldStatus() <> 1) {
+                                $update_hold_status = true;
+                                $holdStatus = 1;
+                            }
                             $so_obj->setHoldStatus(1);
                             if ($this->getDao('So')->update($so_obj)) {   //set the so_hold_reason
                                 if ($sohr_vo = $this->getDao('SoHoldReason')->get()) {
@@ -5369,11 +5388,29 @@ html;
                                     $socc_obj->set_fd_status(2);
                                     $this->getDao('SoCreditChk')->$action($socc_obj);
 
+                                    $update_status = false;
+                                    if ($so_obj->getStatus() <> 0) {
+                                        $update_status = true;
+                                        $status = 0;
+                                    }
+
+                                    if ($so_obj->getHoldStatus() <> 0) {
+                                        $update_hold_status = true;
+                                        $holdStatus = 0;
+                                    }
+
                                     $so_obj->setStatus(0);
                                     $so_obj->setHoldStatus(0);
                                     if ($this->getDao('So')->update($so_obj)) {
-                                         $this->updateIofStatusBySo($so_no, 0);
+                                        if ($update_status) {
+                                            $this->updateIofStatusBySo($so_no, $status);
+                                        }
                                     }
+
+                                    if ($update_hold_status) {
+                                        $this->updateIofHoldStatusBySo($so_no, $holdStatus);
+                                    }
+
                                     $this->getDao('SoCreditChk')->db->trans_complete();
 
                                     //add an order note
@@ -5563,9 +5600,17 @@ html;
 
                             if ($so_obj = $this->getDao('So')->get(["so_no" => $so_no])) {
 
+                                $update_status = false;
+                                if ($so_obj->getStatus() <> 5) {
+                                    $update_status = true;
+                                    $status = 5;
+                                }
+
                                 $so_obj->setStatus("5");
                                 if ($this->getDao('So')->update($so_obj)) {
-                                    $this->updateIofStatusBySo($so_no, 5);
+                                    if ($update_status) {
+                                        $this->updateIofStatusBySo($so_no, $status);
+                                    }
                                 } else {
                                     $error +=1;
                                 }
@@ -5651,6 +5696,39 @@ html;
         $oshVo = $this->getDao('OrderStatusHistory')->insert($oshObj);
     }
 
+    public function updateIofHoldStatusBySo($so_no, $holdStatus)
+    {
+        $iofObjList = $this->getDao('IntegratedOrderFulfillment')->getList(['so_no'=>$so_no]);
+        if((array) $iofObjList) {
+            foreach ($iofObjList as $iofObj) {
+                $iofObj->setholdStatus($holdStatus);
+                $this->getDao('IntegratedOrderFulfillment')->update($iofObj);
+            }
+
+            $this->saveSoHoldStatusHistory($so_no, $holdStatus);
+        }
+    }
+
+    public function saveSoHoldStatusHistory($so_no, $holdStatus)
+    {
+        $oshVo = $this->getDao('SoHoldStatusHistory')->get();
+        $oshObj = clone $oshVo;
+        $oshObj->setSoNo($so_no);
+        $oshObj->setHoldStatus($holdStatus);
+        $oshVo = $this->getDao('SoHoldStatusHistory')->insert($oshObj);
+    }
+
+    public function updateIofRefundStatusBySo($so_no, $refundStatus)
+    {
+        $iofObjList = $this->getDao('IntegratedOrderFulfillment')->getList(['so_no'=>$so_no]);
+        if((array) $iofObjList) {
+            foreach ($iofObjList as $iofObj) {
+                $iofObj->setRefundStatus($refundStatus);
+                $this->getDao('IntegratedOrderFulfillment')->update($iofObj);
+            }
+        }
+    }
+
     public function updateIofOutstandingQtyBySoid($so_no, $line_no, $item_sku, $soid_obj)
     {
         if ($iofObj = $this->getDao('IntegratedOrderFulfillment')->get(['so_no'=>$so_no, 'line_no'=>$line_no,'sku'=>$item_sku])) {
@@ -5714,21 +5792,29 @@ html;
                         }
                     }
                     if ($success) {
+                        $update_status = false;
                         $status = 5;
                         $so_obj = $this->getDao('So')->get(["so_no" => $so_no]);
                         if ($this->getDao('SoAllocate')->getNumRows(["so_no" => $so_no])) {
+                            if ($so_obj->getStatus() <> 4) {
+                                $update_status = true;
+                                $status = 4;
+                            }
                             $so_obj->setStatus("4");
-                            $status = 4;
                         } else {
+                            if ($so_obj->getStatus() <> 3) {
+                                $update_status = true;
+                                $status = 3;
+                            }
                             $so_obj->setStatus("3");
-                            $status = 3;
                         }
                         if (!$this->getDao('So')->update($so_obj)) {
                             $success = 0;
                             $error = __LINE__ . " " . $this->db->_error_message();
                         }
-
-                        $this->updateIofStatusBySo($so_no, $status);
+                        if ($update_status) {
+                            $this->updateIofStatusBySo($so_no, $status);
+                        }
                     }
                 } else {
                     $success = $this->moveOrderToDispatch($so_no, $soal_list, $valueArr["postCourierId"], $valueArr["postCourier"]);
@@ -5861,14 +5947,21 @@ html;
                             }
                         }
                         if ($success) {
+                            $update_status = false;
                             $status = 5;
                             $so_obj = $this->getDao('So')->get(["so_no" => $so_no]);
                             if ($this->getDao('SoAllocate')->getNumRows(["so_no" => $so_no])) {
+                                if ($so_obj->getStatus() <> 4) {
+                                    $update_status = true;
+                                    $status = 4;
+                                }
                                 $so_obj->setStatus("4");
-                                $status = 4;
                             } else {
+                                if ($so_obj->getStatus() <> 3) {
+                                    $update_status = true;
+                                    $status = 3;
+                                }
                                 $so_obj->setStatus("3");
-                                $status = 3;
                             }
 
 
@@ -5876,8 +5969,9 @@ html;
                                 $success = 0;
                                 $error = __LINE__ . "[" . ($rs1 ? 1 : 0) . ($rs2 ? 1 : 0) . "]" . $this->db->_error_message();
                             }
-
-                            $this->updateIofStatusBySo($so_no, $status);
+                            if ($update_status) {
+                                $this->updateIofStatusBySo($so_no, $status);
+                            }
                         }
                     } else {
                         $sosh_obj->setStatus("2");

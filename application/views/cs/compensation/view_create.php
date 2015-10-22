@@ -75,9 +75,7 @@
         <col width="180">
         <col width="20">
 
-        <?php
-        if (count($history)) {
-            ?>
+        <?php if (count($history)) : ?>
             <tr class="header">
                 <td height="20">&nbsp;</td>
                 <td><?= $lang["date"] ?></td>
@@ -88,27 +86,25 @@
             </tr>
             <?php
             $i = 0;
-            foreach ($history as $obj) {
+            foreach ($history as $obj) :
                 ?>
                 <tr class="row<?= $i % 2 ?>">
                     <td>&nbsp;</td>
-                    <td><?= $obj->get_create_on() ?></td>
-                    <td><?= $obj->get_note() ?></td>
-                    <td><?= $obj->get_create_by() ?></td>
-                    <td><?= $lang["app_status"][$obj->get_status()] ?></td>
+                    <td><?= $obj->getCreateOn() ?></td>
+                    <td><?= $obj->getNote() ?></td>
+                    <td><?= $obj->getCreateBy() ?></td>
+                    <td><?= $lang["app_status"][$obj->getStatus()] ?></td>
                     <td>&nbsp;</td>
                 </tr>
                 <?php
                 $i++;
-            }
-        } else {
+            endforeach;
+        else :
             ?>
             <tr class="row0">
                 <td align="center" colspan="7" height="20"><?= $lang["no_history"] ?></td>
             </tr>
-        <?php
-        }
-        ?>
+        <?php endif; ?>
     </table>
     <table border="0" cellpadding="0" cellspacing="0" class="page_header" width="100%">
         <tr height="20">
@@ -131,56 +127,56 @@
             <td width="15%" height="20" align="right" class="field"
                 style="padding-right:10px;"><?= $lang["order_status"] ?></td>
             <td width="35%" align="left" class="value"
-                style="padding-left:10px;"><?= $lang["so_status"][$orderobj->get_status()] ?></td>
+                style="padding-left:10px;"><?= $lang["so_status"][$orderobj->getStatus()] ?></td>
         </tr>
         <tr>
             <td width="15%" height="20" align="right" class="field"
                 style="padding-right:10px;"><?= $lang["platform"] ?></td>
             <td width="35%" align="left" class="value"
-                style="padding-left:10px;"><?= $lang["so_platform"][$orderobj->get_platform_id()] ?></td>
+                style="padding-left:10px;"><?= $lang["so_platform"][$orderobj->getPlatformId()] ?></td>
             <td width="15%" height="20" align="right" class="field"
                 style="padding-right:10px;"><?= $lang["order_amount"] ?></td>
             <td width="35%" align="left" class="value"
-                style="padding-left:10px;"><?= $orderobj->get_currency_id() . " " . number_format(($orderobj->get_amount() - $orderobj->get_delivery_charge()), 2) ?></td>
+                style="padding-left:10px;"><?= $orderobj->getCurrencyId() . " " . number_format(($orderobj->getAmount() - $orderobj->getDeliveryCharge()), 2) ?></td>
         </tr>
         <?php
-        if (ereg('^WS', $orderobj->get_platform_id())) {
+        if (ereg('^WS', $orderobj->getPlatformId())) :
             ?>
             <tr>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["biztype"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $orderobj->get_biz_type() ?></td>
+                    style="padding-left:10px;"><?= $orderobj->getBizType() ?></td>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["order_delivery_charge"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $orderobj->get_currency_id() . " " . number_format($orderobj->get_delivery_charge(), 2) ?></td>
+                    style="padding-left:10px;"><?= $orderobj->getCurrencyId() . " " . number_format($orderobj->getDeliveryCharge(), 2) ?></td>
             </tr>
         <?php
-        } else {
+        else :
             ?>
             <tr>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["platform_order_id"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $orderobj->get_platform_order_id() ?></td>
+                    style="padding-left:10px;"><?= $orderobj->getPlatformOrderId() ?></td>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["order_delivery_charge"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $orderobj->get_currency_id() . " " . $orderobj->get_delivery_charge() ?></td>
+                    style="padding-left:10px;"><?= $orderobj->getCurrencyId() . " " . $orderobj->getDeliveryCharge() ?></td>
             </tr>
         <?php
-        }
+        endif;
         ?>
         <tr>
             <td width="15%" height="20" align="right" class="field"
                 style="padding-right:10px;"><?= $lang["client_id_and_name"] ?></td>
             <td width="35%" align="left" class="value"
-                style="padding-left:10px;"><?= $orderobj->get_client_id() . " - " . $orderobj->get_bill_name() ?></td>
+                style="padding-left:10px;"><?= $orderobj->getClientId() . " - " . $orderobj->getBillName() ?></td>
             <td width="15%" height="20" align="right" class="field"
                 style="padding-right:10px;"><?= $lang["order_total"] ?></td>
             <td width="35%" align="left" class="value"
-                style="padding-left:10px;"><?= $orderobj->get_currency_id() . " " . number_format(($orderobj->get_amount()), 2) ?></td>
+                style="padding-left:10px;"><?= $orderobj->getCurrencyId() . " " . number_format(($orderobj->getAmount()), 2) ?></td>
         </tr>
         <tr>
             <td width="15%" height="20" align="right" class="field"
@@ -204,23 +200,23 @@
                         <td height="20">&nbsp;</td>
                     </tr>
                     <?php
-                    $soldprice = array();
+                    $soldprice = [];
                     $i = 0;
-                    foreach ($order_item_list as $obj) {
+                    foreach ($order_item_list as $obj) :
                         ?>
                         <tr height="20" class="row<?= $i % 2 ?>">
                             <td></td>
-                            <td style="padding-left:10px;"><?= $obj->get_item_sku() ?></td>
-                            <td style="padding-left:10px;"><?= $obj->get_name() ?></td>
-                            <td style="padding-left:10px;"><?= number_format($obj->get_unit_price() / (1 - $obj->get_discount() / 100), 2) ?></td>
-                            <td style="padding-left:10px;"><?= $obj->get_unit_price() ?></td>
-                            <td style="padding-left:10px;"><?= $obj->get_qty() ?></td>
+                            <td style="padding-left:10px;"><?= $obj->getItemSku() ?></td>
+                            <td style="padding-left:10px;"><?= $obj->getName() ?></td>
+                            <td style="padding-left:10px;"><?= number_format($obj->getUnitPrice() / (1 - $obj->getDiscount() / 100), 2) ?></td>
+                            <td style="padding-left:10px;"><?= $obj->getUnitPrice() ?></td>
+                            <td style="padding-left:10px;"><?= $obj->getQty() ?></td>
                             <td></td>
                         </tr>
                         <?php
-                        $soldprice[$obj->get_item_sku()] = $obj->get_unit_price();
+                        $soldprice[$obj->getItemSku()] = $obj->getUnitPrice();
                         $i++;
-                    }
+                    endforeach;
                     ?>
                 </table>
             </td>
@@ -281,7 +277,7 @@
             <tr class="row1" height="30px">
                 <td>&nbsp;</td>
                 <td align="left" colspan="5">
-                    <a href="<?= base_url() ?>cs/compensation_create/prod_list/<?= $i ?>/<?= $orderobj->get_platform_id() ?>"
+                    <a href="<?= base_url() ?>cs/compensation_create/prod_list/<?= $i ?>/<?= $orderobj->getPlatformId() ?>"
                        style="padding-left:10px" rel="lyteframe" rev="width: 1024px; height: 600px; scrolling: auto;"
                        title="Add Compensation Item" class="search_button"><input type="button"
                                                                                   value="Add Compensation Item"></a>
@@ -294,24 +290,16 @@
                 <td width="30%" height="20" align="right" style="padding-right:10px;"
                     class="field"><?= $lang["compensation_notes"] ?></td>
                 <td width="70%" align="left" style="padding-left:10px;" class="value">
-                    <?php
-                    if ($reason_list) {
-                        ?>
+                    <?php if ($reason_list) : ?>
                         <select name="cnotes" dname="Compensation Reason" class="text" onchange="checknote(this.value)"
                                 notEmpty>
                             <option></option>
-                            <?php
-                            foreach ($reason_list as $reason_obj) {
-                                ?>
+                            <?php foreach ($reason_list as $reason_obj) : ?>
                                 <option
-                                    value="<?= $reason_obj->get_id() ?>"><?= $reason_obj->get_reason_cat() . " - " . $reason_obj->get_description() ?></option>
-                            <?php
-                            }
-                            ?>
+                                    value="<?= $reason_obj->getId() ?>"><?= $reason_obj->getReasonCat() . " - " . $reason_obj->getDescription() ?></option>
+                            <?php endforeach; ?>
                         </select>
-                    <?php
-                    }
-                    ?>
+                    <?php endif; ?>
                     <input id="others_reason" name="others_reason" dname="Others Reason" value=""
                            style="width:55%;display:none" Disabled>
                 </td>
@@ -326,9 +314,7 @@
         </table>
         <input type="hidden" value="1" name="posted">
     </form>
-    <?php
-    if (check_app_feature_access_right($app_id, "CS000500_back_to_list_btn")) {
-        ?>
+    <?php if (check_app_feature_access_right($app_id, "CS000500_back_to_list_btn")) :?>
         <table border="0" cellpadding="0" cellspacing="0" class="page_header" width="100%">
             <tr height="20" bgcolor="#000033">
                 <td style="padding-left:10px;"><input type="button" value="<?= $lang["back_to_list"] ?>"
@@ -339,9 +325,7 @@
                 <td>&nbsp;</td>
             </tr>
         </table>
-    <?php
-    }
-    ?>
+    <?php endif; ?>
 </div>
 <?= $notice["js"] ?>
 </body>

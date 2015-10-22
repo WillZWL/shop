@@ -273,8 +273,16 @@ class Refund extends MY_Controller
                 }
 
                 //end added by Jack
+                $update_refund_status = false;
+                if ($so_obj->getRefundStatus() <> $status) {
+                    $update_refund_status = true;
+                    $refundStatus = $status;
+                }
                 $so_obj->setRefundStatus($status);
                 if ($this->sc['So']->getDao('So')->update($so_obj) !== FALSE) {
+                    if ($update_refund_status) {
+                        $this->sc['So']->updateIofRefundStatusBySo($orderid, $refundStatus);
+                    }
 
                     if ($result = $this->sc['Refund']->getDao('Refund')->insert($refund_obj)) {
                         $refund_id = $result->getId();
@@ -308,11 +316,20 @@ class Refund extends MY_Controller
                                 if ($split_so_group = $so_obj->getSplitSoGroup()) {
                                     if ($split_so_group && ($so_obj->getSoNo() != $split_so_group)) {
                                         if ($split_parent_obj = $this->sc['So']->getDao('So')->get(["so_no" => $split_so_group])) {
+                                            $update_refund_status = false;
+                                            if ($split_parent_obj->getRefundStatus() <> $status) {
+                                                $update_refund_status = true;
+                                                $refundStatus = $status;
+                                            }
+
                                             $split_parent_obj->setRefundStatus($status);
                                             if ($this->sc['So']->getDao('So')->update($split_parent_obj) === FALSE) {
                                                 $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " Error update split parent so_no $split_so_group. " . $this->db->display_error();
+                                            } else {
+                                                if ($update_refund_status) {
+                                                    $this->sc['So']->updateIofRefundStatusBySo($split_so_group, $refundStatus);
+                                                }
                                             }
-
                                         }
                                     }
                                 }
@@ -549,12 +566,34 @@ class Refund extends MY_Controller
                         $app_status = 'A';
                     }
                 }
+
+                $update_hold_status = false;
                 if ($hold == '1') {
+                    if ($so_obj->getHoldStatus() <> 1) {
+                        $update_hold_status = true;
+                        $holdStatus = 1;
+                    }
+
                     $so_obj->setHoldStatus($hold);
                 }
+
+                $update_refund_status = false;
+                if ($so_obj->getRefundStatus() <> $status) {
+                    $update_refund_status = true;
+                    $refundStatus = $status;
+                }
+
                 $so_obj->setRefundStatus($status);
                 $ret = $this->sc['So']->getDao('So')->update($so_obj);
                 if ($ret) {
+                    if ($update_hold_status) {
+                        $this->sc['So']->updateIofHoldStatusBySo($refund_obj->getSoNo(), $holdStatus);
+                    }
+
+                    if ($update_refund_status) {
+                        $this->sc['So']->updateIofRefundStatusBySo($refund_obj->getSoNo(), $refundStatus);
+                    }
+
                     if ($hold == '1') {
                         if ($so_hold_reason_obj = $this->sc['So']->getDao('SoHoldReason')->get()) {
                             $holdrea = clone $so_hold_reason_obj;
@@ -855,11 +894,32 @@ class Refund extends MY_Controller
                         $app_status = 'A';
                     }
                 }
+
+                $update_hold_status = false;
                 if ($hold == '1') {
+                    if ($so_obj->getHoldStatus() <> 1) {
+                        $update_hold_status = true;
+                        $holdStatus = 1;
+                    }
                     $so_obj->setHoldStatus($hold);
                 }
+
+                $update_refund_status = false;
+                if ($so_obj->getRefundStatus() <> $status) {
+                    $update_refund_status = true;
+                    $refundStatus = $status;
+                }
+
                 $so_obj->setRefundStatus($status);
                 $ret = $this->sc['So']->getDao('So')->update($so_obj);
+                if ($update_hold_status) {
+                    $this->sc['So']->updateIofHoldStatusBySo($refund_obj->getSoNo(), $holdStatus);
+                }
+
+                if ($update_refund_status) {
+                    $this->sc['So']->updateIofRefundStatusBySo($refund_obj->getSoNo(), $refundStatus);
+                }
+
                 $this->sc['Refund']->checkAction($refundid, "CS");
 
                 $hobj->setAppStatus($app_status);
@@ -868,8 +928,17 @@ class Refund extends MY_Controller
                 $split_so_group = $so_obj->getSplitSoGroup();
                 if ($split_so_group) {
                     $split_parent_obj = $this->sc['So']->getDao('So')->get(["so_no" => $split_so_group]);
+                    $update_refund_status_2 = false;
+                    if ($split_parent_obj->getRefundStatus() <> $status) {
+                        $update_refund_status_2 = true;
+                        $refundStatus = $status;
+                    }
+
                     $split_parent_obj->setRefundStatus($status);
                     $ret = $this->sc['So']->getDao('So')->update($split_parent_obj);
+                    if ($update_refund_status_2) {
+                        $this->sc['So']->updateIofRefundStatusBySo($split_so_group, $refundStatus);
+                    }
                 }
 
                 if ($ret) {
@@ -1123,12 +1192,31 @@ class Refund extends MY_Controller
                 if (!$err) {
                     if ($denial) {
                         $so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $refund_obj->getSoNo()]);
+                        $update_refund_status = false;
+                        if ($so_obj->getRefundStatus() <> 0) {
+                            $update_refund_status = true;
+                            $refundStatus = 0;
+                        }
+
                         $so_obj->setRefundStatus(0);
+                        $update_hold_status = false;
                         if (($so_obj->getStatus() != 1) || ($so_obj->getStatus() != 6)) {
+                            if ($so_obj->getHoldStatus() <> 1) {
+                                $update_hold_status = true;
+                                $holdStatus = 1;
+                            }
                             $so_obj->setHoldStatus(1);
                         }
                         $ret = $this->sc['So']->getDao('So')->update($so_obj);
                         if ($ret) {
+                            if ($update_hold_status) {
+                                $this->sc['So']->updateIofHoldStatusBySo($refund_obj->getSoNo(), $holdStatus);
+                            }
+
+                            if ($update_refund_status) {
+                                $this->sc['So']->updateIofRefundStatusBySo($refund_obj->getSoNo(), $refundStatus);
+                            }
+
                             if (($so_obj->getStatus() != 1) || ($so_obj->getStatus() != 6)) {
                                 if ($so_hold_reason_obj = $this->sc['So']->getDao('SoHoldReason')->get()) {
                                     $holdrea = clone $so_hold_reason_obj;

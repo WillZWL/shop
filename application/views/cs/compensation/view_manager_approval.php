@@ -58,7 +58,7 @@
             <col width="180">
             <col width="20">
             <?php
-            if (count($history)) {
+            if (count($history)) :
                 ?>
                 <tr class="header">
                     <td height="20">&nbsp;</td>
@@ -70,26 +70,26 @@
                 </tr>
                 <?php
                 $i = 0;
-                foreach ($history as $obj) {
+                foreach ($history as $obj) :
                     ?>
                     <tr class="row<?= $i % 2 ?>">
                         <td>&nbsp;</td>
-                        <td><?= $obj->get_create_on() ?></td>
-                        <td><?= $obj->get_note() ?></td>
-                        <td><?= $obj->get_create_by() ?></td>
-                        <td><?= $lang["app_status"][$obj->get_status()] ?></td>
+                        <td><?= $obj->getCreateOn() ?></td>
+                        <td><?= $obj->getNote() ?></td>
+                        <td><?= $obj->getCreateBy() ?></td>
+                        <td><?= $lang["app_status"][$obj->getStatus()] ?></td>
                         <td>&nbsp;</td>
                     </tr>
                     <?php
                     $i++;
-                }
-            } else {
+                endforeach;
+            else :
                 ?>
                 <tr class="row0">
                     <td align="center" colspan="7" height="20"><?= $lang["no_history"] ?></td>
                 </tr>
             <?php
-            }
+            endif;
             ?>
         </table>
     </div>
@@ -112,60 +112,54 @@
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["order_number"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $orderobj->get_so_no() . ($orderobj->get_txn_id() != "" ? " (" . $lang["txn_id"] . " : " . $orderobj->get_txn_id() . ") " : "") ?></td>
+                    style="padding-left:10px;"><?= $orderobj->getSoNo() . ($orderobj->getTxnId() != "" ? " (" . $lang["txn_id"] . " : " . $orderobj->getTxnId() . ") " : "") ?></td>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["order_status"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $lang["so_status"][$orderobj->get_status()] ?></td>
+                    style="padding-left:10px;"><?= $lang["so_status"][$orderobj->getStatus()] ?></td>
             </tr>
             <tr>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["platform"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $lang["so_platform"][$orderobj->get_platform_id()] ?></td>
+                    style="padding-left:10px;"><?= $lang["so_platform"][$orderobj->getPlatformId()] ?></td>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["order_amount"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $orderobj->get_currency_id() . " " . number_format(($orderobj->get_amount() - $orderobj->get_delivery_charge()), 2) ?></td>
+                    style="padding-left:10px;"><?= $orderobj->getCurrencyId() . " " . number_format(($orderobj->getAmount() - $orderobj->getDeliveryCharge()), 2) ?></td>
             </tr>
-            <?php
-            if (ereg('^WS', $orderobj->get_platform_id())) {
-                ?>
+            <?php if (ereg('^WS', $orderobj->getPlatformId())) : ?>
                 <tr>
                     <td width="15%" height="20" align="right" class="field"
                         style="padding-right:10px;"><?= $lang["biztype"] ?></td>
                     <td width="35%" align="left" class="value"
-                        style="padding-left:10px;"><?= $orderobj->get_biz_type() ?></td>
+                        style="padding-left:10px;"><?= $orderobj->getBizType() ?></td>
                     <td width="15%" height="20" align="right" class="field"
                         style="padding-right:10px;"><?= $lang["order_delivery_charge"] ?></td>
                     <td width="35%" align="left" class="value"
-                        style="padding-left:10px;"><?= $orderobj->get_currency_id() . " " . number_format($orderobj->get_delivery_charge(), 2) ?></td>
+                        style="padding-left:10px;"><?= $orderobj->getCurrencyId() . " " . number_format($orderobj->getDeliveryCharge(), 2) ?></td>
                 </tr>
-            <?php
-            } else {
-                ?>
+            <?php else : ?>
                 <tr>
                     <td width="15%" height="20" align="right" class="field"
                         style="padding-right:10px;"><?= $lang["platform_order_id"] ?></td>
                     <td width="35%" align="left" class="value"
-                        style="padding-left:10px;"><?= $orderobj->get_platform_order_id() ?></td>
+                        style="padding-left:10px;"><?= $orderobj->getPlatformOrderId() ?></td>
                     <td width="15%" height="20" align="right" class="field"
                         style="padding-right:10px;"><?= $lang["order_delivery_charge"] ?></td>
                     <td width="35%" align="left" class="value"
-                        style="padding-left:10px;"><?= $orderobj->get_currency_id() . " " . $orderobj->get_delivery_charge() ?></td>
+                        style="padding-left:10px;"><?= $orderobj->getCurrencyId() . " " . $orderobj->getDeliveryCharge() ?></td>
                 </tr>
-            <?php
-            }
-            ?>
+            <?php endif; ?>
             <tr>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["client_id_and_name"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $orderobj->get_client_id() . " - " . $orderobj->get_bill_name() ?></td>
+                    style="padding-left:10px;"><?= $orderobj->getClientId() . " - " . $orderobj->getBillName() ?></td>
                 <td width="15%" height="20" align="right" class="field"
                     style="padding-right:10px;"><?= $lang["order_total"] ?></td>
                 <td width="35%" align="left" class="value"
-                    style="padding-left:10px;"><?= $orderobj->get_currency_id() . " " . number_format(($orderobj->get_amount()), 2) ?></td>
+                    style="padding-left:10px;"><?= $orderobj->getCurrencyId() . " " . number_format(($orderobj->getAmount()), 2) ?></td>
             </tr>
             <tr>
                 <td width="15%" height="20" align="right" class="field"
@@ -191,21 +185,21 @@
                         <?php
                         $soldprice = array();
                         $i = 0;
-                        foreach ($order_item_list as $obj) {
+                        foreach ($order_item_list as $obj) :
                             ?>
                             <tr height="20" class="row<?= $i % 2 ?>">
                                 <td></td>
-                                <td style="padding-left:10px;"><?= $obj->get_item_sku() ?></td>
-                                <td style="padding-left:10px;"><?= $obj->get_name() ?></td>
-                                <td style="padding-left:10px;"><?= number_format($obj->get_unit_price() / (1 - $obj->get_discount() / 100), 2) ?></td>
-                                <td style="padding-left:10px;"><?= $obj->get_unit_price() ?></td>
-                                <td style="padding-left:10px;"><?= $obj->get_qty() ?></td>
+                                <td style="padding-left:10px;"><?= $obj->getItemSku() ?></td>
+                                <td style="padding-left:10px;"><?= $obj->getName() ?></td>
+                                <td style="padding-left:10px;"><?= number_format($obj->getUnitPrice() / (1 - $obj->getDiscount() / 100), 2) ?></td>
+                                <td style="padding-left:10px;"><?= $obj->getUnitPrice() ?></td>
+                                <td style="padding-left:10px;"><?= $obj->getQty() ?></td>
                                 <td></td>
                             </tr>
                             <?php
-                            $soldprice[$obj->get_item_sku()] = $obj->get_unit_price();
+                            $soldprice[$obj->getItemSku()] = $obj->getUnitPrice();
                             $i++;
-                        }
+                        endforeach;
                         ?>
                     </table>
                 </td>
@@ -243,10 +237,10 @@
                 <tr class="row1">
                     <td height="20"><input type="hidden" id="compensate_sku" name="compensate_sku" value="" DISABLED>
                     </td>
-                    <td style="padding-left:4px;" id="csku"><?= $compensate_obj->get_item_sku() ?></td>
-                    <td style="padding-left:4px;" id="cname"><?= $compensate_obj->get_prod_name() ?></td>
+                    <td style="padding-left:4px;" id="csku"><?= $compensate_obj->getItemSku() ?></td>
+                    <td style="padding-left:4px;" id="cname"><?= $compensate_obj->getProdName() ?></td>
                     <td style="padding-left:4px;"
-                        id="cprice"><?= $compensate_obj->get_currency_id() . " " . (($compensate_obj->get_price()) ? $compensate_obj->get_price() : "0, no ref list price") ?></td>
+                        id="cprice"><?= $compensate_obj->getCurrencyId() . " " . (($compensate_obj->getPrice()) ? $compensate_obj->getPrice() : "0, no ref list price") ?></td>
                     <td style="padding-left:4px;" id="cqty">1</td>
                     <td>&nbsp;</td>
                 </tr>
@@ -272,24 +266,19 @@
                 </td>
             </tr>
         </table>
-        <input type="hidden" name="orderid" value="<?= $orderobj->get_so_no() ?>">
+        <input type="hidden" name="orderid" value="<?= $orderobj->getSoNo() ?>">
         <input type="hidden" name="posted" value="1">
         <input type="hidden" id="action" name="action" value="">
     </form>
 
     <table border="0" cellpadding="0" cellspacing="0" class="page_header" width="100%">
         <tr height="30" bgcolor="#000033">
-            <?php
-            if (check_app_feature_access_right($app_id, "CS000405_back_to_list_btn"))
-            {
-            ?>
+            <?php if (check_app_feature_access_right($app_id, "CS000405_back_to_list_btn")) : ?>
             <td style="padding-left:10px;"><input type="button" value="<?= $lang["back_to_list"] ?>"
                                                   onClick="Redirect('<?= base_url() . "cs/compensation/manager_approval/?" . $_SESSION["QUERY_STRING"] ?>');">
             </td>
         </tr>
-        <?php
-        }
-        ?>
+            <?php endif; ?>
         <tr height="20">
             <td>&nbsp;</td>
         </tr>
