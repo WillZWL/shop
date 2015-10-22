@@ -17,7 +17,18 @@ class PricingRulesService extends BaseService
         $data["total"] = $this->getDao('PricingRules')->getPricingRules($where, ["num_rows" => 1]);
         return $data;
     }
-
+	
+	public function getExistingRule($where = [])
+    {
+        $data["existing"] = $this->getDao('PricingRules')->getExistingRule($where, ["num_rows" => 1]);
+        return $data;
+    }
+	
+	public function getPricingRulesByPlatform($where = [])
+    {
+        $data["pricingrules"] = $this->getDao('PricingRules')->getPricingRulesByPlatform($where);
+        return $data;
+    }
 }
 
 

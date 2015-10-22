@@ -123,7 +123,7 @@ class Price_service extends Base_service
     {
         $this->factory_service = $svc;
     }
-
+		
     public function get_pricing_tool_info($platform_id = "", $sku = "", $app_id = null)
         // public function get_pricing_tool_info($platform_id = "", $sku = "")
     {
@@ -2202,12 +2202,14 @@ start;
     public function update_sku_price($platform_id = "", $local_sku = "", $price = "", $commit = false)
     {
         $affected = $this->get_dao()->update_sku_price($platform_id, $local_sku, $price, $commit);
+		
+		//print $this->get_dao()->db->last_query();
 
         if ($affected)
             $this->price_margin_service->refresh_all_platform_margin(array("id" => $platform_id), $local_sku);
 
-        $this->get_product_update_followup_service()->adwords_update($local_sku);
-        $this->get_product_update_followup_service()->google_shopping_update($local_sku);
+        /*$this->get_product_update_followup_service()->adwords_update($local_sku);
+        $this->get_product_update_followup_service()->google_shopping_update($local_sku);*/
         return $affected;
     }
 
