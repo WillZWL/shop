@@ -9,14 +9,75 @@ class TemplateService extends BaseService
         $this->pdfRenderingService = new PdfRenderingService;
     }
 
+    public function getEmail($where, array $replace = [])
+    {
+        $tpl_obj = $this->getDao('Template')->get($where);
+
+        if (empty($tpl_obj)) {
+            // TODO
+            // info IT no template
+            // write a common function,
+            // contains $this->getDao('Template')->db->last_query();
+            return false;
+        }
+
+        if (!empty($replace)) {
+            foreach ($replace as $key => $value) {
+                $search[] = '[:' . $key . ':]';
+                $replace_value[] = $value;
+            }
+
+            $tpl_obj->setSubject(str_replace($search, $replace_value, $tpl_obj->getSubject()));
+            $tpl_obj->setMessageHtml(str_replace($search, $replace_value, $tpl_obj->getMessageHtml()));
+            $tpl_obj->setMessageAlt(str_replace($search, $replace_value, $tpl_obj->getMessageAlt()));
+        }
+
+        return $tpl_obj;
+    }
+
+    public function getVariablesInTemplate($template_string = "", $start_delimiter = "[:", $end_delimiter = ":]")
+    {
+        /* ======================================================================
+            This function gets all the variables in a template string, usually
+            encapsulated by [::]
+            e.g. [:client_id:], [:so_no:]
+        ====================================================================== */
+
+        $var_with_count_arr = $var_arr = $search_var_start = $search_var_end = array();
+        $count_of_var = array();
+
+        if ($template_string && $start_delimiter && $end_delimiter) {
+            if ($search_var_start = explode($start_delimiter, $template_string)) {
+                unset($search_var_start[0]);    # the array before the first "[:" is unwanted
+                foreach ($search_var_start as $key => $value) {
+                    # any array without ":]" in should not be a variable
+                    if (strpos($value, "$end_delimiter")) {
+                        $search_var_end = explode("$end_delimiter", trim($value));
+                        $var_arr[] = trim($search_var_end[0]); # anything after ":]" is unwanted
+                    }
+                }
+
+                # count number of occurances for each variable
+                if ($count_of_var = array_count_values($var_arr)) {
+                    foreach ($count_of_var as $key => $value) {
+                        $var_with_count_arr[] = "$key::$value";
+                    }
+                }
+            }
+        }
+
+        return $var_with_count_arr;
+    }
+
+
     public function get_tpl_list($where = null)
     {
         return $this->getDao('Template')->getList($where);;
     }
 
-    public function getTemplate($where = [], $replace = [])
+    public function getEmailTemplate($where = [], $option = [])
     {
-        $mailObj = $this->getDao('template_by_platform')->get($where);
+        $mail_obj = $this->getDao('Tempalte')->get($where);
 
         if ($template_obj) {
 
