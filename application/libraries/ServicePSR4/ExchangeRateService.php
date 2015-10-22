@@ -283,20 +283,20 @@ class ExchangeRateService extends BaseService
     public function updateExchangeRateFromCv()
     {
         if ($filename = $this->getExchangeRateFile()) {
-            $batch_vo = $this->getBatchDao('Batch')->get();
+            $batch_vo = $this->getDao('Batch')->get();
             if ($rs = $this->validateExchangeRateFile($filename)) {
                 $batch_obj = clone $batch_vo;
                 $batch_obj->setFuncName("exchange_rate");
                 $batch_obj->setStatus("N");
                 $batch_obj->setListed(1);
                 $batch_obj->setRemark($filename);
-                $this->getBatchDao('Batch')->insert($batch_obj);
+                $this->getDao('Batch')->insert($batch_obj);
             } else {
-                mail("steven@eservicesgroup.net", "[VB] Exchange Rate file format does not meet requirement", "For more details, please refer to transmission_log table", "From: Admin <itsupport@eservicesgroup.net>\r\n");
+                mail("oswald-alert@eservicesgroup.com", "[Panther] Exchange Rate file format does not meet requirement", "For more details, please refer to transmission_log table", "From: Admin <itsupport@eservicesgroup.net>\r\n");
                 exit;
             }
 
-            $batch_obj = $this->getBatchDao('Batch')->get(["remark" => $filename]);
+            $batch_obj = $this->getDao('Batch')->get(["remark" => $filename]);
             $batch_id = $batch_obj->getId();
 
             $iex_vo = $this->getDao('InterfaceExchangeRate')->get();
@@ -322,12 +322,13 @@ class ExchangeRateService extends BaseService
 
     public function getExchangeRateFile()
     {
+        $encrypt = new \CI_Encrypt();
         $local_path = $this->getDao('Config')->valueOf("ex_rate_data_path");
         $ftp = $this->ftpConnector;
         $ftpObj = $this->getDao('FtpInfo')->get(["name" => "CV_EXCHANGE_RATE"]);
         $ftp->setRemoteSite($server = $ftpObj->getServer());
         $ftp->setUsername($ftpObj->getUsername());
-        $ftp->setPassword($this->encrypt->decode($ftpObj->getPassword()));
+        $ftp->setPassword($encrypt->decode($ftpObj->getPassword()));
         $ftp->setPort($ftpObj->getPort());
         $ftp->setIsPassive($ftpObj->getPasv());
         $remote_path = "/";
@@ -370,7 +371,7 @@ class ExchangeRateService extends BaseService
         $local_path = $this->getDao('Config')->valueOf("ex_rate_data_path");
         $tlog_obj = $this->getDao('TransmissionLog')->get();
         $tlog_obj->setFuncName("exchange_rate");
-        $batch_obj = $this->getBatchDao('Batch')->get(["remark" => $filename]);
+        $batch_obj = $this->getDao('Batch')->get(["remark" => $filename]);
         $success = 1;
         if (!empty($batch_obj)) {
             $tlog_obj->setMessage($filename . " already_in_batch");
@@ -437,13 +438,13 @@ class ExchangeRateService extends BaseService
 
         set_time_limit(180);
         $success = 1;
-        if ($batch_obj = $this->getBatchDao('Batch')->get(["id" => $batch_id])) {
+        if ($batch_obj = $this->getDao('Batch')->get(["id" => $batch_id])) {
             $objlist = $this->getDao('InterfaceExchangeRate')->getList(["batch_id" => $batch_id, "batch_status" => "N"], ["limit" => -1]);
             if ($objlist) {
                 foreach ($objlist AS $iex_obj) {
                     $action = null;
-                    $rules["from_currency_id"] = ["not_empty"];
-                    $rules["to_currency_id"] = ["not_empty"];
+                    $rules["fromCurrencyId"] = ["not_empty"];
+                    $rules["toCurrencyId"] = ["not_empty"];
                     $rules["rate"] = ["is_number", "min=0"];
 
                     $rs = $this->validateDataRow($iex_obj, $rules);
@@ -470,7 +471,7 @@ class ExchangeRateService extends BaseService
         if (!$success) {
             $batch_obj->setStatus("CE");
             $batch_obj->setEndTime(date("Y-m-d H:i:s"));
-            $this->getBatchDao('Batch')->update($batch_obj);
+            $this->getDao('Batch')->update($batch_obj);
         }
 
         $this->proceedExchangeRate($batch_id);
@@ -481,10 +482,10 @@ class ExchangeRateService extends BaseService
         set_time_limit(180);
         $batch_err = 0;
         $err_msg = "";
-        $batch_obj = $this->getBatchDao('Batch')->get(["id" => $batch_id]);
+        $batch_obj = $this->getDao('Batch')->get(["id" => $batch_id]);
         if ($batch_obj) {
             $batch_obj->setStatus("P");
-            $this->getBatchDao('Batch')->update($batch_obj);
+            $this->getDao('Batch')->update($batch_obj);
 
             $iex_list = $this->getDao('InterfaceExchangeRate')->getList(["batch_id" => $batch_id, "batch_status" => "R"], ["limit" => -1]);
             if (!empty($iex_list)) {
@@ -531,12 +532,12 @@ class ExchangeRateService extends BaseService
         if ($batch_err) {
             $batch_obj->setStatus("CE");
             $batch_obj->setEndTime(date("Y-m-d H:i:s"));
-            $this->getBatchDao('Batch')->update($batch_obj);
+            $this->getDao('Batch')->update($batch_obj);
             mail("oswald-alert@eservicesgroup.com", "[VB] Batch Error", $err_msg, "From: Admin <itsupport@eservicesgroup.net>\r\n");
         } else {
             $batch_obj->setStatus("C");
             $batch_obj->setEndTime(date("Y-m-d H:i:s"));
-            $this->getBatchDao('Batch')->update($batch_obj);
+            $this->getDao('Batch')->update($batch_obj);
         }
     }
 

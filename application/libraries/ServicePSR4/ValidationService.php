@@ -22,6 +22,8 @@ class ValidationService extends BaseService
                     if ($rules) {
                         if (is_object($data)) {
                             $func = "get_" . $field;
+                            if (!method_exists($data, $func))
+                                $func = "get" . ucfirst($field);
                             $value = $data->$func();
                         } else {
                             $value = $data[$field];
