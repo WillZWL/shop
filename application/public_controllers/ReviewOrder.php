@@ -93,7 +93,7 @@ class ReviewOrder extends PUB_Controller
 //
 //
 //                $data["cart"][$val["sku"]][$index]["prod_name"] = $val["name"];
-//                $data["cart"][$val["sku"]][$index]["price"] = platform_curr_format(PLATFORMID, $val["price"]);
+//                $data["cart"][$val["sku"]][$index]["price"] = platform_curr_format($val["price"]);
 //                $data["cart"][$val["sku"]][$index]["qty"] = $val["qty"];
 //
 //                if ($val['promo'] != 1) {
@@ -104,7 +104,7 @@ class ReviewOrder extends PUB_Controller
 //                if ($val["qty"] - 1 > 0 && ($val['promo'] != 1)) {
 //                    $data["cart"][$val["sku"]][$index]["decrease_url"] = base_url() . "review_order/update/" . $val["sku"] . "/" . ($val["qty"] - 1);
 //                }
-//                $data["cart"][$val["sku"]][$index]["sub_total"] = platform_curr_format(PLATFORMID, $val["total"]);
+//                $data["cart"][$val["sku"]][$index]["sub_total"] = platform_curr_format($val["total"]);
 //                $data["cart"][$val["sku"]][$index]["prod_url"] = $this->cart_session_model->get_prod_url($val["sku"]);
 //
 //                $index++;
@@ -117,14 +117,14 @@ class ReviewOrder extends PUB_Controller
 //            }
 //        }
 //
-//        $data["delivery_charge"] = platform_curr_format(PLATFORMID, $result["dc_default"]["charge"]);
-//        $data["item_amount"] = platform_curr_format(PLATFORMID, $item_total);
-//        $data["gst_total"] = platform_curr_format(PLATFORMID, $gst_total);
+//        $data["delivery_charge"] = platform_curr_format($result["dc_default"]["charge"]);
+//        $data["item_amount"] = platform_curr_format($item_total);
+//        $data["gst_total"] = platform_curr_format($gst_total);
 //        $total = $item_total - $result["dc_default"]["charge"] * 1;
 //        if ($result['promo']['disc_amount']) {
 //            $total = $item_total - $result['promo']['disc_amount'];
 //        }
-//        $data["total"] = platform_curr_format(PLATFORMID, $total + $gst_total);
+//        $data["total"] = platform_curr_format($total + $gst_total);
 //        $data['promo'] = $result['promo'];
 //        //$cart_list = unserialize(base64_decode($_COOKIE["chk_cart"]));
 //        //include_once(APPPATH."libraries/service/cart_session_service.php");

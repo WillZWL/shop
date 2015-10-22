@@ -214,8 +214,8 @@ class Checkout_facebook_model extends Checkout_model
                 $this->objResponse->assign("span_{$code_type_o}_surcharge", "innerHTML", "");
                 $this->objResponse->script("
                                         document.getElementById('lbl_surcharge').innerHTML='{$lang["surcharge"]}';
-                                        document.getElementById('span_surcharge').innerHTML='" . platform_curr_format(PLATFORMID, $rs["surcharge"]) . "';
-                                        document.getElementById('span_total_plus_surcharge').innerHTML='" . platform_curr_format(PLATFORMID, $amount - $old_surcharge + $rs["surcharge"]) . "';
+                                        document.getElementById('span_surcharge').innerHTML='" . platform_curr_format($rs["surcharge"]) . "';
+                                        document.getElementById('span_total_plus_surcharge').innerHTML='" . platform_curr_format($amount - $old_surcharge + $rs["surcharge"]) . "';
                                         ");
                 return $this->objResponse;
             }

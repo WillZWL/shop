@@ -1406,9 +1406,9 @@ html;
                         $item_information .= '<tr>
                                                 <td ' . $width_col_1 . ' align="center"><img src="' . $imagepath . '"></td>
                                                 <td ' . $width_col_2 . ' align="left">' . $item_obj->getItemSku() . ' - ' . $item_obj->getName() . '<br/><br/>' . $warrantyname . ': ' . $warranty_month . '</td>
-                                                <td align="right">' . platform_curr_format($cur_platform_id, $item_obj->getUnitPrice()) . '</td>
+                                                <td align="right">' . platform_curr_format($item_obj->getUnitPrice()) . '</td>
                                                 <td align="right">' . $item_obj->getQty() . '</td>
-                                                <td align="right"><b>' . platform_curr_format($cur_platform_id, $amount_total) . '</b></td>
+                                                <td align="right"><b>' . platform_curr_format($amount_total) . '</b></td>
                                             </tr>';
                         $bvat += $amount_total_bvat;
                         $vat += $vat_total;
@@ -1420,9 +1420,9 @@ html;
                     $sum_vat = platform_curr_round($cur_platform_id, $vat);
 
                     $sum_bvat = platform_curr_round($cur_platform_id, $bvat);
-                    $replace["sum_total"] = platform_curr_format($cur_platform_id, $sum_total);
-                    $replace["sum_vat"] = platform_curr_format($cur_platform_id, $sum_vat);
-                    $replace["sum_bvat"] = platform_curr_format($cur_platform_id, $sum_bvat);
+                    $replace["sum_total"] = platform_curr_format($sum_total);
+                    $replace["sum_vat"] = platform_curr_format($sum_vat);
+                    $replace["sum_bvat"] = platform_curr_format($sum_bvat);
 
                     $sid_bvat = "";
                     $sid_vat = "";
@@ -1438,9 +1438,9 @@ html;
                     $sid_bvat = platform_curr_round($cur_platform_id, $sid - $sid_vat);
                     $replace["currency"] = $so_obj->getCurrencyId();
                     $replace["promotion_code"] = $so_obj->getPromotionCode();
-                    $replace["sid"] = platform_curr_format($cur_platform_id, $sid);
-                    $replace["sid_vat"] = platform_curr_format($cur_platform_id, $sid_vat);
-                    $replace["sid_bvat"] = platform_curr_format($cur_platform_id, $sid_bvat);
+                    $replace["sid"] = platform_curr_format($sid);
+                    $replace["sid_vat"] = platform_curr_format($sid_vat);
+                    $replace["sid_bvat"] = platform_curr_format($sid_bvat);
 
                     $ofee = $ofee_vat = $ofee_bvat = 0;
                     $extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
@@ -1449,7 +1449,7 @@ html;
                             $replace["offline_fee"] = '<tr>
                                 <td colspan="2">&nbsp;</td>
                                 <td colspan="2" align="right" bgcolor="#DDDDDD" style="border:1px solid #BBBBBB; border-width:0px 0px 1px 1px;"><b>' . $replace["offline_fee"] . '</b></td>
-                                <td align="right" bgcolor="#F0F0F0" valign="top" style="border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;"><b>' . platform_curr_format($cur_platform_id, $extobj->getOfflineFee()) . '</b></td>
+                                <td align="right" bgcolor="#F0F0F0" valign="top" style="border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;"><b>' . platform_curr_format($extobj->getOfflineFee()) . '</b></td>
                             </tr>';
                             $ofee = platform_curr_round($cur_platform_id, $extobj->getOfflineFee());
                             $ofee_vat = platform_curr_round($cur_platform_id, $ofee * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
@@ -1458,7 +1458,7 @@ html;
                             $replace["offline_fee"] = '<tr>
                                 <td colspan="2">&nbsp;</td>
                                 <td colspan="2" align="right" bgcolor="#DDDDDD" style="border:1px solid #BBBBBB; border-width:0px 0px 1px 1px;"><b>' . $replace["discount"] . '</b></td>
-                                <td align="right" bgcolor="#F0F0F0" valign="top" style="border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;"><b>' . platform_curr_format($cur_platform_id, $extobj->getOfflineFee()) . '</b></td>
+                                <td align="right" bgcolor="#F0F0F0" valign="top" style="border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;"><b>' . platform_curr_format($extobj->getOfflineFee()) . '</b></td>
                             </tr>';
                             $ofee = platform_curr_round($cur_platform_id, $extobj->getOfflineFee());
                             $ofee_vat = platform_curr_round($cur_platform_id, $ofee * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
@@ -1473,7 +1473,7 @@ html;
                         $processing_fee = 0;
                     }
 
-                    $replace["processing_fee"] = platform_curr_format($cur_platform_id, $processing_fee);
+                    $replace["processing_fee"] = platform_curr_format($processing_fee);
                     $replace["total"] = $so_obj->getAmount();
                     $replace["total_vat"] = platform_curr_round($cur_platform_id, $replace["total"] * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
                     $replace["total_bvat"] = platform_curr_round($cur_platform_id, $replace["total"] - $replace["total_vat"]);
@@ -1481,7 +1481,7 @@ html;
                         $replace["payment_method"] = "N/A";
                     }
                     //#2182 add the processing fee to the total, also add the delivery charge
-                    $replace["grand_total"] = platform_curr_format($cur_platform_id, $so_obj->getAmount());
+                    $replace["grand_total"] = platform_curr_format($so_obj->getAmount());
 
                     if ($gen_pdf) {
                         $body_file = "customer_invoice_body_pdf.html";
@@ -3780,7 +3780,7 @@ html;
         $replace["billing_address"] = nl2br($replace["billing_address_text"]);
         $replace['currency_sign'] = (empty($currency_obj) ? $so_obj->getCurrencyId() : $currency_obj->getSign());
         $currency_sign = (empty($currency_obj) ? $so_obj->getCurrencyId() : $currency_obj->getSign());
-        $replace["amount"] = platform_curr_format($platform_id, $so_obj->getAmount(), 0);
+        $replace["amount"] = platform_curr_format($so_obj->getAmount(), 0);
         $replace["timestamp"] = date("d/m/Y");
         $replace["sh_no"] = $sh_no;
 
@@ -3966,13 +3966,13 @@ html;
             }
 
             $replace["so_items_text"] .=
-                $item->getName() . $item_name_tab . $cur_qty . "\t" . platform_curr_format($platform_id, $price, 0) . "\t" . platform_curr_format($platform_id, $cur_sub_total, 0) . "\r\n";
+                $item->getName() . $item_name_tab . $cur_qty . "\t" . platform_curr_format($price, 0) . "\t" . platform_curr_format($cur_sub_total, 0) . "\r\n";
             $replace["so_items"] .=
                 "<tr>
                     <td style='padding:4px 20px; color:#444; font-family:Arial; font-size: 12px;'>" . $item->getName() . "</td>
                     <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>$cur_qty</td>
-                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($platform_id, $price, 0) . "</td>
-                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($platform_id, $cur_sub_total, 0) . "</td>
+                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($price, 0) . "</td>
+                    <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currency_sign . " " . platform_curr_format($cur_sub_total, 0) . "</td>
                 </tr>\n";
 
             $replace["so_items_desc"] .= "<tr><td>$cur_qty x " . $item->getName() . "</td></tr>\n";
@@ -3982,8 +3982,8 @@ html;
 
         $dc = $so_obj->getDeliveryCharge();
         $total += $dc;
-        $replace["subtotal"] = platform_curr_format($platform_id, $sub_total, 0);
-        $replace["total_vat"] = platform_curr_format($platform_id, $total_vat, 0);
+        $replace["subtotal"] = platform_curr_format($sub_total, 0);
+        $replace["total_vat"] = platform_curr_format($total_vat, 0);
 
         //#2182 add the processing fee
         $extobj = $this->getDao('SoExtend')->get(["so_no" => $so_obj->getSoNo()]);
@@ -3994,20 +3994,20 @@ html;
         if (is_null($processing_fee)) {
             $processing_fee = 0;
         }
-        $replace["processing_fee"] = platform_curr_format($platform_id, $processing_fee, 0);
+        $replace["processing_fee"] = platform_curr_format($processing_fee, 0);
         //#2182 add the processing fee to the total fee
         $total += $processing_fee;
-        $replace["total"] = platform_curr_format($platform_id, $total, 0);
+        $replace["total"] = platform_curr_format($total, 0);
 
         $dc = $so_obj->getDeliveryCharge();
         $total += $dc;
         $dc_vat = $dc * ($so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
         $dc_sub_total = $dc - $dc_vat;
-        $replace["dc_sub_total"] = platform_curr_format($platform_id, $dc_sub_total, 0);
-        $replace["dc_vat"] = platform_curr_format($platform_id, $dc_vat, 0);
-        $replace["delivery_charge"] = platform_curr_format($platform_id, $dc, 0);
-        $replace["total_sub_total"] = platform_curr_format($platform_id, $sub_total + $dc_sub_total, 0);
-        $replace["total_total_vat"] = platform_curr_format($platform_id, $total_vat + $dc_vat, 0);
+        $replace["dc_sub_total"] = platform_curr_format($dc_sub_total, 0);
+        $replace["dc_vat"] = platform_curr_format($dc_vat, 0);
+        $replace["delivery_charge"] = platform_curr_format($dc, 0);
+        $replace["total_sub_total"] = platform_curr_format($sub_total + $dc_sub_total, 0);
+        $replace["total_total_vat"] = platform_curr_format($total_vat + $dc_vat, 0);
 
         $dto = new EventEmailDto;
 
@@ -4314,9 +4314,9 @@ html;
                         $item_information .= '<tr>
                                                 <td align="center"><img src="' . $imagepath . '"></td>
                                                 <td align="left">' . $item_obj->getItemSku() . ' - ' . $item_obj->getName() . '</td>
-                                                <td align="right">' . platform_curr_format($cur_platform_id, $item_obj->getUnitPrice()) . '</td>
+                                                <td align="right">' . platform_curr_format($item_obj->getUnitPrice()) . '</td>
                                                 <td align="right">' . $item_obj->getQty() . '</td>
-                                                <td align="right"><b>' . platform_curr_format($cur_platform_id, $amount_total) . '</b></td>
+                                                <td align="right"><b>' . platform_curr_format($amount_total) . '</b></td>
                                             </tr>';
                         $bvat += $amount_total_bvat;
                         $vat += $vat_total;
@@ -4356,7 +4356,7 @@ html;
                             $data["offline_fee"] = "<tr>
                                 <td colspan='2'>&nbsp;</td>
                                 <td colspan='2' align='right' bgcolor='#DDDDDD' style='border:1px solid #BBBBBB; border-width:0px 0px 1px 1px;'><b>" . $ar_lang[$so_lang_id]["offline_fee"] . "</b></td>
-                                <td align='right' bgcolor='#F0F0F0' valign='top' style='border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;'><b>" . platform_curr_format($cur_platform_id, $extobj->getOfflineFee()) . "</b></td>
+                                <td align='right' bgcolor='#F0F0F0' valign='top' style='border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;'><b>" . platform_curr_format($extobj->getOfflineFee()) . "</b></td>
                             </tr>";
                             $ofee = platform_curr_round($cur_platform_id, $extobj->getOfflineFee());
                             $ofee_vat = platform_curr_round($cur_platform_id, $ofee * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
@@ -4365,7 +4365,7 @@ html;
                             $data["offline_fee"] = "<tr>
                                 <td colspan='2'>&nbsp;</td>
                                 <td colspan='2' align='right' bgcolor='#DDDDDD' style='border:1px solid #BBBBBB; border-width:0px 0px 1px 1px;'><b>" . $ar_lang[$so_lang_id]["discount"] . "</b></td>
-                                <td align='right' bgcolor='#F0F0F0' valign='top' style='border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;'><b>" . platform_curr_format($cur_platform_id, $extobj->getOfflineFee()) . "</b></td>
+                                <td align='right' bgcolor='#F0F0F0' valign='top' style='border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;'><b>" . platform_curr_format($extobj->getOfflineFee()) . "</b></td>
                             </tr>";
                             $ofee = platform_curr_round($cur_platform_id, $extobj->getOfflineFee());
                             $ofee_vat = platform_curr_round($cur_platform_id, $ofee * $so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
@@ -4458,7 +4458,7 @@ html;
 
         $replace['currency_sign'] = (empty($currency_obj) ? $so_obj->getCurrencyId() : $currency_obj->getSign());
         $currency_sign = (empty($currency_obj) ? $so_obj->getCurrencyId() : $currency_obj->getSign());
-        $replace["amount"] = platform_curr_format($platform_id, $so_obj->getAmount(), 0);
+        $replace["amount"] = platform_curr_format($so_obj->getAmount(), 0);
         $replace["timestamp"] = date("d/m/Y");
         $replace["sh_no"] = $sh_no;
 
@@ -4593,8 +4593,8 @@ html;
 
         $dc = $so_obj->getDeliveryCharge();
         $total += $dc;
-        $replace["subtotal"] = platform_curr_format($platform_id, $sub_total, 0);
-        $replace["total_vat"] = platform_curr_format($platform_id, $total_vat, 0);
+        $replace["subtotal"] = platform_curr_format($sub_total, 0);
+        $replace["total_vat"] = platform_curr_format($total_vat, 0);
 
         //#2182 add the processing fee
         $extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
@@ -4605,20 +4605,20 @@ html;
         if (is_null($processing_fee)) {
             $processing_fee = 0;
         }
-        $replace["processing_fee"] = platform_curr_format($platform_id, $processing_fee, 0);
+        $replace["processing_fee"] = platform_curr_format($processing_fee, 0);
         //#2182 add the processing fee to the total fee
         $total += $processing_fee;
-        $replace["total"] = platform_curr_format($platform_id, $total, 0);
+        $replace["total"] = platform_curr_format($total, 0);
 
         $dc = $so_obj->getDeliveryCharge();
         $total += $dc;
         $dc_vat = $dc * ($so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
         $dc_sub_total = $dc - $dc_vat;
-        $replace["dc_sub_total"] = platform_curr_format($platform_id, $dc_sub_total, 0);
-        $replace["dc_vat"] = platform_curr_format($platform_id, $dc_vat, 0);
-        $replace["delivery_charge"] = platform_curr_format($platform_id, $dc, 0);
-        $replace["total_sub_total"] = platform_curr_format($platform_id, $sub_total + $dc_sub_total, 0);
-        $replace["total_total_vat"] = platform_curr_format($platform_id, $total_vat + $dc_vat, 0);
+        $replace["dc_sub_total"] = platform_curr_format($dc_sub_total, 0);
+        $replace["dc_vat"] = platform_curr_format($dc_vat, 0);
+        $replace["delivery_charge"] = platform_curr_format($dc, 0);
+        $replace["total_sub_total"] = platform_curr_format($sub_total + $dc_sub_total, 0);
+        $replace["total_total_vat"] = platform_curr_format($total_vat + $dc_vat, 0);
         $replace["last_update_time"] = '';
 
         $dto = new EventEmailDto;
