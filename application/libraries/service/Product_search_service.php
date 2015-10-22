@@ -138,8 +138,8 @@ class Product_search_service extends Base_service
                     $price = $listing_info->get_price();
 
                     $live_price_data = array();
-                    $live_price_data[] = platform_curr_format($platform_id, $rrp);
-                    $live_price_data[] = platform_curr_format($platform_id, $price);
+                    $live_price_data[] = platform_curr_format($rrp);
+                    $live_price_data[] = platform_curr_format($price);
 
                     if ($price_srv->is_display_saving_message() == 'T') {
                         $live_price_data[] = $lang['save'] . number_format(($rrp == 0 ? 0 : ($rrp - $price) / $rrp * 100), 0) . '%';
@@ -167,7 +167,7 @@ class Product_search_service extends Base_service
 
                     $json[$sku] = $live_price_data;
                 } else {
-                    $json[$sku] = platform_curr_format($platform_id, random_markup($listing_info->get_price()));
+                    $json[$sku] = platform_curr_format(random_markup($listing_info->get_price()));
                 }
             }
         }

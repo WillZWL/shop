@@ -460,8 +460,8 @@ class Checkout_model extends CI_Model
                 $this->objResponse->assign("span_{$code_type_o}_surcharge", "innerHTML", "");
                 $this->objResponse->script("
                                         top.document.getElementById('lbl_surcharge').innerHTML='{$lang["surcharge"]}';
-                                        top.document.getElementById('span_surcharge').innerHTML='" . platform_curr_format(PLATFORMID, $rs["surcharge"]) . "';
-                                        top.document.getElementById('span_total').innerHTML='" . platform_curr_format(PLATFORMID, $amount - $old_surcharge + $rs["surcharge"]) . "';
+                                        top.document.getElementById('span_surcharge').innerHTML='" . platform_curr_format($rs["surcharge"]) . "';
+                                        top.document.getElementById('span_total').innerHTML='" . platform_curr_format($amount - $old_surcharge + $rs["surcharge"]) . "';
                                         ");
                 return $this->objResponse;
             }
@@ -473,7 +473,7 @@ class Checkout_model extends CI_Model
         $this->objResponse->script("
                                     top.document.getElementById('span_surcharge').innerHTML='';
                                     top.document.getElementById('lbl_surcharge').innerHTML='';
-                                    top.document.getElementById('span_total').innerHTML='" . platform_curr_format(PLATFORMID, $amount - $old_surcharge) . "';
+                                    top.document.getElementById('span_total').innerHTML='" . platform_curr_format($amount - $old_surcharge) . "';
                                     ");
         return $this->objResponse;
     }
