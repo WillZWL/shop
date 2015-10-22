@@ -32,8 +32,8 @@
                                     </span>
                                 </div>
                             </td>
-                            <td class="text-right"><?= $item->getPrice() ?></td>
-                            <td class="text-right"><?= $item->getAmount() ?></td>
+                            <td class="text-right"><?= platform_curr_format($item->getPrice()) ?></td>
+                            <td class="text-right"><?= platform_curr_format($item->getAmount()) ?></td>
                         </tr>
                         <?php endforeach ?>
                     </tbody>
@@ -46,15 +46,15 @@
                     <tbody>
                         <tr>
                             <td class="text-right"><strong><?=_('Subtotal:') ?></strong></td>
-                            <td class="text-right"><?= $cartInfo->getGrandTotal() ?></td>
+                            <td class="text-right"><?= platform_curr_format($cartInfo->getGrandTotal()) ?></td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong><?=_('Shipping:') ?></strong></td>
-                            <td class="text-right"><?= $cartInfo->getDeliveryCharge() ?></td>
+                            <td class="text-right"><?= platform_curr_format($cartInfo->getDeliveryCharge()) ?></td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong><?= _('Total:') ?></strong></td>
-                            <td class="text-right"><?= $cartInfo->getGrandTotal() ?></td>
+                            <td class="text-right"><?= platform_curr_format($cartInfo->getGrandTotal()) ?></td>
                         </tr>
                     </tbody>
                 </table>
