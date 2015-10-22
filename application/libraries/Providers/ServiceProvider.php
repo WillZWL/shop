@@ -194,8 +194,16 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\PaymentGatewayRedirectCybersourceService();
         };
 
-        $servcieContainer['EmailTemplate'] = function () {
-            return new S\EmailTemplateService();
+        $servcieContainer['Email'] = function () {
+            return new S\EmailService();
+        };
+
+        $servcieContainer['Template'] = function () {
+            return new S\TemplateService();
+        };
+
+        $servcieContainer['SellingPlatform'] = function () {
+            return new S\SellingPlatformService();
         };
     }
 }

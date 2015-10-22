@@ -449,8 +449,8 @@ class DaoProvider implements ServiceProviderInterface
             return new D\WeightCatChargeDao();
         };
 
-        $daoContainer['EmailTemplate'] = function () {
-            return new D\EmailTemplateDao();
+        $daoContainer['Template'] = function () {
+            return new D\TemplateDao();
         };
 
     }
