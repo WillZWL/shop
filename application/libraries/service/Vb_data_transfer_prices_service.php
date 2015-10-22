@@ -33,6 +33,7 @@ class Vb_data_transfer_prices_service extends Vb_data_transfer_service
 	********************************************************************/
 	public function process_vb_data ($feed)
 	{		
+		//print $feed; exit;
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
 		
@@ -70,7 +71,7 @@ class Vb_data_transfer_prices_service extends Vb_data_transfer_service
 					// we only commit at the last update
 					if ($c <= 0) $commit = true;
 				
-					$affected = $this->price_service->update_sku_price($platform_id, $sku, $required_selling_price, $commit);
+					$affected = $this->price_service->update_sku_price($platform_id, $sku, $required_selling_price, $commit);			
 					
 					if ($affected)
 					{

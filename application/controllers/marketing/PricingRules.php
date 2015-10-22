@@ -85,20 +85,18 @@ class PricingRules extends MY_Controller
 
                 set_value($data["pricingrule"], $_POST);
 
-                $proc = $this->sc['pricingRulesModel']->getPricingRule(["country_id" => $data["pricingrule"]->getCountryId()]);
-                if (!empty($proc)) {
+                //$proc = $this->sc['pricingRulesModel']->getPricingRule(["country_id" => $data["pricingrule"]->getCountryId()]);
+                if (!$this->checkRule($data["pricingrule"]) == 0)
+				{
                     $_SESSION["NOTICE"] = "pricing_rule_existed";
-                } else {
-					if ($this->checkRule()) 
-					{	
-						$data["pricingrule"]->setId(0);
-						if ($new_obj = $this->sc['pricingRulesModel']->addPricingRules($data["pricingrule"])) {
-							unset($_SESSION["PricingRulesVo"]);
-							$id = $new_obj->getId();
-							redirect(base_url() . "marketing/pricingRules/view/" . $id);
-						} else {
-							$_SESSION["NOTICE"] = $this->db->error();
-						}
+                } else {	
+					$data["pricingrule"]->setId(0);
+					if ($new_obj = $this->sc['pricingRulesModel']->addPricingRules($data["pricingrule"])) {
+						unset($_SESSION["PricingRulesVo"]);
+						$id = $new_obj->getId();
+						redirect(base_url() . "marketing/pricingRules/view/" . $id);
+					} else {
+						$_SESSION["NOTICE"] = $this->db->error();
 					}
                 }
             }
@@ -138,14 +136,21 @@ class PricingRules extends MY_Controller
                             $_SESSION["NOTICE"] = "pricing_rule_existed";
                         }
                     } else {
-                        set_value($data["pricingrule"], $_POST);
+						set_value($data["pricingrule"], $_POST);
 
-                        if ($this->sc['pricingRulesModel']->updatePricingRules($data["pricingrule"])) {
-                            unset($_SESSION["PricingRulesVo"]);
-                            redirect(base_url() . "marketing/pricingRules/view/" . $id);
-                        } else {
-                            $_SESSION["NOTICE"] = $this->db->error();
-                        }
+						if ($this->checkRule($data["pricingrule"]) == 0)
+						{
+							if ($this->sc['pricingRulesModel']->updatePricingRules($data["pricingrule"])) {
+								unset($_SESSION["PricingRulesVo"]);
+								redirect(base_url() . "marketing/pricingRules/view/" . $id);
+							} else {
+								$_SESSION["NOTICE"] = $this->db->error();
+							}
+						}
+						else
+						{
+							$_SESSION["NOTICE"] = "pricing_rule_existed";
+						}
                     }
                 }
             }
@@ -168,23 +173,44 @@ class PricingRules extends MY_Controller
         }
     }
 	
-	public function checkRule()
+	public function checkRule($pricingrule)
 	{
 		$where['country_id'] = $this->input->post('country_id');
 		$where['(' . $this->input->post('range_min') . ' between range_min and range_max or ' . $this->input->post('range_max') . ' between range_min and range_max)'] = null;
 		
+		$where_days = "and (";
 		if ($this->input->post('monday') == 1)
+			$where_days .= " monday = 1 or";
+		
+		if ($this->input->post('tuesday') == 1)
+			$where_days .= " tuesday = 1 or";
+		
+		if ($this->input->post('wednesday') == 1)			
+			$where_days .= " wednesday = 1 or";
+		
+		if ($this->input->post('thursday') == 1)
+			$where_days .= " thursday = 1 or";
+		
+		if ($this->input->post('friday') == 1)
+			$where_days .= " friday = 1 or";
+		
+		if ($this->input->post('saturday') == 1)
+			$where_days .= " saturday = 1 or";
+		
+		if ($this->input->post('sunday') == 1)
+			$where_days .= " sunday = 1 or";
+
+		$where_days = substr($where_days, 0, -2);
+		$where_days .= ")";
+
+		if ($pricingrule->getId() != "")
 		{
-			$where['monday'] = 1;
+			$where['id <>'] = $pricingrule->getId();
 		}
 		
-		//if ($this->input->post('monday') == 1)
-			
+		$data = $this->sc['pricingRulesModel']->getExistingRule($where);
 		
-		print $data["pricingrule"]->getId();
-			
-		//$where[$condition] = null;
-		
+		return $data["existing"];		
 	}
 }
 

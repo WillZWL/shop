@@ -1,7 +1,7 @@
 <?php
 	$lang = array(
 			"title" => "Pricing Rules",
-			"header" => "Add Pricing Rules",
+			"header" => "Add to Pricing Rules",
 			"header_message" => "Please fill in all fields to add a new pricing rule to the list.",
 			"table_header" => "Pricing Rules",
 			"add_button" => "Add Pricing Rule",

@@ -27,7 +27,7 @@ CREATE TABLE `pricing_rules` (
 insert into application (id, app_name, description,  display_order, status, display_row, create_on, create_at, create_by, modify_at, modify_by)
 values ('MKT0086', 'Pricing Admin', 'Pricing rules admin', 0, 1, 1, now(), '127.0.0.1', 'cristina', '127.0.0.1', 'cristina');
 
-update application set display_order = 135, url = 'marketing/pricing_rules', app_group_id=4 where id='MKT0086';
+update application set display_order = 135, url = 'marketing/pricingRules', app_group_id=4 where id='MKT0086';
 
 call add_role_right('MKT0086', 'admin');
 call add_role_right('MKT0086', 'alan');
