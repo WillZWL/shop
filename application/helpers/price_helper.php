@@ -52,7 +52,7 @@ if (!function_exists('average_divide')) {
 }
 
 if (!function_exists('platform_curr_format')) {
-    function platform_curr_format($platform_id, $amount, $show_currency = 1)
+    function platform_curr_format($amount, $show_currency = 1)
     {
         if (isset(PUB_Controller::$siteInfo)) {
             return curr_format(PUB_Controller::$siteInfo->getPlatformCurrencyId(), $amount, $show_currency, PUB_Controller::$siteInfo);
