@@ -259,10 +259,11 @@ class CI_Router {
 
 		if ($this->translate_uri_dashes === TRUE)
 		{
-			$segments[0] = str_replace('-', '_', $segments[0]);
+			$segments[0] = str_replace(' ', '', ucwords(str_replace('-', ' ', $segments[0])));
+
 			if (isset($segments[1]))
 			{
-				$segments[1] = str_replace('-', '_', $segments[1]);
+				$segments[1] = lcfirst(str_replace(' ', '', ucwords(str_replace('-', ' ', $segments[1]))));
 			}
 		}
 
@@ -338,7 +339,7 @@ class CI_Router {
 		while ($c-- > 0)
 		{
 			$test = $this->directory
-				.ucfirst($this->translate_uri_dashes === TRUE ? str_replace('-', '_', $segments[0]) : $segments[0]);
+				.ucfirst($this->translate_uri_dashes === TRUE ? str_replace(' ', '', ucwords(str_replace('-', ' ', $segments[0]))) : $segments[0] );
 
 			if ( ! file_exists(CTRLPATH.$test.'.php') && is_dir(CTRLPATH.$this->directory.$segments[0]))
 			{
