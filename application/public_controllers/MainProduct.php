@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 DEFINE ('ALLOW_REDIRECT_DOMAIN', 1);
 
-class Mainproduct extends PUB_Controller
+class MainProduct extends PUB_Controller
 {
 
     public function __construct()
