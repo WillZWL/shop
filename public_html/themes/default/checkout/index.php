@@ -345,7 +345,7 @@ $(document).delegate('#loggedInButton', 'click', function() {
 });
 $(document).delegate('#button-payment-address', 'click', function() {
     var targetBlock = $('a[href=\'#collapse-shipping-address\']');
-//    if (validateBlock("collapse-payment-address"))
+    if (validateBlock("collapse-payment-address"))
         activatedBlock(targetBlock, $("#collapse-payment-address"));
 });
 $(document).delegate('#button-shipping-address', 'click', function() {
