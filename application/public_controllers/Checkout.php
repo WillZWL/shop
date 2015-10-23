@@ -91,29 +91,35 @@ class Checkout extends PUB_Controller
 
     public function paymentResult($result, $soNo)
     {
+        $pagePar = [1 => //success
+                        ["option1" => "soItemDetail"
+                         ,  "view" => "paymentSuccess"
+                         ,  "status" => "2"]
+                    , 4 => //review
+                        ["option1" => "soPaymentStatus"
+                        ,  "view" => "paymentReview"
+                        ,  "status" => "1"]
+                    , 0 => //fail
+                        ["option1" => ""
+                        ,  "view" => "paymentFail"
+                        ,  "status" => "0"]];
         $data = [];
-        if ($result == 1) {
+        if (($result == 1) 
+            || ($result == 4)
+            || ($result == 0)) {
 //Success
             if ($soNo) {
-                $verifyData = $this->checkoutModel->verifyAndGetOrderDetails($result, $soNo);
+                $verifyData = $this->checkoutModel->verifyAndGetOrderDetails($result, $soNo, [$pagePar[$result]["option1"] => true, "status" => $pagePar[$result]["status"]]);
                 if ($verifyData["valid"]) {
                     $data["so"] = $verifyData["so"];
-                    $data["soItemDetail"] = $verifyData["soItemDetail"];
-                    $this->load->view('checkout/paymentSuccess', $data);
+                    $data[$pagePar[$result]["option1"]] = $verifyData[$pagePar[$result]["option1"]];
+                    $this->load->view("checkout/" . $pagePar[$result]["view"], $data);
                 } else {
                     show_404();
                 }
             } else {
                 show_404();
             }
-        }
-        else if ($result == 4) {
-//Review
-            $this->load->view('checkout/paymentReview', $data);
-        }
-        else {
-//Fail
-            $this->load->view('checkout/paymentFail', $data);
         }
     }
 

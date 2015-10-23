@@ -105,18 +105,24 @@ class CheckoutModel extends \CI_Model
         }
     }
 
-    public function verifyAndGetOrderDetails($paymentResult, $soNo)
+    public function verifyAndGetOrderDetails($paymentResult, $soNo, $option = [])
     {
         $valid = false;
-        $so = null;
-        $soItem = null;
+        $soObj = null;
+        $soItemDetail = null;
+        $soPaymentStatus = null;
 
         if (intval($soNo) == $soNo) {
             $soObj = $this->_soFactoryService->getDao()->get(["so_no" => $soNo]);
-            if (($paymentResult == 1) && ($soObj->getStatus() >= 2)) {
+            if ($soObj->getStatus() >= $option["status"]) {
                 if (($soObj->getCreateAt() == ip2long($_SERVER["REMOTE_ADDR"]))
                     || (isset($_GET["debug"]) && ($_GET["debug"] == 1))) {
-                    $soItemDetail = $this->_soFactoryService->getSoItemDetailDao()->getList(["so_no" => $soNo], ["limit" => -1]);
+                    if (isset($option["soItemDetail"]))
+                        $soItemDetail = $this->_soFactoryService->getSoItemDetailDao()->getList(["so_no" => $soNo], ["limit" => -1]);
+                    if (isset($option["soPaymentStatus"]))
+                    {
+                        $soPaymentStatus = $this->_soFactoryService->getSoPaymentStatusDao()->getRecordWithGatewayName(["sops.so_no" => $soNo], ["limit" => 1]);
+                    }
                     $valid = true;
                 }
             }
@@ -124,7 +130,8 @@ class CheckoutModel extends \CI_Model
 
         return ["valid" => $valid
                 , "so" => $soObj
-                , "soItemDetail" => $soItemDetail];
+                , "soItemDetail" => $soItemDetail
+                , "soPaymentStatus" => $soPaymentStatus];
     }
 
     public function getPaymentOption($platformId) {
