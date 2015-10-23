@@ -34,11 +34,11 @@
                                                 <div class="product-block">
                                                     <div class="image">
                                                         <div class="product-img img">
-                                                            <a class="img" title="<?= $prod_obj->getProdName(); ?>" href='<?= base_url("/mainproduct/view/$sku") ?>'>
+                                                            <a class="img" title="<?= $prod_obj->getProdName(); ?>" href='<?= base_url("/main-product/view/$sku") ?>'>
                                                                 <img class="img-responsive" src="<?= base_url(get_image_file($prod_obj->getImageExt(), 'm', $prod_obj->getSku())) ?>" title="<?= $prod_obj->getProdName(); ?>" alt="<?= $prod_obj->getProdName(); ?>" />
                                                             </a>
                                                             <div class="quickview hidden-xs">
-                                                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href='<?= base_url("/mainproduct/view/$sku/sv") ?>' title="Quick View"><i class="fa fa-eye"></i></a>
+                                                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href='<?= base_url("/main-product/view/$sku/sv") ?>' title="Quick View"><i class="fa fa-eye"></i></a>
                                                             </div>
                                                             <div class="zoom hidden-xs">
                                                                 <a data-toggle="tooltip" data-placement="top" href="<?= get_image_file($prod_obj->getImageExt(), 'l', $prod_obj->getSku()) ?>" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->getProdName(); ?>"><i class="fa fa-search-plus"></i></a>
@@ -47,7 +47,7 @@
                                                     </div>
                                                     <div class="product-meta">
                                                         <div class="left">
-                                                            <h6 class="name"><a href='<?= base_url("/mainproduct/view/$sku") ?>'><?= $prod_obj->getProdName(); ?></a></h6>
+                                                            <h6 class="name"><a href='<?= base_url("/main-product/view/$sku") ?>'><?= $prod_obj->getProdName(); ?></a></h6>
                                                             <div class="price">
                                                                 <span class="price-new"><?= $prod_obj->getPrice(); ?></span>
                                                                 <span class="price-old"><?= $prod_obj->getRrpPrice(); ?></span>
