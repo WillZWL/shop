@@ -18,8 +18,6 @@ use ESG\Panther\Models\Marketing\RaProdCatModel;
 use ESG\Panther\Models\Marketing\PricingRulesModel;
 use ESG\Panther\Models\Marketing\DataFeedModel;
 use ESG\Panther\Models\Order\SoModel;
-
-
 use ESG\Panther\Service as S;
 use ESG\Panther\Dao as D;
 
@@ -33,6 +31,7 @@ abstract class MY_Controller extends CI_Controller
 
     public function __construct($checkAccessRights = TRUE)
     {
+
         parent::__construct();
         $this->load->library('pagination');
 
@@ -45,6 +44,9 @@ abstract class MY_Controller extends CI_Controller
 
             self::$serviceContainer = true;
             $this->sc = $sc;
+
+            // Important, must call one time to make initilize BaseService
+            $this->sc['Base'];
         }
 
         $this->loadModelDependcy();
@@ -122,7 +124,7 @@ abstract class MY_Controller extends CI_Controller
         $this->sc['raProdCatModel'] = function ($c) {
             return new RaProdCatModel;
         };
-		
+
 		$this->sc['categoryModel'] = function ($c) {
             return new CategoryModel;
         };
