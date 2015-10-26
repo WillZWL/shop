@@ -207,7 +207,7 @@ class Quick_search extends MY_Controller
                 $client->setStatus(0);
 
                 if (($res = $this->sc['Client']->getDao('Client')->update($client)) !== FALSE) {
-                    mail('ming@valuebasket.com', '[VB] Client - ' . $client_email . ' is inactivate', 'Please inactivate ' . $client_email, "From: admin@valuebasket.com\r\n");
+                    mail('ming@valuebasket.com', '[Panther] Client - ' . $client_email . ' is inactivate', 'Please inactivate ' . $client_email, "From: admin@valuebasket.com\r\n");
                 }
                 $_SESSION['NOTICE'] = ($res !== FALSE) ? 'client_account_deactivated' : $this->db->display_error();
             } else {

@@ -67,6 +67,8 @@ class PaypalRequest
         $postData["PAYMENTREQUEST_0_NOTIFYURL"] = $setting["notificationUrl"];
 		$postData["RETURNURL"] = $setting["responseUrl"];
 		$postData["CANCELURL"] = $setting["cancelUrl"];
+        if (isset($setting["siteName"]))
+            $postData["BRANDNAME"] = $setting["siteName"];
 
 		$postData["LOCALECODE"] = $order["countryId"];
 		$postData["HDRIMG"] = $setting["siteLogo"];

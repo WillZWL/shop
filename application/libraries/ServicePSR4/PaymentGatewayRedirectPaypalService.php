@@ -147,11 +147,13 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
         $setting["responseUrl"] = $this->getResponseUrl($order["soNo"]);
         $setting["cancelUrl"] = $this->getCancelUrl($order["soNo"]);
         $setting["siteLogo"] = $this->getSiteLogo();
+        if (defined("SITE_NAME"))
+            $setting["siteName"] = SITE_NAME;
         $postData = $this->_paypalRequest->formPaymentRequest($order, $setting);
         $requestData = @http_build_query($postData);
         return $postData;
     }
-    
+
     public function processNotification($data, &$soNo, &$soPara = array(), &$sopsPara = array(), &$soccPara = array(), &$sorData = array(), &$dataToPmgw, &$dataFromPmgw)
     {
         $orderObj = "";

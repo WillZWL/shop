@@ -564,6 +564,39 @@ class ProductDao extends BaseDao
         return FALSE;
     }
 
+    public function getSearchspringProductFeed($where = [], $option = [], $className = "SearchspringProductFeedProductPriceDto")
+    {
+        $this->db->from("product p");
+        $this->db->join("price pr", "p.sku = pr.sku", "INNER");
+        $this->db->join("platform_biz_var pbv", "pbv.selling_platform_id = pr.platform_id", "INNER");
+        $this->db->join("selling_platform sp", "pbv.selling_platform_id = sp.selling_platform_id AND sp.type = 'WEBSITE'", "INNER");
+        $this->db->join("category_extend cat", "p.cat_id = cat.cat_id and pbv.language_id = cat.lang_id", "LEFT");
+        $this->db->join("category_extend sc", "p.sub_cat_id = sc.cat_id and pbv.language_id = sc.lang_id", "LEFT");
+        $this->db->join("brand br", "p.brand_id = br.id", "INNER");
+        $this->db->join("product_content pc", "p.sku = pc.prod_sku AND pc.lang_id = pbv.language_id", "LEFT");
+        $this->db->join("product_content default_pc", "p.sku = default_pc.prod_sku AND default_pc.lang_id = 'en'", "LEFT");
+        $this->db->where(array("p.status" => 2, "pr.listing_status" => "L"));
+        return $this->commonGetList($className, $where, $option, 'pr.platform_id, pbv.platform_country_id country_id, p.sku, CONCAT("/", REPLACE(REPLACE(p.name, ".", "-"), " ", "-") ,"/main-product/view/", p.sku) product_url, pbv.platform_currency_id currency_id, pr.price, pr.fixed_rrp, pr.rrp_factor, p.website_status, if(p.display_quantity < p.website_quantity, p.display_quantity, p.website_quantity) quantity, coalesce(pc.prod_name, default_pc.prod_name) prod_name, coalesce(pc.short_desc, default_pc.short_desc) short_desc, coalesce(pc.detail_desc, default_pc.detail_desc) detail_desc, p.image, CONCAT("/cart/add-item/", p.sku) add_cart_url, cat.name cat_name, sc.name sub_cat_name, br.brand_name, p.mpn, p.ean, p.upc, p.clearance, p.create_on create_date');
+    }
+/**********************************
+**  searchspring ajax Price
+**  getSearchspringProductFeedPriceInfo
+***********************************/
+    public function getSearchspringProductFeedPriceInfo($where = array(), $option = array(), $className = "SearchspringProductFeedPriceInfoDto")
+    {
+        $this->db->from("product p");
+        $this->db->join("price pr", "p.sku = pr.sku", "INNER");
+        $this->db->join("platform_biz_var pbv", "pbv.selling_platform_id = pr.platform_id", "INNER");
+        $this->db->join("selling_platform sp", "pbv.selling_platform_id = sp.selling_platform_id AND sp.type = 'WEBSITE'", "INNER");
+        $this->db->join("category_extend cat", "p.cat_id = cat.cat_id and pbv.language_id = cat.lang_id", "LEFT");
+        $this->db->join("category_extend sc", "p.sub_cat_id = sc.cat_id and pbv.language_id = sc.lang_id", "LEFT");
+        $this->db->join("brand br", "p.brand_id = br.id", "INNER");
+        $this->db->join("product_content pc", "p.sku = pc.prod_sku AND pc.lang_id = pbv.language_id", "LEFT");
+        $this->db->where(array("p.status" => 2, "pr.listing_status" => "L"));
+        $this->db->where($where);
+        return $this->commonGetList($className, $where, $option, 'pr.platform_id, pbv.platform_country_id country_id, p.sku, CONCAT("/", REPLACE(REPLACE(p.name, ".", "-"), " ", "-") ,"/main-product/view/", p.sku) product_url, pbv.platform_currency_id currency_id, pr.price, pr.fixed_rrp, pr.rrp_factor, p.website_status, if(p.display_quantity < p.website_quantity, p.display_quantity, p.website_quantity) quantity');
+    }
+
     public function getRaProductOverview($sku = "", $platform_id = "", $className = "ProductCostDto")
     {
         $sql = "

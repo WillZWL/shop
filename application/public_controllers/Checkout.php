@@ -42,7 +42,7 @@ class Checkout extends PUB_Controller
     public function index() {
         $cart = $this->cartSessionModel->getCartInfo(true);
         if (!$cart) {
-            redirect("/ReviewOrder");
+            redirect("/review-order");
         }
         $data = [];
         $platformCountryId = $this->getSiteInfo()->getPlatformCountryId();
@@ -84,9 +84,17 @@ class Checkout extends PUB_Controller
         }
         else
         {
-            echo json_encode($filterResult);
+            $jsonResult = json_encode($filterResult);
+            echo $jsonResult;
 //mail alert to IT
+            $subject = "[Panther] Fail server side validation";
+            $this->_checkoutAlert($subject, $jsonResult);
         }
+    }
+
+    private function _checkoutAlert($subject, $message)
+    {
+        mail("oswald-alert@eservicesgroup.com", $subject, $message, "From: website@digitaldiscount.co.uk\r\n");
     }
 
     public function paymentResult($result, $soNo)

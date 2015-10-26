@@ -1615,7 +1615,7 @@ html;
             $prod_name .= $item_obj->getName();
         }
 
-        $email_subject = "[VB] preorder delay email alert";
+        $email_subject = "[Panther] preorder delay email alert";
         $headers .= 'From: Admin <admin@valuebasket.com>' . "\r\n";
         if ($old_edd == $new_edd) {
 //alert
@@ -4795,7 +4795,7 @@ html;
                 }
 
                 $message = preg_replace("{\n$}", "", $message);
-                $title = "[VB] Website Order Quantity Warning, QTY = 5";
+                $title = "[Panther] Website Order Quantity Warning, QTY = 5";
                 $dto = clone $email_dto;
                 $dto->setEventId("notification");
                 $dto->setMailTo(array("bd@eservicesgroup.net"));
@@ -4814,7 +4814,7 @@ html;
                 }
 
                 $message = preg_replace("{\n$}", "", $message);
-                $title = "[VB] Website Order Quantity Warning, QTY = 0";
+                $title = "[Panther] Website Order Quantity Warning, QTY = 0";
                 $dto = clone $email_dto;
                 $dto->setEventId("notification");
                 $dto->setMailTo(array("bd@eservicesgroup.net"));
@@ -5427,7 +5427,7 @@ html;
                                         Compliance@valuebasket.com,
                                         nero@eservicesgroup.com",
 
-                                        "[VB] {$date_info}: Confirmed fraud", $body
+                                        "[Panther] {$date_info}: Confirmed fraud", $body
                                     );
                                 }
                             }
@@ -5636,7 +5636,7 @@ html;
 
             if ($mail_send) {
                 $header = "From: admin@eservicesgroup.com\r\n";
-                $subject = "[VB] Alert, WMS Allocation Plan New order so_no > 'to ship' is abnormal";
+                $subject = "[Panther] Alert, WMS Allocation Plan New order so_no > 'to ship' is abnormal";
                 mail("alice.wu@eservicesgroup.com", "{$subject}", "{$bodytext}", "{$header}");
             }
 
