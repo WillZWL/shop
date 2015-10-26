@@ -109,7 +109,7 @@ abstract class DataFeedService extends BaseService
     function ftpFeeds($local_file, $remote_file, $ftp_name)
     {
         $encrypt = new \CI_Encrypt();
-        $ftp = $this->get_ftp();
+        $ftp = $this->getFtp();
         if ($ftp_obj = $this->get_fi_dao()->get(array("name" => $ftp_name))) {
             $ftp->set_remote_site($server = $ftp_obj->get_server());
             $ftp->set_username($ftp_obj->get_username());
@@ -141,7 +141,7 @@ abstract class DataFeedService extends BaseService
         }
     }
 
-    public function get_ftp()
+    public function getFtp()
     {
         return $this->ftp;
     }
