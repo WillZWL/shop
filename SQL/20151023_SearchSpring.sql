@@ -13,3 +13,4 @@ ADD INDEX `idx_sub_cat_id` (`sub_cat_id`) USING BTREE ;
 ALTER TABLE `category_extend`
 ADD UNIQUE INDEX `idx_cat_lang` (`cat_id`, `lang_id`) USING BTREE ;
 
+update config set value='/var/data/panther' where variable='data_path'
