@@ -21,6 +21,16 @@ class LoadSiteParameterService extends BaseService
         $this->setSiteConfigService(new SiteConfigService);
     }
 
+    public function loadSiteByPlatform($platformId)
+    {
+        $where = ["sp.selling_platform_id" => $platformId];
+        $siteDto = $this->getSiteConfigService()->getDao()->getSiteInitialParameter($where);
+        if ($siteDto)
+            return $siteDto;
+        else
+            return false;
+    }
+
     public function initSite()
     {
         $where = [

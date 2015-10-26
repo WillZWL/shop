@@ -151,7 +151,7 @@
                                     <div class="cart-top">
                                         <div id="cart" class="pull-right clearfix">
                                             <div class="cart-inner media-body">
-                                                <a href="/ReviewOrder">
+                                                <a href="/review-order">
                                                     <img src="/themes/default/asset/image/icon-cart.png">
                                                     <span id="cart-total" class="cart-total"><?= sprintf(_('%s item(s) - %s'), $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"], platform_curr_format($_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"])) ?></span>
                                                     <i class="fa fa-angle-down"></i>

@@ -26,7 +26,7 @@
                         <input type="button" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="button-account" value="<?=_("Continue")?>">
                       </div>
                       <div class="col-sm-6">
-                        <form action="/Checkout/login" method="post" id="loginForm" name="loginForm">
+                        <form action="/checkout/login" method="post" id="loginForm" name="loginForm">
                             <h2><?=_("Returning Customer")?></h2>
                             <p><?=_("I am a returning customer")?></p>
                             <div class="form-group">
@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <form action="/Checkout/payment<?php print (($debug)?"/1":"")?>" method="POST" id="checkoutForm" name="checkoutForm">
+        <form action="/checkout/payment<?php print (($debug)?"/1":"")?>" method="POST" id="checkoutForm" name="checkoutForm">
         <div class="panel panel-default">
             <div class="panel-heading noicon">
                 <h4 class="panel-title">
@@ -686,6 +686,7 @@ function validateCheckout()
     })
     .on("success.form.fv", function(event)
     {
+        var errorMessage = "";
         event.preventDefault();
         standardWaitingScreen.showPleaseWait();
 //        displayCheckoutNowButton(0);
@@ -701,8 +702,16 @@ function validateCheckout()
         .done(function(data) {
             standardWaitingScreen.hidePleaseWait();
             displayCheckoutNowButton(1);
-            if (data.url.substring(0, 5) == "ERROR")
+            if (data.hasOwnProperty("errorMessage"))
             {
+                jQuery.each(data.errorMessage, function(i, val) {
+                    errorMessage = i + ":" + val;
+                });
+                alert(errorMessage);
+            }
+            else if (data.url.substring(0, 5) == "ERROR")
+            {
+//                if (data.hasOwnProperty("errorMessage"))
                 alert(data.url.substring(6, data.length));
                 displayCheckoutNowButton(1);
             }

@@ -561,31 +561,31 @@ implements PaymentGatewayRedirectServiceInterface
 
     protected function getSuccessfulUrl($soNo)
     {
-        $url = "https://" . $_SERVER['HTTP_HOST'] . "/Checkout/paymentResult/1/" . $soNo . (($this->debug) ? "?debug=1" : "");
+        $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/payment-result/1/" . $soNo . (($this->debug) ? "?debug=1" : "");
         return $url;
     }
 
     protected function getReviewUrl($soNo)
     {
-        $url = "https://" . $_SERVER['HTTP_HOST'] . "/Checkout/paymentResult/4/" . $soNo . (($this->debug) ? "?debug=1" : "");
+        $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/payment-result/4/" . $soNo . (($this->debug) ? "?debug=1" : "");
         return $url;
     }
 
     protected function getFailUrl($soNo)
     {
-        $url = "https://" . $_SERVER['HTTP_HOST'] . "/Checkout/paymentResult/0/" . $soNo . (($this->debug) ? "?debug=1" : "");
+        $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/payment-result/0/" . $soNo . (($this->debug) ? "?debug=1" : "");
         return $url;
     }
 
     protected function getCancelUrl($soNo)
     {
-        $url = "https://" . $_SERVER['HTTP_HOST'] . "/Checkout/cancel/" . $soNo . (($this->debug) ? "?debug=1" : "");
+        $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout" . (($this->debug) ? "?debug=1" : "");
         return $url;
     }
 
     protected function getNotificationUrl($soNo = null)
     {
-        $url = "https://" . $_SERVER['HTTP_HOST'] . "/Checkout/notification/" . strtolower($this->getPaymentGatewayName()) . (($this->debug) ? "?debug=1" : "");
+        $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/notification/" . strtolower($this->getPaymentGatewayName()) . (($this->debug) ? "?debug=1" : "");
         if ($soNo != null)
         {
             if ($this->debug)
@@ -598,7 +598,7 @@ implements PaymentGatewayRedirectServiceInterface
 
     protected function getResponseUrl($soNo = null)
     {
-        $url = "https://" . $_SERVER['HTTP_HOST'] . "/Checkout/response/" . strtolower($this->getPaymentGatewayName()) . (($this->debug) ? "?debug=1" : "");
+        $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/response/" . strtolower($this->getPaymentGatewayName()) . (($this->debug) ? "?debug=1" : "");
         if ($soNo != null)
         {
             if ($this->debug)

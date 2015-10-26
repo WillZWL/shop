@@ -9,6 +9,12 @@ Class Cart extends PUB_Controller
         $this->cartSessionModel = new CartSessionModel;
     }
 
+    public function addItem($sku, $qty = 1)
+    {
+        $this->addItemQty($sku, $qty);
+        redirect("/review-order");
+    }
+
     public function ajaxAddItem()
     {
         $sku = $this->input->post_get('sku');
@@ -16,7 +22,7 @@ Class Cart extends PUB_Controller
 // will need to put validation to sku, qty
         $this->addItemQty($sku, $qty);
 
-        $return['redirect'] = '/ReviewOrder';
+        $return['redirect'] = '/review-order';
         echo json_encode($return);
     }
 
@@ -27,7 +33,7 @@ Class Cart extends PUB_Controller
 // will need to put validation to sku, qty
         $this->setItemQty($sku, $qty);
 
-        $return['redirect'] = '/ReviewOrder';
+        $return['redirect'] = '/review-order';
         echo json_encode($return);
     }
 
@@ -38,7 +44,7 @@ Class Cart extends PUB_Controller
 // will need to put validation to sku, qty
         $this->minusItemQty($sku, $qty);
 
-        $return['redirect'] = '/ReviewOrder';
+        $return['redirect'] = '/review-order';
         echo json_encode($return);
     }
 
@@ -48,7 +54,7 @@ Class Cart extends PUB_Controller
 // will need to put validation to sku, qty
         $result = $this->cartSessionModel->removeItem($sku);
 
-        $return['redirect'] = '/ReviewOrder';
+        $return['redirect'] = '/review-order';
         echo json_encode($return);
     }
 
