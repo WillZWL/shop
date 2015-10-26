@@ -33,9 +33,7 @@ class SearchspringProductFeedService extends DataFeedService
     public function genDataFeed($platformId)
     {
         if ($this->_init($platformId)) {
-//            define('DATAPATH', $this->getDao('Config')->valueOf("data_path"));
-//debug
-            define('DATAPATH', "D:\\tmp\\");
+            define('DATAPATH', $this->getDao('Config')->valueOf("data_path"));
             $langId = $this->get_lang_id();
             $folderPath = DATAPATH . 'feeds/searchspring/' . $langId;
             $ftpPath = DATAPATH . 'feeds/searchspring/ftp/' . $langId;
