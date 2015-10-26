@@ -35,8 +35,8 @@ class SearchspringProductFeedService extends DataFeedService
         if ($this->_init($platformId)) {
             define('DATAPATH', $this->getDao('Config')->valueOf("data_path"));
             $langId = $this->get_lang_id();
-            $folderPath = DATAPATH . 'feeds/searchspring/' . $langId;
-            $ftpPath = DATAPATH . 'feeds/searchspring/ftp/' . $langId;
+            $folderPath = DATAPATH . '/feeds/searchspring/' . $langId;
+            $ftpPath = DATAPATH . '/feeds/searchspring/ftp/' . $langId;
 
             $this->createFolder($folderPath);
             $this->createFolder($ftpPath);
@@ -90,9 +90,9 @@ class SearchspringProductFeedService extends DataFeedService
 
     protected function genDataList($where = array(), $option = array())
     {
-        $this->delDir(DATAPATH . 'feeds/searchspring/' . $where['pbv.language_id']);
+        $this->delDir(DATAPATH . '/feeds/searchspring/' . $where['pbv.language_id']);
         $filename = 'panther_data_feed_' . $where['pbv.selling_platform_id'] . '.xml';
-        $fp = fopen(DATAPATH . 'feeds/searchspring/' . $where['pbv.language_id'] . '/' . $filename, 'w');
+        $fp = fopen(DATAPATH . '/feeds/searchspring/' . $where['pbv.language_id'] . '/' . $filename, 'w');
 
         set_time_limit(300);
         $num_rows = $this->productService->getDao()->getSearchspringProductFeed($where, ['num_rows' => 1]);
