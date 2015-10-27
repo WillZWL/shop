@@ -10,9 +10,14 @@ class BaseService
     private $dao;
 
     private static $daoContainer;
+    private static $serviceContainer;
 
-    public function __construct()
+    public function __construct($c = null)
     {
+        if ($c instanceof \Pimple\Container) {
+            self::$serviceContainer = $c;
+        }
+
         if (!self::$daoContainer) {
             $dc = new \Pimple\Container;
             $daoArr = (array) require APPPATH . 'libraries/DaoPSR4/providers.php';
@@ -22,6 +27,21 @@ class BaseService
 
             self::$daoContainer = $dc;
         }
+
+    }
+
+    public function getService($service)
+    {
+
+        if (is_null(self::$serviceContainer[$service])) {
+            throw new \InvalidArgumentException("{$service}Service doesn't in ServiceProvider.php");
+        }
+
+        if ($service.'Service' === end(explode('\\', get_class($this)))) {
+            throw new \Exception("use getService in endless loop", 1);
+        }
+
+        return self::$serviceContainer[$service];
     }
 
     public function getDao($dao = null)
@@ -31,7 +51,7 @@ class BaseService
         }
 
         if (is_null(self::$daoContainer[$dao])) {
-            throw new \InvalidArgumentException("{$dao} doesn't in DaoProvider.php");
+            throw new \InvalidArgumentException("{$dao}Dao doesn't in DaoProvider.php");
         }
 
         return self::$daoContainer[$dao];

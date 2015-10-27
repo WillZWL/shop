@@ -4,25 +4,28 @@ namespace ESG\Panther\Providers;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use ESG\Panther\Service as S;
-use ESG\Panther\Dao as D;
 
 class ServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $servcieContainer)
     {
-        $servcieContainer['Aftership'] = function ($c) {
+        $servcieContainer['Base'] = function ($c) {
+            return new S\BaseService($c);
+        };
+
+        $servcieContainer['Aftership'] = function () {
             return new S\AftershipService();
         };
 
-        $servcieContainer['Authorization'] = function ($c) {
+        $servcieContainer['Authorization'] = function () {
             return new S\AuthorizationService();
         };
 
-        $servcieContainer['Authentication'] = function ($c) {
+        $servcieContainer['Authentication'] = function () {
             return new S\AuthenticationService();
         };
 
-        $servcieContainer['Batch'] = function ($c) {
+        $servcieContainer['Batch'] = function () {
             return new S\BatchService();
         };
 
@@ -204,6 +207,10 @@ class ServiceProvider implements ServiceProviderInterface
 
         $servcieContainer['SellingPlatform'] = function () {
             return new S\SellingPlatformService();
+        };
+
+        $servcieContainer['VbDataTransferProducts'] = function () {
+            return new S\VbDataTransferProductsService();
         };
     }
 }
