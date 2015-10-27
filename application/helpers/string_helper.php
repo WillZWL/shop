@@ -14,6 +14,19 @@ if (!function_exists('underscore2camelcase')) {
     }
 }
 
+if (!function_exists('replace_special_chars')) {
+    function replace_special_chars($replaced_data)
+    {
+        $original_data = "";
+        $original_data = str_replace('&amp;', '&', $replaced_data);
+        $original_data = str_replace('&gt;', '>', $original_data);
+        $original_data = str_replace('&lt;', '<', $original_data);
+
+        return $original_data;
+    }
+}
+
+
 // ------------------------------------------------------------------------
 
 /**

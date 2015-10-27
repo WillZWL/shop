@@ -22,6 +22,7 @@ class VbDataTransferProductsService extends VbDataTransferService
         //print $feed; exit;
         //Read the data sent from VB
         $xml_vb = simplexml_load_string($feed);
+        unset($feed);
 
         $task_id = $xml_vb->attributes()->task_id;
         $is_error_task = $xml_vb->attributes()->is_error_task;

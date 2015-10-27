@@ -213,6 +213,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\VbDataTransferProductsService();
         };
 
+        $servcieContainer['VbDataTransferProductContent'] = function () {
+            return new S\VbDataTransferProductContentService();
+        };
+
         $servcieContainer['SkuMapping'] = function () {
             return new S\SkuMappingService();
         };

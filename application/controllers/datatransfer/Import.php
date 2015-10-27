@@ -12,9 +12,16 @@ class Import extends MY_Controller
 
     public function product()
     {
+        $start = memory_get_usage();
+
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProducts']->startProcess($xml);
         print $feed;
+
+        $end = memory_get_usage();
+
+        echo ($end - $start), '/', memory_get_peak_usage();
+
     }
 
     public function price()
@@ -26,13 +33,10 @@ class Import extends MY_Controller
 
     /********************** start product tables **********************/
 
-    public function productcontent()
+    public function productContent()
     {
         $xml = file_get_contents('php://input');
-        // header('content-type: text/xml');
-        // print $xml;
-        // exit;
-        $feed =$this->vb_data_transfer_product_content_service->startProcess($xml);
+        $feed =$this->sc['VbDataTransferProductContent']->startProcess($xml);
         print $feed;
     }
 
