@@ -69,8 +69,8 @@ class ProductService extends BaseProductService
         }
 
         $newObj = new \ProductContentVo();
-        $newObj->set_prod_sku($sku);
-        $newObj->set_lang_id($oldObj->lang_id);
+        $newObj->setProdSku($sku);
+        $newObj->setLangId($oldObj->lang_id);
         $this->updateProductContent($newObj, $oldObj);
 
         return $newObj;
@@ -100,6 +100,32 @@ class ProductService extends BaseProductService
         $newObj->setYoutubeId2(replace_special_chars($oldObj->youtube_id_2));
         $newObj->setYoutubeCaption1(replace_special_chars($oldObj->youtube_caption_1));
         $newObj->setYoutubeCaption2(replace_special_chars($oldObj->youtube_caption_2));
+    }
+
+    public function createNewProductContentExtend($sku, $oldObj)
+    {
+        if ( ! $this->getDao('Product')->get(['sku' => $sku])) {
+            return false;
+        }
+
+        $newObj = new \ProductContentExtendVo();
+        $newObj->setProdSku($sku);
+        $newObj->setLangId($oldObj->lang_id);
+        $this->updateProductContentExtend($newObj, $oldObj);
+
+        return $newObj;
+    }
+
+    public function updateProductContentExtend($newObj, $oldObj)
+    {
+        $newObj->setFeature($oldObj->feature);
+        $newObj->setFeatureOriginal($oldObj->feature_original);
+        $newObj->setSpecification($oldObj->specification);
+        $newObj->setSpecOriginal($oldObj->spec_original);
+        $newObj->setRequirement($oldObj->requirement);
+        $newObj->setInstruction($oldObj->instruction);
+        $newObj->setApplyEnhancedListing($oldObj->apply_enhanced_listing);
+        $newObj->setEnhancedListing($oldObj->enhanced_listing);
     }
 
     public function addProductData(ProductData $obj)

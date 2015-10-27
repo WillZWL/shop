@@ -15,6 +15,7 @@ abstract class VbDataTransferService extends BaseService implements VbDataTransf
     public function __construct()
     {
         set_time_limit(600);
+        ini_set('memory_limit', '512M');
         parent::__construct();
     }
 
