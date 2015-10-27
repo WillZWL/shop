@@ -58,14 +58,18 @@ class Import extends MY_Controller
         echo ($end - $start), '/', memory_get_peak_usage();
     }
 
-    public function productcustomclass()
+    public function productCustomClass()
     {
+        $start = memory_get_usage();
+
         $xml = file_get_contents('php://input');
-        // header('content-type: text/xml');
-        // print $xml;
-        // exit;
-        $feed =$this->vb_data_transfer_product_custom_class_service->startProcess($xml);
+        $feed =$this->sc['VbDataTransferProductCustomClass']->startProcess($xml);
+        unset($xml);
         print $feed;
+
+        $end = memory_get_usage();
+
+        echo ($end - $start), '/', memory_get_peak_usage();
     }
 
     public function productidentifier()
@@ -78,7 +82,7 @@ class Import extends MY_Controller
         print $feed;
     }
 
-    public function productimage()
+    public function productImage()
     {
         $xml = file_get_contents('php://input');
         // header('content-type: text/xml');

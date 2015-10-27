@@ -221,6 +221,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\VbDataTransferProductContentExtendService();
         };
 
+        $servcieContainer['productCustomClass'] = function () {
+            return new S\VbDataTransferProductCustomClassService();
+        };
+
         $servcieContainer['SkuMapping'] = function () {
             return new S\SkuMappingService();
         };

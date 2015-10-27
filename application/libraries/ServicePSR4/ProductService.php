@@ -128,6 +128,27 @@ class ProductService extends BaseProductService
         $newObj->setEnhancedListing($oldObj->enhanced_listing);
     }
 
+    public function createNewProductCustomClass($sku, $oldObj)
+    {
+        if ( ! $this->getDao('Product')->get(['sku' => $sku])) {
+            return false;
+        }
+
+        $newObj = new \ProductCustomClassificationVo();
+        $newObj->setSku($sku);
+        $newObj->setCountryId($oldObj->country_id);
+        $newObj->updateProductCustomClass($newObj, $oldObj);
+
+        return $newObj;
+    }
+
+    public function updateProductCustomClass($newObj, $oldObj)
+    {
+        $newObj->setCode($oldObj->code);
+        $newObj->setDescription($oldObj->description);
+        $newObj->setDutyPcent($oldObj->duty_pcent);
+    }
+
     public function addProductData(ProductData $obj)
     {
         $obj->parseData($data);

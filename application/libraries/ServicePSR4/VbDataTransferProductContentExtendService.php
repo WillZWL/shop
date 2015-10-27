@@ -54,9 +54,9 @@ class VbDataTransferProductContentExtendService extends VbDataTransferService
             }
 
             $xml[] = '<product>';
-            $xml[] = '<sku>' . $pc->prod_sku . '</sku>';
-            $xml[] = '<platform_id>' . $pc->lang_id . '</platform_id>';
-            $xml[] = '<master_sku>' . $pc->master_sku . '</master_sku>';
+            $xml[] = '<sku>' . $pce->prod_sku . '</sku>';
+            $xml[] = '<platform_id>' . $pce->lang_id . '</platform_id>';
+            $xml[] = '<master_sku>' . $pce->master_sku . '</master_sku>';
             $xml[] = '<status>' . $process_status . '</status>';
             $xml[] = '</product>';
          }
