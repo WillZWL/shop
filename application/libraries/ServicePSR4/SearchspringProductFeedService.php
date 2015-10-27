@@ -12,19 +12,6 @@ class SearchspringProductFeedService extends DataFeedService
     public function __construct()
     {
         parent::__construct();
-/*
-        include_once APPPATH . 'libraries/service/Price_website_service.php';
-        $this->set_price_srv(new Price_website_service());
-        include_once APPPATH . 'libraries/service/Product_service.php';
-        $this->set_product_srv(new Product_service());
-        include_once APPPATH . 'libraries/service/Price_service.php';
-        $this->set_price_srv(new Price_service());
-        include_once APPPATH . 'libraries/service/Platform_biz_var_service.php';
-        $this->set_pbv_srv(new Platform_biz_var_service());
-
-        include_once(APPPATH . "helpers/image_helper.php");
-        include_once(APPPATH . "helpers/MY_url_helper.php");
-*/
         $this->pbvService = new PlatformBizVarService();
         $this->priceWebsiteService = new PriceWebsiteService();
         $this->setOutputDelimiter(',');
@@ -34,7 +21,8 @@ class SearchspringProductFeedService extends DataFeedService
     {
         if ($this->_init($platformId)) {
             define('DATAPATH', $this->getDao('Config')->valueOf("data_path"));
-            $langId = $this->get_lang_id();
+
+            $langId = $this->getLangId();
             $folderPath = DATAPATH . '/feeds/searchspring/' . $langId;
             $ftpPath = DATAPATH . '/feeds/searchspring/ftp/' . $langId;
 
@@ -55,29 +43,19 @@ class SearchspringProductFeedService extends DataFeedService
         if ($siteDto) {
             $this->setDomain($siteDto->getDomain());
             $this->setImageDomain($siteDto->getDomain());
-            $this->set_lang_id($siteDto->getLangId());
+            $this->setLangId($siteDto->getLangId());
             $this->loadLanguage($siteDto->getLangId());
             return true;
         }
         return false;
     }
 
-    public function get_pbv_srv()
-    {
-        return $this->pbv_srv;
-    }
-
-    public function set_pbv_srv(Base_service $srv)
-    {
-        $this->pbv_srv = $srv;
-    }
-
-    public function get_lang_id()
+    public function getLangId()
     {
         return $this->lang_id;
     }
 
-    public function set_lang_id($lang_id)
+    public function setLangId($lang_id)
     {
         $this->lang_id = $lang_id;
     }
@@ -90,8 +68,8 @@ class SearchspringProductFeedService extends DataFeedService
 
     protected function genDataList($where = array(), $option = array())
     {
-        $this->delDir(DATAPATH . '/feeds/searchspring/' . $where['pbv.language_id']);
         $filename = 'panther_data_feed_' . $where['pbv.selling_platform_id'] . '.xml';
+        @unlink($filename);
         $fp = fopen(DATAPATH . '/feeds/searchspring/' . $where['pbv.language_id'] . '/' . $filename, 'w');
 
         set_time_limit(300);
