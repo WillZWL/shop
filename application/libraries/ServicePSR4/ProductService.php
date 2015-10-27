@@ -16,6 +16,83 @@ class ProductService extends BaseProductService
         $this->factory = $factory;
     }
 
+    public function createNewProduct($oldObj)
+    {
+        $sku = $this->getDao('Product')->getNewSku();
+        $newObj = new \ProductVo();
+        $newObj->setSku($sku);
+        $newObj->setProdGrpCd((string)$oldObj->prod_grp_cd);
+        $newObj->setColourId((string)$oldObj->colour_id);
+        $newObj->setVersionId((string)$oldObj->version_id);
+        $newObj->setName((string)$oldObj->name);
+        $newObj->setFreightCatId((string)$oldObj->freight_cat_id);
+        $newObj->setCatId((string)$oldObj->cat_id);
+        $newObj->setSubCatId((string)$oldObj->sub_cat_id);
+        $newObj->setSubSubCatId((string)$oldObj->sub_sub_cat_id);
+        $newObj->setBrandId((string)$oldObj->brand_id);
+        $newObj->setClearance((string)$oldObj->clearance);
+        $newObj->setSurplusQuantity((string)$oldObj->surplus_quantity);
+        $newObj->setQuantity((string)$oldObj->quantity);
+        $newObj->setDisplayQuantity((string)$oldObj->display_quantity);
+        $newObj->setWebsiteQuantity((string)$oldObj->website_quantity);
+        $newObj->setChinaOem((string)$oldObj->china_oem);
+        $newObj->setRrp((string)$oldObj->rrp);
+        $newObj->setImage((string)$oldObj->image);
+        $newObj->setFlash((string)$oldObj->flash);
+        $newObj->setYoutubeId((string)$oldObj->youtube_id);
+        $newObj->setEan((string)$oldObj->ean);
+        $newObj->setMpn((string)$oldObj->mpn);
+        $newObj->setUpc((string)$oldObj->upc);
+        $newObj->setDiscount((string)$oldObj->discount);
+        $newObj->setProcStatus((string)$oldObj->proc_status);
+        $newObj->setWebsiteStatus((string)$oldObj->website_status);
+        $newObj->setSourcingStatus((string)$oldObj->sourcing_status);
+        $newObj->setExpectedDeliveryDate((string)$oldObj->expected_delivery_date);
+        $newObj->setWarrantyInMonth((string)$oldObj->warranty_in_month);
+        $newObj->setCatUpselling((string)$oldObj->cat_upselling);
+        $newObj->setLangRestricted((string)$oldObj->lang_restricted);
+        $newObj->setShipmentRestrictedType((string)$oldObj->shipment_restricted_type);
+        $newObj->setStatus((string)$oldObj->status);
+
+        return $newObj;
+    }
+
+    public function updateProduct(&$newObj, $oldObj)
+    {
+        $newObj->setProdGrpCd((string)$oldObj->prod_grp_cd);
+        $newObj->setColourId((string)$oldObj->colour_id);
+        $newObj->setVersionId((string)$oldObj->version_id);
+        $newObj->setName((string)$oldObj->name);
+        $newObj->setFreightCatId((string)$oldObj->freight_cat_id);
+        $newObj->setCatId((string)$oldObj->cat_id);
+        $newObj->setSubCatId((string)$oldObj->sub_cat_id);
+        $newObj->setSubSubCatId((string)$oldObj->sub_sub_cat_id);
+        $newObj->setBrandId((string)$oldObj->brand_id);
+        $newObj->setClearance((string)$oldObj->clearance);
+        $newObj->setSurplusQuantity((string)$oldObj->surplus_quantity);
+        $newObj->setQuantity((string)$oldObj->quantity);
+        $newObj->setDisplayQuantity((string)$oldObj->display_quantity);
+        $newObj->setWebsiteQuantity((string)$oldObj->website_quantity);
+        $newObj->setChinaOem((string)$oldObj->china_oem);
+        $newObj->setRrp((string)$oldObj->rrp);
+        $newObj->setImage((string)$oldObj->image);
+        $newObj->setFlash((string)$oldObj->flash);
+        $newObj->setYoutubeId((string)$oldObj->youtube_id);
+        $newObj->setEan((string)$oldObj->ean);
+        $newObj->setMpn((string)$oldObj->mpn);
+        $newObj->setUpc((string)$oldObj->upc);
+        $newObj->setDiscount((string)$oldObj->discount);
+        $newObj->setProcStatus((string)$oldObj->proc_status);
+        $newObj->setWebsiteStatus((string)$oldObj->website_status);
+        $newObj->setSourcingStatus((string)$oldObj->sourcing_status);
+        $newObj->setExpectedDeliveryDate((string)$oldObj->expected_delivery_date);
+        $newObj->setWarrantyInMonth((string)$oldObj->warranty_in_month);
+        $newObj->setCatUpselling((string)$oldObj->cat_upselling);
+        $newObj->setLangRestricted((string)$oldObj->lang_restricted);
+        $newObj->setShipmentRestrictedType((string)$oldObj->shipment_restricted_type);
+        $newObj->setStatus((string)$oldObj->status);
+    }
+
     public function addProductData(ProductData $obj)
     {
         $obj->parseData($data);
