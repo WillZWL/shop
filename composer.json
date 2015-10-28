@@ -26,6 +26,7 @@
             "ESG\\Panther\\Models\\Website\\": "application/models/WebsitePSR4",
             "ESG\\Panther\\Models\\Mastercfg\\": "application/models/MastercfgPSR4",
             "ESG\\Panther\\Models\\Marketing\\": "application/models/MarketingPSR4",
+            "ESG\\Panther\\Models\\Integration\\": "application/models/IntegrationPSR4",
             "ESG\\Panther\\Models\\CustomerService\\": "application/models/CustomerServicePSR4",
             "ESG\\Panther\\Models\\Order\\": "application/models/OrderPSR4",
             "ESG\\Panther\\Form\\": "application/form",

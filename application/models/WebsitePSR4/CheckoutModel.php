@@ -52,7 +52,7 @@ class CheckoutModel extends \CI_Model
     }
 
     public function createSaleOrder($formValue) {
-//                return ("ERROR=" . _("Session timeout, please check your cart!"));
+        $result = ["error" => -10, "errorMessage" => _("Please contact CS") . ", err:" . __LINE__];
         $cart = $this->getCartSessionService()->getCart();
 //        var_dump($cart);
         if ($cart)
@@ -67,14 +67,17 @@ class CheckoutModel extends \CI_Model
                 else
                 {
                     error_log("Payment Gateway Service-" . $paymentGatewayId . " not found " . __METHOD__ . __LINE__);
-                    return false;
                 }
+                $result = ["error" => -11, "errorMessage" => _("Please contact CS") . ", err:" . __LINE__];
             }
+            else
+                $result = ["error" => -12, "errorMessage" => _("Please contact CS") . ", err:" . __LINE__];
         }
         else
         {
-            return ("ERROR=" . _("Session timeout, please check your cart!"));
+            $result = ["error" => -13, "errorMessage" => _("Session timeout, please check your cart!" . ", err:" . __LINE__)];
         }
+        return $result;
     }
 
     public function notification($paymentGatewayId, $data, $debug)

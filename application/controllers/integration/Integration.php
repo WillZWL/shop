@@ -1,21 +1,28 @@
 <?php
+use ESG\Panther\Models\Integration\IntegrationModel as newIntegrationModel;
 
 class Integration extends MY_Controller
 {
-
     private $appId = "INT0001";
     private $lang_id = "en";
     private $notification_email = "itsupport@eservicesgroup.net";
 
-
     public function __construct()
     {
         parent::__construct();
+/*
         $this->load->model('integration/integration_model');
         $this->load->helper(array('url', 'notice', 'object', 'operator', 'lang'));
         $this->load->library('service/pagination_service');
         $this->load->library('encrypt');
-        //$this->load->library('service/authorization_service');
+*/
+    }
+
+    public function sendOrderToCybsDecisionManager($debug = 0)
+    {
+        $integrationModel = new newIntegrationModel();
+        $integrationModel->sendOrderToCybsDecisionManager($debug);
+        print "Done";
     }
 
     public function index()
@@ -472,12 +479,6 @@ class Integration extends MY_Controller
             }
             // mail($this->notification_email, $title, $message);
         }
-    }
-
-    public function send_order_to_cybs_decision_manager($debug = 0)
-    {
-        $this->integration_model->send_order_to_cybs_decision_manager($debug);
-        print "Done";
     }
 
     public function refresh_all_platform_margin()

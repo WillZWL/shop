@@ -14,6 +14,10 @@ class CheckoutFormFilter extends InputFilter
         $value = [];
 
         $value["formSalt"] = trim($input->post("formSalt"));
+        $value["cybersourceFingerprint"] = trim($input->post("cybersourceFingerprint"));
+        if (!$this->isValidFingerprint($value["cybersourceFingerprint"])) {
+            $message["cybersourceFingerprint"] = _("Not a valid fingerprint");
+        }
         $value["billFirstName"] = trim($input->post("billingFirstName"));
         if (!$this->isValidFirstName($value["billFirstName"])) {
             $message["billFirstName"] = _("Not a valid billingFirstName");

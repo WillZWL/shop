@@ -5,7 +5,7 @@ use ESG\Panther\Dao\PriceMarginDao;
 use ESG\Panther\Service\ClassFactoryService;
 use ESG\Panther\Service\ProductService;
 use ESG\Panther\Service\PlatformBizVarService;
-use ESG\Panther\Service\PriceService;
+//use ESG\Panther\Service\PriceService;
 
 class PriceMarginService extends BaseService
 {
@@ -18,7 +18,7 @@ class PriceMarginService extends BaseService
         $this->classFactoryService = new ClassFactoryService;
         $this->productService = new ProductService;
         $this->platformBizVarService = new PlatformBizVarService;
-        $this->priceService = new PriceService;
+        //$this->priceService = new PriceService;
     }
 
     public function refreshMarginForTopDeal()
@@ -185,7 +185,7 @@ class PriceMarginService extends BaseService
         $this->updateMargin($prod_list, $where["v_prod_overview_w_update_time.platform_id"]);
     }
 
-    public function getPriceService()
+    /*public function getPriceService()
     {
         return $this->price_service;
     }
@@ -194,7 +194,7 @@ class PriceMarginService extends BaseService
     {
         $this->price_service = $svc;
         return $this;
-    }
+    }*/
 
     public function insertOrUpdateMargin($sku, $platform_id, $price = null, $profit, $margin)
     {

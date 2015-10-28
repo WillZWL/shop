@@ -124,10 +124,10 @@ implements PaymentGatewayRedirectServiceInterface
                 } else {
                     $subject = "[Panther] " . $this->getPaymentGatewayName() . " site down, so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
                     $alertMessage = $callResult["siteDownErrorMessage"];
-                    $messageToUser = _("Please contact our CS");
+                    $messageToUser = _("Please contact our CS") . ", err:" . __LINE__;
                 }
                 $this->sendAlert($subject, $alertMessage, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
-                return $this->checkoutFailureHandler($messageToUser);
+                return $this->checkoutFailureHandler($messageToUser, $callResult["siteDown"]);
             } else {
                 if ($orderFormInfo["paymentGatewayId"] == 'w_bank_transfer') {
                     $this->sops->setPaymentStatus('N');
@@ -141,12 +141,12 @@ implements PaymentGatewayRedirectServiceInterface
                     $subject = "[Panther] fail to update so payment status" . $this->getPaymentGatewayName() . ", so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
                     $message = $this->soFactoryService->getSoPaymentStatusDao()->db->last_query() . "," . $this->soFactoryService->getSoPaymentStatusDao()->db->_error_message();
                     $this->sendAlert($subject, $message, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
-                    return $this->checkoutFailureHandler(_("Please contact our CS"));
+                    return $this->checkoutFailureHandler(_("Please contact our CS") . ", err:" . __LINE__);
                 }
-                return $redirectUrl;
+                return ["url" => $redirectUrl, "error" => 0];
             }
         }
-        return $this->checkoutFailureHandler(_("Please contact our CS"));
+        return $this->checkoutFailureHandler(_("Please contact our CS") . ", err:" . __LINE__);
     }
 
     public function processPaymentStatusInGeneral($generalData = array(), $getData = array())
@@ -182,11 +182,11 @@ implements PaymentGatewayRedirectServiceInterface
             $subject = "[" . $this->get_payment_gateway_name() . "]" . "fatal error";
             $message = "";
             if (is_array($generalData))
-                $message .= $this->array_implode('=', ',', $generalData);
+                $message .= $this->arrayImplode('=', ',', $generalData);
             else if (!empty($generalData))
                 $message .= $generalData;
             if (is_array($getData))
-                $message .= "," . $this->array_implode('=', ',', $getData);
+                $message .= "," . $this->arrayImplode('=', ',', $getData);
             else if (!empty($getData))
                 $message .= $getData;
             $message .= $this->get_so_srv()->get_dao()->db->_error_message();
@@ -238,6 +238,7 @@ implements PaymentGatewayRedirectServiceInterface
                 }
 //update promotion code
                 $this->updatePromo($this->so->getPromotionCode());
+                $this->sendConfirmationEmail($this->so);
                 $this->processSuccessAction();
             } else if ($this->so->getStatus() == 2) {
 //status from 2 to 3 because of 3D info
@@ -379,7 +380,7 @@ implements PaymentGatewayRedirectServiceInterface
                 if ($dataToPmgw)
                     $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "O", $dataToPmgw);
                 if ($dataFromPmgw)
-                    $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "I", $this->array_implode("=", ",", $dataFromPmgw));
+                    $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "I", $this->arrayImplode("=", ",", $dataFromPmgw));
                 if ($fullResult == PaymentGatewayRedirectService::PAYMENT_STATUS_SUCCESS)
                 {
                     $this->paymentSuccessOperation($soData, $sopsData, $soccData, $sorData);
@@ -545,7 +546,24 @@ implements PaymentGatewayRedirectServiceInterface
         }
     }
 
-	protected function array_implode($glue, $separator, $array)
+    public function stdObjToString($input, $array_key = "")
+    {
+        $string_to_return = "";
+        foreach ($input as $key => $value) {
+            if (is_object($value)) {
+                $string_to_return .= $this->stdObjToString($value, "    " . $array_key . ($key . "_"));
+            } else if (is_array($value)) {
+                foreach ($value as $second_key => $second_value) {
+                    $string_to_return .= $this->stdObjToString($second_value, "    " . $array_key . ($key . "_" . $second_key . "_"));
+                }
+            } else {
+                $string_to_return .= $array_key . $key . "=" . $value . "\n";
+            }
+        }
+        return $string_to_return;
+    }
+
+	protected function arrayImplode($glue, $separator, $array)
 	{
 		if (!is_array($array))
 			return $array;
@@ -613,9 +631,9 @@ implements PaymentGatewayRedirectServiceInterface
 *   checkout_failure_handler could be overrided to set different error reponse during checkout
 *   this handler will only be suitable
 ****************************************************************/
-    protected function checkoutFailureHandler($message = "")
+    protected function checkoutFailureHandler($message = "", $siteDown = false)
     {
-        return "ERROR=" . $message . "&URL=" . $this->getFailUrl((($this->so)?$this->so->getSoNo():""));
+        return ["error" => -2, "errorMessage" => $message, "siteDown" => $siteDown, "url" => $this->getFailUrl((($this->so)?$this->so->getSoNo():""))];
     }
 
     protected function getSiteLogo()
