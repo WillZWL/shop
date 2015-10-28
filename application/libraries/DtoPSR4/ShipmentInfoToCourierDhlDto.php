@@ -31,7 +31,7 @@ class ShipmentInfoToCourierDhlDto
     private $prod_sku;
     private $mawb;
     private $client_email;
-    private $delivery_country_id__2;
+    private $delivery_country_id_2;
     private $shipping_date;
     private $category_name;
     private $item_no;
@@ -340,14 +340,14 @@ class ShipmentInfoToCourierDhlDto
         return $this->client_email;
     }
 
-    public function setDeliveryCountryId2($delivery_country_id__2)
+    public function setDeliveryCountryId2($delivery_country_id_2)
     {
-        $this->delivery_country_id__2 = $delivery_country_id__2;
+        $this->delivery_country_id_2 = $delivery_country_id_2;
     }
 
     public function getDeliveryCountryId2()
     {
-        return $this->delivery_country_id__2;
+        return $this->delivery_country_id_2;
     }
 
     public function setShippingDate($shipping_date)

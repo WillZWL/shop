@@ -127,34 +127,34 @@ class SoWithClientAndItemDto
         return $this->risk_ref_4;
     }
 
-    public function setTel1($tel__1)
+    public function setTel1($tel_1)
     {
-        $this->tel__1 = $tel__1;
+        $this->tel_1 = $tel_1;
     }
 
     public function getTel1()
     {
-        return $this->tel__1;
+        return $this->tel_1;
     }
 
-    public function setTel2($tel__2)
+    public function setTel2($tel_2)
     {
-        $this->tel__2 = $tel__2;
+        $this->tel_2 = $tel_2;
     }
 
     public function getTel2()
     {
-        return $this->tel__2;
+        return $this->tel_2;
     }
 
-    public function setTel3($tel__3)
+    public function setTel3($tel_3)
     {
-        $this->tel__3 = $tel__3;
+        $this->tel_3 = $tel_3;
     }
 
     public function getTel3()
     {
-        return $this->tel__3;
+        return $this->tel_3;
     }
 
     public function setCreateOn($create_on)
@@ -257,34 +257,34 @@ class SoWithClientAndItemDto
         return $this->client_id_no;
     }
 
-    public function setAddress1($address__1)
+    public function setAddress1($address_1)
     {
-        $this->address__1 = $address__1;
+        $this->address_1 = $address_1;
     }
 
     public function getAddress1()
     {
-        return $this->address__1;
+        return $this->address_1;
     }
 
-    public function setAddress2($address__2)
+    public function setAddress2($address_2)
     {
-        $this->address__2 = $address__2;
+        $this->address_2 = $address_2;
     }
 
     public function getAddress2()
     {
-        return $this->address__2;
+        return $this->address_2;
     }
 
-    public function setAddress3($address__3)
+    public function setAddress3($address_3)
     {
-        $this->address__3 = $address__3;
+        $this->address_3 = $address_3;
     }
 
     public function getAddress3()
     {
-        return $this->address__3;
+        return $this->address_3;
     }
 
     public function setPostcode($postcode)
@@ -337,34 +337,34 @@ class SoWithClientAndItemDto
         return $this->del_name;
     }
 
-    public function setDelAddress1($del_address__1)
+    public function setDelAddress1($del_address_1)
     {
-        $this->del_address__1 = $del_address__1;
+        $this->del_address_1 = $del_address_1;
     }
 
     public function getDelAddress1()
     {
-        return $this->del_address__1;
+        return $this->del_address_1;
     }
 
-    public function setDelAddress2($del_address__2)
+    public function setDelAddress2($del_address_2)
     {
-        $this->del_address__2 = $del_address__2;
+        $this->del_address_2 = $del_address_2;
     }
 
     public function getDelAddress2()
     {
-        return $this->del_address__2;
+        return $this->del_address_2;
     }
 
-    public function setDelAddress3($del_address__3)
+    public function setDelAddress3($del_address_3)
     {
-        $this->del_address__3 = $del_address__3;
+        $this->del_address_3 = $del_address_3;
     }
 
     public function getDelAddress3()
     {
-        return $this->del_address__3;
+        return $this->del_address_3;
     }
 
     public function setDelPostcode($del_postcode)

@@ -18,17 +18,17 @@ class SoLastOrderWithClientDto
     private $delivery_surname;
     private $delivery_company;
     private $delivery_address;
-    private $delivery_address__1;
+    private $delivery_address_1;
     private $delivery_address_segment;
-    private $delivery_address__2;
-    private $delivery_address__3;
+    private $delivery_address_2;
+    private $delivery_address_3;
     private $delivery_postcode;
     private $delivery_city;
     private $delivery_state;
     private $delivery_country_id;
-    private $tel__1;
-    private $tel__2;
-    private $tel__3;
+    private $tel_1;
+    private $tel_2;
+    private $tel_3;
     private $create_on;
 
     public function setSoNo($so_no)
@@ -201,14 +201,14 @@ class SoLastOrderWithClientDto
         return $this->delivery_address;
     }
 
-    public function setDeliveryAddress1($delivery_address__1)
+    public function setDeliveryAddress1($delivery_address_1)
     {
-        $this->delivery_address__1 = $delivery_address__1;
+        $this->delivery_address_1 = $delivery_address_1;
     }
 
     public function getDeliveryAddress1()
     {
-        return $this->delivery_address__1;
+        return $this->delivery_address_1;
     }
 
     public function setDeliveryAddressSegment($delivery_address_segment)
@@ -221,24 +221,24 @@ class SoLastOrderWithClientDto
         return $this->delivery_address_segment;
     }
 
-    public function setDeliveryAddress2($delivery_address__2)
+    public function setDeliveryAddress2($delivery_address_2)
     {
-        $this->delivery_address__2 = $delivery_address__2;
+        $this->delivery_address_2 = $delivery_address_2;
     }
 
     public function getDeliveryAddress2()
     {
-        return $this->delivery_address__2;
+        return $this->delivery_address_2;
     }
 
-    public function setDeliveryAddress3($delivery_address__3)
+    public function setDeliveryAddress3($delivery_address_3)
     {
-        $this->delivery_address__3 = $delivery_address__3;
+        $this->delivery_address_3 = $delivery_address_3;
     }
 
     public function getDeliveryAddress3()
     {
-        return $this->delivery_address__3;
+        return $this->delivery_address_3;
     }
 
     public function setDeliveryPostcode($delivery_postcode)
@@ -281,34 +281,34 @@ class SoLastOrderWithClientDto
         return $this->delivery_country_id;
     }
 
-    public function setTel1($tel__1)
+    public function setTel1($tel_1)
     {
-        $this->tel__1 = $tel__1;
+        $this->tel_1 = $tel_1;
     }
 
     public function getTel1()
     {
-        return $this->tel__1;
+        return $this->tel_1;
     }
 
-    public function setTel2($tel__2)
+    public function setTel2($tel_2)
     {
-        $this->tel__2 = $tel__2;
+        $this->tel_2 = $tel_2;
     }
 
     public function getTel2()
     {
-        return $this->tel__2;
+        return $this->tel_2;
     }
 
-    public function setTel3($tel__3)
+    public function setTel3($tel_3)
     {
-        $this->tel__3 = $tel__3;
+        $this->tel_3 = $tel_3;
     }
 
     public function getTel3()
     {
-        return $this->tel__3;
+        return $this->tel_3;
     }
 
     public function setCreateOn($create_on)

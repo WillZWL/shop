@@ -4,7 +4,7 @@ class ProdSupplierInfoDto
     private $sku;
     private $name;
     private $surplus_quantity;
-    private $slow_move__7_days;
+    private $slow_move_7_days;
     private $sourcing_status;
     private $platform_id;
     private $price;
@@ -44,14 +44,14 @@ class ProdSupplierInfoDto
         return $this->surplus_quantity;
     }
 
-    public function setSlowMove7Days($slow_move__7_days)
+    public function setSlowMove7Days($slow_move_7_days)
     {
-        $this->slow_move__7_days = $slow_move__7_days;
+        $this->slow_move_7_days = $slow_move_7_days;
     }
 
     public function getSlowMove7Days()
     {
-        return $this->slow_move__7_days;
+        return $this->slow_move_7_days;
     }
 
     public function setSourcingStatus($sourcing_status)

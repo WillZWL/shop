@@ -39,9 +39,9 @@ class ShipmentInfoToCourierDto
     protected $ship_option;
     protected $actual_cost;
     protected $offline_fee = "0.00";
-    protected $delivery_address__1;
-    protected $delivery_address__2;
-    protected $delivery_address__3;
+    protected $delivery_address_1;
+    protected $delivery_address_2;
+    protected $delivery_address_3;
     protected $cc_desc;
     protected $cc_code;
     protected $courier_id;
@@ -426,34 +426,34 @@ class ShipmentInfoToCourierDto
         return $this->offline_fee;
     }
 
-    public function setDeliveryAddress1($delivery_address__1)
+    public function setDeliveryAddress1($delivery_address_1)
     {
-        $this->delivery_address__1 = $delivery_address__1;
+        $this->delivery_address_1 = $delivery_address_1;
     }
 
     public function getDeliveryAddress1()
     {
-        return $this->delivery_address__1;
+        return $this->delivery_address_1;
     }
 
-    public function setDeliveryAddress2($delivery_address__2)
+    public function setDeliveryAddress2($delivery_address_2)
     {
-        $this->delivery_address__2 = $delivery_address__2;
+        $this->delivery_address_2 = $delivery_address_2;
     }
 
     public function getDeliveryAddress2()
     {
-        return $this->delivery_address__2;
+        return $this->delivery_address_2;
     }
 
-    public function setDeliveryAddress3($delivery_address__3)
+    public function setDeliveryAddress3($delivery_address_3)
     {
-        $this->delivery_address__3 = $delivery_address__3;
+        $this->delivery_address_3 = $delivery_address_3;
     }
 
     public function getDeliveryAddress3()
     {
-        return $this->delivery_address__3;
+        return $this->delivery_address_3;
     }
 
     public function setCcDesc($cc_desc)
