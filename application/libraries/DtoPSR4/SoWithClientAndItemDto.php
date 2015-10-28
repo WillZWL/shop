@@ -1,6 +1,7 @@
 <?php
 class SoWithClientAndItemDto
 {
+    public $so_item = [];
     private $so_no;
     private $fingerprint_id;
     private $forename;
@@ -9,9 +10,9 @@ class SoWithClientAndItemDto
     private $payment_gateway_id;
     private $risk_ref_3;
     private $risk_ref_4;
-    private $tel__1;
-    private $tel__2;
-    private $tel__3;
+    private $tel_1;
+    private $tel_2;
+    private $tel_3;
     private $create_on;
     private $create_at;
     private $create_by;
@@ -22,17 +23,17 @@ class SoWithClientAndItemDto
     private $amount;
     private $lang_id;
     private $client_id_no;
-    private $address__1;
-    private $address__2;
-    private $address__3;
+    private $address_1;
+    private $address_2;
+    private $address_3;
     private $postcode;
     private $city;
     private $state;
     private $country_id;
     private $del_name;
-    private $del_address__1;
-    private $del_address__2;
-    private $del_address__3;
+    private $del_address_1;
+    private $del_address_2;
+    private $del_address_3;
     private $del_postcode;
     private $del_city;
     private $del_state;

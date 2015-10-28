@@ -901,7 +901,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_orders_for_dm($where = [], $option = [], $classname = "SoWithClientAndItemDto")
+    public function getOrdersForDm($where = [], $option = [], $classname = "SoWithClientAndItemDto")
     {
         $this->db->from("so");
         $this->db->join("so_payment_status as sps", "sps.so_no=so.so_no and sps.payment_status='S'", 'INNER');
@@ -909,7 +909,7 @@ SQL;
         $this->db->join("so_item_detail as sid", "sid.so_no=so.so_no", 'INNER');
         $this->db->join("so_risk as sr", "sr.so_no=so.so_no and sr.risk_requested=0", 'INNER');
         $this->db->where($where);
-        $this->db->select("so.so_no, so.currency_id, so.amount, so.create_at, so.lang_id, so.fingerprint_id, sps.payment_gateway_id, sps.risk_ref3, sps.risk_ref4, sps.payer_email,
+        $this->db->select("so.so_no, so.currency_id, so.amount, so.create_at, so.lang_id, so.fingerprint_id, sps.payment_gateway_id, sps.risk_ref_3, sps.risk_ref_4, sps.payer_email,
         sid.line_no, sid.item_sku, sid.prod_name, sid.qty, sid.unit_price,
         c.email, c.companyname, c.del_company, c.address_1, c.address_2, c.address_3, c.postcode, c.city, c.state, c.country_id, c.del_address_1, c.del_address_2, c.del_address_3, c.del_postcode, c.del_city, c.del_state, c.del_country_id, c.forename, c.surname, c.tel_1, c.tel_2, c.tel_3");
 

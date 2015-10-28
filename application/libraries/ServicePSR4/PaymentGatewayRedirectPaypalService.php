@@ -285,7 +285,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
         if ($this->so)
         {
 //we do add log by ourselves because it may be redirected if we use Paypal retry
-            $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "I", $this->array_implode("=", ",", $getData));
+            $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "I", $this->arrayImplode("=", ",", $getData));
             $this->_setAccount($this->so->getBillCountryId(), $this->so->getCurrencyId());
             $token = $getData["token"];
             $this->sops = $this->getSoPaymentStatus();
@@ -336,7 +336,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
                                 , "currency" => $soObj->getCurrencyId()
                                 , "token" => $this->sops->getMacToken());
         $doExpressResult = $this->_paypalRequest->doExpressCheckout($doExpressData, $data);
-        $this->getSoPaymentLogService()->addLog($soObj->getSoNo(), "O", $this->array_implode("=", ",", $doExpressData));
+        $this->getSoPaymentLogService()->addLog($soObj->getSoNo(), "O", $this->arrayImplode("=", ",", $doExpressData));
         $this->getSoPaymentLogService()->addLog($soObj->getSoNo(), "I", urldecode($doExpressResult["response"]));
 
         if ($doExpressResult["result"])
@@ -399,7 +399,6 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
     }
 
     public function processSuccessAction() {
-        $this->sendConfirmationEmail($this->so);
         header("Location:" . $this->getSuccessfulUrl($this->so->getSoNo()));
     }
 

@@ -12,8 +12,7 @@ use Zend\Validator\EmailAddress;
 abstract class InputFilter {
     public $validInput = true;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 /*******************************************
 **        return array("validInput" => $validInput,
@@ -133,4 +132,20 @@ abstract class InputFilter {
                                                      'max' => 255)));
         return $this->validInput = $validatorChain->isValid($email);
     }
+
+    public function isValidFingerprint($fingerprint)
+    {
+        return $this->isValidSession($fingerprint);
+    }
+
+    public function isValidSession($session)
+    {
+        if (trim($session) == "")
+        {
+            return true;
+        } else {
+            $validator = new Regex("/^[a-zA-Z0-9]{26,40}$/");
+            return $this->validInput = $validator->isValid($session);
+        }
+    }   
 }
