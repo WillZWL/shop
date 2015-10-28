@@ -193,5 +193,103 @@ class ServiceProvider implements ServiceProviderInterface
         $servcieContainer['EmailTemplate'] = function () {
             return new S\EmailTemplateService();
         };
+		
+		
+		//Data transfer
+        $servcieContainer['VbDataTransferPricesService'] = function () {
+            return new S\VbDataTransferPricesService();
+        };
+		
+        $servcieContainer['VbDataTransferBrandService'] = function () {
+            return new S\VbDataTransferBrandService();
+        };
+		
+        $servcieContainer['VbDataTransferCategoryExtendService'] = function () {
+            return new S\VbDataTransferCategoryExtendService();
+        };
+		
+        $servcieContainer['VbDataTransferCategoryService'] = function () {
+            return new S\VbDataTransferCategoryService();
+        };
+		
+        $servcieContainer['VbDataTransferColourExtendService'] = function () {
+            return new S\VbDataTransferColourExtendService();
+        };
+		
+        $servcieContainer['VbDataTransferColourService'] = function () {
+            return new S\VbDataTransferColourService();
+        };
+		
+        $servcieContainer['VbDataTransferFreightCatService'] = function () {
+            return new S\VbDataTransferFreightCatService();
+        };
+		
+        $servcieContainer['VbDataTransferProductContentExtendService'] = function () {
+            return new S\VbDataTransferProductContentExtendService();
+        };
+		
+        $servcieContainer['VbDataTransferProductContentService'] = function () {
+            return new S\VbDataTransferProductContentService();
+        };
+		
+        $servcieContainer['VbDataTransferProductCustomClassService'] = function () {
+            return new S\VbDataTransferProductCustomClassService();
+        };
+		
+        $servcieContainer['VbDataTransferProductIdentifierService'] = function () {
+            return new S\VbDataTransferProductIdentifierService();
+        };
+		
+        $servcieContainer['VbDataTransferProductImageService'] = function () {
+            return new S\VbDataTransferProductImageService();
+        };
+		
+        $servcieContainer['VbDataTransferProductKeywordService'] = function () {
+            return new S\VbDataTransferProductKeywordService();
+        };
+		
+        $servcieContainer['VbDataTransferProductNoteService'] = function () {
+            return new S\VbDataTransferProductNoteService();
+        };
+		
+        $servcieContainer['VbDataTransferProductsService'] = function () {
+            return new S\VbDataTransferProductsService();
+        };
+		
+        $servcieContainer['VbDataTransferProductWarrantyService'] = function () {
+            return new S\VbDataTransferProductWarrantyService();
+        };
+		
+        $servcieContainer['VbDataTransferRaGroupContentService'] = function () {
+            return new S\VbDataTransferRaGroupContentService();
+        };
+		
+        $servcieContainer['VbDataTransferRaGroupProductService'] = function () {
+            return new S\VbDataTransferRaGroupProductService();
+        };
+		
+        $servcieContainer['VbDataTransferRaGroupService'] = function () {
+            return new S\VbDataTransferRaGroupService();
+        };
+		
+        $servcieContainer['VbDataTransferRaProdCatService'] = function () {
+            return new S\VbDataTransferRaProdCatService();
+        };
+		
+        $servcieContainer['VbDataTransferRaProductService'] = function () {
+            return new S\VbDataTransferRaProductService();
+        };
+		
+        $servcieContainer['VbDataTransferSupplierProductService'] = function () {
+            return new S\VbDataTransferSupplierProductService();
+        };
+		
+        $servcieContainer['VbDataTransferVersionService'] = function () {
+            return new S\VbDataTransferVersionService();
+        };		
+		
+        $servcieContainer['VbProductImageService'] = function () {
+            return new S\VbProductImageService();
+        };
     }
 }

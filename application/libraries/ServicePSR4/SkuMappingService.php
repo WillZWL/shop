@@ -9,8 +9,9 @@ class SkuMappingService extends BaseService
 	public function __construct()
 	{
 		parent::__construct();
+        $this->setDao(new SkuMappingDao);
 	}
-	
+
     public function getMasterSku($where = array())
     {
         if ($obj = $this->getDao()->get($where)) {

@@ -253,12 +253,13 @@
     color: white !important;
     text-align: center;
     line-height: 40px;
-    padding-left:4px; 
+    padding-left:4px;
     padding-right:4px;
 }
 
 .header-links {
     margin-top: 4px;
+    text-align: right;
 }
 
 .header-links  .link-account {
@@ -320,7 +321,7 @@ input.btn-search {
      margin-right: 10px
 }
 
-.footer-fieldsetitem img {    
+.footer-fieldsetitem img {
   border-radius: 10px !important;
 }
 

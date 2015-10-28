@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace ESG\Panther\Service;
 
 use ESG\Panther\Dao\ProductDao;
@@ -8,67 +8,130 @@ use ESG\Panther\Service\ProductIdentifierService;
 
 class VbDataTransferProductsService extends VbDataTransferService
 {
-	
+
+    private $skuMappingDao;
 	public function __construct()
 	{
 		parent::__construct();
-	}
-	
-	public function getDao()
-	{
-		return $this->product_dao;
-	}
-		
+		$this->setDao(new ProductDao);
+		$this->setSkuMappingDao(new SkuMappingDao);
+        $this->skuMappingService = new SkuMappingService;
+        $this->productIdentifierService = new ProductIdentifierService;
+    }
+
+    public function getSkuMappingDao()
+    {
+        return $this->skuMappingDao;
+    }
+
+    public function setSkuMappingDao($dao)
+    {
+        $this->skuMappingDao = $dao;
+    }
+
 	/*******************************************************************
 	*	processVbData, get the VB data to save it in the price table
 	********************************************************************/
 	public function processVbData ($feed)
-	{		
+	{
 		//print $feed; exit;
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
-		
+
 		$task_id = $xml_vb->attributes()->task_id;
-		$is_error_task = $xml_vb->attributes()->is_error_task;
-				
+		//$is_error_task = $xml_vb->attributes()->is_error_task;
+
 		//Create return xml string
 		$xml = array();
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
-		$xml[] = '<products task_id="' . $task_id . '" is_error_task="' . $is_error_task . '">';	
-				
+		$xml[] = '<products task_id="' . $task_id . '">';
+
 		$c = count($xml_vb->product);
 		foreach($xml_vb->product as $product)
 		{
 			$c--;
-				
+
 			//Get the master sku to search the corresponding sku in atomv2 database
 			$master_sku = $product->master_sku;
-						
+
 			$master_sku = strtoupper($master_sku);
-			$sku = $this->SkuMappingService->getLocalSku($master_sku);
-			
+			$sku = $this->skuMappingService->getLocalSku($master_sku);
+
 			$fail_reason = "";
             if ($master_sku == "" || $master_sku == null) $fail_reason .= "No master SKU mapped, ";
             if ($sku == "" || $sku == null) $fail_reason .= "SKU not specified, ";
 
+            /*
+				MASTER SKU VALIDATION
+				1.- sku from VB exists in AV2 product table in the sku_vb field
+					1.1.- Look for the master sku un AV2, get the local sku
+					1.2.- Compare the local sku in mapping table with local sku in product table
+						1.2.1.- Both skus are equal -> update product
+						1.2.2.- Different skus -> update mapping with the new master, update product
+				2.- sku from VB doesnt exist in AV2 product table in the sku_vb field
+					Normal process - Look for the master sku un AV2:
+						2.1.- exists -> if the product exists, update, if the product doesnt exist, insert product
+						2.2.- doesnt exist: no update
+			*/
+
+			//get the sku for the product table with the VB sku
+			$sku_table = "";
+			if($pc_obj_atomv2 = $this->getDao()->get(array("sku_vb"=> $product->sku)))
+			{
+				$sku_table = $pc_obj_atomv2["sku"];
+			}
+
+			$berror_mapping = false;
+			//if the VB sku exists in product table
+			if ($sku_table != "" && $sku_table != null)
+			{
+				//if the mapping for the new master sku doesnt exist, we change the mapping and continue the update
+				if ($sku == "" || $sku == null)
+				{
+					$bchange_mapping = true;
+					$sku = $sku_table;
+					$master_sku = $product->master_sku;
+					$fail_reason = "";
+				}
+				//if the new mapping has a different sku, we dont continue with the update, we return a message error
+				elseif($sku != $sku_table)
+				{
+					$fail_reason = "Different master sku. Sku exists, ";
+					$berror_mapping = true;
+				}
+				//elseif $sku == $sku_table --> normal update
+			}
+
             //if the sku is mapped, we get the atomv prod_gro_id
             $master_prod_grp_id = "";
             if ($fail_reason == "")
-            	$master_prod_grp_id = $this->ProductIdentifierService->getProdGrpCdBySku($sku);
-			
+            	$master_prod_grp_id = $this->productIdentifierService->getProdGrpCdBySku($sku);
+
 			try
 			{
 				if ($fail_reason == "")
 				{
-					//Update the AtomV2 product data 					
+					if ($bchange_mapping == true)
+					{
+						//update sku mapping
+						$where = array("sku"=>$sku_table);
+						$sku_map_obj = array();
+
+						$sku_map_obj["ext_sku"] = $product->master_sku;
+
+						$this->skuMappingService->getDao()->qUpdate($where, $sku_map_obj);
+					}
+
+					//Update the AtomV2 product data
 					$where = array("sku"=>$sku);
-					
+
 					$new_prod_obj = array();
-					
+
+					$new_prod_obj["sku_vb"] = $product->sku; //sku from VB
 					$new_prod_obj["prod_grp_cd"] = $master_prod_grp_id;//$product->prod_grp_cd;
 					$new_prod_obj["colour_id"] = $product->colour_id; //FK colour
-					$new_prod_obj["version_id"] = $product->version_id;	
-					$new_prod_obj["name"] = $product->name;				
+					$new_prod_obj["version_id"] = $product->version_id;
+					$new_prod_obj["name"] = $product->name;
 					$new_prod_obj["freight_cat_id"] = $product->freight_cat_id; //FK freight_category
 					$new_prod_obj["cat_id"] = $product->cat_id; //FK category
 					$new_prod_obj["sub_cat_id"] = $product->sub_cat_id; //FK category
@@ -77,7 +140,7 @@ class VbDataTransferProductsService extends VbDataTransferService
 					$new_prod_obj["clearance"] = $product->clearance;
 					$new_prod_obj["surplus_quantity"] = $product->surplus_quantity; // NOT EXIST IN ATOMV2
 					$new_prod_obj["slow_move_7_days"] = $product->slow_move_7_days; // NOT EXIST IN ATOMV2
-					$new_prod_obj["quantity"] = $product->quantity;
+					$new_prod_obj["quantity"] = (int)$product->quantity - 1;
 					$new_prod_obj["display_quantity"] = $product->display_quantity;
 					$new_prod_obj["website_quantity"] = $product->website_quantity;
 					$new_prod_obj["china_oem"] = $product->china_oem; // NOT EXIST IN ATOMV2
@@ -97,48 +160,60 @@ class VbDataTransferProductsService extends VbDataTransferService
 					$new_prod_obj["warranty_in_month"] = $product->warranty_in_month;
 					$new_prod_obj["cat_upselling"] = $product->cat_upselling;
 					$new_prod_obj["lang_restricted"] = $product->lang_restricted;
-					$new_prod_obj["shipment_restricted_type"] = $product->shipment_restricted_type; 
-					//$new_prod_obj["comments"] = $product->comments; 	
-					$new_prod_obj["status"] = $product->status; 		
-					
-					$this->getDao()->qUpdate($where, $new_prod_obj);				
-					
+					$new_prod_obj["shipment_restricted_type"] = $product->shipment_restricted_type;
+					//$new_prod_obj["comments"] = $product->comments;
+					$new_prod_obj["status"] = $product->status;
+
+					$this->getDao()->qUpdate($where, $new_prod_obj);
+
 					$xml[] = '<product>';
 					$xml[] = '<sku>' . $product->sku . '</sku>';
-					$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';					
-					$xml[] = '<status>5</status>';	 //updated				
-					$xml[] = '<is_error>' . $product->is_error . '</is_error>';		
+					$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';
+					$xml[] = '<status>5</status>';	 //updated
+					$xml[] = '<is_error>' . $product->is_error . '</is_error>';
+					$xml[] = '<reason>update</reason>';
+					$xml[] = '</product>';
+				}
+				elseif ($berror_mapping == true)
+				{
+					$xml[] = '<product>';
+					$xml[] = '<sku>' . $product->sku . '</sku>';
+					$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';
+					$xml[] = '<status>6</status>'; //mapping error
+					$xml[] = '<is_error>' . $product->is_error . '</is_error>';
+					$xml[] = '<reason>' . $fail_reason . '</reason>';
 					$xml[] = '</product>';
 				}
 				elseif ($sku == "" || $sku == null)
-				{	
+				{
 					//TO DO --> Create product function
-					
-					//insert									
+
+					//insert
 					$new_prod_obj = $this->getDao()->get();
-					
+
 					$sku = $this->getDao()->getNewSku();
 					$prod_grp_cd = $this->getDao()->getNewProductGroup();
 					if ($sku != "" && $sku != null && $prod_grp_cd != "" && $prod_grp_cd != null)
 					{
 						//insert sku mapping
-						$new_sku_map_obj = $this->SkuMappingDao()->get();
-						
+						$new_sku_map_obj = $this->getSkuMappingDao()->get();
+
 						$new_sku_map_obj->setExtSku($master_sku);
 						$new_sku_map_obj->setExtSys("WMS");
 						$new_sku_map_obj->setSku($sku);
 						$new_sku_map_obj->setStatus(1);
-						
-						$this->sku_mapping_service->getDao()->insert($new_sku_map_obj);
-						
+
+						$this->skuMappingService->getDao()->insert($new_sku_map_obj);
+
 						//TO DO --> create product identifier
-						
+
 						//insert the product
 						$new_prod_obj->setSku($sku);
+						$new_prod_obj->setSkuVb($product->sku); // Sku from VB
 						$new_prod_obj->setProdGrpCd($prod_grp_cd);
 						$new_prod_obj->setColourId($product->colour_id); //FK colour
-						$new_prod_obj->setVersionId($product->version_id);	
-						$new_prod_obj->setName($product->name);				
+						$new_prod_obj->setVersionId($product->version_id);
+						$new_prod_obj->setName($product->name);
 						$new_prod_obj->setFreightCatId($product->freight_cat_id); //FK freight_category
 						$new_prod_obj->setCatId($product->cat_id); //FK category
 						$new_prod_obj->setSubCatId($product->sub_cat_id); //FK category
@@ -147,10 +222,10 @@ class VbDataTransferProductsService extends VbDataTransferService
 						$new_prod_obj->setClearance($product->clearance);
 						$new_prod_obj->setSurplusQuantity($product->surplus_quantity);
 						$new_prod_obj->setSlowMove7Days($product->slow_move_7_days);
-						$new_prod_obj->setQuantity($product->quantity);
+						$new_prod_obj->setQuantity((int)$product->quantity - 1);
 						$new_prod_obj->setDisplayQuantity($product->display_quantity);
 						$new_prod_obj->setWebsiteQuantity($product->website_quantity);
-						$new_prod_obj->setChinaOem($product->china_oem); 
+						$new_prod_obj->setChinaOem($product->china_oem);
 						$new_prod_obj->setExDemo($product->ex_demo);
 						$new_prod_obj->setRrp($product->rrp);
 						$new_prod_obj->setImage($product->image);
@@ -167,55 +242,59 @@ class VbDataTransferProductsService extends VbDataTransferService
 						$new_prod_obj->setWarrantyInMonth($product->warranty_in_month);
 						$new_prod_obj->setCatUpselling($product->cat_upselling);
 						$new_prod_obj->setLangRestricted($product->lang_restricted);
-						$new_prod_obj->setShipmentRestrictedType($product->shipment_restricted_type); 
-						//$new_prod_obj->set_comments($product->comments); 	
-						$new_prod_obj->set_status($product->status); 
-						
+						$new_prod_obj->setShipmentRestrictedType($product->shipment_restricted_type);
+						//$new_prod_obj->set_comments($product->comments);
+						$new_prod_obj->set_status($product->status);
+
 						$this->getDao()->insert($new_prod_obj);
-						
+
 						//if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
 						$xml[] = '<product>';
 						$xml[] = '<sku>' . $product->sku . '</sku>';
-						$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';				
-						$xml[] = '<status>5</status>'; //inserted	
-						$xml[] = '<is_error>' . $product->is_error . '</is_error>';			
+						$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';
+						$xml[] = '<status>5</status>'; //inserted
+						$xml[] = '<is_error>' . $product->is_error . '</is_error>';
+						$xml[] = '<reason>insert</reason>';
 						$xml[] = '</product>';
 					}
 					else
 					{
 						$xml[] = '<product>';
 						$xml[] = '<sku>' . $product->sku . '</sku>';
-						$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';					
-						$xml[] = '<status>2</status>'; //not found	
+						$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';
+						$xml[] = '<status>2</status>'; //not found
 						$xml[] = '<is_error>' . $product->is_error . '</is_error>';
-						$xml[] = '</product>';	
+						$xml[] = '<reason>' . $fail_reason . '</reason>';
+						$xml[] = '</product>';
 					}
 				}
 				else
 				{
 					$xml[] = '<product>';
 					$xml[] = '<sku>' . $product->sku . '</sku>';
-					$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';					
-					$xml[] = '<status>3</status>'; //not updated	
+					$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';
+					$xml[] = '<status>3</status>'; //not updated
 					$xml[] = '<is_error>' . $product->is_error . '</is_error>';
-					$xml[] = '</product>';				
-				}	
-			}	
+					$xml[] = '<reason>' . $fail_reason . '</reason>';
+					$xml[] = '</product>';
+				}
+			}
 			catch(Exception $e)
 			{
 				$xml[] = '<product>';
 				$xml[] = '<sku>' . $product->sku . '</sku>';
-				$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';					
-				$xml[] = '<status>4</status>';	//error		
+				$xml[] = '<master_sku>' . $product->master_sku . '</master_sku>';
+				$xml[] = '<status>4</status>';	//error
 				$xml[] = '<is_error>' . $product->is_error . '</is_error>';
-				$xml[] = '</product>';	
+				$xml[] = '<reason>' . $e->getMessage() . '</reason>';
+				$xml[] = '</product>';
 			}
 		 }
-		 
+
 		$xml[] = '</products>';
-		
-		$return_feed = implode("\n", $xml);	
-			
+
+		$return_feed = implode("\n", $xml);
+
 		return $return_feed;
 	}
 }
