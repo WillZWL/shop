@@ -10,6 +10,7 @@ class CategoryVo extends \BaseVo
     private $priority = '9';
     private $bundle_discount;
     private $min_display_qty;
+    private $sponsored;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '127.0.0.1';
@@ -109,6 +110,16 @@ class CategoryVo extends \BaseVo
     public function getMinDisplayQty()
     {
         return $this->min_display_qty;
+    }
+
+    public function setSponsored($sponsored)
+    {
+        $this->sponsored = $sponsored;
+    }
+
+    public function getSponsored()
+    {
+        return $this->sponsored;
     }
 
     public function setStatus($status)

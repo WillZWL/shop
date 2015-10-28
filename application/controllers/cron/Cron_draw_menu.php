@@ -184,10 +184,10 @@ class Cron_draw_menu extends MY_Controller
             }
         }
     }
-	    
+
 	function cron_multilanguage_menu()
 	{
-		
+
 		$eol = "\n";
 		$tab = "\t";
 		$platform_list = $this->selling_platform_model->get_list(array("type"=>"WEBSITE", "status"=>1), array("limit"=>-1));
@@ -202,11 +202,11 @@ class Cron_draw_menu extends MY_Controller
 				{
 					//print $this->db->last_query();
 				$country_id = $pbv_obj->get_platform_country_id();
-				$base_url = "";//"/".$lang_id."_".$country_id;				
+				$base_url = "";//"/".$lang_id."_".$country_id;
 				$cat_id_css_map = array(1=>"camera", 2=>"lens", 3=>"camcorders", 4=>"phones", 5=>"apple", 6=>"tablets", 7=>"headphones", 8=>"computing", 9=>"audio", 10=>"warranty");
 
 				//Get the category list with the display name by language
-				//$cat_list = $this->category_model->get_cat_ext_list(array("lang_id"=>$lang_id), array("limit"=>-1));		
+				//$cat_list = $this->category_model->get_cat_ext_list(array("lang_id"=>$lang_id), array("limit"=>-1));
 				$cat_list = $this->category_model->get_cat_menu_list(array("lang_id" => $lang_id), array("limit" => -1, "orderby"=>"c.sponsored desc, ce.name"));
 				if($cat_list)
 				{
@@ -219,17 +219,17 @@ class Cron_draw_menu extends MY_Controller
 				$main_cat_array = array();
 				$cat_arr = $cat_tree = $cat_tree_v2 = array();
 				$cat_arr = $this->category_model->get_listed_cat($platform_id);
-				
+
 				//print $this->db->last_query();
 				foreach($cat_arr as $val)
 				{
 					if($val["cat_id"]==10)
 					{
-						if($cat_name_map[$val['sub_sub_cat_id']]) { 
+						if($cat_name_map[$val['sub_sub_cat_id']]) {
 							$cat_tree_v2[$val['sub_cat_id']][$val['sub_sub_cat_id']] = null;
 						}
 					}
-					else 
+					else
 					{
 						if($val['sub_sub_cat_id'])
 						{
@@ -250,7 +250,7 @@ class Cron_draw_menu extends MY_Controller
 					{
 						foreach($cat_ext_list as $cat_obj)
 						{
-							$cat_url = htmlentities($base_url.$this->website_service->get_cat_url($cat_obj->get_cat_id(), TRUE));	
+							$cat_url = htmlentities($base_url.$this->website_service->get_cat_url($cat_obj->get_cat_id(), TRUE));
 							$no_right_margin = ($cat_id == 10)?" class='no_right_margin'":"";
 							if($cat_obj->get_cat_id()==10)
 							{
@@ -258,7 +258,7 @@ class Cron_draw_menu extends MY_Controller
 								{
 									foreach($cat_tree_v2 as $cat_id=>$sub_cat)
 									{
-										$cat_url = htmlentities($base_url.$this->website_service->get_cat_url($cat_id, TRUE));	
+										$cat_url = htmlentities($base_url.$this->website_service->get_cat_url($cat_id, TRUE));
 										$main_cat_array[$noofmaincat]["id"] = $cat_id;
 										$main_cat_array[$noofmaincat]["name"] = $cat_name_map[$cat_id];
 										$main_cat_array[$noofmaincat]["url"] = $cat_url;
@@ -269,7 +269,7 @@ class Cron_draw_menu extends MY_Controller
 										$subcat_number = 0;
 										foreach($sub_cat as $sub_cat_id=>$sub_sub_cat)
 										{
-											$sub_cat_url = htmlentities($base_url.$this->website_service->get_cat_url($sub_cat_id, TRUE));							
+											$sub_cat_url = htmlentities($base_url.$this->website_service->get_cat_url($sub_cat_id, TRUE));
 											if(!$cat_name_map[$sub_cat_id])
 											{
 												$empty_name[$lang_id][] = $sub_cat_id;
@@ -278,9 +278,9 @@ class Cron_draw_menu extends MY_Controller
 											$subcate_array[$subcat_number]["name"] = $cat_name_map[$sub_cat_id];
 											$subcate_array[$subcat_number]["url"] = $sub_cat_url;
 											$subcate_array[$subcat_number]["sponsored"] = 0;
-											
+
 											$subcate_v2 .= $cat_name_map[$sub_cat_id];
-										
+
 											$subsubcate_v2 = "" ;
 											$subsubcate_array = array();
 											$subsubcat_number = 0;
@@ -294,37 +294,37 @@ class Cron_draw_menu extends MY_Controller
 														{
 															$empty_name[$lang_id][] = $sub_sub_cat_id;
 														}
-														$sub_sub_cat_url = htmlentities($base_url.$this->website_service->get_cat_url($sub_sub_cat_id, TRUE));					
+														$sub_sub_cat_url = htmlentities($base_url.$this->website_service->get_cat_url($sub_sub_cat_id, TRUE));
 														if($cat_name_map[$sub_sub_cat_id]) {
 															$subsubcate_array[$subsubcat_number]["name"] = $cat_name_map[$sub_sub_cat_id];
 															$subsubcate_array[$subsubcat_number]["url"] = $sub_sub_cat_url;
 															$subsubcate_array[$subsubcat_number]["sponsored"] = 0;
 															$subsubcat_number++;
-															$subsubcate_v2 .= $cat_name_map[$sub_sub_cat_id]; 
+															$subsubcate_v2 .= $cat_name_map[$sub_sub_cat_id];
 														}
 													}
 												}
-												uasort( $subsubcate_array, array( $this, 'cmp' ) ); 
+												uasort( $subsubcate_array, array( $this, 'cmp' ) );
 												$subcate_array[$subcat_number]["subsub"] = $subsubcate_array;
 											}
 											$subcat_number++;
-											
+
 										}
-										uasort( $subcate_array, array( $this, 'cmp' ) ); 
+										uasort( $subcate_array, array( $this, 'cmp' ) );
 										$main_cat_array[$noofmaincat]["subcat"] = $subcate_array;
 
 										$noofmaincat++;
 									}
 								}
 							}
-							
+
 						}
 					}
 				}
-								
+
 				//echo "<pre>"; var_dump($main_cat_array);//die();
-				//uasort( $main_cat_array, array( $this, 'cmp' ) ); 				
-				
+				//uasort( $main_cat_array, array( $this, 'cmp' ) );
+
 				$sponsor = array();
 				$names = array();
 				foreach($main_cat_array as $key => $row) {
@@ -332,11 +332,11 @@ class Cron_draw_menu extends MY_Controller
 					$names[$key] = $row['name'];
 				}
 				array_multisort($sponsor, SORT_DESC, $names, SORT_ASC, $main_cat_array);
-				
-				
+
+
 				$CategoriesTitle = "Categories";
 				//Menu header
-				$content_v2 = 
+				$content_v2 =
 					//in the header.php file
 					/*'<div id="header-bot">
 					   <div class="container">
@@ -347,7 +347,7 @@ class Cron_draw_menu extends MY_Controller
 									  ' . $CategoriesTitle .  '<span class="fa fa-angle-down pull-right"></span>
 								   </h4>
 								</div>';
-				
+
 				//Menu container
 				$content_v2 .= '<div id="pav-verticalmenu" class="pav-verticalmenu">
 									<div class="menu-content d-content">
@@ -361,14 +361,24 @@ class Cron_draw_menu extends MY_Controller
 															<span class="icon-bar"></span>
 														</a>
 														<div class="collapse navbar-collapse navbar-ex1-collapse">
-															<ul class="nav navbar-nav verticalmenu">';	
-				
+															<ul class="nav navbar-nav verticalmenu">';
+
 				$mobileContent = '<div class="collapse navbar-collapse" id="bs-megamenu">
+                                    <div class="row">
+                                        <div class="quick-access">
+                                            <div id="search" class="input-group pull-right" style="margin-top: 4px;height: 24px !important;">
+                                                <input type="text" name="search" value="" placeholder="Search" class="form-control"  style="height: 24px !important;" />
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="button-search" style="height: 24px !important;"><i class="fa fa-search"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
 									<ul class="nav navbar-nav megamenu">';
-				
+
 				$end_sponsored = false;
 				foreach( $main_cat_array as $value )
-				{	
+				{
 					if ($end_sponsored == false && $value["sponsored"] == 0)
 					{
 						$end_sponsored = true;
@@ -376,14 +386,14 @@ class Cron_draw_menu extends MY_Controller
 						$content_v2 .="<li class='nav-divider'></li>" . $eol;
 						$mobileContent .="<li class='nav-divider'></li>" . $eol;
 					}
-					
+
 					$content_v2 .= '<li class="bg1 topdropdow parent dropdown " ><a href="' .$value["url"]. '" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">' . $value["name"] . '</span><b class="caret"></b></a>';
-					
+
 					$mobileContent .= '<li class="parent dropdown home aligned-left" >
 											<a class="dropdown-toggle linkcat" data-toggle="dropdown" href="' .$value["url"]. '">
 												<span class="menu-title">' . $value["name"] . '</span><b class="caret"></b>
 											</a>';
-					
+
 					if($value["subcat"])
 					{
 						//subcat header image - no needed
@@ -394,31 +404,31 @@ class Cron_draw_menu extends MY_Controller
 						$content_v2 .= '<div class="dropdown-menu"  style="width:840px" >
                                           <div class="dropdown-menu-inner">
                                              <div class="row">';
-											 
+
 						$mobileContent .= '<div class="dropdown-menu"  style="width:540px" >
 										     <div class="dropdown-menu-inner">
 											   <div class="row">';
-															   
+
 						foreach( $value["subcat"] as $subcategory )
 						{
-							if($totallinks==1 ) 
-							{ 								
-								//subcat column start					 
+							if($totallinks==1 )
+							{
+								//subcat column start
 								$content_v2 .= '<div class="mega-col col-md-4 " >
                                                    <div class="mega-col-inner">
                                                       <div class="pavo-widget">
                                                          <div class="pavo-widget">';
 							}
-							
-							
-							$mobileContent .= '<div class="mega-col col-xs-12 col-sm-12 col-md-4 " > 
+
+
+							$mobileContent .= '<div class="mega-col col-xs-12 col-sm-12 col-md-4 " >
 													 <div class="mega-col-inner">
 														<div class="pavo-widget" id="pavowid-52">
 															<div class="pavo-widget" id="pavowid-747136749">';
-											
+
 							$sub_cat_link = htmlentities($base_url.$this->website_service->get_cat_url($sub_cat_id, TRUE));
-							
-							
+
+
 							$content_v2 .= '<h4 class="widget-heading title">
 												<a class="linksub" href=\''.$subcategory["url"].'\'>
 												   <span>'.$subcategory["name"].'</span>
@@ -431,7 +441,7 @@ class Cron_draw_menu extends MY_Controller
 													</a>
 												</h4>
 												<div class="">';
-													
+
 							if($subcategory["subsub"]) {
 								$content_v2 .= '<ul class="content list-unstyled">';
 								$mobileContent .= '<ul class="content">';
@@ -441,60 +451,60 @@ class Cron_draw_menu extends MY_Controller
 									$mobileContent .= "<li><a class='linkcat' href=\"".$subsubcategory["url"]."\">".$subsubcategory["name"]."</a></li>";
 							  	}
 							  	$content_v2 .= '</ul>
-											 </div>';								
+											 </div>';
 								$mobileContent .= '</ul>
                                                  </div>';
 							}
 							else
 							{
-							  	$content_v2 .= '</div>';								
+							  	$content_v2 .= '</div>';
 								$mobileContent .= '</div>';
 							}
-							
+
 							if( $noofsubcategory==$totallinks )
-							{ 
+							{
 								//subcat column end
 								$content_v2 .= '
 										  </div>
 									   </div>
 									</div>
 								 </div>';
-								 
+
 								 $mobileContent .= '
 										  </div>
 									   </div>
 									</div>
 								  </div>';
-							} 
-							else 
-							{ 
+							}
+							else
+							{
 								if( $totallinks%$eachcol==0 )
-								{ 
+								{
 									//subcat column end
 									$content_v2 .= '
                                               </div>
                                            </div>
                                         </div>
                                      </div>';
-								
-									//subcat column start					 
+
+									//subcat column start
 									$content_v2 .= '<div class="mega-col col-md-4 " >
 													   <div class="mega-col-inner">
                                                          <div class="pavo-widget">
                                                             <div class="pavo-widget">
                                                                ';
-									
-								} 
-								 
+
+								}
+
 								//subcat column end
 								$mobileContent .= '
 											 </div>
 										  </div>
 									   </div>
 									</div>';
-								
+
 								// //subcat column start
-								// $mobileContent .= '<div class="mega-col col-xs-12 col-sm-12 col-md-4 " > 
+								// $mobileContent .= '<div class="mega-col col-xs-12 col-sm-12 col-md-4 " >
 												 // <div class="mega-col-inner">
 													// <div class="pavo-widget" id="pavowid-52">
 													   // <div class="pavo-widget" id="pavowid-747136749">
@@ -502,20 +512,20 @@ class Cron_draw_menu extends MY_Controller
 							}
 							$totallinks++;
 						}
-												
+
 						//end subcats container
 						$content_v2 .= '    </div>
                                          </div>
                                       </div>';
-									  
+
 						$mobileContent .= ' </div>
                                          </div>
                                       </div>';
 					}
-					
+
 					$content_v2 .="</li>" . $eol;
-					$mobileContent .="</li>" . $eol;				
-				} 
+					$mobileContent .="</li>" . $eol;
+				}
 
 				//$content_v2 .= "</ul></div>".$eol;
 				$content_v2 .= '							</ul>
@@ -543,12 +553,12 @@ class Cron_draw_menu extends MY_Controller
 						// </div>
 					// </div>
 				// </div>'.$eol;
-				
+
 				$mobileContent .= '</ul>
 								</div>'.$eol;
-				
-				//print $content_v2; 
-				
+
+				//print $content_v2;
+
 				// $mobile_menu_path = APPPATH . "mobile_views/template/menu/" . $lang_id;
 				// $mobile_menu_file = $mobile_menu_path . "/menu_" . strtolower($platform_id) . ".html";
 				// if (!file_exists($mobile_menu_path))
@@ -561,7 +571,7 @@ class Cron_draw_menu extends MY_Controller
 				// chown($mobile_menu_file, "apache");
 				// chgrp($mobile_menu_file, "users");
 				// chmod($mobile_menu_file, 0664);
-				
+
 				//print APPPATH . "views/template/menu/" . $lang_id;
 
 				$menu_path = APPPATH . "views/template/menu/" . $lang_id;
@@ -573,13 +583,13 @@ class Cron_draw_menu extends MY_Controller
 				$small_menu =  $content_v2;
 
 				file_put_contents($menu_file, $small_menu);
-				chmod($menu_file, 0664);
+				//chmod($menu_file, 0664);
 
 				$menu_file = APPPATH."views/template/menu/".$lang_id."/menu_big_" . strtolower($platform_id) . ".html";
 				$normal_menu = $content_v2;
 				file_put_contents($menu_file, $normal_menu);
-				chmod($menu_file, 0664);
-			
+				//chmod($menu_file, 0664);
+
 				// $footer_menu_file = APPPATH."views/template/menu/".$lang_id."/footer_menu_" . strtolower($platform_id) . ".html";
 				// file_put_contents($footer_menu_file, $footer_content);
 				// chown($menu_file, "apache");
@@ -588,16 +598,16 @@ class Cron_draw_menu extends MY_Controller
 				}
 			}
 		}
-		
+
 	}
-	
-	
+
+
 	function cmp($a, $b)
 	{
  	   return strnatcmp($a["name"], $b["name"]);
 	}
-	
-	
+
+
 
     function index()
     {

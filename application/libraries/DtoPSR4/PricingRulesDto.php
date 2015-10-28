@@ -8,6 +8,7 @@ class PricingRulesDto
     private $mark_up_value = '0.00';
     private $mark_up_type;
 	private $mark_up_desc;
+    private $min_margin = '0.00';
     private $monday = '0';
     private $tuesday = '0';
     private $wednesday = '0';
@@ -90,6 +91,16 @@ class PricingRulesDto
     public function getMarkUpDesc()
     {
         return $this->mark_up_desc;
+    }
+
+    public function setMinMargin($min_margin)
+    {
+        $this->min_margin = $min_margin;
+    }
+
+    public function getMinMargin()
+    {
+        return $this->min_margin;
     }
 
     public function setMonday($monday)

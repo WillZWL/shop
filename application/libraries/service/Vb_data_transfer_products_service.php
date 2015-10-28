@@ -51,7 +51,7 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 		//Create return xml string
 		$xml = array();
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
-		$xml[] = '<products task_id="' . $task_id . '" is_error_task="' . $is_error_task . '">';	
+		$xml[] = '<products task_id="' . $task_id . '">';	
 				
 		$c = count($xml_vb->product);
 		foreach($xml_vb->product as $product)
@@ -81,7 +81,7 @@ class Vb_data_transfer_products_service extends Vb_data_transfer_service
 			
 			//get the sku for the product table with the VB sku
 			$sku_table = "";
-			if(!$pc_obj_atomv2 = $this->get_dao()->get(array("sku_vb"=> $product->sku)))
+			if($pc_obj_atomv2 = $this->get_dao()->get(array("sku_vb"=> $product->sku)))
 			{
 				$sku_table = $pc_obj_atomv2["sku"];
 			}

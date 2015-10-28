@@ -34,7 +34,8 @@
             <col width="20">
             <col width="100">
             <col width="70">
-            <col width="70">			
+            <col width="70">
+            <col width="70">
             <col width="70">
             <col width="70">
             <col width="25">
@@ -64,6 +65,9 @@
                        onClick="SortCol(document.fm, 'mark_up_desc', '<?= @$xsort["mark_up_desc"] ?>')"><?= $lang["mark_up_desc"] ?> <?= @$sortimg["mark_up_desc"] ?></a>
                 </td>
                 <td><a href="#"
+                       onClick="SortCol(document.fm, 'min_margin', '<?= @$xsort["min_margin"] ?>')"><?= $lang["min_margin"] ?> <?= @$sortimg["min_margin"] ?></a>
+                </td>
+                <td><a href="#"
                        onClick="SortCol(document.fm, 'monday', '<?= @$xsort["monday"] ?>')"><?= $lang["monday"] ?> <?= @$sortimg["monday"] ?></a>
                 </td>
                 <td><a href="#"
@@ -90,12 +94,11 @@
                 <td></td>
                 <td><input name="country_id" class="input"
                            value="<?= htmlspecialchars($this->input->get("country_id")) ?>"></td>
-                <td><input name="range_min" class="input"
-                           value="<?= $this->input->get("range_min") ?>"></td>
-				<td><input name="range_max" class="input"
-                           value="<?= $this->input->get("range_max") ?>"></td>
                 <td></td>
 				<td></td>
+                <td></td>
+				<td></td>
+                <td></td>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -122,7 +125,8 @@
                         <td><?= $pricingrule->getRangeMin() ?></td>
                         <td><?= $pricingrule->getRangeMax() ?></td>
                         <td><?= $pricingrule->getMarkUpValue() ?></td>
-                        <td><?= $pricingrule->getMarkUpDesc() ?></td>						
+                        <td><?= $pricingrule->getMarkUpDesc() ?></td>
+                        <td><?= $pricingrule->getMinMargin() ?></td>
                         <td><?= $pricingrule->getMonday() ?></td>
                         <td><?= $pricingrule->getTuesday() ?></td>
                         <td><?= $pricingrule->getWednesday() ?></td>
@@ -130,7 +134,7 @@
                         <td><?= $pricingrule->getFriday() ?></td>
                         <td><?= $pricingrule->getSaturday() ?></td>
                         <td><?= $pricingrule->getSunday() ?></td>
-						
+
                         <td></td>
                     </tr>
                     <?php

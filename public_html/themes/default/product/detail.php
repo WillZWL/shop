@@ -12,7 +12,7 @@
     }
 ?>
 
-
+<div class="main-columns container">
     <div class="row">
         <div id="product-detail" class="col-md-12">
             <div id="content">
@@ -33,7 +33,7 @@
                                 <!--<span><?= var_dump($prod_info) ?></span>-->
                                 <span class="product-label exist"><span class="product-label-special"><?= _('Sale') ?></span></span>
                                 <a href="<?= base_url($default_image)?>" class="imagezoom">
-                                    <img src="<?= base_url($default_image)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image" 
+                                    <img src="<?= base_url($default_image)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image"
                                     data-zoom-image="<?= base_url($default_image) ?>" class="product-image-zoom img-responsive">
                                 </a>
                             </div>
@@ -46,15 +46,15 @@
                                             foreach ($prod_image as $img){
                                         ?>
                                             <div class="item clearfix">
-                                                <a href="<?= base_url($img['image'])?>" title="<?= $prod_name ?>" class="imagezoom" 
+                                                <a href="<?= base_url($img['image'])?>" title="<?= $prod_name ?>" class="imagezoom"
                                                     data-zoom-image="<?= base_url($img['image'])?>" data-image="<?= base_url($img['image'])?>">
-                                                    <img src="<?= base_url($img['image'])?>" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" 
+                                                    <img src="<?= base_url($img['image'])?>" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>"
                                                         data-zoom-image="<?= base_url($img['image'])?>" class="product-image-zoom img-responsive"/>
                                                 </a>
                                             </div>
-                                        <?php 
+                                        <?php
                                                 }
-                                            //} 
+                                            //}
                                         ?>
                                     </div>
                                     <script type="text/javascript">
@@ -73,13 +73,13 @@
                                         });
 
                                         $('.product-info .image a').click(
-                                            function(){  
+                                            function(){
                                                 $.magnificPopup.open({
                                                   items: {
                                                     src:  $('img',this).attr('src')
                                                   },
                                                   type: 'image'
-                                                }); 
+                                                });
                                                 return false;
                                             }
                                         );
@@ -99,7 +99,7 @@
                                             cursor: 'pointer',
                                             galleryActiveClass: "active"
                                         });
-                                     
+
                                     </script>
                                                                         <!-- Controls -->
                                     <!-- <div class="carousel-controls"> -->
@@ -118,7 +118,7 @@
                                 })
                                 </script>
                             </div>
-                             <?php 
+                             <?php
                                     }
                             ?>
                         </div>
