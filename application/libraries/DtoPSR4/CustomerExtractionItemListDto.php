@@ -15,16 +15,16 @@ class CustomerExtractionItemListDto
     private $transaction_category;
     private $transaction_value;
     private $transaction_profit;
-    private $transaction_date__2;
-    private $transaction_item__2;
-    private $transaction_category__2;
-    private $transaction_value__2;
-    private $transaction_profit__2;
-    private $transaction_date__3;
-    private $transaction_item__3;
-    private $transaction_category__3;
-    private $transaction_value__3;
-    private $transaction_profit__3;
+    private $transaction_date_2;
+    private $transaction_item_2;
+    private $transaction_category_2;
+    private $transaction_value_2;
+    private $transaction_profit_2;
+    private $transaction_date_3;
+    private $transaction_item_3;
+    private $transaction_category_3;
+    private $transaction_value_3;
+    private $transaction_profit_3;
 
     public function setTitle($title)
     {
@@ -166,104 +166,104 @@ class CustomerExtractionItemListDto
         return $this->transaction_profit;
     }
 
-    public function setTransactionDate2($transaction_date__2)
+    public function setTransactionDate2($transaction_date_2)
     {
-        $this->transaction_date__2 = $transaction_date__2;
+        $this->transaction_date_2 = $transaction_date_2;
     }
 
     public function getTransactionDate2()
     {
-        return $this->transaction_date__2;
+        return $this->transaction_date_2;
     }
 
-    public function setTransactionItem2($transaction_item__2)
+    public function setTransactionItem2($transaction_item_2)
     {
-        $this->transaction_item__2 = $transaction_item__2;
+        $this->transaction_item_2 = $transaction_item_2;
     }
 
     public function getTransactionItem2()
     {
-        return $this->transaction_item__2;
+        return $this->transaction_item_2;
     }
 
-    public function setTransactionCategory2($transaction_category__2)
+    public function setTransactionCategory2($transaction_category_2)
     {
-        $this->transaction_category__2 = $transaction_category__2;
+        $this->transaction_category_2 = $transaction_category_2;
     }
 
     public function getTransactionCategory2()
     {
-        return $this->transaction_category__2;
+        return $this->transaction_category_2;
     }
 
-    public function setTransactionValue2($transaction_value__2)
+    public function setTransactionValue2($transaction_value_2)
     {
-        $this->transaction_value__2 = $transaction_value__2;
+        $this->transaction_value_2 = $transaction_value_2;
     }
 
     public function getTransactionValue2()
     {
-        return $this->transaction_value__2;
+        return $this->transaction_value_2;
     }
 
-    public function setTransactionProfit2($transaction_profit__2)
+    public function setTransactionProfit2($transaction_profit_2)
     {
-        $this->transaction_profit__2 = $transaction_profit__2;
+        $this->transaction_profit_2 = $transaction_profit_2;
     }
 
     public function getTransactionProfit2()
     {
-        return $this->transaction_profit__2;
+        return $this->transaction_profit_2;
     }
 
-    public function setTransactionDate3($transaction_date__3)
+    public function setTransactionDate3($transaction_date_3)
     {
-        $this->transaction_date__3 = $transaction_date__3;
+        $this->transaction_date_3 = $transaction_date_3;
     }
 
     public function getTransactionDate3()
     {
-        return $this->transaction_date__3;
+        return $this->transaction_date_3;
     }
 
-    public function setTransactionItem3($transaction_item__3)
+    public function setTransactionItem3($transaction_item_3)
     {
-        $this->transaction_item__3 = $transaction_item__3;
+        $this->transaction_item_3 = $transaction_item_3;
     }
 
     public function getTransactionItem3()
     {
-        return $this->transaction_item__3;
+        return $this->transaction_item_3;
     }
 
-    public function setTransactionCategory3($transaction_category__3)
+    public function setTransactionCategory3($transaction_category_3)
     {
-        $this->transaction_category__3 = $transaction_category__3;
+        $this->transaction_category_3 = $transaction_category_3;
     }
 
     public function getTransactionCategory3()
     {
-        return $this->transaction_category__3;
+        return $this->transaction_category_3;
     }
 
-    public function setTransactionValue3($transaction_value__3)
+    public function setTransactionValue3($transaction_value_3)
     {
-        $this->transaction_value__3 = $transaction_value__3;
+        $this->transaction_value_3 = $transaction_value_3;
     }
 
     public function getTransactionValue3()
     {
-        return $this->transaction_value__3;
+        return $this->transaction_value_3;
     }
 
-    public function setTransactionProfit3($transaction_profit__3)
+    public function setTransactionProfit3($transaction_profit_3)
     {
-        $this->transaction_profit__3 = $transaction_profit__3;
+        $this->transaction_profit_3 = $transaction_profit_3;
     }
 
     public function getTransactionProfit3()
     {
-        return $this->transaction_profit__3;
+        return $this->transaction_profit_3;
     }
 
 }

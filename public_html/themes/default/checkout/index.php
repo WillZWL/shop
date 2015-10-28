@@ -36,9 +36,9 @@
                             <div class="form-group">
                               <label for="loginPassword" class="control-label"><?=_("Password")?></label>
                               <input type="password" class="form-control" id="loginPassword" placeholder="<?=_("Password")?>" value="" name="loginPassword">
-                              <a href=""><?=_("Forgotten Password")?></a></div>
+                              <a href="/login/forget-password?back=checkout"><?=_("Forgotten Password")?></a></div>
                             <input type="submit" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="loginButton" value="<?=_("Login")?>">
-                            <input type="button" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" id="loggedInButton" value="<?=_("You have logged in, please click here to continue")?>">
+                            <input type="button" class="btn btn-primary hidden" data-loading-text="<?=_("Loading...")?>" id="loggedInButton" value="<?=_("You have logged in, please click here to continue")?>">
                         </form>
                       </div>
                     </div>            
@@ -277,6 +277,7 @@
                 <div class="buttons">
                     <div class="pull-right">
                         <input type="hidden" name="formSalt" id='formSalt' value="<?=$formSalt;?>">
+                        <input type="hidden" name="cybersourceFingerprint" id='cybersourceFingerprint' value="<?=$cybersourceFingerprint;?>">
                         <input type="submit" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" name="checkoutNow" id="checkoutNow" value="<?=_("Continue")?>" />
                     </div>
                 </div>
@@ -702,18 +703,21 @@ function validateCheckout()
         .done(function(data) {
             standardWaitingScreen.hidePleaseWait();
             displayCheckoutNowButton(1);
-            if (data.hasOwnProperty("errorMessage"))
-            {
-                jQuery.each(data.errorMessage, function(i, val) {
-                    errorMessage = i + ":" + val;
-                });
-                alert(errorMessage);
-            }
-            else if (data.url.substring(0, 5) == "ERROR")
-            {
-//                if (data.hasOwnProperty("errorMessage"))
-                alert(data.url.substring(6, data.length));
-                displayCheckoutNowButton(1);
+            if (data.hasOwnProperty("error") && (data.error < 0)) {
+                errorMessage = "";
+                if (data.hasOwnProperty("validInput") && !data.validInput) {
+                    jQuery.each(data.errorMessage, function(i, val) {
+                        errorMessage = i + ":" + val;
+                    });
+                } else if (data.hasOwnProperty("siteDown") && data.siteDown) {
+//handle site down here, can redirect to 2nd payment option
+                    errorMessage = data.errorMessage;
+                }
+                else if (data.hasOwnProperty("errorMessage")) {
+                    errorMessage = data.errorMessage;
+                }
+                if (errorMessage != "")
+                    alert(errorMessage);
             }
             else
                 location.href = data.url;
@@ -721,7 +725,7 @@ function validateCheckout()
         .fail(function(data) {
             displayCheckoutNowButton(1);
             standardWaitingScreen.hidePleaseWait();
-            location.href = data.url;
+            alert("<?=_("Unknow error: Please contact our CS!")?>");
         });
     });
 }
@@ -729,4 +733,12 @@ function validateCheckout()
 <script type="text/javascript" src="/themes/default/asset/formvalidation/js/formValidation.min.js"></script>
 <script type="text/javascript" src="/themes/default/asset/formvalidation/js/framework/bootstrap.min.js"></script>
 <link href="/themes/default/asset/formvalidation/css/formValidation.min.css" rel="stylesheet" />
+
+<p style="background:url(https://h.online-metrix.net/fp/clear.png?org_id=<?=$cybersourceFingerprintId;?>&session_id=<?=$cybersourceFingerprintLabel;?>&m=1)"></p>
+<img src="https://h.online-metrix.net/fp/clear.png?org_id=<?=$cybersourceFingerprintId;?>&session_id=<?=$cybersourceFingerprintLabel;?>&m=2" alt="">
+<object type="application/x-shockwave-flash" data="https://h.online-metrix.net/fp/fp.swf?org_id=<?=$cybersourceFingerprintLabel;?>&session_id=<?=$cybersourceFingerprintLabel;?>" width="1" height="1"id="thm_fp"><param name="movie" value="https://h.online-metrix.net/fp/fp.swf?org_id=<?=$cybersourceFingerprintId;?>&session_id=<?=$cybersourceFingerprintLabel;?>" />
+<div></div>
+</object>
+<script src="https://h.online-metrix.net/fp/check.js?org_id=<?=$cybersourceFingerprintLabel;?>&session_id=<?=$cybersourceFingerprintLabel;?>" type="text/javascript">
+</script>
 <?php $this->load->view('footer') ?>

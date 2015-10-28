@@ -10,6 +10,7 @@ if (in_array($GLOBALS["URI"]->segments[2], $ws_array)) {
 use ESG\Panther\Models\Website\CheckoutModel;
 use ESG\Panther\Models\Website\CartSessionModel;
 use ESG\Panther\Form\CheckoutFormFilter;
+use ESG\Panther\Service\Cybersource\CybersourceIntegrator;
 
 class Checkout extends PUB_Controller
 {
@@ -56,7 +57,19 @@ class Checkout extends PUB_Controller
         if ($client)
             $data["client"] = json_encode($client);
         $data["debug"] = $this->input->get("debug");
+        $data = array_merge($data, $this->_getFingerPrint($data["debug"]));
         $this->load->view('checkout/index', $data);
+    }
+
+    private function _getFingerPrint($debug)
+    {
+        $data = [];
+        $cybsIntegrator = new CybersourceIntegrator();
+        $merchantInfo = $cybsIntegrator->getMerchantId($this->getSiteInfo()->getPlatformCountryId(), $this->getSiteInfo()->getPlatformCurrencyId());
+        $data["cybersourceFingerprint"] = session_id();
+        $data["cybersourceFingerprintLabel"] = $merchantInfo["merchantId"] . session_id();
+		$data["cybersourceFingerprintId"] = $cybsIntegrator->getFingerprintOrgId($debug);
+        return $data;
     }
 
     public function payment($debug = 0) {
@@ -67,23 +80,12 @@ class Checkout extends PUB_Controller
         $filterResult = $filter->isValidForm($this->input, $this->getSiteInfo(), ["loggedIn" => (($client)?true:false), "email" => (($client)?$client["Email"]:"")]);
         if ($filterResult["validInput"]) {
             $filterResult["value"]["debug"] = $debug;
-            $redirectUrl = $this->checkoutModel->createSaleOrder($filterResult["value"]);
-            if ($redirectUrl) {
-                if (substr($redirectUrl, 0, 4) == "ERROR") {
-                    parse_str($redirectUrl, $actionResult);
-                    $data["url"] = $actionResult["URL"];
-                    $data["errorMessage"] = $actionResult["ERROR"];
-                }
-                else
-                    $data["url"] = $redirectUrl;
-            } else {
-                $data["errorMessage"] = _("Unknown error: Please contact CS");            
-            }
-
-            echo json_encode($data);
+            $redirectUrl = $this->checkoutModel->createSaleOrder($filterResult["value"]);       
+            echo json_encode($redirectUrl);
         }
         else
         {
+            $filterResult["error"] = -30;
             $jsonResult = json_encode($filterResult);
             echo $jsonResult;
 //mail alert to IT

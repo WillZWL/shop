@@ -127,11 +127,6 @@ class Integration_model extends CI_Model
         return $this->price_service->update_auto_price($platform_id, $sku);
     }
 
-    public function send_order_to_cybs_decision_manager($debug = 0)
-    {
-        return $this->payment_gateway_redirect_cybersource_service->send_order_to_dm($debug);
-    }
-
     public function cps_allocated_so_no()
     {
         return $this->cps_allocated_so_service->cps_allocated_so_no();

@@ -1,11 +1,168 @@
 <?php
 namespace ESG\Panther\Service;
+use ESG\Panther\Service\Cybersource\CybersourceIntegrator;
 
-class PaymentGatewayRedirectCybersourceService extends BaseService
+class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectAdapter
 {
-    public function __construct()
-    {
+    private $_cybersourceIntegrator;
+    public function __construct() {
         parent::__construct();
+        $this->_cybersourceIntegrator = new CybersourceIntegrator();
+    }
+
+    public function getPaymentGatewayName() {
+        return "cybersource";
+    }
+
+	public function sendOrderToDm($debug = 0)
+	{
+		$where = ["so.create_on >" => "2015-10-28 00:00:00"];
+		$options = ["limit" => -1];
+		$orders = $this->soFactoryService->getDao()->getOrdersForDm($where, $options);
+		$this->debug = $debug;
+
+		$possibleObj = "";
+		$j = 0;
+
+		foreach($orders as $order)
+		{
+			if ($possibleObj != "")
+			{
+				if ($possibleObj->getSoNo() != $order->getSoNo())
+				{
+					$this->sendRequestToDm($possibleObj, $possibleObj->get_so_no());
+					$possibleObj = $order;
+					$j = 0;
+				}
+			}
+			else if ($possibleObj == "")
+			{
+				$possibleObj = $order;
+			}
+
+			$possibleObj->so_item_detail[$j] = new \SoItemVo();
+			$possibleObj->so_item_detail[$j]->setSoNo($order->getSoNo());
+			$possibleObj->so_item_detail[$j]->setLineNo($order->getLineNo());
+			$possibleObj->so_item_detail[$j]->setProdSku($order->getProdSku());
+			$possibleObj->so_item_detail[$j]->setProdName($order->getProdName());
+			$possibleObj->so_item_detail[$j]->setUnitPrice($order->getUnitPrice());
+			$possibleObj->so_item_detail[$j]->setQty($order->getQty());
+			if ($possibleObj->getPaymentGatewayId() == 'paypal')
+			{
+				$possibleObj->setEmail($possibleObj->getPayerEmail());
+				if (($possibleObj->getSurname() == '') || is_null($possibleObj->getSurname()))
+				{
+//separate the forename and surname
+					$originalName = $possibleObj->getForename();
+					$separateName = explode(' ', $originalName);
+					if (sizeof($separateName) > 1)
+					{
+						$possibleObj->setForename($separateName[0]);
+						$possibleObj->setSurname(str_replace($separateName[0] . " ", "", $originalName));
+					}
+				}
+			}
+			$j++;			
+		}
+		if ($possibleObj != "")
+		{
+			$this->sendRequestToDm($possibleObj, $possibleObj->getSoNo());
+		}
+	}
+
+    public function sendRequestToDm($possibleOrderObjToXml, $soNo) {
+        $this->_cybersourceIntegrator->sendDmRequest($this->debug, $possibleOrderObjToXml, $request, $response);
+
+        if ($request != null) {
+            $this->getSoPaymentQueryLogService()->addLog($soNo, "O", $request);
+        }
+        if ($response != null) {
+            $paymentResult = (array)$response;
+            $afsReply = (array)$paymentResult['afsReply'];
+            $decisionReplyRuleResult = $paymentResult["decisionReply"]->activeProfileReply->rulesTriggered->ruleResultItem;
+            $ruleResultItem = $this->_extractAndFormatRuleResultItem($decisionReplyRuleResult);
+            $saveText = $this->stdObjToString($response);
+            $this->getSoPaymentQueryLogService()->addLog($soNo, "I", $saveText);
+            $smartId = "";
+            $deviceFingerprint = (array)$afsReply["deviceFingerprint"];
+
+            if ($deviceFingerprint) {
+                if (!empty($deviceFingerprint["smartID"])) {
+                    $smartId = $deviceFingerprint["smartID"];
+                }
+            }
+
+            if ($this->so =  $this->getSo($soNo)) {
+                $needCreditChecks = TRUE;
+                if ($paymentResult['merchantReferenceCode'] == $soNo) {
+                    $sorData = ["risk_requested" => 1,
+                                "risk_var_1" => ($paymentResult['decision'] . "|" . $paymentResult['reasonCode']),
+                                "risk_var_4" => $afsReply['afsFactorCode'],
+                                "risk_var_5" => $afsReply['afsResult'],
+                                "risk_var_6" => $afsReply['suspiciousInfoCode'],
+                                "risk_var_7" => $afsReply['velocityInfoCode'],
+                                "risk_var_8" => $afsReply['internetInfoCode'] . "|" . $afsReply['ipCountry'],
+                                "risk_var_9" => $smartId,
+                                "risk_var_10" => $ruleResultItem
+                            ];
+                    $this->createSor($sorData);
+                    if ($paymentResult['decision'] == "REJECT") {
+                        $this->so->setStatus(2);
+                        if ($this->so->getHoldStatus() != 1)
+                            $this->so->setHoldStatus(0);
+                        $this->soFactoryService->getDao()->update($this->so);
+                        mail("compliance@digitaldiscount.co.uk", 'DM REJECT [Panther]:' . $soNo, $saveText, 'From: website@digitaldiscount.co.uk');
+                    } else {
+                        $needCreditChecks = $this->_needCreditCheckAfterDm($paymentResult['decision'], $afsReply['afsResult']);
+                    }
+                    if ($needCreditChecks === FALSE) {
+                        $this->so->setStatus(3);
+                        if ($this->so->getHoldStatus() != 1)
+                            $this->so->setHoldStatus(0);
+                        $this->soFactoryService->getDao()->update($this->so);
+                    }
+                } else {
+                    $sorData = ["risk_requested" => 2];
+                    $this->createSor($sorData);
+                    $this->_alertIt('No such SKU DM [Panther]:' . $soNo, $saveText);
+                }
+            }
+            if ($paymentResult['decision'] == "ERROR") {
+                $this->_alertIt('ERROR IN DM [Panther]:' . $soNo, $saveText);
+            }
+        }
+    }
+
+    public function getTechnicalSupportEmail()
+    {
+        return "oswald-alert@eservicesgroup.com";
+    }
+
+    public function _alertIt($subject, $message)
+    {
+        mail($this->getTechnicalSupportEmail(), $subject, $message, 'From: website@valuebasket.com');
+    }
+
+    private function _needCreditCheckAfterDm($decision, $score)
+    {
+        return true;
+    }
+
+    private function _extractAndFormatRuleResultItem($resultItems)
+    {
+        $outputString = "";
+        if ($resultItems->name) {
+            $outputString .= $resultItems->name . "||" . $resultItems->decision . "||" . $resultItems->evaluation;
+        } else {
+            if ($resultItems) {
+                foreach ($resultItems as $item) {
+                    $outputString .= $item->name . "||" . $item->decision . "||" . $item->evaluation . "&&";
+                }
+                if ($outputString != "")
+                    $outputString = substr($outputString, 0, (strlen($outputString) - 2));
+            }
+        }
+        return $outputString;
     }
 
     public function riskIndictorRisk1($input)

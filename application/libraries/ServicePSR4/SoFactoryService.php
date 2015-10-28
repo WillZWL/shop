@@ -70,7 +70,7 @@ class SoFactoryService extends BaseService
             $newCart = $this->getNewCartByOrderInfo($orderInfo);
             $newSoNo = $this->getDao()->getNewSoNo();
             $this->getDao()->db->trans_start();
-            $soObj = $this->_createSo($clientObj, $newCart, $newSoNo);
+            $soObj = $this->_createSo($clientObj, $newCart, $newSoNo, null, $clientAndCheckoutInfo);
             if ($soObj !== false)
             {
                 if (self::ENABLE_SO_ITEM)
@@ -344,7 +344,7 @@ class SoFactoryService extends BaseService
         return $soItemObj;
     }
 
-    private function _createSo($clientObj, $orderInfo, $newSoNo, $parentSoNo = null) {
+    private function _createSo($clientObj, $orderInfo, $newSoNo, $parentSoNo = null, $checkoutInfo = []) {
         $soObj = $this->getDao()->get();
         $this->_setSoObjClientInfo($clientObj, $soObj);
         $soObj->setSoNo($newSoNo);
@@ -367,7 +367,6 @@ class SoFactoryService extends BaseService
 //other are all through admincentre
             $soObj->setLangId("en");
         }
-
         if (isset($parentSoNo))
             $soObj->setParentSoNo($parentSoNo);
         $soObj->setStatus(1);
@@ -378,6 +377,8 @@ class SoFactoryService extends BaseService
             $soObj->setOrderCreateDate($orderInfo->getOrderCreateDate());
         else
             $soObj->setOrderCreateDate(date("Y-m-d H:i:s"));
+        if (isset($checkoutInfo["cybersourceFingerprint"]))
+            $soObj->setFingerprintId($checkoutInfo["cybersourceFingerprint"]);
 
         $this->setOrderInfoDetail($orderInfo->getPlatformId(), $soObj);
         $insertSoResult = $this->getDao()->insert($soObj);
