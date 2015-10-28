@@ -14,6 +14,7 @@
 			"mark_up_type" => "Mark up Type",
 			"mark_up_A" => "Absolute number",
 			"mark_up_P" => "Percentage",
+			"min_margin" => "Min. Margin",
 			"application_days" => "Apply",
 			"monday" => "Mon",
 			"tuesday" => "Tue",
@@ -32,5 +33,6 @@
 			"submit_error" => "Submit Error",
 			"sql_error" => "SQL Error",
 			"rule_existed" => "Rule Existed!",
+			"negative_margin" => "The Min. Margin is negative!",
 			);
 ?>

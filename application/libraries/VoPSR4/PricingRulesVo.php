@@ -7,6 +7,7 @@ class PricingRulesVo extends \BaseVo
     private $range_max = '0.00';
     private $mark_up_value = '0.00';
     private $mark_up_type;
+    private $min_margin = '0.00';
     private $monday = '0';
     private $tuesday = '0';
     private $wednesday = '0';
@@ -83,6 +84,16 @@ class PricingRulesVo extends \BaseVo
     public function getMarkUpType()
     {
         return $this->mark_up_type;
+    }
+
+    public function setMinMargin($min_margin)
+    {
+        $this->min_margin = $min_margin;
+    }
+
+    public function getMinMargin()
+    {
+        return $this->min_margin;
     }
 
     public function setMonday($monday)

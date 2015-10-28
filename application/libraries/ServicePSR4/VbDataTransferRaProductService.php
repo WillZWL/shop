@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace ESG\Panther\Service;
 
 use ESG\Panther\Dao\RaProductDao;
@@ -6,58 +6,55 @@ use ESG\Panther\Service\SkuMappingService;
 
 class VbDataTransferRaProductService extends VbDataTransferService
 {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
+		$this->setDao(new RaProductDao);
+        $this->skuMappingService = new SkuMappingService;
 	}
-	
-	public function getDao()
-	{
-		return $this->RaProductDao;
-	}
-		
+
 	/**********************************************************************
 	*	processVbData, get the VB data to save it in the ra_product table
 	***********************************************************************/
 	public function processVbData ($feed)
-	{		
-		
+	{
+
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
-		
+
 		$task_sku = $xml_vb->attributes()->task_sku;
-				
+
 		//Create return xml string
 		$xml = array();
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xml[] = '<ra_products task_sku="' . $task_sku . '">';
-					
+
 		$c = count($xml_vb->ra_product);
 		foreach($xml_vb->ra_product as $ra_product)
 		{
-			$c--;			
-				
+			$c--;
+
 			//Get the master sku to search the corresponding sku in atomv2 database
 			$master_sku = $ra_product->master_sku;
-						
+
 			$master_sku = strtoupper($master_sku);
-			$sku = $this->SkuMappingService->getLocalSku($master_sku);
-			
+			$sku = $this->skuMappingService->getLocalSku($master_sku);
+
 			$fail_reason = "";
             if ($master_sku == "" || $master_sku == null) $fail_reason .= "No master SKU mapped, ";
             if ($sku == "" || $sku == null) $fail_reason .= "SKU not specified, ";
-			
+
 			try
 			{	if ($fail_reason == "")
-				{		
+				{
 					if($this->getDao()->get(array("sku"=>$sku)))
 					{
-						//update					
+						//update
 						$where = array("sku"=>$sku);
-						
+
 						$new_ra_product_obj = array();
-						
+
 						$new_ra_product_obj["rcm_group_id_1"] = $ra_product->rcm_group_id_1;
 						$new_ra_product_obj["bundle_use_1"] = $ra_product->bundle_use_1;
 						$new_ra_product_obj["rcm_group_id_2"] = $ra_product->rcm_group_id_2;
@@ -97,22 +94,23 @@ class VbDataTransferRaProductService extends VbDataTransferService
 						$new_ra_product_obj["rcm_group_id_19"] = $ra_product->rcm_group_id_19;
 						$new_ra_product_obj["bundle_use_19"] = $ra_product->bundle_use_19;
 						$new_ra_product_obj["rcm_group_id_20"] = $ra_product->rcm_group_id_20;
-						$new_ra_product_obj["bundle_use_20"] = $ra_product->bundle_use_20;		
-						
+						$new_ra_product_obj["bundle_use_20"] = $ra_product->bundle_use_20;
+
 						$this->getDao()->qUpdate($where, $new_ra_product_obj);
 
 						$xml[] = '<ra_product>';
-						$xml[] = '<sku>' . $ra_product->sku . '</sku>';		
-						$xml[] = '<master_sku>' . $ra_product->master_sku . '</master_sku>';		
+						$xml[] = '<sku>' . $ra_product->sku . '</sku>';
+						$xml[] = '<master_sku>' . $ra_product->master_sku . '</master_sku>';
 						$xml[] = '<status>5</status>'; //updated
 						$xml[] = '<is_error>' . $ra_product->is_error . '</is_error>';
-						$xml[] = '</ra_product>';	
+						$xml[] = '<reason>update</reason>';
+						$xml[] = '</ra_product>';
 					}
 					else
 					{
-						//insert									
+						//insert
 						$new_ra_product_obj = $this->getDao()->get();
-						$new_ra_product_obj->setSku($sku);			
+						$new_ra_product_obj->setSku($sku);
 						$new_ra_product_obj->setRcmGroupId1($ra_product->rcm_group_id_1);
 						$new_ra_product_obj->setBundleUse1($ra_product->bundle_use_1);
 						$new_ra_product_obj->setRcmGroupId2($ra_product->rcm_group_id_2);
@@ -152,54 +150,58 @@ class VbDataTransferRaProductService extends VbDataTransferService
 						$new_ra_product_obj->setRcmGroupId19($ra_product->rcm_group_id_19);
 						$new_ra_product_obj->setBundleUse19($ra_product->bundle_use_19);
 						$new_ra_product_obj->setRcmGroupId20($ra_product->rcm_group_id_20);
-						$new_ra_product_obj->setBundleUse20($ra_product->bundle_use_20);						
-						
+						$new_ra_product_obj->setBundleUse20($ra_product->bundle_use_20);
+
 						$this->getDao()->insert($new_ra_product_obj);
 
 						$xml[] = '<ra_product>';
-						$xml[] = '<sku>' . $ra_product->sku . '</sku>';		
-						$xml[] = '<master_sku>' . $ra_product->master_sku . '</master_sku>';		
+						$xml[] = '<sku>' . $ra_product->sku . '</sku>';
+						$xml[] = '<master_sku>' . $ra_product->master_sku . '</master_sku>';
 						$xml[] = '<status>5</status>'; //updated
 						$xml[] = '<is_error>' . $ra_product->is_error . '</is_error>';
-						$xml[] = '</ra_product>';					
-					}  
+						$xml[] = '<reason>insert</reason>';
+						$xml[] = '</ra_product>';
+					}
 				}
 				elseif ($sku == "" || $sku == null)
-				{				
+				{
 					//if the master_sku is not found in atomv2, we have to store that sku in an xml string to send it to VB
 					$xml[] = '<ra_product>';
-					$xml[] = '<sku>' . $ra_product->sku . '</sku>';		
-					$xml[] = '<master_sku>' . $ra_product->master_sku . '</master_sku>';		
+					$xml[] = '<sku>' . $ra_product->sku . '</sku>';
+					$xml[] = '<master_sku>' . $ra_product->master_sku . '</master_sku>';
 					$xml[] = '<status>2</status>'; //not found
 					$xml[] = '<is_error>' . $ra_product->is_error . '</is_error>';
+					$xml[] = '<reason>' . $fail_reason . '</reason>';
 					$xml[] = '</ra_product>';
 				}
 				else
 				{
 					$xml[] = '<ra_product>';
-					$xml[] = '<sku>' . $ra_product->sku . '</sku>';		
-					$xml[] = '<master_sku>' . $ra_product->master_sku . '</master_sku>';		
+					$xml[] = '<sku>' . $ra_product->sku . '</sku>';
+					$xml[] = '<master_sku>' . $ra_product->master_sku . '</master_sku>';
 					$xml[] = '<status>3</status>'; //not updated
 					$xml[] = '<is_error>' . $ra_product->is_error . '</is_error>';
-					$xml[] = '</ra_product>';			
+					$xml[] = '<reason>' . $fail_reason . '</reason>';
+					$xml[] = '</ra_product>';
 				}
-			}	
+			}
 			catch(Exception $e)
 			{
 				$xml[] = '<ra_product>';
-				$xml[] = '<sku>' . $ra_product->sku . '</sku>';		
-				$xml[] = '<master_sku>' . $ra_product->master_sku . '</master_sku>';		
+				$xml[] = '<sku>' . $ra_product->sku . '</sku>';
+				$xml[] = '<master_sku>' . $ra_product->master_sku . '</master_sku>';
 				$xml[] = '<status>4</status>'; //error
 				$xml[] = '<is_error>' . $ra_product->is_error . '</is_error>';
+				$xml[] = '<reason>' . $e->getMessage() . '</reason>';
 				$xml[] = '</ra_product>';
-			}           
+			}
 		 }
-		 
+
 		$xml[] = '</ra_products>';
-		
-		
-		$return_feed = implode("\n", $xml);	
-			
+
+
+		$return_feed = implode("\n", $xml);
+
 		return $return_feed;
 	}
 }
