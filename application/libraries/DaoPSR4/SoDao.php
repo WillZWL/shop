@@ -1341,185 +1341,65 @@ SQL;
         return FALSE;
     }
 
-    public function getConfirmedSo($where = [], $from_date = '', $to_date = '', $is_light_version = false, $dispatch_report = false)
+    public function getConfirmedSo($where = [], $option = [])
     {
-        $table_alias = ['platform_biz_var' => 'pbz'];
-        include_once APPPATH . "helpers/string_helper.php";
-        include_once APPPATH . "helpers/array_helper.php";
-        $new_where = replace_db_alias($where, $table_alias);
-
-        $value_list = [];
-
-        if (!isset($new_where['so.status'])) {
-            $new_where['so.status >='] = 2;
-        }
-
-        $new_where['so.hold_status !='] = 15;
-
-        if (!$dispatch_report) {
-            if (!array_similar_key_exists($where, 'pay_date')) {
-                $new_where['sps.pay_date'] = ' AND sps.pay_date BETWEEN ? AND ?';
-            }
-        }
-
-        if ($new_where && count($new_where) > 0) {
-            $where_clause = '';
-
-            foreach ($new_where as $key => $value) {
-                if (strlen($where_clause) > 0) {
-                    $where_clause .= ' AND ';
-                } else {
-                    $where_clause = ' WHERE ';
-                }
-
-                if (strpos($key, 'modify_on') === FALSE && strpos($key, "pay_date") === FALSE) {
-                    if (is_array($value)) {
-                        $where_clause .= "$key IN (";
-                        $temp_clause = '';
-
-                        foreach ($value as $element) {
-                            if (strlen($temp_clause) > 0) {
-                                $temp_clause .= ', ';
-                            }
-
-                            $temp_clause .= '?';
-                            array_push($value_list, $value);
-                        }
-
-                        $where_clause .= $temp_clause . ')';
-                    } else {
-                        $no_value = false;
-                        if (is_null($value)) {
-                            //$where_clause .= "$key ";
-
-                            if ($this->db->_has_operator($key)) {
-                                $where_clause .= "$key ";
-                                $no_value = true;
-                            } else {
-                                $where_clause .= "$key is ?";
-                            }
-                        } else {
-                            if ($this->db->_has_operator($key)) {
-
-                                $where_clause .= "$key ?";
-                            } else {
-                                $where_clause .= "$key = ?";
-                            }
-                        }
-
-                        if (!$no_value) {
-                            array_push($value_list, $value);
-                        }
-                    }
-                } else {
-                    $where_clause .= "$key BETWEEN ? AND ?";
-
-                    if (is_array($value) && count($value) >= 2) {
-                        array_push($value_list, $value[0] . ' 00:00:00');
-                        array_push($value_list, $value[1] . ' 23:59:59');
-                    } else {
-                        array_push($value_list, $from_date . ' 00:00:00');
-                        array_push($value_list, $to_date . ' 23:59:59');
-                    }
-                }
-
-                $counter++;
-            }
-        }
-
-        $dispatch_string = check_finance_role(true);
-
-        if ($is_light_version) {
-            $select_str = "so.platform_id, sps.payment_gateway_id, sps.modify_on, sps.payment_status, so.biz_type, ore.reason as order_reason, soid.line_no, so.platform_order_id, so.split_so_group, soex.conv_site_id,
+        $select_str = "so.platform_id, sps.payment_gateway_id, sps.pay_date, sps.payment_status, so.biz_type, ore.reason as order_reason,
+                    so.txn_id, so.so_no, so.split_so_group, sid.line_no, so.platform_order_id, soex.conv_site_id, sa.warehouse_id,
                     cat.name cat_name, sc.name sub_cat_name, b.brand_name, p.name prod_name,
-                    p.sku, soid.qty, so.order_create_date, so.currency_id,
-                    null amount, null fee, null receivable, soid.vat_total,  soid.profit profit, soid.margin margin,
-                    soid.unit_price, soid.cost,
-                    so.promotion_code, rf.refund_status,rf.total_refund_amount,pbz.payment_charge_percent, sp.type,soid.gst_total soid_gst_total,
-                    soid.amount soid_amount,so.rate, so.amount so_amount ";
-        } else {
-            $select_str = "so.platform_id, sps.payment_gateway_id, sps.pay_date, sps.payment_status, so.biz_type, ore.reason as order_reason, so.txn_id, so.so_no, so.split_so_group, soid.line_no, so.platform_order_id, soex.conv_site_id, sa.warehouse_id,
-                    cat.name cat_name, sc.name sub_cat_name, b.brand_name, p.name prod_name,
-                    p.sku, skum.ext_sku, sup.name, soid.qty, " . $dispatch_string . ", so.order_create_date, so.currency_id,
-                    null amount, null fee, null receivable, soid.vat_total,  soid.profit profit, soid.margin margin,
-                    soid.unit_price, soid.cost, so.delivery_country_id, null amount_usd, null profit_usd,
+                    p.sku, sm.ext_sku, sup.name, sid.qty, so.dispatch_date, so.order_create_date, so.currency_id,
+                    sid.vat_total,  sid.profit profit, sid.margin margin,
+                    sid.unit_price, sid.cost, so.delivery_country_id,
                     so.promotion_code, so.delivery_type_id shipment_type, sosh.courier_id, sosh.tracking_no, so.delivery_charge,
-                    rf.refund_type, rf.refund_status, rf.refund_qty, rf.refund_amount,
-                    so.amount so_amount, so.rate, so.delivery_charge,
-                    soid.amount soid_amount, rf.refund_qty,
-                    soid.gst_total soid_gst_total,
-                    rf.total_refund_amount, pbz.payment_charge_percent,
-                    sp.type, sosh.create_on,
-                    sbt.payment_received_date,
-                    p.clearance,cl.email ";
+                    rf.refund_type, rf.refund_status, rf.refund_qty, rf.refund_amount, so.amount so_amount, so.rate, so.delivery_charge,
+                    sid.amount soid_amount, rf.refund_qty,sid.gst_total soid_gst_total,rf.total_refund_amount, pbz.payment_charge_percent,
+                    sp.type, sosh.create_on, sbt.payment_received_date, p.clearance,cl.email ";
+        if (!empty($option)) {
+            if ($option['is_light_version']) {
+               $select_str = "so.platform_id, sps.payment_gateway_id, sps.modify_on, sps.payment_status, so.biz_type, ore.reason as order_reason,
+                    sid.line_no, so.platform_order_id, so.split_so_group, soex.conv_site_id,cat.name cat_name, sc.name sub_cat_name,
+                    b.brand_name, p.name prod_name,p.sku, sid.qty, so.order_create_date, so.currency_id,sid.vat_total,
+                    sid.profit profit, sid.margin margin,sid.unit_price, sid.cost,so.promotion_code, rf.refund_status,
+                    rf.total_refund_amount,pbz.payment_charge_percent, sp.type,sid.gst_total soid_gst_total,
+                    sid.amount soid_amount,so.rate, so.amount so_amount ";
+            }
         }
 
-        $sql = "SELECT
-                    {$select_str}
-                FROM
-                    so
-                LEFT JOIN so_extend soex
-                    ON so.so_no = soex.so_no
-                LEFT JOIN client cl
-                    ON so.client_id = cl.id
-                LEFT JOIN order_reason ore
-                    ON(ore.reason_id = soex.order_reason)
-                INNER JOIN so_item_detail soid
-                    ON(soid.so_no = so.so_no)
-                LEFT JOIN so_allocate sa
-                    ON(sa.so_no = so.so_no AND sa.item_sku = soid.item_sku AND sa.line_no = soid.line_no)
-                LEFT JOIN so_payment_status sps
-                    ON(sps.so_no = so.so_no)
-                LEFT JOIN sku_mapping skum
-                    ON(skum.sku = soid.item_sku and skum.status=1 and skum.ext_sys='WMS')
-                INNER JOIN product p
-                    ON(soid.item_sku = p.sku)
-                INNER JOIN supplier_prod sp_prod
-                        on sp_prod.prod_sku=p.sku and sp_prod.order_default=1
-                INNER JOIN supplier sup
-                        on sup.id=sp_prod.supplier_id and sup.status=1
-                INNER JOIN category cat
-                    ON(cat.id = p.cat_id)
-                INNER JOIN category sc
-                    ON(sc.id = p.sub_cat_id)
-                INNER JOIN brand b
-                    ON(b.id = p.brand_id)
-                INNER JOIN platform_biz_var pbz
-                    ON(pbz.selling_platform_id = so.platform_id)
-                INNER JOIN selling_platform sp on pbz.selling_platform_id = sp.selling_platform_id
-                LEFT JOIN
-                (
-                    SELECT r.so_no, r.reason, r.total_refund_amount,
+        $this->db->from('so AS so');
+        $this->db->join('so_extend AS soex', 'so.so_no = soex.so_no', 'LEFT');
+        $this->db->join('client AS cl', 'so.client_id = cl.id', 'LEFT');
+        $this->db->join('order_reason AS ore', 'ore.reason_id = soex.order_reason', 'LEFT');
+        $this->db->join('so_item_detail AS sid', 'sid.so_no = so.so_no', 'LEFT');
+        $this->db->join('so_allocate AS sa', 'sa.so_no = so.so_no AND sa.item_sku = sid.item_sku AND sa.line_no = sid.line_no', 'LEFT');
+        $this->db->join('so_payment_status AS sps', 'sps.so_no = so.so_no', 'LEFT');
+        $this->db->join('sku_mapping AS sm', "sm.sku = sid.item_sku and sm.status=1 and sm.ext_sys='WMS'", 'LEFT');
+        $this->db->join('product AS p', 'sid.item_sku = p.sku', 'LEFT');
+        $this->db->join('supplier_prod AS sp_prod', 'sp_prod.prod_sku = p.sku and sp_prod.order_default=1','LEFT');
+        $this->db->join('supplier AS sup', 'sup.id=sp_prod.supplier_id and sup.status=1', 'INNER');
+        $this->db->join('category AS cat', 'cat.id = p.cat_id', 'INNER');
+        $this->db->join('category AS sc', 'sc.id = p.sub_cat_id', 'INNER');
+        $this->db->join('brand as b', 'b.id = p.brand_id', 'INNER');
+        $this->db->join('platform_biz_var AS pbz', 'pbz.selling_platform_id = so.platform_id', 'INNER');
+        $this->db->join('selling_platform AS sp', 'pbz.selling_platform_id = sp.selling_platform_id', 'INNER');
+        $this->db->join("(SELECT r.so_no, r.reason, r.total_refund_amount,
                     GROUP_CONCAT(r.status SEPARATOR ',') as refund_status,
                     (ri.refund_amount * ri.qty) as refund_amount , ri.item_sku, ri.qty as refund_qty, ri.refund_type
                     FROM refund_item as ri
                     LEFT JOIN refund as r
                         ON r.id = ri.refund_id
                     WHERE ri.status <> 'D'
-                    GROUP BY r.so_no, r.reason, r.status, r.total_refund_amount, ri.item_sku, ri.refund_type
-                ) rf
-                    ON (rf.item_sku = soid.item_sku and rf.so_no = so.so_no)
-                LEFT JOIN so_allocate soal
-                    ON (soal.so_no = soid.so_no AND soal.line_no = soid.line_no AND soal.item_sku = soid.item_sku)
-                LEFT JOIN so_shipment sosh
-                    ON (sosh.sh_no = soal.sh_no)
-                LEFT JOIN
-                (
-                    SELECT sobt.*, MAX(sobt.received_date_localtime) AS payment_received_date
+                    GROUP BY r.so_no, r.reason, r.status, r.total_refund_amount, ri.item_sku, ri.refund_type) AS rf", 'rf.item_sku = sid.item_sku and rf.so_no = so.so_no', 'LEFT');
+        $this->db->join('so_shipment AS sosh', 'sosh.sh_no = sa.sh_no');
+        $this->db->join("(SELECT sobt.*, MAX(sobt.received_date_localtime) AS payment_received_date
                     FROM so_bank_transfer sobt
                     INNER JOIN so so1 ON so1.so_no = sobt.so_no
-                    GROUP BY sobt.so_no
-                ) sbt ON (so.so_no = sbt.so_no)
-                $where_clause
-                ORDER BY so.so_no, soid.amount DESC, p.sku";
-        $result = $this->db->query($sql, $value_list);
-        if (!$result) {
-            return FALSE;
+                    GROUP BY sobt.so_no) AS sbt", 'so.so_no = sbt.so_no', 'LEFT');
+        $this->db->order_by('so.so_no, sid.amount, p.sku desc');
+        $this->db->select($select_str);
+        $this->db->where($where);
+        if ($query = $this->db->get()) {
+            return $query->row_array();
         }
-
-        $array = $result->result_array();
-
-        return $array;
+        return FALSE;
     }
 
     public function getSplitSoReport($where = [], $option = [], $from_date = "", $to_date = "")
@@ -1802,17 +1682,6 @@ SQL;
             return ["times" => $query->row()->times, "total" => $query->row()->total, "first" => $query->row()->first];
         }
         return FALSE;
-    }
-
-    public function get_ilg_dispatch_feed()
-    {
-        $this->db->from("so_item_detail soid");
-        $this->db->join("so", "so.so_no = soid.so_no", "INNER");
-        $this->db->join("(  SELECT b.so_no, COUNT(b.item_sku) AS cnt
-                            FROM so_item_detail b
-                            GROUP BY b.so_no) AS socnt", "socnt.so_no = soid.so_no", "INNER");
-        $this->db->join("product p", "p.sku = soid.sku", "INNER");
-        $this->db->join("client c", "c.id = so.client_id", "INNER");
     }
 
     public function getShipmentDeliveryInfo($so_no = '', $classname = 'ShipmentInfoToCourierDto')

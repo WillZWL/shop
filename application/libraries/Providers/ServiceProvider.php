@@ -205,5 +205,9 @@ class ServiceProvider implements ServiceProviderInterface
         $servcieContainer['SellingPlatform'] = function () {
             return new S\SellingPlatformService();
         };
+
+        $servcieContainer['RptSalesService'] = function () {
+            return new S\RptSalesService();
+        };
     }
 }
