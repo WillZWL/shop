@@ -35,14 +35,4 @@ abstract class VbDataTransferService extends BaseService implements VbDataTransf
 
         return $new_feed;
     }
-
-    public function replaceSpecialChars($replaced_data)
-    {
-        $original_data = "";
-        $original_data = str_replace('&amp;', '&', $replaced_data);
-        $original_data = str_replace('&gt;', '>', $original_data);
-        $original_data = str_replace('&lt;', '<', $original_data);
-
-        return $original_data;
-    }
 }
