@@ -4,32 +4,32 @@ class ProductContentVo extends \BaseVo
     private $id;
     private $prod_sku;
     private $lang_id;
-    private $prod_name;
-    private $prod_name_original;
+    private $prod_name = '';
+    private $prod_name_original = '0';
     private $short_desc;
     private $contents;
-    private $contents_original;
-    private $series;
+    private $contents_original = '0';
+    private $series = '';
     private $keywords;
-    private $keywords_original;
-    private $model_1;
-    private $model_2;
-    private $model_3;
-    private $model_4;
-    private $model_5;
+    private $keywords_original = '0';
+    private $model_1 = '';
+    private $model_2 = '';
+    private $model_3 = '';
+    private $model_4 = '';
+    private $model_5 = '';
     private $detail_desc;
-    private $detail_desc_original;
+    private $detail_desc_original = '0';
     private $extra_info;
     private $website_status_long_text;
-    private $website_status_short_text;
-    private $youtube_id_1;
-    private $youtube_id_2;
-    private $youtube_caption_1;
-    private $youtube_caption_2;
+    private $website_status_short_text = '';
+    private $youtube_id_1 = '';
+    private $youtube_id_2 = '';
+    private $youtube_caption_1 = '';
+    private $youtube_caption_2 = '';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -38,7 +38,9 @@ class ProductContentVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -48,7 +50,9 @@ class ProductContentVo extends \BaseVo
 
     public function setProdSku($prod_sku)
     {
-        $this->prod_sku = $prod_sku;
+        if ($prod_sku) {
+            $this->prod_sku = $prod_sku;
+        }
     }
 
     public function getProdSku()
@@ -58,7 +62,9 @@ class ProductContentVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        $this->lang_id = $lang_id;
+        if ($lang_id) {
+            $this->lang_id = $lang_id;
+        }
     }
 
     public function getLangId()
@@ -68,7 +74,9 @@ class ProductContentVo extends \BaseVo
 
     public function setProdName($prod_name)
     {
-        $this->prod_name = $prod_name;
+        if ($prod_name) {
+            $this->prod_name = $prod_name;
+        }
     }
 
     public function getProdName()
@@ -78,7 +86,9 @@ class ProductContentVo extends \BaseVo
 
     public function setProdNameOriginal($prod_name_original)
     {
-        $this->prod_name_original = $prod_name_original;
+        if ($prod_name_original) {
+            $this->prod_name_original = $prod_name_original;
+        }
     }
 
     public function getProdNameOriginal()
@@ -88,7 +98,9 @@ class ProductContentVo extends \BaseVo
 
     public function setShortDesc($short_desc)
     {
-        $this->short_desc = $short_desc;
+        if ($short_desc) {
+            $this->short_desc = $short_desc;
+        }
     }
 
     public function getShortDesc()
@@ -98,7 +110,9 @@ class ProductContentVo extends \BaseVo
 
     public function setContents($contents)
     {
-        $this->contents = $contents;
+        if ($contents) {
+            $this->contents = $contents;
+        }
     }
 
     public function getContents()
@@ -108,7 +122,9 @@ class ProductContentVo extends \BaseVo
 
     public function setContentsOriginal($contents_original)
     {
-        $this->contents_original = $contents_original;
+        if ($contents_original) {
+            $this->contents_original = $contents_original;
+        }
     }
 
     public function getContentsOriginal()
@@ -118,7 +134,9 @@ class ProductContentVo extends \BaseVo
 
     public function setSeries($series)
     {
-        $this->series = $series;
+        if ($series) {
+            $this->series = $series;
+        }
     }
 
     public function getSeries()
@@ -128,7 +146,9 @@ class ProductContentVo extends \BaseVo
 
     public function setKeywords($keywords)
     {
-        $this->keywords = $keywords;
+        if ($keywords) {
+            $this->keywords = $keywords;
+        }
     }
 
     public function getKeywords()
@@ -138,7 +158,9 @@ class ProductContentVo extends \BaseVo
 
     public function setKeywordsOriginal($keywords_original)
     {
-        $this->keywords_original = $keywords_original;
+        if ($keywords_original) {
+            $this->keywords_original = $keywords_original;
+        }
     }
 
     public function getKeywordsOriginal()
@@ -148,7 +170,9 @@ class ProductContentVo extends \BaseVo
 
     public function setModel1($model_1)
     {
-        $this->model_1 = $model_1;
+        if ($model_1) {
+            $this->model_1 = $model_1;
+        }
     }
 
     public function getModel1()
@@ -158,7 +182,9 @@ class ProductContentVo extends \BaseVo
 
     public function setModel2($model_2)
     {
-        $this->model_2 = $model_2;
+        if ($model_2) {
+            $this->model_2 = $model_2;
+        }
     }
 
     public function getModel2()
@@ -168,7 +194,9 @@ class ProductContentVo extends \BaseVo
 
     public function setModel3($model_3)
     {
-        $this->model_3 = $model_3;
+        if ($model_3) {
+            $this->model_3 = $model_3;
+        }
     }
 
     public function getModel3()
@@ -178,7 +206,9 @@ class ProductContentVo extends \BaseVo
 
     public function setModel4($model_4)
     {
-        $this->model_4 = $model_4;
+        if ($model_4) {
+            $this->model_4 = $model_4;
+        }
     }
 
     public function getModel4()
@@ -188,7 +218,9 @@ class ProductContentVo extends \BaseVo
 
     public function setModel5($model_5)
     {
-        $this->model_5 = $model_5;
+        if ($model_5) {
+            $this->model_5 = $model_5;
+        }
     }
 
     public function getModel5()
@@ -198,7 +230,9 @@ class ProductContentVo extends \BaseVo
 
     public function setDetailDesc($detail_desc)
     {
-        $this->detail_desc = $detail_desc;
+        if ($detail_desc) {
+            $this->detail_desc = $detail_desc;
+        }
     }
 
     public function getDetailDesc()
@@ -208,7 +242,9 @@ class ProductContentVo extends \BaseVo
 
     public function setDetailDescOriginal($detail_desc_original)
     {
-        $this->detail_desc_original = $detail_desc_original;
+        if ($detail_desc_original) {
+            $this->detail_desc_original = $detail_desc_original;
+        }
     }
 
     public function getDetailDescOriginal()
@@ -218,7 +254,9 @@ class ProductContentVo extends \BaseVo
 
     public function setExtraInfo($extra_info)
     {
-        $this->extra_info = $extra_info;
+        if ($extra_info) {
+            $this->extra_info = $extra_info;
+        }
     }
 
     public function getExtraInfo()
@@ -228,7 +266,9 @@ class ProductContentVo extends \BaseVo
 
     public function setWebsiteStatusLongText($website_status_long_text)
     {
-        $this->website_status_long_text = $website_status_long_text;
+        if ($website_status_long_text) {
+            $this->website_status_long_text = $website_status_long_text;
+        }
     }
 
     public function getWebsiteStatusLongText()
@@ -238,7 +278,9 @@ class ProductContentVo extends \BaseVo
 
     public function setWebsiteStatusShortText($website_status_short_text)
     {
-        $this->website_status_short_text = $website_status_short_text;
+        if ($website_status_short_text) {
+            $this->website_status_short_text = $website_status_short_text;
+        }
     }
 
     public function getWebsiteStatusShortText()
@@ -248,7 +290,9 @@ class ProductContentVo extends \BaseVo
 
     public function setYoutubeId1($youtube_id_1)
     {
-        $this->youtube_id_1 = $youtube_id_1;
+        if ($youtube_id_1) {
+            $this->youtube_id_1 = $youtube_id_1;
+        }
     }
 
     public function getYoutubeId1()
@@ -258,7 +302,9 @@ class ProductContentVo extends \BaseVo
 
     public function setYoutubeId2($youtube_id_2)
     {
-        $this->youtube_id_2 = $youtube_id_2;
+        if ($youtube_id_2) {
+            $this->youtube_id_2 = $youtube_id_2;
+        }
     }
 
     public function getYoutubeId2()
@@ -268,7 +314,9 @@ class ProductContentVo extends \BaseVo
 
     public function setYoutubeCaption1($youtube_caption_1)
     {
-        $this->youtube_caption_1 = $youtube_caption_1;
+        if ($youtube_caption_1) {
+            $this->youtube_caption_1 = $youtube_caption_1;
+        }
     }
 
     public function getYoutubeCaption1()
@@ -278,7 +326,9 @@ class ProductContentVo extends \BaseVo
 
     public function setYoutubeCaption2($youtube_caption_2)
     {
-        $this->youtube_caption_2 = $youtube_caption_2;
+        if ($youtube_caption_2) {
+            $this->youtube_caption_2 = $youtube_caption_2;
+        }
     }
 
     public function getYoutubeCaption2()
@@ -288,7 +338,9 @@ class ProductContentVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -298,7 +350,9 @@ class ProductContentVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -308,7 +362,9 @@ class ProductContentVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -318,7 +374,9 @@ class ProductContentVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -328,7 +386,9 @@ class ProductContentVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -338,7 +398,9 @@ class ProductContentVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

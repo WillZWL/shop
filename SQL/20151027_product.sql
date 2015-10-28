@@ -1,0 +1,1 @@
+ALTER TABLE product MODIFY COLUMN `lang_restricted` SMALLINT NOT NULL DEFAULT '0' COMMENT '//1 = Battery, Can put more type';

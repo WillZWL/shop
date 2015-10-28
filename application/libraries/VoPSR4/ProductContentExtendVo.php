@@ -5,9 +5,9 @@ class ProductContentExtendVo extends \BaseVo
     private $prod_sku;
     private $lang_id;
     private $feature;
-    private $feature_original;
+    private $feature_original = '0';
     private $specification;
-    private $spec_original;
+    private $spec_original = '0';
     private $requirement;
     private $instruction;
     private $apply_enhanced_listing = 'N';
@@ -15,7 +15,7 @@ class ProductContentExtendVo extends \BaseVo
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -24,7 +24,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -34,7 +36,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setProdSku($prod_sku)
     {
-        $this->prod_sku = $prod_sku;
+        if ($prod_sku) {
+            $this->prod_sku = $prod_sku;
+        }
     }
 
     public function getProdSku()
@@ -44,7 +48,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        $this->lang_id = $lang_id;
+        if ($lang_id) {
+            $this->lang_id = $lang_id;
+        }
     }
 
     public function getLangId()
@@ -54,7 +60,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setFeature($feature)
     {
-        $this->feature = $feature;
+        if ($feature) {
+            $this->feature = $feature;
+        }
     }
 
     public function getFeature()
@@ -64,7 +72,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setFeatureOriginal($feature_original)
     {
-        $this->feature_original = $feature_original;
+        if ($feature_original) {
+            $this->feature_original = $feature_original;
+        }
     }
 
     public function getFeatureOriginal()
@@ -74,7 +84,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setSpecification($specification)
     {
-        $this->specification = $specification;
+        if ($specification) {
+            $this->specification = $specification;
+        }
     }
 
     public function getSpecification()
@@ -84,7 +96,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setSpecOriginal($spec_original)
     {
-        $this->spec_original = $spec_original;
+        if ($spec_original) {
+            $this->spec_original = $spec_original;
+        }
     }
 
     public function getSpecOriginal()
@@ -94,7 +108,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setRequirement($requirement)
     {
-        $this->requirement = $requirement;
+        if ($requirement) {
+            $this->requirement = $requirement;
+        }
     }
 
     public function getRequirement()
@@ -104,7 +120,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setInstruction($instruction)
     {
-        $this->instruction = $instruction;
+        if ($instruction) {
+            $this->instruction = $instruction;
+        }
     }
 
     public function getInstruction()
@@ -114,7 +132,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setApplyEnhancedListing($apply_enhanced_listing)
     {
-        $this->apply_enhanced_listing = $apply_enhanced_listing;
+        if ($apply_enhanced_listing) {
+            $this->apply_enhanced_listing = $apply_enhanced_listing;
+        }
     }
 
     public function getApplyEnhancedListing()
@@ -124,7 +144,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setEnhancedListing($enhanced_listing)
     {
-        $this->enhanced_listing = $enhanced_listing;
+        if ($enhanced_listing) {
+            $this->enhanced_listing = $enhanced_listing;
+        }
     }
 
     public function getEnhancedListing()
@@ -134,7 +156,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -144,7 +168,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -154,7 +180,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -164,7 +192,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -174,7 +204,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -184,7 +216,9 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
