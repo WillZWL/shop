@@ -3,7 +3,7 @@
 if (!function_exists('camelcase2underscore')) {
     function camelcase2underscore($name)
     {
-        return strtolower(preg_replace('/(?<!^)([A-Z0-9]){1}/', '_$1', $name));
+        return strtolower(preg_replace('/(?<!^)([A-Z]|\d+){1}/', '_$1', $name));
     }
 }
 
