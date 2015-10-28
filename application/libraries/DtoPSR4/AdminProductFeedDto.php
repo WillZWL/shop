@@ -14,10 +14,10 @@ class AdminProductFeedDto
     private $master_sku;
     private $sku;
     private $website_display_name;
-    private $youtube_id__1;
-    private $youtube_caption__1;
-    private $youtube_id__2;
-    private $youtube_caption__2;
+    private $youtube_id_1;
+    private $youtube_caption_1;
+    private $youtube_id_2;
+    private $youtube_caption_2;
     private $price;
     private $ship_day;
     private $delivery_day;
@@ -214,44 +214,44 @@ class AdminProductFeedDto
         return $this->website_display_name;
     }
 
-    public function setYoutubeId1($youtube_id__1)
+    public function setYoutubeId1($youtube_id_1)
     {
-        $this->youtube_id__1 = $youtube_id__1;
+        $this->youtube_id_1 = $youtube_id_1;
     }
 
     public function getYoutubeId1()
     {
-        return $this->youtube_id__1;
+        return $this->youtube_id_1;
     }
 
-    public function setYoutubeCaption1($youtube_caption__1)
+    public function setYoutubeCaption1($youtube_caption_1)
     {
-        $this->youtube_caption__1 = $youtube_caption__1;
+        $this->youtube_caption_1 = $youtube_caption_1;
     }
 
     public function getYoutubeCaption1()
     {
-        return $this->youtube_caption__1;
+        return $this->youtube_caption_1;
     }
 
-    public function setYoutubeId2($youtube_id__2)
+    public function setYoutubeId2($youtube_id_2)
     {
-        $this->youtube_id__2 = $youtube_id__2;
+        $this->youtube_id_2 = $youtube_id_2;
     }
 
     public function getYoutubeId2()
     {
-        return $this->youtube_id__2;
+        return $this->youtube_id_2;
     }
 
-    public function setYoutubeCaption2($youtube_caption__2)
+    public function setYoutubeCaption2($youtube_caption_2)
     {
-        $this->youtube_caption__2 = $youtube_caption__2;
+        $this->youtube_caption_2 = $youtube_caption_2;
     }
 
     public function getYoutubeCaption2()
     {
-        return $this->youtube_caption__2;
+        return $this->youtube_caption_2;
     }
 
     public function setPrice($price)

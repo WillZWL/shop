@@ -36,9 +36,9 @@ class FraudOrderWithItemDto
     private $delivery_postcode;
     private $delivery_country_id;
     private $password;
-    private $tel__1;
-    private $tel__2;
-    private $tel__3;
+    private $tel_1;
+    private $tel_2;
+    private $tel_3;
     private $mobile;
     private $platform_id;
     private $card_id;
@@ -52,7 +52,7 @@ class FraudOrderWithItemDto
     private $risk_var_7;
     private $risk_var_8;
     private $risk_var_9;
-    private $risk_var_1_0;
+    private $risk_var_10;
     private $card_bin;
     private $verification_level;
     private $fraud_result;
@@ -417,34 +417,34 @@ class FraudOrderWithItemDto
         return $this->password;
     }
 
-    public function setTel1($tel__1)
+    public function setTel1($tel_1)
     {
-        $this->tel__1 = $tel__1;
+        $this->tel_1 = $tel_1;
     }
 
     public function getTel1()
     {
-        return $this->tel__1;
+        return $this->tel_1;
     }
 
-    public function setTel2($tel__2)
+    public function setTel2($tel_2)
     {
-        $this->tel__2 = $tel__2;
+        $this->tel_2 = $tel_2;
     }
 
     public function getTel2()
     {
-        return $this->tel__2;
+        return $this->tel_2;
     }
 
-    public function setTel3($tel__3)
+    public function setTel3($tel_3)
     {
-        $this->tel__3 = $tel__3;
+        $this->tel_3 = $tel_3;
     }
 
     public function getTel3()
     {
-        return $this->tel__3;
+        return $this->tel_3;
     }
 
     public function setMobile($mobile)
@@ -577,14 +577,14 @@ class FraudOrderWithItemDto
         return $this->risk_var_9;
     }
 
-    public function setRiskVar10($risk_var_1_0)
+    public function setRiskVar10($risk_var_10)
     {
-        $this->risk_var_1_0 = $risk_var_1_0;
+        $this->risk_var_10 = $risk_var_10;
     }
 
     public function getRiskVar10()
     {
-        return $this->risk_var_1_0;
+        return $this->risk_var_10;
     }
 
     public function setCardBin($card_bin)

@@ -2,30 +2,30 @@
 class RaProdWithNameDto
 {
     private $sku;
-    private $rcm_prod_id__1;
-    private $rcm_prod_id__2;
-    private $rcm_prod_id__3;
-    private $rcm_prod_id__4;
-    private $rcm_prod_id__5;
-    private $rcm_prod_id__6;
-    private $rcm_prod_id__7;
-    private $rcm_prod_id__8;
-    private $rcm_prod_name__1;
-    private $rcm_prod_name__2;
-    private $rcm_prod_name__3;
-    private $rcm_prod_name__4;
-    private $rcm_prod_name__5;
-    private $rcm_prod_name__6;
-    private $rcm_prod_name__7;
-    private $rcm_prod_name__8;
-    private $rcm_prod_website_status__1;
-    private $rcm_prod_website_status__2;
-    private $rcm_prod_website_status__3;
-    private $rcm_prod_website_status__4;
-    private $rcm_prod_website_status__5;
-    private $rcm_prod_website_status__6;
-    private $rcm_prod_website_status__7;
-    private $rcm_prod_website_status__8;
+    private $rcm_prod_id_1;
+    private $rcm_prod_id_2;
+    private $rcm_prod_id_3;
+    private $rcm_prod_id_4;
+    private $rcm_prod_id_5;
+    private $rcm_prod_id_6;
+    private $rcm_prod_id_7;
+    private $rcm_prod_id_8;
+    private $rcm_prod_name_1;
+    private $rcm_prod_name_2;
+    private $rcm_prod_name_3;
+    private $rcm_prod_name_4;
+    private $rcm_prod_name_5;
+    private $rcm_prod_name_6;
+    private $rcm_prod_name_7;
+    private $rcm_prod_name_8;
+    private $rcm_prod_website_status_1;
+    private $rcm_prod_website_status_2;
+    private $rcm_prod_website_status_3;
+    private $rcm_prod_website_status_4;
+    private $rcm_prod_website_status_5;
+    private $rcm_prod_website_status_6;
+    private $rcm_prod_website_status_7;
+    private $rcm_prod_website_status_8;
     private $create_on;
     private $create_at;
     private $create_by;
@@ -43,244 +43,244 @@ class RaProdWithNameDto
         return $this->sku;
     }
 
-    public function setRcmProdId1($rcm_prod_id__1)
+    public function setRcmProdId1($rcm_prod_id_1)
     {
-        $this->rcm_prod_id__1 = $rcm_prod_id__1;
+        $this->rcm_prod_id_1 = $rcm_prod_id_1;
     }
 
     public function getRcmProdId1()
     {
-        return $this->rcm_prod_id__1;
+        return $this->rcm_prod_id_1;
     }
 
-    public function setRcmProdId2($rcm_prod_id__2)
+    public function setRcmProdId2($rcm_prod_id_2)
     {
-        $this->rcm_prod_id__2 = $rcm_prod_id__2;
+        $this->rcm_prod_id_2 = $rcm_prod_id_2;
     }
 
     public function getRcmProdId2()
     {
-        return $this->rcm_prod_id__2;
+        return $this->rcm_prod_id_2;
     }
 
-    public function setRcmProdId3($rcm_prod_id__3)
+    public function setRcmProdId3($rcm_prod_id_3)
     {
-        $this->rcm_prod_id__3 = $rcm_prod_id__3;
+        $this->rcm_prod_id_3 = $rcm_prod_id_3;
     }
 
     public function getRcmProdId3()
     {
-        return $this->rcm_prod_id__3;
+        return $this->rcm_prod_id_3;
     }
 
-    public function setRcmProdId4($rcm_prod_id__4)
+    public function setRcmProdId4($rcm_prod_id_4)
     {
-        $this->rcm_prod_id__4 = $rcm_prod_id__4;
+        $this->rcm_prod_id_4 = $rcm_prod_id_4;
     }
 
     public function getRcmProdId4()
     {
-        return $this->rcm_prod_id__4;
+        return $this->rcm_prod_id_4;
     }
 
-    public function setRcmProdId5($rcm_prod_id__5)
+    public function setRcmProdId5($rcm_prod_id_5)
     {
-        $this->rcm_prod_id__5 = $rcm_prod_id__5;
+        $this->rcm_prod_id_5 = $rcm_prod_id_5;
     }
 
     public function getRcmProdId5()
     {
-        return $this->rcm_prod_id__5;
+        return $this->rcm_prod_id_5;
     }
 
-    public function setRcmProdId6($rcm_prod_id__6)
+    public function setRcmProdId6($rcm_prod_id_6)
     {
-        $this->rcm_prod_id__6 = $rcm_prod_id__6;
+        $this->rcm_prod_id_6 = $rcm_prod_id_6;
     }
 
     public function getRcmProdId6()
     {
-        return $this->rcm_prod_id__6;
+        return $this->rcm_prod_id_6;
     }
 
-    public function setRcmProdId7($rcm_prod_id__7)
+    public function setRcmProdId7($rcm_prod_id_7)
     {
-        $this->rcm_prod_id__7 = $rcm_prod_id__7;
+        $this->rcm_prod_id_7 = $rcm_prod_id_7;
     }
 
     public function getRcmProdId7()
     {
-        return $this->rcm_prod_id__7;
+        return $this->rcm_prod_id_7;
     }
 
-    public function setRcmProdId8($rcm_prod_id__8)
+    public function setRcmProdId8($rcm_prod_id_8)
     {
-        $this->rcm_prod_id__8 = $rcm_prod_id__8;
+        $this->rcm_prod_id_8 = $rcm_prod_id_8;
     }
 
     public function getRcmProdId8()
     {
-        return $this->rcm_prod_id__8;
+        return $this->rcm_prod_id_8;
     }
 
-    public function setRcmProdName1($rcm_prod_name__1)
+    public function setRcmProdName1($rcm_prod_name_1)
     {
-        $this->rcm_prod_name__1 = $rcm_prod_name__1;
+        $this->rcm_prod_name_1 = $rcm_prod_name_1;
     }
 
     public function getRcmProdName1()
     {
-        return $this->rcm_prod_name__1;
+        return $this->rcm_prod_name_1;
     }
 
-    public function setRcmProdName2($rcm_prod_name__2)
+    public function setRcmProdName2($rcm_prod_name_2)
     {
-        $this->rcm_prod_name__2 = $rcm_prod_name__2;
+        $this->rcm_prod_name_2 = $rcm_prod_name_2;
     }
 
     public function getRcmProdName2()
     {
-        return $this->rcm_prod_name__2;
+        return $this->rcm_prod_name_2;
     }
 
-    public function setRcmProdName3($rcm_prod_name__3)
+    public function setRcmProdName3($rcm_prod_name_3)
     {
-        $this->rcm_prod_name__3 = $rcm_prod_name__3;
+        $this->rcm_prod_name_3 = $rcm_prod_name_3;
     }
 
     public function getRcmProdName3()
     {
-        return $this->rcm_prod_name__3;
+        return $this->rcm_prod_name_3;
     }
 
-    public function setRcmProdName4($rcm_prod_name__4)
+    public function setRcmProdName4($rcm_prod_name_4)
     {
-        $this->rcm_prod_name__4 = $rcm_prod_name__4;
+        $this->rcm_prod_name_4 = $rcm_prod_name_4;
     }
 
     public function getRcmProdName4()
     {
-        return $this->rcm_prod_name__4;
+        return $this->rcm_prod_name_4;
     }
 
-    public function setRcmProdName5($rcm_prod_name__5)
+    public function setRcmProdName5($rcm_prod_name_5)
     {
-        $this->rcm_prod_name__5 = $rcm_prod_name__5;
+        $this->rcm_prod_name_5 = $rcm_prod_name_5;
     }
 
     public function getRcmProdName5()
     {
-        return $this->rcm_prod_name__5;
+        return $this->rcm_prod_name_5;
     }
 
-    public function setRcmProdName6($rcm_prod_name__6)
+    public function setRcmProdName6($rcm_prod_name_6)
     {
-        $this->rcm_prod_name__6 = $rcm_prod_name__6;
+        $this->rcm_prod_name_6 = $rcm_prod_name_6;
     }
 
     public function getRcmProdName6()
     {
-        return $this->rcm_prod_name__6;
+        return $this->rcm_prod_name_6;
     }
 
-    public function setRcmProdName7($rcm_prod_name__7)
+    public function setRcmProdName7($rcm_prod_name_7)
     {
-        $this->rcm_prod_name__7 = $rcm_prod_name__7;
+        $this->rcm_prod_name_7 = $rcm_prod_name_7;
     }
 
     public function getRcmProdName7()
     {
-        return $this->rcm_prod_name__7;
+        return $this->rcm_prod_name_7;
     }
 
-    public function setRcmProdName8($rcm_prod_name__8)
+    public function setRcmProdName8($rcm_prod_name_8)
     {
-        $this->rcm_prod_name__8 = $rcm_prod_name__8;
+        $this->rcm_prod_name_8 = $rcm_prod_name_8;
     }
 
     public function getRcmProdName8()
     {
-        return $this->rcm_prod_name__8;
+        return $this->rcm_prod_name_8;
     }
 
-    public function setRcmProdWebsiteStatus1($rcm_prod_website_status__1)
+    public function setRcmProdWebsiteStatus1($rcm_prod_website_status_1)
     {
-        $this->rcm_prod_website_status__1 = $rcm_prod_website_status__1;
+        $this->rcm_prod_website_status_1 = $rcm_prod_website_status_1;
     }
 
     public function getRcmProdWebsiteStatus1()
     {
-        return $this->rcm_prod_website_status__1;
+        return $this->rcm_prod_website_status_1;
     }
 
-    public function setRcmProdWebsiteStatus2($rcm_prod_website_status__2)
+    public function setRcmProdWebsiteStatus2($rcm_prod_website_status_2)
     {
-        $this->rcm_prod_website_status__2 = $rcm_prod_website_status__2;
+        $this->rcm_prod_website_status_2 = $rcm_prod_website_status_2;
     }
 
     public function getRcmProdWebsiteStatus2()
     {
-        return $this->rcm_prod_website_status__2;
+        return $this->rcm_prod_website_status_2;
     }
 
-    public function setRcmProdWebsiteStatus3($rcm_prod_website_status__3)
+    public function setRcmProdWebsiteStatus3($rcm_prod_website_status_3)
     {
-        $this->rcm_prod_website_status__3 = $rcm_prod_website_status__3;
+        $this->rcm_prod_website_status_3 = $rcm_prod_website_status_3;
     }
 
     public function getRcmProdWebsiteStatus3()
     {
-        return $this->rcm_prod_website_status__3;
+        return $this->rcm_prod_website_status_3;
     }
 
-    public function setRcmProdWebsiteStatus4($rcm_prod_website_status__4)
+    public function setRcmProdWebsiteStatus4($rcm_prod_website_status_4)
     {
-        $this->rcm_prod_website_status__4 = $rcm_prod_website_status__4;
+        $this->rcm_prod_website_status_4 = $rcm_prod_website_status_4;
     }
 
     public function getRcmProdWebsiteStatus4()
     {
-        return $this->rcm_prod_website_status__4;
+        return $this->rcm_prod_website_status_4;
     }
 
-    public function setRcmProdWebsiteStatus5($rcm_prod_website_status__5)
+    public function setRcmProdWebsiteStatus5($rcm_prod_website_status_5)
     {
-        $this->rcm_prod_website_status__5 = $rcm_prod_website_status__5;
+        $this->rcm_prod_website_status_5 = $rcm_prod_website_status_5;
     }
 
     public function getRcmProdWebsiteStatus5()
     {
-        return $this->rcm_prod_website_status__5;
+        return $this->rcm_prod_website_status_5;
     }
 
-    public function setRcmProdWebsiteStatus6($rcm_prod_website_status__6)
+    public function setRcmProdWebsiteStatus6($rcm_prod_website_status_6)
     {
-        $this->rcm_prod_website_status__6 = $rcm_prod_website_status__6;
+        $this->rcm_prod_website_status_6 = $rcm_prod_website_status_6;
     }
 
     public function getRcmProdWebsiteStatus6()
     {
-        return $this->rcm_prod_website_status__6;
+        return $this->rcm_prod_website_status_6;
     }
 
-    public function setRcmProdWebsiteStatus7($rcm_prod_website_status__7)
+    public function setRcmProdWebsiteStatus7($rcm_prod_website_status_7)
     {
-        $this->rcm_prod_website_status__7 = $rcm_prod_website_status__7;
+        $this->rcm_prod_website_status_7 = $rcm_prod_website_status_7;
     }
 
     public function getRcmProdWebsiteStatus7()
     {
-        return $this->rcm_prod_website_status__7;
+        return $this->rcm_prod_website_status_7;
     }
 
-    public function setRcmProdWebsiteStatus8($rcm_prod_website_status__8)
+    public function setRcmProdWebsiteStatus8($rcm_prod_website_status_8)
     {
-        $this->rcm_prod_website_status__8 = $rcm_prod_website_status__8;
+        $this->rcm_prod_website_status_8 = $rcm_prod_website_status_8;
     }
 
     public function getRcmProdWebsiteStatus8()
     {
-        return $this->rcm_prod_website_status__8;
+        return $this->rcm_prod_website_status_8;
     }
 
     public function setCreateOn($create_on)

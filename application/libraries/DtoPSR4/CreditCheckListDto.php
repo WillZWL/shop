@@ -34,12 +34,12 @@ class CreditCheckListDto
     private $delivery_city;
     private $delivery_state;
     private $delivery_country_id;
-    private $tel__1;
-    private $tel__2;
-    private $tel__3;
-    private $del_tel__1;
-    private $del_tel__2;
-    private $del_tel__3;
+    private $tel_1;
+    private $tel_2;
+    private $tel_3;
+    private $del_tel_1;
+    private $del_tel_2;
+    private $del_tel_3;
     private $status;
     private $refund_status;
     private $hold_status;
@@ -395,64 +395,64 @@ class CreditCheckListDto
         return $this->delivery_country_id;
     }
 
-    public function setTel1($tel__1)
+    public function setTel1($tel_1)
     {
-        $this->tel__1 = $tel__1;
+        $this->tel_1 = $tel_1;
     }
 
     public function getTel1()
     {
-        return $this->tel__1;
+        return $this->tel_1;
     }
 
-    public function setTel2($tel__2)
+    public function setTel2($tel_2)
     {
-        $this->tel__2 = $tel__2;
+        $this->tel_2 = $tel_2;
     }
 
     public function getTel2()
     {
-        return $this->tel__2;
+        return $this->tel_2;
     }
 
-    public function setTel3($tel__3)
+    public function setTel3($tel_3)
     {
-        $this->tel__3 = $tel__3;
+        $this->tel_3 = $tel_3;
     }
 
     public function getTel3()
     {
-        return $this->tel__3;
+        return $this->tel_3;
     }
 
-    public function setDelTel1($del_tel__1)
+    public function setDelTel1($del_tel_1)
     {
-        $this->del_tel__1 = $del_tel__1;
+        $this->del_tel_1 = $del_tel_1;
     }
 
     public function getDelTel1()
     {
-        return $this->del_tel__1;
+        return $this->del_tel_1;
     }
 
-    public function setDelTel2($del_tel__2)
+    public function setDelTel2($del_tel_2)
     {
-        $this->del_tel__2 = $del_tel__2;
+        $this->del_tel_2 = $del_tel_2;
     }
 
     public function getDelTel2()
     {
-        return $this->del_tel__2;
+        return $this->del_tel_2;
     }
 
-    public function setDelTel3($del_tel__3)
+    public function setDelTel3($del_tel_3)
     {
-        $this->del_tel__3 = $del_tel__3;
+        $this->del_tel_3 = $del_tel_3;
     }
 
     public function getDelTel3()
     {
-        return $this->del_tel__3;
+        return $this->del_tel_3;
     }
 
     public function setStatus($status)

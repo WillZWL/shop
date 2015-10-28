@@ -11,8 +11,8 @@ class CompetitorMappingDto
     private $last_price;
     private $now_price;
     private $product_url;
-    private $note__1;
-    private $note__2;
+    private $note_1;
+    private $note_2;
     private $comp_stock_status;
     private $comp_ship_charge;
     private $reprice_min_margin;
@@ -127,24 +127,24 @@ class CompetitorMappingDto
         return $this->product_url;
     }
 
-    public function setNote1($note__1)
+    public function setNote1($note_1)
     {
-        $this->note__1 = $note__1;
+        $this->note_1 = $note_1;
     }
 
     public function getNote1()
     {
-        return $this->note__1;
+        return $this->note_1;
     }
 
-    public function setNote2($note__2)
+    public function setNote2($note_2)
     {
-        $this->note__2 = $note__2;
+        $this->note_2 = $note_2;
     }
 
     public function getNote2()
     {
-        return $this->note__2;
+        return $this->note_2;
     }
 
     public function setCompStockStatus($comp_stock_status)

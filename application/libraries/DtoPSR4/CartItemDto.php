@@ -4,7 +4,7 @@ class CartItemDto
 {
     private $sku;
     private $extItemCd;
-    private $name;    
+    private $name;
     private $nameInLang;
     private $qty;
     private $platformCurrency;
@@ -27,7 +27,7 @@ class CartItemDto
     private $warrantyInMonth;
     private $decPlace;
 
-    public function __construct()
+    public function _construct()
     {
         if (is_null($this->imageUrl))
         {
@@ -103,7 +103,7 @@ class CartItemDto
     public function setSupplierCostCurrency($supplierCostCurrency) {
         $this->supplierCostCurrency = $supplierCostCurrency;
     }
-    
+
     public function getSupplierUnitCostInHkd() {
         return $this->supplierUnitCostInHkd;
     }
@@ -111,7 +111,7 @@ class CartItemDto
     public function setSupplierUnitCostInHkd($supplierUnitCostInHkd) {
         $this->supplierUnitCostInHkd = $supplierUnitCostInHkd;
     }
-    
+
     public function getVatTotal() {
         return $this->vatTotal;
     }
@@ -119,7 +119,7 @@ class CartItemDto
     public function setVatTotal($vatTotal) {
         $this->vatTotal = $vatTotal;
     }
-    
+
     public function getVatPercent() {
         return $this->vatPercent;
     }
@@ -143,7 +143,7 @@ class CartItemDto
     public function setQty($qty) {
         $this->qty = $qty;
     }
-    
+
     public function getUnitCost() {
         return $this->unitCost;
     }

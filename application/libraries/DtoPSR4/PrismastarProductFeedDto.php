@@ -46,8 +46,8 @@ class PrismastarProductFeedDto
     private $sale_price;
     private $item_group_id;
     private $shipping;
-    private $video__1;
-    private $video__2;
+    private $video_1;
+    private $video_2;
 
     public function setPlatformId($platform_id)
     {
@@ -499,24 +499,24 @@ class PrismastarProductFeedDto
         return $this->shipping;
     }
 
-    public function setVideo1($video__1)
+    public function setVideo1($video_1)
     {
-        $this->video__1 = $video__1;
+        $this->video_1 = $video_1;
     }
 
     public function getVideo1()
     {
-        return $this->video__1;
+        return $this->video_1;
     }
 
-    public function setVideo2($video__2)
+    public function setVideo2($video_2)
     {
-        $this->video__2 = $video__2;
+        $this->video_2 = $video_2;
     }
 
     public function getVideo2()
     {
-        return $this->video__2;
+        return $this->video_2;
     }
 
 }

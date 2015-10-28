@@ -15,9 +15,9 @@ class Role_app_dto extends Base_dto
     private $display_order;
     private $role_id;
 
-    function __construct()
+    function _construct()
     {
-        parent::__construct();
+        parent::_construct();
     }
 
     //instance method
