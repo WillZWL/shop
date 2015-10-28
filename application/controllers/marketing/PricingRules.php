@@ -7,7 +7,7 @@ class PricingRules extends MY_Controller
     public $default_platform_id;
     private $appId = "MKT0086";
     private $lang_id = "en";
-	
+
     //private $pricingRulesModel;
 
     public function __construct()
@@ -17,13 +17,13 @@ class PricingRules extends MY_Controller
         $this->load->library('service/pagination_service');
         $this->load->library('service/context_config_service');
         $this->load->library('service/pricing_rules_service');*/
-		
+
         //$this->pricingRulesModel = new PricingRulesModel;
-    }	
+    }
 
     public function getAppId()
     {
-		
+
         return $this->appId;
     }
 
@@ -62,7 +62,7 @@ class PricingRules extends MY_Controller
         $config['base_url'] = base_url('marketing/pricingRules/index');
         $config['total_rows'] = $data["total"];
         $config['per_page'] = $limit;
-		
+
 		//var_dump($data);
 
         $this->pagination->initialize($config);
@@ -89,7 +89,14 @@ class PricingRules extends MY_Controller
                 if (!$this->checkRule($data["pricingrule"]) == 0)
 				{
                     $_SESSION["NOTICE"] = "pricing_rule_existed";
-                } else {	
+                }
+                else
+                {
+                    if ((double)$this->input->post('min_margin') < 0)
+                    {
+                        $_SESSION["NOTICE"] = "min_margin_negative";
+                    }
+
 					$data["pricingrule"]->setId(0);
 					if ($new_obj = $this->sc['pricingRulesModel']->addPricingRules($data["pricingrule"])) {
 						unset($_SESSION["PricingRulesVo"]);
@@ -138,8 +145,13 @@ class PricingRules extends MY_Controller
                     } else {
 						set_value($data["pricingrule"], $_POST);
 
-						if ($this->checkRule($data["pricingrule"]) == 0)
+                        if ($this->checkRule($data["pricingrule"]) == 0)
 						{
+                            if ((double)$this->input->post('min_margin') < 0)
+                            {
+                                $_SESSION["NOTICE"] = "min_margin_negative";
+                            }
+
 							if ($this->sc['pricingRulesModel']->updatePricingRules($data["pricingrule"])) {
 								unset($_SESSION["PricingRulesVo"]);
 								redirect(base_url() . "marketing/pricingRules/view/" . $id);
@@ -172,31 +184,31 @@ class PricingRules extends MY_Controller
             $this->load->view('marketing/pricing_rules/pricing_rules_detail_v', $data);
         }
     }
-	
+
 	public function checkRule($pricingrule)
 	{
 		$where['country_id'] = $this->input->post('country_id');
 		$where['(' . $this->input->post('range_min') . ' between range_min and range_max or ' . $this->input->post('range_max') . ' between range_min and range_max)'] = null;
-		
-		$where_days = "and (";
+
+		$where_days = " (";
 		if ($this->input->post('monday') == 1)
 			$where_days .= " monday = 1 or";
-		
+
 		if ($this->input->post('tuesday') == 1)
 			$where_days .= " tuesday = 1 or";
-		
-		if ($this->input->post('wednesday') == 1)			
+
+		if ($this->input->post('wednesday') == 1)
 			$where_days .= " wednesday = 1 or";
-		
+
 		if ($this->input->post('thursday') == 1)
 			$where_days .= " thursday = 1 or";
-		
+
 		if ($this->input->post('friday') == 1)
 			$where_days .= " friday = 1 or";
-		
+
 		if ($this->input->post('saturday') == 1)
 			$where_days .= " saturday = 1 or";
-		
+
 		if ($this->input->post('sunday') == 1)
 			$where_days .= " sunday = 1 or";
 
@@ -207,10 +219,12 @@ class PricingRules extends MY_Controller
 		{
 			$where['id <>'] = $pricingrule->getId();
 		}
-		
+
+        $where[$where_days] = null;
+
 		$data = $this->sc['pricingRulesModel']->getExistingRule($where);
-		
-		return $data["existing"];		
+
+		return $data["existing"];
 	}
 }
 

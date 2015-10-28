@@ -72,13 +72,13 @@
                             </div>
                             <div class="logo inner col-lg-9 col-md-9 col-sm-8 col-xs-8">
                                 <div class="row">
-                                    <div class="pull-left top-desc col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                    <div class="pull-left top-desc col-lg-6 col-md-6 hidden-sm hidden-xs">
                                        <span style="margin-left: 10px;">
                                           <?=_("We won't be beaten on electronics!")?>
                                        </span>
                                        <img src="/themes/default/asset/image/icon-bag.png">
                                     </div>
-                                    <div class="header-links col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                    <div class="pull-right header-links col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <!--<a href="/warranty"><span class=""><?= _('Warranty') ?></span></a>&nbsp;&nbsp;&nbsp;-->
                                         <a href="<?=base_url()?>display/view/contact"><span class="desc-about"><?= _('Contact Us') ?></span></a>&nbsp;&nbsp;&nbsp;
                                         <a href="<?=base_url()?>display/view/conditions_of_use"><span class="desc-about"><?= _('Help') ?></span></a>&nbsp;&nbsp;&nbsp;
@@ -94,19 +94,19 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-lg-12 col-md-12  hidden-sm hidden-xs">
                                         <ul class="list-inline header-desc">
                                             <li >
-                                            <?php 
+                                            <?php
                                                 $siteobj = \PUB_Controller::$siteInfo;
                                                 $currencyId = $siteobj->getPlatformCurrencyId();
                                                 //var_dump($siteobj);
-                                                if (in_array($currencyId, array("GBP", "AUD", "EUR", "NZD"))) { 
+                                                if (in_array($currencyId, array("GBP", "AUD", "EUR", "NZD"))) {
                                             ?>
                                                 <img src=<?= '/themes/default/asset/image/icon-refund_' . strtolower($currencyId) . ".png" ?>>
                                             <?php } else {  ?>
                                                 <img src="/themes/default/asset/image/icon-refund.png">
-                                            <?php } ?>                                                
+                                            <?php } ?>
                                                 <span><?= _("14 Days Money Back Guarantee") ?></span>
                                             </li>
                                             <li >
@@ -119,6 +119,20 @@
                                             </li>
                                         </ul>
                                     </div>
+                                    <div id="cart-top" class=" inner hidden-lg hidden-md col-sm-8 col-xs-8">
+                                        <div class="cart-top">
+                                            <div id="cart" class="pull-right clearfix">
+                                                <div class="cart-inner media-body">
+                                                    <a href="/ReviewOrder">
+                                                        <img src="/themes/default/asset/image/icon-cart.png">
+                                                        <span id="cart-total" class="cart-total"><?= sprintf(_('%s item(s) - %s%s'), $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"], "$", $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"]) ?></span>
+                                                        <i class="fa fa-angle-down"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -131,13 +145,13 @@
                        <div class="container">
                           <div class="row">
                 <?php
-					$lang_id = $siteobj->getLangId();
+                    $lang_id = $siteobj->getLangId();
                    $menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
-					//$menu_script = file_get_contents(APPPATH."views/template/menu/en/menu_webgb.html", true);
-					print $menu_script;
-				?>
-                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 top-verticalmenu">
-                                <div class="quick-access col-lg-10 col-md-10 col-sm-8 col-xs-8">
+                    //$menu_script = file_get_contents(APPPATH."views/template/menu/en/menu_webgb.html", true);
+                    print $menu_script;
+                ?>
+                            <div class="col-lg-9 col-md-9 hidden-sm hidden-xs top-verticalmenu">
+                                <div class="quick-access col-lg-9 col-md-9 hidden-sm hidden-xs">
                                     <div id="search" class="input-group pull-right" style="margin-top: 4px;height: 24px !important;">
                                         <input type="text" name="search" value="" placeholder="Search" class="form-control"  style="height: 24px !important;" />
                                         <span class="input-group-btn">
@@ -167,8 +181,8 @@
             </header>
             <!-- /header -->
             <div class="main-columns container">
-				<div class="bottom-offcanvas">
-					<div class="container">
-						<button data-toggle="offcanvas" class="btn btn-primary visible-xs visible-sm" type="button"><i class="fa fa-bars"></i></button>
-					</div>
-				</div>
+                <div class="bottom-offcanvas">
+                    <div class="container">
+                        <button data-toggle="offcanvas" class="btn btn-primary visible-xs visible-sm" type="button"><i class="fa fa-bars"></i></button>
+                    </div>
+                </div>

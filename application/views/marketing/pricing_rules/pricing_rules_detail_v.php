@@ -51,15 +51,15 @@
 						endforeach;
 						?>
 					</select>
-				</td>	
+				</td>
 			</tr>
-            <tr>				
-				<td class="field"><?= $lang["range"] ?></td>				
+            <tr>
+				<td class="field"><?= $lang["range"] ?></td>
                 <td class="value" colspan="3">
 					<input name="range_min" width="100px" value="<?= htmlspecialchars($pricingrule->getRangeMin()) ?>" notEmpty isNumber min=0>
 					&nbsp;-&nbsp
 					<input name="range_max" width="100px" value="<?= htmlspecialchars($pricingrule->getRangeMax()) ?>" notEmpty isNumber min=0>
-				</td>								 
+				</td>
             </tr>
 			<tr>
 				<td class="field"><?= $lang["mark_up"] ?></td>
@@ -76,6 +76,12 @@
 					</select>
 				</td>
 			</tr>
+            <tr>
+                <td class="field"><?= $lang["min_margin"] ?></td>
+                <td class="value" colspan="3">
+                    <input name="min_margin" width="100px" value="<?= htmlspecialchars($pricingrule->getMinMargin()) ?>" notEmpty isNumber>
+                </td>
+            </tr>
 			<tr>
 				<td class="field"><?= $lang["application_days"] ?></td>
 				<td class="value" colspan="3">
