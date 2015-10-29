@@ -7,6 +7,7 @@ use ESG\Panther\Service\ProductService;
 use ESG\Panther\Service\WeightCatService;
 use ESG\Panther\Service\ContextConfigService;
 use ESG\Panther\Service\SubjectDomainService;
+use ESG\Panther\Service\PriceMarginService;
 
 class PriceService extends BaseService
 {
@@ -22,7 +23,8 @@ class PriceService extends BaseService
         $this->weightCatService = new WeightCatService;
         $this->configService = new ContextConfigService;
         $this->subjectDomainService = new SubjectDomainService;
-        
+        $this->priceMarginService = new PriceMarginService;
+
         if ($platformType)
             $this->platformType = $platformType;
         elseif (defined(PLATFORM_TYPE))
@@ -270,6 +272,14 @@ class PriceService extends BaseService
         var_dump("total_cost(d): " . $total_cost_d);
 
         var_dump("Selling_price: " . $selling_price);
+        var_dump("margin: " . $margin);
+        var_dump("profit: " . $profit);
+        var_dump("bc: " . $bc);
+        var_dump("b: " . $b);
+        var_dump("x2: " . $x2);
+        var_dump("e: " . $e);
+        var_dump("ca: " . $ca);
+        var_dump("c: " . $c);
     }
 
     private function to2Decimal($value)
@@ -956,5 +966,19 @@ class PriceService extends BaseService
         }
 
         return json_encode($array);
+    }
+
+
+
+    public function updateSkuPrice($platform_id = "", $local_sku = "", $price = "", $commit = false)
+    {
+        $affected = $this->getDao('Price')->updateSkuPrice($platform_id, $local_sku, $price, $commit);
+
+        //print $this->get_dao()->db->last_query();
+
+        if ($affected)
+            $this->priceMarginService->refreshAllPlatformMargin(array("id" => $platform_id), $local_sku);
+
+        return $affected;
     }
 }

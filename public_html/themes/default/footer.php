@@ -8,9 +8,10 @@
                                     <div class="row">
                                         <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                                             <span class="footer-legend"><?= _(' PAY WITH CONFIDENCE ') ?></span>
-                                            <fieldset class="footer-fieldset" style="background-color: #999 !important;">
-                                             
-                                                <ul class="list-inline" style="margin-top:8px;">                                                    
+                                        </br>
+                                            <fieldset class="footer-fieldset" style="background-color: #999 !important;border:0px !important;">
+
+                                                <ul class="list-inline" style="margin-top:8px;">
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/paypal.png">
                                                         </li>
@@ -23,30 +24,30 @@
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/mastercard.png">
                                                         </li>
-                                                    <?php 
+                                                    <?php
                                                         $siteobj = \PUB_Controller::$siteInfo;
                                                         $countryid = $siteobj->getPlatformCountryId();
 
-                                                        if ($countryid == "IT") {  ?>      
+                                                        if ($countryid == "IT") {  ?>
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/postepay.png">
                                                         </li>
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/cartasi.png">
                                                         </li>
-                                                    <?php } elseif ($countryid == "FR") {  ?>    
+                                                    <?php } elseif ($countryid == "FR") {  ?>
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/carte-bleue.png">
-                                                        </li>                                                        
-                                                    <?php } elseif ($countryid == "ES") {  ?>    
+                                                        </li>
+                                                    <?php } elseif ($countryid == "ES") {  ?>
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/maestro.png">
-                                                        </li>                                                     
-                                                    <?php } elseif ($countryid == "PL") {  ?>    
+                                                        </li>
+                                                    <?php } elseif ($countryid == "PL") {  ?>
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/Przelewy24.png">
                                                         </li>
-                                                    <?php } ?> 
+                                                    <?php } ?>
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/postepay.png">
                                                         </li>
@@ -55,10 +56,10 @@
                                                         </li>
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/carte-bleue.png">
-                                                        </li> 
+                                                        </li>
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/maestro.png">
-                                                        </li>  
+                                                        </li>
                                                          <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/Przelewy24.png">
                                                         </li>
@@ -77,7 +78,7 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                 <div class="panel panel-white pavreassurances margin_top">
                                     <div class="row">
-                                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">                                            
+                                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                                             <span class="footer-legend"><?= _(' SHOP WITH CONFIDENCE ') ?></span>
                                         </br>
                                             <fieldset class="footer-fieldset" style="background-color: #999 !important;">
@@ -118,17 +119,17 @@
                                         <div class="column col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                             <div class="panel-gray">
                                                 <h4 class="panel-title">Sign up for Newsletter</h4>
-                                                
+
                                                 <p class="desc-about"><?= _('Subscribe to get our latest news and promotions regularly.') ?></p>
-                                                
+
                                                 <form action="" method="post" role="form" >
                                                       <input class="input-newsletter" type="text" id="" name="" placeholder="Enter you email address">
                                                       <input type="submit" value="Sign up" class="btn-newsletter" />
-                                                    
+
                                               </form>
-                                            </div>    
+                                            </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 column">  
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 column">
                                             <ul class="list-inline guarantee">
                                                 <li style="vertical-align: top;">
                                                     <div class="image-wrap">
@@ -148,16 +149,16 @@
                                                 </li>
                                                 <li style="vertical-align: top;">
                                                     <div class="image-wrap">
-                                                        <?php 
+                                                        <?php
                                                             $siteobj = \PUB_Controller::$siteInfo;
                                                             $currencyId = $siteobj->getPlatformCurrencyId();
                                                             //var_dump($siteobj);
-                                                            if (in_array($currencyId, array("GBP", "AUD", "EUR", "NZD"))) { 
+                                                            if (in_array($currencyId, array("GBP", "AUD", "EUR", "NZD"))) {
                                                         ?>
                                                             <img src=<?= '/themes/default/asset/image/moneyback_' . strtolower($currencyId) . ".jpg" ?>>
                                                         <?php } else {  ?>
                                                             <img src="/themes/default/asset/image/moneyback.jpg" class="img-footer">
-                                                        <?php } ?>  
+                                                        <?php } ?>
                                                     </div>
                                                     <p class="desc-sm">
                                                         <?= _('14 days ') ?><br/> <?= _('Money Back') ?><br /><?= _('Guarantee') ?><br />
@@ -172,19 +173,19 @@
                                                     </p>
                                                 </li>
                                             </ul>
-                                        </div>                                        
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">                            
+                        <div class="row">
                             <div class="column col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="panel-gray">
                                     <span class="desc-about" style="font-weight: 400;"><?= _('2015 All Right reserved') ?></span></br>
                                     <a href="<?= site_url('display/view/conditions_of_use') ?>"><span class="desc-about"><?= _('Conditions of Use') ?></span></a>&nbsp;|&nbsp;
                                     <a href='<?= site_url("display/view/shipping") ?>'><span class="desc-about"><?= _('Shipping') ?></span></a>&nbsp;|&nbsp;
                                     <a href="<?= site_url('display/view/privacy_policy') ?>"><span class="desc-about"><?= _('Privacy Policy') ?></span></a>
-                                </div>    
+                                </div>
                             </div>
                             <!--<div class="column col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="panel-white">
