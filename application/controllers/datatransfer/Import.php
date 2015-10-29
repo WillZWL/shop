@@ -12,15 +12,9 @@ class Import extends MY_Controller
 
     public function product()
     {
-        $start = memory_get_usage();
-
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProducts']->startProcess($xml);
         print $feed;
-
-        $end = memory_get_usage();
-
-        echo ($end - $start), '/', memory_get_peak_usage();
     }
 
     public function price()
@@ -34,42 +28,23 @@ class Import extends MY_Controller
 
     public function productContent()
     {
-        $start = memory_get_usage();
-
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductContent']->startProcess($xml);
-        unset($xml);
         print $feed;
-
-        $end = memory_get_usage();
-
-        echo ($end - $start), '/', memory_get_peak_usage();
     }
 
     public function productContentExtend()
     {
-        $start = memory_get_usage();
-
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductContentExtend']->startProcess($xml);
         print $feed;
-
-        $end = memory_get_usage();
-        echo ($end - $start), '/', memory_get_peak_usage();
     }
 
     public function productCustomClass()
     {
-        $start = memory_get_usage();
-
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductCustomClass']->startProcess($xml);
-        unset($xml);
         print $feed;
-
-        $end = memory_get_usage();
-
-        echo ($end - $start), '/', memory_get_peak_usage();
     }
 
     public function productIdentifier()
@@ -89,23 +64,8 @@ class Import extends MY_Controller
 
     public function productImage()
     {
-        $start = memory_get_usage();
-
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductIdentifier']->startProcess($xml);
-        unset($xml);
-        print $feed;
-
-        $end = memory_get_usage();
-
-        echo ($end - $start), '/', memory_get_peak_usage();
-
-
-        $xml = file_get_contents('php://input');
-        // header('content-type: text/xml');
-        // print $xml;
-        // exit;
-        $feed =$this->vb_data_transfer_product_image_service->startProcess($xml);
         print $feed;
     }
 
