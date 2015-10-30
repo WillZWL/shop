@@ -317,9 +317,12 @@ implements PaymentGatewayRedirectServiceInterface
             $this->createSocc($soccPara);
     }
 
-    public function createSor($vars = array())
+    public function createSor($vars = array(), $soNo = null)
     {
-        $this->sor = $this->soFactoryService->getSoRiskDao()->get(array("so_no" => $this->so->getSoNo()));
+        if ($soNo)
+            $this->sor = $this->soFactoryService->getSoRiskDao()->get(array("so_no" => $soNo));
+        else
+            $this->sor = $this->soFactoryService->getSoRiskDao()->get(array("so_no" => $this->so->getSoNo()));
         if (!$this->sor) {
             $sorObj = $this->soFactoryService->getSoRiskDao()->get();
             $action = "insert";
