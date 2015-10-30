@@ -5,16 +5,12 @@ use ESG\Panther\Dao\SkuMappingDao;
 
 class SkuMappingService extends BaseService
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function createNewSkuMapping($sku, $ext_sku, $ext_sys = 'WMS')
+    public function createNewSkuMapping($sku, $ext_sku, $vb_sku = '', $ext_sys = 'WMS')
     {
         $obj = new \SkuMappingVo();
         $obj->setSku($sku);
         $obj->setExtSku($ext_sku);
+        $obj->setVbSku($vb_sku);
         $obj->setExtSys($ext_sys);
 
         return $obj;

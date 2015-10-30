@@ -3,13 +3,14 @@ class SkuMappingVo extends \BaseVo
 {
     private $id;
     private $sku;
-    private $ext_sys;
-    private $ext_sku;
+    private $ext_sys = '';
+    private $ext_sku = '';
+    private $vb_sku = '';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -18,7 +19,9 @@ class SkuMappingVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -28,7 +31,9 @@ class SkuMappingVo extends \BaseVo
 
     public function setSku($sku)
     {
-        $this->sku = $sku;
+        if ($sku) {
+            $this->sku = $sku;
+        }
     }
 
     public function getSku()
@@ -38,7 +43,9 @@ class SkuMappingVo extends \BaseVo
 
     public function setExtSys($ext_sys)
     {
-        $this->ext_sys = $ext_sys;
+        if ($ext_sys) {
+            $this->ext_sys = $ext_sys;
+        }
     }
 
     public function getExtSys()
@@ -48,7 +55,9 @@ class SkuMappingVo extends \BaseVo
 
     public function setExtSku($ext_sku)
     {
-        $this->ext_sku = $ext_sku;
+        if ($ext_sku) {
+            $this->ext_sku = $ext_sku;
+        }
     }
 
     public function getExtSku()
@@ -56,9 +65,23 @@ class SkuMappingVo extends \BaseVo
         return $this->ext_sku;
     }
 
+    public function setVbSku($vb_sku)
+    {
+        if ($vb_sku) {
+            $this->vb_sku = $vb_sku;
+        }
+    }
+
+    public function getVbSku()
+    {
+        return $this->vb_sku;
+    }
+
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -68,7 +91,9 @@ class SkuMappingVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -78,7 +103,9 @@ class SkuMappingVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -88,7 +115,9 @@ class SkuMappingVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -98,7 +127,9 @@ class SkuMappingVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -108,7 +139,9 @@ class SkuMappingVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -118,7 +151,9 @@ class SkuMappingVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
