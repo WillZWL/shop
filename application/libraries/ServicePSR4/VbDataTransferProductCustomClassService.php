@@ -19,46 +19,66 @@ class VbDataTransferProductCustomClassService extends VbDataTransferService
 
         foreach($xml_vb->product as $pcc)
         {
-            //Get the master sku to search the corresponding sku in atomv2 database
-            $master_sku = (string)$pcc->master_sku;
-            $sku = $this->getService('SkuMapping')->getLocalSku($master_sku);
+            try
+            {
+                //Get the master sku to search the corresponding sku in atomv2 database
+                $master_sku = (string)$pcc->master_sku;
+                $sku = $this->getService('SkuMapping')->getLocalSku($master_sku);
 
-            if (empty($sku)) {
+                if (empty($sku)) {
+                    $xml[] = '<product>';
+                    $xml[] = '<sku>' . $pcc->prod_sku . '</sku>';
+                    $xml[] = '<platform_id>' . $pcc->country_id . '</platform_id>';
+                    $xml[] = '<master_sku>' . $pcc->master_sku . '</master_sku>';
+                    $xml[] = '<status>2</status>';  // no mapping
+                    $xml[] = '<is_error>' . $pcc->is_error . '</is_error>';
+                    $xml[] = '<reason>No SKU mapping</reason>';
+                    $xml[] = '</product>';
+                    continue;
+                }
+
+                $pcc_obj = $this->getService('Product')->getDao('ProductCustomClassification')->get(['sku' => $sku, 'country_id' => $pcc->country_id]);
+                $reason = "";
+                if ($pcc_obj) {
+                    // update
+                    $reason = "update";
+                    $this->getService('Product')->updateProductCustomClass($pcc_obj, $pc);
+                    if ($this->getService('Product')->getDao('ProductCustomClassification')->update($pcc_obj)) {
+                        $process_status = 5;    // update success
+                    } else {
+                        $process_status = 3;    // update failure
+                    }
+                } else {
+                    // insert
+                    $reason = "insert";
+                    $pcc_obj = $this->getService('Product')->createNewProductCustomClass($sku, $pcc);
+                    if ($this->getService('Product')->getDao('ProductCustomClassification')->insert($pcc_obj)) {
+                        $process_status = 5;    // insert success
+                    } else {
+                        $process_status = 3;    // insert failure
+                    }
+                }
+
                 $xml[] = '<product>';
                 $xml[] = '<sku>' . $pcc->prod_sku . '</sku>';
                 $xml[] = '<platform_id>' . $pcc->country_id . '</platform_id>';
                 $xml[] = '<master_sku>' . $pcc->master_sku . '</master_sku>';
-                $xml[] = '<status>2</status>';  // no mapping
+                $xml[] = '<status>' . $process_status . '</status>';
+                $xml[] = '<is_error>' . $pcc->is_error . '</is_error>';
+                $xml[] = '<reason>' . $reason . '</reason>';
                 $xml[] = '</product>';
-                continue;
             }
-
-            $pcc_obj = $this->getService('Product')->getDao('ProductCustomClassification')->get(['sku' => $sku, 'country_id' => $pcc->country_id]);
-
-            if ($pcc_obj) {
-                // update
-                $this->getService('Product')->updateProductCustomClass($pcc_obj, $pc);
-                if ($this->getService('Product')->getDao('ProductCustomClassification')->update($pcc_obj)) {
-                    $process_status = 1;    // update success
-                } else {
-                    $process_status = 3;    // update failure
-                }
-            } else {
-                // insert
-                $pcc_obj = $this->getService('Product')->createNewProductCustomClass($sku, $pcc);
-                if ($this->getService('Product')->getDao('ProductCustomClassification')->insert($pcc_obj)) {
-                    $process_status = 4;    // insert success
-                } else {
-                    $process_status = 5;    // insert failure
-                }
+            catch(Exception $e)
+            {
+                $xml[] = '<product>';
+                $xml[] = '<sku>' . $pcc->prod_sku . '</sku>';
+                $xml[] = '<platform_id>' . $pcc->lang_id . '</platform_id>';
+                $xml[] = '<master_sku>' . $pcc->master_sku . '</master_sku>';
+                $xml[] = '<status>4</status>';  //error
+                $xml[] = '<is_error>' . $pcc->is_error . '</is_error>';
+                $xml[] = '<reason>' . $e->getMessage() . '</reason>';
+                $xml[] = '</product>';
             }
-
-            $xml[] = '<product>';
-            $xml[] = '<sku>' . $pcc->prod_sku . '</sku>';
-            $xml[] = '<platform_id>' . $pcc->country_id . '</platform_id>';
-            $xml[] = '<master_sku>' . $pcc->master_sku . '</master_sku>';
-            $xml[] = '<status>' . $process_status . '</status>';
-            $xml[] = '</product>';
         }
         $xml[] = '</products>';
         $return_feed = implode("\n", $xml);
@@ -66,3 +86,4 @@ class VbDataTransferProductCustomClassService extends VbDataTransferService
         return $return_feed;
     }
 }
+

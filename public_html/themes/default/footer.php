@@ -8,7 +8,8 @@
                                     <div class="row">
                                         <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                                             <span class="footer-legend"><?= _(' PAY WITH CONFIDENCE ') ?></span>
-                                            <fieldset class="footer-fieldset" style="background-color: #999 !important;">
+                                        </br>
+                                            <fieldset class="footer-fieldset" style="background-color: #999 !important;border:0px !important;">
 
                                                 <ul class="list-inline" style="margin-top:8px;">
                                                         <li class="footer-fieldsetitem">
@@ -80,16 +81,16 @@
                                         <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                                             <span class="footer-legend"><?= _(' SHOP WITH CONFIDENCE ') ?></span>
                                         </br>
-                                            <fieldset class="footer-fieldset" style="background-color: #999 !important;">
+                                            <fieldset class="footer-fieldset" style="background-color: #999 !important;border:0px !important;">
                                                 <ul class="list-inline" style="margin-top:8px;">
                                                     <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/Confidence_thawte_EN.jpg">
+                                                        <img src="/themes/default/asset/image/ssl_en.jpg">
                                                     </li>
                                                     <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/Confidence_chat_EN.jpg">
+                                                        <img src="/themes/default/asset/image/chat_en.jpg">
                                                     </li>
                                                     <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/Confidence_safe_EN.jpg">
+                                                        <img src="/themes/default/asset/image/data_en.jpg">
                                                     </li>
                                                 </ul>
                                            </fieldset>
