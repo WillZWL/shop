@@ -310,5 +310,21 @@ class ServiceProvider implements ServiceProviderInterface
         $servcieContainer['VbProductImage'] = function () {
             return new S\VbProductImageService();
         };
+
+        $servcieContainer['SoFactory'] = function () {
+            return new S\SoFactoryService();
+        };
+
+        $servcieContainer['SoPaymentQueryLog'] = function () {
+            return new S\SoPaymentQueryLogService();
+        };
+
+        $servcieContainer['SoPaymentLog'] = function () {
+            return new S\SoPaymentLogService();
+        };
+        
+        $servcieContainer['CartSession'] = function () {
+            return new S\CartSessionService();
+        };
     }
 }

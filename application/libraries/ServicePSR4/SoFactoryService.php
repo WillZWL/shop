@@ -31,20 +31,11 @@ class SoFactoryService extends BaseService
 {
     const ENABLE_SO_ITEM = FALSE;
     public $injectObj = null;
-    public $clientService = null;
 
     public function __construct($injectObj = null) {
         parent::__construct();
         $this->injectObj = $injectObj;
-        $this->clientService = new ClientService;
-        $this->cartSessionService = new CartSessionService;
         $this->setDao(new SoDao());
-        $this->setSoItemDao(new SoItemDao());
-        $this->setSoItemDetailDao(new SoItemDetailDao());
-        $this->setSoPaymentStatusDao(new SoPaymentStatusDao());
-        $this->setSoExtendDao(new SoExtendDao());
-        $this->setSoCreditChkDao(new SoCreditChkDao());
-        $this->setSoRiskDao(new SoRiskDao());
     }
 
     public function getNewCartByOrderInfo($orderInfo) {
@@ -124,7 +115,7 @@ class SoFactoryService extends BaseService
 */
     private function _createSoExtend($soObj, $checkoutInfo)
     {
-        $soExtendObj = $this->getSoExtendDao()->get();
+        $soExtendObj = $this->getDao("SoExtend")->get();
         $soExtendObj->setSoNo($soObj->getSoNo());
         if (isset($checkoutInfo["convSiteId"]))
         {
@@ -134,11 +125,11 @@ class SoFactoryService extends BaseService
         if (isset($checkoutInfo["convSiteRef"]))
             $soExtendObj->setConvSiteRef($checkoutInfo["convSiteRef"]);
         
-        $insertSoExtendResult = $this->getSoExtendDao()->insert($soExtendObj);
+        $insertSoExtendResult = $this->getDao("SoExtend")->insert($soExtendObj);
         if ($insertSoExtendResult === false)
         {
             $subject = "[Panther] Cannot create so extend:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
-            $message = $this->getSoExtendDao()->db->last_query() . "," . $this->getSoExtendDao()->db->_error_message();
+            $message = $this->getDao("SoExtend")->db->last_query() . "," . $this->getDao("SoExtend")->db->_error_message();
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
             return false;
         }
@@ -147,17 +138,17 @@ class SoFactoryService extends BaseService
 
     private function _createSoPaymentStatus($soObj, $checkoutInfo)
     {
-        $soPaymentStatusObj = $this->getSoPaymentStatusDao()->get();
+        $soPaymentStatusObj = $this->getDao("SoPaymentStatus")->get();
         $soPaymentStatusObj->setSoNo($soObj->getSoNo());
         $soPaymentStatusObj->setPaymentGatewayId($checkoutInfo["paymentGatewayId"]);
         $soPaymentStatusObj->setCardId($checkoutInfo["paymentCardId"]);
         $soPaymentStatusObj->setPaymentStatus("N");
         
-        $insertSoPaymentResult = $this->getSoPaymentStatusDao()->insert($soPaymentStatusObj);
+        $insertSoPaymentResult = $this->getDao("SoPaymentStatus")->insert($soPaymentStatusObj);
         if ($insertSoPaymentResult === false)
         {
             $subject = "[Panther] Cannot create so payment status:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
-            $message = $this->getSoPaymentStatusDao()->db->last_query() . "," . $this->getSoPaymentStatusDao()->db->_error_message();
+            $message = $this->getDao("SoPaymentStatus")->db->last_query() . "," . $this->getDao("SoPaymentStatus")->db->_error_message();
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
             return false;
         }
@@ -165,7 +156,7 @@ class SoFactoryService extends BaseService
     }
 
     private function _createClient($clientInfo = []) {
-        $clientObj = $this->clientService->createClient($clientInfo, $this->injectObj, true);
+        $clientObj = $this->getService("Client")->createClient($clientInfo, $this->injectObj, true);
         return $clientObj;
     }
 
@@ -266,7 +257,7 @@ class SoFactoryService extends BaseService
     }
 
     private function _createSingleSoItemDetail($soObj, $item, $lineNo, $platformId) {
-        $soItemDetailObj = $this->getSoItemDetailDao()->get();
+        $soItemDetailObj = $this->getDao("SoItemDetail")->get();
         $soItemDetailObj->setSoNo($soObj->getSoNo());
         $soItemDetailObj->setLineNo($lineNo);
         $soItemDetailObj->setItemSku($item->getSku());
@@ -301,11 +292,11 @@ class SoFactoryService extends BaseService
 //        $soItemDetailObj->setGstTotal(round(($item->getAmount() * $item->getVatPercent() / 100), $item->getDecPlace()));
         $soItemDetailObj->setAmount($item->getAmount());
 
-        $insertSoItemDetailResult = $this->getSoItemDetailDao()->insert($soItemDetailObj);
+        $insertSoItemDetailResult = $this->getDao("SoItemDetail")->insert($soItemDetailObj);
         if ($insertSoItemDetailResult === false)
         {
             $subject = "[Panther] Cannot create so item detail:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
-            $message = $this->getSoItemDetailDao()->db->last_query() . "," . $this->getSoItemDetailDao()->db->_error_message();
+            $message = $this->getDao("SoItemDetail")->db->last_query() . "," . $this->getDao("SoItemDetail")->db->_error_message();
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
             return false;
         }
@@ -313,7 +304,7 @@ class SoFactoryService extends BaseService
     }
 
     private function _createSingleSoItem($soObj, $item, $lineNo) {
-        $soItemObj = $this->getSoItemDao()->get();
+        $soItemObj = $this->getDao("SoItem")->get();
         $soItemObj->setSoNo($soObj->getSoNo());
         $soItemObj->setLineNo($lineNo);
         $soItemObj->setProdSku($item->getSku());
@@ -333,11 +324,11 @@ class SoFactoryService extends BaseService
 //        $soItemObj->setSourcingStatus($item->getSourcingStatus());
         $soItemObj->setWarrantyInMonth($item->getWarrantyInMonth());
 
-        $insertSoItemResult = $this->getSoItemDao()->insert($soItemObj);
+        $insertSoItemResult = $this->getDao("SoItem")->insert($soItemObj);
         if ($insertSoItemResult === false)
         {
             $subject = "[Panther] Cannot create so item:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
-            $message = $this->getSoItemDao()->db->last_query() . "," . $this->getSoItemDao()->db->_error_message();
+            $message = $this->getDao("SoItem")->db->last_query() . "," . $this->getDao("SoItem")->db->_error_message();
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
             return false;
         }
@@ -398,9 +389,8 @@ class SoFactoryService extends BaseService
 ***************************************************/
     public function setOrderInfoDetail($platformId, $soObj) {
 //rate, ref_1, expect_delivery_date
-        $this->exchangeRateService = new ExchangeRateService;
-        list($usdArr) = $this->exchangeRateService->getDao("ExchangeRate")->getExchangeRateByPlatform($platformId, "USD");
-        list($eurArr) = $this->exchangeRateService->getDao("ExchangeRate")->getExchangeRateByPlatform($platformId, "EUR");
+        list($usdArr) = $this->getService("ExchangeRate")->getDao("ExchangeRate")->getExchangeRateByPlatform($platformId, "USD");
+        list($eurArr) = $this->getService("ExchangeRate")->getDao("ExchangeRate")->getExchangeRateByPlatform($platformId, "EUR");
 
         if (isset($usdArr["rate"]))
             $soObj->setRate($usdArr["rate"]);
@@ -426,7 +416,7 @@ class SoFactoryService extends BaseService
             $langId = "en";
         foreach($skuInfo as $sku => $item)
         {
-            $newProductInfo = $this->cartSessionService->getCartItemInDetail($sku, $langId, $platformId);
+            $newProductInfo = $this->getService("CartSession")->getCartItemInDetail($sku, $langId, $platformId);
             $newProductInfo->setQty($item["qty"]);
             $newProductInfo->setUnitCost(round($newProductInfo->getUnitCost(), $newProductInfo->getDecPlace()));
             $newProductInfo->setVatTotal(round($newProductInfo->getVatTotal(), $newProductInfo->getDecPlace()));
@@ -469,7 +459,7 @@ class SoFactoryService extends BaseService
             return false;
 
         $so_no = $soObj->getSoNo();
-        if ($clientObj = $this->clientService->getDao()->get(array("id" => $soObj->getClientId()))) {
+        if ($clientObj = $this->getService("Client")->getDao()->get(array("id" => $soObj->getClientId()))) {
             $this->emailReferralListService = new EmailReferralListService;
             $clientEmail = $clientObj->getEmail();
             if ($blackListObject = $this->emailReferralListService->get(array('email' => $clientEmail, '`status`' => 1))) {
@@ -539,65 +529,5 @@ class SoFactoryService extends BaseService
                 $soidObj->setMargin(0);
             }
         }*/
-    }
-
-    public function getSoItemDao()
-    {
-        return $this->soItemDao;
-    }
-
-    public function setSoItemDao($value)
-    {
-        $this->soItemDao = $value;
-    }
-
-    public function getSoItemDetailDao()
-    {
-        return $this->soItemDetailDao;
-    }
-
-    public function setSoItemDetailDao($value)
-    {
-        $this->soItemDetailDao = $value;
-    }
-
-    public function getSoPaymentStatusDao()
-    {
-        return $this->soPaymentStatusDao;
-    }
-
-    public function setSoPaymentStatusDao($value)
-    {
-        $this->soPaymentStatusDao = $value;
-    }
-
-    public function getSoExtendDao()
-    {
-        return $this->soExtendDao;
-    }
-
-    public function setSoExtendDao($value)
-    {
-        $this->soExtendDao = $value;
-    }
-
-    public function getSoCreditChkDao()
-    {
-        return $this->soCreditChkDao;
-    }
-
-    public function setSoCreditChkDao($value)
-    {
-        $this->soCreditChkDao = $value;
-    }
-
-    public function getSoRiskDao()
-    {
-        return $this->soRiskDao;
-    }
-
-    public function setSoRiskDao($value)
-    {
-        $this->soRiskDao = $value;
     }
 }
