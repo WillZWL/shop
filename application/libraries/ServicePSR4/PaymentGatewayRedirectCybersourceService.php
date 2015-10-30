@@ -20,7 +20,6 @@ class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectAda
 		$options = ["limit" => -1];
 		$orders = $this->soFactoryService->getDao()->getOrdersForDm($where, $options);
 		$this->debug = $debug;
-
 		$possibleObj = "";
 		$j = 0;
 
@@ -30,7 +29,7 @@ class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectAda
 			{
 				if ($possibleObj->getSoNo() != $order->getSoNo())
 				{
-					$this->sendRequestToDm($possibleObj, $possibleObj->get_so_no());
+					$this->sendRequestToDm($possibleObj, $possibleObj->getSoNo());
 					$possibleObj = $order;
 					$j = 0;
 				}
@@ -72,7 +71,6 @@ class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectAda
 
     public function sendRequestToDm($possibleOrderObjToXml, $soNo) {
         $this->_cybersourceIntegrator->sendDmRequest($this->debug, $possibleOrderObjToXml, $request, $response);
-
         if ($request != null) {
             $this->getSoPaymentQueryLogService()->addLog($soNo, "O", $request);
         }
@@ -85,14 +83,12 @@ class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectAda
             $this->getSoPaymentQueryLogService()->addLog($soNo, "I", $saveText);
             $smartId = "";
             $deviceFingerprint = (array)$afsReply["deviceFingerprint"];
-
             if ($deviceFingerprint) {
                 if (!empty($deviceFingerprint["smartID"])) {
                     $smartId = $deviceFingerprint["smartID"];
                 }
             }
-
-            if ($this->so =  $this->getSo($soNo)) {
+            if ($this->so =  $this->soFactoryService->getDao()->get(["so_no" => $soNo])) {
                 $needCreditChecks = TRUE;
                 if ($paymentResult['merchantReferenceCode'] == $soNo) {
                     $sorData = ["risk_requested" => 1,
