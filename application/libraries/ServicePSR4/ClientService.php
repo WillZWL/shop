@@ -305,22 +305,12 @@ class ClientService extends BaseService
     public function resetPassword($email = '')
     {
         $newPassword = substr(md5(time()), 0, $this->reset_length);
-
         $client_obj = null;
-
         $result = $this->updatePassword($email, $newPassword, '', $client_obj);
-
         if ($result) {
             $client_name = implode(' ', array($client_obj->getForename(), $client_obj->getSurname()));
-
-            $email_dto = $this->getEmailDto();
-            $replace = array('password' => $newPassword, 'mail_from' => $email_dto->get_mail_from(), 'client name' => $client_name, 'base_url' => base_url());
-            // switch (get_lang_id()) {
-            //     default:
-            //         include_once(APPPATH . "hooks/country_selection.php");
-            //         $replace = array_merge($replace, Country_selection::get_template_require_text(get_lang_id(), PLATFORMCOUNTRYID));
-            //         $email_sender = "no-reply@" . strtolower($replace["site_name"]);
-            // }
+            $email_dto = new \EventEmailDto();
+            $replace = array('password' => $newPassword, 'mail_from' => $email_dto->getMailFrom(), 'client name' => $client_name, 'base_url' => base_url());
             $email_sender = "no-reply@digitaldiscount.co.uk";
             $email_dto->setLangId(get_lang_id());
             $email_dto->setEventId('forget_password');
@@ -330,7 +320,6 @@ class ClientService extends BaseService
             $email_dto->setReplace($replace);
             $this->eventService->fireEvent($email_dto);
         }
-
         return $result;
     }
 
@@ -349,11 +338,10 @@ class ClientService extends BaseService
         $client_obj = $this->getDao()->get($where);
 
         if (!$client_obj) {
-            return 0; // Means fail
+            return 0;
         } else if ($client_obj->getStatus() == 0) {
-            return 0; // not allow to update
+            return 0;
         }
-
         $client_obj->setPassword($this->encryption->encrypt($newPassword));
         $result = $this->getDao()->update($client_obj);
         return $result;
@@ -373,26 +361,10 @@ class ClientService extends BaseService
         $replace["password"] = $this->encryption->encrypt($obj->getPassword());
         $replace["default_url"] = $this->contextConfigService->valueOf("default_url");
         $replace["site_name"] = $this->contextConfigService->valueOf("site_name");
-
-        switch (get_lang_id()) {
-            case 'en':
-            case 'es':
-            case 'de':
-            case 'fr':
-            case 'nl':
-            case 'pt':
-            case 'ja':
-            case 'kr':
-            default:
-                $support_email = 'no-reply@valuebasket.com';
-                break;
-        }
-        $replace["support_email"] = $support_email;
         $dto = new \EventEmailDto();
         $dto->setEventId("register_success");
         $dto->setMailFrom($support_email);
         $dto->setMailTo($obj->getEmail());
-        //$dto->set_mail_to('steven@eservicesgroup.net');
         $dto->setTplId("register_success");
         $dto->setLangId(get_lang_id());
         $dto->setReplace($replace);
