@@ -285,7 +285,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
         if ($this->so)
         {
 //we do add log by ourselves because it may be redirected if we use Paypal retry
-            $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "I", $this->arrayImplode("=", ",", $getData));
+            $this->getService("SoPaymentLog")->addLog($this->so->getSoNo(), "I", $this->arrayImplode("=", ",", $getData));
             $this->_setAccount($this->so->getBillCountryId(), $this->so->getCurrencyId());
             $token = $getData["token"];
             $this->sops = $this->getSoPaymentStatus();
@@ -294,8 +294,8 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
             {
                 $data = array("token" => $token);
                 $expressDetailResult = $this->_paypalRequest->getExpressCheckoutDetail($postData, $data);
-                $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "O", http_build_query($postData));
-                $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "I", urldecode($expressDetailResult["response"]));
+                $this->getService("SoPaymentLog")->addLog($this->so->getSoNo(), "O", http_build_query($postData));
+                $this->getService("SoPaymentLog")->addLog($this->so->getSoNo(), "I", urldecode($expressDetailResult["response"]));
 
                 if ($expressDetailResult["result"])
                 {
@@ -336,8 +336,8 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
                                 , "currency" => $soObj->getCurrencyId()
                                 , "token" => $this->sops->getMacToken());
         $doExpressResult = $this->_paypalRequest->doExpressCheckout($doExpressData, $data);
-        $this->getSoPaymentLogService()->addLog($soObj->getSoNo(), "O", $this->arrayImplode("=", ",", $doExpressData));
-        $this->getSoPaymentLogService()->addLog($soObj->getSoNo(), "I", urldecode($doExpressResult["response"]));
+        $this->getService("SoPaymentLog")->addLog($soObj->getSoNo(), "O", $this->arrayImplode("=", ",", $doExpressData));
+        $this->getService("SoPaymentLog")->addLog($soObj->getSoNo(), "I", urldecode($doExpressResult["response"]));
 
         if ($doExpressResult["result"])
         {
@@ -366,7 +366,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
 //update before redirect
                 if ($this->sops->getRetry() < self::MAXIMUM_NUMBER_OF_RETRIES)
                 {
-                    $this->soFactoryService->getDao()->update($soObj);
+                    $this->getService("SoFactory")->getDao()->update($soObj);
 //will be redirect back to Paypal, before redirect, update the object first
                     set_value($this->sops, $sopsData);
                     $this->paymentRetry($this->sops);
@@ -380,7 +380,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
 	{
 		$sops->setRetry($sops->getRetry() + 1);
 		$token = $sops->getMacToken();
-        $this->soFactoryService->getSoPaymentStatusDao()->update($sops);
+        $this->getService("SoFactory")->getDao("SoPaymentStatus")->update($sops);
 
         $url = $this->_getPaypalUrl() . "cmd=_express-checkout" . "&token=" . $token . "&useraction=commit";
         redirect($url);
