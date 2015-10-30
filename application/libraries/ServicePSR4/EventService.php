@@ -12,10 +12,10 @@ class EventService extends BaseService
     {
         if ($acts = $this->getDao('Event')->getEventAction(['e.event_id' => $dto->getEventId()])) {
             foreach ($acts as $act_obj) {
-                $classname = ucfirst(strtolower($act_obj->getAction()))."Servcie";
+                $classname = ucfirst(strtolower($act_obj->getAction()));
 
                 try {
-                    $eventObj = new $classname();
+                    $eventObj = $this->getService($classname);
                     $eventObj->run($dto);
                 } catch (Exception $e) {
                     // should write log
