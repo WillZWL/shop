@@ -44,16 +44,12 @@ implements PaymentGatewayRedirectServiceInterface
         }
         if ($soObj != null)
             $this->so = $soObj;
-        $this->soFactoryService = new SoFactoryService();
-        $this->soPaymentLogService = new SoPaymentLogService();
-        $this->soPaymentQueryLogService = new SoPaymentQueryLogService();
-        $this->setCountryDao(new CountryDao);
     }
 
     protected function getSo($soNo)
     {
         if (!$this->so)
-            $this->so = $this->soFactoryService->getDao()->get(["so_no" => $soNo]);
+            $this->so = $this->getService("SoFactory")->getDao()->get(["so_no" => $soNo]);
         return $this->so;
     }
 
@@ -62,9 +58,9 @@ implements PaymentGatewayRedirectServiceInterface
         if (!$this->soi)
         {
             if ($soNo)
-                $this->soids = $this->soFactoryService->getSoItemDetailDao()->getList(["so_no" => $soNo], ["limit" => -1]);
+                $this->soids = $this->getService("SoFactory")->getDao("SoItemDetail")->getList(["so_no" => $soNo], ["limit" => -1]);
             else
-                $this->soids = $this->soFactoryService->getSoItemDetailDao()->getList(["so_no" => $this->so->getSoNo()], ["limit" => -1]);
+                $this->soids = $this->getService("SoFactory")->getDao("SoItemDetail")->getList(["so_no" => $this->so->getSoNo()], ["limit" => -1]);
         }
         return $this->soids;
     }
@@ -74,9 +70,9 @@ implements PaymentGatewayRedirectServiceInterface
         if (!$this->sops)
         {
             if ($soNo)
-                $this->sops = $this->soFactoryService->getSoPaymentStatusDao()->get(["so_no" => $soNo]);
+                $this->sops = $this->getService("SoFactory")->getDao("SoPaymentStatus")->get(["so_no" => $soNo]);
             else
-                $this->sops = $this->soFactoryService->getSoPaymentStatusDao()->get(["so_no" => $this->so->getSoNo()]);
+                $this->sops = $this->getService("SoFactory")->getDao("SoPaymentStatus")->get(["so_no" => $this->so->getSoNo()]);
         }
         return $this->sops;
     }
@@ -86,9 +82,9 @@ implements PaymentGatewayRedirectServiceInterface
         if (!$this->soext)
         {
             if ($soNo)
-                $this->soext = $this->soFactoryService->getSoExtendDao()->get(["so_no" => $soNo]);
+                $this->soext = $this->getService("SoFactory")->getDao("SoExtend")->get(["so_no" => $soNo]);
             else
-                $this->soext = $this->soFactoryService->getSoExtendDao()->get(["so_no" => $this->so->getSoNo()]);
+                $this->soext = $this->getService("SoFactory")->getDao("SoExtend")->get(["so_no" => $this->so->getSoNo()]);
         }
         return $this->soext;
     }
@@ -98,9 +94,9 @@ implements PaymentGatewayRedirectServiceInterface
         if (!$this->socc)
         {
             if ($soNo)
-                $this->socc = $this->soFactoryService->getSoCreditChkDao()->get(["so_no" => $soNo]);
+                $this->socc = $this->getService("SoFactory")->getDao("SoCreditChk")->get(["so_no" => $soNo]);
             else
-                $this->socc = $this->soFactoryService->getSoCreditChkDao()->get(["so_no" => $this->so->getSoNo()]);
+                $this->socc = $this->getService("SoFactory")->getDao("SoCreditChk")->get(["so_no" => $this->so->getSoNo()]);
         }
         return $this->socc;
     }
@@ -110,12 +106,12 @@ implements PaymentGatewayRedirectServiceInterface
         if ($this->so->getAmount()) {
             $urlRequest = $this->prepareGetUrlRequest($orderFormInfo, $requestData);
             if (($requestData != null) && (!empty($requestData)))
-                $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "O", str_replace("&", "\n&", $requestData));
+                $this->getService("SoPaymentLog")->addLog($this->so->getSoNo(), "O", str_replace("&", "\n&", $requestData));
             $callResult = $this->getRedirectUrl($urlRequest, $responseData);
 
             $redirectUrl = $callResult["url"];
             if (($responseData != null) && (!empty($responseData)))
-                $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "I", str_replace("&", "\n&", $responseData));
+                $this->getService("SoPaymentLog")->addLog($this->so->getSoNo(), "I", str_replace("&", "\n&", $responseData));
             if (!$callResult["result"]) {
                 if (!$callResult["siteDown"]) {
                     $subject = "[Panther] fail to get " . $this->getPaymentGatewayName() . " return URL, so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
@@ -136,10 +132,10 @@ implements PaymentGatewayRedirectServiceInterface
                 }
 
                 $this->sops = $this->getSoPaymentStatus();
-                $updateResult = $this->soFactoryService->getSoPaymentStatusDao()->update($this->sops);
+                $updateResult = $this->getService("SoFactory")->getDao("SoPaymentStatus")->update($this->sops);
                 if (!$updateResult) {
                     $subject = "[Panther] fail to update so payment status" . $this->getPaymentGatewayName() . ", so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
-                    $message = $this->soFactoryService->getSoPaymentStatusDao()->db->last_query() . "," . $this->soFactoryService->getSoPaymentStatusDao()->db->_error_message();
+                    $message = $this->getService("SoFactory")->getDao("SoPaymentStatus")->db->last_query() . "," . $this->getService("SoFactory")->getDao("SoPaymentStatus")->db->_error_message();
                     $this->sendAlert($subject, $message, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
                     return $this->checkoutFailureHandler(_("Please contact our CS") . ", err:" . __LINE__);
                 }
@@ -156,9 +152,9 @@ implements PaymentGatewayRedirectServiceInterface
         if ($this->so = $this->getSo($soNoFromPmgw)) {
 //save the log first
             if (($dataFromPmgw != null) && (!empty($dataFromPmgw)))
-                $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "I", str_replace("&", "\n&", $dataFromPmgw));
+                $this->getService("SoPaymentLog")->addLog($this->so->getSoNo(), "I", str_replace("&", "\n&", $dataFromPmgw));
             if (($dataToPmgw != null) && (!empty($dataToPmgw)))
-                $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "O", str_replace("&", "\n&", $dataToPmgw));
+                $this->getService("SoPaymentLog")->addLog($this->so->getSoNo(), "O", str_replace("&", "\n&", $dataToPmgw));
 
             $this->sops = $this->getSoPaymentStatus();
             if ($result == PaymentGatewayRedirectService::PAYMENT_STATUS_CANCEL) {
@@ -207,13 +203,13 @@ implements PaymentGatewayRedirectServiceInterface
         if ((!$this->sops->getPayDate())
             || ($this->sops->getPayDate() == "0000-00-00 00:00:00"))
             $this->sops->setPayDate(date('Y-m-d H:i:s'));
-        $this->soFactoryService->getSoPaymentStatusDao()->update($this->sops);
+        $this->getService("SoFactory")->getDao("SoPaymentStatus")->update($this->sops);
 
 #2494 do the fraud oder checking
         //$this->get_so_srv()->process_fraud_order($this->so);
 /*
-        if ($isFraud = $this->soFactoryService->isFraudOrder($this->so)) {
-            $this->soFactoryService->processFraudOrder($this->so);
+        if ($isFraud = $this->getService("SoFactory")->isFraudOrder($this->so)) {
+            $this->getService("SoFactory")->processFraudOrder($this->so);
         } else
 */
 //temporary set to no fraud order
@@ -225,7 +221,7 @@ implements PaymentGatewayRedirectServiceInterface
                 $this->so->setStatus((($this->isPaymentNeedCreditCheck($isFraud))?2:3));
                 if ($soPara)
                     set_value($this->so, $soPara);
-                $this->soFactoryService->getDao()->update($this->so);
+                $this->getService("SoFactory")->getDao()->update($this->so);
 //                $this->get_so_srv()->update_website_display_qty($this->so);
 //CYBS decision manager
                 if ($this->isNeedDmService($isFraud)) {
@@ -245,7 +241,7 @@ implements PaymentGatewayRedirectServiceInterface
                 if (!$this->isPaymentNeedCreditCheck($isFraud)) {
                     $this->so->set_status(3);
                     set_value($this->so, $soPara);
-                    $this->soFactoryService->getDao()->update($this->so);
+                    $this->getService("SoFactory")->getDao()->update($this->so);
 //cc and dm are related
                     if (!$this->isNeedDmService($isFraud)) {
                         if (sizeof($sorData) > 0) {
@@ -287,10 +283,10 @@ implements PaymentGatewayRedirectServiceInterface
             if ($sopsPara)
                 set_value($this->sops, $sopsPara);
             $this->sops->setPaymentStatus("F");
-            $this->soFactoryService->getSoPaymentStatusDao()->update($this->sops);
+            $this->getService("SoFactory")->getDao("SoPaymentStatus")->update($this->sops);
 
             $this->so->setStatus(0);
-            $this->soFactoryService->getDao()->update($this->so);
+            $this->getService("SoFactory")->getDao()->update($this->so);
 
             if ($soccPara) {
                 $this->createSocc($soccPara);
@@ -306,12 +302,12 @@ implements PaymentGatewayRedirectServiceInterface
         if ($sopsPara)
             set_value($this->sops, $sopsPara);
         $this->sops->setPaymentStatus("C");
-        $this->soFactoryService->getSoPaymentStatusDao()->update($this->sops);
+        $this->getService("SoFactory")->getDao("SoPaymentStatus")->update($this->sops);
 
         if ($soPara)
             set_value($this->so, $soPara);
         $this->so->setStatus(0);
-        $this->soFactoryService->getDao()->update($this->so);
+        $this->getService("SoFactory")->getDao()->update($this->so);
 
         if ($soccPara)
             $this->createSocc($soccPara);
@@ -320,11 +316,11 @@ implements PaymentGatewayRedirectServiceInterface
     public function createSor($vars = array(), $soNo = null)
     {
         if ($soNo)
-            $this->sor = $this->soFactoryService->getSoRiskDao()->get(array("so_no" => $soNo));
+            $this->sor = $this->getService("SoFactory")->getDao("SoRisk")->get(array("so_no" => $soNo));
         else
-            $this->sor = $this->soFactoryService->getSoRiskDao()->get(array("so_no" => $this->so->getSoNo()));
+            $this->sor = $this->getService("SoFactory")->getDao("SoRisk")->get(array("so_no" => $this->so->getSoNo()));
         if (!$this->sor) {
-            $sorObj = $this->soFactoryService->getSoRiskDao()->get();
+            $sorObj = $this->getService("SoFactory")->getDao("SoRisk")->get();
             $action = "insert";
         } else {
             $sorObj = $this->sor;
@@ -333,11 +329,11 @@ implements PaymentGatewayRedirectServiceInterface
 
         set_value($sorObj, $vars);
         $sorObj->setSoNo($this->so->getSoNo());
-        $dbResult = $this->soFactoryService->getSoRiskDao()->$action($sorObj);
+        $dbResult = $this->getService("SoFactory")->getDao("SoRisk")->$action($sorObj);
         if ($dbResult === false)
         {
             $subject = "[Panther] fail to insert/update so_rsik" . $this->getPaymentGatewayName() . ", so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
-            $message = $this->soFactoryService->getSoRiskDao()->db->last_query() . "," . $this->soFactoryService->getSoRiskDao()->db->_error_message();
+            $message = $this->getService("SoFactory")->getDao("SoRisk")->db->last_query() . "," . $this->getService("SoFactory")->getDao("SoRisk")->db->_error_message();
             $this->sendAlert($subject, $message, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
             return false;
         }
@@ -349,7 +345,7 @@ implements PaymentGatewayRedirectServiceInterface
             $this->socc = $this->getSoCreditChk();
 
             if (empty($this->socc)) {
-                $this->socc = $this->soFactoryService->getSoCreditChkDao()->get();
+                $this->socc = $this->getService("SoFactory")->getDao("SoCreditChk")->get();
                 $this->socc->setSoNo($this->so->getSoNo());
                 $insert = true;
             } else {
@@ -358,14 +354,14 @@ implements PaymentGatewayRedirectServiceInterface
 
             set_value($this->socc, $soccData);
             if ($insert) {
-                $dbResult = $this->soFactoryService->getSoCreditChkDao()->insert($this->socc);
+                $dbResult = $this->getService("SoFactory")->getDao("SoCreditChk")->insert($this->socc);
             } else {
-                $dbResult = $this->soFactoryService->getSoCreditChkDao()->update($this->socc);
+                $dbResult = $this->getService("SoFactory")->getDao("SoCreditChk")->update($this->socc);
             }
             if ($dbResult === false)
             {
                 $subject = "[Panther] fail to add so_credit_chk" . $this->getPaymentGatewayName() . ", so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
-                $message = $this->soFactoryService->getSoCreditChkDao()->db->last_query() . "," . $this->soFactoryService->getSoCreditChkDao()->db->_error_message();
+                $message = $this->getService("SoFactory")->getDao("SoCreditChk")->db->last_query() . "," . $this->getService("SoFactory")->getDao("SoCreditChk")->db->_error_message();
                 $this->sendAlert($subject, $message, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
                 return false;
             }
@@ -381,9 +377,9 @@ implements PaymentGatewayRedirectServiceInterface
             if ($this->so = $this->getSo($soNo)) {
                 $this->sops = $this->getSoPaymentStatus($soNo);
                 if ($dataToPmgw)
-                    $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "O", $dataToPmgw);
+                    $this->getService("SoPaymentLog")->addLog($this->so->getSoNo(), "O", $dataToPmgw);
                 if ($dataFromPmgw)
-                    $this->getSoPaymentLogService()->addLog($this->so->getSoNo(), "I", $this->arrayImplode("=", ",", $dataFromPmgw));
+                    $this->getService("SoPaymentLog")->addLog($this->so->getSoNo(), "I", $this->arrayImplode("=", ",", $dataFromPmgw));
                 if ($fullResult == PaymentGatewayRedirectService::PAYMENT_STATUS_SUCCESS)
                 {
                     $this->paymentSuccessOperation($soData, $sopsData, $soccData, $sorData);
@@ -398,7 +394,7 @@ implements PaymentGatewayRedirectServiceInterface
     //the idea is to do auto hold and set a reason to so.hold_status in common for this case
                         if (($this->so->getStatus() == 3) && ($this->so->getHoldStatus() == 0)) {
     //auto hold
-    //                    $this->soFactoryService->holdOrder($this->so, $message);
+    //                    $this->getService("SoFactory")->holdOrder($this->so, $message);
                         }
                         if ($this->so->getStatus() == 5) {
     //need to send alert to logistics + compliance
@@ -419,10 +415,10 @@ implements PaymentGatewayRedirectServiceInterface
 
         $platformId = $soObj->getPlatformId();
 //        $pbvObj = $this->platformBizVarService->get(array("selling_platform_id" => $platformId));
-        $soSrv = $this->soFactoryService;
-        $deliveryCountryObj = $this->getCountryDao()->get(["country_id" => $soObj->getDeliveryCountryId()]);
-        $billingCountryObj = $this->getCountryDao()->get(["country_id" => $soObj->getBillCountryId()]);
-        $client = $soSrv->clientService->getDao()->get(["id" => $soObj->getClientId()]);
+        $soSrv = $this->getService("SoFactory");
+        $deliveryCountryObj = $this->getService("SoFactory")->getDao("Country")->get(["country_id" => $soObj->getDeliveryCountryId()]);
+        $billingCountryObj = $this->getService("SoFactory")->getDao("Country")->get(["country_id" => $soObj->getBillCountryId()]);
+        $client = $soSrv->getService("Client")->getDao()->get(["id" => $soObj->getClientId()]);
 
         $replace["so_no"] = $soObj->getSoNo();
         $replace["client_id"] = $soObj->getClientId();
@@ -643,26 +639,6 @@ implements PaymentGatewayRedirectServiceInterface
     {
         $url = "https://" . $_SERVER['HTTP_HOST'] . "/images/logo/" . SITE_LOGO;
         return $url;
-    }
-
-    public function getSoPaymentLogService()
-    {
-        return $this->soPaymentLogService;
-    }
-
-    public function getSoPaymentQueryLogService()
-    {
-        return $this->soPaymentQueryLogService;
-    }
-
-    public function getCountryDao()
-    {
-        return $this->country_dao;
-    }
-
-    public function setCountryDao($dao)
-    {
-        $this->country_dao = $dao;
     }
 }
 
