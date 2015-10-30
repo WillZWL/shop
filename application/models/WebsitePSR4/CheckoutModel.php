@@ -121,10 +121,10 @@ class CheckoutModel extends \CI_Model
                 if (($soObj->getCreateAt() == ip2long($_SERVER["REMOTE_ADDR"]))
                     || (isset($_GET["debug"]) && ($_GET["debug"] == 1))) {
                     if (isset($option["soItemDetail"]))
-                        $soItemDetail = $this->_soFactoryService->getSoItemDetailDao()->getList(["so_no" => $soNo], ["limit" => -1]);
+                        $soItemDetail = $this->_soFactoryService->getDao("SoItemDetail")->getList(["so_no" => $soNo], ["limit" => -1]);
                     if (isset($option["soPaymentStatus"]))
                     {
-                        $soPaymentStatus = $this->_soFactoryService->getSoPaymentStatusDao()->getRecordWithGatewayName(["sops.so_no" => $soNo], ["limit" => 1]);
+                        $soPaymentStatus = $this->_soFactoryService->getDao("SoPaymentStatus")->getRecordWithGatewayName(["sops.so_no" => $soNo], ["limit" => 1]);
                     }
                     $valid = true;
                 }

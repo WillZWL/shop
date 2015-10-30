@@ -34,7 +34,7 @@ class PUB_Controller extends CI_Controller
 
             self::$serviceContainer = true;
             $this->sc = $sc;
-            $this->sc['Base'];
+            $this->sc["Base"];
         }
         $this->loadModelDependcy();
 /*

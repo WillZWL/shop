@@ -205,50 +205,27 @@ class Login extends PUB_Controller
 
     public function forget_password()
     {
-        $email = $this->input->get('email');
-        $no_user = $this->input->get('no_user');
         $data["back"] = $this->input->get("back");
-
-        if (empty($email)) {
-            $no_user= 1;
-        } else {
-            $no_user = abs($this->sc['Client']->resetPassword($email) - 1);
-        }
-        $data['invalchars'] = $invalchars = array("{","}",":","]","[","!","?","&",")","(","?",";","#",);
-        $thisemail = $this->input->get("email");
-        $error=0;
-        $displayn = 2;
-        if(strlen($thisemail)==0){
-            $error=6;
-            $displayn = 1;
-        }else{
-            $displayn=1;
-            if(strlen($thisemail)>3){
-                if(stripos($thisemail, "@")===false){
-                    $error = 2;
-                }else{
-                    $thisafterat = substr($thisemail,stripos($thisemail, "@"));
-                    if(stripos($thisafterat, ".")===false){
-                        $error = 3;
-                    }else{
-                        foreach($invalchars as $charf){
-                            if(stripos($thisemail, $charf) && $error!=4){$error=4;};
-                        }
+        if ($this->input->get('reset')) {
+            $email = trim($this->input->get('email'));
+            if (empty($email)) {
+                $data['error'] = 1;
+                $data['notice'] = _('Please enter your registered email address');
+            } else {
+                if (preg_match("/\w+@(\w|\d)+\.\w{2,3}/i", $email)) {
+                    $num = $this->sc['Client']->resetPassword($email);
+                    if ($num > 0) {
+                        $data['error'] = 0;
+                    } else {
+                        $data['error'] = 2;
+                        $data['notice'] = _('Email Address does not exist in our system. Please click your email');
                     }
+                } else {
+                    $data['error'] = 3;
+                    $data['notice'] = _('Your Email is illegal');
                 }
-            }else{
-                $error=1;
             }
-            if($no_user==1 && $error<1){
-                 $error=5;
-            }
-            if($error!=0){$displayn = 1;}
         }
-        $data['from_checkout'] = (strpos($back, "checkout") !== FALSE);
-        $data['page_width'] = $from_checkout?"100%":1000;
-        $data['thisemail'] = $thisemail;
-        $data['error'] = $error;
-        $data['displayn'] = $displayn;
         $this->load->view('myaccount/forget_password.php', $data);
     }
 }
