@@ -5,6 +5,12 @@ class Import extends MY_Controller
 {
     private $appId = "XFER0001";
 
+    public function __construct()
+    {
+        parent::__construct();
+        ini_set('memory_limit', '1024M');
+    }
+
     public function getAppId()
     {
         return $this->appId;
@@ -14,6 +20,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProducts']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -37,6 +44,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductContentExtend']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -49,9 +57,6 @@ class Import extends MY_Controller
 
     public function productIdentifier()
     {
-
-        // $start = memory_get_usage();
-
         // $xml = file_get_contents('php://input');
         // $feed =$this->sc['VbDataTransferProductIdentifier']->startProcess($xml);
         // unset($xml);
@@ -66,6 +71,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductIdentifier']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
