@@ -209,26 +209,6 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\SellingPlatformService();
         };
 
-        /*$servcieContainer['VbDataTransferProducts'] = function () {
-            return new S\VbDataTransferProductsService();
-        };
-
-        $servcieContainer['VbDataTransferProductContent'] = function () {
-            return new S\VbDataTransferProductContentService();
-        };
-
-        $servcieContainer['VbDataTransferProductContentExtend'] = function () {
-            return new S\VbDataTransferProductContentExtendService();
-        };
-
-        $servcieContainer['VbDataTransferProductCustomClass'] = function () {
-            return new S\VbDataTransferProductCustomClassService();
-        };
-
-        $servcieContainer['VbDataTransferProductIdentifier'] = function () {
-            return new S\VbDataTransferProductIdentifierService();
-        };*/
-
         $servcieContainer['SkuMapping'] = function () {
             return new S\SkuMappingService();
         };

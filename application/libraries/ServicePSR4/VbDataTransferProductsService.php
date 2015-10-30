@@ -42,15 +42,18 @@ class VbDataTransferProductsService extends VbDataTransferService
 
                 /*
                 MASTER SKU VALIDATION
+
+                Get the local sku (from sku_mapping table)
+                Check if the VB sku (in the xml) exists in product table in atomv2 in the field sku_vb
+
                 1.- sku from VB exists in AV2 product table in the sku_vb field
-                    1.1.- Look for the master sku un AV2, get the local sku
-                    1.2.- Compare the local sku in mapping table with local sku in product table
-                        1.2.1.- Both skus are equal -> update product
-                        1.2.2.- Different skus -> update mapping with the new master, update product
+                    1.1.- Compare the local sku in mapping table with local sku in product table
+                        1.1.1.- Both skus are equal -> update product
+                        1.1.2.- Different skus, local sku (mapping table) DOESNT EXISTS -> update mapping with the new master, update product
+                        1.1.3.- Different skus, local sku (mapping table) EXISTS -> return status = 6 in result_xml. No update in AV2 product table (send mail to Chapman from VB)
                 2.- sku from VB doesnt exist in AV2 product table in the sku_vb field
                     Normal process - Look for the master sku un AV2:
-                        2.1.- exists -> if the product exists, update, if the product doesnt exist, insert product
-                        2.2.- doesnt exist: no update
+                        2.1.- exists -> if the product exists, update, if the product doesnt exist, insert product (and mapping if needed)
                 */
 
 
@@ -63,7 +66,7 @@ class VbDataTransferProductsService extends VbDataTransferService
 
                 $berror_mapping = false;
                 //if the VB sku exists in product table
-                if ($sku_table != "" && $sku_table != null)
+                if (!empty($sku_table))
                 {
                     //if the mapping for the new master sku doesnt exist, we change the mapping and continue the update
                     if ($sku == "" || $sku == null)
@@ -91,55 +94,58 @@ class VbDataTransferProductsService extends VbDataTransferService
                     $xml[] = '</product>';
                     continue;
                 }
-
-                //if the sku is mapped, we get the atomv prod_gro_id
-                $master_prod_grp_id = "";
-                $master_prod_grp_id = $this->getService('ProductIdentifier')->getProdGrpCdBySku($sku);
-
-                if (empty($sku))
+                else //if the new mapping has a different sku, we dont continue with the update, we return a message error
                 {
-                    // no mapping, as a new product
-                    $product_obj = $this->getService('Product')->createNewProduct($product);
-                    $product_obj->setProdGrpCd($master_prod_grp_id);
-                    if ($this->getService('Product')->getDao('Product')->insert($product_obj)) {
-                        $sku_mpaping_obj = $this->getService('SkuMapping')->createNewSkuMapping($product_obj->getSku(), $master_sku);
-                        $this->getService('SkuMapping')->getDao('SkuMapping')->insert($sku_mpaping_obj);
+                    //if the sku is mapped, we get the atomv prod_gro_id
+                    $master_prod_grp_id = "";
+                    $master_prod_grp_id = $this->getService('ProductIdentifier')->getProdGrpCdBySku($sku);
 
-                        $process_status = 5;    // insert product success
-                    } else {
-                        $process_status = 3;    // inset failure
-                    }
-                } else {
-
-                    if ($bchange_mapping == true)
+                    if (empty($sku))
                     {
-                        //update sku mapping
-                        $where = array("sku"=>$sku_table);
+                        $reason = "update";
+                        // no mapping, as a new product
+                        $product_obj = $this->getService('Product')->createNewProduct($product);
+                        $product_obj->setProdGrpCd($master_prod_grp_id);
+                        if ($this->getService('Product')->getDao('Product')->insert($product_obj)) {
+                            $sku_mpaping_obj = $this->getService('SkuMapping')->createNewSkuMapping($product_obj->getSku(), $master_sku);
+                            $this->getService('SkuMapping')->getDao('SkuMapping')->insert($sku_mpaping_obj);
 
-                        $sku_map_obj = array();
-                        $sku_map_obj["ext_sku"] = $product->master_sku;
-
-                        $this->$this->getService('SkuMapping')->getDao('SkuMapping')->qUpdate($where, $sku_map_obj);
-                    }
-
-                    $product_obj = $this->getService('Product')->getDao('Product')->get(['sku' => $sku]);
-                    $product_obj->setProdGrpCd($master_prod_grp_id);
-                    $this->getService('Product')->updateProduct($product_obj, $product);
-                    if ($this->getService('Product')->getDao('Product')->update($product_obj)) {
-                        $process_status = 5;    // update success
+                            $process_status = 5;    // insert product success
+                        } else {
+                            $process_status = 3;    // inset failure
+                        }
                     } else {
-                        $process_status = 3;    // update failure
+
+                        if ($bchange_mapping == true)
+                        {
+                            //update sku mapping
+                            $where = array("sku"=>$sku_table);
+
+                            $sku_map_obj = array();
+                            $sku_map_obj["ext_sku"] = $product->master_sku;
+
+                            $this->$this->getService('SkuMapping')->getDao('SkuMapping')->qUpdate($where, $sku_map_obj);
+                        }
+
+                        $product_obj = $this->getService('Product')->getDao('Product')->get(['sku' => $sku_table]);
+                        $product_obj->setProdGrpCd($master_prod_grp_id);
+                        $this->getService('Product')->updateProduct($product_obj, $product);
+                        if ($this->getService('Product')->getDao('Product')->update($product_obj)) {
+                            $process_status = 5;    // update success
+                        } else {
+                            $process_status = 3;    // update failure
+                        }
                     }
+
+
+                    $xml[] = '<product>';
+                    $xml[] = '<sku>' . (string)$product->prod_sku . '</sku>';
+                    $xml[] = '<master_sku>' . (string)$product->master_sku . '</master_sku>';
+                    $xml[] = '<status>' . $process_status . '</status>';
+                    $xml[] = '<is_error>' . $product->is_error . '</is_error>';
+                    $xml[] = '<reason>' . $reason . '</reason>';
+                    $xml[] = '</product>';
                 }
-
-
-                $xml[] = '<product>';
-                $xml[] = '<sku>' . (string)$pce->prod_sku . '</sku>';
-                $xml[] = '<master_sku>' . (string)$pce->master_sku . '</master_sku>';
-                $xml[] = '<status>' . $process_status . '</status>';
-                $xml[] = '<is_error>' . $product->is_error . '</is_error>';
-                $xml[] = '<reason>' . $reason . '</reason>';
-                $xml[] = '</product>';
             }
             catch(Exception $e)
             {
