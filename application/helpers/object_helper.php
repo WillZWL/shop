@@ -78,11 +78,15 @@ function clone_interface(&$obj, $int_obj)
 function get_inclusion($src_list, $inc_list = [], $src_key, $inc_key = "")
 {
     $newobj = [];
+    $tmplist = [];
 
-    if (is_object($inc_list)) {
-        foreach ($inc_list as $obj) {
-            $tmplist[] = call_user_func([$obj, "get" . $inc_key]);
+    foreach ($inc_list as $item) {
+        if (is_object($item)) {
+            $tmplist[] = call_user_func([$item, "get" . $inc_key]);
         }
+    }
+
+    if ($tmplist) {
         $inc_list = $tmplist;
     }
 
@@ -111,11 +115,15 @@ function get_inclusion($src_list, $inc_list = [], $src_key, $inc_key = "")
 function get_exclusion($src_list, $inc_list = [], $src_key, $inc_key = "")
 {
     $newobj = [];
+    $tmplist = [];
 
-    if (is_object($inc_list)) {
-        foreach ($inc_list as $obj) {
-            $tmplist[] = call_user_func([$obj, "get" . $inc_key]);
+    foreach ($inc_list as $item) {
+        if (is_object($item)) {
+            $tmplist[] = call_user_func([$item, "get" . $inc_key]);
         }
+    }
+
+    if ($tmplist) {
         $inc_list = $tmplist;
     }
 
