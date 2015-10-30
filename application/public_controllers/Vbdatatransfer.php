@@ -74,7 +74,7 @@ class Vbdatatransfer extends PUB_Controller
 		// print $xml;
 		// exit;
 		//$feed =$this->vb_data_transfer_prices_service->start_process($xml);
-		$feed = $this->sc['VbDataTransferPricesService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferPrices']->processVbData($xml);
 		print $feed;
 	}
 
@@ -85,7 +85,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['vbDataTransferProductsService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferProducts']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_products_service->start_process($xml);
 		print $feed;
 	}
@@ -96,7 +96,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferProductContentService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferProductContent']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_product_content_service->start_process($xml);
 		print $feed;
 	}
@@ -107,7 +107,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferProductContentExtendService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferProductContentExtend']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_product_content_extend_service->start_process($xml);
 		print $feed;
 	}
@@ -118,7 +118,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferProductCustomClassService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferProductCustomClass']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_product_custom_class_service->start_process($xml);
 		print $feed;
 	}
@@ -129,7 +129,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferProductIdentifierService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferProductIdentifier']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_product_identifier_service->start_process($xml);
 		print $feed;
 	}
@@ -140,14 +140,14 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferProductImageService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferProductImage']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_product_image_service->start_process($xml);
 		print $feed;
 	}
 
 	public function productimagetransfer()
 	{
-		$num_img =$this->sc['VbProductImageService']->transferImages();
+		$num_img =$this->sc['VbProductImage']->transferImages();
 		//$num_img =$this->vb_product_image_service->transfer_images();
 		print $num_img;
 	}
@@ -158,7 +158,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferProductKeywordService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferProductKeyword']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_product_keyword_service->start_process($xml);
 		print $feed;
 	}
@@ -169,7 +169,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferProductNoteService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferProductNote']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_product_note_service->start_process($xml);
 		print $feed;
 	}
@@ -180,7 +180,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferProductWarrantyService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferProductWarranty']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_product_warranty_service->start_process($xml);
 		print $feed;
 	}
@@ -191,7 +191,7 @@ class Vbdatatransfer extends PUB_Controller
 		/*header('content-type: text/xml');
 		print $xml;
 		exit;*/
-		$feed = $this->sc['VbDataTransferSupplierProductService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferSupplierProduct']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_supplier_product_service->start_process($xml);
 		print $feed;
 	}
@@ -204,7 +204,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferCategoryService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferCategory']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_category_service->start_process($xml);
 		print $feed;
 	}
@@ -215,7 +215,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferCategoryExtendService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferCategoryExtend']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_category_extend_service->start_process($xml);
 		print $feed;
 	}
@@ -226,7 +226,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferBrandService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferBrand']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_brand_service->start_process($xml);
 		print $feed;
 	}
@@ -237,7 +237,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferColourService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferColour']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_colour_service->start_process($xml);
 		print $feed;
 	}
@@ -248,7 +248,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferColourExtendService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferColourExtend']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_colour_extend_service->start_process($xml);
 		print $feed;
 	}
@@ -259,7 +259,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferVersionService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferVersion']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_version_service->start_process($xml);
 		print $feed;
 	}
@@ -270,7 +270,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferFreightCatService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferFreightCat']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_freight_cat_service->start_process($xml);
 		print $feed;
 	}
@@ -287,7 +287,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferRaGroupService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferRaGroup']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_ra_group_service->start_process($xml);
 		print $feed;
 	}
@@ -295,7 +295,7 @@ class Vbdatatransfer extends PUB_Controller
 	public function ragroupcontent()
 	{
 		$xml = file_get_contents('php://input');
-		$feed = $this->sc['VbDataTransferRaGroupContentService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferRaGroupContent']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_ra_group_content_service->start_process($xml);
 		print $feed;
 	}
@@ -306,7 +306,7 @@ class Vbdatatransfer extends PUB_Controller
 		// header('content-type: text/xml');
 		// print $xml;
 		// exit;
-		$feed = $this->sc['VbDataTransferRaGroupProductService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferRaGroupProduct']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_ra_group_product_service->start_process($xml);
 		print $feed;
 	}
@@ -314,7 +314,7 @@ class Vbdatatransfer extends PUB_Controller
 	public function raproduct()
 	{
 		$xml = file_get_contents('php://input');
-		$feed = $this->sc['VbDataTransferRaProductService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferRaProduct']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_ra_product_service->start_process($xml);
 		print $feed;
 	}
@@ -322,7 +322,7 @@ class Vbdatatransfer extends PUB_Controller
 	public function raprodcat()
 	{
 		$xml = file_get_contents('php://input');
-		$feed = $this->sc['VbDataTransferRaProdCatService']->processVbData($xml);
+		$feed = $this->sc['VbDataTransferRaProdCat']->processVbData($xml);
 		//$feed =$this->vb_data_transfer_ra_prod_cat_service->start_process($xml);
 		print $feed;
 	}

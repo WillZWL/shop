@@ -4,7 +4,7 @@ namespace ESG\Panther\Dao;
 class PriceDao extends BaseDao
 {
     private $table_name = 'price';
-    private $vo_class_name = 'PriveVo';
+    private $vo_class_name = 'PriceVo';
 
     public function getVoClassname()
     {
@@ -143,5 +143,31 @@ class PriceDao extends BaseDao
         } else {
             return false;
         }
+	}
+	
+    public function updateSkuPrice($platform_id = "", $local_sku = "", $price = "", $commit = false)
+    {
+        $sql =
+            "
+            update price set
+                auto_price = 'N',
+                price      = ?
+            where 1
+            and platform_id    = ?
+            and sku            = ?
+            and listing_status = 'L'
+        ";
+        $this->db->query($sql, array($price, $platform_id, $local_sku));
+        $affected = $this->db->affected_rows();
+
+        if ($commit) $this->commit();
+
+        return $affected;
+    }
+
+    public function commit()
+    {
+        $this->db->query("commit");
+        return true;
     }
 }
