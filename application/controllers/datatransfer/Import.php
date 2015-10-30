@@ -5,6 +5,12 @@ class Import extends MY_Controller
 {
     private $appId = "XFER0001";
 
+    public function __construct()
+    {
+        parent::__construct();
+        ini_set('memory_limit', '1024M');
+    }
+
     public function getAppId()
     {
         return $this->appId;
@@ -12,15 +18,10 @@ class Import extends MY_Controller
 
     public function product()
     {
-        $start = memory_get_usage();
-
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProducts']->startProcess($xml);
+        unset($xml);
         print $feed;
-
-        $end = memory_get_usage();
-
-        echo ($end - $start), '/', memory_get_peak_usage();
     }
 
     public function price()
@@ -34,49 +35,28 @@ class Import extends MY_Controller
 
     public function productContent()
     {
-        $start = memory_get_usage();
-
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductContent']->startProcess($xml);
-        unset($xml);
         print $feed;
-
-        $end = memory_get_usage();
-
-        echo ($end - $start), '/', memory_get_peak_usage();
     }
 
     public function productContentExtend()
     {
-        $start = memory_get_usage();
-
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductContentExtend']->startProcess($xml);
+        unset($xml);
         print $feed;
-
-        $end = memory_get_usage();
-        echo ($end - $start), '/', memory_get_peak_usage();
     }
 
     public function productCustomClass()
     {
-        $start = memory_get_usage();
-
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductCustomClass']->startProcess($xml);
-        unset($xml);
         print $feed;
-
-        $end = memory_get_usage();
-
-        echo ($end - $start), '/', memory_get_peak_usage();
     }
 
     public function productIdentifier()
     {
-
-        // $start = memory_get_usage();
-
         // $xml = file_get_contents('php://input');
         // $feed =$this->sc['VbDataTransferProductIdentifier']->startProcess($xml);
         // unset($xml);
@@ -89,23 +69,9 @@ class Import extends MY_Controller
 
     public function productImage()
     {
-        $start = memory_get_usage();
-
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductIdentifier']->startProcess($xml);
         unset($xml);
-        print $feed;
-
-        $end = memory_get_usage();
-
-        echo ($end - $start), '/', memory_get_peak_usage();
-
-
-        $xml = file_get_contents('php://input');
-        // header('content-type: text/xml');
-        // print $xml;
-        // exit;
-        $feed =$this->vb_data_transfer_product_image_service->startProcess($xml);
         print $feed;
     }
 

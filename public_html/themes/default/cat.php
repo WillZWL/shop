@@ -170,7 +170,11 @@
                                         <span class="price-new"><font class="pay_price"><?= _('You Pay') ?> :  </font><?= $prod_obj->getPrice(); ?></span>
                                     </div>
                                     <div class="save_alter">
-                                        Save -30%
+                                        <?php
+                                        $discount = ($prod_obj->getRrpPrice() - $prod_obj->getPrice())/$prod_obj->getRrpPrice();
+                                        $discount = number_format($discount, 3)*100;
+                                        ?>
+                                        Save - <?=$discount?>%
                                     </div>
                                 </div>
                                 <div class="right">
@@ -182,10 +186,10 @@
                                             </button>
                                         </div>
                                         <div class="wishlist">
-                                            <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="More Info" onclick="wishlist.addwishlist('<?= $sku ?>');">
+                                            <a class="btn btn-primary iframe-link" data-toggle="tooltip" data-placement="top" title="More Info" href="<?= base_url("/main-product/view/$sku/sv") ?>">
                                                 <i class="fa fa-heart"></i>
                                                 <span class="more-info"><?= _("More Info") ?></span>
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
