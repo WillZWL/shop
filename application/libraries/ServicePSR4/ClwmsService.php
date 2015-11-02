@@ -13,6 +13,7 @@ class ClwmsService extends BaseService
     {
         set_time_limit(0);
 
+        $where["p.sku not in (991424795, 991424796, 991424797, 991424798, 991424799, 991424803, 991424804, 991424805, 991424806, 991424807)"] = null;
         $so_list = $this->getDao('So')->getSalesOrder($where, $option);
 
         if ($so_list !== FALSE) {
