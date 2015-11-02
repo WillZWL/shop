@@ -453,8 +453,17 @@ class DaoProvider implements ServiceProviderInterface
             return new D\TemplateDao();
         };
 
-        $daoContainer['SkuMapping'] = function () {
-            return new D\SkuMappingDao();
+        $daoContainer['ScheduleJob'] = function () {
+            return new D\ScheduleJobDao();
         };
+
+        $daoContainer['InterfaceTracking'] = function () {
+            return new D\InterfaceTrackingDao();
+        };
+
+        $daoContainer['InterfaceTrackingFeed'] = function () {
+            return new D\InterfaceTrackingFeedDao();
+        };
+
     }
 }

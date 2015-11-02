@@ -3451,14 +3451,12 @@ SQL;
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, so.platform_id, so.txn_id, so.currency_id, so.amount, so.order_create_date, so.dispatch_date, ifr.status');
     }
 
-    public function get_sales_order($where = [], $option = [], $classname = 'OrderNotInRiaReportDto')
+    public function getSalesOrder($where = [], $option = [], $classname = 'OrderNotInRiaReportDto')
     {
-        $option['limit'] = -1;
-
         $this->db->from('so');
-        $this->db->join('integrated_order_fulfillment iof', 'iof.so_no = so.so_no', 'INNER');
         $this->db->join('selling_platform sp', 'so.platform_id = sp.selling_platform_id', 'INNER');
-        $this->db->join('so_item_detail soid', 'so.so_no = soid.so_no AND soid.item_sku = iof.sku and soid.line_no=iof.line_no', 'INNER');
+        $this->db->join('so_item_detail soid', 'so.so_no = soid.so_no', 'INNER');
+        $this->db->join('integrated_order_fulfillment iof', 'iof.so_no = so.so_no and so.platform_id = iof.platform_id AND soid.item_sku = iof.sku and soid.line_no=iof.line_no', 'LEFT');
         $this->db->join('product p', 'p.sku = soid.item_sku', 'INNER');
         $this->db->join('sku_mapping sm', 'sm.sku = p.sku', 'LEFT');
         $this->db->join('so_payment_status sops', 'sops.so_no = so.so_no', 'LEFT');
@@ -3471,7 +3469,7 @@ SQL;
                        so.platform_id,
                        soid.item_sku as merchant_sku,
                        so.order_create_date,
-                       concat_ws(" ", c.title, c.forename, c.surname) as name,
+                       concat_ws(" ", "c.title", "c.forename", "c.surname") as name,
                        so.delivery_address,
                        so.delivery_postcode,
                        so.delivery_city,
