@@ -63,5 +63,6 @@
 			"modify_at" => "Modify At",
 			"modify_by" => "Modify By",
 			"submit_error" => "Submit Error",
-			);
-?>
+			"sync_wms_tracking_feed" => "Sync WMS Tracking Feed",
+			"wms_tracking_feed_load" => "It is executing, Please wait it untill run to the end...",
+			);?>
