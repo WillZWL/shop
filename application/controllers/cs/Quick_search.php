@@ -308,7 +308,7 @@ class Quick_search extends MY_Controller
         // if this is a split child, redirect to the parent split order
         $split_so_group = $data["so_obj"]->getSplitSoGroup();
 
-        if (isset($split_so_group) && ($split_so_group != $order_no)) {
+        if (!empty($split_so_group) && ($split_so_group != $order_no)) {
             Redirect(base_url() . "cs/quick_search/view/" . $data["so_obj"]->getSplitSoGroup() . "/" . $viewtype);
         }
 
