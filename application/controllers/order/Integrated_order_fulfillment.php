@@ -604,6 +604,12 @@ class Integrated_order_fulfillment extends MY_Controller
         $this->load->view('order/integrated_order_fulfillment/integrated_order_fulfillment_dispatch_v', $data);
     }
 
+    public function sync_wms_tracking_feed()
+    {
+        $this->sc['ClwmsTrackingFeed']->processTrackingFeed();
+        redirect(base_url()."order/integrated_order_fulfillment/dispatch/");
+    }
+
     public function add_note($so_no = "", $line = "")
     {
         if ($so_no && $line != "") {
