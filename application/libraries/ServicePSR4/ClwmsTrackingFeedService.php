@@ -6,7 +6,7 @@ class ClwmsTrackingFeedService extends BaseService
     private $wms_url = "http://remote.eservicesgroup.com:8080/WMS.Server.Web/Service.asmx/GetTrackingFeed";
     private $username = "clwms";
     private $password = "CLUUWMS56";
-    private $retailer_name = "VB";
+    private $retailer_name = "";
     private $it_dao;
     private $itf_dao;
 
