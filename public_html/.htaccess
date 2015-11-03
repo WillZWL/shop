@@ -1,7 +1,7 @@
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^[^.]+/category/(.*)$ /cat/$1 [P]
+RewriteRule ^[^.]+/category/(.*)$ /cat/view/$1 [NC,P]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
