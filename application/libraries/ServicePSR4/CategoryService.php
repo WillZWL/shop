@@ -21,7 +21,7 @@ class CategoryService extends BaseService
         $option = ['limit' => 1];
         $obj = $this->getCategoryFullPath($where, $option);
 
-        $url = base_url();
+        $url = '/';
         switch ($obj->getLevel()) {
             case '3':
                 $url .= str_replace(' ', '-', parse_url_char($obj->getTopTopName())).'/';
