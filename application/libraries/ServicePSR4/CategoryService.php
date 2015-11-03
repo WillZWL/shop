@@ -39,7 +39,7 @@ class CategoryService extends BaseService
                 break;
         }
 
-        return $url;
+        return $url.'Category/'.$obj->getCatId();
     }
 
     private function getCategoryFullPath($where, $option = [])

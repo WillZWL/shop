@@ -168,7 +168,6 @@ class Cron_draw_menu extends MY_Controller
 
                     $end_sponsored = false;
 
-                    var_dump($main_cat_array);die;
                     foreach ($main_cat_array as $value) {
                         if ($end_sponsored == false && $value['sponsored'] == 0) {
                             $end_sponsored = true;
