@@ -6,7 +6,7 @@ class ClwmsTrackingFeedService extends BaseService
     private $wms_url = "http://remote.eservicesgroup.com:8080/WMS.Server.Web/Service.asmx/GetTrackingFeed";
     private $username = "clwms";
     private $password = "CLUUWMS56";
-    private $retailer_name = "VB";
+    private $retailer_name = "";
     private $it_dao;
     private $itf_dao;
 
@@ -431,10 +431,10 @@ class ClwmsTrackingFeedService extends BaseService
         return $date_time;
     }
 
-    private function sendEmail($subject ,$bodynote) {
-        $header = "From: admin@eservicesgroup.com\r\n";
+    private function sendEmail($subject ,$bodynote) {base_url();
+        $header = "From: admin@digitaldiscount.co.uk\r\n";
         $user_email = $_SESSION["user"]["email"] ? ", {$_SESSION["user"]["email"]}" : "";
-        $to = "logistics@eservicesgroup.net{$user_email}, brave.liu@eservicesgroup.com";
+        $to = "{$user_email}, brave.liu@eservicesgroup.com";
         mail($to, "{$subject}", "{$bodynote}", $header);
     }
 

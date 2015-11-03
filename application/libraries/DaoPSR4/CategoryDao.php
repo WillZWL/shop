@@ -6,11 +6,6 @@ class CategoryDao extends BaseDao
     private $tableName = "category";
     private $voClassname = "CategoryVo";
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getTableName()
     {
         return $this->tableName;
@@ -19,6 +14,24 @@ class CategoryDao extends BaseDao
     public function getVoClassname()
     {
         return $this->voClassname;
+    }
+
+    public function getCategoryName()
+    {
+        $query = $this->db->query('select id, name from category where status = 1');
+        return $query->result_array();
+    }
+
+    public function getCategoryFullPath($where = [], $option = [], $className = 'CategoryPullPathDto')
+    {
+        $this->db->from('category c1');
+        $this->db->join('category c2', 'c1.parent_cat_id = c2.id', 'inner');
+        $this->db->join('category c3', 'c2.parent_cat_id = c3.id', 'inner');
+        $this->db->where(['c1.status' => 1, 'c2.status' => 1, 'c3.status' => 1]);
+
+        $select = 'c1.id as cat_id, c1.name as name, c1.level as level, c2.name as top_name, c2.level as top_level, c3.name as top_top_name, c3.level as top_top_level';
+
+        return $this->commonGetList($className, $where, $option, $select);
     }
 
     public function getItemWithChildCount($this_level, $id, $classname)

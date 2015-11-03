@@ -1,4 +1,4 @@
-insert into schedule_job (id, name, last_access_time, status, create_on, create_at, create_by, modify_at, modify_by)
+insert into schedule_job (schedule_job_id, name, last_access_time, status, create_on, create_at, create_by, modify_at, modify_by)
 values
 ('WMS_GET_TRACKING_FEED', "WMS Get Tracking Feed Cron Time", now(), 1, now(), '127.0.0.1', 'brave', '127.0.0.1', 'brave');
 

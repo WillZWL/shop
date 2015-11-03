@@ -566,4 +566,11 @@ if ( ! function_exists('redirect'))
 		}
 		exit;
 	}
+
+	function parse_url_char($src = '')
+	{
+		$url_char = array('#', '?', '/', '\\', '"', '\'', '&', ':', '.', '+', ';', '=', '@', '<', '>', '%');
+
+		return str_replace($url_char, '', $src);
+	}
 }

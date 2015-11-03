@@ -81,7 +81,6 @@ class CategoryModel extends \CI_Model
             case 'latest_desc':
                 $option["orderby"] = "sc.priority asc, p.create_on DESC";
                 break;
-            //#2580, sort by priority of the sub_category
             case 'priority_asc':
                 $option["orderby"] = "sc.priority asc, pr.sales_qty desc";
                 break;
@@ -256,11 +255,6 @@ class CategoryModel extends \CI_Model
         return $this->categoryService->getListedCat($platform_id);
     }
 
-    public function getFullCatList()
-    {
-        return $this->categoryService->getFullCatList();
-    }
-
     public function getListedCatTree($platform_id = "WEBHK")
     {
         return $this->categoryService->getListedCatTree($platform_id);
@@ -319,7 +313,7 @@ class CategoryModel extends \CI_Model
     public function getCatExtList($where = [], $option = [])
     {
         return $this->categoryService->getCatExtList($where, $option);
-    }	
+    }
 
     public function getCatMenuList($where = [], $option = [])
     {
