@@ -3,9 +3,16 @@ namespace ESG\Panther\Service;
 
 class CategoryService extends BaseService
 {
-    public function __construct()
+
+    public function getCategoryName()
     {
-        parent::__construct();
+        $category = $this->getDao('Category')->getCategoryName();
+
+        foreach ($category as $cat) {
+            $category_mapping[$cat['id']] = str_replace(' ', '-',parse_url_char($cat['name']));
+        }
+
+        return $category_mapping;
     }
 
     public function getMenuListData($lang_id, $platform_id)

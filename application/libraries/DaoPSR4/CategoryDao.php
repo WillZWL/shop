@@ -6,11 +6,6 @@ class CategoryDao extends BaseDao
     private $tableName = "category";
     private $voClassname = "CategoryVo";
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getTableName()
     {
         return $this->tableName;
@@ -19,6 +14,12 @@ class CategoryDao extends BaseDao
     public function getVoClassname()
     {
         return $this->voClassname;
+    }
+
+    public function getCategoryName()
+    {
+        $query = $this->db->query('select id, name from category where status = 1');
+        return $query->result_array();
     }
 
     public function getItemWithChildCount($this_level, $id, $classname)

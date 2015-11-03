@@ -19,6 +19,10 @@ class ListingInfoDto
     private $rrp_factor;
     private $warranty_in_month;
     private $delivery_scenarioid;
+    private $cat_id;
+    private $sub_cat_id;
+    private $sub_sub_cat_id;
+    private $productUrl;
 
     public function getPlatformId()
     {
@@ -198,5 +202,45 @@ class ListingInfoDto
     public function setDeliveryScenarioid($delivery_scenarioid)
     {
         $this->delivery_scenarioid = $delivery_scenarioid;
+    }
+
+    public function getCatId()
+    {
+        return $this->cat_id;
+    }
+
+    public function setCatId($cat_id)
+    {
+        $this->cat_id = $cat_id;
+    }
+
+    public function getSubCatId()
+    {
+        return $this->sub_cat_id;
+    }
+
+    public function setSubCatId($sub_cat_id)
+    {
+        $this->sub_cat_id = $sub_cat_id;
+    }
+
+    public function getSubSubCatId()
+    {
+        return $this->sub_sub_cat_id;
+    }
+
+    public function setSubSubCatId($sub_sub_cat_id)
+    {
+        $this->sub_sub_cat_id = $sub_sub_cat_id;
+    }
+
+    public function getProductUrl()
+    {
+        return $this->productUrl;
+    }
+
+    public function setProductUrl($product_url)
+    {
+        $this->productUrl = $product_url;
     }
 }
