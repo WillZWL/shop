@@ -2,9 +2,9 @@
 
 class Cron_draw_menu extends MY_Controller
 {
-    private $appId = "CRN0008";
+    private $appId = 'CRN0008';
 
-    function __construct()
+    public function __construct()
     {
         // load controller parent
         parent::__construct();
@@ -18,338 +18,128 @@ class Cron_draw_menu extends MY_Controller
         $this->load->library('service/platform_biz_var_service');
         $this->load->library('service/category_service');
         $this->load->helper('url');
-
     }
 
-    function cron_multilanguage_menu_old()
+    public function cron_multilanguage_menu()
     {
         $eol = "\n";
         $tab = "\t";
-        $platform_list = $this->selling_platform_model->get_list(array("type" => "WEBSITE", "status" => 1), array("limit" => -1));
-        $language_list = $this->language_model->get_list(array("status" => 1), array("limit" => -1));
-        foreach ($language_list AS $lang_obj) {
-            $lang_id = $lang_obj->get_id();
+        $platform_list = $this->selling_platform_model->get_list(array('type' => 'WEBSITE', 'status' => 1), array('limit' => -1));
+        $language_list = $this->language_model->get_list(array('status' => 1), array('limit' => -1));
+        foreach ($language_list as $lang_obj) {
+            $lang_id = $lang_obj->get_lang_id();
             foreach ($platform_list as $platform_obj) {
-                $platform_id = $platform_obj->get_id();
-                $pbv_obj = $this->platform_biz_var_service->get_platform_biz_var($platform_id);
-                $country_id = $pbv_obj->get_platform_country_id();
+                $platform_id = $platform_obj->get_selling_platform_id();
+                if ($pbv_obj = $this->platform_biz_var_service->get_platform_biz_var($platform_id)) {
+                    $country_id = $pbv_obj->get_platform_country_id();
+                    $base_url = '';
+                    $cat_id_css_map = array(1 => 'camera', 2 => 'lens', 3 => 'camcorders', 4 => 'phones', 5 => 'apple', 6 => 'tablets', 7 => 'headphones', 8 => 'computing', 9 => 'audio', 10 => 'warranty');
 
-                $base_url = "";//"/" . $lang_id . "_" . $country_id;
-                $cat_id_css_map = array(1 => "camera", 2 => "lens", 3 => "camcorders", 4 => "phones", 5 => "apple", 6 => "tablets", 7 => "headphones", 8 => "computing", 9 => "audio", 10 => "warranty");
-
-                $cat_list = $this->category_model->get_cat_menu_list(array("lang_id" => $lang_id), array("limit" => -1, "orderby"=>"c.sponsored desc, ce.name"));
-                if ($cat_list) {
-                    $cat_name_map = array();
-                    foreach ($cat_list as $obj) {
-                        $cat_name_map[$obj->get_cat_id()] = $obj->get_name();
-                    }
-                }
-
-                $cat_arr = $cat_tree = array();
-                $cat_arr = $this->category_model->get_listed_cat($platform_id);
-                foreach ($cat_arr as $val) {
-                    if ($val['sub_sub_cat_id']) {
-                        $cat_tree[$val['cat_id']][$val['sub_cat_id']][$val['sub_sub_cat_id']] = null;
-                    } else {
-                        $cat_tree[$val['cat_id']][$val['sub_cat_id']] = null;
-                    }
-                }
-
-                $content = "";
-                $mobileContent = "";
-                //$content .= "<div id='navigation'>".$eol;
-                $content .= $tab . "<ul>" . $eol;
-
-                foreach ($cat_id_css_map as $cat_id => $css_name) {
-                    if ($cat_ext_list = $this->category_model->get_cat_ext_list(array("cat_id" => $cat_id, "lang_id" => $lang_id), array("limit" => -1))) {
-                        foreach ($cat_ext_list as $cat_obj) {
-                            $cat_url = htmlentities($base_url . $this->website_service->get_cat_url($cat_obj->get_cat_id(), TRUE));
-                            $no_right_margin = ($cat_id == 10) ? " class='no_right_margin'" : "";
-                            $content .= $tab . $tab . "<li id='nav-" . $css_name . "' " . $no_right_margin . "><a href='" . $cat_url . "' title='" . $cat_obj->get_name() . "'><ins class='fixpng'>&nbsp;</ins><span>" . $cat_obj->get_name() . "</span></a></li>" . $eol;
-                            $mobileContent .= $tab . $tab . "<li><a href='" . $cat_url . "' title='" . $cat_obj->get_name() . "'>" . $cat_obj->get_name() . "</a>" . $eol;
-                            $mobileContent .= $tab . $tab . $tab . "<button><i>&nbsp;</i></button>" . $eol;
-                            $mobileContent .= $tab . $tab . $tab . $tab . "<ul>" . $eol;
-                            if ($cat_tree) {
-                                foreach ($cat_tree[$cat_id] as $sub_cat_id => $sub_sub_cat) {
-                                    $sub_cat_link = htmlentities($base_url . $this->website_service->get_cat_url($sub_cat_id, TRUE));
-                                    $mobileContent .= $tab . $tab . $tab . $tab . $tab . "<li><a href=\"" . $sub_cat_link . "\" title=\"" . $cat_name_map[$sub_cat_id] . "\">" . $cat_name_map[$sub_cat_id] . "</a></li>" . $eol;
-                                }
-                            }
-                            $mobileContent .= $tab . $tab . $tab . $tab . "</ul></li>" . $eol;
-//                          $mobileContent .= $tab . $tab . "<li><a href='" . $cat_url . "' title='" . $cat_obj->get_name() ."'>" . $cat_obj->get_name() . "</a></li>" . $eol;
+                    $cat_list = $this->category_model->get_cat_menu_list(array('lang_id' => $lang_id), array('limit' => -1, 'orderby' => 'c.sponsored desc, ce.name'));
+                    if ($cat_list) {
+                        $cat_name_map = array();
+                        foreach ($cat_list as $obj) {
+                            $cat_name_map[$obj->get_cat_id()] = $obj->get_name();
                         }
                     }
-                }
-                $content .= $tab . "</ul>" . $eol;
-                $content .= $tab . "</div>" . $eol;
+                    $main_cat_array = array();
+                    $cat_arr = $cat_tree = $cat_tree_v2 = array();
+                    $cat_arr = $this->category_model->get_listed_cat($platform_id);
 
-                $content .= "<div id='sub-navigation' class='box-shadow-4'>" . $eol;
-                $content .= $tab . "<div class='category'>" . $eol;
-                $content .= $tab . $tab . "<img src='/resources/images/navigation/nav-01.png' alt='' class='fixpng' />" . $eol;
-                $content .= $tab . $tab . "<span>" . $cat_name_map[1] . "</span>" . $eol;
-                $content .= $tab . "</div>" . $eol;
-                if ($cat_tree) {
-                    foreach ($cat_tree as $cat_id => $sub_cat) {
-                        $content .= $tab . "<div class='nav-" . $cat_id_css_map[$cat_id] . "'>" . $eol;
-                        $content .= $tab . $tab . "<ul>" . $eol;
-
-                        $i = 1;
-                        $content .= $tab . $tab . $tab . "<li>" . $eol;
-                        foreach ($sub_cat as $sub_cat_id => $sub_sub_cat) {
-                            $sub_cat_url = htmlentities($base_url . $this->website_service->get_cat_url($sub_cat_id, TRUE));
-                            if (!$cat_name_map[$sub_cat_id]) {
-                                $empty_name[$lang_id][] = $sub_cat_id;
+                    foreach ($cat_arr as $val) {
+                        if ($val['cat_id'] == 10) {
+                            if ($cat_name_map[$val['sub_sub_cat_id']]) {
+                                $cat_tree_v2[$val['sub_cat_id']][$val['sub_sub_cat_id']] = null;
                             }
-                            $content .= $tab . $tab . $tab . $tab . "<p><a href='" . $sub_cat_url . "' title='" . $cat_name_map[$sub_cat_id] . "'>" . $cat_name_map[$sub_cat_id] . "</a></p>" . $eol;
+                        } else {
+                            if ($val['sub_sub_cat_id']) {
+                                $cat_tree_v2[$val['cat_id']][$val['sub_cat_id']][$val['sub_sub_cat_id']] = null;
+                            } else {
+                                $cat_tree_v2[$val['cat_id']][$val['sub_cat_id']] = null;
+                            }
+                        }
+                    }
 
-                            if ($sub_sub_cat) {
-                                $content .= $tab . $tab . $tab . $tab . "<dl>" . $eol;
-                                foreach ($sub_sub_cat as $sub_sub_cat_id => $val) {
-                                    if ($sub_sub_cat_id > 0) {
-                                        if (!$cat_name_map[$sub_sub_cat_id]) {
-                                            $empty_name[$lang_id][] = $sub_sub_cat_id;
+                    foreach ($cat_id_css_map as $cat_id => $css_name) {
+                        if ($cat_ext_list = $this->category_model->get_cat_menu_list(array('cat_id' => $cat_id, 'lang_id' => $lang_id), array('limit' => -1, 'orderby' => 'c.sponsored desc, ce.name'))) {
+                            foreach ($cat_ext_list as $cat_obj) {
+                                $cat_url = htmlentities($this->sc['Category']->getCatUrl($cat_obj->get_cat_id()));
+                                $no_right_margin = ($cat_id == 10) ? " class='no_right_margin'" : '';
+                                if ($cat_obj->get_cat_id() == 10) {
+                                    if ($cat_tree_v2) {
+                                        foreach ($cat_tree_v2 as $cat_id => $sub_cat) {
+                                            $cat_url = htmlentities($this->sc['Category']->getCatUrl($cat_id));
+                                            $main_cat_array[$noofmaincat]['id'] = $cat_id;
+                                            $main_cat_array[$noofmaincat]['name'] = $cat_name_map[$cat_id];
+                                            $main_cat_array[$noofmaincat]['url'] = $cat_url;
+                                            $main_cat_array[$noofmaincat]['sponsored'] = $this->category_service->get_dao()->get(array('id' => $cat_id))->get_sponsored(); //$cat_obj->get_sponsored();
+
+                                        $subcate_v2 = '';
+                                            $subcate_array = array();
+                                            $subcat_number = 0;
+                                            foreach ($sub_cat as $sub_cat_id => $sub_sub_cat) {
+                                                $sub_cat_url = htmlentities($this->sc['Category']->getCatUrl($sub_cat_id));
+                                                if (!$cat_name_map[$sub_cat_id]) {
+                                                    $empty_name[$lang_id][] = $sub_cat_id;
+                                                }
+                                                $subcate_array[$subcat_number]['name'] = $cat_name_map[$sub_cat_id];
+                                                $subcate_array[$subcat_number]['url'] = $sub_cat_url;
+                                                $subcate_array[$subcat_number]['sponsored'] = 0;
+
+                                                $subcate_v2 .= $cat_name_map[$sub_cat_id];
+
+                                                $subsubcate_v2 = '';
+                                                $subsubcate_array = array();
+                                                $subsubcat_number = 0;
+                                                if ($sub_sub_cat) {
+                                                    foreach ($sub_sub_cat as $sub_sub_cat_id => $val) {
+                                                        if ($sub_sub_cat_id > 0) {
+                                                            if (!$cat_name_map[$sub_sub_cat_id]) {
+                                                                $empty_name[$lang_id][] = $sub_sub_cat_id;
+                                                            }
+                                                            $sub_sub_cat_url = htmlentities($this->sc['Category']->getCatUrl($sub_sub_cat_id));
+                                                            if ($cat_name_map[$sub_sub_cat_id]) {
+                                                                $subsubcate_array[$subsubcat_number]['name'] = $cat_name_map[$sub_sub_cat_id];
+                                                                $subsubcate_array[$subsubcat_number]['url'] = $sub_sub_cat_url;
+                                                                $subsubcate_array[$subsubcat_number]['sponsored'] = 0;
+                                                                ++$subsubcat_number;
+                                                                $subsubcate_v2 .= $cat_name_map[$sub_sub_cat_id];
+                                                            }
+                                                        }
+                                                    }
+                                                    uasort($subsubcate_array, array($this, 'cmp'));
+                                                    $subcate_array[$subcat_number]['subsub'] = $subsubcate_array;
+                                                }
+                                                ++$subcat_number;
+                                            }
+                                            uasort($subcate_array, array($this, 'cmp'));
+                                            $main_cat_array[$noofmaincat]['subcat'] = $subcate_array;
+
+                                            ++$noofmaincat;
                                         }
-                                        $sub_sub_cat_url = htmlentities($base_url . $this->website_service->get_cat_url($sub_sub_cat_id, TRUE));
-                                        $content .= $tab . $tab . $tab . $tab . $tab . "<dd><a href='" . htmlspecialchars($sub_sub_cat_url, ENT_QUOTES) . "' title='" . $cat_name_map[$sub_sub_cat_id] . "'>" . $cat_name_map[$sub_sub_cat_id] . "</a></dd>" . $eol;
                                     }
                                 }
-                                $content .= $tab . $tab . $tab . $tab . "</dl>" . $eol;
                             }
-
-                            if ($i % 3 == 0) {
-                                $content .= $tab . $tab . $tab . "</li>" . $eol;
-                                $content .= $tab . $tab . $tab . "<li>" . $eol;
-                            }
-                            $i++;
                         }
-                        $content .= $tab . $tab . $tab . "</li>" . $eol;
-                        $content .= $tab . $tab . "</ul>" . $eol;
-                        $content .= $tab . "</div>" . $eol;
                     }
-                }
-                $content .= "</div>" . $eol;
 
-                $mobile_menu_path = APPPATH . "mobile_views/template/menu/" . $lang_id;
-                $mobile_menu_file = $mobile_menu_path . "/menu_" . strtolower($platform_id) . ".html";
-                if (!file_exists($mobile_menu_path)) {
-                    mkdir($mobile_menu_path, 0755, true);
-                    chown($mobile_menu_path, "apache");
-                    chgrp($mobile_menu_path, "users");
-                }
-                file_put_contents($mobile_menu_file, $mobileContent);
-                chown($mobile_menu_file, "apache");
-                chgrp($mobile_menu_file, "users");
-                chmod($mobile_menu_file, 0664);
-
-                $menu_path = APPPATH . "public_views/template/menu/" . $lang_id;
-                $menu_file = $menu_path . "/menu_" . strtolower($platform_id) . ".html";
-                if (!file_exists($menu_path)) {
-                    mkdir($menu_path, 0755, true);
-                    chown($menu_path, "apache");
-                    chgrp($menu_path, "users");
-                }
-                $small_menu = "<div id='navigation' class='small'>" . $eol . $content;
-
-                file_put_contents($menu_file, $small_menu);
-                chown($menu_file, "apache");
-                chgrp($menu_file, "users");
-                chmod($menu_file, 0664);
-
-                $menu_file = APPPATH . "public_views/template/menu/" . $lang_id . "/menu_big_" . strtolower($platform_id) . ".html";
-                $normal_menu = "<div id='navigation'>" . $eol . $content;
-                file_put_contents($menu_file, $normal_menu);
-                chown($menu_file, "apache");
-                chgrp($menu_file, "users");
-                chmod($menu_file, 0664);
-
-                // generate footer
-                $footer_content = "";
-                if ($cat_tree) {
-                    $footer_content .= "<ul>" . $eol;
-                    foreach ($cat_tree as $cat_id => $sub_cat) {
-                        $cat_url = $base_url . htmlentities($this->website_service->get_cat_url($cat_id, TRUE));
-                        $footer_content .= $tab . "<li>" . $eol;
-                        $footer_content .= $tab . $tab . "<p><a href='" . $cat_url . "' title='" . $cat_name_map[$cat_id] . "'>" . $cat_name_map[$cat_id] . "</a></p>" . $eol;
-
-                        $footer_content .= $tab . "</li>" . $eol;
+                    $sponsor = array();
+                    $names = array();
+                    foreach ($main_cat_array as $key => $row) {
+                        $sponsor[$key] = $row['sponsored'];
+                        $names[$key] = $row['name'];
                     }
-                    $footer_content .= "</ul>" . $eol;
-                }
+                    array_multisort($sponsor, SORT_DESC, $names, SORT_ASC, $main_cat_array);
 
-                $footer_menu_file = APPPATH . "public_views/template/menu/" . $lang_id . "/footer_menu_" . strtolower($platform_id) . ".html";
-                file_put_contents($footer_menu_file, $footer_content);
-                chown($menu_file, "apache");
-                chgrp($menu_file, "users");
-                chmod($menu_file, 0664);
-            }
-        }
-    }
-
-	function cron_multilanguage_menu()
-	{
-
-		$eol = "\n";
-		$tab = "\t";
-		$platform_list = $this->selling_platform_model->get_list(array("type"=>"WEBSITE", "status"=>1), array("limit"=>-1));
-		$language_list = $this->language_model->get_list(array("status"=>1), array("limit"=>-1));
-		foreach($language_list AS $lang_obj)
-		{
-			$lang_id = $lang_obj->get_lang_id();
-			foreach($platform_list as $platform_obj)
-			{
-				$platform_id = $platform_obj->get_selling_platform_id();
-				if ($pbv_obj = $this->platform_biz_var_service->get_platform_biz_var($platform_id))
-				{
-					//print $this->db->last_query();
-				$country_id = $pbv_obj->get_platform_country_id();
-				$base_url = "";//"/".$lang_id."_".$country_id;
-				$cat_id_css_map = array(1=>"camera", 2=>"lens", 3=>"camcorders", 4=>"phones", 5=>"apple", 6=>"tablets", 7=>"headphones", 8=>"computing", 9=>"audio", 10=>"warranty");
-
-				//Get the category list with the display name by language
-				//$cat_list = $this->category_model->get_cat_ext_list(array("lang_id"=>$lang_id), array("limit"=>-1));
-				$cat_list = $this->category_model->get_cat_menu_list(array("lang_id" => $lang_id), array("limit" => -1, "orderby"=>"c.sponsored desc, ce.name"));
-				if($cat_list)
-				{
-					$cat_name_map = array();
-					foreach($cat_list as $obj)
-					{
-						$cat_name_map[$obj->get_cat_id()] = $obj->get_name();
-					}
-				}
-				$main_cat_array = array();
-				$cat_arr = $cat_tree = $cat_tree_v2 = array();
-				$cat_arr = $this->category_model->get_listed_cat($platform_id);
-
-				//print $this->db->last_query();
-				foreach($cat_arr as $val)
-				{
-					if($val["cat_id"]==10)
-					{
-						if($cat_name_map[$val['sub_sub_cat_id']]) {
-							$cat_tree_v2[$val['sub_cat_id']][$val['sub_sub_cat_id']] = null;
-						}
-					}
-					else
-					{
-						if($val['sub_sub_cat_id'])
-						{
-							$cat_tree_v2[$val['cat_id']][$val['sub_cat_id']][$val['sub_sub_cat_id']] = null;
-						}
-						else
-						{
-							$cat_tree_v2[$val['cat_id']][$val['sub_cat_id']] = null;
-						}
-					}
-				}
-
-				foreach($cat_id_css_map as $cat_id=>$css_name)
-				{
-					//Get the display name by language of each cat_id
-					//if($cat_ext_list = $this->category_model->get_cat_ext_list(array("cat_id"=>$cat_id, "lang_id"=>$lang_id), array("limit"=>-1)))
-					if($cat_ext_list = $this->category_model->get_cat_menu_list(array("cat_id"=>$cat_id, "lang_id"=>$lang_id), array("limit" => -1, "orderby"=>"c.sponsored desc, ce.name")))
-					{
-						foreach($cat_ext_list as $cat_obj)
-						{
-							$cat_url = htmlentities($base_url.$this->website_service->get_cat_url($cat_obj->get_cat_id(), TRUE));
-							$no_right_margin = ($cat_id == 10)?" class='no_right_margin'":"";
-							if($cat_obj->get_cat_id()==10)
-							{
-								if($cat_tree_v2)
-								{
-									foreach($cat_tree_v2 as $cat_id=>$sub_cat)
-									{
-										$cat_url = htmlentities($base_url.$this->website_service->get_cat_url($cat_id, TRUE));
-										$main_cat_array[$noofmaincat]["id"] = $cat_id;
-										$main_cat_array[$noofmaincat]["name"] = $cat_name_map[$cat_id];
-										$main_cat_array[$noofmaincat]["url"] = $cat_url;
-										$main_cat_array[$noofmaincat]["sponsored"] = $this->category_service->get_dao()->get(array("id"=>$cat_id))->get_sponsored(); //$cat_obj->get_sponsored();
-
-										$subcate_v2 = "" ;
-										$subcate_array = array();
-										$subcat_number = 0;
-										foreach($sub_cat as $sub_cat_id=>$sub_sub_cat)
-										{
-											$sub_cat_url = htmlentities($base_url.$this->website_service->get_cat_url($sub_cat_id, TRUE));
-											if(!$cat_name_map[$sub_cat_id])
-											{
-												$empty_name[$lang_id][] = $sub_cat_id;
-											}
-											// Get sub category
-											$subcate_array[$subcat_number]["name"] = $cat_name_map[$sub_cat_id];
-											$subcate_array[$subcat_number]["url"] = $sub_cat_url;
-											$subcate_array[$subcat_number]["sponsored"] = 0;
-
-											$subcate_v2 .= $cat_name_map[$sub_cat_id];
-
-											$subsubcate_v2 = "" ;
-											$subsubcate_array = array();
-											$subsubcat_number = 0;
-											if($sub_sub_cat)
-											{
-												foreach($sub_sub_cat as $sub_sub_cat_id=>$val)
-												{
-													if($sub_sub_cat_id > 0)
-													{
-														if(!$cat_name_map[$sub_sub_cat_id])
-														{
-															$empty_name[$lang_id][] = $sub_sub_cat_id;
-														}
-														$sub_sub_cat_url = htmlentities($base_url.$this->website_service->get_cat_url($sub_sub_cat_id, TRUE));
-														if($cat_name_map[$sub_sub_cat_id]) {
-															$subsubcate_array[$subsubcat_number]["name"] = $cat_name_map[$sub_sub_cat_id];
-															$subsubcate_array[$subsubcat_number]["url"] = $sub_sub_cat_url;
-															$subsubcate_array[$subsubcat_number]["sponsored"] = 0;
-															$subsubcat_number++;
-															$subsubcate_v2 .= $cat_name_map[$sub_sub_cat_id];
-														}
-													}
-												}
-												uasort( $subsubcate_array, array( $this, 'cmp' ) );
-												$subcate_array[$subcat_number]["subsub"] = $subsubcate_array;
-											}
-											$subcat_number++;
-
-										}
-										uasort( $subcate_array, array( $this, 'cmp' ) );
-										$main_cat_array[$noofmaincat]["subcat"] = $subcate_array;
-
-										$noofmaincat++;
-									}
-								}
-							}
-
-						}
-					}
-				}
-
-				//echo "<pre>"; var_dump($main_cat_array);//die();
-				//uasort( $main_cat_array, array( $this, 'cmp' ) );
-
-				$sponsor = array();
-				$names = array();
-				foreach($main_cat_array as $key => $row) {
-					$sponsor[$key] = $row['sponsored'];
-					$names[$key] = $row['name'];
-				}
-				array_multisort($sponsor, SORT_DESC, $names, SORT_ASC, $main_cat_array);
-
-
-				$CategoriesTitle = "Categories";
-				//Menu header
-				$content_v2 =
-					//in the header.php file
-					/*'<div id="header-bot">
-					   <div class="container">
-						  <div class="row">*/
-							 '<div class="col-lg-3 col-sm-3 col-md-3 hidden-xs hidden-sm top-verticalmenu">
+                    $CategoriesTitle = 'Categories';
+                    $content_v2 =
+                             '<div class="col-lg-3 col-sm-3 col-md-3 hidden-xs hidden-sm top-verticalmenu">
 								<div class="menu-heading d-heading">
 								   <h4>
-									  ' . $CategoriesTitle .  '<span class="fa fa-angle-down pull-right"></span>
+									  '.$CategoriesTitle.'<span class="fa fa-angle-down pull-right"></span>
 								   </h4>
 								</div>';
-
-				//Menu container
-				$content_v2 .= '<div id="pav-verticalmenu" class="pav-verticalmenu">
+                    $content_v2 .= '<div id="pav-verticalmenu" class="pav-verticalmenu">
 									<div class="menu-content d-content">
 										<div class="pav-verticalmenu fix-top hidden-xs hidden-sm">
 											<div class="navbar navbar-verticalmenu">
@@ -363,7 +153,7 @@ class Cron_draw_menu extends MY_Controller
 														<div class="collapse navbar-collapse navbar-ex1-collapse">
 															<ul class="nav navbar-nav verticalmenu">';
 
-				$mobileContent = '<div class="collapse navbar-collapse" id="bs-megamenu">
+                    $mobileContent = '<div class="collapse navbar-collapse" id="bs-megamenu">
                                     <div class="row">
                                         <div class="quick-access">
                                             <div id="search" class="input-group pull-right" style="margin-top: 4px;height: 24px !important;">
@@ -376,159 +166,128 @@ class Cron_draw_menu extends MY_Controller
                                     </div>
 									<ul class="nav navbar-nav megamenu">';
 
-				$end_sponsored = false;
-				foreach( $main_cat_array as $value )
-				{
-					if ($end_sponsored == false && $value["sponsored"] == 0)
-					{
-						$end_sponsored = true;
-						//add a new line
-						$content_v2 .="<li class='nav-divider'></li>" . $eol;
-						$mobileContent .="<li class='nav-divider'></li>" . $eol;
-					}
+                    $end_sponsored = false;
 
-					$content_v2 .= '<li class="bg1 topdropdow parent dropdown " ><a href="' .$value["url"]. '" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">' . $value["name"] . '</span><b class="caret"></b></a>';
+                    var_dump($main_cat_array);die;
+                    foreach ($main_cat_array as $value) {
+                        if ($end_sponsored == false && $value['sponsored'] == 0) {
+                            $end_sponsored = true;
+                            $content_v2 .= "<li class='nav-divider'></li>".$eol;
+                            $mobileContent .= "<li class='nav-divider'></li>".$eol;
+                        }
 
-					$mobileContent .= '<li class="parent dropdown home aligned-left" >
-											<a class="dropdown-toggle linkcat" data-toggle="dropdown" href="' .$value["url"]. '">
-												<span class="menu-title">' . $value["name"] . '</span><b class="caret"></b>
+                        $content_v2 .= '<li class="bg1 topdropdow parent dropdown " ><a href="'.$value['url'].'" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">'.$value['name'].'</span><b class="caret"></b></a>';
+
+                        $mobileContent .= '<li class="parent dropdown home aligned-left" >
+											<a class="dropdown-toggle linkcat" data-toggle="dropdown" href="'.$value['url'].'">
+												<span class="menu-title">'.$value['name'].'</span><b class="caret"></b>
 											</a>';
 
-					if($value["subcat"])
-					{
-						//subcat header image - no needed
-						$totallinks = 1;
-						$noofsubcategory=count($value["subcat"]);
-						$eachcol = ceil($noofsubcategory / 3);
-						//start subcats container
-						$content_v2 .= '<div class="dropdown-menu"  style="width:840px" >
+                        if ($value['subcat']) {
+                            $totallinks = 1;
+                            $noofsubcategory = count($value['subcat']);
+                            $eachcol = ceil($noofsubcategory / 3);
+                            $content_v2 .= '<div class="dropdown-menu"  style="width:840px" >
                                           <div class="dropdown-menu-inner">
                                              <div class="row">';
 
-						$mobileContent .= '<div class="dropdown-menu"  style="width:540px" >
+                            $mobileContent .= '<div class="dropdown-menu"  style="width:540px" >
 										     <div class="dropdown-menu-inner">
 											   <div class="row">';
 
-						foreach( $value["subcat"] as $subcategory )
-						{
-							if($totallinks==1 )
-							{
-								//subcat column start
-								$content_v2 .= '<div class="mega-col col-md-4 " >
+                            foreach ($value['subcat'] as $subcategory) {
+                                if ($totallinks == 1) {
+                                    $content_v2 .= '<div class="mega-col col-md-4 " >
                                                    <div class="mega-col-inner">
                                                       <div class="pavo-widget">
                                                          <div class="pavo-widget">';
-							}
+                                }
 
-
-							$mobileContent .= '<div class="mega-col col-xs-12 col-sm-12 col-md-4 " >
+                                $mobileContent .= '<div class="mega-col col-xs-12 col-sm-12 col-md-4 " >
 													 <div class="mega-col-inner">
 														<div class="pavo-widget" id="pavowid-52">
 															<div class="pavo-widget" id="pavowid-747136749">';
 
-							$sub_cat_link = htmlentities($base_url.$this->website_service->get_cat_url($sub_cat_id, TRUE));
+                                $sub_cat_link = htmlentities($this->sc['Category']->getCatUrl($sub_cat_id));
 
-
-							$content_v2 .= '<h4 class="widget-heading title">
-												<a class="linksub" href=\''.$subcategory["url"].'\'>
-												   <span>'.$subcategory["name"].'</span>
+                                $content_v2 .= '<h4 class="widget-heading title">
+												<a class="linksub" href=\''.$subcategory['url'].'\'>
+												   <span>'.$subcategory['name'].'</span>
 												</a>
 											</h4>
 											<div class="">';
-							$mobileContent .= ' <h4 class="widget-heading title">
-													<a  class="linksub" href=\''.$subcategory["url"].'\'>
-													   <span>'.$subcategory["name"].'</span>
+                                $mobileContent .= ' <h4 class="widget-heading title">
+													<a  class="linksub" href=\''.$subcategory['url'].'\'>
+													   <span>'.$subcategory['name'].'</span>
 													</a>
 												</h4>
 												<div class="">';
 
-							if($subcategory["subsub"]) {
-								$content_v2 .= '<ul class="content list-unstyled">';
-								$mobileContent .= '<ul class="content">';
-						  		foreach( $subcategory["subsub"] as $subsubcategory )
-								{
-									$content_v2 .= "<li><a href=\"".$subsubcategory["url"]."\">".$subsubcategory["name"]."</a></li>";
-									$mobileContent .= "<li><a class='linkcat' href=\"".$subsubcategory["url"]."\">".$subsubcategory["name"]."</a></li>";
-							  	}
-							  	$content_v2 .= '</ul>
+                                if ($subcategory['subsub']) {
+                                    $content_v2 .= '<ul class="content list-unstyled">';
+                                    $mobileContent .= '<ul class="content">';
+                                    foreach ($subcategory['subsub'] as $subsubcategory) {
+                                        $content_v2 .= '<li><a href="'.$subsubcategory['url'].'">'.$subsubcategory['name'].'</a></li>';
+                                        $mobileContent .= "<li><a class='linkcat' href=\"".$subsubcategory['url'].'">'.$subsubcategory['name'].'</a></li>';
+                                    }
+                                    $content_v2 .= '</ul>
 											 </div>';
-								$mobileContent .= '</ul>
+                                    $mobileContent .= '</ul>
                                                  </div>';
-							}
-							else
-							{
-							  	$content_v2 .= '</div>';
-								$mobileContent .= '</div>';
-							}
+                                } else {
+                                    $content_v2 .= '</div>';
+                                    $mobileContent .= '</div>';
+                                }
 
-							if( $noofsubcategory==$totallinks )
-							{
-								//subcat column end
-								$content_v2 .= '
+                                if ($noofsubcategory == $totallinks) {
+                                    $content_v2 .= '
 										  </div>
 									   </div>
 									</div>
 								 </div>';
 
-								 $mobileContent .= '
+                                    $mobileContent .= '
 										  </div>
 									   </div>
 									</div>
 								  </div>';
-							}
-							else
-							{
-								if( $totallinks%$eachcol==0 )
-								{
-									//subcat column end
-									$content_v2 .= '
+                                } else {
+                                    if ($totallinks % $eachcol == 0) {
+                                        $content_v2 .= '
                                               </div>
                                            </div>
                                         </div>
                                      </div>';
 
-									//subcat column start
-									$content_v2 .= '<div class="mega-col col-md-4 " >
+                                        $content_v2 .= '<div class="mega-col col-md-4 " >
 													   <div class="mega-col-inner">
                                                          <div class="pavo-widget">
                                                             <div class="pavo-widget">
                                                                ';
+                                    }
 
-								}
-
-								//subcat column end
-								$mobileContent .= '
+                                    $mobileContent .= '
 											 </div>
 										  </div>
 									   </div>
 									</div>';
+                                }
+                                ++$totallinks;
+                            }
 
-								// //subcat column start
-								// $mobileContent .= '<div class="mega-col col-xs-12 col-sm-12 col-md-4 " >
-												 // <div class="mega-col-inner">
-													// <div class="pavo-widget" id="pavowid-52">
-													   // <div class="pavo-widget" id="pavowid-747136749">
-														// ';
-							}
-							$totallinks++;
-						}
-
-						//end subcats container
-						$content_v2 .= '    </div>
+                            $content_v2 .= '    </div>
                                          </div>
                                       </div>';
 
-						$mobileContent .= ' </div>
+                            $mobileContent .= ' </div>
                                          </div>
                                       </div>';
-					}
+                        }
 
-					$content_v2 .="</li>" . $eol;
-					$mobileContent .="</li>" . $eol;
-				}
-
-				//$content_v2 .= "</ul></div>".$eol;
-				$content_v2 .= '							</ul>
+                        $content_v2 .= '</li>'.$eol;
+                        $mobileContent .= '</li>'.$eol;
+                    }
+                    $content_v2 .= '							</ul>
 														</div>
 													</div>
 												</div>
@@ -549,69 +308,35 @@ class Cron_draw_menu extends MY_Controller
 									</nav>
 								</div>
 							</div>'.$eol;
-				//in the header.php file
-						// </div>
-					// </div>
-				// </div>'.$eol;
 
-				$mobileContent .= '</ul>
+                    $mobileContent .= '</ul>
 								</div>'.$eol;
 
-				//print $content_v2;
+                    $menu_path = APPPATH.'views/template/menu/'.$lang_id;
+                    $menu_file = $menu_path.'/menu_'.strtolower($platform_id).'.html';
+                    if (!file_exists($menu_path)) {
+                        mkdir($menu_path, 0755, true);
+                    }
+                    $small_menu = $content_v2;
 
-				// $mobile_menu_path = APPPATH . "mobile_views/template/menu/" . $lang_id;
-				// $mobile_menu_file = $mobile_menu_path . "/menu_" . strtolower($platform_id) . ".html";
-				// if (!file_exists($mobile_menu_path))
-				// {
-					// mkdir($mobile_menu_path, 0755, true);
-					// chown($mobile_menu_path, "apache");
-					// chgrp($mobile_menu_path, "users");
-				// }
-				// file_put_contents($mobile_menu_file, $mobileContent);
-				// chown($mobile_menu_file, "apache");
-				// chgrp($mobile_menu_file, "users");
-				// chmod($mobile_menu_file, 0664);
+                    file_put_contents($menu_file, $small_menu);
 
-				//print APPPATH . "views/template/menu/" . $lang_id;
+                    $menu_file = APPPATH.'views/template/menu/'.$lang_id.'/menu_big_'.strtolower($platform_id).'.html';
+                    $normal_menu = $content_v2;
+                    file_put_contents($menu_file, $normal_menu);
+                }
+            }
+        }
+    }
 
-				$menu_path = APPPATH . "views/template/menu/" . $lang_id;
-				$menu_file = $menu_path . "/menu_" . strtolower($platform_id) . ".html";
-				if (!file_exists($menu_path))
-				{
-					mkdir($menu_path, 0755, true);
-				}
-				$small_menu =  $content_v2;
-
-				file_put_contents($menu_file, $small_menu);
-				//chmod($menu_file, 0664);
-
-				$menu_file = APPPATH."views/template/menu/".$lang_id."/menu_big_" . strtolower($platform_id) . ".html";
-				$normal_menu = $content_v2;
-				file_put_contents($menu_file, $normal_menu);
-				//chmod($menu_file, 0664);
-
-				// $footer_menu_file = APPPATH."views/template/menu/".$lang_id."/footer_menu_" . strtolower($platform_id) . ".html";
-				// file_put_contents($footer_menu_file, $footer_content);
-				// chown($menu_file, "apache");
-				// chgrp($menu_file, "users");
-				// chmod($menu_file, 0664);
-				}
-			}
-		}
-
-	}
-
-
-	function cmp($a, $b)
-	{
- 	   return strnatcmp($a["name"], $b["name"]);
-	}
-
-
-
-    function index()
+    public function cmp($a, $b)
     {
-        $platform_list = $this->selling_platform_model->get_list(array("type" => "WEBSITE", "status" => 1), array());
+        return strnatcmp($a['name'], $b['name']);
+    }
+
+    public function index()
+    {
+        $platform_list = $this->selling_platform_model->get_list(array('type' => 'WEBSITE', 'status' => 1), array());
 
         foreach ($platform_list as $p_key => $p_obj) {
             $pbv_obj = $this->platform_biz_var_service->get_platform_biz_var($p_obj->get_id());
@@ -619,34 +344,34 @@ class Cron_draw_menu extends MY_Controller
             $platform_id = $p_obj->get_id();
 
             // initialize data
-            $cat_width = $cat_length = $sum_lenght = $total_cat = NULL;
-            $adj_width_str = "";
-            $n_adj_ie_str = "";
-            $str = "";
+            $cat_width = $cat_length = $sum_lenght = $total_cat = null;
+            $adj_width_str = '';
+            $n_adj_ie_str = '';
+            $str = '';
             $fav = array();
-            $search = $replace = NULL;
+            $search = $replace = null;
 
             // using only en for now
             $menudata = $this->menu_model->get_menu_list_w_platform_id('en', $platform_id);
 
-            $menulist = $menudata["list"];
-            $allcatlist = $menudata["allcat"];
+            $menulist = $menudata['list'];
+            $allcatlist = $menudata['allcat'];
 
-            $str = '<link rel="stylesheet" href="/css/menu_style_' . $p_obj->get_id() . '.css" type="text/css" media="all"/>
+            $str = '<link rel="stylesheet" href="/css/menu_style_'.$p_obj->get_id().'.css" type="text/css" media="all"/>
             <!--[if lte IE 6]>
-                <link rel="stylesheet" href="/css/menu_style_ie6_' . $p_obj->get_id() . '.css" type="text/css" media="all"/>
+                <link rel="stylesheet" href="/css/menu_style_ie6_'.$p_obj->get_id().'.css" type="text/css" media="all"/>
             <![endif]-->
             <div class="menu_wrapper" id="sitenav">
                 <ul class="nav-container">';
 
             //$total_cat = $this->context_config_service->value_of("menu_total_cat");
             $total_cat = sizeof($allcatlist[0]);
-            $total_subcat = $this->context_config_service->value_of("menu_total_subcat");
+            $total_subcat = $this->context_config_service->value_of('menu_total_subcat');
             $total_col1 = ceil($total_subcat / 2);
-            $total_subsubcat = $this->context_config_service->value_of("menu_total_subsubcat");
+            $total_subsubcat = $this->context_config_service->value_of('menu_total_subsubcat');
             $padding = 0;
 
-            $menu_width = $this->context_config_service->value_of("menu_width");
+            $menu_width = $this->context_config_service->value_of('menu_width');
 
             $menulinks_width = 200;
             $search[] = '[:menulinks_width:]';
@@ -659,13 +384,15 @@ class Cron_draw_menu extends MY_Controller
             $cat_length[0] = 2;
 
             if ($menulist[1][0]) {
-                foreach ($menulist[1][0] as $cat_obj) // foreach category
-                {
-                    $cat_count++;
+                foreach ($menulist[1][0] as $cat_obj) {
+                    // foreach category
+
+                    ++$cat_count;
 
                     $cur_name = $cat_obj->get_name();
-                    if (($rows = count($ar_name = explode(" ", $cur_name))) > 1)  // check category word length
-                    {
+                    if (($rows = count($ar_name = explode(' ', $cur_name))) > 1) {
+                        // check category word length
+
                         if ($rows > 2) {
                             $i = 2;
                             $new_name_f = $ar_name[0];
@@ -675,24 +402,23 @@ class Cron_draw_menu extends MY_Controller
 
                             while ($i < $rows) {
                                 if (strlen($new_name_f) < strlen($new_name_l)) {
-                                    $new_name_f .= " " . $ar_name[$check_first];
-                                    $check_first++;
+                                    $new_name_f .= ' '.$ar_name[$check_first];
+                                    ++$check_first;
                                 } else {
-                                    $new_name_l = $ar_name[$check_last] . " " . $new_name_l;
-                                    $check_last--;
+                                    $new_name_l = $ar_name[$check_last].' '.$new_name_l;
+                                    --$check_last;
                                 }
-                                $i++;
+                                ++$i;
                             }
-                            $cat_obj->set_name($new_name_f . "<br />" . $new_name_l);
-                            $cat_length[$cat_count] = $this->_getMaxLen(array(str_replace(" ", "  ", $new_name_f), str_replace(" ", "  ", $new_name_l)));
+                            $cat_obj->set_name($new_name_f.'<br />'.$new_name_l);
+                            $cat_length[$cat_count] = $this->_getMaxLen(array(str_replace(' ', '  ', $new_name_f), str_replace(' ', '  ', $new_name_l)));
                         } else {
-                            $cat_obj->set_name(str_replace(" ", "<br />", $cur_name));
-                            $cat_length[$cat_count] = $this->_getMaxLen(str_replace(" ", "  ", $ar_name));
+                            $cat_obj->set_name(str_replace(' ', '<br />', $cur_name));
+                            $cat_length[$cat_count] = $this->_getMaxLen(str_replace(' ', '  ', $ar_name));
                         }
                     } else {
                         $cat_length[$cat_count] = strlen($cur_name);
                     }
-
                 }
             }
 
@@ -712,11 +438,11 @@ class Cron_draw_menu extends MY_Controller
             $cat_width[$max_col] = $cat_width[$max_col] + $adj_width - $padding * ($total_cat + 1);
 
             // define the width for each cell
-            for ($i = 0; $i < $total_cat + 1; $i++) {
+            for ($i = 0; $i < $total_cat + 1; ++$i) {
                 $adj_width_str .= '
-    #sitenav ul.nav-container #n' . $i . '
+    #sitenav ul.nav-container #n'.$i.'
     {
-    width:' . $cat_width[$i] . 'px;
+    width:'.$cat_width[$i].'px;
     }';
             }
             $search[] = '[:adj_width:]';
@@ -730,7 +456,7 @@ class Cron_draw_menu extends MY_Controller
 
             $half_menulinks_width = floor($menulinks_width / 2);
             $left_width = 0;
-            for ($i = 0; $i < $total_cat + 1; $i++) {
+            for ($i = 0; $i < $total_cat + 1; ++$i) {
                 $cur_half_width = floor($cat_width[$i] / 2);
                 $left_adj_width = $half_menulinks_width - $cur_half_width;
                 $left_adj_width_ie = $left_width - $half_menulinks_width + $cur_half_width;
@@ -754,14 +480,14 @@ class Cron_draw_menu extends MY_Controller
                         $pxx = 0;
                     } else {
                         $offset = $col_width - $cat_width[$total_cat];
-                        $n_adj_str .= ' #sitenav #n' . $i . ':hover .menu { left:-' . $offset . 'px; }
+                        $n_adj_str .= ' #sitenav #n'.$i.':hover .menu { left:-'.$offset.'px; }
                         '; /*'.(-$left_adj_width).'      IE   left:'.($left_adj_width_ie).'px; }*/
                     }
-                    $n_adj_ie_str .= '#sitenav ul #n' . $i . ' a:hover .menu, #sitenav ul #n' . $i . ' a:hover iframe {left:' . ($left_adj_width_ie) . 'px; }
+                    $n_adj_ie_str .= '#sitenav ul #n'.$i.' a:hover .menu, #sitenav ul #n'.$i.' a:hover iframe {left:'.($left_adj_width_ie).'px; }
 
-                    #sitenav ul #n' . $i . ' a:hover iframe
+                    #sitenav ul #n'.$i.' a:hover iframe
                     {
-                        height:expression(document.getElementById(\'m' . $i . '\').offsetHeight+\'px\');
+                        height:expression(document.getElementById(\'m'.$i.'\').offsetHeight+\'px\');
                     }
                     ';
                 }
@@ -772,24 +498,24 @@ class Cron_draw_menu extends MY_Controller
             $search_ie[] = '[:n_adj_ie_str:]';
             $replace_ie[] = $n_adj_ie_str;
 
-            $css = file_get_contents("css/menu_style_tpl.css");
-            $css_file = "../public_html/css/menu_style_" . $p_obj->get_id() . ".css";
+            $css = file_get_contents('css/menu_style_tpl.css');
+            $css_file = '../public_html/css/menu_style_'.$p_obj->get_id().'.css';
 
             file_put_contents($css_file, str_replace($search, $replace, $css));
-            chown($css_file, "apache");
-            chgrp($css_file, "users");
+            chown($css_file, 'apache');
+            chgrp($css_file, 'users');
             chmod($css_file, 0664);
 
-            $css = file_get_contents("css/menu_style_ie6_tpl.css");
-            $css_file = "../public_html/css/menu_style_ie6_" . $p_obj->get_id() . ".css";
+            $css = file_get_contents('css/menu_style_ie6_tpl.css');
+            $css_file = '../public_html/css/menu_style_ie6_'.$p_obj->get_id().'.css';
 
             file_put_contents($css_file, str_replace($search_ie, $replace_ie, $css));
-            chown($css_file, "apache");
-            chgrp($css_file, "users");
+            chown($css_file, 'apache');
+            chgrp($css_file, 'users');
             chmod($css_file, 0664);
 
-            $n_search = array("  ", " ");
-            $n_replace = array(" ", "-");
+            $n_search = array('  ', ' ');
+            $n_replace = array(' ', '-');
 
             $home_padding_right = $cat_width[0] - 8;
 
@@ -797,7 +523,7 @@ class Cron_draw_menu extends MY_Controller
                 <li id="n0" class="nav">
                     <h1 align="center">
                     <img style="display:block" src="/images/seperator_left.gif" class="seperator">
-                    <img style="display:block;margin-left:auto;margin-left:' . $home_padding_right . 'px" src="/images/seperator_right.gif" class="seperator">
+                    <img style="display:block;margin-left:auto;margin-left:'.$home_padding_right.'px" src="/images/seperator_right.gif" class="seperator">
                     <a href="/" class="cat"><span><img border="0px" src="/images/home_icon.gif" />&nbsp;</span></a>
                     </h1>
                 </li>';
@@ -807,26 +533,26 @@ class Cron_draw_menu extends MY_Controller
             $i = 0;
             if ($menulist[1][0]) {
                 foreach ($menulist[1][0] as $cat_obj) {
-                    $i++;
+                    ++$i;
                     $padding_right = $cat_width[$i] - 8; // 8 is the size of the seperator_right.gif
-                    $cat_count++;
+                    ++$cat_count;
                     $str .= '
-                <li id="n' . $cat_count . '" class="nav">
+                <li id="n'.$cat_count.'" class="nav">
                     <h1 align="center">
                         <img style="display:block" src="/images/seperator_left.gif" class="seperator">
-                        <img style="display:block;margin-left:auto;margin-left:' . $padding_right . 'px" src="/images/seperator_right.gif" class="seperator">
-                    <a href="/cat/?catid=' . $cat_obj->get_id() . '" class="cat"><span>' . $cat_obj->get_name() . '&nbsp;</span></a>
+                        <img style="display:block;margin-left:auto;margin-left:'.$padding_right.'px" src="/images/seperator_right.gif" class="seperator">
+                    <a href="/cat/?catid='.$cat_obj->get_id().'" class="cat"><span>'.$cat_obj->get_name().'&nbsp;</span></a>
                     </h1>
-                    <table class="menu" id="m' . $cat_count . '" cellpadding=0 cellspacing=0 border=0><tr><td>
+                    <table class="menu" id="m'.$cat_count.'" cellpadding=0 cellspacing=0 border=0><tr><td>
                         <table class="menu_links" cellpadding=0 cellspacing=0 border=0>
                         <tr>';
                     if ($allcatlist[$cat_obj->get_id()]) {
                         $str .= '
                             <td class="col3" valign=top><ul>';
                         foreach ($allcatlist[$cat_obj->get_id()] as $subcat_obj) {
-                            if ($this->product_service->get_num_rows(array("sub_cat_id" => $subcat_obj->get_id()))) {
+                            if ($this->product_service->get_num_rows(array('sub_cat_id' => $subcat_obj->get_id()))) {
                                 $str .= '
-                                    <li><h3><a href="/search/?from=c&catid=' . $subcat_obj->get_id() . '">' . $subcat_obj->get_name() . '</a></h3></li>';
+                                    <li><h3><a href="/search/?from=c&catid='.$subcat_obj->get_id().'">'.$subcat_obj->get_name().'</a></h3></li>';
                             }
                         }
                         $str .= '
@@ -844,24 +570,23 @@ class Cron_draw_menu extends MY_Controller
                 }
             }
 
-
             $str .= '
         </ul>
     </div>';
 
             // temp fix for no sales data before launch will change back later - 20110317 Steven
-            $platform_list = $this->selling_platform_model->get_platform_by_lang(array("sp.type" => "SKYPE", "sp.status" => "1", "pbv.language_id" => $lang_id));
-            foreach ($platform_list AS $obj) {
+            $platform_list = $this->selling_platform_model->get_platform_by_lang(array('sp.type' => 'SKYPE', 'sp.status' => '1', 'pbv.language_id' => $lang_id));
+            foreach ($platform_list as $obj) {
                 $fav[$obj->get_id()][$lang_id][] = $this->category_model->category_service->get_best_selling_cat($obj->get_id(), $lang_id);
             }
             $fav_cat_obj = serialize($fav);
 
-            $str .= '<?php $fav_cat_obj = \'' . $fav_cat_obj . '\'; ?>';
+            $str .= '<?php $fav_cat_obj = \''.$fav_cat_obj.'\'; ?>';
 
-            $menu_file = APPPATH . "public_views/menu_" . $platform_id . ".php";
+            $menu_file = APPPATH.'public_views/menu_'.$platform_id.'.php';
             file_put_contents($menu_file, $str);
-            chown($menu_file, "apache");
-            chgrp($menu_file, "users");
+            chown($menu_file, 'apache');
+            chgrp($menu_file, 'users');
             chmod($menu_file, 0664);
         }
 
@@ -875,6 +600,7 @@ class Cron_draw_menu extends MY_Controller
         foreach ($arr as $arr_str) {
             $len[] = strlen($arr_str);
         }
+
         return max($len);
     }
 
@@ -883,6 +609,3 @@ class Cron_draw_menu extends MY_Controller
         return $this->appId;
     }
 }
-
-
-

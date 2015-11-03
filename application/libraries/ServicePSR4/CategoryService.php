@@ -9,10 +9,42 @@ class CategoryService extends BaseService
         $category = $this->getDao('Category')->getCategoryName();
 
         foreach ($category as $cat) {
-            $category_mapping[$cat['id']] = str_replace(' ', '-',parse_url_char($cat['name']));
+            $category_mapping[$cat['id']] = str_replace(' ', '-', parse_url_char($cat['name']));
         }
 
         return $category_mapping;
+    }
+
+    public function getCatUrl($cat_id)
+    {
+        $where = ['c1.id' => $cat_id];
+        $option = ['limit' => 1];
+        $obj = $this->getCategoryFullPath($where, $option);
+
+        $url = base_url();
+        switch ($obj->getLevel()) {
+            case '3':
+                $url .= str_replace(' ', '-', parse_url_char($obj->getTopTopName())).'/';
+                $url .= str_replace(' ', '-', parse_url_char($obj->getTopName())).'/';
+                $url .= str_replace(' ', '-', parse_url_char($obj->getName())).'/';
+                break;
+            case '2':
+                $url .= str_replace(' ', '-', parse_url_char($obj->getTopName())).'/';
+                $url .= str_replace(' ', '-', parse_url_char($obj->getName())).'/';
+                break;
+            case '1':
+                $url .= str_replace(' ', '-', parse_url_char($obj->getName())).'/';
+                break;
+            default:
+                break;
+        }
+
+        return $url;
+    }
+
+    private function getCategoryFullPath($where, $option = [])
+    {
+        return $this->getDao('Category')->getCategoryFullPath($where, $option);
     }
 
     public function getMenuListData($lang_id, $platform_id)
