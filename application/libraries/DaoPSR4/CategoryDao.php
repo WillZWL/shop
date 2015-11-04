@@ -22,7 +22,7 @@ class CategoryDao extends BaseDao
         return $query->result_array();
     }
 
-    public function getCategoryFullPath($where = [], $option = [], $className = 'CategoryPullPathDto')
+    public function getCategoryFullPath($where = [], $option = [], $className = 'CategoryFullPathDto')
     {
         $this->db->from('category c1');
         $this->db->join('category c2', 'c1.parent_cat_id = c2.id', 'inner');

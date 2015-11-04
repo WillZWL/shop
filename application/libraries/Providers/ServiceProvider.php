@@ -217,6 +217,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\SkuMappingService();
         };
 
+        $servcieContainer['ProductIdentifier'] = function () {
+            return new S\ProductIdentifierService();
+        };
+
 
 		//Data transfer
         $servcieContainer['VbDataTransferPrices'] = function () {
@@ -314,6 +318,9 @@ class ServiceProvider implements ServiceProviderInterface
         $servcieContainer['VbProductImage'] = function () {
             return new S\VbProductImageService();
         };
+
+        $servcieContainer['Affiliate'] = function () {
+            return new S\AffiliateService();
 
         $servcieContainer['SoFactory'] = function () {
             return new S\SoFactoryService();

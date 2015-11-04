@@ -1568,59 +1568,8 @@ salecycle_script;
         $data['lang_text'] = $controller->get_language_file('', '', 'index');
 
         switch (strtolower(PLATFORMCOUNTRYID)) {
-            case 'au' :
-                $searchspring_site_id = 'vm182w';
-                break;
-            case 'be' :
-                $searchspring_site_id = 'nbc1w6';
-                break;
-            case 'fi' :
-                $searchspring_site_id = 'mlcmi6';
-                break;
-            case 'fr' :
-                $searchspring_site_id = 'hi80z4';
-                break;
             case 'gb' :
-                $searchspring_site_id = 'z7q84w';
-                break;
-            case 'hk' :
-                $searchspring_site_id = 'jx3nzf';
-                break;
-            case 'ie' :
-                $searchspring_site_id = 'evot87';
-                break;
-            case 'my' :
-                $searchspring_site_id = '9amw38';
-                break;
-            case 'nz' :
-                $searchspring_site_id = 'tbp112';
-                break;
-            case 'sg' :
-                $searchspring_site_id = 'zkx7z6';
-                break;
-            case 'es' :
-                $searchspring_site_id = 'kfwha5';
-                break;
-            case 'pt' :
-                $searchspring_site_id = 'lom5se';
-                break;
-            case 'us' :
-                $searchspring_site_id = 'oap9ds';
-                break;
-            case 'ph' :
-                $searchspring_site_id = 'ule0ej';
-                break;
-            case 'it' :
-                $searchspring_site_id = 'zk4kkc';
-                break;
-            case 'mt' :
-                $searchspring_site_id = 'aoi27k';
-                break;
-            case 'ch' :
-                $searchspring_site_id = 'jmx5qq';
-                break;
-            case 'ru' :
-                $searchspring_site_id = 'oocsgg';
+                $searchspring_site_id = 'jdajtq';
                 break;
 
             default   :

@@ -1,5 +1,5 @@
 <?php
-class CategoryPullPathDto extends \BaseDto
+class CategoryFullPathDto extends \BaseDto
 {
     private $cat_id;
     private $name;
