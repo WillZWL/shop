@@ -121,4 +121,16 @@ class Search extends PUB_Controller
 
         return $this->sc['categoryModel']->getBrandFilterGridInfo($where, $option);
     }
+
+
+
+    public function searchBySs()
+    {
+        $this->sc['Affiliate']->addAfCookie($_GET);
+
+        $data = array();
+
+        $this->load->view('searchspring_result', $data);
+        //$this->load_tpl('content', 'tbs_searchspring_result', $data, TRUE);
+    }
 }

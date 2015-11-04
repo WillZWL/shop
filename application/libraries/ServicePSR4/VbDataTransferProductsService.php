@@ -97,15 +97,15 @@ class VbDataTransferProductsService extends VbDataTransferService
                 else //if the new mapping has a different sku, we dont continue with the update, we return a message error
                 {
                     //if the sku is mapped, we get the atomv prod_gro_id
-                    $master_prod_grp_id = "";
-                    $master_prod_grp_id = $this->getService('ProductIdentifier')->getProdGrpCdBySku($sku);
+                    //$master_prod_grp_id = "";
+                    //$master_prod_grp_id = $this->getService('ProductIdentifier')->getProdGrpCdBySku($master_sku);
 
                     if (empty($sku))
                     {
-                        $reason = "update";
+                        $reason = "insert";
                         // no mapping, as a new product
                         $product_obj = $this->getService('Product')->createNewProduct($product);
-                        $product_obj->setProdGrpCd($master_prod_grp_id);
+                        //$product_obj["prod_grp_cd"] = $master_prod_grp_id;
                         if ($this->getService('Product')->getDao('Product')->insert($product_obj)) {
                             $sku_mpaping_obj = $this->getService('SkuMapping')->createNewSkuMapping($product_obj->getSku(), $master_sku);
                             $this->getService('SkuMapping')->getDao('SkuMapping')->insert($sku_mpaping_obj);
@@ -115,6 +115,8 @@ class VbDataTransferProductsService extends VbDataTransferService
                             $process_status = 3;    // inset failure
                         }
                     } else {
+
+                        $reason = "update";
 
                         if ($bchange_mapping == true)
                         {
@@ -127,8 +129,8 @@ class VbDataTransferProductsService extends VbDataTransferService
                             $this->$this->getService('SkuMapping')->getDao('SkuMapping')->qUpdate($where, $sku_map_obj);
                         }
 
-                        $product_obj = $this->getService('Product')->getDao('Product')->get(['sku' => $sku_table]);
-                        $product_obj->setProdGrpCd($master_prod_grp_id);
+                        $product_obj = $this->getService('Product')->getDao('Product')->get(['sku' => $sku]);
+
                         $this->getService('Product')->updateProduct($product_obj, $product);
                         if ($this->getService('Product')->getDao('Product')->update($product_obj)) {
                             $process_status = 5;    // update success

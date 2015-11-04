@@ -935,9 +935,9 @@ class PriceService extends BaseService
         return json_encode($array);
     }
 
-    public function updateSkuPrice($platform_id = "", $local_sku = "", $price = "", $commit = false)
+    public function updateSkuPrice($platform_id = "", $local_sku = "", $price = "", $vb_price = "", $commit = false)
     {
-        $affected = $this->getDao('Price')->updateSkuPrice($platform_id, $local_sku, $price, $commit);
+        $affected = $this->getDao('Price')->updateSkuPrice($platform_id, $local_sku, $price, $vb_price, $commit);
 
         //print $this->get_dao()->db->last_query();
 

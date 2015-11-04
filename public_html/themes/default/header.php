@@ -123,7 +123,7 @@
                                         <div class="cart-top">
                                             <div id="cart" class="pull-right clearfix">
                                                 <div class="cart-inner media-body">
-                                                    <a href="/ReviewOrder">
+                                                    <a href="/revieworder">
                                                         <img src="/themes/default/asset/image/icon-cart.png">
                                                         <span id="cart-total" class="cart-total"><?= sprintf(_('%s item(s) - %s%s'), $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"], "$", $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"]) ?></span>
                                                         <i class="fa fa-angle-down"></i>
@@ -152,12 +152,34 @@
                 ?>
                             <div class="col-lg-9 col-md-9 hidden-sm hidden-xs top-verticalmenu">
                                 <div class="quick-access col-lg-9 col-md-9 hidden-sm hidden-xs">
-                                    <div id="search" class="input-group pull-right" style="margin-top: 4px;height: 24px !important;">
-                                        <input type="text" name="search" value="" placeholder="Search" class="form-control"  style="height: 24px !important;" />
+                                    <!--<div id="search" class="input-group pull-right" style="margin-top: 4px;height: 24px !important;">-->
+                                        <!--<input type="text" name="search" value="" placeholder="Search" class="form-control"  style="height: 24px !important;" />
                                         <span class="input-group-btn">
                                             <button type="button" class="button-search" style="height: 24px !important;"><i class="fa fa-search"></i></button>
-                                        </span>
-                                    </div>
+                                        </span>-->
+                                        <form id="search" class="input-group pull-right" style="margin-top: 4px;height: 24px !important;" action="/search/search-by-ss" name="searchform" method="GET">
+                                            <input type="text" autocomplete="off" onfocus="this.value=''''" value="" name="w" class="searchspring-query input form-control" title="Find your product" style="height: 24px !important;">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="button-search" style="height: 24px !important;"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </form>
+                                         <?php
+                                            $siteobj = \PUB_Controller::$siteInfo;
+                                            $currencyId = $siteobj->getSign();
+                                         ?>
+                                        <link rel="stylesheet" type="text/css" href="https://d2r7ualogzlf1u.cloudfront.net/autocomplete/autocomplete.css">
+                                        <link rel="stylesheet" type="text/css" href="/themes/default/asset/css/searchspring.css">
+                                        <script type="text/javascript" src="https://d2r7ualogzlf1u.cloudfront.net/autocomplete/searchspring-autocomplete.min.js"></script>
+                                        <script type="text/javascript">
+                                            SearchSpring.Autocomplete.init({
+                                                siteId: "jdajtq",
+                                                queryClass : "searchspring-query",
+                                                currencySymbol: "<?php echo $currencyId; ?>",
+                                                offsetY: 10,
+                                                offsetX: -15
+                                            });
+                                        </script>
+                                    <!--</div>-->
                                     <span class="suggestions-title">Top search:</span>
                                     <span class="suggestions">Sleepace, New tab s2, ghostdrone, iPhone 5c</span>
                                 </div>
