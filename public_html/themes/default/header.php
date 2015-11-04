@@ -33,7 +33,6 @@
     <script type="text/javascript" src="/themes/default/asset/js/jquery.scrollTo.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/jquery.serialScroll.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/jquery.jscroll.js"></script>
-    <script type="text/javascript" src="/themes/default/asset/js/raphael-min.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/jquery.easing.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/checkform.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/owl.carousel.min.js"></script>

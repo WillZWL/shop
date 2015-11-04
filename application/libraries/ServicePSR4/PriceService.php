@@ -30,8 +30,12 @@ class PriceService extends BaseService
         }
 
         if ($result = $this->getDao('Price')->getListingInfo($sku_list, $platform_id, $lang_id, $option)) {
+
+            $category_table = $this->getService('Category')->getCategoryName();
             if (is_array($result)) {
                 foreach ($result as $obj) {
+                    $prod_url = base_url().$category_table[$obj->getCatId()].'/'. $category_table[$obj->getSubCatId()].'/'.str_replace(' ', '-',parse_url_char($obj->getProdName())).'/Product/'.$obj->getSku();
+                    $obj->setProductUrl($prod_url);
                     $obj->setPrice(random_markup($obj->getPrice()));
                     $obj->setRrpPrice(random_markup($this->calcWebsiteProductRrp($obj->getPrice(), $obj->getFixedRrp(), $obj->getRrpFactor())));
                 }

@@ -20,7 +20,7 @@
                             </li>
                              <li>
                                 <input value="<?= _('Log In') ?>" onclick="return SubmitLogin();" class="btn btn-primary log_btn"> |
-                                <a href="<?=base_url()?>login/forget_password?back=checkout" rel="lyteframe" rev="width: 600px; height:240px; scrolling: auto;padding: 40px;" title=""><?= _('Forgotten Password') ?></a>
+                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href='<?=base_url()?>login/forget_password?back=checkout' title="<?= _('Forgotten Password') ?>"><?= _('Forgotten Password') ?></a>
                             </li>
                         </ul>
                         <input type="hidden" name="posted" value="1">

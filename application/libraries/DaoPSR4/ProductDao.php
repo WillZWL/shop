@@ -90,7 +90,7 @@ class ProductDao extends BaseDao
 
         $obj = $this->commonGetList($className, [], $option, 'pd.sku');
 
-		//print $this->db->last_query();
+		// print $this->db->last_query();
 		return $obj;
     }
 

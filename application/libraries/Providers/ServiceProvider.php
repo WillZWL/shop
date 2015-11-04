@@ -65,6 +65,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\ClwmsService();
         };
 
+        $servcieContainer['ClwmsTrackingFeed'] = function () {
+            return new S\ClwmsTrackingFeedService();
+        };
+
         $servcieContainer['DeliveryOption'] = function () {
             return new S\DeliveryOptionService();
         };
@@ -317,6 +321,21 @@ class ServiceProvider implements ServiceProviderInterface
 
         $servcieContainer['Affiliate'] = function () {
             return new S\AffiliateService();
+
+        $servcieContainer['SoFactory'] = function () {
+            return new S\SoFactoryService();
+        };
+
+        $servcieContainer['SoPaymentQueryLog'] = function () {
+            return new S\SoPaymentQueryLogService();
+        };
+
+        $servcieContainer['SoPaymentLog'] = function () {
+            return new S\SoPaymentLogService();
+        };
+
+        $servcieContainer['CartSession'] = function () {
+            return new S\CartSessionService();
         };
     }
 }

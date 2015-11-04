@@ -1,12 +1,11 @@
 <?php
-class SkuMappingVo extends \BaseVo
+class InterfaceTrackingVo extends \BaseVo
 {
     private $id;
-    private $sku;
-    private $ext_sys = '';
-    private $ext_sku = '';
-    private $vb_sku = '';
-    private $status = '1';
+    private $schedule_job_id;
+    private $start_time = '0000-00-00 00:00:00';
+    private $end_time = '0000-00-00 00:00:00';
+    private $status = 'N';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -19,9 +18,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id) {
-            $this->id = $id;
-        }
+        $this->id = $id;
     }
 
     public function getId()
@@ -29,59 +26,39 @@ class SkuMappingVo extends \BaseVo
         return $this->id;
     }
 
-    public function setSku($sku)
+    public function setScheduleJobId($schedule_job_id)
     {
-        if ($sku) {
-            $this->sku = $sku;
-        }
+        $this->schedule_job_id = $schedule_job_id;
     }
 
-    public function getSku()
+    public function getScheduleJobId()
     {
-        return $this->sku;
+        return $this->schedule_job_id;
     }
 
-    public function setExtSys($ext_sys)
+    public function setStartTime($start_time)
     {
-        if ($ext_sys) {
-            $this->ext_sys = $ext_sys;
-        }
+        $this->start_time = $start_time;
     }
 
-    public function getExtSys()
+    public function getStartTime()
     {
-        return $this->ext_sys;
+        return $this->start_time;
     }
 
-    public function setExtSku($ext_sku)
+    public function setEndTime($end_time)
     {
-        if ($ext_sku) {
-            $this->ext_sku = $ext_sku;
-        }
+        $this->end_time = $end_time;
     }
 
-    public function getExtSku()
+    public function getEndTime()
     {
-        return $this->ext_sku;
-    }
-
-    public function setVbSku($vb_sku)
-    {
-        if ($vb_sku) {
-            $this->vb_sku = $vb_sku;
-        }
-    }
-
-    public function getVbSku()
-    {
-        return $this->vb_sku;
+        return $this->end_time;
     }
 
     public function setStatus($status)
     {
-        if ($status) {
-            $this->status = $status;
-        }
+        $this->status = $status;
     }
 
     public function getStatus()
@@ -91,9 +68,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on) {
-            $this->create_on = $create_on;
-        }
+        $this->create_on = $create_on;
     }
 
     public function getCreateOn()
@@ -103,9 +78,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at) {
-            $this->create_at = $create_at;
-        }
+        $this->create_at = $create_at;
     }
 
     public function getCreateAt()
@@ -115,9 +88,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by) {
-            $this->create_by = $create_by;
-        }
+        $this->create_by = $create_by;
     }
 
     public function getCreateBy()
@@ -127,9 +98,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on) {
-            $this->modify_on = $modify_on;
-        }
+        $this->modify_on = $modify_on;
     }
 
     public function getModifyOn()
@@ -139,9 +108,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at) {
-            $this->modify_at = $modify_at;
-        }
+        $this->modify_at = $modify_at;
     }
 
     public function getModifyAt()
@@ -151,9 +118,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by) {
-            $this->modify_by = $modify_by;
-        }
+        $this->modify_by = $modify_by;
     }
 
     public function getModifyBy()

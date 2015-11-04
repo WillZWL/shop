@@ -32,10 +32,13 @@
                 <td style="padding-left:8px">
                     <b style="font-size:14px"><?= $lang["header"] ?></b><br><?= $lang["header_message"] ?>
                 </td>
+                <td align="right" style="padding-right:8px;">
+                    <input type="button" id="sync_wms_tracking_feed" onclick="wms_tracking_feed()" value="<?=$lang["sync_wms_tracking_feed"]?>">
+                </td>
             </tr>
             <tr>
-                <td align="right" style="padding-right:8px;">
-                </td>
+                <td></td>
+                <td align="right" style="padding-right:8px;"></td>
             </tr>
         </table>
         <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
@@ -376,6 +379,13 @@ html;
 </div>
 <iframe name="printframe" src="" width="0" height="0" frameborder="0" scrolling="no"></iframe>
 <script>
+    function wms_tracking_feed()
+    {
+        Redirect('<?=site_url('order/integrated_order_fulfillment/sync_wms_tracking_feed')?>');
+        document.getElementById("sync_wms_tracking_feed").disabled=true;
+        document.getElementById("sync_wms_tracking_feed").value = "<?=$lang["wms_tracking_feed_load"]?>";
+    }
+
     function set_mawb() {
         if (mawb = prompt('Please enter MAWB# :', '')) {
             document.getElementById('mawb').value = mawb;

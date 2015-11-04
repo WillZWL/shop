@@ -148,7 +148,7 @@
                         <div class="product-block">
                             <div class="image">
                                 <div class="product-img img">
-                                    <a class="img" title="<?= $prod_obj->getProdName(); ?>" href='<?= base_url("/main-product/view/$sku") ?>'>
+                                    <a class="img" title="<?= $prod_obj->getProdName(); ?>" href='<?= $prod_obj->getProductUrl() ?>'>
                                         <img class="img-responsive" src="<?= get_image_file($prod_obj->getImageExt(), 'm', $prod_obj->getSku()) ?>" title="<?= $prod_obj->getProdName(); ?>" alt="<?= $prod_obj->getProdName(); ?>" />
                                     </a>
                                     <div class="quickview hidden-xs">
@@ -161,7 +161,7 @@
                             </div>
                             <div class="product-meta">
                                 <div class="left">
-                                    <h6 class="name"><a href='<?= base_url("/main-product/view/$sku") ?>'><?= $prod_obj->getProdName(); ?></a></h6>
+                                    <h6 class="name"><a href='<?= $prod_obj->getProductUrl() ?>'><?= $prod_obj->getProdName(); ?></a></h6>
                                     <p class="description">
                                     <?php print $prod_obj->getShortDesc(); ?>
                                     </p>
@@ -170,7 +170,11 @@
                                         <span class="price-new"><font class="pay_price"><?= _('You Pay') ?> :  </font><?= $prod_obj->getPrice(); ?></span>
                                     </div>
                                     <div class="save_alter">
-                                        Save -30%
+                                        <?php
+                                        $discount = ($prod_obj->getRrpPrice() - $prod_obj->getPrice())/$prod_obj->getRrpPrice();
+                                        $discount = number_format($discount, 3)*100;
+                                        ?>
+                                        Save - <?=$discount?>%
                                     </div>
                                 </div>
                                 <div class="right">
@@ -182,10 +186,10 @@
                                             </button>
                                         </div>
                                         <div class="wishlist">
-                                            <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="More Info" onclick="wishlist.addwishlist('<?= $sku ?>');">
+                                            <a class="btn btn-primary iframe-link" data-toggle="tooltip" data-placement="top" title="More Info" href="<?= base_url("/main-product/view/$sku/sv") ?>">
                                                 <i class="fa fa-heart"></i>
                                                 <span class="more-info"><?= _("More Info") ?></span>
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

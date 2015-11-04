@@ -9,21 +9,11 @@ class ClwmsService extends BaseService
         $this->soService = new SoService;
     }
 
-    public function getSalesOrder($include_cc = 0)
+    public function getSalesOrder($where = [], $option = [])
     {
-        $where = [];
+        set_time_limit(0);
 
-        if ($include_cc == 1) {
-            $where['so.status in (2, 3)'] = null;
-        } else {
-            $where['so.status ='] = 3;
-        }
-
-        $where['so.refund_status ='] = 0;
-        $where['so.hold_status ='] = 0;
-        $option["orderby"] = 'so.so_no desc';
-        $option['limit'] = -1;
-
+        $where["p.sku not in (991424795, 991424796, 991424797, 991424798, 991424799, 991424803, 991424804, 991424805, 991424806, 991424807)"] = null;
         $so_list = $this->getDao('So')->getSalesOrder($where, $option);
 
         if ($so_list !== FALSE) {
@@ -52,7 +42,7 @@ class ClwmsService extends BaseService
                     }
                     $score = $so['score'];
                     if (is_null($score)) {
-                        $score = $this->soService->getPriorityScore($so['so_no']);
+                        $score = $this->getService('So')->getPriorityScore($so['so_no']);
                     }
                     $xml[] = '<order>';
                     $xml[] = '<bundle/>';
