@@ -321,6 +321,7 @@ class ServiceProvider implements ServiceProviderInterface
 
         $servcieContainer['Affiliate'] = function () {
             return new S\AffiliateService();
+        };
 
         $servcieContainer['SoFactory'] = function () {
             return new S\SoFactoryService();
