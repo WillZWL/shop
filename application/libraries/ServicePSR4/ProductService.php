@@ -70,7 +70,7 @@ class ProductService extends BaseProductService
 
         $newObj = new \ProductContentVo();
         $newObj->setProdSku($sku);
-        $newObj->setLangId($oldObj->lang_id);
+        $newObj->setLangId((string)$oldObj->lang_id);
         $this->updateProductContent($newObj, $oldObj);
 
         return $newObj;
@@ -78,28 +78,28 @@ class ProductService extends BaseProductService
 
     public function updateProductContent($newObj, $oldObj)
     {
-        $newObj->setProdName(replace_special_chars($oldObj->prod_name));
-        $newObj->setProdNameOriginal(replace_special_chars($oldObj->prod_name_original));
-        $newObj->setShortDesc(replace_special_chars($oldObj->short_desc));
-        $newObj->setContents(replace_special_chars($oldObj->contents));
-        $newObj->setContentsOriginal(replace_special_chars($oldObj->contents_original));
-        $newObj->setSeries(replace_special_chars($oldObj->series));
-        $newObj->setKeywords(replace_special_chars($oldObj->keywords));
-        $newObj->setKeywordsOriginal(replace_special_chars($oldObj->keywords_original));
-        $newObj->setModel1(replace_special_chars($oldObj->model_1));
-        $newObj->setModel2(replace_special_chars($oldObj->model_2));
-        $newObj->setModel3(replace_special_chars($oldObj->model_3));
-        $newObj->setModel4(replace_special_chars($oldObj->model_4));
-        $newObj->setModel5(replace_special_chars($oldObj->model_5));
-        $newObj->setDetailDesc(replace_special_chars($oldObj->detail_desc));
-        $newObj->setDetailDescOriginal(replace_special_chars($oldObj->detail_desc_original));
-        $newObj->setExtraInfo(replace_special_chars($oldObj->extra_info));
-        $newObj->setWebsiteStatusLongText(replace_special_chars($oldObj->website_status_long_text));
-        $newObj->setWebsiteStatusShortText(replace_special_chars($oldObj->website_status_short_text));
-        $newObj->setYoutubeId1(replace_special_chars($oldObj->youtube_id_1));
-        $newObj->setYoutubeId2(replace_special_chars($oldObj->youtube_id_2));
-        $newObj->setYoutubeCaption1(replace_special_chars($oldObj->youtube_caption_1));
-        $newObj->setYoutubeCaption2(replace_special_chars($oldObj->youtube_caption_2));
+        $newObj->setProdName(replace_special_chars((string)$oldObj->prod_name));
+        $newObj->setProdNameOriginal(replace_special_chars((string)$oldObj->prod_name_original));
+        $newObj->setShortDesc(replace_special_chars((string)$oldObj->short_desc));
+        $newObj->setContents(replace_special_chars((string)$oldObj->contents));
+        $newObj->setContentsOriginal(replace_special_chars((string)$oldObj->contents_original));
+        $newObj->setSeries(replace_special_chars((string)$oldObj->series));
+        $newObj->setKeywords(replace_special_chars((string)$oldObj->keywords));
+        $newObj->setKeywordsOriginal(replace_special_chars((string)$oldObj->keywords_original));
+        $newObj->setModel1(replace_special_chars((string)$oldObj->model_1));
+        $newObj->setModel2(replace_special_chars((string)$oldObj->model_2));
+        $newObj->setModel3(replace_special_chars((string)$oldObj->model_3));
+        $newObj->setModel4(replace_special_chars((string)$oldObj->model_4));
+        $newObj->setModel5(replace_special_chars((string)$oldObj->model_5));
+        $newObj->setDetailDesc(replace_special_chars((string)$oldObj->detail_desc));
+        $newObj->setDetailDescOriginal(replace_special_chars((string)$oldObj->detail_desc_original));
+        $newObj->setExtraInfo(replace_special_chars((string)$oldObj->extra_info));
+        $newObj->setWebsiteStatusLongText(replace_special_chars((string)$oldObj->website_status_long_text));
+        $newObj->setWebsiteStatusShortText(replace_special_chars((string)$oldObj->website_status_short_text));
+        $newObj->setYoutubeId1(replace_special_chars((string)$oldObj->youtube_id_1));
+        $newObj->setYoutubeId2(replace_special_chars((string)$oldObj->youtube_id_2));
+        $newObj->setYoutubeCaption1(replace_special_chars((string)$oldObj->youtube_caption_1));
+        $newObj->setYoutubeCaption2(replace_special_chars((string)$oldObj->youtube_caption_2));
     }
 
     public function createNewProductContentExtend($sku, $oldObj)
@@ -110,7 +110,7 @@ class ProductService extends BaseProductService
 
         $newObj = new \ProductContentExtendVo();
         $newObj->setProdSku($sku);
-        $newObj->setLangId($oldObj->lang_id);
+        $newObj->setLangId((string)$oldObj->lang_id);
         $this->updateProductContentExtend($newObj, $oldObj);
 
         return $newObj;
@@ -118,14 +118,14 @@ class ProductService extends BaseProductService
 
     public function updateProductContentExtend($newObj, $oldObj)
     {
-        $newObj->setFeature($oldObj->feature);
-        $newObj->setFeatureOriginal($oldObj->feature_original);
-        $newObj->setSpecification($oldObj->specification);
-        $newObj->setSpecOriginal($oldObj->spec_original);
-        $newObj->setRequirement($oldObj->requirement);
-        $newObj->setInstruction($oldObj->instruction);
-        $newObj->setApplyEnhancedListing($oldObj->apply_enhanced_listing);
-        $newObj->setEnhancedListing($oldObj->enhanced_listing);
+        $newObj->setFeature((string)$oldObj->feature);
+        $newObj->setFeatureOriginal((string)$oldObj->feature_original);
+        $newObj->setSpecification((string)$oldObj->specification);
+        $newObj->setSpecOriginal((string)$oldObj->spec_original);
+        $newObj->setRequirement((string)$oldObj->requirement);
+        $newObj->setInstruction((string)$oldObj->instruction);
+        $newObj->setApplyEnhancedListing((string)$oldObj->apply_enhanced_listing);
+        $newObj->setEnhancedListing((string)$oldObj->enhanced_listing);
     }
 
     public function createNewProductCustomClass($sku, $oldObj)
@@ -136,7 +136,7 @@ class ProductService extends BaseProductService
 
         $newObj = new \ProductCustomClassificationVo();
         $newObj->setSku($sku);
-        $newObj->setCountryId($oldObj->country_id);
+        $newObj->setCountryId((string)$oldObj->country_id);
         $newObj->updateProductCustomClass($newObj, $oldObj);
 
         return $newObj;
@@ -144,33 +144,11 @@ class ProductService extends BaseProductService
 
     public function updateProductCustomClass($newObj, $oldObj)
     {
-        $newObj->setCode($oldObj->code);
-        $newObj->setDescription($oldObj->description);
-        $newObj->setDutyPcent($oldObj->duty_pcent);
+        $newObj->setCode((string)$oldObj->code);
+        $newObj->setDescription((string)$oldObj->description);
+        $newObj->setDutyPcent((string)$oldObj->duty_pcent);
     }
 
-    public function addProductData(ProductData $obj)
-    {
-        $obj->parseData($data);
-        $this->vos = $obj->getData();
-    }
-
-    public function createProductProcess(ProductCreationInterface $obj = null)
-    {
-        $data = $this->vos;
-        $this->vos = '';
-
-        foreach ($data as $key) {
-            $sku = $this->createSkuMapping($data[$key]['skuMappingVo']);
-            $sku = $this->createProductContent($data[$key]['productContentVo']);
-            $sku = $this->createProduct($data[$key]['productVo']);
-        }
-    }
-
-    public function createSkuMapping(BaseVo $obj)
-    {
-        $this->sc['skuMppingDao']->insert($obj);
-    }
 
     public function getHomeProduct($where, $option)
     {
@@ -195,16 +173,6 @@ class ProductService extends BaseProductService
     public function getWebsiteCatPageProductList($where = array(), $option = array())
     {
         return $this->getDao('Product')->getWebsiteCatPageProductList($where, $option);
-    }
-
-    public function getCreateProductOptions()
-    {
-        $data['brandList'] = $this->brandService->getList([], ['orderby' => 'brand_name ASC', 'limit' => -1]);
-        $data['colourList'] = $this->colourService->getList(['status' => 1], ['orderby' => 'colour_id ASC', 'limit' => -1]);
-        $data['versionList'] = $this->versionService->getList(['status' => A], ['orderby' => 'colour_id ASC', 'limit' => -1]);
-
-        $data["version_list"] = $this->product_model->get_list("version", array("status" => 'A'));
-        $data["type_list"] = $this->subject_domain_service->get_subj_list_w_subj_lang("MKT.PROD_TYPE.PROD_TYPE_ID", "en");
     }
 
     public function isClearance($sku)

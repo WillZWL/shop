@@ -9,6 +9,7 @@ class Import extends MY_Controller
     {
         parent::__construct();
         ini_set('memory_limit', '1024M');
+        set_time_limit(1800);
     }
 
     public function getAppId()
@@ -57,37 +58,29 @@ class Import extends MY_Controller
 
     public function productIdentifier()
     {
-        // $xml = file_get_contents('php://input');
-        // $feed =$this->sc['VbDataTransferProductIdentifier']->startProcess($xml);
-        // unset($xml);
-        // print $feed;
-
-        // $end = memory_get_usage();
-
-        // echo ($end - $start), '/', memory_get_peak_usage();
+        $xml = file_get_contents('php://input');
+        $feed =$this->sc['VbDataTransferProductIdentifier']->startProcess($xml);
+        print $feed;
     }
 
     public function productImage()
     {
         $xml = file_get_contents('php://input');
-        $feed =$this->sc['VbDataTransferProductIdentifier']->startProcess($xml);
+        $feed =$this->sc['VbDataTransferProductImage']->startProcess($xml);
         unset($xml);
         print $feed;
     }
 
-    public function productimagetransfer()
+    public function productImageTransfer()
     {
         $num_img =$this->vb_product_image_service->transfer_images();
         print $num_img;
     }
 
-    public function productkeyword()
+    public function productKeyword()
     {
         $xml = file_get_contents('php://input');
-        // header('content-type: text/xml');
-        // print $xml;
-        // exit;
-        $feed =$this->vb_data_transfer_product_keyword_service->startProcess($xml);
+        $feed =$this->sc['VbDataTransferProductKeyword']->startProcess($xml);
         print $feed;
     }
 

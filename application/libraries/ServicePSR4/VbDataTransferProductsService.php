@@ -54,16 +54,16 @@ class VbDataTransferProductsService extends VbDataTransferService
                 }
 
                 $xml[] = '<product>';
-                $xml[] = '<sku>'.(string) $product->prod_sku.'</sku>';
-                $xml[] = '<master_sku>'.(string) $product->master_sku.'</master_sku>';
+                $xml[] = '<sku>'.$vb_sku.'</sku>';
+                $xml[] = '<master_sku>'.$master_sku.'</master_sku>';
                 $xml[] = '<status>'.$process_status.'</status>';
                 $xml[] = '<is_error>'.$product->is_error.'</is_error>';
                 $xml[] = '<reason>'.$reason.'</reason>';
                 $xml[] = '</product>';
             } catch (Exception $e) {
                 $xml[] = '<product>';
-                $xml[] = '<sku>'.(string) $product->prod_sku.'</sku>';
-                $xml[] = '<master_sku>'.(string) $product->master_sku.'</master_sku>';
+                $xml[] = '<sku>'.$vb_sku.'</sku>';
+                $xml[] = '<master_sku>'.$master_sku.'</master_sku>';
                 $xml[] = '<status>4</status>';  //error
                 $xml[] = '<is_error>'.$product->is_error.'</is_error>';
                 $xml[] = '<reason>'.$e->getMessage().'</reason>';

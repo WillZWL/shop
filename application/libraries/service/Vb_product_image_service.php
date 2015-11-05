@@ -34,24 +34,24 @@ class Vb_product_image_service extends Base_service
 	********************************************************************/
 	public function transfer_images ()
 	{
-		//get the pending images 
+		//get the pending images
 		$image_list = $this->get_dao()->get_pending_images();
 
 		//var_dump($image_list);exit;
 		if ($image_list !== FALSE)
 		{
 			foreach ($image_list as $img)
-			{				
+			{
 				$min_priority = $img->min_priority;
 				$img_priority = $img->priority;
-				
+
 				$id = $img->id;
-				
+
 				//save VB images
 				$img_size = array("l", "m", "s");
 
 				//get the image from VB
-				$file = "http://www.valuebasket.com/images/product/" . $img->VB_alt_text;
+				$file = "http://www.valuebasket.com/images/product/" . $img->vb_alt_text;
 				//print $file;
 				//$file = "http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg";
 				$file_headers = @get_headers($file);
@@ -61,7 +61,7 @@ class Vb_product_image_service extends Base_service
 					$file_exist = true;
 
 				if ($file_exist)
-				{					
+				{
             		//$website_domain = $this->context_config_service->value_of("website_domain");
 					$imgpath = FCPATH . "../public_html/" . $this->context_config_service->value_of("prod_img_path");
 
@@ -71,7 +71,7 @@ class Vb_product_image_service extends Base_service
 						@unlink($imgpath . $img->alt_text);
 
 					//save VB image in AtomV2
-					//print $file; 
+					//print $file;
 					$image_content = file_get_contents($file);
 					//$image_content = file_get_contents("http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg");
 					if (file_put_contents($imgpath . $img->alt_text, $image_content) === FALSE)
@@ -106,12 +106,12 @@ class Vb_product_image_service extends Base_service
 							@unlink($imgpath . $img->sku . "." . $img->image);
 
 						//save VB image in AtomV2
-						$vars = explode("_", $img->VB_alt_text);
+						$vars = explode("_", $img->vb_alt_text);
 						$VB_sku = $vars[0];
-						
-						$vars2 = explode(".", $img->VB_alt_text);
-						$ext = $vars2[count($vars2)-1];						
-						
+
+						$vars2 = explode(".", $img->vb_alt_text);
+						$ext = $vars2[count($vars2)-1];
+
 						$image_content = file_get_contents("http://www.valuebasket.com/images/product/" . $VB_sku . "." . $ext);
 						//$image_content = file_get_contents("http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg");
 						if (file_put_contents($imgpath . $img->sku . "." . $img->image, $image_content) === FALSE)
@@ -136,17 +136,17 @@ class Vb_product_image_service extends Base_service
 						}
 					}
 				}
-				
-				
+
+
 				$pi_obj = $this->get_dao()->get(array("id"=>$id));
-				
+
 				//update the product_image table
 				$pi_obj->set_image_saved(1);
-				$pi_obj->set_VB_alt_text("");
+				$pi_obj->set_vb_alt_text("");
 				$this->get_dao()->update($pi_obj);
 			}
 		}
-		
+
 		return count($image_list);
 	}
 }

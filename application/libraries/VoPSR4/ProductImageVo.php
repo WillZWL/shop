@@ -7,21 +7,23 @@ class ProductImageVo extends \BaseVo
     private $image = '';
     private $alt_text = '';
     private $image_saved = '1';
-    private $VB_alt_text;
+    private $vb_alt_text = '';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
     private $modify_on = '';
     private $modify_at = '2130706433';
-    private $modify_by = '';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -31,7 +33,9 @@ class ProductImageVo extends \BaseVo
 
     public function setSku($sku)
     {
-        $this->sku = $sku;
+        if ($sku) {
+            $this->sku = $sku;
+        }
     }
 
     public function getSku()
@@ -41,7 +45,9 @@ class ProductImageVo extends \BaseVo
 
     public function setPriority($priority)
     {
-        $this->priority = $priority;
+        if ($priority) {
+            $this->priority = $priority;
+        }
     }
 
     public function getPriority()
@@ -51,7 +57,9 @@ class ProductImageVo extends \BaseVo
 
     public function setImage($image)
     {
-        $this->image = $image;
+        if ($image) {
+            $this->image = $image;
+        }
     }
 
     public function getImage()
@@ -61,7 +69,9 @@ class ProductImageVo extends \BaseVo
 
     public function setAltText($alt_text)
     {
-        $this->alt_text = $alt_text;
+        if ($alt_text) {
+            $this->alt_text = $alt_text;
+        }
     }
 
     public function getAltText()
@@ -71,7 +81,9 @@ class ProductImageVo extends \BaseVo
 
     public function setImageSaved($image_saved)
     {
-        $this->image_saved = $image_saved;
+        if ($image_saved) {
+            $this->image_saved = $image_saved;
+        }
     }
 
     public function getImageSaved()
@@ -79,19 +91,23 @@ class ProductImageVo extends \BaseVo
         return $this->image_saved;
     }
 
-    public function setVBAltText($VB_alt_text)
+    public function setVbAltText($vb_alt_text)
     {
-        $this->VB_alt_text = $VB_alt_text;
+        if ($vb_alt_text) {
+            $this->vb_alt_text = $vb_alt_text;
+        }
     }
 
-    public function getVBAltText()
+    public function getVbAltText()
     {
-        return $this->VB_alt_text;
+        return $this->vb_alt_text;
     }
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -101,7 +117,9 @@ class ProductImageVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -111,7 +129,9 @@ class ProductImageVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -121,7 +141,9 @@ class ProductImageVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -131,7 +153,9 @@ class ProductImageVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -141,7 +165,9 @@ class ProductImageVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -151,7 +177,9 @@ class ProductImageVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

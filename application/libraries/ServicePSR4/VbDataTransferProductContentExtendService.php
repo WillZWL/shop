@@ -21,7 +21,6 @@ class VbDataTransferProductContentExtendService extends VbDataTransferService
         {
             try
             {
-
                 //Get the master sku to search the corresponding sku in atomv2 database
                 $master_sku = (string)$pce->master_sku;
                 $sku = $this->getService('SkuMapping')->getLocalSku($master_sku);
