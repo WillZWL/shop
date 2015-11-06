@@ -20,10 +20,12 @@ class PaymentOptionService extends BaseService
     public function getPaymentOptionSetDao() {
         return $this->_paymentOptionSetDao;
     }
-*/    
-    public function getPaymentOptionByPlatformId($platformId, $page = "checkout") {
-        $where = ["po.platform_id" => $platformId, "po.page" => $page];
-        $option = ["limit" => -1, "group_by" => "poc.code"];
+*/
+    public function getPaymentOptionByPlatformId($platformId, $cartAmount, $page = "checkout") {
+        $where = ["po.platform_id" => $platformId, "po.page" => $page
+                , "posc.ref_from_amt <= '$cartAmount'" => null
+                , "posc.ref_to_amt_exclusive > '$cartAmount'" => null];
+        $option = ["limit" => -1, "group_by" => "poc.code", "orderby" => "posc.priority"];
 
         $result = $this->getDao()->getPaymentOption($where, $option);
         return $result;

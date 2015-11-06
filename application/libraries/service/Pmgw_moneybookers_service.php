@@ -126,7 +126,7 @@ class Pmgw_moneybookers_service extends Pmgw_voucher
         $session = $result["result"];
 
         if (($result["error"] != "") || (strlen($session) > 100) || ($session == "")) {
-            $error = $result["error"] . ",info:" . @http_build_query($result["info"]);
+            $error = $result["error"] . ",info:" . @http_build_query($result["callInfo"]);
             $this->get_sopl_srv()->add_log($this->so->get_so_no(), "I", str_replace("&", "\n&", urldecode($error)));
             $down_message = "Session: " . $session . "Please contact MB, IT please consider to switch payment gateway." . "O:" . $post_fields . ", I:" . $error;
             mail($this->_sitedown_email, "MB payment issue", $down_message, 'From: website@valuebasket.com');

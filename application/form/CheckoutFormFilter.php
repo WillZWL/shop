@@ -8,6 +8,17 @@ class CheckoutFormFilter extends InputFilter
         parent::__construct();
     }
 
+    public function needCheckPoBox($currency, $totalAmount, $poBoxLimitArr)
+    {
+        $checkPoBoxLimit = false;
+        if (array_key_exists($currency, $poBoxLimitArr)) {
+            if ($totalAmount > $poBoxLimitArr[$currency]) {
+                $checkPoBoxLimit = true;
+            }
+        }
+        return $checkPoBoxLimit;
+    }
+
     public function isValidForm($input, $siteInfo = [], $option = [])
     {
         $message = [];
@@ -42,6 +53,18 @@ class CheckoutFormFilter extends InputFilter
         if (!$this->isValidAddress2($value["billAddress2"])) {
             $message["billAddress2"] = _("Not a valid billing address line 2");
         }
+        if ($this->needCheckPoBox($siteInfo->getPlatformCurrencyId(), $option["cart"]->getGrandTotal(), $option["poBoxLimit"])) {
+            if ($this->isPoBox($value["billAddress1"])) {
+                $this->validInput = false;
+                $message["billAddress1"] = _("POBox Address is not allowed");
+            }
+            if ($this->isPoBox($value["billAddress2"])) {
+                $this->validInput = false;
+                $message["billAddress2"] = _("POBox Address is not allowed");
+            }
+        }
+        
+        
         $value["billCity"] = trim($input->post("billingCity"));
         if (!$this->isValidCity($value["billCity"])) {
             $message["billCity"] = _("Not a valid billingCity");
@@ -115,9 +138,19 @@ class CheckoutFormFilter extends InputFilter
             $value["paymentGatewayId"] = $paymentGateway[2];
         else
             $value["paymentGatewayId"] = null;
+
+        if (!$this->isValidPaymentGateway($value["paymentGatewayId"])){
+            $message["paymentGatewayId"] = _("Payment gateway not valid");
+        }
+        if (!$this->isValidCardId($value["paymentCardId"])){
+            $message["paymentCardId"] = _("Card ID not valid");
+        }
+        if (!$this->isValidCard($value["paymentCardCode"])){
+            $message["paymentCardCode"] = _("Not a valid card");
+        }
+
         $encrypt = new \CI_Encrypt();
-        if ($encrypt->decode($value["formSalt"]) != PLATFORM)
-        {
+        if ($encrypt->decode($value["formSalt"]) != PLATFORM) {
             $this->validInput = false;
             $message["salt"] = "The salt is not salty!";
         }

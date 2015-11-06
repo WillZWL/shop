@@ -7,7 +7,7 @@ interface PaymentGatewayRedirectServiceInterface
      *   return the string/xml that will be sent to payment gateway and pass to $this->getRedirectUrl()
      *   $requestData will store the data for logging into database only.
      ***************************************************/
-    public function prepareGetUrlRequest($paymentInfo = array(), &$requestData);
+    public function prepareGetUrlRequest($paymentInfo = [], &$requestData);
 
     /**************************************************
      *   return the url if success, otherwise, return false
@@ -31,7 +31,7 @@ interface PaymentGatewayRedirectServiceInterface
      *   $socc_data: an output from the function that contain any update to so_credit_chk table
      *   $sor_data: an output from the function that contain any update to so_risk table
      ****************************************/
-    public function processPaymentStatus($generalData = array(), $getData = array(), &$soNumber, &$dataFromPmgw, &$dataToPmgw, &$soData, &$sopsData, &$soccData, &$sorData);
+    public function processPaymentStatus($generalData = [], $getData = [], &$soNumber, &$dataFromPmgw, &$dataToPmgw, &$soData, &$sopsData, &$soccData, &$sorData);
 
     /*********************************************************
      *   return the technical support email of this payment gateway
@@ -80,7 +80,7 @@ interface PaymentGatewayRedirectServiceInterface
      *   inside this function each payment gateway is free to update payment status
      *   $this->so, $this->sops is ready before this function call
      **************************************************************/
-    public function queryTransaction($input_parameters = array(), &$data_from_pmgw, &$data_to_pmgw, &$so_data, &$socc_data, &$sops_data);
+    public function queryTransaction($inputParameters = [], &$dataFromPmgw, &$dataToPmgw, &$soData, &$soccData, &$sopsData);
 
     /*************************************************************
      *   isNeedDmService
@@ -88,5 +88,5 @@ interface PaymentGatewayRedirectServiceInterface
      **************************************************************/
     public function isNeedDmService($isFraud = false);
     
-    public function processNotification($data, &$soNo, &$soPara = array(), &$sopsPara = array(), &$soccPara = array(), &$sorData = array(), &$dataToPmgw, &$dataFromPmgw);
+    public function processNotification($data, &$soNo, &$soPara = [], &$sopsPara = [], &$soccPara = [], &$sorData = [], &$dataToPmgw, &$dataFromPmgw);
 }

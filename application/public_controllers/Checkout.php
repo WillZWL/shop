@@ -50,7 +50,16 @@ class Checkout extends PUB_Controller
         $data = array_merge($data
                 , $this->checkoutModel->getCheckoutFormCountryList($platformCountryId));
         $data["billingStateList"] = $this->checkoutModel->getCheckoutFormStateList($platformCountryId);
-        $data["paymentOption"] = $this->checkoutModel->getPaymentOption($this->getSiteInfo()->getPlatform());
+        $data["paymentOption"] = $this->checkoutModel->getPaymentOption($this->getSiteInfo()->getPlatform(), $cart->getGrandTotal());
+        $poBoxLimit = $this->checkoutModel->getPoBoxAmountLimit();
+
+        $data["checkPoBoxLimit"] = false;
+        if (array_key_exists($this->getSiteInfo()->getPlatformCurrencyId(), $poBoxLimit)) {
+            if ($cart->getGrandTotal() > $poBoxLimit[$this->getSiteInfo()->getPlatformCurrencyId()]) {
+                $data["checkPoBoxLimit"] = true;
+            }
+        }
+
         $encrypt = new \CI_Encrypt();
         $data["formSalt"] = $encrypt->encode($this->getSiteInfo()->getPlatform());
         $client = $this->checkoutModel->isLoggedIn();
@@ -76,8 +85,10 @@ class Checkout extends PUB_Controller
         $data = [];
         $filter = new CheckoutFormFilter();
         $client = $this->checkoutModel->isLoggedIn();
+        $cart = $this->cartSessionModel->getCartInfo(true);
 
-        $filterResult = $filter->isValidForm($this->input, $this->getSiteInfo(), ["loggedIn" => (($client)?true:false), "email" => (($client)?$client["Email"]:"")]);
+        $poBoxLimit = $this->checkoutModel->getPoBoxAmountLimit();
+        $filterResult = $filter->isValidForm($this->input, $this->getSiteInfo(), ["loggedIn" => (($client)?true:false), "email" => (($client)?$client["Email"]:""), "poBoxLimit" => $poBoxLimit, "cart" => $cart]);
         if ($filterResult["validInput"]) {
             $filterResult["value"]["debug"] = $debug;
             $redirectUrl = $this->checkoutModel->createSaleOrder($filterResult["value"]);       
@@ -99,7 +110,7 @@ class Checkout extends PUB_Controller
         mail("oswald-alert@eservicesgroup.com", $subject, $message, "From: website@digitaldiscount.co.uk\r\n");
     }
 
-    public function paymentResult($result, $soNo)
+    public function paymentResult($result, $soNo = "")
     {
         $pagePar = [1 => //success
                         ["option1" => "soItemDetail"
@@ -118,7 +129,9 @@ class Checkout extends PUB_Controller
             || ($result == 4)
             || ($result == 0)) {
 //Success
-            if ($soNo) {
+            if ($soNo == "") {
+                $this->load->view("checkout/" . $pagePar[$result]["view"], $data);
+            } elseif ($soNo) {
                 $verifyData = $this->checkoutModel->verifyAndGetOrderDetails($result, $soNo, [$pagePar[$result]["option1"] => true, "status" => $pagePar[$result]["status"]]);
                 if ($verifyData["valid"]) {
                     $data["so"] = $verifyData["so"];
@@ -142,7 +155,11 @@ class Checkout extends PUB_Controller
     public function notification($gatewayId)
     {
         $debug = ($this->input->get("debug") ? $this->input->get("debug"):0);
-        $data = file_get_contents("php://input");
+        if ($gatewayId == "moneybookers") {
+            $data = $_POST;
+        }
+        else
+            $data = file_get_contents("php://input");           
         $this->checkoutModel->notification($gatewayId, $data, $debug);
     }
 //    public function js_credit_card($platform_curr, $total_amount, $seq = 1)
