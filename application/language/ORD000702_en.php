@@ -1,7 +1,8 @@
 <?php
-	$lang = array(
+	$lang = [
 			"title" => "Logistic Approval Page - On Hold Admin",
 			"header" => "Logistic Approval Page - On Hold Admin",
+			"hrcategory"=>["CS"=>"Hold By Customer Service","COMP"=>"Hold By Compliance","LG"=>"Hold By Logisitcs"],
 			"list_button" => "Pending for Credit Check",
 			"list_button2" => "Parking Area",
 			"order_id" => "ORDER ID",
@@ -45,6 +46,7 @@
 			"modify_by" => "Modify By",
 			"submit_error" => "Submit Error",
 			"supplier_existed" => "Supplier Existed!",
-			"order_detail"=>"Order Detail"
-			);
+			"order_detail"=>"Order Detail",
+			"confirm_submit" => "Confirm Submit",
+	];
 ?>
