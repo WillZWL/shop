@@ -2,6 +2,7 @@
 use ESG\Panther\Service\LoadSiteParameterService;
 use Pimple\Container;
 use ESG\Panther\Models\Marketing\CategoryModel;
+use ESG\Panther\Models\Marketing\SearchModel;
 use ESG\Panther\Models\Website\ClientModel;
 use ESG\Panther\Models\Order\SoModel;
 use ESG\Panther\Models\Website\CourierModel;
@@ -79,6 +80,9 @@ class PUB_Controller extends CI_Controller
         };
         $this->sc['countryModel'] = function ($c) {
             return new CountryModel;
+        };
+        $this->sc['searchModel'] = function ($c) {
+            return new SearchModel;
         };
     }
 

@@ -8,6 +8,8 @@ class Search extends PUB_Controller
     public function __construct()
     {
         parent::__construct();
+
+        $this->load->model("marketing/search_model");
     }
 
     public function index($page = 1)
@@ -132,5 +134,14 @@ class Search extends PUB_Controller
 
         $this->load->view('searchspring_result', $data);
         //$this->load_tpl('content', 'tbs_searchspring_result', $data, TRUE);
+    }
+
+    public function ssLivePrice($platform_id='')
+    {
+        if ($platform_id != '')
+        {
+            $json = $this->sc['searchModel']->getProductSearchListForSsLivePrice($platform_id, $this->input->get('sku'), TRUE);
+            echo $json;
+        }
     }
 }
