@@ -2,7 +2,7 @@
 	$lang = [
 			"title"=>"Hold Reason Management",
 			"header"=>"Hold Reason",
-			"hrcategory"=>["CS"=>"Hold By Customer Service","COMP"=>"Hold By Compliance","LG"=>"Hold By Logisitcs"],
+			"hrcategory"=>["CS"=>"Hold By Customer Service","COMP"=>"Hold By Compliance","LG"=>"Hold By Logisitcs","OT"=>"Others"],
 			"reason_type_list" => [
 				'change_of_address',
 				'confirmation_required',
@@ -31,6 +31,6 @@
 			"modify_on" => "Modify On",
 			"modify_at" => "Modify At",
 			"modify_by" => "Modify By",
-			""=>"",
+			"cannot_be_modified"=>" (Cannot be modified)",
 	];
 ?>

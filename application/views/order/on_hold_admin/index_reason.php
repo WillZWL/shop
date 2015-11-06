@@ -26,7 +26,7 @@
         <col width="200">
         <col width="200">
         <col>
-        <col width="120">
+        <col width="150">
         <tr class="add_header">
             <td height="20"></td>
             <td><?= $lang["reason_category"] ?></td>
@@ -41,7 +41,9 @@
                     <td>
                         <select name="r_cat" class="input">
                             <?php foreach ($lang["hrcategory"] as $key => $value) : ?>
+                                <?php if ($key <> "OT") : ?>
                                 <option value="<?= $key ?>" <?= $this->input->post('r_cat') == $key ? "SELECTED" : "" ?>><?= $key ." - ". $value ?></option>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
                     </td>
@@ -58,7 +60,9 @@
                     <td>
                         <select name="r_cat" class="input">
                             <?php foreach ($lang["hrcategory"] as $key => $value) : ?>
+                                <?php if ($key <> "OT") : ?>
                                 <option value="<?= $key ?>"><?= $key ." - ". $value ?></option>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
                     </td>
@@ -104,8 +108,7 @@
                     <select name="cat" class="input">
                         <option value=""></option>
                         <?php foreach ($lang["hrcategory"] as $key => $value) : ?>
-                            <option
-                                value="<?= $key ?>" <?= $this->input->get('cat') == $key ? "SELECTED" : "" ?>><?= $value ?></option>
+                            <option value="<?= $key ?>" <?= $this->input->get('cat') == $key ? "SELECTED" : "" ?>><?= $value ?></option>
                         <?php endforeach; ?>
                     </select>
                 </td>
@@ -125,7 +128,7 @@
 
                 <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')"
                 <?php
-                    if (!($is_edit)):
+                    if (!($is_edit) && $obj->getReasonCat() <> "OT"):
                 ?>onClick="Redirect('<?= site_url('order/on_hold_admin/reason/'.$offset.'/' . $obj->getId()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"
                 <?php
                     endif;
@@ -134,7 +137,7 @@
                         <img src="<?= base_url() ?>images/info.gif" title='<?= $lang["create_on"] ?>:<?= $obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->getModifyBy() ?>'>
                     </td>
                     <?php
-                    if ($is_edit) :
+                    if ($is_edit && $obj->getReasonCat() <> "OT") :
                         ?>
                         <form name="fm_edit" action="<?= base_url() ?>order/on_hold_admin/reason/<?= $offset ?>/?<?= $_SERVER['QUERY_STRING'] ?>" method="post" onSubmit="return CheckForm(this)">
                             <input type="hidden" name="posted" value="1">
@@ -144,7 +147,9 @@
                                 <td>
                                     <select name="ecat" class="input">
                                         <?php foreach ($lang["hrcategory"] as $key => $value) : ?>
+                                            <?php if ($key <> "OT") : ?>
                                             <option value="<?= $key ?>" <?= $this->input->post('ecat') == $key ? "SELECTED" : "" ?>><?= $key ." - ". $value ?></option>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                     </select>
                                 </td>
@@ -155,7 +160,9 @@
                                 <td>
                                     <select name="ecat" class="input">
                                         <?php foreach ($lang["hrcategory"] as $key => $value) : ?>
+                                            <?php if ($key <> "OT") : ?>
                                             <option value="<?= $key ?>" <?= $obj->getReasonCat() == $key ? "SELECTED" : "" ?>><?= $key ." - ". $value ?></option>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                     </select>
                                 </td>
@@ -174,7 +181,7 @@
                         <td><?= $obj->getReasonCat() ." - ". $lang["hrcategory"][$obj->getReasonCat()] ?></td>
                         <td><?= $obj->getReasonType() ?></td>
                         <td><?= $obj->getDescription() ?></td>
-                        <td>&nbsp;</td>
+                        <td><?= $obj->getReasonCat() == "OT" ? $lang["cannot_be_modified"] : ""?>&nbsp;</td>
                     <?php
                     endif;
                     ?>

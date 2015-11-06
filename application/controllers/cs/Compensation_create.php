@@ -121,10 +121,19 @@ class Compensation_create extends MY_Controller
                         $success = 0;
                         $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " " . $this->db->display_error() . "\n";
                     }
+                    $hr_obj = $this->sc['So']->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'compensation','status'=>1]);
+                    if (!$hr_obj) {
+                        $reason_obj = $this->sc['So']->getDao('HoldReason')->get();
+                        $reason_obj->setReasonCat('OT');
+                        $reason_obj->setReasonType('compensation');
+                        $reason_obj->setDescription('Compensation');
+
+                        $hr_obj = $this->sc['So']->getDao('HoldReason')->insert($reason_obj);
+                    }
 
                     $sohr_obj = $this->sc['So']->getDao('SoHoldReason')->get();
                     $sohr_obj->setSoNo($orderid);
-                    $sohr_obj->setReason("compensation");
+                    $sohr_obj->setReason($hr_obj->getId());
                     if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_obj)) {
                         $success = 0;
                         $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " " . $this->db->display_error() . "\n";
