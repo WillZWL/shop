@@ -120,10 +120,10 @@
             <img class="img-responsive" ng-src="{{ item.imageUrl }}" title="{{ item.name }}" alt="{{ item.name }}"  onerror="this.onerror=null;this.src='//cdn.searchspring.net/ajax_search/img/missing-image-75x75.gif';">
           </a>
           <div class="quickview hidden-xs">
-            <a class="iframe-link" data-toggle="tooltip" data-placement="top" ng-href="//dev.digitaldiscount.co.uk:8000/mainproduct/view/{{ item.uid }}/sv" title="Quick View"><i class="fa fa-eye"></i></a>
+            <a class="iframe-link" data-toggle="tooltip" data-placement="top" ng-href="//www.digitaldiscount.co.uk/main-product/view/{{ item.uid }}/sv" title="Quick View"><i class="fa fa-eye"></i></a>
           </div>
           <div class="zoom hidden-xs">
-            <a data-toggle="tooltip" data-placement="top" ng-href="//dev.digitaldiscount.co.uk/images/product/{{ item.uid }}_l.jpg" class="product-zoom info-view colorbox cboxElement" title="{{ item.name }}"><i class="fa fa-search-plus"></i></a>
+            <a data-toggle="tooltip" data-placement="top" ng-href="//www.digitaldiscount.co.uk/images/product/{{ item.uid }}_l.jpg" class="product-zoom info-view colorbox cboxElement" title="{{ item.name }}"><i class="fa fa-search-plus"></i></a>
           </div>
         </div>
       </div>
@@ -329,7 +329,7 @@
 </script>
 
 
-<?php
+    <?php
         $siteobj = \PUB_Controller::$siteInfo;
         $platCountryId = $siteobj->getPlatformCountryId();;
         switch (strtolower($platCountryId)) {
@@ -341,8 +341,6 @@
                 break;
         }
     ?>
-        <!--<link href="http://dev.clients.com/resources/valuebasket.css" rel="stylesheet" type="text/css" media="screen, print" />-->
-        <!--<script type='text/javascript' src='//s3.amazonaws.com/a.cdn.searchspring.net/ajax_search/sites/jdajtq/js/jdajtq.js'></script>-->
         <script type='text/javascript' src='https://d2r7ualogzlf1u.cloudfront.net/ajax_search/js/searchspring-catalog.min.js'></script>
         <script type='text/javascript'>SearchSpring.Catalog.init({
             results_per_page: 24,
@@ -369,7 +367,7 @@
 
                 skus = skus.join(',');
                 SearchSpring.jQuery.ajax(
-                        ('https:' == document.location.protocol ? 'https://' : 'http://') + 'www.valuebasket.com/en_GB/search/ss_live_price/WEBGB?sku=' + skus,
+                        ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dev.digitaldiscount.co.uk:8000/search/ss-live-price/WEBGB?sku=' + skus,
                         {
                             dataType : 'json',
                             success : function(data) {
