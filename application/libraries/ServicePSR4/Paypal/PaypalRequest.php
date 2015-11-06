@@ -199,12 +199,14 @@ class PaypalRequest
         {
             $errorNo = curl_errno($ch);
             $errorMessage = curl_error($ch);
+            $info = curl_getinfo($ch);
             $result = false;
         }
-
+        curl_close($ch);
         return array("result" => $result
                     , "response" => $response
                     , "errorNo" => $errorNo
-                    , "errorMessage" => $errorMessage);
+                    , "errorMessage" => $errorMessage
+                    , "callInfo" => $info);
     }
 }

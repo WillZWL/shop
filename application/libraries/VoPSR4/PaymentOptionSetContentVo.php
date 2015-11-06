@@ -7,6 +7,7 @@ class PaymentOptionSetContentVo extends \BaseVo
     private $ref_currency;
     private $ref_from_amt;
     private $ref_to_amt_exclusive;
+    private $priority = '0';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
@@ -76,6 +77,16 @@ class PaymentOptionSetContentVo extends \BaseVo
     public function getRefToAmtExclusive()
     {
         return $this->ref_to_amt_exclusive;
+    }
+
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+    }
+
+    public function getPriority()
+    {
+        return $this->priority;
     }
 
     public function setStatus($status)

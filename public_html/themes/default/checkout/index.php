@@ -269,10 +269,13 @@
                 <div class="form-group required">
 <?php foreach ($paymentOption as $card): ?>
                 <div style="float:left;padding-right:2px;">
-                    <input id="card_ay_VSA" type="radio" name="paymentCard" value="<?php print $card->getCardCode() . "%%" . $card->getCardId() . "%%" . $card->getPaymentGatewayId()?>">
+                    <input id="<?=$card->getCardCode()?>" type="radio" name="paymentCard" value="<?php print $card->getCardCode() . "%%" . $card->getCardId() . "%%" . $card->getPaymentGatewayId()?>">
                     <?php print "<img alt='" . $card->getCardName() . "' title='" . $card->getCardName() . "' src='" . $card->getCardImage() . "'/>"; ?>
                 </div>
 <?php endforeach ?>
+<?php if (!$paymentOption): ?>
+<?php print _("Please contact our CS!")?>
+<?php endif; ?>
                 <div class="clearfix" />
                 <div class="buttons">
                     <div class="pull-right">
@@ -509,6 +512,17 @@ function validateLogin()
     });
 }
 
+function poBoxValidate(value, validator) {
+    <?php if (!$checkPoBoxLimit): ?>
+    return true;
+    <?php endif; ?>
+    var poboxReg = new RegExp('\\bP(ost|ostal)?([ \.]*O(ffice)?)?([ \.]*Box)?\\b', 'i');
+    if (value.match(poboxReg)) {
+        return false;
+    }
+    return true;
+}
+
 function validateCheckout()
 {
     $("#checkoutForm").formValidation({
@@ -582,6 +596,12 @@ function validateCheckout()
                         min: 1,
                         max: 1024,
                         message: "<?=_("The billing address must be more than 1 and less than 1024 characters long")?>"
+                    },
+                    callback: {
+                        message: "<?=_("POBox Address is not allowed")?>",
+                        callback: function (value, validator, $field) {
+                                return poBoxValidate(value, validator);
+                        }
                     }
                 }
             },
@@ -596,6 +616,12 @@ function validateCheckout()
                         min: 1,
                         max: 1024,
                         message: "<?=_("The billing address must be more than 1 and less than 1024 characters long")?>"
+                    },
+                    callback: {
+                        message: "<?=_("POBox Address is not allowed")?>",
+                        callback: function (value, validator, $field) {
+                                return poBoxValidate(value, validator);
+                        }
                     }
                 }
             },
@@ -707,7 +733,7 @@ function validateCheckout()
                 errorMessage = "";
                 if (data.hasOwnProperty("validInput") && !data.validInput) {
                     jQuery.each(data.errorMessage, function(i, val) {
-                        errorMessage = i + ":" + val;
+                        errorMessage += i + ":" + val + "\n";
                     });
                 } else if (data.hasOwnProperty("siteDown") && data.siteDown) {
 //handle site down here, can redirect to 2nd payment option

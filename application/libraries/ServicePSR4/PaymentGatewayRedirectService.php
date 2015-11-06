@@ -13,6 +13,7 @@ implements PaymentGatewayRedirectServiceInterface
     const PAYMENT_STATUS_SUCCESS = 3;
     const PAYMENT_STATUS_KEEP_PENDING = 4;
     const PAYMENT_STATUS_REVIEW = 5;
+    const PAYMENT_INVALID_AMOUNT = 8;
     const PAYMENT_STATUS_REVERSE = 9;
     const PAYMENT_STATUS_REFUNDED = 10;
     const PAYMENT_NO_STATUS = 10;
@@ -29,6 +30,7 @@ implements PaymentGatewayRedirectServiceInterface
     protected $sitedownEmail = "oswald-alert@eservicesgroup.com, jesslyn@eservicesgroup.com, compliance-alerts@eservicesgroup.net";
 
     public $so = null;
+    public $client = null;
     public $soids = null;
     public $sops = null;
     public $soFactory = null;
@@ -37,13 +39,22 @@ implements PaymentGatewayRedirectServiceInterface
     public function __construct($soObj = null, $debug = 0)
     {
         parent::__construct();
-        if ($debug == 1)
-        {
+        if ($debug == 1) {
             if (getenv("APPLICATION_ENV") == "dev")
                 $this->debug = $debug;
         }
         if ($soObj != null)
             $this->so = $soObj;
+    }
+
+    protected function getClient($id = null)
+    {
+        if (!$this->client) {
+            if ((!$id) && ($this->so))
+                $id = $this->so->getClientId();
+            $this->client = $this->getService("SoFactory")->getDao("Client")->get(["id" => $id]);
+        }
+        return $this->client;
     }
 
     protected function getSo($soNo)
@@ -125,17 +136,17 @@ implements PaymentGatewayRedirectServiceInterface
                 $this->sendAlert($subject, $alertMessage, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
                 return $this->checkoutFailureHandler($messageToUser, $callResult["siteDown"]);
             } else {
+                $this->sops = $this->getSoPaymentStatus();
                 if ($orderFormInfo["paymentGatewayId"] == 'w_bank_transfer') {
                     $this->sops->setPaymentStatus('N');
                 } else {
                     $this->sops->setPaymentStatus('P');
                 }
 
-                $this->sops = $this->getSoPaymentStatus();
                 $updateResult = $this->getService("SoFactory")->getDao("SoPaymentStatus")->update($this->sops);
                 if (!$updateResult) {
                     $subject = "[Panther] fail to update so payment status" . $this->getPaymentGatewayName() . ", so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
-                    $message = $this->getService("SoFactory")->getDao("SoPaymentStatus")->db->last_query() . "," . $this->getService("SoFactory")->getDao("SoPaymentStatus")->db->_error_message();
+                    $message = $this->getService("SoFactory")->getDao("SoPaymentStatus")->db->last_query() . "," . $this->getService("SoFactory")->getDao("SoPaymentStatus")->db->error()["message"];
                     $this->sendAlert($subject, $message, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
                     return $this->checkoutFailureHandler(_("Please contact our CS") . ", err:" . __LINE__);
                 }
@@ -145,56 +156,63 @@ implements PaymentGatewayRedirectServiceInterface
         return $this->checkoutFailureHandler(_("Please contact our CS") . ", err:" . __LINE__);
     }
 
-    public function processPaymentStatusInGeneral($generalData = array(), $getData = array())
+    public function processPaymentStatusInGeneral($generalData = [], $getData = [])
     {
         $result = $this->processPaymentStatus($generalData, $getData, $soNoFromPmgw, $dataFromPmgw, $dataToPmgw, $soData, $sopsData, $soccData, $sorData);
 //        $so_srv = $this->get_so_srv();
         if ($this->so = $this->getSo($soNoFromPmgw)) {
+            $this->sops = $this->getSoPaymentStatus();
 //save the log first
             if (($dataFromPmgw != null) && (!empty($dataFromPmgw)))
                 $this->getService("SoPaymentLog")->addLog($this->so->getSoNo(), "I", str_replace("&", "\n&", $dataFromPmgw));
             if (($dataToPmgw != null) && (!empty($dataToPmgw)))
                 $this->getService("SoPaymentLog")->addLog($this->so->getSoNo(), "O", str_replace("&", "\n&", $dataToPmgw));
-
-            $this->sops = $this->getSoPaymentStatus();
             if ($result == PaymentGatewayRedirectService::PAYMENT_STATUS_CANCEL) {
                 $this->paymentCancelOperation($soData, $sopsData, $soccData);
                 $this->processCancelAction();
             } else if ($result == PaymentGatewayRedirectService::PAYMENT_STATUS_SUCCESS) {
                 $this->paymentSuccessOperation($soData, $sopsData, $soccData, $sorData);
             } else if ($result == PaymentGatewayRedirectService::PAYMENT_STATUS_REVIEW) {
-//paypal will review order
                 $this->processReviewAction();
             } else if ($result == PaymentGatewayRedirectService::PAYMENT_STATUS_KEEP_PENDING) {
 //failure first, but no fail operation, in this case, it will be still pending and wait for the cron to update the payment status
+                $this->paymentPendingOperation($soData, $sopsData, $soccData);
                 $this->processFailureAction();
             } else {
+                if ($result == PaymentGatewayRedirectService::PAYMENT_INVALID_AMOUNT) {
+                    $subject = "[Panther] - " . $this->getPaymentGatewayName() . " invalid amount";
+                    $message = $dataFromPmgw;
+                    mail($this->getTechnicalSupportEmail(), $subject, $message);
+                }
                 $this->paymentFailOperation($soData, $sopsData, $soccData);
                 $this->processFailureAction();
             }
         } else {
 //probably invalid so number, so, cannot update database
-//email to technical
-            $subject = "[" . $this->get_payment_gateway_name() . "]" . "fatal error";
-            $message = "";
-            if (is_array($generalData))
-                $message .= $this->arrayImplode('=', ',', $generalData);
-            else if (!empty($generalData))
-                $message .= $generalData;
-            if (is_array($getData))
-                $message .= "," . $this->arrayImplode('=', ',', $getData);
-            else if (!empty($getData))
-                $message .= $getData;
-            $message .= $this->get_so_srv()->get_dao()->db->_error_message();
-            mail($this->get_support_email(), $subject, $message);
-            $this->processFailureAction();
+            $this->_sendFatalEmail();
+            $this->processFailureAction($generalData, $getData);
         }
     }
 
+    private function _sendFatalEmail($generalData, $getData) {
+//email to technical team
+        $subject = "[Panther] - " . $this->getPaymentGatewayName() . " fatal error";
+        $message = "";
+        if (is_array($generalData))
+            $message .= $this->arrayImplode('=', ',', $generalData);
+        else if (!empty($generalData))
+            $message .= $generalData;
+        if (is_array($getData))
+            $message .= "," . $this->arrayImplode('=', ',', $getData);
+        else if (!empty($getData))
+            $message .= $getData;
+        $message .= $this->getService("SoFactory")->getDao()->db->error()["message"];
+        mail($this->getTechnicalSupportEmail(), $subject, $message);
+    }
 /********************************************************************************
  *   paymentSuccessOperation could be overrided to do special sucess operation
  *********************************************************************************/
-    protected function paymentSuccessOperation($soPara = array(), $sopsPara = array(), $soccPara = array(), $sorData = array())
+    protected function paymentSuccessOperation($soPara = [], $sopsPara = [], $soccPara = [], $sorData = [])
     {
 //Sops
         if ($sopsPara)
@@ -204,6 +222,7 @@ implements PaymentGatewayRedirectServiceInterface
             || ($this->sops->getPayDate() == "0000-00-00 00:00:00"))
             $this->sops->setPayDate(date('Y-m-d H:i:s'));
         $this->getService("SoFactory")->getDao("SoPaymentStatus")->update($this->sops);
+        $this->createSocc($soccPara);
 
 #2494 do the fraud oder checking
         //$this->get_so_srv()->process_fraud_order($this->so);
@@ -235,6 +254,7 @@ implements PaymentGatewayRedirectServiceInterface
 //update promotion code
                 $this->updatePromo($this->so->getPromotionCode());
                 $this->sendConfirmationEmail($this->so);
+                $this->_unsetVariable();
                 $this->processSuccessAction();
             } else if ($this->so->getStatus() == 2) {
 //status from 2 to 3 because of 3D info
@@ -258,8 +278,6 @@ implements PaymentGatewayRedirectServiceInterface
         }
 //debug
 //    print $this->sendConfirmationEmail($this->so, true);
-        $this->createSocc($soccPara);
-        $this->_unsetVariable();
     }
 
     private function _unsetVariable()
@@ -273,12 +291,34 @@ implements PaymentGatewayRedirectServiceInterface
     }
 
 /********************************************************************************
- *   paymentFailOperation could be overrided to do special sucess operation
+ *   paymentKeepPendingOperation could be overrided to do special pending operation
  *********************************************************************************/
-    protected function paymentFailOperation($soPara = array(), $sopsPara = array(), $soccPara = array())
+    protected function paymentPendingOperation($soPara = [], $sopsPara = [], $soccPara = [])
     {
         if ($this->so->getStatus() >= 2) {
-            mail($this->getTechnicalSupportEmail() . ",compliance@digitaldiscount.co.uk", '[Panther] ' . $this->getPaymentGatewayName() . ' Order try to come from success to fail:' . $this->so->getClientId() . '-' . $this->so->getSoNo(), "Please check the payment and notify IT to manually update the status", 'From: website@digital.co.uk');
+            mail($this->getTechnicalSupportEmail() . ", compliance@digitaldiscount.co.uk", '[Panther] ' . $this->getPaymentGatewayName() . ' Order try to come from success to pending:' . $this->so->getClientId() . '-' . $this->so->getSoNo(), "Please check the payment and notify IT to manually update the status", 'From: website@digitaldiscount.co.uk');
+        } else {
+            if ($sopsPara)
+                set_value($this->sops, $sopsPara);
+            $this->sops->setPaymentStatus("P");
+            $this->getService("SoFactory")->getDao("SoPaymentStatus")->update($this->sops);
+
+            $this->so->setStatus(0);
+            $this->getService("SoFactory")->getDao()->update($this->so);
+
+            if ($soccPara) {
+                $this->createSocc($soccPara);
+            }
+        }
+    }
+
+/********************************************************************************
+ *   paymentFailOperation could be overrided to do special fail operation
+ *********************************************************************************/
+    protected function paymentFailOperation($soPara = [], $sopsPara = [], $soccPara = [])
+    {
+        if ($this->so->getStatus() >= 2) {
+            mail($this->getTechnicalSupportEmail() . ",compliance@digitaldiscount.co.uk", '[Panther] ' . $this->getPaymentGatewayName() . ' Order try to come from success to fail:' . $this->so->getClientId() . '-' . $this->so->getSoNo(), "Please check the payment and notify IT to manually update the status", 'From: website@digitaldiscount.co.uk');
         } else {
             if ($sopsPara)
                 set_value($this->sops, $sopsPara);
@@ -295,9 +335,9 @@ implements PaymentGatewayRedirectServiceInterface
     }
 
 /********************************************************************************
- *   paymentCancelOperation could be overrided to do special sucess operation
+ *   paymentCancelOperation could be overrided to do special cancel operation
  *********************************************************************************/
-    protected function paymentCancelOperation($soPara = array(), $sopsPara = array(), $soccPara = array())
+    protected function paymentCancelOperation($soPara = [], $sopsPara = [], $soccPara = [])
     {
         if ($sopsPara)
             set_value($this->sops, $sopsPara);
@@ -313,7 +353,7 @@ implements PaymentGatewayRedirectServiceInterface
             $this->createSocc($soccPara);
     }
 
-    public function createSor($vars = array(), $soNo = null)
+    public function createSor($vars = [], $soNo = null)
     {
         if ($soNo)
             $this->sor = $this->getService("SoFactory")->getDao("SoRisk")->get(array("so_no" => $soNo));
@@ -333,7 +373,7 @@ implements PaymentGatewayRedirectServiceInterface
         if ($dbResult === false)
         {
             $subject = "[Panther] fail to insert/update so_rsik" . $this->getPaymentGatewayName() . ", so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
-            $message = $this->getService("SoFactory")->getDao("SoRisk")->db->last_query() . "," . $this->getService("SoFactory")->getDao("SoRisk")->db->_error_message();
+            $message = $this->getService("SoFactory")->getDao("SoRisk")->db->last_query() . "," . $this->getService("SoFactory")->getDao("SoRisk")->db->error()["message"];
             $this->sendAlert($subject, $message, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
             return false;
         }
@@ -341,7 +381,7 @@ implements PaymentGatewayRedirectServiceInterface
 
     protected function createSocc($soccData)
     {
-        if (is_array($socc_data)) {
+        if (($socc_data) && is_array($socc_data)) {
             $this->socc = $this->getSoCreditChk();
 
             if (empty($this->socc)) {
@@ -361,7 +401,7 @@ implements PaymentGatewayRedirectServiceInterface
             if ($dbResult === false)
             {
                 $subject = "[Panther] fail to add so_credit_chk" . $this->getPaymentGatewayName() . ", so_no:(" . $this->so->getSoNo() . ") " . __METHOD__ . __LINE__;
-                $message = $this->getService("SoFactory")->getDao("SoCreditChk")->db->last_query() . "," . $this->getService("SoFactory")->getDao("SoCreditChk")->db->_error_message();
+                $message = $this->getService("SoFactory")->getDao("SoCreditChk")->db->last_query() . "," . $this->getService("SoFactory")->getDao("SoCreditChk")->db->error()["message"];
                 $this->sendAlert($subject, $message, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
                 return false;
             }
@@ -566,7 +606,7 @@ implements PaymentGatewayRedirectServiceInterface
 	{
 		if (!is_array($array))
 			return $array;
-		$string = array();
+		$string = [];
 		foreach ($array as $key => $val)
 		{
 			if (is_array($val))
@@ -576,26 +616,34 @@ implements PaymentGatewayRedirectServiceInterface
 		return implode($separator, $string);
 	}
 
-    protected function getSuccessfulUrl($soNo)
+    protected function getSuccessfulUrl($soNo = null)
     {
+        if ((!$soNo) && ($this->so))
+            $soNo = $this->so->getSoNo();
         $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/payment-result/1/" . $soNo . (($this->debug) ? "?debug=1" : "");
         return $url;
     }
 
-    protected function getReviewUrl($soNo)
+    protected function getReviewUrl($soNo = null)
     {
+        if ((!$soNo) && ($this->so))
+            $soNo = $this->so->getSoNo();
         $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/payment-result/4/" . $soNo . (($this->debug) ? "?debug=1" : "");
         return $url;
     }
 
-    protected function getFailUrl($soNo)
+    protected function getFailUrl($soNo = null)
     {
+        if ((!$soNo) && ($this->so))
+            $soNo = $this->so->getSoNo();
         $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/payment-result/0/" . $soNo . (($this->debug) ? "?debug=1" : "");
         return $url;
     }
 
-    protected function getCancelUrl($soNo)
+    protected function getCancelUrl($soNo = null)
     {
+        if ((!$soNo) && ($this->so))
+            $soNo = $this->so->getSoNo();
         $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout" . (($this->debug) ? "?debug=1" : "");
         return $url;
     }
