@@ -85,6 +85,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\ProductService();
         };
 
+        $servcieContainer['ProductImage'] = function () {
+            return new S\ProductImageService();
+        };
+
         $servcieContainer['ProductSearch'] = function () {
             return new S\ProductSearchService();
         };
