@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Dao;
 
-class ReleaseOrderReportDao extends BaseDao
+class ReleaseOrderHistoryDao extends BaseDao
 {
     private $tableName = "release_order_history";
     private $voClassName = "ReleaseOrderHistoryVo";
