@@ -309,8 +309,8 @@ class DaoProvider implements ServiceProviderInterface
             return new D\FulfillmentCentreDao();
         };
 
-        $daoContainer['ReleaseOrderReport'] = function () {
-            return new D\ReleaseOrderReportDao();
+        $daoContainer['ReleaseOrderHistory'] = function () {
+            return new D\ReleaseOrderHistoryDao();
         };
 
         $daoContainer['So'] = function () {
@@ -463,6 +463,10 @@ class DaoProvider implements ServiceProviderInterface
 
         $daoContainer['InterfaceTrackingFeed'] = function () {
             return new D\InterfaceTrackingFeedDao();
+        };
+
+        $daoContainer['HoldReason'] = function () {
+            return new D\HoldReasonDao();
         };
 
     }

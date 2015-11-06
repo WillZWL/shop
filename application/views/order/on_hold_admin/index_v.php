@@ -16,7 +16,9 @@
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td height="30" class="title"><?= $lang["title"] ?></td>
-            <td width="400" align="right" class="title">&nbsp;</td>
+            <td width="400" align="right" class="title">
+                <input class="button" type="button" onclick="Redirect('<?= base_url() ?>order/on_hold_admin/reason/')" value="<?= $lang["hold_reason"] ?>">
+            </td>
         </tr>
         <tr>
             <td height="2" class="line"></td>
@@ -52,9 +54,7 @@
                 <td style="white-space:nowrap">
                     <a href="#" onClick="SortCol(document.fm, 'amount', '<?= $xsort["amount"] ?>')"><?= $lang["order_amount"] ?> <?= $sortimg["amount"] ?></a>
                 </td>
-                <td style="white-space:nowrap">
-                    <a href="#" onClick="SortCol(document.fm, 't3m_result', '<?= $xsort["t3m_result"] ?>')"><?= $lang["t3m"] ?> <?= $sortimg["t3m_result"] ?></a>
-                </td>
+                <td style="white-space:nowrap"></td>
                 <td></td>
             </tr>
             <tr class="search" id="tr_search" <?= $searchdisplay ?>>
@@ -70,7 +70,7 @@
                 </td>
                 <td><input name="amount" class="input" value="<?= htmlspecialchars($this->input->get("amount")) ?>">
                 </td>
-                <td><input name="t3m_result" class="input" value="<?= htmlspecialchars($this->input->get("t3m_result")) ?>"></td>
+                <td></td>
                 <td align="center"><input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;"></td>
             </tr>
             <input type="hidden" name="showall" value='<?= $this->input->get("showall") ?>'>
@@ -159,13 +159,22 @@
                 <td align="center">
                     <form action="<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>" method="post">
                         <select name="reason" class="input">
-                            <option value="change_of_address"><?= $lang["change_of_address"] ?></option>
+                            <?php
+                                if ($reason_list) :
+                                    foreach ($reason_list as $robj) :
+                            ?>
+                                <option value="<?= $robj->getId() ?>"><?= $lang["hrcategory"][$robj->getReasonCat()] . " - " . $robj->getDescription() ?></option>
+                            <?php
+                                    endforeach;
+                                endif;
+                            ?>
+                            <!-- <option value="change_of_address"><?= $lang["change_of_address"] ?></option>
                             <option value="confirmation_required"><?= $lang["confirmation_required"] ?></option>
                             <option value="customer_request"><?= $lang["customer_request"] ?></option>
                             <option value="confirmed_fraud"><?= $lang["confirmed_fraud"] ?></option>
                             <option value="csvv"><?= $lang["csvv"] ?></option>
                             <option value="cscc"><?= $lang["cscc"] ?></option>
-                            <option value="oos"><?= $lang["oos"] ?></option>
+                            <option value="oos"><?= $lang["oos"] ?></option> -->
                         </select><br>
                         <input type="submit" value="<?= $lang["on_hold"] ?>">
                     </form>
