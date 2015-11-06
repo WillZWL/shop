@@ -139,7 +139,7 @@
                 </td>
                 <td class="bfield<?= $i % 2 ?>"><?= $lang["billing_address"] ?></td>
                 <td class="bfield<?= $i % 2 ?>"><?= $lang["delivery_address"] ?></td>
-                <td align="center"><?= $lang["previous_request"] . ":<br>" . $lang[$obj->getReason()] ?><br><input
+                <td align="center"><?= $lang["previous_request"] . ":<br>" . $obj->getReason() ?><br><input
                         type="button" value="<?= $lang["request_refund"] ?>"
                         onClick="Redirect('<?= base_url() ?>order/on_hold_admin/refund/<?= $obj->getSoNo() ?>')"><br><input
                         type="button" value="<?= $lang["approve_for_fulfillment"] ?>"
@@ -167,10 +167,27 @@
                 <td class="bvalue<?= $i % 2 ?>"><?= $bill_addr ?></td>
                 <td class="bvalue<?= $i % 2 ?>"><?= $del_addr ?></td>
                 <td align="center">
-                    <input type="button" value="<?= $lang["request_cc"] ?>"
-                           onclick="Redirect('<?= base_url() . "order/on_hold_admin/oc_request/" . $obj->getSoNo() . "/cscc" ?>')" <?= $obj->getReason() == "contacted" ? "DISABLED" : "" ?>>
-                    <input type="button" value="<?= $lang["confirmed_fraud"] ?>"
-                           onclick="Redirect('<?= base_url() . "order/on_hold_admin/oc_fraud/" . $obj->getSoNo() ?>')">
+                    <select name="reason" id ="reason_<?= $obj->getSoNo() ?>" class="input">
+                        <option></option>
+                        <?php
+                            if ($reason_list) :
+                                foreach ($reason_list as $robj) :
+                        ?>
+                            <?php  if ($robj->getReasonType() == "cscc") : ?>
+                            <option value="<?= base_url() . "order/on_hold_admin/oc_request/". $obj->getSoNo() ."/". $robj->getId() ."/". $robj->getReasonType() ?>"
+                            ><?= $lang["hrcategory"][$robj->getReasonCat()] . " - " . $lang["request_cc"] ?></option>
+                            <?php  endif;?>
+
+                            <?php  if ($robj->getReasonType() == "oc_fraud") : ?>
+                            <option value="<?= base_url() . "order/on_hold_admin/". $robj->getReasonType() ."/" . $obj->getSoNo()."/".$robj->getId() ?>"
+                            ><?= $lang["hrcategory"][$robj->getReasonCat()] . " - " . $robj->getDescription() ?></option>
+                            <?php  endif;?>
+                        <?php
+                                endforeach;
+                            endif;
+                        ?>
+                    </select>
+                    <input type="button" onclick="submit_reason(<?= $obj->getSoNo() ?>)" value="<?= $lang["confirm_submit"] ?>" onClick />
                 </td>
                 <td></td>
             </tr>
@@ -188,6 +205,17 @@
     <script>
         InitPMGW(document.fm.payment_gateway_id);
         document.fm.payment_gateway_id.value = '<?=$this->input->get("payment_gateway_id")?>';
+
+        function submit_reason(obj)
+        {
+            var reason = document.getElementById("reason_"+obj).value;
+            if (reason != "") {
+                var url = reason;
+                window.location.href = url;
+            } else {
+                alert("Please Select Hold Reason");
+            }
+        }
     </script>
     <?= $links ?>
     <?= $notice["js"] ?>

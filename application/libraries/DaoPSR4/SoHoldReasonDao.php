@@ -31,10 +31,31 @@ class SoHoldReasonDao extends BaseDao implements HooksInsert
         $table1 = [
                     'table' => 'so',
                     'where' => ['so_no'=>$obj->getSoNo(),],
-                    'keyValue'=>['hold_reason' => $obj->getReason(),]
+                    'keyValue'=>['hold_reason' => $this->getHoldReasonById($obj->getReason()),]
                   ];
 
         $this->updateTables([$table1,]);
+    }
+
+    public function getHoldReasonById($id = "")
+    {
+        if ($id == "") {
+            return FALSE;
+        }
+
+        $sql = "SELECT reason_type, reason_cat cat, description reason from hold_reason WHERE id = ?";
+
+        if ($query = $this->db->query($sql, $id)) {
+            $cat = $query->row()->cat;
+            $reason = $query->row()->reason;
+            $reason_type = $query->row()->reason_type;
+            $hrcategory = ["CS"=>"Hold By Customer Service","COMP"=>"Hold By Compliance","LG"=>"Hold By Logisitcs"];
+            $hold_reason = $reason_type . " " . $hrcategory[$cat] ." - ". $reason;
+
+            return $hold_reason;
+        }
+
+        return FALSE;
     }
 
     public function getReasonList()

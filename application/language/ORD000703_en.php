@@ -1,7 +1,8 @@
 <?php
-	$lang = array(
+	$lang = [
 			"title" => "On Hold Admin",
 			"header" => "OC Page - On Hold Admin",
+			"hrcategory"=>["CS"=>"Hold By Customer Service","COMP"=>"Hold By Compliance","LG"=>"Hold By Logisitcs"],
 			"headercc" => "CS CC Page - On Hold Admin",
 			"headervv" => "CS VV Page - On Hold Admin",
 			"list_button" => "Pending for Credit Check",
@@ -56,6 +57,7 @@
 			"modify_by" => "Modify By",
 			"submit_error" => "Submit Error",
 			"supplier_existed" => "Supplier Existed!",
-			"order_detail"=>"Order Detail"
-			);
+			"order_detail"=>"Order Detail",
+			"confirm_submit" => "Confirm Submit",
+	];
 ?>
