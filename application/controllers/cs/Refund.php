@@ -596,9 +596,19 @@ class Refund extends MY_Controller
 
                     if ($hold == '1') {
                         if ($so_hold_reason_obj = $this->sc['So']->getDao('SoHoldReason')->get()) {
+                            $hr_obj = $this->sc['So']->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'confirmation_required','status'=>1]);
+                            if (!$hr_obj) {
+                                $reason_obj = $this->sc['So']->getDao('HoldReason')->get();
+                                $reason_obj->setReasonCat('OT');
+                                $reason_obj->setReasonType('confirmation_required');
+                                $reason_obj->setDescription('Confirmation Required');
+
+                                $hr_obj = $this->sc['So']->getDao('HoldReason')->insert($reason_obj);
+                            }
+
                             $holdrea = clone $so_hold_reason_obj;
                             $holdrea->setSoNo($so_obj->getSoNo());
-                            $holdrea->setReason('Confirmation Required');
+                            $holdrea->setReason($hr_obj->getId());
                             $this->sc['So']->getDao('SoHoldReason')->insert($holdrea);
                         }
                     }
@@ -944,9 +954,19 @@ class Refund extends MY_Controller
                 if ($ret) {
                     if ($hold == '1') {
                         if ($so_hold_reason_obj = $this->sc['So']->getDao('SoHoldReason')->get()) {
+                            $hr_obj = $this->sc['So']->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'confirmation_required','status'=>1]);
+                            if (!$hr_obj) {
+                                $reason_obj = $this->sc['So']->getDao('HoldReason')->get();
+                                $reason_obj->setReasonCat('OT');
+                                $reason_obj->setReasonType('confirmation_required');
+                                $reason_obj->setDescription('Confirmation Required');
+
+                                $hr_obj = $this->sc['So']->getDao('HoldReason')->insert($reason_obj);
+                            }
+
                             $holdrea = clone $so_hold_reason_obj;
                             $holdrea->setSoNo($so_obj->getSoNo());
-                            $holdrea->setReason('Confirmation Required');
+                            $holdrea->setReason($hr_obj->getId());
                             $this->sc['So']->getDao('SoHoldReason')->insert($holdrea);
                         }
                     }
@@ -1219,9 +1239,19 @@ class Refund extends MY_Controller
 
                             if (($so_obj->getStatus() != 1) || ($so_obj->getStatus() != 6)) {
                                 if ($so_hold_reason_obj = $this->sc['So']->getDao('SoHoldReason')->get()) {
+                                    $hr_obj = $this->sc['So']->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'confirmation_required','status'=>1]);
+                                    if (!$hr_obj) {
+                                        $reason_obj = $this->sc['So']->getDao('HoldReason')->get();
+                                        $reason_obj->setReasonCat('OT');
+                                        $reason_obj->setReasonType('confirmation_required');
+                                        $reason_obj->setDescription('Confirmation Required');
+
+                                        $hr_obj = $this->sc['So']->getDao('HoldReason')->insert($reason_obj);
+                                    }
+
                                     $holdrea = clone $so_hold_reason_obj;
                                     $holdrea->setSoNo($so_obj->getSoNo());
-                                    $holdrea->setReason('Confirmation Required');
+                                    $holdrea->setReason($hr_obj->getId());
                                     $this->sc['So']->getDao('SoHoldReason')->insert($holdrea);
                                 }
                             }
