@@ -1145,10 +1145,18 @@ class SoService extends BaseService
                     if ($update_hold_status) {
                         $this->updateIofHoldStatusBySo($so_no, $holdStatus);
                     }
+                    $hr_obj = $this->sc['So']->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'created_split','status'=>1]);
+                    if (!$hr_obj) {
+                        $reason_obj = $this->sc['So']->getDao('HoldReason')->get();
+                        $reason_obj->setReasonCat('OT');
+                        $reason_obj->setReasonType('created_split');
+                        $reason_obj->setDescription('Created Split');
 
+                        $hr_obj = $this->sc['So']->getDao('HoldReason')->insert($reason_obj);
+                    }
                     $sohr_vo = $so_holdreason_dao->get();
                     $sohr_vo->setSoNo($so_no);
-                    $sohr_vo->setReason("created_split");
+                    $sohr_vo->setReason($hr_obj->getId());
                     $this->getDao('SoHoldReason')->insert($sohr_vo);
                 }
 
@@ -1987,7 +1995,7 @@ html;
 
                         //SBF #4403 - If hs desc and code not found, get the hs desc and code from sub_cat_id of the product
                         if (!isset($hs_desc) || $hs_desc == '') {
-                            $where = ['ccm.sub_cat_id' => $prod_obj->get_sub_cat_id(), 'ccm.country_id' => $so_obj->getDeliveryCountryId()];
+                            $where = ['ccm.sub_cat_id' => $prod_obj->getSubCatId(), 'ccm.country_id' => $so_obj->getDeliveryCountryId()];
                             $hsDetails = $this->getDao('CustomClassificationMapping')->getHsBySubcatAndCountry($where, $option);
                             $hs_desc = $hsDetails[0]['description'];
                             $code = $hsDetails[0]['code'];
@@ -5373,8 +5381,18 @@ html;
                             $so_obj->setHoldStatus(1);
                             if ($this->getDao('So')->update($so_obj)) {   //set the so_hold_reason
                                 if ($sohr_vo = $this->getDao('SoHoldReason')->get()) {
+                                    $hr_obj = $this->sc['So']->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'confirmed_fraud','status'=>1]);
+                                    if (!$hr_obj) {
+                                        $reason_obj = $this->sc['So']->getDao('HoldReason')->get();
+                                        $reason_obj->setReasonCat('OT');
+                                        $reason_obj->setReasonType('confirmed_fraud');
+                                        $reason_obj->setDescription('Confirmed Fraud');
+
+                                        $hr_obj = $this->sc['So']->getDao('HoldReason')->insert($reason_obj);
+                                    }
+
                                     $sohr_vo->setSoNo($so_no);
-                                    $sohr_vo->setReason("confirmed_fraud");
+                                    $sohr_vo->setReason($hr_obj->getId());
                                     $this->getDao('SoHoldReason')->insert($sohr_vo);
 
                                     $action = "update";
@@ -5472,8 +5490,18 @@ html;
             $parent_so_obj->set_hold_status(self::PERMANENT_HOLD_STATUS);
             $this->getDao('So')->update($parent_so_obj);
             if ($sohr_vo = $this->getDao('SoHoldReason')->get()) {
+                $hr_obj = $this->sc['So']->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'perm_hold_sales_aps','status'=>1]);
+                if (!$hr_obj) {
+                    $reason_obj = $this->sc['So']->getDao('HoldReason')->get();
+                    $reason_obj->setReasonCat('OT');
+                    $reason_obj->setReasonType('perm_hold_sales_aps');
+                    $reason_obj->setDescription('Perm Hold Sales Aps');
+
+                    $hr_obj = $this->sc['So']->getDao('HoldReason')->insert($reason_obj);
+                }
+
                 $sohr_vo->setSoNo($parent_so_no);
-                $sohr_vo->setReason("perm_hold_sales_aps");
+                $sohr_vo->setReason($hr_obj->getId());
                 $this->getDao('SoHoldReason')->insert($sohr_vo);
             }
         }
@@ -5526,8 +5554,18 @@ html;
                         $ret["error_message"] = __LINE__ . "Cannot update so_no <$parent_so_no> with perm hold. SQL: " . $this->db->last_query() . " DBerror: " . $this->db->_error_message();
                     } else {
                         if ($sohr_vo = $this->getDao('SoHoldReason')->get()) {
+                            $hr_obj = $this->sc['So']->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'perm_hold_sales_aps','status'=>1]);
+                            if (!$hr_obj) {
+                                $reason_obj = $this->sc['So']->getDao('HoldReason')->get();
+                                $reason_obj->setReasonCat('OT');
+                                $reason_obj->setReasonType('perm_hold_sales_aps');
+                                $reason_obj->setDescription('Perm Hold Sales Aps');
+
+                                $hr_obj = $this->sc['So']->getDao('HoldReason')->insert($reason_obj);
+                            }
+
                             $sohr_vo->setSoNo($parent_so_no);
-                            $sohr_vo->setReason("perm_hold_sales_aps");
+                            $sohr_vo->setReason($hr_obj->getId());
                             if ($this->getDao('SoHoldReason')->insert($sohr_vo) === FALSE) {
                                 $ret["status"] = false;
                                 $ret["error_message"] = __LINE__ . "Cannot update so_hold_reason <$parent_so_no> with hold reason. SQL: "
