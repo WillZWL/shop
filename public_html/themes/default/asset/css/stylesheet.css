@@ -5009,7 +5009,7 @@ hr.divider-snow {
 /* line 3051, ../development/scss/app/_elements.scss */
 .panel .panel-heading .panel-title {
   position: relative;
-  /*padding-left: 38px;*/  
+  /*padding-left: 38px;*/
   padding-left: 10px !important;
   color: #085004;
   /*letter-spacing: 2px;*/
@@ -8594,14 +8594,14 @@ body.layout-boxed-lg #page {
   line-height: 140%;
 }
 
-.suggestions-title{  
+.suggestions-title{
     padding-left: 4px;
     font-size: 11px !important;
     font-family: "Open Sans Semibold", sans-serif;
     color: #878787;
 }
 
-.suggestions{  
+.suggestions{
     font-size: 11px !important;
     font-family: "Open Sans Semibold", sans-serif;
     color: #549B17;
@@ -9626,7 +9626,7 @@ body .owl-carousel .owl-wrapper-outer {
   color: #999;
   margin-bottom: 10px;
   border: 2px solid #e5e5e5;
-  margin-bottom: 25px;
+  /*margin-bottom: 25px;*/
 }
 /* line 79, ../development/scss/opencart/_opencart-pages.scss */
 .product-filter .filter-right > div {
@@ -9654,7 +9654,7 @@ body .owl-carousel .owl-wrapper-outer {
   display: inline-block;
   width: auto;
   box-shadow: none;
-  height: 20px;
+  height: 36px;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   -ms-border-radius: 0;
@@ -11363,3 +11363,5 @@ body .owl-carousel .owl-wrapper-outer {
   }
 }
 /* Iphone 4 + 5 Portrait */
+
+/**/

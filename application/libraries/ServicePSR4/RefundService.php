@@ -357,7 +357,7 @@ class RefundService extends BaseService
         return FALSE;
     }
 
-    public function create_refund_from_communication_center($so_no, $refund_parameter)
+    public function createRefundFromCommunicationCenter($so_no, $refund_parameter)
     {
         $so_obj = $this->getDao('So')->get(["so_no" => $so_no]);
 

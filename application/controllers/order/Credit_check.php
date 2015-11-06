@@ -10,7 +10,7 @@ class Credit_check extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('order/credit_check_model');
+        /*$this->load->model('order/credit_check_model');
         $this->load->helper(array('url', 'notice', 'object', 'operator'));
         $this->load->library('service/pagination_service');
         $this->load->library('service/event_service');
@@ -18,7 +18,7 @@ class Credit_check extends MY_Controller
         $this->load->library('service/context_config_service');
         $this->load->library('service/platform_biz_var_service');
         $this->load->library('encrypt');
-        $this->load->library('service/so_refund_score_service');
+        $this->load->library('service/so_refund_score_service');*/
     }
 
     public function index($pagetype = "")
@@ -90,11 +90,6 @@ class Credit_check extends MY_Controller
             $submit_search = 1;
         }
 
-        // if ($this->input->get("t3m_result") != "") {
-            // fetch_operator($where, "t3m_result", $this->input->get("t3m_result"));
-            // $submit_search = 1;
-        // }
-
         if ($this->input->get("currency_id") != "") {
             $where["so.currency_id"] = $this->input->get("currency_id");
             $submit_search = 1;
@@ -125,15 +120,15 @@ class Credit_check extends MY_Controller
         $option["orderby"] = $sort . " " . $order;
 
         //$data["objlist"] = $this->credit_check_model->so_service->get_dao()->get_credit_check_list($where, $option);
-        $data["objlist"] = $this->credit_check_model->get_credit_check_list($where, $option, $type);
+        $data["objlist"] = $this->sc['creditCheckModel']->getCreditCheckList($where, $option, $type);
 
         //$data["total"] = $this->credit_check_model->so_service->get_dao()->get_credit_check_list($where, array("num_rows"=>1));
-        $data["total"] = $this->credit_check_model->get_credit_check_list_count($where, array("num_rows" => 1), $type);
+        $data["total"] = $this->sc['creditCheckModel']->getCreditCheckListCount($where, array("num_rows" => 1), $type);
 
-        $data["del_opt_list"] = end($this->delivery_option_service->get_list_w_key(array("lang_id" => "en")));
-        $pmgw_card_list = $this->credit_check_model->get_pmgw_card_list();
+        $data["del_opt_list"] = end($this->sc['DeliveryOption']->getListWithKey(array("lang_id" => "en")));
+        $pmgw_card_list = $this->sc['creditCheckModel']->getPmgwCardList();
         foreach ($pmgw_card_list as $card_obj) {
-            $data["pmgw_card_list"][$card_obj->get_card_id()] = $card_obj->get_card_name();
+            $data["pmgw_card_list"][$card_obj->getCardId()] = $card_obj->getCardName();
         }
 
         if ($data["objlist"]) {
@@ -144,12 +139,12 @@ class Credit_check extends MY_Controller
                 $temp = array();
 
                 if ($pagetype == "comcenter") {
-                    $note_list = $this->credit_check_model->get_order_note(array("so_no" => $obj->get_so_no(), "type" => "O"));
+                    $note_list = $this->sc['creditCheckModel']->getOrderNote(array("so_no" => $obj->get_so_no(), "type" => "O"));
                     foreach ($note_list AS $note) {
-                        $temp[] = $note->get_note() . ' (' . $note->get_create_on() . ')';
+                        $temp[] = $note->getNote() . ' (' . $note->getCreateOn() . ')';
                     }
                 } else {
-                    $note_list = $this->credit_check_model->get_order_note(array("so_no" => $obj->get_so_no(), "type" => "C"));
+                    $note_list = $this->sc['creditCheckModel']->getOrderNote(array("so_no" => $obj->get_so_no(), "type" => "C"));
                     foreach ($note_list AS $note) {
                         $temp[] = $note->get_note();
                     }
@@ -588,7 +583,7 @@ class Credit_check extends MY_Controller
                 }
 
                 // Add notes
-                $this->credit_check_model->add_order_note($so_no, 'Fail CC email send');				
+                $this->credit_check_model->add_order_note($so_no, 'Fail CC email send');
                 //SBF #2607 add the default refund score when order funded
                 $this->so_refund_score_service->insert_initial_refund_score($so_no);
 

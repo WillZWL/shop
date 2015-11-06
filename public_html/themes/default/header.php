@@ -13,6 +13,9 @@
     <meta name="description" content="Digital discount" />
     <meta name="keywords" content="Digital discount" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="icon" type="image/png" href="/themes/default/asset/image/favicon_<?= strtolower(PLATFORM) ?>.png" />
+
     <link href="/themes/default/asset/image/catalog/cart.png" rel="icon" />
     <link href="/themes/default/asset/css/bootstrap.css" rel="stylesheet" />
     <link href="/themes/default/asset/css/stylesheet.css" rel="stylesheet" />
@@ -99,6 +102,10 @@
                                             <?php
                                                 $siteobj = \PUB_Controller::$siteInfo;
                                                 $currencyId = $siteobj->getPlatformCurrencyId();
+                                                $countryid = $siteobj->getPlatformCountryId();
+                                                $guaranteedays = "14";
+                                                if ($countryid == "GB")
+                                                    $guaranteedays = "30";
                                                 //var_dump($siteobj);
                                                 if (in_array($currencyId, array("GBP", "AUD", "EUR", "NZD"))) {
                                             ?>
@@ -106,7 +113,7 @@
                                             <?php } else {  ?>
                                                 <img src="/themes/default/asset/image/icon-refund.png">
                                             <?php } ?>
-                                                <span><?= _("14 Days Money Back Guarantee") ?></span>
+                                                <span><?= $guaranteedays . _(" Days Money Back Guarantee") ?></span>
                                             </li>
                                             <li >
                                                 <img src="/themes/default/asset/image/icon-truck.png">

@@ -48,7 +48,8 @@
                                                             <img src="/themes/default/asset/image/Przelewy24.png">
                                                         </li>
                                                     <?php } ?>
-                                                        <li class="footer-fieldsetitem">
+                                                    <!-- only uncomment to check all the icons-->
+                                                        <!--<li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/postepay.png">
                                                         </li>
                                                         <li class="footer-fieldsetitem">
@@ -62,7 +63,7 @@
                                                         </li>
                                                          <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/Przelewy24.png">
-                                                        </li>
+                                                        </li>-->>
                                                 </ul>
                                            </fieldset>
                                         </div>
@@ -152,7 +153,10 @@
                                                         <?php
                                                             $siteobj = \PUB_Controller::$siteInfo;
                                                             $currencyId = $siteobj->getPlatformCurrencyId();
-                                                            //var_dump($siteobj);
+                                                            $countryid = $siteobj->getPlatformCountryId();
+                                                            $guaranteedays = "14";
+                                                            if ($countryid == "GB")
+                                                                $guaranteedays = "30";
                                                             if (in_array($currencyId, array("GBP", "AUD", "EUR", "NZD"))) {
                                                         ?>
                                                             <img src=<?= '/themes/default/asset/image/moneyback_' . strtolower($currencyId) . ".jpg" ?>>
@@ -161,7 +165,7 @@
                                                         <?php } ?>
                                                     </div>
                                                     <p class="desc-sm">
-                                                        <?= _('14 days ') ?><br/> <?= _('Money Back') ?><br /><?= _('Guarantee') ?><br />
+                                                        <?= $guaranteedays . _(' days ') ?><br/> <?= _('Money Back') ?><br /><?= _('Guarantee') ?><br />
                                                     </p>
                                                 </li>
                                                 <li style="vertical-align: top;">
