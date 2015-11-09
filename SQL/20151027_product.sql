@@ -1,1 +1,1 @@
-ALTER TABLE product MODIFY COLUMN `lang_restricted` SMALLINT NOT NULL DEFAULT '0' COMMENT '//1 = Battery, Can put more type';
+ALTER TABLE product MODIFY COLUMN `lang_restricted` smallint(3) not null DEFAULT '1' COMMENT 'value 0 = completely no selection, bit 0 = Not applicable, bit 1 = FR, bit 2 = ES, bit 3 = RU, bit 4 = PL, bit 5= IT'
