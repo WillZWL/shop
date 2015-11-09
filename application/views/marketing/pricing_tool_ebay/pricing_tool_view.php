@@ -233,7 +233,7 @@ $ar_l_status_color = array("L" => "#00FF00", "N" => "#FF0000");
                                         foreach ($business_day_array as $b) {
                                             ?>
                                             <option
-                                                value="<?= $b ?>" <?if ($price_ext_obj->get_handling_time() == $b) echo "selected"?>><?= $b . " " . $lang["business_day"] ?></option>
+                                                value="<?= $b ?>" <?php if ($price_ext_obj->get_handling_time() == $b) echo "selected"?>><?= $b . " " . $lang["business_day"] ?></option>
                                         <?php
                                         }
                                         ?>
@@ -299,7 +299,7 @@ $ar_l_status_color = array("L" => "#00FF00", "N" => "#FF0000");
                         </table>
                     </td>
                 </tr>
-            <? }
+            <?php  }
 
             ?>
 

@@ -10,7 +10,7 @@
 <body
     onResize="SetFrameFullHeight(document.getElementById('plist'));SetFrameFullHeight(document.getElementById('pview'));">
 <div id="main">
-    <? $ar_status = array("0" => $lang["inactive"], "1" => $lang["active"]); ?>
+    <?php  $ar_status = array("0" => $lang["inactive"], "1" => $lang["active"]); ?>
     <?= $notice["img"] ?>
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>

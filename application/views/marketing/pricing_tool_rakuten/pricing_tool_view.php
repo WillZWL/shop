@@ -490,7 +490,7 @@ html;
 
                     </td>
                 </tr>
-            <? }// foreach $pdata
+            <?php  }// foreach $pdata
 
             ?>
 

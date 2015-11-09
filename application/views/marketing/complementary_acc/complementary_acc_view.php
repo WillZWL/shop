@@ -90,7 +90,7 @@ $ca_status = array(0 => "inactive", 1 => "active");
                     <tr id="caprod_row_<?= $country ?>" style="display:none;">
 
                         <td align="left">
-                            <?
+                            <?php
                             # if mapped complementary accessory list exists for this SKU
                             if (!empty($calist)) {
                                 ?>
@@ -199,7 +199,7 @@ HTML;
                             </form>
                         </td>
                     </tr>
-                <? }
+                <?php  }
             }
             ?>
             <tr>
@@ -323,7 +323,7 @@ HTML;
                 <td>&nbsp;</td>
             </tr>
         </table>
-    <?
+    <?php
     }
     ?>
 </div>

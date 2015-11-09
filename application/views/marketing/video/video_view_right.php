@@ -76,8 +76,8 @@ $v_type_arr = array("G" => $lang["guide"], "R" => $lang["review"]);
                     $is_edit = ($cmd == "edit" && $id == $obj->get_id());
                     ?>
                     <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
-                        onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){
-                    ?>onClick="Redirect('<?= site_url('marketing/video/view_right/' . $obj->get_sku() . '/' . $lang_id . '/' . $country . '/' . $obj->get_id()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"<?
+                        onMouseOut="RemoveClassName(this, 'highlight')" <?php if (!($is_edit)){
+                    ?>onClick="Redirect('<?= site_url('marketing/video/view_right/' . $obj->get_sku() . '/' . $lang_id . '/' . $country . '/' . $obj->get_id()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"<?php
                     }?>>
                         <?php
                         if ($is_edit) {

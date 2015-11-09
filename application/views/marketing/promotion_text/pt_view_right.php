@@ -87,7 +87,7 @@
                                     <td>&nbsp;&nbsp;<?= $type ?></td>
                                     <td>&nbsp;&nbsp;<?= $lang_obj->get_id() ?></td>
                                     <td>&nbsp;&nbsp;<?= $platform_obj->get_platform_name() ?></td>
-                                    <td>&nbsp;&nbsp;<??></td>
+                                    <td>&nbsp;&nbsp;<?php ?></td>
                                     <td>&nbsp;&nbsp;<input
                                             name="promo_text[<?= $type ?>][<?= $lang_id ?>][<?= $platform_obj->get_selling_platform_id() ?>][0]"
                                             class="input" value="" notEmpty maxLen=256></td>
@@ -127,8 +127,8 @@
                             <td height="20"></td>
                             <td>&nbsp;&nbsp;<?= $type ?></td>
                             <td>&nbsp;&nbsp;<?= $lang_obj->get_id() ?></td>
-                            <td>&nbsp;&nbsp;<??></td>
-                            <td>&nbsp;&nbsp;<??></td>
+                            <td>&nbsp;&nbsp;<?php ?></td>
+                            <td>&nbsp;&nbsp;<?php ?></td>
                             <td>&nbsp;&nbsp;<input name="promo_text[<?= $type ?>][<?= $lang_obj->get_id() ?>]"
                                                    class="input" value="" notEmpty maxLen=256></td>
                         </tr>

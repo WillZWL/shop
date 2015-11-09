@@ -23,7 +23,7 @@
     <?php
     $ars_status = array("A" => $lang["available"], "C" => $lang["stock_constraint"], "O" => $lang["temp_out_of_stock"], "L" => $lang["last_lot"], "D" => $lang["discontinued"], "P" => $lang["pre-order"]);
     ?>
-    <? $ar_src_status = array("A" => $lang["available"], "C" => $lang["stock_constraint"], "O" => $lang["temp_out_of_stock"], "L" => $lang["last_lot"], "D" => $lang["discontinued"], "P" => $lang["pre-order"]); ?>
+    <?php  $ar_src_status = array("A" => $lang["available"], "C" => $lang["stock_constraint"], "O" => $lang["temp_out_of_stock"], "L" => $lang["last_lot"], "D" => $lang["discontinued"], "P" => $lang["pre-order"]); ?>
     <table class="page_header" border="0" cellpadding="0" cellspacing="0" height="70" width="100%">
         <tr>
             <td height="70" style="padding-left:8px">
@@ -211,8 +211,8 @@
                         <td><?= $obj->get_currency_id() ?> <input class="int_input"
                                                                   name="sp[<?= $obj->get_supplier_id() ?>][cost]"
                                                                   value="<?= $obj->get_cost() ?>"
-                                                                  onKeyUp="if (ChkChg(this, <?= $obj->get_cost() ?>)){ this.form.elements['sp[<?= $obj->get_supplier_id() ?>][supplier_status]'].value='A'; this.form.elements['check[<?= $obj->get_supplier_id() ?>]'].checked=true;} else{ this.form.elements['sp[<?= $obj->get_supplier_id() ?>][supplier_status]'].value='<?= $obj->get_supplier_status() ?>'; this.form.elements['check[<?= $obj->get_supplier_id() ?>]'].checked=false} exc('<?= $obj->get_currency_id() ?>', '<?= $default_curr ?>', this.value, document.fm.elements['<?= $tc_name ?>']);<?if ($obj->get_order_default()) {
-                                                                      ?>CalcProfit(this.value)<?
+                                                                  onKeyUp="if (ChkChg(this, <?= $obj->get_cost() ?>)){ this.form.elements['sp[<?= $obj->get_supplier_id() ?>][supplier_status]'].value='A'; this.form.elements['check[<?= $obj->get_supplier_id() ?>]'].checked=true;} else{ this.form.elements['sp[<?= $obj->get_supplier_id() ?>][supplier_status]'].value='<?= $obj->get_supplier_status() ?>'; this.form.elements['check[<?= $obj->get_supplier_id() ?>]'].checked=false} exc('<?= $obj->get_currency_id() ?>', '<?= $default_curr ?>', this.value, document.fm.elements['<?= $tc_name ?>']);<?php if ($obj->get_order_default()) {
+                                                                      ?>CalcProfit(this.value)<?php
                                                                   }?>" notEmpty isNumber min="0"></td>
                         <td><?= $default_curr ?> <input name="<?= $tc_name ?>" class="int_input read"
                                                         style="text-align:left;"
@@ -288,7 +288,7 @@
         krsort($prod["max_cost"]);
         foreach ($prod["max_cost"] as $plat_mc) {
             ?>
-                        <b><?= $default_curr ?> <script>w(exc('<?= $plat_mc->get_platform_currency_id() ?>', '<?= $default_curr ?>', <?= $plat_mc->get_supplier_cost() ?>))</script></b> <span class="remark">(<?= $lang["platform"] ?>: <script>w(platformlist['<?= $plat_mc->get_platform_id() ?>'])</script> &nbsp;&nbsp; <?= $lang["ship_type"] ?>: <?= $plat_mc->get_shiptype_name() ?> &nbsp;&nbsp; <?= $lang["selling_price"] ?>: <?= $default_curr ?> <?if (!is_null($plat_mc->get_price())) { ?><script>w(exc('<?= $plat_mc->get_platform_currency_id() ?>', '<?= $default_curr ?>', <?= $plat_mc->get_price() ?>))</script><?
+                        <b><?= $default_curr ?> <script>w(exc('<?= $plat_mc->get_platform_currency_id() ?>', '<?= $default_curr ?>', <?= $plat_mc->get_supplier_cost() ?>))</script></b> <span class="remark">(<?= $lang["platform"] ?>: <script>w(platformlist['<?= $plat_mc->get_platform_id() ?>'])</script> &nbsp;&nbsp; <?= $lang["ship_type"] ?>: <?= $plat_mc->get_shiptype_name() ?> &nbsp;&nbsp; <?= $lang["selling_price"] ?>: <?= $default_curr ?> <?php if (!is_null($plat_mc->get_price())) { ?><script>w(exc('<?= $plat_mc->get_platform_currency_id() ?>', '<?= $default_curr ?>', <?= $plat_mc->get_price() ?>))</script><?php
             }?>)</span>
                         <br>
             <?php

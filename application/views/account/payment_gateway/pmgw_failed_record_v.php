@@ -81,8 +81,8 @@
             ?>
 
             <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
-                onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){
-            ?>onClick="Redirect('<?= site_url('account/payment_gateway/pmgw_failed_record/' . $obj->get_trans_id()) ?>?<?= $_SERVER['QUERY_STRING'] ?>')"<?
+                onMouseOut="RemoveClassName(this, 'highlight')" <?php if (!($is_edit)){
+            ?>onClick="Redirect('<?= site_url('account/payment_gateway/pmgw_failed_record/' . $obj->get_trans_id()) ?>?<?= $_SERVER['QUERY_STRING'] ?>')"<?php
             }?>>
                 <td height="20"><img src="<?= base_url() ?>images/info.gif"
                                      title='<?= $lang["create_on"] ?>:<?= $obj->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->get_modify_by() ?>'>

@@ -169,7 +169,7 @@
                                     <option
                                         value="<?= $value ?>" <?php echo ($obj->get_warranty_in_month() == $value) ? "selected" : ""?> ><?= $value ?></option>
 
-                                <?
+                                <?php
                                 }?>
                             </select>
                             <img src="/images/add_sign.png" id="warranty_add_sign_btn[<?= $obj->get_sku() ?>]"

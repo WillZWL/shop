@@ -134,9 +134,9 @@ $ar_l_status_color = array("L" => "#00FF00", "N" => "#FF0000");
                     <td height="20" align="left" style="padding-left:8px;"><b
                             style="font-size: 12px; color: rgb(255, 255, 255);"><span style="padding-right:15px;"
                                                                                       id='sign_<?= $platform ?>'>-</span><?= $platform_id . " - " . $value["obj"]->get_platform_name() . " | " . $value["obj"]->get_platform_currency_id() . " | " ?>
-                            <!-- <td height="20" align="left" style="padding-left:8px;"><b style="font-size: 12px; color: rgb(255, 255, 255);"><a href="javascript:showHide('<?//=$platform
-                            ?>');"><span style="padding-right:15px;" id='sign_<?//=$platform
-                            ?>'>+</span></a><?//=$platform_id." - ".$value["obj"]->get_platform_name()." | ".$value["obj"]->get_platform_currency_id()." | "
+                            <!-- <td height="20" align="left" style="padding-left:8px;"><b style="font-size: 12px; color: rgb(255, 255, 255);"><a href="javascript:showHide('<?php //=$platform
+                            ?>');"><span style="padding-right:15px;" id='sign_<?php //=$platform
+                            ?>'>+</span></a><?php //=$platform_id." - ".$value["obj"]->get_platform_name()." | ".$value["obj"]->get_platform_currency_id()." | "
                             ?> -->
                             <?php
                             if ($pobj->get_current_platform_price() * 1) {
@@ -304,7 +304,7 @@ $ar_l_status_color = array("L" => "#00FF00", "N" => "#FF0000");
                         </table>
                     </td>
                 </tr>
-            <? }
+            <?php  }
 
             ?>
 

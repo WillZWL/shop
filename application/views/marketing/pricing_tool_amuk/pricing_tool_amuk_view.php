@@ -75,9 +75,9 @@ $ar_src_status = array("A" => $lang["available"], "C" => $lang["stock_constraint
         <div style="float:left"><img src='<?= get_image_file($prod_obj->get_image(), 'm', $prod_obj->get_sku()) ?>'> &nbsp;</div>
         <div style="float:right"><img src='<?= base_url() ?>/images/<?= $lang["platform_country_image"] ?>'> &nbsp;</div>
 
-        <b style="font-size: 12px; color: rgb(0, 0, 0);"><?= $lang["header"] ?></b><br><?= $lang["header_message"] . " - " ?><?php if ($link != "") { ?><a href="<?= $link ?>" <?= $tar ?> title="Link to Website Page"><?
-        }?><font style="font-size:14px; color:#000000; text-decoration:none; font-weight:bold;"><?= $prod_obj->get_sku() . " - " . $prod_obj->get_name() ?></font><?if ($link != "") {
-            ?></a><?
+        <b style="font-size: 12px; color: rgb(0, 0, 0);"><?= $lang["header"] ?></b><br><?= $lang["header_message"] . " - " ?><?php if ($link != "") { ?><a href="<?= $link ?>" <?= $tar ?> title="Link to Website Page"><?php
+        }?><font style="font-size:14px; color:#000000; text-decoration:none; font-weight:bold;"><?= $prod_obj->get_sku() . " - " . $prod_obj->get_name() ?></font><?php if ($link != "") {
+            ?></a><?php
         }?><br><?= $lang["asin"] . " : " . $price_obj->get_platform_code() ?>
 
     </td>

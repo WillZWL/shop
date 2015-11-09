@@ -81,9 +81,7 @@ class ProductImageVo extends \BaseVo
 
     public function setImageSaved($image_saved)
     {
-        if ($image_saved) {
-            $this->image_saved = $image_saved;
-        }
+        $this->image_saved = $image_saved;
     }
 
     public function getImageSaved()

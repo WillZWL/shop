@@ -220,7 +220,7 @@
                     <input id='flag_type_<?= $per_email_info->get_id() ?>' type="hidden" name="post" value="update">
                 </tr>
             </form>
-            <?
+            <?php
             $rowcount++;
         }
         ?>

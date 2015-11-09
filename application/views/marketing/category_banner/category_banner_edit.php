@@ -41,7 +41,7 @@
                         ?>
                     </select>
                 </td>
-                <? if ($language_id) {
+                <?php  if ($language_id) {
                     ?>
                     <td width="15%" class="field" align="right" style="padding-right:8px;" size='5'>Please Select
                         Country
@@ -75,7 +75,7 @@
             </tr>
         </table>
         <table width="100%" cellpadding="0" cellspacing="1" class="tb_list">
-            <? if ($language_id)
+            <?php  if ($language_id)
             {
             ?>
             <tr>
@@ -85,15 +85,15 @@
                     <input type="file" name="image">
                 </td>
                 <td class="field special" align="center">
-                    <?if ($updated_country) {
+                    <?php if ($updated_country) {
                         ?>Updated Language: <?= $updated_language->get_name();
                     }?><br>
-                    <?if ($updated_country) {
-                        ?>Updated Countries:<br> <?foreach ($updated_country AS $obj) {
+                    <?php if ($updated_country) {
+                        ?>Updated Countries:<br> <?php foreach ($updated_country AS $obj) {
                             echo $obj->get_name();
                             $i++;
                             if ($i % 5 == 0) {
-                                ?><br><?
+                                ?><br><?php
                             }
                         }
                     }?></td>
@@ -106,7 +106,7 @@
                         if (file_exists($image_file)) {
                             ?>
                             <img src='<?= base_url() . $image_file ?>'>
-                        <?
+                        <?php
                         }
                     }?>
                 </td>

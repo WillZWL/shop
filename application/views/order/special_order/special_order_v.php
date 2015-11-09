@@ -80,7 +80,7 @@
                                                                onClick="Redirect('<?= site_url('order/special_order') ?>')">
                 &nbsp; <input type="button" value="<?= $lang["on_hold_button"] ?>" class="button"
                               onClick="Redirect('<?= site_url('order/special_order/on_hold') ?>')"> &nbsp;
-                <? if (check_app_feature_access_right($app_id, "ORD001101_aps_payment_order_page")) {
+                <?php  if (check_app_feature_access_right($app_id, "ORD001101_aps_payment_order_page")) {
                     ?>
                     <input type="button" style="width:220px" value="<?= $lang["sale_aps_button"] ?>" class="button"
                            onClick="Redirect('<?= site_url('order/special_order/on_hold/aps_payment') ?>')"> &nbsp;
@@ -245,7 +245,7 @@
                                         <tr>
                                             <td><span class="warn">*</span> Register Name:</td>
                                             <td>
-                                                <?$t_selected[$_POST["client"]["title"]] = " SELECTED";?>
+                                                <?php $t_selected[$_POST["client"]["title"]] = " SELECTED";?>
                                                 <select disabled name="client[title]">
                                                     <option value="Mr"<?= $t_selected["Mr"] ?>>Mr
                                                     <option value="Mrs"<?= $t_selected["Mrs"] ?>>Mrs

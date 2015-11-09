@@ -138,12 +138,12 @@ $ar_status = array($lang["inactive"], $lang["active"]);
                     <?php if ($lang_id != '' && $lang_id != 'en') { ?><input type="button"
                                                                              onClick="confirmTranslate('<?= $ra_group_obj->get_group_id() ?>','<?= $lang_id ?>');"
                                                                              title="<?= $lang["translate_ra_group_content"] ?>"
-                                                                             value="<?= $lang["translate"] ?>"><? } ?>
+                                                                             value="<?= $lang["translate"] ?>"><?php  } ?>
                     <?php if ($lang_id != '' && $lang_id == 'en') { ?><input type="button"
                                                                              onClick="confirmTranslate('<?= $ra_group_obj->get_group_id() ?>','<?= $lang_list_str ?>');"
                                                                              title="<?= $lang["translate_ra_group_content_all_in_one"] ?>"
                                                                              value="<?= $lang["translate"] ?>">
-                    <? } ?>
+                    <?php  } ?>
                 </td>
                 <td class="field"><?= $lang["language"] ?></td>
                 <td class="value">

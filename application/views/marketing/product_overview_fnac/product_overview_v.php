@@ -54,7 +54,7 @@
                 <td style="padding-right:8px" align="right"><b><?= $lang["platform_id"] ?></b></td>
                 <td colspan='3'>
                     <select name="platform_id">
-                        <?
+                        <?php
                         foreach ($clist as $cobj) {
                             ?>
                             <option

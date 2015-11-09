@@ -8,7 +8,7 @@ class VbDataTransferProductContentExtendService extends VbDataTransferService
     ********************************************************************/
     public function processVbData ($feed)
     {
-        $xml_vb = simplexml_load_string($feed);
+        $xml_vb = simplexml_load_string($feed, 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
         unset($feed);
         $task_id = $xml_vb->attributes()->task_id;
 
