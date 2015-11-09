@@ -22,6 +22,12 @@ class CheckoutModel extends \CI_Model
     private $_soFactoryService;
     private $_cartSessionService;
 
+    public $poBoxAmount = ["GBP" => 100
+                            , "AUD" => 100
+                            , "NZD" => 100
+                            , "EUR" => 100
+                            , "PLN" => 100];
+
     public function __construct() {
         parent::__construct();
         $this->setCountryService(new CountryService());
@@ -29,6 +35,13 @@ class CheckoutModel extends \CI_Model
         $this->setPaymentOptionService(new PaymentOptionService());
         $this->setSoFactoryService(new SoFactoryService());
         $this->setCartSessionService(new CartSessionService());
+    }
+
+    public function getPoBoxAmountLimit($inJson = false) {
+        if ($inJson)
+            return json_encode($this->poBoxAmount);
+        else
+            return $this->poBoxAmount;
     }
 
     public function isLoggedIn() {
@@ -137,8 +150,8 @@ class CheckoutModel extends \CI_Model
                 , "soPaymentStatus" => $soPaymentStatus];
     }
 
-    public function getPaymentOption($platformId) {
-        return $this->getPaymentOptionService()->getPaymentOptionByPlatformId($platformId);    
+    public function getPaymentOption($platformId, $cartAmount) {
+        return $this->getPaymentOptionService()->getPaymentOptionByPlatformId($platformId, $cartAmount);
     }
 
     public function getCheckoutFormCountryList($platformCountryId, $type = self::BILLING_COUNTRY) {

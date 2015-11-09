@@ -64,6 +64,10 @@ class On_hold_admin extends MY_Controller
             $where["reason_cat"] = $this->input->get("cat");
         }
 
+        if ($this->input->get("type") != "") {
+            $where["reason_type"] = $this->input->get("type");
+        }
+
         if ($this->input->get("desc") != "") {
             $where["description LIKE "] = '%' . $this->input->get("desc") . '%';
         }
@@ -74,7 +78,7 @@ class On_hold_admin extends MY_Controller
 
         $sort = $this->input->get('sort');
         if ($sort == "") {
-            $sort = "reason_type";
+            $sort = "reason_cat";
         }
 
         $order = $this->input->get('order');
@@ -186,13 +190,13 @@ class On_hold_admin extends MY_Controller
 
             $r_where = [];
             $r_where["reason_type in (
-            'change_of_address',
-            'confirmation_required',
-            'customer_request',
-            'oc_fraud',
-            'csvv',
-            'cscc',
-            'oos')"] = null;
+                    'change_of_address',
+                    'confirmation_required',
+                    'customer_request',
+                    'oc_fraud',
+                    'csvv',
+                    'cscc',
+                    'oos') and reason_cat != 'OT' "] = null;
 
             $data["reason_list"] = $this->sc['So']->getDao('HoldReason')->getList(array_merge($r_where,['status'=>1]), ['orderby'=>'reason_cat asc, description asc', 'limit'=>-1]);
 
@@ -399,11 +403,11 @@ class On_hold_admin extends MY_Controller
 
             $r_where = [];
             if ($type == "cc") {
-                $r_where["reason_type in ('cscc','oc_fraud')"] = null;
+                $r_where["reason_type in ('cscc','oc_fraud') and reason_cat != 'OT'"] = null;
             } else if($type == "vv") {
-                $r_where["reason_type in ('csvv','oc_fraud')"] = null;
+                $r_where["reason_type in ('csvv','oc_fraud') and reason_cat != 'OT'"] = null;
             } else {
-                $r_where["reason_type in ('oc_contacted','oc_fraud')"] = null;
+                $r_where["reason_type in ('oc_contacted','oc_fraud') and reason_cat != 'OT'"] = null;
             }
             $data["reason_list"] = $this->sc['So']->getDao('HoldReason')->getList(array_merge($r_where, ['status'=>1]), ['orderby'=>'reason_cat asc, description asc', 'limit'=>-1]);
             $data["notice"] = notice($lang);

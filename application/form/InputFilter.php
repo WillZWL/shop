@@ -11,6 +11,7 @@ use Zend\Validator\EmailAddress;
 *****************/
 abstract class InputFilter {
     public $validInput = true;
+    public $gatewayList = ["paypal", "moneybookers"];
 
     public function __construct() {
     }
@@ -31,7 +32,9 @@ abstract class InputFilter {
             $validatorChain->attach(new Regex("/^[ \x{00C0}-\x{01FF}a-zA-Z0-9'\-]+$/u"))
                             ->attach(new StringLength(array('min' => 1,
                                                          'max' => $length)));
-            return $this->validInput = $validatorChain->isValid($input);
+            $result = $validatorChain->isValid($input);
+            (!$result) ? ($this->validInput = false) : "";
+            return $result;
         }
 
         return $this->validInput = false;
@@ -61,7 +64,9 @@ abstract class InputFilter {
         $validatorChain->attach(new Regex("/^[ \x{00C0}-\x{01FF}a-zA-Z0-9,'\-\/#]+$/u"))
                         ->attach(new StringLength(array('min' => 1,
                                                      'max' => 1024)));
-        return $this->validInput = $validatorChain->isValid($address);
+        $result = $validatorChain->isValid($address);
+        (!$result) ? ($this->validInput = false) : "";
+        return $result;
     }
 
     public function isValidAddress1($address)
@@ -99,7 +104,9 @@ abstract class InputFilter {
     {
         $validator = new PostCode();
         $validator->setLocale(strtolower($langId) . "-" . strtoupper($countryId));
-        return $this->validInput = $validator->isValid($billPostal);
+        $result = $validator->isValid($billPostal);
+        (!$result) ? ($this->validInput = false) : "";
+        return $result;
     }
     
     public function isValidStateId($state)
@@ -112,7 +119,9 @@ abstract class InputFilter {
         $validatorChain->attach(new Regex("/^[a-zA-Z0-9\-]+$/"))
                         ->attach(new StringLength(array('min' => 1,
                                                      'max' => 6)));
-        return $this->validInput = $validatorChain->isValid($state);    
+        $result = $validatorChain->isValid($state);
+        (!$result) ? ($this->validInput = false) : "";
+        return $result;
     }
 
     public function isValidPhone($countryCode, $areaCode, $number)
@@ -121,7 +130,9 @@ abstract class InputFilter {
         $validatorChain->attach(new Regex("/^\+?(\(?\+?(\s*)?\d{1,3}\)?\s)?\(?\d{1,3}\)?[\s\d.-]{1,20}\d*$/"))
                         ->attach(new StringLength(array('min' => 1,
                                                      'max' => 32)));
-        return $this->validInput = $validatorChain->isValid($countryCode . $areaCode . $number);    
+        $result = $validatorChain->isValid($countryCode . $areaCode . $number);
+        (!$result) ? ($this->validInput = false) : "";
+        return $result;
     }
 
     public function isValidEmail($email)
@@ -130,7 +141,9 @@ abstract class InputFilter {
         $validatorChain->attach(new EmailAddress())
                         ->attach(new StringLength(array('min' => 3,
                                                      'max' => 255)));
-        return $this->validInput = $validatorChain->isValid($email);
+        $result = $validatorChain->isValid($email);
+        (!$result) ? ($this->validInput = false) : "";
+        return $result;
     }
 
     public function isValidFingerprint($fingerprint)
@@ -145,7 +158,42 @@ abstract class InputFilter {
             return true;
         } else {
             $validator = new Regex("/^[a-zA-Z0-9]{26,40}$/");
-            return $this->validInput = $validator->isValid($session);
+            $result = $validator->isValid($session);
+            (!$result) ? ($this->validInput = false) : "";
+            return $result;
         }
-    }   
+    }
+
+    public function isValidPaymentGateway($gateway)
+    {
+        if (in_array($gateway, $this->gatewayList)) {
+            return true;
+        } else {
+            $this->validInput = false;
+            return false;
+        }
+    }
+
+    public function isValidCard($card)
+    {
+        $validator = new Regex("/^[a-zA-Z0-9_]+$/");
+        $result = $validator->isValid($card);
+        (!$result) ? ($this->validInput = false) : "";
+        return $result;
+    }
+
+    public function isValidCardId($cardId)
+    {
+        $validator = new Regex("/^[a-zA-Z0-9]+$/");
+        $result = $validator->isValid($cardId);
+        (!$result) ? ($this->validInput = false) : "";
+        return $result;
+    }
+    
+    public function isPoBox($address)
+    {
+        $validator = new Regex("/\bP(ost|ostal)?([ \.]*O(ffice)?)?([ \.]*Box)?\b/i");
+        $result = $validator->isValid($address);
+        return $result;    
+    }
 }

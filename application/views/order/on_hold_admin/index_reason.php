@@ -26,7 +26,7 @@
         <col width="200">
         <col width="200">
         <col>
-        <col width="120">
+        <col width="150">
         <tr class="add_header">
             <td height="20"></td>
             <td><?= $lang["reason_category"] ?></td>
@@ -41,35 +41,37 @@
                     <td>
                         <select name="r_cat" class="input">
                             <?php foreach ($lang["hrcategory"] as $key => $value) : ?>
+                                <?php if ($key <> "OT") : ?>
                                 <option value="<?= $key ?>" <?= $this->input->post('r_cat') == $key ? "SELECTED" : "" ?>><?= $key ." - ". $value ?></option>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
                     </td>
                     <td>
                         <select name="r_type" class="input">
                             <?php foreach ($lang["reason_type_list"] as $key => $value) : ?>
-                                <option value="<?= $value ?>" <?= $this->input->post('r_cat') == $value ? "SELECTED" : "" ?>><?= $value ?></option>
+                                <option value="<?= $value ?>" <?= $this->input->post('r_type') == $value ? "SELECTED" : "" ?>><?= $value ?></option>
                             <?php endforeach; ?>
                         </select>
                     </td>
-                    <!-- <td><input name="r_type" class="input" value="<?= $this->input->post("r_type") ?>" notEmpty maxLen=255></td> -->
                     <td><input name="r_desc" class="input" value="<?= $this->input->post("r_desc") ?>" notEmpty maxLen=255></td>
                 <?php else : ?>
                     <td>
                         <select name="r_cat" class="input">
                             <?php foreach ($lang["hrcategory"] as $key => $value) : ?>
+                                <?php if ($key <> "OT") : ?>
                                 <option value="<?= $key ?>"><?= $key ." - ". $value ?></option>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
                     </td>
                     <td>
                         <select name="r_type" class="input">
                             <?php foreach ($lang["reason_type_list"] as $key => $value) : ?>
-                                <option value="<?= $value ?>" <?= $this->input->post('r_cat') == $value ? "SELECTED" : "" ?>><?= $value ?></option>
+                                <option value="<?= $value ?>"><?= $value ?></option>
                             <?php endforeach; ?>
                         </select>
                     </td>
-                    <!-- <td><input name="r_type" class="input" notEmpty maxLen=255></td> -->
                     <td><input name="r_desc" class="input" notEmpty maxLen=255></td>
                 <?php endif; ?>
                 <td align="center"><input type="submit" value="<?= $lang["add"] ?>"></td>
@@ -104,12 +106,18 @@
                     <select name="cat" class="input">
                         <option value=""></option>
                         <?php foreach ($lang["hrcategory"] as $key => $value) : ?>
-                            <option
-                                value="<?= $key ?>" <?= $this->input->get('cat') == $key ? "SELECTED" : "" ?>><?= $value ?></option>
+                            <option value="<?= $key ?>" <?= $this->input->get('cat') == $key ? "SELECTED" : "" ?>><?= $value ?></option>
                         <?php endforeach; ?>
                     </select>
                 </td>
-                <td><input name="type" class="input" value="<?= htmlspecialchars($this->input->get("type")) ?>"></td>
+                <td>
+                    <select name="type" class="input">
+                        <option value=""></option>
+                    <?php foreach ($lang["reason_type_list"] as $key => $value) : ?>
+                        <option value="<?= $value ?>" <?= $this->input->get('type') == $value ? "SELECTED" : "" ?>><?= $value ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                </td>
                 <td><input name="desc" class="input" value="<?= htmlspecialchars($this->input->get("desc")) ?>"></td>
                 <td align="center"><input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;"></td>
             </tr>
@@ -125,7 +133,7 @@
 
                 <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')"
                 <?php
-                    if (!($is_edit)):
+                    if (!($is_edit) && $obj->getReasonCat() <> "OT"):
                 ?>onClick="Redirect('<?= site_url('order/on_hold_admin/reason/'.$offset.'/' . $obj->getId()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"
                 <?php
                     endif;
@@ -134,7 +142,7 @@
                         <img src="<?= base_url() ?>images/info.gif" title='<?= $lang["create_on"] ?>:<?= $obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->getModifyBy() ?>'>
                     </td>
                     <?php
-                    if ($is_edit) :
+                    if ($is_edit && $obj->getReasonCat() <> "OT") :
                         ?>
                         <form name="fm_edit" action="<?= base_url() ?>order/on_hold_admin/reason/<?= $offset ?>/?<?= $_SERVER['QUERY_STRING'] ?>" method="post" onSubmit="return CheckForm(this)">
                             <input type="hidden" name="posted" value="1">
@@ -144,22 +152,39 @@
                                 <td>
                                     <select name="ecat" class="input">
                                         <?php foreach ($lang["hrcategory"] as $key => $value) : ?>
+                                            <?php if ($key <> "OT") : ?>
                                             <option value="<?= $key ?>" <?= $this->input->post('ecat') == $key ? "SELECTED" : "" ?>><?= $key ." - ". $value ?></option>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                     </select>
                                 </td>
-                                <td><input name="etype" class="input" value="<?= $this->input->post("etype") ?>"
-                                <td><input name="edesc" class="input" value="<?= $this->input->post("edesc") ?>"
-                                           notEmpty maxLen=255></td>
+                                <td>
+                                    <select name="etype" class="input">
+                                        <option value=""></option>
+                                    <?php foreach ($lang["reason_type_list"] as $key => $value) : ?>
+                                        <option value="<?= $value ?>" <?= $this->input->post('etype') == $value ? "SELECTED" : "" ?>><?= $value ?></option>
+                                    <?php endforeach; ?>
+                                    </select>
+                                </td>
+                                <td><input name="edesc" class="input" value="<?= $this->input->post("edesc") ?>" notEmpty maxLen=255></td>
                             <?php else : ?>
                                 <td>
                                     <select name="ecat" class="input">
                                         <?php foreach ($lang["hrcategory"] as $key => $value) : ?>
+                                            <?php if ($key <> "OT") : ?>
                                             <option value="<?= $key ?>" <?= $obj->getReasonCat() == $key ? "SELECTED" : "" ?>><?= $key ." - ". $value ?></option>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                     </select>
                                 </td>
-                                <td><input name="etype" class="input" value="<?= $obj->getReasonType() ?>" notEmpty maxLen=255></td>
+                                <td>
+                                    <select name="etype" class="input">
+                                        <option value=""></option>
+                                    <?php foreach ($lang["reason_type_list"] as $key => $value) : ?>
+                                        <option value="<?= $value ?>" <?= $obj->getReasonType() == $value ? "SELECTED" : "" ?>><?= $value ?></option>
+                                    <?php endforeach; ?>
+                                    </select>
+                                </td>
                                 <td><input name="edesc" class="input" value="<?= $obj->getDescription() ?>" notEmpty maxLen=255></td>
                             <?php endif; ?>
                             <td align="center">
@@ -174,7 +199,7 @@
                         <td><?= $obj->getReasonCat() ." - ". $lang["hrcategory"][$obj->getReasonCat()] ?></td>
                         <td><?= $obj->getReasonType() ?></td>
                         <td><?= $obj->getDescription() ?></td>
-                        <td>&nbsp;</td>
+                        <td><?= $obj->getReasonCat() == "OT" ? $lang["cannot_be_modified"] : ""?>&nbsp;</td>
                     <?php
                     endif;
                     ?>

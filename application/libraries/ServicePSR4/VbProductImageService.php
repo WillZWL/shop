@@ -40,7 +40,7 @@ class VbProductImageService extends BaseService
 				$img_size = array("l", "m", "s");
 
 				//get the image from VB
-				$file = "http://www.valuebasket.com/images/product/" . $img->VB_alt_text;
+				$file = "http://www.valuebasket.com/images/product/" . $img->vb_alt_text;
 				//print $file;
 				//$file = "http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg";
 				$file_headers = @get_headers($file);
@@ -95,10 +95,10 @@ class VbProductImageService extends BaseService
 							@unlink($imgpath . $img->sku . "." . $img->image);
 
 						//save VB image in AtomV2
-						$vars = explode("_", $img->VB_alt_text);
+						$vars = explode("_", $img->vb_alt_text);
 						$VB_sku = $vars[0];
 
-						$vars2 = explode(".", $img->VB_alt_text);
+						$vars2 = explode(".", $img->vb_alt_text);
 						$ext = $vars2[count($vars2)-1];
 
 						$image_content = file_get_contents("http://www.valuebasket.com/images/product/" . $VB_sku . "." . $ext);
@@ -131,7 +131,7 @@ class VbProductImageService extends BaseService
 
 				//update the product_image table
 				$pi_obj->setImageSaved(1);
-				$pi_obj->setVBAltText("");
+				$pi_obj->setVbAltText("");
 				$this->getDao()->update($pi_obj);
 			}
 		}

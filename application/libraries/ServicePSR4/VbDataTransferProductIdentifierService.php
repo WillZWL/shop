@@ -3,7 +3,6 @@ namespace ESG\Panther\Service;
 
 class VbDataTransferProductIdentifierService extends VbDataTransferService
 {
-
     /*******************************************************************
     *   processVbData, get the VB data to save it in the price table
     ********************************************************************/
@@ -23,25 +22,7 @@ class VbDataTransferProductIdentifierService extends VbDataTransferService
         {
             try
             {
-
-                /*//Get the master sku to search the corresponding sku in atomv2 database
-                $master_sku = (string)$pc->master_sku;
-                $sku = $this->getService('SkuMapping')->getLocalSku($master_sku);
-
-                if (empty($sku)) {
-                    $xml[] = '<product_identifier>';
-                    $xml[] = '<prod_grp_cd>' . $pc->prod_grp_cd . '</prod_grp_cd>';
-                    $xml[] = '<colour_id>' . $pc->colour_id . '</colour_id>';
-                    $xml[] = '<country_id>' . $pc->country_id . '</country_id>';
-                    $xml[] = '<status>2</status>'; // no mapping in panther
-                    $xml[] = '<is_error>' . $pc->is_error . '</is_error>';
-                    $xml[] = '<reason>No SKU mapping</reason>';
-                    $xml[] = '</product_identifier>';
-                    continue;
-                }*/
-
                 $pc_obj = $this->getService('Product')->getDao('ProductIdentifier')->get(['prod_grp_cd'=>$pc->prod_grp_cd;, 'colour_id'=>$product->colour_id, 'country_id'=>$product->country_id]);
-
 
                 $reason = "";
                 if ($pc_obj) {

@@ -46,12 +46,11 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
                              , "paypalHost" => "www.sandbox.paypal.com"
                             ];
     private $_paypalRequest;
-    private $_sitedownEmail = "oswald-alert@eservicesgroup.com";
 /*
     private $payment_methods;
     private $api_url = "https://api-3t.paypal.com/nvp";
     private $paypal_url = "https://www.paypal.com/cgi-bin/webscr?";
-    private $post_array = array();
+    private $post_array = [];
     private $promo;
     private $so_item_list;
 
@@ -103,11 +102,11 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
 /***********************************
 **  interface function prepareGetUrlRequest
 ************************************/
-    public function prepareGetUrlRequest($paymentInfo = array(), &$requestData)
+    public function prepareGetUrlRequest($paymentInfo = [], &$requestData)
     {
-        $order = array();
-        $setting = array();
-        $orderPayment = array();
+        $order = [];
+        $setting = [];
+        $orderPayment = [];
         $orderObj = $this->so;
 
         $order["soNo"] = $orderObj->getSoNo();
@@ -134,7 +133,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
         $order["item"] = [];
         foreach($this->soids as $item)
         {
-            $orderItem = array();
+            $orderItem = [];
             $orderItem["lineNo"] = $item->getLineNo();
             $orderItem["sku"] = $item->getItemSku();
             $orderItem["name"] = $item->getProdName();
@@ -154,7 +153,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
         return $postData;
     }
 
-    public function processNotification($data, &$soNo, &$soPara = array(), &$sopsPara = array(), &$soccPara = array(), &$sorData = array(), &$dataToPmgw, &$dataFromPmgw)
+    public function processNotification($data, &$soNo, &$soPara = [], &$sopsPara = [], &$soccPara = [], &$sorData = [], &$dataToPmgw, &$dataFromPmgw)
     {
         $orderObj = "";
         $orderPaymentObj = "";
@@ -265,7 +264,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
         else
         {
 //need to pass the error
-            $siteDownErrorMessage = "error:" . $response["erroNo"] . ", info:" . $response["errorMessage"];
+            $siteDownErrorMessage = "error:" . $response["erroNo"] . ", errorMessage:" . $response["errorMessage"] . ", info:" . @http_build_query($response["callInfo"]);
             $siteDown = true;
         }
         return ["result" => $callResult
@@ -278,7 +277,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
 /**********************************************
 **  interface function processPaymentStatus
 ************************************************/
-    public function processPaymentStatus($generalData = array(), $getData = array(), &$soNumber, &$dataFromPmgw, &$dataToPmgw, &$soData, &$sopsData, &$soccData, &$sorData)
+    public function processPaymentStatus($generalData = [], $getData = [], &$soNumber, &$dataFromPmgw, &$dataToPmgw, &$soData, &$sopsData, &$soccData, &$sorData)
     {
         $soNo = $getData["soNo"];
         $this->so = $this->getSo($soNo);
@@ -392,14 +391,17 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
 
     public function processFailureAction() {
         header("Location:" . $this->getFailUrl());
+        exit;
     }
 
     public function processCancelAction() {
         header("Location:" . $this->getCancelUrl());
+        exit;
     }
 
     public function processSuccessAction() {
         header("Location:" . $this->getSuccessfulUrl($this->so->getSoNo()));
+        exit;
     }
 
     public function processReviewAction() {
@@ -416,13 +418,14 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
             } else
                 return true;
         }
+        return true;
     }
 
     public function isNeedDmService($isFraud = false) {
         return $this->isPaymentNeedCreditCheck($isFraud);
     }
 
-    public function queryTransaction($input_parameters = array(), &$data_from_pmgw, &$data_to_pmgw, &$so_data, &$socc_data, &$sops_data) {
+    public function queryTransaction($inputParameters = [], &$dataFromPmgw, &$dataToPmgw, &$soData, &$soccData, &$sopsData) {
     }
 
     private function _getPaypalUrl() {
