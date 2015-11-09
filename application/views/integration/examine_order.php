@@ -68,9 +68,9 @@
                             color="<?= $ar_color[$obj->get_batch_status()] ?>"><?= $ar_status[$obj->get_batch_status()] ?></font>
                     </td>
                     <td><?= $obj->get_failed_reason() ?></td>
-                    <td><?if (in_array($obj->get_batch_status(), array("F", "I"))) {
+                    <td><?php if (in_array($obj->get_batch_status(), array("F", "I"))) {
                             ?><input type="button" value="<?= $lang["modify"] ?>"
-                                     onClick="Redirect('<?= base_url() . 'integration/integration/examine_order/' . $batch_id . '/' . $trans_id . '/?line_no=' . $obj->get_line_no() ?>')"><?
+                                     onClick="Redirect('<?= base_url() . 'integration/integration/examine_order/' . $batch_id . '/' . $trans_id . '/?line_no=' . $obj->get_line_no() ?>')"><?php
                         }?></td>
                 </tr>
             <?php

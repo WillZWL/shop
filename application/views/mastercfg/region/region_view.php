@@ -109,7 +109,7 @@
                             <th><font color="#ffffff"><?= $lang["in_region"] ?></font></th>
                         </tr>
                         <tr>
-                            <? if ($editable) { ?>
+                            <?php  if ($editable) { ?>
                                 <td><select name="countrylist" id='left' style='width:150px; height:300px;'
                                             multiple='multiple'><?php
                                         foreach ($country_ex as $key => $value) {
@@ -127,7 +127,7 @@
                                         class="button"><br><br><input type="button" value="<<"
                                                                       onclick="DelAll(document.getElementById('left'),document.getElementById('right'));"
                                                                       class="button"></td>
-                            <? } ?>
+                            <?php  } ?>
                             <td><select name="country[]" id='right' style='width:150px; height:300px;'
                                         multiple='multiple' <?= !$editable ? "disabled" : "" ?>><?php
                                     foreach ($country_in as $key => $value) {

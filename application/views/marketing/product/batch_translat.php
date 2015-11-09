@@ -65,13 +65,13 @@
                             }
                         }
                         ?>
-                    </select> <? if (!$this->input->post("language_id")) echo $lang["lang_null"]; ?>
+                    </select> <?php  if (!$this->input->post("language_id")) echo $lang["lang_null"]; ?>
                 </td>
             </tr>
             <tr>
                 <td width="50" height="50">
                     <input type="radio" name="model"
-                           value="first" <? if ($this->input->post("model") == 'first') echo 'checked'; ?>/><b><?= $lang["s_time"] ?></b>
+                           value="first" <?php  if ($this->input->post("model") == 'first') echo 'checked'; ?>/><b><?= $lang["s_time"] ?></b>
                 </td>
 
                 <!-- <td>
@@ -101,12 +101,12 @@
             <tr>
                 <td height="50">
                     <input type="radio" name="model"
-                           value="second" <? if ($this->input->post("model") != 'first') echo 'checked'; ?> /><b><?= $lang["s_list"] ?></b>
+                           value="second" <?php  if ($this->input->post("model") != 'first') echo 'checked'; ?> /><b><?= $lang["s_list"] ?></b>
                 </td>
                 <td colspan="4">
                     <b><?= $lang["sku_list"] ?>:</b><br/>
                     <textarea name='sku_list' rows="5" cols="20"
-                              style="width: 800"><? if ($this->input->post("sku_list")) echo $this->input->post("sku_list") ?></textarea>
+                              style="width: 800"><?php  if ($this->input->post("sku_list")) echo $this->input->post("sku_list") ?></textarea>
                     <br/><br/>
                     <?= $lang["message"] ?>
                 </td>

@@ -202,7 +202,7 @@
                 </td>
                 <td colspan="2" align="right" style="padding-right:8px;">
                     <input type="submit" value="<?= $lang['cmd_button'] ?>"
-                           <? if ($cmd == "edit") { ?>onClick="if (top.frames['ra_prod'].document.forms[0]) top.frames['ra_prod'].document.forms[0].submit();"<? } ?>>
+                           <?php  if ($cmd == "edit") { ?>onClick="if (top.frames['ra_prod'].document.forms[0]) top.frames['ra_prod'].document.forms[0].submit();"<?php  } ?>>
                 </td>
             </tr>
         </table>

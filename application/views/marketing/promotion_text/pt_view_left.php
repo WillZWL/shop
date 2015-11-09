@@ -155,8 +155,8 @@
                                                                                                      onclick="toggleDetail(this.id);">
                 </td>
             </tr>
-            <tr id='language_detail' <? if ($platform_type){ ?>style="display:''"
-                <? }else{ ?>style="display:none"<? } ?>>
+            <tr id='language_detail' <?php  if ($platform_type){ ?>style="display:''"
+                <?php  }else{ ?>style="display:none"<?php  } ?>>
                 <td class="value" colspan="4" align="center">
                     <select id="s_lang"
                             onChange='updateLanguageOnChange();changeRightFrame3(document.getElementById("s_type").value,this.value);gotoPage("<?= base_url() . "marketing/promotion_text/view_left/$platform_type/" ?>",this.value);'
@@ -178,7 +178,7 @@
                                                                                                      onclick="toggleDetail(this.id);">
                 </td>
             </tr>
-            <tr id='platform_detail' <? if ($lang_id){ ?>style="display:''" <? }else{ ?>style="display:none"<? } ?>>
+            <tr id='platform_detail' <?php  if ($lang_id){ ?>style="display:''" <?php  }else{ ?>style="display:none"<?php  } ?>>
                 <td class="value" colspan="4" align="center">
                     <select id="s_plat"
                             onChange='updatePlatformOnChange();changeRightFrame4(document.getElementById("s_type").value,document.getElementById("s_lang").value,this.value);gotoPage("<?= base_url() . "marketing/promotion_text/view_left/$platform_type/$lang_id/" ?>",this.value)'
@@ -202,7 +202,7 @@
                 </td>
             </tr>
         </table>
-<span id='sku1_detail' <? if ($platform_id){ ?>style="display:''" <? }else{ ?>style="display:none"<? } ?>>
+<span id='sku1_detail' <?php  if ($platform_id){ ?>style="display:''" <?php  }else{ ?>style="display:none"<?php  } ?>>
 <table>
     <tr>
         <td>&nbsp;</td>
@@ -266,7 +266,7 @@
         </table>
     </form>
     <br><br>
-<span id='note' <? if ($platform_id){ ?>style="display:''" <? }else{ ?>style="display:none"<? } ?>>
+<span id='note' <?php  if ($platform_id){ ?>style="display:''" <?php  }else{ ?>style="display:none"<?php  } ?>>
 <div style="padding-top:10px; padding-left:5px; width:100%; text-align:left;">
     <?= $lang["notes"] ?>
 </div>

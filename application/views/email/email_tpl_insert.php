@@ -2,7 +2,7 @@
 <link type="text/css" rel="stylesheet" href="<?= base_url() ?>css/email_template.css">
 <h1><?= $header; ?></h1>
 
-<? if (isset($_POST["submit"])) echo "<font color='red'>" . validation_errors() . "</font>"; ?>
+<?php  if (isset($_POST["submit"])) echo "<font color='red'>" . validation_errors() . "</font>"; ?>
 <?= form_open_multipart("email/email_tpl/insert") ?>
 <table border="0" cellpadding="4" cellspacing="1" width="80%" class="table">
     <tr>

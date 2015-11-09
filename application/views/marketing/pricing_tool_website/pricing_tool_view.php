@@ -233,13 +233,13 @@ $auto_price_action = array("N" => "No action", "Y" => "Auto Price", "C" => "Comp
     -->
                                 <td width="20%" class="field"><?= $lang["advertised"] ?></td>
                                 <td width="30%" class="value"><input type="checkbox"
-                                                                     name="is_advertised[<?= $platform ?>]" <?= ($price_obj->get_is_advertised() == 'Y' ? "CHECKED" : "") ?> <?if (!$pdata[$platform_id]["enabled_pla_checkbox"]) echo "disabled";?>>
-                                    <?if ($pdata[$platform_id]["gsc_comment"]) {
+                                                                     name="is_advertised[<?= $platform ?>]" <?= ($price_obj->get_is_advertised() == 'Y' ? "CHECKED" : "") ?> <?php if (!$pdata[$platform_id]["enabled_pla_checkbox"]) echo "disabled";?>>
+                                    <?php if ($pdata[$platform_id]["gsc_comment"]) {
                                         ?>
                                         <div
                                             style="color:<?= $pdata[$platform_id]["gsc_comment"] == 'Success' ? '#00FF00' : '#FF0000' ?>;width:80%x; height:50px;overflow:hidden"
                                             title='<?= $pdata[$platform_id]["gsc_comment"] ?>'><?= $pdata[$platform_id]["gsc_comment"] ?></div>
-                                    <?
+                                    <?php
                                     }?>
                                 </td>
                                 <td width="20%" class="field"><?= $lang["listing_status"] ?></td>
@@ -428,7 +428,7 @@ html;
 
                     </td>
                 </tr>
-            <? }
+            <?php  }
 
             ?>
 

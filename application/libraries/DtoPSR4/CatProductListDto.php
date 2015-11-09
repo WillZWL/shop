@@ -1,4 +1,4 @@
-<?
+<?php
 class CatProductListDto
 {
     private $sku;

@@ -49,7 +49,7 @@
     <table border="0" cellpadding="0" cellspacing="0" width="100%" class="page_header">
         <tr>
             <td width="100%" height="40" style="padding-left:8px;"><b style="font-size:14px">Display
-                    Banner<? //=$lang["banner_setup"]." - ".$catobj->get_name()?></b></td>
+                    Banner<?php  //=$lang["banner_setup"]." - ".$catobj->get_name()?></b></td>
         </tr>
     </table>
 

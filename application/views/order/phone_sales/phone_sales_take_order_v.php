@@ -305,7 +305,7 @@
             <tr>
                 <td><span class="warn">*</span> Register Name:</td>
                 <td>
-                    <? $t_selected[$_POST["client"]["title"]] = " SELECTED"; ?>
+                    <?php  $t_selected[$_POST["client"]["title"]] = " SELECTED"; ?>
                     <select name="client[title]">
                         <option value="Mr"<?= $t_selected["Mr"] ?>>Mr
                         <option value="Mrs"<?= $t_selected["Mrs"] ?>>Mrs
@@ -429,7 +429,7 @@
             <tr id='del_name' style="display:none">
                 <td><span class="warn">*</span> Delivery Name:</td>
                 <td>
-                    <? $t_selected[$_POST["client"]["del_title"]] = " SELECTED"; ?>
+                    <?php  $t_selected[$_POST["client"]["del_title"]] = " SELECTED"; ?>
                     <select name="client[del_title]">
                         <option value="Mr"<?= $t_selected["Mr"] ?>>Mr
                         <option value="Mrs"<?= $t_selected["Mrs"] ?>>Mrs

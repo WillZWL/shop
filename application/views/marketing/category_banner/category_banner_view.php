@@ -84,7 +84,7 @@
                         ?>
                     </select>
                 </td>
-                <? if ($language_id) {
+                <?php  if ($language_id) {
                     ?>
                     <td width="15%" class="field" align="right" style="padding-right:8px;" size='5'>Please Select
                         Country
@@ -121,7 +121,7 @@
             </tr>
         </table>
         <table width="100%" cellpadding="0" cellspacing="1" class="tb_list">
-            <? if ($language_id)
+            <?php  if ($language_id)
             {
             ?>
             <tr>
@@ -131,28 +131,28 @@
                     <input type="file" name="image">
                 </td>
                 <td width="15%" class="field special" align="right">
-                    <?if ($updated_cat_ban) {
-                        ?>Updated Category<?
+                    <?php if ($updated_cat_ban) {
+                        ?>Updated Category<?php
                     }?><br>
-                    <?if ($updated_language) {
-                        ?>Updated Language<?
+                    <?php if ($updated_language) {
+                        ?>Updated Language<?php
                     }?><br>
-                    <?if ($updated_country) {
-                        ?>Updated Countries<?
+                    <?php if ($updated_country) {
+                        ?>Updated Countries<?php
                     }?><br>
                 <td width="50%" class="field special" colspan='3' align="left">
-                    <?if ($updated_cat_ban) {
+                    <?php if ($updated_cat_ban) {
                         echo $updated_cat_ban->get_name();
                     }?><br>
-                    <?if ($updated_language) {
+                    <?php if ($updated_language) {
                         echo $updated_language->get_name();
                     }?><br>
-                    <?if ($updated_country) {
-                        ?><?foreach ($updated_country AS $obj) {
+                    <?php if ($updated_country) {
+                        ?><?php foreach ($updated_country AS $obj) {
                             echo $obj->get_name();
                             $i++;
                             if ($i % 5 == 0) {
-                                ?><br><?
+                                ?><br><?php
                             }
                         }
                     }?></td>
@@ -165,7 +165,7 @@
                         if (file_exists($image_file)) {
                             ?>
                             <img src='<?= base_url() . $image_file ?>'>
-                        <?
+                        <?php
                         }
                     }?>
                 </td>
