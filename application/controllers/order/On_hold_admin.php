@@ -64,6 +64,10 @@ class On_hold_admin extends MY_Controller
             $where["reason_cat"] = $this->input->get("cat");
         }
 
+        if ($this->input->get("type") != "") {
+            $where["reason_type"] = $this->input->get("type");
+        }
+
         if ($this->input->get("desc") != "") {
             $where["description LIKE "] = '%' . $this->input->get("desc") . '%';
         }
