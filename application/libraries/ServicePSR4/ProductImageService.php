@@ -19,8 +19,8 @@ class ProductImageService extends BaseService
 
     public function updateProductImage($newObj, $oldObj)
     {
-        $newObj->setId((string) $oldObj->id);
         $newObj->setPriority((string) $oldObj->priority);
+        $newObj->setVbImage((string) $oldObj->sku.'_'.(string) $oldObj->id.'.'.(string) $oldObj->image);
         $newObj->setImage((string) $oldObj->image);
         $newObj->setAltText($newObj->getSku() . "_" . (string) $oldObj->id . "." . (string) $oldObj->image);
         $newObj->setVbAltText((string) $oldObj->alt_text);
@@ -46,7 +46,7 @@ class ProductImageService extends BaseService
                 $img_size = array("l", "m", "s");
 
                 //get the image from VB
-                $file = "http://www.valuebasket.com/images/product/" . $img->vb_alt_text;
+                $file = "http://www.valuebasket.com/images/product/" . $img->vb_image;
                 //print $file;
                 //$file = "http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg";
                 $file_headers = @get_headers($file);
@@ -59,24 +59,25 @@ class ProductImageService extends BaseService
                 {
                     //$website_domain = $this->getService('ContextConfig')->valueOf("website_domain");
                     $imgpath = FCPATH . "../public_html/" . $this->getService('ContextConfig')->valueOf("prod_img_path");
+                    $img_local = $img->sku.'_'.$img->id.'.'.$img->image;
 
                     //delete old images
-                    $file_old = file_exists( $imgpath . $img->alt_text);
+                    $file_old = file_exists( $imgpath . $img_local);
                     if ($file_old)
-                        @unlink($imgpath . $img->alt_text);
+                        @unlink($imgpath . $img_local);
 
                     //save VB image in AtomV2
                     //print $file;
                     $image_content = file_get_contents($file);
                     //$image_content = file_get_contents("http://www.valuebasket.fr/images/product/20233-AA-SL_29859.jpg");
-                    if (file_put_contents($imgpath . $img->alt_text, $image_content) === FALSE)
+                    if (file_put_contents($imgpath . $img_local, $image_content) === FALSE)
                     {
                         continue;
                     }
 
                     list($width, $height) = explode("x", $this->getService('ContextConfig')->valueOf("thumb_w_x_h"));
                     //thumbnail($imgpath . $sku . "_" . $new_id . "." . $pc->image, $width, $height, $imgpath . $sku . "_" . $new_id . "." . $pc->image);
-                    thumbnail($imgpath . $img->alt_text, $width, $height, $imgpath . $img->alt_text);
+                    thumbnail($imgpath . $img_local, $width, $height, $imgpath . $img_local);
 
                     foreach ($img_size as $size)
                     {
@@ -101,10 +102,10 @@ class ProductImageService extends BaseService
                             @unlink($imgpath . $img->sku . "." . $img->image);
 
                         //save VB image in AtomV2
-                        $vars = explode("_", $img->vb_alt_text);
+                        $vars = explode("_", $img_local);
                         $VB_sku = $vars[0];
 
-                        $vars2 = explode(".", $img->vb_alt_text);
+                        $vars2 = explode(".", $img_local);
                         $ext = $vars2[count($vars2)-1];
 
                         $image_content = file_get_contents("http://www.valuebasket.com/images/product/" . $VB_sku . "." . $ext);

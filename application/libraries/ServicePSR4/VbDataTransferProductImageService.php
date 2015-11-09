@@ -41,7 +41,9 @@ class VbDataTransferProductImageService extends VbDataTransferService
                     continue;
                 }
 
-                $pi_obj = $this->getService('Product')->getDao('ProductImage')->get(['id' => $pc->id]);
+                $vb_image = (string) $pc->sku.'_'.(string) $pc->id.'.'.(string) $pc->image;
+
+                $pi_obj = $this->getService('Product')->getDao('ProductImage')->get(['vb_image' => $vb_image]);
 
                 if ($pi_obj) {
                     $this->getService('ProductImage')->updateProductImage($pi_obj, $pc);
@@ -53,6 +55,7 @@ class VbDataTransferProductImageService extends VbDataTransferService
                     }
                 } else {
                     $pi_obj = $this->getService('ProductImage')->createNewProductImage($sku, $pc);
+                    $pi_obj->setImageSaved(0);
                     if ($this->getService('ProductImage')->getDao('ProductImage')->insert($pi_obj)) {
                         $process_status = 5;
                     } else {
