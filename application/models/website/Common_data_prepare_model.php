@@ -1450,6 +1450,16 @@ salecycle_script;
             //#2272 add the warranty.
             $data["warranty_in_month"] = $listing_info->get_warranty_in_month();
 
+            if ($prod_info->get_contents() != "") {
+                $str = explode("\n",$prod_info->get_contents());
+                foreach ($str as $k => $v) {
+                    if (empty($v)) {
+                        unset($str[$k]);
+                    }
+                }
+                $data['in_the_box'] = "<ul><li>".implode("</li><li>", $str)."</li></ul>";
+            }
+
             if ($prod_info->get_specification() != "") {
                 $data['specification'] = $prod_info->get_specification();
             }
