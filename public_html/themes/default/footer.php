@@ -63,7 +63,7 @@
                                                         </li>
                                                          <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/Przelewy24.png">
-                                                        </li>-->>
+                                                        </li>-->
                                                 </ul>
                                            </fieldset>
                                         </div>

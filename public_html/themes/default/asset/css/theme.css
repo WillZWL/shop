@@ -167,6 +167,10 @@
     color:#999;
 }
 
+.product-block .product-meta .action .cart{
+    width: 100%;
+}
+
 .product-list .product-block .product-meta .action .cart{
     margin-right:20px;
 }

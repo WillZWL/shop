@@ -110,7 +110,7 @@
                                                         </div>
                                                         <p class="action">Shop now</p>
                                                     </div>
-                                                    <a class="mask-link" href="#"></a>
+                                                    <a class="mask-link" href="<?= base_url('digital-cameras/category/1') ?>"></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -128,7 +128,7 @@
                                                         </div>
                                                         <p class="action">Shop now</p>
                                                     </div>
-                                                    <a class="mask-link" href="#"></a>
+                                                    <a class="mask-link" href="<?= base_url('mobile-phones/category/4') ?>"></a>
                                                 </div>
                                             </div>
                                         </div>
