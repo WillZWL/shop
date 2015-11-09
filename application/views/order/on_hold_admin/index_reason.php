@@ -50,11 +50,10 @@
                     <td>
                         <select name="r_type" class="input">
                             <?php foreach ($lang["reason_type_list"] as $key => $value) : ?>
-                                <option value="<?= $value ?>" <?= $this->input->post('r_cat') == $value ? "SELECTED" : "" ?>><?= $value ?></option>
+                                <option value="<?= $value ?>" <?= $this->input->post('r_type') == $value ? "SELECTED" : "" ?>><?= $value ?></option>
                             <?php endforeach; ?>
                         </select>
                     </td>
-                    <!-- <td><input name="r_type" class="input" value="<?= $this->input->post("r_type") ?>" notEmpty maxLen=255></td> -->
                     <td><input name="r_desc" class="input" value="<?= $this->input->post("r_desc") ?>" notEmpty maxLen=255></td>
                 <?php else : ?>
                     <td>
@@ -69,11 +68,10 @@
                     <td>
                         <select name="r_type" class="input">
                             <?php foreach ($lang["reason_type_list"] as $key => $value) : ?>
-                                <option value="<?= $value ?>" <?= $this->input->post('r_cat') == $value ? "SELECTED" : "" ?>><?= $value ?></option>
+                                <option value="<?= $value ?>"><?= $value ?></option>
                             <?php endforeach; ?>
                         </select>
                     </td>
-                    <!-- <td><input name="r_type" class="input" notEmpty maxLen=255></td> -->
                     <td><input name="r_desc" class="input" notEmpty maxLen=255></td>
                 <?php endif; ?>
                 <td align="center"><input type="submit" value="<?= $lang["add"] ?>"></td>
@@ -112,7 +110,14 @@
                         <?php endforeach; ?>
                     </select>
                 </td>
-                <td><input name="type" class="input" value="<?= htmlspecialchars($this->input->get("type")) ?>"></td>
+                <td>
+                    <select name="type" class="input">
+                        <option value=""></option>
+                    <?php foreach ($lang["reason_type_list"] as $key => $value) : ?>
+                        <option value="<?= $value ?>" <?= $this->input->get('type') == $value ? "SELECTED" : "" ?>><?= $value ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                </td>
                 <td><input name="desc" class="input" value="<?= htmlspecialchars($this->input->get("desc")) ?>"></td>
                 <td align="center"><input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;"></td>
             </tr>
@@ -153,9 +158,15 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </td>
-                                <td><input name="etype" class="input" value="<?= $this->input->post("etype") ?>"
-                                <td><input name="edesc" class="input" value="<?= $this->input->post("edesc") ?>"
-                                           notEmpty maxLen=255></td>
+                                <td>
+                                    <select name="etype" class="input">
+                                        <option value=""></option>
+                                    <?php foreach ($lang["reason_type_list"] as $key => $value) : ?>
+                                        <option value="<?= $value ?>" <?= $this->input->post('etype') == $value ? "SELECTED" : "" ?>><?= $value ?></option>
+                                    <?php endforeach; ?>
+                                    </select>
+                                </td>
+                                <td><input name="edesc" class="input" value="<?= $this->input->post("edesc") ?>" notEmpty maxLen=255></td>
                             <?php else : ?>
                                 <td>
                                     <select name="ecat" class="input">
@@ -166,7 +177,14 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </td>
-                                <td><input name="etype" class="input" value="<?= $obj->getReasonType() ?>" notEmpty maxLen=255></td>
+                                <td>
+                                    <select name="etype" class="input">
+                                        <option value=""></option>
+                                    <?php foreach ($lang["reason_type_list"] as $key => $value) : ?>
+                                        <option value="<?= $value ?>" <?= $obj->getReasonType() == $value ? "SELECTED" : "" ?>><?= $value ?></option>
+                                    <?php endforeach; ?>
+                                    </select>
+                                </td>
                                 <td><input name="edesc" class="input" value="<?= $obj->getDescription() ?>" notEmpty maxLen=255></td>
                             <?php endif; ?>
                             <td align="center">
