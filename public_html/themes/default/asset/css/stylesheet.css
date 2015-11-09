@@ -7795,6 +7795,12 @@ body.layout-boxed-lg #page {
   background: none;
   padding: 0;
 }
+
+.product-list .product-block .product-meta .action .cart{
+    margin-right:20px;
+    width: 100% !important;
+}
+
 /* line 268, ../development/scss/app/_layout.scss */
 .sidebar .products-row .product-col .product-block {
   overflow: hidden;
