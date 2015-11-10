@@ -2653,11 +2653,11 @@ SQL;
         # active but unpaid so; not on hold
         $option = ["limit" => -1];
         $this->db->from("so");
-        $this->db->join("so_item AS soi", "soi.so_no = so.so_no", "INNER");
+        $this->db->join("so_item_detail AS soid", "soid.so_no = so.so_no", "INNER");
         $this->db->join("so_payment_status AS sops", "so.so_no = sops.so_no", "INNER");
         $this->db->join("so_bank_transfer AS sbt", "so.so_no = sbt.so_no", "LEFT");
         $this->db->join("client AS c", "c.id = so.client_id", "INNER");
-        $this->db->join("product AS p", "p.sku = soi.prod_sku", "INNER");
+        $this->db->join("product AS p", "p.sku = soid.item_sku", "INNER");
         $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = so.platform_id", "INNER");
         $this->db->where(["so.client_id" => $client_id, "so.status" => 1, "so.hold_status" => 0, "p.cat_id NOT IN ($ca_catid_arr)" => null]);
 
@@ -2665,7 +2665,7 @@ SQL;
             $this->db->where_in("sops.payment_gateway_id", $payment_gateway_arr);
         }
 
-        return $this->commonGetList($classname, $where, $option, "pbv.platform_currency_id currency_id, so.so_no, so.status, so.hold_status, so.refund_status, c.id client_id, so.order_create_date, so.delivery_name, so.platform_id, p.sku, soi.prod_name, soi.amount, sbt.net_diff_status, so.status, so.refund_status, sops.payment_gateway_id");
+        return $this->commonGetList($classname, $where, $option, "pbv.platform_currency_id currency_id, so.so_no, so.status, so.hold_status, so.refund_status, c.id client_id, so.order_create_date, so.delivery_name, so.platform_id, p.sku, p.name as prod_name, soid.amount, sbt.net_diff_status, so.status, so.refund_status, sops.payment_gateway_id");
     }
 
     public function getFnacPendingPaymentOrders($where = [], $option = [])

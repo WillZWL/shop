@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sales Invoice</title>
+<style type="text/css">
+.pb
+{
+page-break-after : always  ;
+}
+body {
+margin:0;
+}
+* {
+font-size:8pt;
+}
+</style>
+</head>
+<body topmargin="5" leftmargin="5" rightmargin="5" onLoad="if (parent.frames['printframe']){parent.frames['printframe'].focus();parent.frames['printframe'].print();}else{print();}" style="overflow:none;"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			<td colspan="2" align="left">
+				<p><img border=0 src="http://dd.admin:8000/images/logo/[:logo:]"></p>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2" align="left">
+				<font color="#FF6600"><b><i><p>Gracias por comprar con [:site_url:]</p></i></b></font>
+			</td>
+		</tr>
+<tr>
+			<td colspan="2" align="left">
+				<b><p style="font-size:18px;">Factura</p></b>
+			</td>
+		</tr>
+
+		<tr>
+			<td width="50%" valign="top">
+				<b>Número de pedido:</b>
+				<p>[:order_no:]</p>
+				<p> </p>
+			</td>
+			<td width="50%" valign="top">
+				<b>Fecha de pedido:</b>
+				<p>[:order_date:]</p>
+				<p> </p>
+			</td>
+		</tr>
+
+		<tr>
+			<td width="50%" valign="top">
+				<b>NIF / CIF:</b>
+				<p>[:client_id_no:]</p>
+
+			</td>
+		</tr>
+
+		<tr>
+			<td width="50%" valign="top">
+				<b>Enviado a:</b>
+				<p>[:delivery_name:]</p>
+				<p> </p>
+				<p>[:delivery_address:]</p>
+				<p> </p>
+			</td>
+			<td width="50%" valign="top">
+				<b>Facturado a:</b>
+				<p>[:billing_name:]</p>
+				<p> </p>
+				<p>[:billing_address:]</p>
+				<p> </p>
+			</td>
+		</tr>
+
+		<tr>
+			<td width="50%" valign="top">
+				<b>Cupón de descuento utilizado:</b>
+				<p>[:promotion_code:]</p>
+				<p> </p>
+			</td>
+			<td width="50%" valign="top">
+				<b></b>
+				<p></p>
+				<p> </p>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2">
+				<table border="1" width="630" cellspacing="0" cellpadding="4">
+					<tr>
+						<td colspan="5" valign=top bgcolor="#FFCC00" bordercolor="#666666" height="10px">
+							<b>Otra información</b>
+						</td>
+					</tr>
+
+					<tr>
+						<td width="330" colspan="2" valign"top" height="10px" bgcolor="#CCCCCC"><b>Descripción</b></td>
+						<td width="100" valign"top" height="10px" bgcolor="#CCCCCC"><b>Precio unitario</b></td>
+						<td width="100" valign"top" height="10px" bgcolor="#CCCCCC"><b>Cantidad</b></td>
+						<td width="100" valign"top" height="10px" bgcolor="#CCCCCC"><b>Total</b></td>
+					</tr>
+
+					[:item_information:]
+
+					<tr>
+						<td colspan="2" rowspan="5" valign="top"> </td>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Coste de los artículos</b></td>
+						<td valign="top"><b>[:sum_total:]</b></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Enviado</b></td>
+						<td valign="top"><b>[:sid:]</b></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Costo de Procesamiento</b></td>
+						<td valign="top"><b>[:processing_fee:]</b></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Divisa</b></td>
+						<td valign="top"><b>[:currency:]</b></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Total de la compra</b></td>
+						<td valign="top"><b>[:grand_total:]</b></td>
+					</tr>
+			</table>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">
+			<p> </p>
+
+			<font size="-1">
+				<p>Para realizar una devolución, contacte con nosotros a través de nuestro formulario web <a href="http://[:site_url:]/es_ES/contact" target="_blank">aquí</a> y estaremos encantados de ayudarle. <br><br>  ValueBasket.com no se hace responsable de la veracidad de las informaciones suministradas por el cliente.</p>
+			</font>
+		</td>
+	</tr>
+
+</table>
+<p class="pb"></p>
+</body>
+</html>
