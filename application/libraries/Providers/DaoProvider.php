@@ -469,5 +469,9 @@ class DaoProvider implements ServiceProviderInterface
             return new D\HoldReasonDao();
         };
 
+        $daoContainer['SiteConfig'] = function () {
+            return new D\SiteConfigDao();
+        };
+
     }
 }

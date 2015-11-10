@@ -311,6 +311,7 @@ abstract class Base_dao
                         }
                         //echo $rskey." ".$rsvalue."<br>";
                         $this->db->set($rskey, $rsvalue);
+
                     }
                 }
 
