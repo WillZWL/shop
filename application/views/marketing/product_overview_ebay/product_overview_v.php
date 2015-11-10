@@ -172,7 +172,7 @@
                     <td style="padding-right:8px" align="right"><b><?= $lang["platform_id"] ?></b></td>
                     <td colspan='3'>
                         <select name="platform_id">
-                            <?
+                            <?php
                             foreach ($clist as $cobj) {
                                 ?>
                                 <option
@@ -344,7 +344,7 @@
                                                              onClick="SortCol(document.fm, 'handling_time', '<?= $xsort["handling_time"] ?>')"><?= $lang["handling_time"] ?> <?= $sortimg["handling_time"] ?></a>
                 </td>
 
-                <? //echo '<pre>'; var_dump($wms_wh); die();
+                <?php  //echo '<pre>'; var_dump($wms_wh); die();
                 foreach ($wms_wh as $wh) {
                     ?>
                     <td title="<?= $wh->get_warehouse_id() . ' ' . $lang["qty"] ?>"><?= $wh->get_warehouse_id() . ' ' . $lang["qty"] ?></td>

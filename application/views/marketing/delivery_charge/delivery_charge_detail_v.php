@@ -20,7 +20,7 @@
             <td height="30" class="title"><?= $lang["title"] ?></td>
             <td width="400" align="right" class="title"></td>
         </tr>
-        <? include("delivery_charge_header_button_v.php"); ?>
+        <?php  include("delivery_charge_header_button_v.php"); ?>
         <tr>
             <td height="2" class="line"></td>
             <td height="2" class="line"></td>

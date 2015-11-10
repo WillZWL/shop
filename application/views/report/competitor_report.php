@@ -54,7 +54,7 @@
                     <select name="country_id"
                             onChange="Redirect('<?= base_url() ?>report/competitor_report/index/'+this.value)">
                         <option></option>
-                        <?
+                        <?php
 
                         foreach ($country_list as $country_obj) {
                             ?>
@@ -72,7 +72,7 @@
                 <td colspan='3'>
                     <select name="competitor_id">
                         <option></option>
-                        <?
+                        <?php
 
                         foreach ($all_competitors_list as $competitor_obj) {
                             ?>

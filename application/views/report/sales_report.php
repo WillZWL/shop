@@ -141,12 +141,12 @@ $today = getdate();
                                 &nbsp; </td>
                         </tr>
                         <tr>
-                            <? if ($controller == "dispatch_report") { ?>
+                            <?php  if ($controller == "dispatch_report") { ?>
                                 <td colspan="1"></td>
                                 <td><a href="<?= $controller ?>/no_finance_dispatch_report"
                                        title="check orders (2014-04-01 afterwards) that are LOGISTICS dispatched but no Financially dispatched. ">Checking</a>
                                 </td>
-                            <? } else { ?>
+                            <?php  } else { ?>
                                 <td>
                                     <input type="hidden" name="is_sales_rpt" id="is_sales_rpt" value="1">
                                 </td>
@@ -156,7 +156,7 @@ $today = getdate();
                                     Sales Report
                                 </td>
 
-                            <? } ?>
+                            <?php  } ?>
                             <td align='right'><?= $lang["country"] ?></td>
                             <td>
                                 <select name='country' id='country'>

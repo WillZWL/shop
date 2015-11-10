@@ -64,7 +64,7 @@
                         <table cellspacing="0" cellpadding="0" border="0" width="100%">
                             <tr>
                                 <td id="bcell<?= $obj->get_id() ?>" height="160" align="center">
-                                    <?
+                                    <?php
                                     if ($obj->get_bannerfile() != "") {
                                         ?>
                                         <?= ($obj->get_bannerlink() != '' ? '<a href="' . $obj->get_bannerlink() . '" target="_blank">' : '') ?>

@@ -147,8 +147,8 @@
                         <form name="fm_edit" action="<?= base_url() ?>marketing/footer/edit/" method="post"
                               onSubmit="return CheckForm(this)">
                             <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
-                                onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){
-                            ?>onClick="Redirect('<?= site_url('marketing/footer/index/' . $item_obj->get_menu_item_id()) ?>/')"<?
+                                onMouseOut="RemoveClassName(this, 'highlight')" <?php if (!($is_edit)){
+                            ?>onClick="Redirect('<?= site_url('marketing/footer/index/' . $item_obj->get_menu_item_id()) ?>/')"<?php
                             }?>>
                                 <?php
                                 if ($is_edit) {

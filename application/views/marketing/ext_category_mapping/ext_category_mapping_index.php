@@ -578,11 +578,11 @@
             <b style="font-size: 12px;">Country (select for faster category loading) </b>
             <select id="gcat_country" name="gcat_country" style="width:100px;size:30">
                 <option id="" value=""></option>
-                <? foreach ($country_list as $country) {
+                <?php  foreach ($country_list as $country) {
                     ?>
                     <option
                         id="<?= $country ?>" <?= $_GET["gcat_country"] == $country ? " selected" : "" ?> ><?= $country ?></option>
-                <? } ?>
+                <?php  } ?>
             </select>
             <br>
             <b style="font-size: 12px;">Search Term (in local lang.): </b>
@@ -596,37 +596,37 @@
         </form>
         <br>------------------<br>
         <select id="combobox" class="enable_combobox">
-            <? foreach ($cat_details_list[0] as $cat_obj) { ?>
+            <?php  foreach ($cat_details_list[0] as $cat_obj) { ?>
                 <option id="<?= $cat_obj->get_id() ?>"><?= $cat_obj->get_name() ?></option>
-            <? } ?>
+            <?php  } ?>
         </select>
 
 
         <span class="divider"></span>
         <select id="combobox_2" class="enable_combobox">
             <option id="" value=""></option>
-            <? foreach ($cat_details_list[1] as $cat_obj) { ?>
+            <?php  foreach ($cat_details_list[1] as $cat_obj) { ?>
                 <option id="<?= $cat_obj->get_id() ?>"
                         parent_cat_id="<?= $cat_obj->get_parent_cat_id() ?>"><?= $cat_obj->get_name() ?></option>
-            <? } ?>
+            <?php  } ?>
         </select>
 
         <span class="divider"></span>
         <select id="combobox_3" class="enable_combobox">
             <option id="" value=""></option>
-            <? foreach ($cat_details_list[2] as $cat_obj) { ?>
+            <?php  foreach ($cat_details_list[2] as $cat_obj) { ?>
                 <option id="<?= $cat_obj->get_id() ?>"
                         parent_cat_id="<?= $cat_obj->get_parent_cat_id() ?>"><?= $cat_obj->get_name() ?></option>
-            <? } ?>
+            <?php  } ?>
         </select>
 
         <span class="divider"></span>
         <label class="label">Country</label>
         <select id="combobox_4" class="enable_combobox">
             <option id="" value=""></option>
-            <? foreach ($country_list as $country) { ?>
+            <?php  foreach ($country_list as $country) { ?>
                 <option id="<?= $country ?>"><?= $country ?></option>
-            <? } ?>
+            <?php  } ?>
         </select>
 
         <br><br>
@@ -634,10 +634,10 @@
         <select id="combobox_5" style="width:500px;size:30">
 
             <option id="" value=""></option>
-            <? foreach ($google_category_list as $google_category) { ?>
+            <?php  foreach ($google_category_list as $google_category) { ?>
                 <option country_id="<?= $google_category->get_country_id() ?>"
                         value="<?= $google_category->get_id() ?>"><?= htmlspecialchars($google_category->get_ext_name()) ?></option>
-            <? } ?>
+            <?php  } ?>
         </select>
     </div>
 
@@ -652,7 +652,7 @@
     <h3>Google Category Mapping</h3>
 
     <div class="accordion">
-        <? if ($country_list) {
+        <?php  if ($country_list) {
             foreach ($country_list as $country_id) {
                 ?>
                 <h3 id="<?= $country_id ?>" class="country_tab"><?= $country_id ?></h3>
@@ -660,7 +660,7 @@
                     <p id="<?= $country_id ?>_container">
                     </p>
                 </div>
-            <? }
+            <?php  }
         } ?>
     </div>
 </div>
@@ -679,9 +679,9 @@
 
         <div>
             <ol id="selectable">
-                <? foreach ($country_list as $country) { ?>
+                <?php  foreach ($country_list as $country) { ?>
                     <li class="ui-widget-content" id="<?= $country ?>"><?= $country ?></li>
-                <? } ?>
+                <?php  } ?>
             </ol>
         </div>
     </div>
@@ -695,18 +695,18 @@
 <div>
     <div class="ui-widget">
         <select id="combobox_googlefeed_name" class="enable_combobox">
-            <? foreach ($google_datafeed_account as $item) { ?>
+            <?php  foreach ($google_datafeed_account as $item) { ?>
                 <option id="<?= $item["account_id"] ?>"><?= $item["account_name"] ?></option>
-            <? } ?>
+            <?php  } ?>
         </select>
         <span class="divider"></span>
         <select id="combobox_googlefeed_country" class="enable_combobox">
-            <? foreach ($google_datafeed_account as $item) {
+            <?php  foreach ($google_datafeed_account as $item) {
                 foreach ($item["country"] as $country_id) {
                     ?>
                     <option account_id="<?= $item["account_id"] ?>"
                             value="<?= $country_id ?>"><?= $country_id ?></option>
-                <?
+                <?php
                 }
             } ?>
         </select>
@@ -714,11 +714,11 @@
         <span class="divider"></span>
 
         <select id="combobox_googlefeed_language" class="enable_combobox">
-            <? foreach ($google_datafeed_account as $item) {
+            <?php  foreach ($google_datafeed_account as $item) {
                 foreach ($item["language"] as $language) {
                     ?>
                     <option account_id="<?= $item["account_id"] ?>" value="<?= $language ?>"><?= $language ?></option>
-                <?
+                <?php
                 }
             } ?>
         </select>

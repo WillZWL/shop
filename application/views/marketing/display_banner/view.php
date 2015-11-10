@@ -83,14 +83,14 @@
 
             if (document.getElementById('banner_type').value == 'I') {
                 document.getElementById("image").style.display = '';
-                <?if($show_lightbox[$display_id]){?>document.getElementById("select_lb").style.display = '';
-                <?}?>
+                <?php if($show_lightbox[$display_id]){?>document.getElementById("select_lb").style.display = '';
+                <?php }?>
             }
             if (document.getElementById('banner_type').value == 'F') {
                 document.getElementById("flash").style.display = '';
                 document.getElementById("image").style.display = '';
-                <?if($show_lightbox[$display_id]){?>document.getElementById("select_lb").style.display = 'none';
-                <?}?>
+                <?php if($show_lightbox[$display_id]){?>document.getElementById("select_lb").style.display = 'none';
+                <?php }?>
             }
             if (document.getElementById('banner_type').value == 'R') {
                 document.getElementById("time_interval").style.display = '';
@@ -98,8 +98,8 @@
                 document.getElementById("slide_id").style.display = '';
                 document.getElementById("image").style.display = '';
                 document.getElementById("rowingpagination[" + position_id + "]").style.display = "";
-                <?if($show_lightbox[$display_id]){?>document.getElementById("select_lb").style.display = 'none';
-                <?}?>
+                <?php if($show_lightbox[$display_id]){?>document.getElementById("select_lb").style.display = 'none';
+                <?php }?>
             }
             if (document.getElementById("bannerimage[" + position_id + "][" + slide_id + "]")) {
                 document.getElementById("bannerimage[" + position_id + "][" + slide_id + "]").style.display = '';
@@ -129,7 +129,7 @@
     <table border="0" cellpadding="0" cellspacing="0" width="100%" class="page_header">
         <tr>
             <td width="100%" height="40" style="padding-left:8px;" colspan="5"><b
-                    style="font-size:14px"><?= $lang["banner_setup"] . " - " . $disp_obj->get_display_name() ?><? if ($cat_obj) {
+                    style="font-size:14px"><?= $lang["banner_setup"] . " - " . $disp_obj->get_display_name() ?><?php  if ($cat_obj) {
                         echo " (" . $cat_obj->get_name() . ")";
                     } ?></b></td>
         </tr>

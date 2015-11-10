@@ -58,7 +58,7 @@
     } else {
         ?>
         <tr valign="top" class="row1" name="row1">
-            <td colspan="10"><?echo $lang['no_data'];?></td>
+            <td colspan="10"><?php echo $lang['no_data'];?></td>
         </tr>
     <?php
     }
@@ -100,7 +100,7 @@
     } else {
         ?>
         <tr valign="top" class="row1" name="row1">
-            <td colspan="10"><?echo $lang['no_data'];?></td>
+            <td colspan="10"><?php echo $lang['no_data'];?></td>
         </tr>
     <?php
     }
@@ -142,7 +142,7 @@
     } else {
         ?>
         <tr valign="top" class="row1" name="row1">
-            <td colspan="10"><?echo $lang['no_data'];?></td>
+            <td colspan="10"><?php echo $lang['no_data'];?></td>
         </tr>
     <?php
     }
@@ -177,7 +177,7 @@
     } else {
         ?>
         <tr valign="top" class="row1" name="row1">
-            <td colspan="10"><?echo $lang['no_data'];?></td>
+            <td colspan="10"><?php echo $lang['no_data'];?></td>
         </tr>
     <?php
     }

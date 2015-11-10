@@ -15,7 +15,7 @@
 </head>
 <body>
 <div id="main">
-    <? $ar_status = array("0" => $lang["inactive"], "1" => $lang["active"]); ?>
+    <?php  $ar_status = array("0" => $lang["inactive"], "1" => $lang["active"]); ?>
     <?= $notice["img"] ?>
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
@@ -159,7 +159,7 @@
                 <td class="bfield<?= $i % 2 ?>"><?= $lang["billing_address"] ?></td>
                 <td class="bfield<?= $i % 2 ?>"><?= $lang["delivery_address"] ?></td>
                 <?php /*
-        <td align="center"><?php if($obj->get_fd_status() == "2" || $obj->get_payment_status == "F"){?><input type="button" value="<?=$lang["approve"]?>" onClick="Redirect('<?=base_url()?>order/order_reassessment/approve/<?=$obj->get_so_no()?>')">&nbsp;<input type="button" value="<?=$lang["refund"]?>" onClick="Redirect('<?=base_url()?>order/order_reassessment/refund/<?=$obj->get_so_no()?>')"><?}?></td>
+        <td align="center"><?php if($obj->get_fd_status() == "2" || $obj->get_payment_status == "F"){?><input type="button" value="<?=$lang["approve"]?>" onClick="Redirect('<?=base_url()?>order/order_reassessment/approve/<?=$obj->get_so_no()?>')">&nbsp;<input type="button" value="<?=$lang["refund"]?>" onClick="Redirect('<?=base_url()?>order/order_reassessment/refund/<?=$obj->get_so_no()?>')"><?php }?></td>
         */ ?>
                 <td align="center"><input type="button" value="<?= $lang["approve"] ?>"
                                           onClick="Redirect('<?= base_url() ?>order/order_reassessment/approve/<?= $obj->get_so_no() ?>')">&nbsp;<input

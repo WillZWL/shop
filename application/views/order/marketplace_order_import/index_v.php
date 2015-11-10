@@ -195,7 +195,7 @@ html;
         </div>
     </div>
 </div>
-<? $ar_status = array("0" => $lang["inactive"], "1" => $lang["active"]); ?>
+<?php  $ar_status = array("0" => $lang["inactive"], "1" => $lang["active"]); ?>
 <?= $notice["img"] ?>
 <?= $notice["js"] ?>
 </div>

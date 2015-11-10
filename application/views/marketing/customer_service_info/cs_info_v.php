@@ -133,30 +133,30 @@ $ar_color = array("1" => "#009900", "0" => "#0000CC");
                     </table>
                 </td>
             </tr>
-            <? if ($country_id || $language_id) {
+            <?php  if ($country_id || $language_id) {
                 ?>
                 <!--
                 <tr>
                     <td class="field field_text"><?= $lang["title"] ?></td>
-                    <td class="value value_text"><textarea class="input_format" name="title" rows="3" style="width:100%; resize:none;"><?if ($csi_obj['WEBSITE']) {
+                    <td class="value value_text"><textarea class="input_format" name="title" rows="3" style="width:100%; resize:none;"><?php if ($csi_obj['WEBSITE']) {
                     echo $csi_obj['WEBSITE']->get_title();
                 }?></textarea></td>
                 </tr>
                 <tr>
                     <td class="field field_text"><?= $lang["content"] ?></td>
-                    <td class="value value_text"><textarea class="input_format" name="content" rows="3" style="width:100%; resize:none;"><?if ($csi_obj['WEBSITE']) {
+                    <td class="value value_text"><textarea class="input_format" name="content" rows="3" style="width:100%; resize:none;"><?php if ($csi_obj['WEBSITE']) {
                     echo $csi_obj['WEBSITE']->get_content();
                 }?></textarea></td>
                 </tr>
                 <tr>
                     <td class="field field_text"><?= $lang["short_text_skype"] ?></td>
-                    <td class="value value_text"><textarea class="input_format" name="short_text[skype]" rows="8" style="width:100%; resize:none;"><?if ($csi_obj['SKYPE']) {
+                    <td class="value value_text"><textarea class="input_format" name="short_text[skype]" rows="8" style="width:100%; resize:none;"><?php if ($csi_obj['SKYPE']) {
                     echo $csi_obj['SKYPE']->get_short_text();
                 }?></textarea></td>
                 </tr>
                 <tr>
                     <td class="field field_text"><?= $lang["long_text_skype"] ?></td>
-                    <td class="value value_text"><textarea class="input_format" name="long_text[skype]" rows="8" style="width:100%; resize:none;"><?if ($csi_obj['SKYPE']) {
+                    <td class="value value_text"><textarea class="input_format" name="long_text[skype]" rows="8" style="width:100%; resize:none;"><?php if ($csi_obj['SKYPE']) {
                     echo $csi_obj['SKYPE']->get_long_text();
                 }?></textarea></td>
                 </tr>
@@ -164,14 +164,14 @@ $ar_color = array("1" => "#009900", "0" => "#0000CC");
                 <tr>
                     <td class="field field_text"><?= $lang["short_text_website"] ?></td>
                     <td class="value value_text"><input class="input_format" name="short_text[website]"
-                                                        value="<?if ($csi_obj['WEBSITE']) {
+                                                        value="<?php if ($csi_obj['WEBSITE']) {
                                                             echo $csi_obj['WEBSITE']->get_short_text();
                                                         }?>" style="width:200px"></td>
                 </tr>
                 <!--
                 <tr>
                     <td class="field field_text"><?= $lang["long_text_website"] ?></td>
-                    <td class="value value_text"><textarea class="input_format" name="long_text[website]" rows="8" style="width:100%; resize:none;"><?if ($csi_obj['WEBSITE']) {
+                    <td class="value value_text"><textarea class="input_format" name="long_text[website]" rows="8" style="width:100%; resize:none;"><?php if ($csi_obj['WEBSITE']) {
                     echo $csi_obj['WEBSITE']->get_long_text();
                 }?></textarea></td>
                 </tr>

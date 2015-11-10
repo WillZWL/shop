@@ -193,7 +193,7 @@
             </table>
         </form>
         <?= $this->pagination_service->create_links_with_style() ?>
-    <? } ?>
+    <?php  } ?>
 </div>
 </body>
 </html>

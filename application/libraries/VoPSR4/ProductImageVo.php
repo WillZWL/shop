@@ -7,6 +7,7 @@ class ProductImageVo extends \BaseVo
     private $image = '';
     private $alt_text = '';
     private $image_saved = '1';
+    private $vb_image = '';
     private $vb_alt_text = '';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
@@ -81,14 +82,24 @@ class ProductImageVo extends \BaseVo
 
     public function setImageSaved($image_saved)
     {
-        if ($image_saved) {
-            $this->image_saved = $image_saved;
-        }
+        $this->image_saved = $image_saved;
     }
 
     public function getImageSaved()
     {
         return $this->image_saved;
+    }
+
+    public function setVbImage($vb_image)
+    {
+        if ($vb_image) {
+            $this->vb_image = $vb_image;
+        }
+    }
+
+    public function getVbImage()
+    {
+        return $this->vb_image;
     }
 
     public function setVbAltText($vb_alt_text)

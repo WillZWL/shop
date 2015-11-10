@@ -167,8 +167,8 @@
                 ?>
 
                 <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
-                    onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){
-                ?>onClick="Redirect('<?= site_url('mastercfg/courier/index/' . $courier->get_id()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"<?
+                    onMouseOut="RemoveClassName(this, 'highlight')" <?php if (!($is_edit)){
+                ?>onClick="Redirect('<?= site_url('mastercfg/courier/index/' . $courier->get_id()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"<?php
                 }?>>
                     <td height="20"><img src="<?= base_url() ?>images/info.gif"
                                          title='<?= $lang["create_on"] ?>:<?= $courier->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $courier->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $courier->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $courier->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $courier->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $courier->get_modify_by() ?>'>

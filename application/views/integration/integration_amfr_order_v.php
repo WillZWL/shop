@@ -190,7 +190,7 @@
         <td class="bvalue0"><?= $da ?></td>
         <td align="center"><?php if (in_array($obj->get_batch_status(), array('F', 'I'))) { ?><input type="button"
                                                                                                      value="<?= $lang["reprocess"] ?>"
-                                                                                                     onClick="document.location.href='<?= base_url() ?>integration/integration/reprocess_amazon/<?= $obj->get_batch_id() ?>/<?= $obj->get_trans_id() ?>/AMUK';"><?
+                                                                                                     onClick="document.location.href='<?= base_url() ?>integration/integration/reprocess_amazon/<?= $obj->get_batch_id() ?>/<?= $obj->get_trans_id() ?>/AMUK';"><?php
             }?></td>
     </tr>
     <tr height="5">

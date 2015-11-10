@@ -528,7 +528,7 @@ $shipment_status = $lang["shipment_status"];
         </table>
         </form>
         <?= $this->pagination_service->create_links_with_style() ?>
-        <? } ?>
+        <?php  } ?>
         <form name='fedex' target='fedex' method='post' action='http://fedex.com/Tracking'>
             <input type='hidden' name='tracknumbers' value=''>
             <input type='hidden' name='language' value='english'>

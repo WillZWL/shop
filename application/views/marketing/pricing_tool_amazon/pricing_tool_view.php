@@ -274,7 +274,7 @@ $ar_l_status = array("L" => $lang["listed"], "N" => $lang["not_listed"], "NC" =>
                         </table>
                     </td>
                 </tr>
-            <? }
+            <?php  }
 
             ?>
 
