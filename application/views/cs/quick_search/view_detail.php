@@ -193,7 +193,7 @@ function display_risk($title, $results)
                             <td width="35%" align="left" class="value1"><?= $client_obj->getForename() . " " . $client_obj->getSurname() ?> / ID: <?= $client_obj->getClientIdNo() ?></td>
                         <?php endif; ?>
                         <td width="15%" align="left" class="field1"><?= (check_app_feature_access_right($app_id, "CS000100_password")) ? strtoupper($lang["password"]) : "" ?></td>
-                        <td width="35%" align="left" class="value1"><?= (check_app_feature_access_right($app_id, "CS000100_password")) ? $this->encrypt->decode($client_obj->getPassword()) : "" ?></td>
+                        <td width="35%" align="left" class="value1"><?= (check_app_feature_access_right($app_id, "CS000100_password")) ? $this->encryption->decrypt($client_obj->getPassword()) : "" ?></td>
                     </tr>
                     <tr>
                         <td width="15%" align="left" class="field1"><?= strtoupper($lang["email"]) ?></td>
