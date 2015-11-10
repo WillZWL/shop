@@ -1678,7 +1678,6 @@ html;
         if ($so_no_list) {
             $tpl_id = "delivery_note";
             $content .= @file_get_contents(APPPATH . $this->getDao('Config')->valueOf("tpl_path") . $tpl_id . "/" . $tpl_id . "_header.html");
-
             foreach ($so_no_list as $so_no) {
                 if ($so_obj = $this->getDao('So')->get(["so_no" => $so_no])) {
                     $cur_platform_id = $so_obj->getPlatformId();
@@ -1735,27 +1734,22 @@ html;
                         if ($itemlist = $this->getDao('SoItemDetail')->getItemsWithName(["so_no" => $so_no], $option)) {
                             foreach ($itemlist as $item_obj) {
                                 $tmp = $this->getDao('Product')->get(["sku" => $item_obj->getMainProdSku()]);
-                                $imagepath = base_url() . get_image_file($tmp->getImage(), 's', $tmp->getSku());
                                 $replace["so_items"] .= "
-                    <tr>
-                        <td align='center'><img src='{$imagepath}'></td>
-                        <td valign=top>{$item_obj->getProdSku()} - {$item_obj->getName()}</td>
-                        <td valign=top>{$item_obj->getQty()}</td>
-                    </tr>";
+                                <tr>
+                                    <td style='padding: 5' valign='top'>{$item_obj->getItemSku()} - {$tmp->getName()}</td>
+                                    <td width='30' align='right' valign='top' style='padding-right: 5'>{$item_obj->getQty()}</td>
+                                </tr>";
                             }
                         }
                         $replace["barcode"] = "<img src='" . base_url() . "order/integrated_order_fulfillment/get_barcode/$so_no' style='float:right'>";
-
-                        if ($tpl_obj = $this->templateService->getMsgTplWithAtt(["id" => $tpl_id, "lang_id" => $cur_lang_id], $replace)) {
-                            $content .= $tpl_obj->template->getMessage();
+                        if ($tpl_content = $this->templateService->getFileTempalte(["tpl_id"=>$tpl_id], $replace)) {
+                            $content .= $tpl_content;
                         }
                     }
                 }
             }
-
             $content .= @file_get_contents(APPPATH . $this->getDao('Config')->valueOf("tpl_path") . $tpl_id . "/" . $tpl_id . "_footer.html");
         }
-
         return $content;
     }
 
@@ -1832,7 +1826,6 @@ html;
                             <td></td>
                         </tr>";
                                 }
-
                             }
                         }
                         $replace["barcode"] = "<img src='" . base_url() . "order/integrated_order_fulfillment/get_barcode/$so_no' style='float:right'>";
@@ -1880,28 +1873,20 @@ html;
                     for ($i = 1; $i < 7; $i++) {
                         ${"daddr_" . $i} = "&nbsp;";
                     }
-
-                    if ($so_obj->getSplitSoGroup())
-                        $new_so_no = $so_obj->getSplitSoGroup() . "/" . $so_obj->getSoNo();
-                    else
-                        $new_so_no = $so_obj->getSoNo();
-
                     $data["date_of_invoice"] = date("d/m/Y");
-                    $data["shipper_name"] = $new_shipper_name ? strtoupper($new_shipper_name) : "VALUEBASKET.COM LIMITED";
+                    $data["shipper_name"] = "Sunshine Express";
                     $data["shipper_contact"] = "";
                     $data["shipper_phone"] = "852-39043034";
                     $data["saddr_1"] = "Workshop A 10/F,";
-                    $data["saddr_2"] = "Wah Shing Industrial Building,";
-                    $data["saddr_3"] = "18 Cheung Shun Street,";
-                    $data["saddr_4"] = "Lai Chi Kok, Kowloon,";
+                    $data["saddr_2"] = "WAH SHING INDUSTRIAL BUILDING";
+                    $data["saddr_3"] = "18 CHEUNG SHUN STREET";
+                    $data["saddr_4"] = "LAI CHI KOK";
                     $data["saddr_5"] = "HongKong";
                     $data["saddr_6"] = "&nbsp;";
                     $data["date"] = date("d/m/Y");
-                    $data["order_number"] = $new_so_no;
+                    $data["order_number"] = $so_obj->getSoNo();
                     $data["deliver_name"] = $so_obj->getDeliveryName();
                     $data["client_id"] = $so_obj->getClientId();
-
-
                     $line_no = 1;
                     list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("|", $so_obj->getDeliveryAddress());
                     $data["daddr_" . $line_no] = $delivery_addr_1;
@@ -2021,32 +2006,21 @@ html;
                         }
                         $data["currency"] = strtoupper($currency);
 
-                        $item_information .= "<tr bgcolor='#000000'>
-                                                <td width='1' class='tborder'></td>
-                                                <td class='value'>" . $hs_desc . "</td>
-                                                <td width='1' class='tborder'></td>
-                                                <td class='value'>" . $item_obj->getQty() . "</td>
-                                                <td width='1' class='tborder'></td>
-                                                <td class='value'>" . $code . "</td>
-                                                <td width='1' class='tborder'></td>
-                                                <td class='value'>" . number_format($declared_value_converted, 2) . "</td>
-                                                <td width='1' class='tborder'></td>
-                                                <td class='value'>" . number_format($declared_value_converted * $qty, 2) . "</td>
-                                                <td width='1' class='tborder'></td>
-                                            </tr>
-                                            <tr bgcolor='#000000'>
-                                                <td colspan='11' height='1'></td>
-                                            </tr>";
+                        $item_information .= "
+                             <tr>
+                                <td  align='left'>".$hs_desc."</td>
+                                <td align='right'>".$item_obj->getQty()."</td>
+                                <td align='right'>".$code."</td>
+                                <td align='right'>".number_format($declared_value_converted, 2)."</td>
+                                <td align='right'><b>".number_format($declared_value_converted * $qty, 2)."</b></td>
+                            </tr>";
                         $sum += $declared_value_converted * $qty;
                     }
                     $data["item_info"] = $item_information;
-                    //$data["total_cost"] = $so_obj->getAmount() *  $so_obj->getRate();
                     $data["total_cost"] = number_format($sum, 2);
                     $data["delivery"] = number_format($delivery_charge_converted, 2);
                     $data['processing_fee'] = number_format($processing_fee_converted, 2);
-
                     $data["total_value"] = number_format($sum + $data["delivery"] + $data['processing_fee'], 2);
-
                     $content .= $this->getCustomInvBody($data, $lang, $new_shipper_name);
                     if ($run < $total_cnt) {
                         $content .= $pagebreak;
@@ -2409,8 +2383,6 @@ html;
         foreach ($data as $key => $value) {
             ${$key} = $value;
         }
-
-        $logo_place_holder = $new_shipper_name ? "" : "<img src='" . base_url() . "images/logo/digitaldiscount.png' border='0'><br/>";
         include APPPATH . "data/cinvBody.php";
 
         return $body;

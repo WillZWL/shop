@@ -43,12 +43,12 @@ class SoItemWithNameDto
         return $this->line_no;
     }
 
-    public function setitemSku($item_sku)
+    public function setItemSku($item_sku)
     {
         $this->item_sku = $item_sku;
     }
 
-    public function getitemSku()
+    public function getItemSku()
     {
         return $this->item_sku;
     }
