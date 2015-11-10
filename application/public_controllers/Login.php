@@ -51,6 +51,8 @@ class Login extends PUB_Controller
     public function index()
     {
         $data["back"] = $this->input->get("back");
+        $siteobj = \PUB_Controller::$siteInfo;
+        $countryid = $siteobj->getPlatformCountryId();
         if ($this->input->post("posted")) {
             if ($this->input->post("page") == "register") {
                 $post_data = $this->input->post();
@@ -58,6 +60,7 @@ class Login extends PUB_Controller
                 {
                     $_SESSION['NOTICE'] = 'The Email Exist, Please Login or Change another email to Register';
                 } else {
+                    $post_data['country_id'] = $countryid;
                     $reg_res = $this->register($post_data);
                     if ($reg_res['res'] === TRUE) {
                         $client_obj = $reg_res['data'];
@@ -90,8 +93,6 @@ class Login extends PUB_Controller
         if ($_SESSION["client"]["logged_in"]) {
             redirect(base_url() . ($data["back"] ? urldecode($data["back"]) : ""));
         } else {
-            $siteobj = \PUB_Controller::$siteInfo;
-            $countryid = $siteobj->getPlatformCountryId();
 
             $where = array();
             $option = array();
