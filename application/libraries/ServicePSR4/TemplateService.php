@@ -75,10 +75,38 @@ class TemplateService extends BaseService
         return $this->getDao('Template')->getList($where);;
     }
 
+    public function getFileTempalte($where = [], $replace = [])
+    {
+        $where['type'] = 2; //file
+        $tpl_id = $where['tpl_id'];
+        $file_obj = $this->getDao('Template')->get($where);
+        if ($file_obj) {
+            $filepath = APPPATH . $this->getDao('Config')->valueOf("tpl_path").$tpl_id. "/";
+            $filename = $file_obj->getTplFileName();
+            $tpl_file = $filepath.$filename;
+            $file_content = file_get_contents($tpl_file);
+            $value = $search = [];
+            if (!empty($replace)) {
+                foreach ($replace as $rskey => $rsvalue) {
+                    $search[] = "[:" . $rskey . ":]";
+                    $value[] = $rsvalue;
+                }
+            }
+            $file_content = str_replace($search, $value, $file_content);
+            return $file_content;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+
     public function getEmailTemplate($where = [], $option = [])
     {
+        $where['type'] = 1;//email
         $mail_obj = $this->getDao('Tempalte')->get($where);
-
         if ($template_obj) {
 
         }
