@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sales Invoice</title>
+<style type="text/css">
+.pb
+{
+page-break-after : always  ;
+}
+body {
+margin:0;
+}
+* {
+font-size:8pt;
+}
+</style>
+</head>
+<body topmargin="5" leftmargin="5" rightmargin="5" onLoad="if (parent.frames['printframe']){parent.frames['printframe'].focus();parent.frames['printframe'].print();}else{print();}" style="overflow:none;"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			<td colspan="2" align="left">
+				<p><img border=0 src="/images/logo/[:logo:]"></p>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2" align="left">
+				<font color="#FF6600"><b><i><p>Thank you for shopping with [:site_url:]</p></i></b></font>
+			</td>
+		</tr>
+<tr>
+			<td colspan="2" align="left">
+				<b><p style="font-size:18px;">[:invoice:]</p></b>
+			</td>
+		</tr>
+
+		<tr>
+			<td width="50%" valign="top">
+				<b>Order Number:</b>
+				<p>[:order_no:]</p>
+				<p> </p>
+			</td>
+			<td width="50%" valign="top">
+				<b>Order Date:</b>
+				<p>[:order_date:]</p>
+				<p> </p>
+			</td>
+		</tr>
+
+		<tr>
+			<td width="50%" valign="top">
+				<b></b>
+
+			</td>
+		</tr>
+
+		<tr>
+			<td width="50%" valign="top">
+				<b>Ship To:</b>
+				<p>[:delivery_name:]</p>
+				<p> </p>
+				<p>[:delivery_address:]</p>
+				<p> </p>
+			</td>
+			<td width="50%" valign="top">
+				<b>Bill To:</b>
+				<p>[:billing_name:]</p>
+				<p> </p>
+				<p>[:billing_address:]</p>
+				<p> </p>
+			</td>
+		</tr>
+
+		<tr>
+			<td width="50%" valign="top">
+				<b>Coupon Code Used:</b>
+				<p>[:promotion_code:]</p>
+				<p> </p>
+			</td>
+			<td width="50%" valign="top">
+				<b></b>
+				<p></p>
+				<p> </p>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2">
+				<table border="1" width="630" cellspacing="0" cellpadding="4">
+					<tr>
+						<td colspan="5" valign=top bgcolor="#FFCC00" bordercolor="#666666" height="10px">
+							<b>Order Details</b>
+						</td>
+					</tr>
+
+					<tr>
+						<td width="330" colspan="2" valign"top" height="10px" bgcolor="#CCCCCC"><b>Description</b></td>
+						<td width="100" valign"top" height="10px" bgcolor="#CCCCCC"><b>Unit Price</b></td>
+						<td width="100" valign"top" height="10px" bgcolor="#CCCCCC"><b>Quantity</b></td>
+						<td width="100" valign"top" height="10px" bgcolor="#CCCCCC"><b>Total</b></td>
+					</tr>
+
+					[:item_information:]
+
+					<tr>
+						<td colspan="2" rowspan="5" valign="top"> </td>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Cost of Items</b></td>
+						<td valign="top"><b>[:sum_total:]</b></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Delivery</b></td>
+						<td valign="top"><b>[:sid:]</b></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Processing Fee</b></td>
+						<td valign="top"><b>[:processing_fee:]</b></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Currency</b></td>
+						<td valign="top"><b>[:currency:]</b></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Grand Total</b></td>
+						<td valign="top"><b>[:grand_total:]</b></td>
+					</tr>
+			</table>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">
+			<p> </p>
+
+			<font size="-1">
+				<p>For return instructions, please contact us via our web form <a href="http://[:site_url:]/contact" target="_blank">here</a> and we will be happy to assist you further.</p>
+			</font>
+		</td>
+	</tr>
+
+</table>
+<p class="pb"></p>
+</body>
+</html>

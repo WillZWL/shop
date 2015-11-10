@@ -1263,16 +1263,13 @@ class SoService extends BaseService
 
                     // get language template
                     $country_id = $pbv_obj->getPlatformCountryId();
-                    // include_once(APPPATH . "hooks/country_selection.php");
 
-                    // $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
-
-                    // if (file_exists(APPPATH . "language/template_service/" . $lang_id . "/customer_invoice.ini")) {
-                    //     $data_arr = parse_ini_file(APPPATH . "language/template_service/" . $lang_id . "/customer_invoice.ini");
-                    // }
-                    // if (!is_null($data_arr)) {
-                    //     $replace = array_merge($replace, $data_arr);
-                    // }
+                    if (file_exists(APPPATH . "language/template_service/" . $lang_id . "/customer_invoice.ini")) {
+                        $data_arr = parse_ini_file(APPPATH . "language/template_service/" . $lang_id . "/customer_invoice.ini");
+                    }
+                    if (!is_null($data_arr)) {
+                        $replace = array_merge($replace, $data_arr);
+                    }
 
 #                   SBF #2960 Add NIF/CIF to invoice if info was supplied
 #                   SBF #4330 also for IT page
@@ -1289,39 +1286,23 @@ html;
                         $replace["label_client_id_no"] = "";
                         $replace["client_id_no"] = "";
                     }
+                    $replace['invoice'] = 'Invoice';
 
-                    $tpl_id = "shipped_invoice";
+                    if ($site_config_arr = $this->getSiteConfig($cur_platform_id)) {
+                        $replace = array_merge($replace, $site_config_arr);
+                    }
 
-                    $tpl_obj = $this->templateService->getMsgTplWithAtt(array("id" => $tpl_id, "lang_id" => $lang_id, "platform_id" => $cur_platform_id), $replace);
+                    $html = $this->getService('Template')->getFileTempalte(array("tpl_id" => 'shipped_invoice', "platform_id" => $cur_platform_id), $replace);
 
-                    if ($tpl_obj != "") {
-                        $html = $tpl_obj->template->getMessage();
-                    } else {
+                    if ($html === false) {
                         $html = "";
                     }
 
-                    switch ($cur_platform_id) {
-                        case "AMUS":
-                            $replace["isAmazon"] = 1;
-                            $replace["sales_email"] = "amazoncentral@valuebasket.com";
-                            $replace["csemail"] = "amazoncentral@valuebasket.com";
-                            $replace["return_email"] = "returns@valuebasket.com";
-                            break;
-                        case "AMDE":
-                        case "AMFR":
-                        case "AMUK":
-                            $replace["isAmazon"] = 1;
-                            $replace["sales_email"] = "amazoncentral@valuebasket.com";
-                            $replace["csemail"] = "amazoncentral@valuebasket.com";
-                            $replace["return_email"] = "returns@valuebasket.com";
-                            break;
-                        default:
-                            $replace["isAmazon"] = 0;
-                            $replace["sales_email"] = $this->getSalesEmail($lang_id);
-                            $replace["csemail"] = $this->getCsSupportEmail($lang_id);
-                            $replace["return_email"] = $this->getReturnEmail($lang_id);
-                            break;
-                    }
+
+                    $replace["isAmazon"] = 0;
+                    $replace["sales_email"] = $this->getSalesEmail($lang_id);
+                    $replace["csemail"] = $this->getCsSupportEmail($lang_id);
+                    $replace["return_email"] = $this->getReturnEmail($lang_id);
 
                     $itemlist = $this->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $obj, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
                     $so_ext_obj = $this->getDao('SoExtend')->get(["so_no" => $obj]);
@@ -1558,6 +1539,20 @@ html;
         return FALSE;
     }
 
+    public function getSiteConfig($platform_id)
+    {
+        if ($obj = $this->getDao('SiteConfig')->get(['platform'=>$platform_id, 'domain_type'=>'1', 'status'=>1])) {
+            $arr = [];
+            $arr['site_url'] = str_replace(['http://','https://','/'],"", $obj->getDomain());
+            $arr['site_name'] = $obj->getSiteName();
+            $arr['lang'] = $obj->getLang();
+            $arr['logo'] = $obj->getLogo();
+            $arr['email'] = $obj->getEmail();
+
+            return $arr;
+        }
+        return false;
+    }
     public function getSalesEmail($lang_id)
     {
         switch ($lang_id) {
