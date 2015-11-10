@@ -92,8 +92,19 @@
             </tr>
             <tr class="search" id="tr_search" <?= $searchdisplay ?>>
                 <td></td>
-                <td><input name="country_id" class="input"
-                           value="<?= htmlspecialchars($this->input->get("country_id")) ?>"></td>
+                <td>
+                    <select type="text" name="country_id" class="input" >
+                        <?php
+                        foreach ($country_list as $country_obj) :
+                            ?>
+                            <option value="<?= $country_obj->getCountryId() ?>" <?= ($this->input->get("country_id") == $country_obj->getCountryId() ? "SELECTED" : "") ?>>
+                            <?= $country_obj->getCountryId() . " - " . $country_obj->getName() ?>
+                            </option>
+                        <?php
+                        endforeach;
+                        ?>
+                    </select>
+                </td>
                 <td></td>
 				<td></td>
                 <td></td>

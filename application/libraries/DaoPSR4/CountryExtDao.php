@@ -25,7 +25,7 @@ class CountryExtDao extends BaseDao
     {
         $this->db->from('country AS c');
         $this->db->join('language AS l', 'l.status = 1', 'LEFT');
-        $this->db->join('country_ext AS ce', 'ce.cid = c.id AND l.id = ce.lang_id', 'LEFT');
+        $this->db->join('country_ext AS ce', 'ce.cid = c.country_id AND l.lang_id = ce.lang_id', 'LEFT');
 
         if ($where) {
             $this->db->where($where);
