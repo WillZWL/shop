@@ -3,6 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 DEFINE ('ALLOW_REDIRECT_DOMAIN', 1);
 
+
+use ESG\Panther\Service\CountryService;
+
 class Login extends PUB_Controller
 {
     private $lang_id = 'en';
@@ -12,6 +15,8 @@ class Login extends PUB_Controller
         parent::__construct();
         $this->load->helper(array('url', 'object', 'lang','notice'));
         $this->load->library('encryption');
+
+        $this->countryService = new CountryService;
     }
 
     public function checkout_login()
@@ -85,7 +90,22 @@ class Login extends PUB_Controller
         if ($_SESSION["client"]["logged_in"]) {
             redirect(base_url() . ($data["back"] ? urldecode($data["back"]) : ""));
         } else {
-            $data["bill_to_list"] = $this->sc['countryModel']->getCountryNameInLang(get_lang_id(), 1);
+            $siteobj = \PUB_Controller::$siteInfo;
+            $countryid = $siteobj->getPlatformCountryId();
+
+            $where = array();
+            $option = array();
+
+            $where["c.country_id"] = strtoupper($countryid);
+            $where["l.lang_id"] = get_lang_id();
+            $where["c.status"] = 1;
+            $where["c.allow_sell"] = 1;
+
+            $option["limit"] = 1;
+
+            $data["bill_to_list"] = $this->countryService->getCountryExtDao()->getCountryNameInLang($where, $option);
+
+            //$data["bill_to_list"] = $this->sc['countryModel']->getCountryNameInLang(get_lang_id(), 1);
             $data["lang_id"] = get_lang_id();
             $data["notice"] = notice();
             unset($_SESSION["NOTICE"]);

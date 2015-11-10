@@ -58,6 +58,7 @@
                                                                 <div class="cart">
                                                                     <button data-loading-text="Loading..." class="btn btn-primary" type="button" onclick="cart.addcart('<?= $sku ?>');">
                                                                         <i class="fa fa-shopping-cart"></i>
+                                                                        <span class="add-to-cart"><?= _("Add to Cart") ?></span>
                                                                     </button>
                                                                 </div>
                                                                 <!--<div class="wishlist">

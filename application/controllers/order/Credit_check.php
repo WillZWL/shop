@@ -1,5 +1,8 @@
 <?php
 
+
+use ESG\Panther\Service\PaginationService;
+
 class Credit_check extends MY_Controller
 {
 
@@ -19,6 +22,8 @@ class Credit_check extends MY_Controller
         $this->load->library('service/platform_biz_var_service');
         $this->load->library('encrypt');
         $this->load->library('service/so_refund_score_service');*/
+
+        $this->paginationService = new PaginationService;
     }
 
     public function index($pagetype = "")
@@ -162,8 +167,8 @@ class Credit_check extends MY_Controller
         $data["lang"] = $lang;
 
         $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
+        $this->paginationService->set_show_count_tag(TRUE);
+        $this->paginationService->initialize($pconfig);
 
         $data["notice"] = notice($lang);
 
@@ -227,8 +232,8 @@ class Credit_check extends MY_Controller
             $data["lang"] = $lang;
 
             $pconfig['total_rows'] = $data['total'];
-            $this->pagination_service->set_show_count_tag(TRUE);
-            $this->pagination_service->initialize($pconfig);
+            $this->paginationService->set_show_count_tag(TRUE);
+            $this->paginationService->initialize($pconfig);
 
             $data["notice"] = notice($lang);
 

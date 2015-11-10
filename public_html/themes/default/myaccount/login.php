@@ -26,9 +26,10 @@
                         <input type="hidden" name="posted" value="1">
                     </form>
 
-                    <br /><br />
+                    <!-- 8328 - Hide Parcel Tracking (until we know aftership is ready) -->
+                    <!--<br /><br />
                     <?= _('Order shipped? Track your delivery progress by entering your tracking number below:') ?><br /><br />
-                    <div data-slug="" data-size="large" data-width="220" data-counter="true" class="as-track-button" data-tracking-number="<?=$trackno?>"></div>
+                    <div data-slug="" data-size="large" data-width="220" data-counter="true" class="as-track-button" data-tracking-number="<?=$trackno?>"></div>-->
                 </div>
 
                 <div id="right_side">
@@ -39,7 +40,7 @@
                         <ul>
                             <li>
                                 <label><?= _('Country') ?> *</label>
-                                <select name="country_id" class="styled_select" id="delivery_country" onchange="update_field_attribute(this.value)">
+                                <select name="country_id" class="styled_select" id="delivery_country" onchange="update_field_attribute(this.value)" disabled width="220px">
                                     <?php foreach ($bill_to_list as $bill_country): ?>
                                     <option value="<?=$bill_country->getCountryId();?>"><?=$bill_country->getName();?></option>
                                     <?php endforeach ?>

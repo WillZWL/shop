@@ -6,6 +6,9 @@ if (in_array($GLOBALS["URI"]->segments[2], $ws_array)) {
     DEFINE ('PLATFORM_TYPE', 'SKYPE');
 }
 
+
+use ESG\Panther\Service\CountryService;
+
 class Myaccount extends PUB_Controller
 {
     private $components_list;
@@ -15,6 +18,8 @@ class Myaccount extends PUB_Controller
         parent::__construct(array('require_login' => 1, 'load_header' => 1));
         $this->load->helper(array('url', 'object', 'notice', 'lang', 'price'));
         $this->load->library('encrypt');
+
+        $this->countryService = new CountryService;
     }
 
     public function profile()
@@ -99,7 +104,19 @@ class Myaccount extends PUB_Controller
             } else {
                 $_SESSION["client_obj"] = serialize($data["client_obj"]);
             }
-            $data["bill_to_list"] = $this->sc['countryModel']->getCountryNameInLang(get_lang_id(), 1);
+
+            $where = array();
+            $option = array();
+            $where["c.country_id"] = strtoupper(PLATFORM);
+            $where["l.lang_id"] = $lang_id;
+            $where["c.status"] = 1;
+            $where["c.allow_sell"] = 1;
+
+            $option["limit"] = 1;
+
+            $data["bill_to_list"] = $this->countryService->getCountryExtDao()->getCountryNameInLang($where, $option);
+
+            //$data["bill_to_list"] = $this->sc['countryModel']->getCountryNameInLang(get_lang_id(), 1);
             // rma
 
             $data["rma_obj"] = unserialize($_SESSION["rma_obj"]);

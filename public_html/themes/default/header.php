@@ -152,7 +152,7 @@
                           <div class="row">
                 <?php
                     $lang_id = $siteobj->getLangId();
-                   $menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
+                    $menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
                     //$menu_script = file_get_contents(APPPATH."views/template/menu/en/menu_webgb.html", true);
                     print $menu_script;
                 ?>
@@ -172,15 +172,25 @@
                                          <?php
                                             $siteobj = \PUB_Controller::$siteInfo;
                                             $currencyId = $siteobj->getSign();
+                                            $platCountryId = $siteobj->getPlatformCountryId();;
+                                            switch (strtolower($platCountryId)) {
+                                                case 'gb' :
+                                                    $searchspring_site_id = 'jdajtq';
+                                                    break;
+
+                                                default   :
+                                                    $searchspring_site_id = '';
+                                            }
+
                                          ?>
                                         <link rel="stylesheet" type="text/css" href="https://d2r7ualogzlf1u.cloudfront.net/autocomplete/autocomplete.css">
                                         <link rel="stylesheet" type="text/css" href="/themes/default/asset/css/searchspring.css">
                                         <script type="text/javascript" src="https://d2r7ualogzlf1u.cloudfront.net/autocomplete/searchspring-autocomplete.min.js"></script>
                                         <script type="text/javascript">
                                             SearchSpring.Autocomplete.init({
-                                                siteId: "jdajtq",
+                                                siteId: '<?php echo $searchspring_site_id; ?>',
                                                 queryClass : "searchspring-query",
-                                                currencySymbol: "<?php echo $currencyId; ?>",
+                                                currencySymbol: '<?php echo $currencyId; ?>',
                                                 offsetY: 10,
                                                 offsetX: -15
                                             });

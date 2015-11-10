@@ -46,11 +46,12 @@
                                                 <div class="cart">
                                                     <button data-loading-text="Loading..." class="btn btn-primary" type="button" onclick="cart.addcart('<?= $sku ?>');">
                                                         <i class="fa fa-shopping-cart"></i>
+                                                        <span class="add-to-cart"><?= _("Add to Cart") ?></span>
                                                     </button>
                                                 </div>
-                                                <div class="wishlist">
+                                                <!--<div class="wishlist">
                                                     <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="" onclick="wishlist.addwishlist('<?= $sku ?>');" data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
                                     </div>

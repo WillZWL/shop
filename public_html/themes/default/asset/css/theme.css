@@ -221,7 +221,7 @@
 }
 
 .products-block .product-grid .add-to-cart {
-    display:none;
+    /*display:none;*/
 }
 .products-block .product-grid .more-info {
     display:none;
@@ -431,7 +431,7 @@ input.btn-newsletter {
 #content #register #right_side{float:right;width:50%;overflow:hidden;zoom:1;}
 #content #register form{padding:20px 18px 34px 18px;border:solid 1px #d0d0d0;}
 #content #register form .subscribe{line-height:24px;padding:8px 0 16px 0;}
-#content #register #delivery_country{width:90px;}
+#content #register #delivery_country{/*width:90px;*/}
 #content .checkbox-holder{float:left;display:block;cursor:pointer;width:22px;height:23px;background:url('../images/checkbox.jpg') no-repeat 0 0;}
 #content .checkbox-holder.checked {background-position: 0 -23px;}
 #content .checkbox-holder input{display:none;}

@@ -37,12 +37,23 @@ class VbDataTransferCategoryService extends VbDataTransferService
             //if ($id == "" || $id == null)
 			try
 			{
-				if($this->getDao()->get(array("id"=>$category->id)))
+				if($cat_obj = $this->getDao()->get(array("id"=>$category->id)))
 				{
 					//Update the AtomV2 category data
-					$where = array("id"=>$category->id);
+					$cat_obj->setId($category->id);
+					$cat_obj->setName($category->name);
+					$cat_obj->setDescription($category->description);
+					$cat_obj->setParentCatId($category->parent_cat_id);
+					$cat_obj->setLevel($category->level);
+					$cat_obj->setAddColourName($category->add_colour_name);
+					$cat_obj->setPriority($category->priority);
+					$cat_obj->setBundleDiscount($category->bundle_discount);
+					$cat_obj->setMinDisplayQty($category->min_display_qty);
+					$cat_obj->setStatus($category->status);
 
-					$new_cat_obj = array();
+					$this->getDao()->update($cat_obj);
+
+					/*$new_cat_obj = array();
 
 					$new_cat_obj["name"] = $category->name;
 					$new_cat_obj["description"] = $category->description;
@@ -54,7 +65,7 @@ class VbDataTransferCategoryService extends VbDataTransferService
 					$new_cat_obj["min_display_qty"] = $category->min_display_qty;
 					$new_cat_obj["status"] = $category->status;
 
-					$this->getDao()->qUpdate($where, $new_cat_obj);
+					$this->getDao()->qUpdate($where, $new_cat_obj);*/
 
 					$xml[] = '<category>';
 					$xml[] = '<id>' . $category->id . '</id>';
