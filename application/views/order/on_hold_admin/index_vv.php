@@ -134,7 +134,7 @@
                 <td><?= $lang["password"] ?>: <a
                         href="<?= base_url() ?>order/on_hold_admin/chk_pw/?pw=<?= urlencode($obj->getPassword()) ?>"
                         rel="lyteframe[check_password]" rev="width: 1024px; height: 500px; scrolling: auto;"
-                        title="<?= $lang["password"] ?> - <?= $rspw = $this->encrypt->decode($obj->getPassword()) ?>"><?= $rspw ?></a>
+                        title="<?= $lang["password"] ?> - <?= $rspw = $this->encryption->decrypt($obj->getPassword()) ?>"><?= $rspw ?></a>
                     (<?= $obj->getPwCount() ?>)
                 </td>
                 <td class="bfield<?= $i % 2 ?>"><?= $lang["billing_address"] ?></td>
