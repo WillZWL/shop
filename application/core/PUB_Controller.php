@@ -381,19 +381,38 @@ class PUB_Controller extends CI_Controller
         $registered_tracking = $this->config->item('registered_tracking');
         $tracking_code = "";
         foreach ($registered_tracking as $tracking) {
-            $className = $tracking . "_tracking_script_service";
-            include_once(APPPATH . "libraries/service/" . strtolower($className) . ".php");
-            $tracking_obj = new $className();
-            $page = array("class" => $this->router->class,
-                "method" => $this->router->method
-            );
-            if (count($this->router->uri->rsegments) >= 3) {
-                $page = array_merge($page, array("method_parameter1" => $this->router->uri->rsegments[3]));
+            if ($tracking == "GoogleTagManager")
+            {
+                $className = $tracking . "_tracking_script_service";
+
+                $page = array("class" => $this->router->class,
+                    "method" => $this->router->method
+                );
+                if (count($this->router->uri->rsegments) >= 3) {
+                    $page = array_merge($page, array("method_parameter1" => $this->router->uri->rsegments[3]));
+                }
+                if ($this->sc[$className]->isRegisteredPage($page)) {
+                    $tracking_code .= $this->sc[$className]->getSpecificCode($page, $data);
+                } elseif ($this->sc[$className]->needToShowGenericTrackingPage()) {
+                    $tracking_code .= $this->sc[$className]->getAllPageCode($page, $data);
+                }
             }
-            if ($tracking_obj->is_registered_page($page)) {
-                $tracking_code .= $tracking_obj->get_specific_code($page, $data);
-            } elseif ($tracking_obj->need_to_show_generic_tracking_page()) {
-                $tracking_code .= $tracking_obj->get_all_page_code($page, $data);
+            else
+            {
+                $className = $tracking . "_tracking_script_service";
+                include_once(APPPATH . "libraries/service/" . strtolower($className) . ".php");
+                $tracking_obj = new $className();
+                $page = array("class" => $this->router->class,
+                    "method" => $this->router->method
+                );
+                if (count($this->router->uri->rsegments) >= 3) {
+                    $page = array_merge($page, array("method_parameter1" => $this->router->uri->rsegments[3]));
+                }
+                if ($tracking_obj->is_registered_page($page)) {
+                    $tracking_code .= $tracking_obj->get_specific_code($page, $data);
+                } elseif ($tracking_obj->need_to_show_generic_tracking_page()) {
+                    $tracking_code .= $tracking_obj->get_all_page_code($page, $data);
+                }
             }
         }
         return $tracking_code;
