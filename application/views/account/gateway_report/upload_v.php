@@ -19,11 +19,8 @@
         <tr>
             <td height="30" class="title"><?= $lang["title"] ?></td>
             <td width="400" align="right" class="title">
-                <!--
-            <input type="button" value="<?= $lang["check_record"] ?>" class="button" onclick="Redirect('<?= site_url('account/payment_gateway/check_record') ?>')">&nbsp&nbsp
-            -->
                 <input type="button" value="<?= $lang["download_batch"] ?>" class="button"
-                       onclick="Redirect('<?= site_url('account/gateway_report') ?>')">&nbsp&nbsp
+                       onclick="Redirect('<?= site_url('account/GatewayReport') ?>')">&nbsp&nbsp
             </td>
         </tr>
         <tr>
@@ -37,7 +34,7 @@
                     style="font-size:14px"><?= $lang["header"] ?></b><br><?= $lang["header_message"] ?><br>
                 <?= $lang["pmgw"] ?> :
                 <select name="country_id"
-                        onChange="Redirect('<?= base_url() ?>account/gateway_report/upload/'+this.value)">
+                        onChange="Redirect('<?= base_url() ?>account/GatewayReport/upload/'+this.value)">
                     <option value=""></option>
                     <option
                         value="worldpay" <?= $pmgw == "worldpay" ? "SELECTED" : "" ?>><?= $lang["worldpay"] ?></option>

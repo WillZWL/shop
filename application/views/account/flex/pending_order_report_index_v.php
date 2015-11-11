@@ -54,7 +54,7 @@ $today = getdate();
             </tr>
         </table>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $this->sc['Pagination']->createLinksWithStyle() ?>
     <?= $notice["js"] ?>
 </div>
 </body>

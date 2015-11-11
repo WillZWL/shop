@@ -1,7 +1,5 @@
 <?php
-include_once 'Base_vo.php';
-
-class Flex_rolling_reserve_vo extends Base_vo
+class FlexRollingReserveVo extends \BaseVo
 {
 
     //class variable

@@ -15,7 +15,7 @@
             <td height="30" class="title"><?= $lang["title"] ?></td>
             <td width="600" align="right" class="title">
                 <input type="button" value="<?= $lang["upload_report"] ?>" class="button"
-                       onclick="Redirect('<?= site_url('account/gateway_report/upload') ?>')">&nbsp&nbsp
+                       onclick="Redirect('<?= site_url('account/GatewayReport/upload') ?>')">&nbsp&nbsp
             </td>
         </tr>
         <tr>
@@ -99,16 +99,16 @@
 
                     <tr class="row<?= $i % 2 ?>">
                         <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                             title='<?= $lang["create_on"] ?>:<?= $obj->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->get_modify_by() ?>'>
+                                             title='<?= $lang["create_on"] ?>:<?= $obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->getModifyBy() ?>'>
                         </td>
-                        <td><?= $obj->get_id() ?></td>
-                        <td><?= $lang[$obj->get_gateway_id()] ?></td>
+                        <td><?= $obj->getId() ?></td>
+                        <td><?= $lang[$obj->getGatewayId()] ?></td>
                         <td>
                             <span class="pointer"
-                                  onClick="Redirect('<?= site_url('account/gateway_report/download_batch/' . $obj->get_id()) ?>')"><?= $obj->get_filename() ?></span>
+                                  onClick="Redirect('<?= site_url('account/GatewayReport/downloadBatch/' . $obj->getId()) ?>')"><?= $obj->getFilename() ?></span>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <span class="pointer"
-                                  onClick="Redirect('<?= site_url('account/gateway_report/download_feedback_report/' . $obj->get_id()) ?>')"><input
+                                  onClick="Redirect('<?= site_url('account/GatewayReport/downloadFeedbackReport/' . $obj->getId()) ?>')"><input
                                     class="pointer" type="button"
                                     value="<?php echo $lang['download_feedback_report'] ?>"></span>
                         </td>
@@ -123,7 +123,7 @@
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
         <input type="hidden" name="search" value="1">
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $this->sc['Pagination']->createLinksWithStyle(); ?>
     <?= $notice["js"] ?>
 </div>
 </body>

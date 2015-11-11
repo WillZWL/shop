@@ -15,7 +15,7 @@ if (!function_exists('underscore2camelcase')) {
 $tableName = $argv[1];
 
 $voClassName = ucfirst(underscore2camelcase($tableName)."Vo");
-$db = new PDO('mysql:dbname=panther_dev;host=127.0.0.1', 'panther_dev', '');
+$db = new PDO('mysql:dbname=panther_dev;host=127.0.0.1', 'root', '');
 $stmt = $db->query("desc {$tableName}");
 
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -107,4 +107,4 @@ GETINCREMENTFIELD;
 
 $file .= "\n}\n";
 
-file_put_contents("/var/www/html/atomv2/application/libraries/VoPSR4/{$voClassName}.php", $file);
+file_put_contents("application/libraries/VoPSR4/{$voClassName}.php", $file);
