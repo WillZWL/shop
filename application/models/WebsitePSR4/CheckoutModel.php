@@ -26,7 +26,7 @@ class CheckoutModel extends \CI_Model
                             , "AUD" => 100
                             , "NZD" => 100
                             , "EUR" => 100
-                            , "PLN" => 100];
+                            , "PLN" => 595];
 
     public function __construct() {
         parent::__construct();
