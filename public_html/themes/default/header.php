@@ -42,6 +42,71 @@
     <script type="text/javascript" src="/themes/default/asset/js/iview.js"></script>
 </head>
 <body class="common-home page-common-home layout-fullwidth ">
+
+    <?php
+        $siteobj = \PUB_Controller::$siteInfo;
+        $platCountryId = $siteobj->getPlatformCountryId();
+        switch (strtolower($platCountryId)) {
+            case 'gb' :
+                $searchspring_site_id = 'jdajtq';
+                $GTM_ID = 'GTM-MHPP6T';
+                break;
+
+            case 'es' :
+                $searchspring_site_id = 'jdajtq';
+                $GTM_ID = 'GTM-TC6F2D';
+                break;
+
+            case 'au' :
+                $searchspring_site_id = 'jdajtq';
+                $GTM_ID = 'GTM-NNL2JB';
+                break;
+
+            case 'nz' :
+                $searchspring_site_id = 'jdajtq';
+                $GTM_ID = 'GTM-K3GW2F';
+                break;
+
+            case 'it' :
+                $searchspring_site_id = 'jdajtq';
+                $GTM_ID = 'GTM-T33Z3B';
+                break;
+
+            case 'fr' :
+                $searchspring_site_id = 'jdajtq';
+                $GTM_ID = 'GTM-MQ9RSX';
+                break;
+
+            case 'be' :
+                $searchspring_site_id = 'jdajtq';
+                $GTM_ID = 'GTM-MPJWJQ';
+                break;
+
+            case 'pl' :
+                $searchspring_site_id = 'jdajtq';
+                $GTM_ID = 'GTM-TXWWKC';
+                break;
+
+
+            default   :
+                $searchspring_site_id = '';
+                $GTM_ID = '';
+        }
+    ?>
+
+<!-- Google Tag Manager -->
+<noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=<?php echo $GTM_ID; ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','<?php echo $GTM_ID; ?>');
+</script>
+<!-- End Google Tag Manager -->
+
     <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true" id="pleaseWaitDialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -100,7 +165,6 @@
                                         <ul class="list-inline header-desc">
                                             <li >
                                             <?php
-                                                $siteobj = \PUB_Controller::$siteInfo;
                                                 $currencyId = $siteobj->getPlatformCurrencyId();
                                                 $countryid = $siteobj->getPlatformCountryId();
                                                 $guaranteedays = "14";
@@ -169,20 +233,6 @@
                                                 <button type="button" class="button-search" style="height: 24px !important;"><i class="fa fa-search"></i></button>
                                             </span>
                                         </form>
-                                         <?php
-                                            $siteobj = \PUB_Controller::$siteInfo;
-                                            $currencyId = $siteobj->getSign();
-                                            $platCountryId = $siteobj->getPlatformCountryId();;
-                                            switch (strtolower($platCountryId)) {
-                                                case 'gb' :
-                                                    $searchspring_site_id = 'jdajtq';
-                                                    break;
-
-                                                default   :
-                                                    $searchspring_site_id = '';
-                                            }
-
-                                         ?>
                                         <link rel="stylesheet" type="text/css" href="https://d2r7ualogzlf1u.cloudfront.net/autocomplete/autocomplete.css">
                                         <link rel="stylesheet" type="text/css" href="/themes/default/asset/css/searchspring.css">
                                         <script type="text/javascript" src="https://d2r7ualogzlf1u.cloudfront.net/autocomplete/searchspring-autocomplete.min.js"></script>

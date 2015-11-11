@@ -57,8 +57,8 @@ class Credit_check extends MY_Controller
             $where["so.hold_status"] = "1";
             $where["so.status >"] = "1";
             $where["so.status <"] = "6";
-            $where["sohr.reason NOT LIKE"] = '%_log_app';
-            $where["sohr.reason in ('cscc', 'csvv')"] = NULL;
+            $where["so.hold_reason NOT LIKE"] = '%_log_app';
+            $where["so.hold_reason in ('cscc', 'csvv')"] = NULL;
 
             if (empty($sort)) {
                 $sort = "order_create_date";
