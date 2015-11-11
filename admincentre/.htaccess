@@ -1,4 +1,47 @@
+php_flag display_errors on
+php_value session.gc_maxlifetime 14400
+AuthUserFile /var/www/html/access/.htpasswd_panther
+AuthGroupFile /dev/null
+AuthName ExternalAccessPassword
+AuthType Basic
+RewriteEngine on
+
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /index.php/$1 [L]
+
+
+
+<Limit GET>
+order allow,deny
+require valid-user
+
+# Office IP
+Allow from 219.76.190.140
+Allow from 61.238.236.234
+Allow from 112.120.70.143
+Allow from 59.148.247.158
+
+# Server
+Allow from 94.236.11.179
+Allow from 92.52.107.209
+Allow from 92.52.107.210
+Allow from 92.52.107.211
+Allow from 83.138.140.90
+Allow from 94.236.11.182
+Allow from 94.236.11.179
+Allow from 192.168.100.179
+Allow from 5.79.47.124
+Allow from 5.79.47.125
+Allow from 94.236.11.178
+Allow from 120.136.46.150
+Allow from 180.150.135.217
+Allow from 180.150.135.218
+Allow from 180.150.135.219
+Allow from 180.150.135.220
+Allow from 180.150.135.221
+Allow from 210.6.136.171
+Allow from 78.136.35.99
+satisfy any
+</Limit>

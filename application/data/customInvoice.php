@@ -7,24 +7,8 @@ $header = "
 <title>Custom Invoice</title>
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
 <style type=\"text/css\">
-   .pb
-   {
-		page-break-after : always  ;
-   }
-
-
-   body {
-		margin:0;
-		text-align:center;
-   }
-
-   * {
-	font-family:Helvetica,rial,verdana,sans-serif;
-	font-size:11px;
-   }
-.field{background-color:#e1e1e1; padding-left:5px; text-align:left; height:25px; font-size:12px;}
-.value{background-color:#ffffff;  padding-left:5px; text-align:left; height:25px; font-size:12px;}
-.tborder{background-color:#000000; width:1px; }
+body { margin:0 15px;}
+* {font-family:arial;font-size:10px;}
 </style>
 </head>
 <body marginwidth='0' marginheight='0' onLoad='print();'>
@@ -33,7 +17,6 @@ $header = "
 $pagebreak = "
 	   <p class=\"pb\"></p>
 		 ";
-
 
 $footer = "
 </body>

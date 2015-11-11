@@ -40,7 +40,7 @@
                         <ul>
                             <li>
                                 <label><?= _('Country') ?> *</label>
-                                <select name="country_id" class="styled_select" id="delivery_country" onchange="update_field_attribute(this.value)" disabled width="220px">
+                                <select name="country_id" class="styled_select" id="delivery_country" onchange="update_field_attribute(this.value)" disabled width="220px" notEmpty>
                                     <?php foreach ($bill_to_list as $bill_country): ?>
                                     <option value="<?=$bill_country->getCountryId();?>"><?=$bill_country->getName();?></option>
                                     <?php endforeach ?>
@@ -125,7 +125,7 @@
                                 <label><?= _('Confirm Password') ?> *</label>
                                 <fieldset><input type="password" name="confirm_password" dname="<?= _('Confirm Password') ?>" match="password"  onpaste="return false;"/></fieldset>
                             </li>
-                            <li><input value="<?= _('Submit') ?>" class="btn btn-primary log_btn"></li>
+                            <li><input type="submit" value="<?= _('Submit') ?>" class="btn btn-primary log_btn"></li>
                         </ul>
                         <input type="hidden" name="posted" value="1">
                         <input type="hidden" name="page" value="register">
