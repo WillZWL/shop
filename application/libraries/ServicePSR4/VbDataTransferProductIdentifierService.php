@@ -22,14 +22,14 @@ class VbDataTransferProductIdentifierService extends VbDataTransferService
         {
             try
             {
-                $pc_obj = $this->getService('Product')->getDao('ProductIdentifier')->get(['prod_grp_cd'=>$pc->prod_grp_cd;, 'colour_id'=>$product->colour_id, 'country_id'=>$product->country_id]);
+                $pc_obj = $this->getService('Product')->getDao('ProductIdentifier')->get(['prod_grp_cd'=>$pc->prod_grp_cd, 'colour_id'=>$product->colour_id, 'country_id'=>$product->country_id]);
 
                 $reason = "";
                 if ($pc_obj) {
                     // update
                     $reason = "update";
 
-                    $pc_obj->setProdGrpCd($pc->prod_grp_cd;);
+                    $pc_obj->setProdGrpCd($pc->prod_grp_cd);
                     $pc_obj->setColourId($pc->colour_id);
                     $pc_obj->setCountryId($pc->country_id);
                     $pc_obj->setEan($pc->ean);
@@ -50,7 +50,7 @@ class VbDataTransferProductIdentifierService extends VbDataTransferService
                     //insert the product identifier
                     $new_pi_obj = $this->getService('Product')->getDao('ProductIdentifier')->get();
 
-                    $new_pi_obj->setProdGrpCd( $pc->prod_grp_cd;);
+                    $new_pi_obj->setProdGrpCd( $pc->prod_grp_cd);
                     $new_pi_obj->setColourId($pc->colour_id);
                     $new_pi_obj->setCountryId($pc->country_id);
                     $new_pi_obj->setEan($pc->ean);

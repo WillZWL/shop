@@ -134,8 +134,8 @@
                         <form name="fm_edit" action="<?= base_url() ?>marketing/product_spec/edit/" method="post"
                               onSubmit="return CheckForm(this)">
                             <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
-                                onMouseOut="RemoveClassName(this, 'highlight')" <?if (!($is_edit)){
-                            ?>onClick="Redirect('<?= site_url('marketing/product_spec/index/' . $ps_obj->get_id()) ?>/')"<?
+                                onMouseOut="RemoveClassName(this, 'highlight')" <?php if (!($is_edit)){
+                            ?>onClick="Redirect('<?= site_url('marketing/product_spec/index/' . $ps_obj->get_id()) ?>/')"<?php
                             }?>>
                                 <?php
                                 if ($is_edit) {

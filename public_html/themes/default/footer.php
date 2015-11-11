@@ -63,7 +63,7 @@
                                                         </li>
                                                          <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/Przelewy24.png">
-                                                        </li>-->>
+                                                        </li>-->
                                                 </ul>
                                            </fieldset>
                                         </div>
@@ -110,7 +110,7 @@
                                     <div class="row">
                                         <div class="column col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                             <div class="panel-gray">
-                                                <a href="<?= base_url('display/view/about_us') ?>"><h4 class="panel-title"><?= _('About Us') ?></h4></a>
+                                                <a href="<?= base_url('display/view/contact') ?>"><h4 class="panel-title"><?= _('About Us') ?></h4></a>
                                             </div>
                                             <p class="desc-about">
                                                 <?= _('DigitalDiscount prides itself on great deals without compromise on service! ') ?><br /> <?= _('Feel free to contact us anytime for more information') ?>

@@ -59,7 +59,7 @@
             </tr>
         </table>
     </form>
-    <? if ($display) {
+    <?php  if ($display) {
         ?>
         <iframe src="<?= base_url() ?>marketing/top_deals/view_left/<?= $catid ?>/<?= $level ?>/<?= $platform ?>"
                 noresize frameborder="0" name="left" id="left" marginwidth="0" marginheight="0" hspace="0" vspace="0"

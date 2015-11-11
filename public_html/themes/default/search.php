@@ -204,8 +204,8 @@
                                     <?php print $prod_obj->getShortDesc(); ?>
                                     </p>
                                     <div class="price">
-                                        <span class="price-old"><font class="list_price"><?= _('List Price') ?> :  </font><?= $prod_obj->getRrpPrice(); ?></span>
-                                        <span class="price-new"><font class="pay_price"><?= _('You Pay') ?> :  </font><?= $prod_obj->getPrice(); ?></span>
+                                        <span class="price-old"><font class="list_price"><?= _('List Price') ?> :  </font><?= platform_curr_format($prod_obj->getRrpPrice()); ?></span>
+                                        <span class="price-new"><font class="pay_price"><?= _('You Pay') ?> :  </font><?= platform_curr_format($prod_obj->getPrice()); ?></span>
                                     </div>
                                     <div class="save_alter">
                                         Save -30%

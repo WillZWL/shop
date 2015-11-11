@@ -4,13 +4,13 @@
 
     <ul>
 
-        <? foreach ($templates as $template) { ?>
+        <?php  foreach ($templates as $template) { ?>
 
             <li>
-                <p><? echo '<a href="/' . SELF . '/test/test/update/' . $email->get_id() . '">From: ' . $email->get_emailfrom() . ' To: ' . $email->get_emailgoesto(); ?></a></p>
+                <p><?php  echo '<a href="/' . SELF . '/test/test/update/' . $email->get_id() . '">From: ' . $email->get_emailfrom() . ' To: ' . $email->get_emailgoesto(); ?></a></p>
             </li>
 
-        <? } ?>
+        <?php  } ?>
 
     </ul>
 

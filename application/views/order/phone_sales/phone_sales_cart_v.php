@@ -64,7 +64,7 @@
                     <?= $lang["cost_of_items"] ?>: <?= $default_curr ?>  <?= number_format($total, 2) ?><br>
                     <?= $lang["delivery"] ?>
                     : <?= $default_curr ?>  <?= number_format($dc[$dc_default["courier"]]["charge"], 2) ?><br>
-                    <?
+                    <?php
                     #SBF #2978 offline_fee cannot be negative if margin < 7%
                     if ($cart_profit_margin >= 7) {
                         ?>

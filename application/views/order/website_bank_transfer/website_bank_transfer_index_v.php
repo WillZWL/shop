@@ -57,7 +57,7 @@
 <body>
 <div id="main">
 
-    <? $ar_status = array("0" => $lang["inactive"], "1" => $lang["active"]); ?>
+    <?php  $ar_status = array("0" => $lang["inactive"], "1" => $lang["active"]); ?>
     <?php
     if ($pagetype == "all") {
         $net_diff_status = array(0 => "Unpaid", 1 => "Fully paid", 2 => "Underpaid <= 1%", 3 => "Underpaid > 1%", 4 => "Over paid");

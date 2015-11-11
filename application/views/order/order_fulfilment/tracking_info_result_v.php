@@ -7,7 +7,7 @@
 <body style="width:auto;margin:4px;">
 <div style="width:auto;text-align:left">
     <?= $result ?>
-    <? unset($_SESSION["result"]); ?>
+    <?php  unset($_SESSION["result"]); ?>
 </div>
 </body>
 </html>

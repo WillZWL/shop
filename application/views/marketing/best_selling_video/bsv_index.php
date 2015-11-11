@@ -85,7 +85,7 @@
             </tr>
         </table>
     </form>
-    <? if ($display) {
+    <?php  if ($display) {
         ?>
         <iframe
             src="<?= base_url() ?>marketing/best_selling_video/view_left/?cat=<?= $catid ?>&level=<?= $level ?>&platform=<?= $platform ?>&type=<?= $type ?>&src=<?= $src ?>"

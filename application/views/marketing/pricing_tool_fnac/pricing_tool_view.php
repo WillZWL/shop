@@ -216,7 +216,7 @@ $ar_l_status_color = array("L" => "#00FF00", "N" => "#FF0000");
                         </table>
                     </td>
                 </tr>
-            <? }
+            <?php  }
 
             ?>
 

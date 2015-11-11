@@ -133,7 +133,7 @@
                         <td><?= $obj->get_sub_category() ?></td>
                         <td><?= $obj->get_sub_sub_category() ?></td>
                         <td><?= $obj->get_brand_name() ?></td>
-                        <?$wsstatus = ($obj->get_website_status() == "I" && $obj->get_website_quantity() < 1) ? "O" : $obj->get_website_status()?>
+                        <?php $wsstatus = ($obj->get_website_status() == "I" && $obj->get_website_quantity() < 1) ? "O" : $obj->get_website_status()?>
                         <td><?= number_format($curprice = $obj->get_price(), 2, ".", "") ?></td>
                         <td><img src="/images/<?= $ar_status[$wsstatus] ?>"></td>
                         <td>

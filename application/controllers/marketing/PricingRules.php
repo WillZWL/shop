@@ -1,6 +1,8 @@
 <?php
 DEFINE("PLATFORM_TYPE", "WEBSITE");
 
+
+
 class PricingRules extends MY_Controller
 {
     //must set to public for view
@@ -35,7 +37,7 @@ class PricingRules extends MY_Controller
         $option = [];
 
         if ($this->input->get("country_id") != "") {
-            $where["p.country_id LIKE "] = "%" . $this->input->get("country_id") . "%";
+            $where["country_id LIKE "] = "%" . $this->input->get("country_id") . "%";
         }
 
         $sort = $this->input->get("sort");
@@ -69,6 +71,11 @@ class PricingRules extends MY_Controller
         $data['links'] = $this->pagination->create_links();
 
         $data["notice"] = notice($lang);
+
+
+
+        $data["country_list"] = $this->sc['Country']->getSellCountryList();
+
 
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";

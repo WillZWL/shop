@@ -90,7 +90,7 @@
                                             <option name="order_type" id="order_type"
                                                     value="<?= htmlspecialchars($order_type) ?>" <?= $select_order_type == $order_type ? " selected='selected'" : '' ?>><?= $order_type ?></option>
 
-                                        <?
+                                        <?php
                                         }
                                     }
                                     ?>
@@ -121,7 +121,7 @@
                                             <option name="pmgw_id" id="pmgw_id"
                                                     value="<?= htmlspecialchars($pmgw_id) ?>" <?= $select_psp_gateway == $pmgw_id ? " selected='selected'" : '' ?>><?= $pmgw_id ?></option>
 
-                                        <?
+                                        <?php
                                         }
                                     }
                                     ?>
@@ -147,7 +147,7 @@
                                             <option name="hold_reason" id="hold_reason"
                                                     value="<?= htmlspecialchars($hold_reason) ?>" <?= "$select_hold_reason" == "$hold_reason" ? " selected='selected'" : '' ?>><?= $hold_reason ?></option>
 
-                                        <?
+                                        <?php
                                         }
                                     }
                                     ?>
@@ -168,7 +168,7 @@
                                             <option name="currency_id" id="currency_id"
                                                     value="<?= htmlspecialchars($currency_id) ?>" <?= "$select_currency" == "$currency_id" ? " selected='selected'" : '' ?>><?= $currency_id ?></option>
 
-                                        <?
+                                        <?php
                                         }
                                     }
                                     ?>

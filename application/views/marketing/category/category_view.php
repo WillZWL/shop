@@ -480,7 +480,7 @@
                             </td>
                             <td width="270px">
                                 Parent Code Uses
-                                <table><? print_r($upcode);?>
+                                <table><?php  print_r($upcode);?>
                                     <?php for ($i = 0; $i < count($upcode); $i++) : ?>
                                         <tr>
                                             <td style="padding: 0px; border: none; line-height: 10px;">

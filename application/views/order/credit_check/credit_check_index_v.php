@@ -24,7 +24,7 @@
 </head>
 <body>
 <div id="main">
-    <? $ar_status = array("0" => $lang["inactive"], "1" => $lang["active"]); ?>
+    <?php  $ar_status = array("0" => $lang["inactive"], "1" => $lang["active"]); ?>
     <?= $notice["img"] ?>
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
@@ -395,7 +395,7 @@
         InitPMGW(document.fm.payment_gateway_id);
         document.fm.payment_gateway_id.value = '<?=$this->input->get("payment_gateway_id")?>';
     </script>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $this->paginationService->create_links_with_style() ?>
     <?= $notice["js"] ?>
 </div>
 </body>

@@ -147,7 +147,7 @@
                            value="<?= htmlspecialchars($this->input->get("order_create_date")) ?>"></td>
                 <!--
         <td>
-            <? $e_select[$this->input->get("express")] = " SELECTED"; ?>
+            <?php  $e_select[$this->input->get("express")] = " SELECTED"; ?>
             <select name="express" class="input">
                 <option value="">
                 <option value="Y"<?= $e_select["Y"] ?>><?= $lang["yes"] ?>
@@ -156,7 +156,7 @@
         </td>
 -->
                 <td>
-                    <? $m_select[$this->input->get("multiple")] = " SELECTED"; ?>
+                    <?php  $m_select[$this->input->get("multiple")] = " SELECTED"; ?>
                     <select name="multiple" class="input">
                         <option value="">
                         <option value="Y"<?= $m_select["Y"] ?>><?= $lang["yes"] ?>

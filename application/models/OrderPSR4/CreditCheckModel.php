@@ -1,8 +1,8 @@
 <?php
-namespace ESG\Panther\Models\Marketing;
+namespace ESG\Panther\Models\Order;
 
 use ESG\Panther\Service\SoService;
-use ESG\Panther\Service\QuickSearchService;
+use ESG\Panther\Service\RefundService;
 
 class CreditCheckModel extends \CI_Model
 {

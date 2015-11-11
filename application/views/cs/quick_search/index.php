@@ -46,14 +46,14 @@ $currency_arr = array("EUR" => "&euro;", "GBP" => "&pound;");
                             </td>
                             <td width="10%"
                                 align="right"><?= (check_app_feature_access_right($app_id, "CS000100_password")) ? $lang["password"] : "" ?></td>
-                            <? if (check_app_feature_access_right($app_id, "CS000100_password")) :
+                            <?php  if (check_app_feature_access_right($app_id, "CS000100_password")) :
                                 ?>
                                 <td width="25%" align="left">&nbsp;&nbsp;
                                     <input class="input" type="text" name="password" value="<?= $this->input->get('password') ?>">
                                 </td>
-                            <? else : ?>
+                            <?php  else : ?>
                                 <td width="25%" align="left">&nbsp;</td>
-                            <? endif; ?>
+                            <?php  endif; ?>
                             <td width="30%" rowspan="2">&nbsp;&nbsp;
                                 <input type="button" value="<?= $lang["submit"] ?>" onClick="document.fm.submit();"></td>
                         </tr>

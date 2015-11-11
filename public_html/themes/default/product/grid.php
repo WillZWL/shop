@@ -49,8 +49,8 @@
                                                         <div class="left">
                                                             <h6 class="name"><a href='<?= $prod_obj->getProductUrl() ?>'><?= $prod_obj->getProdName(); ?></a></h6>
                                                             <div class="price">
-                                                                <span class="price-new"><?= $prod_obj->getPrice(); ?></span>
-                                                                <span class="price-old"><?= $prod_obj->getRrpPrice(); ?></span>
+                                                                <span class="price-new"><?= platform_curr_format($prod_obj->getPrice()); ?></span>
+                                                                <span class="price-old"><?= platform_curr_format($prod_obj->getRrpPrice()); ?></span>
                                                             </div>
                                                         </div>
                                                         <div class="right">
@@ -58,13 +58,14 @@
                                                                 <div class="cart">
                                                                     <button data-loading-text="Loading..." class="btn btn-primary" type="button" onclick="cart.addcart('<?= $sku ?>');">
                                                                         <i class="fa fa-shopping-cart"></i>
+                                                                        <span class="add-to-cart"><?= _("Add to Cart") ?></span>
                                                                     </button>
                                                                 </div>
-                                                                <div class="wishlist">
+                                                                <!--<div class="wishlist">
                                                                     <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="Add to Wish List" onclick="wishlist.addwishlist('<?= $sku ?>');">
                                                                         <i class="fa fa-heart"></i>
                                                                     </button>
-                                                                </div>
+                                                                </div>-->
                                                             </div>
                                                         </div>
                                                     </div>

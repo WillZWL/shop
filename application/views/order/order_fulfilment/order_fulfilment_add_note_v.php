@@ -7,7 +7,7 @@
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
 </head>
 <body
-    style="width:auto;margin:4px;"<? if ($success) { ?> onLoad="UpdateBack();parent.document.getElementById('lbClose').onclick()"<? } ?>>
+    style="width:auto;margin:4px;"<?php  if ($success) { ?> onLoad="UpdateBack();parent.document.getElementById('lbClose').onclick()"<?php  } ?>>
 <div style="width:auto;text-align:left">
     <?= $notice["img"] ?>
     <center>

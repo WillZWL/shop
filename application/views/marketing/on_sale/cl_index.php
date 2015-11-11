@@ -60,7 +60,7 @@
             </tr>
         </table>
     </form>
-    <? if ($display) {
+    <?php  if ($display) {
         ?>
         <iframe
             src="<?= base_url() ?>marketing/on_sale/view_left/?cat=<?= $catid ?>&level=<?= $level ?>&platform=<?= $platform ?>"

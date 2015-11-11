@@ -254,7 +254,7 @@ if ($syslang == "") {
                     if ($po_obj->get_status() == "N") {
                         ?><select name="status" class="input">
                         <option value="N" SELECTED><?= $status_array[$syslang]["N"] ?></option>
-                        <option value="CL"><?= $status_array[$syslang]["CL"] ?></option></select><?
+                        <option value="CL"><?= $status_array[$syslang]["CL"] ?></option></select><?php
                     } else {
                         echo $status_array[$syslang][$po_obj->get_status()];?><input type="hidden" name="status"
                                                                                      value="<?= $po_obj->get_status() ?>"><?php

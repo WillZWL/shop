@@ -111,7 +111,7 @@
                         if (!in_array($obj->get_batch_status(), array("R", "S"))) {
                             ?>
                             <!--    <input type="button" value="<?= $lang["modify"] ?>" class="button" onClick="Redirect('<?= base_url() . "integration/integration/view_amazon/" . $func . "/" . $obj->get_batch_id() . "?" . $_SERVER["QUERY_STRING"] . "&trans=" . $obj->get_trans_id() ?>')">-->
-                        <?
+                        <?php
                         }
                         ?>
                     </td>

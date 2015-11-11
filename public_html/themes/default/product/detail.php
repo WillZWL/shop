@@ -25,102 +25,37 @@
                                     <img src="<?= get_image_file($image, 'l', $sku)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" class="product-image-zoom img-responsive">
                                 </a>
                             </div>-->
-                            <?php
-                                if (count($prod_image) != 0) {
-                            ?>
 
-                            <div class="image">
-                                <!--<span><?= var_dump($prod_info) ?></span>-->
-                                <span class="product-label exist"><span class="product-label-special"><?= _('Sale') ?></span></span>
-                                <a href="<?= base_url($default_image)?>" class="imagezoom">
-                                    <img src="<?= base_url($default_image)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image"
-                                    data-zoom-image="<?= base_url($default_image) ?>" class="product-image-zoom img-responsive">
-                                </a>
-                            </div>
-                            <div class="thumbs-preview horizontal">
-                                <div class="image-additional olw-carousel horical" id="image-additional">
-                                    <div id="image-additional-carousel">
-                                        <?php
-                                            //var_dump($prod_image);
-                                            //if (count($prod_image) != 0) {
-                                            foreach ($prod_image as $img){
-                                        ?>
+                            <?php if (count($prod_image) !== 0): ?>
+                                <div class="image">
+                                    <span class="product-label exist"><span class="product-label-special"><?= _('Sale') ?></span></span>
+                                    <a href="<?= base_url($default_image)?>" class="imagezoom">
+                                        <img src="<?= base_url($default_image)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image" data-zoom-image="<?= base_url($default_image) ?>" class="product-image-zoom img-responsive">
+                                    </a>
+                                </div>
+                                <div class="thumbs-preview horizontal">
+                                    <div class="image-additional olw-carousel horical" id="image-additional">
+                                        <div id="image-additional-carousel">
+                                        <?php foreach ($prod_image as $img): ?>
                                             <div class="item clearfix">
-                                                <a href="<?= base_url($img['image'])?>" title="<?= $prod_name ?>" class="imagezoom"
-                                                    data-zoom-image="<?= base_url($img['image'])?>" data-image="<?= base_url($img['image'])?>">
-                                                    <img src="<?= base_url($img['image'])?>" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>"
-                                                        data-zoom-image="<?= base_url($img['image'])?>" class="product-image-zoom img-responsive"/>
+                                                <a href="<?= base_url($img['image'])?>" title="<?= $prod_name ?>" class="imagezoom" data-zoom-image="<?= base_url($img['image'])?>" data-image="<?= base_url($img['image'])?>">
+                                                    <img src="<?= base_url($img['image'])?>" style="max-width:80px" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" data-zoom-image="<?= base_url($img['image'])?>" class="product-image-zoom img-responsive"/>
                                                 </a>
                                             </div>
-                                        <?php
-                                                }
-                                            //}
-                                        ?>
+                                        <?php endforeach ?>
+                                        </div>
+                                        <!-- Controls -->
+                                        <!-- <div class="carousel-controls"> -->
+                                        <a class="carousel-control left carousel-sm" href="#image-additional" data-slide="next">
+                                            <i class="fa fa-angle-left"></i>
+                                        </a>
+                                        <a class="carousel-control right carousel-sm" href="#image-additional" data-slide="prev">
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                        <!-- </div> -->
                                     </div>
-                                    <script type="text/javascript">
-                                    $(document).ready(function() {
-                                        var $carousel = $("#image-additional-carousel");
-                                        $carousel.owlCarousel({
-                                            autoPlay: false, //Set AutoPlay to 3 seconds
-                                            items: 4,
-                                            pagination: false
-                                        });
-                                        $("#image-additional .carousel-control.left").click(function() {
-                                            $carousel.trigger('owl.prev');
-                                        });
-                                        $("#image-additional .carousel-control.right").click(function() {
-                                            $carousel.trigger('owl.next');
-                                        });
-
-                                        $('.product-info .image a').click(
-                                            function(){
-                                                $.magnificPopup.open({
-                                                  items: {
-                                                    src:  $('img',this).attr('src')
-                                                  },
-                                                  type: 'image'
-                                                });
-                                                return false;
-                                            }
-                                        );
-
-                                    });
-
-                                    </script>
-
-                                    <script type="text/javascript" src="http://www.themelexus.com/demo/opencart/motozz/demo3/catalog/view/javascript/jquery/elevatezoom/elevatezoom-min.js"></script>
-                                    <script type="text/javascript">
-                                            var zoomCollection = '#image';
-                                            $( zoomCollection ).elevateZoom({
-                                                    lensShape : "basic",
-                                            lensSize    : 150,
-                                            easing:true,
-                                            gallery:'image-additional-carousel',
-                                            cursor: 'pointer',
-                                            galleryActiveClass: "active"
-                                        });
-
-                                    </script>
-                                                                        <!-- Controls -->
-                                    <!-- <div class="carousel-controls"> -->
-                                    <a class="carousel-control left carousel-sm" href="#image-additional" data-slide="next">
-                                        <i class="fa fa-angle-left"></i>
-                                    </a>
-                                    <a class="carousel-control right carousel-sm" href="#image-additional" data-slide="prev">
-                                        <i class="fa fa-angle-right"></i>
-                                    </a>
-                                    <!-- </div> -->
                                 </div>
-                                <script type="text/javascript">
-                                $('#image-additional .item:first').addClass('active');
-                                $('#image-additional').carousel({
-                                    interval: false
-                                })
-                                </script>
-                            </div>
-                             <?php
-                                    }
-                            ?>
+                            <?php endif ?>
                         </div>
                         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
                             <div class="product-info-bg">
@@ -144,7 +79,7 @@
                                 </ul>
                                 <div class="border-success space-30">
                                     <ul class="list-unstyled">
-<!--                                         <li><b>Brand:</b> <a href="#">Apple</a></li>
+                                        <!-- <li><b>Brand:</b> <a href="#">Apple</a></li>
                                         <li><b>Product Code:</b> product 11</li> -->
                                     </ul>
                                 </div>
@@ -170,9 +105,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div>
-                                    <?= _('4-7 working days delivery') ?>
-                                </div>
+                                <div> <?= _('4-7 working days delivery') ?> </div>
                                 <div class="tags">
                                 </div>
                             </div>
@@ -181,16 +114,28 @@
                     </div>
                     <div class="clearfix box-product-infomation tab-v4 none-border text-center">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li class="active"><a href="#tab-description" data-toggle="tab"><?= _('Description') ?></a></li>
-                            <li><a href="#tab-review" data-toggle="tab"><?= sprintf(_('Reviews %s'), "(0)") ?></a></li>
+                            <li><a href="#tab-specification" data-toggle="tab"><?= _('Specification') ?></a></li>
+                            <li class="active"><a href="#tab-overview" data-toggle="tab"><?= _('Overview') ?></a></li>
+                            <li><a href="#tab-in_the_box" data-toggle="tab"><?= _('In the box') ?></a></li>
+                            <!-- <li><a href="#tab-review" data-toggle="tab"><?= sprintf(_('Reviews %s'), "(0)") ?></a></li> -->
                         </ul>
                         <div class="tab-content text-left">
-                            <div class="tab-pane active" id="tab-description">
+                            <div class="tab-pane active" id="tab-overview">
                                 <p class="intro">
                                     <?= $overview ?>
                                 </p>
                             </div>
-                            <div class="tab-pane" id="tab-review">
+                            <div class="tab-pane" id="tab-specification">
+                                <p class="intro">
+                                    <?= $specification ?>
+                                </p>
+                            </div>
+                            <div class="tab-pane" id="tab-in_the_box">
+                                <p class="intro">
+                                    <?= $in_the_box ?>
+                                </p>
+                            </div>
+<!--                             <div class="tab-pane" id="tab-review">
                                 <div id="review" class="space-20">
                                     <p><?= _('There are no review for this product.') ?></p>
                                 </div>
@@ -245,7 +190,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -253,3 +198,50 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $('#image-additional .item:first').addClass('active');
+    $('#image-additional').carousel({
+        interval: false
+    })
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var $carousel = $("#image-additional-carousel");
+        $carousel.owlCarousel({
+            autoPlay: false, //Set AutoPlay to 3 seconds
+            items: 4,
+            pagination: false
+        });
+        $("#image-additional .carousel-control.left").click(function() {
+            $carousel.trigger('owl.prev');
+        });
+        $("#image-additional .carousel-control.right").click(function() {
+            $carousel.trigger('owl.next');
+        });
+
+        $('.product-info .image a').click(
+            function(){
+                $.magnificPopup.open({
+                  items: {
+                    src:  $('img',this).attr('src')
+                  },
+                  type: 'image'
+                });
+                return false;
+            }
+        );
+    });
+</script>
+<script type="text/javascript" src="http://www.themelexus.com/demo/opencart/motozz/demo3/catalog/view/javascript/jquery/elevatezoom/elevatezoom-min.js"></script>
+<script type="text/javascript">
+        var zoomCollection = '#image';
+        $( zoomCollection ).elevateZoom({
+                lensShape : "basic",
+                lensSize    : 150,
+                easing:true,
+                gallery:'image-additional-carousel',
+                cursor: 'pointer',
+                galleryActiveClass: "active"
+            });
+</script>

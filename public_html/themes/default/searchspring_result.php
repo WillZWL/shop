@@ -1,4 +1,16 @@
-<?php $this->load->view('header') ?>
+<?php $this->load->view('header');
+
+    $siteobj = \PUB_Controller::$siteInfo;
+    $platCountryId = $siteobj->getPlatformCountryId();;
+    switch (strtolower($platCountryId)) {
+        case 'gb' :
+            $searchspring_site_id = 'jdajtq';
+            break;
+
+        default   :
+            $searchspring_site_id = '';
+    }
+?>
 
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
@@ -297,7 +309,12 @@
 
 <!-- V3 Init script -->
 
-<script src="//cdn.searchspring.net/search/v3/js/searchspring.catalog.js" searchspring-catalog="jdajtq:search:w">
+    <?php
+      echo "<script type='text/javascript' src='//s3.amazonaws.com/a.cdn.searchspring.net/ajax_search/sites/" . $searchspring_site_id . "/js/" . $searchspring_site_id . ".js'></script>";
+
+      echo '<script src="//cdn.searchspring.net/search/v3/js/searchspring.catalog.js" searchspring-catalog="' . $searchspring_site_id . ':search:w">';
+    ?>
+
   SearchSpring.Catalog.importer.external('slideout', '//a.cdn.searchspring.net/sandbox/js/slideout.js', { width: 991 });
 
   SearchSpring.Catalog.on('afterSearch', function($scope) {
@@ -328,19 +345,6 @@
   });
 </script>
 
-
-    <?php
-        $siteobj = \PUB_Controller::$siteInfo;
-        $platCountryId = $siteobj->getPlatformCountryId();;
-        switch (strtolower($platCountryId)) {
-            case 'gb' :
-    ?>
-                <script type='text/javascript' src='//s3.amazonaws.com/a.cdn.searchspring.net/ajax_search/sites/jdajtq/js/jdajtq.js'></script>
-
-    <?php
-                break;
-        }
-    ?>
         <script type='text/javascript' src='https://d2r7ualogzlf1u.cloudfront.net/ajax_search/js/searchspring-catalog.min.js'></script>
         <script type='text/javascript'>SearchSpring.Catalog.init({
             results_per_page: 24,

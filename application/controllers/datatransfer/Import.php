@@ -66,14 +66,14 @@ class Import extends MY_Controller
     public function productImage()
     {
         $xml = file_get_contents('php://input');
-        $feed =$this->sc['VbDataTransferProductImage']->startProcess($xml);
+        $feed = $this->sc['VbDataTransferProductImage']->startProcess($xml);
         unset($xml);
         print $feed;
     }
 
     public function productImageTransfer()
     {
-        $num_img =$this->vb_product_image_service->transfer_images();
+        $num_img = $this->sc['ProductImage']->transferImages();
         print $num_img;
     }
 

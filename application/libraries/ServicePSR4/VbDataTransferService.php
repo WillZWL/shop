@@ -13,14 +13,6 @@ interface VbDataTransferServiceInterface
 
 abstract class VbDataTransferService extends BaseService implements VbDataTransferServiceInterface
 {
-
-    public function __construct()
-    {
-        set_time_limit(600);
-        ini_set('memory_limit', '512M');
-        parent::__construct();
-    }
-
 	/*****************************************************************************
 	*	startProcess, the input would be the xml text from vb and the parameters
 	* 	need to send the result data to vb (task_id, task_type)
