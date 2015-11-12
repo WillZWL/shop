@@ -39,7 +39,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
     private $_mbRequest = null;
     public $mbAccount = null;
 
-    public function __construct($soObj, $debug = 0)
+    public function __construct($soObj = null, $debug = 0)
     {
         parent::__construct($soObj, $debug);
         $this->_mbRequest = new MoneybookersRequest($debug);
@@ -152,8 +152,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
         return $postData;
     }
 
-    public function processNotification($data, &$soNo, &$soPara = [], &$sopsPara = [], &$soccPara = [], &$sorData = [], &$dataToPmgw, &$dataFromPmgw)
-    {
+    private function _commonProcessStatus($data, &$soNo, &$soPara = [], &$sopsPara = [], &$soccPara = [], &$sorData = [], &$dataToPmgw, &$dataFromPmgw) {
         if (isset($data["mb_currency"])) {
             $currency = $data["mb_currency"];
             $this->_setAccount($currency);
@@ -208,6 +207,10 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
         return PaymentGatewayRedirectService::PAYMENT_STATUS_FAIL;
     }
 
+    public function processNotification($data, &$soNo, &$soPara = [], &$sopsPara = [], &$soccPara = [], &$sorData = [], &$dataToPmgw, &$dataFromPmgw) {
+        $this->_commonProcessStatus($data, $soNo, $soPara, $sopsPara, $soccPara, $sorData, $dataToPmgw, $dataFromPmgw);
+    }
+
 /**********************************************
 **  interface function getRedirectUrl
 ************************************************/
@@ -251,14 +254,18 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
             $soNumber = $getData["soNo"];
             $transactionId = $getData["transaction_id"];
             $input = ["soNo" => $soNumber, "transactionId" => $transactionId];
-            $queryData = $this->queryTransaction($input, $queryFromData, $queryToData, $soData, $soccData, $sopsData);
+            $queryData = $this->_internalQueryTransaction($input, $queryFromData, $queryToData, $soData, $soccData, $sopsData);
             if ($queryToData)
                 $this->getService("SoPaymentQueryLog")->addLog($soNumber, "O", $queryToData);
-            if ($queryFromData)
-                $this->getService("SoPaymentQueryLog")->addLog($soNumber, "I", @http_build_query($queryFromData));
+            if ($queryFromData) {
+                $data = @http_build_query($queryFromData);
+                if ($data == 0)
+                    $data = $queryFromData;
+                $this->getService("SoPaymentQueryLog")->addLog($soNumber, "I", $data);
+            }
             if ($queryData !== false) {
                 $dataFromPmgw = @http_build_query($getData);
-                return $this->processNotification($queryData, $soNumber, $soData, $sopsData, $soccData, $sorData, $dataToPmgw, $noUseData);
+                return $this->_commonProcessStatus($queryData, $soNumber, $soData, $sopsData, $soccData, $sorData, $dataToPmgw, $noUseData);
             }
         }
         return PaymentGatewayRedirectService::PAYMENT_STATUS_FAIL;
@@ -281,7 +288,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
 
         return ["result" => $queryResult["response"]
                 , "dataToPmgw" => $queryResult["url"]
-                , "errorMessage" => $queryResult["errorMessage"] . ", callInfo:" . $queryResult["callInfo"]];
+                , "errorMessage" => $queryResult["response"] . ", errorMessage:" . $queryResult["errorMessage"] . ", callInfo:" . $queryResult["callInfo"]];
     }
 
     public function getTechnicalSupportEmail() {
@@ -295,11 +302,6 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
 
     public function processCancelAction() {
         header("Location:" . $this->getCancelUrl());
-        exit;
-    }
-
-    public function processSuccessAction() {
-        header("Location:" . $this->getSuccessfulUrl($this->so->getSoNo()));
         exit;
     }
 
@@ -319,6 +321,10 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
     }
 
     public function queryTransaction($inputParameters = [], &$dataFromPmgw, &$dataToPmgw, &$soData, &$soccData, &$sopsData) {
+        return $this->processPaymentStatus([], ["transaction_id" => $inputParameters["transaction_id"], "soNo" => $inputParameters["so_no"]], $soNo, $noUse, $noUse, $soData, $sopsData, $soccData, $noUse);
+    }
+
+    private function _internalQueryTransaction($inputParameters = [], &$dataFromPmgw, &$dataToPmgw, &$soData, &$soccData, &$sopsData) {
         if ($this->so = $this->getService("SoFactory")->getDao()->get(["so_no" => $inputParameters["soNo"]])) {
             $this->_setAccount($this->so->getCurrencyId());
             $result = $this->_queryOrderApi($inputParameters["transactionId"]);
@@ -332,6 +338,37 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
             }
         }
         return false;
+    }
+
+    public function getPendingScheduleId() {
+        return "MONEYBOOKERS_ORDERS_VERIFICATION";
+    }
+
+    public function updatePendingList() {
+        $scheduleId = $this->getPendingScheduleId();
+        $sjobObj = $this->getService("SoFactory")->getDao("ScheduleJob")->get(["schedule_job_id" => $scheduleId, "status" => "1"]);
+        if ($sjobObj) {
+            $lastAccess = $sjobObj->getLastAccessTime();
+//shift 30mins
+            $timeShift = 60 * 30;
+//            $additionalShift = 30;
+//we need the additionalShift=90mins because we need to query last 2 hours pending orders
+            $startTime = strtotime($lastAccess) - $timeShift;
+            $endTime = date('Y-m-d H:i:s');
+            $shiftedEndTime = date("Y-m-d H:i:s", (strtotime($endTime) - $timeShift));
+            $sopsList = $this->getService("SoFactory")->getDao("SoPaymentStatus")->getList(["payment_gateway_id" => $this->getPaymentGatewayName()
+                , "payment_status" => "P"
+                , "payment_status <> 'NA'" => null
+                , "create_on >" => date("Y-m-d H:i:s", $startTime)
+                , "create_on <=" => $shiftedEndTime]
+                , ["limit" => -1]);
+//print $this->getService("SoFactory")->getDao("SoPaymentStatus")->db->last_query();
+            foreach ($sopsList as $sops) {
+                $this->queryPaymentStatusInGeneral($sops->getSoNo());
+            }
+            $sjobObj->setLastAccessTime($shiftedEndTime);
+            $this->getService("SoFactory")->getDao("ScheduleJob")->update($sjobObj);
+        }
     }
 
     public function getReason($code)

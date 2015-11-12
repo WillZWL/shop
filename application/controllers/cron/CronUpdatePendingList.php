@@ -1,19 +1,19 @@
 <?php
 
-class Cron_update_pending_list extends MY_Controller
+class CronUpdatePendingList extends MY_Controller
 {
     private $appId = "CRN0002";
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('website/checkout_model');
     }
 
-    public function index($pmgw = "global_collect", $debug = 0)
+    public function index($pmgw = "globalCollect", $debug = 0)
     {
-        $this->payment_gateway_service->init_pmgw_srv($pmgw);
-        $this->payment_gateway_service->get_pmgw_srv()->update_pending_list($debug);
+        $gatewayServieName = "\ESG\Panther\Service\PaymentGatewayRedirect" . ucfirst($pmgw) . "Service";
+        $gatewayObj = new $gatewayServieName(null, $debug);
+        $gatewayObj->updatePendingList($debug);
     }
 
     public function update_altapay_pending_list($debug = 0)
