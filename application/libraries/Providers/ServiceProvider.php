@@ -225,6 +225,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\ProductIdentifierService();
         };
 
+        $servcieContainer['Brand'] = function () {
+            return new S\BrandService();
+        };
+
 
 		//Data transfer
         $servcieContainer['VbDataTransferPrices'] = function () {

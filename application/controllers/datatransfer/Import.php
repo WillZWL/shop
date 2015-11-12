@@ -80,7 +80,7 @@ class Import extends MY_Controller
     public function productKeyword()
     {
         $xml = file_get_contents('php://input');
-        $feed =$this->sc['VbDataTransferProductKeyword']->startProcess($xml);
+        $feed = $this->sc['VbDataTransferProductKeyword']->startProcess($xml);
         print $feed;
     }
 
@@ -119,30 +119,21 @@ class Import extends MY_Controller
     public function category()
     {
         $xml = file_get_contents('php://input');
-        // header('content-type: text/xml');
-        // print $xml;
-        // exit;
-        $feed =$this->vb_data_transfer_category_service->startProcess($xml);
+        $feed = $this->sc['VbDataTransferCategory']->startProcess($xml);
         print $feed;
     }
 
-    public function categoryextend()
+    public function categoryExtend()
     {
         $xml = file_get_contents('php://input');
-        // header('content-type: text/xml');
-        // print $xml;
-        // exit;
-        $feed =$this->vb_data_transfer_category_extend_service->startProcess($xml);
+        $feed = $this->sc['VbDataTransferCategoryExtend']->startProcess($xml);
         print $feed;
     }
 
     public function brand()
     {
         $xml = file_get_contents('php://input');
-        // header('content-type: text/xml');
-        // print $xml;
-        // exit;
-        $feed =$this->vb_data_transfer_brand_service->startProcess($xml);
+        $feed = $this->sc['VbDataTransferBrand']->startProcess($xml);
         print $feed;
     }
 

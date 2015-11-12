@@ -47,6 +47,50 @@ class CategoryService extends BaseService
         return $this->getDao('Category')->getCategoryFullPath($where, $option);
     }
 
+    public function createNewCategory($obj)
+    {
+        $newObj = new \CategoryVo();
+
+        // id come from VB is not reliable, should use auto-increment id
+        $newObj->setId((string) $obj->id);
+        $this->updateCategory($newObj, $obj);
+
+        return $newObj;
+    }
+
+    public function updateCategory($newObj, $oldObj)
+    {
+        $newObj->setName((string) $oldObj->name);
+        $newObj->setDescription((string) $oldObj->description);
+        $newObj->setParentCatId((string) $oldObj->parent_cat_id);
+        $newObj->setLevel((string) $oldObj->level);
+        $newObj->setAddColourName((string) $oldObj->add_colour_name);
+        $newObj->setPriority((string) $oldObj->priority);
+        $newObj->setBundleDiscount((string) $oldObj->bundle_discount);
+        $newObj->setMinDisplayQty((string) $oldObj->min_display_qty);
+        $newObj->setSponsored(0);
+        $newObj->setStatus((string) $oldObj->status);
+    }
+
+    public function createNewCategoryExtend($cat_id, $obj)
+    {
+        if (!$this->getDao('Category')->get(['id' => $cat_id])) {
+            return false;
+        }
+
+        $newObj = new \CategoryExtendVo();
+        $newObj->setCatId((string) $obj->cat_id);
+        $newObj->setLangId((string) $obj->lang_id);
+        $this->updateCategoryExtend($newObj, $obj);
+
+        return $newObj;
+    }
+
+    public function updateCategoryExtend($newObj, $oldObj)
+    {
+        $newObj->setName((string) $oldObj->name);
+    }
+
     public function getMenuListData($lang_id, $platform_id)
     {
         $data = [];
