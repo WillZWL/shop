@@ -3,21 +3,23 @@ class BrandVo extends \BaseVo
 {
     private $id;
     private $brand_name;
-    private $description;
+    private $description = '';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -27,7 +29,9 @@ class BrandVo extends \BaseVo
 
     public function setBrandName($brand_name)
     {
-        $this->brand_name = $brand_name;
+        if ($brand_name) {
+            $this->brand_name = $brand_name;
+        }
     }
 
     public function getBrandName()
@@ -37,7 +41,9 @@ class BrandVo extends \BaseVo
 
     public function setDescription($description)
     {
-        $this->description = $description;
+        if ($description) {
+            $this->description = $description;
+        }
     }
 
     public function getDescription()
@@ -47,7 +53,9 @@ class BrandVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -57,7 +65,9 @@ class BrandVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -67,7 +77,9 @@ class BrandVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -77,7 +89,9 @@ class BrandVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -87,7 +101,9 @@ class BrandVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -97,7 +113,9 @@ class BrandVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -107,7 +125,9 @@ class BrandVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

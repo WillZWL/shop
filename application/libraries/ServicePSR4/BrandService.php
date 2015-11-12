@@ -1,29 +1,25 @@
 <?php
-namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\BrandDao;
-use ESG\Panther\Dao\BrandRegionDao;
+namespace ESG\Panther\Service;
 
 class BrandService extends BaseService
 {
-
-    private $brDao;
-
-    public function __construct()
+    public function createNewBrand($brand_id, $obj)
     {
-        parent::__construct();
-        $this->setDao(new BrandDao);
-        $this->setBrDao(new BrandRegionDao);
+        $newObj = new \BrandVo;
+
+        // id come from VB is not reliable, should change to auto_increment
+        $newObj->setId($brand_id);
+        $this->updateBrand($newObj, $obj);
+
+        return $newObj;
     }
 
-    public function getBrDao()
+    public function updateBrand($newObj, $oldObj)
     {
-        return $this->brDao;
-    }
-
-    public function setBrDao($dao)
-    {
-        $this->brDao = $dao;
+        $newObj->setBrandName((string) $oldObj->brand_name);
+        $newObj->setDescription((string) $oldObj->description);
+        $newObj->setStatus((string) $oldObj->status);
     }
 
     public function getBrandListWRegion($where = [], $option = [])
