@@ -398,12 +398,12 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
         header("Location:" . $this->getCancelUrl());
         exit;
     }
-
+/*
     public function processSuccessAction() {
         header("Location:" . $this->getSuccessfulUrl($this->so->getSoNo()));
         exit;
     }
-
+*/
     public function processReviewAction() {
         header("Location:" . $this->getReviewUrl());
     }

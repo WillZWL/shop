@@ -40,8 +40,9 @@ implements PaymentGatewayRedirectServiceInterface
     {
         parent::__construct();
         if ($debug == 1) {
-            if (getenv("APPLICATION_ENV") == "dev")
+            if ((getenv("APPLICATION_ENV") == "dev") || (php_sapi_name() === 'cli')) {
                 $this->debug = $debug;
+            }
         }
         if ($soObj != null)
             $this->so = $soObj;
@@ -156,6 +157,88 @@ implements PaymentGatewayRedirectServiceInterface
         return $this->checkoutFailureHandler(_("Please contact our CS") . ", err:" . __LINE__);
     }
 
+    public function isPaymentStatusCorrect($result, &$message) {
+        $message = "";
+        if (($result == self::PAYMENT_STATUS_SUCCESS)
+            && ($this->so->getStatus() > 1)
+            && ($this->sops->getPaymentStatus() == 'S')) {
+            return self::ORDER_SUCCESS_TO_SUCESS;
+        } else {
+            if (($result == self::PAYMENT_STATUS_SUCCESS)
+                && (($this->so->getStatus() <= 1) || ($this->sops->getPaymentStatus() != 'S'))) {
+                $message = $this->so->getSoNo() . "\nPayment_gateway query return PAID, system return FAIL";
+                return self::ORDER_FAIL_TO_SUCESS;
+            } else if (($result != self::PAYMENT_STATUS_SUCCESS)
+                && (($this->so->getStatus() > 1) || ($this->sops->getPaymentStatus() == 'S'))) {
+//success to fail case
+                $message = $this->so->getSoNo() . "\nPayment_gateway query return FAIL, system return PAID";
+                return self::ORDER_SUCCESS_TO_FAIL;
+            } else {
+                return self::ORDER_FAIL_TO_FAIL;
+            }
+        }
+    }
+
+    public function queryPaymentStatusInGeneral($soNo)
+    {
+        $take_action = FALSE;
+        $message = "";
+        if ($this->so = $this->getService("SoFactory")->getDao()->get(["so_no" => $soNo])) {
+            $this->sops = $this->getService("SoFactory")->getDao("SoPaymentStatus")->get(["so_no" => $soNo]);
+            $result = $this->queryTransaction(["transaction_id" => $soNo, "so_no" => $soNo], $dataFromPmgw, $dataToPmgw, $soData, $soccData, $sopsData);
+            if ($dataToPmgw)
+                $this->getService("SoPaymentQueryLog")->addLog($this->so->getSoNo(), "O", str_replace("&", "\n&", $dataToPmgw));
+            if ($dataFromPmgw)
+                $this->getService("SoPaymentQueryLog")->addLog($this->so->getSoNo(), "I", str_replace("&", "\n&", $dataFromPmgw));
+            if ($soccData)
+                $this->createSocc($soccData);
+//see if the status match
+            $takeAction = $this->isPaymentStatusCorrect($result, $message);
+            if ($takeAction == self::ORDER_FAIL_TO_SUCESS) {
+//send email
+//could also be correct payment status by each payment gateway service
+                $this->paymentSuccessOperation($soData, $sopsData, $soccData);
+                $this->sendConfirmationEmail($this->so);
+                mail($this->getTechnicalSupportEmail(), "[Panther] " . $this->getPaymentGatewayName() . " order from fail to success, soNo:" . $soNo, $message, 'From: website@digitaldiscount.co.uk');
+                return TRUE;
+            } else if ($takeAction == self::ORDER_SUCCESS_TO_FAIL) {
+                if ((($this->so->getStatus() >= 2) && ($this->so->getStatus() < 6)) && ($this->so->getRefundStatus() == 0)&& ($this->so->getHoldStatus() == 0)) {
+                    $holdAuto = "Auto hold by system, from success to cancel";
+
+                    $orderNoteObj = $this->getService("SoFactory")->getDao("OrderNotesDao")->get();
+                    $orderNoteObj->setSoNo($this->so->getSoNo());
+                    $orderNoteObj->setType('O');
+                    $orderNoteObj->setNote('Order payment status changed from success to fail by ' . $this->get_payment_gateway_name() . ', need compliance to verify');
+                    $this->getService("SoFactory")->getDao("OrderNotesDao")->insert($orderNoteObj);
+
+                    $holdReasonObj = $this->getService("SoFactory")->getDao("soHoldReasonDao")->get();
+                    $holdReasonObj->setSoNo($this->so->getSoNo());
+                    $holdReasonObj->setReason("change_of_address");
+                    $this->getService("SoFactory")->getDao("soHoldReasonDao")->insert($holdReasonObj);
+
+                    $this->so->setStatus(2);
+                    $this->so->setHoldStatus(1);
+                    if (!$this->getService("SoFactory")->getDao()->update($this->so)) {
+                        mail($this->getTechnicalSupportEmail(), '[Panther] ' . $this->getPaymentGatewayName() . ' order from success to fail:' . $this->so->getClientId() . '-' . $soNo, $holdAuto, 'From: website@digitaldiscount.co.uk');
+                    }
+                } else {
+                    $holdAuto = "No change in status in the system, order was hold before";
+                }
+//if yes, put order on hold and send email to compliance to verify
+                mail('compliance@digitaldiscount.co.uk', '[Panther] ' . $this->getPaymentGatewayName() . ' order from success to fail:' . $this->so->getClientId() . '-' . $soNo, $message, 'From: website@digitaldiscount.co.uk');
+                return FALSE;
+            } else
+                return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function processSuccessAction() {
+        header("Location:" . $this->getSuccessfulUrl($this->so->getSoNo()));
+        exit;
+    }
+
     public function processPaymentStatusInGeneral($generalData = [], $getData = [])
     {
         $result = $this->processPaymentStatus($generalData, $getData, $soNoFromPmgw, $dataFromPmgw, $dataToPmgw, $soData, $sopsData, $soccData, $sorData);
@@ -172,6 +255,7 @@ implements PaymentGatewayRedirectServiceInterface
                 $this->processCancelAction();
             } else if ($result == PaymentGatewayRedirectService::PAYMENT_STATUS_SUCCESS) {
                 $this->paymentSuccessOperation($soData, $sopsData, $soccData, $sorData);
+                $this->processSuccessAction();
             } else if ($result == PaymentGatewayRedirectService::PAYMENT_STATUS_REVIEW) {
                 $this->processReviewAction();
             } else if ($result == PaymentGatewayRedirectService::PAYMENT_STATUS_KEEP_PENDING) {
@@ -254,12 +338,10 @@ implements PaymentGatewayRedirectServiceInterface
 //update promotion code
                 $this->updatePromo($this->so->getPromotionCode());
                 $this->sendConfirmationEmail($this->so);
-                $this->_unsetVariable();
-                $this->processSuccessAction();
             } else if ($this->so->getStatus() == 2) {
 //status from 2 to 3 because of 3D info
                 if (!$this->isPaymentNeedCreditCheck($isFraud)) {
-                    $this->so->set_status(3);
+                    $this->so->setStatus(3);
                     set_value($this->so, $soPara);
                     $this->getService("SoFactory")->getDao()->update($this->so);
 //cc and dm are related
@@ -276,6 +358,7 @@ implements PaymentGatewayRedirectServiceInterface
                 }
             }
         }
+        $this->_unsetVariable();
 //debug
 //    print $this->sendConfirmationEmail($this->so, true);
     }
@@ -283,11 +366,10 @@ implements PaymentGatewayRedirectServiceInterface
     private function _unsetVariable()
     {
         unset($_SESSION["cart"]);
-        unset($_SESSION["cart_from_url"]);
-        unset($_SESSION["ra_items"]);
-        unset($_SESSION["warranty"]);
+//        unset($_SESSION["ra_items"]);
+//        unset($_SESSION["warranty"]);
         unset($_SESSION["promotion_code"]);
-        unset($_SESSION["POSTFORM"]);
+        unset($_SESSION["CART_QUICK_INFO"]);
     }
 
 /********************************************************************************
@@ -471,7 +553,7 @@ implements PaymentGatewayRedirectServiceInterface
         $replace["billing_address"] = nl2br($replace["billing_address_text"]);
         $replace["promotion_code"] = $soObj->getPromotionCode();
         $replace["currency_id"] = $soObj->getCurrencyId();
-        $siteObj = $this->_getSiteObj();
+        $siteObj = $this->_getSiteObj($platformId);
         $replace['currency_sign'] = $siteObj->getSign();
         $currencySign = $replace['currency_sign'];
         $replace["order_create_date"] = date("d/m/Y", strtotime($soObj->getOrderCreateDate()));
@@ -559,15 +641,15 @@ implements PaymentGatewayRedirectServiceInterface
         }
     }
 
-    private function _getSiteObj()
+    private function _getSiteObj($platformId)
     {
         if (defined("SITE_NAME"))
             return \PUB_Controller::$siteInfo;
         else {
             if (!$this->siteObj)
             {
-                $loadSiteService = ESG\Panther\Dao\LoadSiteParameterService;
-                $this->siteObj = $loadSiteService->initSite();
+                $loadSiteService = new \ESG\Panther\Service\LoadSiteParameterService();
+                $this->siteObj = $loadSiteService->loadSiteByPlatform($platformId);
             }
             return $this->siteObj;
         }

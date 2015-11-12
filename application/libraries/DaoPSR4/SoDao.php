@@ -861,25 +861,19 @@ SQL;
 
     }
 
-    public function get_so_w_pmgw($where = [], $option = [])
+    public function getSoWithPmgw($where = [], $option = [])
     {
-
         $this->db->from('so');
         $this->db->join('so_payment_status AS sops', 'so.so_no = sops.so_no', 'INNER');
-
         $this->db->where($where);
-
         if (empty($option["num_rows"])) {
-
             $this->include_vo();
             $this->db->select('so.*');
-
             if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
             }
 
             $rs = [];
-
             if ($query = $this->db->get()) {
                 $rs = [];
                 foreach ($query->result($this->getVoClassname()) as $obj) {
