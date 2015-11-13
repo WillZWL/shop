@@ -20,7 +20,7 @@ class CategoryVo extends \BaseVo
     private $modify_by = 'system';
 
     private $primary_key = ['id'];
-    private $increment_field = 'id';
+    private $increment_field = '';
 
     public function setId($id)
     {
