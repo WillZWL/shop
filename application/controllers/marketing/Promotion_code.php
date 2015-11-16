@@ -123,6 +123,15 @@ class Promotion_code extends MY_Controller
                             $disc_level_value = $_POST["disc_level_value"][$_POST["disc_level"]];
                     }
                 }
+                foreach ($_POST["week_day"] as $day) {
+                    $week_day[] = $day;
+                }
+
+                foreach ($_POST["redemption_prod_value"] as $prod_value) {
+                    $redemption_prod_value[] = $prod_value;
+                }
+                $data["promotion_code"]->setWeekDay(implode(",", $week_day));
+                $data["promotion_code"]->setRedemptionProdValue(implode(",", $redemption_prod_value));
                 $data["promotion_code"]->setDiscLevelValue($disc_level_value);
                 $data["promotion_code"]->setRelevantProd(trim(@implode(",", $relevant_prod), ','));
                 if (substr($prefix = rtrim($this->input->post("prefix")), -1) == "%") {
@@ -197,11 +206,10 @@ class Promotion_code extends MY_Controller
                     foreach ($_POST["redemption_prod_value"] as $prod_value) {
                         $redemption_prod_value[] = $prod_value;
                     }
-
-                    $data["promotion_code"]->setDiscLevelValue($disc_level_value);
-                    $data["promotion_code"]->setRelevantProd(trim(@implode(",", $relevant_prod), ','));
                     $data["promotion_code"]->setWeekDay(implode(",", $week_day));
                     $data["promotion_code"]->setRedemptionProdValue(implode(",", $redemption_prod_value));
+                    $data["promotion_code"]->setDiscLevelValue($disc_level_value);
+                    $data["promotion_code"]->setRelevantProd(trim(@implode(",", $relevant_prod), ','));
 
                     if ($this->sc['PromotionCode']->getDao('PromotionCode')->update($data["promotion_code"])) {
                         unset($_SESSION["promotion_code_obj"]);
