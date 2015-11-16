@@ -635,7 +635,6 @@ class ProductDao extends BaseDao
         }
     }
 
-
     public function getComponentsWithName($where = [], $option = [], $className = "ProductCostDto")
     {
 
@@ -671,6 +670,34 @@ class ProductDao extends BaseDao
         } else {
             return FALSE;
         }
+    }
+
+    public function getProductWithPrice($sku,$site='WSGB',$classname='ProductPriceDto')
+    {
+        $where = $option = [];
+        $where['p.sku'] = $sku;
+        $where['pr.platform_id'] = $site;
+        $option = 1;
+
+        $this->db->from("product AS p");
+        $this->db->join("bundle AS b", "b.prod_sku=p.sku", 'LEFT');
+        $this->db->join("product AS pd", "b.component_sku=pd.sku", 'LEFT');
+        $this->db->join("price pr", "coalesce(pd.sku, p.sku)=pr.sku", 'LEFT');
+        $this->db->group_by('p.sku, pr.platform_id');
+        $select = "p.sku AS sku,
+                   p.name AS name,
+                   p.image AS image,
+                   p.brand_id AS brand_id,
+                   p.cat_id AS cat_id,
+                   p.sub_cat_id AS sub_cat_id,
+                   p.sub_sub_cat_id AS sub_sub_cat_id,
+                   p.website_status AS website_status,
+                   p.status AS status,
+                   p.website_quantity AS website_quantity,
+                   sum(round(((pr.price * (100 - coalesce(p.discount,0))) / 100),2)) AS price
+                   ";
+
+        return $this->commonGetList($className, $where, $option, $select);
     }
 
     public function isClearance($sku = "")
