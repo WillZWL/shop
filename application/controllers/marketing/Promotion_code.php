@@ -10,19 +10,15 @@ class Promotion_code extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('marketing/promotion_code_model');
-        $this->load->helper(array('url', 'notice', 'object', 'operator'));
-        $this->load->library('service/pagination_service');
-        $this->load->model('mastercfg/region_model');
     }
 
-    public function index()
+    public function index($offset = 0)
     {
         $sub_app_id = $this->getAppId() . "00";
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
-        $where = array();
-        $option = array();
+        $where = [];
+        $option = [];
 
         $submit_search = 0;
 
@@ -36,7 +32,6 @@ class Promotion_code extends MY_Controller
             $submit_search = 1;
         }
 
-
         if ($this->input->get("expire_date") != "") {
             fetch_operator($where, "expire_date", $this->input->get("expire_date"));
             $submit_search = 1;
@@ -46,7 +41,6 @@ class Promotion_code extends MY_Controller
             fetch_operator($where, "no_taken", $this->input->get("no_taken"));
             $submit_search = 1;
         }
-
 
         if ($this->input->get("status") != "") {
             $where["status"] = $this->input->get("status");
@@ -58,11 +52,8 @@ class Promotion_code extends MY_Controller
 
         $limit = '20';
 
-        $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-        $option["limit"] = $pconfig['per_page'] = $limit;
-        if ($option["limit"]) {
-            $option["offset"] = $this->input->get("per_page");
-        }
+        $option["limit"] = $limit;
+        $option["offset"] = $offset;
 
         if (empty($sort)) {
             $sort = "expire_date desc, create_on";
@@ -74,21 +65,24 @@ class Promotion_code extends MY_Controller
 
         $option["orderby"] = $sort . " " . $order;
 
-        $data["objlist"] = $this->promotion_code_service->get_list($where, $option);
-        $data["total"] = $this->promotion_code_service->get_num_rows($where);
+        $data["objlist"] = $this->sc['PromotionCode']->getDao('PromotionCode')->getList($where, $option);
+        $data["total"] = $this->sc['PromotionCode']->getDao('PromotionCode')->getNumRows($where);
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
+        $config['base_url'] = base_url('marketing/promotion_code/index');
+        $config['total_rows'] = $data["total"];
+        $config['per_page'] = $limit;
+
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
+
 
         $data["notice"] = notice($lang);
 
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
-//      $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
         $data["searchdisplay"] = "";
         $this->load->view('marketing/promotion_code/promotion_code_index_v', $data);
     }
@@ -98,11 +92,6 @@ class Promotion_code extends MY_Controller
         return $this->appId;
     }
 
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
-    }
-
     public function add()
     {
 
@@ -110,7 +99,6 @@ class Promotion_code extends MY_Controller
 
         if ($this->input->post("posted")) {
             if (isset($_SESSION["promotion_code_vo"])) {
-                $this->promotion_code_service->include_vo();
                 $data["promotion_code"] = unserialize($_SESSION["promotion_code_vo"]);
                 set_value($data["promotion_code"], $_POST);
                 foreach ($_POST["relevant_prod"] as $d_product) {
@@ -135,15 +123,24 @@ class Promotion_code extends MY_Controller
                             $disc_level_value = $_POST["disc_level_value"][$_POST["disc_level"]];
                     }
                 }
-                $data["promotion_code"]->set_disc_level_value($disc_level_value);
-                $data["promotion_code"]->set_relevant_prod(trim(@implode(",", $relevant_prod), ','));
+                foreach ($_POST["week_day"] as $day) {
+                    $week_day[] = $day;
+                }
+
+                foreach ($_POST["redemption_prod_value"] as $prod_value) {
+                    $redemption_prod_value[] = $prod_value;
+                }
+                $data["promotion_code"]->setWeekDay(implode(",", $week_day));
+                $data["promotion_code"]->setRedemptionProdValue(implode(",", $redemption_prod_value));
+                $data["promotion_code"]->setDiscLevelValue($disc_level_value);
+                $data["promotion_code"]->setRelevantProd(trim(@implode(",", $relevant_prod), ','));
                 if (substr($prefix = rtrim($this->input->post("prefix")), -1) == "%") {
                     $new_promotion_code = substr($prefix, 0, -1) . hash("crc32", mktime());
                 } else {
                     $new_promotion_code = $prefix;
                 }
-                $data["promotion_code"]->set_code($new_promotion_code);
-                if ($new_obj = $this->promotion_code_service->insert($data["promotion_code"])) {
+                $data["promotion_code"]->setCode($new_promotion_code);
+                if ($new_obj = $this->sc['PromotionCode']->getDao('PromotionCode')->insert($data["promotion_code"])) {
                     unset($_SESSION["promotion_code_vo"]);
                     redirect($_SESSION["LISTPAGE"]);
                 } else {
@@ -152,19 +149,19 @@ class Promotion_code extends MY_Controller
             }
         }
 
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
         if (empty($data["promotion_code"])) {
-            if (($data["promotion_code"] = $this->promotion_code_service->get()) === FALSE) {
+            if (($data["promotion_code"] = $this->sc['PromotionCode']->getDao('PromotionCode')->get()) === FALSE) {
                 $_SESSION["NOTICE"] = $this->db->_error_message();
             } else {
                 $_SESSION["promotion_code_vo"] = serialize($data["promotion_code"]);
             }
         }
 
-        $data["country_list"] = $this->region_service->get_sell_country_list();
-        $data['delivery_option_list'] = $this->promotion_code_model->get_delivery_option_list();
+        $data["country_list"] = $this->sc['Region']->getSellCountryList();
+        $data['delivery_option_list'] = $this->sc['Courier']->getDao('Courier')->getList(['weight_type' => 'CH']);
         $data["notice"] = notice($lang);
         $data["cmd"] = "add";
         $this->load->view('marketing/promotion_code/promotion_code_detail_v', $data);
@@ -177,8 +174,7 @@ class Promotion_code extends MY_Controller
 
             if ($this->input->post("posted")) {
                 unset($_SESSION["NOTICE"]);
-                if ($data["promotion_code"] = $this->promotion_code_service->get(array("code" => $code))) {
-                    $this->promotion_code_service->include_vo();
+                if ($data["promotion_code"] = $this->sc['PromotionCode']->getDao('PromotionCode')->get(["code" => $code])) {
                     set_value($data["promotion_code"], $_POST);
                     foreach ($_POST["relevant_prod"] as $d_product) {
                         if ($d_product != "") {
@@ -202,10 +198,20 @@ class Promotion_code extends MY_Controller
                                 $disc_level_value = $_POST["disc_level_value"][$_POST["disc_level"]];
                         }
                     }
-                    $data["promotion_code"]->set_disc_level_value($disc_level_value);
-                    $data["promotion_code"]->set_relevant_prod(trim(@implode(",", $relevant_prod), ','));
 
-                    if ($this->promotion_code_service->update($data["promotion_code"])) {
+                    foreach ($_POST["week_day"] as $day) {
+                        $week_day[] = $day;
+                    }
+
+                    foreach ($_POST["redemption_prod_value"] as $prod_value) {
+                        $redemption_prod_value[] = $prod_value;
+                    }
+                    $data["promotion_code"]->setWeekDay(implode(",", $week_day));
+                    $data["promotion_code"]->setRedemptionProdValue(implode(",", $redemption_prod_value));
+                    $data["promotion_code"]->setDiscLevelValue($disc_level_value);
+                    $data["promotion_code"]->setRelevantProd(trim(@implode(",", $relevant_prod), ','));
+
+                    if ($this->sc['PromotionCode']->getDao('PromotionCode')->update($data["promotion_code"])) {
                         unset($_SESSION["promotion_code_obj"]);
                         redirect(base_url() . "marketing/promotion_code/view/" . $code);
                     } else {
@@ -214,11 +220,11 @@ class Promotion_code extends MY_Controller
                 }
             }
 
-            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+            include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
 
             if (empty($data["promotion_code"])) {
-                if (($data["promotion_code"] = $this->promotion_code_service->get(array("code" => $code))) === FALSE) {
+                if (($data["promotion_code"] = $this->sc['PromotionCode']->getDao('PromotionCode')->get(["code" => $code])) === FALSE) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 } else {
                     unset($_SESSION["promotion_code_obj"]);
@@ -226,8 +232,8 @@ class Promotion_code extends MY_Controller
                 }
             }
 
-            $data["country_list"] = $this->region_service->get_sell_country_list();
-            $data['delivery_option_list'] = $this->promotion_code_model->get_delivery_option_list();
+            $data["country_list"] = $this->sc['Region']->getSellCountryList();
+            $data['delivery_option_list'] = $this->sc['Courier']->getDao('Courier')->getList(['weight_type' => 'CH']);
             $data["notice"] = notice($lang);
             $data["cmd"] = "edit";
             $this->load->view('marketing/promotion_code/promotion_code_detail_v', $data);
