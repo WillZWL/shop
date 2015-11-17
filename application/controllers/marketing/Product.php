@@ -2803,7 +2803,7 @@ start;
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $cat_list = $this->sc['Category']->getDao('Category')->getList(["id >" => "0"], ["orderby" => "parent_cat_id ASC", "limit" => "-1"]);
+        $cat_list = $this->sc['Category']->getDao('Category')->getList(["id >" => "0", 'status' => 1], ["orderby" => "parent_cat_id ASC", "limit" => "-1"]);
         foreach ($cat_list as $cat) {
             $pid = $cat->getParentCatId();
             $cat_id = str_replace("'", "\'", $cat->getId());

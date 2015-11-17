@@ -70,7 +70,7 @@ class RegionService extends BaseService
         $option["limit"] = -1;
         if ($obj_array = $this->getDao('Country')->getList($where, $option)) {
             foreach ($obj_array as $obj) {
-                $rtn[$obj->getId()] = $obj->getName();
+                $rtn[$obj->getCountryId()] = $obj->getName();
             }
         }
 
@@ -113,7 +113,7 @@ class RegionService extends BaseService
             $rs = [];
             if ($objlist = $this->getDao('Country')->getSellCountryList($detail)) {
                 foreach ($objlist as $obj) {
-                    $rs[$obj->getId()] = $obj->getName();
+                    $rs[$obj->getCountryId()] = $obj->getName();
                 }
             }
             return $rs;
@@ -128,7 +128,7 @@ class RegionService extends BaseService
             $rs = [];
             if ($objlist = $this->getDao('Country')->getFullCountryList($detail)) {
                 foreach ($objlist as $obj) {
-                    $rs[$obj->getId()] = $obj->getName();
+                    $rs[$obj->getCountryId()] = $obj->getName();
                 }
             }
             return $rs;

@@ -170,7 +170,7 @@ class ServiceProvider implements ServiceProviderInterface
         };
 
         $servcieContainer['Region'] = function () {
-            return new S\regionService();
+            return new S\RegionService();
         };
 
         $servcieContainer['Courier'] = function () {
@@ -229,6 +229,9 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\BrandService();
         };
 
+        $servcieContainer['PromotionCode'] = function () {
+            return new S\PromotionCodeService();
+        };
 
 		//Data transfer
         $servcieContainer['VbDataTransferPrices'] = function () {

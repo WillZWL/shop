@@ -473,5 +473,9 @@ class DaoProvider implements ServiceProviderInterface
             return new D\SiteConfigDao();
         };
 
+        $daoContainer['PromotionCode'] = function () {
+            return new D\PromotionCodeDao();
+        };
+
     }
 }
