@@ -132,7 +132,7 @@
             <img class="img-responsive" ng-src="{{ item.imageUrl }}" title="{{ item.name }}" alt="{{ item.name }}"  onerror="this.onerror=null;this.src='//cdn.searchspring.net/ajax_search/img/missing-image-75x75.gif';">
           </a>
           <div class="quickview hidden-xs">
-            <a class="iframe-link" data-toggle="tooltip" data-placement="top" ng-href="//www.digitaldiscount.co.uk/main-product/view/{{ item.uid }}/sv" title="Quick View"><i class="fa fa-eye"></i></a>
+            <a class="iframe-link" data-toggle="tooltip" data-placement="top" ng-href="//www.digitaldiscount.co.uk/Product/{{ item.uid }}/sv" title="Quick View"><i class="fa fa-eye"></i></a>
           </div>
           <div class="zoom hidden-xs">
             <a data-toggle="tooltip" data-placement="top" ng-href="//www.digitaldiscount.co.uk/images/product/{{ item.uid }}_l.jpg" class="product-zoom info-view colorbox cboxElement" title="{{ item.name }}"><i class="fa fa-search-plus"></i></a>
