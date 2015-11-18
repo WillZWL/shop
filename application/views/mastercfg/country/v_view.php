@@ -127,6 +127,7 @@ $ar_fcid = array("US_FC" => $lang["us_fc"], "UK_FC" => $lang["uk_fc"], "HK_FC" =
                 <td class="field"><?= $lang["rma_fc"] ?></td>
                 <td class="value" colspan="3"><select name="rma_fc" class="input">
                         <option value=""></option>
+                        <?php if ($rmaFcVo): ?>
                         <?php
                         unset($select);
                         $select[$rmaFcVo->getRmaFc()] = "selected";
@@ -136,6 +137,10 @@ $ar_fcid = array("US_FC" => $lang["us_fc"], "UK_FC" => $lang["uk_fc"], "HK_FC" =
                         <?php
                         endforeach;
                         ?>
+
+                        <?php endif ?>
+
+
                     </select></td>
             </tr>
             <?php
