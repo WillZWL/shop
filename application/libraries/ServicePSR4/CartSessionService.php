@@ -204,7 +204,7 @@ class CartSessionService extends BaseService
         else
         {
 //out of stock, or
-            $subject = "[Panther] Adding product which is not valid to the cart " . $sku . ":" . $platformId . " " . __METHOD__ . __LINE__;
+            $subject = "[Panther] Adding product which is not valid to the cart, SKU:" . $sku . ", PlatformId:" . $platformId . " " . __METHOD__ . __LINE__;
             $message = $this->productService->getDao()->db->last_query();
             mail($this->support_email, $subject, $message, "From: website@" . SITE_DOMAIN . "\r\n");
         }

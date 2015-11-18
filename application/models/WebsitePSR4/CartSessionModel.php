@@ -2,6 +2,7 @@
 namespace ESG\Panther\Models\Website;
 
 use ESG\Panther\Service\CartSessionService;
+use ESG\Panther\Form\GeneralInputFilter;
 
 class CartSessionModel extends \CI_Model
 {
@@ -18,13 +19,17 @@ class CartSessionModel extends \CI_Model
     }
 
     public function addItemQty($sku, $qty, $langId, $platformId, $currencyId) {
-        $this->cartSessionService->add($sku, $qty, $langId, $platformId, $currencyId);
+        $filter = new GeneralInputFilter();
+        if ($filter->isValidSku($sku) && $filter->isValidQty($qty))
+            $this->cartSessionService->add($sku, $qty, $langId, $platformId, $currencyId);
         $cart = $this->cartSessionService->getCart();
         return $cart;
     }
 
     public function minusItemQty($sku, $qty, $langId, $platformId, $currencyId) {
-        $this->cartSessionService->minus($sku, $qty, $langId, $platformId, $currencyId);
+        $filter = new GeneralInputFilter();
+        if ($filter->isValidSku($sku) && $filter->isValidQty($qty))
+            $this->cartSessionService->minus($sku, $qty, $langId, $platformId, $currencyId);
         $cart = $this->cartSessionService->getCart();
         return $cart;
     }
@@ -33,13 +38,17 @@ class CartSessionModel extends \CI_Model
 **  setItemQty set the qty directly, instead of add of subtract the qty
 *********************************************/
     public function setItemQty($sku, $qty, $langId, $platformId, $currencyId) {
-        $this->cartSessionService->setQty($sku, $qty, $langId, $platformId, $currencyId);
+        $filter = new GeneralInputFilter();
+        if ($filter->isValidSku($sku) && $filter->isValidQty($qty))
+            $this->cartSessionService->setQty($sku, $qty, $langId, $platformId, $currencyId);
         $cart = $this->cartSessionService->getCart();
         return $cart;
     }
 
     public function removeItem($sku) {
-        $this->cartSessionService->removeItem($sku);
+        $filter = new GeneralInputFilter();
+        if ($filter->isValidSku($sku))
+            $this->cartSessionService->removeItem($sku);
         $cart = $this->cartSessionService->getCart();
         return $cart;
     }
