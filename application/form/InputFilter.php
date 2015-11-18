@@ -4,6 +4,7 @@ namespace ESG\Panther\Form;
 use Zend\I18n\Validator\PostCode;
 use Zend\Validator\ValidatorChain;
 use Zend\Validator\Regex;
+use Zend\Validator\Digits;
 use Zend\Validator\StringLength;
 use Zend\Validator\EmailAddress;
 /***************
@@ -195,5 +196,21 @@ abstract class InputFilter {
         $validator = new Regex("/\bP(ost|ostal)?([ \.]*O(ffice)?)?([ \.]*Box)?\b/i");
         $result = $validator->isValid($address);
         return $result;    
+    }
+
+    public function isValidSku($sku)
+    {
+        $validator = new Regex("/^99[0-9]+$/");
+        $result = $validator->isValid($sku);
+        (!$result) ? ($this->validInput = false) : "";
+        return $result;
+    }
+    
+    public function isValidQty($qty)
+    {
+        $validator = new Digits();
+        $result = $validator->isValid($qty);
+        (!$result) ? ($this->validInput = false) : "";
+        return $result;
     }
 }
