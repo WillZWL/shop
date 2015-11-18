@@ -44,7 +44,6 @@
             <col width="100">
             <col width="70">
             <col width="70">
-            <col width="70">
             <col width="26">
             <tr class="header">
                 <td height="20"><img src="<?= base_url() ?>images/expand.png" class="pointer"
@@ -66,9 +65,6 @@
                 </td>
                 <td><a href="#"
                        onClick="SortCol(document.fm, 'language_id', '<?= @$xsort["language_id"] ?>')"><?= $lang["language_id"] ?> <?= @$sortimg["language_id"] ?></a>
-                </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'rma_fc', '<?= @$xsort["fc_id"] ?>')"><?= $lang["rma_fc"] ?> <?= @$sortimg["rma_fc"] ?></a>
                 </td>
                 <td><a href="#"
                        onClick="SortCol(document.fm, 'allow_sell', '<?= @$xsort["allow_sell"] ?>')"><?= $lang["allow_sell"] ?> <?= @$sortimg["allow_sell"] ?></a>
@@ -119,18 +115,6 @@
                     </select>
                 </td>
                 <td>
-                    <select name="rma_fc" class="input">
-                        <option value=""></option>
-                        <?php
-                        foreach ($ar_fcid as $key => $fcname) :
-                            ?>
-                            <option value="<?= $key ?>"<?= $this->input->get("rma_fc") == $key ? ' SELECTED' : '' ?>><?= $fcname ?></option>
-                        <?php
-                        endforeach;
-                        ?>
-                    </select>
-                </td>
-                <td>
                     <?php
                     if ($this->input->get("allow_sell") !== FALSE) :
                         $selected[$this->input->get("allow_sell")] = " SELECTED";
@@ -154,8 +138,7 @@
                     <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
                         onMouseOut="RemoveClassName(this, 'highlight')"
                         onClick="Redirect('<?= site_url('mastercfg/country/view/' . $cobj->getCountryId()) ?>')">
-                        <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                             title='<?= $lang["create_on"] ?>:<?= $cobj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $cobj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $cobj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $cobj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $cobj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $cobj->getModifyBy() ?>'>
+                        <td height="20"><img src="<?= base_url() ?>images/info.gif" title='<?= $lang["create_on"] ?>:<?= $cobj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $cobj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $cobj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $cobj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $cobj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $cobj->getModifyBy() ?>'>
                         </td>
                         <td><?= $cobj->getCountryId() ?></td>
                         <td><?= $cobj->getId3Digit() ?></td>
@@ -163,7 +146,6 @@
                         <td><?= $ar_status[$cobj->getStatus()] ?></td>
                         <td><?= $ar_currency[$cobj->getCurrencyId()] ?></td>
                         <td><?= $ar_lang[$cobj->getLanguageId()] ?></td>
-                        <td><?= $cobj->getRmaFc() ? $ar_fcid[$cobj->getRmaFc()] : '' ?></td>
                         <td><?= $ar_allow_sell[$cobj->getAllowSell()] ?></td>
                         <td></td>
                     </tr>
