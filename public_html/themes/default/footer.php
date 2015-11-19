@@ -84,6 +84,21 @@
                                         </br>
                                             <fieldset class="footer-fieldset" style="background-color: #999 !important;border:0px !important;">
                                                 <ul class="list-inline" style="margin-top:8px;">
+                                                <?php
+                                                        $siteobj = \PUB_Controller::$siteInfo;
+                                                        $countryid = $siteobj->getPlatformCountryId();
+
+                                                        if ($countryid == "FR" || $countryid == "BE") {  ?>
+                                                    <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/ssl_fr.jpg">
+                                                    </li>
+                                                    <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/chat_fr.jpg">
+                                                    </li>
+                                                    <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/data_fr.jpg">
+                                                    </li>
+                                                <?php } else { ?>
                                                     <li class="footer-fieldsetitem">
                                                         <img src="/themes/default/asset/image/ssl_en.jpg">
                                                     </li>
@@ -93,6 +108,7 @@
                                                     <li class="footer-fieldsetitem">
                                                         <img src="/themes/default/asset/image/data_en.jpg">
                                                     </li>
+                                                <?php } ?>
                                                 </ul>
                                            </fieldset>
                                         </div>
@@ -170,7 +186,15 @@
                                                 </li>
                                                 <li style="vertical-align: top;">
                                                     <div class="image-wrap">
+                                                    <?php
+                                                        $siteobj = \PUB_Controller::$siteInfo;
+                                                        $countryid = $siteobj->getPlatformCountryId();
+
+                                                        if ($countryid == "FR" || $countryid == "BE") {  ?>
+                                                        <img src="/themes/default/asset/image/warranty_fr.jpg" class="img-footer">
+                                                    <?php } else { ?>
                                                         <img src="/themes/default/asset/image/warranty.jpg" class="img-footer">
+                                                    <?php } ?>
                                                     </div>
                                                     <p class="desc-sm">
                                                         <?= _('Warranty ') ?><br/> <?= _('Up to 2 Years') ?>

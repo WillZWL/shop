@@ -86,7 +86,7 @@ Class Cart extends PUB_Controller
     {
         $this->addItemQty($sku, 1);
     }
-
+/*
     public function checkout_item($sku = "", $nextpage = "checkout")
     {
         if (empty($sku)) {
@@ -283,5 +283,5 @@ Class Cart extends PUB_Controller
         // bring customer to review orders page
         redirect(base_url() . "review_order");
     }
-
+*/
 }
