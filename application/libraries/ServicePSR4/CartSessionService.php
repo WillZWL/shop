@@ -141,15 +141,15 @@ class CartSessionService extends BaseService
     }
 
     public function addItemToSession($sku, $qty, $lang, $platformId, $currencyId) {
-        if (!$this->_cart) {
-            $this->_cart = [];
-            $this->_cart = new \CartDto();
-            $this->_cart->setPlatformId($platformId);
-            $this->_cart->setPlatformCurrency($currencyId);
-            $this->_cart->items = [];
-        }
         if ($productDetails = $this->_createCartItem($sku, $lang, $platformId)) {
             if (isset($productDetails) && $productDetails) {
+                if (!$this->_cart) {
+                    $this->_cart = [];
+                    $this->_cart = new \CartDto();
+                    $this->_cart->setPlatformId($platformId);
+                    $this->_cart->setPlatformCurrency($currencyId);
+                    $this->_cart->items = [];
+                }
                 $productDetails->setQty($qty);
 //                $productDetails->setAmount($qty * $productDetails->getPrice());
                 $this->_cart->items[$sku] = $productDetails;
