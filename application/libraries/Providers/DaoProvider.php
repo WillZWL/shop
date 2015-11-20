@@ -476,6 +476,8 @@ class DaoProvider implements ServiceProviderInterface
         $daoContainer['PromotionCode'] = function () {
             return new D\PromotionCodeDao();
         };
-
+        $daoContainer['ExternalCategory'] = function () {
+            return new D\ExternalCategoryDao();
+        };
     }
 }
