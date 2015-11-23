@@ -1,228 +1,166 @@
 <?php
-namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\PriceDao;
-use ESG\Panther\Dao\ProductDao;
-use ESG\Panther\Service\PriceService;
-use ESG\Panther\Service\PricingRulesService;
-use ESG\Panther\Service\SkuMappingService;
+namespace ESG\Panther\Service;
 
 class VbDataTransferPricesService extends VbDataTransferService
 {
-
-    private $prodDao;
-
-	public function __construct()
-	{
-		parent::__construct();
-        $this->setDao(new PriceDao);
-        $this->setProductDao(new ProductDao);
-        $this->skuMappingService = new SkuMappingService;
-        $this->priceService = new PriceService;
-        $this->pricingRulesService = new PricingRulesService;
-	}
-
-
-    public function getProductDao()
+    /*******************************************************************
+    *   processVbData, get the VB data to save it in the price table
+    ********************************************************************/
+    public function processVbData($feed)
     {
-        return $this->prodDao;
-    }
+        //Read the data sent from VB
+        $xml_vb = simplexml_load_string($feed);
 
-    public function setProductDao($dao)
-    {
-        $this->prodDao = $dao;
-    }
-	/*******************************************************************
-	*	processVbData, get the VB data to save it in the price table
-	********************************************************************/
-	public function processVbData ($feed)
-	{
-		//Read the data sent from VB
-		$xml_vb = simplexml_load_string($feed);
+        $task_id = $xml_vb->attributes();
 
-		$task_id = $xml_vb->attributes();
+        //Create return xml string
+        $xml = array();
+        $xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
+        $xml[] = '<prices task_id="'.$task_id.'">';
 
-		//Create return xml string
-		$xml = array();
-		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
-		$xml[] = '<prices task_id="' . $task_id . '">';
+        foreach ($xml_vb->price as $vb_price_obj) {
+            //Get the master sku to search the corresponding sku in atomv2 database
+            $master_sku = (string) $vb_price_obj->master_sku;
+            $platform_id = (string) $vb_price_obj->platform_id;
+            $required_selling_price = floatval($vb_price_obj->prod_price);
+            $VB_price = floatval($vb_price_obj->prod_price); //update the VB price field in the atomv2 price table
 
-		//get pricing rules filter
-		$where = [];
-
-		$dayofweek = date('w');
-
-		switch ($dayofweek)
-		{
-			case 0: //sunday
-				$where["sunday"] = "1";
-				break;
-			case 1:
-				$where["monday"] = "1";
-				break;
-			case 2:
-				$where["tuesday"] = "1";
-				break;
-			case 3:
-				$where["wednesday"] = "1";
-				break;
-			case 4:
-				$where["thursday"] = "1";
-				break;
-			case 5:
-				$where["friday"] = "1";
-				break;
-			case 6:
-				$where["saturday"] = "1";
-				break;
-		}
-
-
-		$c = count($xml_vb->price);
-		foreach($xml_vb->price as $price)
-		{
-			$c--;
-
-			//Get the master sku to search the corresponding sku in atomv2 database
-			$master_sku = $price->master_sku;
-			$platform_id=  $price->platform_id;
-			$required_selling_price=  floatval($price->prod_price);
-			$VB_price=  floatval($price->prod_price); //update the VB price field in the atomv2 price table
-
-			$master_sku = strtoupper($master_sku);
-			$sku = $this->skuMappingService->getLocalSku($master_sku);
-
-			$fail_reason = "";
-
-			if (empty($sku)) {
+            $sku = $this->getService('SkuMapping')->getLocalSku($master_sku);
+            if (empty($sku)) {
                 $xml[] = '<price>';
-				$xml[] = '<sku>' . $price->sku . '</sku>';
-				$xml[] = '<master_sku>' . $price->master_sku . '</master_sku>';
-				$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';
-				$xml[] = '<status>2</status>'; //no sku mapping
-				$xml[] = '<is_error>' . $price->is_error . '</is_error>';
-				$xml[] = '<reason>No SKU mapping</reason>';
-				$xml[] = '</price>';
+                $xml[] = '<sku>'.$vb_price_obj->sku.'</sku>';
+                $xml[] = '<master_sku>'.$vb_price_obj->master_sku.'</master_sku>';
+                $xml[] = '<platform_id>'.$vb_price_obj->platform_id.'</platform_id>';
+                $xml[] = '<status>2</status>'; //no sku mapping
+                $xml[] = '<is_error>'.$vb_price_obj->is_error.'</is_error>';
+                $xml[] = '<reason>No SKU mapping</reason>';
+                $xml[] = '</price>';
                 continue;
-			}
-			else
-			{
-				try
-				{
-					if(!$price_obj = $this->getDao()->get(array("sku"=>$sku, "platform_id"=>$platform_id)))
-					{
-						$commit = false;
-						// we only commit at the last update
-						if ($c <= 0) $commit = true;
+            }
 
-						$price_change = "";
+            $prod_obj = $this->getService('Product')->get(['sku' => $sku]);
+            if (!$prod_obj) {
+                $xml[] = '<price>';
+                $xml[] = '<sku>'.$vb_price_obj->sku.'</sku>';
+                $xml[] = '<master_sku>'.$vb_price_obj->master_sku.'</master_sku>';
+                $xml[] = '<platform_id>'.$vb_price_obj->platform_id.'</platform_id>';
+                $xml[] = '<status>2</status>'; //no sku mapping
+                $xml[] = '<is_error>'.$vb_price_obj->is_error.'</is_error>';
+                $xml[] = '<reason>No this product</reason>';
+                $xml[] = '</price>';
+                continue;
+            }
 
-						$where["pbv.selling_platform_id"] = $platform_id;
-						$where[$required_selling_price . " between pr.range_min and pr.range_max"] = null;
+            try {
+                $this->applyPriceRule($vb_price_obj);
+                $price_obj = $this->getDao('Price')->get(['sku' => $sku]);
 
-						$data = $this->pricingRulesService->getPricingRulesByPlatform($where);
+                if ($price_obj) {
+                    $this->getService('Price')->updatePrice($price_obj, $vb_price_obj);
+                    $action = 'update';
+                } else {
+                    $price_obj = $this->getService('Price')->createNewPrice($sku, $vb_price_obj);
+                    $action = 'insert';
+                }
 
-						$min_margin = "";
-						//if exist, apply the pricing rules to the VB price
-						//if dont exist rules for the VB price, we use directly the VB price
-						if (!empty($data["pricingrules"]))
-						{
-							$rule_type = $data["pricingrules"][0]->getMarkUpType();
-							$rule_markup = $data["pricingrules"][0]->getMarkUpValue();
-							$min_margin = $data["pricingrules"][0]->getMinMargin();
+                if (($prod_obj->getClearance() == 0)) {
+                    // TODO:
+                    // need to finish getTrailCalcuMargin function
+                    // $new_margin = $this->getService('Price')->getTrailCalcuProfitMargin($price_obj);
+                    $new_margin = -1;
+                    if ($new_margin < $minimun_margin) {
+                        $reason = "Error in  margin";
+                        $result_status = 6;
+                    } else {
+                        $this->getDao('Price')->$action($price_obj);
+                        $result_status = 5;
+                    }
+                } else {
+                    // clearance, no need check minimun margin
+                    $this->getDao('Price')->$action($price_obj);
+                    $result_status = 5;
+                }
 
-							$required_selling_price = floatval($required_selling_price);
+                $xml[] = '<price>';
+                $xml[] = '<sku>'.$vb_price_obj->sku.'</sku>';
+                $xml[] = '<master_sku>'.$vb_price_obj->master_sku.'</master_sku>';
+                $xml[] = '<platform_id>'.$vb_price_obj->platform_id.'</platform_id>';
+                $xml[] = '<status>'.$result_status.'</status>'; //updated
+                $xml[] = '<is_error>'.$vb_price_obj->is_error.'</is_error>';
+                $xml[] = '<reason>'.$reason.' - '.$price_change.'</reason>';
+                $xml[] = '</price>';
+            } catch (Exception $e) {
+                $xml[] = '<price>';
+                $xml[] = '<sku>'.$vb_price_obj->sku.'</sku>';
+                $xml[] = '<master_sku>'.$vb_price_obj->master_sku.'</master_sku>';
+                $xml[] = '<platform_id>'.$vb_price_obj->platform_id.'</platform_id>';
+                $xml[] = '<status>4</status>'; //error
+                $xml[] = '<is_error>'.$vb_price_obj->is_error.'</is_error>';
+                $xml[] = '<reason>'.$e->getMessage().'</reason>';
+                $xml[] = '</price>';
+            }
+        }
 
-							$price_change .= " type " . $rule_type . " markup " . $rule_markup . " min margin " . $min_margin . " initial price " . $required_selling_price;
+        $xml[] = '</prices>';
+        $return_feed = implode("\n", $xml);
 
-							if ($rule_type == "A")
-								$required_selling_price += floatval($rule_markup * 1.0);
-							elseif ($rule_type == "P")
-								$required_selling_price = $required_selling_price + ($required_selling_price * $rule_markup);
-						}
+        return $return_feed;
+    }
 
-						$price_change .=  " final price " . $required_selling_price;
+    public function applyPriceRule(&$vb_price_obj)
+    {
+        $required_selling_price = floatval($vb_price_obj->prod_price);
+        $platform_id = (string) $vb_price_obj->platform_id;
 
-						//var_dump($required_selling_price);
+        //get pricing rules filter
+        $where = [];
 
-						//get product data (clearance)
-						$clearance = false;
-						$bupdate_price = true;
-						if($prod_obj = $this->getProductDao()->get(array("sku"=> $sku)))
-							$clearance = $prod_obj->getClearance();
+        $dayofweek = date('w');
+        switch ($dayofweek) {
+            case 0: //sunday
+                $where['sunday'] = '1';
+                break;
+            case 1:
+                $where['monday'] = '1';
+                break;
+            case 2:
+                $where['tuesday'] = '1';
+                break;
+            case 3:
+                $where['wednesday'] = '1';
+                break;
+            case 4:
+                $where['thursday'] = '1';
+                break;
+            case 5:
+                $where['friday'] = '1';
+                break;
+            case 6:
+                $where['saturday'] = '1';
+                break;
+        }
 
-						//if clearance, we dont need to check the minimun margin
-						if (!$clearance)
-						{
-							$json = $this->priceService->getProfitMarginJson($platform_id, $sku, $required_selling_price);
-				            //file_put_contents("/var/log/vb-json", "{$soidObj->get_so_no()} || $json", FILE_APPEND);
-				            $jj = json_decode($json, true);
+        $where['pbv.selling_platform_id'] = $platform_id;
+        $where[$required_selling_price.' between pr.range_min and pr.range_max'] = null;
+        $option = ['limit' => 1];
 
-				            $new_marging = round($jj["get_margin"], 2);
-				            $price_change .=  " new margin " . $new_marging;
+        $pricing_rule_obj = $this->getService('PricingRules')->getPricingRulesByPlatform($where, $option);
 
-				            //check minimun margin
-				            if ($min_margin != "" && $new_marging <= $min_margin)
-				            	$bupdate_price = false;
-			        	}
+        //if exist, apply the pricing rules to the VB price
+        //if dont exist rules for the VB price, we use directly the VB price
+        if ($pricing_rule_obj) {
+            $rule_type = $pricing_rule_obj->getMarkUpType();
+            $rule_markup = $pricing_rule_obj->getMarkUpValue();
+            $min_margin = $pricing_rule_obj->getMinMargin();
 
-			        	if ($bupdate_price)
-						{
-							$affected = $this->priceService->updateSkuPrice($platform_id, $sku, $required_selling_price, $VB_price, $commit);
+            if ($rule_type == 'A') {
+                $required_selling_price += floatval($rule_markup * 1.0);
+            } elseif ($rule_type == 'P') {
+                $required_selling_price = $required_selling_price + ($required_selling_price * $rule_markup);
+            }
+        }
 
-							if ($affected)
-							{
-								$reason = "update";
-								$result_status = 5;
-							}
-							else
-							{
-								$reason = "Not updated";
-								$result_status = 3;
-							}
-						}
-						else
-						{
-							$reason = "Error in margin";
-							$result_status = 6;
-						}
-					}
-					else
-					{
-
-						$reason = "Not found";
-						$result_status = 3;
-					}
-
-					$xml[] = '<price>';
-					$xml[] = '<sku>' . $price->sku . '</sku>';
-					$xml[] = '<master_sku>' . $price->master_sku . '</master_sku>';
-					$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';
-					$xml[] = '<status>' . $result_status . '</status>'; //updated
-					$xml[] = '<is_error>' . $price->is_error . '</is_error>';
-					$xml[] = '<reason>' . $reason . ' - ' . $price_change . '</reason>';
-					$xml[] = '</price>';
-
-				}
-				catch(Exception $e)
-				{
-					$xml[] = '<price>';
-					$xml[] = '<sku>' . $price->sku . '</sku>';
-					$xml[] = '<master_sku>' . $price->master_sku . '</master_sku>';
-					$xml[] = '<platform_id>' . $price->platform_id . '</platform_id>';
-					$xml[] = '<status>4</status>'; //error
-					$xml[] = '<is_error>' . $price->is_error . '</is_error>';
-					$xml[] = '<reason>' . $e->getMessage() . '</reason>';
-					$xml[] = '</price>';
-				}
-			}
-		}
-
-		$xml[] = '</prices>';
-
-		$return_feed = implode("\n", $xml);
-
-
-		return $return_feed;
-	}
+        $vb_price_obj->required_selling_price = $required_selling_price;
+    }
 }
