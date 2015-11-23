@@ -20,7 +20,7 @@ class Import extends MY_Controller
     public function product()
     {
         $xml = file_get_contents('php://input');
-        $feed =$this->sc['VbDataTransferProducts']->startProcess($xml);
+        $feed = $this->sc['VbDataTransferProducts']->startProcess($xml);
         unset($xml);
         print $feed;
     }
@@ -28,7 +28,7 @@ class Import extends MY_Controller
     public function price()
     {
         $xml = file_get_contents('php://input');
-        $feed =$this->vb_data_transfer_prices_service->startProcess($xml);
+        $feed = $this->sc['VbDataTransferPrices']->startProcess($xml);
         print $feed;
     }
 

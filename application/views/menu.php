@@ -7,7 +7,7 @@
     <script type="text/javascript" src="<?= base_url('js/common.js') ?>"></script>
 </head>
 <body>
-<div align="center" style="font-size:20px; font-weight:bold; color:#FFA500; line-height:60px">WELCOME TO ADMINCENTRE
+<div align="center" style="font-size:20px; font-weight:bold; color:#549B17; line-height:60px">WELCOME TO ADMINCENTRE
 </div>
 <table width="100%" align="center">
     <tr>

@@ -73,7 +73,7 @@ class SellingPlatformDao extends BaseDao
                 FROM selling_platform sp
                 JOIN platform_biz_var pbv
                     ON sp.selling_platform_id = pbv.selling_platform_id
-                WHERE (sp.type = 'WEBSITE' OR sp.type = 'SKYPE') AND sp.status = 1
+                WHERE (sp.type = 'WEBSITE') AND sp.status = 1
                     AND pbv.platform_country_id = ?";
 
         if ($result = $this->db->query($sql, $country_id)) {
@@ -97,7 +97,7 @@ class SellingPlatformDao extends BaseDao
                     ON sp.selling_platform_id = pbv.selling_platform_id
                 JOIN country c
                     ON c.id = pbv.platform_country_id
-                WHERE (sp.type = 'WEBSITE' OR sp.type = 'SKYPE') AND sp.status = 1
+                WHERE (sp.type = 'WEBSITE') AND sp.status = 1
                     AND c.allow_sell = 1 AND c.status = 1
                     AND pbv.language_id = ?";
 
@@ -112,6 +112,18 @@ class SellingPlatformDao extends BaseDao
             return $result_arr;
         }
         return FALSE;
+    }
+
+    public function getWebsiteCountryList() {
+        $sql = "select pbv.platform_country_id from selling_platform sp
+                inner join platform_biz_var pbv on pbv.selling_platform_id=sp.selling_platform_id
+                where sp.status=1 and type='WEBSITE' and sp.selling_platform_id like 'WEB%' group by pbv.platform_country_id order by pbv.platform_country_id";
+        $result = $this->db->query($sql);
+        if (!$result) {
+            return FALSE;
+        }
+
+        return $result->result_array();
     }
 
     public function getPlatformTypeList()

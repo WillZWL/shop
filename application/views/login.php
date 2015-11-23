@@ -18,8 +18,8 @@
     <form name="loginform" method="post"
           action="<?= site_url('auth/auth') ?><?= $this->input->get("back") ? "?back=" . urlencode($this->input->get("back")) : "" ?>">
         <table cellpadding="0" cellspacing="0" border="0">
-            <tr>
-                <td height="100" colspan="3" background="login-admin.gif">&nbsp;</td>
+            <tr style="background-color:#FFFFFF">
+                <td height="100" colspan="3" background="//www.digitaldiscount.co.uk/images/logo/digitaldiscount.png">&nbsp;</td>
             </tr>
             <tr>
                 <td width="1" valign="top" class="login"></td>

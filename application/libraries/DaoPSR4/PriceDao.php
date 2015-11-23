@@ -144,30 +144,4 @@ class PriceDao extends BaseDao
             return false;
         }
 	}
-
-    public function updateSkuPrice($platform_id = "", $local_sku = "", $price = "", $vb_price = "", $commit = false)
-    {
-        $sql =
-            "
-            update price set
-                price      = ?,
-                vb_price   = ?
-            where 1
-            and platform_id    = ?
-            and sku            = ?
-            and listing_status = 'L'
-        ";
-        $this->db->query($sql, array($price, $vb_price, $platform_id, $local_sku));
-        $affected = $this->db->affected_rows();
-
-        if ($commit) $this->commit();
-
-        return $affected;
-    }
-
-    public function commit()
-    {
-        $this->db->query("commit");
-        return true;
-    }
 }

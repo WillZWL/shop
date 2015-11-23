@@ -1,15 +1,17 @@
 <?php
-require_once(BASEPATH . "plugins/gshoppingcontent/GShoppingContent.php");
-include_once(APPPATH . "hooks/country_selection.php");
+//require_once(BASEPATH . "plugins/gshoppingcontent/GShoppingContent.php");
+use ESG\Panther\Models\Marketing\ExtCategoryMappingModel;
 
-class Ext_category_mapping extends MY_Controller
+class ExtCategoryMapping extends MY_Controller
 {
     private $appId = "MKT0074";
-    private $lang_id = "en";
+    private $langId = "en";
+    public $extCategoryMappingModel;
 
-    public function __construct()
-    {
-        parent::MY_controller();
+    public function __construct() {
+        parent::__construct();
+        $this->extCategoryMappingModel = new ExtCategoryMappingModel();
+/*
         $this->load->model('marketing/ext_category_mapping_model');
         $this->load->library('service/adwords_service');
         $this->load->library('service/category_mapping_service');
@@ -18,36 +20,20 @@ class Ext_category_mapping extends MY_Controller
         //$this->load->library('service/price_service');
         $this->load->model('marketing/product_model');
         $this->load->library('service/google_shopping_service');
+*/
     }
 
-    public function index()
-    {
-        $sub_capp_id = $this->getAppId() . "00";
+    public function index() {
+//        $sub_app_id = $this->getAppId() . "00";
         $where = $option = array();
         $where["status"] = 1;
         $option["limit"] = -1;
-        $cat_details_list = $this->ext_category_mapping_model->process_cat_detail($where, $option);
-        $data['cat_details_list'] = $cat_details_list;
-
-        $country_list = $this->ext_category_mapping_model->get_country_list();
-
-        $data['country_list'] = $country_list;
-
-        if (!empty($_GET)) {
-            if (isset($_GET["gcat"])) {
-                $gcat_name = $_GET["gcat"];
-                if ($_GET["gcat_wildtype"] == "begin")
-                    $gcat_where["ext_name LIKE '$gcat_name%'"] = null;
-                elseif ($_GET["gcat_wildtype"] == "end")
-                    $gcat_where["ext_name LIKE '%$gcat_name'"] = null;
-                else
-                    $gcat_where["ext_name LIKE '%$gcat_name%'"] = null;
-            }
-            if (isset($_GET["gcat_country"]))
-                $gcat_where["country_id"] = $_GET["gcat_country"];
-        }
-        $google_category_list = $this->ext_category_mapping_model->get_google_category_list($gcat_where);
-        $data['google_category_list'] = $google_category_list;
+        $data['cat_details_list'] = $this->extCategoryMappingModel->processCatDetail($where, $option);
+//        var_dump($data['cat_details_list']);exit;
+        $data['country_list'] = $this->extCategoryMappingModel->getCountryList();
+//        var_dump($data['country_list']);exit;
+        
+        $data['google_category_list'] = $this->extCategoryMappingModel->getGoogleCategoryList($gcat_where);
 
         $data["google_datafeed_account"] = array();
         $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.SG", "account_id" => 8384686, "country" => array("SG"), "language" => array("en"));
@@ -62,68 +48,7 @@ class Ext_category_mapping extends MY_Controller
         $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.pl", "account_id" => 100892246, "country" => array("PL"), "language" => array("pl"));
         $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.com", "account_id" => 101019203, "country" => array("US"), "language" => array("en"));
 
-
-        /*
-        $where = $option = array();
-        $option['limit'] = -1;
-        $where['ext_c.country_id in ("AU", "GB")'] = null;
-        //var_dumP($this->db->last_query());die();
-        $container = array();
-        if($s = $this->ext_category_mapping_model->get_google_category_mapping_list($where, $option))
-        {
-            //var_dumP($s);die();
-            foreach($s as $d)
-            {
-                $container[$d->get_country_id()][$d->get_category_id()] =  $d->get_google_category_name();
-            }
-        }
-
-        //var_dump($container['SG']);
-        //var_dump($this->db->last_query());die();
-        $data['existsing_mapping'] = array();
-
-
-        if($country_list)
-        {
-            foreach($country_list as $c)
-            {
-                //$t[$c] = @$container[$c];
-                $data['existsing_mapping']["$c"] = @$container[$c];
-            }
-        }
-
-
-        //var_dump($data['existsing_mapping']);die();
-
-        $category_id_w_name = array();
-        $where = $option = array();
-        $option['limit'] = -1;
-
-        if($category_combination = $this->ext_category_mapping_model->get_category_combination($where,$option ))
-        {
-        //var_dump($this->db->last_query());die();
-            foreach($category_combination as $c)
-            {
-                //echo $c->get_id();
-                //echo preg_replace("/Base->/", '', $c->get_name());
-                //echo "<br>";
-                $category_name = preg_replace("/Base->/", '', $c->get_name());
-
-                $i = strpos($category_name,'->');
-                $i = $i? $i:"100";
-
-                $first_category_level = substr($category_name, 0, $i); //this is category name
-
-
-                $category_classification[$first_category_level][$c->get_id()] = $category_name;
-
-                //$category_id_w_name[$c->get_id()] = preg_replace("/Base->/", '', $c->get_name());
-            }
-        }
-        $data['category_classification'] = $category_classification;
-        */
-
-        $this->load->view('marketing/ext_category_mapping/ext_category_mapping_index', $data);
+        $this->load->view('marketing/ext-category-mapping/ext-category-mapping-index', $data);
     }
 
     public function getAppId()
@@ -657,7 +582,7 @@ end;
 
     public function _get_language_id()
     {
-        return $this->lang_id;
+        return $this->langId;
     }
 
     public function get_country_google_category_mapping()

@@ -3,7 +3,6 @@ namespace ESG\Panther\Service;
 
 class CategoryService extends BaseService
 {
-
     public function getCategoryName()
     {
         $category = $this->getDao('Category')->getCategoryName();
@@ -39,7 +38,7 @@ class CategoryService extends BaseService
                 break;
         }
 
-        return $url.'Category/'.$obj->getCatId();
+        return $url . 'Category/' . $obj->getCatId();
     }
 
     private function getCategoryFullPath($where, $option = [])
