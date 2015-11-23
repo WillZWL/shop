@@ -349,5 +349,9 @@ class ServiceProvider implements ServiceProviderInterface
         $servcieContainer['CartSession'] = function () {
             return new S\CartSessionService();
         };
+
+        $servcieContainer['PricingRules'] = function () {
+            return new S\PricingRulesService();
+        };
     }
 }
