@@ -599,7 +599,7 @@ class ProductDao extends BaseDao
 **  searchspring ajax Price
 **  getSearchspringProductFeedPriceInfo
 ***********************************/
-    public function getSearchspringProductFeedPriceInfo($where = array(), $option = array(), $className = "SearchspringProductFeedPriceInfoDto")
+    public function getSearchspringProductFeedPriceInfo($where = [], $option = [], $className = "SearchspringProductFeedPriceInfoDto")
     {
         $this->db->from("product p");
         $this->db->join("price pr", "p.sku = pr.sku", "INNER");
@@ -714,6 +714,225 @@ class ProductDao extends BaseDao
         return $this->commonGetList($className, $where, $option, $select);
     }
 
+    public function getListWithName($where = [], $option = [], $classname = "ProductListWithNameDto")
+    {
+        $this->db->from('product AS p');
+        $this->db->join('category AS c', 'p.cat_id = c.id', 'LEFT');
+        $this->db->join('colour AS cl', 'p.colour_id = cl.id', 'LEFT');
+        $this->db->join('category AS sc', 'p.sub_cat_id = sc.id', 'LEFT');
+        $this->db->join('category AS ssc', 'p.sub_sub_cat_id = ssc.id', 'LEFT');
+        $this->db->join('brand AS b', 'p.brand_id = b.id', 'LEFT');
+        $this->db->join('sku_mapping AS map', "map.sku = p.sku AND map.ext_sys = 'WMS' AND map.status = 1", 'LEFT');
+
+        if ($where["language_id"]) {
+            $this->db->join('product_content AS pc', 'p.sku = pc.prod_sku AND pc.lang_id ="' . $where["language_id"] . '"', 'INNER');
+            $this->db->join('product_content_extend AS pce', 'p.sku = pce.prod_sku AND pce.lang_id ="' . $where["language_id"] . '"', 'INNER');
+        }
+
+        if ($where["keywords"] != "") {
+            $this->db->join('product_content AS pc', 'p.sku = pc.prod_sku AND pc.lang_id ="en"', 'INNER');
+            $this->db->where('(pc.keywords regexp \'(^|,| |-)' . $where["keywords"] . '\' OR pc.prod_name regexp \'(^|,| |-|\\\\.)' . $where["keywords"] . '\')');
+        }
+
+        if ($where["name"] != "") {
+            $name_list = explode(' ', $where['name']);
+
+            foreach ($name_list as $name) {
+                if (!empty($name)) {
+                    $this->db->like('p.name', $name);
+                }
+            }
+        }
+
+        if ($option["exclude_bundle"] || $option["purchaser"]) {
+            $this->db->join('bundle AS bd', 'p.sku = bd.prod_sku', 'LEFT');
+            $this->db->where('bd.prod_sku IS NULL', null);
+        }
+
+        if ($option["exclude_complementary_acc"]) {
+            # exclude complementary accessories
+            $this->db->where('c.id != 750 AND c.parent_cat_id != 750', null);
+        }
+
+        if ($where["prod_grp_cd"] != "") {
+            $this->db->like('p.prod_grp_cd', $where["prod_grp_cd"]);
+        }
+
+        if ($where["colour_id"] != "") {
+            $this->db->like('p.colour_id', $where["colour_id"]);
+        }
+
+        if ($where["sku"] != "") {
+            $this->db->like('p.sku', $where["sku"]);
+        }
+
+        if ($where["master_sku"] != "") {
+            $this->db->like('map.ext_sku', $where["master_sku"]);
+        }
+
+        if ($where["listing_status"] != "") {
+            $this->db->join('price pr', " pr.sku = p.sku AND pr.listing_status = 'L' AND " . (isset($option["selling_platform"]) ? "pr.platform_id = '" . $option["selling_platform"] . "'" : "pr.platform_id LIKE 'WEB%'") . (isset($option["pricegtzero"]) ? " AND pr.price > 0" : ""), "INNER");
+            $this->db->where('p.website_status', 'I');
+        }
+        if ($where["proc_status"] != "") {
+            if ($where["proc_status"] == 0) {
+                $this->db->where('p.proc_status <', "3");
+            } else {
+                $this->db->where('p.proc_status', $where["proc_status"]);
+            }
+        }
+
+        if ($where["colour"] != "") {
+            $this->db->like('cl.colour_name', $where["colour"]);
+        }
+
+        if ($where["category"] != "") {
+            $this->db->like('c.name', $where["category"]);
+        }
+
+        if ($where["sub_cat"] != "") {
+            $this->db->like('sc.name', $where["sub_cat"]);
+        }
+
+        if ($where["sub_sub_cat"] != "") {
+            $this->db->like('ssc.name', $where["sub_sub_cat"]);
+        }
+
+        if ($where["brand"] != "") {
+            $this->db->like('b.brand_name', $where["brand"]);
+        }
+
+        if ($where["website_status"] != "") {
+            $this->db->where('p.website_status', $where["website_status"]);
+        }
+
+        if ($where["sourcing_status"] != "") {
+            $this->db->where('p.sourcing_status', $where["sourcing_status"]);
+        }
+
+        if ($where["website_quantity"] != "") {
+            $this->db->where('p.website_quantity > 0');
+        }
+
+        if ($where["create_on"] != "") {
+            $this->db->where('p.create_on >=', $where["create_on"] . " 00:00:00");
+            $this->db->where('p.create_on <=', $where["create_on"] . " 23:59:59");
+        }
+
+        if ($where["start_date"] && $where["end_date"] && ($where["start_date"] < $where["end_date"])) {
+            $this->db->where('p.create_on >=', $where["start_date"] . " 00:00:00");
+            $this->db->where('p.create_on <=', $where["end_date"] . " 23:59:59");
+        }
+
+        if ($where["cat_id"] != "") {
+            $this->db->where('p.cat_id', $where["cat_id"]);
+        }
+
+        if ($where["sub_cat_id"] != "") {
+            $this->db->where('p.sub_cat_id', $where["sub_cat_id"]);
+        }
+
+        if ($where["sub_sub_cat_id"] != "") {
+            $this->db->where('p.sub_sub_cat_id', $where["sub_sub_cat_id"]);
+        }
+
+        if ($where["status"] != "") {
+            $this->db->where('p.status', $where["status"]);
+        }
+
+        if ($where["warranty_in_month"] != "") {
+            $this->db->where('p.warranty_in_month', $where["warranty_in_month"]);
+        } else if (!$option["purchaser"]) {
+            //$this->db->where('p.status >= 1');
+        } else {
+
+        }
+
+        if ($where["weblist"] != "") {
+            $this->db->where('p.status', '2');
+        }
+
+        if ($where["platform_id"] != "") {
+            $this->db->where('pr.platform_id', $where['platform_id']);
+        }
+
+        if (empty($option["num_rows"])) {
+
+            $this->db->select('p.sku, p.name, c.name AS category, sc.name AS sub_cat, cl.colour_name AS colour, ssc.name AS sub_sub_cat, b.brand_name AS brand, p.proc_status, p.website_status, p.website_quantity, p.image AS image_file, p.status, p.create_on, p.create_at, p.create_by, p.modify_on, p.modify_at, p.modify_by, map.ext_sku master_sku, p.warranty_in_month');
+
+            if (isset($option["orderby"])) {
+                $this->db->order_by($option["orderby"]);
+            }
+
+            if (empty($option["limit"])) {
+                $option["limit"] = $this->rows_limit;
+            } elseif ($option["limit"] == -1) {
+                $option["limit"] = "";
+            }
+
+            if (!isset($option["offset"])) {
+                $option["offset"] = 0;
+            }
+
+            if ($this->rows_limit != "") {
+                $this->db->limit($option["limit"], $option["offset"]);
+            }
+
+            $rs = [];
+
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
+                    $rs[] = $obj;
+                }
+                return (object)$rs;
+            }
+        } else {
+            $this->db->select('COUNT(*) AS total');
+            if ($query = $this->db->get()) {
+                return $query->row()->total;
+            }
+        }
+
+        return FALSE;
+    }
+
+    public function getCurrentSupplier($sku = "")
+    {
+        if ($sku == "") {
+            return false;
+        }
+
+        $this->db->from('supplier s');
+
+        $this->db->join("(  SELECT supplier_id, supplier_status
+                            FROM supplier_prod
+                            WHERE prod_sku = '$sku'
+                            AND order_default = '1'
+                            LIMIT 1) AS sp", "sp.supplier_id = s.id", "INNER");
+
+        $this->db->limit(1);
+
+        $this->db->select('s.name, sp.supplier_status');
+
+        if ($query = $this->db->get()) {
+            return (array)$query->row();
+        }
+
+        return FALSE;
+    }
+
+    public function getTotalDefaultSupplier($sku)
+    {
+        $sql = "SELECT count(1) num_row
+                FROM supplier_prod
+                WHERE prod_sku = ?";
+
+        if ($query = $this->db->query($sql, array($sku))) {
+            return $query->row()->num_row;
+        }
+
+        return FALSE;
+    }
     public function isClearance($sku = "")
     {
         $sql = "SELECT clearance FROM product p WHERE p.sku = '$sku'";
@@ -722,7 +941,6 @@ class ProductDao extends BaseDao
             return $query->row()->clearance;
         }
     }
-
 
     // TODO
     // will remove
@@ -765,5 +983,18 @@ class ProductDao extends BaseDao
             return $res;
         }
         return FALSE;
+    }
+
+    public function getProdUrl($where = [], $option = [], $className = "SearchspringProductFeedProductPriceDto")
+    {
+        $this->db->from("product p");
+        $this->db->join("price pr", "p.sku = pr.sku", "INNER");
+        $this->db->join("selling_platform sp", "pr.platform_id = sp.selling_platform_id AND sp.type = 'WEBSITE'", "INNER");
+        $this->db->join("platform_biz_var pbv", "pbv.selling_platform_id = sp.selling_platform_id ", "INNER");
+        $this->db->join("category_extend cat", "p.cat_id = cat.cat_id and pbv.language_id = cat.lang_id", "LEFT");
+        $this->db->join("category_extend sc", "p.sub_cat_id = sc.cat_id and pbv.language_id = sc.lang_id", "LEFT");
+
+        $prod_url = 'CONCAT(REPLACE(REPLACE(cat.name, ".", "-"), " ", "-"), "/", REPLACE(REPLACE(sc.name, ".", "-"), " ", "-"), "/", REPLACE(REPLACE(p.name, ".", "-"), " ", "-") ,"/product/", p.sku) product_url';
+        return $this->commonGetList($className, $where, $option, $prod_url);
     }
 }

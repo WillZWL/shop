@@ -66,11 +66,9 @@ class WmsInventoryDao extends BaseDao
                 ORDER BY w.warehouse_id
                 ";
 
-        $this->include_vo();
-
         $rs = [];
         if ($query = $this->db->query($sql, [$where["sku"]])) {
-            foreach ($query->result($$this->getVoClassname()) as $obj) {
+            foreach ($query->result($this->getVoClassname()) as $obj) {
                 $rs[] = $obj;
             }
             return $rs;

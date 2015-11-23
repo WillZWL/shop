@@ -15,7 +15,7 @@ class Pricing_tool_website extends MY_Controller
     {
         parent::__construct();
 
-        $this->load->model('integration/integration_model');
+        // $this->load->model('integration/integration_model');
         $this->tool_path = 'marketing/pricing_tool_' . strtolower(PLATFORM_TYPE);
         $this->load->helper(array('url', 'notice', 'image'));
         $this->load->library('input');
@@ -39,13 +39,13 @@ class Pricing_tool_website extends MY_Controller
         $this->load->library('service/deliverytime_service');
         $this->load->library('dao/competitor_map_dao');
 
-        $this->default_platform_id = $this->context_config_service->value_of("default_platform_id");
+        $this->default_platform_id = $this->sc['ContextConfig']->valueOf("default_platform_id");
     }
 
     public function index()
     {
-        $data = array();
-        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->_get_lang_id() . ".php";
+        $data = [];
+        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->getLangId() . ".php";
         $data["lang"] = $lang;
         $this->load->view($this->tool_path . "/pricing_tool_index", $data);
     }
@@ -53,11 +53,6 @@ class Pricing_tool_website extends MY_Controller
     public function getAppId()
     {
         return $this->appId;
-    }
-
-    public function _get_lang_id()
-    {
-        return $this->lang_id;
     }
 
     public function bulk_list_post()
@@ -68,21 +63,21 @@ class Pricing_tool_website extends MY_Controller
 
 
         foreach ($sku_list as $sku) {
-            if ($platform_list = $this->pricing_tool_model->platform_biz_var_service->get_pricing_tool_platform_list($sku, PLATFORM_TYPE)) {
+            if ($platform_list = $this->sc['PlatformBizVar']->getDao('PlatformBizVar')->getPricingToolPlatformList($sku, PLATFORM_TYPE)) {
                 foreach ($platform_list as $platform_obj) {
-                    $platform_id = $platform_obj->get_selling_platform_id();
+                    $platform_id = $platform_obj->getSellingPlatformId();
                     $json = $this->get_profit_margin_json($platform_id, $sku, 0, -1, "WEBSITE", true);
                     $m = json_decode($json, TRUE);
                     $fail_reason = "";
-                    if ($m["get_margin"] == 0) $fail_reason .= "Margin is 0%, ";
+                    if ($m["getMargin"] == 0) $fail_reason .= "Margin is 0%, ";
                     if ($platform_id == "TMNZ") $fail_reason .= "TMNZ to be omitted, SBF#3308";
                     if ($platform_id == "LAMY") $fail_reason .= "LAMY to be omitted, SBF#3308";
                     $price = $m["get_price"];
 
                     if ($fail_reason == "") {
-                        $price_obj = $this->pricing_tool_model->get_price_obj(array("sku" => $sku, "platform_id" => $platform_id));
+                        $price_obj = $this->sc['Price']->getDao('Price')->get(["sku" => $sku, "platform_id" => $platform_id]);
                         if (!$price_obj) {
-                            $price_obj = $this->pricing_tool_model->get_price_obj();
+                            $price_obj = $this->sc['Price']->getDao('Price')->get();
                             $type = "add";
 
                             $price_obj->set_platform_id($platform_id);
@@ -125,7 +120,7 @@ class Pricing_tool_website extends MY_Controller
                         $msg .= "FAILED: $sku $platform_id, $fail_reason<br>\r\n";
                 }
             }
-            // $this->process_posted_data($line, false, true, true);
+            // $this->processPostedData($line, false, true, true);
         }
 
         header("Content-Type: text/html");
@@ -141,38 +136,38 @@ class Pricing_tool_website extends MY_Controller
         $sku = strtoupper($sku);
         if ($sku[0] == 'M') {
             $sku = substr($sku, 1);
-            $sku = $this->sku_mapping_service->get_local_sku($sku);
+            $sku = $this->sc['SkuMapping']->getLocalSku($sku);
         }
 
-        $price_list = $this->integration_model->get_platform_price_list(array("sp.type" => $platform_type, "sku" => $sku, "platform_id" => $platform_id));
+        $price_list = $this->sc['Price']->getDao('Price')->getPlatformPriceList(array("sp.type" => $platform_type, "sku" => $sku, "platform_id" => $platform_id));
 
         header('Content-type: application/json');
         if ($price_list) {
             foreach ($price_list AS $price_obj) {
-                $json = $this->pricing_tool_model->get_profit_margin_json($price_obj->get_platform_id(), $price_obj->get_sku(), $required_selling_price, $required_cost_price);
+                $json = $this->sc['Price']->getProfitMarginJson($price_obj->getPlatformId(), $price_obj->getSku(), $required_selling_price, $required_cost_price);
                 if ($return_json) return $json; else echo $json;
             }
         } else {
             # this will get called if an unpriced item is passed in
-            $json = $this->pricing_tool_model->get_profit_margin_json($platform_id, $sku, $required_selling_price, $required_cost_price);
+            $json = $this->sc['Price']->getProfitMarginJson($platform_id, $sku, $required_selling_price, $required_cost_price);
             if ($return_json) return $json; else echo $json;
         }
     }
 
     public function bulk_list()
     {
-        $data = array();
-        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->_get_lang_id() . ".php";
+        $data = [];
+        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->getLangId() . ".php";
         $data["lang"] = $lang;
         $this->load->view($this->tool_path . "/pricing_tool_bulk_list", $data);
     }
 
-    public function plist()
+    public function plist($offset = 0)
     {
-        $where = array();
-        $option = array();
+        $where = [];
+        $option = [];
         $sub_app_id = $this->getAppId() . "02";
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
         $sku = $this->input->get("sku");
@@ -198,28 +193,30 @@ class Pricing_tool_website extends MY_Controller
 
             $limit = '20';
 
-            $pconfig['base_url'] = current_url() . "?" . $_SERVER['QUERY_STRING'];
-            $option["limit"] = $pconfig['per_page'] = $limit;
+            $option["limit"] = $limit;
 
-            if ($option["limit"]) {
-                $option["offset"] = $this->input->get("per_page");
+            $option["offset"] = $offset;
+
+            if (empty($sort)) {
+                $sort = "sku";
             }
 
-            if (empty($sort))
-                $sort = "sku";
-
-            if (empty($order))
+            if (empty($order)) {
                 $order = "asc";
+            }
 
             $option["orderby"] = $sort . " " . $order;
 
             $option["exclude_bundle"] = 1;
-            $data["objlist"] = $this->pricing_tool_model->get_product_list($where, $option);
-            $data["total"] = $this->pricing_tool_model->get_product_list_total($where, $option);
-            $pconfig['total_rows'] = $data['total'];
-            $this->pagination_service->set_show_count_tag(TRUE);
-            $this->pagination_service->msg_br = TRUE;
-            $this->pagination_service->initialize($pconfig);
+            $data["objlist"] = $this->sc['Product']->getDao('Product')->getListWithName($where, $option);
+            $data["total"] = $this->sc['Product']->getDao('Product')->getListWithName($where, array_merge(['num_rows'=>1], $option));
+
+            $config['base_url'] = base_url('/marketing/pricing_tool_website/plist');
+            $config['total_rows'] = $data["total"];
+            $config['per_page'] = $limit;
+
+            $this->pagination->initialize($config);
+            $data['links'] = $this->pagination->create_links();
 
             $data["notice"] = notice($lang);
 
@@ -238,22 +235,22 @@ class Pricing_tool_website extends MY_Controller
             exit;
         }
 
-        $no_of_valid_supplier = $this->pricing_tool_model->check_valid_supplier_cost($value);
+        $no_of_valid_supplier = $this->sc['Supplier']->checkValidSupplierCost($value);
         if ($no_of_valid_supplier == 1) {
-            $data = array();
+            $data = [];
             $data["valid_supplier"] = 1;
             $data["prompt_notice"] = 0;
-            $data["website_link"] = $this->context_config_service->value_of("website_domain");
-            define('IMG_PH', $this->context_config_service->value_of("prod_img_path"));
+            $data["website_link"] = $this->sc['ContextConfig']->valueOf("website_domain");
+            define('IMG_PH', $this->sc['ContextConfig']->valueOf("prod_img_path"));
 
-            $this->process_posted_data($value);
+            $this->processPostedData($value);
 
             $data["action"] = "update";
             if (empty($price_obj)) {
-                $price_obj = $this->pricing_tool_model->get_price_obj();
+                $price_obj = $this->sc['Price']->getDao('Price')->get();
                 $data["action"] = "add";
             }
-            include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
+            include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->getLangId() . ".php";
             $data["lang"] = $lang;
             $_SESSION["price_obj"] = serialize($price_obj);
             $data["canedit"] = 1;
@@ -261,45 +258,47 @@ class Pricing_tool_website extends MY_Controller
             $data["target"] = $this->input->get('target');
             $data["notice"] = notice($lang);
 
-            $data["inv"] = $this->wms_inventory_service->get_inventory_list(array("sku" => $value));
+            $data["inv"] = $this->sc['WmsInventory']->getInventoryList(["sku" => $value]);
 
-            $tmpx = $this->pricing_tool_model->get_quantity_in_orders($value);
+            $tmpx[7] = $this->sc['So']->getDao('So')->getQuantityInOrders($value, 7);
+            $tmpx[30] = $this->sc['So']->getDao('So')->getQuantityInOrders($value, 30);
 
             foreach ($tmpx as $key => $val) {
                 $data["qty_in_orders"] .= $lang["last"] . " " . $key . " " . $lang["days"] . " : " . $val . "<br>";
             }
 
-            if ($delivery_scenario_list = $this->deliverytime_service->get_delivery_scenario_list()) {
+            if ($delivery_scenario_list = $this->sc['DeliveryTime']->getDeliveryScenarioList()) {
                 foreach ($delivery_scenario_list as $key => $obj) {
                     $scenario[$obj->id] = $obj->name;
                 }
             }
 
             $data["qty_in_orders"] = ereg_replace("<br>$", "", $data["qty_in_orders"]);
-            $mapping_obj = $this->pricing_tool_model->get_mapping_obj(array('sku' => $value, 'ext_sys' => 'WMS', 'status' => 1));
-            if ($mapping_obj && trim($mapping_obj->get_ext_sku()) != "") {
-                $data['master_sku'] = $mapping_obj->get_ext_sku();
+            $mapping_obj = $this->sc['Product']->getDao('SkuMapping')->get(['sku' => $value, 'ext_sys' => 'WMS', 'status' => 1]);
+            if ($mapping_obj && trim($mapping_obj->getExtSku()) != "") {
+                $data['master_sku'] = $mapping_obj->getExtSku();
             }
-            $pdata = array();
+            $pdata = [];
             if ($value != "") {
-                if ($platform_list = $this->pricing_tool_model->platform_biz_var_service->get_pricing_tool_platform_list($value, PLATFORM_TYPE)) {
+                if ($platform_list = $this->sc['PlatformBizVar']->getDao('PlatformBizVar')->getPricingToolPlatformList($value, PLATFORM_TYPE)) {
                     foreach ($platform_list as $platform_obj) {
-                        $platform_id = $platform_obj->get_selling_platform_id();
-                        $platform_country_id = $platform_obj->get_platform_country_id();
-                        $language_id = $platform_obj->get_language_id();
+                        $platform_id = $platform_obj->getSellingPlatformId();
+                        $platform_country_id = $platform_obj->getPlatformCountryId();
+                        $language_id = $platform_obj->getLanguageId();
 
                         $pdata[$platform_id]["obj"] = $platform_obj;
 
                         // this is the part where we get the HTML from deep inside the code
-                        $tmp = $this->pricing_tool_model->get_pricing_tool_info($platform_id, $value, $this->getAppId());
+                        $tmp = $this->sc['Price']->getPricingToolInfo($platform_id, $value, $this->getAppId());
 
                         $pdata[$platform_id]["pdata"] = $tmp;
                         $objcount++;
-                        $price_obj = $this->pricing_tool_model->get_price_obj(array("sku" => $value, "platform_id" => $platform_id));
-                        $sub_cat_margin = $tmp["dst"]->get_sub_cat_margin();
+                        $price_obj = $this->sc['Price']->getDao('Price')->get(["sku" => $value, "platform_id" => $platform_id]);
+
+                        $sub_cat_margin = $tmp["dst"]->getSubCatMargin();
                         $type = "update";
                         if (!$price_obj) {
-                            $price_obj = $this->pricing_tool_model->get_price_obj();
+                            $price_obj = $this->sc['Price']->getDao('Price')->get();
                             $type = "add";
                         }
 
@@ -308,23 +307,23 @@ class Pricing_tool_website extends MY_Controller
                         $data["price_list"][$platform_id] = $price_obj;
 
                         #SBF #4020 - delivery scenarios to show different time frames on front end
-                        $data["delivery_info"][$platform_id] = array();
-                        $delivery_scenarioid = $price_obj->get_delivery_scenarioid();
-                        $deliverytime_obj = $this->deliverytime_service->get_deliverytime_obj($platform_country_id, $delivery_scenarioid);
+                        $data["delivery_info"][$platform_id] = [];
+                        $delivery_scenarioid = $price_obj->getDeliveryScenarioid();
+                        $deliverytime_obj = $this->sc['DeliveryTime']->getDeliverytimeObj($platform_country_id, $delivery_scenarioid);
                         if (!empty($deliverytime_obj)) {
-                            $data["delivery_info"][$platform_id]["scenarioid"] = $deliverytime_obj->get_scenarioid();
-                            $data["delivery_info"][$platform_id]["scenarioname"] = $scenario[$deliverytime_obj->get_scenarioid()];
-                            $data["delivery_info"][$platform_id]["del_min_day"] = $deliverytime_obj->get_del_min_day();
-                            $data["delivery_info"][$platform_id]["del_max_day"] = $deliverytime_obj->get_del_max_day();
-                            $data["delivery_info"][$platform_id]["margin"] = $deliverytime_obj->get_margin();
+                            $data["delivery_info"][$platform_id]["scenarioid"] = $deliverytime_obj->getScenarioid();
+                            $data["delivery_info"][$platform_id]["scenarioname"] = $scenario[$deliverytime_obj->getScenarioid()];
+                            $data["delivery_info"][$platform_id]["del_min_day"] = $deliverytime_obj->getDelMinDay();
+                            $data["delivery_info"][$platform_id]["del_max_day"] = $deliverytime_obj->getDelMaxDay();
+                            $data["delivery_info"][$platform_id]["margin"] = $deliverytime_obj->getMargin();
                         }
                         $_SESSION["price_obj_" . $platform_id] = serialize($price_obj);
 
                         #SBF2814
-                        if ($adwords_data_obj = $this->adwords_service->get_adwords_data_dao()->get(array("sku" => $value, "platform_id" => $platform_id))) {
+                        if ($adwords_data_obj = $this->sc['Adwords']->getDao('AdwordsData')->get(["sku" => $value, "platform_id" => $platform_id])) {
                             $pdata[$platform_id]["adwords"] = $lang["adwords_exists"];
                             //display adGroup status
-                            if ($adwords_data_obj->get_status() == 0) {
+                            if ($adwords_data_obj->getStatus() == 0) {
                                 $adwords_enabled = 0;
                                 $adwords_status_str = "<span style='color:#FF0000;width:80%x; height:20px;overflow:hidden'>Paused</span>";
                             } else {
@@ -332,12 +331,12 @@ class Pricing_tool_website extends MY_Controller
                                 $adwords_status_str = "<span style='color:#00FF00;width:80%x; height:20px;overflow:hidden'>Enabled</span>";
                             }
 
-                            if ($adwords_data_obj->get_api_request_result() == 1) {
+                            if ($adwords_data_obj->getApiRequestResult() == 1) {
                                 $api_result = "<span style='color:#00FF00;width:80%x; height:20px;overflow:hidden'>Success</span>";
                                 $pdata[$platform_id]["adGroup_status"] = $api_result . ' - ' . $adwords_status_str;
                             } else {
                                 $api_result = "<span style='color:#FF0000;width:80%x; height:20px;overflow:hidden'>Fail   <a href='javascript: void(0)' onclick=\"showHide_with_eleid('adGrouperror[$platform_id][$value]')\">[view error]</a></span>";
-                                $pdata[$platform_id]["adGroup_error_row"] = "<tr><td colspan='4' class='value'><div id='adGrouperror[$platform_id][$value]' style='display:none;color:#000'><b>AdGroup Error:</b> " . $adwords_data_obj->get_comment() . "</div></td></tr>";
+                                $pdata[$platform_id]["adGroup_error_row"] = "<tr><td colspan='4' class='value'><div id='adGrouperror[$platform_id][$value]' style='display:none;color:#000'><b>AdGroup Error:</b> " . $adwords_data_obj->getComment() . "</div></td></tr>";
                                 $pdata[$platform_id]["adGroup_status"] = $api_result;
                             }
                         } else {
@@ -350,41 +349,41 @@ class Pricing_tool_website extends MY_Controller
                         list($prod_grp_cd, $version_id, $colour_id) = explode("-", $value);
 
                         $internal_gsc_comment = "";
-                        if (!$prod_identifer_obj = $this->product_identifier_service->get_dao()->get(array("prod_grp_cd" => $prod_grp_cd, "colour_id" => $colour_id, "country_id" => $platform_country_id))) {
+                        if (!$prod_identifer_obj = $this->sc['ProductIdentifier']->getDao('ProductIdentifier')->get(["prod_grp_cd" => $prod_grp_cd, "colour_id" => $colour_id, "country_id" => $platform_country_id])) {
                             $internal_gsc_comment = "No mpn value. ";
                         } else {
-                            if (!$prod_identifer_obj->get_mpn()) {
+                            if (!$prod_identifer_obj->getMpn()) {
                                 $internal_gsc_comment = "No mpn value. ";
                             }
                         }
 
-                        if ($prod_obj = $this->product_model->get('product', array('sku' => $value))) {
-                            if ($prod_obj->get_status() != 2) {
+                        if ($prod_obj = $this->sc['Product']->getDao('Product')->get(['sku' => $value])) {
+                            if ($prod_obj->getStatus() != 2) {
                                 $internal_gsc_comment .= "/Product is not listed in product Mgmt. ";
                             }
                         }
 
-                        if ($product_content_obj = $this->product_model->get_product_content(array("prod_sku" => $value, "lang_id" => $language_id))) {
-                            if (!$product_content_obj->get_detail_desc()) {
+                        if ($product_content_obj = $this->sc['Product']->getDao('ProductContent')->get(["prod_sku" => $value, "lang_id" => $language_id])) {
+                            if (!$product_content_obj->getDetailDesc()) {
                                 $internal_gsc_comment .= "/No detail desc. ";
                             }
                         }
 
-                        $gsc_where = $gsc_option = array();
+                        $gsc_where = $gsc_option = [];
                         $gsc_where['cm.id'] = $value;
                         $gsc_where['cm.ext_party'] = "GOOGLEBASE";
                         $gsc_where['cm.country_id'] = $platform_country_id;
                         $gsc_where['cm.status'] = 1;
                         $gsc_option['limit'] = 1;
 
-                        if (!$google_cat_obj = $this->ext_category_mapping_service->get_category_mapping_srv()->get_googlebase_cat_list_w_country($gsc_where, $gsc_option)) {
+                        if (!$google_cat_obj = $this->sc['CategoryMapping']->getDao('CategoryMapping')->getGooglebaseCatListWithCountry($gsc_where, $gsc_option)) {
                             $internal_gsc_comment .= " No google product title/category. ";
                         } else {
-                            if (!$google_cat_obj->get_product_name()) {
+                            if (!$google_cat_obj->getProductName()) {
                                 $internal_gsc_comment .= " No google product title. ";
                             }
 
-                            if (!$google_cat_obj->get_ext_name()) {
+                            if (!$google_cat_obj->getExtName()) {
                                 $internal_gsc_comment .= " No google category.";
                             }
                         }
@@ -393,10 +392,10 @@ class Pricing_tool_website extends MY_Controller
                         $enabled_pla_checkbox = $internal_gsc_comment ? 0 : 1;
 
                         $gsc_comment = "";
-                        if ($google_shopping_obj = $this->product_update_followup_service->get_google_shopping_srv()->get(array("sku" => $value, "platform_id" => $platform_id))) {
+                        if ($google_shopping_obj = $this->sc['Product']->getDao('GoogleShopping')->get(["sku" => $value, "platform_id" => $platform_id])) {
                             //result: 0 - fail, 1 - success
-                            $google_shopping_result = $google_shopping_obj->get_api_request_result();
-                            if ($google_shopping_obj->get_status() == 0) {
+                            $google_shopping_result = $google_shopping_obj->getApiRequestResult();
+                            if ($google_shopping_obj->getStatus() == 0) {
                                 $gsc_comment = "PAUSE";
                                 if ($google_shopping_result == 0) {
                                     $gsc_comment .= " - Fail";
@@ -405,9 +404,9 @@ class Pricing_tool_website extends MY_Controller
                                 }
                             } else {
                                 $pdata[$platform_id]["gsc_request_result"] = $google_shopping_result;
-                                if (!$google_shopping_result || $price_obj->get_is_advertised() != "Y") {
+                                if (!$google_shopping_result || $price_obj->getIsAdvertised() != "Y") {
                                     // If previous fail api OR is not advertised, we check if it fulfills the above conditions before enabling (e.g. google cat mapping, mpn, etc)
-                                    $gsc_comment = $google_shopping_obj->get_comment();
+                                    $gsc_comment = $google_shopping_obj->getComment();
                                     if (!$gsc_comment) {
                                         //get internal failed reason if no gsc_comment
                                         $gsc_comment = $internal_gsc_comment;
@@ -429,36 +428,36 @@ class Pricing_tool_website extends MY_Controller
                         $pdata[$platform_id]["gsc_comment"] = $gsc_comment ? $gsc_comment : $internal_gsc_comment;
                         $pdata[$platform_id]["enabled_pla_checkbox"] = $enabled_pla_checkbox;
 
-                        $current_platform_price = $tmp["dst"]->get_current_platform_price();
+                        $current_platform_price = $tmp["dst"]->getCurrentPlatformPrice();
 
                         if ($data["master_sku"]) {
                             # get list of Active competitor mapping
-                            $comp_mapping_list = $this->competitor_map_dao->get_active_comp($data['master_sku'], $platform_country_id);
+                            $comp_mapping_list = $this->sc['CompetitorMap']->getDao('CompetitorMap')->getActiveComp($data['master_sku'], $platform_country_id);
 
                             if ($comp_mapping_list) {
                                 # if set to competitor reprice, then we need to check if there's at least ONE competitor with active match
                                 # front end will show message if $hasactivematch = 0
-                                if ($price_obj->get_auto_price() == "C")
+                                if ($price_obj->getAutoPrice() == "C")
                                     $hasactivematch = 0;
                                 else
                                     $hasactivematch = 1;
 
                                 $pdata[$platform_id]["competitor"]["comp_mapping_list"] = $comp_mapping_list;
-                                $pdata[$platform_id]["competitor"]["price_diff"] = array();
+                                $pdata[$platform_id]["competitor"]["price_diff"] = [];
                                 foreach ($comp_mapping_list as $row) {
-                                    $ship_charge = $row->get_comp_ship_charge();
+                                    $ship_charge = $row->getCompShipCharge();
                                     if (empty($ship_charge)) {
                                         $ship_charge = 0;
                                     }
 
                                     # current competitor's selling price
-                                    $pdata[$platform_id]["competitor"]["total_price"] = number_format(($row->get_now_price() + $ship_charge), 2, '.', '');
+                                    $pdata[$platform_id]["competitor"]["total_price"] = number_format(($row->getNowPrice() + $ship_charge), 2, '.', '');
 
                                     #price difference between vb and competitor
-                                    $pdata[$platform_id]["competitor"]["price_diff"][$row->get_competitor_id()] = number_format(($pdata[$platform_id]["competitor"]["total_price"] - $current_platform_price), 2);
+                                    $pdata[$platform_id]["competitor"]["price_diff"][$row->getCompetitorId()] = number_format(($pdata[$platform_id]["competitor"]["total_price"] - $current_platform_price), 2);
 
                                     # flag to check if all competitors on this platform has IGNORE match
-                                    if ($row->get_match() == 1)
+                                    if ($row->getMatch() == 1)
                                         $hasactivematch++;
 
                                 }
@@ -470,8 +469,8 @@ class Pricing_tool_website extends MY_Controller
                         }
 
                         #sbf #3959 - show always include & always exclude list
-                        $data["feed_include"][$platform_id] = $this->affiliate_sku_platform_service->get_feed_list_by_sku($value, $platform_id, 2);
-                        $data["feed_exclude"][$platform_id] = $this->affiliate_sku_platform_service->get_feed_list_by_sku($value, $platform_id, 1);
+                        $data["feed_include"][$platform_id] = $this->sc['Product']->getDao('AffiliateSkuPlatform')->getFeedListBySku($value, $platform_id, 2);
+                        $data["feed_exclude"][$platform_id] = $this->sc['Product']->getDao('AffiliateSkuPlatform')->getFeedListBySku($value, $platform_id, 1);
 
                     }
                 }
@@ -479,23 +478,22 @@ class Pricing_tool_website extends MY_Controller
 
                 $data["pdata"] = $pdata;
                 $data["objcount"] = $objcount;
-                $data["mkt_note_obj"] = $this->pricing_tool_model->get_note($value, "M");
-                $data["src_note_obj"] = $this->pricing_tool_model->get_note($value, "S");
+                $data["mkt_note_obj"] = $this->sc['Product']->getDao('ProductNote')->getNoteWithAuthorName("WSGB", $value, "M");
+                $data["src_note_obj"] = $this->sc['Product']->getDao('ProductNote')->getNoteWithAuthorName(null, $value, "S");
                 $data["value"] = $value;
-                $prod_obj = $this->pricing_tool_model->get_prod($value);
+                $prod_obj = $this->sc['Product']->getDao('Product')->get(['sku'=>$value]);
             }
 
             if ($prod_obj != null) {
-                $data["surplus_qty"] = $prod_obj->get_surplus_quantity();
-                $data["slow_move"] = $prod_obj->get_slow_move_7_days();
+                $data["surplus_qty"] = $prod_obj->getSurplusQuantity();
+                $data["slow_move"] = $prod_obj->getSlowMove7Days();
             }
             $data["prod_obj"] = $prod_obj;
-            $data["supplier"] = $this->pricing_tool_model->get_current_supplier($value);
-            $data["num_of_supplier"] = $this->pricing_tool_model->get_total_default_supplier($value);
-            if ($t = $this->pricing_tool_model->get_freight_cat($prod_obj->get_freight_cat_id())) {
-                $data["freight_cat"] = $t->get_name();
+            $data["supplier"] = $this->sc['Product']->getDao('Product')->getCurrentSupplier($value);
+            $data["num_of_supplier"] = $this->sc['Product']->getDao('Product')->getTotalDefaultSupplier($value);
+            if ($t = $this->sc['FreightCat']->getDao('FreightCategory')->get(['id'=>$prod_obj->getFreightCatId()])) {
+                $data["freight_cat"] = $t->getName();
             }
-
 
             unset($t);
             $_SESSION["prod_obj"] = serialize($prod_obj);
@@ -504,7 +502,7 @@ class Pricing_tool_website extends MY_Controller
         $this->load->view($this->tool_path . "/pricing_tool_view", $data);
     }
 
-    private function process_posted_data($sku, $redirect = true, $force_auto_price = false, $force_list = false)
+    private function processPostedData($sku, $redirect = true, $force_auto_price = false, $force_list = false)
     {
         if ($this->input->post('posted')) {
             $plat = $this->input->post('selling_platform');
@@ -781,7 +779,7 @@ asdf;
 
     public function set_feed_platform_json($affiliate_id, $platform_id = "")
     {
-        echo json_encode($this->affiliate_service->set_feed_platform($affiliate_id, $platform_id));
+        echo json_encode($this->sc['Affiliate']->getDao('Affiliate')->setFeedPlatform($affiliate_id, $platform_id));
     }
 
     public function get_feed_platform_json()

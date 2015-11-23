@@ -1,25 +1,22 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\CategoryMappingDao;
-
 class CategoryMappingService extends BaseService
 {
 
     public function __construct()
     {
         parent::__construct();
-        $this->setDao(new CategoryMappingDao);
     }
 
     public function insert_cat_map($obj)
     {
-        return $this->getDao()->insert($obj);
+        return $this->getDao('CategoryMapping')->insert($obj);
     }
 
     public function update_cat_map($obj)
     {
-        return $this->getDao()->update($obj);
+        return $this->getDao('CategoryMapping')->update($obj);
     }
 
     public function update_or_insert_mapping($sku, $lang_id_temp, $country_id, $google_cat_id, $google_product_name)
@@ -47,12 +44,12 @@ class CategoryMappingService extends BaseService
 
     public function getCatMap($where = [])
     {
-        return $this->getDao()->get($where);
+        return $this->getDao('CategoryMapping')->get($where);
     }
 
-    public function get_googlebase_cat_list_w_country($where = [], $option = [])
+    public function getGooglebaseCatListWithCountry($where = [], $option = [])
     {
-        return $this->getDao()->getGooglebaseCatListWCountry($where, $option);
+        return $this->getDao('CategoryMapping')->getGooglebaseCatListWithCountry($where, $option);
     }
 
 }

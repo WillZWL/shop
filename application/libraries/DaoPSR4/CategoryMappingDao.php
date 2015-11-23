@@ -21,7 +21,7 @@ class CategoryMappingDao extends BaseDao
         return $this->voClassname;
     }
 
-    public function getGooglebaseCatListWCountry($where, $option, $classname = "CategoryMappingVo")
+    public function getGooglebaseCatListWithCountry($where, $option, $classname = "CategoryMappingVo")
     {
         $this->db->from("category_mapping AS cm");
         $this->db->join("product AS p", "p.sku = cm.category_mapping_id", "LEFT");

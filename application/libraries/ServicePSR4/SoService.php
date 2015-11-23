@@ -2039,331 +2039,47 @@ html;
         $declared_pcent = 100;
         $declared = -1;
 
-        $this->declared_value_debug .= "0. country_id $country_id\r\n";
-
-        {
-            switch ($country_id) {
-                case "AU":
-                    if ($price < 950)
-                        $declared_pcent = 100;
-                    else
-                        $max_declared_value = 950;
-                    break;
-
-                case "RU":
+        switch ($country_id) {
+            case "AU":
+                if ($price < 950) {
                     $declared_pcent = 100;
-                    break;
-
-                case "NZ":
-                    if ($price < 350)
-                        $declared_pcent = 100;
-                    else
-                        $declared_pcent = 80;
-                    break;
-
-                case "SG":
-                    if ($price < 350)
-                        $declared_pcent = 100;
-                    else
-                        $max_declared_value = 350;
-                    break;
-
-                // based on SBF#1790
-                case "AE":
-                case "AF":
-                case "AG":
-                case "AI":
-                case "AM":
-                case "AN":
-                case "AO":
-                case "AQ":
-                case "AR":
-                case "AS":
-                case "AW":
-                case "AZ":
-                case "BB":
-                case "BD":
-                case "BF":
-                case "BH":
-                case "BI":
-                case "BJ":
-                case "BM":
-                case "BN":
-                case "BO":
-                case "BR":
-                case "BS":
-                case "BT":
-                case "BV":
-                case "BW":
-                case "BZ":
-                case "CA":
-                case "CC":
-                case "CD":
-                case "CF":
-                case "CG":
-                case "CI":
-                case "CK":
-                case "CL":
-                case
-                "CM":
-                case "CN":
-                case "CO":
-                case "CR":
-                case "CU":
-                case "CV":
-                case "CX":
-                case "CY":
-                case "DJ":
-                case "DM":
-                case "DO":
-                case "DZ":
-                case "EC":
-                case "EG":
-                case "EH":
-                case "ER":
-                case "ET":
-                case "FJ":
-                case "FK":
-                case "FM":
-                case "GA":
-                case "GD":
-                case "GE":
-                case "GF":
-                case "GH":
-                case "GL":
-                case "GM":
-                case "GN":
-                case "GP":
-                case "GQ":
-                case "GS":
-                case "GT":
-                case "GU":
-                case "GW":
-                case "GY":
-                case "HK":
-                case
-                "HM":
-                case "HN":
-                case "HT":
-                case "ID":
-                case "IL":
-                case "IN":
-                case "IO":
-                case "IQ":
-                case "IR":
-                case "JM":
-                case "JO":
-                case "JP":
-                case "KE":
-                case "KG":
-                case "KH":
-                case "KI":
-                case "KM":
-                case "KN":
-                case "KP":
-                case "KR":
-                case "KW":
-                case "KY":
-                case "KZ":
-                case "LA":
-                case "LB":
-                case "LC":
-                case "LK":
-                case "LR":
-                case "LS":
-                case "LY":
-                case "MA":
-                case "ME":
-                case "MG":
-                case "MH":
-                case "ML":
-                case "MM":
-                case
-                "MN":
-                case "MO":
-                case "MP":
-                case "MQ":
-                case "MR":
-                case "MS":
-                case "MU":
-                case "MV":
-                case "MW":
-                case "MX":
-                case "MY":
-                case "MZ":
-                case "NA":
-                case "NC":
-                case "NE":
-                case "NF":
-                case "NG":
-                case "NI":
-                case "NP":
-                case "NR":
-                case "NU":
-                case "OM":
-                case "PA":
-                case "PE":
-                case "PF":
-                case "PG":
-                case "PH":
-                case "PK":
-                case "PM":
-                case "PN":
-                case "PR":
-                case "PS":
-                case "PW":
-                case "PY":
-                case "QA":
-                case
-                "RE":
-                case "RU":
-                case "RW":
-                case "SA":
-                case "SB":
-                case "SC":
-                case "SD":
-                case "SH":
-                case "SL":
-                case "SN":
-                case "SO":
-                case "SR":
-                case "ST":
-                case "SV":
-                case "SY":
-                case "SZ":
-                case "TC":
-                case "TD":
-                case "TF":
-                case "TG":
-                case "TH":
-                case "TJ":
-                case "TK":
-                case "TL":
-                case "TM":
-                case "TN":
-                case "TO":
-                case "TR":
-                case "TT":
-                case "TV":
-                case "TW":
-                case "TZ":
-                case "UG":
-                case "UM":
-                case "US":
-                case
-                "UY":
-                case "UZ":
-                case "VC":
-                case "VE":
-                case "VG":
-                case "VI":
-                case "VN":
-                case "VU":
-                case "WF":
-                case "WS":
-                case "YE":
-                case "YT":
-                case "ZA":
-                case "ZM":
-                case "ZW":
-                    $declared_pcent = 10;
-                    break;
-
-                # these are EU countries
-                case "GB":
-                case "AD":
-                case "AL":
-                case "AT":
-                case "AX":
-                case "BA":
-                case "BE":
-                case "BG":
-                case "BL":
-                case "BY":
-                case "CH":
-                case "CZ":
-                case "DE":
-                case "DK":
-                case "EE":
-                case "ES":
-                case "FI":
-                case "FO":
-                case "FR":
-                case "GG":
-                case
-                "GI":
-                case "GR":
-                case "HR":
-                case "HU":
-                case "IE":
-                case "IM":
-                case "IS":
-                case "IT":
-                case "JE":
-                case "LI":
-                case "LT":
-                case "LU":
-                case "LV":
-                case "MC":
-                case "MD":
-                case "MF":
-                case "MK":
-                case "MT":
-                case "NL":
-                case "NO":
-                case
-                "PL":
-                case "PT":
-                case "RO":
-                case "RS":
-                case "SE":
-                case "SI":
-                case "SJ":
-                case "SK":
-                case "SM":
-                case "UA":
-                case "VA":
-                    $declared_pcent = 10;
-                    break;
-
-                default:    # all other countries
-                    $declared_pcent = 10;
-                    break;
-                    if ($fc_obj = $this->getDao('FreightCategory')->get(array("id" => $prod_obj->getFreightCatId()))) {
-                        $declared_pcent = $fc_obj->getDeclaredPcent();
-                        $this->declared_value_debug .= "1. declared pcent is $declared_pcent\r\n";
-                    } else {
-                        // default value
-                        $declared_pcent = $this->getDao('Config')->valueOf("default_declared_pcent");
-                        $this->declared_value_debug .= "2. declared pcent is $declared_pcent\r\n";
-                    }
-
-                    if ($obj = $this->subjectDomainService->getDao('SubjectDomain')->get(["subject" => "MAX_DECLARE_VALUE.{$country_id}"])) {
-                        $max_value = $obj->getValue();
-                        $declared = min($max_value, $price);
-                        $this->declared_value_debug .= "3. (max, price, chosen) is ($max_value, $price, $declared)\r\n";
-                    } else {
-                        $declared = $price * $declared_pcent / 100;
-                        $this->declared_value_debug .= "4. (price, declared_pcent, final) is ($price, $declared_pcent, $declared)\r\n";
-                    }
-            }
-
-            if ($declared == -1) {
-                # we have to use max declared value
-                if ($max_declared_value != -1) {
-                    if ($price > $max_declared_value)
-                        $declared = $max_declared_value;
-                    else
-                        $declared = $price;
                 } else {
-                    # we have to use declared percent
-                    $declared = $price * $declared_pcent / 100;
+                    $max_declared_value = 950;
                 }
-            }
+                break;
+
+            case "NZ":
+                if ($price < 350) {
+                    $declared_pcent = 100;
+                } else {
+                    $declared_pcent = 80;
+                }
+                break;
+
+            case "ES":
+            case "BE":
+            case "FR":
+            case "IT":
+            case "PL":
+            case "GB":
+                $declared_pcent = 10;
+                break;
+
+            default:
+                $declared_pcent = 10;
+                break;
         }
 
-        $this->declared_value_debug .= "5. input price at $price\r\n";
-        $this->declared_value_debug .= "5. declared_at $declared\r\n";
+        if ($max_declared_value != -1) {
+            if ($price > $max_declared_value) {
+                $declared = $max_declared_value;
+            } else {
+                $declared = $price;
+            }
+        } else {
+            $declared = $price * $declared_pcent / 100;
+        }
+
         return $declared;
     }
 
