@@ -14,13 +14,13 @@ class PriceService extends BaseService
 
         $newObj->setSku($sku);
         $this->updatePrice($newObj, $obj);
+        $newObj->setPlatformId((string) $obj->platform_id);
 
         return $newObj;
     }
 
     public function updatePrice($newObj, $obj)
     {
-        $newObj->setPlatformId((string) $obj->platform_id);
         $newObj->setDefaultShiptype((string) $obj->default_shiptype);
         $newObj->setSalesQty((string) $obj->sales_qty);
         $newObj->setPrice($obj->required_selling_price);
