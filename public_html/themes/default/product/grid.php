@@ -35,7 +35,7 @@
                                                     <div class="image">
                                                         <div class="product-img img">
                                                             <a class="img" title="<?= $prod_obj->getProdName(); ?>" href='<?= $prod_obj->getProductUrl() ?>'>
-                                                                <img class="img-responsive" src="<?= base_url(get_image_file($prod_obj->getImageExt(), 'm', $prod_obj->getSku())) ?>" title="<?= $prod_obj->getProdName(); ?>" alt="<?= $prod_obj->getProdName(); ?>" />
+                                                                <img class="img-responsive" src="<?=getImageUrl($prod_obj->getImageExt(), 'm', $prod_obj->getSku())?>" title="<?= $prod_obj->getProdName(); ?>" alt="<?= $prod_obj->getProdName(); ?>" />
                                                             </a>
                                                             <div class="quickview hidden-xs">
                                                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top" href='<?= $prod_obj->getProductUrl() ?>' title="Quick View"><i class="fa fa-eye"></i></a>
@@ -55,10 +55,22 @@
                                                         </div>
                                                         <div class="right">
                                                             <div class="action">
-                                                                <div class="cart">
+                                                                <div class="cart  hidden-md hidden-sm hidden-xs">
                                                                     <button data-loading-text="Loading..." class="btn btn-primary" type="button" onclick="cart.addcart('<?= $sku ?>');">
                                                                         <i class="fa fa-shopping-cart"></i>
-                                                                        <span class="add-to-cart"><?= _("Add to Cart") ?></span>
+                                                                        <span class="add-to-cart "><?= _("Add to Cart") ?></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="cart  hidden-lg hidden-sm hidden-xs">
+                                                                    <button data-loading-text="Loading..." class="btn btn-primary btn-cart-md" type="button" onclick="cart.addcart('<?= $sku ?>');">
+                                                                        <i class="fa fa-shopping-cart"></i>
+                                                                        <span class="add-to-cart "><?= _("Add to Cart") ?></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="cart hidden-lg hidden-md">
+                                                                    <button data-loading-text="Loading..." class="btn btn-primary btn-cart-md btn-cart-xs" type="button" onclick="cart.addcart('<?= $sku ?>');">
+                                                                        <i class="fa fa-shopping-cart"></i>
+                                                                        <span class="add-to-cart "><?= _("Add to Cart") ?></span>
                                                                     </button>
                                                                 </div>
                                                                 <!--<div class="wishlist">

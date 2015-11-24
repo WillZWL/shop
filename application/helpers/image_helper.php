@@ -118,6 +118,43 @@ function watermark($image, $watermark, $valign = "B", $align = "R", $padding = 5
     }
 }
 
+function getImageUrl($name = "", $size = "", $sku = "", $id = "")
+{
+    $default_name = "imageunavailable";
+    $default_ext = "jpg";
+    $ar_file = explode(".", $name);
+    $count_name = count($ar_file);
+    $ext = $ar_file[$count_name - 1];
+    $ar_image_name = explode("_", $ar_file[0]);
+    $image_name = $sku ? $sku : $ar_image_name[0];
+    if (empty($sku) && $image_name == $ext) {
+        return "";
+    }
+    if ($size != "") {
+        $size = "_" . $size;
+    }
+    if ($id != "") {
+        $id = "_" . $id;
+    }
+    $filename = $image_name . $id . $size . "." . $ext;
+
+    $urlserver = $_SERVER["HTTP_HOST"];
+
+    $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+
+    $urlserver  =  $base_url . "://" . $urlserver;
+    $urlserver = str_replace("admindev", "dev", $urlserver);
+    $urlserver = str_replace("admincentre", "www", $urlserver);
+
+    $path = "../public_html/images/product/";
+
+    $file_exist = is_file($path . $filename);
+
+    $imgurl =  $urlserver . "/images/product/" . ($file_exist ? $filename : $default_name . $size . "." . $default_ext);
+
+    return $imgurl;
+}
+
 function get_image_file($name = "", $size = "", $sku = "", $id = "")
 {
     $default_name = "imageunavailable";
