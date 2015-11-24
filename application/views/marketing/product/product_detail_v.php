@@ -929,10 +929,10 @@
                                                                     <tr>
                                                                         <td colspan=4 style="border: 0px; padding:0px 0px 0px 0px">
                                                                             <?php
-                                                                            if ($prod_image[0] && $prod_image[0]->get_status()== "1" && file_exists(IMG_PH.$prod_image[0]->get_sku()."_".$prod_image[0]->get_id()."_s.".$prod_image[0]->get_image()))
+                                                                            if ($prod_image[0] && $prod_image[0]->get_status()== "1")
                                                                             {
                                                                                 ?>
-                                                                                <img id='p_img' alt='<?=$prod_image[0]?$prod_image[0]->get_alt_text():""?>' src='<?=base_url()?>images/product/<?=$prod_image[0]->get_sku()."_".$prod_image[0]->get_id()."_l.".$prod_image[0]->get_image()?>?<?=$prod_image[0]->get_modify_on()?>'>
+                                                                                <img id='p_img' alt='<?=$prod_image[0]?$prod_image[0]->get_alt_text():""?>' src='<?=getImageUrl($prod_image[0]->get_image(), "l", $prod_image[0]->get_sku(), $prod_image[0]->get_id())?>'>
                                                                                 <?php
                                                                             }
                                                                             else
@@ -948,11 +948,11 @@
                                                                         <?php
                                                                         for($i=1; $i<5; $i++)
                                                                         {
-                                                                            if($prod_image[$i] && $prod_image[$i]->get_status()== "1" && file_exists(IMG_PH.$prod_image[$i]->get_sku()."_".$prod_image[$i]->get_id()."_s.".$prod_image[$i]->get_image()))
+                                                                            if($prod_image[$i] && $prod_image[$i]->get_status()== "1")
                                                                             {
                                                                                 echo "<td style='border:0px; padding:2px'>";
                         //echo "<img style='padding:2px' alt='".$prod_image[$i]->get_alt_text()."' src='".base_url()."/images/product/".$prod_image[$i]->get_sku()."_".$prod_image[$i]->get_id()."_s.".$prod_image[$i]->get_image()."?".$prod_image[$i]->get_modify_on()."' onmouseover=\"this.style.border='2px solid blue';this.style.padding='0px 0px 0px 0px';\" onmouseout=\"this.style.border='0px'; this.style.padding='2px'\" onclick=\"changeImage(this);\" >";
-                                                                                echo "<img style='padding:2px' alt='".$prod_image[$i]->get_alt_text()."' src='".base_url()."/images/product/".$prod_image[$i]->get_sku()."_".$prod_image[$i]->get_id()."_s.".$prod_image[$i]->get_image()."?".$prod_image[$i]->get_modify_on()."'>";
+                                                                                echo "<img style='padding:2px' alt='".$prod_image[$i]->get_alt_text()."' src='" . getImageUrl($prod_image[$i]->get_image(), "s", $prod_image[$i]->get_sku(), $prod_image[$i]->get_id()) ."'>";
                                                                                 echo "</td>";
                                                                             }
                                                                             else
@@ -1126,7 +1126,7 @@
                 foreach ($lang_list as $lang_obj)
                 {
                     $cur_lang_id = $lang_obj->get_id();
-                    $cur_name = $lang_obj->get_name();
+                    $cur_name = $lang_obj->get_description();
                     ?>
                     <div id="div_tab_<?=$cur_lang_id?>" class="x-tab" title="<?=$cur_name?>">
                         <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_main">
@@ -1236,7 +1236,7 @@
                 foreach ($lang_list as $lang_obj)
                 {
                     $cur_lang_id = $lang_obj->get_id();
-                    $cur_name = $lang_obj->get_name();
+                    $cur_name = $lang_obj->get_description();
                     ?>
                     <div id="div_tab_<?=$cur_lang_id?>" class="x-tab" title="<?=$cur_name?>">
                         <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_main">
@@ -1425,9 +1425,9 @@
                     foreach ($country_list as $country_obj)
                     {
                         $valid_country = $google_feed_arr;
-                        if(in_array($country_obj->get_id(), $valid_country))
+                        if(in_array($country_obj->get_country_id(), $valid_country))
                         {
-                            $cur_country_id = $country_obj->get_id();
+                            $cur_country_id = $country_obj->get_country_id();
                             $cur_name = $country_obj->get_name();
                             ?>
                             <div id="div_tab_<?=$cur_country_id?>" class="x-tab" title="<?=$cur_name?>">

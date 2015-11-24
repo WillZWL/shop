@@ -67,7 +67,7 @@ class CategoryService extends BaseService
         $newObj->setPriority((string) $oldObj->priority);
         $newObj->setBundleDiscount((string) $oldObj->bundle_discount);
         $newObj->setMinDisplayQty((string) $oldObj->min_display_qty);
-        $newObj->setSponsored(0);
+        $newObj->setSponsored((string) $newObj->getSponsored());
         $newObj->setStatus((string) $oldObj->status);
     }
 

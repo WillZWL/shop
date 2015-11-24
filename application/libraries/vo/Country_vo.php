@@ -6,6 +6,7 @@ class Country_vo extends Base_vo
 
     //class variable
     private $id;
+    private $country_id;
     private $id_3_digit;
     private $name;
     private $description;
@@ -38,6 +39,16 @@ class Country_vo extends Base_vo
     {
         $this->id = $value;
         return $this;
+    }
+
+    public function set_country_id($country_id)
+    {
+        $this->country_id = $country_id;
+    }
+
+    public function get_country_id()
+    {
+        return $this->country_id;
     }
 
     public function get_id_3_digit()
