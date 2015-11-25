@@ -43,5 +43,10 @@ Allow from 180.150.135.220
 Allow from 180.150.135.221
 Allow from 210.6.136.171
 Allow from 78.136.35.99
+
+# Local
+Allow from 127.0.0.1
+Allow from 10.0.0.2
+Allow from 192.168.33.1
 satisfy any
 </Limit>
