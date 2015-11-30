@@ -353,5 +353,9 @@ class ServiceProvider implements ServiceProviderInterface
         $servcieContainer['PricingRules'] = function () {
             return new S\PricingRulesService();
         };
+
+        $servcieContainer['PlatformBizVar'] = function () {
+            return new S\PlatformBizVarService();
+        };
     }
 }

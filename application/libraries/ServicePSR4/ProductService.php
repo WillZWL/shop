@@ -1,21 +1,8 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Service\BrandService;
-use ESG\Panther\Dao\ProductDao;
-
 class ProductService extends BaseProductService
 {
-    private $factory;
-    private $data;
-    private $vos;
-
-    public function __construct(ProductDataFactory $factory = null)
-    {
-        $this->setDao(new ProductDao);
-        $this->factory = $factory;
-    }
-
     public function createNewProduct($oldObj)
     {
         $sku = $this->getDao('Product')->getNewSku();
@@ -149,6 +136,10 @@ class ProductService extends BaseProductService
         $newObj->setDutyPcent((string)$oldObj->duty_pcent);
     }
 
+    public function getProductOverview($where = [], $option = [])
+    {
+        return $this->getDao('Product')->getProductOverview($where, $option);
+    }
 
     public function getHomeProduct($where, $option)
     {

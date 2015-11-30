@@ -6,39 +6,45 @@ class ProductOverviewWebsite extends MY_Controller
 {
     private $appId = 'MKT0045';
 
-    public $overview_path;
-    public $overview_path_v2;
-
-    //must set to public for view
-    public $default_platform_id;
-    public $product_update_followup_service;
-    private $lang_id = 'en';
-
-    public function __construct()
+    public function getAppId()
     {
-        parent::__construct();
-        $this->overview_path = 'marketing/product_overview_'.strtolower(PLATFORM_TYPE);
-        $this->overview_path_v2 = 'marketing/product_overview_'.strtolower(PLATFORM_TYPE).'_v2';
-        $this->load->model($this->overview_path.'_model', 'product_overview_model');
-        $this->load->helper(array('url', 'notice', 'object', 'operator'));
-        $this->load->library('service/pagination_service');
-        $this->load->library('service/context_config_service');
-        $this->load->library('service/display_qty_service');
-        $this->load->library('service/wms_warehouse_service');
-        $this->load->library('service/affiliate_sku_platform_service');
-        $this->load->library('service/sku_mapping_service');
-        $this->load->library('service/product_update_followup_service');
-        $this->load->library('service/data_exchange_service');
-        $this->load->library('service/product_service');
-        $this->load->library('service/price_margin_service');
-        $this->default_platform_id = $this->context_config_service->value_of('default_platform_id');
+        return $this->appId;
     }
-
 
     public function index($platform_id = '')
     {
         $sub_app_id = $this->getAppId().'00';
-        $_SESSION['LISTPAGE'] = base_url().$this->overview_path_v2.'/?'.$_SERVER['QUERY_STRING'];
+        include_once APPPATH.'language/'.$sub_app_id.'_'.$this->getLangId().'.php';
+        $data['lang'] = $lang;
+
+        if ($this->input->get('search')) {
+            $where = [];
+            $option = [];
+
+            ($this->input->get('clear') != '') ? $where['p.clearance'] = $this->input->get('clear') : '';
+            ($this->input->get('msku') != '') ? $where['sm.ext_sku'] = $this->input->get('msku') : '';
+            ($this->input->get('liststatus') != '') ? $where['pr.listing_status'] = $this->input->get('liststatus') : '';
+            ($this->input->get('wsqty') != '') ? $where['p.website_quantity'] = $this->input->get('wsqty') : '';
+            ($this->input->get('wsstatus') != '') ? $where['p.website_status'] = $this->input->get('wsstatus') : '';
+            ($this->input->get('suppstatus') != '') ? $where['supplier_status'] = $this->input->get('suppstatus') : '';
+            ($this->input->get('purcupdate') != '') ? $where['sp.modify_on >= '] = $this->input->get('purcupdate') : '';
+            ($this->input->get('profit') != '') ? $where['pm.profit'] = $this->input->get('profit') : '';
+            ($this->input->get('margin') != '') ? $where['pm.margin'] = $this->input->get('margin') : '';
+            ($this->input->get('price') != '') ? $where['pr.price'] = $this->input->get('price') : '';
+            ($this->input->get('limit') != '') ? $option['limit'] = $this->input->get('limit') : '';
+
+            // var_dump($where);
+            // var_dump($option);die;
+
+            $data['product_list'] = $this->sc['Product']->getProductOverview($where, $option);
+            // echo $this->sc['Product']->getDao('Product')->db->last_query();die;
+
+
+            // var_dump($data['product_list']);die;
+        }
+
+
+
 
         if ($this->input->post('posted') && $_POST['check']) {
             $rsresult = '';
@@ -167,225 +173,16 @@ class ProductOverviewWebsite extends MY_Controller
             $data['filter'] = $this->input->get('fil');
         }
 
-        if ($this->input->get('fil') == 1) {
-            // search by multiple filters
-            if ($this->input->get('pfid') != '') {
-                // must always have platform_id
-                $condition = "pbv.selling_platform_id IN ('";
-                $plat_arr = explode(',', $this->input->get('pfid'));
-                $condition .= implode("','", $plat_arr);
-                $condition .= "')";
-                $where[$condition] = null;
-
-                // // IMPORTANT. every time user load page, refresh all the margin in database
-                // $option["refresh_margin"] = 1;
-                // $option["refresh_platform_list"] = $plat_arr;
-
-                $submit_search = 1;
-            }
-
-            if ($this->input->get('catid') != '') {
-                $where['p.cat_id'] = $this->input->get('catid');
-            }
-
-            if ($this->input->get('scatid') != '') {
-                $where['p.sub_cat_id'] = $this->input->get('scatid');
-            }
-
-            if ($this->input->get('brand') != '') {
-                $where['p.brand_id'] = $this->input->get('brand');
-            }
-
-            if ($this->input->get('supp') != '') {
-                $where['sp.supplier_id'] = $this->input->get('supp');
-            }
-
-            if ($this->input->get('auto_price') != '') {
-                $where['pr.auto_price'] = $this->input->get('auto_price');
-                $submit_search = 1;
-            }
-
-            if ($this->input->get('pla') != '') {
-                $where['pr.is_advertised'] = $this->input->get('pla');
-                $submit_search = 1;
-            }
-            if ($this->input->get('plaapi') != '') {
-                $where['gs.api_request_result'] = $this->input->get('plaapi');
-                $submit_search = 1;
-            }
-
-            if ($this->input->get('adw') != '') {
-                if ($this->input->get('adw') == 'Y') {
-                    $where['ad.status IS NOT NULL'] = null;     # can contain 0 = enabled / 1 = disabled
-                    // $option["adw"] = "Y";
-                } elseif ($this->input->get('adw') == 'N') {
-                    $where['ad.status IS NULL'] = null;
-                    // $option["adw"] = "N";
-                }
-                $submit_search = 1;
-            }
-
-            if ($this->input->get('adwapi') != '') {
-                $where['ad.api_request_result'] = $this->input->get('adwapi');
-                $submit_search = 1;
-            }
-
-            if ($this->input->get('surplusqty') != '') {
-                switch ($this->input->get('surplusqty_prefix')) {
-                    case 1:
-                        $where["surplus_quantity is not null and surplus_quantity > 0 and surplus_quantity <= {$this->input->get('surplusqty')}"] = null;
-                        break;
-                    case 2:
-                        $where["surplus_quantity <= {$this->input->get('surplusqty')}"] = null;
-                        break;
-                    case 3:
-                        $where["surplus_quantity >= {$this->input->get('surplusqty')}"] = null;
-                        break;
-                }
-            }
-
-            if ($this->input->get('affeed') != '') {
-                $affiliate_feed = $option['affiliate_feed'] = $this->input->get('affeed');
-                $feed_status = $option['feed_status'] = $this->input->get('feed_status');
-            }
-            $limit = '20';
-            if ($this->input->get('rp') != '') {
-                $limit = $this->input->get('rp');
-            }
-
-            $option['limit'] = $pconfig['per_page'] = $limit;
-            if ($option['limit']) {
-                $option['offset'] = $this->input->get('per_page');
-            }
-        } elseif ($this->input->get('fil') == 2) {
-            // by multiple SKUs / master SKUs
-            if ($this->input->get('pfid2') != '') {
-                $condition = "pr.platform_id IN ('";
-                $plat_arr = explode(',', $this->input->get('pfid2'));
-                $condition .= implode("','", $plat_arr);
-                $condition .= "')";
-                $where[$condition] = null;
-
-                // // IMPORTANT. every time user load page, refresh all the margin in database
-                // $option["refresh_margin"] = 1;
-                // $option["refresh_platform_list"] = $plat_arr;
-
-                $submit_search = 1;
-            }
-
-            $ext_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('mskulist'), -1, PREG_SPLIT_NO_EMPTY));
-            $prod_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('skulist'), -1, PREG_SPLIT_NO_EMPTY));
-
-            if (is_array($ext_sku) && count($ext_sku) > 0) {
-                $list = "('".implode("','", $ext_sku)."')";
-                $where["map.ext_sku IN $list"] = null;
-            } elseif (is_array($prod_sku) && count($prod_sku) > 0) {
-                $list = "('".implode("','", $prod_sku)."')";
-                $where["p.sku IN $list"] = null;
-            } else {
-                // redirect(current_url());
-            }
-
-            // // reset any filters passed previously from multi filter search
-            // $_SESSION["LISTPAGE"] = base_url().$this->overview_path_v2."/?";
-            $this->pagination->per_page = -1;
-            $option['limit'] = -1;
-        }
-
-        if ($this->input->get('msku') != '') {
-            $where['map.ext_sku LIKE '] = '%'.$this->input->get('msku').'%';
-            $submit_search = 1;
-        }
-
-        if ($this->input->get('prod') != '') {
-            $where['p.name LIKE '] = '%'.$this->input->get('prod').'%';
-            $submit_search = 1;
-        }
-
-        if ($this->input->get('clear') != '') {
-            $where['p.clearance'] = $this->input->get('clear');
-            $submit_search = 1;
-        }
-
-        if ($this->input->get('liststatus') != '') {
-            if ($this->input->get('liststatus') == 'N') {
-                $where["(pr.listing_status = 'N' or pr.listing_status is null)"] = null;
-            } else {
-                $where['pr.listing_status'] = $this->input->get('liststatus');
-            }
-            // $where["pr.listing_status"] = $this->input->get("liststatus");
-            $submit_search = 1;
-        }
-
-        if ($this->input->get('wsqty') != '') {
-            fetch_operator($where, 'p.website_quantity', $this->input->get('wsqty'));
-            $submit_search = 1;
-        }
-
-        if ($this->input->get('wsstatus') != '') {
-            $where['p.website_status'] = $this->input->get('wsstatus');
-            $submit_search = 1;
-        }
-
-        if ($this->input->get('suppstatus') != '') {
-            $where['supplier_status'] = $this->input->get('suppstatus');
-            $submit_search = 1;
-        }
-
-        if ($this->input->get('purcupdate') != '') {
-            fetch_operator($where, 'sp.modify_on', $this->input->get('purcupdate'));
-            $submit_search = 1;
-        }
-
-        // if ($this->input->get("shiptype_name") != "")
-        // {
-        //  $where["shiptype_name"] = $this->input->get("shiptype_name");
-        //  $submit_search = 1;
-        // }
-
-        if ($this->input->get('profit') != '') {
-            fetch_operator($where, 'pm.profit', $this->input->get('profit'));
-            $option['refresh_margin'] = 1;
-            $option['refresh_platform_list'] = $plat_arr;
-            $submit_search = 1;
-        }
-
-        if ($this->input->get('margin') != '') {
-            if ($this->input->get('csv')) {
-                fetch_operator($where, 'pm.margin', $this->input->get('margin'));
-            } else {
-                fetch_operator($where, 'pm.margin', $this->input->get('margin'));
-            }
-            $option['refresh_margin'] = 1;
-            $option['refresh_platform_list'] = $plat_arr;
-            $submit_search = 1;
-        }
-
-        if ($this->input->get('price') != '') {
-            fetch_operator($where, 'pr.price', $this->input->get('price'));
-            $submit_search = 1;
-        }
-
         $sort = $this->input->get('sort');
         $order = $this->input->get('order');
 
-        if ($this->input->get('search')) {
-            if ($this->input->get('csv')) {
-                // if (isset($where["pr.listing_status"]))
-                // {
-                //  $where["pr.listing_status"] = $where["pr.listing_status"];
-                //  unset($where["pr.listing_status"]);
-                // }
-                // if (isset($where["pr.auto_price"]))
-                // {
-                //  $where["auto_price"] = $where["pr.auto_price"];
-                //  unset($where["pr.auto_price"]);
-                // }
-                $list = $this->product_overview_model->get_product_overview_v2($where, array_merge($option));
-                $this->generate_csv($list);
-                die();
-            }
-        }
+        // if ($this->input->get('search')) {
+        //     if ($this->input->get('csv')) {
+        //         $list = $this->product_overview_model->get_product_overview_v2($where, array_merge($option));
+        //         $this->generate_csv($list);
+        //         die();
+        //     }
+        // }
 
         $pconfig['base_url'] = $_SESSION['LISTPAGE'];
 
@@ -409,23 +206,15 @@ class ProductOverviewWebsite extends MY_Controller
 
         $option['orderby'] = $sort.' '.$order;
 
-        include_once APPPATH.'language/'.$sub_app_id.'_'.$this->getLangId().'.php';
-        $data['lang'] = $lang;
+        // $affiliate_feed_list = null;
+        // $list = $this->affiliate_sku_platform_service->get_feed_list($platform_id);
+        // if ($list) {
+        //     foreach ($list as $item) {
+        //         $affiliate_feed_list[$item] = $item;
+        //     }
+        // }
 
-        if ($this->input->get('search')) {
-            // HTML is deep inside here
-            $data['objlist'] = $this->product_overview_model->get_product_list_v2($where, $option, $lang);
-            $data['total'] = $this->product_overview_model->get_product_list_total_v2($where, $option);
-        }
-        $affiliate_feed_list = null;
-        $list = $this->affiliate_sku_platform_service->get_feed_list($platform_id);
-        if ($list) {
-            foreach ($list as $item) {
-                $affiliate_feed_list[$item] = $item;
-            }
-        }
-
-        $data['affiliate_feed_list'] = $affiliate_feed_list;
+        // $data['affiliate_feed_list'] = $affiliate_feed_list;
 
         $feed_status_list = null;
         $feed_status_list[0] = 'All';
@@ -445,27 +234,34 @@ class ProductOverviewWebsite extends MY_Controller
             $final_count = $data['total'];
         }
 
-        $pconfig['total_rows'] = $final_count;
-        $this->pagination_service->set_show_count_tag(true);
-        $this->pagination_service->initialize($pconfig);
+        // $pconfig['total_rows'] = $final_count;
+        // $this->pagination_service->set_show_count_tag(true);
+        // $this->pagination_service->initialize($pconfig);
 
         // $data["wms_wh"] = $this->wms_warehouse_service->get_list(array('status'=>1), array('limit'=>-1, 'orderby'=>'warehouse_id'));
-        $data['notice'] = notice($lang);
-        $data['clist'] = $this->product_overview_model->price_service->get_platform_biz_var_service()->selling_platform_dao->get_list(array('type' => PLATFORM_TYPE, 'status' => 1));
-        $data['sortimg'][$sort] = "<img src='".base_url().'images/'.$order.".gif'>";
-        $data['xsort'][$sort] = $order == 'asc' ? 'desc' : 'asc';
-     // $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
+        // $data['notice'] = notice($lang);
+        $data['clist'] = $this->sc['PlatformBizVar']->getDao('SellingPlatform')->getList(array('type' => PLATFORM_TYPE, 'status' => 1));
+        // var_dump($data['clist']);die;
+        // $data['sortimg'][$sort] = "<img src='".base_url().'images/'.$order.".gif'>";
+        // $data['xsort'][$sort] = $order == 'asc' ? 'desc' : 'asc';
+        // $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
         $data['searchdisplay'] = '';
         $data['query_string'] = $_SERVER['QUERY_STRING'];
-
-        $this->load->view($this->overview_path.'/product_overview_v2', $data);
+        $this->load->view('marketing/product_overview/product_overview_v', $data);
     }
 
-    public function getAppId()
+    public function query()
     {
-        return $this->appId;
-    }
+        $sub_app_id = $this->getAppId().'00';
+        include_once APPPATH.'language/'.$sub_app_id.'_'.$this->getLangId().'.php';
+        $data['lang'] = $lang;
 
+
+
+        // var_dump($data['product_list']);die;
+
+        // $data['total'] = $this->product_overview_model->get_product_list_total_v2($where, $option);
+    }
 
     /********** END OF NEW FUNCTION ********/
 
