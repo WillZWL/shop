@@ -71,8 +71,8 @@ class Price_service extends Base_service
         $this->set_ip_country_srv(new Ip2country_service());
         include_once(APPPATH . "libraries/service/Price_margin_service.php");
         $this->set_price_margin_srv(new Price_margin_service());
-        include_once(APPPATH . "libraries/service/Product_update_followup_service.php");
-        $this->set_product_update_followup_service(new Product_update_followup_service());
+        // include_once(APPPATH . "libraries/service/Product_update_followup_service.php");
+        // $this->set_product_update_followup_service(new Product_update_followup_service());
     }
 
     public function set_wc_srv($value)
