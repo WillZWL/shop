@@ -1,19 +1,31 @@
 <?php
 class PriceMarginVo extends \BaseVo
 {
+    private $id;
     private $sku;
     private $platform_id;
-    private $selling_price;
+    private $selling_price = '0.00';
     private $profit = '0.00';
     private $margin = '0.00';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    private $primary_key = ['sku', 'platform_id'];
+    private $primary_key = ['id'];
+    private $increment_field = 'id';
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function setSku($sku)
     {
@@ -128,5 +140,10 @@ class PriceMarginVo extends \BaseVo
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

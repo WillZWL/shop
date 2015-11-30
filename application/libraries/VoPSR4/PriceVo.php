@@ -3,11 +3,11 @@ class PriceVo extends \BaseVo
 {
     private $id;
     private $sku;
-    private $platform_id;
+    private $platform_id = '';
     private $default_shiptype = '0';
     private $sales_qty = '0';
     private $price = '0.00';
-    private $vb_price;
+    private $vb_price = '0.00';
     private $status = 'I';
     private $allow_express = 'N';
     private $is_advertised = 'N';
@@ -27,7 +27,6 @@ class PriceVo extends \BaseVo
     private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
-    private $google_promo_id = '';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
@@ -290,16 +289,6 @@ class PriceVo extends \BaseVo
     public function getModifyBy()
     {
         return $this->modify_by;
-    }
-
-    public function setGooglePromoId($google_promo_id)
-    {
-        $this->google_promo_id = $google_promo_id;
-    }
-
-    public function getGooglePromoId()
-    {
-        return $this->google_promo_id;
     }
 
     public function getPrimaryKey()

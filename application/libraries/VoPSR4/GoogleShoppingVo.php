@@ -5,15 +5,15 @@ class GoogleShoppingVo extends \BaseVo
     private $sku;
     private $platform_id;
     private $status = '1';
-    private $price;
+    private $price = '0.00';
     private $api_request_result = '1';
     private $comment;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
     private $modify_on = '';
-    private $modify_at;
-    private $modify_by;
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
