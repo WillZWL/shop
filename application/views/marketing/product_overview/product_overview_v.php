@@ -92,7 +92,7 @@
                     <td height="2" class="line"></td>
                 </tr>
             </table>
-            <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
+<!--             <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
                 <col width="150"> <col width="420"> <col width="170"> <col width="420"> <col>
                 <tr>
                     <td></td>
@@ -116,7 +116,7 @@
                 <tr>
                     <td colspan="4"></td>
                 </tr>
-            </table>
+            </table> -->
             <form name="fm" id="fm" method="get" onSubmit="return CheckForm(this)">
                 <div id="multifilter" style="display:block">
                     <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
@@ -173,7 +173,7 @@
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+<!--                         <tr>
                             <td style="padding-right:8px" align="right">
                                 <b><?= $lang["category"] ?></b>
                             </td>
@@ -193,8 +193,8 @@
                             <td rowspan="3" align="center">
                                 <input type="button" value="<?= $lang["cmd_search_button"] ?>" onClick="if (CheckForm(this.form)) this.form.submit();">
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+<!--                         <tr>
                             <td style="padding-right:8px" align="right">
                                 <b><?= $lang["sub_cat"] ?></b>
                             </td>
@@ -211,8 +211,8 @@
                                     <option value=""></option>
                                 </select>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+<!--                         <tr>
                             <td style="padding-right:8px" align="right">
                                 <b>PLA</b>
                             </td>
@@ -278,7 +278,7 @@
                                     <option value="100">100</option>
                                 </select>
                             </td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td colspan="2" style="padding-left:60px">
                                 <br><b>* TIP: Refining your search may produce faster result
@@ -593,6 +593,7 @@
                 </table>
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-top:5px;">
                     <tr>
+                        <td><?= $links ?></td>
                         <td align="right" style="padding-right:8px;">
                             <input type="button" value="<?= $lang['cmd_button'] ?>" class="button" onClick="if (CheckProfit(this.form)){needToConfirm=false;this.form.submit()}">
                         </td>

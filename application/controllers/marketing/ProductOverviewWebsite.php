@@ -32,6 +32,7 @@ class ProductOverviewWebsite extends MY_Controller
             ($this->input->get('margin') != '') ? $where['pm.margin'] = $this->input->get('margin') : '';
             ($this->input->get('price') != '') ? $where['pr.price'] = $this->input->get('price') : '';
             ($this->input->get('limit') != '') ? $option['limit'] = $this->input->get('limit') : '';
+            ($this->input->get('per_page') != '') ? $option['offset'] = $this->input->get('per_page') : '';
 
             // var_dump($where);
             // var_dump($option);die;
@@ -39,7 +40,15 @@ class ProductOverviewWebsite extends MY_Controller
             $data['product_list'] = $this->sc['Product']->getProductOverview($where, $option);
             // echo $this->sc['Product']->getDao('Product')->db->last_query();die;
 
+            $config['base_url'] = base_url('marketing/ProductOverviewWebsite');
+            $config['total_rows'] = 1000;
+            $config['attributes']['calss'] = 'pagination';
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
 
+            $this->pagination->initialize($config);
+            $data['links'] = $this->pagination->create_links();
             // var_dump($data['product_list']);die;
         }
 
