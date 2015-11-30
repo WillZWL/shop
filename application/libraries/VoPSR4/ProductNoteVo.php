@@ -1,13 +1,11 @@
 <?php
-class GoogleShoppingVo extends \BaseVo
+class ProductNoteVo extends \BaseVo
 {
     private $id;
     private $sku;
     private $platform_id;
-    private $status = '1';
-    private $price = '0.00';
-    private $api_request_result = '1';
-    private $comment;
+    private $type = 'M';
+    private $note;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -48,44 +46,24 @@ class GoogleShoppingVo extends \BaseVo
         return $this->platform_id;
     }
 
-    public function setStatus($status)
+    public function setType($type)
     {
-        $this->status = $status;
+        $this->type = $type;
     }
 
-    public function getStatus()
+    public function getType()
     {
-        return $this->status;
+        return $this->type;
     }
 
-    public function setPrice($price)
+    public function setNote($note)
     {
-        $this->price = $price;
+        $this->note = $note;
     }
 
-    public function getPrice()
+    public function getNote()
     {
-        return $this->price;
-    }
-
-    public function setApiRequestResult($api_request_result)
-    {
-        $this->api_request_result = $api_request_result;
-    }
-
-    public function getApiRequestResult()
-    {
-        return $this->api_request_result;
-    }
-
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-    }
-
-    public function getComment()
-    {
-        return $this->comment;
+        return $this->note;
     }
 
     public function setCreateOn($create_on)

@@ -1,13 +1,14 @@
 <?php
-class GoogleShoppingVo extends \BaseVo
+class ProductIdentifierVo extends \BaseVo
 {
     private $id;
-    private $sku;
-    private $platform_id;
-    private $status = '1';
-    private $price = '0.00';
-    private $api_request_result = '1';
-    private $comment;
+    private $prod_grp_cd;
+    private $colour_id;
+    private $country_id;
+    private $ean;
+    private $mpn;
+    private $upc;
+    private $status = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -28,24 +29,64 @@ class GoogleShoppingVo extends \BaseVo
         return $this->id;
     }
 
-    public function setSku($sku)
+    public function setProdGrpCd($prod_grp_cd)
     {
-        $this->sku = $sku;
+        $this->prod_grp_cd = $prod_grp_cd;
     }
 
-    public function getSku()
+    public function getProdGrpCd()
     {
-        return $this->sku;
+        return $this->prod_grp_cd;
     }
 
-    public function setPlatformId($platform_id)
+    public function setColourId($colour_id)
     {
-        $this->platform_id = $platform_id;
+        $this->colour_id = $colour_id;
     }
 
-    public function getPlatformId()
+    public function getColourId()
     {
-        return $this->platform_id;
+        return $this->colour_id;
+    }
+
+    public function setCountryId($country_id)
+    {
+        $this->country_id = $country_id;
+    }
+
+    public function getCountryId()
+    {
+        return $this->country_id;
+    }
+
+    public function setEan($ean)
+    {
+        $this->ean = $ean;
+    }
+
+    public function getEan()
+    {
+        return $this->ean;
+    }
+
+    public function setMpn($mpn)
+    {
+        $this->mpn = $mpn;
+    }
+
+    public function getMpn()
+    {
+        return $this->mpn;
+    }
+
+    public function setUpc($upc)
+    {
+        $this->upc = $upc;
+    }
+
+    public function getUpc()
+    {
+        return $this->upc;
     }
 
     public function setStatus($status)
@@ -56,36 +97,6 @@ class GoogleShoppingVo extends \BaseVo
     public function getStatus()
     {
         return $this->status;
-    }
-
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    public function setApiRequestResult($api_request_result)
-    {
-        $this->api_request_result = $api_request_result;
-    }
-
-    public function getApiRequestResult()
-    {
-        return $this->api_request_result;
-    }
-
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-    }
-
-    public function getComment()
-    {
-        return $this->comment;
     }
 
     public function setCreateOn($create_on)

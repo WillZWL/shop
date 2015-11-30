@@ -2056,15 +2056,6 @@ html;
                 }
                 break;
 
-            case "ES":
-            case "BE":
-            case "FR":
-            case "IT":
-            case "PL":
-            case "GB":
-                $declared_pcent = 10;
-                break;
-
             default:
                 $declared_pcent = 10;
                 break;

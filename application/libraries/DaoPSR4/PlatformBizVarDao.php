@@ -41,7 +41,7 @@ class PlatformBizVarDao extends BaseDao
                 LEFT JOIN price AS pr
                     ON pr.platform_id = pbv.selling_platform_id AND pr.platform_id = s.selling_platform_id AND pr.sku = ?
                 WHERE type = ? AND s.status = 1
-                ORDER BY pr.listing_status = 'L' DESC, s.selling_platform_id ASC";
+                ORDER BY pr.listing_status = 'L' DESC, s.selling_platform_id ASC limit 2";
 
         if ($result = $this->db->query($sql, [$sku, $platform_type])) {
             $result_arr = [];

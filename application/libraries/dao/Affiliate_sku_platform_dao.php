@@ -105,35 +105,6 @@ class Affiliate_sku_platform_dao extends Base_dao
         return $rs;
     }
 
-
-    public function set_sku_feed_status($affiliate_id, $sku, $platform_id, $status_id)
-    {
-        $data = array($status_id, $affiliate_id, $sku, $platform_id);
-        # 0 - auto
-        # 1 - always include
-        # 2 - always exclude
-        $query = "
-            update affiliate_sku_platform
-                set status = ?
-            where 1
-            and affiliate_id = ?
-            and sku          = ?
-            and platform_id  = ?
-        ";
-        $this->db->query($query, $data);
-
-        $query = "
-            insert into affiliate_sku_platform
-            (status, affiliate_id, sku, platform_id)
-            values
-            (?, ?, ?, ?)
-        ";
-        $this->db->query($query, $data);
-
-        $query = "commit";
-        $this->db->query($query, $data);
-    }
-
     // clean up any entres that is set to auto
     public function clean_up()
     {

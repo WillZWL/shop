@@ -1,13 +1,10 @@
 <?php
-class GoogleShoppingVo extends \BaseVo
+class DisplayQtyFactorVo extends \BaseVo
 {
     private $id;
-    private $sku;
-    private $platform_id;
-    private $status = '1';
-    private $price = '0.00';
-    private $api_request_result = '1';
-    private $comment;
+    private $cat_id;
+    private $class_id;
+    private $factor = '1.00';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -28,64 +25,34 @@ class GoogleShoppingVo extends \BaseVo
         return $this->id;
     }
 
-    public function setSku($sku)
+    public function setCatId($cat_id)
     {
-        $this->sku = $sku;
+        $this->cat_id = $cat_id;
     }
 
-    public function getSku()
+    public function getCatId()
     {
-        return $this->sku;
+        return $this->cat_id;
     }
 
-    public function setPlatformId($platform_id)
+    public function setClassId($class_id)
     {
-        $this->platform_id = $platform_id;
+        $this->class_id = $class_id;
     }
 
-    public function getPlatformId()
+    public function getClassId()
     {
-        return $this->platform_id;
+        return $this->class_id;
     }
 
-    public function setStatus($status)
+    public function setFactor($factor)
     {
-        $this->status = $status;
+        $this->factor = $factor;
     }
 
-    public function getStatus()
+    public function getFactor()
     {
-        return $this->status;
-    }
-
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    public function setApiRequestResult($api_request_result)
-    {
-        $this->api_request_result = $api_request_result;
-    }
-
-    public function getApiRequestResult()
-    {
-        return $this->api_request_result;
-    }
-
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-    }
-
-    public function getComment()
-    {
-        return $this->comment;
+        return $this->factor;
     }
 
     public function setCreateOn($create_on)

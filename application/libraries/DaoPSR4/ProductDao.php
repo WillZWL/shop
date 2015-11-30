@@ -248,7 +248,7 @@ class ProductDao extends BaseDao
         //         $this->db->limit($option["limit"], $option["offset"]);
         //     }
 
-        //     $rs = array();
+        //     $rs = [];
 
         //     if ($query = $this->db->get()) {
         //         foreach ($query->result($className) as $obj) {
@@ -902,17 +902,11 @@ class ProductDao extends BaseDao
             return false;
         }
 
-        $this->db->from('supplier s');
-
-        $this->db->join("(  SELECT supplier_id, supplier_status
-                            FROM supplier_prod
-                            WHERE prod_sku = '$sku'
-                            AND order_default = '1'
-                            LIMIT 1) AS sp", "sp.supplier_id = s.id", "INNER");
-
-        $this->db->limit(1);
-
+        $this->db->from('supplier_prod sp');
+        $this->db->join("supplier s", "sp.supplier_id = s.id", 'INNER');
+        $this->db->where(['sp.prod_sku' => $sku, 'sp.order_default' => 1]);
         $this->db->select('s.name, sp.supplier_status');
+        $this->db->limit(1);
 
         if ($query = $this->db->get()) {
             return (array)$query->row();
@@ -921,13 +915,75 @@ class ProductDao extends BaseDao
         return FALSE;
     }
 
+    public function getListHavingPrice($where = [], $option = [])
+    {
+        $table_alias = ['product' => 'p', 'price' => 'pr', 'product_type' => 'pt'];
+        include_once APPPATH . "helpers/string_helper.php";
+        $new_where = replace_db_alias($where, $table_alias);
+
+        $value_list = [];
+
+        if ($new_where && count($new_where) > 0) {
+            $where_clause = '';
+            $counter = 0;
+
+            foreach ($new_where as $key => $value) {
+                if ($counter <= 0) {
+                    $where_clause = ' WHERE ';
+                } else {
+                    $where_clause .= ' AND ';
+                }
+
+                if ($this->db->_has_operator($key)) {
+                    $where_clause .= "$key ?";
+                } else {
+                    $where_clause .= "$key = ?";
+                }
+                array_push($value_list, $value);
+                $counter++;
+            }
+        }
+
+        if ($option && count($option) > 0) {
+            $option_clause = '';
+
+            foreach ($option as $key => $value) {
+                if ($key == 'orderby') {
+                    $option_clause .= " ORDER BY $value";
+                } else {
+                    $option_clause .= " $key $value";
+                }
+            }
+        }
+
+        $sql = "SELECT p.* FROM product p
+                JOIN price pr ON (p.sku = pr.sku AND pr.price > 0)";
+
+        if ($where['product_type.type_id']) {
+            $sql .= "
+                LEFT JOIN product_type pt
+                    ON (p.sku = pt.sku)";
+        }
+        $sql .= "$where_clause
+                $option_clause";
+
+        $result_arr = [];
+        if ($result = $this->db->query($sql, $value_list)) {
+
+            $classname = $this->getVoClassname();
+
+            foreach ($result->result("object", $classname) as $obj) {
+                $result_arr[] = $obj;
+            }
+        }
+        return $result_arr;
+    }
+
     public function getTotalDefaultSupplier($sku)
     {
-        $sql = "SELECT count(1) num_row
-                FROM supplier_prod
-                WHERE prod_sku = ?";
+        $sql = "SELECT count(1) num_row FROM supplier_prod WHERE prod_sku = ?";
 
-        if ($query = $this->db->query($sql, array($sku))) {
+        if ($query = $this->db->query($sql, [$sku])) {
             return $query->row()->num_row;
         }
 
@@ -997,4 +1053,29 @@ class ProductDao extends BaseDao
         $prod_url = 'CONCAT(REPLACE(REPLACE(cat.name, ".", "-"), " ", "-"), "/", REPLACE(REPLACE(sc.name, ".", "-"), " ", "-"), "/", REPLACE(REPLACE(p.name, ".", "-"), " ", "-") ,"/product/", p.sku) product_url';
         return $this->commonGetList($className, $where, $option, $prod_url);
     }
+
+    public function getProdOverviewWoShiptype($where = [], $option = [], $classname = "ProdOverviewWoShiptypeDto")
+    {
+        $to_currency_id = isset($option["to_currency_id"]) ? $option["to_currency_id"] : "GBP";
+        $this->db->from('(product p  JOIN platform_biz_var pbv)');
+        $this->db->join("bundle b", "p.sku = b.prod_sku", 'LEFT');
+        $this->db->join("price pr", "pr.sku = p.sku AND pr.platform_id = pbv.selling_platform_id", 'LEFT');
+        $this->db->join("price pr1", "p.sku = pr1.sku", 'LEFT');
+        $this->db->join("(platform_biz_var pbv1 JOIN exchange_rate er)", "er.from_currency_id = 'HKD'
+                                                                          AND er.to_currency_id = pbv1.platform_currency_id
+                                                                          AND pbv1.selling_platform_id = pbv.selling_platform_id", 'LEFT');
+        $this->db->join("config c", "c.variable = 'default_platform_id' AND pr1.platform_id = c.value", 'INNER');
+        $this->db->join("exchange_rate AS er1", "er1.from_currency_id = pbv.platform_currency_id AND er1.to_currency_id = '" . $to_currency_id . "'", 'LEFT');
+
+        $where['b.prod_sku is null'] = null;
+
+        $select_str = "p.cat_id AS cat_id,
+                       p.website_quantity AS website_quantity,
+                       IF((pr.price > 0),pr.price * er1.rate, round((pr1.price * er.rate  *  er1.rate),2)) AS price,
+                       IF((pr.price > 0),pr.price, round((pr1.price * er.rate),2)) as prev_price
+                       ";
+
+        return $this->commonGetList($classname, $where, $option, $select_str);
+    }
+
 }

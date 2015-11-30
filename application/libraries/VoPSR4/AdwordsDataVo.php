@@ -1,5 +1,5 @@
 <?php
-class GoogleShoppingVo extends \BaseVo
+class AdwordsDataVo extends \BaseVo
 {
     private $id;
     private $sku;
@@ -7,7 +7,7 @@ class GoogleShoppingVo extends \BaseVo
     private $status = '1';
     private $price = '0.00';
     private $api_request_result = '1';
-    private $comment;
+    private $comment = '';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';

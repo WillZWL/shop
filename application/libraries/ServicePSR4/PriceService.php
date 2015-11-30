@@ -4,6 +4,8 @@ namespace ESG\Panther\Service;
 
 class PriceService extends BaseService
 {
+    private $dto;
+
     public function createNewPrice($sku, $obj)
     {
         if (!$this->getDao('Product')->get(['sku' => $sku])) {
@@ -100,65 +102,65 @@ class PriceService extends BaseService
         return $sku_list;
     }
 
-    public function getTrailCalcuProfitMargin(PriceVo $price_obj)
-    {
-        $this->set_tool_path('marketing/pricing_tool_'.strtolower(PLATFORM_TYPE));
+    // public function getTrailCalcuProfitMargin(PriceVo $price_obj)
+    // {
+    //     $this->set_tool_path('marketing/pricing_tool_'.strtolower(PLATFORM_TYPE));
 
-        $dto = $this->getDao('Price')->getPriceCostDto($sku, $platform_id);
+    //     $dto = $this->getDao('Price')->getProductPriceWithCost(['p.sku'=>$sku, 'pbv.selling_platform_id'=>$platform_id], ['limit'=>1]);
 
-        $this->performBusinessLogic($dto, 5, $required_selling_price, $required_cost_price);
+    //     $this->performBusinessLogic($dto, 5, $required_selling_price, $required_cost_price);
 
-        $array = array(
-            'local_sku' => $sku,
-            'based_on' => $price_obj->getPrice(),
-            'get_margin' => $dto->getMargin(),
+    //     $array = array(
+    //         'local_sku' => $sku,
+    //         'based_on' => $price_obj->getPrice(),
+    //         'get_margin' => $dto->getMargin(),
 
-            'get_price' => $dto->getPrice(),
+    //         'get_price' => $dto->getPrice(),
 
-            'get_delivery_cost' => $dto->getDeliveryCost(),
-            'get_declared_value' => $this->to2Decimal($dto->getDeclaredValue()),
+    //         'get_delivery_cost' => $dto->getDeliveryCost(),
+    //         'get_declared_value' => $this->to2Decimal($dto->getDeclaredValue()),
 
-            'get_vat_percent' => $dto->getVatPercent(),
-            'get_vat' => $dto->getVat(),
+    //         'get_vat_percent' => $dto->getVatPercent(),
+    //         'get_vat' => $dto->getVat(),
 
-            'get_sales_commission' => $dto->getSalesCommission(),
+    //         'get_sales_commission' => $dto->getSalesCommission(),
 
-            'get_duty_pcent' => $dto->getDutyPcent(),
-            'get_duty' => $dto->getDuty(),
+    //         'get_duty_pcent' => $dto->getDutyPcent(),
+    //         'get_duty' => $dto->getDuty(),
 
-            'get_payment_charge_percent' => $dto->getPaymentChargePercent(),
-            'get_payment_charge' => $dto->getPaymentCharge(),
+    //         'get_payment_charge_percent' => $dto->getPaymentChargePercent(),
+    //         'get_payment_charge' => $dto->getPaymentCharge(),
 
-            'get_forex_fee_percent' => $dto->getForexFeePercent(),
-            'get_forex_fee' => $dto->getForexFee(),
+    //         'get_forex_fee_percent' => $dto->getForexFeePercent(),
+    //         'get_forex_fee' => $dto->getForexFee(),
 
-            'get_listing_fee' => $dto->getListingFee(),
+    //         'get_listing_fee' => $dto->getListingFee(),
 
-            'get_logistic_cost' => $dto->getLogisticCost(),
-            'get_supplier_cost' => $dto->getSupplierCost(),
+    //         'get_logistic_cost' => $dto->getLogisticCost(),
+    //         'get_supplier_cost' => $dto->getSupplierCost(),
 
-            'get_complementary_acc_cost' => $dto->getComplementaryAccCost(),
+    //         'get_complementary_acc_cost' => $dto->getComplementaryAccCost(),
 
-            'get_cost' => $dto->getCost(),
-            'get_price' => $this->to2Decimal($dto->getPrice()),
-            'get_profit' => $this->to2Decimal($dto->getPrice()) - $dto->getCost(),
+    //         'get_cost' => $dto->getCost(),
+    //         'get_price' => $this->to2Decimal($dto->getPrice()),
+    //         'get_profit' => $this->to2Decimal($dto->getPrice()) - $dto->getCost(),
 
-        );
+    //     );
 
-        return json_encode($array);
-    }
+    //     return json_encode($array);
+    // }
 
-    private function performBusinessLogic($dto, $value_to_return, $required_selling_price = -1, $required_cost_price = -1)
-    {
-        $price_obj = $this->getDao('Price')->get(["sku" => $sku, "platform_id" => $platform_id]);
-        if (!$price_obj || !(call_user_func([$price_obj, "getPrice"]) * 1)) {
-            if (!($default_obj = $this->getDao('Price')->getDefaultConvertedPrice(["pr.sku" => $sku, "pbv.selling_platform_id" => $platform_id]))) {
-                return 0;
-            }
-            $defaultPlatformConvertedPrice = $default_obj->getDefaultPlatformConvertedPrice();
-        }
-        return $defaultPlatformConvertedPrice ? $defaultPlatformConvertedPrice : $price_obj->getPrice();
-    }
+    // private function performBusinessLogic($dto, $value_to_return, $required_selling_price = -1, $required_cost_price = -1)
+    // {
+    //     $price_obj = $this->getDao('Price')->get(["sku" => $sku, "platform_id" => $platform_id]);
+    //     if (!$price_obj || !(call_user_func([$price_obj, "getPrice"]) * 1)) {
+    //         if (!($default_obj = $this->getDao('Price')->getDefaultConvertedPrice(["pr.sku" => $sku, "pbv.selling_platform_id" => $platform_id], ['limit' => 1]))) {
+    //             return 0;
+    //         }
+    //         $defaultPlatformConvertedPrice = $default_obj->getDefaultPlatformConvertedPrice();
+    //     }
+    //     return $defaultPlatformConvertedPrice ? $defaultPlatformConvertedPrice : $price_obj->getPrice();
+    // }
 
     private function to2Decimal($value)
     {
@@ -234,29 +236,9 @@ class PriceService extends BaseService
                 $dto->setVatPercent(0);
                 $dto->setVat(0.00);
             }
-
-            if (1 == 0) {
-                if ($dto->getDeclaredValue() > 400) {
-                    $dto->setVat(number_format((($dto->getDeclaredValue()) * $dto->getVatPercent() / 100) + 38.07, 2, ".", ""));
-                } else
-                    $dto->setVat(0.00);
-            }
         } else {
             $dto->setVat(number_format(($dto->getDeclaredValue()) * $dto->getVatPercent() / 100, 2, ".", ""));
         }
-    }
-
-    public function calcDuty($dto = NULL)
-    {
-        $this->initDto($dto);
-        $duty = number_format($dto->getDeclaredValue() * $dto->getDutyPcent() / 100, 2, ".", "");
-        $dto->setDuty($duty);
-    }
-
-    public function calcPaymentCharge($dto = NULL)
-    {
-        $this->initDto($dto);
-        $dto->setPaymentCharge(number_format(($dto->getPrice() + $dto->getDeliveryCharge()) * $dto->getPaymentChargePercent() / 100, 2, ".", ""));
     }
 
     public function initDto(&$dto)
@@ -268,12 +250,21 @@ class PriceService extends BaseService
         }
     }
 
-    public function getProfitMarginJson($platform_id, $sku, $required_selling_price, $required_cost_price = -1, $throw_exception = true)
+    public function getDto()
     {
-        $dto = $this->getDao('Price')->getPriceCostDto($sku, $platform_id);
+        return $this->dto;
+    }
+
+    public function setDto($dto)
+    {
+        $this->dto = $dto;
+    }
+
+    public function getProfitMarginJson($platform_id, $sku, $required_selling_price, $required_cost_price = -1)
+    {
+        $dto = $this->getDao('Price')->getProductPriceWithCost(['p.sku'=>$sku, 'pbv.selling_platform_id'=>$platform_id], ['limit'=>1]);
+
         if ($dto == null) {
-            if ($throw_exception)
-                throw new Exception("[$sku] on [$platform_id] cannot be found, unable to calculate profit/margin");
             return false;
         }
 
@@ -283,33 +274,22 @@ class PriceService extends BaseService
             "local_sku" => $sku,
             "based_on" => $required_selling_price,
             "get_margin" => $dto->getMargin(),
-
             "get_price" => $dto->getPrice(),
-
             "get_delivery_cost" => $dto->getDeliveryCost(),
             "get_declared_value" => $this->to2Decimal($dto->getDeclaredValue()),
-
             "get_vat_percent" => $dto->getVatPercent(),
             "get_vat" => $dto->getVat(),
-
             "get_sales_commission" => $dto->getSalesCommission(),
-
             "get_duty_pcent" => $dto->getDutyPcent(),
             "get_duty" => $dto->getDuty(),
-
             "get_payment_charge_percent" => $dto->getPaymentChargePercent(),
             "get_payment_charge" => $dto->getPaymentCharge(),
-
             "get_forex_fee_percent" => $dto->getForexFeePercent(),
             "get_forex_fee" => $dto->getForexFee(),
-
             "get_listing_fee" => $dto->getListingFee(),
-
             "get_logistic_cost" => $dto->getLogisticCost(),
             "get_supplier_cost" => $dto->getSupplierCost(),
-
             "get_complementary_acc_cost" => $dto->getComplementaryAccCost(),
-
             "get_cost" => $dto->getCost(),
             "get_price" => $this->to2Decimal($dto->getPrice()),
             "get_profit" => $this->to2Decimal($dto->getPrice()) - $dto->getCost()
@@ -321,11 +301,6 @@ class PriceService extends BaseService
 
     private function performBusinessLogic($dto, $value_to_return, $required_selling_price = -1, $required_cost_price = -1)
     {
-        return $this->performBusinessLogicV2($dto, $value_to_return, $required_selling_price, $required_cost_price);
-    }
-
-    private function performBusinessLogicV2($dto, $value_to_return, $required_selling_price = -1, $required_cost_price = -1)
-    {
         $required_margin = -1;
         if ($required_selling_price <= 0) {
             $required_margin = $dto->getSubCatMargin() / 100;
@@ -336,7 +311,7 @@ class PriceService extends BaseService
         $this->calcForexFee($dto);
         $this->calcCommission($dto);
 
-        for (;;) {
+        // for (;;) {
             $c = 0;
             $x = 0;
             $b = $required_selling_price;
@@ -372,15 +347,9 @@ class PriceService extends BaseService
             $this->calcCost($dto);
             $v = $dto->getListingFee();
 
-            $this->calcVat();
-
-            $this->calcPaymentCharge();
             $d2 = $dto->getPaymentCharge();
 
-            $this->calcCommission();
             $x2 = $dto->getSalesCommission();
-
-            $this->calcDuty($dto);
 
             $y = $dto->getVat();
 
@@ -409,15 +378,16 @@ class PriceService extends BaseService
                 $b = $required_selling_price;
                 $bc = $b + $c;
 
-                if ($margin >= ($required_margin * 100)) {
-                    break;
-                }
+                // if ($margin >= ($required_margin * 100)) {
+                //     break;
+                // }
 
                 $required_selling_price += $increment_unit;
-            } else {
-                break;
             }
-        }
+            //  else {
+            //     break;
+            // }
+        // }
 
         $total_cost_d = $this->to2Decimal($total_cost_d);
         $dto->setCost($total_cost_d);
@@ -467,10 +437,11 @@ class PriceService extends BaseService
 
             if ($mapped_ca_list = $this->getDao('ProductComplementaryAcc')->getMappedAccListWithName($where)) {
                 foreach ($mapped_ca_list as $caobj) {
-                    $cadto = $this->getDao('Price')->getPriceCostDto($caobj->getAccessorySku(), $dto->getPlatformId());
+                    $cadto = $this->getDao('Price')->getProductPriceWithCost(['p.sku'=>$caobj->getAccessorySku(), 'pbv.selling_platform_id'=>$dto->getPlatformId()], ['limit'=>1]);
                     $total_cost += $cadto->getSupplierCost();
                 }
             }
+            $dto->setComplementaryAccCost($total_cost);
         }
     }
 
@@ -501,188 +472,38 @@ class PriceService extends BaseService
         return $this->getService('So')->getDeclaredValue($prod_obj, $country_id, $price);
     }
 
-    ########### change_function
-
-    public function getPricingToolInfo($platform_id = "", $sku = "", $app_id = null, $price_obj = null)
+    public function calcPaymentCharge($dto = NULL)
     {
-        if ($platform_id != "" && $sku != "") {
-            $ret = [];
+        $this->initDto($dto);
+        $dto->setPaymentCharge(number_format(($dto->getPrice() + $dto->getDeliveryCharge()) * $dto->getPaymentChargePercent() / 100, 2, ".", ""));
+    }
 
-            $pbv_obj = $this->getDao('PlatformBizVar')->get(["selling_platform_id" => $platform_id]);
-            $country_obj = $this->getDao('Country')->get(["country_id" => $pbv_obj->getPlatformCountryId()]);
-            $prod_obj = $this->getDao('Product')->get(["sku" => $sku]);
+    public function calcDuty($dto = NULL)
+    {
+        $this->initDto($dto);
+        $duty = number_format($dto->getDeclaredValue() * $dto->getDutyPcent() / 100, 2, ".", "");
+        $dto->setDuty($duty);
+    }
 
-            if ( !($pbv_obj && $country_obj && $prod_obj) ) {
-                return FALSE;
-            }
-
-            $pcurr = $pbv_obj->getPlatformCurrencyId();
-            $tmp = $this->getDao('Price')->getPriceCostDto($sku, $platform_id);
-            if (empty($price_obj)) {
-                $price_obj = $this->getDao('Price')->get(["sku" => $sku, "platform_id" => $platform_id]);
-            }
-
-            if (!$price_obj) {
-                $tmp->setPrice($this->getPrice($tmp));
-                $tmp->setCurrentPlatformPrice(NULL);
-                $tmp->setDefaultPlatformConvertedPrice($tmp->getPrice());
-            } else {
-                $tmp->setCurrentPlatformPrice($tmp->getPrice());
-            }
-
-            $this->checkDtoPrice($tmp);
-            $this->calcLogisticCost($tmp);
-            $this->calculateProfit($tmp);
-
-            if ($tmp->getPlatformCountryId() == "GB") {
-                $tmp->setDeclaredPcent(30);
-            } else {
-                $price = $tmp->getPrice();
-                switch ($tmp->getPlatformCountryId()) {
-                    case "AU":
-                        $declared_pcent = 100;
-                        break;
-
-                    case "SG":
-                        $declared_pcent = 100;
-                        break;
-
-                    case "NZ":
-                        if ($price < 400)
-                            $declared_pcent = 100;
-                        else
-                            $declared_pcent = 80;
-                        break;
-                    default:
-                        $declared_pcent = 10;
-                        break;
-                }
-                $tmp->setDeclaredPcent($declared_pcent);
-            }
-
-            $header = $this->drawTableHeaderRow($tmp, $app_id);
-            $ret["header"] = $header;
-
-            $tmp->setListingStatus($price_obj ? $price_obj->getListingStatus() : "N");
-            $ret["dst"] = $tmp;
-
-            $content = $this->drawTableRowForPricingTool($tmp, $app_id);
-            $ret["content"] = $content;
-            unset($tmp);
-            unset($p_srv);
-
-            return $ret;
+    public function getRealPrice(&$prod)
+    {
+        if ($prod->getPrice()) {
+            return $prod->getPrice();
         } else {
-            return FALSE;
+            return $this->getDefaultPrice($prod->getSku(), $prod->getPlatformId());
         }
     }
 
-    public function drawTableHeaderRow($dto = NULL, $app_id = null)
+    private function getDefaultPrice($sku, $platform_id)
     {
-        $this->initDto($dto);
-
-        $hasVatPermission = false;
-        if ($app_id != null) {
-            if (check_app_feature_access_right($app_id, "MKT004400_display_decl_vat")) $hasVatPermission = true;
+        $price_obj = $this->getDao('Price')->get(["sku" => $sku, "platform_id" => $platform_id]);
+        if (!$price_obj || !(call_user_func([$price_obj, "getPrice"]) * 1)) {
+            if (!($default_obj = $this->getDao('Price')->getDefaultConvertedPrice(["pr.sku" => $sku, "pbv.selling_platform_id" => $platform_id], ['limit'=> 1]))) {
+                return 0;
+            }
+            $defaultPlatformConvertedPrice = $default_obj->getDefaultPlatformConvertedPrice();
         }
-
-        $decl_vat = "";
-        if ($hasVatPermission) {
-            $decl_vat = "
-                <td>\$lang[declared]</td>
-                <td>\$lang[vat]<br>(" . $dto->getVatPercent() . "%)</td>
-            ";
-        }
-
-        $header .= "\$header = \"<tr class='header'>
-                        <td>&nbsp;</td>
-                        <td>\$lang[selling_price]</td>
-                        <td>\$lang[delivery]</td>
-                        $decl_vat
-                        <td>\$lang[platform_commission]<br>(" . $dto->getPlatformCommission() . "%)</td>
-                        <td>\$lang[duty]<br>(" . $dto->getDutyPcent() . "%)</td>
-                        <td>\$lang[pmgw]<br>(" . $dto->getPaymentChargePercent() . "%)</td>
-                        <td>\$lang[forex]<br>(" . $dto->getForexFeePercent() . "%)</td>
-                        <td>\$lang[listing_fee]</td>
-                        <td>\$lang[logistic_cost]</td>
-                        <td>\$lang[ca_cost]</td>
-                        <td>\$lang[cost]</td>
-                        <td>\$lang[total_cost]</td>
-                        <td>\$lang[total]</td>
-                        <td>\$lang[profit]</td>
-                        <td>\$lang[gpm]</td>
-                        <td>&nbsp;</td>
-                    </tr>\";";
-        return $header;
-    }
-
-    public function drawTableRowForPricingTool($dto = NULL, $app_id = null)
-    {
-        $this->initDto($dto);
-
-        $delivery = $dto->getDeliveryCharge();
-
-        $total = $dto->getPrice() + $dto->getDeliveryCharge();
-
-        $bgcolor = $total > $dto->getCost() ? "#ddffdd" : "#ffdddd";
-        $platform = $dto->getPlatformId();
-        $country_id = $dto->getPlatformCountryId();
-        $auto_calc_price = ($dto->getAutoTotalCharge() - $dto->getDefaultDeliveryCharge() > $dto->getFreeDeliveryLimit()) ? $dto->getAutoTotalCharge() : $dto->getAutoTotalCharge() - $dto->getDefaultDeliveryCharge();
-
-        $hasVatPermission = false;
-        if ($app_id != null) {
-            if (check_app_feature_access_right($app_id, "MKT004400_display_decl_vat")) $hasVatPermission = true;
-        }
-
-        $decl_vat = "";
-        if ($hasVatPermission) {
-            $decl_vat = '
-                <td id="declare[' . $platform . ']">' . number_format($dto->getDeclaredValue(), 2, ".", "") . '</td>
-                <td id="vat[' . $platform . ']">' . number_format($dto->getVat(), 2, ".", "") . '</td>
-            ';
-        }
-
-        $table_row .= '<tr id="row[' . $platform . ']" style="background-color:' . $bgcolor . '">
-                        <td></td>
-                        <td>
-                            <input type="text" name="selling_price[' . $platform . ']" value="' . ($dto->getCurrentPlatformPrice() * 1) . '" id="sp[' . $platform . ']" onKeyup="rePrice(\'' . $platform . '\',\'' . $dto->getSku() . '\')" style="width:80px;" notEmpty>
-                        </td>
-                        <td id="delivery_charge[' . $platform . ']">' . number_format($delivery, 2, ".", "") . '</td>
-                        ' . $decl_vat . '
-                        <td id="comm[' . $platform . ']">' . number_format($dto->getSalesCommission(), 2, ".", "") . '</td>
-                        <td id="duty[' . $platform . ']">' . number_format($dto->getDuty(), 2, ".", "") . '</td>
-                        <td id="pc[' . $platform . ']">' . number_format($dto->getPaymentCharge(), 2, ".", "") . '</td>
-                        <td id="forex_fee[' . $platform . ']">' . number_format($dto->getForexFee(), 2, ".", "") . '</td>
-                        <td id="listing_fee[' . $platform . ']">' . number_format($dto->getListingFee(), 2, ".", "") . '</td>
-                        <td id="logistic_cost[' . $platform . ']">' . number_format($dto->getLogisticCost(), 2, ".", "") . '</td>
-                        <td id="complementary_acc_cost[' . $platform . ']">' . number_format($dto->getComplementaryAccCost(), 2, ".", "") . '</td>
-                        <td id="supplier_cost[' . $platform . ']">' . number_format($dto->getSupplierCost(), 2, ".", "") . '</td>
-                        <td id="total_cost[' . $platform . ']">' . number_format($dto->getCost(), 2, ".", "") . '</td>
-                        <td id="total[' . $platform . ']">' . number_format(($dto->getPrice() + $delivery), 2, ".", "") . '</td>
-                        <td id="profit[' . $platform . ']">' . number_format($dto->getProfit(), 2, ".", "") . '</td>
-                        <td id="margin[' . $platform . ']">' . number_format($dto->getMargin(), 2, ".", "") . '%</td>
-                        <input type="hidden" id="hidden_profit[' . $platform . ']" name="hidden_profit[' . $platform . ']" value="' . number_format($dto->getProfit(), 2, ".", "") . '">
-                        <input type="hidden" id="hidden_margin[' . $platform . ']" name="hidden_margin[' . $platform . ']" value="' . number_format($dto->getMargin(), 2, ".", "") . '">
-                        <td>
-                            <input type="hidden" id="declared_rate[' . $platform . ']" value="' . $dto->getDeclaredPcent() . '">
-                            <input type="hidden" id="payment_charge_rate[' . $platform . ']" value="' . $dto->getPaymentChargePercent() . '">
-                            <input type="hidden" id="vat_percent[' . $platform . ']" value="' . $dto->getVatPercent() . '">
-                            <input type="hidden" id="duty_percent[' . $platform . ']" value="' . $dto->getDutyPcent() . '">
-                            <input type="hidden" id="forex_fee_percent[' . $platform . ']" value="' . $dto->getForexFeePercent() . '">
-                            <input type="hidden" id="free_delivery_limit[' . $platform . ']" value="' . $dto->getFreeDeliveryLimit() . '">
-                            <input type="hidden" id="default_delivery_charge[' . $platform . ']" value="' . $dto->getDefaultDeliveryCharge() . '">
-                            <input type="hidden" id="scost[' . $platform . ']" value="' . $dto->getSupplierCost() . '">
-                            <input type="hidden" id="commrate[' . $platform . ']" value="' . $dto->getPlatformCommission() . '">
-                            <input type="hidden" id="country_id[' . $platform . ']" value="' . $country_id . '">
-                            <input type="hidden" id="prod_weight[' . $platform . ']" value="' . $dto->getProdWeight() . '">
-                            <input type="hidden" id="default_freight_cost[' . $platform . ']" value="' . ($dto->getWhfcCost() - $dto->getAmazonEfnCost() * 1) . '">
-                            <input type="hidden" id="sub_cat_margin[' . $platform . ']" value="' . $dto->getSubCatMargin() . '">
-                            <input type="hidden" id="auto_calc_price[' . $platform . ']" value="' . number_format($auto_calc_price, 2, ".", "") . '">
-                            <input type="hidden" id="origin_price[' . $platform . ']" value="' . number_format($dto->getPrice(), 2, ".", "") . '">
-                        </td>
-                     </tr>
-                    ' . "\n";
-        return $table_row;
+        return $defaultPlatformConvertedPrice ? $defaultPlatformConvertedPrice : $price_obj->getPrice();
     }
 
     public function calculateProfit($dto = null)
@@ -690,7 +511,7 @@ class PriceService extends BaseService
         $this->initDto($dto);
         $this->checkDtoPrice();
         $this->calcDeliveryCharge();
-        $this->calcCost();
+        // $this->calcCost();
 
         $price = $dto->getPrice();
 
@@ -725,6 +546,32 @@ class PriceService extends BaseService
         $this->calcAutoPriceValue();
     }
 
+    public function checkDtoPrice($dto = NULL)
+    {
+        $this->initDto($dto);
+
+        if ($dto->getPrice()) {
+            $price = $dto->getPrice();
+        } else {
+            $price_obj = $this->getDao('Price')->get(["sku" => $dto->getSku(), "platform_id" => $dto->getPlatformId()]);
+            if ($price_obj) {
+                $price = $price_obj->getPrice();
+                $dto->setCurrentPlatformPrice($price);
+                if (!($price * 1)) {
+                    if ($default_obj = $this->getDao('Price')->getDefaultConvertedPrice(["sku" => $dto->getsku(), "platform_id" => $dto->getPlatformId()], ['limit' => 1])) {
+                        $default_platform_converted_price = $default_obj->getDefaultPlatformConvertedPrice();
+                        $price = $default_platform_converted_price;
+                        $dto->setDefaultPlatformConvertedPrice($price);
+                    }
+                }
+                $dto->setPrice($price);
+            } else {
+                $dto->setPrice(0);
+                $price = 0;
+            }
+        }
+    }
+
     public function calcDeclaredValue($dto = NULL)
     {
         $this->initDto($dto);
@@ -757,5 +604,60 @@ class PriceService extends BaseService
             $declared = $value * $dto->getDeclaredPcent() / 100;
         }
         $dto->setDeclaredValue($declared);
+    }
+
+    public function getPricingToolInfo($platform_id = "", $sku = "")
+    {
+        if ($platform_id != "" && $sku != "") {
+            $ret = [];
+
+            $tmp = $this->getDao('Price')->getProductPriceWithCost(['p.sku'=>$sku, 'pbv.selling_platform_id'=>$platform_id], ['limit'=>1]);
+
+            $price_obj = $this->getDao('Price')->get(["sku" => $sku, "platform_id" => $platform_id]);
+            if (!$price_obj) {
+                $tmp->setPrice($this->getRealPrice($tmp));
+                $tmp->setCurrentPlatformPrice(NULL);
+                $tmp->setDefaultPlatformConvertedPrice($tmp->getPrice());
+            } else {
+                $tmp->setCurrentPlatformPrice($tmp->getPrice());
+            }
+
+            $this->calcLogisticCost($tmp);
+            $this->calculateProfit($tmp);
+
+            if ($tmp->getPlatformCountryId() == "GB") {
+                $tmp->setDeclaredPcent(30);
+            } else {
+                $price = $tmp->getPrice();
+                switch ($tmp->getPlatformCountryId()) {
+                    case "AU":
+                            $declared_pcent = 100;
+                        break;
+
+                    case "NZ":
+                        if ($price < 400) {
+                            $declared_pcent = 100;
+                        } else {
+                            $declared_pcent = 80;
+                        }
+                        break;
+
+                    default:
+                        $declared_pcent = 10;
+                        break;
+                }
+                $tmp->setDeclaredPcent($declared_pcent);
+            }
+
+            $tmp->setListingStatus($price_obj ? $price_obj->getListingStatus() : "N");
+            $ret["dst"] = $tmp;
+
+            unset($tmp);
+            unset($p_srv);
+
+            return $ret;
+        } else {
+            return FALSE;
+        }
     }
 }

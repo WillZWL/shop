@@ -521,5 +521,20 @@ class DaoProvider implements ServiceProviderInterface
             return new D\CompetitorMapDao();
         };
 
+        $daoContainer['PriceExtend'] = function () {
+            return new D\PriceExtendDao();
+        };
+
+        $daoContainer['PriceMargin'] = function () {
+            return new D\PriceMarginDao();
+        };
+
+        $daoContainer['DisplayQtyClass'] = function () {
+            return new D\DisplayQtyClassDao();
+        };
+
+        $daoContainer['DisplayQtyFactor'] = function () {
+            return new D\DisplayQtyFactorDao();
+        };
     }
 }

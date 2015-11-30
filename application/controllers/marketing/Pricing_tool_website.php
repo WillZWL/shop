@@ -478,7 +478,7 @@ class Pricing_tool_website extends MY_Controller
 
                 $data["pdata"] = $pdata;
                 $data["objcount"] = $objcount;
-                $data["mkt_note_obj"] = $this->sc['Product']->getDao('ProductNote')->getNoteWithAuthorName("WSGB", $value, "M");
+                $data["mkt_note_obj"] = $this->sc['Product']->getDao('ProductNote')->getNoteWithAuthorName("WEBGB", $value, "M");
                 $data["src_note_obj"] = $this->sc['Product']->getDao('ProductNote')->getNoteWithAuthorName(null, $value, "S");
                 $data["value"] = $value;
                 $prod_obj = $this->sc['Product']->getDao('Product')->get(['sku'=>$value]);
@@ -747,8 +747,6 @@ header;
             if ($prev_checked == -1) $prev_checked = $checked;
             if ($checked != $prev_checked) $html .= "</table><hr><table>";
             $prev_checked = $checked;
-            // <td><input type="checkbox" name="feed{$item['id']}" value="check" $checked onClick="submit(this);"></td>
-
 
             $dropdown = "";
             foreach ($platform_list as $platform) {

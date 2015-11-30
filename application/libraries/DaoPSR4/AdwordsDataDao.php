@@ -1,10 +1,10 @@
 <?php
 namespace ESG\Panther\Dao;
 
-class GoogleShoppingDao extends BaseDao
+class AdwordsDataDao extends BaseDao
 {
-    private $tableName = "google_shopping";
-    private $voClassName = "GoogleShoppingVo";
+    private $tableName = "adwords_data";
+    private $voClassName = "AdwordsDataVo";
 
     public function getVoClassname()
     {

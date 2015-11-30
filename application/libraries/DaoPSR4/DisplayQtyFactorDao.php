@@ -1,16 +1,10 @@
 <?php
-
 namespace ESG\Panther\Dao;
 
-class AffiliateDao extends BaseDao
+class DisplayQtyFactorDao extends BaseDao
 {
-    private $tableName = "affiliate";
-    private $voClassname = "AffiliateVo";
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    private $tableName = "display_qty_factor";
+    private $voClassname = "DisplayQtyFactorVo";
 
     public function getTableName()
     {
@@ -21,6 +15,5 @@ class AffiliateDao extends BaseDao
     {
         return $this->voClassname;
     }
+
 }
-
-

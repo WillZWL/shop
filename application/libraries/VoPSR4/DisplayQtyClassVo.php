@@ -1,19 +1,20 @@
 <?php
-class GoogleShoppingVo extends \BaseVo
+class DisplayQtyClassVo extends \BaseVo
 {
     private $id;
-    private $sku;
-    private $platform_id;
+    private $price;
+    private $price2;
+    private $qty;
+    private $qty2;
+    private $drop_qty = '0';
+    private $default_factor = '1.00';
     private $status = '1';
-    private $price = '0.00';
-    private $api_request_result = '1';
-    private $comment;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at = '2130706433';
-    private $create_by = 'system';
+    private $create_at = '127.0.0.1';
+    private $create_by;
     private $modify_on = '';
-    private $modify_at = '2130706433';
-    private $modify_by = 'system';
+    private $modify_at = '127.0.0.1';
+    private $modify_by;
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
@@ -28,36 +29,6 @@ class GoogleShoppingVo extends \BaseVo
         return $this->id;
     }
 
-    public function setSku($sku)
-    {
-        $this->sku = $sku;
-    }
-
-    public function getSku()
-    {
-        return $this->sku;
-    }
-
-    public function setPlatformId($platform_id)
-    {
-        $this->platform_id = $platform_id;
-    }
-
-    public function getPlatformId()
-    {
-        return $this->platform_id;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
     public function setPrice($price)
     {
         $this->price = $price;
@@ -68,24 +39,64 @@ class GoogleShoppingVo extends \BaseVo
         return $this->price;
     }
 
-    public function setApiRequestResult($api_request_result)
+    public function setPrice2($price2)
     {
-        $this->api_request_result = $api_request_result;
+        $this->price2 = $price2;
     }
 
-    public function getApiRequestResult()
+    public function getPrice2()
     {
-        return $this->api_request_result;
+        return $this->price2;
     }
 
-    public function setComment($comment)
+    public function setQty($qty)
     {
-        $this->comment = $comment;
+        $this->qty = $qty;
     }
 
-    public function getComment()
+    public function getQty()
     {
-        return $this->comment;
+        return $this->qty;
+    }
+
+    public function setQty2($qty2)
+    {
+        $this->qty2 = $qty2;
+    }
+
+    public function getQty2()
+    {
+        return $this->qty2;
+    }
+
+    public function setDropQty($drop_qty)
+    {
+        $this->drop_qty = $drop_qty;
+    }
+
+    public function getDropQty()
+    {
+        return $this->drop_qty;
+    }
+
+    public function setDefaultFactor($default_factor)
+    {
+        $this->default_factor = $default_factor;
+    }
+
+    public function getDefaultFactor()
+    {
+        return $this->default_factor;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     public function setCreateOn($create_on)

@@ -1,13 +1,11 @@
 <?php
-class GoogleShoppingVo extends \BaseVo
+class AffiliateSkuPlatformVo extends \BaseVo
 {
     private $id;
+    private $affiliate_id;
     private $sku;
-    private $platform_id;
+    private $platform_id = 'WEBSITE';
     private $status = '1';
-    private $price = '0.00';
-    private $api_request_result = '1';
-    private $comment;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -26,6 +24,16 @@ class GoogleShoppingVo extends \BaseVo
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setAffiliateId($affiliate_id)
+    {
+        $this->affiliate_id = $affiliate_id;
+    }
+
+    public function getAffiliateId()
+    {
+        return $this->affiliate_id;
     }
 
     public function setSku($sku)
@@ -56,36 +64,6 @@ class GoogleShoppingVo extends \BaseVo
     public function getStatus()
     {
         return $this->status;
-    }
-
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    public function setApiRequestResult($api_request_result)
-    {
-        $this->api_request_result = $api_request_result;
-    }
-
-    public function getApiRequestResult()
-    {
-        return $this->api_request_result;
-    }
-
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-    }
-
-    public function getComment()
-    {
-        return $this->comment;
     }
 
     public function setCreateOn($create_on)
