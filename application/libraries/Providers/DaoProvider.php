@@ -479,5 +479,14 @@ class DaoProvider implements ServiceProviderInterface
         $daoContainer['ExternalCategory'] = function () {
             return new D\ExternalCategoryDao();
         };
+        $daoContainer['ExtCategoryMapping'] = function () {
+            return new D\ExtCategoryMappingDao();
+        };
+        $daoContainer['CategoryMapping'] = function () {
+            return new D\CategoryMappingDao();
+        };
+        $daoContainer['GoogleShopping'] = function () {
+            return new D\GoogleShoppingDao();
+        };
     }
 }
