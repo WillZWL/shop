@@ -37,12 +37,12 @@ class ExtCategoryMappingService extends BaseService
         return $this->categoryMappingService;
     }
 
-    public function get_google_category_mapping_list($where = [], $option = [])
+    public function getGoogleCategoryMappingList($where = [], $option = [])
     {
-        return $this->getDao()->getCategoryCombination($where, $option);
+        return $this->getDao()->getGoogleCategoryMappingList($where, $option);
     }
 
-    public function get_category_combination($where = [], $option = [])
+    public function getCategoryCombination($where = [], $option = [])
     {
         return $this->getDao()->getCategoryCombination($where, $option);
     }

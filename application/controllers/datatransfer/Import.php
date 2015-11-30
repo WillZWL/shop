@@ -32,6 +32,13 @@ class Import extends MY_Controller
         print $feed;
     }
 
+    public function supplierProd()
+    {
+        $xml = file_get_contents('php://input');
+        $feed =$this->sc['VbDataTransferSupplierProduct']->startProcess($xml);
+        print $feed;
+    }
+
     /********************** start product tables **********************/
 
     public function productContent()

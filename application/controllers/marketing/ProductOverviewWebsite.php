@@ -23,6 +23,7 @@ class ProductOverviewWebsite extends MY_Controller
 
             ($this->input->get('clear') != '') ? $where['p.clearance'] = $this->input->get('clear') : '';
             ($this->input->get('msku') != '') ? $where['sm.ext_sku'] = $this->input->get('msku') : '';
+            ($this->input->get('platform_id') != '') ? $where['pr.platform_id'] = $this->input->get('platform_id') : '';
             ($this->input->get('liststatus') != '') ? $where['pr.listing_status'] = $this->input->get('liststatus') : '';
             ($this->input->get('wsqty') != '') ? $where['p.website_quantity'] = $this->input->get('wsqty') : '';
             ($this->input->get('wsstatus') != '') ? $where['p.website_status'] = $this->input->get('wsstatus') : '';

@@ -3,11 +3,13 @@ namespace ESG\Panther\Models\Marketing;
 
 use ESG\Panther\Service\CategoryService;
 use ESG\Panther\Service\ExternalCategoryService;
+use ESG\Panther\Service\ExtCategoryMappingService;
 
 class ExtCategoryMappingModel extends \CI_Model
 {
     public $categoryService = null;
     public $externalCategoryService = null;
+    public $extCategoryMappingService = null;
 
     public function __construct() {
         parent::__construct();
@@ -15,6 +17,8 @@ class ExtCategoryMappingModel extends \CI_Model
             $this->categoryService = new CategoryService();
         if (!$this->externalCategoryService)
             $this->externalCategoryService = new ExternalCategoryService();
+        if (!$this->extCategoryMappingService)
+            $this->extCategoryMappingService = new ExtCategoryMappingService();
 /*
         $this->load->library('service/ext_category_mapping_service');
         $this->load->library('service/category_service');
@@ -77,7 +81,7 @@ class ExtCategoryMappingModel extends \CI_Model
     }
 
 
-    public function create_or_update_mapping($categroy_id, $target_google_category, $country_id)
+    public function createOrUpdateMapping($categroy_id, $target_google_category, $country_id)
     {
         $where = $option = $where_2 = $option_2 = array();
         $where["ext_party"] = "GOOGLEBASE";
@@ -89,26 +93,24 @@ class ExtCategoryMappingModel extends \CI_Model
         $where_2["category_id"] = $categroy_id;
         $where_2["ext_id"] = $target_google_category;
         $where_2['`status`'] = 1;
-
-
-        if ($category_vo = $this->ext_category_mapping_service->get_dao()->get($where_2)) {
+        if ($extCatMappingVo = $this->extCategoryMappingService->getDao("ExtCategoryMapping")->get($where_2)) {
             return "Rule Already Exists.";
-        } elseif ($category_vo = $this->ext_category_mapping_service->get_dao()->get($where)) {
-            $category_vo->set_ext_id($target_google_category);
-            $category_vo->set_status(1);
-            if ($this->ext_category_mapping_service->update($category_vo)) {
+        } elseif ($extCatMappingVo = $this->extCategoryMappingService->getDao("ExtCategoryMapping")->get($where)) {
+            $extCatMappingVo->setExtId($target_google_category);
+            $extCatMappingVo->setStatus(1);
+            if ($this->extCategoryMappingService->getDao("ExtCategoryMapping")->update($extCatMappingVo)) {
                 return "New Mapping Rule Update Successfully.";
             } else {
                 return "Rule Exists, but Update fail. Please Contact technical staffs for help";
             }
         } else {
-            $category_vo = $this->ext_category_mapping_service->get_dao()->get();
-            $category_vo->set_ext_party("GOOGLEBASE");
-            $category_vo->set_category_id($categroy_id);
-            $category_vo->set_ext_id($target_google_category);
-            $category_vo->set_country_id($country_id);
-            $category_vo->set_status(1);
-            if ($this->ext_category_mapping_service->insert($category_vo)) {
+            $extCatMappingVo = $this->extCategoryMappingService->getDao("ExtCategoryMapping")->get();
+            $extCatMappingVo->setExtParty("GOOGLEBASE");
+            $extCatMappingVo->setCategoryId($categroy_id);
+            $extCatMappingVo->setExtId($target_google_category);
+            $extCatMappingVo->setCountryId($country_id);
+            $extCatMappingVo->setStatus(1);
+            if ($this->extCategoryMappingService->getDao("ExtCategoryMapping")->insert($extCatMappingVo)) {
                 return "New Mapping Rule Update Successfully.";
             } else {
                 return "Update Fail. Please Contact technical staffs for help";
@@ -116,11 +118,9 @@ class ExtCategoryMappingModel extends \CI_Model
         }
     }
 
-    public function create_new_google_category($new_google_cat, $country_list)
+    public function createNewGoogleCategory($new_google_cat, $country_list)
     {
-
         $feedback = $feedback_success = $feedback_fail = $feedback_waring = "";
-
         if (strlen($new_google_cat) > 15) {
             $new_google_cat_short = substr($new_google_cat, 0, 7) . '...' . substr($new_google_cat, -5);
         } else {
@@ -129,19 +129,18 @@ class ExtCategoryMappingModel extends \CI_Model
         $new_google_cat_short .= "<strong> &nbsp;&nbsp;  </strong>";
 
         foreach ($country_list as $country_id) {
-            if ($google_category_vo = $this->external_category_service->get(array("country_id" => $country_id, "ext_name" => $new_google_cat))) {
+            if ($googleCategoryVo = $this->externalCategoryService->getDao("ExternalCategory")->get(["country_id" => $country_id, "ext_name" => $new_google_cat])) {
                 $feedback_waring .= "$new_google_cat_short already exists in country $country_id<br>";
             } else {
-                $google_category_vo = $this->external_category_service->get_dao()->get();
-                $google_category_vo->set_ext_party("GOOGLEBASE");
-                $google_category_vo->set_level(1);
-                $google_category_vo->set_ext_name($new_google_cat);
-                $platform_biz_var_vo = $this->platform_biz_var_service->get_dao()->get(array("platform_country_id" => $country_id));
-                $lang_id = $platform_biz_var_vo->get_language_id();
-                $google_category_vo->set_lang_id($lang_id);
-                $google_category_vo->set_country_id($country_id);
-                $google_category_vo->set_status(1);
-                if ($this->external_category_service->get_dao()->insert($google_category_vo)) {
+                $googleCategoryVo = $this->externalCategoryService->getDao("ExternalCategory")->get();
+                $googleCategoryVo->setExtParty("GOOGLEBASE");
+                $googleCategoryVo->setLevel(1);
+                $googleCategoryVo->setExtName($new_google_cat);
+                $pbvObj = $this->externalCategoryService->getDao("PlatformBizVar")->get(["platform_country_id" => $country_id]);
+                $googleCategoryVo->setLangId($pbvObj->getLanguageId());
+                $googleCategoryVo->setCountryId($country_id);
+                $googleCategoryVo->setStatus(1);
+                if ($this->externalCategoryService->getDao("ExternalCategory")->insert($googleCategoryVo)) {
                     $feedback_success .= "$new_google_cat_short success add to $country_id<br>";
                 } else {
                     $feedback_fail .= "$new_google_cat_short CANNOT be create to $country_id<br>";
@@ -160,14 +159,14 @@ class ExtCategoryMappingModel extends \CI_Model
         return $feedback;
     }
 
-    function get_google_category_mapping_list($where = array(), $option = array())
+    function getGoogleCategoryMappingList($where = array(), $option = array())
     {
-        return $this->ext_category_mapping_service->get_google_category_mapping_list($where, $option);
+        return $this->extCategoryMappingService->getGoogleCategoryMappingList($where, $option);
     }
 
-    function get_category_combination($where = array(), $option = array())
+    function getCategoryCombination($where = array(), $option = array())
     {
-        return $this->ext_category_mapping_service->get_category_combination($where, $option);
+        return $this->extCategoryMappingService->getCategoryCombination($where, $option);
     }
 
 }
