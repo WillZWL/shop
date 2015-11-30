@@ -1720,7 +1720,7 @@ html;
                     ?>
                     <tr bgcolor="<?= $detail_background ?>">
                         <td align="center" style="border: 1px #CCCCCC solid;"><img
-                                src="<?= get_image_file($item_detail[7], 's', $item_detail[0]) ?>" border="0"
+                                src="<?= getImageUrl($item_detail[7], 's', $item_detail[0]) ?>" border="0"
                                 style="margin:2px;"></td>
                         <td style="padding-left:5px;border: 1px #CCCCCC solid;"><?= $item_detail[0] . " - " . $item_detail[1] ?>
                             <font color="red">(<?= $item_detail[2] ?>)</font></td>
