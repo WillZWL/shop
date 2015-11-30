@@ -3,23 +3,16 @@ namespace ESG\Panther\Dao;
 
 class GoogleShoppingDao extends BaseDao
 {
-    private $table_name = "google_shopping";
-    private $vo_classname = "GoogleShoppingVo";
-    private $seq_name = "";
-    private $seq_mapping_field = "";
+    private $tableName = "google_shopping";
+    private $voClassName = "GoogleShoppingVo";
 
-    public function __construct()
+    public function getVoClassname()
     {
-        parent::__construct();
+        return $this->voClassName;
     }
 
     public function getTableName()
     {
         return $this->tableName;
-    }
-
-    public function getVoClassname()
-    {
-        return $this->voClassname;
     }
 }

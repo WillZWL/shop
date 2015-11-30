@@ -21,7 +21,6 @@ class AffiliateDao extends BaseDao
     {
         return $this->voClassname;
     }
-
 }
 
 

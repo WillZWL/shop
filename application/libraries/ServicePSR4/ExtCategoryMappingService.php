@@ -12,24 +12,12 @@ class ExtCategoryMappingService extends BaseService
     public function __construct()
     {
         parent::__construct();
-        $this->setDao(new ExtCategoryMappingDao);
-        $this->setCategoryMappingDao(new CategoryMappingDao);
         $this->categoryMappingService = new CategoryMappingService;
     }
 
     public function get_cat_list($where = [], $option = [], $classname = "")
     {
         return $this->dao->get_cat_list($where = [], $option = [], $classname = "");
-    }
-
-    public function getCategoryMappingDao()
-    {
-        return $this->categoryMappingDao;
-    }
-
-    public function setCategoryMappingDao($dao)
-    {
-        $this->categoryMappingDao = $dao;
     }
 
     public function get_category_mapping_srv()
@@ -39,12 +27,12 @@ class ExtCategoryMappingService extends BaseService
 
     public function getGoogleCategoryMappingList($where = [], $option = [])
     {
-        return $this->getDao()->getGoogleCategoryMappingList($where, $option);
+        return $this->getDao('ExtCategoryMapping')->getCategoryCombination($where, $option);
     }
 
     public function getCategoryCombination($where = [], $option = [])
     {
-        return $this->getDao()->getCategoryCombination($where, $option);
+        return $this->getDao('ExtCategoryMapping')->getCategoryCombination($where, $option);
     }
 
 }
