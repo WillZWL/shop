@@ -44,7 +44,6 @@ class VbDataTransferProductContentService extends VbDataTransferService
                     // update
                     $reason = "update";
                     $this->getService('Product')->updateProductContent($pc_obj, $pc);
-                    $reason = "";
                     if ($this->getService('Product')->getDao('ProductContent')->update($pc_obj)) {
                         $process_status = 5;    // update success
                     } else {
