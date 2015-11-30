@@ -15,7 +15,7 @@ if (!function_exists('underscore2camelcase')) {
 $tableName = $argv[1];
 
 $voClassName = ucfirst(underscore2camelcase($tableName)."Vo");
-$db = new PDO('mysql:dbname=panther_dev;host=127.0.0.1', 'panther_dev', '');
+$db = new PDO('mysql:dbname=panther;host=127.0.0.1', 'panther', 'panther');
 $stmt = $db->query("desc {$tableName}");
 
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -47,7 +47,7 @@ foreach ($result as $column) {
 
     public function {$set_fct_name}(\${$column['Field']})
     {
-        if (\${$column['Field']}) {
+        if (\${$column['Field']} != null) {
             \$this->{$column['Field']} = \${$column['Field']};
         }
     }
