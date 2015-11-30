@@ -1,9 +1,7 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\SkuMappingDao;
-
-class SkuMappingService extends BaseService
+class SupplierProdService extends BaseService
 {
     public function createNewSupplierProd($sku, $oldObj)
     {

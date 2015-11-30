@@ -7,7 +7,7 @@ class VbDataTransferSupplierProductService extends VbDataTransferService
     public function processVbData($feed)
     {
         $xml_vb = simplexml_load_string($feed);
-        unset($xml_vb);
+        unset($feed);
 
         $task_id = $xml_vb->attributes()->task_id;
 
@@ -18,7 +18,7 @@ class VbDataTransferSupplierProductService extends VbDataTransferService
 
         foreach ($xml_vb->product as $sp) {
             try {
-                $master_sku = (string) $product->master_sku;
+                $master_sku = (string) $sp->master_sku;
                 $sku = $this->getService('SkuMapping')->getLocalSku($master_sku);
 
                 if (empty($sku)) {
@@ -35,7 +35,7 @@ class VbDataTransferSupplierProductService extends VbDataTransferService
 
                 $sp_obj = $this->getDao('SupplierProd')->get(['prod_sku' => $sku, 'order_default' => 1]);
 
-                if ((string) $sp_obj) {
+                if ($sp_obj) {
                     $reason = 'update';
                     $this->getService('SupplierProd')->updateSupplierProd($sp_obj, $sp);
                     if ($this->getDao('SupplierProd')->update($sp_obj)) {
