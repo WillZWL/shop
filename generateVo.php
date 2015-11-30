@@ -107,4 +107,4 @@ GETINCREMENTFIELD;
 
 $file .= "\n}\n";
 
-file_put_contents("/var/www/html/atomv2/application/libraries/VoPSR4/{$voClassName}.php", $file);
+file_put_contents("application/libraries/VoPSR4/{$voClassName}.php", $file);
