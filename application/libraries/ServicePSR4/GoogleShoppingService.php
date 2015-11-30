@@ -1,63 +1,25 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+namespace ESG\Panther\Service;
 
-include_once "Base_service.php";
-include_once(BASEPATH . "plugins/gshoppingcontent/GShoppingContent.php");
-
-class Google_shopping_service extends Base_service
+class GoogleShoppingService extends BaseService
 {
     private $googlebase_product_feed_service;
     private $platform_biz_var_service;
     private $context_config_service;
-    private $email_list = array();
-    private $email_cc_list = array();
+    private $emailList = [];
+    private $emailCcList = [];
     private $cache_api_request_dao;
     private $config_dao;
 
-    public function Google_shopping_service($tool_path = 'marketing/pricing_tool')
+    public function __construct($tool_path = 'marketing/pricing_tool')
     {
         parent::__construct();
-
-        include_once(APPPATH . "libraries/dao/Google_shopping_dao.php");
-        $this->set_dao(new Google_shopping_dao());
-
-        include_once(APPPATH . "libraries/dao/Cache_api_request_dao.php");
-        $this->set_cache_api_request_dao(new Cache_api_request_dao());
-
-        include_once(APPPATH . "libraries/service/Platform_biz_var_service.php");
-        $this->platform_biz_var_service = new Platform_biz_var_service();
-
-        include_once(APPPATH . "libraries/dao/Price_dao.php");
-        $this->set_price_dao(new Price_dao());
-
-        include_once(APPPATH . 'libraries/service/Context_config_service.php');
-        $this->context_config_service = new Context_config_service();
-
-        include_once(APPPATH . 'libraries/dao/Config_dao.php');
-        $this->config_dao = new Config_dao();
-
-
         set_time_limit(0);
     }
-
-
-    /* SBF #6199 - API V1 Login method, should not be in use anymore.  */
 
     function set_price_dao($value)
     {
         $this->price_dao = $value;
-    }
-
-    public function shopping_api_login($account_id)
-    {
-        // DEFINE('S_EMAIL', 'edward@valuebasket.com');
-        DEFINE('S_EMAIL', 'google-eu@valuebasket.com');
-        DEFINE('S_PASSWORD', 'happycustomers888');
-        DEFINE('S_APPLICATION_NAME', 'shopping content');
-
-        $client = new GSC_Client($account_id);
-        $client->clientLogin(S_EMAIL, S_PASSWORD, S_APPLICATION_NAME);
-        return $client;
     }
 
     public function cache_api_exec_debug()
@@ -116,7 +78,7 @@ class Google_shopping_service extends Base_service
                         // Make sure your product ID is of the form channel:languageCode:countryCode:offerId.
                         list($id, $country, $language) = array($google_ref_id, $platform_country_id, $language_id);
                         $postdata["productid"] = "online:$language_id:$platform_country_id:$id";
-                        $getproduct_result = $this->shopping_api_connect('getproduct', $account_id, $debug, $postdata);
+                        $getproduct_result = $this->shoppingApiConnect('getproduct', $account_id, $debug, $postdata);
 
                         if ($getproduct_result["status"] == TRUE) {
                             $exec = TRUE;
@@ -134,7 +96,7 @@ class Google_shopping_service extends Base_service
 
                         if ($exec) {
                             // Product exists, proceed to delete
-                            $deleteproduct_result = $this->shopping_api_connect('deleteproduct', $account_id, $debug, $postdata);
+                            $deleteproduct_result = $this->shoppingApiConnect('deleteproduct', $account_id, $debug, $postdata);
                             if ($deleteproduct_result["status"] == TRUE) {
                                 //if success
                                 $this->api_request_result_update($sku, $platform_id, 1, "");
@@ -156,7 +118,7 @@ class Google_shopping_service extends Base_service
                             $GSC_product = $gsc_product_result["product"];
                             //insert the item, if item already exists, then it will update it
                             $postdata["product"] = $GSC_product;
-                            $insertproduct_result = $this->shopping_api_connect('insertproduct', $account_id, $debug, $postdata);
+                            $insertproduct_result = $this->shoppingApiConnect('insertproduct', $account_id, $debug, $postdata);
 
                             if ($insertproduct_result) {
                                 if ($insertproduct_result["status"] == TRUE) {
@@ -216,52 +178,62 @@ class Google_shopping_service extends Base_service
         $this->cache_api_request_dao = $value;
     }
 
-    public function get_shopping_api_accountId($platform_id)
-    {
-        if ($this->context_config_service->value_of('is_dev_site')) {
-            return false;
-            // return "11073443"; # test account
-        }
-
-        $this->set_email_list($platform_id);
-
-
-        switch ($platform_id) {
-            case "WEBIT":
-                return "9674225";
-                break;
-            case "WEBFR":
-                return "7852736";
-                break;
-            case "WEBAU":
-                return "8113126";
-                break;
-            case "WEBBE":
-                return "8121966";
-                break;
-            case "WEBGB":
-                return "8551995";
-                break;
-            case "WEBCH":
-                return "11328624";
-                break;
-            //case "WEBFI": return "11038072"; break;
-            case "WEBES":
-                return "15241301";
-                break;
-            case "WEBPL":
-                return "100892246";
-                break;
-            case "WEBUS":
-                return "101019203";
-                break;
-            //case "WEBSG": return "8384686"; break;
-            default:
-                return "";
-        }
-
+    public function getShoppingApiAccountId($platformId) {
+		if (getenv("APPLICATION_ENV") == "dev") {
+//			return false;
+//			return "11073443"; # test account
+		}
+		$this->setEmailList($platformId);
+		switch($platformId) {
+			case "WEBFR": return "7852736";	break;
+            case "WEBBE": return "8121966";	break;
+			case "WEBAU": return "8113126"; break;
+			default: return "";
+		}
     }
 
+    private function _prepareSendRequestToGoogle($language, $country, $sku) {
+        $googleRefId = $country . '-' . $sku;
+        return ["productId" => "online:$language:$country:$googleRefId"];
+    }
+
+    public function getProduct($input) {
+        if (isset($input["country_id"]))
+            $country = $input["country_id"];
+        if (isset($input["language_id"]))
+            $language = $input["language_id"];
+        if (isset($input["sku"]))
+            $sku = $input["sku"];
+
+        if ($country && $language && $sku) {
+            $accountId = $this->getShoppingApiAccountId("WEB" . $country);
+            $requestData = $this->_prepareSendRequestToGoogle($language, $country, $sku);
+            $googleConnect = $this->getService("GoogleConnect");
+            return $googleConnect->getProduct($accountId, $requestData["productId"]);
+        }
+        return false;
+    }
+
+    public function updateProduct($input) {
+        $sku = substr($input["item_sku"], 3);
+        $categoryMappingObj = $this->getService("CategoryMapping")->getDao("CategoryMapping")->get(["ext_party" => "GOOGLEBASE", "category_mapping_id" => $sku, "country_id" => $input["item_country"]]);
+        if($categoryMappingObj) {
+//update title from database
+            $categoryMappingObj->setProductName($input["item_title"]);
+            if ($this->getService("CategoryMapping")->getDao("CategoryMapping")->update($categoryMappingObj)) {
+                $requestData = $this->_prepareSendRequestToGoogle($input["item_language"], $input["item_country"], $sku);
+                $accountId = $this->getShoppingApiAccountId("WEB" . $input["item_country"]);
+                $googleConnect = $this->getService("GoogleConnect");
+//get the product from google to modify
+                $getProductResult = $googleConnect->getProduct($accountId, $requestData["productId"]);
+                if ($getProductResult["status"] == TRUE) {
+                    $getProductResult["gscDataObj"]->setTitle($input["item_title"]);                  
+                    return $googleConnect->insertProduct($accountId, $getProductResult["gscDataObj"]);
+                }
+            }
+        }
+        return false;
+    }
 
     //update all platform of all product data feed, please use this function with both parameters sku and specified_platform are empty.
 
@@ -273,13 +245,13 @@ class Google_shopping_service extends Base_service
 
     //if want to update the all product in a SINGLE platform, please use funtion -- update_google_shopping_item_by_platform -- whith the first
     //parameter platform set to a corresponding value
-
-    public function shopping_api_connect($call, $account_id, $debug = true, $postdata = array())
+/*
+    public function shoppingApiConnect($call, $account_id, $debug = true, $postdata = array())
     {
         $ret["status"] = FALSE;
 
         if (!$call || !$account_id) {
-            $ret["error_message"] = ">> shopping_api_connect() Missing parameters call or account_id";
+            $ret["error_message"] = ">> shoppingApiConnect() Missing parameters call or account_id";
         } else {
             $query_str = "call=$call&accountid=$account_id";
             if ($debug)
@@ -300,8 +272,8 @@ class Google_shopping_service extends Base_service
                 $query_str = http_build_query($postdata);
 
                 for ($i = 0; $i < 5; $i++) {
-                    $result = $this->get_google_curl($url, $query_str);
-
+                    $result = $this->_getGoogleCurl($url, $query_str);
+var_dump($result);exit;
                     if ($result) {
                         $data = $result['data'];
                         $google_connect_result = json_decode($data, FALSE);
@@ -319,10 +291,10 @@ class Google_shopping_service extends Base_service
                 $curlinfo = $result["curlinfo"];
                 $curlerror = $result["curlerror"];
                 $curlerrorno = $result["curlerrorno"];
-                $curlinfo_str = $this->convert_array_to_string($curlinfo);
+                $curlinfo_str = $this->_convertArrayToString($curlinfo);
 
                 if ($curlerror) {
-                    $ret["error_message"] = ">> shopping_api_connect($call, $account_id) cURL error. [errorno:$curlerrorno] $curlerror. \r\n Curl Info: \r\n$curlinfo_str";
+                    $ret["error_message"] = ">> shoppingApiConnect($call, $account_id) cURL error. [errorno:$curlerrorno] $curlerror. \r\n Curl Info: \r\n$curlinfo_str";
                     $ret["error_handler"] = "[curl_errorno:$curlerrorno] $curlerror";
                 } else {
                     if ($data) {
@@ -338,7 +310,7 @@ class Google_shopping_service extends Base_service
                                     }
                                 }
                             } else {
-                                $ret["error_message"] = ">> shopping_api_connect($call, $account_id)\r\n{$google_connect_result->error_message}";
+                                $ret["error_message"] = ">> shoppingApiConnect($call, $account_id)\r\n{$google_connect_result->error_message}";
 
                                 $short_error_message = $google_connect_result->error_message;
                                 $short_error_message = str_replace("Caught exception: ", "", $short_error_message);
@@ -351,50 +323,25 @@ class Google_shopping_service extends Base_service
                                 $ret["error_handler"] = $short_error_message; // shorter version for database recording
                             }
                         } else {
-                            $ret["error_message"] = ">> shopping_api_connect($call, $account_id) Error decoding json: \r\n{$data}";
+                            $ret["error_message"] = ">> shoppingApiConnect($call, $account_id) Error decoding json: \r\n{$data}";
                             $ret["error_handler"] = "Error decoding response json"; // shorter version for database recording
                         }
                     } else {
                         // shouldn't come here
-                        $ret["error_message"] = ">> shopping_api_connect($call, $account_id) No data detected.";
+                        $ret["error_message"] = ">> shoppingApiConnect($call, $account_id) No data detected.";
                         $ret["error_handler"] = "No data detected"; // shorter version for database recording
                     }
                 }
 
             } else {
-                $ret["error_message"] = ">> shopping_api_connect($call, $account_id) postdata must be an array to build query";
+                $ret["error_message"] = ">> shoppingApiConnect($call, $account_id) postdata must be an array to build query";
                 $ret["error_handler"] = "postdata incorrect format";
             }
 
         }
-
-        // if($call == "deleteproductbatch")
-        // // if($call != "getproduct" && $call != "listproducts")
-        // // if($call == "insertproduct")
-        // {
-        // echo "<pre>";
-        // echo "<hr></hr>";
-        // var_dump(__LINE__ . ' LINE HERESSS');
-        // var_dump("url:  $url");
-        // var_dump($call);
-        // // var_dump("Query string:   " . $query_str);
-        // var_dump("Curl errono:$curlerrorno  -  curl error: $curlerror");
-        // echo "<hr></hr>";
-        // var_dump("raw curl_exec data from google_connect");
-        // var_dump($data); // raw data frm curl
-
-        // echo "<hr></hr>";
-        // var_dump("return message");
-        // var_dump($ret);
-        // echo "<hr></hr>";
-        // echo "<hr></hr>";
-        // die();
-        // }
-
         return $ret;
     }
-
-    private function get_google_curl($url, $query_str, $params = array())
+    private function _getGoogleCurl($url, $query_str, $params = array())
     {
         $ret = array();
         if ($url && $query_str) {
@@ -422,15 +369,15 @@ class Google_shopping_service extends Base_service
         }
         return $ret;
     }
-
-    private function convert_array_to_string($array = array())
+*/
+    private function _convertArrayToString($array = array())
     {
         $return_str = "";
 
         if ($array) {
             foreach ($array as $key => $value) {
                 if (is_array($value)) {
-                    $return_str .= $this->convert_array_to_string($value);
+                    $return_str .= $this->_convertArrayToString($value);
                 } else {
                     $return_str .= "[\"$key\"] => $value \r\n";
                 }
@@ -658,14 +605,14 @@ class Google_shopping_service extends Base_service
             $mail_content = $content;
         }
 
-        $email_list = $this->get_email_list();
-        $email_cc_list = $this->get_email_cc_list();
+        $emailList = $this->getEmailList();
+        $emailCcList = $this->getEmailCcList();
 
 
         $to = $cc = "";
 
-        $to = implode(',', $email_list);
-        $cc = implode(',', $email_cc_list);
+        $to = implode(',', $emailList);
+        $cc = implode(',', $emailCcList);
 
         if ($cc) {
             $header = "Cc: " . $cc . "\r\n";
@@ -675,46 +622,46 @@ class Google_shopping_service extends Base_service
         }
     }
 
-    function get_email_list()
+    function getEmailList()
     {
-        return $this->email_list;
+        return $this->emailList;
     }
 
-    function set_email_list($platform_id)
+    function setEmailList($platformId)
     {
-        $email_list = array();
-        switch ($platform_id) {
+        $emailList = array();
+        switch ($platformId) {
             case "WEBFR":
-                $email_list[] = "google_shopping_FR@eservicesgroup.com";
+                $emailList[] = "google_shopping_FR@eservicesgroup.com";
                 break;
             case "WEBES":
-                $email_list[] = "google_shopping_ES@eservicesgroup.com";
+                $emailList[] = "google_shopping_ES@eservicesgroup.com";
                 break;
             case "WEBIT":
-                $email_list[] = "google_shopping_IT@eservicesgroup.com";
+                $emailList[] = "google_shopping_IT@eservicesgroup.com";
                 break;
             case "WEBGB":
-                $email_list[] = "google_shopping_GB@eservicesgroup.com";
+                $emailList[] = "google_shopping_GB@eservicesgroup.com";
                 break;
             case "WEBCH":
-                $email_list[] = "google_shopping_CH@eservicesgroup.com";
+                $emailList[] = "google_shopping_CH@eservicesgroup.com";
                 break;
             case "WEBAU":
-                $email_list[] = "google_shopping_AU@eservicesgroup.com";
+                $emailList[] = "google_shopping_AU@eservicesgroup.com";
                 break;
             case "WEBPL":
-                $email_list[] = "google_shopping_PL@eservicesgroup.com";
+                $emailList[] = "google_shopping_PL@eservicesgroup.com";
                 break;
         }
 
-        $email_list[] = "google-eu@valuebasket.com";
-        $email_list[] = "itsupport@eservicesgroup.net";
-        $this->email_list = $email_list;
+        $emailList[] = "google-eu@valuebasket.com";
+        $emailList[] = "itsupport@eservicesgroup.net";
+        $this->emailList = $emailList;
     }
 
-    function get_email_cc_list()
+    function getEmailCcList()
     {
-        return $this->email_cc_list;
+        return $this->emailCcList;
     }
 
     public function cron_update_google_shopping_feed($sku = "", $specified_platform = "")
@@ -805,7 +752,7 @@ class Google_shopping_service extends Base_service
 
     public function batch_delete_item_by_product_object($account_id, $sku, $platform_id)
     {
-        /* IN DEV SERVER, it will call shopping_api_connect() will call API in dryRun mode, nothing will be deleted */
+        /* IN DEV SERVER, it will call shoppingApiConnect() will call API in dryRun mode, nothing will be deleted */
         $debug = FALSE;
         if (strpos($_SERVER["HTTP_HOST"], "dev") !== FALSE)
             $debug = TRUE;
@@ -824,7 +771,7 @@ class Google_shopping_service extends Base_service
                 $postdata["maxpages"] = 1;  # number of pages to loop
             }
 
-            $productFeed_result = $this->shopping_api_connect("listproducts", $account_id, $debug, $postdata);
+            $productFeed_result = $this->shoppingApiConnect("listproducts", $account_id, $debug, $postdata);
             if ($productFeed_result["status"] == TRUE) {
                 if ($productFeed = $productFeed_result["data"]) {
                     foreach ($productFeed as $product) {
@@ -844,7 +791,7 @@ class Google_shopping_service extends Base_service
 
                     if ($temp_product_list) {
                         $postdata_deletebatch["productidbatch"] = $temp_product_list;
-                        $deletebatch_result = $this->shopping_api_connect('deleteproductbatch', $account_id, $debug, $postdata_deletebatch);
+                        $deletebatch_result = $this->shoppingApiConnect('deleteproductbatch', $account_id, $debug, $postdata_deletebatch);
                         if ($deletebatch_result["status"] == TRUE) {
                             if ($deletebatch_result["batch_error"] != "") {
                                 // Send email for failed SKUs
@@ -909,7 +856,7 @@ class Google_shopping_service extends Base_service
                     // Make sure your product ID is of the form channel:languageCode:countryCode:offerId.
                     list($id, $country, $language) = array($google_ref_id, $platform_country_id, $language_id);
                     $postdata["productid"] = "online:$language_id:$platform_country_id:$id";
-                    $getproduct_result = $this->shopping_api_connect('getproduct', $account_id, $debug, $postdata);
+                    $getproduct_result = $this->shoppingApiConnect('getproduct', $account_id, $debug, $postdata);
 
                     if ($getproduct_result["status"] == TRUE) {
                         $prepare_batch_item[] = $postdata["productid"];
@@ -931,7 +878,7 @@ class Google_shopping_service extends Base_service
 
         if ($prepare_batch_item) {
             $postdata_deletebatch["productidbatch"] = $prepare_batch_item;
-            $deletebatch_result = $this->shopping_api_connect('deleteproductbatch', $account_id, $debug, $postdata_deletebatch);
+            $deletebatch_result = $this->shoppingApiConnect('deleteproductbatch', $account_id, $debug, $postdata_deletebatch);
 
             if ($deletebatch_result["status"] == TRUE) {
                 if ($deletebatch_result["batch_error"] != "") {
@@ -1009,7 +956,7 @@ class Google_shopping_service extends Base_service
             if ($prepare_insert_item_list) {
                 $batch_error_array = array();
                 $postdata["productbatch"] = $prepare_insert_item_list;
-                $insertproduct_result = $this->shopping_api_connect('insertproductbatch', $account_id, $debug, $postdata);
+                $insertproduct_result = $this->shoppingApiConnect('insertproductbatch', $account_id, $debug, $postdata);
 
                 if ($insertproduct_result["status"] == FALSE) {
                     $result["insertproductbatch_error"] = $insertproduct_result["error_message"];
@@ -1099,7 +1046,7 @@ class Google_shopping_service extends Base_service
                     // Make sure your product ID is of the form channel:languageCode:countryCode:offerId.
                     list($id, $country, $language) = array($google_ref_id, $platform_country_id, $language_id);
                     $postdata["productid"] = "online:$language_id:$platform_country_id:$id";
-                    $getproduct_result = $this->shopping_api_connect('getproduct', $account_id, $debug, $postdata);
+                    $getproduct_result = $this->shoppingApiConnect('getproduct', $account_id, $debug, $postdata);
 
                     if ($getproduct_result["status"] == TRUE) {
                         $exec = TRUE;
@@ -1109,7 +1056,7 @@ class Google_shopping_service extends Base_service
 
                     if ($exec) {
                         // Product exists, proceed to delete
-                        $deleteproduct_result = $this->shopping_api_connect('deleteproduct', $account_id, $debug, $postdata);
+                        $deleteproduct_result = $this->shoppingApiConnect('deleteproduct', $account_id, $debug, $postdata);
                         if ($deleteproduct_result["status"] == TRUE) {
                             //if success
                             $this->api_request_result_update($sku, $platform_id, 1, "");
@@ -1146,68 +1093,42 @@ class Google_shopping_service extends Base_service
 
     }
 
-    public function get_google_shopping_content_report($platform_id = "")
-    {
-        if (!$platform_id) {
+    public function getGoogleShoppingContentReport($platformId = "") {
+        if (!$platformId) {
             return true;
         } else {
-            $debug = FALSE;
-            if (strpos($_SERVER["HTTP_HOST"], "dev") !== FALSE)
-                $debug = TRUE;
-            $account_id = $this->get_shopping_api_accountId($platform_id);
-            if ($account_id) {
-                $postdata["maxresults"] = 250;
-                $productFeed_result = $this->shopping_api_connect("listproducts", $account_id, $debug, $postdata);
+            $accountId = $this->getShoppingApiAccountId($platformId);
+            $googleConnect = $this->getService("GoogleConnect");
+            $requestData["maxresults"] = 250;
+            $productFeedResult = $googleConnect->listProducts($accountId, $requestData["maxresults"]);
 
-                if ($productFeed_result["status"] == TRUE) {
-                    if ($productFeed = $productFeed_result["data"]) {
-                        foreach ($productFeed as $product) {
-                            $result = $this->process_item_data($product, $platform_id);
-                            $report .= $result;
-                        }
+            if ($productFeedResult["status"] == TRUE) {
+                if ($productFeed = $productFeedResult["data"]) {
+                    foreach ($productFeed as $product) {
+                        $result = $this->processItemData($product, $platform_id);
+                        $report .= $result;
                     }
-
-                    $header = "SKU| title| product_url| image_url| target_country| brand| condition| color| availability| google_category| product_type| price| currency| MPN\n";
-                    $filename = 'googlebase_product_feed_' . $platform_id . '_' . date('Ymdhis') . '.csv';
-                    header("Content-type: text/csv");
-                    header("Cache-Control: no-store, no-cache");
-                    header("Content-Disposition: attachment; filename=\"$filename\"");
-                    echo $header . $report;
-                } else {
-                    $error_message = __LINE__ . " google_shopping_service.php, \r\n{$productFeed_result["error_message"]}";
-                    $this->mail_result($result, "content for google shopping error");
-
-                    // for front end
-                    $error_message = str_replace("\r\n", "<br><br>", $error_message);
-                    echo $error_message;
-
                 }
+
+                $header = "SKU| title| product_url| image_url| target_country| brand| condition| color| availability| google_category| product_type| price| currency| MPN\n";
+                $filename = 'googlebase_product_feed_' . $platform_id . '_' . date('Ymdhis') . '.csv';
+                header("Content-type: text/csv");
+                header("Cache-Control: no-store, no-cache");
+                header("Content-Disposition: attachment; filename=\"$filename\"");
+                echo $header . $report;
+            } else {
+                $error_message = __LINE__ . " google_shopping_service.php, \r\n{$productFeedResult["error_message"]}";
+                $this->mail_result($result, "content for google shopping error");
+                // for front end
+                $error_message = str_replace("\r\n", "<br><br>", $error_message);
+                echo $error_message;
             }
         }
     }
 
-    function process_item_data($product, $platform_id = "")
+    function processItemData($product, $platform_id = "")
     {
         $temp = array();
-
-        /*
-        // previous API version format
-                $target_country = $product->getTargetCountry();
-
-                $id = $product->getSKU();
-                $title = $product->getTitle();
-                $product_url = $product->getProductLink();
-                $image_url = $product->getImageLink();
-                $brand = $product->getBrand();
-                $condition = $product->getCondition();
-                $color = $product->getColor();
-                $vail = $product->getAvailability();
-                $google_cat = $product->getGoogleProductCategory();
-                $product_type = $product->getProductType();
-                $price = $product->getPrice();
-                $price_unit = $product->getPriceUnit();
-                $mpn = $product->getMpn();
-        */
 
         $target_country = $product->targetCountry;
 
@@ -1263,787 +1184,4 @@ class Google_shopping_service extends Base_service
         $this->api_request_result_update($sku, $platform_id, 0, $comment);
         $this->mail_result($result, "ERROR: Google Shopping");
     }
-
-
-// =========== SBF #6199 -- FUNCTIONS FROM HERE ONWARD BELONG TO API VERSION 1; HAS SUNSET ================================================================================================================== //
-
-    /*
-    // API V1; obsolete
-        public function get_google_shopping_content_report_v1($platform_id="")
-        {
-            if(!$platform_id)
-            {
-                return true;
-            }
-            else
-            {
-                if($account_id = $this->get_shopping_api_accountId($platform_id))
-                {
-                    $client = $this->shopping_api_login($account_id);
-
-                    try{
-                        $report = "";
-                        //maxResults is the number of item return, can not exceed 250 per request.
-                        $maxResutls = 200;
-                        //if the total item exceed 250, then a token is needed to get the rest result
-                        $start_token = "";
-
-                        do{
-                            $productFeed = $client->getProducts($maxResutls, $start_token);
-                            $start_token = $productFeed->getStartToken();
-                            $products = $productFeed->getProducts();
-                            foreach($products as $product)
-                            {
-                                $result = $this->process_item_data($product, $platform_id);
-                                $report .= $result;
-                            }
-                        }while($start_token);
-
-                        $header = "SKU| title| product_url| image_url| target_country| brand| condition| color| availability| google_category| product_type| price| currency| MPN\n";
-
-                        $filename = 'googlebase_product_feed_' . $platform_id . '_' . date('Ymdhis').'.csv';
-                        header("Content-type: text/csv");
-                        header("Cache-Control: no-store, no-cache");
-                        header("Content-Disposition: attachment; filename=\"$filename\"");
-                        echo $header.$report;
-                    }catch(Exception $e)
-                    {
-                        $result['error'] = $e->getMessage();
-                        $this->mail_result($result, "content for google shopping error");
-                    }
-                }
-            }
-
-
-        }
-    */
-
-// API V1; obsolete
-    // public function cache_api_exec_debug_v1()
-    // {
-    //  /*
-    //      * This function catches ALL the exceptions thrown in GShoppingContent.
-    //      * Switch to use this function if cache_api_exec() produces Exceptions not caught.
-    //  */
-    //  $where = $option = array();
-    //  $where["api"] = "GSC";
-    //  $where["exec"] = 0;
-    //  $option["limit"] = -1;
-
-    //  if($config_vo = $this->config_dao->get(array("variable"=>"google_shopping_api_at_job")))
-    //  {
-    //      $config_vo->set_value(0);
-    //      $this->config_dao->update($config_vo);
-    //  }
-    //  $cache_api_list = $this->get_cache_api_request_dao()->get_list($where, $option);
-
-    //  if($cache_api_list = $this->get_cache_api_request_dao()->get_list($where, $option))
-    //  {
-    //      foreach($cache_api_list as $api_obj)
-    //      {
-    //          $api_obj->set_exec(1);
-    //          $this->get_cache_api_request_dao()->update($api_obj);
-    //      }
-
-    //      $i = 0;
-    //      foreach($cache_api_list as $api_obj)
-    //      {
-    //          $sku = $api_obj->get_sku();
-    //          $platform_id = $api_obj->get_platform_id();
-    //          $stock_status = $api_obj->get_stock_update();
-
-    //          if($i == 30)
-    //              sleep(5);
-
-    //          if(!$account_id = $this->get_shopping_api_accountId($platform_id))
-    //          {
-    //              continue;
-    //          }
-    //          else
-    //          {
-    //              $client = $this->shopping_api_login($account_id);
-    //          }
-
-    //          if(!$client)
-    //          {
-    //              $result["login"] = __LINE__." google_shopping_service Unable to get login account $account_id";
-    //              $this->mail_result($result, "CACHE_API_EXEC ERROR LOGIN");
-    //          }
-    //          $exec = false;
-
-
-    //          if($stock_status == "PAUSED")
-    //          {
-    //              $platform_obj = $this->platform_biz_var_service->get(array("selling_platform_id"=>$platform_id));
-    //              $platform_country_id = substr($platform_id,3);
-    //              $language_id = $platform_obj->get_language_id();
-    //              $google_ref_id = $platform_country_id.'-'.$sku;
-
-    //              list($id, $country, $language) = array($google_ref_id, $platform_country_id, $language_id);
-
-    //              try{
-    //                  $product = $client->getProduct($id, $country, $language);
-    //                  $exec = true;
-    //              }catch(Exception $e){
-    //                  $result["getProduct"] .= __LINE__." ".$e->getMessage()."\n$sku - $platform_id\n";
-    //                  var_dump($result);
-    //                  // $this->mail_result($result, "CACHE_API_EXEC ERROR");
-    //                  // $this->GSC_error_handler($e, $sku, $platform_id);
-    //              }
-
-    //              if($exec)
-    //              {
-    //                  try{
-    //                      $feedback = $client->deleteProduct($product);
-    //                      //if success
-    //                      $this->api_request_result_update($sku, $platform_id, 1, "");
-    //                  }catch(Exception $e){
-    //                      $result["deleteProduct"] .= __LINE__." ".$e->getMessage()."\n$sku - $platform_id\n";
-    //                      var_dump($result);
-    //                      // $this->mail_result($result, "CACHE_API_EXEC ERROR");
-    //                      // $this->GSC_error_handler($e, $sku, $platform_id);
-    //                  }
-    //              }
-    //          }
-    //          else
-    //          {
-    //              //insert the item, if item already exists, then it will update it
-    //              $GSC_product = $this->get_GSC_product($sku, $platform_id);
-
-    //              if($GSC_product)
-    //              {
-    //                  try{
-    //                      $client->insertProduct($GSC_product);
-    //                      //if success
-    //                      $this->api_request_result_update($sku, $platform_id, 1, "");
-    //                  }catch(Exception $e){
-    //                      $result["insertProduct"] .= __LINE__." ".$e->getMessage()."\n$sku - $platform_id\n";
-    //                      var_dump($result);
-    //                      // $this->mail_result($result, "CACHE_API_EXEC ERROR");
-    //                      // $this->GSC_error_handler($e, $sku, $platform_id);
-    //                  }
-    //              }
-    //          }
-
-    //          $i++;
-    //      }
-    //      if($result)
-    //      {
-    //          $this->mail_result($result, "CACHE_API_EXEC ERROR");
-    //      }
-    //  }
-    // }
-
-
-// // API v1 version without debug; obsolete
-    // public function cache_api_exec()
-    // {
-    //  /*
-    //      This is original function that catches exceptions thrown by GSC_RequestError
-    //      If anything happens and Exceptions not caught happen, switch to cache_api_exec_debug_v1()
-    //      to view all the Exceptions thrown.
-    //  */
-    //  $where = $option = array();
-    //  $where["api"] = "GSC";
-    //  $where["exec"] = 0;
-    //  $option["limit"] = -1;
-
-    //  if($config_vo = $this->config_dao->get(array("variable"=>"google_shopping_api_at_job")))
-    //  {
-    //      $config_vo->set_value(0);
-    //      $this->config_dao->update($config_vo);
-    //  }
-
-    //  if($cache_api_list = $this->get_cache_api_request_dao()->get_list($where, $option))
-    //  {
-    //      foreach($cache_api_list as $api_obj)
-    //      {
-    //          $api_obj->set_exec(1);
-    //          $this->get_cache_api_request_dao()->update($api_obj);
-    //      }
-
-    //      foreach($cache_api_list as $api_obj)
-    //      {
-    //          $sku = $api_obj->get_sku();
-    //          $platform_id = $api_obj->get_platform_id();
-    //          $stock_status = $api_obj->get_stock_update();
-
-
-    //          if(!$account_id = $this->get_shopping_api_accountId($platform_id))
-    //          {
-    //              continue;
-    //          }
-    //          else
-    //          {
-    //              $client = $this->shopping_api_login($account_id);
-    //          }
-
-    //          $exec = false;
-
-
-    //          if($stock_status == "PAUSED")
-    //          {
-    //              $platform_obj = $this->platform_biz_var_service->get(array("selling_platform_id"=>$platform_id));
-    //              $platform_country_id = substr($platform_id,3);
-    //              $language_id = $platform_obj->get_language_id();
-    //              $google_ref_id = $platform_country_id.'-'.$sku;
-
-    //              list($id, $country, $language) = array($google_ref_id, $platform_country_id, $language_id);
-
-    //              try{
-    //                  $product = $client->getProduct($id, $country, $language);
-    //                  $exec = true;
-    //              }catch(GSC_RequestError $e){
-    //                  $this->GSC_error_handler($e, $sku, $platform_id);
-    //              }
-
-    //              if($exec)
-    //              {
-    //                  try{
-    //                      $feedback = $client->deleteProduct($product);
-    //                      //if success
-    //                      $this->api_request_result_update($sku, $platform_id, 1, "");
-    //                  }catch(GSC_RequestError $e){
-    //                      $this->GSC_error_handler($e, $sku, $platform_id);
-    //                  }
-    //              }
-    //          }
-    //          else
-    //          {
-    //              //insert the item, if item already exists, then it will update it
-    //              $GSC_product = $this->get_GSC_product($sku, $platform_id);
-
-    //              if($GSC_product)
-    //              {
-    //                  try{
-    //                      $client->insertProduct($GSC_product);
-    //                      //if success
-    //                      $this->api_request_result_update($sku, $platform_id, 1, "");
-    //                  }catch(GSC_RequestError $e){
-    //                      $this->GSC_error_handler($e, $sku, $platform_id);
-    //                  }
-    //              }
-    //          }
-    //      }
-    //  }
-    // }
-
-
-    /*
-    // API V1; obsolete
-        public function batch_insert_item_v1($client, $data_list = array(), $platform_id)
-        {
-            $prepare_insert_item_list = array();
-
-            foreach($data_list as $val)
-            {
-                $sku = $val->get_sku();
-
-                if($item_obj = $this->get_dao()->get(array("sku"=>$sku, "platform_id"=>$platform_id, "status"=>1)))
-                {
-                    continue;
-                }
-
-                $title = $val->get_prod_name();
-                $description = $val->get_detail_desc();
-                $description = preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/','', $description);
-
-                $google_product_category = $val->get_google_product_category();
-                $product_type = $val->get_product_type();
-                $product_url = $val->get_product_url();
-                $image_url = $val->get_image_url();
-                $condition = $val->get_condition();
-                $availability = $val->get_availability();
-
-                if($availability == "out of stock")
-                {
-                    $availability = "in stock";
-                }
-
-                $price_w_curr = $val->get_price_w_curr();
-                $brand_name = $val->get_brand_name();
-                $mpn = $val->get_mpn();
-                $upc = $val->get_upc();
-                $ean = $val->get_ean();
-
-                $item_group_id = $val->get_item_group_id();
-                $colour_name = $val->get_colour_name();
-                $shipping = $val->get_shipping();
-                $prod_weight = $val->get_prod_weight();
-
-                $lang_id = $val->get_language_id();
-                $price = $val->get_price();
-                $currency = $val->get_platform_currency_id();
-                $platform_country_id = $val->get_platform_country_id();
-
-                $product = new GSC_Product();
-                $product->setTitle($title);
-
-
-                $product->setDescription($description);
-
-                $product->setProductLink($product_url);
-                $google_ref_id = $platform_country_id.'-'.$sku;
-                $product->setSKU($google_ref_id);
-                $product->setImageLink($image_url);
-                $product->setTargetCountry($platform_country_id);
-                $product->setContentLanguage($lang_id);
-                $product->setBrand($brand_name);
-                $product->setCondition($condition);
-                $product->setColor($colour_name);
-                $product->setAvailability ($availability);
-                $product->setGoogleProductCategory($google_product_category);
-                $product->setProductType($product_type);
-                $product->setPrice($price,$currency);
-                $product->setShippingWeight($prod_weight,'kg');
-                $product->setMpn($mpn);
-
-                //set empty as GTIN for all platform
-                $product->setGtin("");
-
-                $product->setItemGroupId($item_group_id);
-                $region = '';
-                $shippingPrice = '0.00';
-                $service = 'Standard';
-                $product->addShipping($platform_country_id,$region,$shippingPrice,$currency,$service);
-
-
-                $prepare_insert_item_list[] = $product;
-                //var_dump($val);die();
-            }
-
-
-            $n = 0;
-            try{
-                $insertedFeed = $client->insertProducts($prepare_insert_item_list, true, false);
-                $insertedProducts = $insertedFeed->getProducts();
-                $result = array();
-
-                $interrupted = FALSE;
-                $interrupted_result = array();
-                $is_fail = FALSE;
-                foreach ($insertedProducts as $product)
-                {
-                    //assume the insertProducts' order is the same of those product selected from our system.
-                    //this is use when error occur
-                    $sku = $data_list[$n]->get_sku();
-                    $title = $data_list[$n]->get_prod_name();
-
-                    if($feedback = $product->getBatchInterruptedAttribute('reason'))
-                    {
-                        $interrupted = TRUE;
-                        $interrupted_result[] = $feedback;
-                    }
-                    if($feedback = $product->getBatchInterruptedAttribute('success'))
-                    {
-                        $interrupted = TRUE;
-                        $interrupted_result[] = $feedback;
-                    }
-                    if($feedback = $product->getBatchInterruptedAttribute('failures'))
-                    {
-                        $interrupted = TRUE;
-                        $interrupted_result[] = $feedback;
-                    }
-                    if($feedback = $product->getBatchInterruptedAttribute('parsed'))
-                    {
-                        $interrupted = TRUE;
-                        $interrupted_result[] = $feedback;
-                    }
-
-                    if($interrupted && $interrupted_result)
-                    {
-                        foreach($data_list as $item_in_batch)
-                        {
-                            $interrupted_result[] = $item_in_batch->get_sku();
-                        }
-                        $this->mail_result($interrupted_result, "content for google shopping interrupted");
-                    }
-
-
-                    if($product->getBatchStatus() != '200' && $product->getBatchStatus() != '201')
-                    {
-                        if($errors = $product->getErrorsFromBatch())
-                        {
-                            $errorArray = $errors->getErrors();
-                            foreach ($errorArray as $error) {
-
-                                $result[] = "SKU: ".$sku."\r\n".
-                                            "TITLE: ".$title."\r\n".
-                                            "Code: ".$error->getCode()."\r\n".
-                                            "Domain: ".$error->getDomain()."\r\n".
-                                            'Location: '.$error->getLocation()."\r\n".
-                                            "Internal Reason: ".$error->getInternalReason()."\r\n";
-                            }
-
-                            $is_fail = TRUE;
-
-                            $platform_id = $data_list[$n]->get_platform_id();
-                            $price = $data_list[$n]->get_price();
-                            $this->create_google_shopping_record($sku, $platform_id, 0, $price, $error->getInternalReason());
-                        }
-                    }
-                    else
-                    {
-                        if($product->getBatchStatus() == '200' || $product->getBatchStatus() == '201')
-                        {
-                            $temp_sku = $product->getSKU();
-
-                            $sku = substr($temp_sku,3);
-                            $price = $product->getPrice();
-                            $this->create_google_shopping_record($sku, $platform_id, 1, $price);
-                            $subject = "content for google shopping success to update";
-
-
-                            // if($item_obj = $this->get_dao()->get(array("sku"=>substr($temp_sku,3),"platform_id"=>$platform_id)))
-                            // {
-                            //  $item_obj->set_status(1);
-                            //  $this->get_dao()->update($item_obj);
-                            //  $subject = "content for google shopping success to update";
-                            // }
-                            // else
-                            // {
-                            //  $item_obj = $this->get_dao()->get();
-                            //  $item_obj->set_sku(substr($product->getSKU(),3));
-                            //  $item_obj->set_platform_id($platform_id);
-                            //  $item_obj->set_status(1);
-                            //  $this->get_dao()->insert($item_obj);
-                            // }
-
-
-                        }
-                    }
-
-                    $n++;
-                }
-                if($is_fail)
-                {
-                    $this->mail_result($result, "ERROR: Google Shopping");
-                }
-
-            }catch(Exception $e){
-                $result[] = $e->getMessage();
-                $this->mail_result($result, "content for google shopping error: Insert Operation");
-            }
-        }
-    */
-
-
-    /*
-    // API V1; obsolete
-        public function batch_delete_item_v1($client, $sku, $platform_id)
-        {
-            $sku_list = array();
-            if(is_array($sku))
-            {
-                $sku_list = array_merge($sku_list, $sku);
-            }
-            else
-            {
-                $sku_list[] = $sku;
-            }
-
-            $prepare_batch_item = array();
-
-            foreach($sku_list as $val)
-            {
-                if($item_obj = $this->get_dao()->get(array("sku"=>$val, "platform_id"=>$platform_id, "status"=>1)))
-                {
-                    if($platform_obj = $this->platform_biz_var_service->get(array("selling_platform_id"=>$platform_id)))
-                    {
-                        $platform_country_id = substr($platform_id,3);
-                        $language_id = $platform_obj->get_language_id();
-                        $google_ref_id = $platform_country_id.'-'.$val;
-
-                        try
-                        {
-                            //get the item first then delete.
-                            //var_dump($platform_country_id);var_dump($language_id);var_dump($google_ref_id);die();
-
-                            $product = $client->getProduct($google_ref_id, $platform_country_id , $language_id);
-
-                            if($product)
-                            {
-                                $prepare_batch_item[] = $product;
-                            }
-
-                        }catch(Exception $e){
-                            $result['error'] = $e->getMessage();
-                            $this->mail_result($result, "google shopping error: Single Item delete");
-                        }
-                    }
-                }
-            }
-
-            try
-            {
-
-                if($prepare_batch_item)
-                {
-                    $deletedFeed = $client->deleteProducts($prepare_batch_item);
-                    $deletedProducts = $deletedFeed->getProducts();
-                    $result = array();
-
-                    foreach($prepare_batch_item as $item)
-                    {
-                        if($item_obj = $this->get_dao()->get(array("sku"=>substr($item->getSKU(),3), "platform_id"=>$platform_id)))
-                        {
-                            $item_obj->set_status(0);
-                            $this->get_dao()->update($item_obj);
-                        }
-                    }
-                }
-            }catch(Exception $e){
-                $result['error'] = $e->getMessage();
-                if(count($sku_list) == 1)
-                {
-                    $temp_sku = $sku_list[0];
-                    $result["SKU"] = $temp_sku;
-                }
-                $this->mail_result($result, "ERROR: Google Shopping Batch Delete Item");
-            }
-        }
-    */
-
-
-    /*
-    // API V1; obsolete
-        public function batch_delete_item_by_product_object_v1($client, $sku, $platform_id)
-        {
-            if($sku)
-            {
-                $this->batch_delete_item($client, $sku, $platform_id);
-            }
-            else
-            {
-                $start_token = "";
-                try
-                {
-                    do{
-                        $productFeed = $client->getProducts(200, $start_token);
-                        $start_token = $productFeed->getStartToken();
-                        $products = $productFeed->getProducts();
-
-                        $temp_product_list = array();
-                        foreach($products as $product)
-                        {
-                            $target_country = $product->getTargetCountry();
-                            $country_id = substr($platform_id, 3, 2);
-                            if($target_country == $country_id)
-                            {
-                                $temp_product_list[] = $product;
-                            }
-                        }
-
-                        $deletedFeed = $client->deleteProducts($temp_product_list);
-                    }while($start_token);
-
-                    if($platform_items = $this->get_dao()->get_list(array("platform_id"=>$platform_id), array("limit"=>-1)))
-                    {
-                        foreach($platform_items as $obj)
-                        {
-                            $obj->set_status(0);
-                            $this->get_dao()->update($obj);
-                        }
-                    }
-                }catch(Exception $e){
-                    $result['error'] = $e->getMessage();
-                    $this->mail_result($result, "google shopping error: Platform All Items Delete");
-                }
-            }
-        }
-    */
-
-
-    /*
-    // API V1; obsolete
-        public function delete_product_item_v1($platform_id="", $sku="" , $country_id="", $language_id="")
-        {
-
-            if($account_id = $this->get_shopping_api_accountId($platform_id))
-            {
-                $client = $this->shopping_api_login($account_id);
-
-                $google_ref_id =  $country_id.'-'.$sku;
-
-                try{
-                    if($product = $client->getProduct($google_ref_id, $country_id, $language_id))
-                    {
-                        $client->deleteProduct($product);
-                    }
-                }catch(Exception $e)
-                {
-                    $result['error'] = $e->getMessage();
-                    $this->mail_result($result, "content for google shopping error");
-                }
-            }
-
-
-        }
-    */
-
-    /*
-    // API v1
-        function get_GSC_product($sku, $platform_id)
-        {
-            foreach($gs_obj_list as $gs_obj)
-            {
-                $title = $gs_obj->get_prod_name();
-
-                $description = $gs_obj->get_detail_desc();
-                $description = preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/','', $description);
-
-                $google_product_category = $gs_obj->get_google_product_category();
-                $product_type = $gs_obj->get_product_type();
-                $product_url = $gs_obj->get_product_url();
-                $image_url = $gs_obj->get_image_url();
-                $condition = $gs_obj->get_condition();
-                $availability = $gs_obj->get_availability();
-                if($availability == "out of stock")
-                {
-                    $availability = "in stock";
-                }
-
-                $price_w_curr = $gs_obj->get_price_w_curr();
-                $brand_name = $gs_obj->get_brand_name();
-                $mpn = $gs_obj->get_mpn();
-
-                $upc = $gs_obj->get_upc();
-                $ean = $gs_obj->get_ean();
-
-                $gitn = $upc?$upc:$ean;
-                $item_group_id = $gs_obj->get_item_group_id();
-                $colour_name = $gs_obj->get_colour_name();
-                $shipping = $gs_obj->get_shipping();
-                $prod_weight = $gs_obj->get_prod_weight();
-
-                $lang_id = $gs_obj->get_language_id();
-                $price = $gs_obj->get_price();
-                $currency = $gs_obj->get_platform_currency_id();
-                $platform_country_id = $gs_obj->get_platform_country_id();
-
-                $product = new GSC_Product();
-                $product->setTitle($title);
-                $product->setDescription($description);
-                $product->setProductLink($product_url);
-                $google_ref_id = $platform_country_id.'-'.$sku;
-                $product->setSKU($google_ref_id);
-                $product->setImageLink($image_url);
-                $product->setTargetCountry($platform_country_id);
-                $product->setContentLanguage($lang_id);
-                $product->setBrand($brand_name);
-                $product->setCondition($condition);
-                $product->setColor($colour_name);
-                $product->setAvailability ($availability);
-                $product->setGoogleProductCategory($google_product_category);
-                $product->setProductType($product_type);
-                $product->setPrice($price,$currency);
-                $product->setShippingWeight($prod_weight,'kg');
-                $product->setMpn($mpn);
-
-                if(($google_ref_id == "FR-16060-AA-WH") || ($google_ref_id == "FR-16060-AA-BK"))
-                {
-                    $extra_track_parameter = "&source={ifdyn:dyn}{ifpe:pe}{ifpla:pla}&dyprodid=$google_ref_id";
-                    $product->setAdwordsRedirect($product_url.$extra_track_parameter);
-                }
-
-
-                //set empty as GTIN for all platform
-                //if( $platform_id == "WEBES")
-                //{
-                    $product->setGtin("");
-                //}
-                //else
-                //{
-                //  $product->setGtin($gitn);
-                //}
-
-                $product->setItemGroupId($item_group_id);
-
-                $region = '';
-                $shippingPrice = '0.00';
-                $service = 'Standard';
-                $product->addShipping($platform_country_id,$region,$shippingPrice,$currency,$service);
-                return $product;
-            }
-        }
-    */
-
-    /*
-    // API V1; obsolete
-        public function update_google_shopping_item_by_platform_v1($platform_id="", $sku="")
-        {
-            if(!$account_id = $this->get_shopping_api_accountId($platform_id))
-            {
-                return true;
-            }
-
-            $where = $d_where = array();
-
-            if($sku)
-            {
-                if(is_array($sku))
-                {
-                    $query_str = "";
-                    foreach($sku as $v)
-                    {
-                        $query_str .= "'".$v."',";
-                    }
-
-                    $query_str = rtrim($query_str, ',');
-                    $where['pr.sku in ('. $query_str .')'] = null;
-
-                    $d_where['sku in ('. $query_str .')'] = null;
-
-                }
-                else
-                {
-                    $where["pr.sku in ('". $sku ."')"] = null;
-
-                    $d_where["sku in ('". $sku ."')"] = null;
-                }
-            }
-            $data_list = $this->gen_data_feed($platform_id, $shopping_api = TRUE, $where);
-
-
-            // *******************
-            // *when run this function, update the google_shopping record too
-            // *if update all product by platform, then all google_shopping data in
-            // *that platform will be delete first, then records will be created again base on the
-            // *request return result.
-            // *******************
-            $d_where["platform_id"] =  $platform_id;
-            $this->get_dao()->q_delete($d_where);
-
-            $client = $this->shopping_api_login($account_id);
-
-
-            try{
-                $this->batch_delete_item_by_product_object($client, $sku, $platform_id);
-                //die();
-            }catch(Exception $e)
-            {
-                $result['error'] = $e->getMessage();
-                $this->mail_result($result, "content for google shopping error");
-            }
-
-
-            if($data_list)
-            {
-                $chunk_data_list = array_chunk($data_list, 200, false);
-
-                foreach($chunk_data_list as $chunk_data)
-                {
-                    try{
-                        $this->batch_insert_item($client, $chunk_data, $platform_id);
-                    }catch(Exception $e){
-                        $result['error'] = $e->getMessage();
-                        $this->mail_result($result, "google shopping fail to insert");
-                    }
-                }
-            }
-        }
-
-    */
-// =========== SBF #6199 -- END OF API VERSION 1 FUNCTIONS ============================================================================================================================ //
-
 }

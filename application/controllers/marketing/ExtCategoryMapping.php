@@ -29,30 +29,15 @@ class ExtCategoryMapping extends MY_Controller
         $where["status"] = 1;
         $option["limit"] = -1;
         $data['cat_details_list'] = $this->extCategoryMappingModel->processCatDetail($where, $option);
-//        var_dump($data['cat_details_list']);exit;
         $data['country_list'] = $this->extCategoryMappingModel->getCountryList();
-//        var_dump($data['country_list']);exit;
-        
-        $data['google_category_list'] = $this->extCategoryMappingModel->getGoogleCategoryList($gcat_where);
+        $data['google_category_list'] = $this->extCategoryMappingModel->getGoogleCategoryList($_GET);
 
-        $data["google_datafeed_account"] = array();
-        $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.SG", "account_id" => 8384686, "country" => array("SG"), "language" => array("en"));
-        $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.it", "account_id" => 9674225, "country" => array("IT"), "language" => array("it"));
-        $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.fi", "account_id" => 11038072, "country" => array("FI"), "language" => array("en"));
-        $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.ch", "account_id" => 11328624, "country" => array("CH"), "language" => array("en"));
-        $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.fr", "account_id" => 7852736, "country" => array("FR"), "language" => array("fr"));
-        $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.com.au", "account_id" => 8113126, "country" => array("AU"), "language" => array("en"));
-        $data["google_datafeed_account"][] = array("account_name" => "Valuebasket.be", "account_id" => 8121966, "country" => array("BE"), "language" => array("fr"));
-        $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.com", "account_id" => 8551995, "country" => array("GB", "CH"), "language" => array("en"));
-        $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.es", "account_id" => 15241301, "country" => array("ES"), "language" => array("es"));
-        $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.pl", "account_id" => 100892246, "country" => array("PL"), "language" => array("pl"));
-        $data["google_datafeed_account"][] = array("account_name" => "ValueBasket.com", "account_id" => 101019203, "country" => array("US"), "language" => array("en"));
-
+        $data["google_datafeed_account"] = $this->sc["Google"]->getShoppingAccountInfoList();
+//var_dump($this->sc["Google"]->getAdwordAccountInfoList());exit;
         $this->load->view('marketing/ext-category-mapping/ext-category-mapping-index', $data);
     }
 
-    public function getAppId()
-    {
+    public function getAppId() {
         return $this->appId;
     }
 
@@ -62,7 +47,7 @@ class ExtCategoryMapping extends MY_Controller
         $option['limit'] = -1;
         //var_dumP($this->db->last_query());die();
         $container = array();
-        if ($s = $this->ext_category_mapping_model->get_google_category_mapping_list($where, $option)) {
+        if ($s = $this->ext_category_mapping_model->getCountryGoogleCategoryMapping($where, $option)) {
             foreach ($s as $d) {
                 $container[$d->get_country_id()][$d->get_category_id()] = $d->get_google_category_name();
             }
@@ -77,62 +62,36 @@ class ExtCategoryMapping extends MY_Controller
         }
     }
 
-    public function create_mapping_rule()
+    public function createMappingRule()
     {
         $cat_id = trim($_POST["cat_id"]);
         $sub_cat_id = trim($_POST["sub_cat_id"]);
         $sub_sub_cat_id = trim($_POST["sub_sub_cat_id"]);
         $country_id = trim($_POST["country_id"]);
         $target_google_category = trim($_POST["target_google_category"]);
-
         if (($cat_id == "" && $sub_cat_id == "" && $sub_sub_cat_id == "") || $country_id == "" || $target_google_category == "") {
             echo "Please check you input and try again.";
         } else {
             //always mapping to the more details category_id
             $categroy_id = $sub_sub_cat_id ? $sub_sub_cat_id : ($sub_cat_id ? $sub_cat_id : $cat_id);
-            $feedback = $this->ext_category_mapping_model->create_or_update_mapping($categroy_id, $target_google_category, $country_id);
+            $feedback = $this->extCategoryMappingModel->createOrUpdateMapping($categroy_id, $target_google_category, $country_id);
             echo $feedback;
         }
     }
 
-    public function create_google_category()
+    public function createGoogleCategory()
     {
         $new_google_cat = rtrim($_POST["new_google_cat"], " > ");
         $country_list = $_POST["country_list"];
-        $feedback = $this->ext_category_mapping_model->create_new_google_category($new_google_cat, $country_list);
+        $feedback = $this->extCategoryMappingModel->createNewGoogleCategory($new_google_cat, $country_list);
         echo $feedback;
     }
 
-    public function account_info()
-    {
-        $account_info = array();
-        $account_info[] = array("accountId" => "493-907-8910", "accountName" => "API Test Account");
-        $account_info[] = array("accountId" => "212-603-9902", "accountName" => "VB AU");
-        $account_info[] = array("accountId" => "361-241-0604", "accountName" => "VB ES");
-        $account_info[] = array("accountId" => "316-460-3467", "accountName" => "VB FR");
-        $account_info[] = array("accountId" => "899-782-9704", "accountName" => "VB IT");
-        $account_info[] = array("accountId" => "220-522-9085", "accountName" => "VB UK");
-        $account_info[] = array("accountId" => "556-933-8151", "accountName" => "VB CH");
-        $account_info[] = array("accountId" => "960-837-9622", "accountName" => "VB FI");
-        $account_info[] = array("accountId" => "933-307-6722", "accountName" => "VB MT");
-        $account_info[] = array("accountId" => "766-479-7671", "accountName" => "VB IE");
-        $account_info[] = array("accountId" => "423-123-0557", "accountName" => "VB BE");
-        $account_info[] = array("accountId" => "229-179-7402", "accountName" => "VB PT");
-
-        $account_info[] = array("accountId" => "182-353-3787", "accountName" => "VB NZ");
-        $account_info[] = array("accountId" => "492-329-4157", "accountName" => "VB MY");
-        $account_info[] = array("accountId" => "952-771-4151", "accountName" => "VB PH");
-        $account_info[] = array("accountId" => "383-339-9953", "accountName" => "VB SG");
-        $account_info[] = array("accountId" => "339-560-2926", "accountName" => "VB RU");
-        $account_info[] = array("accountId" => "923-383-8759", "accountName" => "CV HK");
-        $account_info[] = array("accountId" => "312-691-2272", "accountName" => "SE AU");
-        $account_info[] = array("accountId" => "958-318-2390", "accountName" => "SE UK");
-        $account_info[] = array("accountId" => "791-772-7172", "accountName" => "SE EU");
-
+    public function accountInfo() {
         header('Cache-Control: no-cache, must-revalidate');
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
         header('Content-type: application/json');
-        echo json_encode($account_info);
+        echo json_encode($this->sc["Google"]->getAdwordAccountInfoList());
     }
 
     public function compaign_info()
@@ -241,91 +200,17 @@ class ExtCategoryMapping extends MY_Controller
         var_dump($result);
     }
 
-    /*
-    // API V1; obsolete
-        public function get_product_item_v1($id = "", $country = "", $language = "")
-        {
+    public function getProductItem($id = "", $country = "", $language = "")
+    {
+        $input = $_POST;
+        if ($getproduct_result = $this->sc["GoogleShopping"]->getProduct($input)) {
             $account_id = @$_POST["account_id"];
             $country = @$_POST["country_id"];
             $language = @$_POST["language_id"];
             $sku = @$_POST["sku"];
-
-            $client = $this->google_shopping_service->shopping_api_login($account_id);
-
-            try{
-                $product = $client->getProduct($sku, $country, $language);
-            }catch(Exception $e)
-            {
-                echo $e->getMessage();
-            }
-
-            if($product)
-            {
-                $sku = $product->getSku();
-                $title = $product->getTitle();
-                $condit = $product->getCondition();
-                $price = $product->getPrice();
-                $avail = $product->getAvailability();
-                //$google_cat = $product->getg();
-                $brand = $product->getBrand();
-                $gtin = $product->getGtin();
-                $mpn = $product->getMpn();
-                $currency = $product->getPriceUnit();
-                $google_categorys = $product->getGoogleProductCategory();
-                $adwords_redirect = $product->getAdwordsRedirect();
-
-                $result =<<<end
-                    <input type="hidden" id="item_account" value="$account_id">
-                    <input type="hidden" id="item_country" value="$country">
-                    <input type="hidden" id="item_language" value="$language">
-                    <label class="item_label">sku</label><input class="input_box" id="item_sku" value="$sku" readonly>
-                    <label class="item_label">title</label><input class="input_box" id="item_title" value="$title">
-                    <label class="item_label">cond</label><input class="input_box" id="item_condi" value="$condit">
-                    <label class="item_label">price</label><input class="input_box" id="item_price" value="$price">  <br>
-                    <label class="item_label">brand</label><input class="input_box" id="item_brand" value="$brand">
-                    <label class="item_label">avail</label><input class="input_box" id="item_valid" value="$avail">
-                    <label class="item_label">gtin</label><input class="input_box" id="item_gtin" value="$gtin">
-                    <label class="item_label">mpn</label><input class="input_box" id="item_mpn" value="$mpn">  <br>
-                    <label class="item_label">currency</label><input class="input_box" id="item_currency" value="$currency">
-                    <label class="item_label">google_cat</label><input class="input_box" id="item_google_categorys" style="width:680px" value="$google_categorys">
-                    <br>
-                    <label class="item_label">adwords_redirect</label><input class="input_box" id="item_adwords_redirect" style="width:680px" value="$adwords_redirect">
-
-    end;
-                echo $result;
-            }
-            else
-            {
-                echo "No Result Found";
-            }
-        }
-    */
-
-    public function get_product_item($id = "", $country = "", $language = "")
-    {
-        $debug = FALSE;
-        if (strpos($_SERVER["HTTP_HOST"], "dev") != FALSE)
-            $debug = TRUE;
-
-        $account_id = @$_POST["account_id"];
-        $country = @$_POST["country_id"];
-        $language = @$_POST["language_id"];
-        $sku = @$_POST["sku"];
-
-        $exec = false;
-        if ($account_id && $country && $language && $sku) {
-            $google_ref_id = $country . '-' . $sku;
-
-            // Make sure your product ID is of the form channel:languageCode:countryCode:offerId.
-            list($id, $country, $language) = array($google_ref_id, $country, $language);
-            $postdata["productid"] = "online:$language:$country:$id";
-            $getproduct_result = $this->google_shopping_service->shopping_api_connect('getproduct', $account_id, $debug, $postdata);
-
             if ($getproduct_result["status"] == TRUE) {
-                if ((array)$getproduct_result["data"]) {
-                    $exec = TRUE;
+                if ((array) $getproduct_result["data"]) {
                     $product = $getproduct_result["data"];
-
                     $sku = $product->offerId;
                     $title = $product->title;
                     $condit = $product->condition;
@@ -333,8 +218,8 @@ class ExtCategoryMapping extends MY_Controller
                     $brand = $product->brand;
                     $gtin = $product->gtin;
                     $mpn = $product->mpn;
-                    $price = $product->price->value;
-                    $currency = $product->price->currency;
+                    $price = $product->price["value"];
+                    $currency = $product->price["currency"];
                     $google_categorys = $product->googleProductCategory;
                     $adwords_redirect = $product->adwordsRedirect;
 
@@ -360,167 +245,26 @@ end;
                     die();
 
                 } else {
-                    // status=true but no object?
+                    print __LINE__ . __METHOD__ . ", No object result obtain";
+                    exit;
                 }
             } else {
-                // $result["getProduct"] .= __LINE__." Error from google_connect [$sku - $platform_id]: \r\n{$getproduct_result["error_message"]} \r\n";
+                print $getproduct_result["error_message"];
+                exit;
             }
-        } else {
-            // echo "No account_id / country / language / sku found";
         }
-
         echo "No Result Found";
     }
 
-    /*
-    // API V1; obsolete
-        public function update_product_item_v1()
-        {
-            //"item_sku, item_title, item_condi,item_price,item_brand,item_valid, item_mpn
-            //"item_gtin, item_currency, item_country,item_account,item_language,item_google_categorys
-            foreach($_POST as $key=>$val)
-            {
-                $$key = $val;
-            }
-            $account_id = $item_account;
-            $client = $this->google_shopping_service->shopping_api_login($account_id);
-
-            try{
-                $product = $client->getProduct($item_sku, $item_country, $item_language);
-            }catch(Exception $e){
-                echo $e->getMessage();
-            }
-
-            if($product)
-            {
-                try{
-                    $product->setTitle($item_title);
-                    //$product->setCondition($item_condi);
-                    //$item_price = number_format ($item_price, 2, '.', ',');
-                    //$product->setPrice($item_price, $item_currency);
-                    //$product->setAvailability($item_valid);
-                    //$product->setBrand($item_brand);
-                    //$product->setGtin($item_gtin);
-                    //$product->setMpn($item_mpn);
-                    //$product->setGoogleProductCategory($item_google_categorys);
-
-                    $client->updateProduct($product, true, false);
-
-                    $category_service = $this->category_mapping_service;
-                    $sku = substr($item_sku, 3);
-                    $obj = $category_service->get_dao()->get(array("ext_party"=>"GOOGLEBASE", "id" =>$sku, "country_id"=>$item_country));
-                    //var_dump($category_service->get_dao()->db->last_query());die();
-
-                    if($obj = $category_service->get_dao()->get(array("ext_party"=>"GOOGLEBASE", "id" =>$sku, "country_id"=>$item_country)))
-                    {
-                        $obj->set_product_name($item_title);
-                        $category_service->get_dao()->update($obj);
-                    }
-
-                    //echo "$item_price";die();
-                    $warnings = $product->getWarnings();
-                    if($warnings->length == 0)
-                    {
-                        $result = "update successfully";
-                    }
-                    else
-                    {
-                        $result = "";
-                        for($index = 0; $index < $warnings->length; $index++) {
-                            $warning = $warnings->item($index);
-                            $result .='Code: ' . $product->getWarningCode($warning) . "\n";
-                            $result .='Domain: ' . $product->getWarningDomain($warning) . "\n";
-                            $result .='Location: ' . $product->getWarningLocation($warning) . "\n";
-                            $result .='Message: ' . $product->getWarningMessage($warning) . "\n";
-                        }
-                    }
-                    echo $result;
-
-                }catch(Exception $e)
-                {
-                    echo $e->getMessage();
-                }
-            }
-        }
-    */
-
-    public function update_product_item()
+    public function updateProductItem()
     {
-        //"item_sku, item_title, item_condi,item_price,item_brand,item_valid, item_mpn
-        //"item_gtin, item_currency, item_country,item_account,item_language,item_google_categorys
-
-        $_POST["item_sku"] = "AU-18066-AA-NA";
-        $_POST["item_title"] = "Orbotix Sphero 2.0 Revealed Robot (Limited Edition)";
-        $_POST["item_google_categorys"] = "Toys & Games > Toys";
-        $_POST["item_mpn"] = "S003AP";
-        $_POST["item_account"] = 8113126;
-        $_POST["item_country"] = "AU";
-        $_POST["item_language"] = "en";
-
-        foreach ($_POST as $key => $val) {
-            $$key = $val;
-        }
-
-        $debug = FALSE;
-        if (strpos($_SERVER["HTTP_HOST"], "dev") != FALSE)
-            $debug = TRUE;
-
-        $account_id = $item_account;
-        $google_ref_id = $item_sku;  # e.g. AU-18066-AA-NA
-        $country = $item_country;
-        $language = $item_language;
-
-        if ($account_id && $google_ref_id && $country && $language) {
-            $sku = substr($item_sku, 3);
-            $platform_id = "WEB" . $country;
-            $category_service = $this->category_mapping_service;
-            $obj = $category_service->get_dao()->get(array("ext_party" => "GOOGLEBASE", "id" => $sku, "country_id" => $item_country));
-            // var_dump($category_service->get_dao()->db->last_query());die();
-
-            // update new title into db first
-            if ($obj) {
-                $obj->set_product_name($item_title);
-                $category_service->get_dao()->update($obj);
-            }
-
-            // Make sure your product ID is of the form channel:languageCode:countryCode:offerId.
-            list($id, $country, $language) = array($google_ref_id, $country, $language);
-            $postdata["productid"] = "online:$language:$country:$id";
-            $getproduct_result = $this->google_shopping_service->shopping_api_connect('getproduct', $account_id, $debug, $postdata);
-
-            if ($getproduct_result["status"] == TRUE) {
-                if ((array)$getproduct_result["data"]) {
-                    $exec = TRUE;
-
-                    $GSC_product = $this->google_shopping_service->get_GSC_product($sku, $platform_id);
-                    if ($GSC_product) {
-                        //insert the item, if item already exists, then it will update it
-                        $postdata["product"] = json_encode($GSC_product);
-                        $insertproduct_result = $this->google_shopping_service->shopping_api_connect('insertproduct', $account_id, $debug, $postdata);
-
-                        if ($insertproduct_result) {
-                            if ($insertproduct_result["status"] == TRUE) {
-                                //if success
-                                $result = "update successfully";
-                            } else {
-                                $result = __LINE__ . " Error from google_connect [$sku - $platform_id]: {$insertproduct_result["error_message"]}";
-                            }
-                        } else {
-                            $result = __LINE__ . " [$sku - $platform_id] No response detected";
-                        }
-                    }
-                } else {
-                    $result = __LINE__ . " [$sku - $platform_id] No product data returned";
-                }
-            } else {
-                $result = __LINE__ . " Error from google_connect [$sku - $platform_id]: \r\n{$getproduct_result["error_message"]} \r\n";
-            }
-
+        $input = $_POST;
+        $updateResult = $this->sc["GoogleShopping"]->updateProduct($input);
+        if ($updateResult["status"]) {
+            print $input["item_sku"] . " Updated successfully";
         } else {
-            $result = "Missing account_id, google sku, country or language";
+            print $updateResult["error_message"];
         }
-
-        echo $result;
     }
 
     public function  delete_product_item($platform_id = "", $sku = "", $country_id = "", $language_id = "")
@@ -546,9 +290,8 @@ end;
         $this->google_shopping_service->cron_update_google_shopping_feed($sku, $specified_platform);
     }
 
-    public function get_google_shopping_content_report($platform_id = "")
-    {
-        $return = $this->google_shopping_service->get_google_shopping_content_report($platform_id);
+    public function getGoogleShoppingContentReport($platformId = "") {
+        $this->sc["GoogleShopping"]->getGoogleShoppingContentReport($platformId);
     }
 
     public function update_adGroup_keyword_price_paramter($sku = "", $platform_id = "", $price = "")
@@ -585,72 +328,37 @@ end;
         return $this->langId;
     }
 
-    public function get_country_google_category_mapping()
+    public function getCountryGoogleCategoryMapping()
     {
         $country_id = $_POST["country_id"];
-
-        $where = $option = array();
+        $data['existsing_mapping'] = $container = $where = $option = [];
         $option['limit'] = -1;
         $where['ext_c.country_id'] = $country_id;
-        //var_dumP($this->db->last_query());die();
-
-        $container = array();
-        if ($s = $this->ext_category_mapping_model->get_google_category_mapping_list($where, $option)) {
-            //var_dumP($s);die();
-            foreach ($s as $d) {
-                $container[$d->get_country_id()][$d->get_category_id()] = $d->get_google_category_name();
+        if ($categoryMappingList = $this->extCategoryMappingModel->getGoogleCategoryMappingList($where, $option)) {
+            foreach ($categoryMappingList as $obj) {
+                $container[$obj->getCountryId()][$obj->getCategoryId()] = $obj->getGoogleCategoryName();
             }
         }
 
-        //var_dump($container['SG']);
-        //var_dump($this->db->last_query());die();
-        $data['existsing_mapping'] = array();
-
-
-        if ($country_list) {
-            foreach ($country_list as $c) {
-                //$t[$c] = @$container[$c];
-                $data['existsing_mapping']["$c"] = @$container[$c];
-            }
-        }
-
-
-        //var_dump($data['existsing_mapping']);die();
-
-        $category_id_w_name = array();
-        $where = $option = array();
+        $category_id_w_name = $where = $option = [];
         $option['limit'] = -1;
-        //$category_combination = $this->ext_category_mapping_model->get_category_combination($where,$option);
-
-        //var_dump($category_combination);
-
-        if ($category_combination = $this->ext_category_mapping_model->get_category_combination($where, $option)) {
-            //var_dump($this->db->last_query());die();
-            foreach ($category_combination as $c) {
+        if ($category_combination = $this->extCategoryMappingModel->getCategoryCombination($where, $option)) {
+            foreach ($category_combination as $categoryList) {
                 //echo $c->get_id();
                 //echo preg_replace("/Base->/", '', $c->get_name());
                 //echo "<br>";
-
-                $category_name = preg_replace("/Base->/", '', $c->name);
-
-                $i = strpos($category_name, '->');
+                $categoryName = preg_replace("/Base->/", '', $categoryList->getName());
+                $i = strpos($categoryName, '->');
                 $i = $i ? $i : "100";
-
-                $first_category_level = substr($category_name, 0, $i); //this is category name
-
-
-                $category_classification[$first_category_level][$c->id] = $category_name;
-
-                //$category_id_w_name[$c->get_id()] = preg_replace("/Base->/", '', $c->get_name());
+                $first_category_level = substr($categoryName, 0, $i); //this is category name
+                $category_classification[$first_category_level][$categoryList->getId()] = $categoryName;
             }
         }
 
-        $s = "";
+        $output = "";
         if ($category_classification) {
             foreach ($category_classification as $first_category_level => $sub_list) {
-
-                $s .= "<div class='sub_accordion'>   <h3>{$first_category_level}</h3> <div> <p>";
-
+                $output .= "<div class='sub_accordion'>   <h3>{$first_category_level}</h3> <div> <p>";
                 foreach ($sub_list as $category_id => $combination_category_name) {
                     //$container[$d->get_country_id()][$d->get_category_id()]
                     $google_category_name = $container[$country_id][$category_id];
@@ -659,14 +367,12 @@ end;
                     } else {
                         $status = 'valid_google_cat';
                     }
-                    $s .= '<input type="text"  class="system_cat ' . $status . '" value="' . $combination_category_name . '" readonly><input type="text" class="google_cat ' . $status . '" value="' . $google_category_name . '" readonly> <br>';
+                    $output .= '<input type="text"  class="system_cat ' . $status . '" value="' . $combination_category_name . '" readonly><input type="text" class="google_cat ' . $status . '" value="' . $google_category_name . '" readonly> <br>';
                 }
-                $s .= "</p></div></div>";
+                $output .= "</p></div></div>";
             }
         }
-
-        //$data['category_classification'] = $category_classification;
-        echo $s;
+        echo $output;
     }
 }
 
