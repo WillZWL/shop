@@ -375,15 +375,19 @@ class ServiceProvider implements ServiceProviderInterface
         };
 
         $serviceContainer['CategoryMapping'] = function () {
-            return new S\GoogleConnectService();
+            return new S\CategoryMappingService();
         };
 
-        $servcieContainer['PricingTool'] = function () {
+        $serviceContainer['PricingTool'] = function () {
             return new S\PricingToolService();
         };
 
-        $servcieContainer['DisplayQty'] = function () {
+        $serviceContainer['DisplayQty'] = function () {
             return new S\DisplayQtyService();
+        };
+
+        $serviceContainer['Supplier'] = function () {
+            return new S\SupplierService();
         };
     }
 }
