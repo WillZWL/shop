@@ -184,12 +184,10 @@ class GoogleShoppingService extends BaseService
 //			return "11073443"; # test account
 		}
 		$this->setEmailList($platformId);
-		switch($platformId) {
-			case "WEBFR": return "7852736";	break;
-            case "WEBBE": return "8121966";	break;
-			case "WEBAU": return "8113126"; break;
-			default: return "";
-		}
+        $accountInfo = $this->getService("Google")->shoppingAcctInfo;
+        if (array_key_exists($platformId, $accountInfo))
+            return $accountInfo[$platformId]["account_id"];
+        return "";
     }
 
     private function _prepareSendRequestToGoogle($language, $country, $sku) {

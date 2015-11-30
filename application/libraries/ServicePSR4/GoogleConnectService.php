@@ -8,9 +8,9 @@ class GoogleConnectService extends BaseService
     * Credentials: https://console.developers.google.com/project -> API Project
     * If service account changed, need to add the new user in https://www.google.com/merchants/Home?a=9838040#usermanagement
 */
-    private $client_id = '549591735969-0apoenv5ia6a5t7hp4hqmia2uacdi212.apps.googleusercontent.com'; //Client ID
-    private $service_account_name = '549591735969-0apoenv5ia6a5t7hp4hqmia2uacdi212@developer.gserviceaccount.com'; //Email Address
-    private $key_file_location = 'D://website//atomv2//GoogleAPIProjPK.p12'; //key.p12
+    private $client_id = '110619035985876631175'; //Client ID, no use
+    private $service_account_name = 'account-2@ethereal-terra-114508.iam.gserviceaccount.com'; //Email Address
+    private $key_file_location = 'D://website//atomv2//GoogleContentApi-a0754173747d.p12'; //key.p12
 
     public function __construct() {
 		if (getenv("APPLICATION_ENV") == "dev") {
@@ -81,11 +81,10 @@ class GoogleConnectService extends BaseService
     }
 
     private function _setupClientService($serviceName) {
-        $client_id = $this->client_id;
+//        $client_id = $this->client_id;
         $service_account_name = $this->service_account_name;
         $key_file_location = $this->key_file_location;
-        if ($client_id == '<YOUR_CLIENT_ID>'
-            || !strlen($service_account_name)
+        if (!strlen($service_account_name)
             || !strlen($key_file_location)) {
             return false;
         }
@@ -165,12 +164,10 @@ class GoogleConnectService extends BaseService
         $ret["error_message"] = "";
         $ret["debug"] = $this->debug;
 
-        $client_id = $this->client_id;
         $service_account_name = $this->service_account_name;
         $key_file_location = $this->key_file_location;
 
-        if ($client_id == '<YOUR_CLIENT_ID>'
-            || !strlen($service_account_name)
+        if (!strlen($service_account_name)
             || !strlen($key_file_location)) 
         {
             $ret["error_message"] = __LINE__ . " File: " . __FILE__ . " - Missing/Invalid Details.";
@@ -252,12 +249,10 @@ class GoogleConnectService extends BaseService
         $ret["error_message"] = "";
         $ret["debug"] = $this->debug;
 
-        $client_id = $this->client_id;
         $service_account_name = $this->service_account_name;
         $key_file_location = $this->key_file_location;
 
-        if ($client_id == '<YOUR_CLIENT_ID>'
-            || !strlen($service_account_name)
+        if (!strlen($service_account_name)
             || !strlen($key_file_location)) 
         {
             $ret["error_message"] = __LINE__ . " File: " . __FILE__ . " - Missing/Invalid Details.";
@@ -430,12 +425,10 @@ class GoogleConnectService extends BaseService
         $ret["error_message"] = "";
         $ret["debug"] = $this->debug;
 
-        $client_id = $this->client_id;
         $service_account_name = $this->service_account_name;
         $key_file_location = $this->key_file_location;
 
-        if ($client_id == '<YOUR_CLIENT_ID>'
-            || !strlen($service_account_name)
+        if (!strlen($service_account_name)
             || !strlen($key_file_location)) 
         {
             $ret["error_message"] = __LINE__ . " File: " . __FILE__ . " - Missing/Invalid Details.";
