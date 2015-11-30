@@ -356,6 +356,21 @@ class ServiceProvider implements ServiceProviderInterface
 
         $servcieContainer['PlatformBizVar'] = function () {
             return new S\PlatformBizVarService();
+
+        $servcieContainer['Google'] = function () {
+            return new S\GoogleService();
+        };
+
+        $servcieContainer['GoogleShopping'] = function () {
+            return new S\GoogleShoppingService();
+        };
+
+        $servcieContainer['GoogleConnect'] = function () {
+            return new S\GoogleConnectService();
+        };
+
+        $servcieContainer['CategoryMapping'] = function () {
+            return new S\GoogleConnectService();
         };
     }
 }
