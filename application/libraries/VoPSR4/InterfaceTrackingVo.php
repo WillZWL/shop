@@ -18,7 +18,9 @@ class InterfaceTrackingVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -28,7 +30,9 @@ class InterfaceTrackingVo extends \BaseVo
 
     public function setScheduleJobId($schedule_job_id)
     {
-        $this->schedule_job_id = $schedule_job_id;
+        if ($schedule_job_id != null) {
+            $this->schedule_job_id = $schedule_job_id;
+        }
     }
 
     public function getScheduleJobId()
@@ -38,7 +42,9 @@ class InterfaceTrackingVo extends \BaseVo
 
     public function setStartTime($start_time)
     {
-        $this->start_time = $start_time;
+        if ($start_time != null) {
+            $this->start_time = $start_time;
+        }
     }
 
     public function getStartTime()
@@ -48,7 +54,9 @@ class InterfaceTrackingVo extends \BaseVo
 
     public function setEndTime($end_time)
     {
-        $this->end_time = $end_time;
+        if ($end_time != null) {
+            $this->end_time = $end_time;
+        }
     }
 
     public function getEndTime()
@@ -58,7 +66,9 @@ class InterfaceTrackingVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -68,7 +78,9 @@ class InterfaceTrackingVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -78,7 +90,9 @@ class InterfaceTrackingVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -88,7 +102,9 @@ class InterfaceTrackingVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -98,7 +114,9 @@ class InterfaceTrackingVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -108,7 +126,9 @@ class InterfaceTrackingVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -118,7 +138,9 @@ class InterfaceTrackingVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

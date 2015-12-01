@@ -22,7 +22,7 @@ class ProductImageVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id) {
+        if ($id != null) {
             $this->id = $id;
         }
     }
@@ -34,7 +34,7 @@ class ProductImageVo extends \BaseVo
 
     public function setSku($sku)
     {
-        if ($sku) {
+        if ($sku != null) {
             $this->sku = $sku;
         }
     }
@@ -46,7 +46,7 @@ class ProductImageVo extends \BaseVo
 
     public function setPriority($priority)
     {
-        if ($priority) {
+        if ($priority != null) {
             $this->priority = $priority;
         }
     }
@@ -58,7 +58,7 @@ class ProductImageVo extends \BaseVo
 
     public function setImage($image)
     {
-        if ($image) {
+        if ($image != null) {
             $this->image = $image;
         }
     }
@@ -70,7 +70,7 @@ class ProductImageVo extends \BaseVo
 
     public function setAltText($alt_text)
     {
-        if ($alt_text) {
+        if ($alt_text != null) {
             $this->alt_text = $alt_text;
         }
     }
@@ -82,7 +82,9 @@ class ProductImageVo extends \BaseVo
 
     public function setImageSaved($image_saved)
     {
-        $this->image_saved = $image_saved;
+        if ($image_saved != null) {
+            $this->image_saved = $image_saved;
+        }
     }
 
     public function getImageSaved()
@@ -92,7 +94,7 @@ class ProductImageVo extends \BaseVo
 
     public function setVbImage($vb_image)
     {
-        if ($vb_image) {
+        if ($vb_image != null) {
             $this->vb_image = $vb_image;
         }
     }
@@ -104,7 +106,7 @@ class ProductImageVo extends \BaseVo
 
     public function setVbAltText($vb_alt_text)
     {
-        if ($vb_alt_text) {
+        if ($vb_alt_text != null) {
             $this->vb_alt_text = $vb_alt_text;
         }
     }
@@ -116,7 +118,7 @@ class ProductImageVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status) {
+        if ($status != null) {
             $this->status = $status;
         }
     }
@@ -128,7 +130,7 @@ class ProductImageVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on) {
+        if ($create_on != null) {
             $this->create_on = $create_on;
         }
     }
@@ -140,7 +142,7 @@ class ProductImageVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at) {
+        if ($create_at != null) {
             $this->create_at = $create_at;
         }
     }
@@ -152,7 +154,7 @@ class ProductImageVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by) {
+        if ($create_by != null) {
             $this->create_by = $create_by;
         }
     }
@@ -164,7 +166,7 @@ class ProductImageVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on) {
+        if ($modify_on != null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -176,7 +178,7 @@ class ProductImageVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at) {
+        if ($modify_at != null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -188,7 +190,7 @@ class ProductImageVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by) {
+        if ($modify_by != null) {
             $this->modify_by = $modify_by;
         }
     }

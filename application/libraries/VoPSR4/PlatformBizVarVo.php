@@ -2,30 +2,30 @@
 class PlatformBizVarVo extends \BaseVo
 {
     private $id;
-    private $selling_platform_id;
+    private $selling_platform_id = '';
     private $need_round_nearest = 'N';
-    private $latency_in_stock;
-    private $latency_out_of_stock;
+    private $latency_in_stock = '0';
+    private $latency_out_of_stock = '0';
     private $vat_percent = '0.00';
     private $admin_fee = '0.00';
-    private $platform_region_id;
+    private $platform_region_id = '0';
     private $platform_country_id;
     private $dest_country;
     private $platform_currency_id;
-    private $sign_pos;
-    private $dec_place;
-    private $dec_point;
-    private $thousands_sep;
+    private $sign_pos = '';
+    private $dec_place = '0';
+    private $dec_point = '';
+    private $thousands_sep = '';
     private $language_id = 'en';
     private $payment_charge_percent = '0.00';
     private $forex_fee_percent = '0.00';
     private $delivery_type;
-    private $free_delivery_limit;
-    private $default_shiptype;
+    private $free_delivery_limit = '0';
+    private $default_shiptype = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -34,7 +34,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -44,7 +46,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setSellingPlatformId($selling_platform_id)
     {
-        $this->selling_platform_id = $selling_platform_id;
+        if ($selling_platform_id != null) {
+            $this->selling_platform_id = $selling_platform_id;
+        }
     }
 
     public function getSellingPlatformId()
@@ -54,7 +58,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setNeedRoundNearest($need_round_nearest)
     {
-        $this->need_round_nearest = $need_round_nearest;
+        if ($need_round_nearest != null) {
+            $this->need_round_nearest = $need_round_nearest;
+        }
     }
 
     public function getNeedRoundNearest()
@@ -64,7 +70,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setLatencyInStock($latency_in_stock)
     {
-        $this->latency_in_stock = $latency_in_stock;
+        if ($latency_in_stock != null) {
+            $this->latency_in_stock = $latency_in_stock;
+        }
     }
 
     public function getLatencyInStock()
@@ -74,7 +82,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setLatencyOutOfStock($latency_out_of_stock)
     {
-        $this->latency_out_of_stock = $latency_out_of_stock;
+        if ($latency_out_of_stock != null) {
+            $this->latency_out_of_stock = $latency_out_of_stock;
+        }
     }
 
     public function getLatencyOutOfStock()
@@ -84,7 +94,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setVatPercent($vat_percent)
     {
-        $this->vat_percent = $vat_percent;
+        if ($vat_percent != null) {
+            $this->vat_percent = $vat_percent;
+        }
     }
 
     public function getVatPercent()
@@ -94,7 +106,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setAdminFee($admin_fee)
     {
-        $this->admin_fee = $admin_fee;
+        if ($admin_fee != null) {
+            $this->admin_fee = $admin_fee;
+        }
     }
 
     public function getAdminFee()
@@ -104,7 +118,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setPlatformRegionId($platform_region_id)
     {
-        $this->platform_region_id = $platform_region_id;
+        if ($platform_region_id != null) {
+            $this->platform_region_id = $platform_region_id;
+        }
     }
 
     public function getPlatformRegionId()
@@ -114,7 +130,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setPlatformCountryId($platform_country_id)
     {
-        $this->platform_country_id = $platform_country_id;
+        if ($platform_country_id != null) {
+            $this->platform_country_id = $platform_country_id;
+        }
     }
 
     public function getPlatformCountryId()
@@ -124,7 +142,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setDestCountry($dest_country)
     {
-        $this->dest_country = $dest_country;
+        if ($dest_country != null) {
+            $this->dest_country = $dest_country;
+        }
     }
 
     public function getDestCountry()
@@ -134,7 +154,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setPlatformCurrencyId($platform_currency_id)
     {
-        $this->platform_currency_id = $platform_currency_id;
+        if ($platform_currency_id != null) {
+            $this->platform_currency_id = $platform_currency_id;
+        }
     }
 
     public function getPlatformCurrencyId()
@@ -144,7 +166,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setSignPos($sign_pos)
     {
-        $this->sign_pos = $sign_pos;
+        if ($sign_pos != null) {
+            $this->sign_pos = $sign_pos;
+        }
     }
 
     public function getSignPos()
@@ -154,7 +178,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setDecPlace($dec_place)
     {
-        $this->dec_place = $dec_place;
+        if ($dec_place != null) {
+            $this->dec_place = $dec_place;
+        }
     }
 
     public function getDecPlace()
@@ -164,7 +190,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setDecPoint($dec_point)
     {
-        $this->dec_point = $dec_point;
+        if ($dec_point != null) {
+            $this->dec_point = $dec_point;
+        }
     }
 
     public function getDecPoint()
@@ -174,7 +202,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setThousandsSep($thousands_sep)
     {
-        $this->thousands_sep = $thousands_sep;
+        if ($thousands_sep != null) {
+            $this->thousands_sep = $thousands_sep;
+        }
     }
 
     public function getThousandsSep()
@@ -184,7 +214,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setLanguageId($language_id)
     {
-        $this->language_id = $language_id;
+        if ($language_id != null) {
+            $this->language_id = $language_id;
+        }
     }
 
     public function getLanguageId()
@@ -194,7 +226,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setPaymentChargePercent($payment_charge_percent)
     {
-        $this->payment_charge_percent = $payment_charge_percent;
+        if ($payment_charge_percent != null) {
+            $this->payment_charge_percent = $payment_charge_percent;
+        }
     }
 
     public function getPaymentChargePercent()
@@ -204,7 +238,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setForexFeePercent($forex_fee_percent)
     {
-        $this->forex_fee_percent = $forex_fee_percent;
+        if ($forex_fee_percent != null) {
+            $this->forex_fee_percent = $forex_fee_percent;
+        }
     }
 
     public function getForexFeePercent()
@@ -214,7 +250,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setDeliveryType($delivery_type)
     {
-        $this->delivery_type = $delivery_type;
+        if ($delivery_type != null) {
+            $this->delivery_type = $delivery_type;
+        }
     }
 
     public function getDeliveryType()
@@ -224,7 +262,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setFreeDeliveryLimit($free_delivery_limit)
     {
-        $this->free_delivery_limit = $free_delivery_limit;
+        if ($free_delivery_limit != null) {
+            $this->free_delivery_limit = $free_delivery_limit;
+        }
     }
 
     public function getFreeDeliveryLimit()
@@ -234,7 +274,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setDefaultShiptype($default_shiptype)
     {
-        $this->default_shiptype = $default_shiptype;
+        if ($default_shiptype != null) {
+            $this->default_shiptype = $default_shiptype;
+        }
     }
 
     public function getDefaultShiptype()
@@ -244,7 +286,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -254,7 +298,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -264,7 +310,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -274,7 +322,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -284,7 +334,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -294,7 +346,9 @@ class PlatformBizVarVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

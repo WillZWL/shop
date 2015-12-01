@@ -33,7 +33,9 @@ class SoExtendVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -43,7 +45,9 @@ class SoExtendVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        $this->so_no = $so_no;
+        if ($so_no != null) {
+            $this->so_no = $so_no;
+        }
     }
 
     public function getSoNo()
@@ -53,7 +57,9 @@ class SoExtendVo extends \BaseVo
 
     public function setOrderReason($order_reason)
     {
-        $this->order_reason = $order_reason;
+        if ($order_reason != null) {
+            $this->order_reason = $order_reason;
+        }
     }
 
     public function getOrderReason()
@@ -63,7 +69,9 @@ class SoExtendVo extends \BaseVo
 
     public function setNotes($notes)
     {
-        $this->notes = $notes;
+        if ($notes != null) {
+            $this->notes = $notes;
+        }
     }
 
     public function getNotes()
@@ -73,7 +81,9 @@ class SoExtendVo extends \BaseVo
 
     public function setOfflineFee($offline_fee)
     {
-        $this->offline_fee = $offline_fee;
+        if ($offline_fee != null) {
+            $this->offline_fee = $offline_fee;
+        }
     }
 
     public function getOfflineFee()
@@ -83,7 +93,9 @@ class SoExtendVo extends \BaseVo
 
     public function setVatexempt($vatexempt)
     {
-        $this->vatexempt = $vatexempt;
+        if ($vatexempt != null) {
+            $this->vatexempt = $vatexempt;
+        }
     }
 
     public function getVatexempt()
@@ -93,7 +105,9 @@ class SoExtendVo extends \BaseVo
 
     public function setAcked($acked)
     {
-        $this->acked = $acked;
+        if ($acked != null) {
+            $this->acked = $acked;
+        }
     }
 
     public function getAcked()
@@ -103,7 +117,9 @@ class SoExtendVo extends \BaseVo
 
     public function setFulfilled($fulfilled)
     {
-        $this->fulfilled = $fulfilled;
+        if ($fulfilled != null) {
+            $this->fulfilled = $fulfilled;
+        }
     }
 
     public function getFulfilled()
@@ -113,7 +129,9 @@ class SoExtendVo extends \BaseVo
 
     public function setConvSiteId($conv_site_id)
     {
-        $this->conv_site_id = $conv_site_id;
+        if ($conv_site_id != null) {
+            $this->conv_site_id = $conv_site_id;
+        }
     }
 
     public function getConvSiteId()
@@ -123,7 +141,9 @@ class SoExtendVo extends \BaseVo
 
     public function setConvStatus($conv_status)
     {
-        $this->conv_status = $conv_status;
+        if ($conv_status != null) {
+            $this->conv_status = $conv_status;
+        }
     }
 
     public function getConvStatus()
@@ -133,7 +153,9 @@ class SoExtendVo extends \BaseVo
 
     public function setConvSiteRef($conv_site_ref)
     {
-        $this->conv_site_ref = $conv_site_ref;
+        if ($conv_site_ref != null) {
+            $this->conv_site_ref = $conv_site_ref;
+        }
     }
 
     public function getConvSiteRef()
@@ -143,7 +165,9 @@ class SoExtendVo extends \BaseVo
 
     public function setVoucherCode($voucher_code)
     {
-        $this->voucher_code = $voucher_code;
+        if ($voucher_code != null) {
+            $this->voucher_code = $voucher_code;
+        }
     }
 
     public function getVoucherCode()
@@ -153,7 +177,9 @@ class SoExtendVo extends \BaseVo
 
     public function setVoucherDetailId($voucher_detail_id)
     {
-        $this->voucher_detail_id = $voucher_detail_id;
+        if ($voucher_detail_id != null) {
+            $this->voucher_detail_id = $voucher_detail_id;
+        }
     }
 
     public function getVoucherDetailId()
@@ -163,7 +189,9 @@ class SoExtendVo extends \BaseVo
 
     public function setLicenceKey($licence_key)
     {
-        $this->licence_key = $licence_key;
+        if ($licence_key != null) {
+            $this->licence_key = $licence_key;
+        }
     }
 
     public function getLicenceKey()
@@ -173,7 +201,9 @@ class SoExtendVo extends \BaseVo
 
     public function setLsTimeEntered($ls_time_entered)
     {
-        $this->ls_time_entered = $ls_time_entered;
+        if ($ls_time_entered != null) {
+            $this->ls_time_entered = $ls_time_entered;
+        }
     }
 
     public function getLsTimeEntered()
@@ -183,7 +213,9 @@ class SoExtendVo extends \BaseVo
 
     public function setEntityId($entity_id)
     {
-        $this->entity_id = $entity_id;
+        if ($entity_id != null) {
+            $this->entity_id = $entity_id;
+        }
     }
 
     public function getEntityId()
@@ -193,7 +225,9 @@ class SoExtendVo extends \BaseVo
 
     public function setAftershipStatus($aftership_status)
     {
-        $this->aftership_status = $aftership_status;
+        if ($aftership_status != null) {
+            $this->aftership_status = $aftership_status;
+        }
     }
 
     public function getAftershipStatus()
@@ -203,7 +237,9 @@ class SoExtendVo extends \BaseVo
 
     public function setAftershipCheckpoint($aftership_checkpoint)
     {
-        $this->aftership_checkpoint = $aftership_checkpoint;
+        if ($aftership_checkpoint != null) {
+            $this->aftership_checkpoint = $aftership_checkpoint;
+        }
     }
 
     public function getAftershipCheckpoint()
@@ -213,7 +249,9 @@ class SoExtendVo extends \BaseVo
 
     public function setAftershipToken($aftership_token)
     {
-        $this->aftership_token = $aftership_token;
+        if ($aftership_token != null) {
+            $this->aftership_token = $aftership_token;
+        }
     }
 
     public function getAftershipToken()
@@ -223,7 +261,9 @@ class SoExtendVo extends \BaseVo
 
     public function setIntoWmsStatus($into_wms_status)
     {
-        $this->into_wms_status = $into_wms_status;
+        if ($into_wms_status != null) {
+            $this->into_wms_status = $into_wms_status;
+        }
     }
 
     public function getIntoWmsStatus()
@@ -233,7 +273,9 @@ class SoExtendVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -243,7 +285,9 @@ class SoExtendVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -253,7 +297,9 @@ class SoExtendVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -263,7 +309,9 @@ class SoExtendVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -273,7 +321,9 @@ class SoExtendVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -283,7 +333,9 @@ class SoExtendVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

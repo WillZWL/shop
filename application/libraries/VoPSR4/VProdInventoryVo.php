@@ -1,26 +1,17 @@
 <?php
 class VProdInventoryVo extends \BaseVo
 {
-    private $id;
-    private $prod_sku;
+    private $prod_sku = '';
     private $inventory;
 
     private $primary_key = [];
     private $increment_field = '';
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
     public function setProdSku($prod_sku)
     {
-        $this->prod_sku = $prod_sku;
+        if ($prod_sku != null) {
+            $this->prod_sku = $prod_sku;
+        }
     }
 
     public function getProdSku()
@@ -30,7 +21,9 @@ class VProdInventoryVo extends \BaseVo
 
     public function setInventory($inventory)
     {
-        $this->inventory = $inventory;
+        if ($inventory != null) {
+            $this->inventory = $inventory;
+        }
     }
 
     public function getInventory()

@@ -1,34 +1,49 @@
 <?php
 class CountryExtVo extends \BaseVo
 {
-
-    //class variable
+    private $id;
     private $cid;
     private $lang_id;
-    private $name;
+    private $name = '';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    //primary key
-    private $primary_key = ["cid", "lang_id"];
+    private $primary_key = ['id'];
+    private $increment_field = 'id';
 
-    //auo increment
-    private $increment_field = "";
+    public function setId($id)
+    {
+        if ($id != null) {
+            $this->id = $id;
+        }
+    }
 
-    //instance method
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setCid($cid)
+    {
+        if ($cid != null) {
+            $this->cid = $cid;
+        }
+    }
+
     public function getCid()
     {
         return $this->cid;
     }
 
-    public function setCid($value)
+    public function setLangId($lang_id)
     {
-        $this->cid = $value;
-        return $this;
+        if ($lang_id != null) {
+            $this->lang_id = $lang_id;
+        }
     }
 
     public function getLangId()
@@ -36,10 +51,11 @@ class CountryExtVo extends \BaseVo
         return $this->lang_id;
     }
 
-    public function setLangId($value)
+    public function setName($name)
     {
-        $this->lang_id = $value;
-        return $this;
+        if ($name != null) {
+            $this->name = $name;
+        }
     }
 
     public function getName()
@@ -47,10 +63,11 @@ class CountryExtVo extends \BaseVo
         return $this->name;
     }
 
-    public function setName($value)
+    public function setCreateOn($create_on)
     {
-        $this->name = $value;
-        return $this;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -58,10 +75,11 @@ class CountryExtVo extends \BaseVo
         return $this->create_on;
     }
 
-    public function setCreateOn($value)
+    public function setCreateAt($create_at)
     {
-        $this->create_on = $value;
-        return $this;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -69,10 +87,11 @@ class CountryExtVo extends \BaseVo
         return $this->create_at;
     }
 
-    public function setCreateAt($value)
+    public function setCreateBy($create_by)
     {
-        $this->create_at = $value;
-        return $this;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -80,10 +99,11 @@ class CountryExtVo extends \BaseVo
         return $this->create_by;
     }
 
-    public function setCreateBy($value)
+    public function setModifyOn($modify_on)
     {
-        $this->create_by = $value;
-        return $this;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -91,10 +111,11 @@ class CountryExtVo extends \BaseVo
         return $this->modify_on;
     }
 
-    public function setModifyOn($value)
+    public function setModifyAt($modify_at)
     {
-        $this->modify_on = $value;
-        return $this;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -102,21 +123,16 @@ class CountryExtVo extends \BaseVo
         return $this->modify_at;
     }
 
-    public function setModifyAt($value)
+    public function setModifyBy($modify_by)
     {
-        $this->modify_at = $value;
-        return $this;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
     {
         return $this->modify_by;
-    }
-
-    public function setModifyBy($value)
-    {
-        $this->modify_by = $value;
-        return $this;
     }
 
     public function getPrimaryKey()
@@ -128,5 +144,4 @@ class CountryExtVo extends \BaseVo
     {
         return $this->increment_field;
     }
-
 }

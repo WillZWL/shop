@@ -10,23 +10,30 @@ class UserVo extends \BaseVo
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
     private $create_by;
-    private $modify_on;
+    private $modify_on = '';
     private $modify_at;
     private $modify_by;
 
-    private $primary_key = array("id");
+    private $primary_key = ['id'];
+    private $increment_field = '';
 
-    private $increment_field = "";
+    public function setId($id)
+    {
+        if ($id != null) {
+            $this->id = $id;
+        }
+    }
 
     public function getId()
     {
         return $this->id;
     }
 
-    public function setId($value)
+    public function setUsername($username)
     {
-        $this->id = $value;
-        return $this;
+        if ($username != null) {
+            $this->username = $username;
+        }
     }
 
     public function getUsername()
@@ -34,10 +41,11 @@ class UserVo extends \BaseVo
         return $this->username;
     }
 
-    public function setUsername($value)
+    public function setPassword($password)
     {
-        $this->username = $value;
-        return $this;
+        if ($password != null) {
+            $this->password = $password;
+        }
     }
 
     public function getPassword()
@@ -45,10 +53,11 @@ class UserVo extends \BaseVo
         return $this->password;
     }
 
-    public function setPassword($value)
+    public function setEmail($email)
     {
-        $this->password = $value;
-        return $this;
+        if ($email != null) {
+            $this->email = $email;
+        }
     }
 
     public function getEmail()
@@ -56,10 +65,11 @@ class UserVo extends \BaseVo
         return $this->email;
     }
 
-    public function setEmail($value)
+    public function setStatus($status)
     {
-        $this->email = $value;
-        return $this;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -67,10 +77,11 @@ class UserVo extends \BaseVo
         return $this->status;
     }
 
-    public function setStatus($value)
+    public function setFailedAttempt($failed_attempt)
     {
-        $this->status = $value;
-        return $this;
+        if ($failed_attempt != null) {
+            $this->failed_attempt = $failed_attempt;
+        }
     }
 
     public function getFailedAttempt()
@@ -78,10 +89,11 @@ class UserVo extends \BaseVo
         return $this->failed_attempt;
     }
 
-    public function setFailedAttempt($value)
+    public function setCreateOn($create_on)
     {
-        $this->failed_attempt = $value;
-        return $this;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -89,10 +101,11 @@ class UserVo extends \BaseVo
         return $this->create_on;
     }
 
-    public function setCreateOn($value)
+    public function setCreateAt($create_at)
     {
-        $this->create_on = $value;
-        return $this;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -100,10 +113,11 @@ class UserVo extends \BaseVo
         return $this->create_at;
     }
 
-    public function setCreateAt($value)
+    public function setCreateBy($create_by)
     {
-        $this->create_at = $value;
-        return $this;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -111,10 +125,11 @@ class UserVo extends \BaseVo
         return $this->create_by;
     }
 
-    public function setCreateBy($value)
+    public function setModifyOn($modify_on)
     {
-        $this->create_by = $value;
-        return $this;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -122,10 +137,11 @@ class UserVo extends \BaseVo
         return $this->modify_on;
     }
 
-    public function setModifyOn($value)
+    public function setModifyAt($modify_at)
     {
-        $this->modify_on = $value;
-        return $this;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -133,21 +149,16 @@ class UserVo extends \BaseVo
         return $this->modify_at;
     }
 
-    public function setModifyAt($value)
+    public function setModifyBy($modify_by)
     {
-        $this->modify_at = $value;
-        return $this;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
     {
         return $this->modify_by;
-    }
-
-    public function setModifyBy($value)
-    {
-        $this->modify_by = $value;
-        return $this;
     }
 
     public function getPrimaryKey()

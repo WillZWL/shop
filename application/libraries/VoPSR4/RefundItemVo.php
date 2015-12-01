@@ -24,7 +24,9 @@ class RefundItemVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -34,7 +36,9 @@ class RefundItemVo extends \BaseVo
 
     public function setRefundId($refund_id)
     {
-        $this->refund_id = $refund_id;
+        if ($refund_id != null) {
+            $this->refund_id = $refund_id;
+        }
     }
 
     public function getRefundId()
@@ -44,7 +48,9 @@ class RefundItemVo extends \BaseVo
 
     public function setLineNo($line_no)
     {
-        $this->line_no = $line_no;
+        if ($line_no != null) {
+            $this->line_no = $line_no;
+        }
     }
 
     public function getLineNo()
@@ -54,7 +60,9 @@ class RefundItemVo extends \BaseVo
 
     public function setItemSku($item_sku)
     {
-        $this->item_sku = $item_sku;
+        if ($item_sku != null) {
+            $this->item_sku = $item_sku;
+        }
     }
 
     public function getItemSku()
@@ -64,7 +72,9 @@ class RefundItemVo extends \BaseVo
 
     public function setQty($qty)
     {
-        $this->qty = $qty;
+        if ($qty != null) {
+            $this->qty = $qty;
+        }
     }
 
     public function getQty()
@@ -74,7 +84,9 @@ class RefundItemVo extends \BaseVo
 
     public function setRefundAmount($refund_amount)
     {
-        $this->refund_amount = $refund_amount;
+        if ($refund_amount != null) {
+            $this->refund_amount = $refund_amount;
+        }
     }
 
     public function getRefundAmount()
@@ -84,7 +96,9 @@ class RefundItemVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -94,7 +108,9 @@ class RefundItemVo extends \BaseVo
 
     public function setRefundType($refund_type)
     {
-        $this->refund_type = $refund_type;
+        if ($refund_type != null) {
+            $this->refund_type = $refund_type;
+        }
     }
 
     public function getRefundType()
@@ -104,7 +120,9 @@ class RefundItemVo extends \BaseVo
 
     public function setItemStatus($item_status)
     {
-        $this->item_status = $item_status;
+        if ($item_status != null) {
+            $this->item_status = $item_status;
+        }
     }
 
     public function getItemStatus()
@@ -114,7 +132,9 @@ class RefundItemVo extends \BaseVo
 
     public function setStockbackDate($stockback_date)
     {
-        $this->stockback_date = $stockback_date;
+        if ($stockback_date != null) {
+            $this->stockback_date = $stockback_date;
+        }
     }
 
     public function getStockbackDate()
@@ -124,7 +144,9 @@ class RefundItemVo extends \BaseVo
 
     public function setStockbackWarehouse($stockback_warehouse)
     {
-        $this->stockback_warehouse = $stockback_warehouse;
+        if ($stockback_warehouse != null) {
+            $this->stockback_warehouse = $stockback_warehouse;
+        }
     }
 
     public function getStockbackWarehouse()
@@ -134,7 +156,9 @@ class RefundItemVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -144,7 +168,9 @@ class RefundItemVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -154,7 +180,9 @@ class RefundItemVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -164,7 +192,9 @@ class RefundItemVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -174,7 +204,9 @@ class RefundItemVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -184,7 +216,9 @@ class RefundItemVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
