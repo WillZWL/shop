@@ -25,7 +25,7 @@ class CountryVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -37,7 +37,7 @@ class CountryVo extends \BaseVo
 
     public function setCountryId($country_id)
     {
-        if ($country_id != null) {
+        if ($country_id !== null) {
             $this->country_id = $country_id;
         }
     }
@@ -49,7 +49,7 @@ class CountryVo extends \BaseVo
 
     public function setId3Digit($id_3_digit)
     {
-        if ($id_3_digit != null) {
+        if ($id_3_digit !== null) {
             $this->id_3_digit = $id_3_digit;
         }
     }
@@ -61,7 +61,7 @@ class CountryVo extends \BaseVo
 
     public function setName($name)
     {
-        if ($name != null) {
+        if ($name !== null) {
             $this->name = $name;
         }
     }
@@ -73,7 +73,7 @@ class CountryVo extends \BaseVo
 
     public function setDescription($description)
     {
-        if ($description != null) {
+        if ($description !== null) {
             $this->description = $description;
         }
     }
@@ -85,7 +85,7 @@ class CountryVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -97,7 +97,7 @@ class CountryVo extends \BaseVo
 
     public function setCurrencyId($currency_id)
     {
-        if ($currency_id != null) {
+        if ($currency_id !== null) {
             $this->currency_id = $currency_id;
         }
     }
@@ -109,7 +109,7 @@ class CountryVo extends \BaseVo
 
     public function setLanguageId($language_id)
     {
-        if ($language_id != null) {
+        if ($language_id !== null) {
             $this->language_id = $language_id;
         }
     }
@@ -121,7 +121,7 @@ class CountryVo extends \BaseVo
 
     public function setFcId($fc_id)
     {
-        if ($fc_id != null) {
+        if ($fc_id !== null) {
             $this->fc_id = $fc_id;
         }
     }
@@ -133,7 +133,7 @@ class CountryVo extends \BaseVo
 
     public function setAllowSell($allow_sell)
     {
-        if ($allow_sell != null) {
+        if ($allow_sell !== null) {
             $this->allow_sell = $allow_sell;
         }
     }
@@ -145,7 +145,7 @@ class CountryVo extends \BaseVo
 
     public function setUrlEnable($url_enable)
     {
-        if ($url_enable != null) {
+        if ($url_enable !== null) {
             $this->url_enable = $url_enable;
         }
     }
@@ -157,7 +157,7 @@ class CountryVo extends \BaseVo
 
     public function setStandalone($standalone)
     {
-        if ($standalone != null) {
+        if ($standalone !== null) {
             $this->standalone = $standalone;
         }
     }
@@ -169,7 +169,7 @@ class CountryVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -181,7 +181,7 @@ class CountryVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -193,7 +193,7 @@ class CountryVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -205,7 +205,7 @@ class CountryVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -217,7 +217,7 @@ class CountryVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -229,7 +229,7 @@ class CountryVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

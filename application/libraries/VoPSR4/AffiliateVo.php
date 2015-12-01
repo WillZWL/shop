@@ -18,7 +18,7 @@ class AffiliateVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -30,7 +30,7 @@ class AffiliateVo extends \BaseVo
 
     public function setAffiliateId($affiliate_id)
     {
-        if ($affiliate_id != null) {
+        if ($affiliate_id !== null) {
             $this->affiliate_id = $affiliate_id;
         }
     }
@@ -42,7 +42,7 @@ class AffiliateVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        if ($platform_id != null) {
+        if ($platform_id !== null) {
             $this->platform_id = $platform_id;
         }
     }
@@ -54,7 +54,7 @@ class AffiliateVo extends \BaseVo
 
     public function setAffiliateDescription($affiliate_description)
     {
-        if ($affiliate_description != null) {
+        if ($affiliate_description !== null) {
             $this->affiliate_description = $affiliate_description;
         }
     }
@@ -66,7 +66,7 @@ class AffiliateVo extends \BaseVo
 
     public function setExtParty($ext_party)
     {
-        if ($ext_party != null) {
+        if ($ext_party !== null) {
             $this->ext_party = $ext_party;
         }
     }
@@ -78,7 +78,7 @@ class AffiliateVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -90,7 +90,7 @@ class AffiliateVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -102,7 +102,7 @@ class AffiliateVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -114,7 +114,7 @@ class AffiliateVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -126,7 +126,7 @@ class AffiliateVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -138,7 +138,7 @@ class AffiliateVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

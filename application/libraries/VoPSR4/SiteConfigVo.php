@@ -22,7 +22,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -34,7 +34,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setDomain($domain)
     {
-        if ($domain != null) {
+        if ($domain !== null) {
             $this->domain = $domain;
         }
     }
@@ -46,7 +46,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setSiteName($site_name)
     {
-        if ($site_name != null) {
+        if ($site_name !== null) {
             $this->site_name = $site_name;
         }
     }
@@ -58,7 +58,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setLang($lang)
     {
-        if ($lang != null) {
+        if ($lang !== null) {
             $this->lang = $lang;
         }
     }
@@ -70,7 +70,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setLogo($logo)
     {
-        if ($logo != null) {
+        if ($logo !== null) {
             $this->logo = $logo;
         }
     }
@@ -82,7 +82,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setEmail($email)
     {
-        if ($email != null) {
+        if ($email !== null) {
             $this->email = $email;
         }
     }
@@ -94,7 +94,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setPlatform($platform)
     {
-        if ($platform != null) {
+        if ($platform !== null) {
             $this->platform = $platform;
         }
     }
@@ -106,7 +106,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setDomainType($domain_type)
     {
-        if ($domain_type != null) {
+        if ($domain_type !== null) {
             $this->domain_type = $domain_type;
         }
     }
@@ -118,7 +118,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -130,7 +130,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -142,7 +142,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -154,7 +154,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -166,7 +166,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -178,7 +178,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -190,7 +190,7 @@ class SiteConfigVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

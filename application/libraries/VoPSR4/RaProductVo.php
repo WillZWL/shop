@@ -54,7 +54,7 @@ class RaProductVo extends \BaseVo
 
     public function setSku($sku)
     {
-        if ($sku != null) {
+        if ($sku !== null) {
             $this->sku = $sku;
         }
     }
@@ -66,7 +66,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId1($rcm_group_id_1)
     {
-        if ($rcm_group_id_1 != null) {
+        if ($rcm_group_id_1 !== null) {
             $this->rcm_group_id_1 = $rcm_group_id_1;
         }
     }
@@ -78,7 +78,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse1($bundle_use_1)
     {
-        if ($bundle_use_1 != null) {
+        if ($bundle_use_1 !== null) {
             $this->bundle_use_1 = $bundle_use_1;
         }
     }
@@ -90,7 +90,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId2($rcm_group_id_2)
     {
-        if ($rcm_group_id_2 != null) {
+        if ($rcm_group_id_2 !== null) {
             $this->rcm_group_id_2 = $rcm_group_id_2;
         }
     }
@@ -102,7 +102,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse2($bundle_use_2)
     {
-        if ($bundle_use_2 != null) {
+        if ($bundle_use_2 !== null) {
             $this->bundle_use_2 = $bundle_use_2;
         }
     }
@@ -114,7 +114,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId3($rcm_group_id_3)
     {
-        if ($rcm_group_id_3 != null) {
+        if ($rcm_group_id_3 !== null) {
             $this->rcm_group_id_3 = $rcm_group_id_3;
         }
     }
@@ -126,7 +126,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse3($bundle_use_3)
     {
-        if ($bundle_use_3 != null) {
+        if ($bundle_use_3 !== null) {
             $this->bundle_use_3 = $bundle_use_3;
         }
     }
@@ -138,7 +138,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId4($rcm_group_id_4)
     {
-        if ($rcm_group_id_4 != null) {
+        if ($rcm_group_id_4 !== null) {
             $this->rcm_group_id_4 = $rcm_group_id_4;
         }
     }
@@ -150,7 +150,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse4($bundle_use_4)
     {
-        if ($bundle_use_4 != null) {
+        if ($bundle_use_4 !== null) {
             $this->bundle_use_4 = $bundle_use_4;
         }
     }
@@ -162,7 +162,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId5($rcm_group_id_5)
     {
-        if ($rcm_group_id_5 != null) {
+        if ($rcm_group_id_5 !== null) {
             $this->rcm_group_id_5 = $rcm_group_id_5;
         }
     }
@@ -174,7 +174,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse5($bundle_use_5)
     {
-        if ($bundle_use_5 != null) {
+        if ($bundle_use_5 !== null) {
             $this->bundle_use_5 = $bundle_use_5;
         }
     }
@@ -186,7 +186,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId6($rcm_group_id_6)
     {
-        if ($rcm_group_id_6 != null) {
+        if ($rcm_group_id_6 !== null) {
             $this->rcm_group_id_6 = $rcm_group_id_6;
         }
     }
@@ -198,7 +198,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse6($bundle_use_6)
     {
-        if ($bundle_use_6 != null) {
+        if ($bundle_use_6 !== null) {
             $this->bundle_use_6 = $bundle_use_6;
         }
     }
@@ -210,7 +210,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId7($rcm_group_id_7)
     {
-        if ($rcm_group_id_7 != null) {
+        if ($rcm_group_id_7 !== null) {
             $this->rcm_group_id_7 = $rcm_group_id_7;
         }
     }
@@ -222,7 +222,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse7($bundle_use_7)
     {
-        if ($bundle_use_7 != null) {
+        if ($bundle_use_7 !== null) {
             $this->bundle_use_7 = $bundle_use_7;
         }
     }
@@ -234,7 +234,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId8($rcm_group_id_8)
     {
-        if ($rcm_group_id_8 != null) {
+        if ($rcm_group_id_8 !== null) {
             $this->rcm_group_id_8 = $rcm_group_id_8;
         }
     }
@@ -246,7 +246,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse8($bundle_use_8)
     {
-        if ($bundle_use_8 != null) {
+        if ($bundle_use_8 !== null) {
             $this->bundle_use_8 = $bundle_use_8;
         }
     }
@@ -258,7 +258,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId9($rcm_group_id_9)
     {
-        if ($rcm_group_id_9 != null) {
+        if ($rcm_group_id_9 !== null) {
             $this->rcm_group_id_9 = $rcm_group_id_9;
         }
     }
@@ -270,7 +270,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse9($bundle_use_9)
     {
-        if ($bundle_use_9 != null) {
+        if ($bundle_use_9 !== null) {
             $this->bundle_use_9 = $bundle_use_9;
         }
     }
@@ -282,7 +282,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId10($rcm_group_id_10)
     {
-        if ($rcm_group_id_10 != null) {
+        if ($rcm_group_id_10 !== null) {
             $this->rcm_group_id_10 = $rcm_group_id_10;
         }
     }
@@ -294,7 +294,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse10($bundle_use_10)
     {
-        if ($bundle_use_10 != null) {
+        if ($bundle_use_10 !== null) {
             $this->bundle_use_10 = $bundle_use_10;
         }
     }
@@ -306,7 +306,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId11($rcm_group_id_11)
     {
-        if ($rcm_group_id_11 != null) {
+        if ($rcm_group_id_11 !== null) {
             $this->rcm_group_id_11 = $rcm_group_id_11;
         }
     }
@@ -318,7 +318,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse11($bundle_use_11)
     {
-        if ($bundle_use_11 != null) {
+        if ($bundle_use_11 !== null) {
             $this->bundle_use_11 = $bundle_use_11;
         }
     }
@@ -330,7 +330,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId12($rcm_group_id_12)
     {
-        if ($rcm_group_id_12 != null) {
+        if ($rcm_group_id_12 !== null) {
             $this->rcm_group_id_12 = $rcm_group_id_12;
         }
     }
@@ -342,7 +342,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse12($bundle_use_12)
     {
-        if ($bundle_use_12 != null) {
+        if ($bundle_use_12 !== null) {
             $this->bundle_use_12 = $bundle_use_12;
         }
     }
@@ -354,7 +354,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId13($rcm_group_id_13)
     {
-        if ($rcm_group_id_13 != null) {
+        if ($rcm_group_id_13 !== null) {
             $this->rcm_group_id_13 = $rcm_group_id_13;
         }
     }
@@ -366,7 +366,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse13($bundle_use_13)
     {
-        if ($bundle_use_13 != null) {
+        if ($bundle_use_13 !== null) {
             $this->bundle_use_13 = $bundle_use_13;
         }
     }
@@ -378,7 +378,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId14($rcm_group_id_14)
     {
-        if ($rcm_group_id_14 != null) {
+        if ($rcm_group_id_14 !== null) {
             $this->rcm_group_id_14 = $rcm_group_id_14;
         }
     }
@@ -390,7 +390,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse14($bundle_use_14)
     {
-        if ($bundle_use_14 != null) {
+        if ($bundle_use_14 !== null) {
             $this->bundle_use_14 = $bundle_use_14;
         }
     }
@@ -402,7 +402,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId15($rcm_group_id_15)
     {
-        if ($rcm_group_id_15 != null) {
+        if ($rcm_group_id_15 !== null) {
             $this->rcm_group_id_15 = $rcm_group_id_15;
         }
     }
@@ -414,7 +414,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse15($bundle_use_15)
     {
-        if ($bundle_use_15 != null) {
+        if ($bundle_use_15 !== null) {
             $this->bundle_use_15 = $bundle_use_15;
         }
     }
@@ -426,7 +426,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId16($rcm_group_id_16)
     {
-        if ($rcm_group_id_16 != null) {
+        if ($rcm_group_id_16 !== null) {
             $this->rcm_group_id_16 = $rcm_group_id_16;
         }
     }
@@ -438,7 +438,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse16($bundle_use_16)
     {
-        if ($bundle_use_16 != null) {
+        if ($bundle_use_16 !== null) {
             $this->bundle_use_16 = $bundle_use_16;
         }
     }
@@ -450,7 +450,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId17($rcm_group_id_17)
     {
-        if ($rcm_group_id_17 != null) {
+        if ($rcm_group_id_17 !== null) {
             $this->rcm_group_id_17 = $rcm_group_id_17;
         }
     }
@@ -462,7 +462,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse17($bundle_use_17)
     {
-        if ($bundle_use_17 != null) {
+        if ($bundle_use_17 !== null) {
             $this->bundle_use_17 = $bundle_use_17;
         }
     }
@@ -474,7 +474,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId18($rcm_group_id_18)
     {
-        if ($rcm_group_id_18 != null) {
+        if ($rcm_group_id_18 !== null) {
             $this->rcm_group_id_18 = $rcm_group_id_18;
         }
     }
@@ -486,7 +486,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse18($bundle_use_18)
     {
-        if ($bundle_use_18 != null) {
+        if ($bundle_use_18 !== null) {
             $this->bundle_use_18 = $bundle_use_18;
         }
     }
@@ -498,7 +498,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId19($rcm_group_id_19)
     {
-        if ($rcm_group_id_19 != null) {
+        if ($rcm_group_id_19 !== null) {
             $this->rcm_group_id_19 = $rcm_group_id_19;
         }
     }
@@ -510,7 +510,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse19($bundle_use_19)
     {
-        if ($bundle_use_19 != null) {
+        if ($bundle_use_19 !== null) {
             $this->bundle_use_19 = $bundle_use_19;
         }
     }
@@ -522,7 +522,7 @@ class RaProductVo extends \BaseVo
 
     public function setRcmGroupId20($rcm_group_id_20)
     {
-        if ($rcm_group_id_20 != null) {
+        if ($rcm_group_id_20 !== null) {
             $this->rcm_group_id_20 = $rcm_group_id_20;
         }
     }
@@ -534,7 +534,7 @@ class RaProductVo extends \BaseVo
 
     public function setBundleUse20($bundle_use_20)
     {
-        if ($bundle_use_20 != null) {
+        if ($bundle_use_20 !== null) {
             $this->bundle_use_20 = $bundle_use_20;
         }
     }
@@ -546,7 +546,7 @@ class RaProductVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -558,7 +558,7 @@ class RaProductVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -570,7 +570,7 @@ class RaProductVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -582,7 +582,7 @@ class RaProductVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -594,7 +594,7 @@ class RaProductVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -606,7 +606,7 @@ class RaProductVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

@@ -17,7 +17,7 @@ class RaGroupProductVo extends \BaseVo
 
     public function setRaGroupId($ra_group_id)
     {
-        if ($ra_group_id != null) {
+        if ($ra_group_id !== null) {
             $this->ra_group_id = $ra_group_id;
         }
     }
@@ -29,7 +29,7 @@ class RaGroupProductVo extends \BaseVo
 
     public function setSku($sku)
     {
-        if ($sku != null) {
+        if ($sku !== null) {
             $this->sku = $sku;
         }
     }
@@ -41,7 +41,7 @@ class RaGroupProductVo extends \BaseVo
 
     public function setPriority($priority)
     {
-        if ($priority != null) {
+        if ($priority !== null) {
             $this->priority = $priority;
         }
     }
@@ -53,7 +53,7 @@ class RaGroupProductVo extends \BaseVo
 
     public function setBuildBundle($build_bundle)
     {
-        if ($build_bundle != null) {
+        if ($build_bundle !== null) {
             $this->build_bundle = $build_bundle;
         }
     }
@@ -65,7 +65,7 @@ class RaGroupProductVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -77,7 +77,7 @@ class RaGroupProductVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -89,7 +89,7 @@ class RaGroupProductVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -101,7 +101,7 @@ class RaGroupProductVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -113,7 +113,7 @@ class RaGroupProductVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -125,7 +125,7 @@ class RaGroupProductVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

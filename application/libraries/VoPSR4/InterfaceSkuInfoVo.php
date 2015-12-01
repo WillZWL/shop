@@ -32,7 +32,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -44,7 +44,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setBatchId($batch_id)
     {
-        if ($batch_id != null) {
+        if ($batch_id !== null) {
             $this->batch_id = $batch_id;
         }
     }
@@ -56,7 +56,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setCpsBatchId($cps_batch_id)
     {
-        if ($cps_batch_id != null) {
+        if ($cps_batch_id !== null) {
             $this->cps_batch_id = $cps_batch_id;
         }
     }
@@ -68,7 +68,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setProdSku($prod_sku)
     {
-        if ($prod_sku != null) {
+        if ($prod_sku !== null) {
             $this->prod_sku = $prod_sku;
         }
     }
@@ -80,7 +80,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setMasterSku($master_sku)
     {
-        if ($master_sku != null) {
+        if ($master_sku !== null) {
             $this->master_sku = $master_sku;
         }
     }
@@ -92,7 +92,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setMasterskuCached($mastersku_cached)
     {
-        if ($mastersku_cached != null) {
+        if ($mastersku_cached !== null) {
             $this->mastersku_cached = $mastersku_cached;
         }
     }
@@ -104,7 +104,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setPricehkd($pricehkd)
     {
-        if ($pricehkd != null) {
+        if ($pricehkd !== null) {
             $this->pricehkd = $pricehkd;
         }
     }
@@ -116,7 +116,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setPrice($price)
     {
-        if ($price != null) {
+        if ($price !== null) {
             $this->price = $price;
         }
     }
@@ -128,7 +128,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setCurrencyId($currency_id)
     {
-        if ($currency_id != null) {
+        if ($currency_id !== null) {
             $this->currency_id = $currency_id;
         }
     }
@@ -140,7 +140,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setRegion($region)
     {
-        if ($region != null) {
+        if ($region !== null) {
             $this->region = $region;
         }
     }
@@ -152,7 +152,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setLocation($location)
     {
-        if ($location != null) {
+        if ($location !== null) {
             $this->location = $location;
         }
     }
@@ -164,7 +164,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setMoq($moq)
     {
-        if ($moq != null) {
+        if ($moq !== null) {
             $this->moq = $moq;
         }
     }
@@ -176,7 +176,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setLeadDays($lead_days)
     {
-        if ($lead_days != null) {
+        if ($lead_days !== null) {
             $this->lead_days = $lead_days;
         }
     }
@@ -188,7 +188,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setLangRestricted($lang_restricted)
     {
-        if ($lang_restricted != null) {
+        if ($lang_restricted !== null) {
             $this->lang_restricted = $lang_restricted;
         }
     }
@@ -200,7 +200,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setComments($comments)
     {
-        if ($comments != null) {
+        if ($comments !== null) {
             $this->comments = $comments;
         }
     }
@@ -212,7 +212,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setSurplusQty($surplus_qty)
     {
-        if ($surplus_qty != null) {
+        if ($surplus_qty !== null) {
             $this->surplus_qty = $surplus_qty;
         }
     }
@@ -224,7 +224,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setSupplyStatus($supply_status)
     {
-        if ($supply_status != null) {
+        if ($supply_status !== null) {
             $this->supply_status = $supply_status;
         }
     }
@@ -236,7 +236,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -248,7 +248,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setFailedReason($failed_reason)
     {
-        if ($failed_reason != null) {
+        if ($failed_reason !== null) {
             $this->failed_reason = $failed_reason;
         }
     }
@@ -260,7 +260,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -272,7 +272,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -284,7 +284,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -296,7 +296,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -308,7 +308,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -320,7 +320,7 @@ class InterfaceSkuInfoVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

@@ -22,7 +22,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -34,7 +34,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setScenarioid($scenarioid)
     {
-        if ($scenarioid != null) {
+        if ($scenarioid !== null) {
             $this->scenarioid = $scenarioid;
         }
     }
@@ -46,7 +46,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setCountryId($country_id)
     {
-        if ($country_id != null) {
+        if ($country_id !== null) {
             $this->country_id = $country_id;
         }
     }
@@ -58,7 +58,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setShipMinDay($ship_min_day)
     {
-        if ($ship_min_day != null) {
+        if ($ship_min_day !== null) {
             $this->ship_min_day = $ship_min_day;
         }
     }
@@ -70,7 +70,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setShipMaxDay($ship_max_day)
     {
-        if ($ship_max_day != null) {
+        if ($ship_max_day !== null) {
             $this->ship_max_day = $ship_max_day;
         }
     }
@@ -82,7 +82,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setDelMinDay($del_min_day)
     {
-        if ($del_min_day != null) {
+        if ($del_min_day !== null) {
             $this->del_min_day = $del_min_day;
         }
     }
@@ -94,7 +94,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setDelMaxDay($del_max_day)
     {
-        if ($del_max_day != null) {
+        if ($del_max_day !== null) {
             $this->del_max_day = $del_max_day;
         }
     }
@@ -106,7 +106,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setMargin($margin)
     {
-        if ($margin != null) {
+        if ($margin !== null) {
             $this->margin = $margin;
         }
     }
@@ -118,7 +118,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -130,7 +130,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -142,7 +142,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -154,7 +154,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -166,7 +166,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -178,7 +178,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -190,7 +190,7 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

@@ -20,7 +20,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setRefundId($refund_id)
     {
-        if ($refund_id != null) {
+        if ($refund_id !== null) {
             $this->refund_id = $refund_id;
         }
     }
@@ -32,7 +32,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        if ($so_no != null) {
+        if ($so_no !== null) {
             $this->so_no = $so_no;
         }
     }
@@ -44,7 +44,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setPaymentGatewayId($payment_gateway_id)
     {
-        if ($payment_gateway_id != null) {
+        if ($payment_gateway_id !== null) {
             $this->payment_gateway_id = $payment_gateway_id;
         }
     }
@@ -56,7 +56,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setAction($action)
     {
-        if ($action != null) {
+        if ($action !== null) {
             $this->action = $action;
         }
     }
@@ -68,7 +68,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setAmount($amount)
     {
-        if ($amount != null) {
+        if ($amount !== null) {
             $this->amount = $amount;
         }
     }
@@ -80,7 +80,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setLogOut($log_out)
     {
-        if ($log_out != null) {
+        if ($log_out !== null) {
             $this->log_out = $log_out;
         }
     }
@@ -92,7 +92,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setLogIn($log_in)
     {
-        if ($log_in != null) {
+        if ($log_in !== null) {
             $this->log_in = $log_in;
         }
     }
@@ -104,7 +104,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -116,7 +116,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -128,7 +128,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -140,7 +140,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -152,7 +152,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -164,7 +164,7 @@ class AutoRefundVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

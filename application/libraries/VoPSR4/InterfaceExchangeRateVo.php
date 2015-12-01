@@ -20,7 +20,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setTransId($trans_id)
     {
-        if ($trans_id != null) {
+        if ($trans_id !== null) {
             $this->trans_id = $trans_id;
         }
     }
@@ -32,7 +32,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setBatchId($batch_id)
     {
-        if ($batch_id != null) {
+        if ($batch_id !== null) {
             $this->batch_id = $batch_id;
         }
     }
@@ -44,7 +44,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setFromCurrencyId($from_currency_id)
     {
-        if ($from_currency_id != null) {
+        if ($from_currency_id !== null) {
             $this->from_currency_id = $from_currency_id;
         }
     }
@@ -56,7 +56,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setToCurrencyId($to_currency_id)
     {
-        if ($to_currency_id != null) {
+        if ($to_currency_id !== null) {
             $this->to_currency_id = $to_currency_id;
         }
     }
@@ -68,7 +68,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setRate($rate)
     {
-        if ($rate != null) {
+        if ($rate !== null) {
             $this->rate = $rate;
         }
     }
@@ -80,7 +80,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setBatchStatus($batch_status)
     {
-        if ($batch_status != null) {
+        if ($batch_status !== null) {
             $this->batch_status = $batch_status;
         }
     }
@@ -92,7 +92,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setFailedReason($failed_reason)
     {
-        if ($failed_reason != null) {
+        if ($failed_reason !== null) {
             $this->failed_reason = $failed_reason;
         }
     }
@@ -104,7 +104,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -116,7 +116,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -128,7 +128,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -140,7 +140,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -152,7 +152,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -164,7 +164,7 @@ class InterfaceExchangeRateVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }
