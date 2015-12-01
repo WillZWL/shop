@@ -38,7 +38,7 @@ class ProductContentVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -50,7 +50,7 @@ class ProductContentVo extends \BaseVo
 
     public function setProdSku($prod_sku)
     {
-        if ($prod_sku != null) {
+        if ($prod_sku !== null) {
             $this->prod_sku = $prod_sku;
         }
     }
@@ -62,7 +62,7 @@ class ProductContentVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        if ($lang_id != null) {
+        if ($lang_id !== null) {
             $this->lang_id = $lang_id;
         }
     }
@@ -74,7 +74,7 @@ class ProductContentVo extends \BaseVo
 
     public function setProdName($prod_name)
     {
-        if ($prod_name != null) {
+        if ($prod_name !== null) {
             $this->prod_name = $prod_name;
         }
     }
@@ -86,7 +86,7 @@ class ProductContentVo extends \BaseVo
 
     public function setProdNameOriginal($prod_name_original)
     {
-        if ($prod_name_original != null) {
+        if ($prod_name_original !== null) {
             $this->prod_name_original = $prod_name_original;
         }
     }
@@ -98,7 +98,7 @@ class ProductContentVo extends \BaseVo
 
     public function setShortDesc($short_desc)
     {
-        if ($short_desc != null) {
+        if ($short_desc !== null) {
             $this->short_desc = $short_desc;
         }
     }
@@ -110,7 +110,7 @@ class ProductContentVo extends \BaseVo
 
     public function setContents($contents)
     {
-        if ($contents != null) {
+        if ($contents !== null) {
             $this->contents = $contents;
         }
     }
@@ -122,7 +122,7 @@ class ProductContentVo extends \BaseVo
 
     public function setContentsOriginal($contents_original)
     {
-        if ($contents_original != null) {
+        if ($contents_original !== null) {
             $this->contents_original = $contents_original;
         }
     }
@@ -134,7 +134,7 @@ class ProductContentVo extends \BaseVo
 
     public function setSeries($series)
     {
-        if ($series != null) {
+        if ($series !== null) {
             $this->series = $series;
         }
     }
@@ -146,7 +146,7 @@ class ProductContentVo extends \BaseVo
 
     public function setKeywords($keywords)
     {
-        if ($keywords != null) {
+        if ($keywords !== null) {
             $this->keywords = $keywords;
         }
     }
@@ -158,7 +158,7 @@ class ProductContentVo extends \BaseVo
 
     public function setKeywordsOriginal($keywords_original)
     {
-        if ($keywords_original != null) {
+        if ($keywords_original !== null) {
             $this->keywords_original = $keywords_original;
         }
     }
@@ -170,7 +170,7 @@ class ProductContentVo extends \BaseVo
 
     public function setModel1($model_1)
     {
-        if ($model_1 != null) {
+        if ($model_1 !== null) {
             $this->model_1 = $model_1;
         }
     }
@@ -182,7 +182,7 @@ class ProductContentVo extends \BaseVo
 
     public function setModel2($model_2)
     {
-        if ($model_2 != null) {
+        if ($model_2 !== null) {
             $this->model_2 = $model_2;
         }
     }
@@ -194,7 +194,7 @@ class ProductContentVo extends \BaseVo
 
     public function setModel3($model_3)
     {
-        if ($model_3 != null) {
+        if ($model_3 !== null) {
             $this->model_3 = $model_3;
         }
     }
@@ -206,7 +206,7 @@ class ProductContentVo extends \BaseVo
 
     public function setModel4($model_4)
     {
-        if ($model_4 != null) {
+        if ($model_4 !== null) {
             $this->model_4 = $model_4;
         }
     }
@@ -218,7 +218,7 @@ class ProductContentVo extends \BaseVo
 
     public function setModel5($model_5)
     {
-        if ($model_5 != null) {
+        if ($model_5 !== null) {
             $this->model_5 = $model_5;
         }
     }
@@ -230,7 +230,7 @@ class ProductContentVo extends \BaseVo
 
     public function setDetailDesc($detail_desc)
     {
-        if ($detail_desc != null) {
+        if ($detail_desc !== null) {
             $this->detail_desc = $detail_desc;
         }
     }
@@ -242,7 +242,7 @@ class ProductContentVo extends \BaseVo
 
     public function setDetailDescOriginal($detail_desc_original)
     {
-        if ($detail_desc_original != null) {
+        if ($detail_desc_original !== null) {
             $this->detail_desc_original = $detail_desc_original;
         }
     }
@@ -254,7 +254,7 @@ class ProductContentVo extends \BaseVo
 
     public function setExtraInfo($extra_info)
     {
-        if ($extra_info != null) {
+        if ($extra_info !== null) {
             $this->extra_info = $extra_info;
         }
     }
@@ -266,7 +266,7 @@ class ProductContentVo extends \BaseVo
 
     public function setWebsiteStatusLongText($website_status_long_text)
     {
-        if ($website_status_long_text != null) {
+        if ($website_status_long_text !== null) {
             $this->website_status_long_text = $website_status_long_text;
         }
     }
@@ -278,7 +278,7 @@ class ProductContentVo extends \BaseVo
 
     public function setWebsiteStatusShortText($website_status_short_text)
     {
-        if ($website_status_short_text != null) {
+        if ($website_status_short_text !== null) {
             $this->website_status_short_text = $website_status_short_text;
         }
     }
@@ -290,7 +290,7 @@ class ProductContentVo extends \BaseVo
 
     public function setYoutubeId1($youtube_id_1)
     {
-        if ($youtube_id_1 != null) {
+        if ($youtube_id_1 !== null) {
             $this->youtube_id_1 = $youtube_id_1;
         }
     }
@@ -302,7 +302,7 @@ class ProductContentVo extends \BaseVo
 
     public function setYoutubeId2($youtube_id_2)
     {
-        if ($youtube_id_2 != null) {
+        if ($youtube_id_2 !== null) {
             $this->youtube_id_2 = $youtube_id_2;
         }
     }
@@ -314,7 +314,7 @@ class ProductContentVo extends \BaseVo
 
     public function setYoutubeCaption1($youtube_caption_1)
     {
-        if ($youtube_caption_1 != null) {
+        if ($youtube_caption_1 !== null) {
             $this->youtube_caption_1 = $youtube_caption_1;
         }
     }
@@ -326,7 +326,7 @@ class ProductContentVo extends \BaseVo
 
     public function setYoutubeCaption2($youtube_caption_2)
     {
-        if ($youtube_caption_2 != null) {
+        if ($youtube_caption_2 !== null) {
             $this->youtube_caption_2 = $youtube_caption_2;
         }
     }
@@ -338,7 +338,7 @@ class ProductContentVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -350,7 +350,7 @@ class ProductContentVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -362,7 +362,7 @@ class ProductContentVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -374,7 +374,7 @@ class ProductContentVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -386,7 +386,7 @@ class ProductContentVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -398,7 +398,7 @@ class ProductContentVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

@@ -20,7 +20,7 @@ class WarehouseVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -32,7 +32,7 @@ class WarehouseVo extends \BaseVo
 
     public function setWarehouseId($warehouse_id)
     {
-        if ($warehouse_id != null) {
+        if ($warehouse_id !== null) {
             $this->warehouse_id = $warehouse_id;
         }
     }
@@ -44,7 +44,7 @@ class WarehouseVo extends \BaseVo
 
     public function setName($name)
     {
-        if ($name != null) {
+        if ($name !== null) {
             $this->name = $name;
         }
     }
@@ -56,7 +56,7 @@ class WarehouseVo extends \BaseVo
 
     public function setFcId($fc_id)
     {
-        if ($fc_id != null) {
+        if ($fc_id !== null) {
             $this->fc_id = $fc_id;
         }
     }
@@ -68,7 +68,7 @@ class WarehouseVo extends \BaseVo
 
     public function setAddress($address)
     {
-        if ($address != null) {
+        if ($address !== null) {
             $this->address = $address;
         }
     }
@@ -80,7 +80,7 @@ class WarehouseVo extends \BaseVo
 
     public function setRegionId($region_id)
     {
-        if ($region_id != null) {
+        if ($region_id !== null) {
             $this->region_id = $region_id;
         }
     }
@@ -92,7 +92,7 @@ class WarehouseVo extends \BaseVo
 
     public function setCurrencyId($currency_id)
     {
-        if ($currency_id != null) {
+        if ($currency_id !== null) {
             $this->currency_id = $currency_id;
         }
     }
@@ -104,7 +104,7 @@ class WarehouseVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -116,7 +116,7 @@ class WarehouseVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -128,7 +128,7 @@ class WarehouseVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -140,7 +140,7 @@ class WarehouseVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -152,7 +152,7 @@ class WarehouseVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -164,7 +164,7 @@ class WarehouseVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

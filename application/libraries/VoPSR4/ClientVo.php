@@ -51,7 +51,7 @@ class ClientVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -63,7 +63,7 @@ class ClientVo extends \BaseVo
 
     public function setExtClientId($ext_client_id)
     {
-        if ($ext_client_id != null) {
+        if ($ext_client_id !== null) {
             $this->ext_client_id = $ext_client_id;
         }
     }
@@ -75,7 +75,7 @@ class ClientVo extends \BaseVo
 
     public function setClientIdNo($client_id_no)
     {
-        if ($client_id_no != null) {
+        if ($client_id_no !== null) {
             $this->client_id_no = $client_id_no;
         }
     }
@@ -87,7 +87,7 @@ class ClientVo extends \BaseVo
 
     public function setEmail($email)
     {
-        if ($email != null) {
+        if ($email !== null) {
             $this->email = $email;
         }
     }
@@ -99,7 +99,7 @@ class ClientVo extends \BaseVo
 
     public function setPassword($password)
     {
-        if ($password != null) {
+        if ($password !== null) {
             $this->password = $password;
         }
     }
@@ -111,7 +111,7 @@ class ClientVo extends \BaseVo
 
     public function setTitle($title)
     {
-        if ($title != null) {
+        if ($title !== null) {
             $this->title = $title;
         }
     }
@@ -123,7 +123,7 @@ class ClientVo extends \BaseVo
 
     public function setForename($forename)
     {
-        if ($forename != null) {
+        if ($forename !== null) {
             $this->forename = $forename;
         }
     }
@@ -135,7 +135,7 @@ class ClientVo extends \BaseVo
 
     public function setSurname($surname)
     {
-        if ($surname != null) {
+        if ($surname !== null) {
             $this->surname = $surname;
         }
     }
@@ -147,7 +147,7 @@ class ClientVo extends \BaseVo
 
     public function setCompanyname($companyname)
     {
-        if ($companyname != null) {
+        if ($companyname !== null) {
             $this->companyname = $companyname;
         }
     }
@@ -159,7 +159,7 @@ class ClientVo extends \BaseVo
 
     public function setAddress1($address_1)
     {
-        if ($address_1 != null) {
+        if ($address_1 !== null) {
             $this->address_1 = $address_1;
         }
     }
@@ -171,7 +171,7 @@ class ClientVo extends \BaseVo
 
     public function setAddress2($address_2)
     {
-        if ($address_2 != null) {
+        if ($address_2 !== null) {
             $this->address_2 = $address_2;
         }
     }
@@ -183,7 +183,7 @@ class ClientVo extends \BaseVo
 
     public function setAddress3($address_3)
     {
-        if ($address_3 != null) {
+        if ($address_3 !== null) {
             $this->address_3 = $address_3;
         }
     }
@@ -195,7 +195,7 @@ class ClientVo extends \BaseVo
 
     public function setPostcode($postcode)
     {
-        if ($postcode != null) {
+        if ($postcode !== null) {
             $this->postcode = $postcode;
         }
     }
@@ -207,7 +207,7 @@ class ClientVo extends \BaseVo
 
     public function setCity($city)
     {
-        if ($city != null) {
+        if ($city !== null) {
             $this->city = $city;
         }
     }
@@ -219,7 +219,7 @@ class ClientVo extends \BaseVo
 
     public function setState($state)
     {
-        if ($state != null) {
+        if ($state !== null) {
             $this->state = $state;
         }
     }
@@ -231,7 +231,7 @@ class ClientVo extends \BaseVo
 
     public function setCountryId($country_id)
     {
-        if ($country_id != null) {
+        if ($country_id !== null) {
             $this->country_id = $country_id;
         }
     }
@@ -243,7 +243,7 @@ class ClientVo extends \BaseVo
 
     public function setDelName($del_name)
     {
-        if ($del_name != null) {
+        if ($del_name !== null) {
             $this->del_name = $del_name;
         }
     }
@@ -255,7 +255,7 @@ class ClientVo extends \BaseVo
 
     public function setDelCompany($del_company)
     {
-        if ($del_company != null) {
+        if ($del_company !== null) {
             $this->del_company = $del_company;
         }
     }
@@ -267,7 +267,7 @@ class ClientVo extends \BaseVo
 
     public function setDelAddress1($del_address_1)
     {
-        if ($del_address_1 != null) {
+        if ($del_address_1 !== null) {
             $this->del_address_1 = $del_address_1;
         }
     }
@@ -279,7 +279,7 @@ class ClientVo extends \BaseVo
 
     public function setDelAddress2($del_address_2)
     {
-        if ($del_address_2 != null) {
+        if ($del_address_2 !== null) {
             $this->del_address_2 = $del_address_2;
         }
     }
@@ -291,7 +291,7 @@ class ClientVo extends \BaseVo
 
     public function setDelAddress3($del_address_3)
     {
-        if ($del_address_3 != null) {
+        if ($del_address_3 !== null) {
             $this->del_address_3 = $del_address_3;
         }
     }
@@ -303,7 +303,7 @@ class ClientVo extends \BaseVo
 
     public function setDelPostcode($del_postcode)
     {
-        if ($del_postcode != null) {
+        if ($del_postcode !== null) {
             $this->del_postcode = $del_postcode;
         }
     }
@@ -315,7 +315,7 @@ class ClientVo extends \BaseVo
 
     public function setDelCity($del_city)
     {
-        if ($del_city != null) {
+        if ($del_city !== null) {
             $this->del_city = $del_city;
         }
     }
@@ -327,7 +327,7 @@ class ClientVo extends \BaseVo
 
     public function setDelState($del_state)
     {
-        if ($del_state != null) {
+        if ($del_state !== null) {
             $this->del_state = $del_state;
         }
     }
@@ -339,7 +339,7 @@ class ClientVo extends \BaseVo
 
     public function setDelCountryId($del_country_id)
     {
-        if ($del_country_id != null) {
+        if ($del_country_id !== null) {
             $this->del_country_id = $del_country_id;
         }
     }
@@ -351,7 +351,7 @@ class ClientVo extends \BaseVo
 
     public function setTel1($tel_1)
     {
-        if ($tel_1 != null) {
+        if ($tel_1 !== null) {
             $this->tel_1 = $tel_1;
         }
     }
@@ -363,7 +363,7 @@ class ClientVo extends \BaseVo
 
     public function setTel2($tel_2)
     {
-        if ($tel_2 != null) {
+        if ($tel_2 !== null) {
             $this->tel_2 = $tel_2;
         }
     }
@@ -375,7 +375,7 @@ class ClientVo extends \BaseVo
 
     public function setTel3($tel_3)
     {
-        if ($tel_3 != null) {
+        if ($tel_3 !== null) {
             $this->tel_3 = $tel_3;
         }
     }
@@ -387,7 +387,7 @@ class ClientVo extends \BaseVo
 
     public function setMobile($mobile)
     {
-        if ($mobile != null) {
+        if ($mobile !== null) {
             $this->mobile = $mobile;
         }
     }
@@ -399,7 +399,7 @@ class ClientVo extends \BaseVo
 
     public function setDelTel1($del_tel_1)
     {
-        if ($del_tel_1 != null) {
+        if ($del_tel_1 !== null) {
             $this->del_tel_1 = $del_tel_1;
         }
     }
@@ -411,7 +411,7 @@ class ClientVo extends \BaseVo
 
     public function setDelTel2($del_tel_2)
     {
-        if ($del_tel_2 != null) {
+        if ($del_tel_2 !== null) {
             $this->del_tel_2 = $del_tel_2;
         }
     }
@@ -423,7 +423,7 @@ class ClientVo extends \BaseVo
 
     public function setDelTel3($del_tel_3)
     {
-        if ($del_tel_3 != null) {
+        if ($del_tel_3 !== null) {
             $this->del_tel_3 = $del_tel_3;
         }
     }
@@ -435,7 +435,7 @@ class ClientVo extends \BaseVo
 
     public function setDelMobile($del_mobile)
     {
-        if ($del_mobile != null) {
+        if ($del_mobile !== null) {
             $this->del_mobile = $del_mobile;
         }
     }
@@ -447,7 +447,7 @@ class ClientVo extends \BaseVo
 
     public function setSubscriber($subscriber)
     {
-        if ($subscriber != null) {
+        if ($subscriber !== null) {
             $this->subscriber = $subscriber;
         }
     }
@@ -459,7 +459,7 @@ class ClientVo extends \BaseVo
 
     public function setPartySubscriber($party_subscriber)
     {
-        if ($party_subscriber != null) {
+        if ($party_subscriber !== null) {
             $this->party_subscriber = $party_subscriber;
         }
     }
@@ -471,7 +471,7 @@ class ClientVo extends \BaseVo
 
     public function setVip($vip)
     {
-        if ($vip != null) {
+        if ($vip !== null) {
             $this->vip = $vip;
         }
     }
@@ -483,7 +483,7 @@ class ClientVo extends \BaseVo
 
     public function setVipJoinedDate($vip_joined_date)
     {
-        if ($vip_joined_date != null) {
+        if ($vip_joined_date !== null) {
             $this->vip_joined_date = $vip_joined_date;
         }
     }
@@ -495,7 +495,7 @@ class ClientVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -507,7 +507,7 @@ class ClientVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -519,7 +519,7 @@ class ClientVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -531,7 +531,7 @@ class ClientVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -543,7 +543,7 @@ class ClientVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -555,7 +555,7 @@ class ClientVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -567,7 +567,7 @@ class ClientVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

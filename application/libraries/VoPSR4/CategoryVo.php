@@ -25,7 +25,7 @@ class CategoryVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -37,7 +37,7 @@ class CategoryVo extends \BaseVo
 
     public function setName($name)
     {
-        if ($name != null) {
+        if ($name !== null) {
             $this->name = $name;
         }
     }
@@ -49,7 +49,7 @@ class CategoryVo extends \BaseVo
 
     public function setDescription($description)
     {
-        if ($description != null) {
+        if ($description !== null) {
             $this->description = $description;
         }
     }
@@ -61,7 +61,7 @@ class CategoryVo extends \BaseVo
 
     public function setParentCatId($parent_cat_id)
     {
-        if ($parent_cat_id != null) {
+        if ($parent_cat_id !== null) {
             $this->parent_cat_id = $parent_cat_id;
         }
     }
@@ -73,7 +73,7 @@ class CategoryVo extends \BaseVo
 
     public function setLevel($level)
     {
-        if ($level != null) {
+        if ($level !== null) {
             $this->level = $level;
         }
     }
@@ -85,7 +85,7 @@ class CategoryVo extends \BaseVo
 
     public function setAddColourName($add_colour_name)
     {
-        if ($add_colour_name != null) {
+        if ($add_colour_name !== null) {
             $this->add_colour_name = $add_colour_name;
         }
     }
@@ -97,7 +97,7 @@ class CategoryVo extends \BaseVo
 
     public function setPriority($priority)
     {
-        if ($priority != null) {
+        if ($priority !== null) {
             $this->priority = $priority;
         }
     }
@@ -109,7 +109,7 @@ class CategoryVo extends \BaseVo
 
     public function setBundleDiscount($bundle_discount)
     {
-        if ($bundle_discount != null) {
+        if ($bundle_discount !== null) {
             $this->bundle_discount = $bundle_discount;
         }
     }
@@ -121,7 +121,7 @@ class CategoryVo extends \BaseVo
 
     public function setMinDisplayQty($min_display_qty)
     {
-        if ($min_display_qty != null) {
+        if ($min_display_qty !== null) {
             $this->min_display_qty = $min_display_qty;
         }
     }
@@ -133,7 +133,7 @@ class CategoryVo extends \BaseVo
 
     public function setSponsored($sponsored)
     {
-        if ($sponsored != null) {
+        if ($sponsored !== null) {
             $this->sponsored = $sponsored;
         }
     }
@@ -145,7 +145,7 @@ class CategoryVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -157,7 +157,7 @@ class CategoryVo extends \BaseVo
 
     public function setHidden($hidden)
     {
-        if ($hidden != null) {
+        if ($hidden !== null) {
             $this->hidden = $hidden;
         }
     }
@@ -169,7 +169,7 @@ class CategoryVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -181,7 +181,7 @@ class CategoryVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -193,7 +193,7 @@ class CategoryVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -205,7 +205,7 @@ class CategoryVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -217,7 +217,7 @@ class CategoryVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -229,7 +229,7 @@ class CategoryVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

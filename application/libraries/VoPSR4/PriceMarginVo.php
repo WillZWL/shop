@@ -28,7 +28,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -40,7 +40,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setSku($sku)
     {
-        if ($sku != null) {
+        if ($sku !== null) {
             $this->sku = $sku;
         }
     }
@@ -52,7 +52,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        if ($platform_id != null) {
+        if ($platform_id !== null) {
             $this->platform_id = $platform_id;
         }
     }
@@ -64,7 +64,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setSellingPrice($selling_price)
     {
-        if ($selling_price != null) {
+        if ($selling_price !== null) {
             $this->selling_price = $selling_price;
         }
     }
@@ -76,7 +76,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setVat($vat)
     {
-        if ($vat != null) {
+        if ($vat !== null) {
             $this->vat = $vat;
         }
     }
@@ -88,7 +88,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setSupplierCost($supplier_cost)
     {
-        if ($supplier_cost != null) {
+        if ($supplier_cost !== null) {
             $this->supplier_cost = $supplier_cost;
         }
     }
@@ -100,7 +100,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setAdminFee($admin_fee)
     {
-        if ($admin_fee != null) {
+        if ($admin_fee !== null) {
             $this->admin_fee = $admin_fee;
         }
     }
@@ -112,7 +112,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setLogisticCost($logistic_cost)
     {
-        if ($logistic_cost != null) {
+        if ($logistic_cost !== null) {
             $this->logistic_cost = $logistic_cost;
         }
     }
@@ -124,7 +124,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setPaymentCharge($payment_charge)
     {
-        if ($payment_charge != null) {
+        if ($payment_charge !== null) {
             $this->payment_charge = $payment_charge;
         }
     }
@@ -136,7 +136,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setForexFee($forex_fee)
     {
-        if ($forex_fee != null) {
+        if ($forex_fee !== null) {
             $this->forex_fee = $forex_fee;
         }
     }
@@ -148,7 +148,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setListingFee($listing_fee)
     {
-        if ($listing_fee != null) {
+        if ($listing_fee !== null) {
             $this->listing_fee = $listing_fee;
         }
     }
@@ -160,7 +160,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setDuty($duty)
     {
-        if ($duty != null) {
+        if ($duty !== null) {
             $this->duty = $duty;
         }
     }
@@ -172,7 +172,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setTotalCost($total_cost)
     {
-        if ($total_cost != null) {
+        if ($total_cost !== null) {
             $this->total_cost = $total_cost;
         }
     }
@@ -184,7 +184,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setProfit($profit)
     {
-        if ($profit != null) {
+        if ($profit !== null) {
             $this->profit = $profit;
         }
     }
@@ -196,7 +196,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setMargin($margin)
     {
-        if ($margin != null) {
+        if ($margin !== null) {
             $this->margin = $margin;
         }
     }
@@ -208,7 +208,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -220,7 +220,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -232,7 +232,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -244,7 +244,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -256,7 +256,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -268,7 +268,7 @@ class PriceMarginVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

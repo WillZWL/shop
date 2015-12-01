@@ -9,7 +9,7 @@ class VProdInventoryVo extends \BaseVo
 
     public function setProdSku($prod_sku)
     {
-        if ($prod_sku != null) {
+        if ($prod_sku !== null) {
             $this->prod_sku = $prod_sku;
         }
     }
@@ -21,7 +21,7 @@ class VProdInventoryVo extends \BaseVo
 
     public function setInventory($inventory)
     {
-        if ($inventory != null) {
+        if ($inventory !== null) {
             $this->inventory = $inventory;
         }
     }

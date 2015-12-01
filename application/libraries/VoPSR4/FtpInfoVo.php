@@ -20,7 +20,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -32,7 +32,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setName($name)
     {
-        if ($name != null) {
+        if ($name !== null) {
             $this->name = $name;
         }
     }
@@ -44,7 +44,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setServer($server)
     {
-        if ($server != null) {
+        if ($server !== null) {
             $this->server = $server;
         }
     }
@@ -56,7 +56,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setUsername($username)
     {
-        if ($username != null) {
+        if ($username !== null) {
             $this->username = $username;
         }
     }
@@ -68,7 +68,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setPassword($password)
     {
-        if ($password != null) {
+        if ($password !== null) {
             $this->password = $password;
         }
     }
@@ -80,7 +80,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setPort($port)
     {
-        if ($port != null) {
+        if ($port !== null) {
             $this->port = $port;
         }
     }
@@ -92,7 +92,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setPasv($pasv)
     {
-        if ($pasv != null) {
+        if ($pasv !== null) {
             $this->pasv = $pasv;
         }
     }
@@ -104,7 +104,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -116,7 +116,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -128,7 +128,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -140,7 +140,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -152,7 +152,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -164,7 +164,7 @@ class FtpInfoVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

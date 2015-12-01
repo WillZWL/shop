@@ -19,7 +19,7 @@ class CategoryProductSpecVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -31,7 +31,7 @@ class CategoryProductSpecVo extends \BaseVo
 
     public function setPsId($ps_id)
     {
-        if ($ps_id != null) {
+        if ($ps_id !== null) {
             $this->ps_id = $ps_id;
         }
     }
@@ -43,7 +43,7 @@ class CategoryProductSpecVo extends \BaseVo
 
     public function setCatId($cat_id)
     {
-        if ($cat_id != null) {
+        if ($cat_id !== null) {
             $this->cat_id = $cat_id;
         }
     }
@@ -55,7 +55,7 @@ class CategoryProductSpecVo extends \BaseVo
 
     public function setUnitId($unit_id)
     {
-        if ($unit_id != null) {
+        if ($unit_id !== null) {
             $this->unit_id = $unit_id;
         }
     }
@@ -67,7 +67,7 @@ class CategoryProductSpecVo extends \BaseVo
 
     public function setPriority($priority)
     {
-        if ($priority != null) {
+        if ($priority !== null) {
             $this->priority = $priority;
         }
     }
@@ -79,7 +79,7 @@ class CategoryProductSpecVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -91,7 +91,7 @@ class CategoryProductSpecVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -103,7 +103,7 @@ class CategoryProductSpecVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -115,7 +115,7 @@ class CategoryProductSpecVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -127,7 +127,7 @@ class CategoryProductSpecVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -139,7 +139,7 @@ class CategoryProductSpecVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -151,7 +151,7 @@ class CategoryProductSpecVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

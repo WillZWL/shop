@@ -21,7 +21,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -33,7 +33,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        if ($platform_id != null) {
+        if ($platform_id !== null) {
             $this->platform_id = $platform_id;
         }
     }
@@ -45,7 +45,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setSequence($sequence)
     {
-        if ($sequence != null) {
+        if ($sequence !== null) {
             $this->sequence = $sequence;
         }
     }
@@ -57,7 +57,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setPaymentGatewayId($payment_gateway_id)
     {
-        if ($payment_gateway_id != null) {
+        if ($payment_gateway_id !== null) {
             $this->payment_gateway_id = $payment_gateway_id;
         }
     }
@@ -69,7 +69,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setPmgwRefCurrencyId($pmgw_ref_currency_id)
     {
-        if ($pmgw_ref_currency_id != null) {
+        if ($pmgw_ref_currency_id !== null) {
             $this->pmgw_ref_currency_id = $pmgw_ref_currency_id;
         }
     }
@@ -81,7 +81,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setRefFromAmt($ref_from_amt)
     {
-        if ($ref_from_amt != null) {
+        if ($ref_from_amt !== null) {
             $this->ref_from_amt = $ref_from_amt;
         }
     }
@@ -93,7 +93,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setRefToAmtExclusive($ref_to_amt_exclusive)
     {
-        if ($ref_to_amt_exclusive != null) {
+        if ($ref_to_amt_exclusive !== null) {
             $this->ref_to_amt_exclusive = $ref_to_amt_exclusive;
         }
     }
@@ -105,7 +105,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -117,7 +117,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -129,7 +129,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -141,7 +141,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -153,7 +153,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -165,7 +165,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -177,7 +177,7 @@ class PlatformPmgwVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

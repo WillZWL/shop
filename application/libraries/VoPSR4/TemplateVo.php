@@ -29,7 +29,7 @@ class TemplateVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -41,7 +41,7 @@ class TemplateVo extends \BaseVo
 
     public function setType($type)
     {
-        if ($type != null) {
+        if ($type !== null) {
             $this->type = $type;
         }
     }
@@ -53,7 +53,7 @@ class TemplateVo extends \BaseVo
 
     public function setTplId($tpl_id)
     {
-        if ($tpl_id != null) {
+        if ($tpl_id !== null) {
             $this->tpl_id = $tpl_id;
         }
     }
@@ -65,7 +65,7 @@ class TemplateVo extends \BaseVo
 
     public function setTplName($tpl_name)
     {
-        if ($tpl_name != null) {
+        if ($tpl_name !== null) {
             $this->tpl_name = $tpl_name;
         }
     }
@@ -77,7 +77,7 @@ class TemplateVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        if ($platform_id != null) {
+        if ($platform_id !== null) {
             $this->platform_id = $platform_id;
         }
     }
@@ -89,7 +89,7 @@ class TemplateVo extends \BaseVo
 
     public function setDescription($description)
     {
-        if ($description != null) {
+        if ($description !== null) {
             $this->description = $description;
         }
     }
@@ -101,7 +101,7 @@ class TemplateVo extends \BaseVo
 
     public function setSubject($subject)
     {
-        if ($subject != null) {
+        if ($subject !== null) {
             $this->subject = $subject;
         }
     }
@@ -113,7 +113,7 @@ class TemplateVo extends \BaseVo
 
     public function setBcc($bcc)
     {
-        if ($bcc != null) {
+        if ($bcc !== null) {
             $this->bcc = $bcc;
         }
     }
@@ -125,7 +125,7 @@ class TemplateVo extends \BaseVo
 
     public function setCc($cc)
     {
-        if ($cc != null) {
+        if ($cc !== null) {
             $this->cc = $cc;
         }
     }
@@ -137,7 +137,7 @@ class TemplateVo extends \BaseVo
 
     public function setReplyTo($reply_to)
     {
-        if ($reply_to != null) {
+        if ($reply_to !== null) {
             $this->reply_to = $reply_to;
         }
     }
@@ -149,7 +149,7 @@ class TemplateVo extends \BaseVo
 
     public function setFrom($from)
     {
-        if ($from != null) {
+        if ($from !== null) {
             $this->from = $from;
         }
     }
@@ -161,7 +161,7 @@ class TemplateVo extends \BaseVo
 
     public function setTplFileName($tpl_file_name)
     {
-        if ($tpl_file_name != null) {
+        if ($tpl_file_name !== null) {
             $this->tpl_file_name = $tpl_file_name;
         }
     }
@@ -173,7 +173,7 @@ class TemplateVo extends \BaseVo
 
     public function setTplAltFileName($tpl_alt_file_name)
     {
-        if ($tpl_alt_file_name != null) {
+        if ($tpl_alt_file_name !== null) {
             $this->tpl_alt_file_name = $tpl_alt_file_name;
         }
     }
@@ -185,7 +185,7 @@ class TemplateVo extends \BaseVo
 
     public function setMessageHtml($message_html)
     {
-        if ($message_html != null) {
+        if ($message_html !== null) {
             $this->message_html = $message_html;
         }
     }
@@ -197,7 +197,7 @@ class TemplateVo extends \BaseVo
 
     public function setMessageAlt($message_alt)
     {
-        if ($message_alt != null) {
+        if ($message_alt !== null) {
             $this->message_alt = $message_alt;
         }
     }
@@ -209,7 +209,7 @@ class TemplateVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -221,7 +221,7 @@ class TemplateVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -233,7 +233,7 @@ class TemplateVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -245,7 +245,7 @@ class TemplateVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -257,7 +257,7 @@ class TemplateVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -269,7 +269,7 @@ class TemplateVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -281,7 +281,7 @@ class TemplateVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

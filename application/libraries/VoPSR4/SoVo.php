@@ -66,7 +66,7 @@ class SoVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -78,7 +78,7 @@ class SoVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        if ($so_no != null) {
+        if ($so_no !== null) {
             $this->so_no = $so_no;
         }
     }
@@ -90,7 +90,7 @@ class SoVo extends \BaseVo
 
     public function setPlatformOrderId($platform_order_id)
     {
-        if ($platform_order_id != null) {
+        if ($platform_order_id !== null) {
             $this->platform_order_id = $platform_order_id;
         }
     }
@@ -102,7 +102,7 @@ class SoVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        if ($platform_id != null) {
+        if ($platform_id !== null) {
             $this->platform_id = $platform_id;
         }
     }
@@ -114,7 +114,7 @@ class SoVo extends \BaseVo
 
     public function setTxnId($txn_id)
     {
-        if ($txn_id != null) {
+        if ($txn_id !== null) {
             $this->txn_id = $txn_id;
         }
     }
@@ -126,7 +126,7 @@ class SoVo extends \BaseVo
 
     public function setClientId($client_id)
     {
-        if ($client_id != null) {
+        if ($client_id !== null) {
             $this->client_id = $client_id;
         }
     }
@@ -138,7 +138,7 @@ class SoVo extends \BaseVo
 
     public function setBizType($biz_type)
     {
-        if ($biz_type != null) {
+        if ($biz_type !== null) {
             $this->biz_type = $biz_type;
         }
     }
@@ -150,7 +150,7 @@ class SoVo extends \BaseVo
 
     public function setAmount($amount)
     {
-        if ($amount != null) {
+        if ($amount !== null) {
             $this->amount = $amount;
         }
     }
@@ -162,7 +162,7 @@ class SoVo extends \BaseVo
 
     public function setCost($cost)
     {
-        if ($cost != null) {
+        if ($cost !== null) {
             $this->cost = $cost;
         }
     }
@@ -174,7 +174,7 @@ class SoVo extends \BaseVo
 
     public function setVatPercent($vat_percent)
     {
-        if ($vat_percent != null) {
+        if ($vat_percent !== null) {
             $this->vat_percent = $vat_percent;
         }
     }
@@ -186,7 +186,7 @@ class SoVo extends \BaseVo
 
     public function setRate($rate)
     {
-        if ($rate != null) {
+        if ($rate !== null) {
             $this->rate = $rate;
         }
     }
@@ -198,7 +198,7 @@ class SoVo extends \BaseVo
 
     public function setRef1($ref_1)
     {
-        if ($ref_1 != null) {
+        if ($ref_1 !== null) {
             $this->ref_1 = $ref_1;
         }
     }
@@ -210,7 +210,7 @@ class SoVo extends \BaseVo
 
     public function setDeliveryCharge($delivery_charge)
     {
-        if ($delivery_charge != null) {
+        if ($delivery_charge !== null) {
             $this->delivery_charge = $delivery_charge;
         }
     }
@@ -222,7 +222,7 @@ class SoVo extends \BaseVo
 
     public function setDeliveryTypeId($delivery_type_id)
     {
-        if ($delivery_type_id != null) {
+        if ($delivery_type_id !== null) {
             $this->delivery_type_id = $delivery_type_id;
         }
     }
@@ -234,7 +234,7 @@ class SoVo extends \BaseVo
 
     public function setWeight($weight)
     {
-        if ($weight != null) {
+        if ($weight !== null) {
             $this->weight = $weight;
         }
     }
@@ -246,7 +246,7 @@ class SoVo extends \BaseVo
 
     public function setCurrencyId($currency_id)
     {
-        if ($currency_id != null) {
+        if ($currency_id !== null) {
             $this->currency_id = $currency_id;
         }
     }
@@ -258,7 +258,7 @@ class SoVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        if ($lang_id != null) {
+        if ($lang_id !== null) {
             $this->lang_id = $lang_id;
         }
     }
@@ -270,7 +270,7 @@ class SoVo extends \BaseVo
 
     public function setBillName($bill_name)
     {
-        if ($bill_name != null) {
+        if ($bill_name !== null) {
             $this->bill_name = $bill_name;
         }
     }
@@ -282,7 +282,7 @@ class SoVo extends \BaseVo
 
     public function setBillCompany($bill_company)
     {
-        if ($bill_company != null) {
+        if ($bill_company !== null) {
             $this->bill_company = $bill_company;
         }
     }
@@ -294,7 +294,7 @@ class SoVo extends \BaseVo
 
     public function setBillAddress($bill_address)
     {
-        if ($bill_address != null) {
+        if ($bill_address !== null) {
             $this->bill_address = $bill_address;
         }
     }
@@ -306,7 +306,7 @@ class SoVo extends \BaseVo
 
     public function setBillPostcode($bill_postcode)
     {
-        if ($bill_postcode != null) {
+        if ($bill_postcode !== null) {
             $this->bill_postcode = $bill_postcode;
         }
     }
@@ -318,7 +318,7 @@ class SoVo extends \BaseVo
 
     public function setBillCity($bill_city)
     {
-        if ($bill_city != null) {
+        if ($bill_city !== null) {
             $this->bill_city = $bill_city;
         }
     }
@@ -330,7 +330,7 @@ class SoVo extends \BaseVo
 
     public function setBillState($bill_state)
     {
-        if ($bill_state != null) {
+        if ($bill_state !== null) {
             $this->bill_state = $bill_state;
         }
     }
@@ -342,7 +342,7 @@ class SoVo extends \BaseVo
 
     public function setBillCountryId($bill_country_id)
     {
-        if ($bill_country_id != null) {
+        if ($bill_country_id !== null) {
             $this->bill_country_id = $bill_country_id;
         }
     }
@@ -354,7 +354,7 @@ class SoVo extends \BaseVo
 
     public function setDeliveryName($delivery_name)
     {
-        if ($delivery_name != null) {
+        if ($delivery_name !== null) {
             $this->delivery_name = $delivery_name;
         }
     }
@@ -366,7 +366,7 @@ class SoVo extends \BaseVo
 
     public function setDeliveryCompany($delivery_company)
     {
-        if ($delivery_company != null) {
+        if ($delivery_company !== null) {
             $this->delivery_company = $delivery_company;
         }
     }
@@ -378,7 +378,7 @@ class SoVo extends \BaseVo
 
     public function setDeliveryAddress($delivery_address)
     {
-        if ($delivery_address != null) {
+        if ($delivery_address !== null) {
             $this->delivery_address = $delivery_address;
         }
     }
@@ -390,7 +390,7 @@ class SoVo extends \BaseVo
 
     public function setDeliveryPostcode($delivery_postcode)
     {
-        if ($delivery_postcode != null) {
+        if ($delivery_postcode !== null) {
             $this->delivery_postcode = $delivery_postcode;
         }
     }
@@ -402,7 +402,7 @@ class SoVo extends \BaseVo
 
     public function setDeliveryCity($delivery_city)
     {
-        if ($delivery_city != null) {
+        if ($delivery_city !== null) {
             $this->delivery_city = $delivery_city;
         }
     }
@@ -414,7 +414,7 @@ class SoVo extends \BaseVo
 
     public function setDeliveryState($delivery_state)
     {
-        if ($delivery_state != null) {
+        if ($delivery_state !== null) {
             $this->delivery_state = $delivery_state;
         }
     }
@@ -426,7 +426,7 @@ class SoVo extends \BaseVo
 
     public function setDeliveryCountryId($delivery_country_id)
     {
-        if ($delivery_country_id != null) {
+        if ($delivery_country_id !== null) {
             $this->delivery_country_id = $delivery_country_id;
         }
     }
@@ -438,7 +438,7 @@ class SoVo extends \BaseVo
 
     public function setParentSoNo($parent_so_no)
     {
-        if ($parent_so_no != null) {
+        if ($parent_so_no !== null) {
             $this->parent_so_no = $parent_so_no;
         }
     }
@@ -450,7 +450,7 @@ class SoVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -462,7 +462,7 @@ class SoVo extends \BaseVo
 
     public function setRefundStatus($refund_status)
     {
-        if ($refund_status != null) {
+        if ($refund_status !== null) {
             $this->refund_status = $refund_status;
         }
     }
@@ -474,7 +474,7 @@ class SoVo extends \BaseVo
 
     public function setHoldStatus($hold_status)
     {
-        if ($hold_status != null) {
+        if ($hold_status !== null) {
             $this->hold_status = $hold_status;
         }
     }
@@ -486,7 +486,7 @@ class SoVo extends \BaseVo
 
     public function setHoldReason($hold_reason)
     {
-        if ($hold_reason != null) {
+        if ($hold_reason !== null) {
             $this->hold_reason = $hold_reason;
         }
     }
@@ -498,7 +498,7 @@ class SoVo extends \BaseVo
 
     public function setRefundReason($refund_reason)
     {
-        if ($refund_reason != null) {
+        if ($refund_reason !== null) {
             $this->refund_reason = $refund_reason;
         }
     }
@@ -510,7 +510,7 @@ class SoVo extends \BaseVo
 
     public function setOrderNote($order_note)
     {
-        if ($order_note != null) {
+        if ($order_note !== null) {
             $this->order_note = $order_note;
         }
     }
@@ -522,7 +522,7 @@ class SoVo extends \BaseVo
 
     public function setPromotionCode($promotion_code)
     {
-        if ($promotion_code != null) {
+        if ($promotion_code !== null) {
             $this->promotion_code = $promotion_code;
         }
     }
@@ -534,7 +534,7 @@ class SoVo extends \BaseVo
 
     public function setClientPromotionCode($client_promotion_code)
     {
-        if ($client_promotion_code != null) {
+        if ($client_promotion_code !== null) {
             $this->client_promotion_code = $client_promotion_code;
         }
     }
@@ -546,7 +546,7 @@ class SoVo extends \BaseVo
 
     public function setExpectDeliveryDate($expect_delivery_date)
     {
-        if ($expect_delivery_date != null) {
+        if ($expect_delivery_date !== null) {
             $this->expect_delivery_date = $expect_delivery_date;
         }
     }
@@ -558,7 +558,7 @@ class SoVo extends \BaseVo
 
     public function setExpectShipDays($expect_ship_days)
     {
-        if ($expect_ship_days != null) {
+        if ($expect_ship_days !== null) {
             $this->expect_ship_days = $expect_ship_days;
         }
     }
@@ -570,7 +570,7 @@ class SoVo extends \BaseVo
 
     public function setExpectDelDays($expect_del_days)
     {
-        if ($expect_del_days != null) {
+        if ($expect_del_days !== null) {
             $this->expect_del_days = $expect_del_days;
         }
     }
@@ -582,7 +582,7 @@ class SoVo extends \BaseVo
 
     public function setOrderCreateDate($order_create_date)
     {
-        if ($order_create_date != null) {
+        if ($order_create_date !== null) {
             $this->order_create_date = $order_create_date;
         }
     }
@@ -594,7 +594,7 @@ class SoVo extends \BaseVo
 
     public function setDispatchDate($dispatch_date)
     {
-        if ($dispatch_date != null) {
+        if ($dispatch_date !== null) {
             $this->dispatch_date = $dispatch_date;
         }
     }
@@ -606,7 +606,7 @@ class SoVo extends \BaseVo
 
     public function setFingerprintId($fingerprint_id)
     {
-        if ($fingerprint_id != null) {
+        if ($fingerprint_id !== null) {
             $this->fingerprint_id = $fingerprint_id;
         }
     }
@@ -618,7 +618,7 @@ class SoVo extends \BaseVo
 
     public function setCcReminderScheduleDate($cc_reminder_schedule_date)
     {
-        if ($cc_reminder_schedule_date != null) {
+        if ($cc_reminder_schedule_date !== null) {
             $this->cc_reminder_schedule_date = $cc_reminder_schedule_date;
         }
     }
@@ -630,7 +630,7 @@ class SoVo extends \BaseVo
 
     public function setCcReminderType($cc_reminder_type)
     {
-        if ($cc_reminder_type != null) {
+        if ($cc_reminder_type !== null) {
             $this->cc_reminder_type = $cc_reminder_type;
         }
     }
@@ -642,7 +642,7 @@ class SoVo extends \BaseVo
 
     public function setCsCustomerQuery($cs_customer_query)
     {
-        if ($cs_customer_query != null) {
+        if ($cs_customer_query !== null) {
             $this->cs_customer_query = $cs_customer_query;
         }
     }
@@ -654,7 +654,7 @@ class SoVo extends \BaseVo
 
     public function setSplitStatus($split_status)
     {
-        if ($split_status != null) {
+        if ($split_status !== null) {
             $this->split_status = $split_status;
         }
     }
@@ -666,7 +666,7 @@ class SoVo extends \BaseVo
 
     public function setSplitCreateOn($split_create_on)
     {
-        if ($split_create_on != null) {
+        if ($split_create_on !== null) {
             $this->split_create_on = $split_create_on;
         }
     }
@@ -678,7 +678,7 @@ class SoVo extends \BaseVo
 
     public function setSplitCreateBy($split_create_by)
     {
-        if ($split_create_by != null) {
+        if ($split_create_by !== null) {
             $this->split_create_by = $split_create_by;
         }
     }
@@ -690,7 +690,7 @@ class SoVo extends \BaseVo
 
     public function setSplitSoGroup($split_so_group)
     {
-        if ($split_so_group != null) {
+        if ($split_so_group !== null) {
             $this->split_so_group = $split_so_group;
         }
     }
@@ -702,7 +702,7 @@ class SoVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -714,7 +714,7 @@ class SoVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -726,7 +726,7 @@ class SoVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -738,7 +738,7 @@ class SoVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -750,7 +750,7 @@ class SoVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -762,7 +762,7 @@ class SoVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

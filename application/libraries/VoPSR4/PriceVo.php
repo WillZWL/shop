@@ -34,7 +34,7 @@ class PriceVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -46,7 +46,7 @@ class PriceVo extends \BaseVo
 
     public function setSku($sku)
     {
-        if ($sku != null) {
+        if ($sku !== null) {
             $this->sku = $sku;
         }
     }
@@ -58,7 +58,7 @@ class PriceVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        if ($platform_id != null) {
+        if ($platform_id !== null) {
             $this->platform_id = $platform_id;
         }
     }
@@ -70,7 +70,7 @@ class PriceVo extends \BaseVo
 
     public function setDefaultShiptype($default_shiptype)
     {
-        if ($default_shiptype != null) {
+        if ($default_shiptype !== null) {
             $this->default_shiptype = $default_shiptype;
         }
     }
@@ -82,7 +82,7 @@ class PriceVo extends \BaseVo
 
     public function setSalesQty($sales_qty)
     {
-        if ($sales_qty != null) {
+        if ($sales_qty !== null) {
             $this->sales_qty = $sales_qty;
         }
     }
@@ -94,7 +94,7 @@ class PriceVo extends \BaseVo
 
     public function setPrice($price)
     {
-        if ($price != null) {
+        if ($price !== null) {
             $this->price = $price;
         }
     }
@@ -106,7 +106,7 @@ class PriceVo extends \BaseVo
 
     public function setVbPrice($vb_price)
     {
-        if ($vb_price != null) {
+        if ($vb_price !== null) {
             $this->vb_price = $vb_price;
         }
     }
@@ -118,7 +118,7 @@ class PriceVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -130,7 +130,7 @@ class PriceVo extends \BaseVo
 
     public function setAllowExpress($allow_express)
     {
-        if ($allow_express != null) {
+        if ($allow_express !== null) {
             $this->allow_express = $allow_express;
         }
     }
@@ -142,7 +142,7 @@ class PriceVo extends \BaseVo
 
     public function setIsAdvertised($is_advertised)
     {
-        if ($is_advertised != null) {
+        if ($is_advertised !== null) {
             $this->is_advertised = $is_advertised;
         }
     }
@@ -154,7 +154,7 @@ class PriceVo extends \BaseVo
 
     public function setGooglePromoId($google_promo_id)
     {
-        if ($google_promo_id != null) {
+        if ($google_promo_id !== null) {
             $this->google_promo_id = $google_promo_id;
         }
     }
@@ -166,7 +166,7 @@ class PriceVo extends \BaseVo
 
     public function setExtMappingCode($ext_mapping_code)
     {
-        if ($ext_mapping_code != null) {
+        if ($ext_mapping_code !== null) {
             $this->ext_mapping_code = $ext_mapping_code;
         }
     }
@@ -178,7 +178,7 @@ class PriceVo extends \BaseVo
 
     public function setLatency($latency)
     {
-        if ($latency != null) {
+        if ($latency !== null) {
             $this->latency = $latency;
         }
     }
@@ -190,7 +190,7 @@ class PriceVo extends \BaseVo
 
     public function setOosLatency($oos_latency)
     {
-        if ($oos_latency != null) {
+        if ($oos_latency !== null) {
             $this->oos_latency = $oos_latency;
         }
     }
@@ -202,7 +202,7 @@ class PriceVo extends \BaseVo
 
     public function setListingStatus($listing_status)
     {
-        if ($listing_status != null) {
+        if ($listing_status !== null) {
             $this->listing_status = $listing_status;
         }
     }
@@ -214,7 +214,7 @@ class PriceVo extends \BaseVo
 
     public function setPlatformCode($platform_code)
     {
-        if ($platform_code != null) {
+        if ($platform_code !== null) {
             $this->platform_code = $platform_code;
         }
     }
@@ -226,7 +226,7 @@ class PriceVo extends \BaseVo
 
     public function setMaxOrderQty($max_order_qty)
     {
-        if ($max_order_qty != null) {
+        if ($max_order_qty !== null) {
             $this->max_order_qty = $max_order_qty;
         }
     }
@@ -238,7 +238,7 @@ class PriceVo extends \BaseVo
 
     public function setAutoPrice($auto_price)
     {
-        if ($auto_price != null) {
+        if ($auto_price !== null) {
             $this->auto_price = $auto_price;
         }
     }
@@ -250,7 +250,7 @@ class PriceVo extends \BaseVo
 
     public function setFixedRrp($fixed_rrp)
     {
-        if ($fixed_rrp != null) {
+        if ($fixed_rrp !== null) {
             $this->fixed_rrp = $fixed_rrp;
         }
     }
@@ -262,7 +262,7 @@ class PriceVo extends \BaseVo
 
     public function setRrpFactor($rrp_factor)
     {
-        if ($rrp_factor != null) {
+        if ($rrp_factor !== null) {
             $this->rrp_factor = $rrp_factor;
         }
     }
@@ -274,7 +274,7 @@ class PriceVo extends \BaseVo
 
     public function setDeliveryScenarioid($delivery_scenarioid)
     {
-        if ($delivery_scenarioid != null) {
+        if ($delivery_scenarioid !== null) {
             $this->delivery_scenarioid = $delivery_scenarioid;
         }
     }
@@ -286,7 +286,7 @@ class PriceVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -298,7 +298,7 @@ class PriceVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -310,7 +310,7 @@ class PriceVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -322,7 +322,7 @@ class PriceVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -334,7 +334,7 @@ class PriceVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -346,7 +346,7 @@ class PriceVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

@@ -33,7 +33,7 @@ class SupplierVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -45,7 +45,7 @@ class SupplierVo extends \BaseVo
 
     public function setName($name)
     {
-        if ($name != null) {
+        if ($name !== null) {
             $this->name = $name;
         }
     }
@@ -57,7 +57,7 @@ class SupplierVo extends \BaseVo
 
     public function setOriginCountry($origin_country)
     {
-        if ($origin_country != null) {
+        if ($origin_country !== null) {
             $this->origin_country = $origin_country;
         }
     }
@@ -69,7 +69,7 @@ class SupplierVo extends \BaseVo
 
     public function setCurrencyId($currency_id)
     {
-        if ($currency_id != null) {
+        if ($currency_id !== null) {
             $this->currency_id = $currency_id;
         }
     }
@@ -81,7 +81,7 @@ class SupplierVo extends \BaseVo
 
     public function setCreditor($creditor)
     {
-        if ($creditor != null) {
+        if ($creditor !== null) {
             $this->creditor = $creditor;
         }
     }
@@ -93,7 +93,7 @@ class SupplierVo extends \BaseVo
 
     public function setAddress1($address_1)
     {
-        if ($address_1 != null) {
+        if ($address_1 !== null) {
             $this->address_1 = $address_1;
         }
     }
@@ -105,7 +105,7 @@ class SupplierVo extends \BaseVo
 
     public function setAddress2($address_2)
     {
-        if ($address_2 != null) {
+        if ($address_2 !== null) {
             $this->address_2 = $address_2;
         }
     }
@@ -117,7 +117,7 @@ class SupplierVo extends \BaseVo
 
     public function setAddress3($address_3)
     {
-        if ($address_3 != null) {
+        if ($address_3 !== null) {
             $this->address_3 = $address_3;
         }
     }
@@ -129,7 +129,7 @@ class SupplierVo extends \BaseVo
 
     public function setPhone1($phone_1)
     {
-        if ($phone_1 != null) {
+        if ($phone_1 !== null) {
             $this->phone_1 = $phone_1;
         }
     }
@@ -141,7 +141,7 @@ class SupplierVo extends \BaseVo
 
     public function setPhone2($phone_2)
     {
-        if ($phone_2 != null) {
+        if ($phone_2 !== null) {
             $this->phone_2 = $phone_2;
         }
     }
@@ -153,7 +153,7 @@ class SupplierVo extends \BaseVo
 
     public function setPhone3($phone_3)
     {
-        if ($phone_3 != null) {
+        if ($phone_3 !== null) {
             $this->phone_3 = $phone_3;
         }
     }
@@ -165,7 +165,7 @@ class SupplierVo extends \BaseVo
 
     public function setFax1($fax_1)
     {
-        if ($fax_1 != null) {
+        if ($fax_1 !== null) {
             $this->fax_1 = $fax_1;
         }
     }
@@ -177,7 +177,7 @@ class SupplierVo extends \BaseVo
 
     public function setFax2($fax_2)
     {
-        if ($fax_2 != null) {
+        if ($fax_2 !== null) {
             $this->fax_2 = $fax_2;
         }
     }
@@ -189,7 +189,7 @@ class SupplierVo extends \BaseVo
 
     public function setFax3($fax_3)
     {
-        if ($fax_3 != null) {
+        if ($fax_3 !== null) {
             $this->fax_3 = $fax_3;
         }
     }
@@ -201,7 +201,7 @@ class SupplierVo extends \BaseVo
 
     public function setEmail($email)
     {
-        if ($email != null) {
+        if ($email !== null) {
             $this->email = $email;
         }
     }
@@ -213,7 +213,7 @@ class SupplierVo extends \BaseVo
 
     public function setSupplierReg($supplier_reg)
     {
-        if ($supplier_reg != null) {
+        if ($supplier_reg !== null) {
             $this->supplier_reg = $supplier_reg;
         }
     }
@@ -225,7 +225,7 @@ class SupplierVo extends \BaseVo
 
     public function setSourcingReg($sourcing_reg)
     {
-        if ($sourcing_reg != null) {
+        if ($sourcing_reg !== null) {
             $this->sourcing_reg = $sourcing_reg;
         }
     }
@@ -237,7 +237,7 @@ class SupplierVo extends \BaseVo
 
     public function setNote($note)
     {
-        if ($note != null) {
+        if ($note !== null) {
             $this->note = $note;
         }
     }
@@ -249,7 +249,7 @@ class SupplierVo extends \BaseVo
 
     public function setFcId($fc_id)
     {
-        if ($fc_id != null) {
+        if ($fc_id !== null) {
             $this->fc_id = $fc_id;
         }
     }
@@ -261,7 +261,7 @@ class SupplierVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -273,7 +273,7 @@ class SupplierVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -285,7 +285,7 @@ class SupplierVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -297,7 +297,7 @@ class SupplierVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -309,7 +309,7 @@ class SupplierVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -321,7 +321,7 @@ class SupplierVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -333,7 +333,7 @@ class SupplierVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }
