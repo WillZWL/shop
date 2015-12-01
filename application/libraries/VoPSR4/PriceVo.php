@@ -11,7 +11,7 @@ class PriceVo extends \BaseVo
     private $status = 'I';
     private $allow_express = 'N';
     private $is_advertised = 'N';
-    private $google_promo_id;
+    private $google_promo_id = '';
     private $ext_mapping_code = '';
     private $latency = '0';
     private $oos_latency = '0';

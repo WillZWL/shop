@@ -124,7 +124,7 @@ class ProductService extends BaseProductService
         $newObj = new \ProductCustomClassificationVo();
         $newObj->setSku($sku);
         $newObj->setCountryId((string)$oldObj->country_id);
-        $newObj->updateProductCustomClass($newObj, $oldObj);
+        $this->updateProductCustomClass($newObj, $oldObj);
 
         return $newObj;
     }
