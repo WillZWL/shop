@@ -17,7 +17,7 @@ class DeliveryOptionVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -29,7 +29,7 @@ class DeliveryOptionVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        if ($lang_id != null) {
+        if ($lang_id !== null) {
             $this->lang_id = $lang_id;
         }
     }
@@ -41,7 +41,7 @@ class DeliveryOptionVo extends \BaseVo
 
     public function setCourierId($courier_id)
     {
-        if ($courier_id != null) {
+        if ($courier_id !== null) {
             $this->courier_id = $courier_id;
         }
     }
@@ -53,7 +53,7 @@ class DeliveryOptionVo extends \BaseVo
 
     public function setDisplayName($display_name)
     {
-        if ($display_name != null) {
+        if ($display_name !== null) {
             $this->display_name = $display_name;
         }
     }
@@ -65,7 +65,7 @@ class DeliveryOptionVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -77,7 +77,7 @@ class DeliveryOptionVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -89,7 +89,7 @@ class DeliveryOptionVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -101,7 +101,7 @@ class DeliveryOptionVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -113,7 +113,7 @@ class DeliveryOptionVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -125,7 +125,7 @@ class DeliveryOptionVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

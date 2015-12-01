@@ -21,7 +21,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -33,7 +33,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setCatId($cat_id)
     {
-        if ($cat_id != null) {
+        if ($cat_id !== null) {
             $this->cat_id = $cat_id;
         }
     }
@@ -45,7 +45,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        if ($lang_id != null) {
+        if ($lang_id !== null) {
             $this->lang_id = $lang_id;
         }
     }
@@ -57,7 +57,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setImage($image)
     {
-        if ($image != null) {
+        if ($image !== null) {
             $this->image = $image;
         }
     }
@@ -69,7 +69,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setFlash($flash)
     {
-        if ($flash != null) {
+        if ($flash !== null) {
             $this->flash = $flash;
         }
     }
@@ -81,7 +81,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setText($text)
     {
-        if ($text != null) {
+        if ($text !== null) {
             $this->text = $text;
         }
     }
@@ -93,7 +93,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setLatestNews($latest_news)
     {
-        if ($latest_news != null) {
+        if ($latest_news !== null) {
             $this->latest_news = $latest_news;
         }
     }
@@ -105,7 +105,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -117,7 +117,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -129,7 +129,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -141,7 +141,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -153,7 +153,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -165,7 +165,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -177,7 +177,7 @@ class CategoryContentVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

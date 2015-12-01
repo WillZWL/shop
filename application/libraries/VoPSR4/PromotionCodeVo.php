@@ -55,7 +55,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -67,7 +67,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setCode($code)
     {
-        if ($code != null) {
+        if ($code !== null) {
             $this->code = $code;
         }
     }
@@ -79,7 +79,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setDescription($description)
     {
-        if ($description != null) {
+        if ($description !== null) {
             $this->description = $description;
         }
     }
@@ -91,7 +91,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setDiscType($disc_type)
     {
-        if ($disc_type != null) {
+        if ($disc_type !== null) {
             $this->disc_type = $disc_type;
         }
     }
@@ -103,7 +103,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setOverAmount($over_amount)
     {
-        if ($over_amount != null) {
+        if ($over_amount !== null) {
             $this->over_amount = $over_amount;
         }
     }
@@ -115,7 +115,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setOverAmount1($over_amount_1)
     {
-        if ($over_amount_1 != null) {
+        if ($over_amount_1 !== null) {
             $this->over_amount_1 = $over_amount_1;
         }
     }
@@ -127,7 +127,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setDiscount1($discount_1)
     {
-        if ($discount_1 != null) {
+        if ($discount_1 !== null) {
             $this->discount_1 = $discount_1;
         }
     }
@@ -139,7 +139,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setOverAmount2($over_amount_2)
     {
-        if ($over_amount_2 != null) {
+        if ($over_amount_2 !== null) {
             $this->over_amount_2 = $over_amount_2;
         }
     }
@@ -151,7 +151,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setDiscount2($discount_2)
     {
-        if ($discount_2 != null) {
+        if ($discount_2 !== null) {
             $this->discount_2 = $discount_2;
         }
     }
@@ -163,7 +163,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setOverAmount3($over_amount_3)
     {
-        if ($over_amount_3 != null) {
+        if ($over_amount_3 !== null) {
             $this->over_amount_3 = $over_amount_3;
         }
     }
@@ -175,7 +175,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setDiscount3($discount_3)
     {
-        if ($discount_3 != null) {
+        if ($discount_3 !== null) {
             $this->discount_3 = $discount_3;
         }
     }
@@ -187,7 +187,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setOverAmount4($over_amount_4)
     {
-        if ($over_amount_4 != null) {
+        if ($over_amount_4 !== null) {
             $this->over_amount_4 = $over_amount_4;
         }
     }
@@ -199,7 +199,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setDiscount4($discount_4)
     {
-        if ($discount_4 != null) {
+        if ($discount_4 !== null) {
             $this->discount_4 = $discount_4;
         }
     }
@@ -211,7 +211,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setOverAmount5($over_amount_5)
     {
-        if ($over_amount_5 != null) {
+        if ($over_amount_5 !== null) {
             $this->over_amount_5 = $over_amount_5;
         }
     }
@@ -223,7 +223,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setDiscount5($discount_5)
     {
-        if ($discount_5 != null) {
+        if ($discount_5 !== null) {
             $this->discount_5 = $discount_5;
         }
     }
@@ -235,7 +235,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setRegionId($region_id)
     {
-        if ($region_id != null) {
+        if ($region_id !== null) {
             $this->region_id = $region_id;
         }
     }
@@ -247,7 +247,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setCountryId($country_id)
     {
-        if ($country_id != null) {
+        if ($country_id !== null) {
             $this->country_id = $country_id;
         }
     }
@@ -259,7 +259,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setCurrencyId($currency_id)
     {
-        if ($currency_id != null) {
+        if ($currency_id !== null) {
             $this->currency_id = $currency_id;
         }
     }
@@ -271,7 +271,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setFreeItemSku($free_item_sku)
     {
-        if ($free_item_sku != null) {
+        if ($free_item_sku !== null) {
             $this->free_item_sku = $free_item_sku;
         }
     }
@@ -283,7 +283,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setCatId($cat_id)
     {
-        if ($cat_id != null) {
+        if ($cat_id !== null) {
             $this->cat_id = $cat_id;
         }
     }
@@ -295,7 +295,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setSubCatId($sub_cat_id)
     {
-        if ($sub_cat_id != null) {
+        if ($sub_cat_id !== null) {
             $this->sub_cat_id = $sub_cat_id;
         }
     }
@@ -307,7 +307,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setSubSubCatId($sub_sub_cat_id)
     {
-        if ($sub_sub_cat_id != null) {
+        if ($sub_sub_cat_id !== null) {
             $this->sub_sub_cat_id = $sub_sub_cat_id;
         }
     }
@@ -319,7 +319,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setBrandId($brand_id)
     {
-        if ($brand_id != null) {
+        if ($brand_id !== null) {
             $this->brand_id = $brand_id;
         }
     }
@@ -331,7 +331,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setRelevantProd($relevant_prod)
     {
-        if ($relevant_prod != null) {
+        if ($relevant_prod !== null) {
             $this->relevant_prod = $relevant_prod;
         }
     }
@@ -343,7 +343,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setEmail($email)
     {
-        if ($email != null) {
+        if ($email !== null) {
             $this->email = $email;
         }
     }
@@ -355,7 +355,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setDiscLevel($disc_level)
     {
-        if ($disc_level != null) {
+        if ($disc_level !== null) {
             $this->disc_level = $disc_level;
         }
     }
@@ -367,7 +367,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setDiscLevelValue($disc_level_value)
     {
-        if ($disc_level_value != null) {
+        if ($disc_level_value !== null) {
             $this->disc_level_value = $disc_level_value;
         }
     }
@@ -379,7 +379,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setRedemptionProdValue($redemption_prod_value)
     {
-        if ($redemption_prod_value != null) {
+        if ($redemption_prod_value !== null) {
             $this->redemption_prod_value = $redemption_prod_value;
         }
     }
@@ -391,7 +391,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setRedemptionAmount($redemption_amount)
     {
-        if ($redemption_amount != null) {
+        if ($redemption_amount !== null) {
             $this->redemption_amount = $redemption_amount;
         }
     }
@@ -403,7 +403,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setPromoMessage($promo_message)
     {
-        if ($promo_message != null) {
+        if ($promo_message !== null) {
             $this->promo_message = $promo_message;
         }
     }
@@ -415,7 +415,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setDisplayMessage($display_message)
     {
-        if ($display_message != null) {
+        if ($display_message !== null) {
             $this->display_message = $display_message;
         }
     }
@@ -427,7 +427,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setExpireDate($expire_date)
     {
-        if ($expire_date != null) {
+        if ($expire_date !== null) {
             $this->expire_date = $expire_date;
         }
     }
@@ -439,7 +439,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setPromotionSchedule($promotion_schedule)
     {
-        if ($promotion_schedule != null) {
+        if ($promotion_schedule !== null) {
             $this->promotion_schedule = $promotion_schedule;
         }
     }
@@ -451,7 +451,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setWeekDay($week_day)
     {
-        if ($week_day != null) {
+        if ($week_day !== null) {
             $this->week_day = $week_day;
         }
     }
@@ -463,7 +463,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setStartTime($start_time)
     {
-        if ($start_time != null) {
+        if ($start_time !== null) {
             $this->start_time = $start_time;
         }
     }
@@ -475,7 +475,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setEndTime($end_time)
     {
-        if ($end_time != null) {
+        if ($end_time !== null) {
             $this->end_time = $end_time;
         }
     }
@@ -487,7 +487,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setTimeZone($time_zone)
     {
-        if ($time_zone != null) {
+        if ($time_zone !== null) {
             $this->time_zone = $time_zone;
         }
     }
@@ -499,7 +499,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setRepeat($repeat)
     {
-        if ($repeat != null) {
+        if ($repeat !== null) {
             $this->repeat = $repeat;
         }
     }
@@ -511,7 +511,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setRedemption($redemption)
     {
-        if ($redemption != null) {
+        if ($redemption !== null) {
             $this->redemption = $redemption;
         }
     }
@@ -523,7 +523,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setTotalRedemption($total_redemption)
     {
-        if ($total_redemption != null) {
+        if ($total_redemption !== null) {
             $this->total_redemption = $total_redemption;
         }
     }
@@ -535,7 +535,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setNoTaken($no_taken)
     {
-        if ($no_taken != null) {
+        if ($no_taken !== null) {
             $this->no_taken = $no_taken;
         }
     }
@@ -547,7 +547,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -559,7 +559,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -571,7 +571,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -583,7 +583,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -595,7 +595,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -607,7 +607,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -619,7 +619,7 @@ class PromotionCodeVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

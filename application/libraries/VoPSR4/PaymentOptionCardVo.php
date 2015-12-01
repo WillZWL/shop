@@ -20,7 +20,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -32,7 +32,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setCode($code)
     {
-        if ($code != null) {
+        if ($code !== null) {
             $this->code = $code;
         }
     }
@@ -44,7 +44,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setPaymentGatewayId($payment_gateway_id)
     {
-        if ($payment_gateway_id != null) {
+        if ($payment_gateway_id !== null) {
             $this->payment_gateway_id = $payment_gateway_id;
         }
     }
@@ -56,7 +56,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setCardId($card_id)
     {
-        if ($card_id != null) {
+        if ($card_id !== null) {
             $this->card_id = $card_id;
         }
     }
@@ -68,7 +68,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setCardName($card_name)
     {
-        if ($card_name != null) {
+        if ($card_name !== null) {
             $this->card_name = $card_name;
         }
     }
@@ -80,7 +80,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setCardImage($card_image)
     {
-        if ($card_image != null) {
+        if ($card_image !== null) {
             $this->card_image = $card_image;
         }
     }
@@ -92,7 +92,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -104,7 +104,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -116,7 +116,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -128,7 +128,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -140,7 +140,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -152,7 +152,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -164,7 +164,7 @@ class PaymentOptionCardVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

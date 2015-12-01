@@ -16,7 +16,7 @@ class ApplicationFeatureVo extends \BaseVo
 
     public function setAppFeatureId($app_feature_id)
     {
-        if ($app_feature_id != null) {
+        if ($app_feature_id !== null) {
             $this->app_feature_id = $app_feature_id;
         }
     }
@@ -28,7 +28,7 @@ class ApplicationFeatureVo extends \BaseVo
 
     public function setFeatureName($feature_name)
     {
-        if ($feature_name != null) {
+        if ($feature_name !== null) {
             $this->feature_name = $feature_name;
         }
     }
@@ -40,7 +40,7 @@ class ApplicationFeatureVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -52,7 +52,7 @@ class ApplicationFeatureVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -64,7 +64,7 @@ class ApplicationFeatureVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -76,7 +76,7 @@ class ApplicationFeatureVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -88,7 +88,7 @@ class ApplicationFeatureVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -100,7 +100,7 @@ class ApplicationFeatureVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -112,7 +112,7 @@ class ApplicationFeatureVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

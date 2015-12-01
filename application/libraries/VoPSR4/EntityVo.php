@@ -20,7 +20,7 @@ class EntityVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -32,7 +32,7 @@ class EntityVo extends \BaseVo
 
     public function setEntityId($entity_id)
     {
-        if ($entity_id != null) {
+        if ($entity_id !== null) {
             $this->entity_id = $entity_id;
         }
     }
@@ -44,7 +44,7 @@ class EntityVo extends \BaseVo
 
     public function setName($name)
     {
-        if ($name != null) {
+        if ($name !== null) {
             $this->name = $name;
         }
     }
@@ -56,7 +56,7 @@ class EntityVo extends \BaseVo
 
     public function setCountryId($country_id)
     {
-        if ($country_id != null) {
+        if ($country_id !== null) {
             $this->country_id = $country_id;
         }
     }
@@ -68,7 +68,7 @@ class EntityVo extends \BaseVo
 
     public function setBusinessRegistrationNo($business_registration_no)
     {
-        if ($business_registration_no != null) {
+        if ($business_registration_no !== null) {
             $this->business_registration_no = $business_registration_no;
         }
     }
@@ -80,7 +80,7 @@ class EntityVo extends \BaseVo
 
     public function setGstNo($gst_no)
     {
-        if ($gst_no != null) {
+        if ($gst_no !== null) {
             $this->gst_no = $gst_no;
         }
     }
@@ -92,7 +92,7 @@ class EntityVo extends \BaseVo
 
     public function setRegistrationAddress($registration_address)
     {
-        if ($registration_address != null) {
+        if ($registration_address !== null) {
             $this->registration_address = $registration_address;
         }
     }
@@ -104,7 +104,7 @@ class EntityVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -116,7 +116,7 @@ class EntityVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -128,7 +128,7 @@ class EntityVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -140,7 +140,7 @@ class EntityVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -152,7 +152,7 @@ class EntityVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -164,7 +164,7 @@ class EntityVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

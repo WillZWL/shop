@@ -11,7 +11,7 @@ class WmsWarehouseVo extends \BaseVo
 
     public function setType($type)
     {
-        if ($type != null) {
+        if ($type !== null) {
             $this->type = $type;
         }
     }
@@ -23,7 +23,7 @@ class WmsWarehouseVo extends \BaseVo
 
     public function setWarehouseId($warehouse_id)
     {
-        if ($warehouse_id != null) {
+        if ($warehouse_id !== null) {
             $this->warehouse_id = $warehouse_id;
         }
     }
@@ -35,7 +35,7 @@ class WmsWarehouseVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -47,7 +47,7 @@ class WmsWarehouseVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }

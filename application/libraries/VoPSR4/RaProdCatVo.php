@@ -25,7 +25,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -37,7 +37,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setSsCatId($ss_cat_id)
     {
-        if ($ss_cat_id != null) {
+        if ($ss_cat_id !== null) {
             $this->ss_cat_id = $ss_cat_id;
         }
     }
@@ -49,7 +49,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setRcmSsCatId1($rcm_ss_cat_id_1)
     {
-        if ($rcm_ss_cat_id_1 != null) {
+        if ($rcm_ss_cat_id_1 !== null) {
             $this->rcm_ss_cat_id_1 = $rcm_ss_cat_id_1;
         }
     }
@@ -61,7 +61,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setRcmSsCatId2($rcm_ss_cat_id_2)
     {
-        if ($rcm_ss_cat_id_2 != null) {
+        if ($rcm_ss_cat_id_2 !== null) {
             $this->rcm_ss_cat_id_2 = $rcm_ss_cat_id_2;
         }
     }
@@ -73,7 +73,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setRcmSsCatId3($rcm_ss_cat_id_3)
     {
-        if ($rcm_ss_cat_id_3 != null) {
+        if ($rcm_ss_cat_id_3 !== null) {
             $this->rcm_ss_cat_id_3 = $rcm_ss_cat_id_3;
         }
     }
@@ -85,7 +85,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setRcmSsCatId4($rcm_ss_cat_id_4)
     {
-        if ($rcm_ss_cat_id_4 != null) {
+        if ($rcm_ss_cat_id_4 !== null) {
             $this->rcm_ss_cat_id_4 = $rcm_ss_cat_id_4;
         }
     }
@@ -97,7 +97,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setRcmSsCatId5($rcm_ss_cat_id_5)
     {
-        if ($rcm_ss_cat_id_5 != null) {
+        if ($rcm_ss_cat_id_5 !== null) {
             $this->rcm_ss_cat_id_5 = $rcm_ss_cat_id_5;
         }
     }
@@ -109,7 +109,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setRcmSsCatId6($rcm_ss_cat_id_6)
     {
-        if ($rcm_ss_cat_id_6 != null) {
+        if ($rcm_ss_cat_id_6 !== null) {
             $this->rcm_ss_cat_id_6 = $rcm_ss_cat_id_6;
         }
     }
@@ -121,7 +121,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setRcmSsCatId7($rcm_ss_cat_id_7)
     {
-        if ($rcm_ss_cat_id_7 != null) {
+        if ($rcm_ss_cat_id_7 !== null) {
             $this->rcm_ss_cat_id_7 = $rcm_ss_cat_id_7;
         }
     }
@@ -133,7 +133,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setRcmSsCatId8($rcm_ss_cat_id_8)
     {
-        if ($rcm_ss_cat_id_8 != null) {
+        if ($rcm_ss_cat_id_8 !== null) {
             $this->rcm_ss_cat_id_8 = $rcm_ss_cat_id_8;
         }
     }
@@ -145,7 +145,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setWarrantyCat($warranty_cat)
     {
-        if ($warranty_cat != null) {
+        if ($warranty_cat !== null) {
             $this->warranty_cat = $warranty_cat;
         }
     }
@@ -157,7 +157,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -169,7 +169,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -181,7 +181,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -193,7 +193,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -205,7 +205,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -217,7 +217,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -229,7 +229,7 @@ class RaProdCatVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

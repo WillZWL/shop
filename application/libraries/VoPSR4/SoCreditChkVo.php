@@ -28,7 +28,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -40,7 +40,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        if ($so_no != null) {
+        if ($so_no !== null) {
             $this->so_no = $so_no;
         }
     }
@@ -52,7 +52,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardHolder($card_holder)
     {
-        if ($card_holder != null) {
+        if ($card_holder !== null) {
             $this->card_holder = $card_holder;
         }
     }
@@ -64,7 +64,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardType($card_type)
     {
-        if ($card_type != null) {
+        if ($card_type !== null) {
             $this->card_type = $card_type;
         }
     }
@@ -76,7 +76,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardNo($card_no)
     {
-        if ($card_no != null) {
+        if ($card_no !== null) {
             $this->card_no = $card_no;
         }
     }
@@ -88,7 +88,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardBin($card_bin)
     {
-        if ($card_bin != null) {
+        if ($card_bin !== null) {
             $this->card_bin = $card_bin;
         }
     }
@@ -100,7 +100,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardLast4($card_last_4)
     {
-        if ($card_last_4 != null) {
+        if ($card_last_4 !== null) {
             $this->card_last_4 = $card_last_4;
         }
     }
@@ -112,7 +112,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardExpMonth($card_exp_month)
     {
-        if ($card_exp_month != null) {
+        if ($card_exp_month !== null) {
             $this->card_exp_month = $card_exp_month;
         }
     }
@@ -124,7 +124,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardExpYear($card_exp_year)
     {
-        if ($card_exp_year != null) {
+        if ($card_exp_year !== null) {
             $this->card_exp_year = $card_exp_year;
         }
     }
@@ -136,7 +136,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardStartMonth($card_start_month)
     {
-        if ($card_start_month != null) {
+        if ($card_start_month !== null) {
             $this->card_start_month = $card_start_month;
         }
     }
@@ -148,7 +148,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardStartYear($card_start_year)
     {
-        if ($card_start_year != null) {
+        if ($card_start_year !== null) {
             $this->card_start_year = $card_start_year;
         }
     }
@@ -160,7 +160,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardIssueNo($card_issue_no)
     {
-        if ($card_issue_no != null) {
+        if ($card_issue_no !== null) {
             $this->card_issue_no = $card_issue_no;
         }
     }
@@ -172,7 +172,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setFdProcStatus($fd_proc_status)
     {
-        if ($fd_proc_status != null) {
+        if ($fd_proc_status !== null) {
             $this->fd_proc_status = $fd_proc_status;
         }
     }
@@ -184,7 +184,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setFdStatus($fd_status)
     {
-        if ($fd_status != null) {
+        if ($fd_status !== null) {
             $this->fd_status = $fd_status;
         }
     }
@@ -196,7 +196,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCcAction($cc_action)
     {
-        if ($cc_action != null) {
+        if ($cc_action !== null) {
             $this->cc_action = $cc_action;
         }
     }
@@ -208,7 +208,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -220,7 +220,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -232,7 +232,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -244,7 +244,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -256,7 +256,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -268,7 +268,7 @@ class SoCreditChkVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

@@ -19,7 +19,7 @@ class FreightCatChargeVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -31,7 +31,7 @@ class FreightCatChargeVo extends \BaseVo
 
     public function setFcatId($fcat_id)
     {
-        if ($fcat_id != null) {
+        if ($fcat_id !== null) {
             $this->fcat_id = $fcat_id;
         }
     }
@@ -43,7 +43,7 @@ class FreightCatChargeVo extends \BaseVo
 
     public function setOriginCountry($origin_country)
     {
-        if ($origin_country != null) {
+        if ($origin_country !== null) {
             $this->origin_country = $origin_country;
         }
     }
@@ -55,7 +55,7 @@ class FreightCatChargeVo extends \BaseVo
 
     public function setDestCountry($dest_country)
     {
-        if ($dest_country != null) {
+        if ($dest_country !== null) {
             $this->dest_country = $dest_country;
         }
     }
@@ -67,7 +67,7 @@ class FreightCatChargeVo extends \BaseVo
 
     public function setCurrencyId($currency_id)
     {
-        if ($currency_id != null) {
+        if ($currency_id !== null) {
             $this->currency_id = $currency_id;
         }
     }
@@ -79,7 +79,7 @@ class FreightCatChargeVo extends \BaseVo
 
     public function setAmount($amount)
     {
-        if ($amount != null) {
+        if ($amount !== null) {
             $this->amount = $amount;
         }
     }
@@ -91,7 +91,7 @@ class FreightCatChargeVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -103,7 +103,7 @@ class FreightCatChargeVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -115,7 +115,7 @@ class FreightCatChargeVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -127,7 +127,7 @@ class FreightCatChargeVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -139,7 +139,7 @@ class FreightCatChargeVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -151,7 +151,7 @@ class FreightCatChargeVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

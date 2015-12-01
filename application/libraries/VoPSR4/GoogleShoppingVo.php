@@ -20,7 +20,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -32,7 +32,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setSku($sku)
     {
-        if ($sku != null) {
+        if ($sku !== null) {
             $this->sku = $sku;
         }
     }
@@ -44,7 +44,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        if ($platform_id != null) {
+        if ($platform_id !== null) {
             $this->platform_id = $platform_id;
         }
     }
@@ -56,7 +56,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -68,7 +68,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setPrice($price)
     {
-        if ($price != null) {
+        if ($price !== null) {
             $this->price = $price;
         }
     }
@@ -80,7 +80,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setApiRequestResult($api_request_result)
     {
-        if ($api_request_result != null) {
+        if ($api_request_result !== null) {
             $this->api_request_result = $api_request_result;
         }
     }
@@ -92,7 +92,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setComment($comment)
     {
-        if ($comment != null) {
+        if ($comment !== null) {
             $this->comment = $comment;
         }
     }
@@ -104,7 +104,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -116,7 +116,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -128,7 +128,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -140,7 +140,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -152,7 +152,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -164,7 +164,7 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

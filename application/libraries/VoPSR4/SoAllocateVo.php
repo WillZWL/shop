@@ -21,7 +21,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -33,7 +33,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        if ($so_no != null) {
+        if ($so_no !== null) {
             $this->so_no = $so_no;
         }
     }
@@ -45,7 +45,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setLineNo($line_no)
     {
-        if ($line_no != null) {
+        if ($line_no !== null) {
             $this->line_no = $line_no;
         }
     }
@@ -57,7 +57,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setItemSku($item_sku)
     {
-        if ($item_sku != null) {
+        if ($item_sku !== null) {
             $this->item_sku = $item_sku;
         }
     }
@@ -69,7 +69,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setQty($qty)
     {
-        if ($qty != null) {
+        if ($qty !== null) {
             $this->qty = $qty;
         }
     }
@@ -81,7 +81,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setWarehouseId($warehouse_id)
     {
-        if ($warehouse_id != null) {
+        if ($warehouse_id !== null) {
             $this->warehouse_id = $warehouse_id;
         }
     }
@@ -93,7 +93,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setShNo($sh_no)
     {
-        if ($sh_no != null) {
+        if ($sh_no !== null) {
             $this->sh_no = $sh_no;
         }
     }
@@ -105,7 +105,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -117,7 +117,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -129,7 +129,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -141,7 +141,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -153,7 +153,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -165,7 +165,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -177,7 +177,7 @@ class SoAllocateVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

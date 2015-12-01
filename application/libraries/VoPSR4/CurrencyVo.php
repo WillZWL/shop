@@ -24,7 +24,7 @@ class CurrencyVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -36,7 +36,7 @@ class CurrencyVo extends \BaseVo
 
     public function setCurrencyId($currency_id)
     {
-        if ($currency_id != null) {
+        if ($currency_id !== null) {
             $this->currency_id = $currency_id;
         }
     }
@@ -48,7 +48,7 @@ class CurrencyVo extends \BaseVo
 
     public function setSign($sign)
     {
-        if ($sign != null) {
+        if ($sign !== null) {
             $this->sign = $sign;
         }
     }
@@ -60,7 +60,7 @@ class CurrencyVo extends \BaseVo
 
     public function setName($name)
     {
-        if ($name != null) {
+        if ($name !== null) {
             $this->name = $name;
         }
     }
@@ -72,7 +72,7 @@ class CurrencyVo extends \BaseVo
 
     public function setDescription($description)
     {
-        if ($description != null) {
+        if ($description !== null) {
             $this->description = $description;
         }
     }
@@ -84,7 +84,7 @@ class CurrencyVo extends \BaseVo
 
     public function setRoundUp($round_up)
     {
-        if ($round_up != null) {
+        if ($round_up !== null) {
             $this->round_up = $round_up;
         }
     }
@@ -96,7 +96,7 @@ class CurrencyVo extends \BaseVo
 
     public function setRoundUpNearestForPriceTable($round_up_nearest_for_price_table)
     {
-        if ($round_up_nearest_for_price_table != null) {
+        if ($round_up_nearest_for_price_table !== null) {
             $this->round_up_nearest_for_price_table = $round_up_nearest_for_price_table;
         }
     }
@@ -108,7 +108,7 @@ class CurrencyVo extends \BaseVo
 
     public function setSignPos($sign_pos)
     {
-        if ($sign_pos != null) {
+        if ($sign_pos !== null) {
             $this->sign_pos = $sign_pos;
         }
     }
@@ -120,7 +120,7 @@ class CurrencyVo extends \BaseVo
 
     public function setDecPlace($dec_place)
     {
-        if ($dec_place != null) {
+        if ($dec_place !== null) {
             $this->dec_place = $dec_place;
         }
     }
@@ -132,7 +132,7 @@ class CurrencyVo extends \BaseVo
 
     public function setDecPoint($dec_point)
     {
-        if ($dec_point != null) {
+        if ($dec_point !== null) {
             $this->dec_point = $dec_point;
         }
     }
@@ -144,7 +144,7 @@ class CurrencyVo extends \BaseVo
 
     public function setThousandsSep($thousands_sep)
     {
-        if ($thousands_sep != null) {
+        if ($thousands_sep !== null) {
             $this->thousands_sep = $thousands_sep;
         }
     }
@@ -156,7 +156,7 @@ class CurrencyVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -168,7 +168,7 @@ class CurrencyVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -180,7 +180,7 @@ class CurrencyVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -192,7 +192,7 @@ class CurrencyVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -204,7 +204,7 @@ class CurrencyVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -216,7 +216,7 @@ class CurrencyVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

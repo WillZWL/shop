@@ -18,7 +18,7 @@ class ActionVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -30,7 +30,7 @@ class ActionVo extends \BaseVo
 
     public function setEventId($event_id)
     {
-        if ($event_id != null) {
+        if ($event_id !== null) {
             $this->event_id = $event_id;
         }
     }
@@ -42,7 +42,7 @@ class ActionVo extends \BaseVo
 
     public function setAction($action)
     {
-        if ($action != null) {
+        if ($action !== null) {
             $this->action = $action;
         }
     }
@@ -54,7 +54,7 @@ class ActionVo extends \BaseVo
 
     public function setDescription($description)
     {
-        if ($description != null) {
+        if ($description !== null) {
             $this->description = $description;
         }
     }
@@ -66,7 +66,7 @@ class ActionVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -78,7 +78,7 @@ class ActionVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -90,7 +90,7 @@ class ActionVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -102,7 +102,7 @@ class ActionVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -114,7 +114,7 @@ class ActionVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -126,7 +126,7 @@ class ActionVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -138,7 +138,7 @@ class ActionVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

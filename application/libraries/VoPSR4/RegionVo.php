@@ -16,7 +16,7 @@ class RegionVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -28,7 +28,7 @@ class RegionVo extends \BaseVo
 
     public function setRegionName($region_name)
     {
-        if ($region_name != null) {
+        if ($region_name !== null) {
             $this->region_name = $region_name;
         }
     }
@@ -40,7 +40,7 @@ class RegionVo extends \BaseVo
 
     public function setType($type)
     {
-        if ($type != null) {
+        if ($type !== null) {
             $this->type = $type;
         }
     }
@@ -52,7 +52,7 @@ class RegionVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -64,7 +64,7 @@ class RegionVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -76,7 +76,7 @@ class RegionVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -88,7 +88,7 @@ class RegionVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -100,7 +100,7 @@ class RegionVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -112,7 +112,7 @@ class RegionVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

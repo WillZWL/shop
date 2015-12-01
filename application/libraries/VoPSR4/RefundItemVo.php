@@ -24,7 +24,7 @@ class RefundItemVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -36,7 +36,7 @@ class RefundItemVo extends \BaseVo
 
     public function setRefundId($refund_id)
     {
-        if ($refund_id != null) {
+        if ($refund_id !== null) {
             $this->refund_id = $refund_id;
         }
     }
@@ -48,7 +48,7 @@ class RefundItemVo extends \BaseVo
 
     public function setLineNo($line_no)
     {
-        if ($line_no != null) {
+        if ($line_no !== null) {
             $this->line_no = $line_no;
         }
     }
@@ -60,7 +60,7 @@ class RefundItemVo extends \BaseVo
 
     public function setItemSku($item_sku)
     {
-        if ($item_sku != null) {
+        if ($item_sku !== null) {
             $this->item_sku = $item_sku;
         }
     }
@@ -72,7 +72,7 @@ class RefundItemVo extends \BaseVo
 
     public function setQty($qty)
     {
-        if ($qty != null) {
+        if ($qty !== null) {
             $this->qty = $qty;
         }
     }
@@ -84,7 +84,7 @@ class RefundItemVo extends \BaseVo
 
     public function setRefundAmount($refund_amount)
     {
-        if ($refund_amount != null) {
+        if ($refund_amount !== null) {
             $this->refund_amount = $refund_amount;
         }
     }
@@ -96,7 +96,7 @@ class RefundItemVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -108,7 +108,7 @@ class RefundItemVo extends \BaseVo
 
     public function setRefundType($refund_type)
     {
-        if ($refund_type != null) {
+        if ($refund_type !== null) {
             $this->refund_type = $refund_type;
         }
     }
@@ -120,7 +120,7 @@ class RefundItemVo extends \BaseVo
 
     public function setItemStatus($item_status)
     {
-        if ($item_status != null) {
+        if ($item_status !== null) {
             $this->item_status = $item_status;
         }
     }
@@ -132,7 +132,7 @@ class RefundItemVo extends \BaseVo
 
     public function setStockbackDate($stockback_date)
     {
-        if ($stockback_date != null) {
+        if ($stockback_date !== null) {
             $this->stockback_date = $stockback_date;
         }
     }
@@ -144,7 +144,7 @@ class RefundItemVo extends \BaseVo
 
     public function setStockbackWarehouse($stockback_warehouse)
     {
-        if ($stockback_warehouse != null) {
+        if ($stockback_warehouse !== null) {
             $this->stockback_warehouse = $stockback_warehouse;
         }
     }
@@ -156,7 +156,7 @@ class RefundItemVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -168,7 +168,7 @@ class RefundItemVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -180,7 +180,7 @@ class RefundItemVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -192,7 +192,7 @@ class RefundItemVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -204,7 +204,7 @@ class RefundItemVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -216,7 +216,7 @@ class RefundItemVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

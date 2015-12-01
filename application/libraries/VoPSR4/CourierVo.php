@@ -22,7 +22,7 @@ class CourierVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -34,7 +34,7 @@ class CourierVo extends \BaseVo
 
     public function setCourierId($courier_id)
     {
-        if ($courier_id != null) {
+        if ($courier_id !== null) {
             $this->courier_id = $courier_id;
         }
     }
@@ -46,7 +46,7 @@ class CourierVo extends \BaseVo
 
     public function setAftershipId($aftership_id)
     {
-        if ($aftership_id != null) {
+        if ($aftership_id !== null) {
             $this->aftership_id = $aftership_id;
         }
     }
@@ -58,7 +58,7 @@ class CourierVo extends \BaseVo
 
     public function setCourierName($courier_name)
     {
-        if ($courier_name != null) {
+        if ($courier_name !== null) {
             $this->courier_name = $courier_name;
         }
     }
@@ -70,7 +70,7 @@ class CourierVo extends \BaseVo
 
     public function setDescription($description)
     {
-        if ($description != null) {
+        if ($description !== null) {
             $this->description = $description;
         }
     }
@@ -82,7 +82,7 @@ class CourierVo extends \BaseVo
 
     public function setType($type)
     {
-        if ($type != null) {
+        if ($type !== null) {
             $this->type = $type;
         }
     }
@@ -94,7 +94,7 @@ class CourierVo extends \BaseVo
 
     public function setTrackingLink($tracking_link)
     {
-        if ($tracking_link != null) {
+        if ($tracking_link !== null) {
             $this->tracking_link = $tracking_link;
         }
     }
@@ -106,7 +106,7 @@ class CourierVo extends \BaseVo
 
     public function setWeightType($weight_type)
     {
-        if ($weight_type != null) {
+        if ($weight_type !== null) {
             $this->weight_type = $weight_type;
         }
     }
@@ -118,7 +118,7 @@ class CourierVo extends \BaseVo
 
     public function setShowStatus($show_status)
     {
-        if ($show_status != null) {
+        if ($show_status !== null) {
             $this->show_status = $show_status;
         }
     }
@@ -130,7 +130,7 @@ class CourierVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -142,7 +142,7 @@ class CourierVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -154,7 +154,7 @@ class CourierVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -166,7 +166,7 @@ class CourierVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -178,7 +178,7 @@ class CourierVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -190,7 +190,7 @@ class CourierVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

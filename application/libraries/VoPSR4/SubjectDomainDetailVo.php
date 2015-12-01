@@ -17,7 +17,7 @@ class SubjectDomainDetailVo extends \BaseVo
 
     public function setSubject($subject)
     {
-        if ($subject != null) {
+        if ($subject !== null) {
             $this->subject = $subject;
         }
     }
@@ -29,7 +29,7 @@ class SubjectDomainDetailVo extends \BaseVo
 
     public function setSubkey($subkey)
     {
-        if ($subkey != null) {
+        if ($subkey !== null) {
             $this->subkey = $subkey;
         }
     }
@@ -41,7 +41,7 @@ class SubjectDomainDetailVo extends \BaseVo
 
     public function setDescription($description)
     {
-        if ($description != null) {
+        if ($description !== null) {
             $this->description = $description;
         }
     }
@@ -53,7 +53,7 @@ class SubjectDomainDetailVo extends \BaseVo
 
     public function setValue($value)
     {
-        if ($value != null) {
+        if ($value !== null) {
             $this->value = $value;
         }
     }
@@ -65,7 +65,7 @@ class SubjectDomainDetailVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -77,7 +77,7 @@ class SubjectDomainDetailVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -89,7 +89,7 @@ class SubjectDomainDetailVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -101,7 +101,7 @@ class SubjectDomainDetailVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -113,7 +113,7 @@ class SubjectDomainDetailVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -125,7 +125,7 @@ class SubjectDomainDetailVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

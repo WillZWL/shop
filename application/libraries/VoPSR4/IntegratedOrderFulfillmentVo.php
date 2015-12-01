@@ -38,7 +38,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -50,7 +50,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        if ($so_no != null) {
+        if ($so_no !== null) {
             $this->so_no = $so_no;
         }
     }
@@ -62,7 +62,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setLineNo($line_no)
     {
-        if ($line_no != null) {
+        if ($line_no !== null) {
             $this->line_no = $line_no;
         }
     }
@@ -74,7 +74,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setSku($sku)
     {
-        if ($sku != null) {
+        if ($sku !== null) {
             $this->sku = $sku;
         }
     }
@@ -86,7 +86,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        if ($platform_id != null) {
+        if ($platform_id !== null) {
             $this->platform_id = $platform_id;
         }
     }
@@ -98,7 +98,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setPlatformOrderId($platform_order_id)
     {
-        if ($platform_order_id != null) {
+        if ($platform_order_id !== null) {
             $this->platform_order_id = $platform_order_id;
         }
     }
@@ -110,7 +110,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setOrderCreateDate($order_create_date)
     {
-        if ($order_create_date != null) {
+        if ($order_create_date !== null) {
             $this->order_create_date = $order_create_date;
         }
     }
@@ -122,7 +122,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setExpectDeliveryDate($expect_delivery_date)
     {
-        if ($expect_delivery_date != null) {
+        if ($expect_delivery_date !== null) {
             $this->expect_delivery_date = $expect_delivery_date;
         }
     }
@@ -134,7 +134,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setProductName($product_name)
     {
-        if ($product_name != null) {
+        if ($product_name !== null) {
             $this->product_name = $product_name;
         }
     }
@@ -146,7 +146,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setWebsiteStatus($website_status)
     {
-        if ($website_status != null) {
+        if ($website_status !== null) {
             $this->website_status = $website_status;
         }
     }
@@ -158,7 +158,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setDeliveryName($delivery_name)
     {
-        if ($delivery_name != null) {
+        if ($delivery_name !== null) {
             $this->delivery_name = $delivery_name;
         }
     }
@@ -170,7 +170,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setDeliveryCountryId($delivery_country_id)
     {
-        if ($delivery_country_id != null) {
+        if ($delivery_country_id !== null) {
             $this->delivery_country_id = $delivery_country_id;
         }
     }
@@ -182,7 +182,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setDeliveryTypeId($delivery_type_id)
     {
-        if ($delivery_type_id != null) {
+        if ($delivery_type_id !== null) {
             $this->delivery_type_id = $delivery_type_id;
         }
     }
@@ -194,7 +194,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setPaymentGatewayId($payment_gateway_id)
     {
-        if ($payment_gateway_id != null) {
+        if ($payment_gateway_id !== null) {
             $this->payment_gateway_id = $payment_gateway_id;
         }
     }
@@ -206,7 +206,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setRecCourier($rec_courier)
     {
-        if ($rec_courier != null) {
+        if ($rec_courier !== null) {
             $this->rec_courier = $rec_courier;
         }
     }
@@ -218,7 +218,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setNote($note)
     {
-        if ($note != null) {
+        if ($note !== null) {
             $this->note = $note;
         }
     }
@@ -230,7 +230,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setAmount($amount)
     {
-        if ($amount != null) {
+        if ($amount !== null) {
             $this->amount = $amount;
         }
     }
@@ -242,7 +242,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setRefundStatus($refund_status)
     {
-        if ($refund_status != null) {
+        if ($refund_status !== null) {
             $this->refund_status = $refund_status;
         }
     }
@@ -254,7 +254,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setHoldStatus($hold_status)
     {
-        if ($hold_status != null) {
+        if ($hold_status !== null) {
             $this->hold_status = $hold_status;
         }
     }
@@ -266,7 +266,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setQty($qty)
     {
-        if ($qty != null) {
+        if ($qty !== null) {
             $this->qty = $qty;
         }
     }
@@ -278,7 +278,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setOutstandingQty($outstanding_qty)
     {
-        if ($outstanding_qty != null) {
+        if ($outstanding_qty !== null) {
             $this->outstanding_qty = $outstanding_qty;
         }
     }
@@ -290,7 +290,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -302,7 +302,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setSplitSoGroup($split_so_group)
     {
-        if ($split_so_group != null) {
+        if ($split_so_group !== null) {
             $this->split_so_group = $split_so_group;
         }
     }
@@ -314,7 +314,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setDeliveryPostcode($delivery_postcode)
     {
-        if ($delivery_postcode != null) {
+        if ($delivery_postcode !== null) {
             $this->delivery_postcode = $delivery_postcode;
         }
     }
@@ -326,7 +326,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setOrderTotalSku($order_total_sku)
     {
-        if ($order_total_sku != null) {
+        if ($order_total_sku !== null) {
             $this->order_total_sku = $order_total_sku;
         }
     }
@@ -338,7 +338,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -350,7 +350,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -362,7 +362,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -374,7 +374,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -386,7 +386,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -398,7 +398,7 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

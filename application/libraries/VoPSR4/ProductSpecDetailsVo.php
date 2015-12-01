@@ -25,7 +25,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -37,7 +37,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setPsId($ps_id)
     {
-        if ($ps_id != null) {
+        if ($ps_id !== null) {
             $this->ps_id = $ps_id;
         }
     }
@@ -49,7 +49,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setCatId($cat_id)
     {
-        if ($cat_id != null) {
+        if ($cat_id !== null) {
             $this->cat_id = $cat_id;
         }
     }
@@ -61,7 +61,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setProdSku($prod_sku)
     {
-        if ($prod_sku != null) {
+        if ($prod_sku !== null) {
             $this->prod_sku = $prod_sku;
         }
     }
@@ -73,7 +73,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        if ($lang_id != null) {
+        if ($lang_id !== null) {
             $this->lang_id = $lang_id;
         }
     }
@@ -85,7 +85,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setCpsUnitId($cps_unit_id)
     {
-        if ($cps_unit_id != null) {
+        if ($cps_unit_id !== null) {
             $this->cps_unit_id = $cps_unit_id;
         }
     }
@@ -97,7 +97,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setText($text)
     {
-        if ($text != null) {
+        if ($text !== null) {
             $this->text = $text;
         }
     }
@@ -109,7 +109,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setStartValue($start_value)
     {
-        if ($start_value != null) {
+        if ($start_value !== null) {
             $this->start_value = $start_value;
         }
     }
@@ -121,7 +121,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setStartStandardizeValue($start_standardize_value)
     {
-        if ($start_standardize_value != null) {
+        if ($start_standardize_value !== null) {
             $this->start_standardize_value = $start_standardize_value;
         }
     }
@@ -133,7 +133,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setEndValue($end_value)
     {
-        if ($end_value != null) {
+        if ($end_value !== null) {
             $this->end_value = $end_value;
         }
     }
@@ -145,7 +145,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setEndStandardizeValue($end_standardize_value)
     {
-        if ($end_standardize_value != null) {
+        if ($end_standardize_value !== null) {
             $this->end_standardize_value = $end_standardize_value;
         }
     }
@@ -157,7 +157,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -169,7 +169,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -181,7 +181,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -193,7 +193,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -205,7 +205,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -217,7 +217,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -229,7 +229,7 @@ class ProductSpecDetailsVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

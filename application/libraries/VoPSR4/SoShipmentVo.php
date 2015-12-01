@@ -19,7 +19,7 @@ class SoShipmentVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -31,7 +31,7 @@ class SoShipmentVo extends \BaseVo
 
     public function setShNo($sh_no)
     {
-        if ($sh_no != null) {
+        if ($sh_no !== null) {
             $this->sh_no = $sh_no;
         }
     }
@@ -43,7 +43,7 @@ class SoShipmentVo extends \BaseVo
 
     public function setCourierId($courier_id)
     {
-        if ($courier_id != null) {
+        if ($courier_id !== null) {
             $this->courier_id = $courier_id;
         }
     }
@@ -55,7 +55,7 @@ class SoShipmentVo extends \BaseVo
 
     public function setTrackingNo($tracking_no)
     {
-        if ($tracking_no != null) {
+        if ($tracking_no !== null) {
             $this->tracking_no = $tracking_no;
         }
     }
@@ -67,7 +67,7 @@ class SoShipmentVo extends \BaseVo
 
     public function setCourierFeedSent($courier_feed_sent)
     {
-        if ($courier_feed_sent != null) {
+        if ($courier_feed_sent !== null) {
             $this->courier_feed_sent = $courier_feed_sent;
         }
     }
@@ -79,7 +79,7 @@ class SoShipmentVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -91,7 +91,7 @@ class SoShipmentVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -103,7 +103,7 @@ class SoShipmentVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -115,7 +115,7 @@ class SoShipmentVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -127,7 +127,7 @@ class SoShipmentVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -139,7 +139,7 @@ class SoShipmentVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -151,7 +151,7 @@ class SoShipmentVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

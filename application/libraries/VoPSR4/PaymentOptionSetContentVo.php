@@ -21,7 +21,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -33,7 +33,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setSetId($set_id)
     {
-        if ($set_id != null) {
+        if ($set_id !== null) {
             $this->set_id = $set_id;
         }
     }
@@ -45,7 +45,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setCardCode($card_code)
     {
-        if ($card_code != null) {
+        if ($card_code !== null) {
             $this->card_code = $card_code;
         }
     }
@@ -57,7 +57,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setRefCurrency($ref_currency)
     {
-        if ($ref_currency != null) {
+        if ($ref_currency !== null) {
             $this->ref_currency = $ref_currency;
         }
     }
@@ -69,7 +69,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setRefFromAmt($ref_from_amt)
     {
-        if ($ref_from_amt != null) {
+        if ($ref_from_amt !== null) {
             $this->ref_from_amt = $ref_from_amt;
         }
     }
@@ -81,7 +81,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setRefToAmtExclusive($ref_to_amt_exclusive)
     {
-        if ($ref_to_amt_exclusive != null) {
+        if ($ref_to_amt_exclusive !== null) {
             $this->ref_to_amt_exclusive = $ref_to_amt_exclusive;
         }
     }
@@ -93,7 +93,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setPriority($priority)
     {
-        if ($priority != null) {
+        if ($priority !== null) {
             $this->priority = $priority;
         }
     }
@@ -105,7 +105,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -117,7 +117,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -129,7 +129,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -141,7 +141,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -153,7 +153,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -165,7 +165,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -177,7 +177,7 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

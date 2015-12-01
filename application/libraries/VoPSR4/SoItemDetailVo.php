@@ -40,7 +40,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -52,7 +52,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        if ($so_no != null) {
+        if ($so_no !== null) {
             $this->so_no = $so_no;
         }
     }
@@ -64,7 +64,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setLineNo($line_no)
     {
-        if ($line_no != null) {
+        if ($line_no !== null) {
             $this->line_no = $line_no;
         }
     }
@@ -76,7 +76,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setItemSku($item_sku)
     {
-        if ($item_sku != null) {
+        if ($item_sku !== null) {
             $this->item_sku = $item_sku;
         }
     }
@@ -88,7 +88,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setProdName($prod_name)
     {
-        if ($prod_name != null) {
+        if ($prod_name !== null) {
             $this->prod_name = $prod_name;
         }
     }
@@ -100,7 +100,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setExtItemCd($ext_item_cd)
     {
-        if ($ext_item_cd != null) {
+        if ($ext_item_cd !== null) {
             $this->ext_item_cd = $ext_item_cd;
         }
     }
@@ -112,7 +112,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setQty($qty)
     {
-        if ($qty != null) {
+        if ($qty !== null) {
             $this->qty = $qty;
         }
     }
@@ -124,7 +124,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setProductType($product_type)
     {
-        if ($product_type != null) {
+        if ($product_type !== null) {
             $this->product_type = $product_type;
         }
     }
@@ -136,7 +136,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setOutstandingQty($outstanding_qty)
     {
-        if ($outstanding_qty != null) {
+        if ($outstanding_qty !== null) {
             $this->outstanding_qty = $outstanding_qty;
         }
     }
@@ -148,7 +148,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setUnitPrice($unit_price)
     {
-        if ($unit_price != null) {
+        if ($unit_price !== null) {
             $this->unit_price = $unit_price;
         }
     }
@@ -160,7 +160,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setVatTotal($vat_total)
     {
-        if ($vat_total != null) {
+        if ($vat_total !== null) {
             $this->vat_total = $vat_total;
         }
     }
@@ -172,7 +172,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setGstTotal($gst_total)
     {
-        if ($gst_total != null) {
+        if ($gst_total !== null) {
             $this->gst_total = $gst_total;
         }
     }
@@ -184,7 +184,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setDiscountTotal($discount_total)
     {
-        if ($discount_total != null) {
+        if ($discount_total !== null) {
             $this->discount_total = $discount_total;
         }
     }
@@ -196,7 +196,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setBundleCoreId($bundle_core_id)
     {
-        if ($bundle_core_id != null) {
+        if ($bundle_core_id !== null) {
             $this->bundle_core_id = $bundle_core_id;
         }
     }
@@ -208,7 +208,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setBundleLevel($bundle_level)
     {
-        if ($bundle_level != null) {
+        if ($bundle_level !== null) {
             $this->bundle_level = $bundle_level;
         }
     }
@@ -220,7 +220,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setAmount($amount)
     {
-        if ($amount != null) {
+        if ($amount !== null) {
             $this->amount = $amount;
         }
     }
@@ -232,7 +232,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setPromoDiscAmt($promo_disc_amt)
     {
-        if ($promo_disc_amt != null) {
+        if ($promo_disc_amt !== null) {
             $this->promo_disc_amt = $promo_disc_amt;
         }
     }
@@ -244,7 +244,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setCost($cost)
     {
-        if ($cost != null) {
+        if ($cost !== null) {
             $this->cost = $cost;
         }
     }
@@ -256,7 +256,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setItemUnitCost($item_unit_cost)
     {
-        if ($item_unit_cost != null) {
+        if ($item_unit_cost !== null) {
             $this->item_unit_cost = $item_unit_cost;
         }
     }
@@ -268,7 +268,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setProfit($profit)
     {
-        if ($profit != null) {
+        if ($profit !== null) {
             $this->profit = $profit;
         }
     }
@@ -280,7 +280,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setProfitRaw($profit_raw)
     {
-        if ($profit_raw != null) {
+        if ($profit_raw !== null) {
             $this->profit_raw = $profit_raw;
         }
     }
@@ -292,7 +292,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setMargin($margin)
     {
-        if ($margin != null) {
+        if ($margin !== null) {
             $this->margin = $margin;
         }
     }
@@ -304,7 +304,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setMarginRaw($margin_raw)
     {
-        if ($margin_raw != null) {
+        if ($margin_raw !== null) {
             $this->margin_raw = $margin_raw;
         }
     }
@@ -316,7 +316,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setWebsiteStatus($website_status)
     {
-        if ($website_status != null) {
+        if ($website_status !== null) {
             $this->website_status = $website_status;
         }
     }
@@ -328,7 +328,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setWarrantyInMonth($warranty_in_month)
     {
-        if ($warranty_in_month != null) {
+        if ($warranty_in_month !== null) {
             $this->warranty_in_month = $warranty_in_month;
         }
     }
@@ -340,7 +340,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setSupplierStatus($supplier_status)
     {
-        if ($supplier_status != null) {
+        if ($supplier_status !== null) {
             $this->supplier_status = $supplier_status;
         }
     }
@@ -352,7 +352,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status != null) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -364,7 +364,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on != null) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -376,7 +376,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at != null) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -388,7 +388,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by != null) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -400,7 +400,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on != null) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -412,7 +412,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at != null) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -424,7 +424,7 @@ class SoItemDetailVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by != null) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }
