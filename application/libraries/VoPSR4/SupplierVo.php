@@ -1,22 +1,20 @@
 <?php
 class SupplierVo extends \BaseVo
 {
-
-    //class variable
     private $id;
     private $name;
     private $origin_country;
     private $currency_id;
     private $creditor = '0';
-    private $address1;
-    private $address2;
-    private $address3;
-    private $phone1;
-    private $phone2;
-    private $phone3;
-    private $fax1;
-    private $fax2;
-    private $fax3;
+    private $address_1;
+    private $address_2;
+    private $address_3;
+    private $phone_1;
+    private $phone_2;
+    private $phone_3;
+    private $fax_1;
+    private $fax_2;
+    private $fax_3;
     private $email;
     private $supplier_reg;
     private $sourcing_reg;
@@ -24,27 +22,32 @@ class SupplierVo extends \BaseVo
     private $fc_id;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    //primary key
-    private $primary_key = array("id");
+    private $primary_key = ['id'];
+    private $increment_field = 'id';
 
-    //auo increment
-    private $increment_field = "id";
+    public function setId($id)
+    {
+        if ($id != null) {
+            $this->id = $id;
+        }
+    }
 
-    //instance method
     public function getId()
     {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setName($name)
     {
-        $this->id = $id;
+        if ($name != null) {
+            $this->name = $name;
+        }
     }
 
     public function getName()
@@ -52,9 +55,11 @@ class SupplierVo extends \BaseVo
         return $this->name;
     }
 
-    public function setName($name)
+    public function setOriginCountry($origin_country)
     {
-        $this->name = $name;
+        if ($origin_country != null) {
+            $this->origin_country = $origin_country;
+        }
     }
 
     public function getOriginCountry()
@@ -62,19 +67,23 @@ class SupplierVo extends \BaseVo
         return $this->origin_country;
     }
 
-    public function setOriginCountry($origin_country)
+    public function setCurrencyId($currency_id)
     {
-        $this->origin_country = $origin_country;
+        if ($currency_id != null) {
+            $this->currency_id = $currency_id;
+        }
     }
 
     public function getCurrencyId()
     {
-        return $this->currencyId;
+        return $this->currency_id;
     }
 
-    public function setCurrencyId($currency_id)
+    public function setCreditor($creditor)
     {
-        $this->currencyId = $currency_id;
+        if ($creditor != null) {
+            $this->creditor = $creditor;
+        }
     }
 
     public function getCreditor()
@@ -82,99 +91,119 @@ class SupplierVo extends \BaseVo
         return $this->creditor;
     }
 
-    public function setCreditor($creditor)
+    public function setAddress1($address_1)
     {
-        $this->creditor = $creditor;
+        if ($address_1 != null) {
+            $this->address_1 = $address_1;
+        }
     }
 
     public function getAddress1()
     {
-        return $this->address1;
+        return $this->address_1;
     }
 
-    public function setAddress1($address1)
+    public function setAddress2($address_2)
     {
-        $this->address1 = $address1;
+        if ($address_2 != null) {
+            $this->address_2 = $address_2;
+        }
     }
 
     public function getAddress2()
     {
-        return $this->address2;
+        return $this->address_2;
     }
 
-    public function setAddress2($address2)
+    public function setAddress3($address_3)
     {
-        $this->address2 = $address2;
+        if ($address_3 != null) {
+            $this->address_3 = $address_3;
+        }
     }
 
-    public function getaddress3()
+    public function getAddress3()
     {
-        return $this->address3;
+        return $this->address_3;
     }
 
-    public function setaddress3($address3)
+    public function setPhone1($phone_1)
     {
-        $this->address3 = $address3;
+        if ($phone_1 != null) {
+            $this->phone_1 = $phone_1;
+        }
     }
 
     public function getPhone1()
     {
-        return $this->phone1;
+        return $this->phone_1;
     }
 
-    public function setPhone1($phone1)
+    public function setPhone2($phone_2)
     {
-        $this->phone1 = $phone1;
+        if ($phone_2 != null) {
+            $this->phone_2 = $phone_2;
+        }
     }
 
     public function getPhone2()
     {
-        return $this->phone2;
+        return $this->phone_2;
     }
 
-    public function setPhone2($phone2)
+    public function setPhone3($phone_3)
     {
-        $this->phone2 = $phone2;
+        if ($phone_3 != null) {
+            $this->phone_3 = $phone_3;
+        }
     }
 
     public function getPhone3()
     {
-        return $this->phone3;
+        return $this->phone_3;
     }
 
-    public function setPhone3($phone3)
+    public function setFax1($fax_1)
     {
-        $this->phone3 = $phone3;
+        if ($fax_1 != null) {
+            $this->fax_1 = $fax_1;
+        }
     }
 
     public function getFax1()
     {
-        return $this->fax1;
+        return $this->fax_1;
     }
 
-    public function setFax1($fax1)
+    public function setFax2($fax_2)
     {
-        $this->fax1 = $fax1;
+        if ($fax_2 != null) {
+            $this->fax_2 = $fax_2;
+        }
     }
 
     public function getFax2()
     {
-        return $this->fax2;
+        return $this->fax_2;
     }
 
-    public function setFax2($fax2)
+    public function setFax3($fax_3)
     {
-        $this->fax2 = $fax2;
+        if ($fax_3 != null) {
+            $this->fax_3 = $fax_3;
+        }
     }
 
     public function getFax3()
     {
-        return $this->fax3;
+        return $this->fax_3;
     }
 
-    public function setFax3($fax3)
+    public function setEmail($email)
     {
-        $this->fax3 = $fax3;
+        if ($email != null) {
+            $this->email = $email;
+        }
     }
 
     public function getEmail()
@@ -182,9 +211,11 @@ class SupplierVo extends \BaseVo
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setSupplierReg($supplier_reg)
     {
-        $this->email = $email;
+        if ($supplier_reg != null) {
+            $this->supplier_reg = $supplier_reg;
+        }
     }
 
     public function getSupplierReg()
@@ -192,9 +223,11 @@ class SupplierVo extends \BaseVo
         return $this->supplier_reg;
     }
 
-    public function setSupplierReg($supplier_reg)
+    public function setSourcingReg($sourcing_reg)
     {
-        $this->supplier_reg = $supplier_reg;
+        if ($sourcing_reg != null) {
+            $this->sourcing_reg = $sourcing_reg;
+        }
     }
 
     public function getSourcingReg()
@@ -202,9 +235,11 @@ class SupplierVo extends \BaseVo
         return $this->sourcing_reg;
     }
 
-    public function setSourcingReg($sourcing_reg)
+    public function setNote($note)
     {
-        $this->sourcing_reg = $sourcing_reg;
+        if ($note != null) {
+            $this->note = $note;
+        }
     }
 
     public function getNote()
@@ -212,19 +247,23 @@ class SupplierVo extends \BaseVo
         return $this->note;
     }
 
-    public function setNote($note)
+    public function setFcId($fc_id)
     {
-        $this->note = $note;
+        if ($fc_id != null) {
+            $this->fc_id = $fc_id;
+        }
     }
 
     public function getFcId()
     {
-        return $this->fcId;
+        return $this->fc_id;
     }
 
-    public function setFcId($fc_id)
+    public function setStatus($status)
     {
-        $this->fcId = $fc_id;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -232,9 +271,11 @@ class SupplierVo extends \BaseVo
         return $this->status;
     }
 
-    public function setStatus($status)
+    public function setCreateOn($create_on)
     {
-        $this->status = $status;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -242,9 +283,11 @@ class SupplierVo extends \BaseVo
         return $this->create_on;
     }
 
-    public function setCreateOn($create_on)
+    public function setCreateAt($create_at)
     {
-        $this->create_on = $create_on;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -252,9 +295,11 @@ class SupplierVo extends \BaseVo
         return $this->create_at;
     }
 
-    public function setCreateAt($create_at)
+    public function setCreateBy($create_by)
     {
-        $this->create_at = $create_at;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -262,9 +307,11 @@ class SupplierVo extends \BaseVo
         return $this->create_by;
     }
 
-    public function setCreateBy($create_by)
+    public function setModifyOn($modify_on)
     {
-        $this->create_by = $create_by;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -272,9 +319,11 @@ class SupplierVo extends \BaseVo
         return $this->modify_on;
     }
 
-    public function setModifyOn($modify_on)
+    public function setModifyAt($modify_at)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -282,19 +331,16 @@ class SupplierVo extends \BaseVo
         return $this->modify_at;
     }
 
-    public function setModifyAt($modify_at)
+    public function setModifyBy($modify_by)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
     {
         return $this->modify_by;
-    }
-
-    public function setModifyBy($modify_by)
-    {
-        $this->modify_by = $modify_by;
     }
 
     public function getPrimaryKey()

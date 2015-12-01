@@ -28,7 +28,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id) {
+        if ($id != null) {
             $this->id = $id;
         }
     }
@@ -40,7 +40,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setSupplierId($supplier_id)
     {
-        if ($supplier_id) {
+        if ($supplier_id != null) {
             $this->supplier_id = $supplier_id;
         }
     }
@@ -52,7 +52,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setProdSku($prod_sku)
     {
-        if ($prod_sku) {
+        if ($prod_sku != null) {
             $this->prod_sku = $prod_sku;
         }
     }
@@ -64,7 +64,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setCurrencyId($currency_id)
     {
-        if ($currency_id) {
+        if ($currency_id != null) {
             $this->currency_id = $currency_id;
         }
     }
@@ -76,7 +76,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setCost($cost)
     {
-        if ($cost) {
+        if ($cost != null) {
             $this->cost = $cost;
         }
     }
@@ -88,7 +88,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setPricehkd($pricehkd)
     {
-        if ($pricehkd) {
+        if ($pricehkd != null) {
             $this->pricehkd = $pricehkd;
         }
     }
@@ -100,7 +100,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setLeadDay($lead_day)
     {
-        if ($lead_day) {
+        if ($lead_day != null) {
             $this->lead_day = $lead_day;
         }
     }
@@ -112,7 +112,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setMoq($moq)
     {
-        if ($moq) {
+        if ($moq != null) {
             $this->moq = $moq;
         }
     }
@@ -124,7 +124,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setLocation($location)
     {
-        if ($location) {
+        if ($location != null) {
             $this->location = $location;
         }
     }
@@ -136,7 +136,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setRegion($region)
     {
-        if ($region) {
+        if ($region != null) {
             $this->region = $region;
         }
     }
@@ -148,7 +148,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setSurplusQty($surplus_qty)
     {
-        if ($surplus_qty) {
+        if ($surplus_qty != null) {
             $this->surplus_qty = $surplus_qty;
         }
     }
@@ -160,7 +160,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setOrderDefault($order_default)
     {
-        if ($order_default) {
+        if ($order_default != null) {
             $this->order_default = $order_default;
         }
     }
@@ -172,7 +172,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setRegionDefault($region_default)
     {
-        if ($region_default) {
+        if ($region_default != null) {
             $this->region_default = $region_default;
         }
     }
@@ -184,7 +184,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setSupplierStatus($supplier_status)
     {
-        if ($supplier_status) {
+        if ($supplier_status != null) {
             $this->supplier_status = $supplier_status;
         }
     }
@@ -196,7 +196,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setComments($comments)
     {
-        if ($comments) {
+        if ($comments != null) {
             $this->comments = $comments;
         }
     }
@@ -208,7 +208,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on) {
+        if ($create_on != null) {
             $this->create_on = $create_on;
         }
     }
@@ -220,7 +220,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at) {
+        if ($create_at != null) {
             $this->create_at = $create_at;
         }
     }
@@ -232,7 +232,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by) {
+        if ($create_by != null) {
             $this->create_by = $create_by;
         }
     }
@@ -244,7 +244,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on) {
+        if ($modify_on != null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -256,7 +256,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at) {
+        if ($modify_at != null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -268,7 +268,7 @@ class SupplierProdVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by) {
+        if ($modify_by != null) {
             $this->modify_by = $modify_by;
         }
     }

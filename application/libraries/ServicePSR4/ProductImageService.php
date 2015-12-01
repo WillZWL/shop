@@ -54,7 +54,7 @@ class ProductImageService extends BaseService
                 }
 
                 if ($file_exist) {
-                    $imgpath = FCPATH.'../public_html/'.$this->getService('ContextConfig')->valueOf('prod_img_path');
+                    $imgpath = FCPATH.$this->getService('ContextConfig')->valueOf('prod_img_path');
                     $img_local = $img->sku.'_'.$img->id.'.'.$img->image;
 
                     //delete old images

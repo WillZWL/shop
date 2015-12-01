@@ -6,21 +6,23 @@ class FuncOptionVo extends \BaseVo
     private $lang_id = 'en';
     private $text;
     private $value;
-    private $priority;
+    private $priority = '0';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at = '127.0.0.1';
-    private $create_by;
-    private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at = '127.0.0.1';
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -30,7 +32,9 @@ class FuncOptionVo extends \BaseVo
 
     public function setFuncId($func_id)
     {
-        $this->func_id = $func_id;
+        if ($func_id != null) {
+            $this->func_id = $func_id;
+        }
     }
 
     public function getFuncId()
@@ -40,7 +44,9 @@ class FuncOptionVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        $this->lang_id = $lang_id;
+        if ($lang_id != null) {
+            $this->lang_id = $lang_id;
+        }
     }
 
     public function getLangId()
@@ -50,7 +56,9 @@ class FuncOptionVo extends \BaseVo
 
     public function setText($text)
     {
-        $this->text = $text;
+        if ($text != null) {
+            $this->text = $text;
+        }
     }
 
     public function getText()
@@ -60,7 +68,9 @@ class FuncOptionVo extends \BaseVo
 
     public function setValue($value)
     {
-        $this->value = $value;
+        if ($value != null) {
+            $this->value = $value;
+        }
     }
 
     public function getValue()
@@ -70,7 +80,9 @@ class FuncOptionVo extends \BaseVo
 
     public function setPriority($priority)
     {
-        $this->priority = $priority;
+        if ($priority != null) {
+            $this->priority = $priority;
+        }
     }
 
     public function getPriority()
@@ -80,7 +92,9 @@ class FuncOptionVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -90,7 +104,9 @@ class FuncOptionVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -100,7 +116,9 @@ class FuncOptionVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -110,7 +128,9 @@ class FuncOptionVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -120,7 +140,9 @@ class FuncOptionVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -130,7 +152,9 @@ class FuncOptionVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -140,7 +164,9 @@ class FuncOptionVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

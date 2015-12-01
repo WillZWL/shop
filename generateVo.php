@@ -14,8 +14,19 @@ if (!function_exists('underscore2camelcase')) {
 }
 $tableName = $argv[1];
 
+foreach ($argv as $key => $tableName) {
+    if ($key === 0) {
+        continue;
+    }
+
+    generate_vo($tableName);
+}
+
+function generate_vo($tableName)
+{
+
 $voClassName = ucfirst(underscore2camelcase($tableName)."Vo");
-$db = new PDO('mysql:dbname=panther_dev;host=127.0.0.1', 'panther_dev', '');
+$db = new PDO('mysql:dbname=panther;host=127.0.0.1', 'panther', 'panther');
 $stmt = $db->query("desc {$tableName}");
 
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -47,7 +58,7 @@ foreach ($result as $column) {
 
     public function {$set_fct_name}(\${$column['Field']})
     {
-        if (\${$column['Field']}) {
+        if (\${$column['Field']} != null) {
             \$this->{$column['Field']} = \${$column['Field']};
         }
     }
@@ -107,4 +118,6 @@ GETINCREMENTFIELD;
 
 $file .= "\n}\n";
 
-file_put_contents("/var/www/html/atomv2/application/libraries/VoPSR4/{$voClassName}.php", $file);
+file_put_contents("application/libraries/VoPSR4/{$voClassName}.php", $file);
+
+}

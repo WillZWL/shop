@@ -1,33 +1,35 @@
 <?php
 class UserRoleVo extends \BaseVo
 {
-
-    //class variable
     private $user_id;
     private $role_id;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
     private $create_by;
-    private $modify_on;
+    private $modify_on = '';
     private $modify_at;
     private $modify_by;
 
-    //primary key
-    private $primary_key = array("user_id", "role_id");
+    private $primary_key = ['user_id', 'role_id'];
+    private $increment_field = '';
 
-    //auo increment
-    private $increment_field = "";
+    public function setUserId($user_id)
+    {
+        if ($user_id != null) {
+            $this->user_id = $user_id;
+        }
+    }
 
-    //instance method
     public function getUserId()
     {
         return $this->user_id;
     }
 
-    public function setUserId($value)
+    public function setRoleId($role_id)
     {
-        $this->user_id = $value;
-        return $this;
+        if ($role_id != null) {
+            $this->role_id = $role_id;
+        }
     }
 
     public function getRoleId()
@@ -35,10 +37,11 @@ class UserRoleVo extends \BaseVo
         return $this->role_id;
     }
 
-    public function setRoleId($value)
+    public function setCreateOn($create_on)
     {
-        $this->role_id = $value;
-        return $this;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -46,10 +49,11 @@ class UserRoleVo extends \BaseVo
         return $this->create_on;
     }
 
-    public function setCreateOn($value)
+    public function setCreateAt($create_at)
     {
-        $this->create_on = $value;
-        return $this;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -57,10 +61,11 @@ class UserRoleVo extends \BaseVo
         return $this->create_at;
     }
 
-    public function setCreateAt($value)
+    public function setCreateBy($create_by)
     {
-        $this->create_at = $value;
-        return $this;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -68,10 +73,11 @@ class UserRoleVo extends \BaseVo
         return $this->create_by;
     }
 
-    public function setCreateBy($value)
+    public function setModifyOn($modify_on)
     {
-        $this->create_by = $value;
-        return $this;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -79,10 +85,11 @@ class UserRoleVo extends \BaseVo
         return $this->modify_on;
     }
 
-    public function setModifyOn($value)
+    public function setModifyAt($modify_at)
     {
-        $this->modify_on = $value;
-        return $this;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -90,21 +97,16 @@ class UserRoleVo extends \BaseVo
         return $this->modify_at;
     }
 
-    public function setModifyAt($value)
+    public function setModifyBy($modify_by)
     {
-        $this->modify_at = $value;
-        return $this;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
     {
         return $this->modify_by;
-    }
-
-    public function setModifyBy($value)
-    {
-        $this->modify_by = $value;
-        return $this;
     }
 
     public function getPrimaryKey()
@@ -116,7 +118,4 @@ class UserRoleVo extends \BaseVo
     {
         return $this->increment_field;
     }
-
 }
-
-?>

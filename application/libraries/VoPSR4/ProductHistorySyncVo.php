@@ -1,41 +1,43 @@
 <?php
-
 class ProductHistorySyncVo extends \BaseVo
 {
-
-    //class variable
     private $id;
-    private $batch_id;
+    private $batch_id = '0';
     private $sku;
-    private $quantity;
-    private $lang_restricted;
+    private $quantity = '0';
+    private $lang_restricted = '0';
     private $currency_id;
-    private $cost;
-    private $lead_day;
-    private $moq;
+    private $cost = '0.00';
+    private $lead_day = '0';
+    private $moq = '0';
     private $supply_status = 'A';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    //primary key
-    private $primary_key = array("id");
+    private $primary_key = ['id'];
+    private $increment_field = 'id';
 
-    //auo increment
-    private $increment_field = "id";
+    public function setId($id)
+    {
+        if ($id != null) {
+            $this->id = $id;
+        }
+    }
 
-    //instance method
     public function getId()
     {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setBatchId($batch_id)
     {
-        $this->id = $id;
+        if ($batch_id != null) {
+            $this->batch_id = $batch_id;
+        }
     }
 
     public function getBatchId()
@@ -43,9 +45,11 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->batch_id;
     }
 
-    public function setBatchId($batch_id)
+    public function setSku($sku)
     {
-        $this->batch_id = $batch_id;
+        if ($sku != null) {
+            $this->sku = $sku;
+        }
     }
 
     public function getSku()
@@ -53,9 +57,11 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->sku;
     }
 
-    public function setSku($sku)
+    public function setQuantity($quantity)
     {
-        $this->sku = $sku;
+        if ($quantity != null) {
+            $this->quantity = $quantity;
+        }
     }
 
     public function getQuantity()
@@ -63,9 +69,11 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->quantity;
     }
 
-    public function setQuantity($quantity)
+    public function setLangRestricted($lang_restricted)
     {
-        $this->quantity = $quantity;
+        if ($lang_restricted != null) {
+            $this->lang_restricted = $lang_restricted;
+        }
     }
 
     public function getLangRestricted()
@@ -73,9 +81,11 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->lang_restricted;
     }
 
-    public function setLangRestricted($lang_restricted)
+    public function setCurrencyId($currency_id)
     {
-        $this->lang_restricted = $lang_restricted;
+        if ($currency_id != null) {
+            $this->currency_id = $currency_id;
+        }
     }
 
     public function getCurrencyId()
@@ -83,9 +93,11 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->currency_id;
     }
 
-    public function setCurrencyId($currency_id)
+    public function setCost($cost)
     {
-        $this->currency_id = $currency_id;
+        if ($cost != null) {
+            $this->cost = $cost;
+        }
     }
 
     public function getCost()
@@ -93,9 +105,11 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->cost;
     }
 
-    public function setCost($cost)
+    public function setLeadDay($lead_day)
     {
-        $this->cost = $cost;
+        if ($lead_day != null) {
+            $this->lead_day = $lead_day;
+        }
     }
 
     public function getLeadDay()
@@ -103,9 +117,11 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->lead_day;
     }
 
-    public function setLeadDay($lead_day)
+    public function setMoq($moq)
     {
-        $this->lead_day = $lead_day;
+        if ($moq != null) {
+            $this->moq = $moq;
+        }
     }
 
     public function getMoq()
@@ -113,9 +129,11 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->moq;
     }
 
-    public function setMoq($moq)
+    public function setSupplyStatus($supply_status)
     {
-        $this->moq = $moq;
+        if ($supply_status != null) {
+            $this->supply_status = $supply_status;
+        }
     }
 
     public function getSupplyStatus()
@@ -123,14 +141,23 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->supply_status;
     }
 
-    public function setSupplyStatus($supply_status)
+    public function setCreateOn($create_on)
     {
-        $this->supply_status = $supply_status;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
-     public function setCreateOn($create_on)
+    public function getCreateOn()
     {
-        $this->create_on = $create_on;
+        return $this->create_on;
+    }
+
+    public function setCreateAt($create_at)
+    {
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -138,9 +165,11 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->create_at;
     }
 
-    public function setCreateAt($create_at)
+    public function setCreateBy($create_by)
     {
-        $this->create_at = $create_at;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -148,9 +177,11 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->create_by;
     }
 
-    public function setCreateBy($create_by)
+    public function setModifyOn($modify_on)
     {
-        $this->create_by = $create_by;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -158,9 +189,11 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->modify_on;
     }
 
-    public function setModifyOn($modify_on)
+    public function setModifyAt($modify_at)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -168,19 +201,16 @@ class ProductHistorySyncVo extends \BaseVo
         return $this->modify_at;
     }
 
-    public function setModifyAt($modify_at)
+    public function setModifyBy($modify_by)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
     {
         return $this->modify_by;
-    }
-
-    public function setModifyBy($modify_by)
-    {
-        $this->modify_by = $modify_by;
     }
 
     public function getPrimaryKey()
