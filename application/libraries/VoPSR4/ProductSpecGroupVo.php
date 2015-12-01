@@ -2,16 +2,16 @@
 class ProductSpecGroupVo extends \BaseVo
 {
     private $id;
-    private $func_id;
-    private $code;
-    private $name;
-    private $desc;
+    private $func_id = '';
+    private $code = '';
+    private $name = '';
+    private $desc = '';
     private $priority = '9';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -20,7 +20,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -30,7 +32,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setFuncId($func_id)
     {
-        $this->func_id = $func_id;
+        if ($func_id != null) {
+            $this->func_id = $func_id;
+        }
     }
 
     public function getFuncId()
@@ -40,7 +44,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setCode($code)
     {
-        $this->code = $code;
+        if ($code != null) {
+            $this->code = $code;
+        }
     }
 
     public function getCode()
@@ -50,7 +56,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setName($name)
     {
-        $this->name = $name;
+        if ($name != null) {
+            $this->name = $name;
+        }
     }
 
     public function getName()
@@ -60,7 +68,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setDesc($desc)
     {
-        $this->desc = $desc;
+        if ($desc != null) {
+            $this->desc = $desc;
+        }
     }
 
     public function getDesc()
@@ -70,7 +80,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setPriority($priority)
     {
-        $this->priority = $priority;
+        if ($priority != null) {
+            $this->priority = $priority;
+        }
     }
 
     public function getPriority()
@@ -80,7 +92,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -90,7 +104,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -100,7 +116,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -110,7 +128,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -120,7 +140,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -130,7 +152,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -140,7 +164,9 @@ class ProductSpecGroupVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

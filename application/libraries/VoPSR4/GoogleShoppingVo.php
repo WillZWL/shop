@@ -9,18 +9,20 @@ class GoogleShoppingVo extends \BaseVo
     private $api_request_result = '1';
     private $comment;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
     private $modify_on = '';
-    private $modify_at;
-    private $modify_by;
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -30,7 +32,9 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setSku($sku)
     {
-        $this->sku = $sku;
+        if ($sku != null) {
+            $this->sku = $sku;
+        }
     }
 
     public function getSku()
@@ -40,7 +44,9 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        $this->platform_id = $platform_id;
+        if ($platform_id != null) {
+            $this->platform_id = $platform_id;
+        }
     }
 
     public function getPlatformId()
@@ -50,7 +56,9 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -60,7 +68,9 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setPrice($price)
     {
-        $this->price = $price;
+        if ($price != null) {
+            $this->price = $price;
+        }
     }
 
     public function getPrice()
@@ -70,7 +80,9 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setApiRequestResult($api_request_result)
     {
-        $this->api_request_result = $api_request_result;
+        if ($api_request_result != null) {
+            $this->api_request_result = $api_request_result;
+        }
     }
 
     public function getApiRequestResult()
@@ -80,7 +92,9 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setComment($comment)
     {
-        $this->comment = $comment;
+        if ($comment != null) {
+            $this->comment = $comment;
+        }
     }
 
     public function getComment()
@@ -90,7 +104,9 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -100,7 +116,9 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -110,7 +128,9 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -120,7 +140,9 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -130,7 +152,9 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -140,7 +164,9 @@ class GoogleShoppingVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

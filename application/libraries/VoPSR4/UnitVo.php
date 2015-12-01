@@ -12,7 +12,7 @@ class UnitVo extends \BaseVo
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -21,7 +21,9 @@ class UnitVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -31,7 +33,9 @@ class UnitVo extends \BaseVo
 
     public function setUnitId($unit_id)
     {
-        $this->unit_id = $unit_id;
+        if ($unit_id != null) {
+            $this->unit_id = $unit_id;
+        }
     }
 
     public function getUnitId()
@@ -41,7 +45,9 @@ class UnitVo extends \BaseVo
 
     public function setUnitTypeId($unit_type_id)
     {
-        $this->unit_type_id = $unit_type_id;
+        if ($unit_type_id != null) {
+            $this->unit_type_id = $unit_type_id;
+        }
     }
 
     public function getUnitTypeId()
@@ -51,7 +57,9 @@ class UnitVo extends \BaseVo
 
     public function setUnitName($unit_name)
     {
-        $this->unit_name = $unit_name;
+        if ($unit_name != null) {
+            $this->unit_name = $unit_name;
+        }
     }
 
     public function getUnitName()
@@ -61,7 +69,9 @@ class UnitVo extends \BaseVo
 
     public function setFuncUnitName($func_unit_name)
     {
-        $this->func_unit_name = $func_unit_name;
+        if ($func_unit_name != null) {
+            $this->func_unit_name = $func_unit_name;
+        }
     }
 
     public function getFuncUnitName()
@@ -71,7 +81,9 @@ class UnitVo extends \BaseVo
 
     public function setStandardizeValue($standardize_value)
     {
-        $this->standardize_value = $standardize_value;
+        if ($standardize_value != null) {
+            $this->standardize_value = $standardize_value;
+        }
     }
 
     public function getStandardizeValue()
@@ -81,7 +93,9 @@ class UnitVo extends \BaseVo
 
     public function setDescription($description)
     {
-        $this->description = $description;
+        if ($description != null) {
+            $this->description = $description;
+        }
     }
 
     public function getDescription()
@@ -91,7 +105,9 @@ class UnitVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -101,7 +117,9 @@ class UnitVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -111,7 +129,9 @@ class UnitVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -121,7 +141,9 @@ class UnitVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -131,7 +153,9 @@ class UnitVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -141,7 +165,9 @@ class UnitVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -151,7 +177,9 @@ class UnitVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

@@ -19,7 +19,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id) {
+        if ($id != null) {
             $this->id = $id;
         }
     }
@@ -31,7 +31,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setSku($sku)
     {
-        if ($sku) {
+        if ($sku != null) {
             $this->sku = $sku;
         }
     }
@@ -43,7 +43,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setExtSys($ext_sys)
     {
-        if ($ext_sys) {
+        if ($ext_sys != null) {
             $this->ext_sys = $ext_sys;
         }
     }
@@ -55,7 +55,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setExtSku($ext_sku)
     {
-        if ($ext_sku) {
+        if ($ext_sku != null) {
             $this->ext_sku = $ext_sku;
         }
     }
@@ -67,7 +67,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setVbSku($vb_sku)
     {
-        if ($vb_sku) {
+        if ($vb_sku != null) {
             $this->vb_sku = $vb_sku;
         }
     }
@@ -79,7 +79,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status) {
+        if ($status != null) {
             $this->status = $status;
         }
     }
@@ -91,7 +91,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on) {
+        if ($create_on != null) {
             $this->create_on = $create_on;
         }
     }
@@ -103,7 +103,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at) {
+        if ($create_at != null) {
             $this->create_at = $create_at;
         }
     }
@@ -115,7 +115,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by) {
+        if ($create_by != null) {
             $this->create_by = $create_by;
         }
     }
@@ -127,7 +127,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on) {
+        if ($modify_on != null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -139,7 +139,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at) {
+        if ($modify_at != null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -151,7 +151,7 @@ class SkuMappingVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by) {
+        if ($modify_by != null) {
             $this->modify_by = $modify_by;
         }
     }

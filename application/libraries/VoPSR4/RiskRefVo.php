@@ -18,7 +18,9 @@ class RiskRefVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -28,7 +30,9 @@ class RiskRefVo extends \BaseVo
 
     public function setPaymentGatewayId($payment_gateway_id)
     {
-        $this->payment_gateway_id = $payment_gateway_id;
+        if ($payment_gateway_id != null) {
+            $this->payment_gateway_id = $payment_gateway_id;
+        }
     }
 
     public function getPaymentGatewayId()
@@ -38,7 +42,9 @@ class RiskRefVo extends \BaseVo
 
     public function setRiskRef($risk_ref)
     {
-        $this->risk_ref = $risk_ref;
+        if ($risk_ref != null) {
+            $this->risk_ref = $risk_ref;
+        }
     }
 
     public function getRiskRef()
@@ -48,7 +54,9 @@ class RiskRefVo extends \BaseVo
 
     public function setRiskRefDesc($risk_ref_desc)
     {
-        $this->risk_ref_desc = $risk_ref_desc;
+        if ($risk_ref_desc != null) {
+            $this->risk_ref_desc = $risk_ref_desc;
+        }
     }
 
     public function getRiskRefDesc()
@@ -58,7 +66,9 @@ class RiskRefVo extends \BaseVo
 
     public function setAction($action)
     {
-        $this->action = $action;
+        if ($action != null) {
+            $this->action = $action;
+        }
     }
 
     public function getAction()
@@ -68,7 +78,9 @@ class RiskRefVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -78,7 +90,9 @@ class RiskRefVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -88,7 +102,9 @@ class RiskRefVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -98,7 +114,9 @@ class RiskRefVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -108,7 +126,9 @@ class RiskRefVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -118,7 +138,9 @@ class RiskRefVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

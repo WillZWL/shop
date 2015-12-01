@@ -16,7 +16,9 @@ class ReleaseOrderHistoryVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -26,7 +28,9 @@ class ReleaseOrderHistoryVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        $this->so_no = $so_no;
+        if ($so_no != null) {
+            $this->so_no = $so_no;
+        }
     }
 
     public function getSoNo()
@@ -36,7 +40,9 @@ class ReleaseOrderHistoryVo extends \BaseVo
 
     public function setReleaseReason($release_reason)
     {
-        $this->release_reason = $release_reason;
+        if ($release_reason != null) {
+            $this->release_reason = $release_reason;
+        }
     }
 
     public function getReleaseReason()
@@ -46,7 +52,9 @@ class ReleaseOrderHistoryVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -56,7 +64,9 @@ class ReleaseOrderHistoryVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -66,7 +76,9 @@ class ReleaseOrderHistoryVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -76,7 +88,9 @@ class ReleaseOrderHistoryVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -86,7 +100,9 @@ class ReleaseOrderHistoryVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -96,7 +112,9 @@ class ReleaseOrderHistoryVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

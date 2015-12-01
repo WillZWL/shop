@@ -23,7 +23,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -33,7 +35,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setExtParty($ext_party)
     {
-        $this->ext_party = $ext_party;
+        if ($ext_party != null) {
+            $this->ext_party = $ext_party;
+        }
     }
 
     public function getExtParty()
@@ -43,7 +47,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setLevel($level)
     {
-        $this->level = $level;
+        if ($level != null) {
+            $this->level = $level;
+        }
     }
 
     public function getLevel()
@@ -53,7 +59,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setCategoryMappingId($category_mapping_id)
     {
-        $this->category_mapping_id = $category_mapping_id;
+        if ($category_mapping_id != null) {
+            $this->category_mapping_id = $category_mapping_id;
+        }
     }
 
     public function getCategoryMappingId()
@@ -63,7 +71,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setExtId($ext_id)
     {
-        $this->ext_id = $ext_id;
+        if ($ext_id != null) {
+            $this->ext_id = $ext_id;
+        }
     }
 
     public function getExtId()
@@ -73,7 +83,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setExtName($ext_name)
     {
-        $this->ext_name = $ext_name;
+        if ($ext_name != null) {
+            $this->ext_name = $ext_name;
+        }
     }
 
     public function getExtName()
@@ -83,7 +95,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        $this->lang_id = $lang_id;
+        if ($lang_id != null) {
+            $this->lang_id = $lang_id;
+        }
     }
 
     public function getLangId()
@@ -93,7 +107,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setCountryId($country_id)
     {
-        $this->country_id = $country_id;
+        if ($country_id != null) {
+            $this->country_id = $country_id;
+        }
     }
 
     public function getCountryId()
@@ -103,7 +119,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setProductName($product_name)
     {
-        $this->product_name = $product_name;
+        if ($product_name != null) {
+            $this->product_name = $product_name;
+        }
     }
 
     public function getProductName()
@@ -113,7 +131,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -123,7 +143,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -133,7 +155,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -143,7 +167,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -153,7 +179,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -163,7 +191,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -173,7 +203,9 @@ class CategoryMappingVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

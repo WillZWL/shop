@@ -20,7 +20,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -30,7 +32,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setCode($code)
     {
-        $this->code = $code;
+        if ($code != null) {
+            $this->code = $code;
+        }
     }
 
     public function getCode()
@@ -40,7 +44,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setPaymentGatewayId($payment_gateway_id)
     {
-        $this->payment_gateway_id = $payment_gateway_id;
+        if ($payment_gateway_id != null) {
+            $this->payment_gateway_id = $payment_gateway_id;
+        }
     }
 
     public function getPaymentGatewayId()
@@ -50,7 +56,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setCardId($card_id)
     {
-        $this->card_id = $card_id;
+        if ($card_id != null) {
+            $this->card_id = $card_id;
+        }
     }
 
     public function getCardId()
@@ -60,7 +68,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setCardName($card_name)
     {
-        $this->card_name = $card_name;
+        if ($card_name != null) {
+            $this->card_name = $card_name;
+        }
     }
 
     public function getCardName()
@@ -70,7 +80,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setCardImage($card_image)
     {
-        $this->card_image = $card_image;
+        if ($card_image != null) {
+            $this->card_image = $card_image;
+        }
     }
 
     public function getCardImage()
@@ -80,7 +92,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -90,7 +104,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -100,7 +116,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -110,7 +128,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -120,7 +140,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -130,7 +152,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -140,7 +164,9 @@ class PmgwCardVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
