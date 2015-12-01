@@ -256,7 +256,7 @@
                                     <option value='0'>Fail only</option>
                                 </select>
                             </td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td style="padding-right:8px" align="right">
                                 <b>Auto Price Type</b>
@@ -279,7 +279,7 @@
                                     <option value="100">100</option>
                                 </select>
                             </td>
-                        </tr> -->
+                        </tr>
                         <tr>
                             <td colspan="2" style="padding-left:60px">
                                 <br><b>* TIP: Refining your search may produce faster result
