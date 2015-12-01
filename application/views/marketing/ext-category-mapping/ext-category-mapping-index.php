@@ -72,7 +72,7 @@ body{
 		display:block;
 		margin: 10px;
 		height:20px;
-		color:#F39814;
+		color:#FF0000;
 	}
 	#country_block
 	{
@@ -102,6 +102,10 @@ body{
 		padding: 10px;
 		margin: 10px 0px;
 	}
+	.function_block h3 {
+        color:#549B17;
+    }
+
 	.button_section
 	{
 		margin: 10px 0;
@@ -110,7 +114,7 @@ body{
 	.page_title
 	{
 		font-size:20px;
-		color:#F39814;
+		color:#549B17;
 	}
 	
 	.divider
