@@ -39,7 +39,7 @@ class VbDataTransferPricesService extends VbDataTransferService
                 continue;
             }
 
-            $prod_obj = $this->getService('Product')->get(['sku' => $sku]);
+            $prod_obj = $this->getDao('Product')->get(['sku' => $sku]);
             if (!$prod_obj) {
                 $xml[] = '<price>';
                 $xml[] = '<sku>'.$vb_price_obj->sku.'</sku>';
