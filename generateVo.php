@@ -58,7 +58,7 @@ foreach ($result as $column) {
 
     public function {$set_fct_name}(\${$column['Field']})
     {
-        if (\${$column['Field']} != null) {
+        if (\${$column['Field']} !== null) {
             \$this->{$column['Field']} = \${$column['Field']};
         }
     }
