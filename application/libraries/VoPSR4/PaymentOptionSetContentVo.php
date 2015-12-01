@@ -10,18 +10,20 @@ class PaymentOptionSetContentVo extends \BaseVo
     private $priority = '0';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
     private $modify_on = '';
-    private $modify_at;
-    private $modify_by;
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -31,7 +33,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setSetId($set_id)
     {
-        $this->set_id = $set_id;
+        if ($set_id != null) {
+            $this->set_id = $set_id;
+        }
     }
 
     public function getSetId()
@@ -41,7 +45,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setCardCode($card_code)
     {
-        $this->card_code = $card_code;
+        if ($card_code != null) {
+            $this->card_code = $card_code;
+        }
     }
 
     public function getCardCode()
@@ -51,7 +57,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setRefCurrency($ref_currency)
     {
-        $this->ref_currency = $ref_currency;
+        if ($ref_currency != null) {
+            $this->ref_currency = $ref_currency;
+        }
     }
 
     public function getRefCurrency()
@@ -61,7 +69,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setRefFromAmt($ref_from_amt)
     {
-        $this->ref_from_amt = $ref_from_amt;
+        if ($ref_from_amt != null) {
+            $this->ref_from_amt = $ref_from_amt;
+        }
     }
 
     public function getRefFromAmt()
@@ -71,7 +81,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setRefToAmtExclusive($ref_to_amt_exclusive)
     {
-        $this->ref_to_amt_exclusive = $ref_to_amt_exclusive;
+        if ($ref_to_amt_exclusive != null) {
+            $this->ref_to_amt_exclusive = $ref_to_amt_exclusive;
+        }
     }
 
     public function getRefToAmtExclusive()
@@ -81,7 +93,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setPriority($priority)
     {
-        $this->priority = $priority;
+        if ($priority != null) {
+            $this->priority = $priority;
+        }
     }
 
     public function getPriority()
@@ -91,7 +105,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -101,7 +117,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -111,7 +129,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -121,7 +141,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -131,7 +153,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -141,7 +165,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -151,7 +177,9 @@ class PaymentOptionSetContentVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

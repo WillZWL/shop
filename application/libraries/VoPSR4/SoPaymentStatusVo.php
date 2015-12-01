@@ -30,7 +30,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -40,7 +42,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        $this->so_no = $so_no;
+        if ($so_no != null) {
+            $this->so_no = $so_no;
+        }
     }
 
     public function getSoNo()
@@ -50,7 +54,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setPaymentGatewayId($payment_gateway_id)
     {
-        $this->payment_gateway_id = $payment_gateway_id;
+        if ($payment_gateway_id != null) {
+            $this->payment_gateway_id = $payment_gateway_id;
+        }
     }
 
     public function getPaymentGatewayId()
@@ -60,7 +66,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setPayToAccount($pay_to_account)
     {
-        $this->pay_to_account = $pay_to_account;
+        if ($pay_to_account != null) {
+            $this->pay_to_account = $pay_to_account;
+        }
     }
 
     public function getPayToAccount()
@@ -70,7 +78,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setCardId($card_id)
     {
-        $this->card_id = $card_id;
+        if ($card_id != null) {
+            $this->card_id = $card_id;
+        }
     }
 
     public function getCardId()
@@ -80,7 +90,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setPaymentStatus($payment_status)
     {
-        $this->payment_status = $payment_status;
+        if ($payment_status != null) {
+            $this->payment_status = $payment_status;
+        }
     }
 
     public function getPaymentStatus()
@@ -90,7 +102,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setRemark($remark)
     {
-        $this->remark = $remark;
+        if ($remark != null) {
+            $this->remark = $remark;
+        }
     }
 
     public function getRemark()
@@ -100,7 +114,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setMacToken($mac_token)
     {
-        $this->mac_token = $mac_token;
+        if ($mac_token != null) {
+            $this->mac_token = $mac_token;
+        }
     }
 
     public function getMacToken()
@@ -110,7 +126,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setRetry($retry)
     {
-        $this->retry = $retry;
+        if ($retry != null) {
+            $this->retry = $retry;
+        }
     }
 
     public function getRetry()
@@ -120,7 +138,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setPayerEmail($payer_email)
     {
-        $this->payer_email = $payer_email;
+        if ($payer_email != null) {
+            $this->payer_email = $payer_email;
+        }
     }
 
     public function getPayerEmail()
@@ -130,7 +150,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setPayerRef($payer_ref)
     {
-        $this->payer_ref = $payer_ref;
+        if ($payer_ref != null) {
+            $this->payer_ref = $payer_ref;
+        }
     }
 
     public function getPayerRef()
@@ -140,7 +162,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setRiskRef1($risk_ref_1)
     {
-        $this->risk_ref_1 = $risk_ref_1;
+        if ($risk_ref_1 != null) {
+            $this->risk_ref_1 = $risk_ref_1;
+        }
     }
 
     public function getRiskRef1()
@@ -150,7 +174,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setRiskRef2($risk_ref_2)
     {
-        $this->risk_ref_2 = $risk_ref_2;
+        if ($risk_ref_2 != null) {
+            $this->risk_ref_2 = $risk_ref_2;
+        }
     }
 
     public function getRiskRef2()
@@ -160,7 +186,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setRiskRef3($risk_ref_3)
     {
-        $this->risk_ref_3 = $risk_ref_3;
+        if ($risk_ref_3 != null) {
+            $this->risk_ref_3 = $risk_ref_3;
+        }
     }
 
     public function getRiskRef3()
@@ -170,7 +198,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setRiskRef4($risk_ref_4)
     {
-        $this->risk_ref_4 = $risk_ref_4;
+        if ($risk_ref_4 != null) {
+            $this->risk_ref_4 = $risk_ref_4;
+        }
     }
 
     public function getRiskRef4()
@@ -180,7 +210,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setPayDate($pay_date)
     {
-        $this->pay_date = $pay_date;
+        if ($pay_date != null) {
+            $this->pay_date = $pay_date;
+        }
     }
 
     public function getPayDate()
@@ -190,7 +222,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setPendingAction($pending_action)
     {
-        $this->pending_action = $pending_action;
+        if ($pending_action != null) {
+            $this->pending_action = $pending_action;
+        }
     }
 
     public function getPendingAction()
@@ -200,7 +234,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -210,7 +246,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -220,7 +258,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -230,7 +270,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -240,7 +282,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -250,7 +294,9 @@ class SoPaymentStatusVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

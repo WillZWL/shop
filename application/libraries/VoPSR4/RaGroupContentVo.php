@@ -1,48 +1,36 @@
 <?php
-class RaGroupContentVo extends  \BaseVo
+class RaGroupContentVo extends \BaseVo
 {
-
-    //class variable
     private $group_id;
-    private $lang_id;
     private $group_display_name;
+    private $lang_id;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
     private $create_by;
-    private $modify_on;
+    private $modify_on = '';
     private $modify_at;
     private $modify_by;
 
-	//private $primary_key = ['id'];
-    //private $increment_field = 'id';
-	
-    //primary key
-    private $primary_key = array("group_id", "lang_id");
+    private $primary_key = ['group_id', 'lang_id'];
+    private $increment_field = 'group_id';
 
-    //auo increment
-    private $increment_field = "";
+    public function setGroupId($group_id)
+    {
+        if ($group_id != null) {
+            $this->group_id = $group_id;
+        }
+    }
 
-    //instance method
     public function getGroupId()
     {
         return $this->group_id;
     }
 
-    public function setGroupId($value)
+    public function setGroupDisplayName($group_display_name)
     {
-        $this->group_id = $value;
-        return $this;
-    }
-
-    public function getLangId()
-    {
-        return $this->lang_id;
-    }
-
-    public function setLangId($value)
-    {
-        $this->lang_id = $value;
-        return $this;
+        if ($group_display_name != null) {
+            $this->group_display_name = $group_display_name;
+        }
     }
 
     public function getGroupDisplayName()
@@ -50,10 +38,23 @@ class RaGroupContentVo extends  \BaseVo
         return $this->group_display_name;
     }
 
-    public function setGroupDisplayName($value)
+    public function setLangId($lang_id)
     {
-        $this->group_display_name = $value;
-        return $this;
+        if ($lang_id != null) {
+            $this->lang_id = $lang_id;
+        }
+    }
+
+    public function getLangId()
+    {
+        return $this->lang_id;
+    }
+
+    public function setCreateOn($create_on)
+    {
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -61,10 +62,11 @@ class RaGroupContentVo extends  \BaseVo
         return $this->create_on;
     }
 
-    public function setCreateOn($value)
+    public function setCreateAt($create_at)
     {
-        $this->create_on = $value;
-        return $this;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -72,15 +74,11 @@ class RaGroupContentVo extends  \BaseVo
         return $this->create_at;
     }
 
-    public function setCreateAt($value)
-    {
-        $this->create_at = $value;
-        return $this;
-    }
-
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -90,7 +88,9 @@ class RaGroupContentVo extends  \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -100,7 +100,9 @@ class RaGroupContentVo extends  \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -110,7 +112,9 @@ class RaGroupContentVo extends  \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
@@ -128,5 +132,3 @@ class RaGroupContentVo extends  \BaseVo
         return $this->increment_field;
     }
 }
-
-?>

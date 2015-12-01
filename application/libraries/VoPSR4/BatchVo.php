@@ -8,18 +8,20 @@ class BatchVo extends \BaseVo
     private $remark;
     private $end_time;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -29,7 +31,9 @@ class BatchVo extends \BaseVo
 
     public function setFuncName($func_name)
     {
-        $this->func_name = $func_name;
+        if ($func_name != null) {
+            $this->func_name = $func_name;
+        }
     }
 
     public function getFuncName()
@@ -39,7 +43,9 @@ class BatchVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -49,7 +55,9 @@ class BatchVo extends \BaseVo
 
     public function setListed($listed)
     {
-        $this->listed = $listed;
+        if ($listed != null) {
+            $this->listed = $listed;
+        }
     }
 
     public function getListed()
@@ -59,7 +67,9 @@ class BatchVo extends \BaseVo
 
     public function setRemark($remark)
     {
-        $this->remark = $remark;
+        if ($remark != null) {
+            $this->remark = $remark;
+        }
     }
 
     public function getRemark()
@@ -69,7 +79,9 @@ class BatchVo extends \BaseVo
 
     public function setEndTime($end_time)
     {
-        $this->end_time = $end_time;
+        if ($end_time != null) {
+            $this->end_time = $end_time;
+        }
     }
 
     public function getEndTime()
@@ -79,7 +91,9 @@ class BatchVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -89,7 +103,9 @@ class BatchVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -99,7 +115,9 @@ class BatchVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -109,7 +127,9 @@ class BatchVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -119,7 +139,9 @@ class BatchVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -129,7 +151,9 @@ class BatchVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

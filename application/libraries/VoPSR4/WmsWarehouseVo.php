@@ -4,13 +4,16 @@ class WmsWarehouseVo extends \BaseVo
     private $type;
     private $warehouse_id;
     private $status = '1';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
 
     private $primary_key = ['type', 'warehouse_id'];
+    private $increment_field = '';
 
     public function setType($type)
     {
-        $this->type = $type;
+        if ($type != null) {
+            $this->type = $type;
+        }
     }
 
     public function getType()
@@ -20,7 +23,9 @@ class WmsWarehouseVo extends \BaseVo
 
     public function setWarehouseId($warehouse_id)
     {
-        $this->warehouse_id = $warehouse_id;
+        if ($warehouse_id != null) {
+            $this->warehouse_id = $warehouse_id;
+        }
     }
 
     public function getWarehouseId()
@@ -30,7 +35,9 @@ class WmsWarehouseVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -40,7 +47,9 @@ class WmsWarehouseVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -51,5 +60,10 @@ class WmsWarehouseVo extends \BaseVo
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

@@ -50,7 +50,7 @@ class ProductVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id) {
+        if ($id != null) {
             $this->id = $id;
         }
     }
@@ -62,7 +62,7 @@ class ProductVo extends \BaseVo
 
     public function setSku($sku)
     {
-        if ($sku) {
+        if ($sku != null) {
             $this->sku = $sku;
         }
     }
@@ -74,7 +74,7 @@ class ProductVo extends \BaseVo
 
     public function setSkuVb($sku_vb)
     {
-        if ($sku_vb) {
+        if ($sku_vb != null) {
             $this->sku_vb = $sku_vb;
         }
     }
@@ -86,7 +86,7 @@ class ProductVo extends \BaseVo
 
     public function setProdGrpCd($prod_grp_cd)
     {
-        if ($prod_grp_cd) {
+        if ($prod_grp_cd != null) {
             $this->prod_grp_cd = $prod_grp_cd;
         }
     }
@@ -98,7 +98,7 @@ class ProductVo extends \BaseVo
 
     public function setColourId($colour_id)
     {
-        if ($colour_id) {
+        if ($colour_id != null) {
             $this->colour_id = $colour_id;
         }
     }
@@ -110,7 +110,7 @@ class ProductVo extends \BaseVo
 
     public function setVersionId($version_id)
     {
-        if ($version_id) {
+        if ($version_id != null) {
             $this->version_id = $version_id;
         }
     }
@@ -122,7 +122,7 @@ class ProductVo extends \BaseVo
 
     public function setName($name)
     {
-        if ($name) {
+        if ($name != null) {
             $this->name = $name;
         }
     }
@@ -134,7 +134,7 @@ class ProductVo extends \BaseVo
 
     public function setFreightCatId($freight_cat_id)
     {
-        if ($freight_cat_id) {
+        if ($freight_cat_id != null) {
             $this->freight_cat_id = $freight_cat_id;
         }
     }
@@ -146,7 +146,7 @@ class ProductVo extends \BaseVo
 
     public function setCatId($cat_id)
     {
-        if ($cat_id) {
+        if ($cat_id != null) {
             $this->cat_id = $cat_id;
         }
     }
@@ -158,7 +158,7 @@ class ProductVo extends \BaseVo
 
     public function setSubCatId($sub_cat_id)
     {
-        if ($sub_cat_id) {
+        if ($sub_cat_id != null) {
             $this->sub_cat_id = $sub_cat_id;
         }
     }
@@ -170,7 +170,7 @@ class ProductVo extends \BaseVo
 
     public function setSubSubCatId($sub_sub_cat_id)
     {
-        if ($sub_sub_cat_id) {
+        if ($sub_sub_cat_id != null) {
             $this->sub_sub_cat_id = $sub_sub_cat_id;
         }
     }
@@ -182,7 +182,7 @@ class ProductVo extends \BaseVo
 
     public function setBrandId($brand_id)
     {
-        if ($brand_id) {
+        if ($brand_id != null) {
             $this->brand_id = $brand_id;
         }
     }
@@ -194,7 +194,7 @@ class ProductVo extends \BaseVo
 
     public function setClearance($clearance)
     {
-        if ($clearance) {
+        if ($clearance != null) {
             $this->clearance = $clearance;
         }
     }
@@ -206,7 +206,7 @@ class ProductVo extends \BaseVo
 
     public function setSurplusQuantity($surplus_quantity)
     {
-        if ($surplus_quantity) {
+        if ($surplus_quantity != null) {
             $this->surplus_quantity = $surplus_quantity;
         }
     }
@@ -218,7 +218,7 @@ class ProductVo extends \BaseVo
 
     public function setSlowMove7Days($slow_move_7_days)
     {
-        if ($slow_move_7_days) {
+        if ($slow_move_7_days != null) {
             $this->slow_move_7_days = $slow_move_7_days;
         }
     }
@@ -230,7 +230,7 @@ class ProductVo extends \BaseVo
 
     public function setQuantity($quantity)
     {
-        if ($quantity) {
+        if ($quantity != null) {
             $this->quantity = $quantity;
         }
     }
@@ -242,7 +242,7 @@ class ProductVo extends \BaseVo
 
     public function setDisplayQuantity($display_quantity)
     {
-        if ($display_quantity) {
+        if ($display_quantity != null) {
             $this->display_quantity = $display_quantity;
         }
     }
@@ -254,7 +254,7 @@ class ProductVo extends \BaseVo
 
     public function setWebsiteQuantity($website_quantity)
     {
-        if ($website_quantity) {
+        if ($website_quantity != null) {
             $this->website_quantity = $website_quantity;
         }
     }
@@ -266,7 +266,7 @@ class ProductVo extends \BaseVo
 
     public function setExDemo($ex_demo)
     {
-        if ($ex_demo) {
+        if ($ex_demo != null) {
             $this->ex_demo = $ex_demo;
         }
     }
@@ -278,7 +278,7 @@ class ProductVo extends \BaseVo
 
     public function setChinaOem($china_oem)
     {
-        if ($china_oem) {
+        if ($china_oem != null) {
             $this->china_oem = $china_oem;
         }
     }
@@ -290,7 +290,7 @@ class ProductVo extends \BaseVo
 
     public function setRrp($rrp)
     {
-        if ($rrp) {
+        if ($rrp != null) {
             $this->rrp = $rrp;
         }
     }
@@ -302,7 +302,7 @@ class ProductVo extends \BaseVo
 
     public function setImage($image)
     {
-        if ($image) {
+        if ($image != null) {
             $this->image = $image;
         }
     }
@@ -314,7 +314,7 @@ class ProductVo extends \BaseVo
 
     public function setFlash($flash)
     {
-        if ($flash) {
+        if ($flash != null) {
             $this->flash = $flash;
         }
     }
@@ -326,7 +326,7 @@ class ProductVo extends \BaseVo
 
     public function setYoutubeId($youtube_id)
     {
-        if ($youtube_id) {
+        if ($youtube_id != null) {
             $this->youtube_id = $youtube_id;
         }
     }
@@ -338,7 +338,7 @@ class ProductVo extends \BaseVo
 
     public function setEan($ean)
     {
-        if ($ean) {
+        if ($ean != null) {
             $this->ean = $ean;
         }
     }
@@ -350,7 +350,7 @@ class ProductVo extends \BaseVo
 
     public function setMpn($mpn)
     {
-        if ($mpn) {
+        if ($mpn != null) {
             $this->mpn = $mpn;
         }
     }
@@ -362,7 +362,7 @@ class ProductVo extends \BaseVo
 
     public function setUpc($upc)
     {
-        if ($upc) {
+        if ($upc != null) {
             $this->upc = $upc;
         }
     }
@@ -374,7 +374,7 @@ class ProductVo extends \BaseVo
 
     public function setDiscount($discount)
     {
-        if ($discount) {
+        if ($discount != null) {
             $this->discount = $discount;
         }
     }
@@ -386,7 +386,7 @@ class ProductVo extends \BaseVo
 
     public function setProcStatus($proc_status)
     {
-        if ($proc_status) {
+        if ($proc_status != null) {
             $this->proc_status = $proc_status;
         }
     }
@@ -398,7 +398,7 @@ class ProductVo extends \BaseVo
 
     public function setWebsiteStatus($website_status)
     {
-        if ($website_status) {
+        if ($website_status != null) {
             $this->website_status = $website_status;
         }
     }
@@ -410,7 +410,7 @@ class ProductVo extends \BaseVo
 
     public function setSourcingStatus($sourcing_status)
     {
-        if ($sourcing_status) {
+        if ($sourcing_status != null) {
             $this->sourcing_status = $sourcing_status;
         }
     }
@@ -422,7 +422,7 @@ class ProductVo extends \BaseVo
 
     public function setExpectedDeliveryDate($expected_delivery_date)
     {
-        if ($expected_delivery_date) {
+        if ($expected_delivery_date != null) {
             $this->expected_delivery_date = $expected_delivery_date;
         }
     }
@@ -434,7 +434,7 @@ class ProductVo extends \BaseVo
 
     public function setWarrantyInMonth($warranty_in_month)
     {
-        if ($warranty_in_month) {
+        if ($warranty_in_month != null) {
             $this->warranty_in_month = $warranty_in_month;
         }
     }
@@ -446,7 +446,7 @@ class ProductVo extends \BaseVo
 
     public function setCatUpselling($cat_upselling)
     {
-        if ($cat_upselling) {
+        if ($cat_upselling != null) {
             $this->cat_upselling = $cat_upselling;
         }
     }
@@ -458,7 +458,7 @@ class ProductVo extends \BaseVo
 
     public function setLangRestricted($lang_restricted)
     {
-        if ($lang_restricted) {
+        if ($lang_restricted != null) {
             $this->lang_restricted = $lang_restricted;
         }
     }
@@ -470,7 +470,7 @@ class ProductVo extends \BaseVo
 
     public function setShipmentRestrictedType($shipment_restricted_type)
     {
-        if ($shipment_restricted_type) {
+        if ($shipment_restricted_type != null) {
             $this->shipment_restricted_type = $shipment_restricted_type;
         }
     }
@@ -482,7 +482,7 @@ class ProductVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status) {
+        if ($status != null) {
             $this->status = $status;
         }
     }
@@ -494,7 +494,7 @@ class ProductVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on) {
+        if ($create_on != null) {
             $this->create_on = $create_on;
         }
     }
@@ -506,7 +506,7 @@ class ProductVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at) {
+        if ($create_at != null) {
             $this->create_at = $create_at;
         }
     }
@@ -518,7 +518,7 @@ class ProductVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by) {
+        if ($create_by != null) {
             $this->create_by = $create_by;
         }
     }
@@ -530,7 +530,7 @@ class ProductVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on) {
+        if ($modify_on != null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -542,7 +542,7 @@ class ProductVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at) {
+        if ($modify_at != null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -554,7 +554,7 @@ class ProductVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by) {
+        if ($modify_by != null) {
             $this->modify_by = $modify_by;
         }
     }

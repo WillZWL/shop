@@ -31,7 +31,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -41,7 +43,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setTrackingId($tracking_id)
     {
-        $this->tracking_id = $tracking_id;
+        if ($tracking_id != null) {
+            $this->tracking_id = $tracking_id;
+        }
     }
 
     public function getTrackingId()
@@ -51,7 +55,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        $this->so_no = $so_no;
+        if ($so_no != null) {
+            $this->so_no = $so_no;
+        }
     }
 
     public function getSoNo()
@@ -61,7 +67,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setRetailerName($retailer_name)
     {
-        $this->retailer_name = $retailer_name;
+        if ($retailer_name != null) {
+            $this->retailer_name = $retailer_name;
+        }
     }
 
     public function getRetailerName()
@@ -71,7 +79,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setShNo($sh_no)
     {
-        $this->sh_no = $sh_no;
+        if ($sh_no != null) {
+            $this->sh_no = $sh_no;
+        }
     }
 
     public function getShNo()
@@ -81,7 +91,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setTrackingNo($tracking_no)
     {
-        $this->tracking_no = $tracking_no;
+        if ($tracking_no != null) {
+            $this->tracking_no = $tracking_no;
+        }
     }
 
     public function getTrackingNo()
@@ -91,7 +103,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setHistoryTrackingNo($history_tracking_no)
     {
-        $this->history_tracking_no = $history_tracking_no;
+        if ($history_tracking_no != null) {
+            $this->history_tracking_no = $history_tracking_no;
+        }
     }
 
     public function getHistoryTrackingNo()
@@ -101,7 +115,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setWeightInKg($weight_in_kg)
     {
-        $this->weight_in_kg = $weight_in_kg;
+        if ($weight_in_kg != null) {
+            $this->weight_in_kg = $weight_in_kg;
+        }
     }
 
     public function getWeightInKg()
@@ -111,7 +127,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setCourierName($courier_name)
     {
-        $this->courier_name = $courier_name;
+        if ($courier_name != null) {
+            $this->courier_name = $courier_name;
+        }
     }
 
     public function getCourierName()
@@ -121,7 +139,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setCourierId($courier_id)
     {
-        $this->courier_id = $courier_id;
+        if ($courier_id != null) {
+            $this->courier_id = $courier_id;
+        }
     }
 
     public function getCourierId()
@@ -131,7 +151,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setCourierIdNum($courier_id_num)
     {
-        $this->courier_id_num = $courier_id_num;
+        if ($courier_id_num != null) {
+            $this->courier_id_num = $courier_id_num;
+        }
     }
 
     public function getCourierIdNum()
@@ -141,7 +163,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setItems($items)
     {
-        $this->items = $items;
+        if ($items != null) {
+            $this->items = $items;
+        }
     }
 
     public function getItems()
@@ -151,7 +175,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setNotes($notes)
     {
-        $this->notes = $notes;
+        if ($notes != null) {
+            $this->notes = $notes;
+        }
     }
 
     public function getNotes()
@@ -161,7 +187,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setVbCourierId($vb_courier_id)
     {
-        $this->vb_courier_id = $vb_courier_id;
+        if ($vb_courier_id != null) {
+            $this->vb_courier_id = $vb_courier_id;
+        }
     }
 
     public function getVbCourierId()
@@ -171,7 +199,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setRefundStatus($refund_status)
     {
-        $this->refund_status = $refund_status;
+        if ($refund_status != null) {
+            $this->refund_status = $refund_status;
+        }
     }
 
     public function getRefundStatus()
@@ -181,7 +211,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setHoldStatus($hold_status)
     {
-        $this->hold_status = $hold_status;
+        if ($hold_status != null) {
+            $this->hold_status = $hold_status;
+        }
     }
 
     public function getHoldStatus()
@@ -191,7 +223,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setSendEmail($send_email)
     {
-        $this->send_email = $send_email;
+        if ($send_email != null) {
+            $this->send_email = $send_email;
+        }
     }
 
     public function getSendEmail()
@@ -201,7 +235,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -211,7 +247,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -221,7 +259,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -231,7 +271,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -241,7 +283,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -251,7 +295,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -261,7 +307,9 @@ class InterfaceTrackingFeedVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

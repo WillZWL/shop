@@ -11,6 +11,7 @@ class PriceVo extends \BaseVo
     private $status = 'I';
     private $allow_express = 'N';
     private $is_advertised = 'N';
+    private $google_promo_id;
     private $ext_mapping_code = '';
     private $latency = '0';
     private $oos_latency = '0';
@@ -33,7 +34,9 @@ class PriceVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -43,7 +46,9 @@ class PriceVo extends \BaseVo
 
     public function setSku($sku)
     {
-        $this->sku = $sku;
+        if ($sku != null) {
+            $this->sku = $sku;
+        }
     }
 
     public function getSku()
@@ -53,7 +58,9 @@ class PriceVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        $this->platform_id = $platform_id;
+        if ($platform_id != null) {
+            $this->platform_id = $platform_id;
+        }
     }
 
     public function getPlatformId()
@@ -63,7 +70,9 @@ class PriceVo extends \BaseVo
 
     public function setDefaultShiptype($default_shiptype)
     {
-        $this->default_shiptype = $default_shiptype;
+        if ($default_shiptype != null) {
+            $this->default_shiptype = $default_shiptype;
+        }
     }
 
     public function getDefaultShiptype()
@@ -73,7 +82,9 @@ class PriceVo extends \BaseVo
 
     public function setSalesQty($sales_qty)
     {
-        $this->sales_qty = $sales_qty;
+        if ($sales_qty != null) {
+            $this->sales_qty = $sales_qty;
+        }
     }
 
     public function getSalesQty()
@@ -83,7 +94,9 @@ class PriceVo extends \BaseVo
 
     public function setPrice($price)
     {
-        $this->price = $price;
+        if ($price != null) {
+            $this->price = $price;
+        }
     }
 
     public function getPrice()
@@ -93,7 +106,9 @@ class PriceVo extends \BaseVo
 
     public function setVbPrice($vb_price)
     {
-        $this->vb_price = $vb_price;
+        if ($vb_price != null) {
+            $this->vb_price = $vb_price;
+        }
     }
 
     public function getVbPrice()
@@ -103,7 +118,9 @@ class PriceVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -113,7 +130,9 @@ class PriceVo extends \BaseVo
 
     public function setAllowExpress($allow_express)
     {
-        $this->allow_express = $allow_express;
+        if ($allow_express != null) {
+            $this->allow_express = $allow_express;
+        }
     }
 
     public function getAllowExpress()
@@ -123,7 +142,9 @@ class PriceVo extends \BaseVo
 
     public function setIsAdvertised($is_advertised)
     {
-        $this->is_advertised = $is_advertised;
+        if ($is_advertised != null) {
+            $this->is_advertised = $is_advertised;
+        }
     }
 
     public function getIsAdvertised()
@@ -131,9 +152,23 @@ class PriceVo extends \BaseVo
         return $this->is_advertised;
     }
 
+    public function setGooglePromoId($google_promo_id)
+    {
+        if ($google_promo_id != null) {
+            $this->google_promo_id = $google_promo_id;
+        }
+    }
+
+    public function getGooglePromoId()
+    {
+        return $this->google_promo_id;
+    }
+
     public function setExtMappingCode($ext_mapping_code)
     {
-        $this->ext_mapping_code = $ext_mapping_code;
+        if ($ext_mapping_code != null) {
+            $this->ext_mapping_code = $ext_mapping_code;
+        }
     }
 
     public function getExtMappingCode()
@@ -143,7 +178,9 @@ class PriceVo extends \BaseVo
 
     public function setLatency($latency)
     {
-        $this->latency = $latency;
+        if ($latency != null) {
+            $this->latency = $latency;
+        }
     }
 
     public function getLatency()
@@ -153,7 +190,9 @@ class PriceVo extends \BaseVo
 
     public function setOosLatency($oos_latency)
     {
-        $this->oos_latency = $oos_latency;
+        if ($oos_latency != null) {
+            $this->oos_latency = $oos_latency;
+        }
     }
 
     public function getOosLatency()
@@ -163,7 +202,9 @@ class PriceVo extends \BaseVo
 
     public function setListingStatus($listing_status)
     {
-        $this->listing_status = $listing_status;
+        if ($listing_status != null) {
+            $this->listing_status = $listing_status;
+        }
     }
 
     public function getListingStatus()
@@ -173,7 +214,9 @@ class PriceVo extends \BaseVo
 
     public function setPlatformCode($platform_code)
     {
-        $this->platform_code = $platform_code;
+        if ($platform_code != null) {
+            $this->platform_code = $platform_code;
+        }
     }
 
     public function getPlatformCode()
@@ -183,7 +226,9 @@ class PriceVo extends \BaseVo
 
     public function setMaxOrderQty($max_order_qty)
     {
-        $this->max_order_qty = $max_order_qty;
+        if ($max_order_qty != null) {
+            $this->max_order_qty = $max_order_qty;
+        }
     }
 
     public function getMaxOrderQty()
@@ -193,7 +238,9 @@ class PriceVo extends \BaseVo
 
     public function setAutoPrice($auto_price)
     {
-        $this->auto_price = $auto_price;
+        if ($auto_price != null) {
+            $this->auto_price = $auto_price;
+        }
     }
 
     public function getAutoPrice()
@@ -203,7 +250,9 @@ class PriceVo extends \BaseVo
 
     public function setFixedRrp($fixed_rrp)
     {
-        $this->fixed_rrp = $fixed_rrp;
+        if ($fixed_rrp != null) {
+            $this->fixed_rrp = $fixed_rrp;
+        }
     }
 
     public function getFixedRrp()
@@ -213,7 +262,9 @@ class PriceVo extends \BaseVo
 
     public function setRrpFactor($rrp_factor)
     {
-        $this->rrp_factor = $rrp_factor;
+        if ($rrp_factor != null) {
+            $this->rrp_factor = $rrp_factor;
+        }
     }
 
     public function getRrpFactor()
@@ -223,7 +274,9 @@ class PriceVo extends \BaseVo
 
     public function setDeliveryScenarioid($delivery_scenarioid)
     {
-        $this->delivery_scenarioid = $delivery_scenarioid;
+        if ($delivery_scenarioid != null) {
+            $this->delivery_scenarioid = $delivery_scenarioid;
+        }
     }
 
     public function getDeliveryScenarioid()
@@ -233,7 +286,9 @@ class PriceVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -243,7 +298,9 @@ class PriceVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -253,7 +310,9 @@ class PriceVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -263,7 +322,9 @@ class PriceVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -273,7 +334,9 @@ class PriceVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -283,7 +346,9 @@ class PriceVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

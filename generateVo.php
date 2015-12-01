@@ -14,6 +14,17 @@ if (!function_exists('underscore2camelcase')) {
 }
 $tableName = $argv[1];
 
+foreach ($argv as $key => $tableName) {
+    if ($key === 0) {
+        continue;
+    }
+
+    generate_vo($tableName);
+}
+
+function generate_vo($tableName)
+{
+
 $voClassName = ucfirst(underscore2camelcase($tableName)."Vo");
 $db = new PDO('mysql:dbname=panther;host=127.0.0.1', 'panther', 'panther');
 $stmt = $db->query("desc {$tableName}");
@@ -108,3 +119,4 @@ GETINCREMENTFIELD;
 $file .= "\n}\n";
 
 file_put_contents("application/libraries/VoPSR4/{$voClassName}.php", $file);
+}

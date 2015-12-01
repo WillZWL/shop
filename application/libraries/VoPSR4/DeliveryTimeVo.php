@@ -11,18 +11,20 @@ class DeliveryTimeVo extends \BaseVo
     private $margin;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at = '127.0.0.1';
-    private $create_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
     private $modify_on = '';
-    private $modify_at = '127.0.0.1';
-    private $modify_by;
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -32,7 +34,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setScenarioid($scenarioid)
     {
-        $this->scenarioid = $scenarioid;
+        if ($scenarioid != null) {
+            $this->scenarioid = $scenarioid;
+        }
     }
 
     public function getScenarioid()
@@ -42,7 +46,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setCountryId($country_id)
     {
-        $this->country_id = $country_id;
+        if ($country_id != null) {
+            $this->country_id = $country_id;
+        }
     }
 
     public function getCountryId()
@@ -52,7 +58,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setShipMinDay($ship_min_day)
     {
-        $this->ship_min_day = $ship_min_day;
+        if ($ship_min_day != null) {
+            $this->ship_min_day = $ship_min_day;
+        }
     }
 
     public function getShipMinDay()
@@ -62,7 +70,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setShipMaxDay($ship_max_day)
     {
-        $this->ship_max_day = $ship_max_day;
+        if ($ship_max_day != null) {
+            $this->ship_max_day = $ship_max_day;
+        }
     }
 
     public function getShipMaxDay()
@@ -72,7 +82,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setDelMinDay($del_min_day)
     {
-        $this->del_min_day = $del_min_day;
+        if ($del_min_day != null) {
+            $this->del_min_day = $del_min_day;
+        }
     }
 
     public function getDelMinDay()
@@ -82,7 +94,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setDelMaxDay($del_max_day)
     {
-        $this->del_max_day = $del_max_day;
+        if ($del_max_day != null) {
+            $this->del_max_day = $del_max_day;
+        }
     }
 
     public function getDelMaxDay()
@@ -92,7 +106,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setMargin($margin)
     {
-        $this->margin = $margin;
+        if ($margin != null) {
+            $this->margin = $margin;
+        }
     }
 
     public function getMargin()
@@ -102,7 +118,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status != null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -112,7 +130,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -122,7 +142,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -132,7 +154,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -142,7 +166,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -152,7 +178,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -162,7 +190,9 @@ class DeliveryTimeVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

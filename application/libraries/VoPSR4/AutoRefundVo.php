@@ -1,7 +1,6 @@
 <?php
 class AutoRefundVo extends \BaseVo
 {
-    private $id;
     private $refund_id;
     private $so_no;
     private $payment_gateway_id;
@@ -16,22 +15,14 @@ class AutoRefundVo extends \BaseVo
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
-    private $primary_key = ['id'];
-    private $increment_field = 'id';
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $primary_key = ['refund_id'];
+    private $increment_field = '';
 
     public function setRefundId($refund_id)
     {
-        $this->refund_id = $refund_id;
+        if ($refund_id != null) {
+            $this->refund_id = $refund_id;
+        }
     }
 
     public function getRefundId()
@@ -41,7 +32,9 @@ class AutoRefundVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        $this->so_no = $so_no;
+        if ($so_no != null) {
+            $this->so_no = $so_no;
+        }
     }
 
     public function getSoNo()
@@ -51,7 +44,9 @@ class AutoRefundVo extends \BaseVo
 
     public function setPaymentGatewayId($payment_gateway_id)
     {
-        $this->payment_gateway_id = $payment_gateway_id;
+        if ($payment_gateway_id != null) {
+            $this->payment_gateway_id = $payment_gateway_id;
+        }
     }
 
     public function getPaymentGatewayId()
@@ -61,7 +56,9 @@ class AutoRefundVo extends \BaseVo
 
     public function setAction($action)
     {
-        $this->action = $action;
+        if ($action != null) {
+            $this->action = $action;
+        }
     }
 
     public function getAction()
@@ -71,7 +68,9 @@ class AutoRefundVo extends \BaseVo
 
     public function setAmount($amount)
     {
-        $this->amount = $amount;
+        if ($amount != null) {
+            $this->amount = $amount;
+        }
     }
 
     public function getAmount()
@@ -81,7 +80,9 @@ class AutoRefundVo extends \BaseVo
 
     public function setLogOut($log_out)
     {
-        $this->log_out = $log_out;
+        if ($log_out != null) {
+            $this->log_out = $log_out;
+        }
     }
 
     public function getLogOut()
@@ -91,7 +92,9 @@ class AutoRefundVo extends \BaseVo
 
     public function setLogIn($log_in)
     {
-        $this->log_in = $log_in;
+        if ($log_in != null) {
+            $this->log_in = $log_in;
+        }
     }
 
     public function getLogIn()
@@ -101,7 +104,9 @@ class AutoRefundVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -111,7 +116,9 @@ class AutoRefundVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -121,7 +128,9 @@ class AutoRefundVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -131,7 +140,9 @@ class AutoRefundVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -141,7 +152,9 @@ class AutoRefundVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -151,7 +164,9 @@ class AutoRefundVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

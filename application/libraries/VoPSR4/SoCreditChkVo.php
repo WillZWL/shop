@@ -28,7 +28,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id != null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -38,7 +40,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        $this->so_no = $so_no;
+        if ($so_no != null) {
+            $this->so_no = $so_no;
+        }
     }
 
     public function getSoNo()
@@ -48,7 +52,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardHolder($card_holder)
     {
-        $this->card_holder = $card_holder;
+        if ($card_holder != null) {
+            $this->card_holder = $card_holder;
+        }
     }
 
     public function getCardHolder()
@@ -58,7 +64,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardType($card_type)
     {
-        $this->card_type = $card_type;
+        if ($card_type != null) {
+            $this->card_type = $card_type;
+        }
     }
 
     public function getCardType()
@@ -68,7 +76,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardNo($card_no)
     {
-        $this->card_no = $card_no;
+        if ($card_no != null) {
+            $this->card_no = $card_no;
+        }
     }
 
     public function getCardNo()
@@ -78,7 +88,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardBin($card_bin)
     {
-        $this->card_bin = $card_bin;
+        if ($card_bin != null) {
+            $this->card_bin = $card_bin;
+        }
     }
 
     public function getCardBin()
@@ -88,7 +100,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardLast4($card_last_4)
     {
-        $this->card_last_4 = $card_last_4;
+        if ($card_last_4 != null) {
+            $this->card_last_4 = $card_last_4;
+        }
     }
 
     public function getCardLast4()
@@ -98,7 +112,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardExpMonth($card_exp_month)
     {
-        $this->card_exp_month = $card_exp_month;
+        if ($card_exp_month != null) {
+            $this->card_exp_month = $card_exp_month;
+        }
     }
 
     public function getCardExpMonth()
@@ -108,7 +124,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardExpYear($card_exp_year)
     {
-        $this->card_exp_year = $card_exp_year;
+        if ($card_exp_year != null) {
+            $this->card_exp_year = $card_exp_year;
+        }
     }
 
     public function getCardExpYear()
@@ -118,7 +136,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardStartMonth($card_start_month)
     {
-        $this->card_start_month = $card_start_month;
+        if ($card_start_month != null) {
+            $this->card_start_month = $card_start_month;
+        }
     }
 
     public function getCardStartMonth()
@@ -128,7 +148,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardStartYear($card_start_year)
     {
-        $this->card_start_year = $card_start_year;
+        if ($card_start_year != null) {
+            $this->card_start_year = $card_start_year;
+        }
     }
 
     public function getCardStartYear()
@@ -138,7 +160,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCardIssueNo($card_issue_no)
     {
-        $this->card_issue_no = $card_issue_no;
+        if ($card_issue_no != null) {
+            $this->card_issue_no = $card_issue_no;
+        }
     }
 
     public function getCardIssueNo()
@@ -148,7 +172,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setFdProcStatus($fd_proc_status)
     {
-        $this->fd_proc_status = $fd_proc_status;
+        if ($fd_proc_status != null) {
+            $this->fd_proc_status = $fd_proc_status;
+        }
     }
 
     public function getFdProcStatus()
@@ -158,7 +184,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setFdStatus($fd_status)
     {
-        $this->fd_status = $fd_status;
+        if ($fd_status != null) {
+            $this->fd_status = $fd_status;
+        }
     }
 
     public function getFdStatus()
@@ -168,7 +196,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCcAction($cc_action)
     {
-        $this->cc_action = $cc_action;
+        if ($cc_action != null) {
+            $this->cc_action = $cc_action;
+        }
     }
 
     public function getCcAction()
@@ -178,7 +208,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on != null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -188,7 +220,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at != null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -198,7 +232,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by != null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -208,7 +244,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on != null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -218,7 +256,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at != null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -228,7 +268,9 @@ class SoCreditChkVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by != null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
