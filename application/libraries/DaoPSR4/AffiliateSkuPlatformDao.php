@@ -22,6 +22,33 @@ class AffiliateSkuPlatformDao extends BaseDao
         return $this->voClassname;
     }
 
+    public function getAffiliateFeedListWithInfo($where=array(), $option=array())
+    {
+        $this->db->from("affiliate_sku_platform asp");
+        $this->db->join("product p", "p.sku=asp.sku", "LEFT");
+        $this->db->join("price pr", "pr.sku=asp.sku AND asp.platform_id=pr.platform_id", "LEFT");
+        $this->db->join("sku_mapping map", "map.sku=asp.sku AND map.ext_sys='WMS' ", "LEFT");
+
+        $select_str = "p.name, pr.price, pr.listing_status, map.ext_sku, asp.sku, asp.affiliate_id, asp.platform_id, asp.status AS affiliate_sku_status, ' ' AS new_affiliate_sku_status ";
+        $this->db->select($select_str, FALSE);
+        if ($where) {
+            $this->db->where($where);
+        }
+
+        $rs = array();
+        if ($query = $this->db->get()) {
+            foreach ($query->result_array() as $row)
+            {
+                $rs[] = $row;
+            }
+            return (object) $rs;
+        }
+
+        return FALSE;
+
+
+    }
+
     public function getFeedListBySku($sku, $platform_id, $status = 0)
     {
         $data = [$sku, $platform_id, $status];

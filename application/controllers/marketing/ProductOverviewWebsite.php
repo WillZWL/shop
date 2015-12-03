@@ -1,6 +1,6 @@
 <?php
 
-DEFINE("PLATFORM_TYPE", "WEBSITE");
+DEFINE('PLATFORM_TYPE', 'WEBSITE');
 
 class ProductOverviewWebsite extends MY_Controller
 {
@@ -252,8 +252,6 @@ class ProductOverviewWebsite extends MY_Controller
         include_once APPPATH.'language/'.$sub_app_id.'_'.$this->getLangId().'.php';
         $data['lang'] = $lang;
 
-
-
         // var_dump($data['product_list']);die;
 
         // $data['total'] = $this->product_overview_model->get_product_list_total_v2($where, $option);
@@ -261,61 +259,55 @@ class ProductOverviewWebsite extends MY_Controller
 
     public function exportAffiliateFeed()
     {
-        if($_POST)
-        {
-            if($_POST['af_skulist'])
-            {
+        if ($_POST) {
+            if ($_POST['af_skulist']) {
                 $prod_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $_POST['af_skulist'], -1, PREG_SPLIT_NO_EMPTY));
 
-                if(is_array($prod_sku) && count($prod_sku) > 0)
-                {
-                    $list = "('" . implode("','", $prod_sku) . "')";
+                if (is_array($prod_sku) && count($prod_sku) > 0) {
+                    $list = "('".implode("','", $prod_sku)."')";
                     $where["asp.sku IN $list"] = null;
                 }
             }
 
-            if($_POST["platform_id"])
-            {
-                $where["asp.platform_id"] = $_POST["pfid"];
+            if ($_POST['platform_id']) {
+                $where['asp.platform_id'] = $_POST['platform_id'];
             }
-            if($_POST["afsku_status"] && $_POST["afsku_status"] != "NA")
-            {
-                $where["asp.status"] = $_POST["afsku_status"];
+            if ($_POST['afsku_status'] && $_POST['afsku_status'] != 'NA') {
+                $where['asp.status'] = $_POST['afsku_status'];
             }
 
-            $feed_list = $this->affiliate_sku_platform_service->get_affiliate_feed_list_w_info($where, $option);
-            if($feed_list)
-            {
+            $feed_list = $this->sc['AffiliateSkuPlatform']->getAffiliateFeedListWithInfo($where, $option);
+
+            if ($feed_list) {
                 ob_end_clean();
                 ob_start();
-                $csv_string = "";
-                $header_row[] = "name";
-                $header_row[] = "price";
-                $header_row[] = "listing_status";
-                $header_row[] = "master_sku";
-                $header_row[] = "sku";
-                $header_row[] = "affiliate_id";
-                $header_row[] = "platform_id";
-                $header_row[] = "affiliate_sku_status";
-                $header_row[] = "new_affiliate_sku_status";
+                $csv_string = '';
+                $header_row[] = 'name';
+                $header_row[] = 'price';
+                $header_row[] = 'listing_status';
+                $header_row[] = 'master_sku';
+                $header_row[] = 'sku';
+                $header_row[] = 'affiliate_id';
+                $header_row[] = 'platform_id';
+                $header_row[] = 'affiliate_sku_status';
+                $header_row[] = 'new_affiliate_sku_status';
 
                 $fp = fopen('php://output', 'w');
                 fputcsv($fp, $header_row);
-                foreach ($feed_list as $key => $value)
-                {
+                foreach ($feed_list as $key => $value) {
                     fputcsv($fp, $value);
                 }
                 $csv_string = ob_get_clean();
                 fclose($fp);
 
-                $output_filename = date("Ymd_His")."_affiliate_sku_export.csv";
+                $output_filename = date('Ymd_His').'_affiliate_sku_export.csv';
                 header('Content-Type: text/csv');
                 header('Content-Disposition: attachment;filename='.$output_filename);
                 echo $csv_string;
                 die();
             }
         }
-        $url = base_url() . "marketing/product_overview_website_v2/";
+        $url = base_url().'marketing/product_overview_website_v2/';
         redirect($url);
     }
 
