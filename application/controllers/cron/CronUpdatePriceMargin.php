@@ -19,7 +19,7 @@ class CronUpdatePriceMargin extends MY_Controller
             }
         } else {
             if ($sku === '') {
-                $this->sc['Price']->refreshMargin($platform_obj->getSellingPlatformId());
+                $this->sc['Price']->refreshMargin($platform_id);
             } else {
                 $this->sc['Price']->refreshMargin($platform_id, $sku);
             }
