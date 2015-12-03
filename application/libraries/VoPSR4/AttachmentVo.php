@@ -8,18 +8,20 @@ class AttachmentVo extends \BaseVo
     private $description;
     private $att_file;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
     private $modify_on = '';
-    private $modify_at;
-    private $modify_by;
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -29,7 +31,9 @@ class AttachmentVo extends \BaseVo
 
     public function setTplId($tpl_id)
     {
-        $this->tpl_id = $tpl_id;
+        if ($tpl_id !== null) {
+            $this->tpl_id = $tpl_id;
+        }
     }
 
     public function getTplId()
@@ -39,7 +43,9 @@ class AttachmentVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        $this->lang_id = $lang_id;
+        if ($lang_id !== null) {
+            $this->lang_id = $lang_id;
+        }
     }
 
     public function getLangId()
@@ -49,7 +55,9 @@ class AttachmentVo extends \BaseVo
 
     public function setName($name)
     {
-        $this->name = $name;
+        if ($name !== null) {
+            $this->name = $name;
+        }
     }
 
     public function getName()
@@ -59,7 +67,9 @@ class AttachmentVo extends \BaseVo
 
     public function setDescription($description)
     {
-        $this->description = $description;
+        if ($description !== null) {
+            $this->description = $description;
+        }
     }
 
     public function getDescription()
@@ -69,7 +79,9 @@ class AttachmentVo extends \BaseVo
 
     public function setAttFile($att_file)
     {
-        $this->att_file = $att_file;
+        if ($att_file !== null) {
+            $this->att_file = $att_file;
+        }
     }
 
     public function getAttFile()
@@ -79,7 +91,9 @@ class AttachmentVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -89,7 +103,9 @@ class AttachmentVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -99,7 +115,9 @@ class AttachmentVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -109,7 +127,9 @@ class AttachmentVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -119,7 +139,9 @@ class AttachmentVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -129,7 +151,9 @@ class AttachmentVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

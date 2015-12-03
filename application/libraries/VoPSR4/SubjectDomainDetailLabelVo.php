@@ -7,17 +7,20 @@ class SubjectDomainDetailLabelVo extends \BaseVo
     private $lang_id;
     private $value;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
+    private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -27,7 +30,9 @@ class SubjectDomainDetailLabelVo extends \BaseVo
 
     public function setSubject($subject)
     {
-        $this->subject = $subject;
+        if ($subject !== null) {
+            $this->subject = $subject;
+        }
     }
 
     public function getSubject()
@@ -37,7 +42,9 @@ class SubjectDomainDetailLabelVo extends \BaseVo
 
     public function setSubkey($subkey)
     {
-        $this->subkey = $subkey;
+        if ($subkey !== null) {
+            $this->subkey = $subkey;
+        }
     }
 
     public function getSubkey()
@@ -47,7 +54,9 @@ class SubjectDomainDetailLabelVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        $this->lang_id = $lang_id;
+        if ($lang_id !== null) {
+            $this->lang_id = $lang_id;
+        }
     }
 
     public function getLangId()
@@ -57,7 +66,9 @@ class SubjectDomainDetailLabelVo extends \BaseVo
 
     public function setValue($value)
     {
-        $this->value = $value;
+        if ($value !== null) {
+            $this->value = $value;
+        }
     }
 
     public function getValue()
@@ -67,7 +78,9 @@ class SubjectDomainDetailLabelVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -77,7 +90,9 @@ class SubjectDomainDetailLabelVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -87,7 +102,9 @@ class SubjectDomainDetailLabelVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -97,7 +114,9 @@ class SubjectDomainDetailLabelVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -107,7 +126,9 @@ class SubjectDomainDetailLabelVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -117,7 +138,9 @@ class SubjectDomainDetailLabelVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
@@ -128,5 +151,10 @@ class SubjectDomainDetailLabelVo extends \BaseVo
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

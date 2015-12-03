@@ -71,8 +71,8 @@ class Price_service extends Base_service
         $this->set_ip_country_srv(new Ip2country_service());
         include_once(APPPATH . "libraries/service/Price_margin_service.php");
         $this->set_price_margin_srv(new Price_margin_service());
-        include_once(APPPATH . "libraries/service/Product_update_followup_service.php");
-        $this->set_product_update_followup_service(new Product_update_followup_service());
+        // include_once(APPPATH . "libraries/service/Product_update_followup_service.php");
+        // $this->set_product_update_followup_service(new Product_update_followup_service());
     }
 
     public function set_wc_srv($value)
@@ -123,7 +123,7 @@ class Price_service extends Base_service
     {
         $this->factory_service = $svc;
     }
-		
+
     public function get_pricing_tool_info($platform_id = "", $sku = "", $app_id = null)
         // public function get_pricing_tool_info($platform_id = "", $sku = "")
     {
@@ -1563,7 +1563,7 @@ start;
         //      }
         //  }
         // }
-        $objlist = $this->get_product_service()->get_dao()->get_product_overview_v2($where, $option, $classname);
+        // $objlist = $this->get_product_service()->get_dao()->get_product_overview_v2($where, $option, $classname);
         if ($objlist = $this->get_product_service()->get_dao()->get_product_overview_v2($where, $option, $classname)) {
             include_once BASEPATH . "helpers/url_helper.php";
             $list_where["status"] = 1;
@@ -2202,7 +2202,7 @@ start;
     public function update_sku_price($platform_id = "", $local_sku = "", $price = "", $commit = false)
     {
         $affected = $this->get_dao()->update_sku_price($platform_id, $local_sku, $price, $commit);
-		
+
 		//print $this->get_dao()->db->last_query();
 
         if ($affected)

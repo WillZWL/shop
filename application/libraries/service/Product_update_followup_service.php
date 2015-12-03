@@ -16,8 +16,8 @@ class Product_update_followup_service extends Base_service
     {
         parent::__construct();
 
-        include_once(APPPATH . 'libraries/service/Google_shopping_service.php');
-        $this->google_shopping_service = new Google_shopping_service();
+        // include_once(APPPATH . 'libraries/service/Google_shopping_service.php');
+        // $this->google_shopping_service = new Google_shopping_service();
 
         include_once(APPPATH . 'libraries/service/Platform_biz_var_service.php');
         $this->platform_biz_var_service = new Platform_biz_var_service();

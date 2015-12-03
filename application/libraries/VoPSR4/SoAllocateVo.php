@@ -8,20 +8,22 @@ class SoAllocateVo extends \BaseVo
     private $qty;
     private $warehouse_id;
     private $sh_no;
-    private $status;
+    private $status = '0';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -31,7 +33,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        $this->so_no = $so_no;
+        if ($so_no !== null) {
+            $this->so_no = $so_no;
+        }
     }
 
     public function getSoNo()
@@ -41,7 +45,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setLineNo($line_no)
     {
-        $this->line_no = $line_no;
+        if ($line_no !== null) {
+            $this->line_no = $line_no;
+        }
     }
 
     public function getLineNo()
@@ -51,7 +57,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setItemSku($item_sku)
     {
-        $this->item_sku = $item_sku;
+        if ($item_sku !== null) {
+            $this->item_sku = $item_sku;
+        }
     }
 
     public function getItemSku()
@@ -61,7 +69,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setQty($qty)
     {
-        $this->qty = $qty;
+        if ($qty !== null) {
+            $this->qty = $qty;
+        }
     }
 
     public function getQty()
@@ -71,7 +81,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setWarehouseId($warehouse_id)
     {
-        $this->warehouse_id = $warehouse_id;
+        if ($warehouse_id !== null) {
+            $this->warehouse_id = $warehouse_id;
+        }
     }
 
     public function getWarehouseId()
@@ -81,7 +93,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setShNo($sh_no)
     {
-        $this->sh_no = $sh_no;
+        if ($sh_no !== null) {
+            $this->sh_no = $sh_no;
+        }
     }
 
     public function getShNo()
@@ -91,7 +105,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -101,7 +117,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -111,7 +129,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -121,7 +141,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -131,7 +153,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -141,7 +165,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -151,7 +177,9 @@ class SoAllocateVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

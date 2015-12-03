@@ -4,11 +4,11 @@ class ProductWarrantyVo extends \BaseVo
     private $id;
     private $sku;
     private $platform_id;
-    private $warranty_in_month;
+    private $warranty_in_month = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -17,7 +17,9 @@ class ProductWarrantyVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -27,7 +29,9 @@ class ProductWarrantyVo extends \BaseVo
 
     public function setSku($sku)
     {
-        $this->sku = $sku;
+        if ($sku !== null) {
+            $this->sku = $sku;
+        }
     }
 
     public function getSku()
@@ -37,7 +41,9 @@ class ProductWarrantyVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        $this->platform_id = $platform_id;
+        if ($platform_id !== null) {
+            $this->platform_id = $platform_id;
+        }
     }
 
     public function getPlatformId()
@@ -47,7 +53,9 @@ class ProductWarrantyVo extends \BaseVo
 
     public function setWarrantyInMonth($warranty_in_month)
     {
-        $this->warranty_in_month = $warranty_in_month;
+        if ($warranty_in_month !== null) {
+            $this->warranty_in_month = $warranty_in_month;
+        }
     }
 
     public function getWarrantyInMonth()
@@ -57,7 +65,9 @@ class ProductWarrantyVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -67,7 +77,9 @@ class ProductWarrantyVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -77,7 +89,9 @@ class ProductWarrantyVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -87,7 +101,9 @@ class ProductWarrantyVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -97,7 +113,9 @@ class ProductWarrantyVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -107,7 +125,9 @@ class ProductWarrantyVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

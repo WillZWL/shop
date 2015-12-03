@@ -5,128 +5,130 @@ class ApplicationFeatureVo extends \BaseVo
     private $feature_name;
     private $status = '0';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
-    private $primary_key = array("app_feature_id");
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    private $increment_field = "app_feature_id";
+    private $primary_key = ['feature_name'];
+    private $increment_field = 'app_feature_id';
 
-    public function __construct()
+    public function setAppFeatureId($app_feature_id)
     {
-        parent::Base_vo();
+        if ($app_feature_id !== null) {
+            $this->app_feature_id = $app_feature_id;
+        }
     }
 
-    public function get_app_feature_id()
+    public function getAppFeatureId()
     {
         return $this->app_feature_id;
     }
 
-    public function set_app_feature_id($value)
+    public function setFeatureName($feature_name)
     {
-        $this->app_feature_id = $value;
-        return $this;
+        if ($feature_name !== null) {
+            $this->feature_name = $feature_name;
+        }
     }
 
-    public function get_feature_name()
+    public function getFeatureName()
     {
         return $this->feature_name;
     }
 
-    public function set_feature_name($value)
+    public function setStatus($status)
     {
-        $this->feature_name = $value;
-        return $this;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
-    public function get_status()
+    public function getStatus()
     {
         return $this->status;
     }
 
-    public function set_status($value)
+    public function setCreateOn($create_on)
     {
-        $this->status = $value;
-        return $this;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
-    public function get_create_on()
+    public function getCreateOn()
     {
         return $this->create_on;
     }
 
-    public function set_create_on($value)
+    public function setCreateAt($create_at)
     {
-        $this->create_on = $value;
-        return $this;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
-    public function get_create_at()
+    public function getCreateAt()
     {
         return $this->create_at;
     }
 
-    public function set_create_at($value)
+    public function setCreateBy($create_by)
     {
-        $this->create_at = $value;
-        return $this;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
-    public function get_create_by()
+    public function getCreateBy()
     {
         return $this->create_by;
     }
 
-    public function set_create_by($value)
+    public function setModifyOn($modify_on)
     {
-        $this->create_by = $value;
-        return $this;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
-    public function get_modify_on()
+    public function getModifyOn()
     {
         return $this->modify_on;
     }
 
-    public function set_modify_on($value)
+    public function setModifyAt($modify_at)
     {
-        $this->modify_on = $value;
-        return $this;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
-    public function get_modify_at()
+    public function getModifyAt()
     {
         return $this->modify_at;
     }
 
-    public function set_modify_at($value)
+    public function setModifyBy($modify_by)
     {
-        $this->modify_at = $value;
-        return $this;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
-    public function get_modify_by()
+    public function getModifyBy()
     {
         return $this->modify_by;
     }
 
-    public function set_modify_by($value)
-    {
-        $this->modify_by = $value;
-        return $this;
-    }
-
-
-    public function _get_primary_key()
+    public function getPrimaryKey()
     {
         return $this->primary_key;
     }
 
-    public function _get_increment_field()
+    public function getIncrementField()
     {
         return $this->increment_field;
     }
-
 }

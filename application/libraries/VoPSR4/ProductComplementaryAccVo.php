@@ -7,18 +7,20 @@ class ProductComplementaryAccVo extends \BaseVo
     private $dest_country_id;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
     private $modify_on = '';
-    private $modify_at = '';
-    private $modify_by;
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -28,7 +30,9 @@ class ProductComplementaryAccVo extends \BaseVo
 
     public function setMainprodSku($mainprod_sku)
     {
-        $this->mainprod_sku = $mainprod_sku;
+        if ($mainprod_sku !== null) {
+            $this->mainprod_sku = $mainprod_sku;
+        }
     }
 
     public function getMainprodSku()
@@ -38,7 +42,9 @@ class ProductComplementaryAccVo extends \BaseVo
 
     public function setAccessorySku($accessory_sku)
     {
-        $this->accessory_sku = $accessory_sku;
+        if ($accessory_sku !== null) {
+            $this->accessory_sku = $accessory_sku;
+        }
     }
 
     public function getAccessorySku()
@@ -48,7 +54,9 @@ class ProductComplementaryAccVo extends \BaseVo
 
     public function setDestCountryId($dest_country_id)
     {
-        $this->dest_country_id = $dest_country_id;
+        if ($dest_country_id !== null) {
+            $this->dest_country_id = $dest_country_id;
+        }
     }
 
     public function getDestCountryId()
@@ -58,7 +66,9 @@ class ProductComplementaryAccVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -68,7 +78,9 @@ class ProductComplementaryAccVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -78,7 +90,9 @@ class ProductComplementaryAccVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -88,7 +102,9 @@ class ProductComplementaryAccVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -98,7 +114,9 @@ class ProductComplementaryAccVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -108,7 +126,9 @@ class ProductComplementaryAccVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -118,7 +138,9 @@ class ProductComplementaryAccVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

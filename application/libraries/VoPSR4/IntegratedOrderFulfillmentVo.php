@@ -4,32 +4,32 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
     private $id;
     private $so_no;
     private $line_no;
-    private $sku;
-    private $platform_id;
-    private $platform_order_id;
+    private $sku = '';
+    private $platform_id = '';
+    private $platform_order_id = '';
     private $order_create_date = '0000-00-00 00:00:00';
     private $expect_delivery_date = '0000-00-00';
-    private $product_name;
-    private $website_status;
-    private $delivery_name;
-    private $delivery_country_id;
-    private $delivery_type_id;
-    private $payment_gateway_id;
-    private $rec_courier;
-    private $note;
+    private $product_name = '';
+    private $website_status = '';
+    private $delivery_name = '';
+    private $delivery_country_id = '';
+    private $delivery_type_id = '';
+    private $payment_gateway_id = '';
+    private $rec_courier = '';
+    private $note = '';
     private $amount = '0.00';
-    private $refund_status;
-    private $hold_status;
-    private $qty;
-    private $outstanding_qty;
+    private $refund_status = '0';
+    private $hold_status = '0';
+    private $qty = '0';
+    private $outstanding_qty = '0';
     private $status = '1';
-    private $split_so_group;
-    private $delivery_postcode;
-    private $order_total_sku;
+    private $split_so_group = '';
+    private $delivery_postcode = '';
+    private $order_total_sku = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -38,7 +38,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -48,7 +50,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        $this->so_no = $so_no;
+        if ($so_no !== null) {
+            $this->so_no = $so_no;
+        }
     }
 
     public function getSoNo()
@@ -58,7 +62,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setLineNo($line_no)
     {
-        $this->line_no = $line_no;
+        if ($line_no !== null) {
+            $this->line_no = $line_no;
+        }
     }
 
     public function getLineNo()
@@ -68,7 +74,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setSku($sku)
     {
-        $this->sku = $sku;
+        if ($sku !== null) {
+            $this->sku = $sku;
+        }
     }
 
     public function getSku()
@@ -78,7 +86,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        $this->platform_id = $platform_id;
+        if ($platform_id !== null) {
+            $this->platform_id = $platform_id;
+        }
     }
 
     public function getPlatformId()
@@ -88,7 +98,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setPlatformOrderId($platform_order_id)
     {
-        $this->platform_order_id = $platform_order_id;
+        if ($platform_order_id !== null) {
+            $this->platform_order_id = $platform_order_id;
+        }
     }
 
     public function getPlatformOrderId()
@@ -98,7 +110,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setOrderCreateDate($order_create_date)
     {
-        $this->order_create_date = $order_create_date;
+        if ($order_create_date !== null) {
+            $this->order_create_date = $order_create_date;
+        }
     }
 
     public function getOrderCreateDate()
@@ -108,7 +122,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setExpectDeliveryDate($expect_delivery_date)
     {
-        $this->expect_delivery_date = $expect_delivery_date;
+        if ($expect_delivery_date !== null) {
+            $this->expect_delivery_date = $expect_delivery_date;
+        }
     }
 
     public function getExpectDeliveryDate()
@@ -118,7 +134,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setProductName($product_name)
     {
-        $this->product_name = $product_name;
+        if ($product_name !== null) {
+            $this->product_name = $product_name;
+        }
     }
 
     public function getProductName()
@@ -128,7 +146,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setWebsiteStatus($website_status)
     {
-        $this->website_status = $website_status;
+        if ($website_status !== null) {
+            $this->website_status = $website_status;
+        }
     }
 
     public function getWebsiteStatus()
@@ -138,7 +158,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setDeliveryName($delivery_name)
     {
-        $this->delivery_name = $delivery_name;
+        if ($delivery_name !== null) {
+            $this->delivery_name = $delivery_name;
+        }
     }
 
     public function getDeliveryName()
@@ -148,7 +170,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setDeliveryCountryId($delivery_country_id)
     {
-        $this->delivery_country_id = $delivery_country_id;
+        if ($delivery_country_id !== null) {
+            $this->delivery_country_id = $delivery_country_id;
+        }
     }
 
     public function getDeliveryCountryId()
@@ -158,7 +182,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setDeliveryTypeId($delivery_type_id)
     {
-        $this->delivery_type_id = $delivery_type_id;
+        if ($delivery_type_id !== null) {
+            $this->delivery_type_id = $delivery_type_id;
+        }
     }
 
     public function getDeliveryTypeId()
@@ -168,7 +194,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setPaymentGatewayId($payment_gateway_id)
     {
-        $this->payment_gateway_id = $payment_gateway_id;
+        if ($payment_gateway_id !== null) {
+            $this->payment_gateway_id = $payment_gateway_id;
+        }
     }
 
     public function getPaymentGatewayId()
@@ -178,7 +206,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setRecCourier($rec_courier)
     {
-        $this->rec_courier = $rec_courier;
+        if ($rec_courier !== null) {
+            $this->rec_courier = $rec_courier;
+        }
     }
 
     public function getRecCourier()
@@ -188,7 +218,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setNote($note)
     {
-        $this->note = $note;
+        if ($note !== null) {
+            $this->note = $note;
+        }
     }
 
     public function getNote()
@@ -198,7 +230,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setAmount($amount)
     {
-        $this->amount = $amount;
+        if ($amount !== null) {
+            $this->amount = $amount;
+        }
     }
 
     public function getAmount()
@@ -208,7 +242,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setRefundStatus($refund_status)
     {
-        $this->refund_status = $refund_status;
+        if ($refund_status !== null) {
+            $this->refund_status = $refund_status;
+        }
     }
 
     public function getRefundStatus()
@@ -218,7 +254,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setHoldStatus($hold_status)
     {
-        $this->hold_status = $hold_status;
+        if ($hold_status !== null) {
+            $this->hold_status = $hold_status;
+        }
     }
 
     public function getHoldStatus()
@@ -228,7 +266,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setQty($qty)
     {
-        $this->qty = $qty;
+        if ($qty !== null) {
+            $this->qty = $qty;
+        }
     }
 
     public function getQty()
@@ -238,7 +278,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setOutstandingQty($outstanding_qty)
     {
-        $this->outstanding_qty = $outstanding_qty;
+        if ($outstanding_qty !== null) {
+            $this->outstanding_qty = $outstanding_qty;
+        }
     }
 
     public function getOutstandingQty()
@@ -248,7 +290,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -258,7 +302,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setSplitSoGroup($split_so_group)
     {
-        $this->split_so_group = $split_so_group;
+        if ($split_so_group !== null) {
+            $this->split_so_group = $split_so_group;
+        }
     }
 
     public function getSplitSoGroup()
@@ -268,7 +314,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setDeliveryPostcode($delivery_postcode)
     {
-        $this->delivery_postcode = $delivery_postcode;
+        if ($delivery_postcode !== null) {
+            $this->delivery_postcode = $delivery_postcode;
+        }
     }
 
     public function getDeliveryPostcode()
@@ -278,7 +326,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setOrderTotalSku($order_total_sku)
     {
-        $this->order_total_sku = $order_total_sku;
+        if ($order_total_sku !== null) {
+            $this->order_total_sku = $order_total_sku;
+        }
     }
 
     public function getOrderTotalSku()
@@ -288,7 +338,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -298,7 +350,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -308,7 +362,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -318,7 +374,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -328,7 +386,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -338,7 +398,9 @@ class IntegratedOrderFulfillmentVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

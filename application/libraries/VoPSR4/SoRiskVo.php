@@ -26,7 +26,9 @@ class SoRiskVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -36,7 +38,9 @@ class SoRiskVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        $this->so_no = $so_no;
+        if ($so_no !== null) {
+            $this->so_no = $so_no;
+        }
     }
 
     public function getSoNo()
@@ -46,7 +50,9 @@ class SoRiskVo extends \BaseVo
 
     public function setRiskRequested($risk_requested)
     {
-        $this->risk_requested = $risk_requested;
+        if ($risk_requested !== null) {
+            $this->risk_requested = $risk_requested;
+        }
     }
 
     public function getRiskRequested()
@@ -56,7 +62,9 @@ class SoRiskVo extends \BaseVo
 
     public function setRiskVar1($risk_var_1)
     {
-        $this->risk_var_1 = $risk_var_1;
+        if ($risk_var_1 !== null) {
+            $this->risk_var_1 = $risk_var_1;
+        }
     }
 
     public function getRiskVar1()
@@ -66,7 +74,9 @@ class SoRiskVo extends \BaseVo
 
     public function setRiskVar2($risk_var_2)
     {
-        $this->risk_var_2 = $risk_var_2;
+        if ($risk_var_2 !== null) {
+            $this->risk_var_2 = $risk_var_2;
+        }
     }
 
     public function getRiskVar2()
@@ -76,7 +86,9 @@ class SoRiskVo extends \BaseVo
 
     public function setRiskVar3($risk_var_3)
     {
-        $this->risk_var_3 = $risk_var_3;
+        if ($risk_var_3 !== null) {
+            $this->risk_var_3 = $risk_var_3;
+        }
     }
 
     public function getRiskVar3()
@@ -86,7 +98,9 @@ class SoRiskVo extends \BaseVo
 
     public function setRiskVar4($risk_var_4)
     {
-        $this->risk_var_4 = $risk_var_4;
+        if ($risk_var_4 !== null) {
+            $this->risk_var_4 = $risk_var_4;
+        }
     }
 
     public function getRiskVar4()
@@ -96,7 +110,9 @@ class SoRiskVo extends \BaseVo
 
     public function setRiskVar5($risk_var_5)
     {
-        $this->risk_var_5 = $risk_var_5;
+        if ($risk_var_5 !== null) {
+            $this->risk_var_5 = $risk_var_5;
+        }
     }
 
     public function getRiskVar5()
@@ -106,7 +122,9 @@ class SoRiskVo extends \BaseVo
 
     public function setRiskVar6($risk_var_6)
     {
-        $this->risk_var_6 = $risk_var_6;
+        if ($risk_var_6 !== null) {
+            $this->risk_var_6 = $risk_var_6;
+        }
     }
 
     public function getRiskVar6()
@@ -116,7 +134,9 @@ class SoRiskVo extends \BaseVo
 
     public function setRiskVar7($risk_var_7)
     {
-        $this->risk_var_7 = $risk_var_7;
+        if ($risk_var_7 !== null) {
+            $this->risk_var_7 = $risk_var_7;
+        }
     }
 
     public function getRiskVar7()
@@ -126,7 +146,9 @@ class SoRiskVo extends \BaseVo
 
     public function setRiskVar8($risk_var_8)
     {
-        $this->risk_var_8 = $risk_var_8;
+        if ($risk_var_8 !== null) {
+            $this->risk_var_8 = $risk_var_8;
+        }
     }
 
     public function getRiskVar8()
@@ -136,7 +158,9 @@ class SoRiskVo extends \BaseVo
 
     public function setRiskVar9($risk_var_9)
     {
-        $this->risk_var_9 = $risk_var_9;
+        if ($risk_var_9 !== null) {
+            $this->risk_var_9 = $risk_var_9;
+        }
     }
 
     public function getRiskVar9()
@@ -146,7 +170,9 @@ class SoRiskVo extends \BaseVo
 
     public function setRiskVar10($risk_var_10)
     {
-        $this->risk_var_10 = $risk_var_10;
+        if ($risk_var_10 !== null) {
+            $this->risk_var_10 = $risk_var_10;
+        }
     }
 
     public function getRiskVar10()
@@ -156,7 +182,9 @@ class SoRiskVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -166,7 +194,9 @@ class SoRiskVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -176,7 +206,9 @@ class SoRiskVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -186,7 +218,9 @@ class SoRiskVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -196,7 +230,9 @@ class SoRiskVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -206,7 +242,9 @@ class SoRiskVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

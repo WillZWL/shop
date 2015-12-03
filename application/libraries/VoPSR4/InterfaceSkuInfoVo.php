@@ -1,50 +1,52 @@
 <?php
-
 class InterfaceSkuInfoVo extends \BaseVo
 {
-
-    //class variable
     private $id;
     private $batch_id;
     private $cps_batch_id;
-    private $prod_sku;
-    private $master_sku;
+    private $prod_sku = '';
+    private $master_sku = '';
     private $mastersku_cached;
     private $pricehkd = '0.00';
-    private $price;
-    private $currency_id;
-    private $region;
-    private $location;
-    private $moq;
-    private $lead_days;
-    private $lang_restricted;
+    private $price = '0.00';
+    private $currency_id = '';
+    private $region = '';
+    private $location = '';
+    private $moq = '0';
+    private $lead_days = '0';
+    private $lang_restricted = '';
     private $comments;
-    private $surplus_qty;
+    private $surplus_qty = '0';
     private $supply_status = '6';
     private $status = 'N';
     private $failed_reason;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    //primary key
-    private $primary_key = array("id");
+    private $primary_key = ['id'];
+    private $increment_field = 'id';
 
-    //auo increment
-    private $increment_field = "id";
+    public function setId($id)
+    {
+        if ($id !== null) {
+            $this->id = $id;
+        }
+    }
 
-    //instance method
     public function getId()
     {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setBatchId($batch_id)
     {
-        $this->id = $id;
+        if ($batch_id !== null) {
+            $this->batch_id = $batch_id;
+        }
     }
 
     public function getBatchId()
@@ -52,9 +54,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->batch_id;
     }
 
-    public function setBatchId($batch_id)
+    public function setCpsBatchId($cps_batch_id)
     {
-        $this->batch_id = $batch_id;
+        if ($cps_batch_id !== null) {
+            $this->cps_batch_id = $cps_batch_id;
+        }
     }
 
     public function getCpsBatchId()
@@ -62,9 +66,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->cps_batch_id;
     }
 
-    public function setCpsBatchId($cps_batch_id)
+    public function setProdSku($prod_sku)
     {
-        $this->cps_batch_id = $cps_batch_id;
+        if ($prod_sku !== null) {
+            $this->prod_sku = $prod_sku;
+        }
     }
 
     public function getProdSku()
@@ -72,9 +78,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->prod_sku;
     }
 
-    public function setProdSku($prod_sku)
+    public function setMasterSku($master_sku)
     {
-        $this->prod_sku = $prod_sku;
+        if ($master_sku !== null) {
+            $this->master_sku = $master_sku;
+        }
     }
 
     public function getMasterSku()
@@ -82,9 +90,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->master_sku;
     }
 
-    public function setMasterSku($master_sku)
+    public function setMasterskuCached($mastersku_cached)
     {
-        $this->master_sku = $master_sku;
+        if ($mastersku_cached !== null) {
+            $this->mastersku_cached = $mastersku_cached;
+        }
     }
 
     public function getMasterskuCached()
@@ -92,9 +102,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->mastersku_cached;
     }
 
-    public function setMasterskuCached($mastersku_cached)
+    public function setPricehkd($pricehkd)
     {
-        $this->mastersku_cached = $mastersku_cached;
+        if ($pricehkd !== null) {
+            $this->pricehkd = $pricehkd;
+        }
     }
 
     public function getPricehkd()
@@ -102,9 +114,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->pricehkd;
     }
 
-    public function setPricehkd($pricehkd)
+    public function setPrice($price)
     {
-        $this->pricehkd = $pricehkd;
+        if ($price !== null) {
+            $this->price = $price;
+        }
     }
 
     public function getPrice()
@@ -112,9 +126,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->price;
     }
 
-    public function setPrice($price)
+    public function setCurrencyId($currency_id)
     {
-        $this->price = $price;
+        if ($currency_id !== null) {
+            $this->currency_id = $currency_id;
+        }
     }
 
     public function getCurrencyId()
@@ -122,9 +138,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->currency_id;
     }
 
-    public function setCurrencyId($currency_id)
+    public function setRegion($region)
     {
-        $this->currency_id = $currency_id;
+        if ($region !== null) {
+            $this->region = $region;
+        }
     }
 
     public function getRegion()
@@ -132,9 +150,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->region;
     }
 
-    public function setRegion($region)
+    public function setLocation($location)
     {
-        $this->region = $region;
+        if ($location !== null) {
+            $this->location = $location;
+        }
     }
 
     public function getLocation()
@@ -142,9 +162,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->location;
     }
 
-    public function setLocation($location)
+    public function setMoq($moq)
     {
-        $this->location = $location;
+        if ($moq !== null) {
+            $this->moq = $moq;
+        }
     }
 
     public function getMoq()
@@ -152,9 +174,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->moq;
     }
 
-    public function setMoq($moq)
+    public function setLeadDays($lead_days)
     {
-        $this->moq = $moq;
+        if ($lead_days !== null) {
+            $this->lead_days = $lead_days;
+        }
     }
 
     public function getLeadDays()
@@ -162,9 +186,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->lead_days;
     }
 
-    public function setLeadDays($lead_days)
+    public function setLangRestricted($lang_restricted)
     {
-        $this->lead_days = $lead_days;
+        if ($lang_restricted !== null) {
+            $this->lang_restricted = $lang_restricted;
+        }
     }
 
     public function getLangRestricted()
@@ -172,9 +198,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->lang_restricted;
     }
 
-    public function setLangRestricted($lang_restricted)
+    public function setComments($comments)
     {
-        $this->lang_restricted = $lang_restricted;
+        if ($comments !== null) {
+            $this->comments = $comments;
+        }
     }
 
     public function getComments()
@@ -182,9 +210,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->comments;
     }
 
-    public function setComments($comments)
+    public function setSurplusQty($surplus_qty)
     {
-        $this->comments = $comments;
+        if ($surplus_qty !== null) {
+            $this->surplus_qty = $surplus_qty;
+        }
     }
 
     public function getSurplusQty()
@@ -192,9 +222,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->surplus_qty;
     }
 
-    public function setSurplusQty($surplus_qty)
+    public function setSupplyStatus($supply_status)
     {
-        $this->surplus_qty = $surplus_qty;
+        if ($supply_status !== null) {
+            $this->supply_status = $supply_status;
+        }
     }
 
     public function getSupplyStatus()
@@ -202,9 +234,23 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->supply_status;
     }
 
-    public function setSupplyStatus($supply_status)
+    public function setStatus($status)
     {
-        $this->supply_status = $supply_status;
+        if ($status !== null) {
+            $this->status = $status;
+        }
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setFailedReason($failed_reason)
+    {
+        if ($failed_reason !== null) {
+            $this->failed_reason = $failed_reason;
+        }
     }
 
     public function getFailedReason()
@@ -212,19 +258,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->failed_reason;
     }
 
-    public function setFailedReason($value)
+    public function setCreateOn($create_on)
     {
-        $this->failed_reason = $value;
-    }
-
-     public function getStatus()
-    {
-        return $this->status;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -232,9 +270,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->create_on;
     }
 
-    public function setCreateOn($create_on)
+    public function setCreateAt($create_at)
     {
-        $this->create_on = $create_on;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -242,9 +282,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->create_at;
     }
 
-    public function setCreateAt($create_at)
+    public function setCreateBy($create_by)
     {
-        $this->create_at = $create_at;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -252,9 +294,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->create_by;
     }
 
-    public function setCreateBy($create_by)
+    public function setModifyOn($modify_on)
     {
-        $this->create_by = $create_by;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -262,9 +306,11 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->modify_on;
     }
 
-    public function setModifyOn($modify_on)
+    public function setModifyAt($modify_at)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -272,19 +318,16 @@ class InterfaceSkuInfoVo extends \BaseVo
         return $this->modify_at;
     }
 
-    public function setModifyAt($modify_at)
+    public function setModifyBy($modify_by)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
     {
         return $this->modify_by;
-    }
-
-    public function setModifyBy($modify_by)
-    {
-        $this->modify_by = $modify_by;
     }
 
     public function getPrimaryKey()

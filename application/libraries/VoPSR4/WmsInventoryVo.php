@@ -9,7 +9,7 @@ class WmsInventoryVo extends \BaseVo
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -18,7 +18,9 @@ class WmsInventoryVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -28,7 +30,9 @@ class WmsInventoryVo extends \BaseVo
 
     public function setWarehouseId($warehouse_id)
     {
-        $this->warehouse_id = $warehouse_id;
+        if ($warehouse_id !== null) {
+            $this->warehouse_id = $warehouse_id;
+        }
     }
 
     public function getWarehouseId()
@@ -38,7 +42,9 @@ class WmsInventoryVo extends \BaseVo
 
     public function setMasterSku($master_sku)
     {
-        $this->master_sku = $master_sku;
+        if ($master_sku !== null) {
+            $this->master_sku = $master_sku;
+        }
     }
 
     public function getMasterSku()
@@ -48,7 +54,9 @@ class WmsInventoryVo extends \BaseVo
 
     public function setInventory($inventory)
     {
-        $this->inventory = $inventory;
+        if ($inventory !== null) {
+            $this->inventory = $inventory;
+        }
     }
 
     public function getInventory()
@@ -58,7 +66,9 @@ class WmsInventoryVo extends \BaseVo
 
     public function setGit($git)
     {
-        $this->git = $git;
+        if ($git !== null) {
+            $this->git = $git;
+        }
     }
 
     public function getGit()
@@ -68,7 +78,9 @@ class WmsInventoryVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -78,7 +90,9 @@ class WmsInventoryVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -88,7 +102,9 @@ class WmsInventoryVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -98,7 +114,9 @@ class WmsInventoryVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -108,7 +126,9 @@ class WmsInventoryVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -118,7 +138,9 @@ class WmsInventoryVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

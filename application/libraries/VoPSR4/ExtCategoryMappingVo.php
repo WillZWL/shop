@@ -8,17 +8,20 @@ class ExtCategoryMappingVo extends \BaseVo
     private $country_id;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at;
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
+    private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -28,7 +31,9 @@ class ExtCategoryMappingVo extends \BaseVo
 
     public function setExtParty($ext_party)
     {
-        $this->ext_party = $ext_party;
+        if ($ext_party !== null) {
+            $this->ext_party = $ext_party;
+        }
     }
 
     public function getExtParty()
@@ -38,7 +43,9 @@ class ExtCategoryMappingVo extends \BaseVo
 
     public function setCategoryId($category_id)
     {
-        $this->category_id = $category_id;
+        if ($category_id !== null) {
+            $this->category_id = $category_id;
+        }
     }
 
     public function getCategoryId()
@@ -48,7 +55,9 @@ class ExtCategoryMappingVo extends \BaseVo
 
     public function setExtId($ext_id)
     {
-        $this->ext_id = $ext_id;
+        if ($ext_id !== null) {
+            $this->ext_id = $ext_id;
+        }
     }
 
     public function getExtId()
@@ -58,7 +67,9 @@ class ExtCategoryMappingVo extends \BaseVo
 
     public function setCountryId($country_id)
     {
-        $this->country_id = $country_id;
+        if ($country_id !== null) {
+            $this->country_id = $country_id;
+        }
     }
 
     public function getCountryId()
@@ -68,7 +79,9 @@ class ExtCategoryMappingVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -78,7 +91,9 @@ class ExtCategoryMappingVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -88,7 +103,9 @@ class ExtCategoryMappingVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -98,7 +115,9 @@ class ExtCategoryMappingVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -108,7 +127,9 @@ class ExtCategoryMappingVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -118,7 +139,9 @@ class ExtCategoryMappingVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -128,7 +151,9 @@ class ExtCategoryMappingVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
@@ -139,5 +164,10 @@ class ExtCategoryMappingVo extends \BaseVo
     public function getPrimaryKey()
     {
         return $this->primary_key;
+    }
+
+    public function getIncrementField()
+    {
+        return $this->increment_field;
     }
 }

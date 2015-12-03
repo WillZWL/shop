@@ -7,355 +7,392 @@ use ESG\Panther\Service as S;
 
 class ServiceProvider implements ServiceProviderInterface
 {
-    public function register(Container $servcieContainer)
+    public function register(Container $serviceContainer)
     {
-        $servcieContainer['Base'] = function ($c) {
+        $serviceContainer['Base'] = function ($c) {
             return new S\BaseService($c);
         };
 
-        $servcieContainer['Aftership'] = function () {
+        $serviceContainer['Aftership'] = function () {
             return new S\AftershipService();
         };
 
-        $servcieContainer['Authorization'] = function () {
+        $serviceContainer['Authorization'] = function () {
             return new S\AuthorizationService();
         };
 
-        $servcieContainer['Authentication'] = function () {
+        $serviceContainer['Authentication'] = function () {
             return new S\AuthenticationService();
         };
 
-        $servcieContainer['Batch'] = function () {
+        $serviceContainer['Batch'] = function () {
             return new S\BatchService();
         };
 
-        $servcieContainer['Category'] = function () {
+        $serviceContainer['Category'] = function () {
             return new S\CategoryService();
         };
 
-        $servcieContainer['ContextConfig'] = function () {
+        $serviceContainer['ContextConfig'] = function () {
             return new S\ContextConfigService();
         };
 
-        $servcieContainer['Colour'] = function () {
+        $serviceContainer['Colour'] = function () {
             return new S\ColourService();
         };
 
-        $servcieContainer['Courier'] = function () {
+        $serviceContainer['Courier'] = function () {
             return new S\CourierService();
         };
 
-        $servcieContainer['Country'] = function () {
+        $serviceContainer['Country'] = function () {
             return new S\CountryService();
         };
 
-        $servcieContainer['Currency'] = function () {
+        $serviceContainer['Currency'] = function () {
             return new S\CurrencyService();
         };
 
-        $servcieContainer['CustomClass'] = function () {
+        $serviceContainer['CustomClass'] = function () {
             return new S\CustomClassService();
         };
 
-        $servcieContainer['CustomClassificationMapping'] = function () {
+        $serviceContainer['CustomClassificationMapping'] = function () {
             return new S\CustomClassificationMappingService();
         };
 
-        $servcieContainer['Clwms'] = function () {
+        $serviceContainer['Clwms'] = function () {
             return new S\ClwmsService();
         };
 
-        $servcieContainer['ClwmsTrackingFeed'] = function () {
+        $serviceContainer['ClwmsTrackingFeed'] = function () {
             return new S\ClwmsTrackingFeedService();
         };
 
-        $servcieContainer['DeliveryOption'] = function () {
+        $serviceContainer['DeliveryOption'] = function () {
             return new S\DeliveryOptionService();
         };
 
-        $servcieContainer['Language'] = function () {
+        $serviceContainer['Language'] = function () {
             return new S\LanguageService();
         };
 
-        $servcieContainer['PriceMargin'] = function () {
+        $serviceContainer['PriceMargin'] = function () {
             return new S\PriceMarginService();
         };
 
-        $servcieContainer['Product'] = function () {
+        $serviceContainer['Product'] = function () {
             return new S\ProductService();
         };
 
-        $servcieContainer['ProductImage'] = function () {
+        $serviceContainer['ProductImage'] = function () {
             return new S\ProductImageService();
         };
 
-        $servcieContainer['ProductSearch'] = function () {
+        $serviceContainer['ProductSearch'] = function () {
             return new S\ProductSearchService();
         };
 
-        $servcieContainer['Log'] = function () {
+        $serviceContainer['Log'] = function () {
             return new S\LogService();
         };
 
-        $servcieContainer['IntegratedOrderFulfillment'] = function () {
+        $serviceContainer['IntegratedOrderFulfillment'] = function () {
             return new S\IntegratedOrderFulfillmentService();
         };
 
-        $servcieContainer['DeliveryTime'] = function () {
+        $serviceContainer['DeliveryTime'] = function () {
             return new S\DeliveryTimeService();
         };
 
-        $servcieContainer['ProductCreation'] = function () {
+        $serviceContainer['ProductCreation'] = function () {
             return new S\ProductCreationService();
         };
 
-        $servcieContainer['ExchangeRate'] = function () {
+        $serviceContainer['ExchangeRate'] = function () {
             return new S\ExchangeRateService();
         };
 
-        $servcieContainer['User'] = function () {
+        $serviceContainer['User'] = function () {
             return new S\UserService();
         };
 
-        $servcieContainer['Refund'] = function () {
+        $serviceContainer['Refund'] = function () {
             return new S\RefundService();
         };
 
-        $servcieContainer['So'] = function () {
+        $serviceContainer['So'] = function () {
             return new S\SoService();
         };
 
-        $servcieContainer['SoPriorityScore'] = function () {
+        $serviceContainer['SoPriorityScore'] = function () {
             return new S\SoPriorityScoreService();
         };
 
-        $servcieContainer['SoRefundScore'] = function () {
+        $serviceContainer['SoRefundScore'] = function () {
             return new S\SoRefundScoreService();
         };
 
-        $servcieContainer['SoCompensation'] = function () {
+        $serviceContainer['SoCompensation'] = function () {
             return new S\SoCompensationService();
         };
 
-        $servcieContainer['SplitOrder'] = function () {
+        $serviceContainer['SplitOrder'] = function () {
             return new S\SplitOrderService();
         };
 
-        $servcieContainer['Warehouse'] = function () {
+        $serviceContainer['Warehouse'] = function () {
             return new S\WarehouseService();
         };
 
-        $servcieContainer['WmsInventory'] = function () {
+        $serviceContainer['WmsInventory'] = function () {
             return new S\WmsInventoryService();
         };
 
-        $servcieContainer['LoadSiteParameter'] = function () {
+        $serviceContainer['LoadSiteParameter'] = function () {
             return new S\LoadSiteParameterService();
         };
 
-        $servcieContainer['Website'] = function () {
+        $serviceContainer['Website'] = function () {
             return new S\WebsiteService();
         };
 
-        $servcieContainer['Price'] = function () {
+        $serviceContainer['Price'] = function () {
             return new S\PriceService();
         };
 
-        $servcieContainer['PriceWebsite'] = function () {
+        $serviceContainer['PriceWebsite'] = function () {
             return new S\PriceWebsiteService();
         };
 
-        $servcieContainer['QuickSearch'] = function () {
+        $serviceContainer['QuickSearch'] = function () {
             return new S\QuickSearchService();
         };
 
-        $servcieContainer['Region'] = function () {
+        $serviceContainer['Region'] = function () {
             return new S\RegionService();
         };
 
-        $servcieContainer['Courier'] = function () {
+        $serviceContainer['Courier'] = function () {
             return new S\CourierService();
         };
 
-        $servcieContainer['Client'] = function () {
+        $serviceContainer['Client'] = function () {
             return new S\ClientService();
         };
 
-        $servcieContainer['ComplementaryAcc'] = function () {
+        $serviceContainer['ComplementaryAcc'] = function () {
             return new S\ComplementaryAccService();
         };
 
-        $servcieContainer['Event'] = function () {
+        $serviceContainer['Event'] = function () {
             return new S\EventService();
         };
 
-        $servcieContainer['PdfRendering'] = function () {
+        $serviceContainer['PdfRendering'] = function () {
             return new S\PdfRenderingService();
         };
 
-        $servcieContainer['ProductApi'] = function () {
+        $serviceContainer['ProductApi'] = function () {
             return new S\ProductApiService();
         };
 
-        $servcieContainer['PaymentGateway'] = function () {
+        $serviceContainer['PaymentGateway'] = function () {
             return new S\PaymentGatewayService();
         };
 
-        $servcieContainer['PaymentGatewayRedirectCybersource'] = function () {
+        $serviceContainer['PaymentGatewayRedirectCybersource'] = function () {
             return new S\PaymentGatewayRedirectCybersourceService();
         };
 
-        $servcieContainer['Email'] = function () {
+        $serviceContainer['Email'] = function () {
             return new S\EmailService();
         };
 
-        $servcieContainer['Template'] = function () {
+        $serviceContainer['Template'] = function () {
             return new S\TemplateService();
         };
 
-        $servcieContainer['SellingPlatform'] = function () {
+        $serviceContainer['SellingPlatform'] = function () {
             return new S\SellingPlatformService();
         };
 
-        $servcieContainer['SkuMapping'] = function () {
+        $serviceContainer['SkuMapping'] = function () {
             return new S\SkuMappingService();
         };
 
-        $servcieContainer['ProductIdentifier'] = function () {
+        $serviceContainer['ProductIdentifier'] = function () {
             return new S\ProductIdentifierService();
         };
 
-        $servcieContainer['Brand'] = function () {
+        $serviceContainer['Brand'] = function () {
             return new S\BrandService();
         };
 
-        $servcieContainer['PromotionCode'] = function () {
+        $serviceContainer['PromotionCode'] = function () {
             return new S\PromotionCodeService();
         };
 
+        $serviceContainer['SupplierProd'] = function () {
+            return new S\SupplierProdService();
+        };
+
 		//Data transfer
-        $servcieContainer['VbDataTransferPrices'] = function () {
+        $serviceContainer['VbDataTransferPrices'] = function () {
             return new S\VbDataTransferPricesService();
         };
 
-        $servcieContainer['VbDataTransferBrand'] = function () {
+        $serviceContainer['VbDataTransferBrand'] = function () {
             return new S\VbDataTransferBrandService();
         };
 
-        $servcieContainer['VbDataTransferCategoryExtend'] = function () {
+        $serviceContainer['VbDataTransferCategoryExtend'] = function () {
             return new S\VbDataTransferCategoryExtendService();
         };
 
-        $servcieContainer['VbDataTransferCategory'] = function () {
+        $serviceContainer['VbDataTransferCategory'] = function () {
             return new S\VbDataTransferCategoryService();
         };
 
-        $servcieContainer['VbDataTransferColourExtend'] = function () {
+        $serviceContainer['VbDataTransferColourExtend'] = function () {
             return new S\VbDataTransferColourExtendService();
         };
 
-        $servcieContainer['VbDataTransferColour'] = function () {
+        $serviceContainer['VbDataTransferColour'] = function () {
             return new S\VbDataTransferColourService();
         };
 
-        $servcieContainer['VbDataTransferFreightCat'] = function () {
+        $serviceContainer['VbDataTransferFreightCat'] = function () {
             return new S\VbDataTransferFreightCatService();
         };
 
-        $servcieContainer['VbDataTransferProductContentExtend'] = function () {
+        $serviceContainer['VbDataTransferProductContentExtend'] = function () {
             return new S\VbDataTransferProductContentExtendService();
         };
 
-        $servcieContainer['VbDataTransferProductContent'] = function () {
+        $serviceContainer['VbDataTransferProductContent'] = function () {
             return new S\VbDataTransferProductContentService();
         };
 
-        $servcieContainer['VbDataTransferProductCustomClass'] = function () {
+        $serviceContainer['VbDataTransferProductCustomClass'] = function () {
             return new S\VbDataTransferProductCustomClassService();
         };
 
-        $servcieContainer['VbDataTransferProductIdentifier'] = function () {
+        $serviceContainer['VbDataTransferProductIdentifier'] = function () {
             return new S\VbDataTransferProductIdentifierService();
         };
 
-        $servcieContainer['VbDataTransferProductImage'] = function () {
+        $serviceContainer['VbDataTransferProductImage'] = function () {
             return new S\VbDataTransferProductImageService();
         };
 
-        $servcieContainer['VbDataTransferProductKeyword'] = function () {
+        $serviceContainer['VbDataTransferProductKeyword'] = function () {
             return new S\VbDataTransferProductKeywordService();
         };
 
-        $servcieContainer['VbDataTransferProductNote'] = function () {
+        $serviceContainer['VbDataTransferProductNote'] = function () {
             return new S\VbDataTransferProductNoteService();
         };
 
-        $servcieContainer['VbDataTransferProducts'] = function () {
+        $serviceContainer['VbDataTransferProducts'] = function () {
             return new S\VbDataTransferProductsService();
         };
 
-        $servcieContainer['VbDataTransferProductWarranty'] = function () {
+        $serviceContainer['VbDataTransferProductWarranty'] = function () {
             return new S\VbDataTransferProductWarrantyService();
         };
 
-        $servcieContainer['VbDataTransferRaGroupContent'] = function () {
+        $serviceContainer['VbDataTransferRaGroupContent'] = function () {
             return new S\VbDataTransferRaGroupContentService();
         };
 
-        $servcieContainer['VbDataTransferRaGroupProduct'] = function () {
+        $serviceContainer['VbDataTransferRaGroupProduct'] = function () {
             return new S\VbDataTransferRaGroupProductService();
         };
 
-        $servcieContainer['VbDataTransferRaGroup'] = function () {
+        $serviceContainer['VbDataTransferRaGroup'] = function () {
             return new S\VbDataTransferRaGroupService();
         };
 
-        $servcieContainer['VbDataTransferRaProdCat'] = function () {
+        $serviceContainer['VbDataTransferRaProdCat'] = function () {
             return new S\VbDataTransferRaProdCatService();
         };
 
-        $servcieContainer['VbDataTransferRaProduct'] = function () {
+        $serviceContainer['VbDataTransferRaProduct'] = function () {
             return new S\VbDataTransferRaProductService();
         };
 
-        $servcieContainer['VbDataTransferSupplierProduct'] = function () {
+        $serviceContainer['VbDataTransferSupplierProduct'] = function () {
             return new S\VbDataTransferSupplierProductService();
         };
 
-        $servcieContainer['VbDataTransferVersion'] = function () {
+        $serviceContainer['VbDataTransferVersion'] = function () {
             return new S\VbDataTransferVersionService();
         };
 
-        $servcieContainer['VbProductImage'] = function () {
+        $serviceContainer['VbProductImage'] = function () {
             return new S\VbProductImageService();
         };
 
-        $servcieContainer['Affiliate'] = function () {
+        $serviceContainer['Affiliate'] = function () {
             return new S\AffiliateService();
         };
 
-        $servcieContainer['SoFactory'] = function () {
+        $serviceContainer['SoFactory'] = function () {
             return new S\SoFactoryService();
         };
 
-        $servcieContainer['SoPaymentQueryLog'] = function () {
+        $serviceContainer['SoPaymentQueryLog'] = function () {
             return new S\SoPaymentQueryLogService();
         };
 
-        $servcieContainer['SoPaymentLog'] = function () {
+        $serviceContainer['SoPaymentLog'] = function () {
             return new S\SoPaymentLogService();
         };
 
-        $servcieContainer['CartSession'] = function () {
+        $serviceContainer['CartSession'] = function () {
             return new S\CartSessionService();
         };
 
-        $servcieContainer['PricingRules'] = function () {
+        $serviceContainer['PricingRules'] = function () {
             return new S\PricingRulesService();
         };
 
-        $servcieContainer['PlatformBizVar'] = function () {
+        $serviceContainer['PlatformBizVar'] = function () {
             return new S\PlatformBizVarService();
         };
+
+        $serviceContainer['Google'] = function () {
+            return new S\GoogleService();
+        };
+
+        $serviceContainer['GoogleShopping'] = function () {
+            return new S\GoogleShoppingService();
+        };
+
+        $serviceContainer['GoogleConnect'] = function () {
+            return new S\GoogleConnectService();
+        };
+
+        $serviceContainer['CategoryMapping'] = function () {
+            return new S\CategoryMappingService();
+        };
+
+        $serviceContainer['PricingTool'] = function () {
+            return new S\PricingToolService();
+        };
+
+        $serviceContainer['DisplayQty'] = function () {
+            return new S\DisplayQtyService();
+        };
+
+        $serviceContainer['Supplier'] = function () {
+            return new S\SupplierService();
+        };
+
+        $serviceContainer['AffiliateSkuPlatform'] = function () {
+            return new S\AffiliateSkuPlatformService();
+        };
+
     }
 }

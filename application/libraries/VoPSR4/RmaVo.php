@@ -17,23 +17,25 @@ class RmaVo extends \BaseVo
     private $serial_no;
     private $components;
     private $reason;
-    private $action_request;
+    private $action_request = '0';
     private $details;
     private $shipfrom;
-    private $status;
+    private $status = '0';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at = '127.0.0.1';
-    private $create_by;
-    private $modify_on = 'CURRENT_TIMESTAMP';
-    private $modify_at = '127.0.0.1';
-    private $modify_by;
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
     private $primary_key = ['id'];
     private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -43,7 +45,9 @@ class RmaVo extends \BaseVo
 
     public function setSoNo($so_no)
     {
-        $this->so_no = $so_no;
+        if ($so_no !== null) {
+            $this->so_no = $so_no;
+        }
     }
 
     public function getSoNo()
@@ -53,7 +57,9 @@ class RmaVo extends \BaseVo
 
     public function setClientId($client_id)
     {
-        $this->client_id = $client_id;
+        if ($client_id !== null) {
+            $this->client_id = $client_id;
+        }
     }
 
     public function getClientId()
@@ -63,7 +69,9 @@ class RmaVo extends \BaseVo
 
     public function setForename($forename)
     {
-        $this->forename = $forename;
+        if ($forename !== null) {
+            $this->forename = $forename;
+        }
     }
 
     public function getForename()
@@ -73,7 +81,9 @@ class RmaVo extends \BaseVo
 
     public function setSurname($surname)
     {
-        $this->surname = $surname;
+        if ($surname !== null) {
+            $this->surname = $surname;
+        }
     }
 
     public function getSurname()
@@ -83,7 +93,9 @@ class RmaVo extends \BaseVo
 
     public function setAddress1($address_1)
     {
-        $this->address_1 = $address_1;
+        if ($address_1 !== null) {
+            $this->address_1 = $address_1;
+        }
     }
 
     public function getAddress1()
@@ -93,7 +105,9 @@ class RmaVo extends \BaseVo
 
     public function setAddress2($address_2)
     {
-        $this->address_2 = $address_2;
+        if ($address_2 !== null) {
+            $this->address_2 = $address_2;
+        }
     }
 
     public function getAddress2()
@@ -103,7 +117,9 @@ class RmaVo extends \BaseVo
 
     public function setPostcode($postcode)
     {
-        $this->postcode = $postcode;
+        if ($postcode !== null) {
+            $this->postcode = $postcode;
+        }
     }
 
     public function getPostcode()
@@ -113,7 +129,9 @@ class RmaVo extends \BaseVo
 
     public function setCity($city)
     {
-        $this->city = $city;
+        if ($city !== null) {
+            $this->city = $city;
+        }
     }
 
     public function getCity()
@@ -123,7 +141,9 @@ class RmaVo extends \BaseVo
 
     public function setState($state)
     {
-        $this->state = $state;
+        if ($state !== null) {
+            $this->state = $state;
+        }
     }
 
     public function getState()
@@ -133,7 +153,9 @@ class RmaVo extends \BaseVo
 
     public function setCountryId($country_id)
     {
-        $this->country_id = $country_id;
+        if ($country_id !== null) {
+            $this->country_id = $country_id;
+        }
     }
 
     public function getCountryId()
@@ -143,7 +165,9 @@ class RmaVo extends \BaseVo
 
     public function setProductReturned($product_returned)
     {
-        $this->product_returned = $product_returned;
+        if ($product_returned !== null) {
+            $this->product_returned = $product_returned;
+        }
     }
 
     public function getProductReturned()
@@ -153,7 +177,9 @@ class RmaVo extends \BaseVo
 
     public function setCategory($category)
     {
-        $this->category = $category;
+        if ($category !== null) {
+            $this->category = $category;
+        }
     }
 
     public function getCategory()
@@ -163,7 +189,9 @@ class RmaVo extends \BaseVo
 
     public function setSerialNo($serial_no)
     {
-        $this->serial_no = $serial_no;
+        if ($serial_no !== null) {
+            $this->serial_no = $serial_no;
+        }
     }
 
     public function getSerialNo()
@@ -173,7 +201,9 @@ class RmaVo extends \BaseVo
 
     public function setComponents($components)
     {
-        $this->components = $components;
+        if ($components !== null) {
+            $this->components = $components;
+        }
     }
 
     public function getComponents()
@@ -183,7 +213,9 @@ class RmaVo extends \BaseVo
 
     public function setReason($reason)
     {
-        $this->reason = $reason;
+        if ($reason !== null) {
+            $this->reason = $reason;
+        }
     }
 
     public function getReason()
@@ -193,7 +225,9 @@ class RmaVo extends \BaseVo
 
     public function setActionRequest($action_request)
     {
-        $this->action_request = $action_request;
+        if ($action_request !== null) {
+            $this->action_request = $action_request;
+        }
     }
 
     public function getActionRequest()
@@ -203,7 +237,9 @@ class RmaVo extends \BaseVo
 
     public function setDetails($details)
     {
-        $this->details = $details;
+        if ($details !== null) {
+            $this->details = $details;
+        }
     }
 
     public function getDetails()
@@ -213,7 +249,9 @@ class RmaVo extends \BaseVo
 
     public function setShipfrom($shipfrom)
     {
-        $this->shipfrom = $shipfrom;
+        if ($shipfrom !== null) {
+            $this->shipfrom = $shipfrom;
+        }
     }
 
     public function getShipfrom()
@@ -223,7 +261,9 @@ class RmaVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -233,7 +273,9 @@ class RmaVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -243,7 +285,9 @@ class RmaVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -253,7 +297,9 @@ class RmaVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -263,7 +309,9 @@ class RmaVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -273,7 +321,9 @@ class RmaVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -283,7 +333,9 @@ class RmaVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

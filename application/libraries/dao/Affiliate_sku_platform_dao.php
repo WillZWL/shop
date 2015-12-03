@@ -34,6 +34,38 @@ class Affiliate_sku_platform_dao extends Base_dao
         return $this->seq_mapping_field;
     }
 
+    public function get_affiliate_feed_list_w_info($where=array(), $option=array())
+    {
+
+        $this->db->from("affiliate_sku_platform asp");
+        $this->db->join("product p", "p.sku=asp.sku", "LEFT");
+        $this->db->join("price pr", "pr.sku=asp.sku AND asp.platform_id=pr.platform_id", "LEFT");
+        $this->db->join("sku_mapping map", "map.sku=asp.sku AND map.ext_sys='WMS' ", "LEFT");
+
+        $select_str = "p.name, pr.price, pr.listing_status, map.ext_sku, asp.sku, asp.affiliate_id, asp.platform_id, asp.status AS affiliate_sku_status, ' ' AS new_affiliate_sku_status ";
+        $this->db->select($select_str, FALSE);
+        if($where)
+            $this->db->where($where);
+
+        $rs = array();
+        if ($query = $this->db->get())
+        {
+
+            foreach ($query->result_array() as $row)
+            {
+                $rs[] = $row;
+            }
+            return (object) $rs;
+        }
+
+        return FALSE;
+
+
+    }
+
+
+
+
     public function get_feed_list($platform_id = "")
     {
         $query = "
@@ -103,35 +135,6 @@ class Affiliate_sku_platform_dao extends Base_dao
         }
 
         return $rs;
-    }
-
-
-    public function set_sku_feed_status($affiliate_id, $sku, $platform_id, $status_id)
-    {
-        $data = array($status_id, $affiliate_id, $sku, $platform_id);
-        # 0 - auto
-        # 1 - always include
-        # 2 - always exclude
-        $query = "
-            update affiliate_sku_platform
-                set status = ?
-            where 1
-            and affiliate_id = ?
-            and sku          = ?
-            and platform_id  = ?
-        ";
-        $this->db->query($query, $data);
-
-        $query = "
-            insert into affiliate_sku_platform
-            (status, affiliate_id, sku, platform_id)
-            values
-            (?, ?, ?, ?)
-        ";
-        $this->db->query($query, $data);
-
-        $query = "commit";
-        $this->db->query($query, $data);
     }
 
     // clean up any entres that is set to auto

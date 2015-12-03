@@ -1204,7 +1204,7 @@ SQL;
         }
     }
 
-    public function get_quantity_in_orders($sku = "", $num_of_days = "7")
+    public function getQuantityInOrders($sku = "", $num_of_days = "7")
     {
         if ($sku == "") {
             return FALSE;
@@ -2559,7 +2559,7 @@ SQL;
         $this->db->join("so_extend soext", "soext.so_no=so.so_no", "LEFT");
 
         $select_str = "
-                    so.so_no as so_no, if('sops.pay_date', 'sops.pay_date', 'so.order_create_date') as pay_date,
+                    so.so_no as so_no, (CASE WHEN sops.pay_date  THEN sops.pay_date ELSE so.order_create_date END) as pay_date,
                     so.status as order_status,
                     soext.aftership_status,
                     soext.aftership_checkpoint as last_update_time,

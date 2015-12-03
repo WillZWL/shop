@@ -1,7 +1,6 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\PriceMarginDao;
 use ESG\Panther\Service\ClassFactoryService;
 use ESG\Panther\Service\ProductService;
 use ESG\Panther\Service\PlatformBizVarService;
@@ -14,7 +13,6 @@ class PriceMarginService extends BaseService
     public function __construct()
     {
         parent::__construct();
-        $this->setDao(new PriceMarginDao);
         $this->classFactoryService = new ClassFactoryService;
         $this->productService = new ProductService;
         $this->platformBizVarService = new PlatformBizVarService;
@@ -44,7 +42,7 @@ class PriceMarginService extends BaseService
 
         $pr_svc = $this->classFactoryService->getPlatformPriceService($platform);
 
-        $sample_vo = $this->getDao()->get();
+        $sample_vo = $this->getDao('PriceMargin')->get();
         foreach ($prod_list as $prod) {
             $margin_vo = clone $sample_vo;
 
@@ -52,7 +50,7 @@ class PriceMarginService extends BaseService
             $pr_svc->calcLogisticCost($prod);
             $pr_svc->calculateProfit($prod);
             set_value($margin_vo, $prod);
-            $this->getDao()->replace($margin_vo);
+            $this->getDao('PriceMargin')->replace($margin_vo);
         }
 
         unset($pr_svc);
@@ -119,7 +117,7 @@ class PriceMarginService extends BaseService
 
 
         $price_srv = $this->classFactoryService->getPriceService($platform);
-        $sample_vo = $this->getDao()->get();
+        $sample_vo = $this->getDao('PriceMargin')->get();
 
         foreach ($prod_list as $prod) {
             $margin_vo = clone $sample_vo;
@@ -129,9 +127,9 @@ class PriceMarginService extends BaseService
             $price_srv->calcProfit($prod);
             set_value($margin_vo, $prod);
 
-            $this->getDao()->replace($margin_vo);
+            $this->getDao('PriceMargin')->replace($margin_vo);
             if ($prod->getSku() == '10051-NA') {
-                var_dump($this->getDao()->db->last_query());
+                var_dump($this->getDao('PriceMargin')->db->last_query());
                 var_dump($prod);
                 exit;
             }
@@ -153,7 +151,7 @@ class PriceMarginService extends BaseService
 
         $pr_svc = $this->classFactoryService->getPlatformPriceService($platform);
 
-        $sample_vo = $this->getDao()->get();
+        $sample_vo = $this->getDao('PriceMargin')->get();
         foreach ($prod_list as $prod) {
             $p_srv = $pr_svc->getPriceServiceFromDto($prod);
             $p_srv->setPlatformId($prod->getPlatformId());
@@ -173,7 +171,7 @@ class PriceMarginService extends BaseService
             $pr_svc->calculateProfit($prod);
             set_value($margin_vo, $prod);
 
-            $this->getDao()->replace($margin_vo);
+            $this->getDao('PriceMargin')->replace($margin_vo);
         }
         unset($pr_svc);
         unset($p_svc);
@@ -198,27 +196,27 @@ class PriceMarginService extends BaseService
 
     public function insertOrUpdateMargin($sku, $platform_id, $price = null, $profit, $margin)
     {
-        if ($price_margin_obj = $this->getDao()->get(['sku' => $sku, 'platform_id' => $platform_id])) {
-            if (!$temp_price_margin_obj = $this->getDao()->get(['sku' => $sku, 'platform_id' => $platform_id, 'profit' => $profit, 'margin' => $margin])) {
+        if ($price_margin_obj = $this->getDao('PriceMargin')->get(['sku' => $sku, 'platform_id' => $platform_id])) {
+            if (!$temp_price_margin_obj = $this->getDao('PriceMargin')->get(['sku' => $sku, 'platform_id' => $platform_id, 'profit' => $profit, 'margin' => $margin])) {
                 $price_margin_obj->setProfit($profit);
                 $price_margin_obj->setSellingPrice($price);
                 $price_margin_obj->setMargin($margin);
-                $this->getDao()->update($price_margin_obj);
+                $this->getDao('PriceMargin')->update($price_margin_obj);
             }
         } else {
-            $price_margin_obj = $this->getDao()->get();
+            $price_margin_obj = $this->getDao('PriceMargin')->get();
             $price_margin_obj->setSku($sku);
             $price_margin_obj->setPlatformId($platform_id);
             $price_margin_obj->setSellingPrice($price);
             $price_margin_obj->setProfit($profit);
             $price_margin_obj->setMargin($margin);
-            $this->getDao()->insert($price_margin_obj);
+            $this->getDao('PriceMargin')->insert($price_margin_obj);
         }
     }
 
     public function getCrossSellProduct($prod_info, $platform_id, $language_id, $price, $price_adjustment)
     {
-        return $this->getDao()->getCrossSellProduct($prod_info, $platform_id, $language_id, $price, $price_adjustment);
+        return $this->getDao('PriceMargin')->getCrossSellProduct($prod_info, $platform_id, $language_id, $price, $price_adjustment);
     }
 }
 

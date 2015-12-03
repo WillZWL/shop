@@ -72,7 +72,7 @@ body{
 		display:block;
 		margin: 10px;
 		height:20px;
-		color:#F39814;
+		color:#FF0000;
 	}
 	#country_block
 	{
@@ -102,6 +102,10 @@ body{
 		padding: 10px;
 		margin: 10px 0px;
 	}
+	.function_block h3 {
+        color:#549B17;
+    }
+
 	.button_section
 	{
 		margin: 10px 0;
@@ -110,7 +114,7 @@ body{
 	.page_title
 	{
 		font-size:20px;
-		color:#F39814;
+		color:#549B17;
 	}
 	
 	.divider
@@ -439,7 +443,7 @@ body{
 				$.ajax({
 					type: "POST",
 					dataType:"text",
-					url: "ext-category-mapping/create_mapping_rule",
+					url: "ext-category-mapping/create-mapping-rule",
 					data: {"cat_id":cat_id, "sub_cat_id":sub_cat_id, "sub_sub_cat_id":sub_sub_cat_id,"country_id":country_id,"target_google_category":target_google_category},
 					success:function(data){
 						var result = $("#ajax_message").html(data);
@@ -498,7 +502,7 @@ body{
 			if(arr.length <=0){$("#dialog_mapping_rule").dialog("open"); return;}
 			
 			$.ajax({
-				url: "ext-category-mapping/create_google_category",
+				url: "ext-category-mapping/create-google-category",
 				type:"POST",
 				dataType: "html",
 				data: {"new_google_cat":new_google_category, "country_list":arr},
@@ -522,12 +526,11 @@ body{
 		$(document).on("click", ".country_tab", function(){
 			var country_id = $(this).attr("id");
 			$.ajax({
-				url: "ext-category-mapping/get_country_google_category_mapping",
+				url: "ext-category-mapping/get-country-google-category-mapping",
 				type:"POST",
 				dataType: "html",
 				data: {"country_id":country_id},
-				success:function(data){
-				
+				success:function(data) {
 						var result = $("#"+ country_id +"_container").html(data);
 						$( "div.sub_accordion" ).accordion({
 							heightStyle: "content",
@@ -646,14 +649,15 @@ body{
 <div id="google_category_section" class="function_block">
 <h3>Google Category Mapping</h3>
 	<div class="accordion">
-		<?if($country_list){
-			foreach($country_list as $country_id){?>
-				<h3 id="<?=$country_id?>" class="country_tab"><?=$country_id?></h3>
-				<div>
-					<p id="<?=$country_id?>_container">		
-					</p>
-			</div>	 
-		<?}}?>	
+		<?php if($country_list) :?>
+			<?php foreach($country_list as $country_id): ?>
+				<h3 id="<?=$country_id["platform_country_id"]?>" class="country_tab"><?=$country_id["platform_country_id"]?></h3>
+                    <div>
+                        <p id="<?=$country_id["platform_country_id"]?>_container">
+                        </p>
+                    </div>
+            <?php endforeach?>
+		<?php endif?>
 	</div>
 </div>
 	
@@ -669,9 +673,9 @@ body{
 		 <span id="select-result">Hold Ctrl to select Multiple Country</span>
 		<div>
 			<ol id="selectable">
-			<?foreach($country_list as $country){?>
-				  <li class="ui-widget-content" id="<?=$country?>"><?=$country?></li>
-			<?}?>
+			<?php foreach($country_list as $country):?>
+				  <li class="ui-widget-content" id="<?=$country["platform_country_id"]?>"><?=$country["platform_country_id"]?></li>
+			<?php endforeach?>
 			</ol>
 		</div>
 	</div>
@@ -684,29 +688,27 @@ body{
 <div>
 	<div class="ui-widget">
 		<select id="combobox_googlefeed_name" class="enable_combobox">
-		<?foreach($google_datafeed_account as $item) {?>
+		<?php foreach($google_datafeed_account as $key => $item): ?>
 			<option id="<?=$item["account_id"]?>"><?=$item["account_name"]?></option>
-		<?}?>
+		<?php endforeach ?>
 		</select>
 		<span class="divider"></span>
 		<select id="combobox_googlefeed_country" class="enable_combobox">
-		<?foreach($google_datafeed_account as $item) {
-			foreach($item["country"] as $country_id){
-			?>
+		<?php foreach($google_datafeed_account as $key => $item): 
+                  foreach($item["country"] as $country_id): ?>
 			<option account_id="<?=$item["account_id"]?>" value="<?=$country_id?>"><?=$country_id?></option>
-			<?}
-		}?>
+            <?php endforeach ?>
+        <?php endforeach ?>
 		</select>
 		
 		<span class="divider"></span>
 		
 		<select id="combobox_googlefeed_language" class="enable_combobox">
-		<?foreach($google_datafeed_account as $item) {
-			foreach($item["language"] as $language){
-			?>
+		<?php foreach($google_datafeed_account as $key => $item):
+			foreach($item["language"] as $language): ?>
 			<option account_id="<?=$item["account_id"]?>" value="<?=$language?>"><?=$language?></option>
-			<?}
-		}?>
+            <?php endforeach ?>
+        <?php endforeach ?>
 		</select>
 		<span class="divider"></span>
 		<input class="input_box" type="text" id="sku" placeholder="SKU">
@@ -773,7 +775,7 @@ body{
 		$("#dialog_ajax_feedback").dialog("open");
 		//alert(sku);return ;
 		$.ajax({
-				url: "ext-category-mapping/get_product_item",
+				url: "ext-category-mapping/get-product-item",
 				type:"POST",
 				dataType: "html",
 				data: {"account_id":account_id, "country_id":country_id, "language_id":language_id, "sku":sku},
@@ -821,7 +823,7 @@ body{
 			var result = $("#ajax_message").html("Loading...");
 			$("#dialog_ajax_feedback").dialog("open");
 			$.ajax({
-				url: "ext-category-mapping/update_product_item",
+				url: "ext-category-mapping/update-product-item",
 				type:"POST",
 				dataType:"html",
 				data:{"item_sku":item_sku,
@@ -853,7 +855,7 @@ body{
 			var country_id = $("#combobox_googlefeed_country").find(":selected")[0].value;
 			
 			//window.location.url = "ext-category-mapping/get_google_shopping_content_report/WEB" + country_id;
-			var url = "ext-category-mapping/get_google_shopping_content_report/WEB" + country_id; 
+			var url = "ext-category-mapping/get-google-shopping-content-report/WEB" + country_id; 
 			window.location.assign(url);
 		});
 		
@@ -864,7 +866,7 @@ body{
 
 $(function(){
 	$.ajax({
-		url:"ext-category-mapping/account_info",
+		url:"ext-category-mapping/account-info",
 		dataType:"json",
 		success:function(data)
 		{

@@ -24,7 +24,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -36,7 +36,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setProdSku($prod_sku)
     {
-        if ($prod_sku) {
+        if ($prod_sku !== null) {
             $this->prod_sku = $prod_sku;
         }
     }
@@ -48,7 +48,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        if ($lang_id) {
+        if ($lang_id !== null) {
             $this->lang_id = $lang_id;
         }
     }
@@ -60,7 +60,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setFeature($feature)
     {
-        if ($feature) {
+        if ($feature !== null) {
             $this->feature = $feature;
         }
     }
@@ -72,7 +72,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setFeatureOriginal($feature_original)
     {
-        if ($feature_original) {
+        if ($feature_original !== null) {
             $this->feature_original = $feature_original;
         }
     }
@@ -84,7 +84,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setSpecification($specification)
     {
-        if ($specification) {
+        if ($specification !== null) {
             $this->specification = $specification;
         }
     }
@@ -96,7 +96,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setSpecOriginal($spec_original)
     {
-        if ($spec_original) {
+        if ($spec_original !== null) {
             $this->spec_original = $spec_original;
         }
     }
@@ -108,7 +108,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setRequirement($requirement)
     {
-        if ($requirement) {
+        if ($requirement !== null) {
             $this->requirement = $requirement;
         }
     }
@@ -120,7 +120,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setInstruction($instruction)
     {
-        if ($instruction) {
+        if ($instruction !== null) {
             $this->instruction = $instruction;
         }
     }
@@ -132,7 +132,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setApplyEnhancedListing($apply_enhanced_listing)
     {
-        if ($apply_enhanced_listing) {
+        if ($apply_enhanced_listing !== null) {
             $this->apply_enhanced_listing = $apply_enhanced_listing;
         }
     }
@@ -144,7 +144,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setEnhancedListing($enhanced_listing)
     {
-        if ($enhanced_listing) {
+        if ($enhanced_listing !== null) {
             $this->enhanced_listing = $enhanced_listing;
         }
     }
@@ -156,7 +156,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -168,7 +168,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -180,7 +180,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -192,7 +192,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -204,7 +204,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -216,7 +216,7 @@ class ProductContentExtendVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

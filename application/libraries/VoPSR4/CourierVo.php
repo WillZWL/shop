@@ -2,17 +2,18 @@
 class CourierVo extends \BaseVo
 {
     private $id;
-    private $courier_id;
-    private $aftership_id;
-    private $courier_name;
-    private $description;
+    private $courier_id = '';
+    private $aftership_id = '';
+    private $courier_name = '';
+    private $description = '';
     private $type = 'F';
-    private $tracking_link;
-    private $weight_type;
+    private $tracking_link = '';
+    private $weight_type = '';
+    private $show_status = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -21,7 +22,9 @@ class CourierVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -31,7 +34,9 @@ class CourierVo extends \BaseVo
 
     public function setCourierId($courier_id)
     {
-        $this->courier_id = $courier_id;
+        if ($courier_id !== null) {
+            $this->courier_id = $courier_id;
+        }
     }
 
     public function getCourierId()
@@ -41,7 +46,9 @@ class CourierVo extends \BaseVo
 
     public function setAftershipId($aftership_id)
     {
-        $this->aftership_id = $aftership_id;
+        if ($aftership_id !== null) {
+            $this->aftership_id = $aftership_id;
+        }
     }
 
     public function getAftershipId()
@@ -51,7 +58,9 @@ class CourierVo extends \BaseVo
 
     public function setCourierName($courier_name)
     {
-        $this->courier_name = $courier_name;
+        if ($courier_name !== null) {
+            $this->courier_name = $courier_name;
+        }
     }
 
     public function getCourierName()
@@ -61,7 +70,9 @@ class CourierVo extends \BaseVo
 
     public function setDescription($description)
     {
-        $this->description = $description;
+        if ($description !== null) {
+            $this->description = $description;
+        }
     }
 
     public function getDescription()
@@ -71,7 +82,9 @@ class CourierVo extends \BaseVo
 
     public function setType($type)
     {
-        $this->type = $type;
+        if ($type !== null) {
+            $this->type = $type;
+        }
     }
 
     public function getType()
@@ -81,7 +94,9 @@ class CourierVo extends \BaseVo
 
     public function setTrackingLink($tracking_link)
     {
-        $this->tracking_link = $tracking_link;
+        if ($tracking_link !== null) {
+            $this->tracking_link = $tracking_link;
+        }
     }
 
     public function getTrackingLink()
@@ -91,7 +106,9 @@ class CourierVo extends \BaseVo
 
     public function setWeightType($weight_type)
     {
-        $this->weight_type = $weight_type;
+        if ($weight_type !== null) {
+            $this->weight_type = $weight_type;
+        }
     }
 
     public function getWeightType()
@@ -99,9 +116,23 @@ class CourierVo extends \BaseVo
         return $this->weight_type;
     }
 
+    public function setShowStatus($show_status)
+    {
+        if ($show_status !== null) {
+            $this->show_status = $show_status;
+        }
+    }
+
+    public function getShowStatus()
+    {
+        return $this->show_status;
+    }
+
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -111,7 +142,9 @@ class CourierVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -121,7 +154,9 @@ class CourierVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -131,7 +166,9 @@ class CourierVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -141,7 +178,9 @@ class CourierVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -151,7 +190,9 @@ class CourierVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

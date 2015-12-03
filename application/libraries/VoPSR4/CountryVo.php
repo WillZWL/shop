@@ -3,20 +3,20 @@ class CountryVo extends \BaseVo
 {
     private $id;
     private $country_id;
-    private $id_3_digit;
-    private $name;
-    private $description;
+    private $id_3_digit = '';
+    private $name = '';
+    private $description = '';
     private $status;
     private $currency_id;
-    private $language_id;
-    private $fc_id;
-    private $allow_sell;
-    private $url_enable;
-    private $standalone;
+    private $language_id = '';
+    private $fc_id = '';
+    private $allow_sell = '0';
+    private $url_enable = '0';
+    private $standalone = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -25,7 +25,9 @@ class CountryVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -35,7 +37,9 @@ class CountryVo extends \BaseVo
 
     public function setCountryId($country_id)
     {
-        $this->country_id = $country_id;
+        if ($country_id !== null) {
+            $this->country_id = $country_id;
+        }
     }
 
     public function getCountryId()
@@ -45,7 +49,9 @@ class CountryVo extends \BaseVo
 
     public function setId3Digit($id_3_digit)
     {
-        $this->id_3_digit = $id_3_digit;
+        if ($id_3_digit !== null) {
+            $this->id_3_digit = $id_3_digit;
+        }
     }
 
     public function getId3Digit()
@@ -55,7 +61,9 @@ class CountryVo extends \BaseVo
 
     public function setName($name)
     {
-        $this->name = $name;
+        if ($name !== null) {
+            $this->name = $name;
+        }
     }
 
     public function getName()
@@ -65,7 +73,9 @@ class CountryVo extends \BaseVo
 
     public function setDescription($description)
     {
-        $this->description = $description;
+        if ($description !== null) {
+            $this->description = $description;
+        }
     }
 
     public function getDescription()
@@ -75,7 +85,9 @@ class CountryVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -85,7 +97,9 @@ class CountryVo extends \BaseVo
 
     public function setCurrencyId($currency_id)
     {
-        $this->currency_id = $currency_id;
+        if ($currency_id !== null) {
+            $this->currency_id = $currency_id;
+        }
     }
 
     public function getCurrencyId()
@@ -95,7 +109,9 @@ class CountryVo extends \BaseVo
 
     public function setLanguageId($language_id)
     {
-        $this->language_id = $language_id;
+        if ($language_id !== null) {
+            $this->language_id = $language_id;
+        }
     }
 
     public function getLanguageId()
@@ -105,7 +121,9 @@ class CountryVo extends \BaseVo
 
     public function setFcId($fc_id)
     {
-        $this->fc_id = $fc_id;
+        if ($fc_id !== null) {
+            $this->fc_id = $fc_id;
+        }
     }
 
     public function getFcId()
@@ -115,7 +133,9 @@ class CountryVo extends \BaseVo
 
     public function setAllowSell($allow_sell)
     {
-        $this->allow_sell = $allow_sell;
+        if ($allow_sell !== null) {
+            $this->allow_sell = $allow_sell;
+        }
     }
 
     public function getAllowSell()
@@ -125,7 +145,9 @@ class CountryVo extends \BaseVo
 
     public function setUrlEnable($url_enable)
     {
-        $this->url_enable = $url_enable;
+        if ($url_enable !== null) {
+            $this->url_enable = $url_enable;
+        }
     }
 
     public function getUrlEnable()
@@ -135,7 +157,9 @@ class CountryVo extends \BaseVo
 
     public function setStandalone($standalone)
     {
-        $this->standalone = $standalone;
+        if ($standalone !== null) {
+            $this->standalone = $standalone;
+        }
     }
 
     public function getStandalone()
@@ -145,7 +169,9 @@ class CountryVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -155,7 +181,9 @@ class CountryVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -165,7 +193,9 @@ class CountryVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -175,7 +205,9 @@ class CountryVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -185,7 +217,9 @@ class CountryVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -195,7 +229,9 @@ class CountryVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

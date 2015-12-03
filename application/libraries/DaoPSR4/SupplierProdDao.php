@@ -15,9 +15,4 @@ class SupplierProdDao extends BaseDao
     {
         return $this->table_name;
     }
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 }

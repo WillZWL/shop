@@ -28,7 +28,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -38,7 +40,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setCountryId($country_id)
     {
-        $this->country_id = $country_id;
+        if ($country_id !== null) {
+            $this->country_id = $country_id;
+        }
     }
 
     public function getCountryId()
@@ -48,7 +52,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setRangeMin($range_min)
     {
-        $this->range_min = $range_min;
+        if ($range_min !== null) {
+            $this->range_min = $range_min;
+        }
     }
 
     public function getRangeMin()
@@ -58,7 +64,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setRangeMax($range_max)
     {
-        $this->range_max = $range_max;
+        if ($range_max !== null) {
+            $this->range_max = $range_max;
+        }
     }
 
     public function getRangeMax()
@@ -68,7 +76,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setMarkUpValue($mark_up_value)
     {
-        $this->mark_up_value = $mark_up_value;
+        if ($mark_up_value !== null) {
+            $this->mark_up_value = $mark_up_value;
+        }
     }
 
     public function getMarkUpValue()
@@ -78,7 +88,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setMarkUpType($mark_up_type)
     {
-        $this->mark_up_type = $mark_up_type;
+        if ($mark_up_type !== null) {
+            $this->mark_up_type = $mark_up_type;
+        }
     }
 
     public function getMarkUpType()
@@ -88,7 +100,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setMinMargin($min_margin)
     {
-        $this->min_margin = $min_margin;
+        if ($min_margin !== null) {
+            $this->min_margin = $min_margin;
+        }
     }
 
     public function getMinMargin()
@@ -98,7 +112,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setMonday($monday)
     {
-        $this->monday = $monday;
+        if ($monday !== null) {
+            $this->monday = $monday;
+        }
     }
 
     public function getMonday()
@@ -108,7 +124,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setTuesday($tuesday)
     {
-        $this->tuesday = $tuesday;
+        if ($tuesday !== null) {
+            $this->tuesday = $tuesday;
+        }
     }
 
     public function getTuesday()
@@ -118,7 +136,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setWednesday($wednesday)
     {
-        $this->wednesday = $wednesday;
+        if ($wednesday !== null) {
+            $this->wednesday = $wednesday;
+        }
     }
 
     public function getWednesday()
@@ -128,7 +148,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setThursday($thursday)
     {
-        $this->thursday = $thursday;
+        if ($thursday !== null) {
+            $this->thursday = $thursday;
+        }
     }
 
     public function getThursday()
@@ -138,7 +160,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setFriday($friday)
     {
-        $this->friday = $friday;
+        if ($friday !== null) {
+            $this->friday = $friday;
+        }
     }
 
     public function getFriday()
@@ -148,7 +172,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setSaturday($saturday)
     {
-        $this->saturday = $saturday;
+        if ($saturday !== null) {
+            $this->saturday = $saturday;
+        }
     }
 
     public function getSaturday()
@@ -158,7 +184,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setSunday($sunday)
     {
-        $this->sunday = $sunday;
+        if ($sunday !== null) {
+            $this->sunday = $sunday;
+        }
     }
 
     public function getSunday()
@@ -168,7 +196,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -178,7 +208,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -188,7 +220,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -198,7 +232,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -208,7 +244,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -218,7 +256,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -228,7 +268,9 @@ class PricingRulesVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

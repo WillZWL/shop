@@ -19,7 +19,9 @@ class DeliveryVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -29,7 +31,9 @@ class DeliveryVo extends \BaseVo
 
     public function setDeliveryTypeId($delivery_type_id)
     {
-        $this->delivery_type_id = $delivery_type_id;
+        if ($delivery_type_id !== null) {
+            $this->delivery_type_id = $delivery_type_id;
+        }
     }
 
     public function getDeliveryTypeId()
@@ -39,7 +43,9 @@ class DeliveryVo extends \BaseVo
 
     public function setCountryId($country_id)
     {
-        $this->country_id = $country_id;
+        if ($country_id !== null) {
+            $this->country_id = $country_id;
+        }
     }
 
     public function getCountryId()
@@ -49,7 +55,9 @@ class DeliveryVo extends \BaseVo
 
     public function setMinDay($min_day)
     {
-        $this->min_day = $min_day;
+        if ($min_day !== null) {
+            $this->min_day = $min_day;
+        }
     }
 
     public function getMinDay()
@@ -59,7 +67,9 @@ class DeliveryVo extends \BaseVo
 
     public function setMaxDay($max_day)
     {
-        $this->max_day = $max_day;
+        if ($max_day !== null) {
+            $this->max_day = $max_day;
+        }
     }
 
     public function getMaxDay()
@@ -69,7 +79,9 @@ class DeliveryVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -79,7 +91,9 @@ class DeliveryVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -89,7 +103,9 @@ class DeliveryVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -99,7 +115,9 @@ class DeliveryVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -109,7 +127,9 @@ class DeliveryVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -119,7 +139,9 @@ class DeliveryVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -129,7 +151,9 @@ class DeliveryVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

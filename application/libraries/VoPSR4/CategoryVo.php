@@ -13,6 +13,7 @@ class CategoryVo extends \BaseVo
     private $min_display_qty;
     private $sponsored = '0';
     private $status = '1';
+    private $hidden = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -21,11 +22,13 @@ class CategoryVo extends \BaseVo
     private $modify_by = 'system';
 
     private $primary_key = ['id'];
-    private $increment_field = '';
+    private $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -35,7 +38,7 @@ class CategoryVo extends \BaseVo
 
     public function setName($name)
     {
-        if ($name) {
+        if ($name !== null) {
             $this->name = $name;
         }
     }
@@ -47,7 +50,7 @@ class CategoryVo extends \BaseVo
 
     public function setDescription($description)
     {
-        if ($description) {
+        if ($description !== null) {
             $this->description = $description;
         }
     }
@@ -59,7 +62,7 @@ class CategoryVo extends \BaseVo
 
     public function setParentCatId($parent_cat_id)
     {
-        if ($parent_cat_id) {
+        if ($parent_cat_id !== null) {
             $this->parent_cat_id = $parent_cat_id;
         }
     }
@@ -71,7 +74,7 @@ class CategoryVo extends \BaseVo
 
     public function setLevel($level)
     {
-        if ($level) {
+        if ($level !== null) {
             $this->level = $level;
         }
     }
@@ -83,7 +86,7 @@ class CategoryVo extends \BaseVo
 
     public function setAddColourName($add_colour_name)
     {
-        if ($add_colour_name) {
+        if ($add_colour_name !== null) {
             $this->add_colour_name = $add_colour_name;
         }
     }
@@ -95,7 +98,7 @@ class CategoryVo extends \BaseVo
 
     public function setPriority($priority)
     {
-        if ($priority) {
+        if ($priority !== null) {
             $this->priority = $priority;
         }
     }
@@ -107,9 +110,9 @@ class CategoryVo extends \BaseVo
 
     public function setStopSyncPriority($stop_sync_priority)
     {
-        //if ($stop_sync_priority) {
+        if ($stop_sync_priority !== null) {
             $this->stop_sync_priority = $stop_sync_priority;
-        //}
+        }
     }
 
     public function getStopSyncPriority()
@@ -119,7 +122,7 @@ class CategoryVo extends \BaseVo
 
     public function setBundleDiscount($bundle_discount)
     {
-        if ($bundle_discount) {
+        if ($bundle_discount !== null) {
             $this->bundle_discount = $bundle_discount;
         }
     }
@@ -131,7 +134,7 @@ class CategoryVo extends \BaseVo
 
     public function setMinDisplayQty($min_display_qty)
     {
-        if ($min_display_qty) {
+        if ($min_display_qty !== null) {
             $this->min_display_qty = $min_display_qty;
         }
     }
@@ -143,9 +146,9 @@ class CategoryVo extends \BaseVo
 
     public function setSponsored($sponsored)
     {
-        //if ($sponsored) {
+        if ($sponsored !== null) {
             $this->sponsored = $sponsored;
-        //}
+        }
     }
 
     public function getSponsored()
@@ -155,7 +158,7 @@ class CategoryVo extends \BaseVo
 
     public function setStatus($status)
     {
-        if ($status) {
+        if ($status !== null) {
             $this->status = $status;
         }
     }
@@ -165,9 +168,21 @@ class CategoryVo extends \BaseVo
         return $this->status;
     }
 
+    public function setHidden($hidden)
+    {
+        if ($hidden !== null) {
+            $this->hidden = $hidden;
+        }
+    }
+
+    public function getHidden()
+    {
+        return $this->hidden;
+    }
+
     public function setCreateOn($create_on)
     {
-        if ($create_on) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -179,7 +194,7 @@ class CategoryVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -191,7 +206,7 @@ class CategoryVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -203,7 +218,7 @@ class CategoryVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -215,7 +230,7 @@ class CategoryVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -227,7 +242,7 @@ class CategoryVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

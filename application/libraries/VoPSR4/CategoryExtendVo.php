@@ -18,7 +18,7 @@ class CategoryExtendVo extends \BaseVo
 
     public function setId($id)
     {
-        if ($id) {
+        if ($id !== null) {
             $this->id = $id;
         }
     }
@@ -30,7 +30,7 @@ class CategoryExtendVo extends \BaseVo
 
     public function setCatId($cat_id)
     {
-        if ($cat_id) {
+        if ($cat_id !== null) {
             $this->cat_id = $cat_id;
         }
     }
@@ -42,7 +42,7 @@ class CategoryExtendVo extends \BaseVo
 
     public function setLangId($lang_id)
     {
-        if ($lang_id) {
+        if ($lang_id !== null) {
             $this->lang_id = $lang_id;
         }
     }
@@ -54,7 +54,7 @@ class CategoryExtendVo extends \BaseVo
 
     public function setName($name)
     {
-        if ($name) {
+        if ($name !== null) {
             $this->name = $name;
         }
     }
@@ -78,7 +78,7 @@ class CategoryExtendVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        if ($create_on) {
+        if ($create_on !== null) {
             $this->create_on = $create_on;
         }
     }
@@ -90,7 +90,7 @@ class CategoryExtendVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        if ($create_at) {
+        if ($create_at !== null) {
             $this->create_at = $create_at;
         }
     }
@@ -102,7 +102,7 @@ class CategoryExtendVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        if ($create_by) {
+        if ($create_by !== null) {
             $this->create_by = $create_by;
         }
     }
@@ -114,7 +114,7 @@ class CategoryExtendVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        if ($modify_on) {
+        if ($modify_on !== null) {
             $this->modify_on = $modify_on;
         }
     }
@@ -126,7 +126,7 @@ class CategoryExtendVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        if ($modify_at) {
+        if ($modify_at !== null) {
             $this->modify_at = $modify_at;
         }
     }
@@ -138,7 +138,7 @@ class CategoryExtendVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        if ($modify_by) {
+        if ($modify_by !== null) {
             $this->modify_by = $modify_by;
         }
     }

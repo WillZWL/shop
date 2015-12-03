@@ -14,17 +14,17 @@ class WmsInventoryService extends BaseService
 
     public function renewInventory($inv)
     {
-        return $this->getDao()->renewInventory($inv);
+        return $this->getDao('WmsInventory')->renewInventory($inv);
     }
 
     public function emptyTable()
     {
-        return $this->getDao()->emptyTable();
+        return $this->getDao('WmsInventory')->emptyTable();
     }
 
     public function getInventoryList($where = [])
     {
-        return $this->getDao()->getInventoryList($where);
+        return $this->getDao('WmsInventory')->getInventoryList($where);
     }
 
     public function getWmsSoNoList()

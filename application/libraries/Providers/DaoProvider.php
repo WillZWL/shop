@@ -25,6 +25,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\AuditLogDao();
         };
 
+        $daoContainer['AdwordsData'] = function () {
+            return new D\AdwordsDataDao();
+        };
+
         $daoContainer['Config'] = function () {
             return new D\ConfigDao();
         };
@@ -476,8 +480,61 @@ class DaoProvider implements ServiceProviderInterface
         $daoContainer['PromotionCode'] = function () {
             return new D\PromotionCodeDao();
         };
+
         $daoContainer['ExternalCategory'] = function () {
             return new D\ExternalCategoryDao();
+        };
+
+        $daoContainer['ProductIdentifier'] = function () {
+            return new D\ProductIdentifierDao();
+        };
+
+        $daoContainer['ExtCategoryMapping'] = function () {
+            return new D\ExtCategoryMappingDao();
+        };
+
+        $daoContainer['CategoryMapping'] = function () {
+            return new D\CategoryMappingDao();
+        };
+
+        $daoContainer['AffiliateSkuPlatform'] = function () {
+            return new D\AffiliateSkuPlatformDao();
+        };
+
+        $daoContainer['Affiliate'] = function () {
+            return new D\AffiliateDao();
+        };
+
+        $daoContainer['ProductNote'] = function () {
+            return new D\ProductNoteDao();
+        };
+
+        $daoContainer['GoogleShopping'] = function () {
+            return new D\GoogleShoppingDao();
+        };
+
+        $daoContainer['WmsInventory'] = function () {
+            return new D\WmsInventoryDao();
+        };
+
+        $daoContainer['CompetitorMap'] = function () {
+            return new D\CompetitorMapDao();
+        };
+
+        $daoContainer['PriceExtend'] = function () {
+            return new D\PriceExtendDao();
+        };
+
+        $daoContainer['PriceMargin'] = function () {
+            return new D\PriceMarginDao();
+        };
+
+        $daoContainer['DisplayQtyClass'] = function () {
+            return new D\DisplayQtyClassDao();
+        };
+
+        $daoContainer['DisplayQtyFactor'] = function () {
+            return new D\DisplayQtyFactorDao();
         };
     }
 }

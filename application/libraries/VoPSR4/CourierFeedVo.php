@@ -2,9 +2,9 @@
 class CourierFeedVo extends \BaseVo
 {
     private $id;
-    private $batch_id = '0';
+    private $batch_id;
     private $so_no_str;
-    private $courier_id = '';
+    private $courier_id;
     private $mawb = '';
     private $exec = '0';
     private $comment = '';
@@ -20,7 +20,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -30,7 +32,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setBatchId($batch_id)
     {
-        $this->batch_id = $batch_id;
+        if ($batch_id !== null) {
+            $this->batch_id = $batch_id;
+        }
     }
 
     public function getBatchId()
@@ -40,7 +44,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setSoNoStr($so_no_str)
     {
-        $this->so_no_str = $so_no_str;
+        if ($so_no_str !== null) {
+            $this->so_no_str = $so_no_str;
+        }
     }
 
     public function getSoNoStr()
@@ -50,7 +56,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setCourierId($courier_id)
     {
-        $this->courier_id = $courier_id;
+        if ($courier_id !== null) {
+            $this->courier_id = $courier_id;
+        }
     }
 
     public function getCourierId()
@@ -60,7 +68,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setMawb($mawb)
     {
-        $this->mawb = $mawb;
+        if ($mawb !== null) {
+            $this->mawb = $mawb;
+        }
     }
 
     public function getMawb()
@@ -70,7 +80,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setExec($exec)
     {
-        $this->exec = $exec;
+        if ($exec !== null) {
+            $this->exec = $exec;
+        }
     }
 
     public function getExec()
@@ -80,7 +92,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setComment($comment)
     {
-        $this->comment = $comment;
+        if ($comment !== null) {
+            $this->comment = $comment;
+        }
     }
 
     public function getComment()
@@ -90,7 +104,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -100,7 +116,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -110,7 +128,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -120,7 +140,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -130,7 +152,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -140,7 +164,9 @@ class CourierFeedVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

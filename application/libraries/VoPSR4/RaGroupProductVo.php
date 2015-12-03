@@ -1,41 +1,37 @@
 <?php
-
 class RaGroupProductVo extends \BaseVo
 {
     private $ra_group_id;
-
-    //class variable
     private $sku;
-    private $priority;
+    private $priority = '1';
+    private $build_bundle;
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
-    private $primary_key = array("ra_group_id", "sku");
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    //primary key
-    private $increment_field = "";
+    private $primary_key = ['ra_group_id', 'sku'];
+    private $increment_field = '';
 
-    //auo increment
-
-    public function __construct()
+    public function setRaGroupId($ra_group_id)
     {
-        parent::Base_vo();
+        if ($ra_group_id !== null) {
+            $this->ra_group_id = $ra_group_id;
+        }
     }
-
-    //instance method
 
     public function getRaGroupId()
     {
         return $this->ra_group_id;
     }
 
-    public function setRaGroupId($value)
+    public function setSku($sku)
     {
-        $this->ra_group_id = $value;
-        return $this;
+        if ($sku !== null) {
+            $this->sku = $sku;
+        }
     }
 
     public function getSku()
@@ -43,10 +39,11 @@ class RaGroupProductVo extends \BaseVo
         return $this->sku;
     }
 
-    public function setSku($value)
+    public function setPriority($priority)
     {
-        $this->sku = $value;
-        return $this;
+        if ($priority !== null) {
+            $this->priority = $priority;
+        }
     }
 
     public function getPriority()
@@ -54,15 +51,23 @@ class RaGroupProductVo extends \BaseVo
         return $this->priority;
     }
 
-    public function setPriority($value)
+    public function setBuildBundle($build_bundle)
     {
-        $this->priority = $value;
-        return $this;
+        if ($build_bundle !== null) {
+            $this->build_bundle = $build_bundle;
+        }
     }
-    
+
+    public function getBuildBundle()
+    {
+        return $this->build_bundle;
+    }
+
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -72,7 +77,9 @@ class RaGroupProductVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -82,7 +89,9 @@ class RaGroupProductVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -92,7 +101,9 @@ class RaGroupProductVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -102,7 +113,9 @@ class RaGroupProductVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -112,7 +125,9 @@ class RaGroupProductVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
@@ -130,5 +145,3 @@ class RaGroupProductVo extends \BaseVo
         return $this->increment_field;
     }
 }
-
-

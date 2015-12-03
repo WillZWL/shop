@@ -4,18 +4,18 @@ class CurrencyVo extends \BaseVo
     private $id;
     private $currency_id;
     private $sign;
-    private $name;
-    private $description;
-    private $round_up;
+    private $name = '';
+    private $description = '';
+    private $round_up = '';
     private $round_up_nearest_for_price_table = '0.99';
-    private $sign_pos;
-    private $dec_place;
-    private $dec_point;
-    private $thousands_sep;
+    private $sign_pos = '';
+    private $dec_place = '0';
+    private $dec_point = '';
+    private $thousands_sep = '';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -24,7 +24,9 @@ class CurrencyVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -34,7 +36,9 @@ class CurrencyVo extends \BaseVo
 
     public function setCurrencyId($currency_id)
     {
-        $this->currency_id = $currency_id;
+        if ($currency_id !== null) {
+            $this->currency_id = $currency_id;
+        }
     }
 
     public function getCurrencyId()
@@ -44,7 +48,9 @@ class CurrencyVo extends \BaseVo
 
     public function setSign($sign)
     {
-        $this->sign = $sign;
+        if ($sign !== null) {
+            $this->sign = $sign;
+        }
     }
 
     public function getSign()
@@ -54,7 +60,9 @@ class CurrencyVo extends \BaseVo
 
     public function setName($name)
     {
-        $this->name = $name;
+        if ($name !== null) {
+            $this->name = $name;
+        }
     }
 
     public function getName()
@@ -64,7 +72,9 @@ class CurrencyVo extends \BaseVo
 
     public function setDescription($description)
     {
-        $this->description = $description;
+        if ($description !== null) {
+            $this->description = $description;
+        }
     }
 
     public function getDescription()
@@ -74,7 +84,9 @@ class CurrencyVo extends \BaseVo
 
     public function setRoundUp($round_up)
     {
-        $this->round_up = $round_up;
+        if ($round_up !== null) {
+            $this->round_up = $round_up;
+        }
     }
 
     public function getRoundUp()
@@ -84,7 +96,9 @@ class CurrencyVo extends \BaseVo
 
     public function setRoundUpNearestForPriceTable($round_up_nearest_for_price_table)
     {
-        $this->round_up_nearest_for_price_table = $round_up_nearest_for_price_table;
+        if ($round_up_nearest_for_price_table !== null) {
+            $this->round_up_nearest_for_price_table = $round_up_nearest_for_price_table;
+        }
     }
 
     public function getRoundUpNearestForPriceTable()
@@ -94,7 +108,9 @@ class CurrencyVo extends \BaseVo
 
     public function setSignPos($sign_pos)
     {
-        $this->sign_pos = $sign_pos;
+        if ($sign_pos !== null) {
+            $this->sign_pos = $sign_pos;
+        }
     }
 
     public function getSignPos()
@@ -104,7 +120,9 @@ class CurrencyVo extends \BaseVo
 
     public function setDecPlace($dec_place)
     {
-        $this->dec_place = $dec_place;
+        if ($dec_place !== null) {
+            $this->dec_place = $dec_place;
+        }
     }
 
     public function getDecPlace()
@@ -114,7 +132,9 @@ class CurrencyVo extends \BaseVo
 
     public function setDecPoint($dec_point)
     {
-        $this->dec_point = $dec_point;
+        if ($dec_point !== null) {
+            $this->dec_point = $dec_point;
+        }
     }
 
     public function getDecPoint()
@@ -124,7 +144,9 @@ class CurrencyVo extends \BaseVo
 
     public function setThousandsSep($thousands_sep)
     {
-        $this->thousands_sep = $thousands_sep;
+        if ($thousands_sep !== null) {
+            $this->thousands_sep = $thousands_sep;
+        }
     }
 
     public function getThousandsSep()
@@ -134,7 +156,9 @@ class CurrencyVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -144,7 +168,9 @@ class CurrencyVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -154,7 +180,9 @@ class CurrencyVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -164,7 +192,9 @@ class CurrencyVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -174,7 +204,9 @@ class CurrencyVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -184,7 +216,9 @@ class CurrencyVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

@@ -16,7 +16,7 @@ class PriceDao extends BaseDao
         return $this->table_name;
     }
 
-    public function getItemsWithPrice($where = array(), $classname = "ItemWithPriceDto")
+    public function getItemsWithPrice($where = [], $classname = "ItemWithPriceDto")
     {
         $this->db->from('v_prod_items AS vpi');
         $this->db->join('price AS p', 'vpi.item_sku = p.sku', 'LEFT');
@@ -28,7 +28,7 @@ class PriceDao extends BaseDao
         $rs = [];
 
         if ($query = $this->db->get()) {
-            $this->include_dto($classname);
+            // $this->include_dto($classname);
             foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
@@ -38,29 +38,133 @@ class PriceDao extends BaseDao
         return FALSE;
     }
 
-    public function getPriceCostDto($sku, $platform, $shiptype = "", $classname = "ProductCostDto")
+    public function getPlatformPriceList($where = [], $option = [])
     {
-        $where = $option = [];
-        $select_str = "*";
-        $this->db->from('v_prod_w_platform_biz_var');
-        $where['sku'] = $sku;
-        $where['platform_id'] = $platform;
-        $option['limit'] = 1;
+        $classname = $this->getVoClassname();
+
+        $this->db->from('price AS p');
+        $this->db->join('selling_platform AS sp', 'sp.selling_platform_id= p.platform_id', 'INNER');
+
+        return $this->commonGetList($classname, $where, $option, 'p.*');
+    }
+
+    public function getProductPriceWithCost($where = [], $option = [], $classname = "ProductPriceWithCostDto")
+    {
+        $this->db->from('product p');
+        $this->db->join("freight_category fc", "fc.id = p.freight_cat_id", "LEFT");
+        $this->db->join("supplier_prod sp", "p.sku = sp.prod_sku AND sp.order_default = 1", "LEFT");
+        $this->db->join("supplier s", "sp.supplier_id = s.id", "INNER");
+        $this->db->join("exchange_rate sper", "sp.currency_id = sper.from_currency_id", "INNER");
+        $this->db->join("platform_biz_var pbv", "pbv.platform_currency_id = sper.to_currency_id", "INNER");
+        $this->db->join("sub_cat_platform_var scpv", "p.sub_cat_id = scpv.sub_cat_id AND pbv.selling_platform_id = scpv.platform_id", "LEFT");
+        $this->db->join("product_custom_classification cc", "cc.sku = p.sku AND cc.country_id = pbv.platform_country_id", "LEFT");
+
+        $select_str = " p.sku AS sku,
+                        pbv.selling_platform_id AS platform_id,
+                        pbv.platform_country_id AS platform_country_id,
+                        pbv.vat_percent AS vat_percent,
+                        pbv.payment_charge_percent AS payment_charge_percent,
+                        pbv.free_delivery_limit AS free_delivery_limit,
+                        pbv.admin_fee AS admin_fee,
+                        0 AS delivery_cost,
+                        0 AS delivery_charge,
+                        fc.declared_pcent AS declared_pcent,
+                        fc.weight AS prod_weight,
+                        sp.cost * sper.rate AS supplier_cost,
+                        cc.duty_pcent AS duty_pcent,
+                        scpv.platform_commission AS platform_commission,
+                        scpv.fixed_fee AS listing_fee,
+                        scpv.profit_margin AS sub_cat_margin,
+                        pbv.platform_currency_id AS platform_currency_id,
+                        pbv.forex_fee_percent AS forex_fee_percent";
+
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
-    public function getDefaultConvertedPrice($where = [], $option = [])
+    public function getPriceCostDto($sku, $platform, $shiptype = "", $classname = "ProductCostDto")
     {
-        $option["limit"] = 1;
+        $where = $option = [];
+        $this->db->from('product p');
+        $this->db->join("freight_category fc", "fc.id = p.freight_cat_id", "LEFT");
+        $this->db->join("supplier_prod sp", "p.sku = sp.prod_sku AND sp.order_default = 1", "LEFT");
+        $this->db->join("supplier s", "sp.supplier_id = s.id", "INNER");
+        $this->db->join("exchange_rate sper", "sp.currency_id = sper.from_currency_id", "INNER");
+        $this->db->join("platform_biz_var pbv", "pbv.platform_currency_id = sper.to_currency_id", "INNER");
+        $this->db->join("sub_cat_platform_var scpv", "p.sub_cat_id = scpv.sub_cat_id AND pbv.selling_platform_id = scpv.platform_id", "LEFT");
+        $this->db->join("product_custom_classification cc", "cc.sku = p.sku AND cc.country_id = pbv.platform_country_id", "LEFT");
+        $this->db->join("price_extend px", "px.sku = p.sku AND  px.platform_id = pbv.selling_platform_id", "LEFT");
 
-        return $this->getDefaultConvertedPriceList($where, $option);
+        $where['p.sku'] = $sku;
+        $where['pbv.selling_platform_id'] = $platform;
+        $option['limit'] = 1;
+
+        $select_str = " p.sku AS sku,
+                        p.prod_grp_cd AS prod_grp_cd,
+                        p.version_id AS version_id,
+                        p.colour_id AS colour_id,
+                        p.name AS prod_name,
+                        pbv.selling_platform_id AS platform_id,
+                        pbv.platform_region_id AS platform_region_id,
+                        pbv.platform_country_id AS platform_country_id,
+                        pbv.vat_percent AS vat_percent,
+                        pbv.payment_charge_percent AS payment_charge_percent,
+                        COALESCE (fc.declared_pcent, 100) AS declared_pcent,
+                        COALESCE (cc.duty_pcent, 0) AS duty_pcent,
+                        cc.code AS cc_code,
+                        cc.description AS cc_desc,
+                        COALESCE (pbv.admin_fee, 0) AS admin_fee,
+                        0 AS freight_cost,
+                        0 AS delivery_cost,
+                        COALESCE ((sp.cost * sper.rate),0) AS supplier_cost,
+                        sp.cost AS item_cost,
+                        sp.modify_on AS purchaser_updated_date,
+                        0 AS delivery_charge,
+                        fc.weight AS prod_weight,
+                        pbv.free_delivery_limit AS free_delivery_limit,
+                        p.quantity AS quantity,
+                        p.clearance AS clearance,
+                        p.website_quantity AS website_quantity,
+                        px.ext_qty AS ext_qty,
+                        p.proc_status AS proc_status,
+                        p.website_status AS website_status,
+                        p.sourcing_status AS sourcing_status,
+                        p.cat_id AS cat_id,
+                        p.sub_cat_id AS sub_cat_id,
+                        p.sub_sub_cat_id AS sub_sub_cat_id,
+                        p.brand_id AS brand_id,
+                        p.image AS image,
+                        sp.supplier_id AS supplier_id,
+                        p.freight_cat_id AS freight_cat_id,
+                        p.ean AS ean,
+                        p.mpn AS mpn,
+                        p.upc AS upc,
+                        p.status AS prod_status,
+                        p.display_quantity AS display_quantity,
+                        p.youtube_id AS youtube_id,
+                        p.ex_demo AS ex_demo,
+                        scpv.platform_commission AS platform_commission,
+                        scpv.fixed_fee AS listing_fee,
+                        scpv.profit_margin AS sub_cat_margin,
+                        pbv.platform_currency_id AS platform_currency_id,
+                        pbv.language_id AS language_id,
+                        pbv.forex_fee_percent AS forex_fee_percent,
+                        px.ext_item_id AS ext_item_id,
+                        px.handling_time AS handling_time";
+
+        return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
-    public function getDefaultConvertedPriceList($where = [], $option = [], $classname = "ProductCostDto")
+    public function getDefaultConvertedPrice($where = [], $option = [], $classname = "ProductCostDto")
     {
-        $select_str = "*";
-        $this->db->from('v_default_converted_price');
-        return $this->common_get_list($classname, $where, $option, $select_str);
+        $this->db->from('price pr');
+        $this->db->join("(platform_biz_var pbv INNER JOIN exchange_rate er)", "er.from_currency_id = 'HKD' AND er.to_currency_id = pbv.platform_currency_id", "LEFT");
+        $this->db->join("config c", "c.variable = 'default_platform_id' AND pr.platform_id = c.value", "INNER");
+
+        $select_str = "
+                        pbv.selling_platform_id AS platform_id,
+                        pr.sku AS sku,round((pr.price * er.rate),2) AS default_platform_converted_price
+                      ";
+        return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
     public function getListingInfo($sku = "", $platform_id = "", $lang_id = "en", $option = [], $class_name = 'ListingInfoDto')

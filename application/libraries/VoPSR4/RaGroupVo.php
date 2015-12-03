@@ -1,35 +1,38 @@
 <?php
-
 class RaGroupVo extends \BaseVo
 {
     private $group_id;
-
-    //class variable
     private $group_name;
     private $status = '1';
     private $warranty = '0';
+    private $ignore_qty_bundle = '0';
     private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
-    private $primary_key = array("group_id");
+    private $create_at = '2130706433';
+    private $create_by = 'system';
+    private $modify_on = '';
+    private $modify_at = '2130706433';
+    private $modify_by = 'system';
 
-    //primary key
-    private $increment_field = "group_id";
+    private $primary_key = ['group_id'];
+    private $increment_field = 'group_id';
 
-    //instance method
+    public function setGroupId($group_id)
+    {
+        if ($group_id !== null) {
+            $this->group_id = $group_id;
+        }
+    }
 
     public function getGroupId()
     {
         return $this->group_id;
     }
 
-    public function setGroupId($value)
+    public function setGroupName($group_name)
     {
-        $this->group_id = $value;
-        return $this;
+        if ($group_name !== null) {
+            $this->group_name = $group_name;
+        }
     }
 
     public function getGroupName()
@@ -37,10 +40,11 @@ class RaGroupVo extends \BaseVo
         return $this->group_name;
     }
 
-    public function setGroupName($value)
+    public function setStatus($status)
     {
-        $this->group_name = $value;
-        return $this;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -48,10 +52,11 @@ class RaGroupVo extends \BaseVo
         return $this->status;
     }
 
-    public function setStatus($value)
+    public function setWarranty($warranty)
     {
-        $this->status = $value;
-        return $this;
+        if ($warranty !== null) {
+            $this->warranty = $warranty;
+        }
     }
 
     public function getWarranty()
@@ -59,13 +64,23 @@ class RaGroupVo extends \BaseVo
         return $this->warranty;
     }
 
-    public function setWarranty($value)
+    public function setIgnoreQtyBundle($ignore_qty_bundle)
     {
-        $this->warranty = $value;
+        if ($ignore_qty_bundle !== null) {
+            $this->ignore_qty_bundle = $ignore_qty_bundle;
+        }
     }
+
+    public function getIgnoreQtyBundle()
+    {
+        return $this->ignore_qty_bundle;
+    }
+
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -75,7 +90,9 @@ class RaGroupVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -85,7 +102,9 @@ class RaGroupVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -95,7 +114,9 @@ class RaGroupVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -105,7 +126,9 @@ class RaGroupVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -115,7 +138,9 @@ class RaGroupVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
@@ -132,6 +157,4 @@ class RaGroupVo extends \BaseVo
     {
         return $this->increment_field;
     }
-
 }
-

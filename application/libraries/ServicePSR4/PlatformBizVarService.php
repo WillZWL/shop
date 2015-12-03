@@ -3,12 +3,6 @@ namespace ESG\Panther\Service;
 
 class PlatformBizVarService extends BaseService
 {
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getPlatformBizVar($id)
     {
         if ($id != "") {

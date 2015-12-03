@@ -3,17 +3,17 @@ class SiteConfigVo extends \BaseVo
 {
     private $id;
     private $domain;
-    private $site_name;
-    private $lang;
-    private $logo;
-    private $email;
+    private $site_name = '';
+    private $lang = '';
+    private $logo = '';
+    private $email = '';
     private $platform;
     private $domain_type = '1';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
-    private $modify_on = 'CURRENT_TIMESTAMP';
+    private $modify_on = '';
     private $modify_at = '2130706433';
     private $modify_by = 'system';
 
@@ -22,7 +22,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -32,7 +34,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setDomain($domain)
     {
-        $this->domain = $domain;
+        if ($domain !== null) {
+            $this->domain = $domain;
+        }
     }
 
     public function getDomain()
@@ -42,7 +46,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setSiteName($site_name)
     {
-        $this->site_name = $site_name;
+        if ($site_name !== null) {
+            $this->site_name = $site_name;
+        }
     }
 
     public function getSiteName()
@@ -52,7 +58,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setLang($lang)
     {
-        $this->lang = $lang;
+        if ($lang !== null) {
+            $this->lang = $lang;
+        }
     }
 
     public function getLang()
@@ -62,7 +70,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setLogo($logo)
     {
-        $this->logo = $logo;
+        if ($logo !== null) {
+            $this->logo = $logo;
+        }
     }
 
     public function getLogo()
@@ -72,7 +82,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setEmail($email)
     {
-        $this->email = $email;
+        if ($email !== null) {
+            $this->email = $email;
+        }
     }
 
     public function getEmail()
@@ -82,7 +94,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setPlatform($platform)
     {
-        $this->platform = $platform;
+        if ($platform !== null) {
+            $this->platform = $platform;
+        }
     }
 
     public function getPlatform()
@@ -92,7 +106,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setDomainType($domain_type)
     {
-        $this->domain_type = $domain_type;
+        if ($domain_type !== null) {
+            $this->domain_type = $domain_type;
+        }
     }
 
     public function getDomainType()
@@ -102,7 +118,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -112,7 +130,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -122,7 +142,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -132,7 +154,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -142,7 +166,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -152,7 +178,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -162,7 +190,9 @@ class SiteConfigVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()
