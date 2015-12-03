@@ -127,7 +127,7 @@
                         <br>Import your updated affiliate SKU's management file here.
                         <br>Update/Insert will be based on these columns:
                         <br>sku, affiliate_id, platform_id, affiliate_sku_status, new_affiliate_sku_status
-                        <form action="/marketing/product_overview_website_v2/upload_affiliate_feed" enctype="multipart/form-data" method="post" target="_blank">
+                        <form action="/marketing/ProductOverviewWebsite/upload_affiliate_feed" enctype="multipart/form-data" method="post" target="_blank">
                             <input type="file" name="datafile" size="40">
                             <input type="submit" value="Upload">
                         </form>
@@ -146,8 +146,8 @@
                     <td></td>
                     <td>
                         Export as CSV
-                        <a href="/marketing/product_overview_website_v2?<?= $query_string ?>&csv=1">here</a>, after modification, upload the file below
-                        <form action="/marketing/product_overview_website_v2/upload_sku_info" enctype="multipart/form-data" method="post">
+                        <a href="/marketing/ProductOverviewWebsite?<?= $query_string ?>&csv=1">here</a>, after modification, upload the file below
+                        <form action="/marketing/ProductOverviewWebsite/upload_sku_info" enctype="multipart/form-data" method="post">
                             <input type="file" name="datafile" size="40">
                             <input type="submit" value="Upload">
                         </form>
@@ -155,7 +155,7 @@
                     <td></td>
                     <td style="width:50%;text-align:left;">
                         Upload the clearance info
-                        <form action="/marketing/product_overview_website_v2/upload_clearance_sku_info" enctype="multipart/form-data" method="post">
+                        <form action="/marketing/ProductOverviewWebsite/upload_clearance_sku_info" enctype="multipart/form-data" method="post">
                             <input type="file" name="clearance_datafile" size="40">
                             <input type="submit" value="Upload">
                         </form>
@@ -176,21 +176,6 @@
                             </td>
                             <td></td>
                             <td></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-right:8px" align="right"></td>
-                            <td></td>
-                            <td style="padding-right:8px" align="right">
-                                <b>Surplus Quantity</b>
-                            </td>
-                            <td>
-                                <select id="surplusqty_prefix" name="surplusqty_prefix">
-                                    <option value="2"> Smaller <= </option>
-                                    <option value="1"> 0 and Smaller <= </option>
-                                    <option value="3"> Greater >= </option>
-                                </select>
-                                <input name="surplusqty" class="input" value="<?= $this->input->get("surplusqty") == " " ? "10000 " : $this->input->get("surplusqty") ?>" style="width:200px">
-                            </td>
                         </tr>
                         <tr>
                             <td style="padding-right:8px" align="right"><b><?= $lang["platform_id"] ?></b>

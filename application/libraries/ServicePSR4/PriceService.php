@@ -109,6 +109,29 @@ class PriceService extends BaseService
         }
     }
 
+    public function calcWebsiteProductRrp($price = 0, $fixed_rrp = 'Y', $rrp_factor = 1.18)
+    {
+        if ($price > 0) {
+            if ($fixed_rrp == 'Y') {
+                $markup = $price * 1.18;
+            } else {
+                if ($rrp_factor < 10) {
+                    $markup = $price * $rrp_factor;
+                } else {
+                    return number_format($rrp_factor, 2, '.', '');
+                }
+            }
+
+            $remainder = fmod($markup, 5);
+            $add_to = 5 - $remainder;
+            $rrp = number_format($markup - (-$add_to) - .01, 2, '.', '');
+
+            return number_format($rrp, 2, '.', '');
+        }
+
+        return 0;
+    }
+
     public function getListingInfoList($sku_arr = [], $platform_id = '', $lang_id = 'en', $option = [])
     {
         set_time_limit(600);
