@@ -63,9 +63,11 @@ class PriceService extends BaseService
 
             if ($price_obj) {
                 $price_margin_obj = $this->getDao('PriceMargin')->get(['sku' => $sku, 'platform_id' => $platform_id]);
+                if (!$price_margin_obj) {
+                    $price_margin_obj = new \PriceMarginVo();
+                }
 
                 $price = $price_obj->getPrice();
-
                 $prod_obj->setPrice($price);
                 $this->calculateDeclaredValue($prod_obj);
                 $this->calcVat($prod_obj);
@@ -84,14 +86,12 @@ class PriceService extends BaseService
                 $duty_cost = $prod_obj->getDuty();
                 $forex_fee = $prod_obj->getForexFee();
 
-                // var_dump($prod_obj);
-
                 $total_cost = $vat + $logistic_cost + $supplier_cost + $payment_charge_cost + $listing_fee + $duty_cost + $forex_fee;
-
-
                 $profit = $price - $total_cost;
                 $margin = $profit / $price;
 
+                $price_margin_obj->setSku($sku);
+                $price_margin_obj->setPlatformId($platform_id);
                 $price_margin_obj->setSellingPrice($price);
                 $price_margin_obj->setVat($vat);
                 $price_margin_obj->setLogisticCost($logistic_cost);
@@ -103,8 +103,6 @@ class PriceService extends BaseService
                 $price_margin_obj->setTotalCost($total_cost);
                 $price_margin_obj->setProfit($profit);
                 $price_margin_obj->setMargin($margin);
-
-                // var_dump($price_margin_obj);die;
 
                 $this->getDao('PriceMargin')->update($price_margin_obj);
             }
