@@ -8,6 +8,7 @@ class ProductImageVo extends \BaseVo
     private $alt_text = '';
     private $image_saved = '1';
     private $vb_image = '';
+    private $stop_sync_image = '0';
     private $vb_alt_text = '';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
@@ -102,6 +103,18 @@ class ProductImageVo extends \BaseVo
     public function getVbImage()
     {
         return $this->vb_image;
+    }
+
+    public function setStopSyncImage($stop_sync_image)
+    {
+        //if ($stop_sync_image) {
+            $this->stop_sync_image = $stop_sync_image;
+        //}
+    }
+
+    public function getStopSyncImage()
+    {
+        return $this->stop_sync_image;
     }
 
     public function setVbAltText($vb_alt_text)

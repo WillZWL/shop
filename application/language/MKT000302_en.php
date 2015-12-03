@@ -120,6 +120,7 @@
 			"t_priority"=> "Priority",
 			"t_file_upload"=> "File Upload",
 			"t_status"=> "Active",
+			"t_stop_sync"=> "Stop Sync",
 			"no_image"=> "No Image Yet",
 			"alt_text"=>"Alt Text",
 			"banner_alt_text"=>"Banner Alt Text",

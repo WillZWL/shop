@@ -36,7 +36,7 @@ img {
   font-weight: bold;
   padding-left: 8px;
   padding-right: 8px;
-  background: #AA3300;
+  background: #006600; /*#AA3300;*/
 }
 .title2 {
   border-top: 2px solid #000;
@@ -275,7 +275,7 @@ b.login {
   color: #FF0000;
 }
 .page_header {
-  background: #FF6600;
+  background: #549B17; /*#FF6600;*/
 }
 .line {
   background: #000033
@@ -304,7 +304,7 @@ b.login {
   background: #FFEE00 !important;
 }
 .field {
-  background: #FF9900;
+  background: #66CC00;
 }
 .value {
   background: #FFFF00;

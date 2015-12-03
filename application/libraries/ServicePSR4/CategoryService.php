@@ -65,9 +65,10 @@ class CategoryService extends BaseService
         $newObj->setLevel((string) $oldObj->level);
         $newObj->setAddColourName((string) $oldObj->add_colour_name);
         $newObj->setPriority((string) $oldObj->priority);
+        $newObj->setStopSyncPriority((string) $oldObj->stop_sync_priority);
         $newObj->setBundleDiscount((string) $oldObj->bundle_discount);
         $newObj->setMinDisplayQty((string) $oldObj->min_display_qty);
-        $newObj->setSponsored((string) $newObj->getSponsored());
+        $newObj->setSponsored((string) $oldObj->sponsored);
         $newObj->setStatus((string) $oldObj->status);
     }
 
@@ -88,6 +89,7 @@ class CategoryService extends BaseService
     public function updateCategoryExtend($newObj, $oldObj)
     {
         $newObj->setName((string) $oldObj->name);
+        $newObj->setStopSyncName((string) $oldObj->stop_sync_name);
     }
 
     public function getMenuListData($lang_id, $platform_id)

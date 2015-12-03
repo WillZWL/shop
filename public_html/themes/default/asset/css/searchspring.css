@@ -168,214 +168,165 @@
 
 }*/
 
-
 body #searchspring-autocomplete_results {
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  -o-border-radius: 0;
-  border-radius: 0;
-  border: 1px solid #d9d9d9;
-  z-index: 9999;
-  margin: 0 auto;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  box-shadow: none;
-  width: 400px;
-}
-body #searchspring-autocomplete_results li {
-  margin: 0;
-}
-body #searchspring-autocomplete_results em {
-  color: #549B17;
-  font-style: normal;
-}
-body #searchspring-autocomplete_results .ac_title:first-of-type,
-body #searchspring-autocomplete_results .ac_title,
-body #searchspring-autocomplete_results .ac_powered {
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  -o-border-radius: 0;
-  border-radius: 0;
-}
-body #searchspring-autocomplete_results .ac_title,
-body #searchspring-autocomplete_results .ac_term_suggest {
-  padding: 6px 12px;
-  font-family: "Open Sans", Arial, Sans-serif;
-  color: #fff;
-  background: #323232;
-}
-body #searchspring-autocomplete_results .ac_term_suggest em {
-  color: #fff;
-}
-body #searchspring-autocomplete_results .ac_title {
-  font-size: 18px;
-  line-height: 22px;
-  margin: 0;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-body #searchspring-autocomplete_results .ac_term_suggest {
-  font-size: 14px;
-  line-height: 18px;
-}
-body #searchspring-autocomplete_results .ac_term_suggest:hover {
-background: #549B17;
-}
-body #searchspring-autocomplete_results .ac_powered {
-  display: none;
-}
-body #searchspring-autocomplete_results .ac_result_even {
-  background: #f6f6f6;
-}
-body #searchspring-autocomplete_results .ac_term_result {
-  padding: 6px;
-}
-body #searchspring-autocomplete_results .ac_product_result.highlight,
-body #searchspring-autocomplete_results .ac_product_result:hover {
-  background: #e6e6e6;
-}
-body #searchspring-autocomplete_results .ac_product_result {
-  padding: 15px 6px;
-}
-body #searchspring-autocomplete_results .ac_product_result .image {
-  height: auto;
-  width: 60px;
-}
-body #searchspring-autocomplete_results .ac_product_result .info {
-  width: auto;
-  margin: 0;
-  float: none;
-  overflow: hidden;
-  padding: 0 0 0 20px;
-}
-body #searchspring-autocomplete_results .ac_term_result,
-body #searchspring-autocomplete_results .ac_product_result .info div {
-  font-family: "Open Sans", Arial, Sans-serif;
-  font-size: 14px;
-  line-height: 18px;
-  color: #555555;
-}
-body #searchspring-autocomplete_results .ac_product_result .info .sku {
-display: none;
-}
-body #searchspring-autocomplete_results .ac_product_result .info .price {
-  font-style: normal;
-  font-weight: bold;
-  color: #333333;
-}
-body #searchspring-autocomplete_results:before,
-body #searchspring-autocomplete_results:after {
-  width: 0;
-  height: 0;
-}
-body #searchspring-autocomplete_results:before {
-  left: 16px;
-  right: auto;
-  top: -7px;
-  background: none;
-  border-right: 9px inset transparent;
-  border-left: 9px inset transparent;
-  border-bottom: 7px solid #d9d9d9;
-}
-body #searchspring-autocomplete_results:after {
-  position: absolute;
-  top: -6px;
-  left: 18px;
-  right: auto;
-  margin: 0 auto;
-  display: block;
-  content: '';
-  border-right: 7px inset transparent;
-  border-left: 7px inset transparent;
-  border-bottom: 6px solid #fff;
-}
-@media only screen and (max-width: 768px) {
-  body #searchspring-autocomplete_results {
-      width: auto;
-      max-width: 100%;
-      margin: auto;
-      left: 15px !important;
-      right: 15px !important;
-  }
-  body #searchspring-autocomplete_results:before {
-      right: 48px;
-  }
-  body #searchspring-autocomplete_results:after {
-    right: 50px;
-  }
-  body #searchspring-autocomplete_results .ac_term_result,
-  body #searchspring-autocomplete_results .ac_product_result {
-      padding: 3px 6px;
-  }
-  body #searchspring-autocomplete_results .ac_product_result .image {
-      width: 50px;
-  }
-  body #searchspring-autocomplete_results .ac_product_result .image img {
-      max-height: 40px;
-  }
-  body #searchspring-autocomplete_results .ac_title,
-  body #searchspring-autocomplete_results .ac_term_suggest {
-      padding: 6px 12px;
-      font-size: 14px;
-      line-height: 16px;
-  }
-  body #searchspring-autocomplete_results .ac_term_result,
-  body #searchspring-autocomplete_results .ac_product_result .info div {
-      line-height: 16px;
-      font-size: 12px;
-  }
-}
+                                          -webkit-border-radius: 0;
+                                          -moz-border-radius: 0;
+                                          -ms-border-radius: 0;
+                                          -o-border-radius: 0;
+                                          border-radius: 0;
+                                          border: 1px solid #d9d9d9;
+                                          z-index: 9999;
+                                          margin: 0 auto;
+                                          -webkit-box-sizing: border-box;
+                                          -moz-box-sizing: border-box;
+                                          box-sizing: border-box;
+                                          box-shadow: none;
+                                          width: 400px;
+                                      }
+                                      body #searchspring-autocomplete_results li {
+                                          margin: 0;
+                                      }
+                                      body #searchspring-autocomplete_results em {
+                                          color: #549B17;
+                                          font-style: normal;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_title:first-of-type,
+                                      body #searchspring-autocomplete_results .ac_title,
+                                      body #searchspring-autocomplete_results .ac_powered {
+                                          -webkit-border-radius: 0;
+                                          -moz-border-radius: 0;
+                                          -ms-border-radius: 0;
+                                          -o-border-radius: 0;
+                                          border-radius: 0;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_title,
+                                      body #searchspring-autocomplete_results .ac_term_suggest {
+                                          padding: 6px 12px;
+                                          font-family: "Open Sans", Arial, Sans-serif;
+                                          color: #fff;
+                                          background: #323232;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_term_suggest em {
+                                          color: #fff;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_title {
+                                          font-size: 18px;
+                                          line-height: 22px;
+                                          margin: 0;
+                                          font-weight: 600;
+                                          text-transform: uppercase;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_term_suggest {
+                                          font-size: 14px;
+                                          line-height: 18px;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_term_suggest:hover {
+                                        background: #549B17;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_powered {
+                                          display: none;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_result_even {
+                                          background: #f6f6f6;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_term_result {
+                                          padding: 6px;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_product_result.highlight,
+                                      body #searchspring-autocomplete_results .ac_product_result:hover {
+                                          background: #e6e6e6;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_product_result {
+                                          padding: 15px 6px;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_product_result .image {
+                                          height: auto;
+                                          width: 60px;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_product_result .info {
+                                          width: auto;
+                                          margin: 0;
+                                          float: none;
+                                          overflow: hidden;
+                                          padding: 0 0 0 20px;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_term_result,
+                                      body #searchspring-autocomplete_results .ac_product_result .info div {
+                                          font-family: "Open Sans", Arial, Sans-serif;
+                                          font-size: 14px;
+                                          line-height: 18px;
+                                          color: #555555;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_product_result .info .sku {
+                                        display: none;
+                                      }
+                                      body #searchspring-autocomplete_results .ac_product_result .info .price {
+                                          font-style: normal;
+                                          font-weight: bold;
+                                          color: #333333;
+                                      }
+                                      body #searchspring-autocomplete_results:before,
+                                      body #searchspring-autocomplete_results:after {
+                                          width: 0;
+                                          height: 0;
+                                      }
+                                      body #searchspring-autocomplete_results:before {
+                                          left: 16px;
+                                          right: auto;
+                                          top: -7px;
+                                          background: none;
+                                          border-right: 9px inset transparent;
+                                          border-left: 9px inset transparent;
+                                          border-bottom: 7px solid #d9d9d9;
+                                      }
+                                      body #searchspring-autocomplete_results:after {
+                                          position: absolute;
+                                          top: -6px;
+                                          left: 18px;
+                                          right: auto;
+                                          margin: 0 auto;
+                                          display: block;
+                                          content: '';
+                                          border-right: 7px inset transparent;
+                                          border-left: 7px inset transparent;
+                                          border-bottom: 6px solid #fff;
+                                      }
+                                      @media only screen and (max-width: 768px) {
+                                          body #searchspring-autocomplete_results {
+                                              width: auto;
+                                              max-width: 100%;
+                                              margin: auto;
+                                              left: 15px !important;
+                                              right: 15px !important;
+                                          }
+                                          body #searchspring-autocomplete_results:before {
+                                              right: 48px;
+                                          }
+                                          body #searchspring-autocomplete_results:after {
+                                            right: 50px;
+                                          }
+                                          body #searchspring-autocomplete_results .ac_term_result,
+                                          body #searchspring-autocomplete_results .ac_product_result {
+                                              padding: 3px 6px;
+                                          }
+                                          body #searchspring-autocomplete_results .ac_product_result .image {
+                                              width: 50px;
+                                          }
+                                          body #searchspring-autocomplete_results .ac_product_result .image img {
+                                              max-height: 40px;
+                                          }
+                                          body #searchspring-autocomplete_results .ac_title,
+                                          body #searchspring-autocomplete_results .ac_term_suggest {
+                                              padding: 6px 12px;
+                                              font-size: 14px;
+                                              line-height: 16px;
+                                          }
+                                          body #searchspring-autocomplete_results .ac_term_result,
+                                          body #searchspring-autocomplete_results .ac_product_result .info div {
+                                              line-height: 16px;
+                                              font-size: 12px;
+                                          }
+                                      }
 
-
-
-
-/*
- * SearchSpring Slideout
- ------------------------
- * barebones stylesheet
- *
- */
-body.ss-slideout_body {
-  overflow: hidden; }
-
-body .searchspring-overlay {
-  height: 0%;
-  width: 0%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -999999; }
-
-body .searchspring-overlay.ss-slideout_show {
-  z-index: 999998;
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0; }
-
-body #searchspring-slideout_container {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: -300px;
-  transition: left 0.5s;
-  height: 100%;
-  z-index: 999999;
-  width: 90%;
-  max-width: 300px;
-  padding: 0px;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  background: #fff;
-  box-shadow: -1px 0px 5px #999; }
-
-body #searchspring-slideout_container.ss-slideout_show {
-  display: block;
-  left: 0px;
-  transition: all 200ms; }
 
 

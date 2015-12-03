@@ -146,6 +146,7 @@
                             foreach ($lang_list as $key => $lang_obj) :
                                 $cur_lang_id = $lang_obj->getLangId();
                                 @$cur_name = $cat_ext[$cat_id][$cur_lang_id] ? $cat_ext[$cat_id][$cur_lang_id]->getName() : "";
+                                @$cur_stop_sync_name = $cat_ext[$cat_id][$cur_lang_id] ? $cat_ext[$cat_id][$cur_lang_id]->getStopSyncName() : 0;
                                 ?>
                                 <div id="div_name_<?= $cur_lang_id ?>" class="x-tab" title="<?= $lang_obj->getLangName() ?>" style="border:0px">
                                     <table border="0" cellpadding="0" cellspacing="1" height="20" class="page_header"
@@ -157,6 +158,12 @@
                                             <td class="field"><?= $lang["display_name"] ?></td>
                                             <td class="value" colspan="2">
                                                 <input name="lang_name[<?= $cur_lang_id ?>]" class="input" value="<?= htmlspecialchars($cur_name) ?>">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="field"><?= $lang["stop_sync_display_name"] ?></td>
+                                            <td height="20" valign="top" class="value" align="left" colspan="2">
+                                                <input type="checkbox" name="stop_sync_name[<?= $cur_lang_id ?>]" value="1" onChange="confirmStopSyncName(this)" <?=$cur_stop_sync_name?"CHECKED":""?> style="vertical-align:middle;margin-left:10px;">
                                             </td>
                                         </tr>
                                     </table>
@@ -209,6 +216,12 @@
                     <input type="text" name="priority" value="<?= $cat_obj->getPriority() ?>" isInteger min=1>
                 </td>
             </tr>
+            <tr>
+                <td width="142" height="20" valign="top" class="field" align="right"><?= $lang["stop_sync_priority"] ?></td>
+                <td height="20" valign="top" class="value" align="left" colspan="2">
+                    <input type="checkbox" name="stop_sync_priority" value="1" onChange="confirmStopSync(this)" <?=$cat_obj->getStopSyncPriority()?"CHECKED":""?> style="vertical-align:middle;margin-left:10px;"></div>
+                </td>
+            </tr>
             <?php
             if ($cat_obj->getLevel() == 2) :
                 ?>
@@ -222,6 +235,12 @@
             <?php
             endif;
             ?>
+            <tr>
+                <td width="142" height="20" valign="top" class="field" align="right"><?= $lang["sponsored"] ?></td>
+                <td height="20" valign="top" class="value" align="left" colspan="2">
+                    <input type="checkbox" name="sponsored" value="1" <?=$cat_obj->getSponsored()?"CHECKED":""?> style="vertical-align:middle;margin-left:10px;"></div>
+                </td>
+            </tr
             <tr>
                 <td width="142" height="20" valign="top" class="field" align="right"><?= $lang["hs_code"] ?>
                 <td height="20" valign="top" class="value" align="left" colspan="2">
@@ -677,6 +696,48 @@
     function fillduty(ccode, duty, cid) {
 
         $('#duty_' + cid).val(duty);
+    }
+
+
+
+    function confirmStopSync(ele)
+    {
+        if(ele.checked)
+        {
+            var r = confirm("Stop syncing priority from VB?");
+            if(r == false)
+            {
+                ele.checked = false;
+            }
+        }
+        else
+        {
+            var r = confirm("Allow syncing priority from VB?");
+            if(r == false)
+            {
+                ele.checked = true;
+            }
+        }
+    }
+
+    function confirmStopSyncName(ele)
+    {
+        if(ele.checked)
+        {
+            var r = confirm("Stop syncing display name from VB?");
+            if(r == false)
+            {
+                ele.checked = false;
+            }
+        }
+        else
+        {
+            var r = confirm("Allow syncing display name from VB?");
+            if(r == false)
+            {
+                ele.checked = true;
+            }
+        }
     }
 </script>
 <?= $notice["js"] ?>

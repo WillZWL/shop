@@ -8,8 +8,9 @@ class CategoryVo extends \BaseVo
     private $level = '1';
     private $add_colour_name = '1';
     private $priority = '9';
-    private $bundle_discount = '0.00';
-    private $min_display_qty = '0';
+    private $stop_sync_priority = '0';
+    private $bundle_discount;
+    private $min_display_qty;
     private $sponsored = '0';
     private $status = '1';
     private $hidden = '0';
@@ -105,6 +106,18 @@ class CategoryVo extends \BaseVo
     public function getPriority()
     {
         return $this->priority;
+    }
+
+    public function setStopSyncPriority($stop_sync_priority)
+    {
+        if ($stop_sync_priority !== null) {
+            $this->stop_sync_priority = $stop_sync_priority;
+        }
+    }
+
+    public function getStopSyncPriority()
+    {
+        return $this->stop_sync_priority;
     }
 
     public function setBundleDiscount($bundle_discount)

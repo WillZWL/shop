@@ -45,13 +45,24 @@ class VbDataTransferProductImageService extends VbDataTransferService
 
                 $pi_obj = $this->getService('Product')->getDao('ProductImage')->get(['vb_image' => $vb_image]);
 
+                $reason = 'insert_or_update';
                 if ($pi_obj) {
-                    $this->getService('ProductImage')->updateProductImage($pi_obj, $pc);
-                    $pi_obj->setImageSaved(0);
-                    if ($this->getService('ProductImage')->getDao('ProductImage')->update($pi_obj)) {
-                        $process_status = 5;
-                    } else {
-                        $process_status = 3;
+                    //we need to check the stop_sync_image value to stop the update when needed (only for update)
+                    $stop_sync_image = $cat_ext_obj->getStopSyncImage();
+
+                    if ($stop_sync_image != 1)
+                    {
+                        $this->getService('ProductImage')->updateProductImage($pi_obj, $pc);
+                        $pi_obj->setImageSaved(0);
+                        if ($this->getService('ProductImage')->getDao('ProductImage')->update($pi_obj)) {
+                            $process_status = 5;
+                        } else {
+                            $process_status = 3;
+                        }
+                    }
+                    else
+                    {
+                        $reason = 'stop_sync_image';
                     }
                 } else {
                     $pi_obj = $this->getService('ProductImage')->createNewProductImage($sku, $pc);
@@ -69,7 +80,7 @@ class VbDataTransferProductImageService extends VbDataTransferService
                 $xml[] = '<master_sku>' . $master_sku. '</master_sku>';
                 $xml[] = '<status>' . $process_status . '</status>'; //updated
                 $xml[] = '<is_error>' . $pc->is_error . '</is_error>';
-                $xml[] = '<reason>update</reason>';
+                $xml[] = '<reason>'.$reason.'</reason>';
                 $xml[] = '</product_image>';
             } catch(Exception $e) {
                 $xml[] = '<product_image>';

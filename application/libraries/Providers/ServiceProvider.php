@@ -393,5 +393,6 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['AffiliateSkuPlatform'] = function () {
             return new S\AffiliateSkuPlatformService();
         };
+
     }
 }

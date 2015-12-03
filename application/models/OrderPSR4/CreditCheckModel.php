@@ -15,32 +15,32 @@ class CreditCheckModel extends \CI_Model
 
     public function getList($dao, $where = [], $option = [])
     {
-        return $this->getDao($dao)->getList($where, $option);
+        return $this->soService->getDao($dao)->getList($where, $option);
     }
 
     public function getNumRows($dao, $where = [])
     {
-        return $this->getDao($dao)->getNumRows($where);
+        return $this->soService->getDao($dao)->getNumRows($where);
     }
 
     public function get($dao, $where = [])
     {
-        return $this->getDao($dao)->get($where);
+        return $this->soService->getDao($dao)->get($where);
     }
 
     public function update($dao, $obj)
     {
-        return $this->getDao($dao)->update($obj);
+        return $this->soService->getDao($dao)->update($obj);
     }
 
     public function add($dao, $obj)
     {
-        return $this->getDao($dao)->insert($obj);
+        return $this->soService->getDao($dao)->insert($obj);
     }
 
     public function includeVo($dao)
     {
-        return $this->getDao($dao)->get();
+        return $this->soService->getDao($dao)->get();
     }
 
     public function createRefundFromCommunicationCenter($so_no = "", $refund_parameter = array())
@@ -75,9 +75,9 @@ class CreditCheckModel extends \CI_Model
     public function addOrderNote($so_no, $notes)
     {
         $obj = $this->soService->getDao('OrderNotes')->get();
-        $obj->set_so_no($so_no);
-        $obj->set_type('O');
-        $obj->set_note($notes);
+        $obj->setSoNo($so_no);
+        $obj->setType('O');
+        $obj->setNote($notes);
         return $this->soService->getDao('OrderNotes')->insert($obj);
     }
 }
