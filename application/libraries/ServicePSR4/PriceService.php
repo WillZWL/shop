@@ -452,7 +452,12 @@ class PriceService extends BaseService
 
     public function calculateDeclaredValue($prod_obj = "", $country_id = "", $price = "")
     {
-        return $this->getService('So')->getDeclaredValue($prod_obj, $country_id, $price);
+        $price = $prod_obj->getPrice();
+        $country_id = $prod_obj->getPlatformCountryId();
+        $declared_value = $this->getService('So')->getDeclaredValue($prod_obj, $country_id, $price);
+        $prod_obj->setDeclaredValue($declared_value);
+
+        return $declared_value;
     }
 
     public function calcPaymentCharge($dto = NULL)
