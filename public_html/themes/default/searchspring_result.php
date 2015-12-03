@@ -144,8 +144,8 @@
           <h6 class="name"><a href="{{ item.url }}" intellisuggest>{{ item.name }}</a></h6>
           <p class="description"></p>
           <div class="price">
-            <span class="price-old" ng-if="item.msrp > item.price"><font class="list_price">List Price :  </font>{{ item.msrp | currency:'£':2 }}</span>
-            <span class="price-new"><font class="pay_price">You Pay :  </font>{{ item.price | currency:'£':2 }}</span>
+            <span class="price-old" ng-if="item.msrp > item.price"><font class="list_price">List Price :  </font><strike id="before_{{ item.sku }}">{{ item.msrp | currency:'£':2 }}</strike></span>
+            <span class="price-new"><font class="pay_price">You Pay :  </font><strong id="price_{{ item.sku }}">{{ item.price | currency:'£':2 }}</strong></span>
           </div>
           <div class="save_alter"><span ng-if="item.msrp > item.price">{{ item.discount_text }}</span></div>
         </div>
