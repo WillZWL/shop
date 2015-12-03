@@ -43,27 +43,72 @@ class PriceService extends BaseService
         $newObj->setDeliveryScenarioid((string) $obj->delivery_scenarioid);
     }
 
-    public function calcWebsiteProductRrp($price = 0, $fixed_rrp = 'Y', $rrp_factor = 1.18)
+    public function refreshMargin($platform_id = '', $sku = '')
     {
-        if ($price > 0) {
-            if ($fixed_rrp == 'Y') {
-                $markup = $price * 1.18;
-            } else {
-                if ($rrp_factor < 10) {
-                    $markup = $price * $rrp_factor;
-                } else {
-                    return number_format($rrp_factor, 2, '.', '');
-                }
-            }
-
-            $remainder = fmod($markup, 5);
-            $add_to = 5 - $remainder;
-            $rrp = number_format($markup - (-$add_to) - .01, 2, '.', '');
-
-            return number_format($rrp, 2, '.', '');
+        if ($sku !== '') {
+            $where['p.sku'] = $sku;
         }
 
-        return 0;
+        if ($platform_id !== '') {
+            $where['pbv.selling_platform_id'] = $platform_id;
+        }
+
+        $option = ['limit' => -1];
+        $prod_obj_list = $this->getDao('Price')->getProductPriceWithCost($where, $option);
+
+        foreach ($prod_obj_list as $prod_obj) {
+            $sku = $prod_obj->getSku();
+            $platform_id = $prod_obj->getPlatformId();
+            $price_obj = $this->getDao('Price')->get(['sku' => $sku, 'platform_id' => $platform_id]);
+
+            if ($price_obj) {
+                $price_margin_obj = $this->getDao('PriceMargin')->get(['sku' => $sku, 'platform_id' => $platform_id]);
+
+                $price = $price_obj->getPrice();
+
+                $prod_obj->setPrice($price);
+                $this->calculateDeclaredValue($prod_obj);
+                $this->calcVat($prod_obj);
+                $this->calcDeliveryCharge($prod_obj);
+                $this->calcLogisticCost($prod_obj);
+                $this->calcPaymentCharge($prod_obj);
+                $this->calcForexFee($prod_obj);
+                $this->calcDuty($prod_obj);
+                $this->calcForexFee($prod_obj);
+
+                $vat = $prod_obj->getVat();
+                $logistic_cost = $prod_obj->getLogisticCost();
+                $supplier_cost = $prod_obj->getSupplierCost();
+                $payment_charge_cost = $prod_obj->getPaymentCharge();
+                $listing_fee = $prod_obj->getListingFee();
+                $duty_cost = $prod_obj->getDuty();
+                $forex_fee = $prod_obj->getForexFee();
+
+                // var_dump($prod_obj);
+
+                $total_cost = $vat + $logistic_cost + $supplier_cost + $payment_charge_cost + $listing_fee + $duty_cost + $forex_fee;
+
+
+                $profit = $price - $total_cost;
+                $margin = $profit / $price;
+
+                $price_margin_obj->setSellingPrice($price);
+                $price_margin_obj->setVat($vat);
+                $price_margin_obj->setLogisticCost($logistic_cost);
+                $price_margin_obj->setSupplierCost($supplier_cost);
+                $price_margin_obj->setPaymentCharge($payment_charge_cost);
+                $price_margin_obj->setListingFee($listing_fee);
+                $price_margin_obj->setDuty($duty_cost);
+                $price_margin_obj->setForexFee($forex_fee);
+                $price_margin_obj->setTotalCost($total_cost);
+                $price_margin_obj->setProfit($profit);
+                $price_margin_obj->setMargin($margin);
+
+                // var_dump($price_margin_obj);die;
+
+                $this->getDao('PriceMargin')->update($price_margin_obj);
+            }
+        }
     }
 
     public function getListingInfoList($sku_arr = [], $platform_id = '', $lang_id = 'en', $option = [])
@@ -101,66 +146,6 @@ class PriceService extends BaseService
 
         return $sku_list;
     }
-
-    // public function getTrailCalcuProfitMargin(PriceVo $price_obj)
-    // {
-    //     $this->set_tool_path('marketing/pricing_tool_'.strtolower(PLATFORM_TYPE));
-
-    //     $dto = $this->getDao('Price')->getProductPriceWithCost(['p.sku'=>$sku, 'pbv.selling_platform_id'=>$platform_id], ['limit'=>1]);
-
-    //     $this->performBusinessLogic($dto, 5, $required_selling_price, $required_cost_price);
-
-    //     $array = array(
-    //         'local_sku' => $sku,
-    //         'based_on' => $price_obj->getPrice(),
-    //         'get_margin' => $dto->getMargin(),
-
-    //         'get_price' => $dto->getPrice(),
-
-    //         'get_delivery_cost' => $dto->getDeliveryCost(),
-    //         'get_declared_value' => $this->to2Decimal($dto->getDeclaredValue()),
-
-    //         'get_vat_percent' => $dto->getVatPercent(),
-    //         'get_vat' => $dto->getVat(),
-
-    //         'get_sales_commission' => $dto->getSalesCommission(),
-
-    //         'get_duty_pcent' => $dto->getDutyPcent(),
-    //         'get_duty' => $dto->getDuty(),
-
-    //         'get_payment_charge_percent' => $dto->getPaymentChargePercent(),
-    //         'get_payment_charge' => $dto->getPaymentCharge(),
-
-    //         'get_forex_fee_percent' => $dto->getForexFeePercent(),
-    //         'get_forex_fee' => $dto->getForexFee(),
-
-    //         'get_listing_fee' => $dto->getListingFee(),
-
-    //         'get_logistic_cost' => $dto->getLogisticCost(),
-    //         'get_supplier_cost' => $dto->getSupplierCost(),
-
-    //         'get_complementary_acc_cost' => $dto->getComplementaryAccCost(),
-
-    //         'get_cost' => $dto->getCost(),
-    //         'get_price' => $this->to2Decimal($dto->getPrice()),
-    //         'get_profit' => $this->to2Decimal($dto->getPrice()) - $dto->getCost(),
-
-    //     );
-
-    //     return json_encode($array);
-    // }
-
-    // private function performBusinessLogic($dto, $value_to_return, $required_selling_price = -1, $required_cost_price = -1)
-    // {
-    //     $price_obj = $this->getDao('Price')->get(["sku" => $sku, "platform_id" => $platform_id]);
-    //     if (!$price_obj || !(call_user_func([$price_obj, "getPrice"]) * 1)) {
-    //         if (!($default_obj = $this->getDao('Price')->getDefaultConvertedPrice(["pr.sku" => $sku, "pbv.selling_platform_id" => $platform_id], ['limit' => 1]))) {
-    //             return 0;
-    //         }
-    //         $defaultPlatformConvertedPrice = $default_obj->getDefaultPlatformConvertedPrice();
-    //     }
-    //     return $defaultPlatformConvertedPrice ? $defaultPlatformConvertedPrice : $price_obj->getPrice();
-    // }
 
     private function to2Decimal($value)
     {
