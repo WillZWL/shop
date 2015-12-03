@@ -4,34 +4,22 @@ include_once 'Base_dao.php';
 
 class RegionDao extends BaseDao
 {
-    private $table_name = "region";
-    private $vo_classname = "Region_vo";
-    private $seq_name = "";
-    private $seq_mapping_field = "";
+    private $tableName = "region";
+    private $voClassname = "RegionVo";
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function get_table_name()
+    public function getTableName()
     {
-        return $this->table_name;
+        return $this->tableName;
     }
 
-    public function get_vo_classname()
+    public function getVoClassname()
     {
-        return $this->vo_classname;
-    }
-
-    public function get_seq_name()
-    {
-        return $this->seq_name;
-    }
-
-    public function get_seq_mapping_field()
-    {
-        return $this->seq_mapping_field;
+        return $this-$voClassname;
     }
 
     public function get_region_by_name_and_type($region_name = "", $type, $id, $option = array())
@@ -68,7 +56,7 @@ class RegionDao extends BaseDao
         $rs = array();
         $cnt = 0;
         if ($query = $this->db->query($sql)) {
-            foreach ($query->result($$this->get_vo_classname()) as $obj) {
+            foreach ($query->result($this->getVoClassname()) as $obj) {
                 $cnt++;
                 $rs[] = $obj;
             }

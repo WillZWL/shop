@@ -89,7 +89,7 @@ class InventoryDao extends BaseDao
         $rs = [];
 
         if ($query = $this->db->query($sql, [$where["sku"]])) {
-            foreach ($query->result($$this->getVoClassname()) as $obj) {
+            foreach ($query->result($this->getVoClassname()) as $obj) {
                 $rs[] = $obj;
             }
             return $rs;

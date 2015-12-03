@@ -92,7 +92,55 @@
                     <td height="2" class="line"></td>
                 </tr>
             </table>
-<!--             <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
+
+            <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
+                <col width="150"><col width="420"><col width="170"><col width="420"><col>
+                <tr>
+                    <td></td>
+                    <td>
+                        <br>
+                        <b>AFFILIATE'S SKU MANAGEMENT</b>
+                        <br>affiliate_sku_status: 0 = auto / 1 = exclude / 2 = include
+                        <br>All products not in the list have "auto" status. To add a status to a new product, simply insert new line and fill in the "new_affiliate_sku_status" column.
+                        <form action="/marketing/product_overview_website_v2/export_affiliate_feed" enctype="multipart/form-data" method="post" target="_blank">
+                            <select name="platform_id">
+                                <option value=""></option>
+                                <?php foreach ($clist as $cobj): ?>
+                                    <option value="<?= $cobj->getSellingPlatformId() ?>"> <?= $cobj->getSellingPlatformId() ?> - <?= $cobj->getName() ?></option>
+                                <?php endforeach ?>
+                            </select>
+                            <br>
+                            <select name="afsku_status">
+                                <option value="NA">ALL</option>
+                                <option value="0">Auto</option>
+                                <option value="1">Exclude</option>
+                                <option value="2">Include</option>
+                            </select>
+                            <br>
+                            <textarea rows="3" name="af_skulist" placeholder="Local SKU, separated by next line"></textarea>
+                            <input type="submit" value="Export">
+                        </form>
+
+                    </td>
+                    <td></td>
+                    <td style="width:50%;text-align:left;">
+                        <br>Import your updated affiliate SKU's management file here.
+                        <br>Update/Insert will be based on these columns:
+                        <br>sku, affiliate_id, platform_id, affiliate_sku_status, new_affiliate_sku_status
+                        <form action="/marketing/product_overview_website_v2/upload_affiliate_feed" enctype="multipart/form-data" method="post" target="_blank">
+                            <input type="file" name="datafile" size="40">
+                            <input type="submit" value="Upload">
+                        </form>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4"><br><hr></hr><br></td>
+                </tr>
+            </table>
+
+
+            <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
                 <col width="150"> <col width="420"> <col width="170"> <col width="420"> <col>
                 <tr>
                     <td></td>
@@ -116,7 +164,7 @@
                 <tr>
                     <td colspan="4"></td>
                 </tr>
-            </table> -->
+            </table>
             <form name="fm" id="fm" method="get" onSubmit="return CheckForm(this)">
                 <div id="multifilter" style="display:block">
                     <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
@@ -174,7 +222,7 @@
                                 </select>
                             </td>
                         </tr>
-<!--                         <tr>
+                        <tr>
                             <td style="padding-right:8px" align="right">
                                 <b><?= $lang["category"] ?></b>
                             </td>
@@ -194,34 +242,14 @@
                             <td rowspan="3" align="center">
                                 <input type="button" value="<?= $lang["cmd_search_button"] ?>" onClick="if (CheckForm(this.form)) this.form.submit();">
                             </td>
-                        </tr> -->
-<!--                         <tr>
+                        </tr>
+                        <tr>
                             <td style="padding-right:8px" align="right">
                                 <b><?= $lang["sub_cat"] ?></b>
                             </td>
                             <td>
                                 <select name="scatid" class="input">
                                     <option value=""></option>
-                                </select>
-                            </td>
-                            <td style="padding-right:8px" align="right">
-                                <b><?= $lang["supplier"] ?></b>
-                            </td>
-                            <td>
-                                <select name="supp" class="input">
-                                    <option value=""></option>
-                                </select>
-                            </td>
-                        </tr> -->
-<!--                         <tr>
-                            <td style="padding-right:8px" align="right">
-                                <b>PLA</b>
-                            </td>
-                            <td>
-                                <select name="pla" class="input">
-                                    <option></option>
-                                    <option value="Y">Listed</option>
-                                    <option value="N">Unlisted</option>
                                 </select>
                             </td>
                             <td style="padding-right:8px" align="right">
@@ -237,13 +265,13 @@
                         </tr>
                         <tr>
                             <td style="padding-right:8px" align="right">
-                                <b>PLA API Result</b>
+                                <b>PLA</b>
                             </td>
                             <td>
-                                <select name='plaapi' class='input'>
+                                <select name="pla" class="input">
                                     <option></option>
-                                    <option value='1'>Success only</option>
-                                    <option value='0'>Fail only</option>
+                                    <option value="Y">Listed</option>
+                                    <option value="N">Unlisted</option>
                                 </select>
                             </td>
                             <td style="padding-right:8px" align="right">
@@ -256,17 +284,16 @@
                                     <option value='0'>Fail only</option>
                                 </select>
                             </td>
-                        </tr> -->
+                        </tr>
                         <tr>
                             <td style="padding-right:8px" align="right">
-                                <b>Auto Price Type</b>
+                                <b>PLA API Result</b>
                             </td>
                             <td>
-                                <select name='auto_price' class='input'>
-                                    <option value=""></option>
-                                    <option value="N">Manual</option>
-                                    <option value="Y">Auto</option>
-                                    <option value="C">CompReprice</option>
+                                <select name='plaapi' class='input'>
+                                    <option></option>
+                                    <option value='1'>Success only</option>
+                                    <option value='0'>Fail only</option>
                                 </select>
                             </td>
                             <td style="padding-right:8px" align="right">
@@ -606,13 +633,13 @@
     </div>
     <?= $objlist["js"] ?>
     <script>
-        // InitBrand(document.fm.brand);
+        InitBrand(document.fm.brand);
         // document.fm.brand.value = '<?=$this->input->get("brand")?>';
         // InitSupp(document.fm.supp);
         // document.fm.supp.value = '<?=$this->input->get("supp")?>';
-        // ChangeCat('0', document.fm.catid);
+        ChangeCat('0', document.fm.catid);
         // document.fm.catid.value = '<?=$this->input->get("catid")?>';
-        // ChangeCat('<?=$this->input->get("catid")?>', document.fm.scatid);
+        ChangeCat('<?=$this->input->get("catid")?>', document.fm.scatid);
         // document.fm.scatid.value = '<?=$this->input->get("scatid")?>';
 
         // function checklist(checkallboxid, checkname) {

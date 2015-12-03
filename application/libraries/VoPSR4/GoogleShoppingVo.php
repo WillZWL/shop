@@ -5,7 +5,7 @@ class GoogleShoppingVo extends \BaseVo
     private $sku;
     private $platform_id;
     private $status = '1';
-    private $price;
+    private $price = '0.00';
     private $api_request_result = '1';
     private $comment;
     private $create_on = '0000-00-00 00:00:00';

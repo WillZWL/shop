@@ -3,11 +3,11 @@ class PriceVo extends \BaseVo
 {
     private $id;
     private $sku;
-    private $platform_id;
+    private $platform_id = '';
     private $default_shiptype = '0';
     private $sales_qty = '0';
     private $price = '0.00';
-    private $vb_price;
+    private $vb_price = '0.00';
     private $status = 'I';
     private $allow_express = 'N';
     private $is_advertised = 'N';

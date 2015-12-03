@@ -1,7 +1,5 @@
 update application set url='marketing/ext-category-mapping' where id='MKT0074';
 
-/* above is LIVE */
-
 ALTER TABLE `category`
 ADD COLUMN `hidden`  tinyint(1) NOT NULL DEFAULT 0 AFTER `status`;
 
@@ -16,3 +14,4 @@ DROP INDEX `platform_id` ,
 ADD INDEX `idx_platform_id` (`platform_id`) USING BTREE ,
 ADD INDEX `idx_status` (`status`) USING BTREE ;
 
+/* above is LIVE */

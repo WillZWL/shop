@@ -9,22 +9,20 @@ class GoogleService extends BaseService
                         , ["accountId" => "316-460-3467", "accountName" => "VB FR"]
                         , ["accountId" => "899-782-9704", "accountName" => "VB IT"]];
 
-    public $shoppingAcctInfo = [["account_name" => "ValueBasket.SG", "account_id" => 8384686, "country" => array("SG"), "language" => array("en")]
-        , ["account_name" => "ValueBasket.it", "account_id" => 9674225, "country" => array("IT"), "language" => array("it")]
-        , ["account_name" => "ValueBasket.fi", "account_id" => 11038072, "country" => array("FI"), "language" => array("en")]
-        , ["account_name" => "ValueBasket.ch", "account_id" => 11328624, "country" => array("CH"), "language" => array("en")]
-        , ["account_name" => "ValueBasket.fr", "account_id" => 7852736, "country" => array("FR"), "language" => array("fr")]
-        , ["account_name" => "ValueBasket.com.au", "account_id" => 8113126, "country" => array("AU"), "language" => array("en")]
-        , ["account_name" => "Valuebasket.be", "account_id" => 8121966, "country" => array("BE"), "language" => array("fr")]
-        , ["account_name" => "ValueBasket.com", "account_id" => 8551995, "country" => array("GB", "CH"), "language" => array("en")]
-        , ["account_name" => "ValueBasket.es", "account_id" => 15241301, "country" => array("ES"), "language" => array("es")]
-        , ["account_name" => "ValueBasket.pl", "account_id" => 100892246, "country" => array("PL"), "language" => array("pl")]
-        , ["account_name" => "ValueBasket.com", "account_id" => 101019203, "country" => array("US"), "language" => array("en")]];
+    public $shoppingAcctInfo = [
+        "WEBAU" => ["account_name" => "AheadDigital AU", "account_id" => 106487544, "country" => array("AU"), "language" => array("en")]
+        , "WEBNZ" => ["account_name" => "AheadDigital NZ", "account_id" => 106491401, "country" => array("NZ"), "language" => array("en")]
+        , "WEBES" => ["account_name" => "BuhoLoco ES", "account_id" => 106487978, "country" => array("ES"), "language" => array("es")]
+        , "WEBGB" => ["account_name" => "DigitalDiscount UK", "account_id" => 106482750, "country" => array("GB"), "language" => array("en")]
+        , "WEBPL" => ["account_name" => "ElektroRaj PL", "account_id" => 106487577, "country" => array("PL"), "language" => array("pl")]
+        , "WEBBE" => ["account_name" => "NumeriStock BE", "account_id" => 106487592, "country" => array("BE"), "language" => array("fr")]
+        , "WEBFR" => ["account_name" => "NumeriStock FR", "account_id" => 106487574, "country" => array("FR"), "language" => array("fr")]
+        , "WEBIT" => ["account_name" => "NuovaDigitale IT", "account_id" => 106501714, "country" => array("IT"), "language" => array("it")]];
 
     public function __construct() {
         parent::__construct();
     }
-    
+
     public function getAdwordAccountInfoList() {
         return $this->adwordAccountInfo;
     }

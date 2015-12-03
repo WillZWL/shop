@@ -119,5 +119,4 @@ GETINCREMENTFIELD;
 $file .= "\n}\n";
 
 file_put_contents("application/libraries/VoPSR4/{$voClassName}.php", $file);
-
 }

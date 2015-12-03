@@ -59,6 +59,24 @@ class SupplierDao extends BaseDao
         }
         return FALSE;
     }
+
+    public function checkValidSupplierCost($sku)
+    {
+        if (empty($sku)) {
+            return FALSE;
+        }
+
+        $this->db->from("supplier AS s");
+        $this->db->join("supplier_prod AS sp", "s.id = sp.supplier_id AND sp.order_default = 1", "INNER");
+        $this->db->where("sp.prod_sku", $sku);
+        $this->db->select("count(1) total");
+
+        if ($query = $this->db->get()) {
+            return $query->row()->total;
+        }
+
+        return FALSE;
+    }
 }
 
 /* End of file supplier_dao.php */
