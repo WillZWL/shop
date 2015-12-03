@@ -3,6 +3,7 @@
     <title> <?= $lang["title"] ?> </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="<?= base_url() ?>css/bootstrap.min.css" type="text/css" media="all" />
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="<?= base_url() ?>css/colorbox.css" />
     <script type="text/javascript" src="<?= base_url() ?>js/jquery-colorbox.min.js"></script>

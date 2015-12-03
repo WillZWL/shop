@@ -151,42 +151,42 @@ class CI_Pagination {
 	 *
 	 * @var	string
 	 */
-	public $full_tag_open = '';
+	public $full_tag_open = '<ul class="pagination pagination-sm">';
 
 	/**
 	 * Full tag close
 	 *
 	 * @var	string
 	 */
-	public $full_tag_close = '';
+	public $full_tag_close = '</ul>';
 
 	/**
 	 * First tag open
 	 *
 	 * @var	string
 	 */
-	public $first_tag_open = '';
+	public $first_tag_open = '<li>';
 
 	/**
 	 * First tag close
 	 *
 	 * @var	string
 	 */
-	public $first_tag_close = '';
+	public $first_tag_close = '</li>';
 
 	/**
 	 * Last tag open
 	 *
 	 * @var	string
 	 */
-	public $last_tag_open = '';
+	public $last_tag_open = '<li>';
 
 	/**
 	 * Last tag close
 	 *
 	 * @var	string
 	 */
-	public $last_tag_close = '';
+	public $last_tag_close = '</li>';
 
 	/**
 	 * First URL
@@ -202,56 +202,56 @@ class CI_Pagination {
 	 *
 	 * @var	string
 	 */
-	public $cur_tag_open = '<strong>';
+	public $cur_tag_open = '<li class="active">';
 
 	/**
 	 * Current tag close
 	 *
 	 * @var	string
 	 */
-	public $cur_tag_close = '</strong>';
+	public $cur_tag_close = '</li>';
 
 	/**
 	 * Next tag open
 	 *
 	 * @var	string
 	 */
-	public $next_tag_open = '';
+	public $next_tag_open = '<li>';
 
 	/**
 	 * Next tag close
 	 *
 	 * @var	string
 	 */
-	public $next_tag_close = '';
+	public $next_tag_close = '</li>';
 
 	/**
 	 * Previous tag open
 	 *
 	 * @var	string
 	 */
-	public $prev_tag_open = '';
+	public $prev_tag_open = '<li>';
 
 	/**
 	 * Previous tag close
 	 *
 	 * @var	string
 	 */
-	public $prev_tag_close = '';
+	public $prev_tag_close = '</li>';
 
 	/**
 	 * Number tag open
 	 *
 	 * @var	string
 	 */
-	public $num_tag_open = '';
+	public $num_tag_open = '<li>';
 
 	/**
 	 * Number tag close
 	 *
 	 * @var	string
 	 */
-	public $num_tag_close = '';
+	public $num_tag_close = '</li>';
 
 	/**
 	 * Page query string flag
@@ -602,7 +602,7 @@ class CI_Pagination {
 					if ($this->cur_page === $loop)
 					{
 						// Current page
-						$output .= $this->cur_tag_open.$loop.$this->cur_tag_close;
+						$output .= $this->cur_tag_open.'<a href="#">'.$loop.'</a>'.$this->cur_tag_close;
 					}
 					elseif ($i === $base_page)
 					{
