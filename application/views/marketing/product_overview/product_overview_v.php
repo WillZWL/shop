@@ -102,7 +102,7 @@
                         <b>AFFILIATE'S SKU MANAGEMENT</b>
                         <br>affiliate_sku_status: 0 = auto / 1 = exclude / 2 = include
                         <br>All products not in the list have "auto" status. To add a status to a new product, simply insert new line and fill in the "new_affiliate_sku_status" column.
-                        <form action="/marketing/product_overview_website_v2/export_affiliate_feed" enctype="multipart/form-data" method="post" target="_blank">
+                        <form action="/marketing/productOverviewWebsite/exportAffiliateFeed" enctype="multipart/form-data" method="post" target="_blank">
                             <select name="platform_id">
                                 <option value=""></option>
                                 <?php foreach ($clist as $cobj): ?>
