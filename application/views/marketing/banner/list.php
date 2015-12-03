@@ -42,7 +42,7 @@
         }
 
         a.vlink {
-            color: #3333ff;
+            color: #0000CC;
         }
     </style>
     <script type="text/javascript">

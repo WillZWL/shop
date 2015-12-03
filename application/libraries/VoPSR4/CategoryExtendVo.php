@@ -5,6 +5,7 @@ class CategoryExtendVo extends \BaseVo
     private $cat_id;
     private $lang_id;
     private $name;
+    private $stop_sync_name = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -61,6 +62,18 @@ class CategoryExtendVo extends \BaseVo
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setStopSyncName($stop_sync_name)
+    {
+        //if ($stop_sync_name) {
+            $this->stop_sync_name = $stop_sync_name;
+        //}
+    }
+
+    public function getStopSyncName()
+    {
+        return $this->stop_sync_name;
     }
 
     public function setCreateOn($create_on)

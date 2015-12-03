@@ -8,6 +8,7 @@ class CategoryVo extends \BaseVo
     private $level = '1';
     private $add_colour_name = '1';
     private $priority = '9';
+    private $stop_sync_priority = '0';
     private $bundle_discount;
     private $min_display_qty;
     private $sponsored = '0';
@@ -104,6 +105,18 @@ class CategoryVo extends \BaseVo
         return $this->priority;
     }
 
+    public function setStopSyncPriority($stop_sync_priority)
+    {
+        //if ($stop_sync_priority) {
+            $this->stop_sync_priority = $stop_sync_priority;
+        //}
+    }
+
+    public function getStopSyncPriority()
+    {
+        return $this->stop_sync_priority;
+    }
+
     public function setBundleDiscount($bundle_discount)
     {
         if ($bundle_discount) {
@@ -130,9 +143,9 @@ class CategoryVo extends \BaseVo
 
     public function setSponsored($sponsored)
     {
-        if ($sponsored) {
+        //if ($sponsored) {
             $this->sponsored = $sponsored;
-        }
+        //}
     }
 
     public function getSponsored()

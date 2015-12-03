@@ -639,7 +639,7 @@ SQL;
             $rs = [];
 
             if ($query = $this->db->get()) {
-                // echo $this->db->last_query();die;
+                //echo $this->db->last_query();//die;
                 foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }

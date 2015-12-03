@@ -1340,6 +1340,7 @@ html;
                         }
                     }
 
+                    var_dump($data["product"]);exit;
                     if ($this->product_model->update("product", $data["product"])) {
                         // SBF 4402 warranty for different countries
                         // for receiving the changes of list
@@ -1728,6 +1729,10 @@ html;
                                     $priority = $p_list[$i] ? $p_list[$i] : 9;
                                     $prod_image[$i]->set_priority($priority);
 
+                                    $s_stop_sync = $this->input->post("im_stop_sync");
+                                    $image_stop_sync = $s_stop_sync[$i] ? '1' : '0';
+                                    $prod_image[$i]->set_stop_sync_image($image_stop_sync);
+
                                     if (!$this->product_model->add_product_image($prod_image[$i])) {
                                         $this->product_model->product_service->get_pi_dao()->trans_rollback();
                                         $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->product_model->product_service->get_pi_dao()->db->_error_message();
@@ -1747,6 +1752,10 @@ html;
                                     $priority = $p_list[$i] ? $p_list[$i] : 9;
                                     $prod_image[$i]->set_priority($priority);
 
+                                    $s_stop_sync = $this->input->post("im_stop_sync");
+                                    $image_stop_sync = $s_stop_sync[$i] ? '1' : '0';
+                                    $prod_image[$i]->set_stop_sync_image($image_stop_sync);
+
                                     if (!$this->product_model->update_product_image($prod_image[$i])) {
                                         $this->product_model->product_service->get_pi_dao()->trans_rollback();
                                         $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
@@ -1758,6 +1767,10 @@ html;
                                     $s_list = $this->input->post("im_status");
                                     $image_status = $s_list[$i] ? '1' : '0';
                                     $prod_image[$i]->set_status($image_status);
+
+                                    $s_stop_sync = $this->input->post("im_stop_sync");
+                                    $image_stop_sync = $s_stop_sync[$i] ? '1' : '0';
+                                    $prod_image[$i]->set_stop_sync_image($image_stop_sync);
                                     /* remove file if set inactive
                                     if($prod_image[$i]->get_status() == "0")
                                     {
@@ -1938,11 +1951,14 @@ html;
                     {
                         $google_cat_id = null;
                         //$ext_cat_obj = $this->product_model->get_googlebase_cat(array("ext_party"=>"GOOGLEBASE", "id"=>$google_cat_id));
-                        $platform_biz_var_obj = $this->platform_biz_var_service->get(array("platform_country_id" => $cid));
-                        $lang_id_temp = $platform_biz_var_obj->get_language_id();
-                        $google_product_name = $this->input->post("google_product_name_{$cid}");
-                        #SBF2701
-                        $this->product_model->category_mapping_service->update_or_insert_mapping($sku, $lang_id_temp, $cid, $google_cat_id, $google_product_name);
+                        $platform_biz_var_obj = $this->sc['PlatformBizVar']->getDao('PlatformBizVar')->get(array("platform_country_id" => $cid));
+                        if ($platform_biz_var_obj)
+                        {
+                            $lang_id_temp = $platform_biz_var_obj->getLanguageId();
+                            $google_product_name = $this->input->post("google_product_name_{$cid}");
+                            #SBF2701
+                            //$this->product_model->category_mapping_service->update_or_insert_mapping($sku, $lang_id_temp, $cid, $google_cat_id, $google_product_name);
+                        }
                     }
                 }
 
@@ -2523,7 +2539,8 @@ start;
                 }
             }
 
-            if ($ad_accountid_arr) {
+            //if ($ad_accountid_arr) {
+            if (false) {
                 $cat_name = $this->product_model->get("category", array("id" => $cat_id))->get_name();
 
                 foreach ($ad_accountid_arr as $platform_id => $id) {

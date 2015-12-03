@@ -13,7 +13,7 @@ class Credit_check extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        /*$this->load->model('order/credit_check_model');
+        /*$this->load->model('order/sc['creditCheckModel']');
         $this->load->helper(array('url', 'notice', 'object', 'operator'));
         $this->load->library('service/pagination_service');
         $this->load->library('service/event_service');
@@ -101,7 +101,7 @@ class Credit_check extends MY_Controller
         }
 
         if ($this->input->get('cybs') != "") {
-            $where["sor.risk_var1 LIKE"] = "%" . $this->input->get("cybs") . "%";
+            $where["sor.risk_var_1 LIKE"] = "%" . $this->input->get("cybs") . "%";
             $submit_search = 1;
         }
 
@@ -124,11 +124,11 @@ class Credit_check extends MY_Controller
 
         $option["orderby"] = $sort . " " . $order;
 
-        //$data["objlist"] = $this->credit_check_model->so_service->get_dao()->get_credit_check_list($where, $option);
-        $data["objlist"] = $this->sc['creditCheckModel']->getCreditCheckList($where, $option, $type);
+        //$data["objlist"] = $this->sc['creditCheckModel']->so_service->get_dao()->get_credit_check_list($where, $option);
+        $data["objlist"] = $this->sc['So']->getCreditCheckList($where, $option, $type);
 
-        //$data["total"] = $this->credit_check_model->so_service->get_dao()->get_credit_check_list($where, array("num_rows"=>1));
-        $data["total"] = $this->sc['creditCheckModel']->getCreditCheckListCount($where, array("num_rows" => 1), $type);
+        //$data["total"] = $this->sc['creditCheckModel']->so_service->get_dao()->get_credit_check_list($where, array("num_rows"=>1));
+        $data["total"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, array("num_rows" => 1), $type);
 
         $data["del_opt_list"] = end($this->sc['DeliveryOption']->getListWithKey(array("lang_id" => "en")));
         $pmgw_card_list = $this->sc['creditCheckModel']->getPmgwCardList();
@@ -137,30 +137,30 @@ class Credit_check extends MY_Controller
         }
 
         if ($data["objlist"]) {
-            include_once(APPPATH . "libraries/service/Payment_gateway_redirect_cybersource_service.php");
-            $cybs = new Payment_gateway_redirect_cybersource_service();
+            //include_once(APPPATH . "libraries/service/Payment_gateway_redirect_cybersource_service.php");
+            $cybs = $this->sc["PaymentGatewayRedirectCybersource"];
 
             foreach ($data["objlist"] AS $obj) {
                 $temp = array();
 
                 if ($pagetype == "comcenter") {
-                    $note_list = $this->sc['creditCheckModel']->getOrderNote(array("so_no" => $obj->get_so_no(), "type" => "O"));
+                    $note_list = $this->sc['So']->getDao('OrderNotes')->getList(array("so_no" => $obj->getSoNo(), "type" => "O"));
                     foreach ($note_list AS $note) {
                         $temp[] = $note->getNote() . ' (' . $note->getCreateOn() . ')';
                     }
                 } else {
-                    $note_list = $this->sc['creditCheckModel']->getOrderNote(array("so_no" => $obj->get_so_no(), "type" => "C"));
+                    $note_list = $this->sc['So']->getDao('OrderNotes')->getList(array("so_no" => $obj->getSoNo(), "type" => "C"));
                     foreach ($note_list AS $note) {
-                        $temp[] = $note->get_note();
+                        $temp[] = $note->getNote();
                     }
                 }
 
-                if ($obj->get_sor_obj()) {
-                    $data["risk1"][$obj->get_so_no()] = $cybs->risk_indictor_risk1($obj->get_sor_obj()->get_risk_var1());
-                    $data["risk2"][$obj->get_so_no()] = $cybs->risk_indictor_avs_risk2($obj->get_sor_obj()->get_risk_var2());
-                    $data["risk3"][$obj->get_so_no()] = $cybs->risk_indictor_cvn_risk3($obj->get_sor_obj()->get_risk_var3());
+                if ($obj->getSorObj()) {
+                    $data["risk1"][$obj->getSoNo()] = $cybs->riskIndictorRisk1($obj->getSorObj()->getRiskVar1());
+                    $data["risk2"][$obj->getSoNo()] = $cybs->riskIndictorAvsRisk2($obj->getSorObj()->getRiskVar2());
+                    $data["risk3"][$obj->getSoNo()] = $cybs->riskIndictorCvnRisk3($obj->getSorObj()->getRiskVar3());
                 }
-                $data["order_note"][$obj->get_so_no()] = implode('<br />', $temp);
+                $data["order_note"][$obj->getSoNo()] = implode('<br />', $temp);
             }
         }
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
@@ -225,8 +225,8 @@ class Credit_check extends MY_Controller
             $option["reason"] = 1;
             $option["item"] = 1;
 
-            $data["objlist"] = $this->credit_check_model->so_service->get_dao()->get_credit_check_list($where, $option);
-            $data["total"] = $this->credit_check_model->so_service->get_dao()->get_credit_check_list($where, array("num_rows" => 1));
+            $data["objlist"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, $option);
+            $data["total"] = $this->sc['So']->getDao('So')->getCreditCheckList($where, array("num_rows" => 1));
 
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
@@ -247,14 +247,14 @@ class Credit_check extends MY_Controller
 
     public function delete($so_no = "")
     {
-        if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+        if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
-                $so_obj->set_status(0);
-                if (!$this->credit_check_model->update("dao", $so_obj)) {
+                $so_obj->setStatus(0);
+                if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 }
             }
@@ -269,14 +269,14 @@ class Credit_check extends MY_Controller
 
     public function approve($so_no = "")
     {
-        if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+        if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
-                $so_obj->set_status(3);
-                if (!$this->credit_check_model->update("dao", $so_obj)) {
+                $so_obj->setStatus(3);
+                if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 }
             }
@@ -290,14 +290,15 @@ class Credit_check extends MY_Controller
 
     public function approve_challenged($so_no = "")
     {
-        if (($sops_obj = $this->credit_check_model->so_service->get_sops_dao()->get(array("so_no" => $so_no))) === FALSE) {
+
+        if (($sops_obj = $this->sc['So']->getDao('SoPaymentStatus')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($sops_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
-                $sops_obj->set_pending_action('P');
-                if (!$this->credit_check_model->so_service->get_sops_dao()->update($sops_obj)) {
+                $sops_obj->setPendingAction('P');
+                if (!$this->sc['So']->getDao('SoPaymentStatus')->update($sops_obj)) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 }
             }
@@ -311,14 +312,14 @@ class Credit_check extends MY_Controller
 
     public function reject_challenged($so_no = "")
     {
-        if (($sops_obj = $this->credit_check_model->so_service->get_sops_dao()->get(array("so_no" => $so_no))) === FALSE) {
+        if (($sops_obj = $this->sc['So']->getDao('SoPaymentStatus')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($sops_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
-                $sops_obj->set_pending_action('R');
-                if (!$this->credit_check_model->so_service->get_sops_dao()->update($sops_obj)) {
+                $sops_obj->setPendingAction('R');
+                if (!$this->sc['So']->getDao('SoPaymentStatus')->update($sops_obj)) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 }
             }
@@ -332,53 +333,53 @@ class Credit_check extends MY_Controller
 
     public function hold($so_no = "")
     {
-        if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+        if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
                 if (in_array($this->input->post("reason"), array("cscc", "csvv", "confirmed_fraud"))) {
-                    $so_obj->set_hold_status(1);
+                    $so_obj->setHoldStatus(1);
                 } else {
-                    $so_obj->set_hold_status(2);
+                    $so_obj->setHoldStatus(2);
                 }
 
-                if ($this->credit_check_model->update("dao", $so_obj)) {
-                    if (($sohr_vo = $this->credit_check_model->get("sohr_dao")) !== FALSE) {
-                        $sohr_vo->set_so_no($so_no);
-                        $sohr_vo->set_reason($this->input->post("reason"));
-                        if (!$this->credit_check_model->add("sohr_dao", $sohr_vo)) {
+                if ($this->sc['So']->getDao('So')->update($so_obj)) {
+                    if (($sohr_vo = $this->sc['So']->getDao('SoHoldReason')->get()) !== FALSE) {
+                        $sohr_vo->setSoNo($so_no);
+                        $sohr_vo->setReason($this->input->post("reason"));
+                        if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_vo)) {
                             $_SESSION["NOTICE"] = $this->db->_error_message();
                         }
                         if (in_array($this->input->post("reason"), array("cscc", "csvv"))) {
                             //Commented out as requested by CS, send email only after manager reviewed
-                            //$this->credit_check_model->fire_cs_request($so_no,$this->input->post("reason"));
+                            //$this->sc['creditCheckModel']->fire_cs_request($so_no,$this->input->post("reason"));
                         }
                         if (in_array($this->input->post("reason"), array("change_of_address", "confirmation_required", "customer_request"))) {
-                            $so_obj->set_hold_status(1);
-                            if (!$this->credit_check_model->update("dao", $so_obj)) {
+                            $so_obj->setHoldStatus(1);
+                            if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                                 $_SESSION["NOTICE"] = $this->db->_error_message();
                             }
                         }
                         if ($this->input->post("reason") == "confirmed_fraud") {
                             $action = "update";
-                            $socc_obj = $this->credit_check_model->so_service->get_socc_dao()->get(array("so_no" => $so_no));
+                            $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get(array("so_no" => $so_no));
                             if (!$socc_obj) {
-                                $socc_obj = $this->credit_check_model->so_service->get_socc_dao()->get();
+                                $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get();
                                 $action = "insert";
                             }
-                            $this->credit_check_model->so_service->get_socc_dao()->trans_start();
-                            $socc_obj->set_so_no($so_no);
-                            $socc_obj->set_fd_status(2);
-                            $this->credit_check_model->so_service->get_socc_dao()->$action($socc_obj);
+                            $this->sc['So']->getDao('SoCreditChk')->db->trans_start();
+                            $socc_obj->setSoNo($so_no);
+                            $socc_obj->setFdStatus(2);
+                            $this->sc['So']->getDao('SoCreditChk')->$action($socc_obj);
 
-                            $so_obj->set_status(0);
-                            $so_obj->set_hold_status(0);
-                            if (!$this->credit_check_model->update("dao", $so_obj)) {
+                            $so_obj->setStatus(0);
+                            $so_obj->setHoldStatus(0);
+                            if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                                 $_SESSION["NOTICE"] = $this->db->_error_message();
                             }
-                            $this->credit_check_model->so_service->get_socc_dao()->trans_complete();
+                            $this->sc['So']->getDao('SoCreditChk')->db->trans_complete();
                         }
                     } else {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
@@ -403,27 +404,27 @@ class Credit_check extends MY_Controller
         $where["so.status <"] = "6";
         $where["cc_reminder_schedule_date <="] = date('Y-m-d H:i:s', time());
 
-        if (($so_list = $this->credit_check_model->get_list("dao", $where, array('limit' => '-1'))) === FALSE) {
+        if (($so_list = $this->sc['So']->getDao('So')->getList($where, array('limit' => '-1'))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             foreach ($so_list as $so) {
-                if ($socc_obj = $this->credit_check_model->get('socc_dao', array('so_no' => $so->get_so_no()))) {
+                if ($socc_obj = $this->sc['So']->getDao('SoCreditChk')->get(array('so_no' => $so->getSoNo()))) {
                     // bit 1 is save order action
-                    if ($socc_obj->get_cc_action() & 2) {
-                        $not_send_orders[] = $so->get_so_no();
+                    if ($socc_obj->getCcAction() & 2) {
+                        $not_send_orders[] = $so->getSoNo();
                         continue;
                     }
                 }
 
-                if (strtoupper($so->get_cc_reminder_type()) == 'HIGH_RISK_CC') {
+                if (strtoupper($so->getCcReminderType()) == 'HIGH_RISK_CC') {
                     $this->send_high_risk_cc_reminder($so);
-                } elseif (strtoupper($so->get_cc_reminder_type()) == 'LOW_RISK_CC') {
+                } elseif (strtoupper($so->getCcReminderType()) == 'LOW_RISK_CC') {
                     $this->send_low_risk_cc_reminder($so);
                 }
 
-                $so->set_cc_reminder_type(NULL);
-                $so->set_cc_reminder_schedule_date(NULL);
-                if (!$this->credit_check_model->update("dao", $so)) {
+                $so->setCcReminderType(NULL);
+                $so->setCcReminderScheduleDate(NULL);
+                if (!$this->sc['So']->getDao('So')->update($so)) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 }
             }
@@ -438,46 +439,41 @@ class Credit_check extends MY_Controller
             $this->communication_center_email_common($so_obj, $replace, "high_risk_cc_reminder", "high_risk_cc_reminder");
 
             // Add notes
-            $this->credit_check_model->add_order_note($so_obj->get_so_no(), 'High risk CC reminder sent');
+            $this->sc['creditCheckModel']->addOrderNote($so_obj->getSoNo(), 'High risk CC reminder sent');
         }
     }
 
     protected function communication_center_email_common($so_obj, $replace, $event_id, $tpl_id)
     {
-        $pbv_obj = $this->platform_biz_var_service->get_platform_biz_var($so_obj->get_platform_id());
-        if (($pbv_obj->get_platform_country_id() == '') || ($pbv_obj->get_language_id() == '')) {
+        $pbv_obj = $this->sc['PlatformBizVar']->getPlatformBizVar($so_obj->getPlatformId());
+        if (($pbv_obj->getPlatformCountryId() == '') || ($pbv_obj->getLanguageId() == '')) {
             $lang_id = "en";
             $country_id = "US";
         } else {
-            $lang_id = trim($pbv_obj->get_language_id());
-            $country_id = trim($pbv_obj->get_platform_country_id());
+            $lang_id = trim($pbv_obj->getLanguageId());
+            $country_id = trim($pbv_obj->getPlatformCountryId());
         }
         include_once(APPPATH . "hooks/Country_selection.php");
         $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
 
-        $client = $this->credit_check_model->get_client(array("id" => $so_obj->get_client_id()));
-        $replace["forename"] = $client->get_forename();
-        $replace["so_no"] = $so_obj->get_so_no();
-        $replace["client_id"] = $so_obj->get_client_id();
+        $client = $this->sc['Client']->getDao('Client')->get(array("id" => $so_obj->getClientId()));
+        $replace["forename"] = $client->getForename();
+        $replace["so_no"] = $so_obj->getSoNo();
+        $replace["client_id"] = $so_obj->getClientId();
 
-        if ($lang_id == "fr") {
-            $from_email = "sophie@valuebasket.com";
-        } else if ($lang_id == "es") {
-            $from_email = "alicia@valuebasket.es";
-        } else {
-            $from_email = "agatha@valuebasket.com";
-        }
+        //TO DO
+        $from_email = "no-reply@digitaldiscount.co.uk";
 
-        $this->credit_check_model->so_service->include_dto("Event_email_dto");
-        $dto = new Event_email_dto();
-        $dto->set_mail_from($from_email);
-        $dto->set_mail_to($client->get_email());
-        $dto->set_lang_id($lang_id);
-        $dto->set_event_id($event_id);
-        $dto->set_tpl_id($tpl_id);
-        $dto->set_replace($replace);
+        $dto = new \EventEmailDto();
 
-        return $this->event_service->fire_event($dto);
+        $dto->setMailFrom($from_email);
+        $dto->setMailTo($client->getEmail());
+        $dto->setLangId($lang_id);
+        $dto->setEventId($event_id);
+        $dto->setTplId($tpl_id);
+        $dto->setReplace($replace);
+
+        return $this->sc['Event']->fireEvent($dto);
     }
 
     public function send_low_risk_cc_reminder($so_obj = NULL)
@@ -488,13 +484,13 @@ class Credit_check extends MY_Controller
             $this->communication_center_email_common($so_obj, $replace, "low_risk_cc_reminder", "low_risk_cc_reminder");
 
             // Add notes
-            $this->credit_check_model->add_order_note($so_obj->get_so_no(), 'Low risk CC reminder sent');
+            $this->sc['creditCheckModel']->addOrderNote($so_obj->getSoNo(), 'Low risk CC reminder sent');
         }
     }
 
     public function apr_fulfill($so_no = "")
     {
-        if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+        if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($so_obj)) {
@@ -505,19 +501,19 @@ class Credit_check extends MY_Controller
                 $this->communication_center_email_common($so_obj, $replace, "apr_fulfill", "apr_fulfill");
 
                 // Update SO
-                $so_obj->set_cc_reminder_schedule_date(NULL);
-                $so_obj->set_cc_reminder_type(NULL);
-                $so_obj->set_hold_status(0);
-                if ($so_obj->get_status() < 3) {
-                    $so_obj->set_status(3);
+                $so_obj->setCcReminderScheduleDate(NULL);
+                $so_obj->setCcReminderType(NULL);
+                $so_obj->setHoldStatus(0);
+                if ($so_obj->getStatus() < 3) {
+                    $so_obj->setStatus(3);
                 }
 
-                if (!$this->credit_check_model->update("dao", $so_obj)) {
+                if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 }
 
                 // Add notes
-                $this->credit_check_model->add_order_note($so_no, 'Approved order with email confirmation');
+                $this->sc['creditCheckModel']->addOrderNote($so_no, 'Approved order with email confirmation');
             }
         }
         if (isset($_SESSION["CCLISTPAGE"])) {
@@ -529,7 +525,7 @@ class Credit_check extends MY_Controller
 
     public function further_check($so_no = "")
     {
-        if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+        if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($so_obj)) {
@@ -540,16 +536,18 @@ class Credit_check extends MY_Controller
                 $this->communication_center_email_common($so_obj, $replace, "further_check", "further_check");
 
                 // Update SO
-                if (!is_null($so_obj->get_cc_reminder_schedule_date())) {
-                    $so_obj->set_cc_reminder_schedule_date(NULL);
-                    $so_obj->set_cc_reminder_type(NULL);
-                    if (!$this->credit_check_model->update("dao", $so_obj)) {
+                if (!is_null($so_obj->getCcReminderScheduleDate())) {
+                    $so_obj->setCcReminderScheduleDate(NULL);
+                    $so_obj->setCcReminderType(NULL);
+
+                    if(!$this->sc['So']->getDao('So')->update($so_obj)){
+                    //if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
                 }
 
                 // Add notes
-                $this->credit_check_model->add_order_note($so_no, 'Further check email sent');
+                $this->sc['creditCheckModel']->addOrderNote($so_no, 'Further check email sent');
             }
         }
         if (isset($_SESSION["CCLISTPAGE"])) {
@@ -561,7 +559,7 @@ class Credit_check extends MY_Controller
 
     public function failcc_refund($so_no = "")
     {
-        if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+        if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($so_obj)) {
@@ -572,10 +570,10 @@ class Credit_check extends MY_Controller
                 $this->communication_center_email_common($so_obj, $replace, "failcc_refund", "failcc_refund");
 
                 // Update SO
-                if (!is_null($so_obj->get_cc_reminder_schedule_date())) {
-                    $so_obj->set_cc_reminder_schedule_date(NULL);
-                    $so_obj->set_cc_reminder_type(NULL);
-                    if (!$this->credit_check_model->update("dao", $so_obj)) {
+                if (!is_null($so_obj->getCcReminderScheduleDate())) {
+                    $so_obj->setCcReminderScheduleDate(NULL);
+                    $so_obj->setCcReminderType(NULL);
+                    if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
                 }
@@ -583,14 +581,14 @@ class Credit_check extends MY_Controller
                 // Create refund
                 $refund_parameter = array();
                 $refund_parameter['refund_reason_description'] = 'Failed Credit Check';
-                if (!$this->credit_check_model->create_refund_from_communication_center($so_no, $refund_parameter)) {
+                if (!$this->sc['creditCheckModel']->createRefundFromCommunicationCenter($so_no, $refund_parameter)) {
                     $_SESSION["NOTICE"] = "failed_create_refund";
                 }
 
                 // Add notes
-                $this->credit_check_model->add_order_note($so_no, 'Fail CC email send');
+                $this->sc['creditCheckModel']->addOrderNote($so_no, 'Fail CC email send');
                 //SBF #2607 add the default refund score when order funded
-                $this->so_refund_score_service->insert_initial_refund_score($so_no);
+                $this->sc['SoRefundScore']->insertInitialRefundScore($so_no);
 
             }
         }
@@ -603,17 +601,17 @@ class Credit_check extends MY_Controller
 
     public function refuse_cc_refund($so_no = "")
     {
-        if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+        if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
                 // Update SO
-                if (!is_null($so_obj->get_cc_reminder_schedule_date())) {
-                    $so_obj->set_cc_reminder_schedule_date(NULL);
-                    $so_obj->set_cc_reminder_type(NULL);
-                    if (!$this->credit_check_model->update("dao", $so_obj)) {
+                if (!is_null($so_obj->getCcReminderScheduleDate())) {
+                    $so_obj->setCcReminderScheduleDate(NULL);
+                    $so_obj->setCcReminderType(NULL);
+                    if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
                 }
@@ -621,14 +619,14 @@ class Credit_check extends MY_Controller
                 // Create refund
                 $refund_parameter = array();
                 $refund_parameter['refund_reason_description'] = 'Refused Credit Check';
-                if (!$this->credit_check_model->create_refund_from_communication_center($so_no, $refund_parameter)) {
+                if (!$this->sc['creditCheckModel']->createRefundFromCommunicationCenter($so_no, $refund_parameter)) {
                     $_SESSION["NOTICE"] = "refuse_cc_refund";
                 }
 
                 // Add notes
-                $this->credit_check_model->add_order_note($so_no, 'Refuse CC refund');
+                $this->sc['creditCheckModel']->addOrderNote($so_no, 'Refuse CC refund');
                 //SBF #2607 add the default refund score when order funded
-                $this->so_refund_score_service->insert_initial_refund_score($so_no);
+                $this->sc['SoRefundScore']->insertInitialRefundScore($so_no);
             }
         }
         if (isset($_SESSION["CCLISTPAGE"])) {
@@ -640,40 +638,40 @@ class Credit_check extends MY_Controller
 
     public function confirmed_fraud($so_no = "")
     {
-        if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+        if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
-                if (($sohr_vo = $this->credit_check_model->get("sohr_dao")) !== FALSE) {
-                    $sohr_vo->set_so_no($so_no);
-                    $sohr_vo->set_reason("confirmed_fraud");
-                    if (!$this->credit_check_model->add("sohr_dao", $sohr_vo)) {
+                if (($sohr_vo = $this->sc['So']->getDao('SoHoldReason')->get()) !== FALSE) {
+                    $sohr_vo->setSoNo($so_no);
+                    $sohr_vo->setReason("confirmed_fraud");
+                    if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_vo)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
 
                     $action = "update";
-                    $socc_obj = $this->credit_check_model->so_service->get_socc_dao()->get(array("so_no" => $so_no));
+                    $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get(array("so_no" => $so_no));
                     if (!$socc_obj) {
-                        $socc_obj = $this->credit_check_model->so_service->get_socc_dao()->get();
+                        $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get();
                         $action = "insert";
                     }
-                    $this->credit_check_model->so_service->get_socc_dao()->trans_start();
-                    $socc_obj->set_so_no($so_no);
-                    $socc_obj->set_fd_status(2);
-                    $this->credit_check_model->so_service->get_socc_dao()->$action($socc_obj);
+                    $this->sc['So']->getDao('SoCreditChk')->db->trans_start();
+                    $socc_obj->setSoNo($so_no);
+                    $socc_obj->setFdStatus(2);
+                    $this->sc['So']->getDao('SoCreditChk')->$action($socc_obj);
 
-                    $so_obj->set_status(0);
-                    if (!is_null($so_obj->get_cc_reminder_schedule_date())) {
-                        $so_obj->set_cc_reminder_schedule_date(NULL);
-                        $so_obj->set_cc_reminder_type(NULL);
+                    $so_obj->setStatus(0);
+                    if (!is_null($so_obj->getCcReminderScheduleDate())) {
+                        $so_obj->setCcReminderScheduleDate(NULL);
+                        $so_obj->setCcReminderType(NULL);
                     }
 
-                    if (!$this->credit_check_model->update("dao", $so_obj)) {
+                    if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
-                    $this->credit_check_model->so_service->get_socc_dao()->trans_complete();
+                    $this->sc['So']->getDao('SoCreditChk')->db->trans_complete();
                 }
             }
         }
@@ -686,7 +684,7 @@ class Credit_check extends MY_Controller
 
     public function high_risk_cc($so_no = "")
     {
-        if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+        if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($so_obj)) {
@@ -694,11 +692,11 @@ class Credit_check extends MY_Controller
             } else {
                 // Send email
                 $replace = array();
-                $replace['order_create_date'] = date("d/m/Y", strtotime($so_obj->get_order_create_date()));
-                $list = $this->credit_check_model->so_service->get_soi_dao()->get_items_w_name(array("so_no" => $so_no));
+                $replace['order_create_date'] = date("d/m/Y", strtotime($so_obj->getOrderCreateDate()));
+                $list = $this->sc['So']->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $so_no));
                 $item_list = array();
                 foreach ($list as $obj) {
-                    $item_list[] = "- " . $obj->get_name();
+                    $item_list[] = "- " . $obj->getName();
                 }
                 $replace["item_list_html"] = implode("<br>", $item_list);
                 $replace["item_list_text"] = implode("\n", $item_list);
@@ -719,14 +717,14 @@ class Credit_check extends MY_Controller
                 }
                 $schedule_date = date('Y-m-d H:i:s', $schedule_ts);
 
-                $so_obj->set_cc_reminder_schedule_date($schedule_date);
-                $so_obj->set_cc_reminder_type('high_risk_cc');
-                if (!$this->credit_check_model->update("dao", $so_obj)) {
+                $so_obj->setCcReminderScheduleDate($schedule_date);
+                $so_obj->setCcReminderType('high_risk_cc');
+                if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 }
 
                 // Add notes
-                $this->credit_check_model->add_order_note($so_no, 'High risk CC email sent');
+                $this->sc['creditCheckModel']->addOrderNote($so_no, 'High risk CC email sent');
             }
         }
         if (isset($_SESSION["CCLISTPAGE"])) {
@@ -738,7 +736,7 @@ class Credit_check extends MY_Controller
 
     public function low_risk_cc($so_no = "")
     {
-        if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+        if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($so_obj)) {
@@ -746,12 +744,12 @@ class Credit_check extends MY_Controller
             } else {
                 // Send email
                 $replace = array();
-                $replace['order_create_date'] = date("d/m/Y", strtotime($so_obj->get_order_create_date()));
+                $replace['order_create_date'] = date("d/m/Y", strtotime($so_obj->getOrderCreateDate()));
 
-                $list = $this->credit_check_model->so_service->get_soi_dao()->get_items_w_name(array("so_no" => $so_no));
+                $list = $this->sc['So']->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $so_no));
                 $item_list = array();
                 foreach ($list as $obj) {
-                    $item_list[] = "- " . $obj->get_name();
+                    $item_list[] = "- " . $obj->getName();
                 }
                 $replace["item_list_html"] = implode("<br>", $item_list);
                 $replace["item_list_text"] = implode("\n", $item_list);
@@ -772,14 +770,14 @@ class Credit_check extends MY_Controller
                 }
                 $schedule_date = date('Y-m-d H:i:s', $schedule_ts);
 
-                $so_obj->set_cc_reminder_schedule_date($schedule_date);
-                $so_obj->set_cc_reminder_type('low_risk_cc');
-                if (!$this->credit_check_model->update("dao", $so_obj)) {
+                $so_obj->setCcReminderScheduleDate($schedule_date);
+                $so_obj->setCcReminderType('low_risk_cc');
+                if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 }
 
                 // Add notes
-                $this->credit_check_model->add_order_note($so_no, 'Low risk CC email sent');
+                $this->sc['creditCheckModel']->addOrderNote($so_no, 'Low risk CC email sent');
             }
         }
         if (isset($_SESSION["CCLISTPAGE"])) {
@@ -831,14 +829,14 @@ class Credit_check extends MY_Controller
     public function all_in_one($so_no, $operation_type, $reason)
     {
         if ($operation_type == 'delete') {
-            if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+            if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
                 $_SESSION["NOTICE"] = $this->db->_error_message();
             } else {
                 if (empty($so_obj)) {
                     $_SESSION["NOTICE"] = "$so_no order not found";
                 } else {
-                    $so_obj->set_status(0);
-                    if (!$this->credit_check_model->update("dao", $so_obj)) {
+                    $so_obj->setStatus(0);
+                    if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
                 }
@@ -846,14 +844,14 @@ class Credit_check extends MY_Controller
         }
 
         if ($operation_type == 'approve') {
-            if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+            if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
                 $_SESSION["NOTICE"] = $this->db->_error_message();
             } else {
                 if (empty($so_obj)) {
                     $_SESSION["NOTICE"] = "$so_no order not found";
                 } else {
-                    $so_obj->set_status(3);
-                    if (!$this->credit_check_model->update("dao", $so_obj)) {
+                    $so_obj->setStatus(3);
+                    if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
                 }
@@ -861,53 +859,55 @@ class Credit_check extends MY_Controller
         }
 
         if ($operation_type == 'hold') {
-            if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+            if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
                 $_SESSION["NOTICE"] = $this->db->_error_message();
             } else {
                 if (empty($so_obj)) {
                     $_SESSION["NOTICE"] = "$so_no order not found";
                 } else {
                     if (in_array($reason, array("cscc", "csvv", "confirmed_fraud"))) {
-                        $so_obj->set_hold_status(1);
+                        $so_obj->setHoldStatus(1);
                     } else {
-                        $so_obj->set_hold_status(2);
+                        $so_obj->setHoldStatus(2);
                     }
 
-                    if ($this->credit_check_model->update("dao", $so_obj)) {
-                        if (($sohr_vo = $this->credit_check_model->get("sohr_dao")) !== FALSE) {
-                            $sohr_vo->set_so_no($so_no);
-                            $sohr_vo->set_reason($reason);
-                            if (!$this->credit_check_model->add("sohr_dao", $sohr_vo)) {
+                    if ($this->sc['So']->getDao('So')->update($so_obj)) {
+                        if (($sohr_vo = $this->sc['So']->getDao('SoHoldReason')->get()) !== FALSE) {
+                            $sohr_vo->setSoNo($so_no);
+                            $sohr_vo->setReason($reason);
+                            if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_vo)) {
                                 $_SESSION["NOTICE"] = $this->db->_error_message();
                             }
                             if (in_array($reason, array("cscc", "csvv"))) {
                                 //Commented out as requested by CS, send email only after manager reviewed
-                                //$this->credit_check_model->fire_cs_request($so_no,$this->input->post("reason"));
+                                //$this->sc['creditCheckModel']->fire_cs_request($so_no,$this->input->post("reason"));
                             }
                             if (in_array($reason, array("change_of_address", "confirmation_required", "customer_request"))) {
-                                $so_obj->set_hold_status(1);
-                                if (!$this->credit_check_model->update("dao", $so_obj)) {
+                                $so_obj->setHoldStatus(1);
+                                if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                                     $_SESSION["NOTICE"] = $this->db->_error_message();
                                 }
                             }
                             if ($reason == "confirmed_fraud") {
                                 $action = "update";
-                                $socc_obj = $this->credit_check_model->so_service->get_socc_dao()->get(array("so_no" => $so_no));
+
+
+                                $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get(array("so_no" => $so_no));
                                 if (!$socc_obj) {
-                                    $socc_obj = $this->credit_check_model->so_service->get_socc_dao()->get();
+                                    $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get();
                                     $action = "insert";
                                 }
-                                $this->credit_check_model->so_service->get_socc_dao()->trans_start();
-                                $socc_obj->set_so_no($so_no);
-                                $socc_obj->set_fd_status(2);
-                                $this->credit_check_model->so_service->get_socc_dao()->$action($socc_obj);
+                                $this->sc['So']->getDao('SoCreditChk')->db->trans_start();
+                                $socc_obj->setSoNo($so_no);
+                                $socc_obj->setFdStatus(2);
+                                $this->sc['So']->getDao('SoCreditChk')->$action($socc_obj);
 
-                                $so_obj->set_status(0);
-                                $so_obj->set_hold_status(0);
-                                if (!$this->credit_check_model->update("dao", $so_obj)) {
+                                $so_obj->setStatus(0);
+                                $so_obj->setHoldStatus(0);
+                                if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                                     $_SESSION["NOTICE"] = $this->db->_error_message();
                                 }
-                                $this->credit_check_model->so_service->get_socc_dao()->trans_complete();
+                                $this->sc['So']->getDao('SoCreditChk')->db->trans_complete();
                             }
                         } else {
                             $_SESSION["NOTICE"] = $this->db->_error_message();
@@ -944,7 +944,7 @@ class Credit_check extends MY_Controller
                     if ($this->approve_if_paid($so_no)) {
                         echo "SUCCESS: SO#$so_no marked as credit checked";
                         if ($note <> "") {
-                            $this->credit_check_model->add_order_note($so_no, $note);
+                            $this->sc['creditCheckModel']->addOrderNote($so_no, $note);
                             echo ", added note";
                         } else
                             echo ", blank note note added";
@@ -954,7 +954,7 @@ class Credit_check extends MY_Controller
                         echo "FAILED: to mark SO#$so_no as credit checked, note not added<br>\r\n";
                 } else {
                     if ($note <> "") {
-                        $this->credit_check_model->add_order_note($so_no, $note);
+                        $this->sc['creditCheckModel']->addOrderNote($so_no, $note);
                         echo "SUCCESS: Added note to SO#$so_no<br>\r\n";
                     } else
                         echo "FAILED: Blank note given, no action on SO#$so_no<br>\r\n";
@@ -966,15 +966,15 @@ class Credit_check extends MY_Controller
 
     public function approve_if_paid($so_no = "")
     {
-        if (($so_obj = $this->credit_check_model->get("dao", array("so_no" => $so_no))) === FALSE) {
+        if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
         } else {
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
-                if ($so_obj->get_status() == 2) {
-                    $so_obj->set_status(3);
-                    if (!$this->credit_check_model->update("dao", $so_obj))
+                if ($so_obj->getStatus() == 2) {
+                    $so_obj->setStatus(3);
+                    if (!$this->sc['So']->getDao('So')->update($so_obj))
                         $_SESSION["NOTICE"] = $this->db->_error_message();
 
                     return true;

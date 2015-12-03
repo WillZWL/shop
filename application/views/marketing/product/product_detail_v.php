@@ -107,7 +107,7 @@
                     else
                     {
                         ?>
-                        <div style="float:left"><img src='<?=get_image_file($product->get_image(), 's', $product->get_sku())?>'> &nbsp;</div>
+                        <div style="float:left"><img src='<?=getImageUrl($product->get_image(), 's', $product->get_sku())?>'> &nbsp;</div>
                         <?=$lang["header"]?><br><a href="<?=$website_link."mainproduct/view/".$product->get_sku()?>" target="_blank"><b style="font-size:14px; color:#000000;"><?=$product->get_name()?><?=$product->get_clearance()?" <span style='color:#0072E3; font-size:14px;'>(Clearance)</span>":""?></b></a><br><?=$lang["sku"]?>: <?=$product->get_sku()?>
                         <?php
                     }
@@ -705,7 +705,7 @@
                                         foreach ($lang_list as $language)
                                         {
                                             ?>
-                                            <option value="<?=$language->get_id()?>" <?=$selectedb[$language->get_id()]?>><?=strtoupper($language->get_id()).' - '.$language->get_name()?>
+                                            <option value="<?=$language->get_id()?>" <?=$selectedb[$language->get_id()]?>><?=strtoupper($language->get_lang_id()).' - '.$language->get_lang_name()?>
                                                 <?php
                                             }
                                         }
@@ -863,6 +863,7 @@
                                                                         <td width="50px"><?=$lang["t_priority"]?></td>
                                                                         <td width="50%"><?=$lang["t_file_upload"]?></td>
                                                                         <td width="40px"><?=$lang["t_status"]?></td>
+                                                                        <td width="40px"><?=$lang["t_stop_sync"]?></td>
                                                                     </tr>
 
                                                                     <?php
@@ -908,6 +909,9 @@
                                                                             </td>
                                                                             <td align="center">
                                                                                 <input type="checkbox" name="im_status[]" value="1" <?=($prod_image[$i] && $prod_image[$i]->get_status()==1)?"CHECKED":""?>>
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <input type="checkbox" name="im_stop_sync[]" value="1" <?=($prod_image[$i] && $prod_image[$i]->get_stop_sync_image()==1)?"CHECKED":""?>>
                                                                             </td>
                                                                         </tr>
                                                                         <?php
@@ -1474,7 +1478,7 @@
 ?>
 <td colspan="2" height="40" style="border-right:0px;" class="tb_detail"><input type="button" name="back" value="<?=$lang['back_list']?>" onClick="Redirect('<?=isset($_SESSION['LISTPAGE'])?$_SESSION['LISTPAGE']:base_url().'/marketing/product'?>')"></td>
 <td colspan="2" align="right" style="border-left:0px; padding-right:8px;" class="tb_detail">
-    <input type="submit" value="<?=$lang['cmd_button']?>">
+    <input type="submit" name="submit" id="submit" value="<?=$lang['cmd_button']?>">
 </td>
 </tr>
 </table>
@@ -1598,8 +1602,7 @@ jQuery(function(){
                     $platform_id_list[] = $country_obj["platform_id"];
                 }
                 ?>
-                var platform_id_list = ['<?php echo implode('\',\'', $platform_id_list) ?>'];
-                //var existing_platform_list = $("input[id^='warranty_country']");
+                var platform_id_list = ["<?php echo implode('\',\'', $platform_id_list) ?>"];
                 var existing_platform_list = document.getElementsByClassName('warranty_country');
 
                 if(existing_platform_list.length ==  platform_id_list.length)

@@ -21,6 +21,7 @@ class ProductImageService extends BaseService
     {
         $newObj->setPriority((string) $oldObj->priority);
         $newObj->setVbImage((string) $oldObj->sku.'_'.(string) $oldObj->id.'.'.(string) $oldObj->image);
+        $newObj->setStopsyncImage(0); //we reach this point from the data transfer, if we are updating then the stop_sync_image field = 0
         $newObj->setImage((string) $oldObj->image);
         $newObj->setAltText($newObj->getSku().'_'.(string) $oldObj->id.'.'.(string) $oldObj->image);
         $newObj->setVbAltText((string) $oldObj->alt_text);
