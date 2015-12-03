@@ -4398,6 +4398,16 @@ tbody.collapse.in {
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box;
+  /*background: url('http://sparkdsg.com/wp-content/uploads/2012/10/Insights_Ecommerce.jpg') top center no-repeat;*/
+
+
+  /*background-image: url("../image/dropdown_bg.png");*/
+  background: rgb(98,98,98);
+  background: -moz-linear-gradient(top,  rgba(98,98,98,1) 0%, rgba(11,11,11,1) 100%);
+  background: -webkit-linear-gradient(top,  rgba(98,98,98,1) 0%,rgba(11,11,11,1) 100%);
+  background: linear-gradient(to bottom,  rgba(98,98,98,1) 0%,rgba(11,11,11,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#626262', endColorstr='#0b0b0b',GradientType=0 );
+
 }
 /* line 52, ../development/scss/bootstrap/_dropdowns.scss */
 .dropdown-menu.pull-right {
@@ -7734,12 +7744,12 @@ button.close {
 .carousel-control.right {
   right: 0;
   left: auto;
-  margin-right: -45px; 
+  margin-right: -45px;
   font-size: 40px;
 }
 
 .carousel-control.left {
-  margin-left: -45px; 
+  margin-left: -45px;
   font-size: 40px;
 }
 /* line 120, ../development/scss/bootstrap/_carousel.scss */

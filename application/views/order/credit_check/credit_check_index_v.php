@@ -86,7 +86,7 @@
                                                   onClick="SortCol(document.fm, 'amount', '<?= $xsort["amount"] ?>')"><?= $lang["order_amount"] ?> <?= $sortimg["amount"] ?></a>
                 </td>
                 <td colspan="2" style="white-space:nowrap"><a href="#"
-                                                              onClick="SortCol(document.fm, 'risk_var1', '<?= $xsort["risk_var1"] ?>')"><?= $lang["cybs"] ?> <?= $sortimg["risk_var1"] ?></a>
+                                                              onClick="SortCol(document.fm, 'risk_var_1', '<?= $xsort["risk_var_1"] ?>')"><?= $lang["cybs"] ?> <?= $sortimg["risk_var_1"] ?></a>
                 </td>
                 <td></td>
             </tr>
@@ -141,13 +141,13 @@
         $i = 0;
         if ($objlist) {
             foreach ($objlist as $obj) {
-                $bill_name = $obj->get_forename() . " " . $obj->get_surname();
-                $del_name = $obj->get_delivery_name();
+                $bill_name = $obj->getForename() . " " . $obj->getSurname();
+                $del_name = $obj->getDeliveryName();
 
-                $bill_company_name = $obj->get_bill_company();
-                $del_company_name = $obj->get_delivery_company();
-                list($d1, $d2, $d3) = explode("|", $obj->get_delivery_address());
-                list($b1, $b2, $b3) = explode("|", $obj->get_bill_address());
+                $bill_company_name = $obj->getBillCompany();
+                $del_company_name = $obj->getDeliveryCompany();
+                list($d1, $d2, $d3) = explode("|", $obj->getDeliveryAddress());
+                list($b1, $b2, $b3) = explode("|", $obj->getBillAddress());
 
                 $del_addr = "<i>" . $del_name . "</i><br>";
                 $bill_addr = "<i>" . $bill_name . "</i><br>";
@@ -155,11 +155,11 @@
                 $bill_addr .= $bill_company_name ? "<b>" . $bill_company_name . "</b><br>" : "";
                 $del_addr .= $d1 . ($d2 != "" ? "<br>" . $d2 : "") . ($d3 != "" ? "<br>" . $d3 : $d3);
                 $bill_addr .= $b1 . ($b2 != "" ? "<br>" . $b2 : "") . ($b3 != "" ? "<br>" . $b3 : $b3);
-                $del_addr .= "<br>" . $obj->get_delivery_city() . " " . $obj->get_delivery_postcode() . "<br>" . $obj->get_delivery_country_id();
-                $bill_addr .= "<br>" . $obj->get_bill_city() . " " . $obj->get_bill_postcode() . "<br>" . $obj->get_bill_country_id();
+                $del_addr .= "<br>" . $obj->getDeliveryCity() . " " . $obj->getDeliveryPostcode() . "<br>" . $obj->getDeliveryCountryId();
+                $bill_addr .= "<br>" . $obj->getBillCity() . " " . $obj->getBillPostcode() . "<br>" . $obj->getBillCountryId();
 
-                $tel = implode(' ', array($obj->get_tel_1(), $obj->get_tel_2(), $obj->get_tel_3()));
-                $del_tel = implode(' ', array($obj->get_del_tel_1(), $obj->get_del_tel_2(), $obj->get_del_tel_3()));
+                $tel = implode(' ', array($obj->getTel1(), $obj->getTel2(), $obj->getTel3()));
+                $del_tel = implode(' ', array($obj->getDelTel1(), $obj->getDelTel2(), $obj->getDelTel3()));
 
                 if (trim($del_tel)) {
                     $del_addr .= "<br />Tel: " . $del_tel;
@@ -167,46 +167,46 @@
                 if (trim($tel)) {
                     $bill_addr .= "<br />Tel: " . $tel;
                 }
-                $t3m_arr = explode("|", $obj->get_t3m_result());
+                $t3m_arr = explode("|", $obj->getT3mResult());
                 ?>
 
                 <tr class="row<?= $i % 2 ?>">
                     <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                         title='<?= $lang["create_on"] ?>:<?= $obj->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->get_modify_by() ?>'>
+                                         title='<?= $lang["create_on"] ?>:<?= $obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->getModifyBy() ?>'>
                     </td>
-                    <td><a href="<?= base_url() ?>cs/quick_search/view/<?= $obj->get_so_no() ?>"
-                           target="_blank"><?= $obj->get_so_no() ?></a></td>
-                    <td><?= $obj->get_platform_order_id() . "(" . $obj->get_id() . "-" . str_replace("SO", "", $obj->get_so_no()) . ")" ?></td>
+                    <td><a href="<?= base_url() ?>cs/quick_search/view/<?= $obj->getSoNo() ?>"
+                           target="_blank"><?= $obj->getSoNo() ?></a></td>
+                    <td><?= $obj->getPlatformOrderId() . "(" . $obj->getId() . "-" . str_replace("SO", "", $obj->getSoNo()) . ")" ?></td>
                     <td style="background:#99CCCC;">
-                        <script>w(pmgwlist['<?=$obj->get_payment_gateway_id()?>'])</script>
+                        <script>w(pmgwlist['<?=$obj->getPaymentGatewayId()?>'])</script>
                     </td>
                     <td>
-                        <?= $obj->get_currency_id() ?>
+                        <?= $obj->getCurrencyId() ?>
                     </td>
-                    <td><?= $obj->get_txn_id() ?></td>
-                    <td><?= $obj->get_currency_id() ?> <?= $obj->get_amount() ?></td>
+                    <td><?= $obj->getTxnId() ?></td>
+                    <td><?= $obj->getCurrencyId() ?> <?= $obj->getAmount() ?></td>
 
                     <?php
-                    if ($risk2[$obj->get_so_no()]) {
+                    if ($risk2[$obj->getSoNo()]) {
                         $risk_style = "";
-                        if (($risk2[$obj->get_so_no()][0]['style'] == "bad") || ($risk3[$obj->get_so_no()][0]['style'] == "bad")) {
+                        if (($risk2[$obj->getSoNo()][0]['style'] == "bad") || ($risk3[$obj->getSoNo()][0]['style'] == "bad")) {
                             $risk_style = "class='risk_bad'";
                         }
                         ?>
-                        <td colspan='2' <?= $risk_style ?>>RESULT:<?= $risk1[$obj->get_so_no()][0]['value'] ?>,
-                            AVS:<?= $risk2[$obj->get_so_no()][0]['value'] ?>,
-                            CVN: <?= $risk3[$obj->get_so_no()][0]['value'] ?></td>
+                        <td colspan='2' <?= $risk_style ?>>RESULT:<?= $risk1[$obj->getSoNo()][0]['value'] ?>,
+                            AVS:<?= $risk2[$obj->getSoNo()][0]['value'] ?>,
+                            CVN: <?= $risk3[$obj->getSoNo()][0]['value'] ?></td>
                     <?php
                     } else {
                         ?>
-                        <td colspan="2"><?= $obj->get_t3m_result() != "" ? $t3m_status[$t3m_arr[0]] . ":" . $t3m_arr[1] : "" ?></td>
+                        <td colspan="2"><?= $obj->getT3mResult() != "" ? $t3m_status[$t3m_arr[0]] . ":" . $t3m_arr[1] : "" ?></td>
                     <?php
                     }
                     ?>
                     <td></td>
                 </tr>
                 <?php
-                if (in_array(($pmgw_id = $obj->get_payment_gateway_id()), $extend_info)) {
+                if (in_array(($pmgw_id = $obj->getPaymentGatewayId()), $extend_info)) {
                     ?>
                     <tr class="row<?= $i % 2 ?>">
                         <td height="20"></td>
@@ -216,29 +216,29 @@
                                 case "paypal":
                                     ?>
                                     PROTECTIONELIGIBILITY: <font
-                                    color="#0000FF"><?= $obj->get_risk_ref1() ?></font> &nbsp; / &nbsp; PROTECTIONELIGIBILITYTYPE:
+                                    color="#0000FF"><?= $obj->getRiskRef1() ?></font> &nbsp; / &nbsp; PROTECTIONELIGIBILITYTYPE:
                                     <font
-                                        color="#0000FF"><?= $obj->get_risk_ref2() ?></font> &nbsp; / &nbsp; ADDRESSSTATUS:
+                                        color="#0000FF"><?= $obj->getRiskRef2() ?></font> &nbsp; / &nbsp; ADDRESSSTATUS:
                                     <font
-                                        color="#0000FF"><?= $obj->get_risk_ref3() ?></font> &nbsp; / &nbsp; PAYERSTATUS:
-                                    <font color="#0000FF"><?= $obj->get_risk_ref4() ?></font>
+                                        color="#0000FF"><?= $obj->getRiskRef3() ?></font> &nbsp; / &nbsp; PAYERSTATUS:
+                                    <font color="#0000FF"><?= $obj->getRiskRef4() ?></font>
                                     <?php
                                     break;
                                 case "global_collect":
-                                    if ($obj->get_card_type()) { ?> PAYMENT TYPE: <font
-                                        color="#0000FF"><?= $pmgw_card_list[$obj->get_card_type()] ?></font>
+                                    if ($obj->getCardType()) { ?> PAYMENT TYPE: <font
+                                        color="#0000FF"><?= $pmgw_card_list[$obj->getCardType()] ?></font>
                                         <br> <?php } ?>
                                     AVSRESULT: <font
-                                    color="#0000FF"><?= $obj->get_risk_ref1() ?></font> - <?= $obj->get_risk_ref_desc() ?><?= $obj->get_pending_action() == "P" ? " <font color='#FFFF00'>(PROCESS_CHALLENGED)</font>" : "" ?>
+                                    color="#0000FF"><?= $obj->getRiskRef1() ?></font> - <?= $obj->getRiskRefDesc() ?><?= $obj->getPendingAction() == "P" ? " <font color='#FFFF00'>(PROCESS_CHALLENGED)</font>" : "" ?>
                                     <br>
-                                    FRAUDRESULT: <font color="#0000FF"><?= $obj->get_risk_ref2() ?></font>
+                                    FRAUDRESULT: <font color="#0000FF"><?= $obj->getRiskRef2() ?></font>
                                     <?php
                                     break;
                                 case "moneybookers":
-                                    if ($obj->get_card_type()) { ?> PAYMENT TYPE: <font
-                                        color="#0000FF"><?= $pmgw_card_list[$obj->get_card_type()] ?></font>
+                                    if ($obj->getCardType()) { ?> PAYMENT TYPE: <font
+                                        color="#0000FF"><?= $pmgw_card_list[$obj->getCardType()] ?></font>
                                         <br> <?php } ?>
-                                    VERIFICATION LEVEL: <font color="#0000FF"><?= $obj->get_risk_ref1() ?></font>
+                                    VERIFICATION LEVEL: <font color="#0000FF"><?= $obj->getRiskRef1() ?></font>
                                     <?php
                                     break;
 
@@ -251,13 +251,13 @@
                 ?>
                 <tr class="row<?= $i % 2 ?>">
                     <td height="20"></td>
-                    <td><?= $del_opt_list[$obj->get_delivery_type_id()]->get_display_name() ?></td>
-                    <td><?= $obj->get_email() ?></td>
+                    <td><?= $del_opt_list[$obj->getDeliveryTypeId()]->getDisplayName() ?></td>
+                    <td><?= $obj->getemail() ?></td>
                     <td><?= $lang["password"] ?>: <a
-                            href="<?= base_url() ?>order/credit_check/chk_pw/?pw=<?= urlencode($obj->get_password()) ?>"
+                            href="<?= base_url() ?>order/credit_check/chk_pw/?pw=<?= urlencode($obj->getPassword()) ?>"
                             rel="lyteframe[check_password]" rev="width: 1024px; height: 500px; scrolling: auto;"
-                            title="<?= $lang["password"] ?> - <?= $rspw = $this->encrypt->decode($obj->get_password()) ?>"><?= $rspw ?></a>
-                        (<?= $obj->get_pw_count() ?>)
+                            title="<?= $lang["password"] ?> - <?= $rspw = $this->encrypt->decode($obj->getPassword()) ?>"><?= $rspw ?></a>
+                        (<?= $obj->getPwCount() ?>)
                     </td>
                     <td class="bfield<?= $i % 2 ?>"><?= $lang["billing_address"] ?></td>
                     <td class="bfield<?= $i % 2 ?>"><?= $lang["delivery_address"] ?></td>
@@ -268,22 +268,22 @@
                         ?>
                         <td align="center" rowspan="2">
                             <input type="button" value="<?= $lang["high_risk_cc"] ?>"
-                                   onClick="Redirect('<?= base_url() ?>order/credit_check/high_risk_cc/<?= $obj->get_so_no() ?>')"><br>
+                                   onClick="Redirect('<?= base_url() ?>order/credit_check/high_risk_cc/<?= $obj->getSoNo() ?>')"><br>
                             <input type="button" value="<?= $lang["low_risk_cc"] ?>"
-                                   onClick="Redirect('<?= base_url() ?>order/credit_check/low_risk_cc/<?= $obj->get_so_no() ?>')"><br>
+                                   onClick="Redirect('<?= base_url() ?>order/credit_check/low_risk_cc/<?= $obj->getSoNo() ?>')"><br>
                             <input type="button" value="<?= $lang["further_check"] ?>"
-                                   onClick="Redirect('<?= base_url() ?>order/credit_check/further_check/<?= $obj->get_so_no() ?>')"><br>
+                                   onClick="Redirect('<?= base_url() ?>order/credit_check/further_check/<?= $obj->getSoNo() ?>')"><br>
                             <input type="button" value="<?= $lang["apr_fulfill"] ?>"
-                                   onClick="Redirect('<?= base_url() ?>order/credit_check/apr_fulfill/<?= $obj->get_so_no() ?>')"><br>
+                                   onClick="Redirect('<?= base_url() ?>order/credit_check/apr_fulfill/<?= $obj->getSoNo() ?>')"><br>
                             <input type="button" value="<?= $lang["failcc_refund"] ?>"
-                                   onClick="Redirect('<?= base_url() ?>order/credit_check/failcc_refund/<?= $obj->get_so_no() ?>')"><br>
+                                   onClick="Redirect('<?= base_url() ?>order/credit_check/failcc_refund/<?= $obj->getSoNo() ?>')"><br>
                             <!-- SBF #4646 add save order button -->
                             <input type="button" id="reason" name="reason" value="Save Order"
-                                   onClick="Redirect('<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->get_so_no() ?>?cf=confirmation_required')"><br>
+                                   onClick="Redirect('<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>?cf=confirmation_required')"><br>
                             <input type="button" value="<?= $lang["refuse_cc_refund"] ?>"
-                                   onClick="Redirect('<?= base_url() ?>order/credit_check/refuse_cc_refund/<?= $obj->get_so_no() ?>')">
+                                   onClick="Redirect('<?= base_url() ?>order/credit_check/refuse_cc_refund/<?= $obj->getSoNo() ?>')">
                             <input type="button" value="<?= $lang["confirmed_fraud"] ?>"
-                                   onClick="Redirect('<?= base_url() ?>order/credit_check/confirmed_fraud/<?= $obj->get_so_no() ?>')">
+                                   onClick="Redirect('<?= base_url() ?>order/credit_check/confirmed_fraud/<?= $obj->getSoNo() ?>')">
                         </td>
                     <?php
                     } else {
@@ -294,25 +294,25 @@
                                 //#2309
                                 ?>
                                 <input type="button" value="<?= $lang["delete"] ?>"
-                                       onClick="Redirect('<?= base_url() ?>order/credit_check/delete/<?= $obj->get_so_no() ?>')"
+                                       onClick="Redirect('<?= base_url() ?>order/credit_check/delete/<?= $obj->getSoNo() ?>')"
                                        style="width:70px; float:left;"> <input type="radio"
-                                                                               name="operation[<?= $obj->get_so_no() ?>]"
+                                                                               name="operation[<?= $obj->getSoNo() ?>]"
                                                                                ondblclick="cancel_check(this)"
                                                                                value="delete" style="float:right;">
                                 <br/><br/>
                                 <input type="button" value="<?= $lang["approve"] ?>"
-                                       onClick="Redirect('<?= base_url() ?>order/credit_check/approve/<?= $obj->get_so_no() ?>')"
+                                       onClick="Redirect('<?= base_url() ?>order/credit_check/approve/<?= $obj->getSoNo() ?>')"
                                        style="width:70px; float:left;"> <input type="radio"
-                                                                               name="operation[<?= $obj->get_so_no() ?>]"
+                                                                               name="operation[<?= $obj->getSoNo() ?>]"
                                                                                ondblclick="cancel_check(this)"
                                                                                value="approve" style="float:right;">
                             <?php
                             } elseif ($pagetype == "challenged") {
                                 ?>
                                 <input type="button" value="<?= $lang["approve"] ?>"
-                                       onClick="Redirect('<?= base_url() ?>order/credit_check/approve_challenged/<?= $obj->get_so_no() ?>')"> &nbsp;
+                                       onClick="Redirect('<?= base_url() ?>order/credit_check/approve_challenged/<?= $obj->getSoNo() ?>')"> &nbsp;
                                 <input type="button" value="<?= $lang["reject"] ?>"
-                                       onClick="Redirect('<?= base_url() ?>order/credit_check/reject_challenged/<?= $obj->get_so_no() ?>')">
+                                       onClick="Redirect('<?= base_url() ?>order/credit_check/reject_challenged/<?= $obj->getSoNo() ?>')">
                             <?php
                             }
                             ?>
@@ -326,8 +326,8 @@
                     <td height="20"></td>
                     <td colspan="3">
                         <?php
-                        if ($obj->get_items()) {
-                            $items = explode("||", $obj->get_items());
+                        if ($obj->getItems()) {
+                            $items = explode("||", $obj->getItems());
                             foreach ($items as $item) {
                                 list($sku, $name, $qty, $u_p, $amount) = @explode("::", $item);
                                 ?>
@@ -340,7 +340,7 @@
                     </td>
                     <td class="bvalue<?= $i % 2 ?>"><?= $bill_addr ?></td>
                     <td class="bvalue<?= $i % 2 ?>"><?= $del_addr ?></td>
-                    <td><?= $order_note[$obj->get_so_no()] ?></td>
+                    <td><?= $order_note[$obj->getSoNo()] ?></td>
 
                     <?php
                     if ($pagetype != "comcenter") {
@@ -349,8 +349,8 @@
                             <?php
                             if ($pagetype == "") {#2309
                                 ?>
-                                <!-- <form action="<?= base_url() ?>order/credit_check/hold/<?= $obj->get_so_no() ?>" method="post"> -->
-                                <select name="reason[<?= $obj->get_so_no() ?>]" class="input"
+                                <!-- <form action="<?= base_url() ?>order/credit_check/hold/<?= $obj->getSoNo() ?>" method="post"> -->
+                                <select name="reason[<?= $obj->getSoNo() ?>]" class="input"
                                         style="width:110px; float:left;">
                                     <option value="change_of_address"><?= $lang["change_of_address"] ?></option>
                                     <option value="confirmation_required"><?= $lang["confirmation_required"] ?></option>
@@ -359,7 +359,7 @@
                                     <option value="csvv"><?= $lang["csvv"] ?>
                                     <option value="cscc"><?= $lang["cscc"] ?>
                                 </select>
-                                <input type="radio" name="operation[<?= $obj->get_so_no() ?>]"
+                                <input type="radio" name="operation[<?= $obj->getSoNo() ?>]"
                                        ondblclick="cancel_check(this)" value="hold" style="float:right;">
                                 <br>
                                 <!-- <input type="submit" value="<?= $lang["on_hold"] ?>"> -->

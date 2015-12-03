@@ -11,6 +11,8 @@ class Product_image_vo extends Base_vo
     private $image;
     private $alt_text;
     private $image_saved = '1';
+    private $vb_image = '';
+    private $stop_sync_image = '0';
     private $vb_alt_text;
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
@@ -90,6 +92,30 @@ class Product_image_vo extends Base_vo
     public function get_image_saved()
     {
         return $this->image_saved;
+    }
+
+    public function set_vb_image($vb_image)
+    {
+        if ($vb_image) {
+            $this->vb_image = $vb_image;
+        }
+    }
+
+    public function get_vb_image()
+    {
+        return $this->vb_image;
+    }
+
+    public function set_stop_sync_image($stop_sync_image)
+    {
+        //if ($stop_sync_image) {
+            $this->stop_sync_image = $stop_sync_image;
+        //}
+    }
+
+    public function get_stop_sync_image()
+    {
+        return $this->stop_sync_image;
     }
 
     public function set_vb_alt_text($vb_alt_text)

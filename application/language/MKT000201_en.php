@@ -42,5 +42,8 @@
 		"max_width"=>"Max Width",
 		"update_successful"=>"Records updated successfully",
 		"bundle_discount"=>"Bundle Discount",
+		"stop_sync_display_name"=>"Stop Sync Display Name",
+		"stop_sync_priority"=>"Stop Sync Priority",
+		"sponsored"=>"Sponsored",
 		);
-?> 
+?>

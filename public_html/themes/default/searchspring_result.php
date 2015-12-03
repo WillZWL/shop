@@ -36,7 +36,7 @@
         <ul class="box-category list-group accordion">
           <li class="list-group-item accordion-group">
             <p>Refine Search</p>
-
+          </li>
           <li class="list-group-item accordion-group" ng-repeat="facet in facets">
             <a class="active list-group-item-title">{{ facet.label }}</a>
             <ul class="collapse accordion-body in" ng-class="{ 'ss-hierarchy': facet.type == 'hierarchy' }">
@@ -60,15 +60,15 @@
       </div>
     </div>
   </div>
-  <div ss-merchandising type="left"></div>
+  <div ss-merchandising="left"></div>
 </script>
 
 <!-- Main Template -->
 <script type="text/ss-template" target=".products-block">
   <div class="category_title"><h3>Search Results <span ng-if="q">for '{{ q }}'</span></h3></div>
 
-  <div ng-if="pagination.totalResults" ss-merchandising type="banner"></div>
-  <div ng-if="pagination.totalResults" ss-merchandising type="header"></div>
+  <div ng-if="pagination.totalResults" ss-merchandising="banner"></div>
+  <div ng-if="pagination.totalResults" ss-merchandising="header"></div>
 
   <div class="searchspring-slideout_button" slideout ng-if="pagination.totalResults && facets.length > 0">
     <span class="searchspring-slideout_button_icon"></span>
@@ -119,7 +119,7 @@
     </ul>
   </div>
 
-  <div ng-if="pagination.totalResults" ss-merchandising type="footer"></div>
+  <div ng-if="pagination.totalResults" ss-merchandising="footer"></div>
 </script>
 
 <!-- Item Template -->
@@ -132,10 +132,10 @@
             <img class="img-responsive" ng-src="{{ item.imageUrl }}" title="{{ item.name }}" alt="{{ item.name }}"  onerror="this.onerror=null;this.src='//cdn.searchspring.net/ajax_search/img/missing-image-75x75.gif';">
           </a>
           <div class="quickview hidden-xs">
-            <a class="iframe-link" data-toggle="tooltip" data-placement="top" ng-href="//www.digitaldiscount.co.uk/Product/{{ item.uid }}/sv" title="Quick View"><i class="fa fa-eye"></i></a>
+            <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="{{ item.url }}" title="Quick View"><i class="fa fa-eye"></i></a>
           </div>
           <div class="zoom hidden-xs">
-            <a data-toggle="tooltip" data-placement="top" ng-href="//www.digitaldiscount.co.uk/images/product/{{ item.uid }}_l.jpg" class="product-zoom info-view colorbox cboxElement" title="{{ item.name }}"><i class="fa fa-search-plus"></i></a>
+            <a data-toggle="tooltip" data-placement="top" href="/images/product/{{ item.uid }}_l.jpg" class="product-zoom info-view colorbox cboxElement" title="{{ item.name }}"><i class="fa fa-search-plus"></i></a>
           </div>
         </div>
       </div>
@@ -144,10 +144,10 @@
           <h6 class="name"><a href="{{ item.url }}" intellisuggest>{{ item.name }}</a></h6>
           <p class="description"></p>
           <div class="price">
-            <span class="price-old" ng-if="item.msrp > item.price"><font class="list_price">List Price :  </font>{{ item.msrp | currency:'€':2 }}</span>
-            <span class="price-new"><font class="pay_price">You Pay :  </font>{{ item.price | currency:'€':2 }}</span>
+            <span class="price-old" ng-if="item.msrp > item.price"><font class="list_price">List Price :  </font><strike id="before_{{ item.sku }}">{{ item.msrp | currency:'£':2 }}</strike></span>
+            <span class="price-new"><font class="pay_price">You Pay :  </font><strong id="price_{{ item.sku }}">{{ item.price | currency:'£':2 }}</strong></span>
           </div>
-          <div class="save_alter" ng-if="item.msrp > item.price">{{ item.discount_text }}</div>
+          <div class="save_alter"><span ng-if="item.msrp > item.price">{{ item.discount_text }}</span></div>
         </div>
         <div class="right">
           <div class="action">
@@ -157,18 +157,13 @@
                 <span class="add-to-cart">Add to Cart</span>
               </button>
             </div>
-            <div class="wishlist">
-              <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="More Info" ng-click="addWishList(item.uid)">
-                <i class="fa fa-heart"></i>
-                <span class="more-info">More Info</span>
-              </button>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </script>
+
 
 <style>
   body .searchspring-overlay {
@@ -334,7 +329,7 @@
   });
 
   SearchSpring.Catalog.on('domReady', function() {
-    $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+    $('[data-toggle=\'tooltip\']').tooltip('destroy').tooltip({container: 'body'});
     $('.product-zoom').magnificPopup({
       type: 'image',
       closeOnContentClick: true,

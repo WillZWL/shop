@@ -22,11 +22,23 @@ class VbDataTransferCategoryService extends VbDataTransferService
         foreach ($xml_vb->category as $category) {
             try {
                 if ($cat_obj = $this->getDao('Category')->get(['id' => $category->id])) {
+                    //we need to add the sponsored value to avoid overwritting it during the transfer
+                    $category->addChild('sponsored', $cat_obj->getSponsored());
+                    $stop_sync_priority = $cat_obj->getStopSyncPriority();
+                    $category->addChild('stop_sync_priority', $stop_sync_priority);
+                    if ($stop_sync_priority == 1)
+                    {
+                        //dont overwrite priority field with the VB value
+                        $category->priority = $cat_obj->getPriority();
+                    }
 
                 	$this->getService('Category')->updateCategory($cat_obj, $category);
                 	$this->getDao('Category')->update($cat_obj);
                 	$reason = 'update';
                 } else {
+                    $category->addChild('sponsored', '0');
+                    $category->addChild('stop_sync_priority', '0');
+
                 	$cat_obj = $this->getService('Category')->createNewCategory($category);
                 	$this->getDao('Category')->insert($cat_obj);
                 	$reason = 'insert';

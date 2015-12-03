@@ -168,6 +168,7 @@ class Category extends MY_Controller
             $data["cat_ext"] = unserialize($_SESSION["cat_ext"]);
             $cat_ext_vo = $this->sc['Category']->getDao('CategoryExtend')->get();
 
+            $stop_sync_name = $this->input->post('stop_sync_name');
             foreach ($_POST["lang_name"] as $rs_lang_id => $rs_name) {
                 if ($rs_name) {
                     if (empty($data["cat_ext"][$value][$rs_lang_id])) {
@@ -180,6 +181,15 @@ class Category extends MY_Controller
                     }
 
                     $data["cat_ext"][$value][$rs_lang_id]->setName($rs_name);
+
+                    if ($stop_sync_name[$rs_lang_id] != null)
+                    {
+                        $data["cat_ext"][$value][$rs_lang_id]->setStopSyncName(1);
+                    }
+                    else
+                    {
+                        $data["cat_ext"][$value][$rs_lang_id]->setStopSyncName(0);
+                    }
                     if (!$this->sc['Category']->getDao('CategoryExtend')->$action($data["cat_ext"][$value][$rs_lang_id])) {
                         $_SESSION["NOTICE"] = "ERROR: " . __LINE__ . " " . $this->db->_error_message();
                     } else {
@@ -257,6 +267,8 @@ class Category extends MY_Controller
             $cat_obj->setLevel($this->input->post('level'));
             $cat_obj->setStatus($this->input->post('status'));
             $cat_obj->setPriority($this->input->post('priority') ? $this->input->post('priority') : '');
+            $cat_obj->setStopSyncPriority($this->input->post('stop_sync_priority'));
+            $cat_obj->setSponsored($this->input->post('sponsored'));
             $cat_obj->setAddColourName($this->input->post('add_colour_name'));
             $cat_obj->setBundleDiscount($this->input->post('bundle_discount'));
             $ccmap = [
