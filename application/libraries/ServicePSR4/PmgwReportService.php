@@ -72,7 +72,7 @@ abstract class PmgwReportService extends BaseService
         if (is_file($this->getFolderPath() . $filename)) {
             $batch_dao = $this->getDao("FlexBatch");
             $batch_vo = $batch_dao->get();
-            $batch_obj = $this->getDao("FlexBatch")->get(array("filename" => $filename));
+            $batch_obj = $this->getDao("FlexBatch")->get(["filename" => $filename]);
             if (!$batch_obj) {
                 $batch_obj = clone $batch_vo;
                 $batch_obj->setGatewayId($this->getPmgw());
@@ -422,7 +422,7 @@ abstract class PmgwReportService extends BaseService
 
     public function insertFlexGatewayFee($batch_id)
     {
-        $ifgf_list = $this->getDao("InterfaceFlexGatewayFee")->getList(array("flex_batch_id" => $batch_id), array("limit" => "-1"));
+        $ifgf_list = $this->getDao("InterfaceFlexGatewayFee")->getList(["flex_batch_id" => $batch_id], ["limit" => "-1"]);
         if ($ifgf_list) {
             $return_result = TRUE;
             foreach ($ifgf_list AS $ifgf_obj) {
@@ -473,7 +473,7 @@ abstract class PmgwReportService extends BaseService
 
     public function completeBatch($batch_id, $status)
     {
-        $batch_obj = $this->getDao('FlexBatch')->get(array("id" => $batch_id));
+        $batch_obj = $this->getDao('FlexBatch')->get(["id" => $batch_id]);
         $batch_obj->setStatus($status);
         $this->getDao('FlexBatch')->update($batch_obj);
     }
@@ -564,7 +564,7 @@ abstract class PmgwReportService extends BaseService
         $this->updateRecord($interface_obj);
     }
 
-    public function getPmgwFailedRecord($where = array(), $option = array())
+    public function getPmgwFailedRecord($where = [], $option = [])
     {
         return $this->get_ifpt_dao()->getPmgw_failed_record($where, $option);
     }
@@ -579,7 +579,7 @@ abstract class PmgwReportService extends BaseService
         $ifr_dao = $this->getDao("InterfaceFlexRia");
         $ifr_obj = $ifr_dao->get();
         if (!$dto_obj->getSoNo() && $dto_obj->getTxnId()) {
-            if ($so_obj = $this->getSoObj(array("txn_id" => $dto_obj->getTxnId()))) {
+            if ($so_obj = $this->getSoObj(["txn_id" => $dto_obj->getTxnId()])) {
                 $dto_obj->setSoNo($so_obj->getSoNo());
             }
         }
@@ -662,7 +662,7 @@ abstract class PmgwReportService extends BaseService
         $ifrr_dao = $this->getDao('InterfaceFlexRollingReserve');
         $ifrr_obj = $ifrr_dao->get();
         if (!$dto_obj->getSoNo() && $dto_obj->getRefTxnId()) {
-            if ($so_obj = $this->getSoObj(array("txn_id" => $dto_obj->getRefTxnId()))) {
+            if ($so_obj = $this->getSoObj(["txn_id" => $dto_obj->getRefTxnId()])) {
                 $dto_obj->setSoNo($so_obj->getSoNo());
             }
         }

@@ -46,7 +46,7 @@ class FlexService extends BaseService
 
     public function generateFeedbackReport($where, $option)
     {
-        $feedback_report = array();
+        $feedback_report = [];
         $fri_obj_list = $this->getDao('FlexRia')->getList($where, $option);
         $fre_obj_list = $this->getDao('FlexRefund')->getList($where, $option);
         $fgf_obj_list = $this->getDao('FlexGatewayFee')->getList($where, $option);
@@ -141,7 +141,7 @@ class FlexService extends BaseService
 
     public function generateZipFile($file_path, $zip_name)
     {
-        $files_to_zip = array();
+        $files_to_zip = [];
         if (is_dir($file_path) && ($handle = opendir($file_path))) {
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != "..") {
@@ -169,12 +169,12 @@ class FlexService extends BaseService
         }
     }
 
-    public function createZip($files = array(), $destination = '', $location = '', $overwrite = true)
+    public function createZip($files = [], $destination = '', $location = '', $overwrite = true)
     {
         if (file_exists($location . $destination) && !$overwrite) {
             return false;
         }
-        $valid_files = array();
+        $valid_files = [];
         if (is_array($files)) {
             foreach ($files as $file) {
                 if (file_exists($location . $file)) {
@@ -200,7 +200,7 @@ class FlexService extends BaseService
     public function getSalesInvoice($date, $folder_name, $gen_exception_only = TRUE, $ignore_status = FALSE)
     {
         $gen_exception_only = FALSE;
-        $where = array();
+        $where = [];
         $where["so.dispatch_date >= "] = $date. ' 00:00:00';
         $where["so.dispatch_date <= "] = $date. ' 23:59:59';
         $si_list = $this->getDao('So')->getFlexSalesInvoice($where);
@@ -210,9 +210,9 @@ class FlexService extends BaseService
             $exception = $flex_sales_invoice_data['exception'];
             $special_order = $flex_sales_invoice_data['special_order'];
 
-            $flex_invoice_list = array();
+            $flex_invoice_list = [];
             if ($data) {
-                $group_content = array();
+                $group_content = [];
                 foreach ($data AS $pmgw => $si_list_w_currency) {
                     foreach ($si_list_w_currency AS $currency_id => $list) {
                         $group_content = array_merge($group_content, $list);
@@ -243,18 +243,18 @@ class FlexService extends BaseService
 
             if ($special_order) {
                 $special_order_list = $this->setFlexFormat($special_order);
-                $temp_h = array();
+                $temp_h = [];
                 foreach ($special_order_list as $temp_order) {
                     $t_tran_type = $temp_order->getTranType();
                     $temp_h[$t_tran_type][] = $temp_order;
                 }
                 unset($special_order_list);
-                $assemble_speical_order = array();
+                $assemble_speical_order = [];
                 foreach ($temp_h as $item) {
                     $assemble_speical_order = array_merge($assemble_speical_order, $item);
                 }
                 unset($temp_h);
-                $temp_h = array();
+                $temp_h = [];
                 $index_num = 1;
                 $product_line = 1;
                 $last_tran_type = '';
@@ -288,7 +288,7 @@ class FlexService extends BaseService
                     foreach ($flex_invoice_list as $status => $fi_list) {
                         if ($fi_list) {
                             foreach ($fi_list as $obj) {
-                                if ($flex_ria_obj_list = $this->getDao('FlexRia')->getList(array("flex_batch_id" => $obj->getFlexBatchId(), "so_no" => $obj->getSoNo()), array("limit" => -1))) {
+                                if ($flex_ria_obj_list = $this->getDao('FlexRia')->getList(array("flex_batch_id" => $obj->getFlexBatchId(), "so_no" => $obj->getSoNo()), ["limit" => -1])) {
                                     foreach ($flex_ria_obj_list as $flex_ria_obj) {
                                         if ($flex_ria_obj->getStatus() == "SALES") {
                                             $err = 1;
@@ -313,7 +313,7 @@ class FlexService extends BaseService
                         $flex_list = $this->setFlexFormat($group_content);
                         $segement_array = array_chunk($flex_list, 900);
                         foreach ($segement_array as $s) {
-                            $temp_h = array();
+                            $temp_h = [];
                             $index_num = 1;
                             $product_line = 1;
                             $last_pmgw = "";
@@ -357,7 +357,7 @@ class FlexService extends BaseService
             if ($origin_so_no = $obj->getSplitSoGroup()) {
                 $is_split_order = true;
                 $obj->setSoNo($origin_so_no);
-                if ($fr_obj = $this->getDao('FlexRia')->getFlexRiaWithGatewayMapping(array("so_no" => $origin_so_no))) {
+                if ($fr_obj = $this->getDao('FlexRia')->getFlexRiaWithGatewayMapping(["so_no" => $origin_so_no])) {
                     $obj->setReportPmgw($fr_obj->getReportPmgw());
                     $obj->setTranType($fr_obj->getTranType());
                     $obj->setFlexBatchId($fr_obj->getFlexBatchId());
@@ -365,7 +365,7 @@ class FlexService extends BaseService
                     $obj->setTxnId($fr_obj->getTxnId());
                 }
             } else {
-                $fr_obj = $this->getDao('FlexRia')->get(array("so_no" => $so_no, "flex_batch_id" => $obj->getFlexBatchId()));
+                $fr_obj = $this->getDao('FlexRia')->get(["so_no" => $so_no, "flex_batch_id" => $obj->getFlexBatchId()]);
             }
 
             $so_obj = $this->getDao('So')->get(array("so_no" => $so_no));
@@ -373,7 +373,7 @@ class FlexService extends BaseService
             $is_platform = in_array($platform_id, $platform_arr);
 
             if ($so_obj->getBizType() == "SPECIAL") {
-                $order_reason = $this->getDao('So')->getSoWithReason(array('so.so_no' => $so_no), array('limit' => 1));
+                $order_reason = $this->getDao('So')->getSoWithReason(['so.so_no' => $so_no], ['limit' => 1]);
                 $obj->setReason($order_reason->getReasonDisplayName());
                 $obj->setRemark('Speical Order');
                 $reason_id = $obj->getOrderReason();
@@ -381,7 +381,7 @@ class FlexService extends BaseService
                     $this->reformatSpecialOrderData($obj, $reason_id);
                     $special_order[] = $obj;
                 } elseif (in_array($reason_id, $order_reason_category['2'])) {
-                    if ($fr_obj = $this->getDao('FlexRia')->getFlexRiaWithGatewayMapping(array("so_no"=>$obj->get_parent_so_no()))) {
+                    if ($fr_obj = $this->getDao('FlexRia')->getFlexRiaWithGatewayMapping(["so_no"=>$obj->get_parent_so_no()])) {
                         $obj->setReportPmgw($fr_obj->getReportPmgw());
                         $obj->setTranType($fr_obj->getTranType());
                     }
@@ -492,8 +492,8 @@ class FlexService extends BaseService
     {
         $index_no = $product_line = $i = 1;
         $sku = "";
-        $delivery_list = array();
-        $re_arrange_container = array();
+        $delivery_list = [];
+        $re_arrange_container = [];
         foreach ($list AS $obj) {
             $obj->setRowNo($product_line - 1);
             if ($product_line - 1 == 0) {
@@ -538,7 +538,7 @@ class FlexService extends BaseService
         return $re_arrange_container;
     }
 
-    public function convert($list = array(), $first_line_headling = TRUE, $is_exception = FALSE)
+    public function convert($list = [], $first_line_headling = TRUE, $is_exception = FALSE)
     {
         if ($is_exception) {
             $out_csv = new XmlToCsv("", APPPATH . 'data/flex/flex_sales_exception_xml2csv.txt', $first_line_headling, ',');
@@ -581,7 +581,7 @@ class FlexService extends BaseService
     {
         $index_no = $product_line = 1;
         foreach ($inv_list as $status => $list) {
-            $report_list = array();
+            $report_list = [];
             foreach ($list as $sku => $qty) {
                 if ($sku <> 'NIL') {
                     if (!$ret = $this->getDao('SupplierProd')->getSupplierCostBySkuDate($sku, $dispatch_date)) {
@@ -646,7 +646,7 @@ class FlexService extends BaseService
 
     public function getRefundInvoice($start_date, $end_date, $type = "R", $folder_name)
     {
-        $where = array();
+        $where = [];
         $start_date = date("Y-m-d", strtotime($start_date));
         $end_date = date("Y-m-d", strtotime($end_date));
         $where["status"] = $type;
@@ -664,8 +664,8 @@ class FlexService extends BaseService
         }
 
         if ($exception) {
-            $report_list = array();
-            $where = array();
+            $report_list = [];
+            $where = [];
             $where["frf.status"] = $type;
             $where["txn_time >="] = $start_date . ' 00:00:00';
             $where["txn_time <="] = $end_date . ' 23:59:59';
@@ -680,9 +680,9 @@ class FlexService extends BaseService
     {
         foreach ($data as $obj) {
             $index_no = $product_line = 1;
-            $item_list = $this->getDao('So')->getFlexRefundInvoice(array("frf.so_no" => $obj->getSoNo(), "frf.status" => $type));
+            $item_list = $this->getDao('So')->getFlexRefundInvoice(["frf.so_no" => $obj->getSoNo(), "frf.status" => $type]);
             if ($item_list) {
-                $fr_obj = $this->getDao('FlexRia')->get(array("so_no" => $obj->getSoNo()));
+                $fr_obj = $this->getDao('FlexRia')->get(["so_no" => $obj->getSoNo()]);
                 foreach ($item_list as $obj) {
                     $gen_refund_report = TRUE;
                     $riv_dto = clone $this->refundInvoiceDto;
@@ -732,7 +732,7 @@ class FlexService extends BaseService
             $index_no = $product_line = 1;
             $where["frf.so_no"] = $obj->getSoNo();
             if ($item_list = $this->getDao('So')->getFlexRefundInvoice($where)) {
-                $fr_obj = $this->getDao('FlexRia')->get(array("so_no" => $obj->getSoNo()));
+                $fr_obj = $this->getDao('FlexRia')->get(["so_no" => $obj->getSoNo()]);
                 foreach ($item_list as $obj) {
                     $riv_dto = clone $this->RefundInvoiceDto;
                     if ($txn_id <> $obj->getTxnId()) {
@@ -850,8 +850,8 @@ class FlexService extends BaseService
         $ri_list = $this->getDao('FlexRefund')->getRefunds($where, array('limit'=>'-1'));
         if ($ri_list) {
             foreach ($ri_list AS $obj) {
-                $so_obj = $this->getDao('So')->get(array("so_no" => $obj->getSoNo()));
-                $fr_obj = $this->getDao('FlexRia')->get(array("so_no" => $obj->getSoNo()));
+                $so_obj = $this->getDao('So')->get(["so_no" => $obj->getSoNo()]);
+                $fr_obj = $this->getDao('FlexRia')->get(["so_no" => $obj->getSoNo()]);
                 $obj->setAmount(abs($obj->getAmount()));
                 if (!$fr_obj) {
                     $exception[$obj->getSoNo()]["obj"] = $obj;
@@ -898,7 +898,7 @@ class FlexService extends BaseService
         if (is_file((REPORT_PATH . "so_fee.csv"))) {
             @unlink(REPORT_PATH . "so_fee.csv");
         }
-        $where = array();
+        $where = [];
         $start_date = date("Y-m-d", strtotime($start_date));
         $end_date = date("Y-m-d", strtotime($end_date));
         $where["fsf.txn_time >="] = $start_date . ' 00:00:00';
@@ -949,7 +949,7 @@ class FlexService extends BaseService
         if (is_file((REPORT_PATH . "gateway_fee.csv"))) {
             @unlink(REPORT_PATH . "gateway_fee.csv");
         }
-        $where = array();
+        $where = [];
         $start_date = date("Y-m-d", strtotime($start_date));
         $end_date = date("Y-m-d", strtotime($end_date));
         $where["txn_time >="] = $start_date . ' 00:00:00';
@@ -960,7 +960,7 @@ class FlexService extends BaseService
         }
         $fgf_list = $this->getDao('FlexGatewayFee')->getList(array_merge((array)$where, array("status IN ('FXI','FXO')" => NULL)), $option);
         if ($fgf_list) {
-            $txn_array = array();
+            $txn_array = [];
             foreach ($fgf_list AS $fgf_obj) {
                 $txn_array[$fgf_obj->getTxnId()][$fgf_obj->getStatus()] = $fgf_obj;
             }
@@ -1000,7 +1000,7 @@ class FlexService extends BaseService
         $status_list_str = "'" . implode("','", $status_list) . "'";
         $tfr_fgf_list = $this->getDao('FlexGatewayFee')->getList(array_merge((array)$where, array("status IN ({$status_list_str})" => NULL)), $option);
         if ($tfr_fgf_list) {
-            $txn_array = array();
+            $txn_array = [];
             foreach ($tfr_fgf_list AS $fgf_obj) {
                 $gfi_dto = clone $this->get_gfi_dto();
                 $flex_gateway_code = $this->getFlexGatewayMapping($fgf_obj->getGatewayId(), $fgf_obj->getCurrencyId());
@@ -1080,7 +1080,7 @@ class FlexService extends BaseService
         if (is_file((REPORT_PATH . self::ROLLING_RESERVE_REPORT_FILE_NAME))) {
             @unlink(REPORT_PATH . self::ROLLING_RESERVE_REPORT_FILE_NAME);
         }
-        $where = array();
+        $where = [];
         $start_date = date("Y-m-d", strtotime($start_date));
         $end_date = date("Y-m-d", strtotime($end_date));
         $where["txn_time >="] = $start_date . ' 00:00:00';
@@ -1090,7 +1090,7 @@ class FlexService extends BaseService
             $where["gateway_id"] = $gateway_id;
         }
         $frr_list = $this->getDao('FlexRollingReserve')->getList($where, $option);
-        $rrrList = array();
+        $rrrList = [];
         foreach ($frr_list as $frr) {
             $rrrObj = $this->RollingReserveReportDto;
             $rrrObj->setSoNo($frr->getSoNo());
@@ -1130,14 +1130,14 @@ class FlexService extends BaseService
 
     public function getPendingOrderReport($ship_date)
     {
-        $where = array();
+        $where = [];
         if ($ship_date != '') {
             $where["(so.dispatch_date > '" . ($ship_date . ' 23:59:59') . "' or so.dispatch_date is null)"] = NULL;
             $where["ria.txn_time <="] = $ship_date . ' 23:59:59';
         }
         $fr_list = $this->getDao('FlexRia')->getPendingOrderReportList($where, array("orderby" => "ria.txn_time", "limit" => -1));
         if ($fr_list) {
-            $where = array();
+            $where = [];
             if ($ship_date != '') {
                 $where["txn_time <="] = $ship_date . ' 23:59:59';
             }
@@ -1189,12 +1189,12 @@ class FlexService extends BaseService
     {
         $date = date("Y-m-d", strtotime($date));
         if (preg_match("/\d{4}-\d{2}-\d{2}/", trim($date))) {
-            $where = array();
+            $where = [];
             $where["so.dispatch_date >= "] = $date. ' 00:00:00';
             $where["so.dispatch_date <= "] = $date. ' 23:59:59';
             $dispatched_order_list = $this->getDao('So')->getFlexSalesInvoice($where);
             foreach ($dispatched_order_list as $dispatched_order_obj) {
-                if ($ria_obj = $this->getDao('FlexRia')->get(array("so_no" => $dispatched_order_obj->getSoNo()))) {
+                if ($ria_obj = $this->getDao('FlexRia')->get(["so_no" => $dispatched_order_obj->getSoNo()])) {
                     $ria_obj->setStatus("RIA");
                     $this->getDao('FlexRia')->update($ria_obj);
                 }
@@ -1206,13 +1206,13 @@ class FlexService extends BaseService
     {
         $date = date("Y-m-d", strtotime($date));
         if (preg_match("/\d{4}-\d{2}-\d{2}/", trim($date))) {
-            $where = array();
+            $where = [];
             $date = date("Y-m-d", strtotime($date));
             $where["txn_time >="] = $date . ' 00:00:00';
             $where["txn_time <="] = $date . ' 23:59:59';
-            if ($ri_list = $this->getDao('FlexRefund')->getList($where, array("limit" => -1))) {
+            if ($ri_list = $this->getDao('FlexRefund')->getList($where, ["limit" => -1])) {
                 foreach ($ri_list as $refund_obj) {
-                    if ($ria_obj = $this->getDao('FlexRia')->get(array("so_no" => $refund_obj->getSoNo(), "status" => "REFUNDED"))) {
+                    if ($ria_obj = $this->getDao('FlexRia')->get(["so_no" => $refund_obj->getSoNo(), "status" => "REFUNDED"])) {
                         $ria_obj->setStatus("RIA");
                         $this->getDao('FlexRia')->update($ria_obj);
                     }
@@ -1225,10 +1225,10 @@ class FlexService extends BaseService
     {
         $so_no_collect = '(' . implode(',', $so_no_list) . ')';
         $where = array("so_no IN {$so_no_collect}" => null);
-        $option = array('limit' => -1);
+        $option = ['limit' => -1];
 
         if (($so_obj_list = $this->getDao('So')->getList($where, $option))
-            && ($flex_batch_obj = $this->getDao('FlexBatch')->get(array('gateway_id' => $gateway_id)))
+            && ($flex_batch_obj = $this->getDao('FlexBatch')->get(['gateway_id' => $gateway_id]))
         ) {
             foreach ($so_obj_list as $so_obj) {
                 $ifr_vo = $this->getDao('InterfaceFlexRia')->get();
@@ -1250,8 +1250,8 @@ class FlexService extends BaseService
     public function platformOrderDeleteInterfaceFlexRia($gateway_id, $so_no_list)
     {
         $so_no_collect = '(' . implode(',', $so_no_list) . ')';
-        $where = array("so_no IN {$so_no_collect}" => null);
-        $option = array('limit' => -1);
+        $where = ["so_no IN {$so_no_collect}" => null];
+        $option = ['limit' => -1];
         if ($ifr_obj_list = $this->getDao('InterfaceFlexRia')->getList($where, $option)) {
             foreach ($ifr_obj_list as $ifr_obj) {
                 $this->getDao('InterfaceFlexRia')->delete($ifr_obj);
@@ -1261,11 +1261,11 @@ class FlexService extends BaseService
 
     public function WithBankTransferToFlexRia($sobt_obj)
     {
-        if (($so_obj = $this->getDao('So')->get(array('so_no' => $sobt_obj->getSoNo())))
-            && ($flex_batch_obj = $this->getDao('FlexBatch')->get(array('gateway_id' => 'w_bank_transfer')))
+        if (($so_obj = $this->getDao('So')->get(['so_no' => $sobt_obj->getSoNo()]))
+            && ($flex_batch_obj = $this->getDao('FlexBatch')->get(['gateway_id' => 'w_bank_transfer']))
         ) {
 
-            if ($flex_ria_obj = $this->getDao('FlexRia')->get(array('so_no' => $sobt_obj->getSoNo(), 'flex_batch_id' => $flex_batch_obj->getId()))) {
+            if ($flex_ria_obj = $this->getDao('FlexRia')->get(['so_no' => $sobt_obj->getSoNo(), 'flex_batch_id' => $flex_batch_obj->getId()])) {
                 $action = 'update';
             } else {
                 $action = 'insert';
@@ -1293,11 +1293,11 @@ class FlexService extends BaseService
 
     public function platfromOrderInsert_flex_ria($gateway_id, $so_no)
     {
-        if (($so_obj = $this->getDao('So')->get(array('so_no' => $so_no)))
-            && ($flex_batch_obj = $this->getDao('FlexBatch')->get(array('gateway_id' => $gateway_id)))
+        if (($so_obj = $this->getDao('So')->get(['so_no' => $so_no]))
+            && ($flex_batch_obj = $this->getDao('FlexBatch')->get(['gateway_id' => $gateway_id]))
         ) {
 
-            if ($flex_ria_obj = $this->getDao('FlexRia')->get(array('so_no' => $so_no, 'flex_batch_id' => $flex_batch_obj->getId()))) {
+            if ($flex_ria_obj = $this->getDao('FlexRia')->get(['so_no' => $so_no, 'flex_batch_id' => $flex_batch_obj->getId()])) {
                 $action = 'update';
             } else {
                 $action = 'insert';
@@ -1321,8 +1321,8 @@ class FlexService extends BaseService
     public function platfromOrderInsertFlexRefund($gateway_id, $refund_obj)
     {
         $so_no = $refund_obj->getSoNo();
-        if (($so_obj = $this->getDao('So')->get(array('so_no' => $so_no)))
-            && ($flex_batch_obj = $this->getDao('FlexBatch')->get(array('gateway_id' => $gateway_id)))
+        if (($so_obj = $this->getDao('So')->get(['so_no' => $so_no]))
+            && ($flex_batch_obj = $this->getDao('FlexBatch')->get(['gateway_id' => $gateway_id]))
         ) {
             $flex_refund_vo = $this->getDao('FlexRefund')->get();
             $flex_refund_obj = clone $flex_refund_vo;
@@ -1348,13 +1348,13 @@ class FlexService extends BaseService
             "so.dispatch_date > '2014-10-31 23:59:59'" => null,
             "so.platform_order_id like '%{$platform_order_id}%'" => null
         );
-        $so_list = $this->getDao('So')->getRakutenShippedOrder($where, array('limit' => -1));
+        $so_list = $this->getDao('So')->getRakutenShippedOrder($where, ['limit' => -1]);
         return $so_list;
     }
 
     public function getRakutenShippedOrderFromInterface()
     {
         $where = array('ifr.gateway_id' => 'rakuten','fr.so_no IS NULL' => null);
-        return $this->getDao('So')->getRakutenShippedOrderFromInterface($where, array('limit' => -1));
+        return $this->getDao('So')->getRakutenShippedOrderFromInterface($where, ['limit' => -1]);
     }
 }

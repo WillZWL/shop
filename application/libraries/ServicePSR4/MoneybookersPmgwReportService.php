@@ -136,12 +136,12 @@ class MoneybookersPmgwReportService extends PmgwReportService
     {
         $where["flex_batch_id"] = $batch_id;
         $where["so_no"] = " ";
-        if ($empty_so_no_obj_list = $this->getDao('InterfaceFlexRefund')->getList($where, array("limit" => -1))) {
+        if ($empty_so_no_obj_list = $this->getDao('InterfaceFlexRefund')->getList($where, ["limit" => -1])) {
             $related_txn_id = array("getInternalTxnId", "getTxnId");
             foreach ($empty_so_no_obj_list as $nut_obj) {
                 foreach ($related_txn_id as $method) {
                     $txn_id = $nut_obj->$method();
-                    if ($ria_obj = $this->getDao('InterfaceFlexRia')->get(array("txn_id" => $txn_id))) {
+                    if ($ria_obj = $this->getDao('InterfaceFlexRia')->get(["txn_id" => $txn_id])) {
                         if ($so_no = $ria_obj->getSoNo()) {
                             $nut_obj->setSoNo($so_no);
                             $nut_obj->setBatchStatus("N");
@@ -157,7 +157,7 @@ class MoneybookersPmgwReportService extends PmgwReportService
         unset($where);
         $where["flex_batch_id"] = $batch_id;
         $where["so_no"] = " ";
-        if ($empty_so_no_obj_list = $this->getDao('InterfaceFlexSoFee')->getList($where, array("limit" => -1))) {
+        if ($empty_so_no_obj_list = $this->getDao('InterfaceFlexSoFee')->getList($where, ["limit" => -1])) {
             foreach ($empty_so_no_obj_list as $nut_obj) {
                 $txn_id = $nut_obj->getTxnId();
                 $search_fields = array("txn_id", "internal_txn_id");
@@ -180,10 +180,10 @@ class MoneybookersPmgwReportService extends PmgwReportService
         $where["flex_batch_id"] = $batch_id;
         $where["so_no"] = " ";
         $where["failed_reason"] = PmgwReportService::WRONG_TRANSACTION_ID;
-        if ($empty_so_no_obj_list = $this->getDao('InterfaceFlexSoFee')->getList($where, array("limit" => -1))) {
+        if ($empty_so_no_obj_list = $this->getDao('InterfaceFlexSoFee')->getList($where, ["limit" => -1])) {
             foreach ($empty_so_no_obj_list as $nut_obj) {
                 $txn_id = $nut_obj->getTxnId();
-                if ($so_obj = $this->getDao('InterfaceFlexRefund')->get(array("txn_id" => $txn_id, "gateway_id" => $this->getPmgw()))) {
+                if ($so_obj = $this->getDao('InterfaceFlexRefund')->get(["txn_id" => $txn_id, "gateway_id" => $this->getPmgw()])) {
                     $nut_obj->setSoNo($so_obj->getSoNo());
                     $nut_obj->setBatchStatus("N");
                     $nut_obj->setFailedReason("");
@@ -202,7 +202,7 @@ class MoneybookersPmgwReportService extends PmgwReportService
                 $ifgf_obj->setBatchStatus("N");
 
                 if ($ifgf_dao = $this->getDao('InterfaceFlexGatewayFee')->insert($ifgf_obj)) {
-                    if ($ifsf_obj = $this->getDao('InterfaceFlexSoFee')->get(array("txn_id" => $nut_obj->getTxnId(), "gateway_id" => $this->getPmgw(), "status" => $nut_obj->getStatus()))) {
+                    if ($ifsf_obj = $this->getDao('InterfaceFlexSoFee')->get(["txn_id" => $nut_obj->getTxnId(), "gateway_id" => $this->getPmgw(), "status" => $nut_obj->getStatus()])) {
                         $ifsf_obj->setBatchStatus("S");
                         $ifsf_obj->setFailedReason("move from interface_so_fee to interface_gateway_fee");
                         $this->getDao('InterfaceFlexSoFee')->update($ifsf_obj);
@@ -256,7 +256,7 @@ class MoneybookersPmgwReportService extends PmgwReportService
             foreach ($txn_id_list as $a) {
                 $method = "get" . $a;
                 if ($txn_id = $dto_obj->$method()) {
-                    if (($so_obj = $this->getDao('So')->get(array("txn_id" => $txn_id)))) {
+                    if (($so_obj = $this->getDao('So')->get(["txn_id" => $txn_id]))) {
                         $dto_obj->setRefTxnId($txn_id);
                         $dto_obj->setSoNo($so_obj->getSoNo());
                         break;

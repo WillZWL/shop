@@ -17,8 +17,8 @@ class GatewayReport extends MY_Controller
         $_SESSION["LISTPAGE"] = base_url() . "account/GatewayReport/?" . $_SERVER['QUERY_STRING'];
         $data["lang"] = $lang;
         if ($this->input->get("search")) {
-            $where = array();
-            $option = array();
+            $where = [];
+            $option = [];
             $submit_search = 0;
             if ($this->input->get("batch_id") != "") {
                 $where["id"] = $this->input->get("batch_id");
@@ -82,7 +82,7 @@ class GatewayReport extends MY_Controller
             }
             $file_from = $this->sc['ContextConfig']->valueOf("flex_ftp_location") . "pmgw/" . $pmgw . "/";
             $file_arr = scandir($file_from);
-            $file_list = array();
+            $file_list = [];
             foreach ($file_arr AS $key => $old_name) {
                 if (!in_array($old_name, array(".", ".."))) {
                     $file_list[] = $old_name;
@@ -105,16 +105,18 @@ class GatewayReport extends MY_Controller
                 $batch_result = TRUE;
                 if (!in_array($old_name, array(".", "..", ".DS_Store"))) {
                     $new_name = pathinfo(trim($old_name), PATHINFO_FILENAME) . "_" . date("YmdHis") . "." . pathinfo(trim($old_name), PATHINFO_EXTENSION);
-                    //list($batch_result, $batch_id_list[]) = $this->sc['Flex']->processReport($pmgw, $new_name);
-                    if (copy($file_from . $old_name, $file_to . $new_name)) {
-                        //@unlink($file_from . $old_name);
-                        $pmgw = $this->underscore2camelcase($pmgw);
-                        list($batch_result, $batch_id_list[]) = $this->sc['Flex']->processReport($pmgw, $new_name);
-                        if ($batch_result == FALSE && $result == TRUE) {
+                    $extension = pathinfo(trim($old_name), PATHINFO_EXTENSION);
+                    if (in_array($extension, array('txt', 'csv'))) {
+                        if (copy($file_from . $old_name, $file_to . $new_name)) {
+                            @unlink($file_from . $old_name);
+                            $pmgw = $this->underscore2camelcase($pmgw);
+                            list($batch_result, $batch_id_list[]) = $this->sc['Flex']->processReport($pmgw, $new_name);
+                            if ($batch_result == FALSE && $result == TRUE) {
+                                $result = FALSE;
+                            }
+                        } else {
                             $result = FALSE;
                         }
-                    } else {
-                        $result = FALSE;
                     }
                 }
             }

@@ -32,10 +32,10 @@ class Flex extends MY_Controller
         $start_date = $date = date("Ymd", strtotime("+1 day", strtotime($data["start_date"])));
         $end_date = date("Ymd", strtotime("+1 day", strtotime($data["end_date"])));
         if ($this->input->post("search") == 1 || $query) {
-            $result_array = array();
+            $result_array = [];
             $i = 0;
             while (strtotime($date) <= strtotime($end_date) && $i < 30) {
-                $result = array();
+                $result = [];
                 $result["date"] = date('Y-m-d', strtotime($date));
                 $file_path = FLEX_REPORT_PATH . $date . "/sales/";
                 $file_info = $this->getDirFileInfo($file_path);
@@ -79,8 +79,8 @@ class Flex extends MY_Controller
 
     public function getDirFileInfo($file_path)
     {
-        $file_info = array();
-        $file_info['other'] = array();
+        $file_info = [];
+        $file_info['other'] = [];
         if (is_dir($file_path) && ($handle = opendir($file_path))) {
             while (false !== ($entity = readdir($handle))) {
                 if ($entity != "." && $entity != "..") {
@@ -120,10 +120,10 @@ class Flex extends MY_Controller
         $end_date = date("Ymd", strtotime("+1 day", strtotime($data["end_date"])));
         DEFINE('FLEX_REPORT_PATH', $this->sc['ContextConfig']->valueOf("flex_report_path"));
         if ($this->input->post("search") == 1 || $query) {
-            $result_array = array();
+            $result_array = [];
             $i = 0;
             while (strtotime($date) <= strtotime($end_date) && $i < 30) {
-                $result = array();
+                $result = [];
                 $result["date"] = date('Y-m-d', strtotime($date));
                 $file_path = FLEX_REPORT_PATH . $date . "/refund/";
                 $file_info = $this->getDirFileInfo($file_path);
@@ -203,13 +203,13 @@ class Flex extends MY_Controller
         }
     }
 
-    public function order_not_in_ria_report()
+    public function orderNotInRiaReport()
     {
         $sub_app_id = $this->getAppId() . "05";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->lang_id . ".php");
         $data['lang'] = $lang;
         if ($this->input->post('is_query') == 1) {
-            $where = array();
+            $where = [];
             $where['so.order_create_date >= '] = $this->input->post('start_date') . ' 00:00:00';
             $where['so.order_create_date <= '] = $this->input->post('end_date') . ' 23:59:59';
             if ($this->input->post('payment_gateway') != -1) {
@@ -295,14 +295,14 @@ class Flex extends MY_Controller
         return $this->sc['Flex']->getRollingReserveReport($start_date, $end_date, $gateway_id);
     }
 
-    public function download_file($date, $status, $filename = "")
+    public function downloadFile($date, $status, $filename = "")
     {
         DEFINE('FLEX_REPORT_PATH', $this->sc['ContextConfig']->valueOf("flex_report_path"));
         $file_path = FLEX_REPORT_PATH . $date . "/" . $status . "/" . $filename;
         $this->download($file_path, $filename);
     }
 
-    public function generate_exception($date, $start_date = "", $end_date = "", $folder_name = "")
+    public function generateException($date, $start_date = "", $end_date = "", $folder_name = "")
     {
         $file_path = $this->sc['ContextConfig']->valueOf("flex_report_path") . $date . "/sales/";
         $flag_file = "processing.txt";
@@ -405,7 +405,7 @@ class Flex extends MY_Controller
         redirect(base_url() . "account/flex/refund/" . $start_date . "/" . $end_date);
     }
 
-    public function gen_refund_invoice_ignore_status($start_date = "", $end_date = "", $folder_name = "")
+    public function genRefundInvoiceIgnoreStatus($start_date = "", $end_date = "", $folder_name = "")
     {
         $this->sc['Flex']->getRefundInvoice($start_date, $end_date, "R", $folder_name);
     }
@@ -429,7 +429,7 @@ class Flex extends MY_Controller
         redirect(base_url() . "account/flex/get_rakuten_shipped_order");
     }
 
-    public function get_rakuten_shipped_order($page = 'search')
+    public function getRakutenShippedOrder($page = 'search')
     {
         $sub_app_id = $this->getAppId() . "06";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->lang_id . ".php");

@@ -3,12 +3,12 @@ namespace ESG\Panther\Service;
 abstract class PaypalPmgwReportService extends PmgwReportService
 {
 
-    public $RiaRecordType = array("Mobile Express Checkout Payment Received",
+    public $RiaRecordType = ["Mobile Express Checkout Payment Received",
             "PayPal Express Checkout Payment Received",
             "Mobile Payment Received",
             "Payment Received",
             "Express Checkout Payment Received"
-        );
+        ];
 
     public function __construct()
     {
@@ -86,7 +86,7 @@ abstract class PaypalPmgwReportService extends PmgwReportService
         $where = array();
         $where["txn_id is null"] = null;
         $where["gateway_id"] = $this->getPmgw();
-        if ($empty_txn_obj_list = $this->getDao('InterfaceFlexRollingReserve')->getList($where, array("limit" => -1))) {
+        if ($empty_txn_obj_list = $this->getDao('InterfaceFlexRollingReserve')->getList($where, ["limit" => -1])) {
             foreach ($empty_txn_obj_list as $empty_txn_obj) {
                 if ($txn_id = $empty_txn_obj->getTxnId()) {
                     if (!$empty_txn_obj->getInternalTxnId()) {
@@ -100,7 +100,7 @@ abstract class PaypalPmgwReportService extends PmgwReportService
             }
         }
 
-        if ($empty_txn_obj_list = $this->getDao("InterfaceFlexRia")->getList($where, array("limit" => -1))) {
+        if ($empty_txn_obj_list = $this->getDao("InterfaceFlexRia")->getList($where, ["limit" => -1])) {
             foreach ($empty_txn_obj_list as $empty_txn_obj) {
                 if ($txn_id = $empty_txn_obj->getTxnId()) {
                     if (!$empty_txn_obj->getInternalTxnId()) {
@@ -119,10 +119,10 @@ abstract class PaypalPmgwReportService extends PmgwReportService
         $where["gateway_id"] = $this->getPmgw();
         $where["failed_reason"] = PmgwReportService::WRONG_TRANSACTION_ID;
 
-        if ($rolling_reserve_obj_list = $this->getDao('InterfaceFlexRollingReserve')->getList($where, array("limit" => -1))) {
+        if ($rolling_reserve_obj_list = $this->getDao('InterfaceFlexRollingReserve')->getList($where, ["limit" => -1])) {
             foreach ($rolling_reserve_obj_list as $nut_obj) {
                 $txn_id = $nut_obj->getTxnId();
-                if ($related_record = $this->getDao('InterfaceFlexRollingReserve')->getList(array("internal_txn_id" => $txn_id), array("limit" => 1))) {
+                if ($related_record = $this->getDao('InterfaceFlexRollingReserve')->getList(["internal_txn_id" => $txn_id], ["limit" => 1])) {
                     if ($so_no = $related_record->getSoNo()) {
                         $nut_obj->setSoNo($so_no);
                         $nut_obj->setTxnId($related_record->getTxnId());
@@ -133,7 +133,7 @@ abstract class PaypalPmgwReportService extends PmgwReportService
                 }
             }
         }
-        if ($rolling_reserve_obj_list = $this->getDao('InterfaceFlexRollingReserve')->getList($where, array("limit" => -1))) {
+        if ($rolling_reserve_obj_list = $this->getDao('InterfaceFlexRollingReserve')->getList($where, ["limit" => -1])) {
             foreach ($rolling_reserve_obj_list as $nut_obj) {
                 $this->RRToInterfaceFlexGatewayFee($batch_id, $nut_obj->getStatus(), $nut_obj);
             }
@@ -279,7 +279,7 @@ abstract class PaypalPmgwReportService extends PmgwReportService
         $ifgf_obj->setStatus($destination_status);
         $ifgf_obj->setBatchStatus("N");
         if ($ifgf_dao = $this->getDao("InterfaceFlexGatewayFee")->insert($ifgf_obj)) {
-            if ($ifr_obj = $this->getDao("InterfaceFlexRia")->get(array("txn_id" => $dto_obj->getTxnId(), "status" => $original_status, "batch_status != 'S'" => NULL))) {
+            if ($ifr_obj = $this->getDao("InterfaceFlexRia")->get(["txn_id" => $dto_obj->getTxnId(), "status" => $original_status, "batch_status != 'S'" => NULL])) {
                 $ifr_obj->setBatchStatus("S");
                 $ifr_obj->setFailedReason("move to interface_gateway_fee");
                 $this->getDao("InterfaceFlexRia")->update($ifr_obj);
