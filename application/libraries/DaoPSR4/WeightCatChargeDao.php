@@ -115,24 +115,20 @@ class WeightCatChargeDao extends BaseDao
     public function getCountryWeightChargeByPlatform($platform_id, $weight, $delivery_type = "STD", $classname = "CountryWeightChargeDto")
     {
         $sql = "
-                SELECT wcc.*, wcc.amount * er.rate converted_amount
-                FROM weight_cat_charge wcc
-                JOIN
-                (
-                    SELECT wc.id
-                    FROM weight_category wc
-                    ORDER BY (wc.weight >= ?) DESC, ABS(? - wc.weight) ASC
-                    LIMIT 1
-                )mwc
-                    ON (wcc.wcat_id = mwc.id AND wcc.delivery_type = ?)
+                SELECT
+                    wcc.*, wcc.amount * er.rate converted_amount
+                FROM weight_category wc
+                INNER JOIN weight_cat_charge wcc
+                    ON wcc.wcat_id = wc.id
                 JOIN platform_biz_var pbv
                     ON pbv.dest_country = wcc.dest_country
-                LEFT JOIN exchange_rate er
+                INNER JOIN exchange_rate er
                     ON (wcc.currency_id = er.from_currency_id AND pbv.platform_currency_id  = er.to_currency_id)
-                WHERE pbv.selling_platform_id = ?
-                ";
+                WHERE
+                    wc.weight >= ? AND wcc.delivery_type = ? AND pbv.selling_platform_id = ?
+                ORDER BY wc.id ASC LIMIT 1";
 
-        if ($query = $this->db->query($sql, [$weight, $weight, $delivery_type, $platform_id])) {
+        if ($query = $this->db->query($sql, [$weight, $delivery_type, $platform_id])) {
             if ($query->row()) {
                 return $query->row()->converted_amount;
             }
