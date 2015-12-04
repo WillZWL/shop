@@ -109,6 +109,38 @@ class PriceService extends BaseService
         }
     }
 
+    public function getTrailCalcuMargin($platform_id, $sku, $price)
+    {
+        $where['p.sku'] = $sku;
+        $where['pbv.selling_platform_id'] = $platform_id;
+        $option['limit'] = 1;
+        $prod_obj = $this->getDao('Price')->getProductPriceWithCost($where, $option);
+
+        $prod_obj->setPrice($price);
+        $this->calculateDeclaredValue($prod_obj);
+        $this->calcVat($prod_obj);
+        $this->calcDeliveryCharge($prod_obj);
+        $this->calcLogisticCost($prod_obj);
+        $this->calcPaymentCharge($prod_obj);
+        $this->calcForexFee($prod_obj);
+        $this->calcDuty($prod_obj);
+        $this->calcForexFee($prod_obj);
+
+        $vat = $prod_obj->getVat();
+        $logistic_cost = $prod_obj->getLogisticCost();
+        $supplier_cost = $prod_obj->getSupplierCost();
+        $payment_charge_cost = $prod_obj->getPaymentCharge();
+        $listing_fee = $prod_obj->getListingFee();
+        $duty_cost = $prod_obj->getDuty();
+        $forex_fee = $prod_obj->getForexFee();
+
+        $total_cost = $vat + $logistic_cost + $supplier_cost + $payment_charge_cost + $listing_fee + $duty_cost + $forex_fee;
+        $profit = $price - $total_cost;
+        $margin = $profit / $price;
+
+        return $margin;
+    }
+
     public function calcWebsiteProductRrp($price = 0, $fixed_rrp = 'Y', $rrp_factor = 1.18)
     {
         if ($price > 0) {
