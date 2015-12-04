@@ -394,5 +394,13 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\AffiliateSkuPlatformService();
         };
 
+        $serviceContainer['PricingToolWebsite'] = function () {
+            return new S\PricingToolWebsiteService();
+        };
+
+        $serviceContainer['PricingToolEbay'] = function () {
+            return new S\PricingToolEbayService();
+        };
+
     }
 }

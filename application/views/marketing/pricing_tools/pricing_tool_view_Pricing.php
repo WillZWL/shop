@@ -46,7 +46,8 @@
     $table_row = '<tr id="row[' . $platform . ']" style="background-color:' . $bgcolor . '">
                     <td></td>
                     <td>
-                        <input type="text" name="selling_price[' . $platform . ']" value="' . ($pobj->getCurrentPlatformPrice() * 1) . '" id="sp[' . $platform . ']" onKeyup="rePrice(\'' . $platform . '\',\'' . $pobj->getSku() . '\')" style="width:80px;" notEmpty>
+                        <input type="text" name="selling_price[' . $platform . ']" value="' . ($pobj->getCurrentPlatformPrice() * 1) . '" id="sp[' . $platform . ']"
+                        onKeyup="value=value.replace(/[^\d.]/g,\'\');rePrice(\''.$platform.'\',\'' . $platform . '\',\'' . $pobj->getSku() . '\')" style="width:80px;">
                     </td>
                     <td id="delivery_charge[' . $platform . ']">' . number_format($pobj->getDeliveryCharge(), 2, ".", "") . '</td>
                     ' . $decl_vat_row . '
@@ -63,7 +64,7 @@
                     <td id="profit[' . $platform . ']">' . number_format($pobj->getProfit(), 2, ".", "") . '</td>
                     <td id="margin[' . $platform . ']">' . number_format($pobj->getMargin(), 2, ".", "") . '%</td>
                     <input type="hidden" id="hidden_profit[' . $platform . ']" name="hidden_profit[' . $platform . ']" value="' . number_format($pobj->getProfit(), 2, ".", "") . '">
-                    <input type="hidden" id="hidden_margin[' . $platform . ']" name="hidden_margin[' . $platform . ']" value="' . number_format($pobj->getMargin(), 2, ".", "") . '">
+                    <input type="hidden" id="hidden_margin[' . $platform . ']" name="hidden_margin[' . $platform . ']" margin="'. number_format($pobj->getMargin(), 2, ".", "") .'" value="' . number_format($pobj->getMargin(), 2, ".", "") . '">
                     <td>
                         <input type="hidden" id="declared_rate[' . $platform . ']" value="' . $pobj->getDeclaredPcent() . '">
                         <input type="hidden" id="payment_charge_rate[' . $platform . ']" value="' . $pobj->getPaymentChargePercent() . '">
@@ -79,7 +80,7 @@
                         <input type="hidden" id="default_freight_cost[' . $platform . ']" value="' . ($pobj->getWhfcCost() - $pobj->getAmazonEfnCost() * 1) . '">
                         <input type="hidden" id="sub_cat_margin[' . $platform . ']" value="' . $pobj->getSubCatMargin() . '">
                         <input type="hidden" id="auto_calc_price[' . $platform . ']" value="' . number_format($auto_calc_price, 2, ".", "") . '">
-                        <input type="hidden" id="origin_price[' . $platform . ']" value="' . number_format($pobj->getPrice(), 2, ".", "") . '">
+                        <input type="hidden" id="origin_price[' . $platform . ']" default_price="'. number_format($pobj->getDefaultPlatformConvertedPrice(), 2, ".", "") .'" value="' . number_format($pobj->getPrice(), 2, ".", "") . '">
                     </td>
                  </tr>
                 ';
