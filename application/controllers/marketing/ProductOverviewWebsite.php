@@ -570,8 +570,8 @@ class ProductOverviewWebsite extends MY_Controller
         }
     }
 
-    public function js_overview()
-    {
-        $this->product_overview_model->print_overview_js();
-    }
+    // public function js_overview()
+    // {
+    //     $this->product_overview_model->print_overview_js();
+    // }
 }

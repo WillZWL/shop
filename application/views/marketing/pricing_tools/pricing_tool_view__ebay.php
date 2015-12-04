@@ -1,5 +1,5 @@
 <?php
-    $price_ext_obj = $price_ext[$platform_id];
+    $price_ext_obj = $price_ext[$platform];
 ?>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tb_main">
     <tr>
@@ -51,7 +51,7 @@
     <tr>
         <td class="field"><?= $lang["listing_qty"] ?></td>
         <td class="value">
-            <input name="price_ext[<?= $platform ?>][ext_qty]" value="<?= htmlspecialchars($price_ext_obj->getExtQty()) ?>">
+            <input name="price_ext[<?= $platform ?>][ext_qty]" value="<?= htmlspecialchars($price_ext_obj->getExtQty()) ?>"  onkeyup="value=value.replace(/[^\d.]/g,'')">
             <select name="price_ext[<?= $platform ?>][handling_time]" style="width:130px;">
             <?php
                   $business_day_array = array(0, 1, 2, 3, 4, 5, 10, 15, 20);

@@ -13,7 +13,7 @@ class CronUpdatePriceMargin extends MY_Controller
     public function updateMargin($platform_id = '', $sku = '')
     {
         if ($platform_id === '') {
-            $platform_list = $this->getDao('SellingPlatform')->getList();
+            $platform_list = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList();
             foreach ($platform_list as $platform_obj) {
                 $this->sc['Price']->refreshMargin($platform_obj->getSellingPlatformId());
             }

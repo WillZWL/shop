@@ -51,13 +51,16 @@ class PriceDao extends BaseDao
     public function getProductPriceWithCost($where = [], $option = [], $classname = "ProductPriceWithCostDto")
     {
         $this->db->from('product p');
-        $this->db->join("freight_category fc", "fc.id = p.freight_cat_id", "LEFT");
-        $this->db->join("supplier_prod sp", "p.sku = sp.prod_sku AND sp.order_default = 1", "LEFT");
-        $this->db->join("supplier s", "sp.supplier_id = s.id", "INNER");
+        $this->db->join("freight_category fc", "fc.id = p.freight_cat_id", "INNER");
+        $this->db->join("supplier_prod sp", "p.sku = sp.prod_sku AND sp.order_default = 1", "INNER");
+        // $this->db->join("supplier s", "sp.supplier_id = s.id", "INNER");
         $this->db->join("exchange_rate sper", "sp.currency_id = sper.from_currency_id", "INNER");
         $this->db->join("platform_biz_var pbv", "pbv.platform_currency_id = sper.to_currency_id", "INNER");
-        $this->db->join("sub_cat_platform_var scpv", "p.sub_cat_id = scpv.sub_cat_id AND pbv.selling_platform_id = scpv.platform_id", "LEFT");
-        $this->db->join("product_custom_classification cc", "cc.sku = p.sku AND cc.country_id = pbv.platform_country_id", "LEFT");
+        $this->db->join("sub_cat_platform_var scpv", "p.sub_cat_id = scpv.sub_cat_id AND pbv.selling_platform_id = scpv.platform_id", "INNER");
+        $this->db->join("product_custom_classification cc", "cc.sku = p.sku AND cc.country_id = pbv.platform_country_id", "INNER");
+        $this->db->join("price pr", "pr.sku = sp.prod_sku AND pr.platform_id = pbv.selling_platform_id", "LEFT");
+
+        $this->db->order_by("pbv.platform_country_id asc, pr.id asc");
 
         $select_str = " p.sku AS sku,
                         pbv.selling_platform_id AS platform_id,
@@ -66,17 +69,21 @@ class PriceDao extends BaseDao
                         pbv.payment_charge_percent AS payment_charge_percent,
                         pbv.free_delivery_limit AS free_delivery_limit,
                         pbv.admin_fee AS admin_fee,
-                        0 AS delivery_cost,
-                        0 AS delivery_charge,
+                        0.00 AS delivery_cost,
+                        0.00 AS delivery_charge,
                         fc.declared_pcent AS declared_pcent,
                         fc.weight AS prod_weight,
-                        sp.cost * sper.rate AS supplier_cost,
+                        (sp.cost * sper.rate) AS supplier_cost,
                         cc.duty_pcent AS duty_pcent,
                         scpv.platform_commission AS platform_commission,
                         scpv.fixed_fee AS listing_fee,
                         scpv.profit_margin AS sub_cat_margin,
                         pbv.platform_currency_id AS platform_currency_id,
-                        pbv.forex_fee_percent AS forex_fee_percent";
+                        pbv.forex_fee_percent AS forex_fee_percent,
+                        pr.id price_id,
+                        pr.price,
+                        IF (length(pr.listing_status)>0, pr.listing_status, 'N') listing_status
+                        ";
 
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
@@ -157,7 +164,7 @@ class PriceDao extends BaseDao
     public function getDefaultConvertedPrice($where = [], $option = [], $classname = "ProductCostDto")
     {
         $this->db->from('price pr');
-        $this->db->join("(platform_biz_var pbv INNER JOIN exchange_rate er)", "er.from_currency_id = 'HKD' AND er.to_currency_id = pbv.platform_currency_id", "LEFT");
+        $this->db->join("(platform_biz_var pbv INNER JOIN exchange_rate er)", "er.from_currency_id = 'HKD' AND er.to_currency_id = pbv.platform_currency_id", "INNER");
         $this->db->join("config c", "c.variable = 'default_platform_id' AND pr.platform_id = c.value", "INNER");
 
         $select_str = "

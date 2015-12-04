@@ -23,7 +23,6 @@ class ProductPriceWithCostDto
     private $logistic_cost;
     private $forex_fee;
     private $cost;
-    private $price;
     private $sales_commission;
     private $declared_value;
     private $duty;
@@ -36,6 +35,8 @@ class ProductPriceWithCostDto
     private $default_delivery_charge;
     private $profit;
     private $margin;
+    private $price = '0.00';
+    private $price_id;
 
     private $whfc_cost;
     private $amazon_efn_cost;
@@ -389,7 +390,18 @@ class ProductPriceWithCostDto
     {
         $this->margin = $margin;
     }
-        public function getWhfcCost()
+
+    public function getPriceId()
+    {
+        return $this->price_id;
+    }
+
+    public function setPriceId($price_id)
+    {
+        $this->price_id = $price_id;
+    }
+
+    public function getWhfcCost()
     {
         return number_format($this->whfc_cost, 2, ".", "");
     }
