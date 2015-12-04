@@ -357,7 +357,7 @@ function check_sub_cat_margin(platform_type, platform, sku) {
                     rePrice(platform_type, platform, sku);
                 }
             } else {
-                if ($("input[id='origin_price["+platform+"]']").val() == 0) {
+                if ($("input[id='origin_price["+platform+"]']").val() == 0 || $("select[name='auto_price["+platform+"]'] option:selected").val() == "C") {
                     var default_price = $("input[id='origin_price["+platform+"]']").attr("default_price");
                     $("input[id='origin_price["+platform+"]']").val(default_price);
                 }
