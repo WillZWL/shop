@@ -67,8 +67,12 @@ class PricingToolService extends BaseService
                             $param['prod_obj'] = $prod_obj;
 
                             $website_data = $this->getService('PricingToolWebsite')->getPrivateDataForWebsite($param);
-                            $data = array_merge($website_data['data'], $data);
-                            $pdata = array_merge($website_data['pdata'], $pdata);
+                            if ($website_data['data']) {
+                                $data = array_merge($website_data['data'], $data);
+                            }
+                            if ($website_data['pdata']) {
+                                $pdata = array_merge($website_data['pdata'], $pdata);
+                            }
                             break;
 
                         default:
