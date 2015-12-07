@@ -287,19 +287,17 @@ class PriceService extends BaseService
                 if ($required_cost_price != -1) {
                     $k = $required_cost_price;
                     $dto->setSupplierCost($k);
-                } else {
-                    $k = $dto->getSupplierCost();
                 }
+
+                $k = $dto->getSupplierCost();
 
                 $l = $dto->getLogisticCost();
                 $d1 = $dto->getPaymentChargePercent() / 100;
-                $f1 = $dto->getForexFeePercent() / 100;
-                $f2 = $f1 * $bc;
+                // $f1 = $dto->getForexFeePercent() / 100;
+                // $f2 = $f1 * $bc;
+                $f2 = ($dto->getForexFeePercent() / 100) * $b;
 
-                $ca = 0;
-                if (method_exists($dto, 'getComplementaryAccCost')) {
-                    $ca = $dto->getComplementaryAccCost();
-                }
+                $ca = $dto->getComplementaryAccCost();
 
 
                 $declared_value = $this->calculateDeclaredValue($dto, $b);
@@ -307,7 +305,7 @@ class PriceService extends BaseService
 
                 $z = $dto->getVatPercent() / 100;
                 $h = $dto->getDeclaredPcent() / 100;
-                $a1 = $h * $b;
+                $a1 = ($dto->getDeclaredPcent() / 100) * $b;
                 $y = $a1 * $z;
 
                 $dto->setPrice($b);
@@ -377,21 +375,23 @@ class PriceService extends BaseService
 
     public function calcComplementaryAccCost(&$dto)
     {
-        if (method_exists($dto, "setComplementaryAccCost")) {
-            $total_cost = 0;
+        $total_cost = 0;
 
-            $where["pca.dest_country_id"] = $dto->getPlatformCountryId();
-            $where["pca.mainprod_sku"] = $dto->getSku();
-            $where["pca.status"] = 1;
+        $where["pca.dest_country_id"] = $dto->getPlatformCountryId();
+        $where["pca.mainprod_sku"] = $dto->getSku();
+        $where["pca.status"] = 1;
 
-            if ($mapped_ca_list = $this->getDao('ProductComplementaryAcc')->getMappedAccListWithName($where)) {
-                foreach ($mapped_ca_list as $caobj) {
-                    $cadto = $this->getDao('Price')->getProductPriceWithCost(['p.sku'=>$caobj->getAccessorySku(), 'pbv.selling_platform_id'=>$dto->getPlatformId()], ['limit'=>1]);
-                    $total_cost += $cadto->getSupplierCost();
-                }
+        if ($mapped_ca_list = $this->getDao('ProductComplementaryAcc')->getMappedAccListWithName($where)) {
+            $sku_arr = [];
+            foreach ($mapped_ca_list as $caobj) {
+                $sku_arr[] = $caobj->getAccessorySku();
             }
-            $dto->setComplementaryAccCost($total_cost);
+            $sku_list = "'". implode("','", $sku_arr) . "'";
+            if ($cadto = $this->getDao('Price')->getProductPriceWithCost(["p.sku in ({$sku_list})"=>null, 'pbv.selling_platform_id'=>$dto->getPlatformId()], ['sum_complementary_cost'=>1])) {
+                $total_cost = $cadto->getSupplierCost();
+            }
         }
+        $dto->setComplementaryAccCost($total_cost);
     }
 
     public function getPricingToolInfo($platform_list = "", $sku = "")

@@ -62,28 +62,34 @@ class PriceDao extends BaseDao
 
         $this->db->order_by("pbv.platform_country_id asc, pr.id asc");
 
-        $select_str = " p.sku AS sku,
-                        pbv.selling_platform_id AS platform_id,
-                        pbv.platform_country_id AS platform_country_id,
-                        pbv.vat_percent AS vat_percent,
-                        pbv.payment_charge_percent AS payment_charge_percent,
-                        pbv.free_delivery_limit AS free_delivery_limit,
-                        pbv.admin_fee AS admin_fee,
-                        0.00 AS delivery_cost,
-                        0.00 AS delivery_charge,
-                        fc.declared_pcent AS declared_pcent,
-                        fc.weight AS prod_weight,
-                        (sp.cost * sper.rate) AS supplier_cost,
-                        cc.duty_pcent AS duty_pcent,
-                        scpv.platform_commission AS platform_commission,
-                        scpv.fixed_fee AS listing_fee,
-                        scpv.profit_margin AS sub_cat_margin,
-                        pbv.platform_currency_id AS platform_currency_id,
-                        pbv.forex_fee_percent AS forex_fee_percent,
-                        pr.id price_id,
-                        pr.price,
-                        IF (length(pr.listing_status)>0, pr.listing_status, 'N') listing_status
-                        ";
+
+        if ($option['sum_complementary_cost']) {
+            $select_str = "sum((sp.cost * sper.rate)) supplier_cost";
+            $this->db->group_by("pbv.selling_platform_id");
+        } else {
+            $select_str = " p.sku AS sku,
+                            pbv.selling_platform_id AS platform_id,
+                            pbv.platform_country_id AS platform_country_id,
+                            pbv.vat_percent AS vat_percent,
+                            pbv.payment_charge_percent AS payment_charge_percent,
+                            pbv.free_delivery_limit AS free_delivery_limit,
+                            pbv.admin_fee AS admin_fee,
+                            0.00 AS delivery_cost,
+                            0.00 AS delivery_charge,
+                            fc.declared_pcent AS declared_pcent,
+                            fc.weight AS prod_weight,
+                            (sp.cost * sper.rate) AS supplier_cost,
+                            cc.duty_pcent AS duty_pcent,
+                            scpv.platform_commission AS platform_commission,
+                            scpv.fixed_fee AS listing_fee,
+                            scpv.profit_margin AS sub_cat_margin,
+                            pbv.platform_currency_id AS platform_currency_id,
+                            pbv.forex_fee_percent AS forex_fee_percent,
+                            pr.id price_id,
+                            pr.price,
+                            IF (length(pr.listing_status)>0, pr.listing_status, 'N') listing_status
+                            ";
+        }
 
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
