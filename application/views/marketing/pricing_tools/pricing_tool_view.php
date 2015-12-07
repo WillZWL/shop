@@ -2,9 +2,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="<?= base_url() ?>css/colorbox.css" />
-    <script type="text/javascript" src="<?= base_url() ?>js/jquery-colorbox.min.js"></script>
 </head>
 <script type="text/javascript">
     $(document).ready
@@ -32,8 +30,17 @@
             </tr>
         </table>
         <?php endif; ?>
-    <?php if ($sku != "") : ?>
-
+    <?php if ($sku != "") :
+            if ($canedit) :
+        ?>
+            <form name="list" action="<?= base_url() . $this->tool_path ?>/view/<?= $platform_type ?>/<?= $prod_obj->getSku() . ($this->input->get('target') == "" ? "" : "?target=" . $this->input->get('target')) ?>" method="POST" onSubmit="return CheckForm(this)">
+            <input type="hidden" name="sku" value="<?= $sku ?>">
+            <input type="hidden" name="posted" value="1">
+            <input type="hidden" name="formtype" value="<?= $action ?>">
+            <input type="hidden" name="target" value="<?= $target ?>">
+        <?php
+            endif;
+        ?>
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td height="60" align="left" style="padding-left:8px;">
@@ -157,10 +164,12 @@
                     <tr>
                         <td align="right" style="padding-right:8px;" height="30">
                             <input type="button" id="update_pricing_tool" value="<?= $lang['update_prod_for_price_tool'] ?>" onClick="update_product_for_pricing_tool('<?= $platform_type ?>', '<?= $sku ?>','all')">
+                            <input type="submit" value="<?= $lang['submit_all_changes'] ?>" />
                             <div style="float:left" id='note_for_product'></div>
                         </td>
                     </tr>
                 </table>
+            </form>
             <?php endif;?>
 
     <?php else : ?>
@@ -185,7 +194,9 @@ if ($prompt_notice) :
     <script language="javascript">alert('<?=$lang["update_notice"]?>')</script><?php
 endif;
 ?>
-
-<script type="text/javascript" src="<?= base_url() ?>js/pricing_tools/main.1.0.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>js/jquery-colorbox.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>js/pricing_tools/main.js"></script>
 </body>
 </html>
