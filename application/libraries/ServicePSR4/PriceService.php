@@ -77,6 +77,7 @@ class PriceService extends BaseService
                 $this->calcForexFee($prod_obj);
                 $this->calcDuty($prod_obj);
                 $this->calcForexFee($prod_obj);
+                $this->calcComplementaryAccCost($prod_obj);
 
                 $vat = $prod_obj->getVat();
                 $logistic_cost = $prod_obj->getLogisticCost();
@@ -85,8 +86,9 @@ class PriceService extends BaseService
                 $listing_fee = $prod_obj->getListingFee();
                 $duty_cost = $prod_obj->getDuty();
                 $forex_fee = $prod_obj->getForexFee();
+                $complementary_acc_cost = $prod_obj->getComplementaryAccCost();
 
-                $total_cost = $vat + $logistic_cost + $supplier_cost + $payment_charge_cost + $listing_fee + $duty_cost + $forex_fee;
+                $total_cost = $vat + $logistic_cost + $supplier_cost + $payment_charge_cost + $listing_fee + $duty_cost + $forex_fee + $complementary_acc_cost;
                 $profit = $price - $total_cost;
                 $margin = $profit / $price;
 
