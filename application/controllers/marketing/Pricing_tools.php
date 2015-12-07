@@ -52,9 +52,8 @@ class pricing_tools extends MY_Controller
                 $where["name"] = $prod_name;
             }
 
-            $limit = '20';
-            $option["limit"] = $limit;
-            $option["offset"] = $offset;
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
             $sort = $this->input->get("sort");
             $order = $this->input->get("order");
@@ -69,11 +68,15 @@ class pricing_tools extends MY_Controller
             $option["exclude_bundle"] = 1;
             $data["objlist"] = $this->sc['Product']->getDao('Product')->getListWithName($where, $option);
             $data["total"] = $this->sc['Product']->getDao('Product')->getListWithName($where, array_merge(['num_rows'=>1], $option));
+
             $config['base_url'] = base_url($this->tool_path . '/plist');
-            $config['total_rows'] = $data["total"];
-            $config['per_page'] = $limit;
+            $config['total_rows'] = 1000;
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
+
             $data["notice"] = notice($lang);
             $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
             $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
