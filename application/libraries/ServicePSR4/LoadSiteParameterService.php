@@ -65,8 +65,8 @@ class LoadSiteParameterService extends BaseService
     {
         setcookie('lang', SITE_LANG, time()+3600, '/', $this->getDomain());
         putenv('LANG=' . SITE_LANG);
-//        setlocale(LC_MESSAGES, SITE_LANG);
-        setlocale(LC_NUMERIC, 'en_US');
+        setlocale(LC_MESSAGES, SITE_LANG);
+        // setlocale(LC_NUMERIC, 'en_US');
 
         $domain = 'message';
         bindtextdomain($domain, I18N."Locale");
