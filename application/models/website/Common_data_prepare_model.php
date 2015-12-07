@@ -9,6 +9,8 @@ class Common_data_prepare_model extends CI_Model
     {
         parent::__construct();
 
+        $this->lang_id = strtolower(substr(PLATFORM, 3));
+
         // Don't load any helper/service here in order to reduce resource consumption
         // Load anything you need inside the method itself
     }
@@ -1400,7 +1402,6 @@ salecycle_script;
         $sku = $url_paras["sku"];
         $type = $url_paras["type"];
 
-        $abc = $this->product_model->price_service->get(array("sku" => $sku, "listing_status" => "L", "platform_id" => PLATFORM));
 
         if (!$this->product_model->price_service->get(array("sku" => $sku, "listing_status" => "L", "platform_id" => PLATFORM))) {
             return false;
