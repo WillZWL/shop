@@ -67,15 +67,18 @@ class VbDataTransferPricesService extends VbDataTransferService
                 if (($prod_obj->getClearance() == 0)) {
                     $new_margin = $this->getService('Price')->getTrailCalcuMargin($platform_id, $sku, $required_selling_price);
                     $pricing_rule_obj = $this->getPriceRule($vb_price_obj);
-                    $min_margin = $pricing_rule_obj->getMinMargin();
 
-                    if ($new_margin * 100 < $minimun_margin) {
-                        $reason = "Error in margin";
-                        $result_status = 6;
-                    } else {
-                        $this->getDao('Price')->$action($price_obj);
-                        $result_status = 5;
+                    if ($pricing_rule_obj) {
+                        $min_margin = $pricing_rule_obj->getMinMargin();
+
+                        if ($new_margin * 100 < $minimun_margin) {
+                            $reason = "Error in margin";
+                            $result_status = 6;
+                            continue;
+                        }
                     }
+                    $this->getDao('Price')->$action($price_obj);
+                    $result_status = 5;
                 } else {
                     // clearance, no need check minimun margin
                     $this->getDao('Price')->$action($price_obj);
@@ -110,6 +113,7 @@ class VbDataTransferPricesService extends VbDataTransferService
 
     public function applyPriceRule(&$vb_price_obj)
     {
+        $required_selling_price = $vb_price_obj->prod_price;
         $pricing_rule_obj = $this->getPriceRule($vb_price_obj);
         if ($pricing_rule_obj) {
             $rule_type = $pricing_rule_obj->getMarkUpType();
