@@ -72,10 +72,7 @@ class PricingRules extends MY_Controller
 
         $data["notice"] = notice($lang);
 
-
-
-        $data["country_list"] = $this->sc['Country']->getSellCountryList();
-
+        $data["country_list"] = $this->sc['Country']->getCountryLanguageList();
 
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
@@ -118,7 +115,7 @@ class PricingRules extends MY_Controller
 
         include_once(APPPATH . "language/" . $this->getAppId() . "01" . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
-		$data["country_list"] = $this->sc['Country']->getSellCountryList();
+		$data["country_list"] = $this->sc['Country']->getCountryLanguageList();
 
         if (empty($data["pricingrule"])) {
             if (($data["pricingrule"] = $this->sc['pricingRulesModel']->getPricingRule()) === FALSE) {
@@ -176,7 +173,7 @@ class PricingRules extends MY_Controller
 
             include_once(APPPATH . "language/" . $this->getAppId() . "02" . "_" . $this->getLangId() . ".php");
 			$data["lang"] = $lang;
-			$data["country_list"] = $this->sc['Country']->getSellCountryList();
+			$data["country_list"] = $this->sc['Country']->getCountryLanguageList();
 
             if (empty($data["pricingrule"])) {
                 if (($data["pricingrule"] = $this->sc['pricingRulesModel']->getPricingRule(["id" => $id])) === FALSE) {

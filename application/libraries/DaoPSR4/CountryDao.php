@@ -208,10 +208,10 @@ class CountryDao extends BaseDao
 
     public function getCountryLanguageList()
     {
-        $sql = "SELECT sp.id, c.country_id, c.id_3_digit, c.name, c.description, c.status, c.currency_id, pbv.language_id, c.fc_id, c.allow_sell, c.create_on, c.create_at, c.create_by, c.modify_on, c.modify_at, c.modify_by
+        $sql = "SELECT sp.id, sp.selling_platform_id, c.country_id, c.id_3_digit, c.name, c.description, c.status, c.currency_id, pbv.language_id, c.fc_id, c.allow_sell, c.create_on, c.create_at, c.create_by, c.modify_on, c.modify_at, c.modify_by
                 FROM selling_platform sp
                 JOIN platform_biz_var pbv
-                    ON sp.id = pbv.selling_platform_id
+                    ON sp.selling_platform_id = pbv.selling_platform_id
                 JOIN country c
                     ON pbv.platform_country_id = c.country_id
                 WHERE (sp.type = 'WEBSITE' OR sp.type = 'SKYPE') AND sp.status = 1

@@ -1571,6 +1571,27 @@ salecycle_script;
             case 'gb' :
                 $searchspring_site_id = 'jdajtq';
                 break;
+            case 'nz' :
+                $searchspring_site_id = '61jj96';
+                break;
+            case 'au' :
+                $searchspring_site_id = 'dkow9j';
+                break;
+            case 'es' :
+                $searchspring_site_id = '7g2sk7';
+                break;
+            case 'it' :
+                $searchspring_site_id = '1eq9mh';
+                break;
+            case 'fr' :
+                $searchspring_site_id = 'rtkr86';
+                break;
+            case 'be' :
+                $searchspring_site_id = 'm15dls';
+                break;
+            case 'pl' :
+                $searchspring_site_id = 'yf45du';
+                break;
 
             default   :
                 $searchspring_site_id = '';
