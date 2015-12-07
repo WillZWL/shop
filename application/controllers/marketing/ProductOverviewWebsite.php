@@ -43,11 +43,9 @@ class ProductOverviewWebsite extends MY_Controller
 
             $config['base_url'] = base_url('marketing/ProductOverviewWebsite');
             $config['total_rows'] = 1000;
-            $config['attributes']['calss'] = 'pagination';
             $config['page_query_string'] = true;
             $config['reuse_query_string'] = true;
             $config['per_page'] = $option['limit'];
-
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
         }
@@ -572,8 +570,8 @@ class ProductOverviewWebsite extends MY_Controller
         }
     }
 
-    public function js_overview()
-    {
-        $this->product_overview_model->print_overview_js();
-    }
+    // public function js_overview()
+    // {
+    //     $this->product_overview_model->print_overview_js();
+    // }
 }

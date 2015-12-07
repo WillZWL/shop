@@ -16,7 +16,7 @@
         </td>
         <td width="20%" class="field"><?= $lang["webqty"] ?></td>
         <td width="30%" class="value">
-            <input type="text" name="webqty" value="<?= $prod_obj->getWebsiteQuantity() ?>" notEmpty isNatural>
+            <input type="text" name="webqty" value="<?= $prod_obj->getWebsiteQuantity() ?>" onkeyup="value=value.replace(/[^\d.]/g,'')">
         </td>
     </tr>
     <tr>
@@ -77,8 +77,7 @@
     <tr>
         <td width="20%" class="field" valign="top"
             style="padding-top:2px; padding-bottom:2px;"><?= $lang["marketing_notes"] ?></td>
-        <td width="30%" class="value" valign="top" style="padding-top:2px; padding-bottom:2px;">
-            <div><?= $lang["current_notes"] ?></div>
+        <td width="30%" id="td_m_note" class="value" valign="top" style="padding-top:2px; padding-bottom:2px;">
             <?php
                 if (!empty($mkt_note_obj)) :
                     foreach ($mkt_note_obj as $nobj) : ?>
@@ -93,13 +92,12 @@
                     echo "<div>" . $lang["no_notes"] . "</div>";
                 endif;
             ?>
-            <div><?= $lang["create_note"] ?></div>
-            <div><input name="m_note" maxlength="255" type="text"></div>
+            <span id="m_create_note"><?= $lang["create_note"] ?></span><br/>
+            <span><input name="m_note" maxlength="255" type="text"></span>
         </td>
         <td width="20%" class="field" valign="top"
             style="padding-top:2px; padding-bottom:2px;"><?= $lang["sourcing_notes"] ?></td>
-        <td width="30%" class="value" valign="top" style="padding-top:2px; padding-bottom:2px;">
-            <div><?= $lang["current_notes"] ?></div>
+        <td width="30%" id="td_s_note" class="value" valign="top" style="padding-top:2px; padding-bottom:2px;">
             <?php
                 if (!empty($src_note_obj)) :
                     foreach ($src_note_obj as $nobj) :
@@ -115,17 +113,22 @@
                     echo "<div>" . $lang["no_notes"] . "</div>";
                 endif;
             ?>
-            <div><?= $lang["create_note"] ?></div>
-            <div><input name="s_note" maxlength="255" type="text"></div>
+            <span id="s_create_note"><?= $lang["create_note"] ?></span><br/>
+            <span><input name="s_note" maxlength="255" type="text"></span>
         </td>
     </tr>
     <tr>
         <td width="20%" class="field" valign="top" style="padding-top:2px; padding-bottom:2px;"><?= $lang["max_order_qty"] ?></td>
         <td width="30%" class="value" valign="top" style="padding-top:2px; padding-bottom:2px;">
-            <input type="text" name="max_order_qty" value="<?= ($price_obj->getMaxOrderQty() == "" ? "100" : $price_obj->getMaxOrderQty()) ?>">
+            <input type="text" name="max_order_qty" value="<?= ($price_obj->getMaxOrderQty() == "" ? "100" : $price_obj->getMaxOrderQty()) ?>" onkeyup="value=value.replace(/[^\d.]/g,'')">
         </td>
+    <?php if ($platform_type == "WEBSITE") : ?>
         <td width="20%" class="field"><?= $lang["mapping_code"] ?></td>
         <td width="30%" class="value"><input type="text" name="ext_mapping_code" value="<?= $price_obj->getExtMappingCode() ?>" style="width:130px;"></td>
+    <?php else : ?>
+        <td width="20%" class="field"></td>
+        <td width="30%" class="value"></td>
+    <?php endif; ?>
     </tr>
     <tr>
         <td width="20%" class="field"><?= $lang["create_on"] ?></td>
@@ -150,6 +153,7 @@
             <td width="20%" class="field"><?= $lang["ean"] ?></td>
             <td width="30%" class="value">
                 <input type="text" name="ean" value="<?= $prod_obj->getEan() ?>">
+                <input type="hidden" name="chk" value="<?= $platform_type ?>">
             </td>
             <td width="20%" class="field"><?= $lang["mapping_code"] ?></td>
             <td width="30%" class="value">

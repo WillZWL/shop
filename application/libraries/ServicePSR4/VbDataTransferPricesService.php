@@ -65,17 +65,20 @@ class VbDataTransferPricesService extends VbDataTransferService
                 }
 
                 if (($prod_obj->getClearance() == 0)) {
-                    // TODO:
-                    // need to finish getTrailCalcuMargin function
-                    // $new_margin = $this->getService('Price')->getTrailCalcuProfitMargin($price_obj);
-                    $new_margin = -1;
-                    if ($new_margin < $minimun_margin) {
-                        $reason = "Error in  margin";
-                        $result_status = 6;
-                    } else {
-                        $this->getDao('Price')->$action($price_obj);
-                        $result_status = 5;
+                    $new_margin = $this->getService('Price')->getTrailCalcuMargin($platform_id, $sku, $required_selling_price);
+                    $pricing_rule_obj = $this->getPriceRule($vb_price_obj);
+
+                    if ($pricing_rule_obj) {
+                        $min_margin = $pricing_rule_obj->getMinMargin();
+
+                        if ($new_margin * 100 < $minimun_margin) {
+                            $reason = "Error in margin";
+                            $result_status = 6;
+                            continue;
+                        }
                     }
+                    $this->getDao('Price')->$action($price_obj);
+                    $result_status = 5;
                 } else {
                     // clearance, no need check minimun margin
                     $this->getDao('Price')->$action($price_obj);
@@ -109,6 +112,24 @@ class VbDataTransferPricesService extends VbDataTransferService
     }
 
     public function applyPriceRule(&$vb_price_obj)
+    {
+        $required_selling_price = $vb_price_obj->prod_price;
+        $pricing_rule_obj = $this->getPriceRule($vb_price_obj);
+        if ($pricing_rule_obj) {
+            $rule_type = $pricing_rule_obj->getMarkUpType();
+            $rule_markup = $pricing_rule_obj->getMarkUpValue();
+
+            if ($rule_type == 'A') {
+                $required_selling_price += floatval($rule_markup * 1.0);
+            } elseif ($rule_type == 'P') {
+                $required_selling_price = $required_selling_price + ($required_selling_price * $rule_markup);
+            }
+        }
+
+        $vb_price_obj->required_selling_price = $required_selling_price;
+    }
+
+    public function getPriceRule($vb_price_obj)
     {
         $required_selling_price = floatval($vb_price_obj->prod_price);
         $platform_id = (string) $vb_price_obj->platform_id;
@@ -147,20 +168,6 @@ class VbDataTransferPricesService extends VbDataTransferService
 
         $pricing_rule_obj = $this->getService('PricingRules')->getPricingRulesByPlatform($where, $option);
 
-        //if exist, apply the pricing rules to the VB price
-        //if dont exist rules for the VB price, we use directly the VB price
-        if ($pricing_rule_obj) {
-            $rule_type = $pricing_rule_obj->getMarkUpType();
-            $rule_markup = $pricing_rule_obj->getMarkUpValue();
-            $min_margin = $pricing_rule_obj->getMinMargin();
-
-            if ($rule_type == 'A') {
-                $required_selling_price += floatval($rule_markup * 1.0);
-            } elseif ($rule_type == 'P') {
-                $required_selling_price = $required_selling_price + ($required_selling_price * $rule_markup);
-            }
-        }
-
-        $vb_price_obj->required_selling_price = $required_selling_price;
+        return $pricing_rule_obj;
     }
 }

@@ -24,7 +24,8 @@
         <table>
         <?php
             $c = 1;
-            foreach ($current_mapping as $obj) :
+            if ($current_mapping) :
+                foreach ($current_mapping as $obj) :
         ?>
             <tr>
                 <td><?= $c ?></td>
@@ -41,7 +42,8 @@
             </tr>
         <?php
             $c++;
-            endforeach;
+                endforeach;
+            endif;
         ?>
         </table>
     </body>

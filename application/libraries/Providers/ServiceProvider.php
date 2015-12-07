@@ -398,5 +398,13 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\BundleConfigService();
         };
 
+        $serviceContainer['PricingToolWebsite'] = function () {
+            return new S\PricingToolWebsiteService();
+        };
+
+        $serviceContainer['PricingToolEbay'] = function () {
+            return new S\PricingToolEbayService();
+        };
+
     }
 }

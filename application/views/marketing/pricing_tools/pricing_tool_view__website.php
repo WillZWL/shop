@@ -52,7 +52,7 @@
     <tr>
         <td width="20%" class="field"><?= $lang["auto_price"] ?></td>
         <td width="30%" class="value">
-            <select id="auto_price_cb[<?= $platform ?>]" name="auto_price[<?= $platform ?>]" onchange="check_sub_cat_margin('<?= $platform ?>')">
+            <select id="auto_price_cb[<?= $platform ?>]" name="auto_price[<?= $platform ?>]" onchange="check_sub_cat_margin('<?= $platform_type ?>','<?= $platform ?>', '<?=$prod_obj->getSku();?>')">
                 <?php
                 foreach ($auto_price_action as $key => $action) :
                     $selected = "";
