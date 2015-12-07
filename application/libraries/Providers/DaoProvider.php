@@ -536,5 +536,9 @@ class DaoProvider implements ServiceProviderInterface
         $daoContainer['DisplayQtyFactor'] = function () {
             return new D\DisplayQtyFactorDao();
         };
+
+        $daoContainer['BundleConfig'] = function () {
+            return new D\BundleConfigDao();
+        };
     }
 }
