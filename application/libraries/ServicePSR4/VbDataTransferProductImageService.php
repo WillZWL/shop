@@ -48,7 +48,7 @@ class VbDataTransferProductImageService extends VbDataTransferService
                 $reason = 'insert_or_update';
                 if ($pi_obj) {
                     //we need to check the stop_sync_image value to stop the update when needed (only for update)
-                    $pi_obj = $cat_ext_obj->getStopSyncImage();
+                    $stop_sync_image = $pi_obj->getStopSyncImage();
 
                     if ($stop_sync_image != 1)
                     {
