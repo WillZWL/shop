@@ -51,13 +51,13 @@ class PriceDao extends BaseDao
     public function getProductPriceWithCost($where = [], $option = [], $classname = "ProductPriceWithCostDto")
     {
         $this->db->from('product p');
-        $this->db->join("freight_category fc", "fc.id = p.freight_cat_id", "INNER");
-        $this->db->join("supplier_prod sp", "p.sku = sp.prod_sku AND sp.order_default = 1", "INNER");
+        $this->db->join("freight_category fc", "fc.id = p.freight_cat_id", "LEFT");
+        $this->db->join("supplier_prod sp", "p.sku = sp.prod_sku AND sp.order_default = 1", "LEFT");
         // $this->db->join("supplier s", "sp.supplier_id = s.id", "INNER");
         $this->db->join("exchange_rate sper", "sp.currency_id = sper.from_currency_id", "INNER");
         $this->db->join("platform_biz_var pbv", "pbv.platform_currency_id = sper.to_currency_id", "INNER");
         $this->db->join("sub_cat_platform_var scpv", "p.sub_cat_id = scpv.sub_cat_id AND pbv.selling_platform_id = scpv.platform_id", "INNER");
-        $this->db->join("product_custom_classification cc", "cc.sku = p.sku AND cc.country_id = pbv.platform_country_id", "INNER");
+        $this->db->join("product_custom_classification cc", "cc.sku = p.sku AND cc.country_id = pbv.platform_country_id", "LEFT");
         $this->db->join("price pr", "pr.sku = sp.prod_sku AND pr.platform_id = pbv.selling_platform_id", "LEFT");
 
         $this->db->order_by("pbv.platform_country_id asc, pr.id asc");

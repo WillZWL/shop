@@ -3,6 +3,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+   <!--  <link rel="stylesheet" href="<?= base_url() ?>css/colorbox.css" />
+    <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>js/jquery-colorbox.min.js"></script> -->
 </head>
 <body marginheight="0" marginwidth="0" topmargin="0" leftmargin="0" class="frame_left">
     <div id="main" style="width:auto">
@@ -167,6 +171,7 @@
 <?php endif; ?>
 </div>
 <?= $notice["js"] ?>
+<?= $objlist["js"] ?>
 <?php
 
 if ($prompt_notice) :
