@@ -389,8 +389,16 @@ class PriceService extends BaseService
                 $sku_arr[] = $caobj->getAccessorySku();
             }
             $sku_list = "'". implode("','", $sku_arr) . "'";
-            if ($cadto = $this->getDao('Price')->getProductPriceWithCost(["p.sku in ({$sku_list})"=>null, 'pbv.selling_platform_id'=>$dto->getPlatformId()], ['sum_complementary_cost'=>1, 'limit'=>-1])) {
-                $total_cost = $cadto->getSupplierCost();
+            if ($cadto = $this->getDao('Price')->getProductPriceWithCost(
+                                    [
+                                        "p.sku in ({$sku_list})"=>null,
+                                        'pbv.selling_platform_id'=>$dto->getPlatformId()
+                                    ], [
+                                        'sum_complementary_cost'=>1,
+                                        'limit'=>1
+                                    ])
+            ) {
+                    $total_cost = $cadto->getSupplierCost();
             }
         }
         $dto->setComplementaryAccCost($total_cost);
