@@ -100,6 +100,9 @@ class pricing_tools extends MY_Controller
             $data['canedit'] = 1;
             $data["prompt_notice"] = 0;
             $data["valid_supplier"] = 1;
+
+            $this->processPostedData($platform_type, $sku);
+
             $data["sku"] = $sku;
             $data["target"] = $this->input->get('target');
             $data["platform_type"] = $platform_type;
@@ -108,7 +111,7 @@ class pricing_tools extends MY_Controller
             $data['app_id'] = $this->getAppId();
             $data["notice"] = notice($lang);
             if ($data["prod_obj"]  = $prod_obj = $this->sc['Product']->getDao('Product')->get(['sku'=>$sku])) {
-
+                $_SESSION["prod_obj"] = serialize($prod_obj);
                 $data["inv"] = $this->sc['WmsInventory']->getInventoryList(["sku" => $sku]);
                 $data['master_sku'] = $this->sc['SkuMapping']->getMasterSku(['sku' => $sku, 'ext_sys' => 'WMS', 'status' => 1]);
                 $data["supplier"] = $this->sc['Product']->getDao('Product')->getCurrentSupplier($sku);
@@ -131,6 +134,92 @@ class pricing_tools extends MY_Controller
         }
 
         $this->load->view($this->tool_path . "/pricing_tool_view", $data);
+    }
+
+    public function processPostedData($platform_type, $sku, $redirect = true, $force_auto_price = false, $force_list = false) {
+        if ($this->input->post('posted')) {
+            $plat = $this->input->post('selling_platform');
+            $splist = $this->input->post("selling_price");
+            $pae = $this->input->post('allow_express');
+            $pia = $this->input->post('is_advertised');
+            $pft = $this->input->post('formtype');
+            $pls = $this->input->post('listing_status');
+
+
+            $hidden_profit = $this->input->post("hidden_profit");
+            $hidden_margin = $this->input->post("hidden_margin");
+
+            $status = $this->input->post('status');
+            $ext_mapping_code = $this->input->post('ext_mapping_code');
+            $max_order_qty = $this->input->post('max_order_qty');
+
+            foreach ($plat as $platform => $val) {
+                $vars = [];
+                $vars['sku'] = $sku;
+                $vars['platform'] = $platform;
+                $vars['sp'] = trim($splist[$platform]);
+                $allow_express = $pae[$platform];
+                $is_advertised = $pia[$platform];
+                $vars['ae'] = ($allow_express) ? 'Y' : 'N';
+                $vars['ia'] = ($is_advertised)? 'Y' : 'N';
+
+                $vars['cur_listing_status'] = $pls[$platform];
+                $vars['formtype'] = $pft[$platform];
+                $vars['profit'] = $hidden_profit[$platform];
+                $vars['margin'] = $hidden_margin[$platform];
+
+                $vars['special_update'] = 1;
+                $vars['status'] = $status;
+                $vars['ext_mapping_code'] = $ext_mapping_code;
+                $vars['max_order_qty'] = $max_order_qty;
+
+                switch ($platform_type) {
+                    case 'WEBSITE':
+                        $pap = $this->input->post('auto_price');
+                        $pfrrp = $this->input->post('fixed_rrp');
+                        $prrp_factor = $this->input->post('rrp_factor');
+
+                        $vars['rrp_factor'] = trim($prrp_factor[$platform]);
+                        $ap = (!$pap[$platform]) ? 'N' : $pap[$platform];
+                        $vars['ap'] = ($force_auto_price) ? "Y" : $ap;
+                        $vars['frrp'] = ($pfrrp[$platform] == 'N') ? 'N' : 'Y';
+                        $vars['cur_listing_status'] = ($force_list) ? "L" : $vars['cur_listing_status'];
+
+                        $arr = $this->sc['PricingToolWebsite']->updatePricingForWebsite($vars);
+                        $this->sc['PriceMargin']->insertOrUpdateMargin($vars['sku'], $vars['platform'], $vars['sp'], $vars['profit'], $vars['margin']);
+                        break;
+
+                    case 'EBAY':
+                        $price_ext = $this->input->post('price_ext');
+                        $action = $this->input->post('action');
+                        $reason = $this->input->post('reason');
+
+                        $vars['ext_ref_1'] = $price_ext[$platform]['ext_ref_1'];
+                        $vars['ext_ref_2'] = $price_ext[$platform]['ext_ref_2'];
+                        $vars['ext_ref_3'] = $price_ext[$platform]['ext_ref_3'];
+                        $vars['ext_ref_4'] = $price_ext[$platform]['ext_ref_4'];
+                        $vars['ext_qty'] = $price_ext[$platform]['ext_qty'];
+                        $vars['title'] = $price_ext[$platform]['title'];
+                        $vars['handling_time'] = $price_ext[$platform]['handling_time'];
+                        $vars['action'] = $action[$platform];
+                        $vars['reason'] = $reason[$platform];
+
+                        $arr = $this->sc['PricingToolEbay']->updatePricingForEbay($vars);
+
+                    default:
+                        # code...
+                        break;
+                }
+            }
+
+            $this->postDataForProduct($sku);
+
+            if ($redirect) {
+                Redirect(base_url() . $this->tool_path . "/view/" .$platform_type . "/" . $sku);
+            }
+        }
+
+        return null;
     }
 
     public function update_pricing_for_platform($platform_type)
@@ -197,6 +286,13 @@ class pricing_tools extends MY_Controller
                                     'moq' => $this->input->post('max_order_qty')
                                  ]);
 
+        $arr = $this->postDataForProduct($sku);
+
+        echo json_encode($arr);
+    }
+
+    public function postDataForProduct($sku)
+    {
         $prod_obj = unserialize($_SESSION["prod_obj"]);
         $prev_webqty = $prod_obj->getWebsiteQuantity();
         $prod_obj->setClearance($this->input->post('clearance'));
@@ -236,6 +332,10 @@ class pricing_tools extends MY_Controller
         if (trim($this->input->post('s_note')) != "") {
             $s_obj = $this->sc['PricingTool']->addProductNote($sku, 'S', 'WEBGB', $this->input->post('s_note'));
         }
+        // $this->product_update_followup_service->google_shopping_update($sku);
+        // $google_adwords_target_platform_list = $this->input->post('google_adwords');
+        // //$adGroup_status = $this->input->post('adGroup_status');
+        // $this->product_update_followup_service->adwords_update($sku, $google_adwords_target_platform_list);
 
         $arr['add_m_note'] = $arr['add_s_note'] = false;
         if ($m_obj) {
@@ -251,11 +351,7 @@ class pricing_tools extends MY_Controller
             $arr['s_note'] = $s_obj->getNote();
         }
 
-        // $this->product_update_followup_service->google_shopping_update($sku);
-        // $google_adwords_target_platform_list = $this->input->post('google_adwords');
-        // //$adGroup_status = $this->input->post('adGroup_status');
-        // $this->product_update_followup_service->adwords_update($sku, $google_adwords_target_platform_list);
-        echo json_encode($arr);
+        return $arr;
     }
 
     public function get_profit_margin_json($platform_id, $sku, $required_selling_price = 0, $required_cost_price = -1, $return_json = false)
