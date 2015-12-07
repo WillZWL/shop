@@ -118,8 +118,9 @@ class pricing_tools extends MY_Controller
                 $data["website_product_url"] = $this->sc['PricingTool']->getProductUrl($sku);
 
                 $princing_data = $this->sc['PricingTool']->getPricingToolPanel($sku, $platform_type, $data['master_sku'], $data["prod_obj"]);
-
-                $data = array_merge($princing_data, $data);
+                if ($princing_data) {
+                    $data = array_merge($princing_data, $data);
+                }
 
             }
 
