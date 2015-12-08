@@ -115,11 +115,6 @@ class Freight_model extends CI_Model
         return $this->freight_cat_service->get_fcc_w_reg_list($where, $option);
     }
 
-    public function get_wcc_w_reg_list($where = array(), $option = array())
-    {
-        return $this->weight_cat_service->get_wcc_w_reg_list($where, $option);
-    }
-
     public function include_fcc_vo()
     {
         return $this->freight_cat_service->get_fcc_dao()->include_vo();
