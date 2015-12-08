@@ -90,7 +90,7 @@ class PriceService extends BaseService
 
                 $total_cost = $vat + $logistic_cost + $supplier_cost + $payment_charge_cost + $listing_fee + $duty_cost + $forex_fee + $complementary_acc_cost;
                 $profit = $price - $total_cost;
-                $margin = $profit / $price;
+                $margin = $profit / $price * 100;
 
                 $price_margin_obj->setSku($sku);
                 $price_margin_obj->setPlatformId($platform_id);
