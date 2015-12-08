@@ -2686,34 +2686,30 @@ SQL;
         return $this->commonGetList($classname, $where, $option, "so.so_no, so.platform_id, c.email, so.delivery_name, GROUP_CONCAT(CONCAT(soi.ext_item_cd,',',soi.prod_name) SEPARATOR '||')item_list, pbv.language_id");
     }
 
-    public function get_flex_sales_invoice($where, $classname = "SalesInvoiceDto")
+    public function getFlexSalesInvoice($where, $classname = "SalesInvoiceDto")
     {
         $option['limit'] = -1;
-        $this->db->from("(select so.so_no, so.biz_type, so.parent_so_no, so.status,
-        so.client_id, so.currency_id, so.platform_id,so.client_promotion_code,so.dispatch_date,so.order_create_date,so.delivery_charge,so.split_so_group,soex.order_reason,
-        sum(fr.amount) as amount, fr.txn_id, fr.txn_time, fr.flex_batch_id, fr.gateway_id from so
-        INNER JOIN so_extend soex on so.so_no = soex.so_no LEFT JOIN flex_ria fr ON so.so_no = fr.so_no group by so.so_no) tbl_1");
-
-        $this->db->join("so_payment_status sops", "sops.so_no = tbl_1.so_no", "LEFT");
-        $this->db->join("so_item_detail soid", "soid.so_no = tbl_1.so_no", "LEFT");
-        $this->db->join("client c", "c.id = tbl_1.client_id", "INNER");
-
-        $this->db->join("flex_gateway_mapping gm", "gm.gateway_id = tbl_1.gateway_id AND gm.currency_id = tbl_1.currency_id", "LEFT");
+        $this->db->from("so so");
+        $this->db->join("so_extend soex", "so.so_no = soex.so_no", "INNER");
+        $this->db->join("flex_ria fr", "so.so_no = fr.so_no", "LEFT");
+        $this->db->join("so_payment_status sops", "sops.so_no = so.so_no", "LEFT");
+        $this->db->join("so_item_detail soid", "soid.so_no = so.so_no", "LEFT");
+        $this->db->join("client c", "c.id = so.client_id", "INNER");
+        $this->db->join("flex_gateway_mapping gm", "gm.gateway_id = fr.gateway_id AND gm.currency_id = so.currency_id", "LEFT");
         $this->db->join("sku_mapping map", "map.sku = soid.item_sku AND map.ext_sys = 'WMS' AND map.status = 1", "LEFT");
-        $this->db->orderby("gm.gateway_code desc, tbl_1.txn_time DESC, sops.payment_gateway_id, tbl_1.currency_id, soid.item_sku");
-        $start_date = $where["start_date"];
-        $end_date = $where["end_date"];
-
-        unset($where["start_date"]);
-        unset($where["end_date"]);
-        $dispatch_string = "tbl_1.finance_dispatch_date";
-        $where[$dispatch_string . " >="] = $start_date . ' 00:00:00';
-        $where[$dispatch_string . " <="] = $end_date . ' 23:59:59';
-
-        return $this->commonGetList($classname, $where, $option, 'tbl_1.txn_id, tbl_1.biz_type, tbl_1.order_reason, tbl_1.parent_so_no, tbl_1.split_so_group, RIGHT(tbl_1.platform_id,2) as sm_code, SUBSTR(tbl_1.platform_id, 1, CHAR_LENGTH(tbl_1.platform_id) - 2) as contain_size, tbl_1.client_promotion_code as promotion_code, CONCAT(gm.gateway_code, "I") tran_type,date_format(tbl_1.finance_dispatch_date, "%Y-%m-%d") dispatch_date, date_format(tbl_1.txn_time, "%Y-%m-%d") txn_time, map.ext_sku product_code, tbl_1.platform_id, tbl_1.flex_batch_id, gm.gateway_code AS report_pmgw, if(tbl_1.gateway_id !="", tbl_1.gateway_id, sops.payment_gateway_id) as gateway_id, tbl_1.currency_id, map.ext_sku AS master_sku, soid.qty AS qty, soid.amount AS amount, tbl_1.order_create_date, c.email AS customer_email, tbl_1.so_no, if(soid.line_no = 1,tbl_1.delivery_charge,0) AS delivery_charge, soid.line_no as line_index');
+        $this->db->group_by("so.so_no");
+        $this->db->order_by("gm.gateway_code desc, fr.txn_time DESC, sops.payment_gateway_id, so.currency_id, soid.item_sku");
+        $select_str = "fr.txn_id, so.biz_type, soex.order_reason, so.parent_so_no, so.split_so_group, RIGHT(so.platform_id,2) as sm_code,
+                    SUBSTR(so.platform_id, 1, CHAR_LENGTH(so.platform_id) - 2) as contain_size, so.client_promotion_code as promotion_code,
+                    CONCAT(gm.gateway_code, 'I') tran_type,date_format(so.dispatch_date, '%Y-%m-%d') dispatch_date,
+                    date_format(fr.txn_time, '%Y-%m-%d') txn_time, map.ext_sku product_code, so.platform_id, fr.flex_batch_id,
+                    gm.gateway_code AS report_pmgw, if(fr.gateway_id !='', fr.gateway_id, sops.payment_gateway_id) as gateway_id,
+                    so.currency_id, map.ext_sku AS master_sku, soid.qty AS qty, soid.amount AS amount, so.order_create_date, c.email AS customer_email,
+                    so.so_no, if(soid.line_no = 1, so.delivery_charge, 0) AS delivery_charge, soid.line_no as line_index";
+        return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
-    public function get_flex_refund_invoice($where, $classname = "RefundInvoiceDto")
+    public function getFlexRefundInvoice($where, $classname = "RefundInvoiceDto")
     {
         $option['limit'] = -1;
         $this->db->from("flex_refund frf");
@@ -2722,9 +2718,10 @@ SQL;
         $this->db->join("sku_mapping map", " map.sku = soid.item_sku AND map.ext_sys = 'WMS' AND map.status = 1", "LEFT");
         $this->db->join("flex_gateway_mapping gm", "gm.gateway_id = frf.gateway_id AND gm.currency_id = frf.currency_id", "LEFT");
         $this->db->join("so_payment_status sops", "sops.so_no = so.so_no", "LEFT");
-        $this->db->orderby("gm.gateway_code desc, frf.flex_batch_id, frf.txn_time");
-
-        return $this->commonGetList($classname, $where, $option, 'map.ext_sku master_sku, CONCAT(gm.gateway_code,frf.status) tran_type, frf.flex_batch_id, frf.txn_time, frf.currency_id, gm.gateway_code report_pmgw, soid.qty, soid.amount unit_price, so.so_no, frf.txn_id, sops.payment_gateway_id gateway_id');
+        $this->db->order_by("gm.gateway_code desc, frf.flex_batch_id, frf.txn_time");
+        $select_str = 'map.ext_sku master_sku, CONCAT(gm.gateway_code,frf.status) tran_type, frf.flex_batch_id, frf.txn_time, frf.currency_id,
+        gm.gateway_code report_pmgw, soid.qty, soid.amount unit_price, so.so_no, frf.txn_id, sops.payment_gateway_id gateway_id';
+        return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
     public function getOrdersBySkuAndStatus($sku, $so_status = 2, $where = [], $option = [])
@@ -3300,7 +3297,7 @@ SQL;
         $this->db->join("so_priority_score sps", "sps.so_no  = s.so_no", "INNER");
         $this->db->join("(select round(sum(profit*qty)/sum(amount)*100,2) as margin, so_no from so_item_detail group by so_no) temp", "temp.so_no = s.so_no", "INNER");
         $this->db->select($selectStr);
-        $this->db->orderby("modify_on ASC");
+        $this->db->order_by("modify_on ASC");
         $this->db->where($where);
 
 
@@ -3416,7 +3413,7 @@ SQL;
         return $this->common_get_list($where, $option, "so_vo", "so.so_no, so.platform_id, so.create_on, so.dispatch_date, so.finance_dispatch_date");
     }
 
-    public function get_order_not_in_ria_report($where = [], $option = [], $classname = 'OrderNotInRiaReportDto')
+    public function getOrderNotInRiaReport($where = [], $option = [], $classname = 'OrderNotInRiaReportDto')
     {
         $this->db->from('so');
         $this->db->join('flex_ria ria', 'so.so_no = ria.so_no', 'LEFT');
@@ -3424,24 +3421,21 @@ SQL;
         $this->db->where('ria.so_no IS NULL');
         $this->db->where('so.status >= 2');
         $this->db->order_by('so.currency_id', 'ASC');
-
         return $this->commonGetList($classname, $where, $option, 'sps.payment_gateway_id, so.order_create_date, so.currency_id, so.so_no, so.amount');
     }
 
-    public function get_rakuten_shipped_order($where = [], $option = [], $classname = 'RakutenShippedOrderDto')
+    public function getRakutenShippedOrder($where = [], $option = [], $classname = 'RakutenShippedOrderDto')
     {
         $this->db->from('so');
         $this->db->join('interface_flex_ria ifr', 'so.so_no = ifr.so_no', 'LEFT');
-
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, so.platform_id, so.txn_id, so.currency_id, so.amount, so.order_create_date, so.dispatch_date, ifr.status');
     }
 
-    public function get_rakuten_shipped_order_from_interface($where, $option, $classname = 'RakutenShippedOrderDto')
+    public function getRakutenShippedOrderFromInterface($where, $option, $classname = 'RakutenShippedOrderDto')
     {
         $this->db->from('interface_flex_ria ifr');
         $this->db->join('flex_ria fr', 'fr.so_no = ifr.so_no', 'LEFT');
         $this->db->join('so', 'ifr.so_no = so.so_no', 'INNER');
-
         return $this->commonGetList($classname, $where, $option, 'so.so_no, so.platform_order_id, so.platform_id, so.txn_id, so.currency_id, so.amount, so.order_create_date, so.dispatch_date, ifr.status');
     }
 

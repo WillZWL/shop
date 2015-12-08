@@ -18,7 +18,7 @@ class CartSessionService extends BaseService
     const DIFFERENT_PREORDER_ITEM = 80;
     const DIFFERENT_ARRIVING_ITEM = 85;
     const UNKNOWN_ITEM_STATUS = 100;
-    
+
     const CART_ACTION_ADD = "ADD";
     const CART_ACTION_SUBTRACTION = "MINUS";
     const CART_ACTION_SET = "SET";
@@ -175,8 +175,8 @@ class CartSessionService extends BaseService
     public function getCartItemInDetail($sku, $lang, $platformId) {
         $para = $this->_getCommonCartParameter($sku, $lang, $platformId);
 
-        $productInfo = $this->productService->getDao()->getCartDataDetail($para["where"], $para["options"]);
-//        print $this->productService->getDao()->db->last_query();
+        $productInfo = $this->getDao('Product')->getCartDataDetail($para["where"], $para["options"]);
+//        print $this->getDao('Product')->db->last_query();
 //        var_dump($productInfo);
 //        exit;
         if ($productInfo) {
@@ -186,7 +186,7 @@ class CartSessionService extends BaseService
         {
 //out of stock, or
             $subject = "[Panther] Adding product which is not valid to the cart " . $sku . ":" . $platformId . " " . __METHOD__ . __LINE__;
-            $message = $this->productService->getDao()->db->last_query();
+            $message = $this->getDao('Product')->db->last_query();
             mail($this->support_email, $subject, $message, "From: website@" . SITE_DOMAIN . "\r\n");
         }
         return false;
@@ -196,8 +196,8 @@ class CartSessionService extends BaseService
         $para = $this->_getCommonCartParameter($sku, $lang, $platformId);
         $para["options"]["orderby"] = "pi.priority";
 
-        $productInfo = $this->productService->getDao()->getCartDataLite($para["where"], $para["options"]);
-//        print $this->productService->getDao()->db->last_query();
+        $productInfo = $this->getDao('Product')->getCartDataLite($para["where"], $para["options"]);
+//        print $this->getDao('Product')->db->last_query();
         if ($productInfo) {
             return $productInfo;
         }
@@ -205,7 +205,7 @@ class CartSessionService extends BaseService
         {
 //out of stock, or
             $subject = "[Panther] Adding product which is not valid to the cart, SKU:" . $sku . ", PlatformId:" . $platformId . " " . __METHOD__ . __LINE__;
-            $message = $this->productService->getDao()->db->last_query();
+            $message = $this->getDao('Product')->db->last_query();
             mail($this->support_email, $subject, $message, "From: website@" . SITE_DOMAIN . "\r\n");
         }
         return false;

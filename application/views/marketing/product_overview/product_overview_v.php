@@ -452,7 +452,7 @@
                                 <input name="msku" class="input" value="<?= htmlspecialchars($this->input->get("msku")) ?>">
                             </td>
                             <td>
-                                <input name="prod" class="input" value="<?= htmlspecialchars($this->input->get("prod")) ?>">
+                                <input name="prod_name" class="input" value="<?= htmlspecialchars($this->input->get("prod")) ?>">
                             </td>
                             <td>
                                 <select name="clear" class="input">
@@ -598,8 +598,8 @@
                                 <?= $product->getPlatformCurrencyId() . ' ' . $product->getVbPrice() ?>
                             </td>
                             <td><?= $product->getProfit() ?></td>
-                            <td><?= $product->getMargin() ?></td>
-                            <td>select all</td>
+                            <td><?= $product->getMargin() ?>%</td>
+                            <td><input type="checkbox"></td>
                         </tr>
                 <?php endforeach ?>
                     </tbody>

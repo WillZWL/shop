@@ -28,51 +28,25 @@ class PaginationService extends BaseService
         $this->load = $CI->load;
         $CI->load->library('pagination');
         $this->pagination = $CI->pagination;
-
-        //Modify by Tommy, set default value;
-        // $this->pagination->full_tag_open = "<table class='page' align='right' cellpadding=0 cellspacing=0 border=0><tr><td><table cellpadding=0 cellspacing=1 border=0><tr>";
-        // $this->pagination->full_tag_close = "</tr></table></td></tr></table>";
-        // $this->pagination->first_tag_open = "<td>";
-        // $this->pagination->first_tag_close = "</td>";
-        // $this->pagination->last_tag_open = "<td>";
-        // $this->pagination->first_tag_close = "</td>";
-        // $this->pagination->last_tag_close = "</td>";
-        // $this->pagination->next_tag_open = "<td>";
-        // $this->pagination->next_tag_close = "</td>";
-        // $this->pagination->prev_tag_open = "<td>";
-        // $this->pagination->prev_tag_close = "</td>";
-        // $this->pagination->num_tag_open = "<td>";
-        // $this->pagination->num_tag_close = "</td>";
-        // $this->pagination->cur_tag_open = "<td class='current'>";
-        // $this->pagination->cur_tag_close = "</td>";
-        // $this->pagination->first_link = htmlspecialchars("|<");
-        // $this->pagination->last_link = htmlspecialchars(">|");
-        // $this->pagination->next_link = htmlspecialchars("> ");
-        // $this->pagination->prev_link = htmlspecialchars("<");
-        // $this->pagination->num_links = 2;
-
-
     }
 
 
-    function set_anchor_style($style)
+    function setAnchorStyle($style)
     {
         $this->anchor_style = $style;
     }
 
-    function set_count_tag_open($tag)
+    function setCountTagOpen($tag)
     {
         $this->count_tag_open = $tag;
-
     }
 
-    function set_count_tag_close($tag)
+    function setCountTagClose($tag)
     {
         $this->count_tag_close = $tag;
-
     }
 
-    function set_row_per_page($value)
+    function setRowPerPage($value)
     {
         if (!is_numeric($value)) {
             $this->row_per_page = "";
@@ -81,15 +55,13 @@ class PaginationService extends BaseService
         }
     }
 
-    function set_show_count_tag($value)
+    function setShowCountTag($value)
     {
         $this->show_count_tag = $value;
     }
 
-    function get_num_records_per_page($aid = "")
+    function getNumRecordsPerPage($aid = "")
     {
-        //not yet implemented, return 20 as default
-        //if($aid == "")
         if ($this->row_per_page == "") {
             $ret = 20;
         } else {
@@ -117,7 +89,7 @@ class PaginationService extends BaseService
         }
     }
 
-    function create_links_with_style()
+    function createLinksWithStyle()
     {
         // If our item count or per-page total is zero there is no need to continue.
         if ($this->pagination->total_rows == 0 OR $this->pagination->per_page == 0) {
@@ -126,13 +98,6 @@ class PaginationService extends BaseService
 
         // Calculate the total number of pages
         $num_pages = ceil($this->pagination->total_rows / $this->pagination->per_page);
-
-        // Is there only one page? Hm... nothing more to do here then.
-        /*      if ($num_pages == 1)
-                {
-                    return '';
-                }
-        */
         // Determine the current page number.
         $CI =& get_instance();
 
@@ -198,22 +163,22 @@ class PaginationService extends BaseService
 
         // Render the "First" link
         if ($this->pagination->cur_page > ($this->pagination->num_links + 1) || !$not_exceed) {
-            $output .= $this->add_tag_style($this->pagination->first_tag_open, $this->first_tag_style) . '<A HRef="' . $this->pagination->base_url . '">' . $this->pagination->first_link . '</a>' . $this->pagination->first_tag_close;
+            $output .= $this->addTagStyle($this->pagination->first_tag_open, $this->first_tag_style) . '<A HRef="' . $this->pagination->base_url . '">' . $this->pagination->first_link . '</a>' . $this->pagination->first_tag_close;
         }
 
         // Render the "previous" link
         if ($this->pagination->cur_page != 1 && $not_exceed) {
             $i = $uri_page_number - $this->pagination->per_page;
             if ($i == 0) $i = '';
-            $output .= $this->add_tag_style($this->pagination->prev_tag_open, $this->prev_tag_style) . '<a href="' . $this->pagination->base_url . $i . '">' . $this->pagination->prev_link . '</a>' . $this->pagination->prev_tag_close;
+            $output .= $this->addTagStyle($this->pagination->prev_tag_open, $this->prev_tag_style) . '<a href="' . $this->pagination->base_url . $i . '">' . $this->pagination->prev_link . '</a>' . $this->pagination->prev_tag_close;
         }
 
         // Write the digit links
         if ($this->pagination->num_links < 2) {
             if ($not_exceed) {
-                $output .= $this->add_tag_style($this->pagination->cur_tag_open, $this->cur_tag_style) . $this->pagination->cur_page . $this->pagination->cur_tag_close;
+                $output .= $this->addTagStyle($this->pagination->cur_tag_open, $this->cur_tag_style) . $this->pagination->cur_page . $this->pagination->cur_tag_close;
             } else {
-                $output .= $this->add_tag_style($this->pagination->num_tag_open, $this->num_tag_style) . '<a href="' . $this->pagination->base_url . (($this->pagination->cur_page * $this->pagination->per_page) - $this->pagination->per_page) . '" ' . $this->anchor_style . '>' . $this->pagination->cur_page . '</a>' . $this->pagination->num_tag_close;
+                $output .= $this->addTagStyle($this->pagination->num_tag_open, $this->num_tag_style) . '<a href="' . $this->pagination->base_url . (($this->pagination->cur_page * $this->pagination->per_page) - $this->pagination->per_page) . '" ' . $this->anchor_style . '>' . $this->pagination->cur_page . '</a>' . $this->pagination->num_tag_close;
             }
         } else {
             for ($loop = $start - 1; $loop <= $end; $loop++) {
@@ -221,10 +186,10 @@ class PaginationService extends BaseService
 
                 if ($i >= 0) {
                     if ($this->pagination->cur_page == $loop && $not_exceed) {
-                        $output .= $this->add_tag_style($this->pagination->cur_tag_open, $this->cur_tag_style) . $loop . $this->pagination->cur_tag_close; // Current page
+                        $output .= $this->addTagStyle($this->pagination->cur_tag_open, $this->cur_tag_style) . $loop . $this->pagination->cur_tag_close; // Current page
                     } else {
                         $n = ($i == 0) ? '' : $i;
-                        $output .= $this->add_tag_style($this->pagination->num_tag_open, $this->num_tag_style) . '<a href="' . $this->pagination->base_url . $n . '" ' . $this->anchor_style . '>' . $loop . '</a>' . $this->pagination->num_tag_close;
+                        $output .= $this->addTagStyle($this->pagination->num_tag_open, $this->num_tag_style) . '<a href="' . $this->pagination->base_url . $n . '" ' . $this->anchor_style . '>' . $loop . '</a>' . $this->pagination->num_tag_close;
                     }
                 }
             }
@@ -232,13 +197,13 @@ class PaginationService extends BaseService
 
         // Render the "next" link
         if ($this->pagination->cur_page < $num_pages) {
-            $output .= $this->add_tag_style($this->pagination->next_tag_open, $this->next_tag_style) . '<a href="' . $this->pagination->base_url . ($this->pagination->cur_page * $this->pagination->per_page) . '">' . $this->pagination->next_link . '</a>' . $this->pagination->next_tag_close;
+            $output .= $this->addTagStyle($this->pagination->next_tag_open, $this->next_tag_style) . '<a href="' . $this->pagination->base_url . ($this->pagination->cur_page * $this->pagination->per_page) . '">' . $this->pagination->next_link . '</a>' . $this->pagination->next_tag_close;
         }
 
         // Render the "Last" link
         if (($this->pagination->cur_page + $this->pagination->num_links) < $num_pages) {
             $i = (($num_pages * $this->pagination->per_page) - $this->pagination->per_page);
-            $output .= $this->add_tag_style($this->pagination->last_tag_open, $this->last_tag_style) . '<a href="' . $this->pagination->base_url . $i . '">' . $this->pagination->last_link . '</a>' . $this->pagination->last_tag_close;
+            $output .= $this->addTagStyle($this->pagination->last_tag_open, $this->last_tag_style) . '<a href="' . $this->pagination->base_url . $i . '">' . $this->pagination->last_link . '</a>' . $this->pagination->last_tag_close;
         }
 
         // Kill double slashes.  Note: Sometimes we can end up with a double slash
@@ -246,7 +211,7 @@ class PaginationService extends BaseService
         $output = preg_replace("#([^:])//+#", "\\1/", $output);
 
         // Add the wrapper HTML if exists
-        $output = $this->add_tag_style($this->pagination->full_tag_open, $this->full_tag_style) . $output . $this->pagination->full_tag_close;
+        $output = $this->addTagStyle($this->pagination->full_tag_open, $this->full_tag_style) . $output . $this->pagination->full_tag_close;
 
         //Add the total number of row Notice
         if ($this->show_count_tag) {
@@ -260,7 +225,7 @@ class PaginationService extends BaseService
         return $output;
     }
 
-    function add_tag_style($tag, $style_tag)
+    function addTagStyle($tag, $style_tag)
     {
         $attribute = "";
         if (count($style_tag) == 0) {

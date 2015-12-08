@@ -92,12 +92,10 @@ $today = getdate();
                         <td><?= $arr["date"] ?></td>
                         <td>
                             <?php
-                            $script .= "<input style='width:170px' type='button' value='Generate Refund & Chargeback' class='button' onclick=\"Redirect(" . "'" . site_url('account/flex/gen_refund_and_chargeback_invoice/' . $date . '/' . $start_date . '/' . $end_date) . "'" . ")\">";
+                            $script .= "<input style='width:170px' type='button' value='Generate Refund & Chargeback' class='button' onclick=\"Redirect(" . "'" . site_url('account/flex/genRefundAndChargebackInvoice/' . $date . '/' . $start_date . '/' . $end_date) . "'" . ")\">";
                             if (array_key_exists("zip", $arr)) {
                                 $download_zip_link = "";
                                 foreach ($arr["zip"] as $zip_file_name) {
-                                    //$script = "<a href='".site_url('account/flex/download_file/'.$date.'/'.$status.'/'.$arr['filename'])."'>".$arr['filename']."</a>";
-
                                     $download_zip_link .= "<a href='" . site_url('account/flex/download_file/' . $date . '/' . $status . '/' . $zip_file_name) . "'>" . $zip_file_name . "</a> | ";
                                 }
                                 $script = $download_zip_link . $script;
@@ -113,7 +111,7 @@ $today = getdate();
             ?>
         </table>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $this->sc['Pagination']->createLinksWithStyle() ?>
     <?= $notice["js"] ?>
 </div>
 </body>
