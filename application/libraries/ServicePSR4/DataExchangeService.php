@@ -1,16 +1,6 @@
 <?php
 namespace ESG\Panther\Service;
 
-interface inConverter
-{
-    public function inConvert();
-}
-
-interface outConverter
-{
-    public function outConvert();
-}
-
 class DataExchangeService extends BaseService
 {
 
@@ -40,6 +30,15 @@ class DataExchangeService extends BaseService
 
 }
 // CSV to XML
+interface inConverter
+{
+    public function inConvert();
+}
+
+interface outConverter
+{
+    public function outConvert();
+}
 
 class CsvToXml implements inConverter
 {
@@ -811,7 +810,6 @@ class XmlToVo implements outConverter
                         }
                     }
                 } else {
-
                     $class_methods = get_class_methods($vo);
                     foreach ($class_methods as $fct_name) {
                         if (substr($fct_name, 0, 3) == "set") {

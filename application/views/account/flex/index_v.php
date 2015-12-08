@@ -94,12 +94,12 @@ $today = getdate();
                             <?php
                             switch ($arr["type"]) {
                                 case "gen_exception":
-                                    $script = "<input type='button' value='Check Exception' class='button' onclick=\"Redirect(" . "'" . site_url('account/flex/gen_sales_invoice/' . $date . '/' . $start_date . '/' . $end_date) . "'" . ")\">";
+                                    $script = "<input type='button' value='Check Exception' class='button' onclick=\"Redirect(" . "'" . site_url('account/flex/genSalesInvoice/' . $date . '/' . $start_date . '/' . $end_date) . "'" . ")\">";
 
                                     break;
                                 case "waiting_confirm":
                                     $script = "<a href='" . site_url('account/flex/download_file/' . $date . '/' . $status . '/' . $arr['filename']) . "'>" . $arr['filename'] . "</a>";
-                                    $script .= "<input type='button' value='Confirm Process' class='button' onclick=\"Redirect(" . "'" . site_url('account/flex/gen_sales_invoice/' . $date . '/' . $start_date . '/' . $end_date) . "'" . ")\">";
+                                    $script .= "<input type='button' value='Confirm Process' class='button' onclick=\"Redirect(" . "'" . site_url('account/flex/genSalesInvoice/' . $date . '/' . $start_date . '/' . $end_date) . "'" . ")\">";
                                     $script .= "<input type='button' value='Regenerate Exception' class='button' onclick=\"Redirect(" . "'" . site_url('account/flex/regenerate_exception/' . $date . '/' . $start_date . '/' . $end_date) . "'" . ")\">";
                                     break;
 
@@ -128,7 +128,7 @@ $today = getdate();
             ?>
         </table>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $this->sc['Pagination']->createLinksWithStyle() ?>
     <?= $notice["js"] ?>
 </div>
 </body>
