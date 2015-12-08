@@ -35,11 +35,13 @@ class PricingToolService extends BaseService
                     $platform_obj = $plat[$platform_id];
                     $pdata[$platform_id]["obj"] = $platform_obj;
 
+                    $data["formtype"][$platform_id] = "update";
                     if ( !($price_obj = $this->getDao('Price')->get(["sku" => $prod_sku, "platform_id" => $platform_id])) ) {
                         $price_obj = $this->getDao('Price')->get();
+                        $data["formtype"][$platform_id] = "add";
                     }
                     $data["price_list"][$platform_id] = $price_obj;
-
+                    $_SESSION["price_obj_" . $platform_id] = serialize($price_obj);
                     $param = [];
                     # public param's array
                     $param['platform_id'] = $platform_id;

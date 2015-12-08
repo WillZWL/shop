@@ -12,10 +12,8 @@ class PricingToolWebsiteService extends BaseService
     {
     	$arr = [];
         $action = "update";
-    	if (!$price_obj = $this->getDao('Price')->get(["platform_id" => $vars['platform'], "sku" => $vars['sku']])) {
-            $action = "insert";
-            $price_obj = $this->getDao('Price')->get();
-        }
+    	$action = $vars['formtype'] == "update" ? "update" : "insert";
+        $price_obj = unserialize($_SESSION["price_obj_" . $vars['platform']]);
 		if ($price_obj->getPrice() * 1 != $vars['sp'] * 1 ||
             $price_obj->getListingStatus() != $vars['cur_listing_status'] ||
             $price_obj->getAllowExpress() != $vars['ae'] ||
@@ -26,16 +24,18 @@ class PricingToolWebsiteService extends BaseService
         ) {
             $price_obj->setPlatformId($vars['platform']);
             $price_obj->setSku($vars['sku']);
-            // $price_obj->setStatus($this->input->post('status'));
-            // $price_obj->setExtMappingCode($this->input->post('ext_mapping_code'));
             $price_obj->setListingStatus($vars['cur_listing_status']);
             $price_obj->setPrice($vars['sp']);
-
             $price_obj->setAllowExpress($vars['ae']);
             $price_obj->setIsAdvertised($vars['ia']);
             $price_obj->setAutoPrice($vars['ap']);
             $price_obj->setFixedRrp($vars['frrp']);
-            // $price_obj->setMaxOrderQty($this->input->post('max_order_qty'));
+
+            if ($vars['special_update']) {
+                $price_obj->setStatus($vars['status']);
+                $price_obj->setExtMappingCode($vars['ext_mapping_code']);
+                $price_obj->setMaxOrderQty($vars['max_order_qty']);
+            }
 
             if (($vars['frrp'] == 'N') && ($vars['rrp_factor'] != '')) {
                 $price_obj->setRrpFactor($vars['rrp_factor']);
@@ -55,8 +55,8 @@ class PricingToolWebsiteService extends BaseService
                 $arr['price'] = $vars['sp'];
                 $arr['listing_status'] = $vars['cur_listing_status'];
                 $arr['margin'] = $vars['margin'];
-                // unset($_SESSION["price_obj_" . $vars['platform']]);
-                // $_SESSION["price_obj_" . $vars['platform']] = serialize($price_obj);
+                unset($_SESSION["price_obj_" . $vars['platform']]);
+                $_SESSION["price_obj_" . $vars['platform']] = serialize($price_obj);
             }
         } else {
             $arr['no_update'] = true;
