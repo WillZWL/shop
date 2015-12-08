@@ -1,5 +1,5 @@
 <?php
-class ProductPriceWithCostDto
+class PriceWithCostDto
 {
     private $sku;
     private $vat;

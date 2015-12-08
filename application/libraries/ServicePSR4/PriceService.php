@@ -54,7 +54,7 @@ class PriceService extends BaseService
         }
 
         $option = ['limit' => -1];
-        $prod_obj_list = $this->getDao('Price')->getProductPriceWithCost($where, $option);
+        $prod_obj_list = $this->getDao('Price')->getPriceWithCost($where, $option);
 
         foreach ($prod_obj_list as $prod_obj) {
             $sku = $prod_obj->getSku();
@@ -115,7 +115,7 @@ class PriceService extends BaseService
         $where['p.sku'] = $sku;
         $where['pbv.selling_platform_id'] = $platform_id;
         $option['limit'] = 1;
-        $prod_obj = $this->getDao('Price')->getProductPriceWithCost($where, $option);
+        $prod_obj = $this->getDao('Price')->getPriceWithCost($where, $option);
 
         if ($prod_obj) {
             $prod_obj->setPrice($price);
@@ -205,13 +205,15 @@ class PriceService extends BaseService
 
     public function getProfitMarginJson($platform_id, $sku, $required_selling_price, $required_cost_price = -1)
     {
-        $dto = $this->getDao('Price')->getProductPriceWithCost(['p.sku'=>$sku, 'pbv.selling_platform_id'=>$platform_id], ['limit'=>1]);
+        $dto = $this->getDao('Price')->getPriceWithCost(['p.sku' => $sku, 'pbv.selling_platform_id' => $platform_id], ['limit' => 1]);
 
-        if ($dto == null) {
-            return false;
+        if ( ! $dto) {
+            return json_encode(['error' => "can't get PriceWithCostDto"]);
         }
 
-        $this->performBusinessLogic($dto, $required_selling_price, $required_cost_price);
+        $this->calculateCost($dto);
+
+        // $this->performBusinessLogic($dto, $required_selling_price, $required_cost_price);
 
         $data_arr = [
             "local_sku" => $sku,
@@ -240,6 +242,47 @@ class PriceService extends BaseService
         ];
 
         return json_encode($data_arr);
+    }
+
+    public function calculateCost(PriceWithCostDto $dto)
+    {
+        $this->calculateDeclaredValue($dto);
+
+        $this->calculateLogisticCost($dto);
+        $this->calculateVatCost($dto);
+        $this->calculateDuty($dto);
+        $this->calculateListingCost($dto);
+    }
+
+    public function calculateLogisticCost($value='')
+    {
+        if ($lc = $this->getDao('FreightCatCharge')->calcLogisticCost($dto->getPlatformId(), $dto->getSku())) {
+            $dto->setLogisticCost($lc['converted_amount']);
+        } else {
+            $dto->setLogisticCost(0);
+        }
+    }
+
+    public function calculateDeclaredValue(PriceWithCostDto $dto)
+    {
+        $price = $dto->getPrice();
+        $country_id = $dto->getPlatformCountryId();
+
+        switch ($country_id) {
+            case "AU":
+                $declared_value = min($price, 950);
+                break;
+
+            case "NZ":
+                $declared_value = ($price < 350) ? $price : $price * 80 / 100;
+                break;
+
+            default:
+                $declared_value = $price * 10 / 100;
+                break;
+        }
+
+        $dto->setDeclaredValue($declared_value);
     }
 
     private function performBusinessLogic($dto, $required_selling_price = -1, $required_cost_price = -1)
@@ -274,7 +317,7 @@ class PriceService extends BaseService
             if ($total_cost > 0) {
                 $margin = $required_margin;
             } else {
-                $margin = 0;   
+                $margin = 0;
             }
 
             $price = $total_cost;
@@ -314,7 +357,7 @@ class PriceService extends BaseService
         $profit = $dto->getPrice() - $total_cost;
 
         $margin = ($dto->getPrice() > 0) ? ($profit / $dto->getPrice() * 100) : 0;
-        
+
         $dto->setProfit(number_format($profit, 2, ".", ""));
         $dto->setMargin(number_format($margin, 2, ".", ""));
     }
@@ -358,7 +401,7 @@ class PriceService extends BaseService
                 $sku_arr[] = $caobj->getAccessorySku();
             }
             $sku_list = "'". implode("','", $sku_arr) . "'";
-            if ($cadto = $this->getDao('Price')->getProductPriceWithCost(
+            if ($cadto = $this->getDao('Price')->getPriceWithCost(
                                     [
                                         "p.sku in ({$sku_list})"=>null,
                                         'pbv.selling_platform_id'=>$dto->getPlatformId()
@@ -367,7 +410,7 @@ class PriceService extends BaseService
                                         'limit'=>1
                                     ])
             ) {
-                    $total_cost = $cadto->getSupplierCost();
+                $total_cost = $cadto->getSupplierCost();
             }
         }
         $dto->setComplementaryAccCost($total_cost);
@@ -376,7 +419,7 @@ class PriceService extends BaseService
     public function getPricingToolInfo($platform_list = "", $sku = "")
     {
         $ret = [];
-        if ($tmp_objlist = $this->getDao('Price')->getProductPriceWithCost(['p.sku'=>$sku, "pbv.selling_platform_id in ({$platform_list})"=>null], ['limit'=>-1])) {
+        if ($tmp_objlist = $this->getDao('Price')->getPriceWithCost(['p.sku'=>$sku, "pbv.selling_platform_id in ({$platform_list})"=>null], ['limit'=>-1])) {
             foreach ($tmp_objlist  as $tmp_obj) {
 
                 $this->calculateProfit($tmp_obj);
