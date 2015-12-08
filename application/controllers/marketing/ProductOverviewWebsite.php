@@ -22,6 +22,7 @@ class ProductOverviewWebsite extends MY_Controller
             $option = [];
 
             ($this->input->get('platform_id') != '') ? $where['pr.platform_id'] = $this->input->get('platform_id') : '';
+            ($this->input->get('prod_name') != '') ? $where["p.name LIKE "] = "%".$this->input->get("prod_name")."%" : '';
             ($this->input->get('catid') != '') ? $where['p.cat_id'] = $this->input->get('catid') : '';
             ($this->input->get('scatid') != '') ? $where['p.sub_cat_id'] = $this->input->get('scatid') : '';
             ($this->input->get('brand') != '') ? $where['p.brand_id'] = $this->input->get('brand') : '';
