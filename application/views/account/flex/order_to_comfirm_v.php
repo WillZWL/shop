@@ -115,7 +115,7 @@
         <input type="submit" value="approve" class="button" name="comfirm"/>
         <input type="submit" value="cancel" class="button" name="comfirm"/>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $this->sc['Pagination']->createLinksWithStyle() ?>
     <?= $notice["js"] ?>
 </div>
 </body>

@@ -406,5 +406,28 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\PricingToolEbayService();
         };
 
+        $servcieContainer['Flex'] = function () {
+            return new S\FlexService();
+        };
+
+        $servcieContainer['Pagination'] = function () {
+            return new S\PaginationService();
+        };
+
+        $servcieContainer['RptOrderNotInRiaReport'] = function () {
+            return new S\RptOrderNotInRiaReportService();
+        };
+
+        $servcieContainer['MoneybookersPmgwReport'] = function () {
+            return new S\MoneybookersPmgwReportService();
+        };
+
+        $servcieContainer['PaypalHkPmgwReport'] = function () {
+            return new S\PaypalHkPmgwReportService();
+        };
+
+        $servcieContainer['PaypalAuPmgwReport'] = function () {
+            return new S\PaypalAuPmgwReportService();
+        };
     }
 }

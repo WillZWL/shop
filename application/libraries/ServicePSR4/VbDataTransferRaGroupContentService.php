@@ -1,29 +1,8 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\RaGroupContentDao;
-use ESG\Panther\Dao\RaGroupDao;
-
 class VbDataTransferRaGroupContentService extends VbDataTransferService
 {
-	private $ragroupdao;
-
-	public function __construct()
-	{
-		parent::__construct();
-		$this->setDao(new RaGroupContentDao);
-        $this->setRaGroupDao(new RaGroupDao);
-	}
-
-    public function getRaGroupDao()
-    {
-        return $this->ragroupdao;
-    }
-
-    public function setRaGroupDao($dao)
-    {
-        $this->ragroupdao = $dao;
-    }
 
 	/**********************************************************************
 	*	processVbData, get the VB data to save it in the ra_group_content table
@@ -40,77 +19,42 @@ class VbDataTransferRaGroupContentService extends VbDataTransferService
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xml[] = '<ra_groups task_id="' . $task_id . '">';
 
-		$c = count($xml_vb->ra_group);
 		foreach($xml_vb->ra_group as $ra_group)
 		{
-			$c--;
-
 			try
 			{
-				if($group_atomv2 = $this->getRaGroupDao()->get(array("group_id"=>$ra_group->group_id)))
-				{
-					$id = $group_atomv2->getGroupId();
+				$group_cont_obj = $this->getDao('RaGroupContent')->get(['group_id'=>$ra_group->group_id]);
+
+				$reason = 'insert_or_update';
+
+				if($group_cont_obj) {
+					//We dont update ra_group_content (only insert)
+					$reason = 'update';
+					$status = '2';
 				}
 				else
 				{
-					$id = "";
+					//insert ra_group
+					$group_cont_obj = new \RaGroupContentVo(); //$this->getDao()->get();
+					$group_cont_obj->setGroupId($ra_group->group_id);
+					$group_cont_obj->setGroupDisplayName($ra_group->group_display_name);
+					$group_cont_obj->setLangId($ra_group->lang_id);
+
+					$this->getDao('RaGroupContent')->insert($group_cont_obj);
+
+					$reason = 'insert';
+					$status = '5';
 				}
 
-				if ($id != "" && $id != null)
-				{
-					//ra_group exists
-					$lang_id = "";
+				//return result
+				$xml[] = '<ra_group>';
+				$xml[] = '<group_id>' . $ra_group->group_id . '</group_id>';
+				$xml[] = '<lang_id>' . $ra_group->lang_id . '</lang_id>';
+				$xml[] = '<status>'.$status.'</status>';
+				$xml[] = '<is_error>' . $ra_group->is_error . '</is_error>';
+				$xml[] = '<reason>'.$reason.'</reason>';
+				$xml[] = '</ra_group>';
 
-					if($ra_group_ext_atomv2 = $this->getDao()->get(array("group_id"=>$id, "lang_id"=>$ra_group->lang_id)))
-					{
-						$lang_id .= $ra_group_ext_atomv2->getLangId();
-					}
-					//if extend content exists, update
-					if ($lang_id != "" && $lang_id != null)
-					{
-						//We dont update ra_group_content
-
-						//return result
-						$xml[] = '<ra_group>';
-						$xml[] = '<group_id>' . $ra_group->group_id . '</group_id>';
-						$xml[] = '<lang_id>' . $ra_group->lang_id . '</lang_id>';
-						$xml[] = '<status>2</status>'; //we dont update the display name of the ra_group (only insert) --> not updated
-						$xml[] = '<is_error>' . $ra_group->is_error . '</is_error>';
-						$xml[] = '<reason>update</reason>';
-						$xml[] = '</ra_group>';
-					}
-					//if not exists, insert
-					else
-					{
-						//insert
-						$new_ra_group_obj = array();
-
-						$new_ra_group_obj = $this->getDao()->get();
-						$new_ra_group_obj->setGroupId($ra_group->group_id);
-						$new_ra_group_obj->setGroupDisplayName($ra_group->group_display_name);
-						$new_ra_group_obj->setLangId($ra_group->lang_id);
-						$this->getDao()->insert($new_ra_group_obj);
-
-						$xml[] = '<ra_group>';
-						$xml[] = '<group_id>' . $ra_group->group_id . '</group_id>';
-						$xml[] = '<lang_id>' . $ra_group->lang_id . '</lang_id>';
-						$xml[] = '<status>5</status>'; //updated
-						$xml[] = '<is_error>' . $ra_group->is_error . '</is_error>';
-						$xml[] = '<reason>insert</reason>';
-						$xml[] = '</ra_group>';
-					}
-				}
-				elseif ($id == "" || $id == null)
-				{
-					//if the ext_id is not changed in atomv2, we store it in an xml string to send it to VB
-					$xml[] = '<ra_group>';
-					$xml[] = '<group_id>' . $ra_group->group_id . '</group_id>';
-					$xml[] = '<lang_id>' . $ra_group->lang_id . '</lang_id>';
-					$xml[] = '<status>2</status>'; //ra_group not found
-					$xml[] = '<is_error>' . $ra_group->is_error . '</is_error>';
-					$xml[] = '<reason>' . $fail_reason . '</reason>';
-					$xml[] = '</ra_group>';
-				}
 			}
 			catch(Exception $e)
 			{

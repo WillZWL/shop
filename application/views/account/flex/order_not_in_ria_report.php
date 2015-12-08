@@ -35,7 +35,7 @@
                         <option value='-1'>-- All gateway --</option>
                         <?php
                         foreach ($gateways as $gateway) {
-                            print "<option value='" . $gateway->get_id() . "'>" . $gateway->get_name() . "</option>";
+                            print "<option value='" . $gateway->getId() . "'>" . $gateway->getName() . "</option>";
                         }
                         ?>
                     </select>
@@ -46,7 +46,7 @@
                         <option value='-1'>-- All currencies --</option>
                         <?php
                         foreach ($currencys as $currency) {
-                            print "<option value='" . $currency->get_currency_id() . "'>" . $currency->get_currency_id() . "</option>";
+                            print "<option value='" . $currency->getCurrencyId() . "'>" . $currency->getCurrencyId() . "</option>";
                         }
                         ?>
                     </select>
@@ -98,7 +98,6 @@
         var end_date = document.getElementById("oc_end_date").value.trim();
         fm_2.expect_delivery_date_approve_start_date.value = start_date;
         fm_2.expect_delivery_date_approve_end_date.value = end_date;
-
         if (!start_date.match(/^\d{4}-\d{2}-\d{2}$/) || !end_date.match(/^\d{4}-\d{2}-\d{2}$/)) {
             alert("please input the correct date");
             return false;
@@ -108,7 +107,6 @@
     function verfiy_date() {
         var start_date = document.getElementById("oc_start_date").value.trim();
         var end_date = document.getElementById("oc_end_date").value.trim();
-
         if (!start_date.match(/^\d{4}-\d{2}-\d{2}$/) || !end_date.match(/^\d{4}-\d{2}-\d{2}$/)) {
             alert("please input the correct date");
             return false;

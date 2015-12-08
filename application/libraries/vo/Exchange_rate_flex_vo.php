@@ -23,122 +23,122 @@ class Exchange_rate_flex_vo extends Base_vo
     private $increment_field = "";
 
     //instance method
-    public function get_from_currency_id()
+    public function getFromCurrencyId()
     {
         return $this->from_currency_id;
     }
 
-    public function set_from_currency_id($value)
+    public function setFromCurrencyId($value)
     {
         $this->from_currency_id = $value;
         return $this;
     }
 
-    public function get_to_currency_id()
+    public function getToCurrencyId()
     {
         return $this->to_currency_id;
     }
 
-    public function set_to_currency_id($value)
+    public function setToCurrencyId($value)
     {
         $this->to_currency_id = $value;
         return $this;
     }
 
-    public function get_rate()
+    public function getRate()
     {
         return $this->rate;
     }
 
-    public function set_rate($value)
+    public function setRate($value)
     {
         $this->rate = $value;
         return $this;
     }
 
-    public function get_approvial_status()
+    public function getApprovialStatus()
     {
         return $this->approvial_status;
     }
 
-    public function set_approvial_status($value)
+    public function setApprovialStatus($value)
     {
         $this->approvial_status = $value;
         return $this;
     }
 
-    public function get_create_on()
+    public function getCreateOn()
     {
         return $this->create_on;
     }
 
-    public function set_create_on($value)
+    public function setCreateOn($value)
     {
         $this->create_on = $value;
         return $this;
     }
 
-    public function get_create_at()
+    public function getCreateAt()
     {
         return $this->create_at;
     }
 
-    public function set_create_at($value)
+    public function setCreateAt($value)
     {
         $this->create_at = $value;
         return $this;
     }
 
-    public function get_create_by()
+    public function getCreateBy()
     {
         return $this->create_by;
     }
 
-    public function set_create_by($value)
+    public function setCreateBy($value)
     {
         $this->create_by = $value;
         return $this;
     }
 
-    public function get_modify_on()
+    public function getModify_on()
     {
         return $this->modify_on;
     }
 
-    public function set_modify_on($value)
+    public function setModify_on($value)
     {
         $this->modify_on = $value;
         return $this;
     }
 
-    public function get_modify_at()
+    public function getModifyAt()
     {
         return $this->modify_at;
     }
 
-    public function set_modify_at($value)
+    public function setModifyAt($value)
     {
         $this->modify_at = $value;
         return $this;
     }
 
-    public function get_modify_by()
+    public function getModifyBy()
     {
         return $this->modify_by;
     }
 
-    public function set_modify_by($value)
+    public function setModifyBy($value)
     {
         $this->modify_by = $value;
         return $this;
     }
 
-    public function _get_primary_key()
+    public function getPrimaryKey()
     {
         return $this->primary_key;
     }
 
-    public function _get_increment_field()
+    public function getIncrementField()
     {
         return $this->increment_field;
     }

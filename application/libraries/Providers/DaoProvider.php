@@ -540,5 +540,77 @@ class DaoProvider implements ServiceProviderInterface
         $daoContainer['BundleConfig'] = function () {
             return new D\BundleConfigDao();
         };
+
+        $daoContainer['RaGroup'] = function () {
+            return new D\RaGroupDao();
+        };
+
+        $daoContainer['RaGroupContent'] = function () {
+            return new D\RaGroupContentDao();
+        };
+
+        $daoContainer['RaGroupProduct'] = function () {
+            return new D\RaGroupProductDao();
+        };
+
+        $daoContainer['RaProdCat'] = function () {
+            return new D\RaProdCatDao();
+        };
+
+        $daoContainer['RaProduct'] = function () {
+            return new D\RaProductDao();
+        };
+
+        $daoContainer['FlexBatch'] = function () {
+            return new D\FlexBatchDao();
+        };
+
+        $daoContainer['FlexRia'] = function () {
+            return new D\FlexRiaDao();
+        };
+
+        $daoContainer['FlexRefund'] = function () {
+            return new D\FlexRefundDao();
+        };
+
+        $daoContainer['FlexSoFee'] = function () {
+            return new D\FlexSoFeeDao();
+        };
+
+        $daoContainer['FlexGatewayFee'] = function () {
+            return new D\FlexGatewayFeeDao();
+        };
+
+        $daoContainer['ExchangeRateFlex'] = function () {
+            return new D\ExchangeRateFlexDao();
+        };
+
+        $daoContainer['FlexGatewayMapping'] = function () {
+            return new D\FlexGatewayMappingDao();
+        };
+
+        $daoContainer['FlexRollingReserve'] = function () {
+            return new D\FlexRollingReserveDao();
+        };
+
+        $daoContainer['InterfaceFlexRia'] = function () {
+            return new D\InterfaceFlexRiaDao();
+        };
+
+        $daoContainer['InterfaceFlexRefund'] = function () {
+            return new D\InterfaceFlexRefundDao();
+        };
+
+        $daoContainer['InterfaceFlexSoFee'] = function () {
+            return new D\InterfaceFlexSoFeeDao();
+        };
+
+        $daoContainer['InterfaceFlexRollingReserve'] = function () {
+            return new D\InterfaceFlexRollingReserveDao();
+        };
+
+        $daoContainer['InterfaceFlexGatewayFee'] = function () {
+            return new D\InterfaceFlexGatewayFeeDao();
+        };
     }
 }

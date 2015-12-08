@@ -598,7 +598,7 @@
                                 <?= $product->getPlatformCurrencyId() . ' ' . $product->getVbPrice() ?>
                             </td>
                             <td><?= $product->getProfit() ?></td>
-                            <td><?= $product->getMargin() ?></td>
+                            <td><?= $product->getMargin() ?>%</td>
                             <td><input type="checkbox"></td>
                         </tr>
                 <?php endforeach ?>
