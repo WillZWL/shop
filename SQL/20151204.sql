@@ -19,7 +19,7 @@ CREATE TABLE `bundle_config` (
 insert into application (id, app_name, description,  display_order, status, display_row, create_on, create_at, create_by, modify_at, modify_by)
 values ('MKT0087', 'Bundle & RA Admin', 'Bundle & RA admin', 0, 1, 1, now(), '127.0.0.1', 'cristina', '127.0.0.1', 'cristina');
 
-update application set display_order = 135, url = 'marketing/bundle_config', app_group_id=4 where id='MKT0087';
+update application set display_order = 136, url = 'marketing/bundleconfig', app_group_id=4 where id='MKT0087';
 
 call add_role_right('MKT0087', 'admin');
 call add_role_right('MKT0087', 'alan');

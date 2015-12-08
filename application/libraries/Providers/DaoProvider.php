@@ -540,5 +540,25 @@ class DaoProvider implements ServiceProviderInterface
         $daoContainer['BundleConfig'] = function () {
             return new D\BundleConfigDao();
         };
+
+        $daoContainer['RaGroup'] = function () {
+            return new D\RaGroupDao();
+        };
+
+        $daoContainer['RaGroupContent'] = function () {
+            return new D\RaGroupContentDao();
+        };
+
+        $daoContainer['RaGroupProduct'] = function () {
+            return new D\RaGroupProductDao();
+        };
+
+        $daoContainer['RaProdCat'] = function () {
+            return new D\RaProdCatDao();
+        };
+
+        $daoContainer['RaProduct'] = function () {
+            return new D\RaProductDao();
+        };
     }
 }
