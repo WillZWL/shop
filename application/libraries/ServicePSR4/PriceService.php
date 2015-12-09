@@ -203,11 +203,6 @@ class PriceService extends BaseService
         return $sku_list;
     }
 
-    private function to2Decimal($value)
-    {
-        return number_format($value, 2, ".", "");
-    }
-
     public function getProfitMarginJson($platform_id, $sku, $required_selling_price, $required_cost_price = -1)
     {
         $dto = $this->getDao('Price')->getProductPriceWithCost(['p.sku'=>$sku, 'pbv.selling_platform_id'=>$platform_id], ['limit'=>1]);
@@ -224,7 +219,7 @@ class PriceService extends BaseService
             "get_margin" => $dto->getMargin(),
             "get_price" => $dto->getPrice(),
             "get_delivery_cost" => $dto->getDeliveryCost(),
-            "get_declared_value" => $this->to2Decimal($dto->getDeclaredValue()),
+            "get_declared_value" => number_format($dto->getDeclaredValue(), 2, ".", ""),
             "get_vat_percent" => $dto->getVatPercent(),
             "get_vat" => $dto->getVat(),
             "get_sales_commission" => $dto->getSalesCommission(),
@@ -239,8 +234,8 @@ class PriceService extends BaseService
             "get_supplier_cost" => $dto->getSupplierCost(),
             "get_complementary_acc_cost" => $dto->getComplementaryAccCost(),
             "get_cost" => $dto->getCost(),
-            "get_price" => $this->to2Decimal($dto->getPrice()),
-            "get_profit" => $this->to2Decimal($dto->getPrice()) - $dto->getCost()
+            "get_price" => number_format($dto->getPrice(), 2, ".", ""),
+            "get_profit" => number_format($dto->getPrice(), 2, ".", "") - $dto->getCost()
 
         ];
 
@@ -278,27 +273,21 @@ class PriceService extends BaseService
     {
         $total_cost = $this->getTotalCost($dto, $price);
 
-        $total_cost = $this->to2Decimal($total_cost);
+        $total_cost = number_format($total_cost, 2, ".", "");
         $dto->setCost($total_cost);
 
         $profit = $price - $total_cost;
-        if ($price > 0) {
-            $margin = $profit / $price * 100;
-        } else {
-            $margin = 0;
-        }
 
-        $profit = $this->to2Decimal($profit);
-        $margin = $this->to2Decimal($margin);
-
-        $dto->setProfit($profit);
-        $dto->setMargin($margin);
+        $margin = ($price > 0) ? ($profit / $price * 100) : 0;
+        
+        $dto->setProfit(number_format($profit, 2, ".", ""));
+        $dto->setMargin(number_format($margin, 2, ".", ""));
     }
 
     public function getTotalCost($dto, $price = 0)
     {
         $dto->setPrice($price);
-        $this->calcDeclaredValue($dto);
+        $this->calculateDeclaredValue($dto);
         $this->calcCommission($dto);
         $this->calcDuty($dto);
         $this->calcPaymentCharge($dto);
@@ -316,7 +305,7 @@ class PriceService extends BaseService
         $duty_cost = $dto->getDuty();
         $complementary_acc_cost = $dto->getComplementaryAccCost();
 
-        $total_cost = $supplier_cost + $logistic_cost + $listing_fee + $Sales_commission_cost + $payment_charge_cost + $forex_fee + $vat_cost + $duty_cost + $complementary_acc_cost - $delivery_cost;
+        $total_cost = $supplier_cost + $logistic_cost + $listing_fee + $Sales_commission_cost + $payment_charge_cost + $forex_fee + $vat_cost + $duty_cost + $complementary_acc_cost;
 
         return $total_cost;
     }
@@ -357,22 +346,18 @@ class PriceService extends BaseService
             foreach ($tmp_objlist  as $tmp_obj) {
 
                 $this->calculateProfit($tmp_obj);
-
-                $declared_pcent = $this->checkDeclaredPcent($tmp_obj->getPlatformCountryId(), $tmp_obj->getPrice());
-                $tmp_obj->setDeclaredPcent($declared_pcent);
-
                 $ret[$tmp_obj->getPlatformId()]["dst"] = $tmp_obj;
+
             }
         }
 
         return $ret;
     }
 
-    public function calculateProfit($dto = null)
+    public function calculateProfit($dto)
     {
-        // $this->calcLogisticCost($dto);
         $this->calcDtoPrice($dto);
-        // $this->calcCost();
+        $this->calcDeclaredPcent($dto);
 
         $this->performBusinessLogic($dto, $dto->getPrice());
         return;
@@ -387,7 +372,7 @@ class PriceService extends BaseService
         return $declared_value;
     }
 
-    public function calcLogisticCost(&$dto)
+    public function calcLogisticCost($dto)
     {
         if ($lc = $this->getDao('FreightCatCharge')->calcLogisticCost($dto->getPlatformId(), $dto->getSku())) {
             $dto->setLogisticCost($lc['converted_amount']);
@@ -396,7 +381,7 @@ class PriceService extends BaseService
         }
     }
 
-    public function calcDtoPrice($dto = null)
+    public function calcDtoPrice($dto)
     {
 
         $default_price = $this->getDefaultPrice($dto);
@@ -410,7 +395,7 @@ class PriceService extends BaseService
         $dto->setDefaultPlatformConvertedPrice($default_price);
     }
 
-    public function getDefaultPrice($dto = null)
+    public function getDefaultPrice($dto)
     {
         $default_price = 0;
         if ($default_obj = $this->getDao('Price')->getDefaultConvertedPrice(["pr.sku" => $dto->getSku(), "pbv.selling_platform_id" => $dto->getPlatformId()], ['limit'=> 1])) {
@@ -420,7 +405,7 @@ class PriceService extends BaseService
         return $default_price;
     }
 
-    public function calcDeliveryCharge($dto = null)
+    public function calcDeliveryCharge($dto)
     {
 
         if ($this->getDao('ProductType')->getNumRows(["sku" => $dto->getSku(), "type_id" => "VIRTUAL"])) {
@@ -438,53 +423,41 @@ class PriceService extends BaseService
         }
     }
 
-    public function calcDeclaredValue($dto = NULL)
+    public function calcCommission($dto)
     {
-
-        $value = $dto->getPrice() + $dto->getDeliveryCharge();
-
-        $this->calculateDeclaredValue($dto, $value);
+        $dto->setSalesCommission(number_format($dto->getPrice() * $dto->getPlatformCommission() / 100, 2, ".", ""));
     }
 
-    public function calcCommission($dto = NULL)
-    {
-        $dto->setSalesCommission(number_format(($dto->getPrice() + $dto->getDeliveryCharge()) * $dto->getPlatformCommission() / 100, 2, ".", ""));
-    }
-
-    public function calcDuty($dto = NULL)
+    public function calcDuty($dto)
     {
         $duty = number_format($dto->getDeclaredValue() * $dto->getDutyPcent() / 100, 2, ".", "");
         $dto->setDuty($duty);
     }
 
-    public function calcPaymentCharge($dto = NULL)
+    public function calcPaymentCharge($dto)
     {
-        $dto->setPaymentCharge(number_format(($dto->getPrice() + $dto->getDeliveryCharge()) * $dto->getPaymentChargePercent() / 100, 2, ".", ""));
+        $dto->setPaymentCharge(number_format($dto->getPrice() * $dto->getPaymentChargePercent() / 100, 2, ".", ""));
     }
 
-    public function calcForexFee($dto = NULL)
+    public function calcForexFee($dto)
     {
-        $dto->setForexFee(number_format(($dto->getPrice() + $dto->getDeliveryCharge()) * $dto->getForexFeePercent() / 100, 2, ".", ""));
+        $dto->setForexFee(number_format($dto->getPrice() * $dto->getForexFeePercent() / 100, 2, ".", ""));
     }
 
-    public function calcVat($dto = NULL)
+    public function calcVat($dto)
     {
 
         if ($dto->getPlatformCountryId() == "NZ") {
             $dto->setVatPercent(0);
 
-            $value = $dto->getPrice();
-            if ($value > 400) {
-                $dto->setVat(number_format(($dto->getDeclaredValue() * $dto->getVatPercent() / 100), 2, ".", ""));
-            } else {
-                $dto->setVat(0.00);
-            }
+            $vat = ($dto->getPrice() > 400) ? ($dto->getDeclaredValue() * $dto->getVatPercent() / 100) : 0;
+            $dto->setVat(number_format($vat, 2, ".", ""));
         } else {
             $dto->setVat(number_format(($dto->getDeclaredValue()) * $dto->getVatPercent() / 100, 2, ".", ""));
         }
     }
 
-    public function calcAutoPriceValue($dto = NULL)
+    public function calcAutoPriceValue($dto)
     {
         $recalVat = 0;
         $tmp_cost = $dto->getSupplierCost() + $dto->getLogisticCost() + $dto->getListingFee();
@@ -520,8 +493,10 @@ class PriceService extends BaseService
         $dto->setAutoTotalCharge($auto_total_charge + $recalVat);
     }
 
-    public function checkDeclaredPcent($country_id, $price)
+    public function calcDeclaredPcent($dto)
     {
+        $country_id = $dto->getPlatformCountryId();
+        $price = $dto->getPrice();
         switch ($country_id) {
             case 'GB':
                 $declared_pcent = 30;
@@ -532,11 +507,7 @@ class PriceService extends BaseService
                 break;
 
             case "NZ":
-                if ($price < 400) {
-                    $declared_pcent = 100;
-                } else {
-                    $declared_pcent = 80;
-                }
+                    $declared_pcent = ($price < 400) ? 100 : 80;
                 break;
 
             default:
@@ -544,7 +515,7 @@ class PriceService extends BaseService
                 break;
         }
 
-        return $declared_pcent;
+        $dto->setDeclaredPcent($declared_pcent);
     }
 
 }
