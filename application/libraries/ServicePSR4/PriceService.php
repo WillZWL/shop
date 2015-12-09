@@ -255,8 +255,7 @@ class PriceService extends BaseService
         if ($required_cost_price != -1) {
             $dto->setSupplierCost($required_cost_price);
         }
-        $dto->setSupplierCost(521.68);
-        $dto->setLogisticCost(20.10);
+
         $required_margin = -1;
 
         if ($required_selling_price <= 0) {
