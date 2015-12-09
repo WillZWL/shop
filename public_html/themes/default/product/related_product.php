@@ -19,7 +19,7 @@
                                                 <img class="img-responsive" src="<?= get_image_file($image, 'm', $sku)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>">
                                             </a>
                                             <div class="quickview hidden-xs">
-                                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="#" title="" data-original-title="Quick View"><i class="fa fa-eye"></i></a>
+                                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="#" title="" data-original-title="<?= _('Quick View') ?>"><i class="fa fa-eye"></i></a>
                                             </div>
                                             <div class="zoom hidden-xs">
                                                 <a data-toggle="tooltip" data-placement="top" href="<?= get_image_file($image, 'l', $sku)?>" class="product-zoom info-view colorbox cboxElement" title="" data-original-title="<?= $prod_name ?>"><i class="fa fa-search-plus"></i></a>

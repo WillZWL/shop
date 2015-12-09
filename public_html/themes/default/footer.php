@@ -148,12 +148,12 @@
                                                 <div id="mc_embed_signup">
                                                     <form action="//digitaldiscount.us12.list-manage.com/subscribe/post?u=811fba9bd26f35cade0854986&id=c81a013806" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                                                         <div id="mc_embed_signup_scroll">
-                                                            <h4 class="panel-title">Sign up for Newsletter</h4>
+                                                            <h4 class="panel-title"><?= _('Sign up for Newsletter') ?></h4>
                                                             <p class="desc-about"><?= _('Subscribe to get our latest news and promotions regularly.') ?></p>
                                                             <div class="mc-field-group">
                                                                 <!--<label for="mce-EMAIL">Email Address <span class="asterisk">*</span>
                                                                 </label>-->
-                                                                <input type="email" value="" name="EMAIL" class="required email input-newsletter" id="mce-EMAIL" placeholder="Enter you email address *">
+                                                                <input type="email" value="" name="EMAIL" class="required email input-newsletter" id="mce-EMAIL" placeholder="<?= _('Enter you email address') ?> *">
                                                             </div>
                                                             <div id="mce-responses" class="clear">
                                                                 <div class="response" id="mce-error-response" style="display:none"></div>
@@ -163,11 +163,11 @@
                                                                 <input type="text" name="b_811fba9bd26f35cade0854986_c81a013806" tabindex="-1" value="">
                                                             </div>
                                                             <div class="clear">
-                                                                <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn-newsletter">
+                                                                <input type="submit" value="<?= _('Subscribe') ?>" name="subscribe" id="mc-embedded-subscribe" class="btn-newsletter">
                                                             </div>
                                                             </br>
                                                             <div class="indicates-required desc-about">
-                                                                    <span class="asterisk">*</span> indicates required
+                                                                    <span class="asterisk">*</span> <?= _('indicates required') ?>
                                                             </div>
                                                         </div>
                                                     </form>

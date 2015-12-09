@@ -84,7 +84,7 @@
                                         <div class="col-inner ">
                                             <div class="panel-left panel panel-default">
                                                 <div class="panel-heading nopadding text-left">
-                                                    <h3 class="panel-title">Collections</h3>
+                                                    <h3 class="panel-title"><?= _('Collections') ?></h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -105,11 +105,11 @@
                                                         <img alt="" src="<?= base_url('/images/banner/camera.jpg') ?>" class="img-responsive">
                                                         <div class="interactive-banner-profile text-center">
                                                             <div class="banner-title">
-                                                                <h2>camera collection</h2>
+                                                                <h2><?= _('camera collection') ?></h2>
                                                             </div>
                                                             <div class="light-style">
                                                             </div>
-                                                            <p class="action">Shop now</p>
+                                                            <p class="action"><?= _('Shop now') ?></p>
                                                         </div>
                                                     </a>
                                                 </div>
@@ -125,11 +125,11 @@
 
                                                         <div class="interactive-banner-profile text-center">
                                                             <div class="banner-title">
-                                                                <h2>mobile collection</h2>
+                                                                <h2><?= _('mobile collection') ?></h2>
                                                             </div>
                                                             <div class="light-style">
                                                             </div>
-                                                            <p class="action">Shop now</p>
+                                                            <p class="action"><?= _('Shop now') ?></p>
                                                         </div>
                                                     </a>
                                                 </div>
