@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2015-11-16 17:49+0800\n"
-"PO-Revision-Date: 2015-11-24 16:33+0800\n"
+"POT-Creation-Date: 2015-12-08 10:46+0800\n"
+"PO-Revision-Date: 2015-12-08 22:17+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -23,633 +23,445 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-6: public_html/themes/numeristock.fr\n"
 "X-Poedit-SearchPathExcluded-7: public_html/themes/nuovadigitale.it\n"
 
-#: application/form/CheckoutFormFilter.php:30
-msgid "Not a valid fingerprint"
-msgstr "L'empreinte digitale n'est pas valide "
-
-#: application/form/CheckoutFormFilter.php:34
-msgid "Not a valid billingFirstName"
-msgstr "Le prénom associé à l'adresse de facturation n'est pas valide"
-
-#: application/form/CheckoutFormFilter.php:38
-msgid "Not a valid billingLastName"
-msgstr "Le nom associé à l'adresse de facturation n'est pas valide"
-
-#: application/form/CheckoutFormFilter.php:42
-#: application/form/CheckoutFormFilter.php:46
-msgid "Not a valid billingCompany"
-msgstr "Le nom de l'entreprise de l'adresse de facturation n'est pas valide"
-
-#: application/form/CheckoutFormFilter.php:50
-msgid "Not a valid billing address line 1"
-msgstr "La premiere ligne de l'adresse de facturation n'est pas valide."
-
-#: application/form/CheckoutFormFilter.php:54
-msgid "Not a valid billing address line 2"
-msgstr "La deuxième ligne de l'adresse de facturation n'est pas valide."
-
-#: application/form/CheckoutFormFilter.php:59
-#: application/form/CheckoutFormFilter.php:63
-#: public_html/themes/default/checkout/index.php:601
-#: public_html/themes/default/checkout/index.php:621
-msgid "POBox Address is not allowed"
-msgstr "L'adresse du siège n'est pas valide"
-
-#: application/form/CheckoutFormFilter.php:70
-msgid "Not a valid billingCity"
-msgstr "La ville de l'adresse de facturation n'est pas valide"
-
-#: application/form/CheckoutFormFilter.php:74
-msgid "Not a valid billingPostal"
-msgstr "Le code postal de l'adresse de facturation n'est pas valide"
-
-#: application/form/CheckoutFormFilter.php:82
-msgid "Not a valid billState"
-msgstr "Le pays de l'adresse de facturation n'est pas valide"
-
-#: application/form/CheckoutFormFilter.php:90
-msgid "Not a valid billing phone number"
-msgstr ""
-"Le numéro de téléphone associé à l'adresse de facturation n'est pas valide"
-
-#: application/form/CheckoutFormFilter.php:100
-msgid "Not a valid email address"
-msgstr "L'adresse mail n'est pas valide"
-
-#: application/form/CheckoutFormFilter.php:114
-msgid "Password not match"
-msgstr "Le mot de passe n'est pas valide"
-
-#: application/form/CheckoutFormFilter.php:143
-msgid "Payment gateway not valid"
-msgstr "Le portail de paiement n'est pas valide"
-
-#: application/form/CheckoutFormFilter.php:146
-msgid "Card ID not valid"
-msgstr "La carte d'identité n'est pas valide"
-
-#: application/form/CheckoutFormFilter.php:149
-msgid "Not a valid card"
-msgstr "La carte n'est pas valide"
-
-#: application/libraries/ServicePSR4/DataFeedService.php:247
-msgid "Save "
-msgstr "Enregister"
-
-#: application/libraries/ServicePSR4/DataFeedService.php:248
-msgid "In Stock"
-msgstr "En stock"
-
-#: application/libraries/ServicePSR4/DataFeedService.php:249
-msgid "Out Of Stock"
-msgstr "Hors stock"
-
-#: application/libraries/ServicePSR4/DataFeedService.php:250
-msgid "Pre-Order"
-msgstr "Pré-commande"
-
-#: application/libraries/ServicePSR4/DataFeedService.php:251
-msgid "Available Soon"
-msgstr "Disponible bientôt"
-
-#: application/libraries/ServicePSR4/PaymentGatewayRedirectMoneybookersService.php:134
-msgid "Proceed to Order Confirmation"
-msgstr "En attende de confirmation de la commande"
-
-#: application/libraries/ServicePSR4/PaymentGatewayRedirectMoneybookersService.php:135
-msgid "Please proceed to order confirmation to complete your order"
-msgstr ""
-"Veuillez attendre la confirmation de votre commande avant de complétér votre "
-"demande."
-
-#: application/libraries/ServicePSR4/PaymentGatewayRedirectMoneybookersService.php:136
-msgid "Delivery Cost"
-msgstr "Coût de livraison"
-
-#: application/libraries/ServicePSR4/PaymentGatewayRedirectMoneybookersService.php:137
-msgid "Order Number:"
-msgstr "Numéro de commande"
-
-#: application/libraries/ServicePSR4/PaymentGatewayRedirectService.php:135
-#: application/libraries/ServicePSR4/PaymentGatewayRedirectService.php:152
-#: application/libraries/ServicePSR4/PaymentGatewayRedirectService.php:157
-msgid "Please contact our CS"
-msgstr "Veuillez contacter notre service client"
-
-#: application/models/WebsitePSR4/CheckoutModel.php:68
-#: application/models/WebsitePSR4/CheckoutModel.php:84
-#: application/models/WebsitePSR4/CheckoutModel.php:87
-msgid "Please contact CS"
-msgstr "Veuillez contacter le service client"
-
-#: application/models/WebsitePSR4/CheckoutModel.php:91
-msgid "Session timeout, please check your cart!, err:"
-msgstr "Session expirée, veuillez consulter votre panier"
-
-#: application/public_controllers/Checkout.php:40
-msgid "Login Fail"
-msgstr "Echec d'identification"
-
-#: application/public_controllers/Login.php:234
-msgid "Please enter your registered email address"
-msgstr "Veuillez entrer votre adresse mail"
-
-#: application/public_controllers/Login.php:242
-msgid "Email Address does not exist in our system. Please click your email"
-msgstr ""
-"Cette adresse mail n'existe pas dans notre système, veuillez entrer votre "
-"adresse mail."
-
-#: application/public_controllers/Login.php:246
-msgid "Your Email is illegal"
-msgstr "Votre email est illégal"
-
-#: public_html/themes/default/cart/info.php:35
-#: public_html/themes/default/review.php:15
+#: default/cart/info.php:35 default/review.php:15
 msgid "Total"
 msgstr "Total"
 
-#: public_html/themes/default/cart/info.php:40
+#: default/cart/info.php:40
 msgid " View Cart "
 msgstr "Voir le panier"
 
-#: public_html/themes/default/cart/info.php:41
+#: default/cart/info.php:41
 msgid " Checkout"
 msgstr "Vérifier"
 
-#: public_html/themes/default/cart/info.php:48
+#: default/cart/info.php:48
 msgid "Your shopping cart is empty!"
 msgstr "Votre panier est vide"
 
-#: public_html/themes/default/cat.php:12
-#: public_html/themes/default/category.php:7
-#: public_html/themes/default/myaccount/index.php:186
-#: public_html/themes/default/myaccount/index.php:187
-#: public_html/themes/default/search.php:12
+#: default/cat.php:10 default/search.php:10 default/searchspring_result.php:38
+msgid "Refine Search"
+msgstr "Affiner la recherche"
+
+#: default/cat.php:12 default/category.php:7 default/myaccount/index.php:186
+#: default/myaccount/index.php:187 default/search.php:12
 msgid "Categories"
 msgstr "Catégories"
 
-#: public_html/themes/default/cat.php:15
-#: public_html/themes/default/category.php:24
-#: public_html/themes/default/search.php:15
+#: default/cat.php:15 default/category.php:24 default/search.php:15
 msgid "SmartPhones"
 msgstr "SmartPhones"
 
-#: public_html/themes/default/cat.php:18
-#: public_html/themes/default/category.php:27
-#: public_html/themes/default/search.php:18
+#: default/cat.php:18 default/category.php:27 default/search.php:18
 msgid "Webcams"
 msgstr "Webcams"
 
-#: public_html/themes/default/cat.php:21
-#: public_html/themes/default/category.php:30
-#: public_html/themes/default/search.php:21
+#: default/cat.php:21 default/category.php:30 default/search.php:21
 msgid "Conference Phones"
 msgstr "Conférence téléphonique"
 
-#: public_html/themes/default/cat.php:24
-#: public_html/themes/default/category.php:33
-#: public_html/themes/default/search.php:24
+#: default/cat.php:24 default/category.php:33 default/search.php:24
 msgid "Accessories"
 msgstr "Accessoires "
 
-#: public_html/themes/default/cat.php:35
-#: public_html/themes/default/category.php:36
-#: public_html/themes/default/search.php:35
+#: default/cat.php:28 default/search.php:28
+msgid "Show more"
+msgstr "Montrer la suite"
+
+#: default/cat.php:35 default/category.php:36 default/search.php:35
 msgid "Software"
 msgstr "Logiciel"
 
-#: public_html/themes/default/cat.php:38
-#: public_html/themes/default/category.php:39
-#: public_html/themes/default/search.php:38
+#: default/cat.php:38 default/category.php:39 default/search.php:38
 msgid "Computing"
 msgstr "Ordinateur"
 
-#: public_html/themes/default/cat.php:43
-#: public_html/themes/default/search.php:43
+#: default/cat.php:43 default/search.php:43
 msgid "BRANDS"
 msgstr "marques"
 
-#: public_html/themes/default/cat.php:118
-#: public_html/themes/default/search.php:140
+#: default/cat.php:118 default/search.php:140
+#: default/searchspring_result.php:88
 msgid "Sort By:"
 msgstr "Trier par"
 
-#: public_html/themes/default/cat.php:120
-#: public_html/themes/default/search.php:146
+#: default/cat.php:120 default/search.php:146
 msgid "Default"
 msgstr "Défaut"
 
-#: public_html/themes/default/cat.php:121
-#: public_html/themes/default/search.php:148
+#: default/cat.php:121 default/search.php:148
 msgid "Name (A - Z)"
 msgstr "Nom (A - Z)"
 
-#: public_html/themes/default/cat.php:122
-#: public_html/themes/default/search.php:150
+#: default/cat.php:122 default/search.php:150
 msgid "Name (Z - A)"
 msgstr "Nom (Z - A)"
 
-#: public_html/themes/default/cat.php:123
-#: public_html/themes/default/search.php:152
+#: default/cat.php:123 default/search.php:152
 msgid "Price (Low to High)"
 msgstr "prix (du plus bas au plus élevé)"
 
-#: public_html/themes/default/cat.php:124
-#: public_html/themes/default/search.php:154
+#: default/cat.php:124 default/search.php:154
 msgid "Price (High to Low)"
 msgstr "prix (du plus elevé au plus bas)"
 
-#: public_html/themes/default/cat.php:125
+#: default/cat.php:125
 msgid "Rating (Highest)"
 msgstr "Note (la plus élevée)"
 
-#: public_html/themes/default/cat.php:126
+#: default/cat.php:126
 msgid "Rating (Lowest)"
 msgstr "Note (la plus basse)"
 
-#: public_html/themes/default/cat.php:127
+#: default/cat.php:127
 msgid "Model (A - Z)"
 msgstr "Modèle (A - Z)"
 
-#: public_html/themes/default/cat.php:128
+#: default/cat.php:128
 msgid "Model (Z - A)"
 msgstr "Modèle (Z - A)"
 
-#: public_html/themes/default/cat.php:132
-#: public_html/themes/default/search.php:162
+#: default/cat.php:132 default/search.php:162
+#: default/searchspring_result.php:92
 msgid "Display:"
 msgstr "Ecran"
 
-#: public_html/themes/default/cat.php:169
-#: public_html/themes/default/search.php:207
+#: default/cat.php:155 default/product/grid.php:41
+#: default/product/related_product.php:22 default/search.php:193
+#: default/searchspring_result.php:135
+msgid "Quick View"
+msgstr "Aperçu rapide"
+
+#: default/cat.php:169 default/search.php:207
 msgid "List Price"
 msgstr "Voir les prix"
 
-#: public_html/themes/default/cat.php:170
-#: public_html/themes/default/search.php:208
+#: default/cat.php:170 default/search.php:208
 msgid "You Pay"
 msgstr "Acheter"
 
-#: public_html/themes/default/cat.php:185
-#: public_html/themes/default/product/detail.php:100
-#: public_html/themes/default/product/grid.php:61
-#: public_html/themes/default/product/related_product.php:49
-#: public_html/themes/default/product/simpledetail.php:187
-#: public_html/themes/default/search.php:219
+#: default/cat.php:185 default/cat.php:191 default/product/detail.php:100
+#: default/product/grid.php:61 default/product/grid.php:67
+#: default/product/related_product.php:49 default/product/simpledetail.php:187
+#: default/search.php:219 default/searchspring_result.php:157
 msgid "Add to Cart"
 msgstr "Ajouter au panier"
 
-#: public_html/themes/default/cat.php:191
-#: public_html/themes/default/search.php:225
+#: default/cat.php:197 default/search.php:225
 msgid "More Info"
 msgstr "Plus d'info"
 
-#: public_html/themes/default/checkout/index.php:7
-#: public_html/themes/default/review.php:65
+#: default/checkout/index.php:7 default/review.php:65
 msgid "Checkout"
 msgstr "Verifiation"
 
-#: public_html/themes/default/checkout/index.php:13
+#: default/checkout/index.php:13
 msgid "Step 1: Checkout Options"
 msgstr "Etape 1 : options de vérification"
 
-#: public_html/themes/default/checkout/index.php:22
-#: public_html/themes/default/myaccount/login.php:36
+#: default/checkout/index.php:22 default/myaccount/login.php:36
 msgid "New Customer"
 msgstr "Nouveau client"
 
-#: public_html/themes/default/checkout/index.php:23
+#: default/checkout/index.php:23
 msgid "Guest Checkout"
 msgstr "Validation des achats"
 
-#: public_html/themes/default/checkout/index.php:26
-#: public_html/themes/default/checkout/index.php:40
-#: public_html/themes/default/checkout/index.php:41
-#: public_html/themes/default/checkout/index.php:146
-#: public_html/themes/default/checkout/index.php:237
-#: public_html/themes/default/checkout/index.php:284
+#: default/checkout/index.php:26 default/checkout/index.php:40
+#: default/checkout/index.php:41 default/checkout/index.php:146
+#: default/checkout/index.php:237 default/checkout/index.php:284
 msgid "Loading..."
 msgstr "chargement..."
 
-#: public_html/themes/default/checkout/index.php:26
-#: public_html/themes/default/checkout/index.php:146
-#: public_html/themes/default/checkout/index.php:237
-#: public_html/themes/default/checkout/index.php:284
-#: public_html/themes/default/product/detail.php:186
-#: public_html/themes/default/product/simpledetail.php:263
+#: default/checkout/index.php:26 default/checkout/index.php:146
+#: default/checkout/index.php:237 default/checkout/index.php:284
+#: default/product/detail.php:186 default/product/simpledetail.php:263
 msgid "Continue"
 msgstr "continuer"
 
-#: public_html/themes/default/checkout/index.php:30
+#: default/checkout/index.php:30
 msgid "Returning Customer"
 msgstr "Client membre"
 
-#: public_html/themes/default/checkout/index.php:31
+#: default/checkout/index.php:31
 msgid "I am a returning customer"
 msgstr "Je suis déjà client"
 
-#: public_html/themes/default/checkout/index.php:33
-#: public_html/themes/default/checkout/index.php:34
-#: public_html/themes/default/checkout/index.php:73
-#: public_html/themes/default/checkout/index.php:74
+#: default/checkout/index.php:33 default/checkout/index.php:34
+#: default/checkout/index.php:73 default/checkout/index.php:74
 msgid "E-Mail"
 msgstr "E-Mail"
 
-#: public_html/themes/default/checkout/index.php:37
-#: public_html/themes/default/checkout/index.php:38
-#: public_html/themes/default/checkout/index.php:87
-#: public_html/themes/default/checkout/index.php:88
-#: public_html/themes/default/myaccount/login.php:18
-#: public_html/themes/default/myaccount/login.php:117
+#: default/checkout/index.php:37 default/checkout/index.php:38
+#: default/checkout/index.php:87 default/checkout/index.php:88
+#: default/myaccount/login.php:18 default/myaccount/login.php:117
 msgid "Password"
 msgstr "Mot de passe"
 
-#: public_html/themes/default/checkout/index.php:39
-#: public_html/themes/default/myaccount/login.php:23
+#: default/checkout/index.php:39 default/myaccount/login.php:23
 msgid "Forgotten Password"
 msgstr "Mot de passe oublié"
 
-#: public_html/themes/default/checkout/index.php:40
+#: default/checkout/index.php:40
 msgid "Login"
 msgstr "connexion"
 
-#: public_html/themes/default/checkout/index.php:41
+#: default/checkout/index.php:41
 msgid "You have logged in, please click here to continue"
 msgstr "Vous venez de vous connecter, veuillez cliquer ici pour continuer."
 
-#: public_html/themes/default/checkout/index.php:53
+#: default/checkout/index.php:53
 msgid "Step 2: Account &amp; Billing Details"
 msgstr "Deuxième étape: informations sur le compte et la facturation"
 
-#: public_html/themes/default/checkout/index.php:63
+#: default/checkout/index.php:63
 msgid "Your Personal Details"
 msgstr "Vos informations personnelles"
 
-#: public_html/themes/default/checkout/index.php:65
-#: public_html/themes/default/checkout/index.php:66
-#: public_html/themes/default/myaccount/index.php:129
-#: public_html/themes/default/myaccount/index.php:130
-#: public_html/themes/default/myaccount/index.php:315
-#: public_html/themes/default/myaccount/index.php:316
-#: public_html/themes/default/myaccount/login.php:97
-#: public_html/themes/default/myaccount/login.php:98
+#: default/checkout/index.php:65 default/checkout/index.php:66
+#: default/myaccount/index.php:129 default/myaccount/index.php:130
+#: default/myaccount/index.php:315 default/myaccount/index.php:316
+#: default/myaccount/login.php:97 default/myaccount/login.php:98
 msgid "First Name"
 msgstr "Prénom"
 
-#: public_html/themes/default/checkout/index.php:69
-#: public_html/themes/default/checkout/index.php:70
+#: default/checkout/index.php:69 default/checkout/index.php:70
 msgid "Last Name"
 msgstr "Nom"
 
-#: public_html/themes/default/checkout/index.php:76
-#: public_html/themes/default/checkout/index.php:80
-#: public_html/themes/default/myaccount/login.php:67
+#: default/checkout/index.php:76 default/checkout/index.php:80
+#: default/myaccount/login.php:67
 msgid "Telephone"
 msgstr "Telephone"
 
-#: public_html/themes/default/checkout/index.php:78
-#: public_html/themes/default/myaccount/index.php:360
-#: public_html/themes/default/myaccount/index.php:361
-#: public_html/themes/default/myaccount/login.php:70
+#: default/checkout/index.php:78 default/myaccount/index.php:360
+#: default/myaccount/index.php:361 default/myaccount/login.php:70
 msgid "Country Code"
 msgstr "Code du pays"
 
-#: public_html/themes/default/checkout/index.php:79
-#: public_html/themes/default/myaccount/index.php:364
-#: public_html/themes/default/myaccount/index.php:365
-#: public_html/themes/default/myaccount/login.php:74
+#: default/checkout/index.php:79 default/myaccount/index.php:364
+#: default/myaccount/index.php:365 default/myaccount/login.php:74
 msgid "Area Code"
 msgstr "code régional"
 
-#: public_html/themes/default/checkout/index.php:85
+#: default/checkout/index.php:85
 msgid "Your Password"
 msgstr "votre mot de passe"
 
-#: public_html/themes/default/checkout/index.php:90
-#: public_html/themes/default/checkout/index.php:91
+#: default/checkout/index.php:90 default/checkout/index.php:91
 msgid "Password Confirm"
 msgstr "Confirmer votre mot de passe"
 
-#: public_html/themes/default/checkout/index.php:97
+#: default/checkout/index.php:97
 msgid "Your Address"
 msgstr "Votre adresse"
 
-#: public_html/themes/default/checkout/index.php:99
-#: public_html/themes/default/checkout/index.php:100
+#: default/checkout/index.php:99 default/checkout/index.php:100
 msgid "Company"
 msgstr "Entreprise"
 
-#: public_html/themes/default/checkout/index.php:103
-#: public_html/themes/default/checkout/index.php:104
+#: default/checkout/index.php:103 default/checkout/index.php:104
 msgid "Address 1"
 msgstr "Première adresse "
 
-#: public_html/themes/default/checkout/index.php:107
-#: public_html/themes/default/checkout/index.php:108
+#: default/checkout/index.php:107 default/checkout/index.php:108
 msgid "Address 2"
 msgstr "Deuxième adresse "
 
-#: public_html/themes/default/checkout/index.php:111
-#: public_html/themes/default/checkout/index.php:112
-#: public_html/themes/default/myaccount/index.php:146
-#: public_html/themes/default/myaccount/index.php:147
-#: public_html/themes/default/myaccount/index.php:340
-#: public_html/themes/default/myaccount/index.php:341
-#: public_html/themes/default/myaccount/login.php:50
-#: public_html/themes/default/myaccount/login.php:51
+#: default/checkout/index.php:111 default/checkout/index.php:112
+#: default/myaccount/index.php:146 default/myaccount/index.php:147
+#: default/myaccount/index.php:340 default/myaccount/index.php:341
+#: default/myaccount/login.php:50 default/myaccount/login.php:51
 msgid "City"
 msgstr "Ville "
 
-#: public_html/themes/default/checkout/index.php:115
-#: public_html/themes/default/checkout/index.php:116
+#: default/checkout/index.php:115 default/checkout/index.php:116
 msgid "Post Code"
 msgstr "Code postal"
 
-#: public_html/themes/default/checkout/index.php:119
-#: public_html/themes/default/myaccount/index.php:137
-#: public_html/themes/default/myaccount/index.php:138
-#: public_html/themes/default/myaccount/index.php:332
-#: public_html/themes/default/myaccount/login.php:42
+#: default/checkout/index.php:119 default/display/contact.php:48
+#: default/myaccount/index.php:137 default/myaccount/index.php:138
+#: default/myaccount/index.php:332 default/myaccount/login.php:42
 msgid "Country"
 msgstr "Pays"
 
-#: public_html/themes/default/checkout/index.php:125
+#: default/checkout/index.php:125
 msgid "County / State"
 msgstr "Pays/Etat"
 
-#: public_html/themes/default/checkout/index.php:127
+#: default/checkout/index.php:127
 msgid "select County / State"
 msgstr "Choisissez un pays/Etat"
 
-#: public_html/themes/default/checkout/index.php:156
+#: default/checkout/index.php:156
 msgid "Step 3: Delivery Details"
 msgstr "troisième étape: information sur la livraison"
 
-#: public_html/themes/default/checkout/index.php:165
+#: default/checkout/index.php:165
 msgid "We could only ship to the billing address!"
 msgstr "Nous livrons uniquement à l'adresse de facturation"
 
-#: public_html/themes/default/checkout/index.php:262
+#: default/checkout/index.php:262
 msgid "Step 4: Payment Method"
 msgstr "Quatrième étape: méthode de paiement "
 
-#: public_html/themes/default/checkout/index.php:277
+#: default/checkout/index.php:277
 msgid "Please contact our CS!"
 msgstr "Veuillez contacter notre service client !"
 
-#: public_html/themes/default/checkout/index.php:462
-#: public_html/themes/default/checkout/index.php:673
+#: default/checkout/index.php:462 default/checkout/index.php:673
 msgid "The email is required"
 msgstr "L'adresse mail doit être renseignée"
 
-#: public_html/themes/default/checkout/index.php:465
-#: public_html/themes/default/checkout/index.php:681
+#: default/checkout/index.php:465 default/checkout/index.php:681
 msgid "The value is not a valid email address"
 msgstr "L'adresse mail n'est pas valide"
 
-#: public_html/themes/default/checkout/index.php:473
+#: default/checkout/index.php:473
 msgid "Please input a password"
 msgstr "veuillez entrer un mot de passe"
 
-#: public_html/themes/default/checkout/index.php:542
+#: default/checkout/index.php:542
 msgid "The billing first name is required"
 msgstr "Veuillez renseigner le prénom de l'adresse de facturation "
 
-#: public_html/themes/default/checkout/index.php:547
+#: default/checkout/index.php:547
 msgid ""
 "The billing first name must be more than 1 and less than 50 characters long"
 msgstr ""
 "le prénom de l'adresse de facturation doit être compris entre 1 et 50 "
 "caractères"
 
-#: public_html/themes/default/checkout/index.php:551
+#: default/checkout/index.php:551
 msgid "The billing first name can only consist of alphabetical, number"
 msgstr ""
 "le prénom de l'adresse de facturation doit uniquement contenir des "
 "caractères alphabétiques et numériques"
 
-#: public_html/themes/default/checkout/index.php:559
+#: default/checkout/index.php:559
 msgid "The billing last name is required"
 msgstr "Veuillez renseigner le nom de l'adresse de facturation "
 
-#: public_html/themes/default/checkout/index.php:564
+#: default/checkout/index.php:564
 msgid ""
 "The billing last name must be more than 1 and less than 50 characters long"
 msgstr ""
 "le nom de l'adresse de facturation doit être compris entre 1 et 50 caractères"
 
-#: public_html/themes/default/checkout/index.php:568
+#: default/checkout/index.php:568
 msgid "The billing last name can only consist of alphabetical, number"
 msgstr ""
 "le nom de l'adresse de facturation doit uniquement contenir des caractères "
 "alphabétiques et numériques"
 
-#: public_html/themes/default/checkout/index.php:577
+#: default/checkout/index.php:577
 msgid "The billing company name cannot be longer than 50 characters"
 msgstr ""
 "le nom de l'entreprise de l'adresse de facturation doit être compris entre 1 "
 "et 50 caractères"
 
-#: public_html/themes/default/checkout/index.php:581
+#: default/checkout/index.php:581
 msgid "The billing company name can only consist of alphabetical, number"
 msgstr ""
 "le nom de l'entreprsie de l'adresse de facturation doit uniquement contenir "
 "des caractères alphabétiques et numériques"
 
-#: public_html/themes/default/checkout/index.php:589
+#: default/checkout/index.php:589
 msgid "The billing address 1 is required"
 msgstr "Veuillez renseigner la première adresse de facturation "
 
-#: public_html/themes/default/checkout/index.php:593
+#: default/checkout/index.php:593
 msgid "The billing address1 name can only consist of alphabetical, number"
 msgstr ""
 "le nom de la première adresse de facturation doit uniquement contenir des "
 "caractères alphabétiques et numériques"
 
-#: public_html/themes/default/checkout/index.php:598
-#: public_html/themes/default/checkout/index.php:618
+#: default/checkout/index.php:598 default/checkout/index.php:618
 msgid ""
 "The billing address must be more than 1 and less than 1024 characters long"
 msgstr ""
 "L' adresse de facturation doit être comprise entre 1 et 1024 caractères"
 
-#: public_html/themes/default/checkout/index.php:613
+#: default/checkout/index.php:601 default/checkout/index.php:621
+msgid "POBox Address is not allowed"
+msgstr "L'adresse du siège n'est pas valide"
+
+#: default/checkout/index.php:613
 msgid "The billing address2 name can only consist of alphabetical, number"
 msgstr ""
 "le nom de la deuxième adresse de facturation doit uniquement contenir des "
 "caractères alphabétiques et numériques"
 
-#: public_html/themes/default/checkout/index.php:632
+#: default/checkout/index.php:632
 msgid "The billing city is required"
 msgstr "Veuillez renseigner la ville de l'adresse de facturation "
 
-#: public_html/themes/default/checkout/index.php:637
+#: default/checkout/index.php:637
 msgid "The billing city must be more than 1 and less than 128 characters long"
 msgstr ""
 "le nom de la ville de l'adresse de facturation doit être compris entre 1 et "
 "128 caractères"
 
-#: public_html/themes/default/checkout/index.php:641
+#: default/checkout/index.php:641
 msgid "The billing city can only consist of alphabetical, number"
 msgstr ""
 "le nom de la ville de l'adresse de facturation doit uniquement contenir des "
 "caractères alphabétiques et numériques"
 
-#: public_html/themes/default/checkout/index.php:649
+#: default/checkout/index.php:649
 msgid "The Zip/Postal Code is required"
 msgstr "Veuillez renseigner le code postal"
 
-#: public_html/themes/default/checkout/index.php:653
+#: default/checkout/index.php:653
 #, php-format
 msgid "The value is not valid %s Zip/Postal Code"
-msgstr "Le code postal n'est pas valide"
+msgstr "Le code postal %s n'est pas valide"
 
-#: public_html/themes/default/checkout/index.php:661
+#: default/checkout/index.php:661
 msgid "The billing telephone number is required"
 msgstr ""
 "Veuillez renseigner le numéro de téléphone de l'adresse de facturation "
 
-#: public_html/themes/default/checkout/index.php:665
+#: default/checkout/index.php:665
 msgid "The billing telephone is not valid"
 msgstr ""
 "Veuillez renseigner le numéro de téléphone de l'adresse de facturation "
 
-#: public_html/themes/default/checkout/index.php:678
+#: default/checkout/index.php:678
 msgid "Email must be more than 3 and less than 256 characters long"
 msgstr "L'adresse mail doit être comprise entre 3 et 256 caractères "
 
-#: public_html/themes/default/checkout/index.php:690
+#: default/checkout/index.php:690
 msgid "The password and its confirm are not the same"
 msgstr "Les deux mots de passe ne sont pas les mêmes"
 
-#: public_html/themes/default/checkout/index.php:699
+#: default/checkout/index.php:699
 msgid "Please Select a state"
 msgstr "Veuillez sélctionner un pays"
 
-#: public_html/themes/default/checkout/index.php:708
+#: default/checkout/index.php:708
 msgid "Please select a card"
 msgstr "Veuillez sélctionner une carte"
 
-#: public_html/themes/default/checkout/index.php:754
+#: default/checkout/index.php:754
 msgid "Unknow error: Please contact our CS!"
 msgstr "Erreur inconnue: veuillez contacter notre service client !"
 
-#: public_html/themes/default/checkout/paymentFail.php:4
+#: default/checkout/paymentFail.php:4
 msgid "Payment Fail"
 msgstr "Echec de la transaction "
 
-#: public_html/themes/default/checkout/paymentFail.php:6
+#: default/checkout/paymentFail.php:6
 msgid "We're sorry. This payment has been declined by your card issuer."
 msgstr "Nous sommes désolés, ce paiement a été refusé par votre banque"
 
-#: public_html/themes/default/checkout/paymentFail.php:9
+#: default/checkout/paymentFail.php:9
 msgid "1 - make sure that the billing address entered matches your bank record"
 msgstr ""
 "1. Vérifiez que votre adresse de facturation correspond à celle enregistrée "
 "sur votre compte bancaire"
 
-#: public_html/themes/default/checkout/paymentFail.php:10
+#: default/checkout/paymentFail.php:10
 msgid ""
 "2 - double check your card details especially the CVV number (last 3 digits "
 "on the back of the card) and expiry date are correct"
@@ -658,7 +470,7 @@ msgstr ""
 "derniers chiffres au dos de votre carte) et la date de d'expiration, sont "
 "corrects "
 
-#: public_html/themes/default/checkout/paymentFail.php:11
+#: default/checkout/paymentFail.php:11
 msgid ""
 "3 - check with your bank before re-attempting to order if payment was "
 "blocked for any particular reason and ask them to unblock your card if so"
@@ -667,58 +479,56 @@ msgstr ""
 "transaction a été bloquée pour une raison particulière et si le cas se "
 "présente, demandez à votre conseiller de débloquer votre carte "
 
-#: public_html/themes/default/checkout/paymentFail.php:12
+#: default/checkout/paymentFail.php:12
 msgid "4 - try again with the same, or a different card"
 msgstr ""
 "4. Essayez de nouveau, avec la même carte ou avec une carte différente "
 
-#: public_html/themes/default/checkout/paymentFail.php:13
+#: default/checkout/paymentFail.php:13
 msgid "5 - still having trouble? "
 msgstr "5. le problème persiste ? "
 
-#: public_html/themes/default/checkout/paymentFail.php:13
+#: default/checkout/paymentFail.php:13
 msgid "Contact us"
 msgstr "Contactez nous"
 
-#: public_html/themes/default/checkout/paymentFail.php:13
+#: default/checkout/paymentFail.php:13
 msgid " via email"
 msgstr "par mail"
 
-#: public_html/themes/default/checkout/paymentReview.php:4
+#: default/checkout/paymentReview.php:4
 msgid "Payment Review"
 msgstr "Bilan de votre transaction"
 
-#: public_html/themes/default/checkout/paymentReview.php:6
-#: public_html/themes/default/checkout/paymentSuccess.php:6
+#: default/checkout/paymentReview.php:6 default/checkout/paymentSuccess.php:6
 msgid "Thank you for your purchase!"
 msgstr "Merci de votre achat !"
 
-#: public_html/themes/default/checkout/paymentReview.php:8
+#: default/checkout/paymentReview.php:8
 #, php-format
 msgid ""
 "Your order is in a queue for the payment to be checked and processed by our "
 "payment service provider [%s] which can take a few hours to a couple of "
 "days’ time. Money has not been taken from your credit card yet."
 msgstr ""
-"\n"
-"Votre commande est en attente de vérification de votre paiement par nos "
+"Votre commande est en attente de vérification de votre paiement [%s] par nos "
 "services, ce qui peut prendre quelques heures ou quelques jours. L’argent "
 "n’a pas encore été débité de votre carte de crédit."
 
-#: public_html/themes/default/checkout/paymentReview.php:9
+#: default/checkout/paymentReview.php:9
 msgid "We'll send you an email as soon as the payment has been verified!"
 msgstr "Nous vous enverrons une email une fois que le paiement ait été validé"
 
-#: public_html/themes/default/checkout/paymentSuccess.php:4
+#: default/checkout/paymentSuccess.php:4
 msgid "Payment Successful"
 msgstr "Paiement accepté"
 
-#: public_html/themes/default/checkout/paymentSuccess.php:8
+#: default/checkout/paymentSuccess.php:8
 #, php-format
 msgid "Your order number is %s."
-msgstr "Votre numéro de commande est"
+msgstr "Votre numéro de commande est %s."
 
-#: public_html/themes/default/checkout/paymentSuccess.php:10
+#: default/checkout/paymentSuccess.php:10
 msgid ""
 "You will receive an order confirmation email with details of your order and "
 "a link to track its progress."
@@ -726,19 +536,19 @@ msgstr ""
 "Vous allez recevoir un mail de confirmation de votre commande avec les "
 "détails de celle-ci et un lien pour suivre sa livraison"
 
-#: public_html/themes/default/checkout/paymentSuccess.php:12
+#: default/checkout/paymentSuccess.php:12
 msgid "We'll send you an email as soon as it's shipped!"
 msgstr "Nous vous enverrons un email dès que la commande sera livrée."
 
-#: public_html/themes/default/contact.php:3
+#: default/contact.php:3
 msgid "CONTACT US"
 msgstr "Nous contacter"
 
-#: public_html/themes/default/contact.php:4
+#: default/contact.php:4
 msgid "We're here to help you!"
 msgstr "Nous sommes là pour vous aider"
 
-#: public_html/themes/default/contact.php:6
+#: default/contact.php:6
 msgid ""
 "Our principal route for all enquiries is via our Sales and Customer Care "
 "Team, which has gained extensive experience and knowledge of our products "
@@ -748,13 +558,13 @@ msgstr ""
 "grâce à leur expérience et leur connaissance très élargie de nos produits et "
 "services afin de servir au mieux nos clients."
 
-#: public_html/themes/default/contact.php:7
+#: default/contact.php:7
 msgid ""
 "Our goal is to assist you with your queries in a friendly and helpful manner."
 msgstr ""
 "Notre but est de répondre à vos besoins de manière simple et serviable."
 
-#: public_html/themes/default/contact.php:10
+#: default/contact.php:10
 msgid ""
 "DigitalDiscount.co.uk Flat/RM 12, Tower 8, 25/F Langham Place Office Argyle "
 "Street, Kowloon, Hong Kong"
@@ -762,15 +572,15 @@ msgstr ""
 "DigitalDiscount.co.uk Flat/RM 12, Tower 8, 25/F Langham Place Office Argyle "
 "Street, Kowloon, Hong Kong"
 
-#: public_html/themes/default/contact.php:13
+#: default/contact.php:13
 msgid "Tel:"
 msgstr "Tel:"
 
-#: public_html/themes/default/contact.php:15
+#: default/contact.php:15
 msgid "Email Enquiries"
 msgstr "Demande par email"
 
-#: public_html/themes/default/contact.php:17
+#: default/contact.php:17
 msgid ""
 "Our ticketing system is designed to ensure that your queries are responded "
 "by the most qualified staff and as quickly as possible."
@@ -778,7 +588,7 @@ msgstr ""
 "Notre système de réponses par tickets vous assure une réponse rapide "
 "délivrée par nos équipes qualifiées"
 
-#: public_html/themes/default/contact.php:18
+#: default/contact.php:18
 msgid ""
 "In order to take advantage of this, please kindly choose the correct "
 "department and the most relevant \"Query\"."
@@ -786,47 +596,42 @@ msgstr ""
 "Afin de faciliter la réponse à votre demande, veuillez chosir le service "
 "approprié et le type de demande."
 
-#: public_html/themes/default/contact.php:23
+#: default/contact.php:23
 msgid "Subject"
 msgstr "Objet"
 
-#: public_html/themes/default/contact.php:27
+#: default/contact.php:27 default/display/contact.php:90
 msgid "Message"
 msgstr "Message"
 
-#: public_html/themes/default/contact.php:31
-#: public_html/themes/default/product/detail.php:150
-#: public_html/themes/default/product/simpledetail.php:227
+#: default/contact.php:31 default/product/detail.php:150
+#: default/product/simpledetail.php:227
 msgid "Your Name"
 msgstr "Votre nom"
 
-#: public_html/themes/default/contact.php:35
-#: public_html/themes/default/myaccount/forget_password.php:41
-#: public_html/themes/default/myaccount/login.php:14
-#: public_html/themes/default/myaccount/login.php:15
+#: default/contact.php:35 default/myaccount/forget_password.php:41
+#: default/myaccount/login.php:14 default/myaccount/login.php:15
 msgid "Email"
 msgstr "Email"
 
-#: public_html/themes/default/contact.php:39
+#: default/contact.php:39 default/display/contact.php:67
 msgid "Order Number"
 msgstr "Numéro de commande"
 
-#: public_html/themes/default/contact.php:42
-#: public_html/themes/default/myaccount/index.php:278
-#: public_html/themes/default/myaccount/index.php:372
-#: public_html/themes/default/myaccount/login.php:128
+#: default/contact.php:42 default/myaccount/index.php:278
+#: default/myaccount/index.php:372 default/myaccount/login.php:128
 msgid "Submit"
 msgstr "Envoyer"
 
-#: public_html/themes/default/display/about_us.php:2
+#: default/display/about_us.php:2
 msgid "About ChatandVision"
 msgstr "A propos de ChatandVision"
 
-#: public_html/themes/default/display/about_us.php:3
+#: default/display/about_us.php:3
 msgid "Who are we? "
 msgstr "Qui sommes-nous ?"
 
-#: public_html/themes/default/display/about_us.php:6
+#: default/display/about_us.php:6
 #, php-format
 msgid ""
 "ChatandVision is one of Skype’s Global Merchant Partners, bringing %s high "
@@ -836,12 +641,12 @@ msgid ""
 "have a wonderful Skype experience."
 msgstr ""
 "ChatandVision est l’un des partenaires commerciaux de Skype chargé "
-"d’augmenter la qualité de la communication sur nos produits avec notre "
-"clientèle. Partenaire avec Skype, ChatandVision possède une variété de "
+"d’augmenter la qualité de %s de la communication sur nos produits %s avec "
+"notre clientèle. Partenaire avec Skype, ChatandVision possède une variété de "
 "produits qualifiés qui correspondent aux exigences de qualité de Skype et "
 "possèdent ainsi une très belle expérience Skype."
 
-#: public_html/themes/default/display/about_us.php:8
+#: default/display/about_us.php:8
 msgid ""
 "We are driven by the strong desire to bring people closer together and offer "
 "the products to help people all over the world communicate with each other. "
@@ -849,17 +654,17 @@ msgstr ""
 "Nous sommes désireux de rapprocher les gens entre eux et de leur offrir les "
 "meilleurs produits permettant cet échange à travers le monde."
 
-#: public_html/themes/default/display/about_us.php:9
+#: default/display/about_us.php:9
 msgid "Whether it’s for use at home or in the office, we’re here to help."
 msgstr ""
 "Que ce soit pour une utilisation au travail ou à la maison, nous sommes là "
 "pour vous aider."
 
-#: public_html/themes/default/display/about_us.php:22
+#: default/display/about_us.php:22
 msgid "Buying Experience"
 msgstr "Expérience achat"
 
-#: public_html/themes/default/display/about_us.php:25
+#: default/display/about_us.php:25
 #, php-format
 msgid ""
 "We do our best to try and make this experience as simple as possible for our "
@@ -874,15 +679,15 @@ msgid ""
 msgstr ""
 "Nous faisons de notre mieux pour rendre cette expérience aussi simple que "
 "possible pour nos clients et agissons en tant que distributeur local. Nous "
-"sommes présents dans plus de 70 pays, nous assurons la transparence client, "
-"nous importons la taxe locale ce qui signifie que le prix visible sur notre "
-"site est le prix final qui vous est facturé. Nous offrons des options de "
-"paiement en devise locale afin de vous de vous offrir une expérience simple "
-"et fluide. Grâce à nos services de paiement partenaires de qualité, nous "
-"espérons offrir à nos clients un bon moment, une confiance et le plus haut "
-"niveau de sécurité lors du paiement sur notre site."
+"sommes présents dans plus de %s 70 pays %s, nous assurons la transparence "
+"client, nous importons la taxe locale ce qui signifie que le prix visible "
+"sur notre site est le prix final qui vous est facturé. Nous offrons des "
+"options de paiement en devise locale afin de vous de vous offrir une "
+"expérience simple et fluide. Grâce à nos services de paiement partenaires de "
+"qualité, nous espérons offrir à nos clients un bon moment, une confiance et "
+"le plus haut niveau de sécurité lors du paiement sur notre site."
 
-#: public_html/themes/default/display/about_us.php:27
+#: default/display/about_us.php:27
 msgid ""
 "We ship from several hubs worldwide so that you can receive your products "
 "faster, and have chosen to partner with reputable courier companies to "
@@ -893,11 +698,11 @@ msgstr ""
 "partenaire avec des entreprises réputées afin d'assurer que votre commande "
 "arrive en bon et due forme. "
 
-#: public_html/themes/default/display/about_us.php:33
+#: default/display/about_us.php:33
 msgid "We're always here for you!"
 msgstr "Nous sommes toujours là pour vous !"
 
-#: public_html/themes/default/display/about_us.php:36
+#: default/display/about_us.php:36
 #, php-format
 msgid ""
 "Our priority is in providing customer focused service, and we continually "
@@ -913,81 +718,79 @@ msgstr ""
 "préoccupation. Afin de fournir la meilleure expérience d'achat à nos clients "
 "nous assurons une communication dans chaque étape du parcours (de l'achat "
 "jusqu'à la livraison en passant par le suivi de la commande). Notre équipe "
-"relation client accueillante est à vvotre disposition et heureuse de vous "
-"aider en cas de difficulté lors du choix d'un produit ou d'une toute autre "
-"requete durant le processus d'achat. "
+"%s  relation client  %s accueillante est à vvotre disposition et heureuse de "
+"vous aider en cas de difficulté lors du choix d'un produit ou d'une toute "
+"autre requete durant le processus d'achat. "
 
-#: public_html/themes/default/display/conditions_of_use.php:2
+#: default/display/conditions_of_use.php:2
 msgid "Term and Conditions"
 msgstr "Termes et conditions "
 
-#: public_html/themes/default/display/conditions_of_use.php:3
+#: default/display/conditions_of_use.php:3
 msgid "DigitalDiscount.co.uk Conditions of Use and Sale"
 msgstr "DigitalDiscount.co.uk  condition d'utilisation et de vente"
 
-#: public_html/themes/default/display/conditions_of_use.php:6
-#: public_html/themes/default/display/privacy_policy.php:6
+#: default/display/conditions_of_use.php:6 default/display/privacy_policy.php:6
 msgid "CONTENTS"
 msgstr "contenu"
 
-#: public_html/themes/default/display/conditions_of_use.php:8
-#: public_html/themes/default/display/conditions_of_use.php:21
+#: default/display/conditions_of_use.php:8
+#: default/display/conditions_of_use.php:21
 msgid "CONDITIONS OF USE"
 msgstr "condition d'utilisation"
 
-#: public_html/themes/default/display/conditions_of_use.php:9
-#: public_html/themes/default/display/conditions_of_use.php:30
+#: default/display/conditions_of_use.php:9
+#: default/display/conditions_of_use.php:30
 msgid "SITE CONTENTS, OWNERSHIP, AND USE RESTRICTIONS"
 msgstr "contenu du site, propriété et utilisation de restriction "
 
-#: public_html/themes/default/display/conditions_of_use.php:10
-#: public_html/themes/default/display/conditions_of_use.php:47
+#: default/display/conditions_of_use.php:10
+#: default/display/conditions_of_use.php:47
 msgid "PLACING AN ORDER"
 msgstr "passer une commande"
 
-#: public_html/themes/default/display/conditions_of_use.php:11
-#: public_html/themes/default/display/conditions_of_use.php:65
+#: default/display/conditions_of_use.php:11
+#: default/display/conditions_of_use.php:65
 msgid "TAX AND DUTIES"
 msgstr "taxes et droits"
 
-#: public_html/themes/default/display/conditions_of_use.php:12
-#: public_html/themes/default/display/conditions_of_use.php:75
+#: default/display/conditions_of_use.php:12
+#: default/display/conditions_of_use.php:75
 msgid "DELIVERY"
 msgstr "livraison"
 
-#: public_html/themes/default/display/conditions_of_use.php:13
-#: public_html/themes/default/display/conditions_of_use.php:83
+#: default/display/conditions_of_use.php:13
+#: default/display/conditions_of_use.php:83
 msgid "CANCELLING YOUR ORDER"
 msgstr "annulation de commande"
 
-#: public_html/themes/default/display/conditions_of_use.php:14
-#: public_html/themes/default/display/conditions_of_use.php:89
+#: default/display/conditions_of_use.php:14
+#: default/display/conditions_of_use.php:89
 msgid "DEFECTIVE ITEM"
 msgstr "produit deffectueux "
 
-#: public_html/themes/default/display/conditions_of_use.php:15
-#: public_html/themes/default/display/conditions_of_use.php:98
+#: default/display/conditions_of_use.php:15
+#: default/display/conditions_of_use.php:98
 msgid "PRODUCT WARRANTIES"
 msgstr "garantie produit"
 
-#: public_html/themes/default/display/conditions_of_use.php:16
-#: public_html/themes/default/display/conditions_of_use.php:133
+#: default/display/conditions_of_use.php:16
+#: default/display/conditions_of_use.php:133
 msgid "DISCLAIMER OF LIABILITY"
 msgstr "clause de non-responsabilité"
 
-#: public_html/themes/default/display/conditions_of_use.php:17
-#: public_html/themes/default/display/conditions_of_use.php:141
-#: public_html/themes/default/display/privacy_policy.php:12
-#: public_html/themes/default/display/privacy_policy.php:54
+#: default/display/conditions_of_use.php:17
+#: default/display/conditions_of_use.php:141
+#: default/display/privacy_policy.php:12 default/display/privacy_policy.php:54
 msgid "SECURITY"
 msgstr "Sécurité "
 
-#: public_html/themes/default/display/conditions_of_use.php:18
-#: public_html/themes/default/display/conditions_of_use.php:157
+#: default/display/conditions_of_use.php:18
+#: default/display/conditions_of_use.php:157
 msgid "CONDITIONS OF USE REVISIONS"
 msgstr "conditions d'utilisation"
 
-#: public_html/themes/default/display/conditions_of_use.php:23
+#: default/display/conditions_of_use.php:23
 msgid ""
 "DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by "
 "ChatandVision Ltd (ChatandVision). By visiting or shopping at the "
@@ -1003,7 +806,7 @@ msgstr ""
 "n'êtes pas d'accord avec les termes d'utilisation veuillez ne pas utiliser "
 "ce site. "
 
-#: public_html/themes/default/display/conditions_of_use.php:25
+#: default/display/conditions_of_use.php:25
 msgid ""
 "DigitalDiscount  is a trading name owned by ChatandVision Ltd with "
 "registered offices at Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle "
@@ -1015,7 +818,7 @@ msgstr ""
 "Kowloon, Hong Kong. Sur ses différents sites, ChatandVision Ltd offre à la "
 "vente des produits électroniques de consommation ainsi que des services. "
 
-#: public_html/themes/default/display/conditions_of_use.php:27
+#: default/display/conditions_of_use.php:27
 msgid ""
 "If you have any queries relating to our terms and conditions, please contact "
 "the Customer Support team or read our FAQ."
@@ -1023,7 +826,7 @@ msgstr ""
 "Pour toute question relative à nos conditions d’utilisation, merci de "
 "contacter notre service clientèle ou de vous référer à notre FAQ."
 
-#: public_html/themes/default/display/conditions_of_use.php:32
+#: default/display/conditions_of_use.php:32
 msgid ""
 "The information contained in this Site including all images, illustrations, "
 "designs, photographs, video clips, writings and other materials that appear "
@@ -1042,7 +845,7 @@ msgstr ""
 "(\"ChatandVision\"), ou, alternativement, à leurs propriétaires respectifs. "
 "Le nom ainsi que le logo ChatandVision sont des marques déposées. "
 
-#: public_html/themes/default/display/conditions_of_use.php:34
+#: default/display/conditions_of_use.php:34
 msgid ""
 "Permission is granted to display, copy, distribute, download, and print in "
 "hard copy portions of this Site for the purposes of: "
@@ -1050,11 +853,11 @@ msgstr ""
 "Permission est accordée d’afficher, copier, distribuer, télécharger et "
 "imprimer tout ou partie de ce site pour les motifs suivants : "
 
-#: public_html/themes/default/display/conditions_of_use.php:36
+#: default/display/conditions_of_use.php:36
 msgid "placing an order with DigitalDiscount.co.uk or"
 msgstr "• Commander sur DigitalDiscount.co.uk, ou"
 
-#: public_html/themes/default/display/conditions_of_use.php:37
+#: default/display/conditions_of_use.php:37
 msgid ""
 "using this Site as a shopping resource, provided you do not modify the Site "
 "and that you retain all copyright and other proprietary notices contained in "
@@ -1064,7 +867,7 @@ msgstr ""
 "n’est apportée au site et que les droits sur la propriété intellectuelle "
 "sont préservés"
 
-#: public_html/themes/default/display/conditions_of_use.php:39
+#: default/display/conditions_of_use.php:39
 msgid ""
 "Except in connection with shopping or placing an order, none of the Contents "
 "may be copied, reproduced, distributed, re-published, downloaded, displayed, "
@@ -1079,7 +882,7 @@ msgstr ""
 "photocopié, reproduit, ou mis en ligne par le biais de site miroirs, sans la "
 "permission préalable écrite de ChatandVision ou du propriétaire. "
 
-#: public_html/themes/default/display/conditions_of_use.php:41
+#: default/display/conditions_of_use.php:41
 msgid ""
 "Please note that the permission granted herein terminates automatically if "
 "you breach any of these Site terms or conditions. Any other use of the "
@@ -1096,7 +899,7 @@ msgstr ""
 "intellectuelle et, à défaut d’autorisation de ChatandVision, est strictement "
 "prohibée. "
 
-#: public_html/themes/default/display/conditions_of_use.php:43
+#: default/display/conditions_of_use.php:43
 msgid ""
 "If you choose to leave this Site via links to other non-ChatandVision "
 "operated sites, ChatandVision is not responsible for the privacy policies of "
@@ -1106,7 +909,7 @@ msgstr ""
 "toute responsabilité. En continuant votre navigation sur ce site, vous "
 "acceptez l’utilisation de cookies. "
 
-#: public_html/themes/default/display/conditions_of_use.php:49
+#: default/display/conditions_of_use.php:49
 msgid ""
 "The prices advertised on this Site are for Internet orders. Prices and the "
 "availability of items are subject to change without notice. Any recommended "
@@ -1120,7 +923,7 @@ msgstr ""
 "représentatif du prix de marché correspondant à un secteur géographique "
 "particulier. "
 
-#: public_html/themes/default/display/conditions_of_use.php:51
+#: default/display/conditions_of_use.php:51
 msgid ""
 "Any reference to savings used on this Site indicates the promotional savings "
 "off the recommended retail price and the actual savings will vary depending "
@@ -1130,7 +933,7 @@ msgstr ""
 "par rapport au prix public constaté. L’économie en question peut varier en "
 "fonction du bien acheté et de la date d’achat. "
 
-#: public_html/themes/default/display/conditions_of_use.php:53
+#: default/display/conditions_of_use.php:53
 msgid ""
 "Please check carefully that all information given is accurate and complete "
 "when placing an order."
@@ -1138,7 +941,7 @@ msgstr ""
 "L’utilisateur est prié de vérifier que l’information fournie est précise et "
 "exacte lors de la commande. "
 
-#: public_html/themes/default/display/conditions_of_use.php:55
+#: default/display/conditions_of_use.php:55
 msgid ""
 "Payment for all orders must be made in advance by credit or debit card. We "
 "accept payment from most major credit and debit cards as well as PayPal and "
@@ -1148,7 +951,7 @@ msgstr ""
 "acceptions les cartes émises par les sociétés majeures (Visa, Mastercard, …) "
 "ainsi que Paypal et Skrill (anciennement connu sous le nom MoneyBookers)."
 
-#: public_html/themes/default/display/conditions_of_use.php:57
+#: default/display/conditions_of_use.php:57
 msgid ""
 "While we make every effort to provide accurate information, technical "
 "inaccuracies or typographic or photographic errors may occur. We reserve the "
@@ -1161,7 +964,7 @@ msgstr ""
 "amélioration à l’information contenue sur le site à tout moment et sans "
 "notification préalable. "
 
-#: public_html/themes/default/display/conditions_of_use.php:59
+#: default/display/conditions_of_use.php:59
 msgid ""
 "There may be certain orders that we are either unable to accept or must "
 "cancel. We reserve the right, at our sole discretion, to refuse or cancel "
@@ -1176,7 +979,7 @@ msgstr ""
 "voire d’erreurs dans les informations disponibles sur le site concernant les "
 "prix ou spécifications. "
 
-#: public_html/themes/default/display/conditions_of_use.php:61
+#: default/display/conditions_of_use.php:61
 msgid ""
 "When you place an order to purchase a product from DigitalDiscount.co.uk, we "
 "will send you an e-mail confirming receipt of your order and containing the "
@@ -1198,7 +1001,7 @@ msgstr ""
 "dans un message confirmation d’expédition ne ferait pas partie du même "
 "contrat. "
 
-#: public_html/themes/default/display/conditions_of_use.php:67
+#: default/display/conditions_of_use.php:67
 msgid ""
 "In using our services, you authorize ChatandVision to make arrangements for "
 "customs clearance for the products ordered. The responsibility for ensuring "
@@ -1225,7 +1028,7 @@ msgstr ""
 "de dédouanement, des répercussions peuvent avoir lieu vis-à-vis de la date "
 "de livraison. "
 
-#: public_html/themes/default/display/conditions_of_use.php:69
+#: default/display/conditions_of_use.php:69
 msgid ""
 "Where the price of the goods allows, certain shipments to some countries may "
 "include a fee which is borne by ChatandVision, for import of the goods. This "
@@ -1235,7 +1038,7 @@ msgstr ""
 "pays incluent des frais transmis par ChatandVision, pour l'importation de "
 "biens. Cela sera noté sur votre facture de livraison. "
 
-#: public_html/themes/default/display/conditions_of_use.php:71
+#: default/display/conditions_of_use.php:71
 msgid ""
 "In the event where customs clearance is required, this will cause delays to "
 "the original delivery estimate."
@@ -1243,7 +1046,7 @@ msgstr ""
 "Dans le cas de dédouanement nécessaire, un retard sur la marchandise sera "
 "prévu. "
 
-#: public_html/themes/default/display/conditions_of_use.php:77
+#: default/display/conditions_of_use.php:77
 msgid ""
 "Goods will be sent to the address given by you in your order. If you are "
 "ordering more than one item, your goods may be sent to you in separate "
@@ -1253,7 +1056,7 @@ msgstr ""
 "copmmande. Si vous commandez plus d'un produit, alors ils seront livrés "
 "séparémment. Il n'y aura pas de frais supplémentaire dans ce cas. "
 
-#: public_html/themes/default/display/conditions_of_use.php:79
+#: default/display/conditions_of_use.php:79
 msgid ""
 "Your order should not take any more than 7 to 14 working days to arrive, "
 "however, this is not guaranteed and we cannot be held responsible for events "
@@ -1266,7 +1069,7 @@ msgstr ""
 "votre commande sous 20 jours ouvrés, nous vous recommandons de contacter "
 "notre service client. "
 
-#: public_html/themes/default/display/conditions_of_use.php:85
+#: default/display/conditions_of_use.php:85
 msgid ""
 "The period in which you can exercise the right to cancel an order is 30 days "
 "beginning the day after your goods are received. The cancellation request "
@@ -1296,7 +1099,7 @@ msgstr ""
 "offre droit à remboursement intégral du prix payé pour l’article. Toute "
 "annulation faite en dehors de cette période peut ne pas être acceptée. "
 
-#: public_html/themes/default/display/conditions_of_use.php:91
+#: default/display/conditions_of_use.php:91
 msgid ""
 "In the unlikely event your order is damaged in transit please contact us "
 "immediately. Please send the product back to us in the original packaging "
@@ -1314,7 +1117,7 @@ msgstr ""
 "remboursement si la première notification intervient après 30 jours à "
 "compter du jour suivant la réception des biens. "
 
-#: public_html/themes/default/display/conditions_of_use.php:94
+#: default/display/conditions_of_use.php:94
 msgid ""
 "During the RMA process, ChatandVision Ltd will follow up with you via email "
 "on issues requiring your clarification and agreement, using the trading name "
@@ -1337,7 +1140,7 @@ msgstr ""
 "semaines, ChantandVision se réserve le droit de disposer de l’article à sa "
 "discrétion. "
 
-#: public_html/themes/default/display/conditions_of_use.php:100
+#: default/display/conditions_of_use.php:100
 msgid ""
 "All products, unless otherwise stated in the product listing, are supplied "
 "with an in-house warranty where our facilities are able to process all "
@@ -1352,7 +1155,7 @@ msgstr ""
 "d’articles. Le tableau ci-dessous établit la période de couverture "
 "applicable, courant au jour de facturation de l’article. "
 
-#: public_html/themes/default/display/conditions_of_use.php:124
+#: default/display/conditions_of_use.php:124
 msgid ""
 "This warranty does not cover:\n"
 "                                - Damage, fault or failure due to alteration "
@@ -1374,7 +1177,7 @@ msgstr ""
 "- Les cas où le retour serait effectué pour cause d’insatisfaction liée au "
 "client"
 
-#: public_html/themes/default/display/conditions_of_use.php:135
+#: default/display/conditions_of_use.php:135
 msgid ""
 "IN NO EVENT SHALL CHATANDVISION BE LIABLE FOR SPECIAL, INDIRECT, EXEMPLARY, "
 "OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER, INCLUDING BUT NOT "
@@ -1396,7 +1199,7 @@ msgstr ""
 "ChatandVision peut, ponctuellement, effectuer des changements de contenu et "
 "de produits ou services décrits sur son site. "
 
-#: public_html/themes/default/display/conditions_of_use.php:137
+#: default/display/conditions_of_use.php:137
 msgid ""
 "ChatandVision Ltd does not accept liability for any loss caused by delay in "
 "the delivery of products ordered."
@@ -1404,11 +1207,11 @@ msgstr ""
 "ChatandVision Ltd n’est pas responsable de toute perte causée par un "
 "dépassement du délai de livraison prévu. "
 
-#: public_html/themes/default/display/conditions_of_use.php:143
+#: default/display/conditions_of_use.php:143
 msgid "In using this Site you agree to the following:"
 msgstr "En utilisant ce site, vous consentez et vous engagez à :"
 
-#: public_html/themes/default/display/conditions_of_use.php:146
+#: default/display/conditions_of_use.php:146
 msgid ""
 "You will not use any device, software, or other instrumentality to disrupt, "
 "damage or interfere with or attempt to disrupt, damage or interfere with the "
@@ -1417,7 +1220,7 @@ msgstr ""
 "a. Ne pas utiliser tout appareil, logiciel ou tout autre instrument pour "
 "détériorer, endommager ou interférer avec le fonctionnement normal du site"
 
-#: public_html/themes/default/display/conditions_of_use.php:147
+#: default/display/conditions_of_use.php:147
 msgid ""
 "You will not to violate or attempt to violate the security of this Site, "
 "including, without limitation,"
@@ -1425,11 +1228,11 @@ msgstr ""
 "b. Ne pas enfreindre ou tenter d’enfreindre la sécurité de ce site, incluant "
 "mais non limité à :"
 
-#: public_html/themes/default/display/conditions_of_use.php:149
+#: default/display/conditions_of_use.php:149
 msgid "logging onto an account which you are not authorized to access;"
 msgstr "i. Vous connecter à un compte sans autorisation ;"
 
-#: public_html/themes/default/display/conditions_of_use.php:150
+#: default/display/conditions_of_use.php:150
 msgid ""
 "attempting to interfere with service to any user, host or network, "
 "including, without limitation, via means of submitting a virus to the Site, "
@@ -1439,7 +1242,7 @@ msgstr ""
 "ou client, incluant mais non limité à l’infection du site par un virus, "
 "l’overloading, le flood, le spam, le mail bombing, le crash ; ou"
 
-#: public_html/themes/default/display/conditions_of_use.php:151
+#: default/display/conditions_of_use.php:151
 msgid ""
 "attempt to transmit any virus, Trojan horse or other software destruction or "
 "disruption device; and"
@@ -1447,7 +1250,7 @@ msgstr ""
 "iii. Tenter de transmettre un virus, cheval de Troie ou autre logiciel à "
 "visée destructrice ou interruptive du bon fonctionnement ; et"
 
-#: public_html/themes/default/display/conditions_of_use.php:154
+#: default/display/conditions_of_use.php:154
 msgid ""
 "You will not intentionally or unintentionally violate any applicable "
 "international, federal, state or local law, including but not limited to any "
@@ -1457,7 +1260,7 @@ msgstr ""
 "incluant mais non limitées aux régulations applicables à l’utilisation de ce "
 "site. "
 
-#: public_html/themes/default/display/conditions_of_use.php:159
+#: default/display/conditions_of_use.php:159
 msgid ""
 "ChatandVision Ltd may revise these conditions of use by updating this "
 "posting. You agree that in the event any portion of these Site conditions of "
@@ -1473,50 +1276,170 @@ msgstr ""
 "par toute révision et à visiter périodiquement cette page pour vous assurer "
 "des conditions d’usages en vigueur."
 
-#: public_html/themes/default/display/conditions_of_use.php:162
+#: default/display/conditions_of_use.php:162
 msgid "Updated: July 09, 2015 "
 msgstr "mise à jour : 9 juillet 2015"
 
-#: public_html/themes/default/display/privacy_policy.php:2
-#: public_html/themes/default/footer.php:191
+#: default/display/contact.php:22
+msgid ""
+"Having an issue? There are a number of ways you can get in touch with our "
+"experienced Sales and Customer Service teams. "
+msgstr ""
+"Vous rencontrez un problème ? N'hésitez pas à contacter notre équipe "
+"expérimentée  Relation Clients et Ventes."
+
+#: default/display/contact.php:28
+msgid "Contact Form"
+msgstr "Formulaire de contact"
+
+#: default/display/contact.php:30
+msgid "Name"
+msgstr "Nom"
+
+#: default/display/contact.php:36
+msgid "E-Mail Address"
+msgstr "Adresse mail"
+
+#: default/display/contact.php:42
+msgid "Phone Number"
+msgstr "Numéro de téléphone"
+
+#: default/display/contact.php:51
+msgid "Select A Country"
+msgstr "Séléctionnez un pays"
+
+#: default/display/contact.php:52 default/footer.php:252
+msgid "Australia"
+msgstr "Australie"
+
+#: default/display/contact.php:53 default/footer.php:254
+msgid "Finland"
+msgstr "Finlande"
+
+#: default/display/contact.php:54 default/footer.php:256
+msgid "Great Britain"
+msgstr "Grande Bretagne"
+
+#: default/display/contact.php:55 default/footer.php:257
+msgid "Hong Kong"
+msgstr "Hong Kong"
+
+#: default/display/contact.php:56
+msgid "Ireland"
+msgstr "Irlande "
+
+#: default/display/contact.php:57
+msgid "Malaysia"
+msgstr "Malaisie "
+
+#: default/display/contact.php:58
+msgid "Malta"
+msgstr "Malte"
+
+#: default/display/contact.php:59
+msgid "New Zealand"
+msgstr "Nouvelle Zelande"
+
+#: default/display/contact.php:60
+msgid "Singapore"
+msgstr "Singapour"
+
+#: default/display/contact.php:61
+msgid "Switzerland"
+msgstr "Suisse"
+
+#: default/display/contact.php:62
+msgid "United States"
+msgstr "Etats-Unis"
+
+#: default/display/contact.php:73
+msgid "Your Question"
+msgstr "Votre question"
+
+#: default/display/contact.php:76
+msgid "Select A Question"
+msgstr "Séléctionnez une question"
+
+#: default/display/contact.php:77
+msgid "My Account page says Order Held"
+msgstr "La page de mon compte indique que la commande a été retenue"
+
+#: default/display/contact.php:78
+msgid "My Account page says Order Shipped, but I think it's lost"
+msgstr ""
+"La page de mon compte indique que la commande a été livrée mais je pense "
+"qu'elle est perdue"
+
+#: default/display/contact.php:79
+msgid "I want to cancel my order"
+msgstr "Je veux annuler ma commande"
+
+#: default/display/contact.php:80
+msgid "I haven't received my refund"
+msgstr "Je n'ai pas reçu mon remboursement "
+
+#: default/display/contact.php:81
+msgid "My delivery is missing item(s)"
+msgstr "Il manque des articles dans ma livraison"
+
+#: default/display/contact.php:82
+msgid "I want to change the address for my order delivery"
+msgstr "je veux changer l'adresse de ma livraison de commande"
+
+#: default/display/contact.php:83
+msgid "I want to have express delivery for my order"
+msgstr "Je veux avoir une livraison express pour ma commande"
+
+#: default/display/contact.php:84
+msgid "My Account page still says Order Processing"
+msgstr ""
+"la page de mon compte indique que la commande est encore en cours de "
+"livraison"
+
+#: default/display/contact.php:85
+msgid ""
+"I like to enquire on my Cash On Delivery order (Singapore residents only)"
+msgstr ""
+"je veux être informé sur la livraison en espèces de ma commande (résidents "
+"de Singapour unqiuement)"
+
+#: default/display/contact.php:97
+msgid "Submit Enquiry"
+msgstr "Envoyer la demande"
+
+#: default/display/privacy_policy.php:2 default/footer.php:244
 msgid "Privacy Policy"
 msgstr "Politique confidentielle "
 
-#: public_html/themes/default/display/privacy_policy.php:3
+#: default/display/privacy_policy.php:3
 msgid "DigitalDiscount Privacy Policy"
 msgstr "Politique confidentielle de DigitalDiscount "
 
-#: public_html/themes/default/display/privacy_policy.php:9
-#: public_html/themes/default/display/privacy_policy.php:24
+#: default/display/privacy_policy.php:9 default/display/privacy_policy.php:24
 msgid "WHY WE COLLECT"
 msgstr "Pourquoi nous recueillons"
 
-#: public_html/themes/default/display/privacy_policy.php:10
-#: public_html/themes/default/display/privacy_policy.php:31
+#: default/display/privacy_policy.php:10 default/display/privacy_policy.php:31
 msgid "WHAT WE COLLECT"
 msgstr "Ce que nous receuillons"
 
-#: public_html/themes/default/display/privacy_policy.php:11
-#: public_html/themes/default/display/privacy_policy.php:42
+#: default/display/privacy_policy.php:11 default/display/privacy_policy.php:42
 msgid "WHAT WE DO WITH THE INFORMATION WE GATHER"
 msgstr "Ce que nous faisons avec les informations collectées "
 
-#: public_html/themes/default/display/privacy_policy.php:13
-#: public_html/themes/default/display/privacy_policy.php:67
+#: default/display/privacy_policy.php:13 default/display/privacy_policy.php:67
 msgid "HOW WE USE COOKIES"
 msgstr "Comment nous utilisons les cookies "
 
-#: public_html/themes/default/display/privacy_policy.php:14
-#: public_html/themes/default/display/privacy_policy.php:80
+#: default/display/privacy_policy.php:14 default/display/privacy_policy.php:80
 msgid "LINKS TO OTHER WEBSITES"
 msgstr "Liens vers d'autres sites web"
 
-#: public_html/themes/default/display/privacy_policy.php:15
-#: public_html/themes/default/display/privacy_policy.php:87
+#: default/display/privacy_policy.php:15 default/display/privacy_policy.php:87
 msgid "PRIVACY QUESTIONS"
 msgstr "Questions privées"
 
-#: public_html/themes/default/display/privacy_policy.php:19
+#: default/display/privacy_policy.php:19
 msgid ""
 "DigitalDiscount's Customer Privacy Policy covers the collection, use, and "
 "disclosure of personal information that may be collected by DigitalDiscount "
@@ -1541,7 +1464,7 @@ msgstr ""
 "priorité à DigitalDiscount, et nous faisons ce que nous pouvons pour le "
 "protéger. "
 
-#: public_html/themes/default/display/privacy_policy.php:21
+#: default/display/privacy_policy.php:21
 msgid ""
 "DigitalDiscount may change this policy from time to time by updating this "
 "page. You should check this page from time to time to ensure that you are "
@@ -1550,7 +1473,7 @@ msgstr ""
 "DigitalDiscount peut parfois être amené à changer sa politique en mettant à "
 "jour cette page. Vous dev"
 
-#: public_html/themes/default/display/privacy_policy.php:27
+#: default/display/privacy_policy.php:27
 msgid ""
 "We collect personal information because it helps us to deliver a customised "
 "customer service experience for you. This affords you convenient access to "
@@ -1567,28 +1490,28 @@ msgstr ""
 "produits, des offres spéciales ou des évenements qui pourraient vous "
 "intéresser. "
 
-#: public_html/themes/default/display/privacy_policy.php:34
+#: default/display/privacy_policy.php:34
 msgid "We may collect the following information:"
 msgstr "Nous allons collecter les differntes informations"
 
-#: public_html/themes/default/display/privacy_policy.php:36
+#: default/display/privacy_policy.php:36
 msgid "name and job title"
 msgstr "Nom et fonction professionnelle"
 
-#: public_html/themes/default/display/privacy_policy.php:37
+#: default/display/privacy_policy.php:37
 msgid "contact information including email address"
 msgstr "information sur votre contact incluant votre adresse email"
 
-#: public_html/themes/default/display/privacy_policy.php:38
+#: default/display/privacy_policy.php:38
 msgid "demographic information such as postcode, preferences and interests"
 msgstr ""
 "information démographiques telles que codes postales, préferences ou intérêts"
 
-#: public_html/themes/default/display/privacy_policy.php:39
+#: default/display/privacy_policy.php:39
 msgid "other information relevant to customer surveys and/or offers"
 msgstr "autre information pertinente pour enquêtes ou offres clients"
 
-#: public_html/themes/default/display/privacy_policy.php:45
+#: default/display/privacy_policy.php:45
 msgid ""
 "The personal information may help us give you a better shopping experience "
 "with us in the following areas:"
@@ -1596,7 +1519,7 @@ msgstr ""
 "Les informations personnelles peuvent nous aider à vous donner une meilleure "
 "expérience shopping dans les domaines suivants "
 
-#: public_html/themes/default/display/privacy_policy.php:47
+#: default/display/privacy_policy.php:47
 msgid ""
 "we may ask for your personal information when you're discussing a service "
 "issue on the phone with a representative, making a purchase, or registering "
@@ -1606,7 +1529,7 @@ msgstr ""
 "évoquez un problème au téléphone avec un employé, au moment de l'achat ou de "
 "l'enregistrement de votre produit. "
 
-#: public_html/themes/default/display/privacy_policy.php:48
+#: default/display/privacy_policy.php:48
 msgid ""
 "we may use the information to improve our product range and services offered."
 msgstr ""
@@ -1614,7 +1537,7 @@ msgstr ""
 "évoquez un problème au téléphone avec un employé, au moment de l'achat ou de "
 "l'enregistrement de votre produit. "
 
-#: public_html/themes/default/display/privacy_policy.php:49
+#: default/display/privacy_policy.php:49
 msgid ""
 "we may send promotional emails (to the email address provided) about new "
 "products, special offers or other information which we think you may find "
@@ -1623,7 +1546,7 @@ msgstr ""
 "Nous devons utiliser les information pour améliorer notre diversité de "
 "produits et nos services offerts"
 
-#: public_html/themes/default/display/privacy_policy.php:50
+#: default/display/privacy_policy.php:50
 msgid ""
 "from time to time, we may also use your information to contact you for "
 "market research purposes. We may contact you by email, phone, or mail. We "
@@ -1633,7 +1556,7 @@ msgstr ""
 "propos de nouveaux produits, d'offres spéciales ou toute autre information "
 "que nous pensons intéressante pour vous. "
 
-#: public_html/themes/default/display/privacy_policy.php:51
+#: default/display/privacy_policy.php:51
 msgid ""
 "We will use the information to create an account area to which you can login "
 "and access your order history."
@@ -1643,7 +1566,7 @@ msgstr ""
 "mail, téléphone. Nous pouvons utiliser les informations pour costumiser le "
 "site web selon vos attentes. "
 
-#: public_html/themes/default/display/privacy_policy.php:57
+#: default/display/privacy_policy.php:57
 msgid ""
 "We are committed to ensuring that your information is secure. In order to "
 "prevent unauthorised access or disclosure, we have put in place suitable "
@@ -1653,7 +1576,7 @@ msgstr ""
 "Nous allons utiliser les inforations pour créer une rubrique dans votre "
 "compte où vous pourrez avoir un suivi de l'historique de votre livraison. "
 
-#: public_html/themes/default/display/privacy_policy.php:59
+#: default/display/privacy_policy.php:59
 msgid ""
 "DigitalDiscount takes your privacy very seriously. DigitalDiscount does not "
 "sell or rent your contact information to other marketers."
@@ -1663,7 +1586,7 @@ msgstr ""
 "des procédures physiques, éléctroniques, appropriées et managériales afin de "
 "sauvegarder et sécuriser les informations que nous récoltons en ligne. "
 
-#: public_html/themes/default/display/privacy_policy.php:61
+#: default/display/privacy_policy.php:61
 msgid ""
 "DigitalDiscount may share certain personal information with other companies "
 "with which DigitalDiscount have a strategic relationship and/or provide "
@@ -1693,7 +1616,7 @@ msgstr ""
 "difficile d'obtenir les produits acheté, un service client de qualité, des "
 "retours de notre part, ou d'avoir acces à de offres spéciales."
 
-#: public_html/themes/default/display/privacy_policy.php:63
+#: default/display/privacy_policy.php:63
 msgid ""
 "We may also be required by law or litigation to disclose your personal "
 "information. We may also disclose information if it is determined that it is "
@@ -1703,7 +1626,7 @@ msgstr ""
 "par application de la loi ou de litige, ou bien si cela s'avère nécessaire "
 "en cas de renforcement de la loi ou de problèmes d'ordre public. "
 
-#: public_html/themes/default/display/privacy_policy.php:70
+#: default/display/privacy_policy.php:70
 msgid ""
 "A cookie is a small file which asks permission to be placed on your "
 "computer's hard drive. Once you agree, the file is added and the cookie "
@@ -1720,7 +1643,7 @@ msgstr ""
 "opérations à vos besoins en rassemblant les informations selon vos "
 "préférences. "
 
-#: public_html/themes/default/display/privacy_policy.php:72
+#: default/display/privacy_policy.php:72
 msgid ""
 "We use traffic log cookies to identify which pages are being used. This "
 "helps us analyse data about web page traffic and improve our website in "
@@ -1733,7 +1656,7 @@ msgstr ""
 "uniquement cette information pour des analyses statistiques puis les données "
 "sont supprimées du système."
 
-#: public_html/themes/default/display/privacy_policy.php:74
+#: default/display/privacy_policy.php:74
 msgid ""
 "Overall, cookies help us provide you with a better website, by enabling us "
 "to monitor which pages you find useful and which you do not. A cookie in no "
@@ -1742,7 +1665,7 @@ msgid ""
 msgstr ""
 "Les cookies nous permettent surtout de vous fournir un meilleur site web"
 
-#: public_html/themes/default/display/privacy_policy.php:76
+#: default/display/privacy_policy.php:76
 msgid ""
 "You can choose to accept or decline cookies. Most web browsers automatically "
 "accept cookies, but you can usually modify your browser setting to decline "
@@ -1755,7 +1678,7 @@ msgstr ""
 "cookies si vous le souhaitez. Cela peut cependant vous empêcher de profiter "
 "pleinement du site web. "
 
-#: public_html/themes/default/display/privacy_policy.php:83
+#: default/display/privacy_policy.php:83
 msgid ""
 "Our website may contain links to other websites of interest. However, once "
 "you have used these links to leave our site, you should note that we do not "
@@ -1774,7 +1697,7 @@ msgstr ""
 "devirez faire attention à la confidentialité et aux conditions du site en "
 "question. "
 
-#: public_html/themes/default/display/privacy_policy.php:90
+#: default/display/privacy_policy.php:90
 msgid ""
 "If you have any questions or concerns, you can email us using our "
 "interactive web form located at our "
@@ -1782,28 +1705,27 @@ msgstr ""
 "Si vous avez une question ou une demande, vous pouvez nous écrire par mail "
 "via notre plateforme interactive située à notre "
 
-#: public_html/themes/default/display/privacy_policy.php:90
-#: public_html/themes/default/header.php:150
+#: default/display/privacy_policy.php:90 default/header.php:157
 msgid "Contact Us"
 msgstr "Contactez nous"
 
-#: public_html/themes/default/display/privacy_policy.php:90
+#: default/display/privacy_policy.php:90
 msgid " page."
 msgstr "Page"
 
-#: public_html/themes/default/display/privacy_policy.php:94
+#: default/display/privacy_policy.php:94
 msgid "Last updated 9th July 2015"
 msgstr "dernière mise à jour le 9 juillet 2015"
 
-#: public_html/themes/default/display/privacy_policy.php:95
+#: default/display/privacy_policy.php:95
 msgid "DigitalDiscount Limited. All rights reserved."
 msgstr "DigitalDiscount Limited. Tout droits réservés. "
 
-#: public_html/themes/default/display/shipping.php:1
+#: default/display/shipping.php:1
 msgid "FREE Shipping"
 msgstr "Livraison gratuite "
 
-#: public_html/themes/default/display/shipping.php:3
+#: default/display/shipping.php:3
 msgid ""
 "When you shop with us we like to keep it simple, our free shipping offer "
 "applies to all orders no matter the size or value. Digital Discount not only "
@@ -1818,11 +1740,11 @@ msgstr ""
 "directement à votre porte sans frais* dans plus de 60 pays à travers le "
 "monde grâce à nos partenaires. "
 
-#: public_html/themes/default/display/shipping.php:10
+#: default/display/shipping.php:10
 msgid "Taxes and Duties"
 msgstr "Droits de douane"
 
-#: public_html/themes/default/display/shipping.php:12
+#: default/display/shipping.php:12
 msgid ""
 "Worried about hidden costs? Please don't be, we'll take care of any "
 "applicable taxes and duties prior to delivery so the price on the website is "
@@ -1835,11 +1757,11 @@ msgstr ""
 "assurés que votre experience en tant que consommateur avec nous s "
 "'effectuera en toute sécurité. "
 
-#: public_html/themes/default/display/shipping.php:15
+#: default/display/shipping.php:15
 msgid "Tracking Your Order"
 msgstr "Suivi de votre commande "
 
-#: public_html/themes/default/display/shipping.php:17
+#: default/display/shipping.php:17
 msgid ""
 "Once your order has been processed, an email containing your order and "
 "account information will be sent to your registered email. You can always "
@@ -1850,11 +1772,11 @@ msgstr ""
 "mail enregistrée confirmant votre commande et vos informations sur votre "
 "compte. "
 
-#: public_html/themes/default/display/shipping.php:20
+#: default/display/shipping.php:20
 msgid "FREE Shipping Delivery Times"
 msgstr "Frais de transport gratuits"
 
-#: public_html/themes/default/display/shipping.php:22
+#: default/display/shipping.php:22
 msgid ""
 "Orders delivered with free shipping typically arrive within 7 to 14 business "
 "days; although this is dependent on your delivery region, with many orders "
@@ -1875,7 +1797,7 @@ msgstr ""
 "Etats-Unis et à Hong Kong. Cependant, veuillez noter que certaines régions "
 "nécéssitent des temps de livraison plus longs."
 
-#: public_html/themes/default/display/shipping.php:26
+#: default/display/shipping.php:26
 msgid ""
 "* Shipping to and from less populated or accessible domestic and "
 "international areas carries higher operating costs. Delivery and extended or "
@@ -1887,18 +1809,18 @@ msgstr ""
 "final afin de vous renseigner de manière pécise le coût de nos services dans "
 "ces régions. "
 
-#: public_html/themes/default/display/shipping.php:28
+#: default/display/shipping.php:28
 msgid ""
 "United States: extended or remote areas within the contingent 48  states, "
 "Hawaii and Alaska"
 msgstr ""
 "Etats-Unis: livraison comprise dans les 48 Etats, à Hawaï et en Alaska. "
 
-#: public_html/themes/default/display/shipping.php:31
+#: default/display/shipping.php:31
 msgid "United Kingdom: areas in Guernsey, Jersey, and the Isle of Man"
 msgstr "Royaume-Uni: les zones en Guernesey, Jersey et l'Ile de Man."
 
-#: public_html/themes/default/display/shipping.php:36
+#: default/display/shipping.php:36
 msgid ""
 "** Although we do our best to ensure a smooth shipping process please note "
 "delivery speed to some regions may experience delays depending on a wide "
@@ -1910,180 +1832,198 @@ msgstr ""
 "des régions desservie et de leurs facteurs (ex: adresse particulière...) qui "
 "sont en dehors de notre contrôle. "
 
-#: public_html/themes/default/footer.php:10
+#: default/footer.php:10
 msgid " PAY WITH CONFIDENCE "
 msgstr "Payer en toute sécurité"
 
-#: public_html/themes/default/footer.php:83
+#: default/footer.php:83
 msgid " SHOP WITH CONFIDENCE "
 msgstr "Faites vos achats en toute sécurité"
 
-#: public_html/themes/default/footer.php:113
+#: default/footer.php:129
 msgid "About Us"
 msgstr "A propos de nous"
 
-#: public_html/themes/default/footer.php:116
+#: default/footer.php:132
 msgid ""
 "DigitalDiscount prides itself on great deals without compromise on service! "
 msgstr ""
 "DigitalDiscount vous assure des bonnes affaires sans affecter la qualité de "
 "notre service. "
 
-#: public_html/themes/default/footer.php:116
+#: default/footer.php:132
 msgid "Feel free to contact us anytime for more information"
 msgstr "N'hésitez pas à nous contacter pour toute demande d'information. "
 
-#: public_html/themes/default/footer.php:124
+#: default/footer.php:140 default/footer.php:152
 msgid "Subscribe to get our latest news and promotions regularly."
 msgstr ""
 "Inscrivez-vous pour recevoir nos dernières offres et nos promotions "
 "régulières."
 
-#: public_html/themes/default/footer.php:140
+#: default/footer.php:151
+msgid "Sign up for Newsletter"
+msgstr "Inscrivez vous pour recevoir la Newsletter"
+
+#: default/footer.php:156
+msgid "Enter you email address"
+msgstr "Entrez votre adresse mail"
+
+#: default/footer.php:166
+msgid "Subscribe"
+msgstr "Inscrivez vous"
+
+#: default/footer.php:170
+msgid "indicates required"
+msgstr "Indique un champ obligatoire"
+
+#: default/footer.php:185
 msgid "100% Secure "
 msgstr "100% sécurisé"
 
-#: public_html/themes/default/footer.php:140
+#: default/footer.php:185
 msgid "with SSL encryption"
 msgstr "Avec le cryptage SSL"
 
-#: public_html/themes/default/footer.php:148
+#: default/footer.php:193
 msgid "Free Delivery"
 msgstr "Livraison gratuite"
 
-#: public_html/themes/default/footer.php:148
+#: default/footer.php:193
 msgid "For All Orders*"
 msgstr "Pour toute commande"
 
-#: public_html/themes/default/footer.php:148
-#: public_html/themes/default/review.php:52
+#: default/footer.php:193 default/review.php:52
 msgid "Shipping:"
 msgstr "Expédition"
 
-#: public_html/themes/default/footer.php:148
+#: default/footer.php:193
 msgid "3-5 Working Days"
 msgstr "3-5 jours ouvrés"
 
-#: public_html/themes/default/footer.php:168
+#: default/footer.php:213
 msgid " days "
 msgstr "jours"
 
-#: public_html/themes/default/footer.php:168
+#: default/footer.php:213
 msgid "Money Back"
 msgstr "Remboursement "
 
-#: public_html/themes/default/footer.php:168
+#: default/footer.php:213
 msgid "Guarantee"
 msgstr "Garantie"
 
-#: public_html/themes/default/footer.php:176
+#: default/footer.php:229
 msgid "Warranty "
 msgstr "Garantie "
 
-#: public_html/themes/default/footer.php:176
+#: default/footer.php:229
 msgid "Up to 2 Years"
 msgstr "Jusqu'à deux ans"
 
-#: public_html/themes/default/footer.php:188
+#: default/footer.php:241
 msgid "2015 All Right reserved"
 msgstr "2015 tout droits réservés"
 
-#: public_html/themes/default/footer.php:189
+#: default/footer.php:242
 msgid "Conditions of Use"
 msgstr "Condition d'utilisation"
 
-#: public_html/themes/default/footer.php:190
+#: default/footer.php:243
 msgid "Shipping"
 msgstr "Expédition"
 
-#: public_html/themes/default/footer.php:196
+#: default/footer.php:249
 msgid "SELECT SHIPPING COUNTRY"
 msgstr "Choisissez un pays d'expédition "
 
-#: public_html/themes/default/footer.php:199
-msgid "Australia"
-msgstr "Australie"
-
-#: public_html/themes/default/footer.php:200
+#: default/footer.php:253
 msgid "Belgium"
 msgstr "Belgique"
 
-#: public_html/themes/default/footer.php:201
-msgid "Finland"
-msgstr "Finlande"
-
-#: public_html/themes/default/footer.php:202
+#: default/footer.php:255
 msgid "France"
 msgstr "France"
 
-#: public_html/themes/default/footer.php:203
-msgid "Great Britain"
-msgstr "Grande Bretagne"
-
-#: public_html/themes/default/footer.php:204
-msgid "Hong Kong"
-msgstr "Hong Kong"
-
-#: public_html/themes/default/header.php:144
+#: default/header.php:151
 msgid "We won't be beaten on electronics!"
 msgstr "Nous ne seront pas vaincus sur l'électronique !"
 
-#: public_html/themes/default/header.php:149
+#: default/header.php:156
 msgid "Warranty"
 msgstr "Garantie"
 
-#: public_html/themes/default/header.php:151
+#: default/header.php:158
 msgid "Help"
 msgstr "Aide"
 
-#: public_html/themes/default/header.php:152
+#: default/header.php:159
 msgid "Clearance"
 msgstr "Dédouanement"
 
-#: public_html/themes/default/header.php:155
-#: public_html/themes/default/myaccount/index.php:4
+#: default/header.php:162 default/myaccount/index.php:4
 msgid "My Account"
 msgstr "Mon compte"
 
-#: public_html/themes/default/header.php:158
+#: default/header.php:165
 msgid "Sign in"
 msgstr "Inscrivez-vous"
 
-#: public_html/themes/default/header.php:180
+#: default/header.php:187
 msgid " Days Money Back Guarantee"
 msgstr "garantie remboursement"
 
-#: public_html/themes/default/header.php:184
+#: default/header.php:191
 msgid "Free Delivery For All Orders"
 msgstr "livraison gratuite pour toute commande"
 
-#: public_html/themes/default/header.php:188
+#: default/header.php:195
 msgid "Up to 2 Years Warranty"
 msgstr "Jusqu'à deux ans de garantie"
 
-#: public_html/themes/default/header.php:198
+#: default/header.php:205
 #, php-format
 msgid "%s item(s) - %s%s"
-msgstr "article(s)"
+msgstr "%s article(s)- %s%s"
 
-#: public_html/themes/default/header.php:258
+#: default/header.php:256
+msgid "Top search:"
+msgstr "Premiers résultats de recherche "
+
+#: default/header.php:265
 #, php-format
 msgid "%s item(s) - %s"
-msgstr "article(s)"
+msgstr "%s article(s)- %s"
 
-#: public_html/themes/default/myaccount/forget_password.php:4
+#: default/index.php:87
+msgid "Collections"
+msgstr "Collections"
+
+#: default/index.php:108
+msgid "camera collection"
+msgstr "Collection d'appareils photo "
+
+#: default/index.php:112 default/index.php:132
+msgid "Shop now"
+msgstr "Achetez maintenant "
+
+#: default/index.php:128
+msgid "mobile collection"
+msgstr "Collection de téléphones mobiles "
+
+#: default/myaccount/forget_password.php:4
 msgid "Reset your password"
 msgstr "Réinitialisez votre mot de passe"
 
-#: public_html/themes/default/myaccount/forget_password.php:34
+#: default/myaccount/forget_password.php:34
 msgid "Please enter your registered email address!"
 msgstr "veuillez entrer votre adresse mail."
 
-#: public_html/themes/default/myaccount/forget_password.php:43
+#: default/myaccount/forget_password.php:43
 msgid "Go"
 msgstr "Aller "
 
-#: public_html/themes/default/myaccount/forget_password.php:50
+#: default/myaccount/forget_password.php:50
 msgid ""
 "An email containing a temporary password will be sent to your registered "
 "email shortly."
@@ -2091,7 +2031,7 @@ msgstr ""
 "Un mail contenant un mot de passe temporaire va vous être envoyé dans les "
 "plus brefs délais"
 
-#: public_html/themes/default/myaccount/forget_password.php:51
+#: default/myaccount/forget_password.php:51
 msgid ""
 "Kindly check your spam folder in the event our email is not received within "
 "a couple of minutes."
@@ -2099,19 +2039,19 @@ msgstr ""
 "Veuillez consulter vos spams dans le cas où vous ne receviez pas notre mail "
 "d'ici quelques minutes"
 
-#: public_html/themes/default/myaccount/index.php:23
+#: default/myaccount/index.php:23
 msgid "Order History"
 msgstr "Historique de la commande"
 
-#: public_html/themes/default/myaccount/index.php:24
+#: default/myaccount/index.php:24
 msgid "Returns Request"
 msgstr "retours demandes "
 
-#: public_html/themes/default/myaccount/index.php:25
+#: default/myaccount/index.php:25
 msgid "Edit Your Profile"
 msgstr "Editer son profil"
 
-#: public_html/themes/default/myaccount/index.php:30
+#: default/myaccount/index.php:30
 msgid ""
 "Your order has been split at no extra cost to ensure all item(s) purchased "
 "are received at the soonest available opportunity."
@@ -2119,52 +2059,45 @@ msgstr ""
 "Votre commande a été divisée sans coût supplémentaire pour garantir une "
 "livraison de chaque article dans des délais optimisés au maximum"
 
-#: public_html/themes/default/myaccount/index.php:43
-#: public_html/themes/default/myaccount/index.php:76
+#: default/myaccount/index.php:43 default/myaccount/index.php:76
 msgid "Order"
 msgstr "commande"
 
-#: public_html/themes/default/myaccount/index.php:44
-#: public_html/themes/default/myaccount/index.php:77
+#: default/myaccount/index.php:44 default/myaccount/index.php:77
 msgid "Date"
 msgstr "date"
 
-#: public_html/themes/default/myaccount/index.php:45
-#: public_html/themes/default/myaccount/index.php:78
+#: default/myaccount/index.php:45 default/myaccount/index.php:78
 msgid "Shipped to"
 msgstr "Livré vers"
 
-#: public_html/themes/default/myaccount/index.php:46
-#: public_html/themes/default/myaccount/index.php:79
+#: default/myaccount/index.php:46 default/myaccount/index.php:79
 msgid "Product"
 msgstr "Produit"
 
-#: public_html/themes/default/myaccount/index.php:47
-#: public_html/themes/default/myaccount/index.php:80
+#: default/myaccount/index.php:47 default/myaccount/index.php:80
 msgid "Order total"
 msgstr "Total de la commande"
 
-#: public_html/themes/default/myaccount/index.php:48
-#: public_html/themes/default/myaccount/index.php:81
+#: default/myaccount/index.php:48 default/myaccount/index.php:81
 msgid "Status"
 msgstr "Statut"
 
-#: public_html/themes/default/myaccount/index.php:69
+#: default/myaccount/index.php:69
 msgid "Have you paid by bank transfer?<br>Contact us "
 msgstr "Vous payez par virement bancaire ? Contactez-nous"
 
-#: public_html/themes/default/myaccount/index.php:70
-#: public_html/themes/default/myaccount/index.php:113
+#: default/myaccount/index.php:70 default/myaccount/index.php:113
 msgid "here"
 msgstr "Ici"
 
-#: public_html/themes/default/myaccount/index.php:94
+#: default/myaccount/index.php:94
 msgid ""
 "<b>Pending Payment</b><br>We have not received the payment for your order."
 msgstr ""
 "Paiement en attente. Nous n'avons pas reçu le paiement pour votre commande. "
 
-#: public_html/themes/default/myaccount/index.php:97
+#: default/myaccount/index.php:97
 msgid ""
 "<b>Incomplete Payment</b><br>The amount received in our bank account does "
 "not correspond to the total amount of your order."
@@ -2172,7 +2105,7 @@ msgstr ""
 "Paiement incomplet. Le montant reçu dans notre compte bancaire ne correspond "
 "pas au montant de votre commande. "
 
-#: public_html/themes/default/myaccount/index.php:111
+#: default/myaccount/index.php:111
 msgid ""
 "Your request has been submitted. Please kindly review the information below "
 "as your RMA confirmation."
@@ -2180,11 +2113,11 @@ msgstr ""
 "Votre demande a été envoyée. Veuillez relire les informations ci-dessous en "
 "tant que confirmation RMA."
 
-#: public_html/themes/default/myaccount/index.php:112
+#: default/myaccount/index.php:112
 msgid "Please click"
 msgstr "Veuillez cliquer"
 
-#: public_html/themes/default/myaccount/index.php:114
+#: default/myaccount/index.php:114
 msgid ""
 "to print this page and send it back to us together with the returned "
 "package. Items returned without this RMA form will not be processed."
@@ -2192,28 +2125,28 @@ msgstr ""
 "Imprimer cette page et envoyez-là nouss avec le colis à retourner. Toute "
 "commande renvoyée sans le RMA ne pourra pas être considérée."
 
-#: public_html/themes/default/myaccount/index.php:118
+#: default/myaccount/index.php:118
 msgid "Important Notice"
 msgstr "Importante remarque"
 
-#: public_html/themes/default/myaccount/index.php:120
+#: default/myaccount/index.php:120
 msgid "Please read the following before filling in the web form below."
 msgstr ""
 "Veuillez lire les informations ci-dessous avant de remplir le formulaire"
 
-#: public_html/themes/default/myaccount/index.php:122
+#: default/myaccount/index.php:122
 msgid ""
 "- Any items returned without a returns form enclosed will not be entertained"
 msgstr ""
 "- Toute commande retournée sans formulaire de retour ne pourra pas être "
 "prise en compte"
 
-#: public_html/themes/default/myaccount/index.php:123
+#: default/myaccount/index.php:123
 msgid "- Read our returns policy that can be found at the bottom of this page"
 msgstr ""
 "- Veuillez lire notre politique de retour qui se trouve au bas de la page"
 
-#: public_html/themes/default/myaccount/index.php:124
+#: default/myaccount/index.php:124
 msgid ""
 "- Kindly use our webform for &quot;Faulty goods or returned items&quot; to "
 "confirm your intention to return your goods and we will then advise you with "
@@ -2223,95 +2156,78 @@ msgstr ""
 "produits défecteux ou non, afin de confirmer votre volonté de renvoyer les "
 "produits et nous vous renseignerons l'adresse de retour de marchandises. "
 
-#: public_html/themes/default/myaccount/index.php:126
+#: default/myaccount/index.php:126
 msgid "Personal Details"
 msgstr "Données personnelles"
 
-#: public_html/themes/default/myaccount/index.php:133
-#: public_html/themes/default/myaccount/index.php:134
-#: public_html/themes/default/myaccount/index.php:319
-#: public_html/themes/default/myaccount/index.php:320
-#: public_html/themes/default/myaccount/login.php:93
-#: public_html/themes/default/myaccount/login.php:94
+#: default/myaccount/index.php:133 default/myaccount/index.php:134
+#: default/myaccount/index.php:319 default/myaccount/index.php:320
+#: default/myaccount/login.php:93 default/myaccount/login.php:94
 msgid "Surname"
 msgstr "Nom"
 
-#: public_html/themes/default/myaccount/index.php:150
-#: public_html/themes/default/myaccount/index.php:151
-#: public_html/themes/default/myaccount/index.php:344
-#: public_html/themes/default/myaccount/index.php:345
-#: public_html/themes/default/myaccount/login.php:54
-#: public_html/themes/default/myaccount/login.php:55
+#: default/myaccount/index.php:150 default/myaccount/index.php:151
+#: default/myaccount/index.php:344 default/myaccount/index.php:345
+#: default/myaccount/login.php:54 default/myaccount/login.php:55
 msgid "State"
 msgstr "Pays"
 
-#: public_html/themes/default/myaccount/index.php:154
-#: public_html/themes/default/myaccount/index.php:155
-#: public_html/themes/default/myaccount/index.php:349
-#: public_html/themes/default/myaccount/login.php:59
+#: default/myaccount/index.php:154 default/myaccount/index.php:155
+#: default/myaccount/index.php:349 default/myaccount/login.php:59
 msgid "Address Line 1"
 msgstr "Adresse ligne 1"
 
-#: public_html/themes/default/myaccount/index.php:158
-#: public_html/themes/default/myaccount/index.php:159
-#: public_html/themes/default/myaccount/index.php:350
-#: public_html/themes/default/myaccount/login.php:60
+#: default/myaccount/index.php:158 default/myaccount/index.php:159
+#: default/myaccount/index.php:350 default/myaccount/login.php:60
 msgid "Address Line 2"
 msgstr "Adresse ligne 2"
 
-#: public_html/themes/default/myaccount/index.php:162
-#: public_html/themes/default/myaccount/index.php:163
-#: public_html/themes/default/myaccount/index.php:353
-#: public_html/themes/default/myaccount/index.php:354
+#: default/myaccount/index.php:162 default/myaccount/index.php:163
+#: default/myaccount/index.php:353 default/myaccount/index.php:354
 msgid "Postcode"
 msgstr "Code postal"
 
-#: public_html/themes/default/myaccount/index.php:169
+#: default/myaccount/index.php:169
 msgid "Order Details"
 msgstr "Détail sur la commande"
 
-#: public_html/themes/default/myaccount/index.php:172
-#: public_html/themes/default/myaccount/index.php:173
+#: default/myaccount/index.php:172 default/myaccount/index.php:173
 msgid "Order number"
 msgstr "numéro de commande"
 
-#: public_html/themes/default/myaccount/index.php:179
+#: default/myaccount/index.php:179
 msgid "Product Details"
 msgstr "Détail produit"
 
-#: public_html/themes/default/myaccount/index.php:182
-#: public_html/themes/default/myaccount/index.php:183
+#: default/myaccount/index.php:182 default/myaccount/index.php:183
 msgid "Product Returned"
 msgstr "Retours produit"
 
-#: public_html/themes/default/myaccount/index.php:197
+#: default/myaccount/index.php:197
 msgid "Serial No"
 msgstr "numéro de série"
 
-#: public_html/themes/default/myaccount/index.php:204
+#: default/myaccount/index.php:204
 msgid "Returns Details"
 msgstr "Informations sur le retour de la commande"
 
-#: public_html/themes/default/myaccount/index.php:207
-#: public_html/themes/default/myaccount/index.php:208
+#: default/myaccount/index.php:207 default/myaccount/index.php:208
 msgid "Reasons for Returns"
 msgstr "Raisons du retour de la commande"
 
-#: public_html/themes/default/myaccount/index.php:221
-#: public_html/themes/default/myaccount/index.php:222
+#: default/myaccount/index.php:221 default/myaccount/index.php:222
 msgid "Action Required"
 msgstr "Actions nécessaires"
 
-#: public_html/themes/default/myaccount/index.php:234
-#: public_html/themes/default/myaccount/index.php:235
+#: default/myaccount/index.php:234 default/myaccount/index.php:235
 msgid "Detailed Description of Fault"
 msgstr "Décriptions détaillée de la défaillance"
 
-#: public_html/themes/default/myaccount/index.php:243
+#: default/myaccount/index.php:243
 msgid "ValueBasket Returns Policy"
 msgstr "Politique de retour de commande de ValueBasket"
 
-#: public_html/themes/default/myaccount/index.php:246
+#: default/myaccount/index.php:246
 msgid ""
 "Where the dispatch has been made, you may request for a refund up to 14 days "
 "after the goods are delivered."
@@ -2319,7 +2235,7 @@ msgstr ""
 "Une fois que le renvoi de la commande a été effectué, votre remboursement "
 "vous sera retourné d'ici à 14 jours après la réception du colis."
 
-#: public_html/themes/default/myaccount/index.php:247
+#: default/myaccount/index.php:247
 msgid ""
 "To submit a returns request, simply email us to start the process.  Where "
 "you are eligible for a refund, Valuebasket.com will provide authorization "
@@ -2330,23 +2246,23 @@ msgstr ""
 "un remboursement, ValueBasket.com vous retournera une autorisation et une "
 "adresse de retour de commande."
 
-#: public_html/themes/default/myaccount/index.php:248
+#: default/myaccount/index.php:248
 msgid "Returning an order within the 14-day grace period from delivery date;"
 msgstr "retour de commande "
 
-#: public_html/themes/default/myaccount/index.php:250
+#: default/myaccount/index.php:250
 msgid "that are new unopened item, will be eligible for refund"
 msgstr ""
 "qui sont de nouveaux produits non ouverts éligbles pour un remboursement"
 
-#: public_html/themes/default/myaccount/index.php:251
+#: default/myaccount/index.php:251
 msgid ""
 "that are found to be faulty will be eligible for replacement order or refund"
 msgstr ""
 "qui apparaissent être endommagés sont éligibles pour être remplacés ou "
 "remboursés"
 
-#: public_html/themes/default/myaccount/index.php:254
+#: default/myaccount/index.php:254
 msgid ""
 "Good returned for a refund must be in their original condition with all "
 "original packing, accessories and included materials."
@@ -2354,7 +2270,7 @@ msgstr ""
 "Tout bien retourné doit être emballé dans ses conditions originales avec les "
 "accessoirs inclus."
 
-#: public_html/themes/default/myaccount/index.php:255
+#: default/myaccount/index.php:255
 msgid ""
 "You must take all due reasonable care of the goods and return them in its "
 "original and undamaged condition."
@@ -2362,7 +2278,7 @@ msgstr ""
 "Vous devez prêter attention aux colis et les retourner dans leurs conditions "
 "initiales de livraison"
 
-#: public_html/themes/default/myaccount/index.php:256
+#: default/myaccount/index.php:256
 msgid ""
 "You will agree to bear the costs of returning the item(s).  The cost "
 "incurred in returning the item(s) may be eligible for reimbursement where "
@@ -2374,7 +2290,7 @@ msgstr ""
 "si les produits s'avèrent être défectueux et si l'autorisation propre à "
 "Valuebasket.com s'avère être prioritaire au retour des produits"
 
-#: public_html/themes/default/myaccount/index.php:257
+#: default/myaccount/index.php:257
 msgid ""
 "Where the purchases are opened and are of usable software, consumable goods, "
 "or items impacted by hygiene, such items will be ineligible for refund."
@@ -2382,47 +2298,42 @@ msgstr ""
 "Si les achats sont ouverts et ont été utilisés, ces articles ne pourront pas "
 "être remboursés. "
 
-#: public_html/themes/default/myaccount/index.php:258
+#: default/myaccount/index.php:258
 msgid "A restocking fee may be applicable at the discretion of ValueBasket.com"
 msgstr ""
 "Des frais de remise en stock peuvent être applicables au gré de Valuebasket."
 "com"
 
-#: public_html/themes/default/myaccount/index.php:259
+#: default/myaccount/index.php:259
 msgid "An admin fee may be incurred if no fault found or fault caused by user"
 msgstr ""
 "des frais d'administration seront appliqués si aucune erreur ou défaut "
 "d'utilisation n'a été trouvée"
 
-#: public_html/themes/default/myaccount/index.php:266
-#: public_html/themes/default/myaccount/index.php:270
+#: default/myaccount/index.php:266 default/myaccount/index.php:270
 msgid "Declaration"
 msgstr "Attestation"
 
-#: public_html/themes/default/myaccount/index.php:271
+#: default/myaccount/index.php:271
 msgid "I declare that I have read and agree to the Returns Policy"
 msgstr ""
 "J'atteste que j'ai lu et que je suis d'accord avec la politique de retour de "
 "commande"
 
-#: public_html/themes/default/myaccount/index.php:284
+#: default/myaccount/index.php:284
 msgid "Profile"
 msgstr "Profil"
 
-#: public_html/themes/default/myaccount/index.php:287
-#: public_html/themes/default/myaccount/login.php:105
-#: public_html/themes/default/myaccount/login.php:108
-#: public_html/themes/default/myaccount/login.php:109
+#: default/myaccount/index.php:287 default/myaccount/login.php:105
+#: default/myaccount/login.php:108 default/myaccount/login.php:109
 msgid "Email Address"
 msgstr "Adresse mail"
 
-#: public_html/themes/default/myaccount/index.php:292
-#: public_html/themes/default/myaccount/index.php:293
+#: default/myaccount/index.php:292 default/myaccount/index.php:293
 msgid "Old Password"
 msgstr "Ancien mot de passe"
 
-#: public_html/themes/default/myaccount/index.php:296
-#: public_html/themes/default/myaccount/login.php:118
+#: default/myaccount/index.php:296 default/myaccount/login.php:118
 msgid ""
 "Password must be between 6 to 20 characters in length. We recommend that you "
 "make your password secure by including a mixture of upper and lower case "
@@ -2432,60 +2343,53 @@ msgstr ""
 "recommandons de créer un mot de passe sécurisé en incluant un mélange de "
 "lettres majuscules et minuscules, des nombres et des symboles (ex: #, @, !)"
 
-#: public_html/themes/default/myaccount/index.php:299
-#: public_html/themes/default/myaccount/index.php:300
+#: default/myaccount/index.php:299 default/myaccount/index.php:300
 msgid "Choose a New Password"
 msgstr "Choisissez un mot de passe"
 
-#: public_html/themes/default/myaccount/index.php:299
-#: public_html/themes/default/myaccount/index.php:303
+#: default/myaccount/index.php:299 default/myaccount/index.php:303
 msgid "(Optional)"
 msgstr "(optionnel)"
 
-#: public_html/themes/default/myaccount/index.php:303
-#: public_html/themes/default/myaccount/index.php:304
+#: default/myaccount/index.php:303 default/myaccount/index.php:304
 msgid "Re-enter New Password"
 msgstr "Entrez de nouveau votre mot de passe"
 
-#: public_html/themes/default/myaccount/index.php:307
-#: public_html/themes/default/myaccount/login.php:85
+#: default/myaccount/index.php:307 default/myaccount/login.php:85
 msgid "Title"
 msgstr "Titre"
 
-#: public_html/themes/default/myaccount/index.php:323
-#: public_html/themes/default/myaccount/index.php:324
-#: public_html/themes/default/myaccount/login.php:101
+#: default/myaccount/index.php:323 default/myaccount/index.php:324
+#: default/myaccount/login.php:101
 msgid "Company Name"
 msgstr "Nom de l'entreprise"
 
-#: public_html/themes/default/myaccount/index.php:328
+#: default/myaccount/index.php:328
 msgid "Billing Address"
 msgstr "Adresse de facturation"
 
-#: public_html/themes/default/myaccount/index.php:348
-#: public_html/themes/default/myaccount/login.php:58
+#: default/myaccount/index.php:348 default/myaccount/login.php:58
 msgid "Address"
 msgstr "Adresse"
 
-#: public_html/themes/default/myaccount/index.php:357
+#: default/myaccount/index.php:357
 msgid "Phone"
 msgstr "Téléphone"
 
-#: public_html/themes/default/myaccount/index.php:368
-#: public_html/themes/default/myaccount/index.php:369
-#: public_html/themes/default/myaccount/login.php:78
+#: default/myaccount/index.php:368 default/myaccount/index.php:369
+#: default/myaccount/login.php:78
 msgid "Number"
 msgstr "Numéro"
 
-#: public_html/themes/default/myaccount/login.php:9
+#: default/myaccount/login.php:9
 msgid "Existing Customer"
 msgstr "Client déjà inscrit"
 
-#: public_html/themes/default/myaccount/login.php:22
+#: default/myaccount/login.php:22
 msgid "Log In"
 msgstr "Se connecter"
 
-#: public_html/themes/default/myaccount/login.php:31
+#: default/myaccount/login.php:31
 msgid ""
 "Order shipped? Track your delivery progress by entering your tracking number "
 "below:"
@@ -2493,203 +2397,333 @@ msgstr ""
 "Votre commande est en cours de livraison ? Suivez l'évolution de la "
 "livraison en entrant votre numéro de suivi ci dessous:"
 
-#: public_html/themes/default/myaccount/login.php:39
+#: default/myaccount/login.php:39
 msgid "Delivery Address"
 msgstr "Adresse de livraison"
 
-#: public_html/themes/default/myaccount/login.php:63
-#: public_html/themes/default/myaccount/login.php:64
+#: default/myaccount/login.php:63 default/myaccount/login.php:64
 msgid "Postal code"
 msgstr "Code postal"
 
-#: public_html/themes/default/myaccount/login.php:82
+#: default/myaccount/login.php:82
 msgid "Recipient Details"
 msgstr "Détail de la facture"
 
-#: public_html/themes/default/myaccount/login.php:112
-#: public_html/themes/default/myaccount/login.php:113
+#: default/myaccount/login.php:112 default/myaccount/login.php:113
 msgid "Confirm Email Address"
 msgstr "Confirmation de l'adresse mail"
 
-#: public_html/themes/default/myaccount/login.php:121
-#: public_html/themes/default/myaccount/login.php:122
+#: default/myaccount/login.php:121 default/myaccount/login.php:122
 msgid "New Password"
 msgstr "nouveau mot de passe"
 
-#: public_html/themes/default/myaccount/login.php:125
-#: public_html/themes/default/myaccount/login.php:126
+#: default/myaccount/login.php:125 default/myaccount/login.php:126
 msgid "Confirm Password"
 msgstr "Confirmation du mot de passe"
 
-#: public_html/themes/default/product/detail.php:23
-#: public_html/themes/default/product/detail.php:31
-#: public_html/themes/default/product/related_product.php:16
-#: public_html/themes/default/product/simpledetail.php:51
+#: default/product/detail.php:23 default/product/detail.php:31
+#: default/product/related_product.php:16 default/product/simpledetail.php:51
 msgid "Sale"
 msgstr "Vente"
 
-#: public_html/themes/default/product/detail.php:69
+#: default/product/detail.php:69
 #, php-format
 msgid "%s review(s)"
-msgstr "Avis"
+msgstr "Avis %s"
 
-#: public_html/themes/default/product/detail.php:69
-#: public_html/themes/default/product/detail.php:142
-#: public_html/themes/default/product/detail.php:147
-#: public_html/themes/default/product/simpledetail.php:156
-#: public_html/themes/default/product/simpledetail.php:219
-#: public_html/themes/default/product/simpledetail.php:224
+#: default/product/detail.php:69 default/product/detail.php:142
+#: default/product/detail.php:147 default/product/simpledetail.php:156
+#: default/product/simpledetail.php:219 default/product/simpledetail.php:224
 msgid "Write a review"
 msgstr "Ecrivez un avis"
 
-#: public_html/themes/default/product/detail.php:78
-#: public_html/themes/default/product/simpledetail.php:165
+#: default/product/detail.php:78 default/product/simpledetail.php:165
 msgid "Availability:"
 msgstr "Disponibilité"
 
-#: public_html/themes/default/product/detail.php:78
-#: public_html/themes/default/product/simpledetail.php:165
+#: default/product/detail.php:78 default/product/simpledetail.php:165
 msgid " In Stock"
 msgstr "En stock"
 
-#: public_html/themes/default/product/detail.php:88
-#: public_html/themes/default/product/simpledetail.php:175
+#: default/product/detail.php:88 default/product/simpledetail.php:175
 msgid "Qty:"
 msgstr "Quantité"
 
-#: public_html/themes/default/product/detail.php:103
-#: public_html/themes/default/product/simpledetail.php:190
+#: default/product/detail.php:103 default/product/simpledetail.php:190
 msgid "Add to Wish List"
 msgstr "Ajouter à la liste des souhaits"
 
-#: public_html/themes/default/product/detail.php:108
-#: public_html/themes/default/product/simpledetail.php:196
+#: default/product/detail.php:108 default/product/simpledetail.php:196
 msgid "4-7 working days delivery"
 msgstr "4-7 jours ouvrés de livraison"
 
-#: public_html/themes/default/product/detail.php:117
+#: default/product/detail.php:117
 msgid "Specification"
 msgstr "Spécifications "
 
-#: public_html/themes/default/product/detail.php:118
+#: default/product/detail.php:118
 msgid "Overview"
 msgstr "Apreçu "
 
-#: public_html/themes/default/product/detail.php:119
+#: default/product/detail.php:119
 msgid "In the box"
 msgstr "Dans la boîte"
 
-#: public_html/themes/default/product/detail.php:120
-#: public_html/themes/default/product/simpledetail.php:207
+#: default/product/detail.php:120 default/product/simpledetail.php:207
 #, php-format
 msgid "Reviews %s"
-msgstr "Avis"
+msgstr "Avis %s"
 
-#: public_html/themes/default/product/detail.php:140
-#: public_html/themes/default/product/simpledetail.php:217
+#: default/product/detail.php:140 default/product/simpledetail.php:217
 msgid "There are no review for this product."
 msgstr "il n'y a pas d'avis pour ce produit"
 
-#: public_html/themes/default/product/detail.php:156
-#: public_html/themes/default/product/simpledetail.php:233
+#: default/product/detail.php:156 default/product/simpledetail.php:233
 msgid "Your Review"
 msgstr "Votre avis"
 
-#: public_html/themes/default/product/detail.php:158
-#: public_html/themes/default/product/simpledetail.php:235
+#: default/product/detail.php:158 default/product/simpledetail.php:235
 msgid "Note:"
 msgstr "Note"
 
-#: public_html/themes/default/product/detail.php:158
-#: public_html/themes/default/product/simpledetail.php:235
+#: default/product/detail.php:158 default/product/simpledetail.php:235
 msgid " HTML is not translated!"
 msgstr "le langage HTML n'est pas traduit"
 
-#: public_html/themes/default/product/detail.php:163
-#: public_html/themes/default/product/simpledetail.php:240
+#: default/product/detail.php:163 default/product/simpledetail.php:240
 msgid "Rating"
 msgstr "Avis"
 
-#: public_html/themes/default/product/detail.php:164
-#: public_html/themes/default/product/simpledetail.php:241
+#: default/product/detail.php:164 default/product/simpledetail.php:241
 msgid "Bad"
 msgstr "Mauvais"
 
-#: public_html/themes/default/product/detail.php:169
-#: public_html/themes/default/product/simpledetail.php:246
+#: default/product/detail.php:169 default/product/simpledetail.php:246
 msgid "Good"
 msgstr "Bien"
 
-#: public_html/themes/default/product/related_product.php:4
+#: default/product/related_product.php:4
 msgid "Related Products"
 msgstr "Produits concernés"
 
-#: public_html/themes/default/product/simpledetail.php:12
+#: default/product/simpledetail.php:12
 msgid "Digital Discount"
 msgstr "Digital Discount"
 
-#: public_html/themes/default/product/simpledetail.php:156
+#: default/product/simpledetail.php:156
 msgid "0 review"
 msgstr "0 critique"
 
-#: public_html/themes/default/product/simpledetail.php:206
+#: default/product/simpledetail.php:206
 msgid "Description"
 msgstr "Déscription"
 
-#: public_html/themes/default/review.php:5
-#: public_html/themes/default/reviewEmptyCart.php:5
+#: default/review.php:5 default/reviewEmptyCart.php:5
 msgid "Shopping Cart"
 msgstr "Panier d'achat"
 
-#: public_html/themes/default/review.php:11
+#: default/review.php:11
 msgid "Image"
 msgstr "image"
 
-#: public_html/themes/default/review.php:12
+#: default/review.php:12
 msgid "Product Name"
 msgstr "Nom du produit"
 
-#: public_html/themes/default/review.php:13
+#: default/review.php:13
 msgid "Quantity"
 msgstr "Quantité"
 
-#: public_html/themes/default/review.php:14
+#: default/review.php:14
 msgid "Unit Price"
 msgstr "Prix unitaire"
 
-#: public_html/themes/default/review.php:48
+#: default/review.php:48
 msgid "Subtotal:"
 msgstr "Sous-total:"
 
-#: public_html/themes/default/review.php:56
+#: default/review.php:56
 msgid "Total:"
 msgstr "Total:"
 
-#: public_html/themes/default/review.php:64
-#: public_html/themes/default/reviewEmptyCart.php:7
+#: default/review.php:64 default/reviewEmptyCart.php:7
 msgid "Continue Shopping"
 msgstr "Poursuivre l'achat"
 
-#: public_html/themes/default/reviewEmptyCart.php:6
+#: default/reviewEmptyCart.php:6
 msgid "Empty Cart"
 msgstr "panier vide"
 
-#: public_html/themes/default/search.php:118
+#: default/search.php:118
 msgid " to "
 msgstr "vers"
 
-#: public_html/themes/default/search.php:118
+#: default/search.php:118
 msgid " of "
 msgstr "de"
 
-#: public_html/themes/default/search.php:124
+#: default/search.php:124
 msgid " Search Results for "
 msgstr "Rechercher des résulats pour"
 
-#: public_html/themes/default/search.php:156
+#: default/search.php:156
 msgid "New Arrivals"
 msgstr "Nouvelles arrivées "
 
-#: public_html/themes/default/search.php:158
+#: default/search.php:158
 msgid "Last Updated"
 msgstr "Dernières mises-à-jour"
+
+#: default/search.php:211
+msgid "Save"
+msgstr "Enregistrez"
+
+#: default/searchspring_result.php:68
+msgid "Search Results "
+msgstr "Résultats de recherche"
+
+#: default/searchspring_result.php:75
+msgid "Filter Options"
+msgstr "Filtrer les options"
+
+#: default/searchspring_result.php:82
+msgid "List"
+msgstr "Liste"
+
+#: default/searchspring_result.php:83
+msgid "Grid"
+msgstr "Grille"
+
+#: default/searchspring_result.php:103
+msgid "Did you mean "
+msgstr "Vouliez -vous dire"
+
+#: default/searchspring_result.php:105
+msgid "Sorry, No Results Were Found"
+msgstr "Désolé, aucun résultat n'a été trouvé"
+
+#: default/searchspring_result.php:106
+msgid "Search was unable to find any results for"
+msgstr "La recherche n'a trouvé aucun résultat pour"
+
+#: default/searchspring_result.php:106
+msgid "You may have typed your word incorrectly, or are being too specific."
+msgstr "Vous avez peut-être entré un mot incorect ou avez été trop spécifique "
+
+#: default/searchspring_result.php:107
+msgid "Please try using a broader search phrase."
+msgstr "Veuillez essayer d'entrer une recherche plus générique "
+
+#: default/searchspring_result.php:148
+msgid "You Pay : "
+msgstr "Vous payez"
+
+#: added by manual
+msgid "CATEGORIES"
+msgstr "Catégorie"
+
+#: added by manual
+msgid "LATEST ARRIVAL"
+msgstr "Dernières arrivées "
+
+#: added by manual
+msgid "BEST SELLER"
+msgstr "Meilleur vendeur"
+
+#~ msgid "Not a valid fingerprint"
+#~ msgstr "L'empreinte digitale n'est pas valide "
+
+#~ msgid "Not a valid billingFirstName"
+#~ msgstr "Le prénom associé à l'adresse de facturation n'est pas valide"
+
+#~ msgid "Not a valid billingLastName"
+#~ msgstr "Le nom associé à l'adresse de facturation n'est pas valide"
+
+#~ msgid "Not a valid billingCompany"
+#~ msgstr "Le nom de l'entreprise de l'adresse de facturation n'est pas valide"
+
+#~ msgid "Not a valid billing address line 1"
+#~ msgstr "La premiere ligne de l'adresse de facturation n'est pas valide."
+
+#~ msgid "Not a valid billing address line 2"
+#~ msgstr "La deuxième ligne de l'adresse de facturation n'est pas valide."
+
+#~ msgid "Not a valid billingCity"
+#~ msgstr "La ville de l'adresse de facturation n'est pas valide"
+
+#~ msgid "Not a valid billingPostal"
+#~ msgstr "Le code postal de l'adresse de facturation n'est pas valide"
+
+#~ msgid "Not a valid billState"
+#~ msgstr "Le pays de l'adresse de facturation n'est pas valide"
+
+#~ msgid "Not a valid billing phone number"
+#~ msgstr ""
+#~ "Le numéro de téléphone associé à l'adresse de facturation n'est pas valide"
+
+#~ msgid "Not a valid email address"
+#~ msgstr "L'adresse mail n'est pas valide"
+
+#~ msgid "Password not match"
+#~ msgstr "Le mot de passe n'est pas valide"
+
+#~ msgid "Payment gateway not valid"
+#~ msgstr "Le portail de paiement n'est pas valide"
+
+#~ msgid "Card ID not valid"
+#~ msgstr "La carte d'identité n'est pas valide"
+
+#~ msgid "Not a valid card"
+#~ msgstr "La carte n'est pas valide"
+
+#~ msgid "Save "
+#~ msgstr "Enregister"
+
+#~ msgid "In Stock"
+#~ msgstr "En stock"
+
+#~ msgid "Out Of Stock"
+#~ msgstr "Hors stock"
+
+#~ msgid "Pre-Order"
+#~ msgstr "Pré-commande"
+
+#~ msgid "Available Soon"
+#~ msgstr "Disponible bientôt"
+
+#~ msgid "Proceed to Order Confirmation"
+#~ msgstr "En attende de confirmation de la commande"
+
+#~ msgid "Please proceed to order confirmation to complete your order"
+#~ msgstr ""
+#~ "Veuillez attendre la confirmation de votre commande avant de complétér "
+#~ "votre demande."
+
+#~ msgid "Delivery Cost"
+#~ msgstr "Coût de livraison"
+
+#~ msgid "Order Number:"
+#~ msgstr "Numéro de commande"
+
+#~ msgid "Please contact our CS"
+#~ msgstr "Veuillez contacter notre service client"
+
+#~ msgid "Please contact CS"
+#~ msgstr "Veuillez contacter le service client"
+
+#~ msgid "Session timeout, please check your cart!, err:"
+#~ msgstr "Session expirée, veuillez consulter votre panier"
+
+#~ msgid "Login Fail"
+#~ msgstr "Echec d'identification"
+
+#~ msgid "Please enter your registered email address"
+#~ msgstr "Veuillez entrer votre adresse mail"
+
+#~ msgid "Email Address does not exist in our system. Please click your email"
+#~ msgstr ""
+#~ "Cette adresse mail n'existe pas dans notre système, veuillez entrer votre "
+#~ "adresse mail."
+
+#~ msgid "Your Email is illegal"
+#~ msgstr "Votre email est illégal"
