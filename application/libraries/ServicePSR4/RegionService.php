@@ -140,7 +140,7 @@ class RegionService extends BaseService
     public function getRegNameListWKey($where = [], $option = [])
     {
         $data = [];
-        if ($obj_list = $this->getList($where, $option)) {
+        if ($obj_list = $this->getDao('Region')->getList($where, $option)) {
             foreach ($obj_list as $obj) {
                 $data[$obj->getId()] = $obj->getRegionName();
             }
