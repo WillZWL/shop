@@ -76,7 +76,6 @@ class PriceService extends BaseService
                 $this->calcPaymentCharge($prod_obj);
                 $this->calcForexFee($prod_obj);
                 $this->calcDuty($prod_obj);
-                $this->calcForexFee($prod_obj);
                 $this->calcComplementaryAccCost($prod_obj);
 
                 $vat = $prod_obj->getVat();
@@ -127,7 +126,6 @@ class PriceService extends BaseService
             $this->calcPaymentCharge($prod_obj);
             $this->calcForexFee($prod_obj);
             $this->calcDuty($prod_obj);
-            $this->calcForexFee($prod_obj);
 
             $vat = $prod_obj->getVat();
             $logistic_cost = $prod_obj->getLogisticCost();
@@ -210,25 +208,6 @@ class PriceService extends BaseService
         return number_format($value, 2, ".", "");
     }
 
-    public function initDto(&$dto)
-    {
-        if (is_null($dto)) {
-            $dto = $this->getDto();
-        } else {
-            $this->setDto($dto);
-        }
-    }
-
-    public function getDto()
-    {
-        return $this->dto;
-    }
-
-    public function setDto($dto)
-    {
-        $this->dto = $dto;
-    }
-
     public function getProfitMarginJson($platform_id, $sku, $required_selling_price, $required_cost_price = -1)
     {
         $dto = $this->getDao('Price')->getProductPriceWithCost(['p.sku'=>$sku, 'pbv.selling_platform_id'=>$platform_id], ['limit'=>1]);
@@ -270,109 +249,76 @@ class PriceService extends BaseService
 
     private function performBusinessLogic($dto, $required_selling_price = -1, $required_cost_price = -1)
     {
-        $required_margin = -1;
-        if ($required_selling_price <= 0) {
-            $required_margin = $dto->getSubCatMargin() / 100;
-        }
-
         $this->calcComplementaryAccCost($dto);
         $this->calcLogisticCost($dto);
-        $this->calcForexFee($dto);
+
+        if ($required_cost_price != -1) {
+            $dto->setSupplierCost($required_cost_price);
+        }
+
+        $required_margin = -1;
+
+        if ($required_selling_price <= 0) {
+            $required_margin = $dto->getSubCatMargin();
+        }
+
+        if ($required_margin >= 0) {
+            $this->calcAutoPriceByRequiredMargin($required_margin);
+        } else {
+            $this->calcMarginByPrice($dto, $required_selling_price);
+        }
+    }
+
+    public function calcAutoPriceByRequiredMargin($required_margin)
+    {
+        echo $price = $this->getTotalCost($dto);
+    }
+
+    public function calcMarginByPrice($dto, $price)
+    {
+        $total_cost = $this->getTotalCost($dto, $price);
+
+        $total_cost = $this->to2Decimal($total_cost);
+        $dto->setCost($total_cost);
+
+        $profit = $price - $total_cost;
+        if ($price > 0) {
+            $margin = $profit / $price * 100;
+        } else {
+            $margin = 0;
+        }
+
+        $profit = $this->to2Decimal($profit);
+        $margin = $this->to2Decimal($margin);
+
+        $dto->setProfit($profit);
+        $dto->setMargin($margin);
+    }
+
+    public function getTotalCost($dto, $price = 0)
+    {
+        $dto->setPrice($price);
+        $this->calcDeclaredValue($dto);
         $this->calcCommission($dto);
+        $this->calcDuty($dto);
+        $this->calcPaymentCharge($dto);
+        $this->calcForexFee($dto);
+        $this->calcVat($dto);
+        $this->calcAutoPriceValue($dto);
 
-        for (;;) {
-                $c = 0;
-                $x = 0;
-                $b = $required_selling_price;
-                $bc = $b + $c;
+        $supplier_cost = $dto->getSupplierCost();
+        $logistic_cost = $dto->getLogisticCost();
+        $listing_fee = $dto->getListingFee();
+        $Sales_commission_cost = $dto->getSalesCommission();
+        $payment_charge_cost = $dto->getPaymentCharge();
+        $forex_fee = $dto->getForexFee();
+        $vat_cost = $dto->getVat();
+        $duty_cost = $dto->getDuty();
+        $complementary_acc_cost = $dto->getComplementaryAccCost();
 
-                if ($required_cost_price != -1) {
-                    $k = $required_cost_price;
-                    $dto->setSupplierCost($k);
-                }
+        $total_cost = $supplier_cost + $logistic_cost + $listing_fee + $Sales_commission_cost + $payment_charge_cost + $forex_fee + $vat_cost + $duty_cost + $complementary_acc_cost - $delivery_cost;
 
-                $k = $dto->getSupplierCost();
-
-                $l = $dto->getLogisticCost();
-                $d1 = $dto->getPaymentChargePercent() / 100;
-                // $f1 = $dto->getForexFeePercent() / 100;
-                // $f2 = $f1 * $bc;
-                $f2 = ($dto->getForexFeePercent() / 100) * $b;
-
-                $ca = $dto->getComplementaryAccCost();
-
-
-                $declared_value = $this->calculateDeclaredValue($dto, $b);
-                $dto->setDeclaredValue($declared_value);
-
-                $z = $dto->getVatPercent() / 100;
-                $h = $dto->getDeclaredPcent() / 100;
-                $a1 = ($dto->getDeclaredPcent() / 100) * $b;
-                $y = $a1 * $z;
-
-                $dto->setPrice($b);
-
-                $this->calcCost($dto);
-
-                $v = $dto->getListingFee();
-                $d2 = $dto->getPaymentCharge();
-                $x2 = $dto->getSalesCommission();
-                $y = $dto->getVat();
-                $f = $dto->getDutyPcent() / 100;
-                $e = $a1 * $f;
-                $c = $dto->getDeliveryCost();
-
-                $total_cost_d = $k + $l + $v + $x2 + $d2 + $f2 + $y + $e + $ca - $c;
-
-                $profit = $b - $total_cost_d;
-                if ($bc > 0) {
-                    $margin = $profit / $bc * 100;
-                } else {
-                    $margin = 0;
-                }
-
-                if ($required_margin >= 0) {
-                    if ($required_selling_price < $total_cost_d) {
-                        $required_selling_price = $total_cost_d;
-                        $increment_unit = $total_cost_d * 1 / 100;
-                        if ($increment_unit <= 0) {
-                            $increment_unit = 0.1;
-                        }
-                    }
-                    $b = $required_selling_price;
-                    $bc = $b + $c;
-
-                    if ($margin >= ($required_margin * 100)) {
-                        break;
-                    }
-
-                    $required_selling_price += $increment_unit;
-                } else {
-                    break;
-                }
-            }
-
-                $total_cost_d = $this->to2Decimal($total_cost_d);
-                $dto->setCost($total_cost_d);
-
-
-                $profit = $b - $total_cost_d;
-                if ($bc > 0) {
-                    $margin = $profit / $bc * 100;
-                } else {
-                    $margin = 0;
-                }
-
-                $profit = $this->to2Decimal($profit);
-                $margin = $this->to2Decimal($margin);
-
-                $dto->setProfit($profit);
-                $dto->setMargin($margin);
-                $dto->setPrice($required_selling_price);
-
-                $this->calcPaymentCharge($dto);
-
-        return $required_selling_price;
+        return $total_cost;
     }
 
     public function calcComplementaryAccCost(&$dto)
@@ -424,11 +370,9 @@ class PriceService extends BaseService
 
     public function calculateProfit($dto = null)
     {
-        $this->initDto($dto);
-        $this->calcLogisticCost($dto);
-        $this->calcDtoPrice();
-        $this->calcDeliveryCharge();
-        $this->calcCost();
+        // $this->calcLogisticCost($dto);
+        $this->calcDtoPrice($dto);
+        // $this->calcCost();
 
         $this->performBusinessLogic($dto, $dto->getPrice());
         return;
@@ -454,7 +398,6 @@ class PriceService extends BaseService
 
     public function calcDtoPrice($dto = null)
     {
-        $this->initDto($dto);
 
         $default_price = $this->getDefaultPrice($dto);
         if ($dto->getPrice() > 0) {
@@ -479,7 +422,6 @@ class PriceService extends BaseService
 
     public function calcDeliveryCharge($dto = null)
     {
-        $this->initDto($dto);
 
         if ($this->getDao('ProductType')->getNumRows(["sku" => $dto->getSku(), "type_id" => "VIRTUAL"])) {
             $delivery_charge = '0.00';
@@ -496,73 +438,37 @@ class PriceService extends BaseService
         }
     }
 
-    public function calcCost($dto = NULL)
-    {
-        $this->initDto($dto);
-        $this->calcDtoData();
-        // $dto->setCost(number_format($dto->getVat()
-        //     + $dto->getSupplierCost()
-        //     + $dto->getAdminFee()
-        //     + $dto->getLogisticCost()
-        //     + $dto->getPaymentCharge()
-        //     + $dto->getForexFee()
-        //     + $dto->getSalesCommission()
-        //     + $dto->getListingFee()
-        //     + $dto->getDuty(), 2, ".", ""));
-    }
-
-    public function calcDtoData($dto = NULL)
-    {
-        $this->initDto($dto);
-        $this->calcDeclaredValue();
-        $this->calcCommission();
-        $this->calcDuty();
-        $this->calcPaymentCharge();
-        $this->calcForexFee();
-        $this->calcVat();
-        $this->calcAutoPriceValue();
-    }
-
     public function calcDeclaredValue($dto = NULL)
     {
-        $this->initDto($dto);
 
         $value = $dto->getPrice() + $dto->getDeliveryCharge();
 
-        $temp = $this->calculateDeclaredValue($dto, $value);
-
-        $dto->setDeclaredValue($temp);
-        return;
+        $this->calculateDeclaredValue($dto, $value);
     }
 
     public function calcCommission($dto = NULL)
     {
-        $this->initDto($dto);
         $dto->setSalesCommission(number_format(($dto->getPrice() + $dto->getDeliveryCharge()) * $dto->getPlatformCommission() / 100, 2, ".", ""));
     }
 
     public function calcDuty($dto = NULL)
     {
-        $this->initDto($dto);
         $duty = number_format($dto->getDeclaredValue() * $dto->getDutyPcent() / 100, 2, ".", "");
         $dto->setDuty($duty);
     }
 
     public function calcPaymentCharge($dto = NULL)
     {
-        $this->initDto($dto);
         $dto->setPaymentCharge(number_format(($dto->getPrice() + $dto->getDeliveryCharge()) * $dto->getPaymentChargePercent() / 100, 2, ".", ""));
     }
 
     public function calcForexFee($dto = NULL)
     {
-        $this->initDto($dto);
         $dto->setForexFee(number_format(($dto->getPrice() + $dto->getDeliveryCharge()) * $dto->getForexFeePercent() / 100, 2, ".", ""));
     }
 
     public function calcVat($dto = NULL)
     {
-        $this->initDto($dto);
 
         if ($dto->getPlatformCountryId() == "NZ") {
             $dto->setVatPercent(0);
@@ -578,10 +484,9 @@ class PriceService extends BaseService
         }
     }
 
-    public function calcAutoPriceValue()
+    public function calcAutoPriceValue($dto = NULL)
     {
         $recalVat = 0;
-        $this->initDto($dto);
         $tmp_cost = $dto->getSupplierCost() + $dto->getLogisticCost() + $dto->getListingFee();
         $markup_percent = $dto->getSubCatMargin() + $dto->getPlatformCommission() + $dto->getPaymentChargePercent() + $dto->getForexFeePercent();
         $auto_declared = $tmp_cost / (1 - ($markup_percent / 100)) * ($dto->getDeclaredPcent() / 100);

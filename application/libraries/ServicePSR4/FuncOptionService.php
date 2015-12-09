@@ -19,7 +19,7 @@ class FuncOptionService extends BaseService
     public function getListWithKey($where = [], $option = [])
     {
         $data = [];
-        if ($objList = $this->getList($where, $option)) {
+        if ($objList = $this->getDao('FuncOption')->getList($where, $option)) {
             foreach ($objList as $obj) {
                 $data[$obj->getLangId()][$obj->getFuncId()] = $obj;
             }
