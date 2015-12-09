@@ -27,8 +27,8 @@
                                 <div class="input-group btn-block" style="max-width: 200px;">
                                     <input id="update-<?php print $item->getSku()?>" type="text" name="quantity[YToxOntzOjEwOiJwcm9kdWN0X2lkIjtpOjMzO30=]" value="<?php print $item->getQty()?>" size="1" class="form-control">
                                     <span class="input-group-btn">
-                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-primary" onclick="cart.update('<?php print $item->getSku()?>', $('#update-<?php print $item->getSku()?>').val())" data-original-title="Update"><i class="fa fa-refresh"></i></button>
-                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-primary" onclick="cart.remove('<?php print $item->getSku()?>');" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
+                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-primary" onclick="cart.update('<?php print $item->getSku()?>', $('#update-<?php print $item->getSku()?>').val())" data-original-title="<?= _('Update') ?>"><i class="fa fa-refresh"></i></button>
+                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-primary" onclick="cart.remove('<?php print $item->getSku()?>');" data-original-title="<?= _('Remove') ?>"><i class="fa fa-times-circle"></i></button>
                                     </span>
                                 </div>
                             </td>

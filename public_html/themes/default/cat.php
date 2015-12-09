@@ -7,7 +7,7 @@
                 <div class="panel-body tree-menu">
                     <ul class="box-category list-group accordion">
                         <li class="list-group-item accordion-group">
-                            <p>Refine Search</p>
+                            <p><?= _('Refine Search') ?></p>
                             <li class="list-group-item accordion-group">
                                 <a href=""class="active"><span id="list-group-item-title" ><?= _('Categories') ?></span></a>
                                 <ul class="collapse accordion-body in">
@@ -25,7 +25,7 @@
                                     </li>
                                     <li>
                                         <div class="show-more">
-                                            Show more
+                                            <?= _('Show more') ?>
                                             <span data-toggle="collapse" data-target="#accordiondata1" class="bg collapsed"><i class="fa fa-angle-down"></i></span>
                                         </div>
                                     </li>
@@ -56,7 +56,7 @@
 
                                     <li>
                                         <div class="show-more">
-                                            Show more
+                                            <?= _('Show more') ?>
                                             <span data-toggle="collapse"  data-target="#accordiondata" class="bg collapsed">
                                                 <i class="fa fa-angle-down"></i>
                                             </span>
@@ -104,8 +104,8 @@
             <div class="inner clearfix">
                 <div class="display">
                     <div class="btn-group group-switch">
-                        <button data-original-title="List" type="button" id="list-view" class="btn btn-switch" data-toggle="tooltip" title=""><i class="fa fa-th-list"></i></button>
-                        <button data-original-title="Grid" type="button" id="grid-view" class="btn btn-switch active" data-toggle="tooltip" title=""><i class="fa fa-th"></i></button>
+                        <button data-original-title="<?= _('List') ?>" type="button" id="list-view" class="btn btn-switch" data-toggle="tooltip" title=""><i class="fa fa-th-list"></i></button>
+                        <button data-original-title="<?= _('Grid') ?>" type="button" id="grid-view" class="btn btn-switch active" data-toggle="tooltip" title=""><i class="fa fa-th"></i></button>
                     </div>
                 </div>
                 <div class="filter-right">
@@ -152,7 +152,7 @@
                                         <img class="img-responsive" src="<?= get_image_file($prod_obj->getImageExt(), 'm', $prod_obj->getSku()) ?>" title="<?= $prod_obj->getProdName(); ?>" alt="<?= $prod_obj->getProdName(); ?>" />
                                     </a>
                                     <div class="quickview hidden-xs">
-                                        <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="<?= base_url("/main-product/view/$sku/sv") ?>" title="Quick View"><i class="fa fa-eye"></i></a>
+                                        <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="<?= base_url("/main-product/view/$sku/sv") ?>" title="<?= _('Quick View') ?>"><i class="fa fa-eye"></i></a>
                                     </div>
                                     <div class="zoom hidden-xs">
                                         <a data-toggle="tooltip" data-placement="top" href="<?= get_image_file($prod_obj->getImageExt(), 'l', $prod_obj->getSku()) ?>" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->getProdName(); ?>"><i class="fa fa-search-plus"></i></a>

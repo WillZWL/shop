@@ -38,7 +38,7 @@
                                                                 <img class="img-responsive" src="<?=getImageUrl($prod_obj->getImageExt(), 'm', $prod_obj->getSku())?>" title="<?= $prod_obj->getProdName(); ?>" alt="<?= $prod_obj->getProdName(); ?>" />
                                                             </a>
                                                             <div class="quickview hidden-xs">
-                                                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href='<?= $prod_obj->getProductUrl() ?>' title="Quick View"><i class="fa fa-eye"></i></a>
+                                                                <a class="iframe-link" data-toggle="tooltip" data-placement="top" href='<?= $prod_obj->getProductUrl() ?>' title="<?= _('Quick View') ?>"><i class="fa fa-eye"></i></a>
                                                             </div>
                                                             <div class="zoom hidden-xs">
                                                                 <a data-toggle="tooltip" data-placement="top" href="<?= get_image_file($prod_obj->getImageExt(), 'l', $prod_obj->getSku()) ?>" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->getProdName(); ?>"><i class="fa fa-search-plus"></i></a>
