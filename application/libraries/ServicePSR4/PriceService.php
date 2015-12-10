@@ -281,19 +281,22 @@ class PriceService extends BaseService
             $profit = 0;
         } else {
             for (; ;) {
-                $price = ($total_cost) / (1 - $required_margin / 100);
+                $price = ($total_cost) / (1 - $required_margin / 100) + 0.01;
                 $dto->setPrice($price);
                 $total_cost = $this->getTotalCost($dto);
 
-                $total_cost = number_format($total_cost, 2, ".", "");
+                $total_cost = $total_cost;
                 $profit = $dto->getPrice() - $total_cost;
                 $margin = $profit / $dto->getPrice() * 100;
 
-                if ($margin >= $required_margin) {
+                if ( ($margin - $required_margin) >= 0 ) {
                     break;
                 }
             }
         }
+        $total_cost = number_format($total_cost, 2, ".", "");
+        $profit = $dto->getPrice() - $total_cost;
+        $margin = $profit / $dto->getPrice() * 100;
 
         $dto->setPrice($price);
         $dto->setCost($total_cost);
