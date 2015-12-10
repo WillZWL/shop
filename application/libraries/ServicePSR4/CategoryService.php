@@ -402,7 +402,7 @@ class CategoryService extends BaseService
     public function getListWithKey($where = [], $option = [])
     {
         $data = [];
-        if ($objlist = $this->getList($where, $option)) {
+        if ($objlist = $this->getDao('Category')->getList($where, $option)) {
             foreach ($objlist as $obj) {
                 $data[$obj->getId()] = $obj;
             }
@@ -414,7 +414,7 @@ class CategoryService extends BaseService
     {
         $option["result_type"] = "array";
         $rslist = [];
-        if ($ar_list = $this->getList($where, $option)) {
+        if ($ar_list = $this->getDao('Category')->getList($where, $option)) {
             foreach ($ar_list as $rsdata) {
                 $rslist[$rsdata["id"]] = $rsdata["name"];
             }

@@ -8,6 +8,7 @@ var result_recv = false;
 function rePrice(platform_type, platform, sku)
 {
     $('#update_pricing_'+platform).attr('disabled','disabled');
+    $('#submit_all_changes').attr('disabled','disabled');
     var remote_url;
     var sp = $("input[id='sp["+platform+"]']").val() * 1;
 
@@ -111,9 +112,11 @@ function rePrice(platform_type, platform, sku)
             $("input[id='hidden_margin["+platform+"]']").val(margin);
 
             $('#update_pricing_'+platform).removeAttr('disabled');
+            $('#submit_all_changes').removeAttr('disabled');
         },
         error: function(err) {
             $('#update_pricing_'+platform).removeAttr('disabled');
+            $('#submit_all_changes').removeAttr('disabled');
             if (err.status == 200) {
                 // ParseResult(err);
             }

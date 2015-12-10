@@ -119,7 +119,7 @@ class DeliveryService extends BaseService
 
     public function getDeliveryTypeList()
     {
-        return $this->deliveryTypeService->getList([], ["limit" => -1, "orderby" => "id <> '{$this->default_delivery}'"]);
+        return $this->getService('DeliveryType')->getDao('DeliveryType')->getList([], ["limit" => -1, "orderby" => "id <> '{$this->default_delivery}'"]);
     }
 
     public function get_delivery_options()

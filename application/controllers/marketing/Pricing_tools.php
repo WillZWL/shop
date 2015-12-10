@@ -145,7 +145,6 @@ class pricing_tools extends MY_Controller
             $pft = $this->input->post('formtype');
             $pls = $this->input->post('listing_status');
 
-
             $hidden_profit = $this->input->post("hidden_profit");
             $hidden_margin = $this->input->post("hidden_margin");
 

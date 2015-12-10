@@ -1,6 +1,6 @@
                     <h3><?= _('FREE Shipping') ?></h3>
                     <p>
-                        <?= _('When you shop with us we like to keep it simple, our free shipping offer applies to all orders no matter the size or value. Digital Discount not only accepts payment in your local currency but also ships directly to your doorstep free of charge* to over 60 countries worldwide with our courier partners:') ?>
+                        <?= _('When you shop with us we like to keep it simple, our free shipping offer applies to all orders no matter the size or value. DigitalDiscount.co.uk not only accepts payment in your local currency but also ships directly to your doorstep free of charge* via our courier partners.') ?>
                     </p>
                         <img src="/images/shipping/dhl.jpg" border="0">
                         &nbsp;<img src="/images/shipping/dpd.jpg" border="0">
@@ -19,13 +19,13 @@
 
                     <h3><?= _('FREE Shipping Delivery Times') ?></h3>
                     <p>
-                        <?= _('Orders delivered with free shipping typically arrive within 7 to 14 business days; although this is dependent on your delivery region, with many orders often arriving sooner.
+                        <?= _('Orders delivered with free shipping typically arrive within 5 to 12 business days; although this is dependent on your delivery region, with many orders often arriving sooner.
                         In order to facilitate free shipping and pass on savings to our customers, we endeavor to use reliable and cost effective couriers to deliver globally. To minimize delays we ship directly to our customers from our global fulfillment centers in the UK, US and HK, however please bear in mind some regions may experience longer shipping lead times.**') ?>
                         </p>
                     <p style="color: grey;font-size: 10px;">
                         <?= _('* Shipping to and from less populated or accessible domestic and international areas carries higher operating costs. Delivery and extended or remote area surcharges will be added to your final order amount in order to more accurately reflect the cost of providing service to these areas.') ?>
                             <li style="color: grey;font-size: 10px;">
-                                <?= _('United States: extended or remote areas within the contingent 48  states, Hawaii and Alaska') ?>
+                                <?= _('United States: extended or remote areas within the contingent 48 states, Hawaii and Alaska') ?>
                             </li>
                             <li style="color: grey;font-size: 10px;">
                                 <?= _('United Kingdom: areas in Guernsey, Jersey, and the Isle of Man') ?>

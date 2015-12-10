@@ -100,7 +100,7 @@
                                             <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary" onclick="cart.addcart('<?=$sku?>');"><?= _('Add to Cart') ?></button>
                                         </div>
                                         <div class="pull-left">
-                                            <a data-toggle="tooltip" class="wishlist" title="" onclick="wishlist.addwishlist('50');" data-original-title="Add to Wish List"><?= _('Add to Wish List') ?></a>
+                                            <a data-toggle="tooltip" class="wishlist" title="" onclick="wishlist.addwishlist('50');" data-original-title="<?= _('Add to Wish List') ?>"><?= _('Add to Wish List') ?></a>
                                         </div>
                                     </div>
                                 </div>

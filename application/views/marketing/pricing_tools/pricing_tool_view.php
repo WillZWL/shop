@@ -164,7 +164,7 @@
                     <tr>
                         <td align="right" style="padding-right:8px;" height="30">
                             <input type="button" id="update_pricing_tool" value="<?= $lang['update_prod_for_price_tool'] ?>" onClick="update_product_for_pricing_tool('<?= $platform_type ?>', '<?= $sku ?>','all')">
-                            <input type="submit" value="<?= $lang['submit_all_changes'] ?>" />
+                            <input type="submit" id="submit_all_changes" value="<?= $lang['submit_all_changes'] ?>" />
                             <div style="float:left" id='note_for_product'></div>
                         </td>
                     </tr>
