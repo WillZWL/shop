@@ -10,8 +10,9 @@ class GoogleShoppingService extends BaseService
     private $emailCcList = [];
     private $cache_api_request_dao;
     private $config_dao;
+    private $technicalEmail = "oswald-alert@eservicesgroup.com";
 
-    public function __construct($tool_path = 'marketing/pricing_tool')
+    public function __construct()
     {
         parent::__construct();
         set_time_limit(0);
@@ -558,7 +559,7 @@ var_dump($result);exit;
 
         return $ret;
     }
-
+/*
     public function gen_data_feed($platform_id = "", $shopping_api = TRUE, $where = array())
     {
         include_once(APPPATH . "libraries/service/Googlebase_product_feed_service.php");
@@ -571,7 +572,7 @@ var_dump($result);exit;
         }
         return array();
     }
-
+*/
     private function utf_encode_array_values($array)
     {
         $return_array = array();
@@ -661,83 +662,75 @@ var_dump($result);exit;
     {
         return $this->emailCcList;
     }
-
+/*
     public function cron_update_google_shopping_feed($sku = "", $specified_platform = "")
     {
         $platform_biz_obj_list = $this->platform_biz_var_service->get_selling_platform_list();
 
         if ($specified_platform) {
-            $this->update_google_shopping_item_by_platform($specified_platform, $sku);
+            $this->updateGoogleShoppingItemByPlatform($specified_platform, $sku);
         } else {
             foreach ($platform_biz_obj_list as $obj) {
                 $platform_id = $obj->get_id();
-                $this->update_google_shopping_item_by_platform($platform_id, $sku);
+                $this->updateGoogleShoppingItemByPlatform($platform_id, $sku);
             }
         }
     }
+*/
+    public function updateGoogleShoppingItemByPlatform($platformId = "", $sku = "") {
+        $this->updateGoogleShoppingItem($platformId, $sku);
+    }
+/***************************************************************
+**  updateGoogleShoppingItem 
+**  This function will insert record into pending_google_api_request
+**  Another process(CronUpdatePriceMargin/processGoogleApiRequest) = GoogleShoppingService->sendRequestToGoogle will get all the data inside and send to google 
+****************************************************************/
+    public function updateGoogleShoppingItem($platformId = "", $sku = "") {
+        $this->getService("Product")->getDao("GoogleShopping")->insertGoogleShoppingData($platformId, str_replace("WEB", "GOO", $platformId), $sku);
+    }
 
-    public function update_google_shopping_item_by_platform($platform_id = "", $sku = "")
-    {
-        // http://admindev.valuebasket.com/marketing/ext_category_mapping/update_google_shopping_item_by_platform/WEBAU?debug
-        $debug = FALSE;
-        if (strpos($_SERVER["HTTP_HOST"], "dev") != FALSE)
-            $debug = TRUE;
-
-        $this->debug = $debug;
-
-        $account_id = $this->get_shopping_api_accountId($platform_id);
-
-        // pingtest
-        if ($debug)
-            // $account_id = 8113126;
-
-            if (!$account_id) {
-                return true;
-            }
-
-        $where = $d_where = array();
-
-
-        if ($sku) {
-            if (is_array($sku)) {
-                $query_str = "";
-                foreach ($sku as $v) {
-                    $query_str .= "'" . $v . "',";
+    public function sendRequestToGoogle() {
+        $this->getService("Product")->getDao("GoogleShopping")->get
+    }
+/**************************************************
+**  Get a batch ID and mark the record with a batch ID and transfer to another table
+***************************************************/
+    public function _sendRequestToGoogleStep1() {
+//        $this->db->trans_start();
+//        $this->db->trans_commit();
+    }
+/*
+    public function updateGoogleShoppingItemStep2($platformId = "", $sku = "") {
+        $accountId = $this->getShoppingApiAccountId($platformId);
+        if ($accountId) {
+            $where = $d_where = [];
+            if ($sku) {
+                if (is_array($sku)) {
+                    $query_str = "";
+                    foreach ($sku as $v) {
+                        $query_str .= "'" . $v . "',";
+                    }
+                    $query_str = rtrim($query_str, ',');
+                    $where['pr.sku in (' . $query_str . ')'] = null;
+                    $d_where['sku in (' . $query_str . ')'] = null;
+                } else {
+                    $where["pr.sku in ('" . $sku . "')"] = null;
+                    $d_where["sku in ('" . $sku . "')"] = null;
                 }
-
-                $query_str = rtrim($query_str, ',');
-                $where['pr.sku in (' . $query_str . ')'] = null;
-
-                $d_where['sku in (' . $query_str . ')'] = null;
-
-            } else {
-                $where["pr.sku in ('" . $sku . "')"] = null;
-
-                $d_where["sku in ('" . $sku . "')"] = null;
             }
+            $productList = $this->getService("Product")->getDao("GoogleShopping")->getGoogleShoppingData($platformId, str_replace("WEB", "GOO", $platformId), $where);
+            $d_where["platform_id"] = $platformId;
+            $this->getDao("GoogleShopping")->q_delete($d_where);
+            $this->batchDeleteItem($accountId, $productList, $platform_id);
+        } else {
+            $subject = "[Panther] Cannot find google shopping account " . __LINE__ . " " . __METHOD__;
+            $this->sendAlert($subject, "No google shoppoing acct found", $this->technicalEmail);
         }
+//print $this->getService("Product")->getDao("Product")->db->last_query();
+//exit;
+//        $data_list = $this->gen_data_feed($platform_id, $shopping_api = TRUE, $where);
 
-        if ($debug) {
-            $where["pr.sku in ('18066-AA-NA', '12859-AA-AL')"] = null;
-            $d_where["sku in ('18066-AA-NA', '12859-AA-AL')"] = null;
-
-            $where["pr.sku in ('18066-AA-NA')"] = null;
-            $d_where["sku in ('18066-AA-NA')"] = null;
-
-        }
-        $data_list = $this->gen_data_feed($platform_id, $shopping_api = TRUE, $where);
-
-        /********************
-         *when run this function, update the google_shopping record too
-         *if update all product by platform, then all google_shopping data in
-         *that platform will be delete first, then records will be created again base on the
-         *request return result.
-         ********************/
-        $d_where["platform_id"] = $platform_id;
-        $this->get_dao()->q_delete($d_where);
-
-        // delete everything on google first; on DEV server, it will use dryRun mode on Google
-        $this->batch_delete_item_by_product_object($account_id, $sku, $platform_id);
+// delete everything on google first; on DEV server, it will use dryRun mode on Google
 
         if ($data_list) {
             $chunk_data_list = array_chunk($data_list, 250, false);
@@ -747,19 +740,26 @@ var_dump($result);exit;
             }
         }
     }
+*/
+    public function batchDeleteItem($accountId = null, $googleShoppingData = [], $platformId) {
+        if (!$accountId)
+            $accountId = $this->getShoppingApiAccountId($platformId);
+        $result = $this->deleteProductBatch($accountId, $googleShoppingData);
+        if ($result["error_message"] != "") {
+            $subject = "[Panther] Google Content API Batch Delete Error";
+            $message = $result["error_message"];
+            $this->sendAlert($subject, $message, $this->technicalEmail);
+        }
+        return $result["status"];
+    }
 
-    public function batch_delete_item_by_product_object($account_id, $sku, $platform_id)
+    public function batchDeleteItemOld($accountId, $sku, $platformId)
     {
-        /* IN DEV SERVER, it will call shoppingApiConnect() will call API in dryRun mode, nothing will be deleted */
-        $debug = FALSE;
-        if (strpos($_SERVER["HTTP_HOST"], "dev") !== FALSE)
-            $debug = TRUE;
-
-
+/* IN DEV SERVER, it will call shoppingApiConnect() will call API in dryRun mode, nothing will be deleted */
         if ($sku) {
             $this->batch_delete_item($account_id, $sku, $platform_id);
         } else {
-            // To get here -- http://admindev.valuebasket.com/marketing/ext_category_mapping/update_google_shopping_item_by_platform/WEBAU?debug
+            // To get here -- http://admindev.valuebasket.com/marketing/ext_category_mapping/updateGoogleShoppingItemByPlatform/WEBAU?debug
 
             $temp_product_list = array();
 
@@ -1088,7 +1088,6 @@ var_dump($result);exit;
             var_dump($result);
             echo "<br>COMPLETED<hr></hr> </pre>";
         }
-
     }
 
     public function getGoogleShoppingContentReport($platformId = "") {

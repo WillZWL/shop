@@ -57,7 +57,7 @@ class GoogleConnectService extends BaseService
                     if($i == $maxpages)
                         break;
                 } else {
-                    if (getenv("APPLICATION_ENV") == "dev") {
+                    if ($this->debug) {
                         if($i == 2)
                             break;
                     }
@@ -115,12 +115,9 @@ class GoogleConnectService extends BaseService
     public function getProduct($accountId, $productId) {        
 // Make sure your product ID is of the form channel:languageCode:countryCode:offerId.
         $ret = ["status" => FALSE, "error_message" => ""];
-
-        if (($setupResponse = $this->_setupClientService("Google_Shopping_Get_Product")) === false) {
-            $ret["error_message"] = __LINE__ . " File: " . __METHOD__ . " - Missing/Invalid Details.";
+        if (($service = $this->_createService("Google_Shopping_Get_Product")) === false) {
+            $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . " - Missing/Invalid Details.";
             return $ret;
-        } else {
-            list($client, $service) = [$setupResponse["client"], $setupResponse["service"]];
         }
 
         try {
@@ -129,16 +126,12 @@ class GoogleConnectService extends BaseService
             if ($result) {
                 if ($result->kind != "content#product") {
 // should not come in here
-                    $ret["error_message"] = __LINE__ . " File: " . __METHOD__ . ". API kind is incorrect";
+                    $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . ". API kind is incorrect";
                     break;
                 } else {
-                    $warnings = $result->getWarnings();
-                    if ($warnings) {
-                        $ret["error_message"] = __LINE__ . " File: " . __METHOD__ . ". Warnings:\r\n";
-                        foreach ($warnings as $warning) {
-                            $ret["error_message"] .= "[domain]{$warning->getDomain()}, [reason]{$warning->getReason()}, [message]{$warning->getMessage()}\r\n";
-                        }
-                    } else {
+                    $ret["error_message"] = $this->_formWarning($result->getWarnings(), __LINE__ . " METHOD: " . __METHOD__ . ". Warnings:\r\n");
+
+                    if (!$ret["error_message"]) {
                         $ret["status"] = TRUE;
                         $ret["gscDataObj"] = $result;
                         $ret["data"] = $this->_convertToStdProductObject($result);
@@ -147,266 +140,141 @@ class GoogleConnectService extends BaseService
             }
         } catch(\Google_Service_Exception $e) {
             // if item not found, error message contains "(404) item not found"
-            $ret["error_message"] = __LINE__ . " File: " . __METHOD__ . ", ERROR: " . $e->getMessage();
+            $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . ", ERROR: " . $e->getMessage();
         }
         return $ret;
     }
 
-    public function deleteProduct($accountid, $productid) {
-        
-        // Make sure your product ID is of the form channel:languageCode:countryCode:offerId.
-
-        # for testing
-        // $accountid = "8113126";
-        // $productid = "online:en:AU:AU-18066-AA-UU"; 	
-
-        $ret["status"] = FALSE;
-        $ret["error_message"] = "";
-        $ret["debug"] = $this->debug;
-
-        $service_account_name = $this->service_account_name;
-        $key_file_location = $this->key_file_location;
-
-        if (!strlen($service_account_name)
-            || !strlen($key_file_location)) 
-        {
-            $ret["error_message"] = __LINE__ . " File: " . __FILE__ . " - Missing/Invalid Details.";
+    public function deleteProduct($accountId, $productId) {        
+        $ret = ["status" => FALSE, "error_message" => ""];
+        if (($service = $this->_createService("Google_Shopping_Delete_Product")) === false) {
+            $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . " - Missing/Invalid Details.";
             return $ret;
         }
 
-        $client = new \Google_Client();
-        $client->setApplicationName("Google_Shopping_Delete_Product");
-        $service = new \Google_Service_ShoppingContent($client);
-
-        // /************************************************
-        //   If we have an access token, we can carry on.
-        //   Otherwise, we'll get one with the help of an
-        //   assertion credential. In other examples the list
-        //   of scopes was managed by the Client, but here
-        //   we have to list them manually. We also supply
-        //   the service account
-        //  ************************************************/
-        
-        if (isset($_SESSION['service_token'])) 
-        {
-          $client->setAccessToken($_SESSION['service_token']);
-        }
-
-        try
-        {
-            $productlist = array();
-            $key = file_get_contents($key_file_location, true);
-            $cred = new \Google_Auth_AssertionCredentials(
-                $service_account_name,
-                array('https://www.googleapis.com/auth/content'),
-                $key
-            );
-
-            $client->setAssertionCredentials($cred);
-            if ($client->getAuth()->isAccessTokenExpired()) {
-              $client->getAuth()->refreshTokenWithAssertion($cred);
+        try {
+            $result = $service->products->delete($accountId, $productId);
+            if ($result) {
+                $ret["error_message"] = $this->_formWarning($result->getWarnings(), __LINE__ . " METHOD: " . __METHOD__ . ". Something might have gone wrong with deleteproduct(). \r\n");
             }
-            $_SESSION['service_token'] = $client->getAccessToken();
-
-            //	delete the product
-            // The response for a successful delete is empty
-            $result = $service->products->delete($accountid, $productid);
-            if($result)
-            {
-                $ret["error_message"] = __LINE__ . " File: " . __FILE__ . ". Something might have gone wrong with deleteproduct(). \r\n";
-                $warnings = $result->modelData["warnings"];
-                if($warnings)
-                {
-                    $ret["error_message"] .= "Warnings: \r\n";
-                    foreach ($warnings as $warning) 
-                    {
-                        $ret["error_message"] .= "[domain]{$warning["domain"]}, [reason]{$warning["reason"]}, [message]{$warning["message"]}\r\n";
-                    }
-                }					
-            }
-            else
-            {
-                $ret["status"] = TRUE;
-            }
+        } catch(\Google_Service_Exception $e) {
+            $ret["error_message"] = __LINE__ . ", METHOD: " . __METHOD__ . ", ERROR: " . $e->getMessage();
         }
-        catch(Exception $e)
-        {
-            // if item not found, error message contains "(404) item not found"
-            $ret["error_message"] = __LINE__ . " File: " . __FILE__ . ". Caught exception: " . $e->getMessage();
-        }
-
         return $ret;
     }
 
-    public function deleteProductBatch($accountid, $productidbatch) {
-// 			// Make sure your product ID is of the form channel:languageCode:countryCode:offerId.
+    private function _createService($serviceName) {
+        if (($setupResponse = $this->_setupClientService($serviceName)) === false) {
+            return false;
+        } else {
+            list($client, $service) = [$setupResponse["client"], $setupResponse["service"]];
+        }
+        return $service;
+    }
 
-        # for testing
-        // $accountid = "8113126";
-        // $productid = "online:en:AU:AU-18066-AA-UU"; 	
-
-        $ret["status"] = FALSE;
-        $ret["error_message"] = "";
-        $ret["debug"] = $this->debug;
-
-        $service_account_name = $this->service_account_name;
-        $key_file_location = $this->key_file_location;
-
-        if (!strlen($service_account_name)
-            || !strlen($key_file_location)) 
+    private function _formWarning($warnings = null, $generalMessage = null) {
+        $errorMessage = "";
+        if ($warnings)
         {
-            $ret["error_message"] = __LINE__ . " File: " . __FILE__ . " - Missing/Invalid Details.";
+            if ($generalMessage)
+                $errorMessage .= $generalMessage;
+            foreach ($warnings as $warning) {
+                $errorMessage .= "[domain]{$warning->getDomain()}, [reason]{$warning->getReason()}, [message]{$warning->getMessage()}\r\n";
+            }
+        }
+        return $errorMessage;
+    }
+
+    private function _formBatchEntries($productIdBatch) {
+        $entries = [];
+        if (isset($productIdBatch)) {
+            $uniqueBatchId = date("his");
+            foreach ($productIdBatch as $key => $productId)  {
+                $entry = new \Google_Service_ShoppingContent_ProductsCustomBatchRequestEntry();
+                $entry->setMethod('delete');
+                $entry->setBatchId($uniqueBatchId);
+                $entry->setProductId($productId->getGoogleRefId());
+                $entry->setMerchantId($accountId);
+                $entries[$key] = $entry;
+                $key++;
+            }
+        }
+        return $entries;
+    }
+
+    private function _sendBatchRequest($service, $entries) {
+        $batchRequest = new \Google_Service_ShoppingContent_ProductsCustomBatchRequest();						
+        $batchRequest->setEntries($entries);
+        if ($this->debug) {
+            $batchResponse = $service->products->custombatch($batchRequest, ["dryRun" => true]);
+        } else {
+            $batchResponse = $service->products->custombatch($batchRequest);
+        }
+        return $batchResponse;
+    }
+
+    public function deleteProductBatch($accountId, $productIdBatch) {
+        $ret = ["status" => FALSE, "error_message" => ""];
+        if (($service = $this->_createService("Google_Shopping_Delete_Product_Batch")) === false) {
+            $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . " - Missing/Invalid Details.";
             return $ret;
         }
+        try {
+            $entries = $this->_formBatchEntries($productIdBatch);
+            if($entries) {
+                $batchResponse = $this->_sendBatchRequest($service, $entries);
 
-        $client = new \Google_Client();
-        $client->setApplicationName("Google_Shopping_Delete_Product_Batch");
-        $service = new \Google_Service_ShoppingContent($client);
-
-        // /************************************************
-        //   If we have an access token, we can carry on.
-        //   Otherwise, we'll get one with the help of an
-        //   assertion credential. In other examples the list
-        //   of scopes was managed by the Client, but here
-        //   we have to list them manually. We also supply
-        //   the service account
-        //  ************************************************/
-        
-        if (isset($_SESSION['service_token'])) 
-        {
-          $client->setAccessToken($_SESSION['service_token']);
-        }
-
-        try
-        {
-            $key = file_get_contents($key_file_location, true);
-            $cred = new \Google_Auth_AssertionCredentials(
-                $service_account_name,
-                array('https://www.googleapis.com/auth/content'),
-                $key
-            );
-
-            $client->setAssertionCredentials($cred);
-            if ($client->getAuth()->isAccessTokenExpired()) {
-              $client->getAuth()->refreshTokenWithAssertion($cred);
-            }
-            $_SESSION['service_token'] = $client->getAccessToken();
-
-            $entries = array();
-            if(isset($productidbatch))
-            {
-                foreach ($productidbatch as $key => $productid) 
-                {
-                    $entry = new \Google_Service_ShoppingContent_ProductsCustomBatchRequestEntry();
-                        
-                    $entry->setMethod('delete');
-                    $entry->setBatchId($key);
-                    $entry->setProductId($productid);
-                    $entry->setMerchantId($accountid);
-                    $entries[$key] = $entry;
-
-                    $key++;
-                }
-
-                if($entries)
-                {
-                    $batch_request = new \Google_Service_ShoppingContent_ProductsCustomBatchRequest();						
-                    $batch_request->setEntries($entries);
-
-                    if($this->debug)
+                $numberOfErrorsInBatch = 0;
+                $batcherror = $ret["batch_error"] = "";
+                $successList = [];
+                if ($responseEntries = $batchResponse->getEntries()) {
+// as long as we get response, we treat as success, then compile a list of error SKUs below
+                    $ret["status"] = TRUE;
+                    foreach ($responseEntries as $key => $responseEntry) 
                     {
-                        $optParams["dryRun"] = true;
-                        $batch_responses = $service->products->custombatch($batch_request, $optParams);
-                    }
-                    else
-                    {
-                        $batch_responses = $service->products->custombatch($batch_request);
-                    }
-
-                    $errors = 0;
-                    $batcherror = $ret["batch_error"] = "";
-                    $successlist = array();
-
-                    $response_entries = $batch_responses->modelData["entries"];
-                    if($response_entries)
-                    {
-                        // as long as we get response, we treat as success, then compile a list of error SKUs below
-                        $ret["status"] = TRUE;
-                        foreach ($response_entries as $key => $response_entry) 
-                        {
-                            $batchid = $response_entry["batchId"];
-                            $current_productid = $productidbatch[$batchid];
-
-                            $response_errors = $response_entry["errors"]["errors"];
-                            $response_error_code = $response_entry["errors"]["code"];
-                            if(is_array($response_errors))
-                            {
-                                $batcherror .= "[$current_productid]=>";
-                                foreach ($response_errors as $k => $arr) 
-                                {
-                                    $batcherror .= "[errorcode]$response_error_code], [domain]{$arr["domain"]}, [reason]{$arr["reason"]}, [message]{$arr["message"]}. \r\n";
-                                }
-                                $errors++;
+                        $batchId = $responseEntry->getBatchId();
+                        $currentProductId = $entries[$key];
+                        $responseErrors = $responseEntry->getErrors()->getErrors();
+                        $responseErrorCode = (($responseEntry->getErrors()) ? $responseEntry->getErrors()->getCode() : "");
+                        if(is_array($responseErrors)) {
+                            $batcherror .= "[$currentProductId]=>";
+                            foreach ($responseErrors as $k => $error) {
+                                $batcherror .= "[errorcode]$responseErrorCode], [domain]{$error->getDomain()}, [reason]{$error->getReason()}, [message]{$error->getMessage()}. \r\n";
                             }
-                            else
-                            {
-                                $successlist[] = $current_productid;
-                            }
-                            if($errors)
-                            {
-                                $ret["batch_error"] = __LINE__ . " File: " . __FILE__ . ". $errors error(s) in batch, google error reasons below:\r\n $batcherror";
-                            }
-
-                            $ret["data"] = $successlist;
+                            $numberOfErrorsInBatch++;
+                        } else {
+                            $successList[] = $currentProductId;
                         }
+                        if ($numberOfErrorsInBatch) {
+                            $ret["batch_error"] = __LINE__ . " METHOD: " . __METHOD__ . ". $numberOfErrorsInBatch error(s) in batch, google error reasons below:\r\n $batcherror";
+                        }
+
+                        $ret["data"] = $successList;
                     }
-                    else
-                    {
-                        $ret["error_message"] = __LINE__ . " File: " . __FILE__ . ". Something wrong, no response entries from google. ";
-                    }
+                } else {
+                    $ret["error_message"] = __LINE__ . " File: " . __FILE__ . ". Something wrong, no response entries from google. ";
                 }
-                else
-                {
-                    // error forming $entries will not throw any Exceptions
-                    $ret["error_message"] = __LINE__ . " File: " . __FILE__ . ". No entries; maybe error forming of product batch";
-                }
-            }
-            else
-            {
+            } else {
                 // shouldn't have come in here; already processed at top of file
-                $ret["error_message"] = __LINE__ . " File: " . __FILE__ . ". No product IDs batch? ";
+                $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . ". No product IDs batch, empty entries ";
             }
-
+        } catch(\Google_Service_Exception $e) {
+            $ret["error_message"] = __LINE__ . ", METHOD: " . __METHOD__ . ", ERROR: " . $e->getMessage();
         }
-        catch(Exception $e)
-        {
-            // if item not found, error message contains "(404) item not found"
-            $ret["error_message"] = __LINE__ . " File: " . __FILE__ . ". Caught exception: " . $e->getMessage();
-        }
-
         return $ret;
     }
 
     public function insertProduct($accountId, \Google_Service_ShoppingContent_Product $productobj) {
         $ret = ["status" => FALSE, "error_message" => ""];
-        if (($setupResponse = $this->_setupClientService("Google_Shopping_Insert_Product")) === false) {
-            $ret["error_message"] = __LINE__ . " File: " . __METHOD__ . " - Missing/Invalid Details.";
+        if (($service = $this->_createService("Google_Shopping_Insert_Product")) === false) {
+            $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . " - Missing/Invalid Details.";
             return $ret;
-        } else {
-            list($client, $service) = [$setupResponse["client"], $setupResponse["service"]];
         }
 
-        try {				
+        try {
             $result = $service->products->insert($accountId, $productobj);
             $ret["status"] = TRUE;
-            $warnings = $result->getWarnings();
-            if($warnings) {
-                $ret["warning"] = __LINE__ . " File: " . __METHOD__ . ". Warnings:\r\n";
-                foreach ($warnings as $warning) 
-                {
-                    $ret["error_message"] .= "[domain]{$warning->getDomain()}, [reason]{$warning->getReason()}, [message]{$warning->getMessage()}\r\n";
-                }
-            }
+            $ret["error_message"] = $this->_formWarning($result->getWarnings(), __LINE__ . " METHOD: " . __METHOD__ . ". Warnings:\r\n");
         } catch(\Google_Service_Exception $e) {
             $ret["error_message"] = __LINE__ . " File: " . __METHOD__ . ". Caught exception: " . $e->getMessage();
         }
