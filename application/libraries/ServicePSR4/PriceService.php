@@ -258,35 +258,66 @@ class PriceService extends BaseService
         }
 
         if ($required_margin >= 0) {
-            $this->calcAutoPriceByRequiredMargin($required_margin);
+            $this->calcAutoPriceByRequiredMargin($dto, $required_margin);
         } else {
-            $this->calcMarginByPrice($dto, $required_selling_price);
+            $dto->setPrice($required_selling_price);
+            $this->calcMarginByPrice($dto);
         }
     }
 
-    public function calcAutoPriceByRequiredMargin($required_margin)
+    public function calcAutoPriceByRequiredMargin($dto, $required_margin)
     {
-        echo $price = $this->getTotalCost($dto);
+        $margin = 0;
+        $total_cost = $this->getTotalCost($dto);
+
+        if ($required_margin == 0 || $total_cost == 0) {
+            if ($total_cost > 0) {
+                $margin = $required_margin;
+            } else {
+                $margin = 0;   
+            }
+
+            $price = $total_cost;
+            $profit = 0;
+        } else {
+            for (; ;) {
+                $price = ($total_cost) / (1 - $required_margin / 100);
+                $dto->setPrice($price);
+                $total_cost = $this->getTotalCost($dto);
+
+                $total_cost = number_format($total_cost, 2, ".", "");
+                $profit = $dto->getPrice() - $total_cost;
+                $margin = $profit / $dto->getPrice() * 100;
+
+                if ($margin >= $required_margin) {
+                    break;
+                }
+            }
+        }
+
+        $dto->setPrice($price);
+        $dto->setCost($total_cost);
+        $dto->setProfit(number_format($profit, 2, ".", ""));
+        $dto->setMargin(number_format($margin, 2, ".", ""));
     }
 
-    public function calcMarginByPrice($dto, $price)
+    public function calcMarginByPrice($dto)
     {
-        $total_cost = $this->getTotalCost($dto, $price);
+        $total_cost = $this->getTotalCost($dto);
 
         $total_cost = number_format($total_cost, 2, ".", "");
         $dto->setCost($total_cost);
 
-        $profit = $price - $total_cost;
+        $profit = $dto->getPrice() - $total_cost;
 
-        $margin = ($price > 0) ? ($profit / $price * 100) : 0;
+        $margin = ($dto->getPrice() > 0) ? ($profit / $dto->getPrice() * 100) : 0;
         
         $dto->setProfit(number_format($profit, 2, ".", ""));
         $dto->setMargin(number_format($margin, 2, ".", ""));
     }
 
-    public function getTotalCost($dto, $price = 0)
+    public function getTotalCost($dto)
     {
-        $dto->setPrice($price);
         $this->calculateDeclaredValue($dto);
         $this->calcCommission($dto);
         $this->calcDuty($dto);
@@ -462,6 +493,7 @@ class PriceService extends BaseService
         $recalVat = 0;
         $tmp_cost = $dto->getSupplierCost() + $dto->getLogisticCost() + $dto->getListingFee();
         $markup_percent = $dto->getSubCatMargin() + $dto->getPlatformCommission() + $dto->getPaymentChargePercent() + $dto->getForexFeePercent();
+
         $auto_declared = $tmp_cost / (1 - ($markup_percent / 100)) * ($dto->getDeclaredPcent() / 100);
         $country_id = substr($dto->getPlatformId(), -2);
         if ($obj = $this->getDao("SubjectDomain")->get(["subject" => "MAX_DECLARE_VALUE.{$country_id}"])) {
