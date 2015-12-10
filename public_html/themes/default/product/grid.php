@@ -30,7 +30,7 @@
                                         <div class="row products-row last">
                                 <?php       endif; ?>
 
-                                            <div class="col-lg-2 col-sm-12 col-xs-12  product-col border">
+                                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  product-col border">
                                                 <div class="product-block">
                                                     <div class="image">
                                                         <div class="product-img img">

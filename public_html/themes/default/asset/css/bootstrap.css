@@ -4109,6 +4109,7 @@ select[multiple].input-lg,
   color: #000;
   background-color: #549B17;
   border-color: #499209;
+  padding: 6px;
 }
 /* line 11, ../development/scss/mixins/mixins/_buttons.scss */
 .btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
