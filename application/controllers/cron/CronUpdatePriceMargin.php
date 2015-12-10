@@ -10,6 +10,13 @@ class CronUpdatePriceMargin extends MY_Controller
         set_time_limit(900);
     }
 
+    public function processGoogleApiRequest() {
+        do {
+            $this->sc['GoogleShopping']->sendRequestToGoogle();
+            sleep(300);
+        } while (date("H") != "15");
+    }
+
     public function updateMargin($platform_id = '', $sku = '')
     {
         if ($platform_id === '') {

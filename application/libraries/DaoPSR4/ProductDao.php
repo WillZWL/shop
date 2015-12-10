@@ -1077,5 +1077,4 @@ class ProductDao extends BaseDao
 
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
-
 }
