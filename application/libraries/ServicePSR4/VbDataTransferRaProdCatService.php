@@ -57,7 +57,7 @@ class VbDataTransferRaProdCatService extends VbDataTransferService
 					$ra_prod_cat_obj->setWarrantyCat($ra_prod_cat->warranty_cat);
 					$ra_prod_cat_obj->setStatus($ra_prod_cat->status);
 
-					$this->getDao('RaProdCat')->insert($ra_group_obj);
+					$this->getDao('RaProdCat')->insert($ra_prod_cat_obj);
 
 					$reason = 'insert';
 				}
