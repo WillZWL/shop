@@ -352,6 +352,89 @@ class pricing_tools extends MY_Controller
 
         return $arr;
     }
+    public function bulk_list($platform_type)
+    {
+        $data = [];
+        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->getLangId() . ".php";
+        $data["lang"] = $lang;
+        $data['platform_type'] = $platform_type;
+        $this->load->view($this->tool_path . "/pricing_tool_bulk_list", $data);
+    }
+
+    public function bulk_list_post($platform_type)
+    {
+        $sku_list = explode("\n", $this->input->post("sku_list"));
+        // remove the extra
+        $sku_list = array_filter($sku_list);
+
+
+        foreach ($sku_list as $sku) {
+            if ($platform_list = $this->sc['PlatformBizVar']->getDao('PlatformBizVar')->getPricingToolPlatformList($sku, $platform_type)) {
+                foreach ($platform_list as $platform_obj) {
+                    $platform_id = $platform_obj->getSellingPlatformId();
+                    $json = $this->get_profit_margin_json($platform_id, $sku, 0, -1, "WEBSITE", true);
+                    $m = json_decode($json, TRUE);
+                    $fail_reason = "";
+                    
+                    if ($m["get_margin"] == 0) {
+                        $fail_reason .= "Margin is 0%, ";
+                    }
+                    
+                    if ($platform_id == "TMNZ") {
+                        $fail_reason .= "TMNZ to be omitted, SBF#3308";
+                    }
+
+                    if ($platform_id == "LAMY") {
+                        $fail_reason .= "LAMY to be omitted, SBF#3308";
+                    }
+
+                    $price = $m["get_price"];
+
+                    if ($fail_reason == "") {
+                        $price_obj = $this->sc['Price']->getDao('Price')->get(["sku" => $sku, "platform_id" => $platform_id]);
+                        if (!$price_obj) {
+                            $price_obj = $this->sc['Price']->getDao('Price')->get();
+
+                            $price_obj->setPlatformId($platform_id);
+                            $price_obj->setSku($sku);
+                            $price_obj->setListingStatus("L");
+                            $price_obj->setPrice($price);
+                            $price_obj->setAutoPrice("Y");
+                            $price_obj->setFixedRrp("Y");
+                            if (is_null($default_rrp_factor)) {
+                                $default_rrp_factor = $this->getService('PricingTool')->getRrpFactorBySku($price_obj->getSku());
+                            }
+                            $price_obj->setRrpFactor($default_rrp_factor);
+
+                            $this->sc['Price']->getDao('Price')->insert($price_obj);
+                        } else {
+                            $price_obj->setListingStatus("L");
+                            $price_obj->setAutoPrice("Y");
+                            $price_obj->setPrice($price);
+                            $this->sc['Price']->getDao('Price')->update($price_obj);
+                            $default_rrp_factor = $price_obj->getRrpFactor();
+                        }
+
+                        $prod_obj = $this->sc['Product']->getDao('Product')->get(["sku" => $sku]);
+                        $prod_obj->setWebsiteQuantity(20);
+                        $prod_obj->setWebsiteStatus('I');
+                        $this->sc['Product']->getDao('Product')->update($prod_obj);
+                    }
+
+                    if ($fail_reason == "")
+                        $msg .= "SUCCESS: Selling $sku @ {$m["get_price"]} on $platform_id (instock, website_qty={$prod_obj->getWebsiteQuantity()})<br>\r\n";
+                    else
+                        $msg .= "FAILED: $sku $platform_id, $fail_reason<br>\r\n";
+                }
+            }
+        }
+
+        header("Content-Type: text/html");
+        echo "<html><head></head><body>";
+        echo "<a href='/". $this->tool_path ."/bulk_list'>Return to pricing tool</a><br><br>$msg";
+
+        die();
+    }
 
     public function get_profit_margin_json($platform_id, $sku, $required_selling_price = 0, $required_cost_price = -1, $return_json = false)
     {
