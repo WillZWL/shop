@@ -59,6 +59,19 @@
                         </div>
                         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
                             <div class="product-info-bg">
+                                <div itemscope itemtype="http://schema.org/Product">
+                                    <meta itemprop="brand" content="<?= $microdata['brand'] ?>" />
+                                    <meta itemprop="name" content="<?= $prod_name ?>" />
+                                    <meta itemprop="sku" content="<?= $sku ?>" />
+                                    <meta itemprop="productID" content="sku:<?= $sku ?>" />
+                                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                        <meta itemprop="price" content="<?= $microdata['price'] ?>" />
+                                        <meta itemprop="priceCurrency" content="<?= $microdata['currency'] ?>" />
+                                        <meta itemprop="availability" content="<?= $microdata['availability'] ?>" />
+                                        <meta itemprop="itemCondition" content="<?= $microdata['itemCondition'] ?>" />
+                                    </div>
+                                </div>
+
                                 <h1 class="title-product"><?= $prod_name ?></h1>
                                 <div class="rating">
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
