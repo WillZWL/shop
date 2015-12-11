@@ -1649,9 +1649,8 @@ salecycle_script;
 
             $data['microdata']['price'] = $listing_info->get_price();
             $data['microdata']['currency'] = $listing_info->get_currency_id();
-            $brand_obj = $this->product_model->get_brand($listing_info->get_brand_id());
-            $data['microdata']['brand'] = $brand_obj->get_brand_name();
-            if (strtolower($category_name) == "refurbish") {
+            $data['microdata']['brand'] =  $prod_info->get_brand_name();
+            if (strtolower($prod_info->get_cat_name()) == "refurbish") {
                 $data['microdata']['itemCondition'] = 'http://schema.org/RefurbishedCondition';
             } else {
                 $data['microdata']['itemCondition'] = 'http://schema.org/NewCondition';
