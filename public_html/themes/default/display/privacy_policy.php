@@ -1,6 +1,6 @@
                 <div class="main-columns container">
                     <h2><?= _('Privacy Policy') ?></h2>
-                    <h3><?= _('DigitalDiscount Privacy Policy') ?></h3>
+                    <h3><?= SITE_NAME . _(' Privacy Policy') ?></h3>
                     <br />
 
                     <h3><?= _('CONTENTS') ?></h3>
@@ -16,9 +16,9 @@
                     <br /><br />
 
                     <p>
-                        <?= _("DigitalDiscount's Customer Privacy Policy covers the collection, use, and disclosure of personal information that may be collected by DigitalDiscount anytime you interact with DigitalDiscount, such as when visiting our website, purchasing products, or using our sales or support facilities. Please take a moment to read the following to learn more about our practices with regards to this, including what type of information we gather, how and for what purposes we use the information, to whom we disclose the information, and how the personal information is kept safe and secure. Your privacy is a priority at DigitalDiscount, and we do what we can to protect it.") ?>
+                        <?= SITE_NAME . _("'s Customer Privacy Policy covers the collection, use, and disclosure of personal information that may be collected by ") . SITE_NAME . _("　anytime you interact with ") . SITE_NAME . _(", such as when visiting our website, purchasing products, or using our sales or support facilities. Please take a moment to read the following to learn more about our practices with regards to this, including what type of information we gather, how and for what purposes we use the information, to whom we disclose the information, and how the personal information is kept safe and secure. Your privacy is a priority at ") . SITE_NAME . _(", and we do what we can to protect it.") ?>
                         <br /><br />
-                        <?= _('DigitalDiscount may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes. This policy is effective from 31 May 2010.') ?>
+                        <?= SITE_NAME . _(' may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes. This policy is effective from 31 May 2010.') ?>
                     </p>
 
                     <h3 id="why_collect"><?= _('WHY WE COLLECT') ?></h3>
@@ -56,9 +56,9 @@
                     <p>
                         <?= _('We are committed to ensuring that your information is secure. In order to prevent unauthorised access or disclosure, we have put in place suitable physical, electronic and managerial procedures to safeguard and secure the information we collect online.') ?>
                         <br /><br />
-                        <?= _('DigitalDiscount takes your privacy very seriously. DigitalDiscount does not sell or rent your contact information to other marketers.') ?>
+                        <?= SITE_NAME . _(' takes your privacy very seriously. ') . SITE_NAME . _(' does not sell or rent your contact information to other marketers.') ?>
                         <br /><br />
-                        <?= _('DigitalDiscount may share certain personal information with other companies with which DigitalDiscount have a strategic relationship and/or provide services on our behalf to your advantage. These companies may help process information, fulfil customer orders, deliver products, manage and enhance customer data, provide customer service, assess levels of interest in our product range, or carry out customer research or satisfaction surveys. These companies are also obliged to protect your personal information, except if exchange of information is required for your purchase. For example, when an extended warranty is purchased, you authorise DigitalDiscount and the Warranty Provider to exchange information to carry out the service. Without the exchange, it would be otherwise be difficult to have products purchased, customer service offered, feedback provided to us, or have access to special offers or content from DigitalDiscount.') ?>
+                        <?= SITE_NAME . _(' may share certain personal information with other companies with which ') . SITE_NAME . _(' have a strategic relationship and/or provide services on our behalf to your advantage. These companies may help process information, fulfil customer orders, deliver products, manage and enhance customer data, provide customer service, assess levels of interest in our product range, or carry out customer research or satisfaction surveys. These companies are also obliged to protect your personal information, except if exchange of information is required for your purchase. For example, when an extended warranty is purchased, you authorise ') . SITE_NAME . _(' and the Warranty Provider to exchange information to carry out the service. Without the exchange, it would be otherwise be difficult to have products purchased, customer service offered, feedback provided to us, or have access to special offers or content from ') . SITE_NAME . _('.') ?>
                         <br /><br />
                         <?= _('We may also be required by law or litigation to disclose your personal information. We may also disclose information if it is determined that it is necessary for security, law enforcement or other issues of public importance.') ?>
                     </p>
@@ -92,6 +92,6 @@
                     <br /><br />
 
                     <?= _('Last updated 9th July 2015') ?><br />
-                    <?= _('DigitalDiscount Limited. All rights reserved.') ?>
+                    <?= SITE_NAME . _(' Limited. All rights reserved.') ?>
                     <div class="clearfix"></div>
                 </div>
