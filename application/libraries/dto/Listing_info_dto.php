@@ -24,6 +24,7 @@ class Listing_info_dto extends Base_dto
     private $rrp_factor;
     private $warranty_in_month;
     private $delivery_scenarioid;
+    private $brand_id;
 
     public function __construct()
     {
@@ -209,6 +210,18 @@ class Listing_info_dto extends Base_dto
     {
         return $this->delivery_scenarioid = $value;
     }
+
+    public function get_brand_id()
+    {
+        return $this->brand_id;
+    }
+
+    public function set_brand_id($value)
+    {
+        return $this->brand_id = $value;
+    }
+
+    
 }
 
 
