@@ -388,8 +388,6 @@ class Flex_service extends Base_service
 
         $where = array();
 
-        //using so.finance_dispatch_date to replace this. but in test, using the so.dispatch_date
-
         $where["start_date"] = $start_date;
         $where["end_date"] = $end_date;
 
@@ -1528,9 +1526,8 @@ class Flex_service extends Base_service
     {
         $where = array();
         if ($ship_date != '') {
-            if (check_finance_role())
-                $dispatch_string = "so.finance_dispatch_date";
-            else
+            // if (check_finance_role())
+            // else
                 $dispatch_string = "so.dispatch_date";
 
             $where["(" . $dispatch_string . " > '" . ($ship_date . ' 23:59:59') . "' or " . $dispatch_string . " is null)"] = NULL;

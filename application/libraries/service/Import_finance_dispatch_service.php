@@ -32,7 +32,7 @@ class Import_finance_dispatch_service extends Import_info_service
                 $result[] = array("row" => $i, "column" => $column, "error_code" => Import_info_service::VALUE_IS_NOT_AN_INTEGER);
 
             $column = 1;
-            $dispatch_date = trim($row->get_finance_dispatch_date());
+            $dispatch_date = trim($row->get_dispatch_date());
             if (!$this->validDate($dispatch_date))
                 $result[] = array("row" => $i, "column" => $column, "error_code" => Import_info_service::VALUE_IS_NOT_A_VALID_DATE);
             $i++;
@@ -51,12 +51,12 @@ class Import_finance_dispatch_service extends Import_info_service
         foreach ($process_list as $data) {
             $so_obj = $so_srv->get_dao()->get(array("so_no" => trim($data->get_so_no())));
             if ($so_obj) {
-                if ((!$is_reprocess) && ($so_obj->get_finance_dispatch_date() != '') and (!is_null($so_obj->get_finance_dispatch_date()))) {
-                    $data->set_failed_reason("Dispatch Date uploaded before:" . $so_obj->get_finance_dispatch_date());
+                if ((!$is_reprocess) && ($so_obj->get_dispatch_date() != '') and (!is_null($so_obj->get_dispatch_date()))) {
+                    $data->set_failed_reason("Dispatch Date uploaded before:" . $so_obj->get_dispatch_date());
                     $data->set_status("F");
                     $error_occur = true;
                 } else {
-                    $so_obj->set_finance_dispatch_date(trim($data->get_finance_dispatch_date()));
+                    $so_obj->set_dispatch_date(trim($data->get_dispatch_date()));
                     $result = $so_srv->get_dao()->update($so_obj);
                     if ($result !== FALSE)
                         $data->set_status("S");
