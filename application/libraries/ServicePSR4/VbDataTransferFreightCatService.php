@@ -1,17 +1,8 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\FreightCategoryDao;
-
 class VbDataTransferFreightCatService extends VbDataTransferService
 {
-
-	public function __construct()
-	{
-		parent::__construct();
-
-		$this->setDao(new FreightCategoryDao);
-	}
 
 	/**********************************************************************
 	*	process_vb_data, get the VB data to save it in the freight_cat table
@@ -39,7 +30,7 @@ class VbDataTransferFreightCatService extends VbDataTransferService
 
 			try
 			{
-				if($this->getDao()->get(array("id"=>$freight_cat->id)))
+				if($this->getDao('FreightCategory')->get(['id' => $freight_cat->id]))
 				{
 					//update
 					// $where = array("id"=>$id);
@@ -64,9 +55,7 @@ class VbDataTransferFreightCatService extends VbDataTransferService
 				else
 				{
 					//insert
-					$new_freight_cat_obj = array();
-
-					$new_freight_cat_obj = $this->getDao()->get();
+					$new_freight_cat_obj = new \FreightCategoryVo();//$this->getDao()->get();
 					$new_freight_cat_obj->setId($freight_cat->id);
 					$new_freight_cat_obj->setName($freight_cat->name);
 					$new_freight_cat_obj->setWeight($freight_cat->weight);
@@ -74,7 +63,7 @@ class VbDataTransferFreightCatService extends VbDataTransferService
 					$new_freight_cat_obj->setBulkAdminChrg($freight_cat->bulk_admin_chrg);
 					$new_freight_cat_obj->setStatus($freight_cat->status);
 
-					$this->getDao()->insert($new_freight_cat_obj);
+					$this->getDao('FreightCategory')->insert($new_freight_cat_obj);
 
 					$xml[] = '<freight_cat>';
 					$xml[] = '<id>' . $freight_cat->id . '</id>';

@@ -117,6 +117,7 @@
                             <li><a href="#tab-specification" data-toggle="tab"><?= _('Specification') ?></a></li>
                             <li class="active"><a href="#tab-overview" data-toggle="tab"><?= _('Overview') ?></a></li>
                             <li><a href="#tab-in_the_box" data-toggle="tab"><?= _('In the box') ?></a></li>
+                            <!--<li><a href="#tab-accesories" data-toggle="tab"><?= _('Recommended Accessories') ?></a></li>-->
                             <!-- <li><a href="#tab-review" data-toggle="tab"><?= sprintf(_('Reviews %s'), "(0)") ?></a></li> -->
                         </ul>
                         <div class="tab-content text-left">
@@ -135,6 +136,14 @@
                                     <?= $in_the_box ?>
                                 </p>
                             </div>
+                            <!--<div class="tab-pane" id="tab-accessories">
+                                <p class="intro">
+                                    <?= $accessories ?>
+                                </p>
+                                <?php if ($categories) : ?>
+                                    <?php $this->load->view('product/accesories.php', ['categories' => $categories]); ?>
+                                <?php endif; ?>
+                            </div>-->
 <!--                             <div class="tab-pane" id="tab-review">
                                 <div id="review" class="space-20">
                                     <p><?= _('There are no review for this product.') ?></p>

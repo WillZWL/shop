@@ -234,4 +234,72 @@ class PricingToolService extends BaseService
 
         return true;
     }
+
+    public function setAutoPricingForBulkSku($sku_list, $platform_type)
+    {
+        $msg = "";
+        
+        foreach ($sku_list as $sku) {
+            if ($platform_list = $this->getDao('PlatformBizVar')->getPricingToolPlatformList($sku, $platform_type)) {
+                foreach ($platform_list as $platform_obj) {
+                    $platform_id = $platform_obj->getSellingPlatformId();
+                    $json = $this->getService('Price')->getProfitMarginJson($platform_id, $sku, 0, -1);
+                    $m = json_decode($json, TRUE);
+                    $fail_reason = "";
+                    
+                    if ($m["get_margin"] == 0) {
+                        $fail_reason .= "Margin is 0%, ";
+                    }
+                    
+                    if ($platform_id == "TMNZ") {
+                        $fail_reason .= "TMNZ to be omitted, SBF#3308";
+                    }
+
+                    if ($platform_id == "LAMY") {
+                        $fail_reason .= "LAMY to be omitted, SBF#3308";
+                    }
+
+                    $price = $m["get_price"];
+
+                    if ($fail_reason == "") {
+                        $price_obj = $this->getDao('Price')->get(["sku" => $sku, "platform_id" => $platform_id]);
+                        if (!$price_obj) {
+                            $price_obj = $this->getDao('Price')->get();
+
+                            $price_obj->setPlatformId($platform_id);
+                            $price_obj->setSku($sku);
+                            $price_obj->setListingStatus("L");
+                            $price_obj->setPrice($price);
+                            $price_obj->setAutoPrice("Y");
+                            $price_obj->setFixedRrp("Y");
+                            if (is_null($default_rrp_factor)) {
+                                $default_rrp_factor = $this->getService('PricingTool')->getRrpFactorBySku($price_obj->getSku());
+                            }
+                            $price_obj->setRrpFactor($default_rrp_factor);
+
+                            $this->getDao('Price')->insert($price_obj);
+                        } else {
+                            $price_obj->setListingStatus("L");
+                            $price_obj->setAutoPrice("Y");
+                            $price_obj->setPrice($price);
+                            $this->getDao('Price')->update($price_obj);
+                            $default_rrp_factor = $price_obj->getRrpFactor();
+                        }
+
+                        $prod_obj = $this->getDao('Product')->get(["sku" => $sku]);
+                        $prod_obj->setWebsiteQuantity(20);
+                        $prod_obj->setWebsiteStatus('I');
+                        $this->getDao('Product')->update($prod_obj);
+                    }
+
+                    if ($fail_reason == "")
+                        $msg .= "SUCCESS: Selling $sku @ {$m["get_price"]} on $platform_id (instock, website_qty={$prod_obj->getWebsiteQuantity()})<br>\r\n";
+                    else
+                        $msg .= "FAILED: $sku $platform_id, $fail_reason<br>\r\n";
+                }
+            }
+        } 
+
+        return $msg;
+    }
 }

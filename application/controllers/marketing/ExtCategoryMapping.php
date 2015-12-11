@@ -11,20 +11,9 @@ class ExtCategoryMapping extends MY_Controller
     public function __construct() {
         parent::__construct();
         $this->extCategoryMappingModel = new ExtCategoryMappingModel();
-/*
-        $this->load->model('marketing/ext_category_mapping_model');
-        $this->load->library('service/adwords_service');
-        $this->load->library('service/category_mapping_service');
-        $this->load->library('service/platform_biz_var_service');
-        $this->load->library('service/product_service');
-        //$this->load->library('service/price_service');
-        $this->load->model('marketing/product_model');
-        $this->load->library('service/google_shopping_service');
-*/
     }
 
     public function index() {
-//        $sub_app_id = $this->getAppId() . "00";
         $where = $option = array();
         $where["status"] = 1;
         $option["limit"] = -1;
@@ -266,8 +255,8 @@ end;
             print $updateResult["error_message"];
         }
     }
-
-    public function  delete_product_item($platform_id = "", $sku = "", $country_id = "", $language_id = "")
+/*
+    public function delete_product_item($platform_id = "", $sku = "", $country_id = "", $language_id = "")
     {
         $this->google_shopping_service->delete_product_item($platform_id, $sku, $country_id, $language_id);
     }
@@ -279,10 +268,10 @@ end;
     {
         $result = $this->google_shopping_service->gen_data_feed($platform_id);
     }
-
-    public function update_google_shopping_item_by_platform($platform_id = "WEBSG", $sku = "")
+*/
+    public function updateGoogleShoppingItemByPlatform($platformId = "WEBSG", $sku = "")
     {
-        $this->google_shopping_service->update_google_shopping_item_by_platform($platform_id, $sku);
+        $this->sc["GoogleShopping"]->updateGoogleShoppingItemByPlatform($platformId, $sku);
     }
 
     public function cron_update_google_shopping_feed($sku = "", $specified_platform = "")

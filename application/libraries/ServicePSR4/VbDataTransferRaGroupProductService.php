@@ -41,7 +41,7 @@ class VbDataTransferRaGroupProductService extends VbDataTransferService
 
 				$is_delete =  $ra_group_product->is_delete;
 
-				$ra_group_product_obj = $this->getService('RaGroupProduct')->getDao('RaGroupProduct')->get(['ra_group_id' => $ra_group_product->ra_group_id, 'sku' => $sku]);
+				$ra_group_product_obj = $this->getDao('RaGroupProduct')->get(['ra_group_id' => $ra_group_product->ra_group_id, 'sku' => $sku]);
 
 				if ($ra_group_product_obj) {
 					if ($is_delete)	{
@@ -51,7 +51,8 @@ class VbDataTransferRaGroupProductService extends VbDataTransferService
 					else
 					{
 						$reason = 'update';
-						$ra_group_product_obj->setName($ra_group_product->name);
+						$ra_group_product_obj->setPriority($ra_group_product->priority);
+						$ra_group_product_obj->setBuildBundle($ra_group_product->build_bundle);
 
 						$this->getDao('RaGroupProduct')->update($ra_group_product_obj);
 					}
@@ -63,7 +64,8 @@ class VbDataTransferRaGroupProductService extends VbDataTransferService
 					$ra_group_product_obj = new \RaGroupProductVo(); //$this->getDao()->get();
 					$ra_group_product_obj->setRaGroupId($ra_group_product->ra_group_id);
 					$ra_group_product_obj->setSku($sku);
-					$ra_group_product_obj->setName($ra_group_product->name);
+					$ra_group_product_obj->setPriority($ra_group_product->priority);
+					$ra_group_product_obj->setBuildBundle($ra_group_product->build_bundle);
 
 					$this->getDao('RaGroupProduct')->insert($ra_group_product_obj);
 				}
@@ -74,7 +76,7 @@ class VbDataTransferRaGroupProductService extends VbDataTransferService
 				$xml[] = '<master_sku>' . $ra_group_product->master_sku . '</master_sku>';
 				$xml[] = '<status>5</status>'; //updated
 				$xml[] = '<is_error>' . $ra_group_product->is_error . '</is_error>';
-				$xml[] = '<reason>'.$reason.'delete''</reason>';
+				$xml[] = '<reason>'.$reason.'</reason>';
 				$xml[] = '</ra_group_product>';
 
 			}
