@@ -26,9 +26,9 @@
             <td height="30" class="title"><?= $lang["title"] ?></td>
             <td height="30" width="400" align="right" class="title">
                 <input type="button" style="width: 160px" value="Search Shipped Orders" class="button"
-                       onclick="Redirect('<?= base_url() ?>account/flex/get_rakuten_shipped_order')">
+                       onclick="Redirect('<?= base_url() ?>account/flex/getRakutenShippedOrder')">
                 <input type="button" style="width: 160px" value="Approve Shipped Orders" class="button"
-                       onclick="Redirect('<?= base_url() ?>account/flex/get_rakuten_shipped_order_list')">
+                       onclick="Redirect('<?= base_url() ?>account/flex/getRakutenShippedOrderList')">
             </td>
         </tr>
     </table>
