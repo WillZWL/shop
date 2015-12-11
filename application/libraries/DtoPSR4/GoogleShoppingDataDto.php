@@ -1,50 +1,49 @@
 <?php
-class GooglebaseProductFeedDto
+class GoogleShoppingDataDto
 {
     private $platform_id;
     private $sku;
-    private $prod_grp_cd;
-    private $version_id;
-    private $colour_id;
-    private $colour_name;
-    private $platform_country_id;
-    private $language_id;
-    private $prod_name;
+    private $prod_grp_cd;   //itemGroupId, need it only if color is not NA
+    private $version_id;    //no use?
+    private $colour_id;     //use to identify itemGroupId
+    private $colour_name;   //colour_name
+    private $platform_country_id;  //targetCountry
+    private $language_id;   //contentLanguage
+    private $prod_name; //title
     private $cat_id;
     private $cat_name;
+/*
     private $sub_cat_id;
     private $sub_cat_name;
     private $brand_id;
-    private $brand_name;
-    private $mpn;
-    private $upc;
-    private $ean;
-    private $short_desc;
-    private $detail_desc;
-    private $contents;
-    private $prod_weight;
-    private $image;
-    private $platform_currency_id;
-    private $price;
-    private $default_platform_converted_price;
-    private $quantity;
+*/
+    private $brand_name; //brand_name
+    private $mpn;   //gtin, mpn
+    private $upc;   //gtin
+    private $ean;   //gtin
+    private $detail_desc; //description
+    private $prod_weight;   //prod_weight
+    private $platform_currency_id;  //currency
+    private $price; //price
     private $display_quantity;
     private $website_quantity;
     private $website_status;
-    private $availability;
-    private $prod_status;
+    private $availability;  //availability
+//    private $prod_status;   //status
     private $listing_status;
     private $ex_demo;
     private $google_ref_id;
-    private $product_type;
-    private $google_product_category;
-    private $product_url;
-    private $image_url;
-    private $condition;
+    private $product_type;  //product_type
+    private $google_product_category;   //google_product_category
+    private $product_url; //product_url
+    private $image_url; //imageLink
+    private $condition; //condition
+/*
     private $price_w_curr;
     private $sale_price;
+*/
     private $item_group_id;
-    private $shipping;
+//    private $shipping;
 
     public function setPlatformId($platform_id)
     {
@@ -160,7 +159,7 @@ class GooglebaseProductFeedDto
     {
         $this->sub_cat_id = $sub_cat_id;
     }
-
+/*
     public function getSubCatId()
     {
         return $this->sub_cat_id;
@@ -185,7 +184,7 @@ class GooglebaseProductFeedDto
     {
         return $this->brand_id;
     }
-
+*/
     public function setBrandName($brand_name)
     {
         $this->brand_name = $brand_name;
@@ -226,16 +225,6 @@ class GooglebaseProductFeedDto
         return $this->ean;
     }
 
-    public function setShortDesc($short_desc)
-    {
-        $this->short_desc = $short_desc;
-    }
-
-    public function getShortDesc()
-    {
-        return $this->short_desc;
-    }
-
     public function setDetailDesc($detail_desc)
     {
         $this->detail_desc = $detail_desc;
@@ -246,16 +235,6 @@ class GooglebaseProductFeedDto
         return $this->detail_desc;
     }
 
-    public function setContents($contents)
-    {
-        $this->contents = $contents;
-    }
-
-    public function getContents()
-    {
-        return $this->contents;
-    }
-
     public function setProdWeight($prod_weight)
     {
         $this->prod_weight = $prod_weight;
@@ -264,16 +243,6 @@ class GooglebaseProductFeedDto
     public function getProdWeight()
     {
         return $this->prod_weight;
-    }
-
-    public function setImage($image)
-    {
-        $this->image = $image;
-    }
-
-    public function getImage()
-    {
-        return $this->image;
     }
 
     public function setPlatformCurrencyId($platform_currency_id)
@@ -294,26 +263,6 @@ class GooglebaseProductFeedDto
     public function getPrice()
     {
         return $this->price;
-    }
-
-    public function setDefaultPlatformConvertedPrice($default_platform_converted_price)
-    {
-        $this->default_platform_converted_price = $default_platform_converted_price;
-    }
-
-    public function getDefaultPlatformConvertedPrice()
-    {
-        return $this->default_platform_converted_price;
-    }
-
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-    }
-
-    public function getQuantity()
-    {
-        return $this->quantity;
     }
 
     public function setDisplayQuantity($display_quantity)
@@ -355,7 +304,7 @@ class GooglebaseProductFeedDto
     {
         return $this->availability;
     }
-
+/*
     public function setProdStatus($prod_status)
     {
         $this->prod_status = $prod_status;
@@ -365,7 +314,7 @@ class GooglebaseProductFeedDto
     {
         return $this->prod_status;
     }
-
+*/
     public function setListingStatus($listing_status)
     {
         $this->listing_status = $listing_status;
@@ -445,7 +394,7 @@ class GooglebaseProductFeedDto
     {
         return $this->condition;
     }
-
+/*
     public function setPriceWCurr($price_w_curr)
     {
         $this->price_w_curr = $price_w_curr;
@@ -465,7 +414,7 @@ class GooglebaseProductFeedDto
     {
         return $this->sale_price;
     }
-
+*/
     public function setItemGroupId($item_group_id)
     {
         $this->item_group_id = $item_group_id;
@@ -475,7 +424,7 @@ class GooglebaseProductFeedDto
     {
         return $this->item_group_id;
     }
-
+/*
     public function setShipping($shipping)
     {
         $this->shipping = $shipping;
@@ -485,5 +434,5 @@ class GooglebaseProductFeedDto
     {
         return $this->shipping;
     }
-
+*/
 }

@@ -374,6 +374,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\GoogleConnectService();
         };
 
+        $serviceContainer['GoogleRequestBatch'] = function () {
+            return new S\GoogleRequestBatchService();
+        };
+
         $serviceContainer['CategoryMapping'] = function () {
             return new S\CategoryMappingService();
         };

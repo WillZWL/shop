@@ -74,7 +74,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><a href="/marketing/pricing_tools_website/bulk_list">Bulk List + Auto-price</a></td>
+                        <td><a href="/<?= $this->tool_path ?>/bulk_list/<?= $platform ?>">Bulk List + Auto-price</a></td>
                         <td><b><?= $lang["by_prod_name"] ?></b></td>
                         <td><input name="name" class="input" value='<?= htmlspecialchars($this->input->get("name")) ?>'>
                         </td>

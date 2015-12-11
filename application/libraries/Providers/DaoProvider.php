@@ -513,6 +513,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\GoogleShoppingDao();
         };
 
+        $daoContainer['GoogleRequestBatch'] = function () {
+            return new D\GoogleRequestBatchDao();
+        };
+
         $daoContainer['WmsInventory'] = function () {
             return new D\WmsInventoryDao();
         };
