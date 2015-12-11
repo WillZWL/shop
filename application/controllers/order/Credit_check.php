@@ -167,7 +167,7 @@ class Credit_check extends MY_Controller
         $data["lang"] = $lang;
 
         $pconfig['total_rows'] = $data['total'];
-        $this->paginationService->set_show_count_tag(TRUE);
+        $this->paginationService->setShowCountTag(TRUE);
         $this->paginationService->initialize($pconfig);
 
         $data["notice"] = notice($lang);
@@ -232,7 +232,7 @@ class Credit_check extends MY_Controller
             $data["lang"] = $lang;
 
             $pconfig['total_rows'] = $data['total'];
-            $this->paginationService->set_show_count_tag(TRUE);
+            $this->paginationService->setShowCountTag(TRUE);
             $this->paginationService->initialize($pconfig);
 
             $data["notice"] = notice($lang);
