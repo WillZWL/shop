@@ -257,7 +257,7 @@ if (!function_exists('check_finance_role')) {
             foreach ($_SESSION["user"]["role_id"] as $role) {
                 if (in_array($role, $account_role)) {
                     if ($returnString) {
-                        return "so.finance_dispatch_date as dispatch_date";
+                        return "so.dispatch_date";
                     } else {
                         return true;
                     }

@@ -65,17 +65,6 @@ class Interface_finance_dispatch_vo extends Base_vo
         return $this;
     }
 
-    public function get_finance_dispatch_date()
-    {
-        return $this->finance_dispatch_date;
-    }
-
-    public function set_finance_dispatch_date($value)
-    {
-        $this->finance_dispatch_date = $value;
-        return $this;
-    }
-
     public function get_status()
     {
         return $this->status;

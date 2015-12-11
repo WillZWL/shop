@@ -3410,7 +3410,7 @@ SQL;
         $this->db->from("so");
         $this->include_vo();
 
-        return $this->common_get_list($where, $option, "so_vo", "so.so_no, so.platform_id, so.create_on, so.dispatch_date, so.finance_dispatch_date");
+        return $this->common_get_list($where, $option, "so_vo", "so.so_no, so.platform_id, so.create_on, so.dispatch_date");
     }
 
     public function getOrderNotInRiaReport($where = [], $option = [], $classname = 'OrderNotInRiaReportDto')

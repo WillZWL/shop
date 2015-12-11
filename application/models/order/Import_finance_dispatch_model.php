@@ -22,7 +22,6 @@ class Import_finance_dispatch_model extends Import_info_model
 
         $new_dispatch_dto = new $className;
         $new_dispatch_dto->set_so_no($so_no);
-        $new_dispatch_dto->set_finance_dispatch_date($dispatch_date);
         $data = array($new_dispatch_dto);
         $result = $this->get_import_service()->validate_import_data($data);
 
@@ -40,7 +39,6 @@ class Import_finance_dispatch_model extends Import_info_model
     {
         $interface_obj = $this->get_import_service()->get_import_interface_info_dao()->get(array("trans_id" => $trans_id));
         $interface_obj->set_so_no($so_no);
-        $interface_obj->set_finance_dispatch_date($dispatch_date);
         $interface_obj->set_status("R");
         $this->get_import_service()->get_import_interface_info_dao()->update($interface_obj);
     }
