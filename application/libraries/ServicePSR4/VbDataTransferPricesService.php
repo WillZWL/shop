@@ -53,9 +53,11 @@ class VbDataTransferPricesService extends VbDataTransferService
             }
 
             try {
+                //$price_change = ' price vb orig ' . $required_selling_price;
                 $this->applyPriceRule($vb_price_obj);
                 $price_obj = $this->getDao('Price')->get(['sku' => $sku, 'platform_id' => $platform_id]);
 
+                //$price_change = $price_change . " init price " . $price_obj->getPrice() . ' price vb orig after ' . $vb_price_obj->required_selling_price;
                 if ($price_obj) {
                     $this->getService('Price')->updatePrice($price_obj, $vb_price_obj);
                     $action = 'update';
@@ -71,12 +73,14 @@ class VbDataTransferPricesService extends VbDataTransferService
                     if ($pricing_rule_obj) {
                         $min_margin = $pricing_rule_obj->getMinMargin();
 
-                        if ($new_margin * 100 < $minimun_margin) {
+                        /*if ($new_margin * 100 < $minimun_margin) {
                             $reason = "Error in margin";
                             $result_status = 6;
                             continue;
-                        }
+                        }*/
                     }
+                    //$price_change = $price_change . ' new margin ' . $new_margin . ' price ' . $vb_price_obj->required_selling_price . ' mark up ' . $pricing_rule_obj->getMarkUpValue();
+
                     $this->getDao('Price')->$action($price_obj);
                     $result_status = 5;
                 } else {
@@ -120,7 +124,7 @@ class VbDataTransferPricesService extends VbDataTransferService
             $rule_markup = $pricing_rule_obj->getMarkUpValue();
 
             if ($rule_type == 'A') {
-                $required_selling_price += floatval($rule_markup * 1.0);
+                $required_selling_price = (float)$required_selling_price + (float)$rule_markup;
             } elseif ($rule_type == 'P') {
                 $required_selling_price = $required_selling_price + ($required_selling_price * $rule_markup);
             }

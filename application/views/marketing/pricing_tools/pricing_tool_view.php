@@ -177,7 +177,7 @@
             <tr>
                 <td style="padding-left:8px;">
                     <br>
-                    <b><a class="warn" href="<?= base_url() ?>marketing/category/view_scpv/?subcat_id=<?= $prod_obj->getSubCatId() ?>&platform=WEBSITE"><?= $lang["sub_cat_no_set"] ?></a></b>
+                    <b><a class="warn" target="_blank" href="<?= base_url() ?>marketing/category/view_scpv/?subcat_id=<?= $prod_obj->getSubCatId() ?>&platform=WEBSITE"><?= $lang["sub_cat_no_set"] ?></a></b>
                 </td>
             </tr>
         </table>

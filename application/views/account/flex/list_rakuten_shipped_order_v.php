@@ -26,9 +26,9 @@
             <td height="30" class="title"><?= $lang["title"] ?></td>
             <td height="30" width="400" align="right" class="title">
                 <input type="button" style="width: 160px" value="Search Shipped Orders" class="button"
-                       onclick="Redirect('<?= base_url() ?>account/flex/get_rakuten_shipped_order')">
+                       onclick="Redirect('<?= base_url() ?>account/flex/getRakutenShippedOrder')">
                 <input type="button" style="width: 160px" value="Approve Shipped Orders" class="button"
-                       onclick="Redirect('<?= base_url() ?>account/flex/get_rakuten_shipped_order_list')">
+                       onclick="Redirect('<?= base_url() ?>account/flex/getRakutenShippedOrderList')">
             </td>
         </tr>
     </table>
@@ -95,18 +95,18 @@
                     ?>
                     <tr class="row1">
                         <td height="20" width="20px"></td>
-                        <td><a href="<?= base_url() ?>cs/quick_search/view/<?= $orderobj->get_so_no() ?>"
-                               target="_blank"><?= $orderobj->get_so_no() ?></a></td>
-                        <td><?= $orderobj->get_platform_order_id() ?></td>
-                        <td><?= $orderobj->get_platform_id() ?></td>
-                        <td><?= $orderobj->get_txn_id() ?></td>
-                        <td><?= $orderobj->get_currency_id() ?></td>
-                        <td><?= $orderobj->get_currency_id() ?> <?= $orderobj->get_amount() ?></td>
-                        <td><?= $orderobj->get_order_create_date() ?></td>
-                        <td><?= $orderobj->get_dispatch_date() ?></td>
+                        <td><a href="<?= base_url() ?>cs/quick_search/view/<?= $orderobj->getSoNo() ?>"
+                               target="_blank"><?= $orderobj->getSoNo() ?></a></td>
+                        <td><?= $orderobj->getPlatformOrderId() ?></td>
+                        <td><?= $orderobj->getPlatformId() ?></td>
+                        <td><?= $orderobj->getTxnId() ?></td>
+                        <td><?= $orderobj->getCurrencyId() ?></td>
+                        <td><?= $orderobj->getCurrencyId() ?> <?= $orderobj->getAmount() ?></td>
+                        <td><?= $orderobj->getOrderCreateDate() ?></td>
+                        <td><?= $orderobj->getDispatchDate() ?></td>
                         <td>
-                            <input type="checkbox" name="check[<?= $orderobj->get_so_no() ?>]"
-                                   value="<?= $orderobj->get_so_no() ?>">
+                            <input type="checkbox" name="check[<?= $orderobj->getSoNo() ?>]"
+                                   value="<?= $orderobj->getSoNo() ?>">
                         </td>
                     </tr>
                 <?php
