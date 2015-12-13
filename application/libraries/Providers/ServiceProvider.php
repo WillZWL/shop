@@ -374,6 +374,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\GoogleConnectService();
         };
 
+        $serviceContainer['GoogleRequestBatch'] = function () {
+            return new S\GoogleRequestBatchService();
+        };
+
         $serviceContainer['CategoryMapping'] = function () {
             return new S\CategoryMappingService();
         };
@@ -428,6 +432,10 @@ class ServiceProvider implements ServiceProviderInterface
 
         $serviceContainer['PaypalAuPmgwReport'] = function () {
             return new S\PaypalAuPmgwReportService();
+        };
+
+        $serviceContainer['PaypalNzPmgwReport'] = function () {
+            return new S\PaypalNzPmgwReportService();
         };
     }
 }

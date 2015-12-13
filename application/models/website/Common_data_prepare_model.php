@@ -1549,6 +1549,7 @@ salecycle_script;
                 $cat_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
                 if ($cat_obj) {
                     $localized_cat_name = $cat_obj->get_name();
+                    $category_name = $cat_obj->get_name();
                 }
             }
 
@@ -1645,6 +1646,21 @@ salecycle_script;
             //     }
             // }
             // $data["cross_sell_product_list"] = $csp_arr;
+
+            $data['microdata']['price'] = $listing_info->get_price();
+            $data['microdata']['currency'] = $listing_info->get_currency_id();
+            $data['microdata']['brand'] =  $prod_info->get_brand_name();
+            if (strtolower($prod_info->get_cat_name()) == "refurbish") {
+                $data['microdata']['itemCondition'] = 'http://schema.org/RefurbishedCondition';
+            } else {
+                $data['microdata']['itemCondition'] = 'http://schema.org/NewCondition';
+            }
+
+            if ($listing_info->get_qty() > 0) {
+                $data['microdata']['availability'] = "http://schema.org/InStock";
+            } else {
+                $data['microdata']['availability'] = "http://schema.org/OutOfStock";
+            }
 
             return $data;
         }

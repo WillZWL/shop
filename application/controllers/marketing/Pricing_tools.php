@@ -352,6 +352,29 @@ class pricing_tools extends MY_Controller
 
         return $arr;
     }
+    public function bulk_list($platform_type)
+    {
+        $data = [];
+        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->getLangId() . ".php";
+        $data["lang"] = $lang;
+        $data['platform_type'] = $platform_type;
+        $this->load->view($this->tool_path . "/pricing_tool_bulk_list", $data);
+    }
+
+    public function bulk_list_post($platform_type)
+    {
+        $sku_list = explode("\n", $this->input->post("sku_list"));
+        // remove the extra
+        $sku_list = array_filter($sku_list);
+
+        $msg = $this->sc['PricingTool']->setAutoPricingForBulkSku($sku_list, $platform_type);
+
+        header("Content-Type: text/html");
+        echo "<html><head></head><body>";
+        echo "<a href='/". $this->tool_path ."/bulk_list/". $platform_type ."'>Return to pricing tool</a><br><br>$msg";
+
+        die();
+    }
 
     public function get_profit_margin_json($platform_id, $sku, $required_selling_price = 0, $required_cost_price = -1, $return_json = false)
     {

@@ -1,16 +1,12 @@
 <?php
-class CategoryMappingVo extends \BaseVo
+class GoogleRequestBatchVo extends \BaseVo
 {
     private $id;
-    private $ext_party;
-    private $level;
-    private $category_mapping_id;
-    private $ext_id = '';
-    private $ext_name;
-    private $lang_id = '';
-    private $country_id = '';
-    private $product_name = '';
-    private $status = '1';
+    private $func_name;
+    private $status = 'N';
+    private $remark;
+    private $start_time;
+    private $end_time;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -33,100 +29,16 @@ class CategoryMappingVo extends \BaseVo
         return $this->id;
     }
 
-    public function setExtParty($ext_party)
+    public function setFuncName($func_name)
     {
-        if ($ext_party !== null) {
-            $this->ext_party = $ext_party;
+        if ($func_name !== null) {
+            $this->func_name = $func_name;
         }
     }
 
-    public function getExtParty()
+    public function getFuncName()
     {
-        return $this->ext_party;
-    }
-
-    public function setLevel($level)
-    {
-        if ($level !== null) {
-            $this->level = $level;
-        }
-    }
-
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    public function setCategoryMappingId($category_mapping_id)
-    {
-        if ($category_mapping_id !== null) {
-            $this->category_mapping_id = $category_mapping_id;
-        }
-    }
-
-    public function getCategoryMappingId()
-    {
-        return $this->category_mapping_id;
-    }
-
-    public function setExtId($ext_id)
-    {
-        if ($ext_id !== null) {
-            $this->ext_id = $ext_id;
-        }
-    }
-
-    public function getExtId()
-    {
-        return $this->ext_id;
-    }
-
-    public function setExtName($ext_name)
-    {
-        if ($ext_name !== null) {
-            $this->ext_name = $ext_name;
-        }
-    }
-
-    public function getExtName()
-    {
-        return $this->ext_name;
-    }
-
-    public function setLangId($lang_id)
-    {
-        if ($lang_id !== null) {
-            $this->lang_id = $lang_id;
-        }
-    }
-
-    public function getLangId()
-    {
-        return $this->lang_id;
-    }
-
-    public function setCountryId($country_id)
-    {
-        if ($country_id !== null) {
-            $this->country_id = $country_id;
-        }
-    }
-
-    public function getCountryId()
-    {
-        return $this->country_id;
-    }
-
-    public function setProductName($product_name)
-    {
-        if ($product_name !== null) {
-            $this->product_name = $product_name;
-        }
-    }
-
-    public function getProductName()
-    {
-        return $this->product_name;
+        return $this->func_name;
     }
 
     public function setStatus($status)
@@ -139,6 +51,42 @@ class CategoryMappingVo extends \BaseVo
     public function getStatus()
     {
         return $this->status;
+    }
+
+    public function setRemark($remark)
+    {
+        if ($remark !== null) {
+            $this->remark = $remark;
+        }
+    }
+
+    public function getRemark()
+    {
+        return $this->remark;
+    }
+
+    public function setStartTime($start_time)
+    {
+        if ($start_time !== null) {
+            $this->start_time = $start_time;
+        }
+    }
+
+    public function getStartTime()
+    {
+        return $this->start_time;
+    }
+
+    public function setEndTime($end_time)
+    {
+        if ($end_time !== null) {
+            $this->end_time = $end_time;
+        }
+    }
+
+    public function getEndTime()
+    {
+        return $this->end_time;
     }
 
     public function setCreateOn($create_on)

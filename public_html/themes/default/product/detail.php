@@ -59,6 +59,19 @@
                         </div>
                         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
                             <div class="product-info-bg">
+                                <div itemscope itemtype="http://schema.org/Product">
+                                    <meta itemprop="brand" content="<?= $microdata['brand'] ?>" />
+                                    <meta itemprop="name" content="<?= $prod_name ?>" />
+                                    <meta itemprop="sku" content="<?= $sku ?>" />
+                                    <meta itemprop="productID" content="sku:<?= $sku ?>" />
+                                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                        <meta itemprop="price" content="<?= $microdata['price'] ?>" />
+                                        <meta itemprop="priceCurrency" content="<?= $microdata['currency'] ?>" />
+                                        <meta itemprop="availability" content="<?= $microdata['availability'] ?>" />
+                                        <meta itemprop="itemCondition" content="<?= $microdata['itemCondition'] ?>" />
+                                    </div>
+                                </div>
+
                                 <h1 class="title-product"><?= $prod_name ?></h1>
                                 <div class="rating">
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
@@ -100,7 +113,7 @@
                                             <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary" onclick="cart.addcart('<?=$sku?>');"><?= _('Add to Cart') ?></button>
                                         </div>
                                         <div class="pull-left">
-                                            <a data-toggle="tooltip" class="wishlist" title="" onclick="wishlist.addwishlist('50');" data-original-title="Add to Wish List"><?= _('Add to Wish List') ?></a>
+                                            <a data-toggle="tooltip" class="wishlist" title="" onclick="wishlist.addwishlist('50');" data-original-title="<?= _('Add to Wish List') ?>"><?= _('Add to Wish List') ?></a>
                                         </div>
                                     </div>
                                 </div>
@@ -117,6 +130,7 @@
                             <li><a href="#tab-specification" data-toggle="tab"><?= _('Specification') ?></a></li>
                             <li class="active"><a href="#tab-overview" data-toggle="tab"><?= _('Overview') ?></a></li>
                             <li><a href="#tab-in_the_box" data-toggle="tab"><?= _('In the box') ?></a></li>
+                            <!--<li><a href="#tab-accesories" data-toggle="tab"><?= _('Recommended Accessories') ?></a></li>-->
                             <!-- <li><a href="#tab-review" data-toggle="tab"><?= sprintf(_('Reviews %s'), "(0)") ?></a></li> -->
                         </ul>
                         <div class="tab-content text-left">
@@ -135,6 +149,14 @@
                                     <?= $in_the_box ?>
                                 </p>
                             </div>
+                            <!--<div class="tab-pane" id="tab-accessories">
+                                <p class="intro">
+                                    <?= $accessories ?>
+                                </p>
+                                <?php if ($categories) : ?>
+                                    <?php $this->load->view('product/accesories.php', ['categories' => $categories]); ?>
+                                <?php endif; ?>
+                            </div>-->
 <!--                             <div class="tab-pane" id="tab-review">
                                 <div id="review" class="space-20">
                                     <p><?= _('There are no review for this product.') ?></p>

@@ -3078,7 +3078,7 @@ ORDER BY so.so_no, soid.line_no
     public function get_flex_sales_invoice($where, $classname = "sales_invoice_dto")
     {
         $option['limit'] = -1;
-        $this->db->from("(select so.so_no, so.biz_type, so.parent_so_no, so.status, so.finance_dispatch_date,
+        $this->db->from("(select so.so_no, so.biz_type, so.parent_so_no, so.status, 
         so.client_id, so.currency_id, so.platform_id,so.client_promotion_code,so.dispatch_date,so.order_create_date,so.delivery_charge,so.split_so_group,soex.order_reason,
         sum(fr.amount) as amount, fr.txn_id, fr.txn_time, fr.flex_batch_id, fr.gateway_id from so
         INNER JOIN so_extend soex on so.so_no = soex.so_no LEFT JOIN flex_ria fr ON so.so_no = fr.so_no group by so.so_no) tbl_1");
@@ -3096,7 +3096,7 @@ ORDER BY so.so_no, soid.line_no
         unset($where["start_date"]);
         unset($where["end_date"]);
 //      if (check_finance_role())
-        $dispatch_string = "tbl_1.finance_dispatch_date";
+        $dispatch_string = "tbl_1.dispatch_date";
 //      else
 //          $dispatch_string = "tbl_1.dispatch_date";
         $where[$dispatch_string . " >="] = $start_date . ' 00:00:00';
@@ -3105,7 +3105,7 @@ ORDER BY so.so_no, soid.line_no
 
         //$this->common_get_list($where, $option, $classname, 'tbl_1.txn_id, RIGHT(tbl_1.platform_id,2) as sm_code, SUBSTR(tbl_1.platform_id, 1, CHAR_LENGTH(tbl_1.platform_id) - 2) as contain_size, tbl_1.client_promotion_code as promotion_code, CONCAT(gm.gateway_code, "I") tran_type,date_format(tbl_1.dispatch_date, "%Y-%m-%d") dispatch_date, date_format(tbl_1.txn_time, "%Y-%m-%d") txn_time, map.ext_sku product_code, tbl_1.platform_id, tbl_1.flex_batch_id, gm.gateway_code AS report_pmgw, if(tbl_1.gateway_id !="", tbl_1.gateway_id, sops.payment_gateway_id) as gateway_id, tbl_1.currency_id, map.ext_sku AS master_sku, soid.qty AS qty, soid.amount AS amount, tbl_1.order_create_date, c.email AS customer_email, tbl_1.so_no, if(soid.line_no = 1,tbl_1.delivery_charge,0) AS delivery_charge');
         //var_dump($this->db->last_query());die();
-        return $this->common_get_list($where, $option, $classname, 'tbl_1.txn_id, tbl_1.biz_type, tbl_1.order_reason, tbl_1.parent_so_no, tbl_1.split_so_group, RIGHT(tbl_1.platform_id,2) as sm_code, SUBSTR(tbl_1.platform_id, 1, CHAR_LENGTH(tbl_1.platform_id) - 2) as contain_size, tbl_1.client_promotion_code as promotion_code, CONCAT(gm.gateway_code, "I") tran_type,date_format(tbl_1.finance_dispatch_date, "%Y-%m-%d") dispatch_date, date_format(tbl_1.txn_time, "%Y-%m-%d") txn_time, map.ext_sku product_code, tbl_1.platform_id, tbl_1.flex_batch_id, gm.gateway_code AS report_pmgw, if(tbl_1.gateway_id !="", tbl_1.gateway_id, sops.payment_gateway_id) as gateway_id, tbl_1.currency_id, map.ext_sku AS master_sku, soid.qty AS qty, soid.amount AS amount, tbl_1.order_create_date, c.email AS customer_email, tbl_1.so_no, if(soid.line_no = 1,tbl_1.delivery_charge,0) AS delivery_charge, soid.line_no as line_index');
+        return $this->common_get_list($where, $option, $classname, 'tbl_1.txn_id, tbl_1.biz_type, tbl_1.order_reason, tbl_1.parent_so_no, tbl_1.split_so_group, RIGHT(tbl_1.platform_id,2) as sm_code, SUBSTR(tbl_1.platform_id, 1, CHAR_LENGTH(tbl_1.platform_id) - 2) as contain_size, tbl_1.client_promotion_code as promotion_code, CONCAT(gm.gateway_code, "I") tran_type,date_format(tbl_1.dispatch_date, "%Y-%m-%d") dispatch_date, date_format(tbl_1.txn_time, "%Y-%m-%d") txn_time, map.ext_sku product_code, tbl_1.platform_id, tbl_1.flex_batch_id, gm.gateway_code AS report_pmgw, if(tbl_1.gateway_id !="", tbl_1.gateway_id, sops.payment_gateway_id) as gateway_id, tbl_1.currency_id, map.ext_sku AS master_sku, soid.qty AS qty, soid.amount AS amount, tbl_1.order_create_date, c.email AS customer_email, tbl_1.so_no, if(soid.line_no = 1,tbl_1.delivery_charge,0) AS delivery_charge, soid.line_no as line_index');
     }
 
     public function get_flex_refund_invoice($where, $classname = "refund_invoice_dto")
@@ -3471,7 +3471,6 @@ ORDER BY so.so_no, soid.line_no
             foreach ($query->result($classname) as $obj) {
                 $found = false;
                 $dispatch_date = $obj->get_dispatch_date();
-                //$finance_dispatch = $obj->get_finance_dispatch_date();
                 $pay_date = $obj->get_pay_date();
                 $order_create_date = $obj->get_order_create_date();
                 $expect_ship_days = $obj->get_expect_ship_days();
@@ -3896,7 +3895,7 @@ SQL;
     {
         $this->db->from("so");
         $this->include_vo();
-        return $this->common_get_list($where, $option, "so_vo", "so.so_no, so.platform_id, so.create_on, so.dispatch_date, so.finance_dispatch_date");
+        return $this->common_get_list($where, $option, "so_vo", "so.so_no, so.platform_id, so.create_on, so.dispatch_date");
 
     }
 
