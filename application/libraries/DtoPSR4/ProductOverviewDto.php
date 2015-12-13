@@ -22,6 +22,11 @@ class ProductOverviewDto
     private $supplier_status;
     private $modify_on;
     private $platform_currency_id;
+    private $image;
+    private $category;
+    private $sub_category;
+    private $sub_sub_category;
+    private $brand_name;
 
     public function getSku()
     {
@@ -221,5 +226,55 @@ class ProductOverviewDto
     public function setPlatformCurrencyId($platform_currency_id)
     {
         $this->platform_currency_id = $platform_currency_id;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    public function getSubCategory()
+    {
+        return $this->sub_category;
+    }
+
+    public function setSubCategory($sub_category)
+    {
+        $this->sub_category = $sub_category;
+    }
+
+    public function getSubSubCategory()
+    {
+        return $this->sub_sub_category;
+    }
+
+    public function setSubSubCategory($sub_sub_category)
+    {
+        $this->sub_sub_category = $sub_sub_category;
+    }
+
+    public function getBrandName()
+    {
+        return $this->brand_name;
+    }
+
+    public function setBrandName($brand_name)
+    {
+        $this->brand_name = $brand_name;
     }
 }

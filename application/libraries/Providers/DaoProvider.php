@@ -616,9 +616,13 @@ class DaoProvider implements ServiceProviderInterface
         $daoContainer['InterfaceFlexGatewayFee'] = function () {
             return new D\InterfaceFlexGatewayFeeDao();
         };
-        
+
         $daoContainer['FuncOption'] = function () {
             return new D\FuncOptionDao();
+        };
+
+        $daoContainer['LandpageListing'] = function () {
+            return new D\LandpageListingDao();
         };
     }
 }
