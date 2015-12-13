@@ -210,7 +210,7 @@
                                                         <?php } ?>
                                                     </div>
                                                     <p class="desc-sm">
-                                                        <?= $guaranteedays . _(' days ') ?><br/> <?= _('Money Back') ?><br /><?= _('Guarantee') ?><br />
+                                                        <?= $guaranteedays . _(" Days Money Back Guarantee") ?>
                                                     </p>
                                                 </li>
                                                 <li style="vertical-align: top;">
