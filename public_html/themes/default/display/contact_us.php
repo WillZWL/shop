@@ -17,9 +17,9 @@
 
 
 <div id="container">
-	<div class="row">		
+	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			Having an issue? There are a number of ways you can get in touch with our experienced Sales and Customer Service teams. 
+			Having an issue? There are a number of ways you can get in touch with our experienced Sales and Customer Service teams.
 		</div>
 	</div>
 	<form name="fm_enquiry" class="form-horizontal" method="post" onsubmit="if (CheckForm(this)) {SubmitEnquiry(this);} return false;" target="enquiry_result_iframe" enctype="multipart/form-data">
@@ -101,4 +101,3 @@
 		</div>
     </form>
 </div>
-            
