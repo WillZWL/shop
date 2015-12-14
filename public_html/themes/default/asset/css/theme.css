@@ -563,3 +563,39 @@ input.btn-newsletter {
 .has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
     color: #ED0A00;
 }
+
+#contact_us .box {
+    width:100%;height:185px;
+    border: 2px solid #a9a9a9;
+    padding:125px 80px 0 80px;
+    line-height:20px;
+    margin-bottom:20px
+}
+
+#contact_us .box:hover {
+    border: 2px solid ##549B17;
+    color:##549B17;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#contact_us .img1 {
+    background: url(../image/contact_1.png) center 10px;
+    -moz-background-size:63px 100px;
+    background-size:210px 110px;
+    background-repeat:no-repeat;
+}
+
+#contact_us .img2 {
+    background: url(../image/contact_2.png) center 10px;
+    -moz-background-size:63px 100px;
+    background-size:210px 110px;
+    background-repeat:no-repeat;
+}
+
+#contact_us .img3 {
+    background: url(../image/contact_3.png) center 10px;
+    -moz-background-size:63px 100px;
+    background-size:210px 110px;
+    background-repeat:no-repeat;
+}
