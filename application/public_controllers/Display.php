@@ -17,12 +17,14 @@ class Display extends PUB_Controller
 
     public function view($page = '')
     {
-        if (($page != "shipping")
+        if (
+            ($page != "shipping")
             && ($page != "conditions_of_use")
             && ($page != "about_us")
             && ($page != "privacy_policy")
-            && ($page != "contact"))
-        {
+            && ($page != "contact")
+            && ($page != "contact_us")
+        ) {
 //very important to do page parameter validation
             show_404();
         }
