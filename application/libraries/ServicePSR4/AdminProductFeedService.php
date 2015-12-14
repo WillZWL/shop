@@ -18,7 +18,7 @@ class AdminProductFeedService extends DataFeedService
         set_time_limit(900);
         define('DATAPATH', $this->getDao('Config')->valueOf("data_path"));
         $this->filename = "admin_product_feed.csv";
-        $this->filepath = DATAPATH . "feeds/admin/";
+        $this->filepath = DATAPATH . "/feeds/admin/";
         $data_feed = $this->getDataFeed(TRUE, $platform_type);
         if ($data_feed === TRUE) {
             $this->sendReport();
