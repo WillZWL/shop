@@ -157,8 +157,8 @@
                                         <a href="<?=base_url()?>display/view/conditions_of_use"><span class="desc-about"><?= _('Help') ?></span></a>&nbsp;&nbsp;&nbsp;
                                         <!--<a href="/clearance"><span class="clearance"><?= _('Clearance') ?></span></a>&nbsp;&nbsp;&nbsp;-->
                                         <?php if ($_SESSION["client"]["loggedIn"]) { ?>
-                                            <a class="desc-about" href="<?=base_url()?>myaccount/index">
-                                                <?= _("My Account") ?></a>
+                                            <a class="desc-about" href="<?=base_url()?>myaccount/index"><?= _("My Account") ?></a>&nbsp;&nbsp;&nbsp;
+                                            <a class="desc-about" href="<?=base_url()?>Logout/index"><?= _("Log Out") ?></a>
                                         <?php } else { ?>
                                               <a  class="desc-about" href="<?=base_url()?>login/index">
                                                 <?= _("Sign in") ?></a>
