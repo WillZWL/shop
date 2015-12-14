@@ -244,7 +244,7 @@ class PriceService extends BaseService
         return json_encode($data_arr);
     }
 
-    public function calculateCost(PriceWithCostDto $dto)
+    public function calculateCost(\PriceWithCostDto $dto)
     {
         $this->calculateDeclaredValue($dto);
 
@@ -263,14 +263,14 @@ class PriceService extends BaseService
         }
     }
 
-    public function calculateDeclaredValue(PriceWithCostDto $dto)
+    public function calculateDeclaredValue(\PriceWithCostDto $dto)
     {
         $price = $dto->getPrice();
         $country_id = $dto->getPlatformCountryId();
 
         switch ($country_id) {
             case "AU":
-                $declared_value = min($price, 950);
+                $declared_value = min($price, 910);
                 break;
 
             case "NZ":
@@ -438,15 +438,6 @@ class PriceService extends BaseService
 
         $this->performBusinessLogic($dto, $dto->getPrice());
         return;
-    }
-    public function calculateDeclaredValue($dto = "", $price = "")
-    {
-        $price = $price ? $price : $dto->getPrice();
-        $country_id = $dto->getPlatformCountryId();
-        $declared_value = $this->getService('So')->getDeclaredValue($dto, $country_id, $price);
-        $dto->setDeclaredValue($declared_value);
-
-        return $declared_value;
     }
 
     public function calcLogisticCost($dto)
