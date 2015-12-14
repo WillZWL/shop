@@ -156,38 +156,11 @@ class SellingPlatformDao extends BaseDao
 
     public function getPlatformListWithAllowSellCountry($type = "")
     {
-        //Only those platform not started with WEB%
-        if (isset($type) && $type == "MARKETPLACE") {
-            $sql = "SELECT sp.selling_platform_id AS platform_id, c.id AS country_id
-                    FROM selling_platform sp
-                    JOIN platform_biz_var pbv
-                        ON sp.selling_platform_id = pbv.selling_platform_id
-                    JOIN country c
-                        ON c.id = pbv.platform_country_id
-                    WHERE (sp.selling_platform_id NOT LIKE 'WEB%') AND sp.status = 1
-                        AND c.allow_sell = 1 AND c.status = 1";
-        } //Original query, still be used to retrieve the WEBSITE type
-        else {
-            $sql = "SELECT sp.selling_platform_id AS platform_id, c.id AS country_id
-                    FROM selling_platform sp
-                    JOIN platform_biz_var pbv
-                        ON sp.selling_platform_id = pbv.selling_platform_id
-                    JOIN country c
-                        ON c.id = pbv.platform_country_id
-                    WHERE (sp.type = ?) AND sp.status = 1
-                        AND c.allow_sell = 1 AND c.status = 1";
-        }
-
-        if ($result = $this->db->query($sql, $type)) {
-            $this->include_vo();
-
-            $result_arr = [];
-
-            foreach ($result->result() as $row) {
-                $result_arr[] = ["platform_id" => $row->platform_id, "country_id" => $row->country_id];
-            }
-            return $result_arr;
-        }
-        return FALSE;
+        $where = ['sp.type' => $type, 'sp.status' => 1, 'c.allow_sell' => 1, 'c.status' => 1];
+        $option = ['limit' => '-1'];
+        $this->db->from('selling_platform AS sp');
+        $this->db->join('platform_biz_var AS pbv', "pbv.selling_platform_id = sp.selling_platform_id", "INNER");
+        $this->db->join('country AS c', "c.country_id = pbv.platform_country_id", "INNER");
+        return $this->commonGetList('SellingPlatformVo', $where, $option, "sp.*");
     }
 }

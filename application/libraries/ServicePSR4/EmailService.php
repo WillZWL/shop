@@ -56,7 +56,7 @@ class EmailService extends BaseService
         return $result;
     }
 
-    private function sendEmail($email)
+    public function sendEmail($email)
     {
         $phpmail = new PHPMailer;
 

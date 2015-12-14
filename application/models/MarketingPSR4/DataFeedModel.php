@@ -2,6 +2,7 @@
 namespace ESG\Panther\Models\Marketing;
 use ESG\Panther\Service\SearchspringProductFeedService;
 use ESG\Panther\Service\SellingPlatformService;
+use ESG\Panther\Service\AdminProductFeedService;
 
 class DataFeedModel extends \CI_Model
 {
@@ -20,6 +21,12 @@ class DataFeedModel extends \CI_Model
     {
         $searchSpringService = new SearchspringProductFeedService();
         $searchSpringService->genDataFeed($platform_id);
+    }
+
+    public function genAdminProductFeed($platform_type)
+    {
+        $adminProductFeedService = new AdminProductFeedService();
+        return $adminProductFeedService->genDataFeed($platform_type);
     }
 }
 
