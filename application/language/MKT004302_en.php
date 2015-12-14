@@ -1,6 +1,5 @@
 <?php
-	$lang = array(
-			"sku"=>"SKU",
-			"name"=>"NAME"
-		      );
-?>
+    $lang = [
+        "sku"=>"SKU",
+        "name"=>"NAME"
+    ];

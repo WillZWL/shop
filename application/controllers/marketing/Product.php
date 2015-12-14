@@ -1340,7 +1340,7 @@ html;
                         }
                     }
 
-                    var_dump($data["product"]);exit;
+                    //var_dump($data["product"]);exit;
                     if ($this->product_model->update("product", $data["product"])) {
                         // SBF 4402 warranty for different countries
                         // for receiving the changes of list

@@ -22,6 +22,11 @@ class CronDataFeed extends MY_Controller
         }
     }
 
+    public function genAdminProductFeed($platformType = 'WEBSITE')
+    {
+        $this->sc['dataFeedModel']->genAdminProductFeed(strtoupper($platformType));
+    }
+
     public function getAppId()
     {
         return $this->appId;

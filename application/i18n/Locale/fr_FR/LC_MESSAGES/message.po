@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2015-12-08 10:46+0800\n"
-"PO-Revision-Date: 2015-12-08 22:17+0800\n"
+"PO-Revision-Date: 2015-12-14 16:48+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -1834,7 +1834,7 @@ msgstr ""
 
 #: default/footer.php:10
 msgid " PAY WITH CONFIDENCE "
-msgstr "Payer en toute sécurité"
+msgstr "Payez en toute sécurité"
 
 #: default/footer.php:83
 msgid " SHOP WITH CONFIDENCE "
@@ -1871,7 +1871,7 @@ msgstr "Entrez votre adresse mail"
 
 #: default/footer.php:166
 msgid "Subscribe"
-msgstr "Inscrivez vous"
+msgstr "Inscrivez-vous"
 
 #: default/footer.php:170
 msgid "indicates required"
@@ -1947,7 +1947,7 @@ msgstr "France"
 
 #: default/header.php:151
 msgid "We won't be beaten on electronics!"
-msgstr "Nous ne seront pas vaincus sur l'électronique !"
+msgstr "Numéro 1 de l’électronique!"
 
 #: default/header.php:156
 msgid "Warranty"
@@ -1971,7 +1971,7 @@ msgstr "Inscrivez-vous"
 
 #: default/header.php:187
 msgid " Days Money Back Guarantee"
-msgstr "garantie remboursement"
+msgstr " jours de garantie remboursement"
 
 #: default/header.php:191
 msgid "Free Delivery For All Orders"
@@ -2623,12 +2623,12 @@ msgid "CATEGORIES"
 msgstr "Catégorie"
 
 #: added by manual
-msgid "LATEST ARRIVAL"
-msgstr "Dernières arrivées "
+msgid "latest arrival"
+msgstr "dernières arrivées"
 
 #: added by manual
-msgid "BEST SELLER"
-msgstr "Meilleur vendeur"
+msgid "best seller"
+msgstr "meilleur vendeur"
 
 #~ msgid "Not a valid fingerprint"
 #~ msgstr "L'empreinte digitale n'est pas valide "

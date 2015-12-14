@@ -6,7 +6,7 @@ class pricing_tools extends MY_Controller
     public $tool_path;
     public $default_platform_id;
 
-    private $appId = 'MKT0200';
+    private $appId = 'MKT0043';
     private $lang_id = 'en';
 
     public function __construct()

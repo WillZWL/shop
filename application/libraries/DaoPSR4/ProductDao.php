@@ -1077,4 +1077,48 @@ class ProductDao extends BaseDao
 
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
+
+    public function getAdminProductFeedDto($where = array(), $option = array(), $classname = "AdminProductFeedDto")
+    {
+        $this->db->from("product p");
+        $this->db->join("sku_mapping map", "map.sku = p.sku and map.ext_sys = 'WMS'", "LEFT");
+        $this->db->join("supplier_prod sp", "sp.prod_sku = p.sku and sp.order_default = 1");
+        $this->db->join("supplier s", "s.id = sp.supplier_id");
+        $this->db->join("product_content pc", "map.sku = pc.prod_sku AND pc.lang_id = 'en'", "LEFT");
+        $this->db->join("category cat", "cat.id = p.cat_id", "LEFT");
+        $this->db->join("category scat", "scat.id = p.sub_cat_id", "LEFT");
+        $this->db->join("category sscat", "sscat.id = p.sub_sub_cat_id", "LEFT");
+        $this->db->join("price pr", "p.sku = pr.sku AND pr.platform_id LIKE 'WEB%'", "LEFT");
+        $this->db->join("platform_biz_var pbv", "pbv.selling_platform_id = pr.platform_id", "LEFT");
+        $this->db->join("delivery_time dt", "pr.delivery_scenarioid = dt.scenarioid AND pbv.platform_country_id  = dt.country_id", "LEFT");
+        $this->db->group_by("p.sku");
+        $this->db->where($where);
+        $this->db->select("
+                    IFNULL(map.ext_sku, ' ') AS master_sku,
+                    p.sku,
+                    p.name AS product_name,
+                    pc.prod_name AS website_display_name,
+                    cat.name AS cat, scat.name AS sub_cat, IFNULL(sscat.name, ' ') AS sub_sub_cat,
+                    s.origin_country AS supplier_country,
+                    p.status as status, p.website_status,
+                    p.create_by, p.create_on, p.modify_by, p.modify_on,
+                    pc.youtube_id_1, pc.youtube_caption_1, pc.youtube_id_2, pc.youtube_caption_2,
+                    GROUP_CONCAT(pr.price) price,
+                    GROUP_CONCAT(pr.platform_id) platform_id,
+                    GROUP_CONCAT(CAST(CONCAT(' ', (CONCAT_WS('-', dt.ship_min_day, dt.ship_max_day))) AS CHAR)) as ship_day,
+                    GROUP_CONCAT(CAST(CONCAT(' ', (CONCAT_WS('-', dt.del_min_day, dt.del_max_day))) AS CHAR)) as delivery_day
+                ", false);
+        $rs = array();
+        if ($query = $this->db->get()) {
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $row) {
+                    $rs[] = $row;
+                }
+            }
+            return $rs;
+        } else {
+            return false;
+        }
+    }
+
 }

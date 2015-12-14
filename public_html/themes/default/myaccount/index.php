@@ -275,7 +275,7 @@
 				</div>
 				<input type="hidden" name="rma_id" value="<?=$rma_obj->getId();?>">
 				<input type="hidden" name="posted" value="1">
-				<button type="submit"><?= _('Submit') ?></button>
+				<button type="submit" class="btn btn-primary account_btn"><?= _('Submit') ?></button>
 			</form>
 		</div>
 
@@ -369,7 +369,7 @@
 						<fieldset class="medium"><input type="text" name="tel_3" dname="<?= _('Number') ?>" size="16" value="<?=$client_obj->getTel3();?>" notEmpty /></fieldset>
 					</li>
 					<li class="clear">
-						<button type="submit" class="border-radius-2"><?= _('Submit') ?></button>
+						<button type="submit" class="btn btn-primary account_btn"><?= _('Submit') ?></button>
 					</li>
 				</ul>
 				<input type="hidden" name="posted" value="1">
