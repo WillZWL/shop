@@ -29,6 +29,23 @@ class Display extends PUB_Controller
             show_404();
         }
 
+        if ($page == 'contact') {
+            switch (SITEVIEW) {
+                case 'dev.digitaldiscount.co.uk':
+                case 'www.digitaldiscount.co.uk':
+                    $data['contact_url_1'] = 'http://contact.digitaldiscount.co.uk/support/tickets/new?genaftersales=true';
+                    $data['contact_url_2'] = 'http://contact.digitaldiscount.co.uk/support/tickets/new?presales=true';
+                    $data['contact_url_3'] = 'http://contact.digitaldiscount.co.uk/support/tickets/new?faultorreturn=true';
+                    break;
+
+                default:
+                    $data['contact_url_1'] = 'http://contact.digitaldiscount.co.uk/support/tickets/new?genaftersales=true';
+                    $data['contact_url_2'] = 'http://contact.digitaldiscount.co.uk/support/tickets/new?presales=true';
+                    $data['contact_url_3'] = 'http://contact.digitaldiscount.co.uk/support/tickets/new?faultorreturn=true';
+                    break;
+            }
+        }
+
         $data["content"] = "display/" . $page;
         $this->load->view('display/view', $data);
     }
