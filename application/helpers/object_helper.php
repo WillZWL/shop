@@ -27,6 +27,42 @@ function set_value(&$obj, $value = [])
     }
 }
 
+function set_value_vo(&$obj, $value=array())
+{
+    $class_methods = get_class_methods($obj);
+    if (!empty($class_methods))
+    {
+        if (is_array($value))
+        {
+            foreach ($class_methods as $fct_name)
+            {
+                if (substr($fct_name,0,4) == "set_")
+                {
+                    $rskey = substr($fct_name,4);
+                    if (isset($value[$rskey]))
+                    {
+                        call_user_func(array($obj, "set_".$rskey), $value[$rskey]);
+                    }
+                }
+            }
+        }
+        elseif (is_object($value))
+        {
+            foreach ($class_methods as $fct_name)
+            {
+                if (substr($fct_name,0,4) == "set_")
+                {
+                    $rskey = substr($fct_name,4);
+                    if (!is_null($gvalue = @call_user_func(array($value, "get_".$rskey))))
+                    {
+                        call_user_func(array($obj, "set_".$rskey), $gvalue);
+                    }
+                }
+            }
+        }
+    }
+}
+
 function compare_object($old_obj, $new_obj, $trim_white_space = FALSE, $select_excl = [])
 {
     if (get_class($old_obj) == get_class($new_obj)) {

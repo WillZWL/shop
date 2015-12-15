@@ -35,6 +35,26 @@ class ExtCategoryMappingService extends BaseService
         return $this->getDao('ExtCategoryMapping')->getCategoryCombination($where, $option);
     }
 
+    public function createNewExtCategoryMapping($obj)
+    {
+        $newObj = new \ExtCategoryMappingVo();
+
+        // id come from VB is not reliable, should use auto-increment id
+        $newObj->setId((string) $obj->id);
+        $this->updateExtCategoryMapping($newObj, $obj);
+
+        return $newObj;
+    }
+
+    public function updateExtCategoryMapping($newObj, $oldObj)
+    {
+        $newObj->setExtParty((string) $oldObj->ext_party);
+        $newObj->setCategoryId((string) $oldObj->category_id);
+        $newObj->setExtId((string) $oldObj->ext_id);
+        $newObj->setCountryId((string) $oldObj->country_id);
+        $newObj->setStatus((string) $oldObj->status);
+    }
+
 }
 
 ?>

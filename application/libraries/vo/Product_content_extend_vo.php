@@ -15,6 +15,7 @@ class Product_content_extend_vo extends Base_vo
     private $instruction;
     private $apply_enhanced_listing;
     private $enhanced_listing;
+    private $stop_sync;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '127.0.0.1';
     private $create_by;
@@ -212,6 +213,17 @@ class Product_content_extend_vo extends Base_vo
     public function set_feature_original($value)
     {
         $this->feature_original = $value;
+        return $this;
+    }
+
+    public function get_stop_sync()
+    {
+        return $this->stop_sync;
+    }
+
+    public function set_stop_sync($value)
+    {
+        $this->stop_sync = $value;
         return $this;
     }
 }

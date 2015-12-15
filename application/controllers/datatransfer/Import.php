@@ -111,15 +111,6 @@ class Import extends MY_Controller
         print $feed;
     }
 
-    /*public function supplierproduct()
-    {
-        $xml = file_get_contents('php://input');
-        // header('content-type: text/xml');
-        // print $xml;
-        // exit;
-        $feed =$this->sc['VbDataTransferSupplierProduct']->startProcess($xml);
-        print $feed;
-    }*/
     /********************** end product tables **********************/
 
     /********************** start master tables **********************/
@@ -213,6 +204,32 @@ class Import extends MY_Controller
     }
 
     /********************** end RA tables **********************/
+
+
+    /********************** start google mapping tables **********************/
+
+    public function categorymapping()
+    {
+        $xml = file_get_contents('php://input');
+        $feed = $this->sc['VbDataTransferCategoryMapping']->startProcess($xml);
+        print $feed;
+    }
+
+    public function extcategorymapping()
+    {
+        $xml = file_get_contents('php://input');
+        $feed = $this->sc['VbDataTransferExtCategoryMapping']->startProcess($xml);
+        print $feed;
+    }
+
+    public function externalcategory()
+    {
+        $xml = file_get_contents('php://input');
+        $feed = $this->sc['VbDataTransferExternalCategory']->startProcess($xml);
+        print $feed;
+    }
+
+    /********************** end google mapping tables **********************/
 
      public function index()
      {

@@ -322,6 +322,24 @@ class ProductApiService extends BaseService
          return $lang_osd;
     }
 
+    public function stopSyncArrToBit($stop_sync_array)
+    {
+        $stop_sync = 0;
+        //product content
+        //0 NA / 1 = prod_name / 2 = contents / 3 = keyworks / 4 = detail_desc
+        //product content extend
+        //0 NA / 1 = feature / 2 = specification / 3 = enhanced_listing
+        if (count($stop_sync_array) == 0) {
+            $stop_sync = 1;
+         } else {
+            foreach($stop_sync_array as $check) {
+                $stop_sync += $check;
+            }
+         }
+         return $stop_sync;
+    }
+
+
     public function getSkuMappingDao()
     {
         return $this->sku_mapping_dao;

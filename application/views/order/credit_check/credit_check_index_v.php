@@ -395,7 +395,7 @@
         InitPMGW(document.fm.payment_gateway_id);
         document.fm.payment_gateway_id.value = '<?=$this->input->get("payment_gateway_id")?>';
     </script>
-    <?= $this->paginationService->create_links_with_style() ?>
+    <?= $this->paginationService->createLinksWithStyle() ?>
     <?= $notice["js"] ?>
 </div>
 </body>

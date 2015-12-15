@@ -29,6 +29,7 @@ class Product_content_vo extends Base_vo
     private $youtube_id_2;
     private $youtube_caption_1;
     private $youtube_caption_2;
+    private $stop_sync;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '127.0.0.1';
     private $create_by;
@@ -379,6 +380,17 @@ class Product_content_vo extends Base_vo
     public function set_contents_original($value)
     {
         $this->contents_original = $value;
+        return $this;
+    }
+
+    public function get_stop_sync()
+    {
+        return $this->stop_sync;
+    }
+
+    public function set_stop_sync($value)
+    {
+        $this->stop_sync = $value;
         return $this;
     }
 
