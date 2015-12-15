@@ -9,18 +9,18 @@
         overflow-y:hidden !important;
     }
 </style>
-<div id="contact_us">
+<div class="contact">
     <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="center-block header-desc" style="max-width: 950px;">
-                    <div class="container-fluid">
-                        <h1 class="text-left"><?=_('CONTACT US')?></h1>
-                        <p class="text-left">
+                <div class="center-block">
+                    <div class="">
+                        <h2 class="text-left"><?=_('CONTACT US')?></h2>
+                        <p class="text-left note-alert">
                             <?=_('Having an issue? There are a number of ways you can get in touch with our experienced Sales and Customer Service teams. ')?>
                             <?=_('Select one of the enquiry types below and we\'ll repond to you as soon as we can!')?>
                         </p>
                     </div>
-                    <div class="container-fluid">
+                    <div class="container-fluid img-box">
                         <div class="row">
                             <div class="col-md-4">
                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top"
