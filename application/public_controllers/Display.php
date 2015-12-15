@@ -30,20 +30,10 @@ class Display extends PUB_Controller
         }
 
         if ($page == 'contact') {
-            switch (SITEVIEW) {
-                case 'dev.digitaldiscount.co.uk':
-                case 'www.digitaldiscount.co.uk':
-                    $data['contact_url_1'] = 'http://contact.digitaldiscount.co.uk/support/tickets/new?genaftersales=true';
-                    $data['contact_url_2'] = 'http://contact.digitaldiscount.co.uk/support/tickets/new?presales=true';
-                    $data['contact_url_3'] = 'http://contact.digitaldiscount.co.uk/support/tickets/new?faultorreturn=true';
-                    break;
-
-                default:
-                    $data['contact_url_1'] = 'http://contact.digitaldiscount.co.uk/support/tickets/new?genaftersales=true';
-                    $data['contact_url_2'] = 'http://contact.digitaldiscount.co.uk/support/tickets/new?presales=true';
-                    $data['contact_url_3'] = 'http://contact.digitaldiscount.co.uk/support/tickets/new?faultorreturn=true';
-                    break;
-            }
+            $server_name = str_replace(['www.'], '', $_SERVER['SERVER_NAME']);
+            $data['contact_url_1'] = 'http://contact.'  . $server_name . '/support/tickets/new?genaftersales=true';
+            $data['contact_url_2'] = 'http://contact.'  . $server_name . '/support/tickets/new?presales=true';
+            $data['contact_url_3'] = 'http://contact.'  . $server_name . '/support/tickets/new?faultorreturn=true';
         }
 
         $data["content"] = "display/" . $page;
