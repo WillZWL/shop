@@ -3,6 +3,7 @@
     <title><?= $lang["title"] ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="<?= base_url() ?>css/bootstrap.min.css" type="text/css" media="all" />
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
 </head>
@@ -134,7 +135,7 @@
                 <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')"
                 <?php
                     if (!($is_edit) && $obj->getReasonCat() <> "OT"):
-                ?>onClick="Redirect('<?= site_url('order/on_hold_admin/reason/'.$offset.'/' . $obj->getId()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"
+                ?>onClick="Redirect('<?= site_url('order/on_hold_admin/reason/'. $obj->getId()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"
                 <?php
                     endif;
                 ?>>
@@ -144,7 +145,7 @@
                     <?php
                     if ($is_edit && $obj->getReasonCat() <> "OT") :
                         ?>
-                        <form name="fm_edit" action="<?= base_url() ?>order/on_hold_admin/reason/<?= $offset ?>/?<?= $_SERVER['QUERY_STRING'] ?>" method="post" onSubmit="return CheckForm(this)">
+                        <form name="fm_edit" action="<?= base_url() ?>order/on_hold_admin/reason/?<?= $_SERVER['QUERY_STRING'] ?>" method="post" onSubmit="return CheckForm(this)">
                             <input type="hidden" name="posted" value="1">
                             <input type="hidden" id="action" name="action" value="edit">
                             <input type="hidden" name="id" value="<?= $obj->getId() ?>">
@@ -190,7 +191,7 @@
                             <td align="center">
                                 <input type="submit" value="<?= $lang["update"] ?>">
                                 <input onclick="document.getElementById('action').value = 'delete';" type="submit" value="<?= $lang["delete"] ?>"> &nbsp;
-                                <input type="button" value="<?= $lang["back"] ?>" onClick="Redirect('<?= site_url('order/on_hold_admin/reason/'.$offset.'/') ?>?<?= $_SERVER['QUERY_STRING'] ?>')">
+                                <input type="button" value="<?= $lang["back"] ?>" onClick="Redirect('<?= site_url('order/on_hold_admin/reason/') ?>?<?= $_SERVER['QUERY_STRING'] ?>')">
                             </td>
                         </form>
                     <?php

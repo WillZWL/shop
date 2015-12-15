@@ -177,11 +177,6 @@ class FreightModel extends \CI_Model
         return $this->weightCatService->getDao('WeightCatCharge')->delete($where);
     }
 
-    public function getOriginCountryList()
-    {
-        return $this->freightCatService->getOriginCountryList();
-    }
-
     public function getFullFreightCatChargeList($where = [], $option = [])
     {
         return $this->freightCatService->getFullFreightCatChargeList($where, $option);

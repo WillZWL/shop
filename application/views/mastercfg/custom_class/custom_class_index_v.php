@@ -3,6 +3,7 @@
     <title><?= $lang["title"] ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="<?= base_url() ?>css/bootstrap.min.css" type="text/css" media="all" />
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
 </head>
@@ -12,7 +13,7 @@
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td height="30" class="title"><?= $lang["title"] ?></td>
-            <td width="400" align="right" class="title"><input type="button" value="<?= $lang["default_mapping"] ?>"
+            <td width="400" align="right" style="background:#286512"><input type="button" value="<?= $lang["default_mapping"] ?>"
                                                                class="button"
                                                                onclick="Redirect('<?= site_url('mastercfg/custom_class/sub_cat/' . $country_id . '/') ?>')"><input
                     type="button" value="<?= $lang["edit_specific_sku"] ?>" class="button"
@@ -140,7 +141,7 @@ if ($country_id) :
                 $is_edit = ($cmd == "edit" && $cc_id == $cc->getId());
                 ?>
 
-                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" <?=(!($is_edit)) ? "onClick=Redirect('". site_url('mastercfg/custom_class/index/' . $country_id ."/".$cc->getId())."/". $offset ."/?".$_SERVER['QUERY_STRING']."')" : ""?> onMouseOut="RemoveClassName(this, 'highlight')">
+                <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')" <?=(!($is_edit)) ? "onClick=Redirect('". site_url('mastercfg/custom_class/index/' . $country_id ."/".$cc->getId())."/?".$_SERVER['QUERY_STRING']."')" : ""?> onMouseOut="RemoveClassName(this, 'highlight')">
 
                     <td height="20"><img src="<?= base_url() ?>images/info.gif"
                                          title='<?= $lang["create_on"] ?>:<?= $cc->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $cc->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $cc->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $cc->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $cc->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $cc->getModifyBy() ?>'>

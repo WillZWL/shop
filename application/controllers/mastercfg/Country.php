@@ -10,7 +10,7 @@ class Country extends MY_Controller
         return $this->appId;
     }
 
-    public function index($offset = 0)
+    public function index()
     {
         $sub_id = $this->getAppId().'01_'.$this->getLangId();
 
@@ -56,11 +56,9 @@ class Country extends MY_Controller
         $sort = $this->input->get('sort');
         $order = $this->input->get('order');
 
-        $limit = '20';
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
-        $pconfig['base_url'] = $_SESSION['clist_page'];
-        $option['limit'] = $limit;
-        $option['offset'] = $offset;
         if (empty($sort)) {
             $sort = 'status';
         }
@@ -71,17 +69,14 @@ class Country extends MY_Controller
 
         $option['orderby'] = $sort.' '.$order;
 
-
-
-        // $clist = $this->sc['Country']->getDao('Country')->getListWRmaFc($where, $option);
         $clist = $this->sc['Country']->getDao('Country')->getList($where, $option);
-        // var_dump($this->sc['Country']->getDao('Country')->db->last_query());die;
-        $total = $this->sc['Country']->getDao('Country')->getListWRmaFc($where, ['num_rows' => 1]);
+        $data["total"] = $this->sc['Country']->getDao('Country')->getListWRmaFc($where, ['num_rows' => 1]);
 
         $config['base_url'] = base_url('mastercfg/country/index');
-        $config['total_rows'] = $total;
-        $config['per_page'] = $limit;
-
+        $config['total_rows'] = $data["total"];
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
 

@@ -55,6 +55,7 @@ class BrandDao extends BaseDao
                 return $rs;
             }
         } else {
+            $this->db->where($where);
             $this->db->select('COUNT(*) AS total');
             if ($query = $this->db->get()) {
                 return $query->row()->total;
