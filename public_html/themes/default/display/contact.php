@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top"
-                                    href="http://contact.digitaldiscount.co.uk/support/tickets/new?genaftersales=true" title=""
+                                    href="<?= $contact_url_1 ?>" title=""
                                     data-original-title="<?=_('GENERAL AND AFTER-SALES')?>">
                                     <div class="box img1 container-fluid">
                                         <?=_('GENERAL AND AFTER-SALES')?>
@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-md-4">
                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top"
-                                    href="http://contact.digitaldiscount.co.uk/support/tickets/new?presales=true" title=""
+                                    href="<?= $contact_url_2 ?>" title=""
                                     data-original-title="<?=_('PRE-SALES')?>">
                                     <div class="box img2 container-fluid">
                                         <?=_('PRE-SALES')?>
@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-md-4">
                                 <a class="iframe-link" data-toggle="tooltip" data-placement="top"
-                                    href="http://contact.digitaldiscount.co.uk/support/tickets/new?faultorreturn=true" title=""
+                                    href="<?= $contact_url_3 ?>" title=""
                                     data-original-title="<?=_('FAULTY GOODS OR RETURNED ITEMS')?>">
                                     <div class="box img3 container-fluid">
                                         <?=_('FAULTY GOODS OR RETURNED ITEMS')?>
