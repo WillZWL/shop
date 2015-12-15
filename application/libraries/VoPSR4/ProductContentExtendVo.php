@@ -12,6 +12,7 @@ class ProductContentExtendVo extends \BaseVo
     private $instruction;
     private $apply_enhanced_listing = 'N';
     private $enhanced_listing;
+    private $stop_sync = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -152,6 +153,18 @@ class ProductContentExtendVo extends \BaseVo
     public function getEnhancedListing()
     {
         return $this->enhanced_listing;
+    }
+
+    public function setStopSync($stop_sync)
+    {
+        if ($stop_sync !== null) {
+            $this->stop_sync = $stop_sync;
+        }
+    }
+
+    public function getStopSync()
+    {
+        return $this->stop_sync;
     }
 
     public function setCreateOn($create_on)

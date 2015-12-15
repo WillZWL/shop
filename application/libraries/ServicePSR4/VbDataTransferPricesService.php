@@ -65,7 +65,7 @@ class VbDataTransferPricesService extends VbDataTransferService
                 }
 
                 if (($prod_obj->getClearance() == 0)) {
-                    $new_margin = $this->getService('Price')->getTrailCalcuMargin($platform_id, $sku, $required_selling_price);
+                    $new_margin = $this->getService('Price')->getTrailCalcuMargin($platform_id, $sku, $price_obj->getPrice());
                     $pricing_rule_obj = $this->getPriceRule($vb_price_obj);
 
                     if ($pricing_rule_obj) {
@@ -74,7 +74,16 @@ class VbDataTransferPricesService extends VbDataTransferService
                         if ($new_margin * 100 < $minimun_margin) {
                             $reason = "Error in margin";
                             $result_status = 6;
-                            continue;
+
+                            //In the case of a new (insert) price whose new margin is less than the minimum margin in the rules table
+                            //We will insert this price record with the original VB price (not the price after applying the rules)
+                            if ($action == 'update') {
+                                continue;
+                            }
+                            else
+                            {
+                                $price_obj->setPrice($required_selling_price);
+                            }
                         }
                     }
                     $this->getDao('Price')->$action($price_obj);

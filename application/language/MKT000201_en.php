@@ -44,6 +44,7 @@
 		"bundle_discount"=>"Bundle Discount",
 		"stop_sync_display_name"=>"Stop Sync Display Name",
 		"stop_sync_priority"=>"Stop Sync Priority",
+		"tip_stop_sync"=>"(tick before make changes in VB)",
 		"sponsored"=>"Sponsored",
 		);
 ?>

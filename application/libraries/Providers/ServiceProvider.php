@@ -334,6 +334,18 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\VbProductImageService();
         };
 
+        $serviceContainer['VbDataTransferExternalCategory'] = function () {
+            return new S\VbDataTransferExternalCategoryService();
+        };
+
+        $serviceContainer['VbDataTransferExtCategoryMapping'] = function () {
+            return new S\VbDataTransferExtCategoryMappingService();
+        };
+
+        $serviceContainer['VbDataTransferCategoryMapping'] = function () {
+            return new S\VbDataTransferCategoryMappingService();
+        };
+
         $serviceContainer['Affiliate'] = function () {
             return new S\AffiliateService();
         };

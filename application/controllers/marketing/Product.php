@@ -701,7 +701,7 @@ html;
                 $_POST["website_status"] = 'I';
                 $_POST["sourcing_status"] = 'A';
                 $_POST["website_quantity"] = $_POST["quantity"] = 0;
-                set_value($data["product"], $_POST);
+                set_value_vo($data["product"], $_POST);
 
                 $data["supp_prod"] = $this->product_model->get_supplier_prod();
                 $prod_custom_class_vo = $this->product_model->get_product_custom_classification();
@@ -905,7 +905,7 @@ html;
                 $_POST["website_status"] = 'I';
                 $_POST["sourcing_status"] = 'A';
                 $_POST["website_quantity"] = $_POST["quantity"] = 0;
-                set_value($data["product"], $_POST);
+                set_value_vo($data["product"], $_POST);
 
                 $data["supp_prod"] = $this->product_model->get_supplier_prod();
                 $prod_custom_class_vo = $this->product_model->get_product_custom_classification();
@@ -1192,6 +1192,7 @@ html;
         if ($this->input->post('posted')) {
             unset($_SESSION["NOTICE"]);
             if (isset($_SESSION["product_obj"][$sku])) {
+
                 $this->product_model->include_vo("product");
                 $this->product_model->product_service->get_sku_map_dao()->include_vo("sku_mapping");
 
@@ -1292,7 +1293,7 @@ html;
                     }
                     unset($_POST["before_update_website_status"]);
                     unset($_POST["before_expected_delivery_date"]);
-                    set_value($data["product"], $_POST);
+                    set_value_vo($data["product"], $_POST);
 
                     $config['upload_path'] = IMG_PH;
                     $config['allowed_types'] = 'gif|jpg|jpeg|png';
@@ -1501,7 +1502,10 @@ html;
                             $this->product_model->include_pc_vo();
                             $data["prod_cont"] = unserialize($_SESSION["prod_cont_vo"][$sku]);
 
-                            set_value($data["prod_cont"], $_POST);
+                            set_value_vo($data["prod_cont"], $_POST);
+
+                            $stop_sync_pc = $this->sc['ProductApi']->stopSyncArrToBit($_POST['stop_sync_pc']);
+                            $data["prod_cont"]->set_stop_sync($stop_sync_pc);
 
                             $str = explode("\n", trim($this->input->post('keywords')));
 
@@ -1580,7 +1584,11 @@ html;
                             $this->product_model->include_pcext_vo();
                             $data["prod_cont_ext"] = unserialize($_SESSION["prod_cont_ext_vo"][$sku]);
 
-                            set_value($data["prod_cont_ext"], $_POST);
+                            set_value_vo($data["prod_cont_ext"], $_POST);
+
+                            $stop_sync_pce = $this->sc['ProductApi']->stopSyncArrToBit($_POST['stop_sync_pce']);
+                            $data["prod_cont_ext"]->set_stop_sync($stop_sync_pce);
+
                             $data["prod_cont_ext"]->set_prod_sku($sku);
                             $data["prod_cont_ext"]->set_lang_id($_POST['lang_id']);
 
@@ -1610,7 +1618,7 @@ html;
                                 $data["prod_feed"][$feed]["feeder"] = $feed;
                                 $prod_feed_obj = clone $prod_feed_vo;
                                 $data["prod_feed"][$feed]["sku"] = $sku;
-                                set_value($prod_feed_obj, $data["prod_feed"][$feed]);
+                                set_value_vo($prod_feed_obj, $data["prod_feed"][$feed]);
                                 $prod_feed_obj->set_status($_POST["prod_feed"][$feed]["status"] ? 1 : 0);
                                 if (($prod_feed_obj->get_status() || ($prod_feed_obj->get_status() == 0 && $_POST["prod_feed"][$feed]["value_1"] != "")) && $this->product_feed_service->insert($prod_feed_obj) === FALSE) {
                                     $_SESSION["NOTICE"] = __LINE__ . " " . $this->db->_error_message();
@@ -1987,9 +1995,9 @@ html;
         if ($sub_cat_id) {
             $lang_list = $this->product_model->get_list("language", array("status" => 1), array("orderby" => "lang_name ASC"));
             foreach ($lang_list AS $lang_obj) {
-                $temp_arr = $this->product_model->get_full_psd_w_lang($sub_cat_id, $sku, $lang_obj->get_id());
+                $temp_arr = $this->product_model->get_full_psd_w_lang($sub_cat_id, $sku, $lang_obj->get_lang_id());
                 foreach ($temp_arr AS $obj) {
-                    $psd_list[$lang_obj->get_id()][$obj->get_psg_name()][$obj->get_ps_name()] = $obj;
+                    $psd_list[$lang_obj->get_lang_id()][$obj->get_psg_name()][$obj->get_ps_name()] = $obj;
                 }
             }
             $data["psd_list"] = $psd_list;
@@ -2108,17 +2116,17 @@ html;
         }
 
         foreach ($lang_list AS $lang_obj) {
-            $temp_arr = $this->product_model->get_full_psd_w_lang($sub_cat_id, $sku, $lang_obj->get_id());
+            $temp_arr = $this->product_model->get_full_psd_w_lang($sub_cat_id, $sku, $lang_obj->get_lang_id());
             foreach ($temp_arr AS $obj) {
-                $psd_list[$lang_obj->get_id()][$obj->get_psg_name()][$obj->get_ps_name()] = $obj;
+                $psd_list[$lang_obj->get_lang_id()][$obj->get_psg_name()][$obj->get_ps_name()] = $obj;
             }
 
 
             // ====================================== not working old codes =================================
-            $data["product_banner"][$lang_obj->get_id()] = $this->product_model->get_prod_banner(array("sku" => $sku, "status" => 1));
-            if ($data["product_banner"][$lang_obj->get_id()]) {
-                $image_id = $data["product_banner"][$lang_obj->get_id()]->get_image_id();
-                $data["prod_banner_w_graphic"][$lang_obj->get_id()] = $this->product_model->get_graphic(array("id" => $image_id));
+            $data["product_banner"][$lang_obj->get_lang_id()] = $this->product_model->get_prod_banner(array("sku" => $sku, "status" => 1));
+            if ($data["product_banner"][$lang_obj->get_lang_id()]) {
+                $image_id = $data["product_banner"][$lang_obj->get_lang_id()]->get_image_id();
+                $data["prod_banner_w_graphic"][$lang_obj->get_lang_id()] = $this->product_model->get_graphic(array("id" => $image_id));
             }
         }
 
@@ -2128,8 +2136,8 @@ html;
         #SBF2701
         $data["lang_list_str"] = '';
         foreach ($data["lang_list"] as $v) {
-            if ($v->get_id() != "en")
-                $data["lang_list_str"] .= $v->get_id() . ",";
+            if ($v->get_lang_id() != "en")
+                $data["lang_list_str"] .= $v->get_lang_id() . ",";
         }
 
         $data["lang_list_str"] = rtrim($data["lang_list_str"], ',');

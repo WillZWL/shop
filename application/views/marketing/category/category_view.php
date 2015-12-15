@@ -161,7 +161,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="field"><?= $lang["stop_sync_display_name"] ?></td>
+                                            <td class="field"><?= $lang["stop_sync_display_name"] ?><br><?= $lang["tip_stop_sync"] ?></td>
                                             <td height="20" valign="top" class="value" align="left" colspan="2">
                                                 <input type="checkbox" name="stop_sync_name[<?= $cur_lang_id ?>]" value="1" onChange="confirmStopSyncName(this)" <?=$cur_stop_sync_name?"CHECKED":""?> style="vertical-align:middle;margin-left:10px;">
                                             </td>
@@ -217,7 +217,7 @@
                 </td>
             </tr>
             <tr>
-                <td width="142" height="20" valign="top" class="field" align="right"><?= $lang["stop_sync_priority"] ?></td>
+                <td width="142" height="20" valign="top" class="field" align="right"><?= $lang["stop_sync_priority"] ?><br><?= $lang["tip_stop_sync"] ?></td>
                 <td height="20" valign="top" class="value" align="left" colspan="2">
                     <input type="checkbox" name="stop_sync_priority" value="1" onChange="confirmStopSync(this)" <?=$cat_obj->getStopSyncPriority()?"CHECKED":""?> style="vertical-align:middle;margin-left:10px;"></div>
                 </td>

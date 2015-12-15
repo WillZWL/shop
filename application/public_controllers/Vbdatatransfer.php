@@ -1,70 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-
-use ESG\Panther\Service\VbDataTransferPricesService;
-
-use ESG\Panther\Service\VbDataTransferBrandService;
-use ESG\Panther\Service\VbDataTransferCategoryExtendService;
-use ESG\Panther\Service\VbDataTransferCategoryService;
-use ESG\Panther\Service\VbDataTransferColourExtendService;
-use ESG\Panther\Service\VbDataTransferColourService;
-use ESG\Panther\Service\VbDataTransferFreightCatService;
-use ESG\Panther\Service\VbDataTransferVersionService;
-
-use ESG\Panther\Service\VbDataTransferProductContentExtendService;
-use ESG\Panther\Service\VbDataTransferProductContentService;
-use ESG\Panther\Service\VbDataTransferProductCustomClassService;
-use ESG\Panther\Service\VbDataTransferProductIdentifierService;
-use ESG\Panther\Service\VbDataTransferProductKeywordService;
-use ESG\Panther\Service\VbDataTransferProductNoteService;
-use ESG\Panther\Service\VbDataTransferProductsService;
-use ESG\Panther\Service\VbDataTransferProductWarrantyService;
-use ESG\Panther\Service\VbDataTransferSupplierProductService;
-use ESG\Panther\Service\VbProductImageService;
-
-use ESG\Panther\Service\VbDataTransferRaGroupContentService;
-use ESG\Panther\Service\VbDataTransferRaGroupProductService;
-use ESG\Panther\Service\VbDataTransferRaGroupService;
-use ESG\Panther\Service\VbDataTransferRaProdCatService;
-use ESG\Panther\Service\VbDataTransferRaProductService;
-
 class Vbdatatransfer extends PUB_Controller
 {
 
 	public function  __construct()
 	{
         parent::__construct();
-		//price
-        $this->vbDataTransferPricesService = new VbDataTransferPricesService;
-
-		//product
-        $this->vbDataTransferProductsService = new VbDataTransferProductsService;
-        $this->vbDataTransferProductContentExtendService = new VbDataTransferProductContentExtendService;
-        $this->vbDataTransferProductContentService = new VbDataTransferProductContentService;
-        $this->vbDataTransferProductCustomClassService = new VbDataTransferProductCustomClassService;
-        $this->vbDataTransferProductIdentifierService = new VbDataTransferProductIdentifierService;
-        $this->vbDataTransferProductKeywordService = new VbDataTransferProductKeywordService;
-        $this->vbDataTransferProductNoteService = new VbDataTransferProductNoteService;
-        $this->vbDataTransferProductWarrantyService = new VbDataTransferProductWarrantyService;
-        $this->vbDataTransferSupplierProductService = new VbDataTransferSupplierProductService;
-        $this->vbProductImageService = new VbProductImageService;
-
-		//master tables
-        $this->vbDataTransferBrandService = new VbDataTransferBrandService;
-        $this->vbDataTransferCategoryService = new VbDataTransferCategoryService;
-        $this->vbDataTransferCategoryExtendService = new VbDataTransferCategoryExtendService;
-        $this->vbDataTransferColourService = new VbDataTransferColourService;
-        $this->vbDataTransferColourExtendService = new VbDataTransferColourExtendService;
-        $this->vbDataTransferFreightCatService = new VbDataTransferFreightCatService;
-        $this->vbDataTransferVersionService = new VbDataTransferVersionService;
-
-		//RA
-        $this->vbDataTransferRaGroupContentService = new VbDataTransferRaGroupContentService;
-        $this->vbDataTransferRaGroupProductService = new VbDataTransferRaGroupProductService;
-        $this->vbDataTransferRaGroupService = new VbDataTransferRaGroupService;
-        $this->vbDataTransferRaProdCatService = new VbDataTransferRaProdCatService;
-        $this->vbDataTransferRaProductService = new VbDataTransferRaProductService;
 	}
 
 	public function price()

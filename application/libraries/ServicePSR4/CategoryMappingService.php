@@ -52,6 +52,29 @@ class CategoryMappingService extends BaseService
         return $this->getDao('CategoryMapping')->getGooglebaseCatListWithCountry($where, $option);
     }
 
+    public function createNewCategoryMapping($obj)
+    {
+        $newObj = new \CategoryMappingVo();
+
+        // id come from VB is not reliable, should use auto-increment id
+        $newObj->setExpParty((string) $obj->ext_party);
+        $newObj->setLevel((string) $obj->level);
+        $newObj->setCategoryMappingId((string) $obj->id);
+        $newObj->setLangId((string) $obj->lang_id);
+        $newObj->setCountryId((string) $obj->country_id);
+        $this->updateCategoryMapping($newObj, $obj);
+
+        return $newObj;
+    }
+
+    public function updateCategoryMapping($newObj, $oldObj)
+    {
+        $newObj->setExtId((string) $oldObj->ext_id);
+        $newObj->setExtName((string) $oldObj->ext_name);
+        $newObj->setProductName((string) $oldObj->product_name);
+        $newObj->setStatus((string) $oldObj->status);
+    }
+
 }
 
 

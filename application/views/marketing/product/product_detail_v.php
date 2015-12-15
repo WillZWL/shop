@@ -705,7 +705,7 @@
                                         foreach ($lang_list as $language)
                                         {
                                             ?>
-                                            <option value="<?=$language->get_id()?>" <?=$selectedb[$language->get_id()]?>><?=strtoupper($language->get_lang_id()).' - '.$language->get_lang_name()?>
+                                            <option value="<?=$language->get_lang_id()?>" <?=$selectedb[$language->get_lang_id()]?>><?=strtoupper($language->get_lang_id()).' - '.$language->get_lang_name()?>
                                                 <?php
                                             }
                                         }
@@ -732,6 +732,9 @@
                                     <div><label for="prod_name_original" style="font-weight:bold;"><?=$lang["manual_translation"]?></label>
                                         <input type="hidden" name="prod_name_original" value="0">
                                         <input type="checkbox" name="prod_name_original" value="1" onChange="changeOriginalContent(this)" <?=$prod_cont->get_prod_name_original()?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
+                                    <div>
+                                        <label for="stop_sync" style="font-weight:bold;"><?=$lang["stop_sync"]?></label>
+                                        <input type="checkbox" name="stop_sync_pc[0]" value="2" onChange="StopSync(this)" <?=($prod_cont->get_stop_sync() & (1 << 1))?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
                                     </td>
                                     <td class="value"><input name="prod_name" value="<?=htmlspecialchars($prod_cont->get_prod_name())?>" class="input"></td>
                                     <td class="field">
@@ -739,6 +742,9 @@
                                         <div><label for="keywords_original" style="font-weight:bold;"><?=$lang["manual_translation"]?></label>
                                             <input type="hidden" name="keywords_original" value="0">
                                             <input type="checkbox" name="keywords_original" value="1" onChange="changeOriginalContent(this)" <?=$prod_cont->get_keywords_original()?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
+                                        <div>
+                                            <label for="stop_sync" style="font-weight:bold;"><?=$lang["stop_sync"]?></label>
+                                            <input type="checkbox" name="stop_sync_pc[2]" value="8" onChange="StopSync(this)" <?=($prod_cont->get_stop_sync() & (1 << 3))?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
                                         </td>
                                         <td class="value">
                                             <textarea name="keywords" class="input" rows="8"><?=$keywords?></textarea>
@@ -772,6 +778,9 @@
                                             <div><label for="detail_desc_original" style="font-weight:bold;"><?=$lang["manual_translation"]?></label>
                                                 <input type="hidden" name="detail_desc_original" value="0">
                                                 <input type="checkbox" name="detail_desc_original" value="1" onChange="changeOriginalContent(this)" <?=$prod_cont->get_detail_desc_original()?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
+                                            <div>
+                                                <label for="stop_sync" style="font-weight:bold;"><?=$lang["stop_sync"]?></label>
+                                                <input type="checkbox" name="stop_sync_pc[3]" value="16" onChange="StopSync(this)" <?=($prod_cont->get_stop_sync() & (1 << 4))?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
                                             </td>
                                             <td class="value"><textarea name="detail_desc" class="input" rows="5"><?=htmlspecialchars(trim($prod_cont->get_detail_desc()))?></textarea></td>
                                         </tr>
@@ -781,6 +790,9 @@
                                                 <div><label for="contents_original" style="font-weight:bold;"><?=$lang["manual_translation"]?></label>
                                                     <input type="hidden" name="contents_original" value="0">
                                                     <input type="checkbox" name="contents_original" value="1" onChange="changeOriginalContent(this)" <?=htmlspecialchars($prod_cont->get_contents_original())?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
+                                                <div>
+                                                    <label for="stop_sync" style="font-weight:bold;"><?=$lang["stop_sync"]?></label>
+                                                    <input type="checkbox" name="stop_sync_pc[1]" value="4" onChange="StopSync(this)" <?=($prod_cont->get_stop_sync() & (1 << 2))?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
                                                 </td>
                                                 <td class="value"><textarea name="contents" class="input" rows="11"><?=htmlspecialchars($prod_cont->get_contents())?></textarea></td>
                                                 <td class="field" valign="top">
@@ -788,6 +800,9 @@
                                                     <div><label for="feature_original" style="font-weight:bold;"><?=$lang["manual_translation"]?></label>
                                                         <input type="hidden" name="feature_original" value="0">
                                                         <input type="checkbox" name="feature_original" value="1" onChange="changeOriginalContent(this)" <?=htmlspecialchars($prod_cont_ext->get_feature_original())?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
+                                                    <div>
+                                                        <label for="stop_sync_pce" style="font-weight:bold;"><?=$lang["stop_sync"]?></label>
+                                                        <input type="checkbox" name="stop_sync_pce[0]" value="2" onChange="StopSync(this)" <?=($prod_cont_ext->get_stop_sync() & (1 << 1))?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
                                                     </td>
                                                     <td class="value"><textarea name="feature" class="input" rows="11"><?=htmlspecialchars($prod_cont_ext->get_feature())?></textarea></td>
                                                 </tr>
@@ -797,6 +812,9 @@
                                                         <div><label for="spec_original" style="font-weight:bold;"><?=$lang["manual_translation"]?></label>
                                                             <input type="hidden" name="spec_original" value="0">
                                                             <input type="checkbox" name="spec_original" value="1" onChange="changeOriginalContent(this)" <?=htmlspecialchars($prod_cont_ext->get_spec_original())?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
+                                                        <div>
+                                                            <label for="stop_sync_specification" style="font-weight:bold;"><?=$lang["stop_sync"]?></label>
+                                                            <input type="checkbox" name="stop_sync_pce[1]" value="4" onChange="StopSync(this)" <?=($prod_cont_ext->get_stop_sync() & (1 << 2))?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
                                                         </td>
                                                         <td class="value"><textarea name="specification" class="input" rows="5"><?=htmlspecialchars(@call_user_func(array($prod_cont_ext, "get_specification")))?></textarea></td>
                                                         <td class="field" valign="top"><?=$lang["requirement"]?></td>
@@ -836,6 +854,9 @@
                                                                 </div>
                                                                 <div id = "preview_full_enhance_modal" style="display:none">hello</div>
                                                                 <div id = "edit_enhance_modal" style="display:none"><?=$edit_enhance_content?></div>
+                                                            <div>
+                                                                <label for="stop_sync_pce" style="font-weight:bold;"><?=$lang["stop_sync"]?></label>
+                                                                <input type="checkbox" name="stop_sync_pce[2]" value="8" onChange="StopSync(this)" <?=($prod_cont_ext->get_stop_sync() & (1 << 3))?"CHECKED":""?> style="vertical-align:text-top;margin-left:10px;"></div>
                                                             </td>
                                                             <td class="value"><textarea name="enhanced_listing" id="enhanced_listing_modal" class="input" rows="5"><?=htmlspecialchars(@call_user_func(array($prod_cont_ext, "get_enhanced_listing")))?></textarea></td>
                                                         </tr>
@@ -911,7 +932,7 @@
                                                                                 <input type="checkbox" name="im_status[]" value="1" <?=($prod_image[$i] && $prod_image[$i]->get_status()==1)?"CHECKED":""?>>
                                                                             </td>
                                                                             <td align="center">
-                                                                                <input type="checkbox" name="im_stop_sync[]" value="1" <?=($prod_image[$i] && $prod_image[$i]->get_stop_sync_image()==1)?"CHECKED":""?>>
+                                                                                <input type="checkbox" name="im_stop_sync_pc[]" value="1" <?=($prod_image[$i] && $prod_image[$i]->get_stop_sync_image()==1)?"CHECKED":""?>>
                                                                             </td>
                                                                         </tr>
                                                                         <?php
@@ -1129,7 +1150,7 @@
                 <?php
                 foreach ($lang_list as $lang_obj)
                 {
-                    $cur_lang_id = $lang_obj->get_id();
+                    $cur_lang_id = $lang_obj->get_lang_id();
                     $cur_name = $lang_obj->get_description();
                     ?>
                     <div id="div_tab_<?=$cur_lang_id?>" class="x-tab" title="<?=$cur_name?>">
@@ -1239,7 +1260,7 @@
                 <?php
                 foreach ($lang_list as $lang_obj)
                 {
-                    $cur_lang_id = $lang_obj->get_id();
+                    $cur_lang_id = $lang_obj->get_lang_id();
                     $cur_name = $lang_obj->get_description();
                     ?>
                     <div id="div_tab_<?=$cur_lang_id?>" class="x-tab" title="<?=$cur_name?>">
