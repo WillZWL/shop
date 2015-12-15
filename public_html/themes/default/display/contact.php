@@ -17,7 +17,7 @@
                         <h2 class="text-left"><?=_('CONTACT US')?></h2>
                         <p class="text-left note-alert">
                             <?=_('Having an issue? There are a number of ways you can get in touch with our experienced Sales and Customer Service teams. ')?>
-                            <?=_('Select one of the enquiry types below and we\'ll repond to you as soon as we can!')?>
+                            <?=_("Select one of the enquiry types below and we'll repond to you as soon as we can!")?>
                         </p>
                     </div>
                     <div class="container-fluid img-box">

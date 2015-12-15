@@ -115,13 +115,13 @@
                     $end = $total_result;
                 }
             }
-            $curr_number = "<span class='span-lowercase'>" . $begin . _(' to ') . $end . _(' of ') . $total_result . "</span>";
+            $curr_number = "<span class='span-lowercase'>" . sprintf(_('%s to %s of %s'), $begin, $end, $total) . "</span>";
         } else {
             $curr_number = "";
         }
     ?>
     <div class="products-block  col-lg-9 col-sm-9 col-xs-12">
-        <div class="category_title"><h3><?= $curr_number . _(' Search Results for ') . '"' . ($skey ? $skey :$keyword) . '"'?></h3></div>
+        <div class="category_title"><h3><?= $curr_number . sprintf(_(' Search Results for "%s"'), ($skey ? $skey : $keyword))?></h3></div>
         <div class="product-filter no-shadow" style="margin:20px auto">
             <div class="inner clearfix">
                 <div class="display">
@@ -137,7 +137,7 @@
                 </div>
 
                 <div class="sort pull-right">
-                    <span for="input-sort"><?= _('Sort By:') ?></span>
+                    <span for="input-sort"><?= _('Sort By').':' ?></span>
                     <?php
                        $keyword_limit = ($keyword ? "&w=" . $keyword : "") . ($limit ? "&limit=" . $limit : "");
                     ?>
@@ -159,7 +159,7 @@
                     </select>
                 </div>
                 <div class="limit pull-right">
-                    <span for="input-limit"><?= _('Display:') ?></span>
+                    <span for="input-limit"><?= _('Display').':' ?></span>
                     <?php
                         $keyword_sort_order = ($keyword ? "&w=" . $keyword : "") . ($sort ? "&sort=" . $sort : "") . ($order ? "&order=" . $order : "");
                     ?>
