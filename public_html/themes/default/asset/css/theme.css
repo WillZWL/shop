@@ -399,16 +399,12 @@ input.btn-search {
 }
 
 input.btn-newsletter {
-
     border-top-right-radius: 4px !important;
     border-bottom-right-radius: 4px !important;
     float: left;
     background-color: #549B17;
     color: white;
     height: 24px;
-    padding: 0px !important;
-    width: 70px;
-
     font-size: 12px;
     font-family: "Open Sans Semibold", sans-serif;
     border:0;
