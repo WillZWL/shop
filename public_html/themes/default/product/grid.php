@@ -11,7 +11,7 @@
                     <div class="col-inner ">
                         <div class="widget bg-carousel panel-left panel panel-default">
                             <div class="widget-heading panel-heading nopadding  space-10">
-                                <h3 class="panel-title"><?= str_replace('_', ' ', $title) ?></h3>
+                                <h3 class="panel-title"><?= _(str_replace('_', ' ', $title)) ?></h3>
                             </div>
                             <div class="list box-products slide" id=<?= 'product_list' . $title ?>>
 

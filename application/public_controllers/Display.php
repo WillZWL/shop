@@ -17,14 +17,23 @@ class Display extends PUB_Controller
 
     public function view($page = '')
     {
-        if (($page != "shipping")
+        if (
+            ($page != "shipping")
             && ($page != "conditions_of_use")
             && ($page != "about_us")
             && ($page != "privacy_policy")
-            && ($page != "contact"))
-        {
+            && ($page != "contact")
+            && ($page != "contact_us")
+        ) {
 //very important to do page parameter validation
             show_404();
+        }
+
+        if ($page == 'contact') {
+            $server_name = str_replace(['www.'], '', $_SERVER['SERVER_NAME']);
+            $data['contact_url_1'] = 'http://contact.'  . $server_name . '/support/tickets/new?genaftersales=true';
+            $data['contact_url_2'] = 'http://contact.'  . $server_name . '/support/tickets/new?presales=true';
+            $data['contact_url_3'] = 'http://contact.'  . $server_name . '/support/tickets/new?faultorreturn=true';
         }
 
         $data["content"] = "display/" . $page;

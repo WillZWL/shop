@@ -129,7 +129,7 @@
                                                 <a href="<?= base_url('display/view/contact') ?>"><h4 class="panel-title"><?= _('About Us') ?></h4></a>
                                             </div>
                                             <p class="desc-about">
-                                                <?= SITE_NAME . _(' prides itself on great deals without compromise on service! ') ?><br /> <?= _('Feel free to contact us anytime for more information') ?>
+                                                <?= sprintf(_("%s prides itself on great deals without compromise on service! "), SITE_NAME) ?><br /> <?= _('Feel free to contact us anytime for more information') ?>
                                                 <br>
                                             </p>
                                         </div>
@@ -210,7 +210,7 @@
                                                         <?php } ?>
                                                     </div>
                                                     <p class="desc-sm">
-                                                        <?= $guaranteedays . _(' days ') ?><br/> <?= _('Money Back') ?><br /><?= _('Guarantee') ?><br />
+                                                        <?= $guaranteedays . _(" Days Money Back Guarantee") ?>
                                                     </p>
                                                 </li>
                                                 <li style="vertical-align: top;">
