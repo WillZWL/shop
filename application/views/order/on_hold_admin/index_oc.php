@@ -3,6 +3,7 @@
     <title><?= $lang["title"] . ($type != "" ? " (" . $lang[$type] . ")" : "") ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="<?= base_url() ?>css/bootstrap.min.css" type="text/css" media="all" />
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>mastercfg/PaymentGateway/jsPmgwlist"></script>
@@ -16,7 +17,7 @@
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td height="30" class="title"><?= $lang["title"] . ($type != "" ? " (" . $lang[$type] . ")" : "") ?></td>
-            <td width="400" align="right" class="title">
+            <td width="400" align="right" style="background:#286512">
                 <input type="button" value="<?= $lang["oc_page"] ?>" onClick="Redirect('<?= base_url() . "order/on_hold_admin/oc_index/" ?>')">&nbsp;
                 <input type="button" value="<?= $lang["cc_page"] ?>" onClick="Redirect('<?= base_url() . "order/on_hold_admin/oc_index/cc/" ?>')">&nbsp;
                 <input type="button" value="<?= $lang["vv_page"] ?>" onClick="Redirect('<?= base_url() . "order/on_hold_admin/oc_index/vv/" ?>')">

@@ -449,5 +449,14 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['PaypalNzPmgwReport'] = function () {
             return new S\PaypalNzPmgwReportService();
         };
+
+        $serviceContainer['DeliveryType'] = function () {
+            return new S\DeliveryTypeService();
+        };
+
+        $serviceContainer['Delivery'] = function () {
+            return new S\DeliveryService();
+        };
+
     }
 }
