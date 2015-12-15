@@ -28,7 +28,7 @@ class Quick_search extends MY_Controller
         Redirect(base_url() . "cs/quick_search/view/" . $so_no);
     }
 
-    public function index($offset = 0)
+    public function index()
     {
         $sub_app_id = $this->getAppId() . "01";
 
@@ -128,11 +128,8 @@ class Quick_search extends MY_Controller
             $sort = $this->input->get("sort");
             $order = $this->input->get("order");
 
-            $limit = '20';
-
-            $option["limit"] = $limit;
-            $option["offset"] = $offset;
-
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
             if (empty($sort)) {
                 $sort = "so.so_no";
@@ -147,13 +144,13 @@ class Quick_search extends MY_Controller
             $data["total"] = $this->sc['So']->orderQuickSearch($where, ["num_rows" => 1]);
 
 
-            $config['base_url'] = base_url('cs/quick_search/index')."?" . $_SERVER['QUERY_STRING'];
+            $config['base_url'] = base_url('cs/quick_search/index');
             $config['total_rows'] = $data["total"];
-            $config['per_page'] = $limit;
-
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
-
             $data["notice"] = notice($lang);
             $data["search"] = $search;
             $data["refresh"] = $this->input->get("refresh");

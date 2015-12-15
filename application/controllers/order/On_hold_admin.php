@@ -12,7 +12,7 @@ class On_hold_admin extends MY_Controller
         parent::__construct();
     }
 
-    public function reason($offset = 0, $id = "")
+    public function reason($id = "")
     {
         $sub_app_id = $this->getAppId() . "04";
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
@@ -72,9 +72,8 @@ class On_hold_admin extends MY_Controller
             $where["description LIKE "] = '%' . $this->input->get("desc") . '%';
         }
 
-        $limit = 40;
-        $option["limit"] = $limit;
-        $option["offset"] = $offset;
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
         $sort = $this->input->get('sort');
         if ($sort == "") {
@@ -98,11 +97,12 @@ class On_hold_admin extends MY_Controller
 
         $config['base_url'] = base_url("order/on_hold_admin/reason/");
         $config['total_rows'] = $data["total"];
-        $config['per_page'] = $limit;
-
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
-        $data['offset'] = $offset;
+
 
         $data["notice"] = notice($lang);
 
@@ -115,7 +115,7 @@ class On_hold_admin extends MY_Controller
         $this->load->view('order/on_hold_admin/index_reason', $data);
     }
 
-    public function index($offset = 0)
+    public function index()
     {
         $search = $this->input->get('search');
         $sub_app_id = $this->getAppId() . "01";
@@ -202,11 +202,11 @@ class On_hold_admin extends MY_Controller
 
             $config['base_url'] = base_url('order/on_hold_admin/index/');
             $config['total_rows'] = $data["total"];
-            $config['per_page'] = $limit;
-
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
-
 
             $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
             $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
@@ -226,7 +226,7 @@ class On_hold_admin extends MY_Controller
         return $this->appId;
     }
 
-    public function log_approval_page($offset = 0)
+    public function log_approval_page()
     {
         $sub_app_id = $this->getAppId() . "02";
 
@@ -268,10 +268,8 @@ class On_hold_admin extends MY_Controller
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
-        $limit = '20';
-
-        $option["limit"] = $limit;
-        $option["offset"] = $offset;
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
         if (empty($sort)) {
             $sort = "so_no";
@@ -291,10 +289,12 @@ class On_hold_admin extends MY_Controller
 
         $config['base_url'] = base_url('order/on_hold_admin/log_approval_page/');
         $config['total_rows'] = $data["total"];
-        $config['per_page'] = $limit;
-
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
+
 
         $data["notice"] = notice($lang);
 
@@ -304,7 +304,7 @@ class On_hold_admin extends MY_Controller
         $this->load->view('order/on_hold_admin/log_approve_index', $data);
     }
 
-    public function oc_index($type = "", $offset = 0)
+    public function oc_index($type = "")
     {
         if ($type != "" && $type != "cc" && $type != "vv") {
             Redirect(base_url() . "order/on_hold_admin/oc_index/");
@@ -353,10 +353,8 @@ class On_hold_admin extends MY_Controller
             $sort = $this->input->get("sort");
             $order = $this->input->get("order");
 
-            $limit = '20';
-
-            $option["limit"] = $limit;
-            $option["offset"] = $offset;
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
             if (empty($sort)) {
                 $sort = "so_no";
@@ -396,8 +394,9 @@ class On_hold_admin extends MY_Controller
 
             $config['base_url'] = base_url('order/on_hold_admin/oc_index/'.$type);
             $config['total_rows'] = $data["total"];
-            $config['per_page'] = $limit;
-
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
 
@@ -425,7 +424,7 @@ class On_hold_admin extends MY_Controller
         return $this->sc['User']->isAllowedToCancelOrder();
     }
 
-    public function chk_pw($offset = 0)
+    public function chk_pw()
     {
         $password = $this->input->get("pw");
         if ($password) {
@@ -441,10 +440,8 @@ class On_hold_admin extends MY_Controller
             $sort = $this->input->get("sort");
             $order = $this->input->get("order");
 
-            $limit = '20';
-
-            $option["limit"] = $limit;
-            $option["offset"] = $offset;
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
             if (empty($sort)) {
                 $sort = "so_no";
@@ -466,8 +463,9 @@ class On_hold_admin extends MY_Controller
 
             $config['base_url'] = base_url('order/on_hold_admin/chk_pw/index');
             $config['total_rows'] = $data["total"];
-            $config['per_page'] = $limit;
-
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
 

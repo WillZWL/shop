@@ -16,6 +16,11 @@
         -->
     </script>
 </head>
+<style type="text/css">
+    .pagination-sm li a {
+        padding:0px 2px;
+    }
+</style>
 <body class="frame_left" style="width:auto;">
 <div id="main" style="width:auto;">
     <form name="fm" method="get">
