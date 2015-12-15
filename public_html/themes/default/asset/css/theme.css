@@ -465,7 +465,8 @@ input.btn-newsletter {
 #content .form-holder fieldset textarea{width:100%;height:72px;border:0;background:none;resize:none;}
 #content .form-holder fieldset input{clear:left;width:100%;border:0;background:none;padding-left:10px;}
 #content .form-holder select{margin-top:2px;height:28px;display:block;border:solid 1px #d0d0d0;}
-#content .form-holder button{background:url('../image/btn30-orange-back.jpg');height:30px;border:0;padding:0 25px 2px 25px;border-right:solid 1px #ff6d17;border-left:solid 1px #ff6d17;cursor:pointer;color:#fff;font-size:14px;}
+/*#content .form-holder button{background:url('../image/btn30-orange-back.jpg');height:30px;border:0;padding:0 25px 2px 25px;border-right:solid 1px #ff6d17;border-left:solid 1px #ff6d17;cursor:pointer;color:#fff;font-size:14px;}*/
+#content .form-holder .account_btn{cursor: pointer;text-align: center;width: 150px;}
 #content .form-holder button:hover{background-position:0 30px;}
 #content .form-holder .clear{clear:left;}
 #content .form-holder ins{text-transform:uppercase;clear:both;display:block;color:#000;font-size:14px;padding:10px 0 15px 0;text-decoration: none;}
@@ -560,38 +561,49 @@ input.btn-newsletter {
     color: #ED0A00;
 }
 
-#contact_us .box {
-    width:100%;height:185px;
+.contact .box {
+    width:90%;height:185px;
     border: 2px solid #a9a9a9;
-    padding:125px 80px 0 80px;
+    padding:125px 27% 0 27%;
     line-height:20px;
-    margin-bottom:20px
+    margin-bottom:20px;
+    /*float: left;*/
 }
 
-#contact_us .box:hover {
-    border: 2px solid ##549B17;
-    color:##549B17;
+.contact .box:hover {
+    border: 2px solid #549B17;
+    color:#549B17;
     cursor: pointer;
     font-weight: bold;
 }
 
-#contact_us .img1 {
+.contact .img1 {
     background: url(../image/contact_1.png) center 10px;
     -moz-background-size:63px 100px;
     background-size:210px 110px;
     background-repeat:no-repeat;
 }
 
-#contact_us .img2 {
+.contact .img2 {
     background: url(../image/contact_2.png) center 10px;
     -moz-background-size:63px 100px;
     background-size:210px 110px;
     background-repeat:no-repeat;
 }
 
-#contact_us .img3 {
+.contact .img3 {
     background: url(../image/contact_3.png) center 10px;
     -moz-background-size:63px 100px;
     background-size:210px 110px;
     background-repeat:no-repeat;
+}
+
+.contact .img-box {
+    margin-top: 35px;
+    margin-bottom: 50px;
+}
+
+.contact .note-alert {
+    font-size: 14px;
+    color: #999999;
 }
