@@ -24,7 +24,7 @@ class Integration extends MY_Controller
         $integrationModel->sendOrderToCybsDecisionManager($debug);
         print "Done";
     }
-
+/*
     public function index()
     {
         $sub_app_id = $this->getAppId() . "00";
@@ -103,7 +103,7 @@ class Integration extends MY_Controller
         $data["searchdisplay"] = "";
         $this->load->view('integration/integration_index_v', $data);
     }
-
+*/
     public function getAppId()
     {
         return $this->appId;
@@ -113,7 +113,7 @@ class Integration extends MY_Controller
     {
         return $this->lang_id;
     }
-
+/*
     public function view($func, $batch_id)
     {
         $sub_app_id = $this->getAppId() . "01";
@@ -504,6 +504,7 @@ class Integration extends MY_Controller
             mail($this->notification_email, "VB Error updating Price Margin", $result["error_message"]);
         }
     }
+*/
 }
 
 

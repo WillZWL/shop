@@ -27,7 +27,7 @@ class pricing_tools extends MY_Controller
         $this->load->view($this->tool_path . "/pricing_tool_index", $data);
     }
 
-    public function plist($offset = 0)
+    public function plist()
     {
         $where = $option = [];
         $sub_app_id = $this->getAppId() . "02";
@@ -70,7 +70,7 @@ class pricing_tools extends MY_Controller
             $data["total"] = $this->sc['Product']->getDao('Product')->getListWithName($where, array_merge(['num_rows'=>1], $option));
 
             $config['base_url'] = base_url($this->tool_path . '/plist');
-            $config['total_rows'] = 1000;
+            $config['total_rows'] = $data["total"];
             $config['page_query_string'] = true;
             $config['reuse_query_string'] = true;
             $config['per_page'] = $option['limit'];

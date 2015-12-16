@@ -41,12 +41,8 @@ class PriceMarginDao extends BaseDao
             return false; // Nothing can replace.
         }
 
-        $id = "system";
-        if (isset($_SESSION["user"]["id"])) {
-            $id = $_SESSION["user"]["id"];
-        }
-
-        $this->db->trans_start();
+        $id = $this->getUserId();
+        $this->db->trans_begin();
         $sql = 'INSERT INTO price_margin (sku, platform_id, profit, margin,
                     create_on, create_at, create_by, modify_on, modify_at, modify_by)
                 VALUES(?, ?, ?, ?, now(), ?, ?, now(), ?, ?)

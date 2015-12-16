@@ -1,12 +1,6 @@
 <style type="text/css">
-    .mfp-iframe {
-        height: 740px !important;
-    }
     .mfp-iframe-scaler {
-        padding-top: 98%;
-    }
-    .mfp-ready, .mfp-auto-cursor {
-        overflow-y:hidden !important;
+        padding-top: 74.5%;
     }
 </style>
 <div class="contact">

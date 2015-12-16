@@ -517,6 +517,14 @@ class DaoProvider implements ServiceProviderInterface
             return new D\GoogleRequestBatchDao();
         };
 
+        $daoContainer['PendingGoogleApiRequest'] = function () {
+            return new D\PendingGoogleApiRequestDao();
+        };
+
+        $daoContainer['GoogleApiRequest'] = function () {
+            return new D\GoogleApiRequestDao();
+        };
+
         $daoContainer['WmsInventory'] = function () {
             return new D\WmsInventoryDao();
         };

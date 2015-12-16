@@ -7,18 +7,11 @@ class CronUpdatePriceMargin extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        set_time_limit(900);
-    }
-
-    public function processGoogleApiRequest() {
-        do {
-            $this->sc['GoogleShopping']->sendRequestToGoogle();
-            sleep(300);
-        } while (date("H") != "15");
     }
 
     public function updateMargin($platform_id = '', $sku = '')
     {
+        set_time_limit(900);
         if ($platform_id === '') {
             $platform_list = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList();
             foreach ($platform_list as $platform_obj) {

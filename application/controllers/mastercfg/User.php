@@ -9,7 +9,7 @@ class User extends MY_Controller
         parent::__construct();
     }
 
-    public function index($offset = 0)
+    public function index()
     {
         $subAppId = $this->getAppId() . "00";
         include_once(APPPATH . "language/" . $subAppId . "_" . $this->getLangId() . ".php");
@@ -38,12 +38,8 @@ class User extends MY_Controller
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
-        $limit = 20;
-
-        $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-
-        $option["limit"] = $limit;
-        $option["offset"] = $offset;
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
         if (empty($sort)) {
             $sort = "id";
@@ -65,9 +61,10 @@ class User extends MY_Controller
         $data["lang"] = $lang;
 
         $config['base_url'] = base_url('mastercfg/user/index');
-        $config['total_rows'] =  $data['total'];
-        $config['per_page'] = $limit;
-
+        $config['total_rows'] = $data["total"];
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
 

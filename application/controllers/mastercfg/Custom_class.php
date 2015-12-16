@@ -45,7 +45,7 @@ class Custom_class extends MY_Controller
         return $this->appId;
     }
 
-    public function index($country_id = "", $cc_id = "", $offset = 0)
+    public function index($country_id = "", $cc_id = "")
     {
         $sub_app_id = $this->getAppId() . "00";
 
@@ -79,10 +79,8 @@ class Custom_class extends MY_Controller
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
-        $limit = '20';
-
-        $option["limit"] = $limit;
-        $option["offset"] = $offset;
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
         if (empty($sort))
             $sort = "id";
@@ -105,8 +103,9 @@ class Custom_class extends MY_Controller
         $ccid = $cc_id ? $cc_id : 0;
         $config['base_url'] = base_url("mastercfg/custom_class/index/$country_id/$ccid/");
         $config['total_rows'] = $data["total"];
-        $config['per_page'] = $limit;
-
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
 
@@ -138,7 +137,6 @@ class Custom_class extends MY_Controller
         $data["cmd"] = ($cc_id == "") ? $this->input->post("cmd") : "edit";
         $data["country_id"] = $country_id;
         $data["cc_id"] = $cc_id;
-        $data["offset"] = $offset;
 
         $this->load->view('mastercfg/custom_class/custom_class_index_v', $data);
     }
@@ -211,11 +209,11 @@ class Custom_class extends MY_Controller
         $this->sku($this->input->post("country_id"), $_POST["sku"]);
     }
 
-    public function sku($country_id = "", $sku = "", $offset = 0)
+    public function sku($country_id = "", $sku = "")
     {
         $sub_app_id = $this->getAppId() . "00";
 
-        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "sku/" . $country_id) . ($sku == "" ? "" : "/" . $sku) . ($offset ? "/".$offset : "") . "?" . $_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "sku/" . $country_id) . ($sku == "" ? "" : "/" . $sku) . "?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
         $option = array();
@@ -256,10 +254,8 @@ class Custom_class extends MY_Controller
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
-        $limit = '20';
-
-        $option["limit"] = $limit;
-        $option["offset"] = $offset;
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
         if (empty($sort))
             $sort = "pcc.sku";
@@ -282,12 +278,11 @@ class Custom_class extends MY_Controller
 
         $config['base_url'] = base_url("mastercfg/custom_class/sku/$country_id/$sku/");
         $config['total_rows'] = $data["total"];
-        $config['per_page'] = $limit;
-
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
-        $data["notice"] = notice($lang);
-
         $data["notice"] = notice($lang);
 
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
@@ -315,7 +310,6 @@ class Custom_class extends MY_Controller
         $data["cmd"] = ($sku == "") ? $this->input->post("cmd") : "edit";
         $data["country_id"] = $country_id;
         $data["sku"] = $sku;
-        $data["offset"] = $offset;
 
         $this->load->view('mastercfg/custom_class/custom_class_sku_v', $data);
     }
@@ -360,11 +354,11 @@ class Custom_class extends MY_Controller
 
     }
 
-    public function sub_cat($country_id = "", $sub_cat_id = "", $offset = 0)
+    public function sub_cat($country_id = "", $sub_cat_id = "")
     {
         $sub_app_id = $this->getAppId() . "00";
 
-        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "sub_cat/" . $country_id) . ($sub_cat_id == "" ? "" : "/" . $sub_cat_id) . ($offset ? "/".$offset : "") . "?" . $_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = base_url() . "mastercfg/custom_class/" . ($country_id == "" ? "" : "sub_cat/" . $country_id) . ($sub_cat_id == "" ? "" : "/" . $sub_cat_id) . "?" . $_SERVER['QUERY_STRING'];
 
         $where = array();
         $option = array();
@@ -402,10 +396,8 @@ class Custom_class extends MY_Controller
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
-        $limit = '20';
-
-        $option["limit"] = $limit;
-        $option["offset"] = $offset;
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
         if (empty($sort))
             $sort = "sub_cat_id";
@@ -428,10 +420,11 @@ class Custom_class extends MY_Controller
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
-        $config['base_url'] = base_url("mastercfg/custom_class/sub_cat/$country_id/$sub_cat_id/");
+        $config['base_url'] = base_url("mastercfg/custom_class/sub_cat/$country_id/");
         $config['total_rows'] = $data["total"];
-        $config['per_page'] = $limit;
-
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
         $data["notice"] = notice($lang);
@@ -464,7 +457,6 @@ class Custom_class extends MY_Controller
         $data["cmd"] = ($sub_cat_id == "") ? $this->input->post("cmd") : "edit";
         $data["country_id"] = $country_id;
         $data["sub_cat_id"] = $sub_cat_id;
-        $data["offset"] = $offset;
 
         $this->load->view('mastercfg/custom_class/custom_class_sub_cat_v', $data);
     }

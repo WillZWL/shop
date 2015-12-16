@@ -3,6 +3,9 @@ namespace ESG\Panther\Service;
 
 class GoogleService extends BaseService
 {
+    const FUNC_GOOGLE_CONTENT_API = "Content API";
+    const FUNC_GOOGLE_ADWORD_API = "Aword API";
+
     public $adwordAccountInfo = [["accountId" => "493-907-8910", "accountName" => "API Test Account"]
                         , ["accountId" => "212-603-9902", "accountName" => "VB AU"]
                         , ["accountId" => "361-241-0604", "accountName" => "VB ES"]

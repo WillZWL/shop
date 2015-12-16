@@ -8,16 +8,6 @@ class FreightCatService extends BaseService
         parent::__construct();
     }
 
-    public function getFulFillmentCentreDao()
-    {
-        return $this->fulfillmentCentreDao;
-    }
-
-    public function setFulFillmentCentreDao($dao)
-    {
-        $this->fulfillmentCentreDao = $dao;
-    }
-
     public function getFccWithRegList($where = [], $option = [])
     {
         $option["limit"] = -1;
@@ -44,11 +34,6 @@ class FreightCatService extends BaseService
             $new_cat[$cat_id] = $cat;
         }
         return $new_cat;
-    }
-
-    public function getOriginCountryList()
-    {
-       return $this->getDao('FulfillmentCentre')->getList();
     }
 
     public function getFullFreightCatChargeList($where, $option)

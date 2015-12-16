@@ -99,25 +99,28 @@ class Colour extends MY_Controller
         $option['orderby'] = $sort.' '.$order;
     }
 
-    public function index($offset = 0)
+    public function index()
     {
         $subAppId = $this->getAppId().'00';
         include_once APPPATH.'language/'.$subAppId.'_'.$this->getLangId().'.php';
         $data['lang'] = $lang;
 
-        $limit = 20;
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
-        $data['colourList'] = $this->sc['Colour']->getDao('Colour')->getList([], ['limit' => $limit, 'offset' => $offset]);
+        $data['colourList'] = $this->sc['Colour']->getDao('Colour')->getList([], ['limit' => $option['limit'], 'offset' => $option['offset']]);
         $data['langList'] = $this->sc['Language']->getDao('Language')->getList(['status' => 1], ['orderby' => 'lang_id ASC']);
-        $total = $this->sc['Colour']->getDao('Colour')->getNumRows();
+        $data["total"] = $this->sc['Colour']->getDao('Colour')->getNumRows();
 
         $editColourId = $this->input->get('edit');
         $data['colourWithLang'] = $this->sc['Colour']->getDao('Colour')->getListWithLang(['c.colour_id' => $editColourId], ['limit' => -1]);
 
         $config['base_url'] = base_url('mastercfg/colour/index');
-        $config['total_rows'] = $total;
-        $config['per_page'] = $limit;
-
+        $config['total_rows'] = $data["total"];
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
+        $data['per_page']  =  $this->input->get('per_page') ;
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
 

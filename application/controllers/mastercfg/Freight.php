@@ -27,6 +27,9 @@ class Freight extends FreightHelper
             $where["weight"] = $this->input->get("weight");
         }
 
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
+
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
@@ -84,10 +87,18 @@ class Freight extends FreightHelper
             }
         }
 
-        $data["origin_country_list"] = $this->sc['freightModel']->getOriginCountryList();
+        // $data["origin_country_list"] = $this->sc['freightModel']->getOriginCountryList();
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
+        $config['base_url'] = base_url("mastercfg/freight/index/{$cat_type}/{$cat_id}");
+        $config['total_rows'] = $data["total"];
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
+
         $data["notice"] = notice($lang);
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
@@ -171,7 +182,7 @@ class Freight extends FreightHelper
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
 
-            $data["origin_country_list"] = $this->sc['freightModel']->getOriginCountryList();
+            // $data["origin_country_list"] = $this->sc['freightModel']->getOriginCountryList();
             $data["origin_country"] = $origin_country;
             $data["notice"] = notice($lang);
             $data["cmd"] = "edit";

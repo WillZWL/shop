@@ -17,11 +17,11 @@ class Delivery extends MY_Controller
         $sub_app_id = $this->getAppId() . "00";
 
         if ($this->input->post('posted')) {
-            $vo["func_opt"] = $this->sc['deliveryModel']->deliveryService->funcOptionService->get();
+            $vo["func_opt"] = $this->sc['DeliveryOption']->getDao('FuncOption')->get();
             $data["func_opt_list"] = unserialize($_SESSION["func_opt_list"]);
             $this->sc['deliveryModel']->checkSerialize('func_opt_list', $data);
 
-            $vo["del_opt"] = $this->sc['deliveryModel']->deliveryService->deliveryOptionService->get();
+            $vo["del_opt"] = $this->sc['DeliveryOption']->getDao('DeliveryOption')->get();
             $data["del_opt_list"] = unserialize($_SESSION["del_opt_list"]);
             $this->sc['deliveryModel']->checkSerialize('del_opt_list', $data);
 
@@ -37,7 +37,7 @@ class Delivery extends MY_Controller
 
 
         $data["lang_list"] = $this->sc['Language']->getDao('Language')->getList(["status" => 1], ["limit" => -1]);
-        $data["delivery_type_list"] = $this->sc['deliveryModel']->deliveryService->getDeliveryTypeList();
+        $data["delivery_type_list"] = $this->sc['Delivery']->getDeliveryTypeList();
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
@@ -55,7 +55,7 @@ class Delivery extends MY_Controller
         $sub_app_id = $this->getAppId() . "01";
 
         if ($this->input->post('posted')) {
-            $vo = $this->sc['deliveryModel']->deliveryService->get();
+            $vo = $this->sc['Delivery']->getDao('Delivery')->get();
             $data["delivery_list"] = unserialize($_SESSION["delivery_list"]);
             $this->sc['deliveryModel']->checkSerialize('delivery_list', $data);
             if ($this->sc['deliveryModel']->updateDelivery($vo, $data)) {
@@ -67,8 +67,8 @@ class Delivery extends MY_Controller
 
         $this->sc['deliveryModel']->checkSerialize('delivery_list', $data);
 
-        $data["delivery_type_list"] = $this->sc['deliveryModel']->deliveryService->getDeliveryTypeList();
-        $data["country_list"] = $this->sc['deliveryModel']->countryService->getCountryNameListWithKey([], ["limit" => -1]);
+        $data["delivery_type_list"] = $this->sc['Delivery']->getDeliveryTypeList();
+        $data["country_list"] = $this->sc['Country']->getCountryNameListWithKey([], ["limit" => -1]);
         $data["default_delivery"] = $this->default_delivery;
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;

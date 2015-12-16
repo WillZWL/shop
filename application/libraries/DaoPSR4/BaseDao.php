@@ -350,4 +350,12 @@ abstract class BaseDao
 
         return false;
     }
+
+    public function getUserId() {
+        $id = "system";
+        if (isset($_SESSION["user"]["id"])) {
+            $id = $_SESSION["user"]["id"];
+        }
+        return $id;
+    }
 }

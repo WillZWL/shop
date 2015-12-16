@@ -55,7 +55,7 @@ class Category extends MY_Controller
         }
     }
 
-    public function top($offset = 0)
+    public function top()
     {
         $sub_app_id = $this->getAppId() . "00";
 
@@ -72,10 +72,8 @@ class Category extends MY_Controller
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
-        $limit = '30';
-
-        $option["limit"] = $limit;
-        $option["offset"] = $offset;
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '30';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
         if (empty($sort))
             $sort = "id";
@@ -91,9 +89,10 @@ class Category extends MY_Controller
         $data["lang"] = $lang;
 
         $config['base_url'] = base_url('marketing/category/top/');
-        $config['total_rows'] = $data['total'];
-        $config['per_page'] = $limit;
-
+        $config['total_rows'] = $data["total"];
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
 
