@@ -142,7 +142,7 @@ class Import extends MY_Controller
         print $feed;
     }
 
-    public function colourextend()
+    public function colourExtend()
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferColourExtend']->startProcess($xml);
@@ -156,7 +156,7 @@ class Import extends MY_Controller
         print $feed;
     }
 
-    public function freightcat()
+    public function freightCat()
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferFreightCat']->startProcess($xml);
@@ -168,35 +168,35 @@ class Import extends MY_Controller
     /********************** start RA tables **********************/
 
 
-    public function ragroup()
+    public function raGroup()
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferRaGroup']->startProcess($xml);
         print $feed;
     }
 
-    public function ragroupcontent()
+    public function raGroupContent()
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferRaGroupContent']->startProcess($xml);
         print $feed;
     }
 
-    public function ragroupproduct()
+    public function raGroupProduct()
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferRaGroupProduct']->startProcess($xml);
         print $feed;
     }
 
-    public function raproduct()
+    public function raProduct()
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferRaProduct']->startProcess($xml);
         print $feed;
     }
 
-    public function raprodcat()
+    public function raProdCat()
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferRaProdCat']->startProcess($xml);
@@ -208,21 +208,21 @@ class Import extends MY_Controller
 
     /********************** start google mapping tables **********************/
 
-    public function categorymapping()
+    public function categoryMapping()
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferCategoryMapping']->startProcess($xml);
         print $feed;
     }
 
-    public function extcategorymapping()
+    public function extCategoryMapping()
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferExtCategoryMapping']->startProcess($xml);
         print $feed;
     }
 
-    public function externalcategory()
+    public function externalCategory()
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferExternalCategory']->startProcess($xml);
