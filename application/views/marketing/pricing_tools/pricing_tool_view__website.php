@@ -20,12 +20,17 @@
             endif;
             ?>
         </td>
-        <td width="20%" class="field"><?= $lang["allow_express"] ?></td>
+        <td width="20%" class="field"><?= $lang["listing_status"] ?></td>
         <td width="30%" class="value">
-            <input type="checkbox" name="allow_express[<?= $platform ?>]" <?= ($price_obj->getAllowExpress() == 'Y' ? "CHECKED" : "") ?>>
+            <select name="listing_status[<?= $platform ?>]" style="width:130px;">
+                <option value="N"><?= $lang["not_listed"] ?></option>
+                <option value="L" <?= ($price_obj->getListingStatus() == "L" ? "SELECTED" : "") ?>><?= $lang["listed"] ?></option>
+            </select>
+            <input type="hidden" name="selling_platform[<?= $platform ?>]" value="<?= $platform ?>">
+            <input type="hidden" name="formtype[<?= $platform ?>]" value="<?= $formtype[$platform] ?>">
         </td>
     </tr>
-    <tr>
+<!--     <tr>
 
         <td width="20%" class="field"><?= $lang["advertised"] ?></td>
         <td width="30%" class="value">
@@ -39,16 +44,11 @@
                 </div>
             <?php endif; ?>
         </td>
-        <td width="20%" class="field"><?= $lang["listing_status"] ?></td>
+        <td width="20%" class="field"><?= $lang["allow_express"] ?></td>
         <td width="30%" class="value">
-            <select name="listing_status[<?= $platform ?>]" style="width:130px;">
-                <option value="N"><?= $lang["not_listed"] ?></option>
-                <option value="L" <?= ($price_obj->getListingStatus() == "L" ? "SELECTED" : "") ?>><?= $lang["listed"] ?></option>
-            </select>
-            <input type="hidden" name="selling_platform[<?= $platform ?>]" value="<?= $platform ?>">
-            <input type="hidden" name="formtype[<?= $platform ?>]" value="<?= $formtype[$platform] ?>">
+            <input type="checkbox" name="allow_express[<?= $platform ?>]" <?= ($price_obj->getAllowExpress() == 'Y' ? "CHECKED" : "") ?>>
         </td>
-    </tr>
+    </tr> -->
     <tr>
         <td width="20%" class="field"><?= $lang["auto_price"] ?></td>
         <td width="30%" class="value">
@@ -138,13 +138,13 @@
             $adGroup_error_row ="";
         endif;
     ?>
-    <tr>
+<!--     <tr>
         <td class="field" height="25"><?= $lang["google_adwords"] ?></td>
         <td class="value"><?= $adwords ?></td>
         <td class="field"><?= $lang["google_adwords_status"] ?></td>
         <td class="value"><?= $adGroup_status ?></td>
     </tr>
-    <?= $adGroup_error_row ?>
+    <?= $adGroup_error_row ?> -->
 </table>
 
 <!-- competitor start -->

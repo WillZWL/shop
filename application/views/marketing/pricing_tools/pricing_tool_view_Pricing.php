@@ -6,12 +6,13 @@
     endif;
 
     $decl_vat = "";
-    if ($hasVatPermission) :
-        $decl_vat = '
-            <td>' . $lang['declared'] . '</td>
-            <td>' . $lang['vat'] . '<br>(' . $pobj->getVatPercent() . '%)</td>
-        ';
-    endif;
+    // if ($hasVatPermission) :
+    //     $decl_vat = '
+    //         <td>' . $lang['declared'] . '</td>
+    //         <td>' . $lang['listing_fee'] . '</td>
+    //         <td>' . $lang['vat'] . '<br>(' . $pobj->getVatPercent() . '%)</td>
+    //     ';
+    // endif;
 
     $header = '<tr class=\'header\'>
                     <td>&nbsp;</td>
@@ -22,7 +23,6 @@
                     <td>' . $lang['duty'] . '<br>(' . $pobj->getDutyPcent() . '%)</td>
                     <td>' . $lang['pmgw'] . '<br>(' . $pobj->getPaymentChargePercent() . '%)</td>
                     <td>' . $lang['forex'] . '<br>(' . $pobj->getForexFeePercent() . '%)</td>
-                    <td>' . $lang['listing_fee'] . '</td>
                     <td>' . $lang['logistic_cost'] . '</td>
                     <td>' . $lang['ca_cost'] . '</td>
                     <td>' . $lang['cost'] . '</td>
@@ -38,10 +38,11 @@
     // $platform = $pobj->getPlatformId();
 
     $decl_vat_row = "";
-    if ($hasVatPermission) :
-        $decl_vat_row = '<td id="declare[' . $platform . ']">' . number_format($pobj->getDeclaredValue(), 2, ".", "") . '</td>
-                         <td id="vat[' . $platform . ']">' . number_format($pobj->getVat(), 2, ".", "") . '</td>';
-    endif;
+    // if ($hasVatPermission) :
+    //     $decl_vat_row = '<td id="declare[' . $platform . ']">' . number_format($pobj->getDeclaredValue(), 2, ".", "") . '</td>
+    //                              <td id="listing_fee[' . $platform . ']">' . number_format($pobj->getListingFee(), 2, ".", "") . '</td>
+    //                              <td id="vat[' . $platform . ']">' . number_format($pobj->getVat(), 2, ".", "") . '</td>';
+    // endif;
 
     $table_row = '<tr id="row[' . $platform . ']" style="background-color:' . $bgcolor . '">
                     <td></td>
@@ -55,7 +56,6 @@
                     <td id="duty[' . $platform . ']">' . number_format($pobj->getDuty(), 2, ".", "") . '</td>
                     <td id="pc[' . $platform . ']">' . number_format($pobj->getPaymentCharge(), 2, ".", "") . '</td>
                     <td id="forex_fee[' . $platform . ']">' . number_format($pobj->getForexFee(), 2, ".", "") . '</td>
-                    <td id="listing_fee[' . $platform . ']">' . number_format($pobj->getListingFee(), 2, ".", "") . '</td>
                     <td id="logistic_cost[' . $platform . ']">' . number_format($pobj->getLogisticCost(), 2, ".", "") . '</td>
                     <td id="complementary_acc_cost[' . $platform . ']">' . number_format($pobj->getComplementaryAccCost(), 2, ".", "") . '</td>
                     <td id="supplier_cost[' . $platform . ']">' . number_format($pobj->getSupplierCost(), 2, ".", "") . '</td>

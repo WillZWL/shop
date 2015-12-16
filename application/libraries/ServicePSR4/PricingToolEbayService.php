@@ -52,16 +52,16 @@ class PricingToolEbayService extends BaseService
 
         if ($price_obj->getPrice() * 1 != $vars['sp'] * 1 ||
             $price_obj->getListingStatus() != $vars['cur_listing_status'] ||
-            $price_obj->getAllowExpress() != $vars['ae'] ||
-            $price_obj->getIsAdvertised() != $vars['ia'] ||
+            // $price_obj->getAllowExpress() != $vars['ae'] ||
+            // $price_obj->getIsAdvertised() != $vars['ia'] ||
             $price_ext_need_update
         ) {
             $price_obj->setPlatformId($vars['platform']);
             $price_obj->setSku($vars['sku']);
             $price_obj->setListingStatus($vars['cur_listing_status']);
             $price_obj->setPrice($vars['sp']);
-            $price_obj->setAllowExpress($vars['ae']);
-            $price_obj->setIsAdvertised($vars['ia']);
+            // $price_obj->setAllowExpress($vars['ae']);
+            // $price_obj->setIsAdvertised($vars['ia']);
             $price_obj->setAutoPrice('N');
 
             $ret = $this->getDao('Price')->$action($price_obj);
