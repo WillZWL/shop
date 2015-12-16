@@ -1,8 +1,50 @@
 <?php
+
 namespace ESG\Panther\Service;
 
 class PlatformBizVarService extends BaseService
 {
+    public function calculateDeclaredValue(\PriceWithCostDto $dto)
+    {
+        $price = $dto->getPrice();
+        $country_id = $dto->getPlatformCountryId();
+
+        switch ($country_id) {
+            case "AU":
+                $declared_value = min($price, 910);
+                break;
+
+            case "NZ":
+                $declared_value = ($price < 350) ? $price : $price * 80 / 100;
+                break;
+
+            default:
+                $declared_value = $price * 10 / 100;
+                break;
+        }
+
+        $dto->setDeclaredValue(number_format($declared_value, 2, '.', ''));
+    }
+
+    public function calculatePaymentCharge(\PriceWithCostDto $dto)
+    {
+        $payment_charge = $dto->getPrice() * $dto->getPaymentChargePercent() / 100;
+        $dto->setPaymentCharge(number_format($payment_charge, 2, '.', ''));
+    }
+
+    public function calculateForexFee(\PriceWithCostDto $dto)
+    {
+        $forex_fee = $dto->getPrice() * $dto->getForexFeePercent() / 100;
+        $dto->setForexFee(number_format($forex_fee, 2, '.', ''));
+    }
+
+    public function calculateVat(\PriceWithCostDto $dto)
+    {
+        $vat = $dto->getDeclaredValue() * $dto->getVatPercent() / 100;
+        $dto->setVat(number_format($vat, 2, '.', ''));
+    }
+
+
     public function getPlatformBizVar($id)
     {
         if ($id != "") {

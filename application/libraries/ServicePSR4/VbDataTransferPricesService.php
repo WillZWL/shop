@@ -65,13 +65,15 @@ class VbDataTransferPricesService extends VbDataTransferService
                 }
 
                 if (($prod_obj->getClearance() == 0)) {
-                    $new_margin = $this->getService('Price')->getTrailCalcuMargin($platform_id, $sku, $price_obj->getPrice());
+                    $data = json_decode($this->getService('Price')->getProfitMarginJson($platform_id, $sku, $price_obj->getPrice()));
+                    $new_margin = $data['get_margin'];
+
                     $pricing_rule_obj = $this->getPriceRule($vb_price_obj);
 
                     if ($pricing_rule_obj) {
                         $min_margin = $pricing_rule_obj->getMinMargin();
 
-                        if ($new_margin * 100 < $minimun_margin) {
+                        if ($new_margin < $minimun_margin) {
                             $reason = "Error in margin";
                             $result_status = 6;
 
