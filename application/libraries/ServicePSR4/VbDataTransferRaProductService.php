@@ -14,12 +14,12 @@ class VbDataTransferRaProductService extends VbDataTransferService
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
 
-		$task_sku = $xml_vb->attributes()->task_sku;
+		$task_id = $xml_vb->attributes()->task_id;
 
 		//Create return xml string
 		$xml = array();
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
-		$xml[] = '<ra_products task_sku="' . $task_sku . '">';
+		$xml[] = '<ra_products task_id="' . $task_id . '">';
 
 		foreach($xml_vb->ra_product as $ra_product)
 		{

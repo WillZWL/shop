@@ -271,6 +271,31 @@ class Vbdatatransfer extends PUB_Controller
 
 	/********************** end RA tables **********************/
 
+	/********************** start google mapping tables **********************/
+
+    public function categoryMapping()
+    {
+        $xml = file_get_contents('php://input');
+        $feed = $this->sc['VbDataTransferCategoryMapping']->startProcess($xml);
+        print $feed;
+    }
+
+    public function extCategoryMapping()
+    {
+        $xml = file_get_contents('php://input');
+        $feed = $this->sc['VbDataTransferExtCategoryMapping']->startProcess($xml);
+        print $feed;
+    }
+
+    public function externalCategory()
+    {
+        $xml = file_get_contents('php://input');
+        $feed = $this->sc['VbDataTransferExternalCategory']->startProcess($xml);
+        print $feed;
+    }
+
+    /********************** end google mapping tables **********************/
+
 	 public function index()
 	 {
 		// $xml = file_get_contents('php://input');
