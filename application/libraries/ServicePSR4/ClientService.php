@@ -318,6 +318,7 @@ class ClientService extends BaseService
             $email_dto->setMailTo($client_obj->getEmail());
             $email_dto->setMailFrom($email_sender);
             $email_dto->setReplace($replace);
+            $email_dto->setPlatformId(PLATFORM);
             $this->eventService->fireEvent($email_dto);
         }
         return $result;
