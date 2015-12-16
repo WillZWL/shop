@@ -475,7 +475,7 @@
                                 <input name="msku" class="input" value="<?= htmlspecialchars($this->input->get("msku")) ?>">
                             </td>
                             <td>
-                                <input name="prod_name" class="input" value="<?= htmlspecialchars($this->input->get("prod")) ?>">
+                                <input name="prod_name" class="input" value="<?= htmlspecialchars($this->input->get("prod_name")) ?>">
                             </td>
                             <td>
                                 <select name="clear" class="input">
@@ -517,7 +517,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input name="purcupdate" class="input" value="<?= htmlspecialchars($this->input->get("purcupdate")) ?>">
+                                <!-- <input name="purcupdate" class="input" value="<?= htmlspecialchars($this->input->get("purcupdate")) ?>"> -->
                             </td>
                             <td></td>
                             <td></td>
@@ -560,7 +560,9 @@
                         <tr onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')">
                             <td></td>
                             <td><?= $platform_id ?></td>
-                            <td><?= $product->getExtSku() ?></td>
+                            <td>
+                                <a href='<?= base_url()."marketing/pricing_tools/view/website/".$sku."?target=overview" ?>' target="_blank"><?= $product->getExtSku() ?></a>
+                            </td>
                             <td><?= $name ?></td>
                             <td>
                                 <select name='<?= "product[{$sku}][clear]" ?>' class="input">
