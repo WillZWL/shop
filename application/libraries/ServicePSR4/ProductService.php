@@ -87,6 +87,7 @@ class ProductService extends BaseProductService
         $newObj->setYoutubeId2(replace_special_chars((string)$oldObj->youtube_id_2));
         $newObj->setYoutubeCaption1(replace_special_chars((string)$oldObj->youtube_caption_1));
         $newObj->setYoutubeCaption2(replace_special_chars((string)$oldObj->youtube_caption_2));
+        $newObj->setStopSync((string)$oldObj->stop_sync);
     }
 
     public function createNewProductContentExtend($sku, $oldObj)
@@ -113,6 +114,7 @@ class ProductService extends BaseProductService
         $newObj->setInstruction((string)$oldObj->instruction);
         $newObj->setApplyEnhancedListing((string)$oldObj->apply_enhanced_listing);
         $newObj->setEnhancedListing((string)$oldObj->enhanced_listing);
+        $newObj->setStopSync((string)$oldObj->stop_sync);
     }
 
     public function createNewProductCustomClass($sku, $oldObj)

@@ -41,6 +41,25 @@ class VbDataTransferProductContentService extends VbDataTransferService
                 $pc_obj = $this->getService('Product')->getDao('ProductContent')->get(['prod_sku' => $sku, 'lang_id' => $pc->lang_id]);
 
                 if ($pc_obj) {
+                     //0 NA / 1 = prod_name / 2 = contents / 3 = keyworks / 4 = detail_desc
+                    $stop_sync_array = array_reverse(str_split(base_convert($pc_obj->getStopSync(), 10, 2)));
+                    $pc->addChild('stop_sync', $pc_obj->getStopSync());
+
+                    foreach($stop_sync_array as $k => $v) {
+                        if ($k == 1 && $v) {
+                            $pc->prod_name = $pc_obj->getProdName();
+                        }
+                        if ($k == 2 && $v) {
+                            $pc->contents = $pc_obj->getContents();
+                        }
+                        if ($k == 3 && $v) {
+                            $pc->keywords = $pc_obj->getKeywords();
+                        }
+                        if ($k == 4 && $v) {
+                            $pc->detail_desc = $pc_obj->getDetailDesc();
+                        }
+                    }
+
                     // update
                     $reason = "update";
                     $this->getService('Product')->updateProductContent($pc_obj, $pc);
@@ -52,6 +71,8 @@ class VbDataTransferProductContentService extends VbDataTransferService
                 } else {
                     // insert
                     $reason = "insert";
+                    $pc->addChild('stop_sync', 1);
+
                     $pc_obj = $this->getService('Product')->createNewProductContent($sku, $pc);
                     if ($this->getService('Product')->getDao('ProductContent')->insert($pc_obj)) {
                         $process_status = 5;    // insert success
