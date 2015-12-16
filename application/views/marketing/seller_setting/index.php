@@ -2,7 +2,7 @@
 <head>
     <title><?= $lang["title"] ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script type="text/javascript" src="<?= base_url()?>js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>js/jquery-1.9.1.min.js"></script>
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
@@ -34,7 +34,7 @@
             </td>
             <td align="right" style="padding-right:8px">
                 <?= $lang["selling_platform"] ?>:
-                <select style="width:250px" onChange="Redirect('<?= base_url() ?>marketing/<?= $handle?>/index/'+this.value)">
+                <select style="width:250px" onChange="Redirect('<?= base_url() ?>marketing/<?= $handle ?>/index/'+this.value)">
                     <option></option>
                     <?php
                     $sp_selected[$platform_id] = " SELECTED";
@@ -49,7 +49,7 @@
             </td>
         </tr>
     </table>
-    <form name="fm" method="post" action="<?= base_url() ?>marketing/<?= $handle?>/update">
+    <form name="fm" method="post" action="<?= base_url() ?>marketing/<?= $handle ?>/update">
         <input type="hidden" name="platform_id" value="<?=$platform_id?>">
         <input type="hidden" name="catid" value="<?=$catid?>">
         <table border="0" cellpadding="0" cellspacing="1" bgcolor="#000000" width="100%" class="tb_list">
@@ -107,12 +107,12 @@
                 </td>
                 <td>
                     <a href="<?= base_url() ?>marketing/<?= $handle?>/prodList/<?= $i ?>/<?= $platform_id ?>"
-                        rel="lyteframe" rev="width: 1024px; height: 400px; scrolling: auto;" title="Select Product for <?= $handle?>"
+                        rel="lyteframe" rev="width: 1024px; height: 400px; scrolling: auto;" title="Select Product for <?= $handle ?>"
                         class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">&nbsp; &nbsp; &nbsp;
                     </a>
                 </td>
             </tr>
-        <?
+        <?php
                 }
             }
         ?>

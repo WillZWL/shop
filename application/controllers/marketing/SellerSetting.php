@@ -54,7 +54,7 @@ class SellerSetting extends MY_Controller
         include_once APPPATH.'language/'.$sub_app_id.'_'.$this->getLangId().'.php';
         $data['lang'] = $lang;
         $data["notice"] = notice($lang, TRUE);
-        $data['selling_platform'] = $this->sc['SellingPlatform']->getList(['status' =>1 ], ['limit' => -1]);
+        $data['selling_platform'] = $this->sc['SellingPlatform']->getList(['status' => 1, 'type' => 'WEBSITE'], ['limit' => -1]);
         $data['catid'] = $catid;
         $data['handle'] = $this->getHandle();
         $data['limit'] = $this->getLimit();
