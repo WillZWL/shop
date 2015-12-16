@@ -40,9 +40,25 @@ class VbDataTransferProductContentExtendService extends VbDataTransferService
                 $pce_obj = $this->getService('Product')->getDao('ProductContentExtend')->get(['prod_sku' => $sku, 'lang_id' => $pce->lang_id]);
                 $reason = "";
                 if ($pce_obj) {
+                    //0 NA / 1 = feature / 2 = specification / 3 = enhanced_listing
+                    $stop_sync_array = array_reverse(str_split(base_convert($pce_obj->getStopSync(), 10, 2)));
+                    $pce->addChild('stop_sync', $pce_obj->getStopSync());
+
+                    foreach($stop_sync_array as $k => $v) {
+                        if ($k == 1 && $v) {
+                            $pce->feature = $pce_obj->getFeature();
+                        }
+                        if ($k == 2 && $v) {
+                            $pce->specification = $pce_obj->getSpecification();
+                        }
+                        if ($k == 3 && $v) {
+                            $pce->enhanced_listing = $pce_obj->getEnhancedListing();
+                        }
+                    }
+
                     // update
                     $reason = "update";
-                    $this->getService('Product')->updateProductContentExtend($pce_obj, $pc);
+                    $this->getService('Product')->updateProductContentExtend($pce_obj, $pce);
                     if ($this->getService('Product')->getDao('ProductContentExtend')->update($pce_obj)) {
                         $process_status = 5;    // update success
                     } else {
@@ -51,6 +67,7 @@ class VbDataTransferProductContentExtendService extends VbDataTransferService
                 } else {
                     // insert
                     $reason = "insert";
+                    $pce->addChild('stop_sync', 1);
                     $pce_obj = $this->getService('Product')->createNewProductContentExtend($sku, $pce);
                     if ($this->getService('Product')->getDao('ProductContentExtend')->insert($pce_obj)) {
                         $process_status = 5;    // insert success
