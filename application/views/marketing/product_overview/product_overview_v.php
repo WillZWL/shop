@@ -294,6 +294,29 @@
                             </td>
                         </tr>
                         <tr>
+                            <td style="padding-right:8px" align="right">
+                                <b>Auto Price Type</b>
+                            </td>
+                            <td>
+                                <select name="auto_price" class="input">
+                                    <option value=""></option>
+                                    <option value="N">Manual</option>
+                                    <option value="Y">Auto</option>
+                                </select>
+                            </td>
+                            <td style="padding-right:8px" align="right">
+                                <b>Surplus Quantity</b>
+                            </td>
+                            <td>
+                                <select id="surplusqty_prefix" name="surplusqty_prefix">
+                                    <option value="2"> Smaller <= </option>
+                                    <option value="1"> 0 and Smaller <= </option>
+                                    <option value="3"> Greater >= </option>
+                                </select>
+                                <input name="surplusqty" class="input" value="10000" style="width:200px">
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="2" style="padding-left:60px">
                                 <br><b>* TIP: Refining your search may produce faster result
                                 <br>* Results Per Page may give lesser results when used together with PLA/Adwords filters.</b>

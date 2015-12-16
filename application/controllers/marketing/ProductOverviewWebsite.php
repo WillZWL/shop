@@ -27,6 +27,7 @@ class ProductOverviewWebsite extends MY_Controller
             ($this->input->get('scatid') != '') ? $where['p.sub_cat_id'] = $this->input->get('scatid') : '';
             ($this->input->get('brand') != '') ? $where['p.brand_id'] = $this->input->get('brand') : '';
             ($this->input->get('pla') != '') ? $where['pr.is_advertised'] = $this->input->get('pla') : '';
+            ($this->input->get('auto_price') != '') ? $where['pr.auto_price'] = $this->input->get('auto_price') : '';
             ($this->input->get('msku') != '') ? $where['sm.ext_sku'] = $this->input->get('msku') : '';
             ($this->input->get('liststatus') != '') ? $where['pr.listing_status'] = $this->input->get('liststatus') : '';
             ($this->input->get('clear') != '') ? $where['p.clearance'] = $this->input->get('clear') : '';
@@ -39,6 +40,20 @@ class ProductOverviewWebsite extends MY_Controller
             ($this->input->get('price') != '') ? $where['pr.price'] = $this->input->get('price') : '';
             ($this->input->get('limit') != '') ? $option['limit'] = $this->input->get('limit') : '';
             ($this->input->get('per_page') != '') ? $option['offset'] = $this->input->get('per_page') : '';
+
+            if ($this->input->get("surplusqty") != "") {
+                switch($this->input->get("surplusqty_prefix")) {
+                    case 1:
+                        $where["surplus_quantity > 0 and surplus_quantity <= {$this->input->get("surplusqty")}"] = null;
+                        break;
+                    case 2:
+                        $where["surplus_quantity <= {$this->input->get("surplusqty")}"] = null;
+                        break;
+                    case 3:
+                        $where["surplus_quantity >= {$this->input->get("surplusqty")}"] = null;
+                        break;
+                }
+            }
 
             $data['product_list'] = $this->sc['Product']->getProductOverview($where, $option);
 
