@@ -466,5 +466,13 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\DeliveryService();
         };
 
+        $serviceContainer['BestSeller'] = function () {
+            return new S\BestSellerService();
+        };
+
+        $serviceContainer['LandpageListing'] = function () {
+            return new S\LandpageListingService();
+        };
+
     }
 }
