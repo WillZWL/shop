@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Service;
 
-abstract class LandpageListingService extends BaseService
+class LandpageListingService extends BaseService
 {
     public $product_service;
 
@@ -9,5 +9,10 @@ abstract class LandpageListingService extends BaseService
     {
         parent::__construct();
         $this->product_service = new ProductService;
+    }
+
+    public function getLandpageList($where = [], $option = [])
+    {
+        return $this->getDao('LandpageListing')->getLandpageList($where, $option);
     }
 }
