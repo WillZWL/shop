@@ -4,7 +4,7 @@ namespace ESG\Panther\Dao;
 class GoogleRequestBatchDao extends BaseDao
 {
     private $tableName = "google_request_batch";
-    private $voClassName = "GoogleShoppingVo";
+    private $voClassName = "GoogleRequestBatchVo";
 
     public function __construct() {
         parent::__construct();

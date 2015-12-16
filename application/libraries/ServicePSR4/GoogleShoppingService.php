@@ -3,180 +3,14 @@ namespace ESG\Panther\Service;
 
 class GoogleShoppingService extends BaseService
 {
-    private $googlebase_product_feed_service;
-    private $platform_biz_var_service;
-    private $context_config_service;
+//    const NUMBER_OF_PRODUCTS_IN_BATCH = 250;
     private $emailList = [];
     private $emailCcList = [];
-    private $cache_api_request_dao;
-    private $config_dao;
     private $technicalEmail = "oswald-alert@eservicesgroup.com";
 
     public function __construct()
     {
         parent::__construct();
-        set_time_limit(0);
-    }
-
-    function set_price_dao($value)
-    {
-        $this->price_dao = $value;
-    }
-
-    public function cache_api_exec_debug()
-    {
-        $debug = FALSE;
-        if (strpos($_SERVER["HTTP_HOST"], "dev") != FALSE)
-            $debug = TRUE;
-
-        $where = $option = array();
-        $where["api"] = "GSC";
-        $where["exec"] = 0;
-        $option["limit"] = -1;
-
-        if ($config_vo = $this->config_dao->get(array("variable" => "google_shopping_api_at_job"))) {
-            $config_vo->set_value(0);
-            $this->config_dao->update($config_vo);
-        }
-
-// $cache_api_list = $this->get_cache_api_request_dao()->get_list($where, $option); echo "<pre>"; var_dump($cache_api_list);die();
-        if ($cache_api_list = $this->get_cache_api_request_dao()->get_list($where, $option)) {
-            // set API jobs as being executed
-            foreach ($cache_api_list as $api_obj) {
-                // pingtest
-                $api_obj->set_exec(1);
-                if (!$debug) {
-                    //pingtest
-                    $this->get_cache_api_request_dao()->update($api_obj);
-                }
-            }
-
-            $i = 0;
-            foreach ($cache_api_list as $api_obj) {
-                $sku = $api_obj->get_sku();
-                $platform_id = $api_obj->get_platform_id();
-                $stock_status = $api_obj->get_stock_update();
-
-                if ($i == 30)
-                    sleep(5);
-
-                $account_id = $this->get_shopping_api_accountId($platform_id);
-                if ($debug) {
-                    // $account_id = 8113126;  //pingtest
-                }
-
-                if (!$account_id) {
-                    if ($debug) echo "No accountID for $platform_id";
-                    continue;
-                } else {
-                    $exec = false;
-                    if ($stock_status == "PAUSED") {
-                        $platform_obj = $this->platform_biz_var_service->get(array("selling_platform_id" => $platform_id));
-                        $platform_country_id = substr($platform_id, 3);
-                        $language_id = $platform_obj->get_language_id();
-                        $google_ref_id = $platform_country_id . '-' . $sku;
-
-                        // Make sure your product ID is of the form channel:languageCode:countryCode:offerId.
-                        list($id, $country, $language) = array($google_ref_id, $platform_country_id, $language_id);
-                        $postdata["productid"] = "online:$language_id:$platform_country_id:$id";
-                        $getproduct_result = $this->shoppingApiConnect('getproduct', $account_id, $debug, $postdata);
-
-                        if ($getproduct_result["status"] == TRUE) {
-                            $exec = TRUE;
-                        } else {
-
-                            // >> [GOOGLE_ERR]call:insertproduct- 812 File: /var/www/html/Google/google_connect.php. Caught exception: Error calling POST https://www.googleapis.com/content/v2/8113126/products: (400) [description] validation/invalid_character for AffiliateNetwork,DisplayAds,Shopping,ShoppingApi: Encoding problem in attribute: description
-                            # if item not found, means already deleted (normal; not reall error). Else, it may be some other errors that must be reported
-                            if (strpos($getproduct_result["error_message"], "item not found") === FALSE) {
-                                $record_comment = $getproduct_result["error_handler"];
-                                $this->GSC_error_handler_record($record_comment, $sku, $platform_id);
-
-                                $result["getProduct"] .= " \r\n ----- \r\n" . __LINE__ . " Error from google_connect [$sku - $platform_id]: \r\n{$getproduct_result["error_message"]} \r\n";
-                            }
-                        }
-
-                        if ($exec) {
-                            // Product exists, proceed to delete
-                            $deleteproduct_result = $this->shoppingApiConnect('deleteproduct', $account_id, $debug, $postdata);
-                            if ($deleteproduct_result["status"] == TRUE) {
-                                //if success
-                                $this->api_request_result_update($sku, $platform_id, 1, "");
-                                $data["deleted"] .= "[$sku - $platform_id]\r\n";
-                            } else {
-                                if (strpos($deleteproduct_result["error_handler"], "item not found") === FALSE) {
-                                    $record_comment = $deleteproduct_result["error_handler"];
-                                    $this->GSC_error_handler_record($record_comment, $sku, $platform_id);
-
-                                    $result["deleteProduct"] .= " \r\n ----- \r\n" . __LINE__ . " Error from google_connect [$sku - $platform_id]: {$deleteproduct_result["error_message"]} \r\n";
-                                }
-                            }
-                        }
-                    } else {
-                        $gsc_product_result = $this->get_GSC_product($sku, $platform_id);
-                        // echo "<pre>";var_dump("GSCPRODUCT"); var_dump($gsc_product_result);
-
-                        if ($gsc_product_result["status"] == TRUE) {
-                            $GSC_product = $gsc_product_result["product"];
-                            //insert the item, if item already exists, then it will update it
-                            $postdata["product"] = $GSC_product;
-                            $insertproduct_result = $this->shoppingApiConnect('insertproduct', $account_id, $debug, $postdata);
-
-                            if ($insertproduct_result) {
-                                if ($insertproduct_result["status"] == TRUE) {
-                                    //if success
-                                    $this->api_request_result_update($sku, $platform_id, 1, "");
-                                    $data["inserted"] .= "[$sku - $platform_id]\r\n";
-                                } else {
-                                    $record_comment = $insertproduct_result["error_handler"];
-                                    $this->GSC_error_handler_record($record_comment, $sku, $platform_id);
-                                    $result["insertProduct"] .= " \r\n ----- \r\n" . __LINE__ . " Error from google_connect [$sku - $platform_id]: {$insertproduct_result["error_message"]} \r\n";
-                                }
-                            } else {
-                                $this->GSC_error_handler_record("No response detected", $sku, $platform_id);
-                                $result["insertProduct"] .= " \r\n ----- \r\n" . __LINE__ . " [$sku - $platform_id] No response detected \r\n";
-                            }
-                        } elseif (isset($gsc_product_result["error_message"])) {
-                            // most likely is missing MPN
-                            $this->GSC_error_handler_record($gsc_product_result["error_message"], $sku, $platform_id);
-                            $result["insertProduct"] .= " \r\n ----- \r\n" . __LINE__ . " [$sku - $platform_id] {$gsc_product_result["error_message"]} \r\n";
-                        }
-                    }
-                }
-
-                $i++;
-            }
-
-
-            if ($result) {
-                $this->mail_result($result, "CACHE_API_EXEC ERROR - google_shopping_service.php");
-            }
-
-        } else {
-            $result[] = "No cache_api list";
-        }
-
-        if (isset($_GET["debug"])) {
-            echo "<pre>";
-            echo __LINE__ . " DEBUG <br>cache_api_exec_debug() <br><hr></hr>Cache API list:<br>";
-            var_dump($cache_api_list);
-            echo " <hr></hr><br>cache_api_exec_debug() <br>Deleted Products:<br>";
-            var_dump(str_replace("\r\n", "<br>", $data["deleted"]));
-            echo "<br><br>Inserted Products: <br>";
-            var_dump(str_replace("\r\n", "<br>", $data["inserted"]));
-            echo "<br><br>Errors (if any):<br>";
-            var_dump($result);
-            echo "<br>COMPLETED<hr></hr> </pre>";
-        }
-    }
-
-    function get_cache_api_request_dao()
-    {
-        return $this->cache_api_request_dao;
-    }
-
-    function set_cache_api_request_dao($value)
-    {
-        $this->cache_api_request_dao = $value;
     }
 
     public function getShoppingApiAccountId($platformId) {
@@ -191,7 +25,7 @@ class GoogleShoppingService extends BaseService
         return "";
     }
 
-    private function _prepareSendRequestToGoogle($language, $country, $sku) {
+    private function _prepareFormRequestToGoogle($language, $country, $sku) {
         $googleRefId = $country . '-' . $sku;
         return ["productId" => "online:$language:$country:$googleRefId"];
     }
@@ -206,7 +40,7 @@ class GoogleShoppingService extends BaseService
 
         if ($country && $language && $sku) {
             $accountId = $this->getShoppingApiAccountId("WEB" . $country);
-            $requestData = $this->_prepareSendRequestToGoogle($language, $country, $sku);
+            $requestData = $this->_prepareFormRequestToGoogle($language, $country, $sku);
             $googleConnect = $this->getService("GoogleConnect");
             return $googleConnect->getProduct($accountId, $requestData["productId"]);
         }
@@ -220,7 +54,7 @@ class GoogleShoppingService extends BaseService
 //update title from database
             $categoryMappingObj->setProductName($input["item_title"]);
             if ($this->getService("CategoryMapping")->getDao("CategoryMapping")->update($categoryMappingObj)) {
-                $requestData = $this->_prepareSendRequestToGoogle($input["item_language"], $input["item_country"], $sku);
+                $requestData = $this->_prepareFormRequestToGoogle($input["item_language"], $input["item_country"], $sku);
                 $accountId = $this->getShoppingApiAccountId("WEB" . $input["item_country"]);
                 $googleConnect = $this->getService("GoogleConnect");
 //get the product from google to modify
@@ -234,141 +68,6 @@ class GoogleShoppingService extends BaseService
         return false;
     }
 
-    //update all platform of all product data feed, please use this function with both parameters sku and specified_platform are empty.
-
-    //update a single product in all platform, please use this function whith the first parameter sku set to the value wanted and the
-    //seconde sepcified_platform is empty.
-
-    //update a certain product in a certain platform, please use this function with both parameters sku and sepcified_platform set to
-    //corresponding value.
-
-    //if want to update the all product in a SINGLE platform, please use funtion -- update_google_shopping_item_by_platform -- whith the first
-    //parameter platform set to a corresponding value
-/*
-    public function shoppingApiConnect($call, $account_id, $debug = true, $postdata = array())
-    {
-        $ret["status"] = FALSE;
-
-        if (!$call || !$account_id) {
-            $ret["error_message"] = ">> shoppingApiConnect() Missing parameters call or account_id";
-        } else {
-            $query_str = "call=$call&accountid=$account_id";
-            if ($debug)
-                $query_str .= "&debug=1";
-
-            $postdata = (array)$postdata;
-            if ($debug)
-                $postdata["debug"] = 1;
-            $postdata["call"] = $call;
-            $postdata["accountid"] = $account_id;
-
-            if (isset($postdata)) {
-                if ($debug)
-                    $url = "http://219.76.190.140:4580/Google_test/google_connect.php";
-                else
-                    $url = "http://219.76.190.140:4580/Google/google_connect.php";
-
-                $query_str = http_build_query($postdata);
-
-                for ($i = 0; $i < 5; $i++) {
-                    $result = $this->_getGoogleCurl($url, $query_str);
-var_dump($result);exit;
-                    if ($result) {
-                        $data = $result['data'];
-                        $google_connect_result = json_decode($data, FALSE);
-
-                        // if error is not due to connection problem, then don't need to retry
-                        if (strpos($google_connect_result->error_message, "couldn't connect to host") === FALSE && strpos($google_connect_result->error_message, "Network is unreachable") === FALSE) {
-                            break;
-                        }
-                    }
-
-                    sleep(5);
-                }
-
-                $data = $result['data'];
-                $curlinfo = $result["curlinfo"];
-                $curlerror = $result["curlerror"];
-                $curlerrorno = $result["curlerrorno"];
-                $curlinfo_str = $this->_convertArrayToString($curlinfo);
-
-                if ($curlerror) {
-                    $ret["error_message"] = ">> shoppingApiConnect($call, $account_id) cURL error. [errorno:$curlerrorno] $curlerror. \r\n Curl Info: \r\n$curlinfo_str";
-                    $ret["error_handler"] = "[curl_errorno:$curlerrorno] $curlerror";
-                } else {
-                    if ($data) {
-                        $google_connect_result = json_decode($data, FALSE);
-                        if ($google_connect_result) {
-                            if ($google_connect_result->status == TRUE) {
-                                // SUCCESS RETURN WITH DATA
-                                $ret["status"] = TRUE;
-
-                                if ($result_vars = get_object_vars($google_connect_result)) {
-                                    foreach ($result_vars as $propertyname => $value) {
-                                        $ret[$propertyname] = $value;
-                                    }
-                                }
-                            } else {
-                                $ret["error_message"] = ">> shoppingApiConnect($call, $account_id)\r\n{$google_connect_result->error_message}";
-
-                                $short_error_message = $google_connect_result->error_message;
-                                $short_error_message = str_replace("Caught exception: ", "", $short_error_message);
-
-                                if (strpos($short_error_message, "/products: (") != FALSE) {
-                                    // EXAMPLE of usual error message:
-                                    // Error calling POST https://www.googleapis.com/content/v2/7852736/products: (400) [description] validation/invalid_value: Invalid string value in attribute: description
-                                    $short_error_message = str_replace("/products: ", "", strstr($short_error_message, "/products: ("));
-                                }
-                                $ret["error_handler"] = $short_error_message; // shorter version for database recording
-                            }
-                        } else {
-                            $ret["error_message"] = ">> shoppingApiConnect($call, $account_id) Error decoding json: \r\n{$data}";
-                            $ret["error_handler"] = "Error decoding response json"; // shorter version for database recording
-                        }
-                    } else {
-                        // shouldn't come here
-                        $ret["error_message"] = ">> shoppingApiConnect($call, $account_id) No data detected.";
-                        $ret["error_handler"] = "No data detected"; // shorter version for database recording
-                    }
-                }
-
-            } else {
-                $ret["error_message"] = ">> shoppingApiConnect($call, $account_id) postdata must be an array to build query";
-                $ret["error_handler"] = "postdata incorrect format";
-            }
-
-        }
-        return $ret;
-    }
-    private function _getGoogleCurl($url, $query_str, $params = array())
-    {
-        $ret = array();
-        if ($url && $query_str) {
-            $ch = curl_init();
-            $timeout = 5;
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            // curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $query_str);
-            $data = curl_exec($ch);
-            $curlinfo = curl_getinfo($ch);
-            $curlerror = curl_error($ch);
-            $curlerrorno = curl_errno($ch);
-            curl_close($ch);
-
-            # cannot connect to host
-            if ($curlerrorno != 7) {
-                if ($data || $curlerror != "") {
-                    $ret['data'] = $data;
-                    $ret["curlinfo"] = $curlinfo;
-                    $ret["curlerror"] = $curlerror;
-                    $ret["curlerrorno"] = $curlerrorno;
-                }
-            }
-        }
-        return $ret;
-    }
-*/
     private function _convertArrayToString($array = array())
     {
         $return_str = "";
@@ -399,30 +98,6 @@ var_dump($result);exit;
 
         // update google api request
         $this->api_request_result_update($sku, $platform_id, 0, $comment);
-    }
-
-    function get_price_dao()
-    {
-        return $this->price_dao;
-    }
-
-
-    //update whole platform product data feed, please using this function with the second parameter sku=""
-    // update_google_shopping_item_by_platform is run by cron
-
-    private function api_request_result_update($sku, $platform_id, $status = 1, $comment = "")
-    {
-        if ($google_shopping_obj = $this->get_dao()->get(array("sku" => $sku, "platform_id" => $platform_id))) {
-            $google_shopping_obj->set_api_request_result($status);
-            if ($status == 1) {
-                $google_shopping_obj->set_comment($comment);
-            } else {
-                $old_comment = $google_shopping_obj->get_comment();
-                $new_comment = $old_comment ? ($old_comment . ';' . $comment) : $comment;
-                $google_shopping_obj->set_comment($new_comment);
-            }
-            $this->get_dao()->update($google_shopping_obj);
-        }
     }
 
 
@@ -683,21 +358,95 @@ var_dump($result);exit;
 /***************************************************************
 **  updateGoogleShoppingItem 
 **  This function will insert record into pending_google_api_request
-**  Another process(CronUpdatePriceMargin/processGoogleApiRequest) = GoogleShoppingService->sendRequestToGoogle will get all the data inside and send to google 
+**  Another process(CronUpdatePriceMargin/processGoogleApiRequest) = GoogleShoppingService->sendBatchRequestToGoogle will get all the data inside and send to google 
 ****************************************************************/
     public function updateGoogleShoppingItem($platformId = "", $sku = "") {
-        $this->getService("Product")->getDao("GoogleShopping")->insertGoogleShoppingData($platformId, str_replace("WEB", "GOO", $platformId), $sku);
+        $this->getService("PendingGoogleApiRequest")->getDao("PendingGoogleApiRequest")->insertGoogleShoppingData($platformId, str_replace("WEB", "GOO", $platformId), $sku);
     }
 
-    public function sendRequestToGoogle() {
-        $this->getService("Product")->getDao("GoogleShopping")->get
-    }
 /**************************************************
-**  Get a batch ID and mark the record with a batch ID and transfer to another table
+**  Get a batch ID and mark the record with a batch ID and transfer to other to process to keep pending table slim
 ***************************************************/
-    public function _sendRequestToGoogleStep1() {
-//        $this->db->trans_start();
-//        $this->db->trans_commit();
+    public function sendBatchRequestToGoogle() {
+        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
+        $this->getService("GoogleRequestBatch")->getDao("PendingGoogleApiRequest")->db->save_queries = false;
+        $hasRequest = $this->getService("GoogleRequestBatch")->getDao("PendingGoogleApiRequest")->getList([], ["limit" => 1]);
+        if ($hasRequest) {
+            if (($batchObj = $this->getService("GoogleRequestBatch")->getNewBatch(GoogleService::FUNC_GOOGLE_CONTENT_API)) !== false) {
+                $batchId = $batchObj->getId();
+
+                $this->getService("GoogleRequestBatch")->getDao('GoogleRequestBatch')->db->trans_begin();
+//insert
+                $insertResult = $this->_sendBatchRequestToGoogleStep1($batchId);
+//delete
+                $deleteResult = $this->_sendBatchRequestToGoogleStep2();
+                if ($insertResult && $deleteResult) {
+                    $transCompleteResult = $this->getService("GoogleRequestBatch")->getDao('GoogleRequestBatch')->db->trans_commit();
+                    if ($transCompleteResult)
+                        $this->processBatchByBatchId($batchId);
+                } else {
+                    $this->getService("GoogleRequestBatch")->getDao('GoogleRequestBatch')->db->trans_rollback();
+                }
+            } else {
+                $this->sendAlert("[Panther] Cannot get a new batch to send google API", "error:" . $this->getService("GoogleRequestBatch")->getDao('GoogleRequestBatch')->db->error()["message"]);
+            }
+        }
+    }
+
+    public function processBatchByBatchId($batchId, $reprocess = false) {
+        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
+        $where["request_batch_id"] = $batchId;
+        if ($reprocess)
+            $where["`result` in ('N', 'F')"] = null;
+        else
+            $where["result"] = "N";
+        $processingList = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->getList($where, ["limit" => 10]);       
+        
+        $reOrderList = [];
+        foreach($processingList as $product) {
+            $reOrderList[$product->getGoogleProductId()] = $product;
+            $accountId = $this->getShoppingApiAccountId($product->getPlatformId());
+            $this->getService("GoogleConnect")->testInsertProduct($accountId, $product);
+            exit;
+        }
+        unset($processingList);
+
+        $googleConnect = $this->getService("GoogleConnect");
+        $googleConnect->processingInsertProductBatch($batchId, $reOrderList);
+
+        foreach($reOrderList as $key => $googleApiRequestObj) {
+            $updateResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->update($googleApiRequestObj);
+            if ($updateResult === false) {
+                $this->_sendAlert("[Panther] cannot save google api request result", $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
+            }
+        }
+        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
+        unset($reOrderList);
+        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
+    }
+
+/*******************************************************************
+**  Step1, insert data into google_api_request
+**
+********************************************************************/
+    public function _sendBatchRequestToGoogleStep1($batchId) {
+        $result = $this->getService("GoogleApiRequest")->getDao('GoogleApiRequest')->cloneGoogleApiRequestDataWithBatchId($batchId);
+        if ($result === false) {
+            $this->_sendAlert("[Panther] Cannot insert data to google_api_request table, " . __METHOD__ . __LINE__, "error:" . $this->getService("GoogleApiRequest")->getDao('GoogleApiRequest')->db->error()["message"]);
+        }
+        return $result;
+    }
+
+/*******************************************************************
+**  Step2, delete the data from google_api_request
+**  this step is inside a transaction with step1 to prevent someone is updating this table
+********************************************************************/
+    public function _sendBatchRequestToGoogleStep2() {
+        $result = $this->getService("GoogleApiRequest")->getDao('PendingGoogleApiRequest')->clearPendingGoogleApiRequest();
+        if ($result === false) {
+            $this->_sendAlert("[Panther] Cannot clear data from google_api_request table, " . __METHOD__ . __LINE__, "error:" . $this->getService("GoogleApiRequest")->getDao('GoogleApiRequest')->db->error()["message"]);
+        }
+        return $result;
     }
 /*
     public function updateGoogleShoppingItemStep2($platformId = "", $sku = "") {
@@ -748,346 +497,9 @@ var_dump($result);exit;
         if ($result["error_message"] != "") {
             $subject = "[Panther] Google Content API Batch Delete Error";
             $message = $result["error_message"];
-            $this->sendAlert($subject, $message, $this->technicalEmail);
+            $this->_sendAlert($subject, $message);
         }
         return $result["status"];
-    }
-
-    public function batchDeleteItemOld($accountId, $sku, $platformId)
-    {
-/* IN DEV SERVER, it will call shoppingApiConnect() will call API in dryRun mode, nothing will be deleted */
-        if ($sku) {
-            $this->batch_delete_item($account_id, $sku, $platform_id);
-        } else {
-            // To get here -- http://admindev.valuebasket.com/marketing/ext_category_mapping/updateGoogleShoppingItemByPlatform/WEBAU?debug
-
-            $temp_product_list = array();
-
-            $postdata["maxresults"] = 250;
-            if ($debug) {
-                $postdata["maxresults"] = 1;
-                $postdata["maxpages"] = 1;  # number of pages to loop
-            }
-
-            $productFeed_result = $this->shoppingApiConnect("listproducts", $account_id, $debug, $postdata);
-            if ($productFeed_result["status"] == TRUE) {
-                if ($productFeed = $productFeed_result["data"]) {
-                    foreach ($productFeed as $product) {
-
-                        $target_country = $product->targetCountry;
-                        $country_id = substr($platform_id, 3, 2);
-                        if ($target_country == $country_id) {
-                            if ($debug) {
-                                // // pingtest
-                                // if($product->id != "online:en:AU:AU-18066-AA-NA")
-                                //  continue;
-                            }
-
-                            $temp_product_list[] = $product->id;
-                        }
-                    }
-
-                    if ($temp_product_list) {
-                        $postdata_deletebatch["productidbatch"] = $temp_product_list;
-                        $deletebatch_result = $this->shoppingApiConnect('deleteproductbatch', $account_id, $debug, $postdata_deletebatch);
-                        if ($deletebatch_result["status"] == TRUE) {
-                            if ($deletebatch_result["batch_error"] != "") {
-                                // Send email for failed SKUs
-                                $result["error"] .= " \r\n ----- \r\n" . __LINE__ . " Error in batch from google_connect: \r\n{$deletebatch_result["batch_error"]} \r\n";
-                                $this->mail_result($result, "google shopping error: Platform All Items Delete");
-                            }
-                        } else {
-                            $result["error"] .= " \r\n ----- \r\n" . __LINE__ . " Error from google_connect: {$deletebatch_result["error_message"]} \n$val - $platform_id\r\n";
-                            $this->mail_result($result, "google shopping error: Platform All Items Delete");
-                        }
-                    }
-
-                    if ($platform_items = $this->get_dao()->get_list(array("platform_id" => $platform_id), array("limit" => -1))) {
-                        foreach ($platform_items as $obj) {
-                            $obj->set_status(0);
-                            $this->get_dao()->update($obj);
-                        }
-                    }
-                }
-            } else {
-                $result["error"] = __LINE__ . " google_shopping_service.php, \r\n{$productFeed_result["error_message"]}";
-                $this->mail_result($result, "google shopping error: Platform All Items Delete");
-            }
-
-            if (isset($_GET["debug"])) {
-                echo "<pre>";
-                echo __LINE__ . " DEBUG <br> batch_delete_item_by_product_object() <br>";
-                echo "ProductIDs to delete: <br>";
-                var_dump($temp_product_list);
-                echo "<br><br>Errors (if any):<br>";
-                var_dump($result);
-                echo "<br>Completed.<hr></hr> </pre>";
-            }
-        }
-    }
-
-    public function batch_delete_item($account_id, $sku, $platform_id)
-    {
-        $debug = FALSE;
-        if (strpos($_SERVER["HTTP_HOST"], "dev") != FALSE)
-            $debug = TRUE;
-
-        $sku_list = array();
-        if (is_array($sku)) {
-            $sku_list = array_merge($sku_list, $sku);
-        } else {
-            $sku_list[] = $sku;
-        }
-
-        $prepare_batch_item = array();
-
-        foreach ($sku_list as $val) {
-            // ping's comment: when batch_delete_item() is called, q_delete has deleted the record in db google_shopping, so $item_obj will not exist.
-            // thus, it may not go into delete batch. the following line was previously here from batch_delete_item_v1()
-            // if($item_obj = $this->get_dao()->get(array("sku"=>$val, "platform_id"=>$platform_id, "status"=>1)))
-            {
-                if ($platform_obj = $this->platform_biz_var_service->get(array("selling_platform_id" => $platform_id))) {
-                    $platform_country_id = substr($platform_id, 3);
-                    $language_id = $platform_obj->get_language_id();
-                    $google_ref_id = $platform_country_id . '-' . $val;
-
-                    // Make sure your product ID is of the form channel:languageCode:countryCode:offerId.
-                    list($id, $country, $language) = array($google_ref_id, $platform_country_id, $language_id);
-                    $postdata["productid"] = "online:$language_id:$platform_country_id:$id";
-                    $getproduct_result = $this->shoppingApiConnect('getproduct', $account_id, $debug, $postdata);
-
-                    if ($getproduct_result["status"] == TRUE) {
-                        $prepare_batch_item[] = $postdata["productid"];
-                    } else {
-                        if (strpos($getproduct_result["error_message"], "item not found") === FALSE) {
-                            $result["error"] .= " \r\n ----- \r\n" . __LINE__ . " Error from google_connect: {$getproduct_result["error_message"]} \n$val - $platform_id \r\n";
-                            $this->mail_result($result, "google shopping error: Single Item delete");
-                        } else {
-                            // if google erorr message says item not found, deactivate status on db google_shopping
-                            if ($item_obj = $this->get_dao()->get(array("sku" => $val, "platform_id" => $platform_id))) {
-                                $item_obj->set_status(0);
-                                $this->get_dao()->update($item_obj);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if ($prepare_batch_item) {
-            $postdata_deletebatch["productidbatch"] = $prepare_batch_item;
-            $deletebatch_result = $this->shoppingApiConnect('deleteproductbatch', $account_id, $debug, $postdata_deletebatch);
-
-            if ($deletebatch_result["status"] == TRUE) {
-                if ($deletebatch_result["batch_error"] != "") {
-                    // Send email for failed SKUs
-                    $result["error"] .= " \r\n ----- \r\n" . __LINE__ . " Error in batch from google_connect: \r\n{$deletebatch_result["batch_error"]} \r\n";
-                    $this->mail_result($result, "google shopping error: Single Item delete");
-                }
-
-                if ($deletebatch_result["data"]) {
-                    // Successful SKUs
-                    foreach ($deletebatch_result["data"] as $key => $productid) {
-                        list($channel, $language_id, $platform_country_id, $google_ref_id) = explode(':', $productid);
-                        $sku = substr($google_ref_id, 3);
-                        if ($item_obj = $this->get_dao()->get(array("sku" => $sku, "platform_id" => $platform_id))) {
-                            $item_obj->set_status(0);
-                            $this->get_dao()->update($item_obj);
-                        }
-                    }
-                }
-            } else {
-                $result["error"] .= " \r\n ----- \r\n" . __LINE__ . " Error from google_connect: {$deletebatch_result["error_message"]} \n$val - $platform_id \r\n";
-                $this->mail_result($result, "google shopping error: Single Item delete");
-            }
-
-        }
-
-        if (isset($_GET["debug"])) {
-            echo "<pre>";
-            echo __LINE__ . " DEBUG <br>batch_delete_item() <br>Product IDs to delete: <br>";
-            var_dump($prepare_batch_item);
-            echo "<br><br>Errors (if any):<br>";
-            var_dump($result);
-            echo "Completed <hr></hr> </pre>";
-        }
-    }
-
-    // convert a single product into utf encoded array and compatible for google api
-
-    public function batch_insert_item($account_id, $data_list = array(), $platform_id)
-    {
-        $prepare_insert_item_list = $process_list = array();
-        $debug = $this->debug;
-        $prepare_batch_error = "";
-        if ($data_list) {
-            foreach ($data_list as $val) {
-                $sku = $val->get_sku();
-                $process_list[$sku]["price"] = $val->get_price();
-                $process_list[$sku]["platform_id"] = $val->get_platform_id(); // WEBAU
-
-                if ($this->debug) {
-                    // // pingtest
-                    // if($sku != "18066-AA-NA" && $sku != "12859-AA-AL")
-                    //  continue;
-                }
-
-                if ($item_obj = $this->get_dao()->get(array("sku" => $sku, "platform_id" => $platform_id, "status" => 1))) {
-                    continue;
-                }
-
-                // if($product = $this->get_GSC_product($sku, $platform_id))
-                $gsc_product_result = $this->get_GSC_product($sku, $platform_id);
-
-                if ($gsc_product_result["status"] === TRUE) {
-                    $prepare_insert_item_list[] = $gsc_product_result["product"];
-                } elseif (isset($gsc_product_result["error_message"])) {
-                    $prepare_batch_error .= " \r\n ----- \r\n" . __LINE__ . " Error prepare batch: {$gsc_product_result["error_message"]} \r\n";
-                }
-            }
-
-            if ($prepare_batch_error) {
-                $error["prepare_batch_error"] = $prepare_batch_error;
-                $this->mail_result($result, __LINE__ . " ERROR: Google Shopping Insert Batch Part Fail");
-            }
-
-            if ($prepare_insert_item_list) {
-                $batch_error_array = array();
-                $postdata["productbatch"] = $prepare_insert_item_list;
-                $insertproduct_result = $this->shoppingApiConnect('insertproductbatch', $account_id, $debug, $postdata);
-
-                if ($insertproduct_result["status"] == FALSE) {
-                    $result["insertproductbatch_error"] = $insertproduct_result["error_message"];
-                    $this->mail_result($result, __LINE__ . " ERROR: Google Shopping Insert Batch Fail");
-                } else {
-                    if ($batch_error_array = (array)$insertproduct_result["batch_error"]) {
-                        foreach ($batch_error_array as $offerid => $error_message) {
-                            $thisprice = $thisplatform_id = "";
-                            $sku = substr($offerid, 3);
-                            $thisprice = $process_list[$sku]["price"];
-                            $thisplatform_id = $process_list[$sku]["platform_id"];
-
-                            $this->create_google_shopping_record($sku, $thisplatform_id, 0, $thisprice, $error_message);
-                            $result[] = "offerID: $offerid \r\n$error_message\r\n";
-                        }
-                        $this->mail_result($result, __LINE__ . " ERROR: Google Shopping Insert Batch Error Products");
-                    }
-
-                    if ($batch_success_array = (array)$insertproduct_result["data"]) {
-                        foreach ($batch_success_array as $k => $offerid) {
-                            $thisprice = $thisplatform_id = "";
-                            $sku = substr($offerid, 3);
-                            $thisprice = $process_list[$sku]["price"];
-                            $thisplatform_id = $process_list[$sku]["platform_id"];
-
-                            $this->create_google_shopping_record($sku, $thisplatform_id, 1, $thisprice);
-                            $subject = "content for google shopping success to update";
-                        }
-                    }
-                }
-            } else {
-                $result[] = "Empty Insert Item List; probably error creating GSC_product";
-                $this->mail_result($result, __LINE__ . " ERROR: Google Shopping Empty Insert List");
-            }
-        }
-
-        if (isset($_GET["debug"])) {
-            echo "<pre>";
-            echo __LINE__ . " DEBUG <br>batch_insert_item() <br>Prepare to insert Products:<br>";
-            var_dump($process_list);
-            echo "<br><br>Insert batch Partial Errors (if any):<br>";
-            var_dump(str_replace("\r\n", "<br>", $prepare_batch_error));
-            echo "<br><br>Inserted Products: <br>";
-            var_dump(str_replace("\r\n", "<br>", $batch_success_array));
-            echo "<br><br>Errors (if any):<br>";
-            var_dump($result);
-            echo "<br>COMPLETED<hr></hr> </pre>";
-        }
-    }
-
-    private function create_google_shopping_record($sku, $platform_id, $status, $price, $comment = '')
-    {
-        if ($item_obj = $this->get_dao()->get(array("sku" => $sku, "platform_id" => $platform_id))) {
-            $item_obj->set_status($status);
-            $item_obj->set_price($price);
-            $item_obj->set_api_request_result($status);
-            $item_obj->set_comment($comment);
-            $this->get_dao()->update($item_obj);
-        } else {
-            $item_obj = $this->get_dao()->get();
-            $item_obj->set_sku($sku);
-            $item_obj->set_platform_id($platform_id);
-            $item_obj->set_status($status);
-            $item_obj->set_api_request_result($status);
-            $item_obj->set_price($price);
-            $item_obj->set_comment($comment);
-            $this->get_dao()->insert($item_obj);
-        }
-    }
-
-    public function delete_product_item($platform_id = "", $sku = "", $country_id = "", $language_id = "")
-    {
-        $debug = FALSE;
-        if (strpos($_SERVER["HTTP_HOST"], "dev") != FALSE)
-            $debug = TRUE;
-
-        $exec = false;
-        $result = array();
-        if ($platform_id) {
-            if ($sku) {
-                if ($account_id = $this->get_shopping_api_accountId($platform_id)) {
-                    $platform_obj = $this->platform_biz_var_service->get(array("selling_platform_id" => $platform_id));
-                    $platform_country_id = substr($platform_id, 3);
-                    $language_id = $platform_obj->get_language_id();
-                    $google_ref_id = $platform_country_id . '-' . $sku;
-
-                    // Make sure your product ID is of the form channel:languageCode:countryCode:offerId.
-                    list($id, $country, $language) = array($google_ref_id, $platform_country_id, $language_id);
-                    $postdata["productid"] = "online:$language_id:$platform_country_id:$id";
-                    $getproduct_result = $this->shoppingApiConnect('getproduct', $account_id, $debug, $postdata);
-
-                    if ($getproduct_result["status"] == TRUE) {
-                        $exec = TRUE;
-                    } else {
-                        $result["getProduct"] .= " \r\n ----- \r\n" . __LINE__ . " Error from google_connect [$sku - $platform_id]: \r\n{$getproduct_result["error_message"]} \r\n";
-                    }
-
-                    if ($exec) {
-                        // Product exists, proceed to delete
-                        $deleteproduct_result = $this->shoppingApiConnect('deleteproduct', $account_id, $debug, $postdata);
-                        if ($deleteproduct_result["status"] == TRUE) {
-                            //if success
-                            $this->api_request_result_update($sku, $platform_id, 1, "");
-                            $data["deleted"] .= "[$sku - $platform_id]\r\n";
-                        } else {
-                            $result["deleteProduct"] .= " \r\n ----- \r\n" . __LINE__ . " Error from google_connect [$sku - $platform_id]: {$deleteproduct_result["error_message"]} \r\n";
-                        }
-                    }
-
-                } else {
-                    $result['error'] = __LINE__ . " google_shopping_service.php - delete_product_item(), No accountid";
-                }
-
-            } else {
-                $result['error'] = __LINE__ . " google_shopping_service.php - delete_product_item(), No sku";
-            }
-
-        } else {
-            $result['error'] = __LINE__ . " google_shopping_service.php - delete_product_item(), No platform_id";
-        }
-
-        if (isset($result)) {
-            $this->mail_result($result, "content for google shopping error");
-        }
-
-        if (isset($_GET["debug"])) {
-            echo "<pre>";
-            echo __LINE__ . " DEBUG <br>delete_product_item() <br>Deleted Products:<br>";
-            var_dump(str_replace("\r\n", "<br>", $data["deleted"]));
-            echo "<br><br>Errors (if any):<br>";
-            var_dump($result);
-            echo "<br>COMPLETED<hr></hr> </pre>";
-        }
     }
 
     public function getGoogleShoppingContentReport($platformId = "") {
@@ -1180,5 +592,9 @@ var_dump($result);exit;
 
         $this->api_request_result_update($sku, $platform_id, 0, $comment);
         $this->mail_result($result, "ERROR: Google Shopping");
+    }
+
+    private function _sendAlert($subject, $message) {
+        $this->sendAlert($subject, $message, $this->technicalEmail);
     }
 }

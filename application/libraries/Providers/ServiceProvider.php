@@ -390,6 +390,14 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\GoogleRequestBatchService();
         };
 
+        $serviceContainer['PendingGoogleApiRequest'] = function () {
+            return new S\PendingGoogleApiRequestService();
+        };
+
+        $serviceContainer['GoogleApiRequest'] = function () {
+            return new S\GoogleApiRequestService();
+        };
+
         $serviceContainer['CategoryMapping'] = function () {
             return new S\CategoryMappingService();
         };
