@@ -73,6 +73,7 @@ class PricingToolWebsiteService extends BaseService
         $data["feed_include"][$platform_id] = $this->getDao('AffiliateSkuPlatform')->getFeedListBySku($param['prod_sku'], $platform_id, 2);
         $data["feed_exclude"][$platform_id] = $this->getDao('AffiliateSkuPlatform')->getFeedListBySku($param['prod_sku'], $platform_id, 1);
         $pdata[$platform_id]["competitor"] = $this->getCompetitor($param);
+
         // $pdata[$platform_id]["adwords_obj"] = $this->getAdwordsData($param);
         // $googleComment = $this->getGoogleGscComment($param);
         // $pdata[$platform_id]["gsc_comment"] = $googleComment["gsc_comment"];
