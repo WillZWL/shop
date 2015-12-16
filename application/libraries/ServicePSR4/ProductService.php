@@ -51,9 +51,12 @@ class ProductService extends BaseProductService
 
     public function createNewProductContent($sku, $oldObj)
     {
-        if ( ! $this->getDao('Product')->get(['sku' => $sku])) {
+        if ( $prod_obj = $this->getDao('Product')->get(['sku' => $sku])) {
             return false;
         }
+
+        $category_table = $this->getService('Category')->getCategoryName((string)$oldObj->lang_id);
+        $prod_url = '/'. $category_table[$prod_obj->getCatId()].'/'.$category_table[$prod_obj->getSubCatId()].'/'.str_replace(' ', '-', parse_url_char($prod_obj->getProdName())).'/product/'.$prod_obj->getSku();
 
         $newObj = new \ProductContentVo();
         $newObj->setProdSku($sku);
@@ -88,6 +91,8 @@ class ProductService extends BaseProductService
         $newObj->setYoutubeCaption1(replace_special_chars((string)$oldObj->youtube_caption_1));
         $newObj->setYoutubeCaption2(replace_special_chars((string)$oldObj->youtube_caption_2));
         $newObj->setStopSync((string)$oldObj->stop_sync);
+
+        $newObj->setProductUrl();
     }
 
     public function createNewProductContentExtend($sku, $oldObj)

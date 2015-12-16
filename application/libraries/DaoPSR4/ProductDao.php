@@ -596,9 +596,7 @@ class ProductDao extends BaseDao
         $this->db->join("product_content default_pc", "p.sku = default_pc.prod_sku AND default_pc.lang_id = 'en'", "LEFT");
         $this->db->where(array("p.status" => 2, "pr.listing_status" => "L"));
 
-        $prod_url = 'CONCAT("/", REPLACE(REPLACE(cat.name, ".", "-"), " ", "-"), "/", REPLACE(REPLACE(sc.name, ".", "-"), " ", "-"), "/", REPLACE(REPLACE(p.name, ".", "-"), " ", "-") ,"/product/", p.sku) product_url';
-
-        return $this->commonGetList($className, $where, $option, 'pr.platform_id, pbv.platform_country_id country_id, p.sku, ' . $prod_url.  ', pbv.platform_currency_id currency_id, pr.price, pr.fixed_rrp, pr.rrp_factor, p.website_status, if(p.display_quantity < p.website_quantity, p.display_quantity, p.website_quantity) quantity, coalesce(pc.prod_name, default_pc.prod_name) prod_name, coalesce(pc.short_desc, default_pc.short_desc) short_desc, coalesce(pc.detail_desc, default_pc.detail_desc) detail_desc, p.image, CONCAT("/cart/add-item/", p.sku) add_cart_url, cat.name cat_name, sc.name sub_cat_name, br.brand_name, p.mpn, p.ean, p.upc, p.clearance, p.create_on create_date');
+        return $this->commonGetList($className, $where, $option, 'pr.platform_id, pbv.platform_country_id country_id, p.sku, pc.product_url, pbv.platform_currency_id currency_id, pr.price, pr.fixed_rrp, pr.rrp_factor, p.website_status, if(p.display_quantity < p.website_quantity, p.display_quantity, p.website_quantity) quantity, coalesce(pc.prod_name, default_pc.prod_name) prod_name, coalesce(pc.short_desc, default_pc.short_desc) short_desc, coalesce(pc.detail_desc, default_pc.detail_desc) detail_desc, p.image, CONCAT("/cart/add-item/", p.sku) add_cart_url, cat.name cat_name, sc.name sub_cat_name, br.brand_name, p.mpn, p.ean, p.upc, p.clearance, p.create_on create_date');
     }
 /**********************************
 **  searchspring ajax Price
