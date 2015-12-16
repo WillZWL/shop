@@ -69,12 +69,14 @@ class PricingToolService extends BaseService
                             $param['prod_obj'] = $prod_obj;
 
                             $website_data = $this->getService('PricingToolWebsite')->getPrivateDataForWebsite($param);
-                            if ($website_data['data']) {
-                                $data = array_merge($website_data['data'], $data);
-                            }
-                            if ($website_data['pdata']) {
-                                $pdata = array_merge($website_data['pdata'], $pdata);
-                            }
+
+                            $data['delivery_info'][$platform_id] = $website_data['delivery_info'];
+                            $data["feed_include"][$platform_id] = $website_data['feed_include'];
+                            $data["feed_exclude"][$platform_id] = $website_data['feed_exclude'];
+                            $pdata[$platform_id]["competitor"] = $website_data['competitor'];
+                             // $pdata[$platform_id]["adwords_obj"] = $website_data['adwords_obj'];
+                            // $pdata[$platform_id]["gsc_comment"] = $website_data['gsc_comment'];
+                            // $pdata[$platform_id]["enabled_pla_checkbox"] = $website_data['enabled_pla_checkbox'];
                             break;
 
                         default:
@@ -89,7 +91,6 @@ class PricingToolService extends BaseService
                 $data['pdata'] = $pdata;
             }
         }
-
         return $data;
     }
 
@@ -238,7 +239,7 @@ class PricingToolService extends BaseService
     public function setAutoPricingForBulkSku($sku_list, $platform_type)
     {
         $msg = "";
-        
+
         foreach ($sku_list as $sku) {
             if ($platform_list = $this->getDao('PlatformBizVar')->getPricingToolPlatformList($sku, $platform_type)) {
                 foreach ($platform_list as $platform_obj) {
@@ -246,11 +247,11 @@ class PricingToolService extends BaseService
                     $json = $this->getService('Price')->getProfitMarginJson($platform_id, $sku, 0, -1);
                     $m = json_decode($json, TRUE);
                     $fail_reason = "";
-                    
+
                     if ($m["get_margin"] == 0) {
                         $fail_reason .= "Margin is 0%, ";
                     }
-                    
+
                     if ($platform_id == "TMNZ") {
                         $fail_reason .= "TMNZ to be omitted, SBF#3308";
                     }
@@ -298,7 +299,7 @@ class PricingToolService extends BaseService
                         $msg .= "FAILED: $sku $platform_id, $fail_reason<br>\r\n";
                 }
             }
-        } 
+        }
 
         return $msg;
     }
