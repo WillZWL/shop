@@ -70,7 +70,7 @@ class CheckoutFormFilter extends InputFilter
             $message["billCity"] = _("Not a valid billingCity");
         }
         $value["billPostal"] = trim($input->post("billingPostal"));
-        if (!$this->isValidPostCode($value["billPostal"], $siteInfo->getLangId(), $value["billCountry"])) {
+        if (!$this->isValidPostCode(strtoupper($value["billPostal"]), $siteInfo->getLangId(), $value["billCountry"])) {
             $message["billPostal"] = _("Not a valid billingPostal");
         }
 
