@@ -47,12 +47,12 @@
     $table_row = '<tr id="row[' . $platform . ']" style="background-color:' . $bgcolor . '">
                     <td></td>
                     <td>
-                        <input type="text" name="selling_price[' . $platform . ']" value="' . ($pobj->getCurrentPlatformPrice() * 1) . '" id="sp[' . $platform . ']"
+                        <input type="text" name="selling_price[' . $platform . ']" value="' . ($pobj->getPrice()) . '" id="sp[' . $platform . ']"
                         onKeyup="value=value.replace(/[^\d.]/g,\'\');rePrice(\''.$platform.'\',\'' . $platform . '\',\'' . $pobj->getSku() . '\')" style="width:80px;">
                     </td>
                     <td id="delivery_charge[' . $platform . ']">' . number_format($pobj->getDeliveryCharge(), 2, ".", "") . '</td>
                     ' . $decl_vat_row . '
-                    <td id="comm[' . $platform . ']">' . number_format($pobj->getSalesCommission(), 2, ".", "") . '</td>
+                    <td id="comm[' . $platform . ']">' . number_format($pobj->getPlatformCommission(), 2, ".", "") . '</td>
                     <td id="duty[' . $platform . ']">' . number_format($pobj->getDuty(), 2, ".", "") . '</td>
                     <td id="pc[' . $platform . ']">' . number_format($pobj->getPaymentCharge(), 2, ".", "") . '</td>
                     <td id="forex_fee[' . $platform . ']">' . number_format($pobj->getForexFee(), 2, ".", "") . '</td>

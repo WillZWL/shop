@@ -1,19 +1,12 @@
 <?php
-namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\SubCatPlatformVarDao;
+namespace ESG\Panther\Service;
 
 class SubCatPlatformVarService extends BaseService
 {
-
-    public function __construct()
+    public function calculatePlatformCommission(\PriceWithCostDto $dto)
     {
-        parent::__construct();
-        $this->setDao(new SubCatPlatformVarDao);
-    }
-
-    public function loadVo()
-    {
-        $this->getDao()->get();
+        $platform_commission = $dto->getPrice() * $dto->getPlatformCommissionPercent() / 100;
+        $dto->setPlatformCommission(number_format($platform_commission, 2, '.', ''));
     }
 }
