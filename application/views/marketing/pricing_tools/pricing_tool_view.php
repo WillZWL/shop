@@ -66,6 +66,7 @@
                 $price_obj = $price_list[$platform_id];
             // endif;
             $pobj = $value["pdata"]["dst"];
+
             ?>
                 <tr class="header">
                     <td height="20" align="left" style="padding-left:8px;">
@@ -73,8 +74,9 @@
                             <a href="javascript:showHide('<?= $platform_type ?>', '<?= $platform ?>');"><span style="padding-right:15px;" id='sign_<?= $platform ?>'>+</span></a>
                             <?= $platform_id . " - " . $value["obj"]->getPlatformCountry() . " | " . $value["obj"]->getPlatformCurrencyId() . " | " ?>
                             <span id="title_<?= $platform ?>">
+
                                 <?php
-                                if ($pobj->getCurrentPlatformPrice() * 1) :
+                                if ($pobj->getPrice()) :
                                     echo $pobj->getPrice();
                                 else :
                                     echo $lang["price_not_set"] . " <span class='converted'>({$this->default_platform_id} ".

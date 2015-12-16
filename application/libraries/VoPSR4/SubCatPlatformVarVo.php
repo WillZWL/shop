@@ -5,7 +5,7 @@ class SubCatPlatformVarVo extends \BaseVo
     private $sub_cat_id;
     private $platform_id;
     private $currency_id;
-    private $platform_commission;
+    private $platform_commission_percent = '0.00';
     private $dlvry_chrg;
     private $custom_class_id;
     private $fixed_fee = '0.00';
@@ -68,16 +68,16 @@ class SubCatPlatformVarVo extends \BaseVo
         return $this->currency_id;
     }
 
-    public function setPlatformCommission($platform_commission)
+    public function setPlatformCommissionPercent($platform_commission_percent)
     {
-        if ($platform_commission !== null) {
-            $this->platform_commission = $platform_commission;
+        if ($platform_commission_percent !== null) {
+            $this->platform_commission_percent = $platform_commission_percent;
         }
     }
 
-    public function getPlatformCommission()
+    public function getPlatformCommissionPercent()
     {
-        return $this->platform_commission;
+        return $this->platform_commission_percent;
     }
 
     public function setDlvryChrg($dlvry_chrg)

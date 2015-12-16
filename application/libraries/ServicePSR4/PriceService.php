@@ -4,8 +4,6 @@ namespace ESG\Panther\Service;
 
 class PriceService extends BaseService
 {
-    private $dto;
-
     public function createNewPrice($sku, $obj)
     {
         if (!$this->getDao('Product')->get(['sku' => $sku])) {
@@ -41,107 +39,6 @@ class PriceService extends BaseService
         $newObj->setFixedRrp((string) $obj->fixed_rrp);
         $newObj->setRrpFactor((string) $obj->rrp_factor);
         $newObj->setDeliveryScenarioid((string) $obj->delivery_scenarioid);
-    }
-
-    public function refreshMargin($platform_id = '', $sku = '')
-    {
-        if ($sku !== '') {
-            $where['p.sku'] = $sku;
-        }
-
-        if ($platform_id !== '') {
-            $where['pbv.selling_platform_id'] = $platform_id;
-        }
-
-        $option = ['limit' => -1];
-        $prod_obj_list = $this->getDao('Price')->getPriceWithCost($where, $option);
-
-        foreach ($prod_obj_list as $prod_obj) {
-            $sku = $prod_obj->getSku();
-            $platform_id = $prod_obj->getPlatformId();
-            $price_obj = $this->getDao('Price')->get(['sku' => $sku, 'platform_id' => $platform_id]);
-
-            if ($price_obj) {
-                $price_margin_obj = $this->getDao('PriceMargin')->get(['sku' => $sku, 'platform_id' => $platform_id]);
-                if (!$price_margin_obj) {
-                    $price_margin_obj = new \PriceMarginVo();
-                }
-
-                $price = $price_obj->getPrice();
-                $prod_obj->setPrice($price);
-                $this->calculateDeclaredValue($prod_obj);
-                $this->calcVat($prod_obj);
-                $this->calcDeliveryCharge($prod_obj);
-                $this->calcLogisticCost($prod_obj);
-                $this->calcPaymentCharge($prod_obj);
-                $this->calcForexFee($prod_obj);
-                $this->calcDuty($prod_obj);
-                $this->calcComplementaryAccCost($prod_obj);
-
-                $vat = $prod_obj->getVat();
-                $logistic_cost = $prod_obj->getLogisticCost();
-                $supplier_cost = $prod_obj->getSupplierCost();
-                $payment_charge_cost = $prod_obj->getPaymentCharge();
-                $listing_fee = $prod_obj->getListingFee();
-                $duty_cost = $prod_obj->getDuty();
-                $forex_fee = $prod_obj->getForexFee();
-                $complementary_acc_cost = $prod_obj->getComplementaryAccCost();
-
-                $total_cost = $vat + $logistic_cost + $supplier_cost + $payment_charge_cost + $listing_fee + $duty_cost + $forex_fee + $complementary_acc_cost;
-                $profit = $price - $total_cost;
-                $margin = $profit / $price * 100;
-
-                $price_margin_obj->setSku($sku);
-                $price_margin_obj->setPlatformId($platform_id);
-                $price_margin_obj->setSellingPrice($price);
-                $price_margin_obj->setVat($vat);
-                $price_margin_obj->setLogisticCost($logistic_cost);
-                $price_margin_obj->setSupplierCost($supplier_cost);
-                $price_margin_obj->setPaymentCharge($payment_charge_cost);
-                $price_margin_obj->setListingFee($listing_fee);
-                $price_margin_obj->setDuty($duty_cost);
-                $price_margin_obj->setForexFee($forex_fee);
-                $price_margin_obj->setTotalCost($total_cost);
-                $price_margin_obj->setProfit($profit);
-                $price_margin_obj->setMargin($margin);
-
-                $this->getDao('PriceMargin')->update($price_margin_obj);
-            }
-        }
-    }
-
-    public function getTrailCalcuMargin($platform_id, $sku, $price)
-    {
-        $where['p.sku'] = $sku;
-        $where['pbv.selling_platform_id'] = $platform_id;
-        $option['limit'] = 1;
-        $prod_obj = $this->getDao('Price')->getPriceWithCost($where, $option);
-
-        if ($prod_obj) {
-            $prod_obj->setPrice($price);
-            $this->calculateDeclaredValue($prod_obj);
-            $this->calcVat($prod_obj);
-            $this->calcDeliveryCharge($prod_obj);
-            $this->calcLogisticCost($prod_obj);
-            $this->calcPaymentCharge($prod_obj);
-            $this->calcForexFee($prod_obj);
-            $this->calcDuty($prod_obj);
-
-            $vat = $prod_obj->getVat();
-            $logistic_cost = $prod_obj->getLogisticCost();
-            $supplier_cost = $prod_obj->getSupplierCost();
-            $payment_charge_cost = $prod_obj->getPaymentCharge();
-            $listing_fee = $prod_obj->getListingFee();
-            $duty_cost = $prod_obj->getDuty();
-            $forex_fee = $prod_obj->getForexFee();
-
-            $total_cost = $vat + $logistic_cost + $supplier_cost + $payment_charge_cost + $listing_fee + $duty_cost + $forex_fee;
-            $profit = $price - $total_cost;
-            $margin = $profit / $price;
-        } else {
-            $margin = -1;
-        }
-        return $margin;
     }
 
     public function calcWebsiteProductRrp($price = 0, $fixed_rrp = 'Y', $rrp_factor = 1.18)
@@ -203,7 +100,7 @@ class PriceService extends BaseService
         return $sku_list;
     }
 
-    public function getProfitMarginJson($platform_id, $sku, $required_selling_price, $required_cost_price = -1)
+    public function getProfitMarginJson($platform_id, $sku, $required_selling_price = 0)
     {
         $dto = $this->getDao('Price')->getPriceWithCost(['p.sku' => $sku, 'pbv.selling_platform_id' => $platform_id], ['limit' => 1]);
 
@@ -211,20 +108,24 @@ class PriceService extends BaseService
             return json_encode(['error' => "can't get PriceWithCostDto"]);
         }
 
-        $this->calculateCost($dto);
+        if ($required_selling_price != 0) {
+            // calculate profit using assumed selling price.
+            $dto->setPrice($required_selling_price);
+        } else {
+            // calculate cost base on auto price.
+            $this->calculateAutoPrice($dto);
+        }
 
-        // $this->performBusinessLogic($dto, $required_selling_price, $required_cost_price);
+        $this->calculateProfitAndMargin($dto);
 
         $data_arr = [
             "local_sku" => $sku,
             "based_on" => $required_selling_price,
-            "get_margin" => $dto->getMargin(),
-            "get_price" => $dto->getPrice(),
             "get_delivery_cost" => $dto->getDeliveryCost(),
-            "get_declared_value" => number_format($dto->getDeclaredValue(), 2, ".", ""),
+            "get_declared_value" => $dto->getDeclaredValue(),
             "get_vat_percent" => $dto->getVatPercent(),
             "get_vat" => $dto->getVat(),
-            "get_sales_commission" => $dto->getSalesCommission(),
+            "get_sales_commission" => $dto->getPlatformCommission(),
             "get_duty_pcent" => $dto->getDutyPcent(),
             "get_duty" => $dto->getDuty(),
             "get_payment_charge_percent" => $dto->getPaymentChargePercent(),
@@ -235,185 +136,71 @@ class PriceService extends BaseService
             "get_logistic_cost" => $dto->getLogisticCost(),
             "get_supplier_cost" => $dto->getSupplierCost(),
             "get_complementary_acc_cost" => $dto->getComplementaryAccCost(),
+            "get_price" => $dto->getPrice(),
             "get_cost" => $dto->getCost(),
-            "get_price" => number_format($dto->getPrice(), 2, ".", ""),
-            "get_profit" => number_format($dto->getPrice(), 2, ".", "") - $dto->getCost()
-
+            "get_profit" => $dto->getProfit(),
+            "get_margin" => $dto->getMargin()
         ];
 
         return json_encode($data_arr);
     }
 
-    public function calculateCost(\PriceWithCostDto $dto)
+    public function calculateProfitAndMargin(\PriceWithCostDto $dto)
     {
-        $this->calculateDeclaredValue($dto);
+        $this->calculateCost($dto);
 
-        $this->calculateLogisticCost($dto);
-        $this->calculateVatCost($dto);
-        $this->calculateDuty($dto);
-        $this->calculateListingCost($dto);
-    }
-
-    public function calculateLogisticCost($value='')
-    {
-        if ($lc = $this->getDao('FreightCatCharge')->calcLogisticCost($dto->getPlatformId(), $dto->getSku())) {
-            $dto->setLogisticCost($lc['converted_amount']);
-        } else {
-            $dto->setLogisticCost(0);
-        }
-    }
-
-    public function calculateDeclaredValue(\PriceWithCostDto $dto)
-    {
-        $price = $dto->getPrice();
-        $country_id = $dto->getPlatformCountryId();
-
-        switch ($country_id) {
-            case "AU":
-                $declared_value = min($price, 910);
-                break;
-
-            case "NZ":
-                $declared_value = ($price < 350) ? $price : $price * 80 / 100;
-                break;
-
-            default:
-                $declared_value = $price * 10 / 100;
-                break;
-        }
-
-        $dto->setDeclaredValue($declared_value);
-    }
-
-    private function performBusinessLogic($dto, $required_selling_price = -1, $required_cost_price = -1)
-    {
-        $this->calcComplementaryAccCost($dto);
-        $this->calcLogisticCost($dto);
-
-        if ($required_cost_price != -1) {
-            $dto->setSupplierCost($required_cost_price);
-        }
-
-        $required_margin = -1;
-
-        if ($required_selling_price <= 0) {
-            $required_margin = $dto->getSubCatMargin();
-        }
-
-        if ($required_margin >= 0) {
-            $this->calcAutoPriceByRequiredMargin($dto, $required_margin);
-        } else {
-            $dto->setPrice($required_selling_price);
-            $this->calcMarginByPrice($dto);
-        }
-    }
-
-    public function calcAutoPriceByRequiredMargin($dto, $required_margin)
-    {
-        $margin = 0;
-        $total_cost = $this->getTotalCost($dto);
-
-        if ($required_margin == 0 || $total_cost == 0) {
-            if ($total_cost > 0) {
-                $margin = $required_margin;
-            } else {
-                $margin = 0;
-            }
-
-            $price = $total_cost;
-            $profit = 0;
-        } else {
-            for (; ;) {
-                $price = ($total_cost) / (1 - $required_margin / 100) + 0.01;
-                $dto->setPrice($price);
-                $total_cost = $this->getTotalCost($dto);
-
-                $total_cost = $total_cost;
-                $profit = $dto->getPrice() - $total_cost;
-                $margin = $profit / $dto->getPrice() * 100;
-
-                if ( ($margin - $required_margin) >= 0 ) {
-                    break;
-                }
-            }
-        }
-        $total_cost = number_format($total_cost, 2, ".", "");
+        $total_cost = $dto->getCost();
         $profit = $dto->getPrice() - $total_cost;
         $margin = $profit / $dto->getPrice() * 100;
 
-        $dto->setPrice($price);
-        $dto->setCost($total_cost);
-        $dto->setProfit(number_format($profit, 2, ".", ""));
-        $dto->setMargin(number_format($margin, 2, ".", ""));
+        $dto->setProfit(number_format($profit, 2, '.', ''));
+        $dto->setMargin(number_format($margin, 2, '.', ''));
     }
 
-    public function calcMarginByPrice($dto)
+    public function calculateCost(\PriceWithCostDto $dto)
     {
-        $total_cost = $this->getTotalCost($dto);
+        $this->getService('PlatformBizVar')->calculateDeclaredValue($dto);
 
-        $total_cost = number_format($total_cost, 2, ".", "");
-        $dto->setCost($total_cost);
+        $this->getService('FreightCharge')->calculateLogisticCost($dto);
+        $this->getService('SubCatPlatformVar')->calculatePlatformCommission($dto);
+        $this->getService('PlatformBizVar')->calculatePaymentCharge($dto);
+        $this->getService('PlatformBizVar')->calculateForexFee($dto);
+        $this->getService('PlatformBizVar')->calculateVat($dto);
+        $this->getService('ComplementaryAcc')->calculateComplementaryAccCost($dto);
+        $this->getService('ProductCustomClassification')->calculateDuty($dto);
 
-        $profit = $dto->getPrice() - $total_cost;
-
-        $margin = ($dto->getPrice() > 0) ? ($profit / $dto->getPrice() * 100) : 0;
-
-        $dto->setProfit(number_format($profit, 2, ".", ""));
-        $dto->setMargin(number_format($margin, 2, ".", ""));
-    }
-
-    public function getTotalCost($dto)
-    {
-        $this->calculateDeclaredValue($dto);
-        $this->calcCommission($dto);
-        $this->calcDuty($dto);
-        $this->calcPaymentCharge($dto);
-        $this->calcForexFee($dto);
-        $this->calcVat($dto);
-        $this->calcAutoPriceValue($dto);
+        $logistic_cost = $dto->getLogisticCost();
+        $platform_commission = $dto->getPlatformCommission();
+        $payment_charge = $dto->getPaymentCharge();
+        $forex_fee = $dto->getForexFee();
+        $vat = $dto->getVat();
+        $complementary_acc_cost = $dto->getComplementaryAccCost();
+        $duty = $dto->getDuty();
 
         $supplier_cost = $dto->getSupplierCost();
-        $logistic_cost = $dto->getLogisticCost();
         $listing_fee = $dto->getListingFee();
-        $Sales_commission_cost = $dto->getSalesCommission();
-        $payment_charge_cost = $dto->getPaymentCharge();
-        $forex_fee = $dto->getForexFee();
-        $vat_cost = $dto->getVat();
-        $duty_cost = $dto->getDuty();
-        $complementary_acc_cost = $dto->getComplementaryAccCost();
 
-        $total_cost = $supplier_cost + $logistic_cost + $listing_fee + $Sales_commission_cost + $payment_charge_cost + $forex_fee + $vat_cost + $duty_cost + $complementary_acc_cost;
+        $total_cost = $supplier_cost + $logistic_cost + $listing_fee + $platform_commission + $payment_charge + $forex_fee + $vat + $duty + $complementary_acc_cost;
 
-        return $total_cost;
+        $dto->setCost($total_cost);
     }
 
-    public function calcComplementaryAccCost(&$dto)
+    public function calculateAutoPrice(\PriceWithCostDto $dto)
     {
-        $total_cost = 0;
+        $required_margin = $dto->getSubCatMargin();
 
-        $where["pca.dest_country_id"] = $dto->getPlatformCountryId();
-        $where["pca.mainprod_sku"] = $dto->getSku();
-        $where["pca.status"] = 1;
+        $dto->setPrice(0);
+        $this->calculateCost($dto);
 
-        if ($mapped_ca_list = $this->getDao('ProductComplementaryAcc')->getMappedAccListWithName($where)) {
-            $sku_arr = [];
-            foreach ($mapped_ca_list as $caobj) {
-                $sku_arr[] = $caobj->getAccessorySku();
-            }
-            $sku_list = "'". implode("','", $sku_arr) . "'";
-            if ($cadto = $this->getDao('Price')->getPriceWithCost(
-                                    [
-                                        "p.sku in ({$sku_list})"=>null,
-                                        'pbv.selling_platform_id'=>$dto->getPlatformId()
-                                    ], [
-                                        'sum_complementary_cost'=>1,
-                                        'limit'=>1
-                                    ])
-            ) {
-                $total_cost = $cadto->getSupplierCost();
-            }
-        }
-        $dto->setComplementaryAccCost($total_cost);
+        do {
+            $auto_price = ($dto->getCost()) / (1 - $required_margin / 100);
+            $auto_price = number_format($auto_price, 2, '.', '');
+            $dto->setPrice($auto_price);
+            $this->calculateProfitAndMargin($dto);
+        } while ($dto->getMargin() - $required_margin);
+
+        // calculate cost base on finally auto price.
+        $this->calculateProfitAndMargin($dto);
     }
 
     public function getPricingToolInfo($platform_list = "", $sku = "")
@@ -421,170 +208,22 @@ class PriceService extends BaseService
         $ret = [];
         if ($tmp_objlist = $this->getDao('Price')->getPriceWithCost(['p.sku'=>$sku, "pbv.selling_platform_id in ({$platform_list})"=>null], ['limit'=>-1])) {
             foreach ($tmp_objlist  as $tmp_obj) {
-
-                $this->calculateProfit($tmp_obj);
+                $this->initPrice($tmp_obj);
+                $this->calculateProfitAndMargin($tmp_obj);
                 $ret[$tmp_obj->getPlatformId()]["dst"] = $tmp_obj;
-
             }
         }
 
         return $ret;
     }
 
-    public function calculateProfit($dto)
+    public function initPrice(\PriceWithCostDto $dto)
     {
-        $this->calcDtoPrice($dto);
-        $this->calcDeclaredPcent($dto);
-
-        $this->performBusinessLogic($dto, $dto->getPrice());
-        return;
+        $default_obj = $this->getDao('Price')->getDefaultConvertedPrice(["pr.sku" => $dto->getSku(), "pbv.selling_platform_id" => $dto->getPlatformId()], ['limit' => 1]);
+        // var_dump($default_obj);die;
+        $default_price = $default_obj ? $default_obj->getDefaultPlatformConvertedPrice() : 0;
+        // $dto->setPrice($default_price);
+        // $dto->setDefaultPlatformConvertedPrice($default_price);
+        $dto->setCurrentPlatformPrice($default_price);
     }
-
-    public function calcLogisticCost($dto)
-    {
-        if ($lc = $this->getDao('FreightCatCharge')->calcLogisticCost($dto->getPlatformId(), $dto->getSku())) {
-            $dto->setLogisticCost($lc['converted_amount']);
-        } else {
-            $dto->setLogisticCost(0);
-        }
-    }
-
-    public function calcDtoPrice($dto)
-    {
-
-        $default_price = $this->getDefaultPrice($dto);
-        if ($dto->getPrice() > 0) {
-            $dto->setCurrentPlatformPrice($dto->getPrice());
-        } else {
-            $dto->setPrice($default_price);
-            $dto->setCurrentPlatformPrice(null);
-        }
-
-        $dto->setDefaultPlatformConvertedPrice($default_price);
-    }
-
-    public function getDefaultPrice($dto)
-    {
-        $default_price = 0;
-        if ($default_obj = $this->getDao('Price')->getDefaultConvertedPrice(["pr.sku" => $dto->getSku(), "pbv.selling_platform_id" => $dto->getPlatformId()], ['limit'=> 1])) {
-            $default_price = $default_obj->getDefaultPlatformConvertedPrice();
-        }
-
-        return $default_price;
-    }
-
-    public function calcDeliveryCharge($dto)
-    {
-
-        if ($this->getDao('ProductType')->getNumRows(["sku" => $dto->getSku(), "type_id" => "VIRTUAL"])) {
-            $delivery_charge = '0.00';
-        } else {
-            $type = $this->getDao('Config')->valueOf("default_delivery_type");
-            $delivery_charge = $this->getDao('WeightCatCharge')->getCountryWeightChargeByPlatform($dto->getPlatformId(), $dto->getProdWeight(), $type);
-        }
-        $dto->setDefaultDeliveryCharge($delivery_charge);
-        $fdl = $dto->getFreeDeliveryLimit();
-        if ($dto->getPrice() > $fdl * 1) {
-            $dto->setDeliveryCharge('0.00');
-        } else {
-            $dto->setDeliveryCharge($delivery_charge);
-        }
-    }
-
-    public function calcCommission($dto)
-    {
-        $dto->setSalesCommission(number_format($dto->getPrice() * $dto->getPlatformCommission() / 100, 2, ".", ""));
-    }
-
-    public function calcDuty($dto)
-    {
-        $duty = number_format($dto->getDeclaredValue() * $dto->getDutyPcent() / 100, 2, ".", "");
-        $dto->setDuty($duty);
-    }
-
-    public function calcPaymentCharge($dto)
-    {
-        $dto->setPaymentCharge(number_format($dto->getPrice() * $dto->getPaymentChargePercent() / 100, 2, ".", ""));
-    }
-
-    public function calcForexFee($dto)
-    {
-        $dto->setForexFee(number_format($dto->getPrice() * $dto->getForexFeePercent() / 100, 2, ".", ""));
-    }
-
-    public function calcVat($dto)
-    {
-
-        if ($dto->getPlatformCountryId() == "NZ") {
-            $dto->setVatPercent(0);
-
-            $vat = ($dto->getPrice() > 400) ? ($dto->getDeclaredValue() * $dto->getVatPercent() / 100) : 0;
-            $dto->setVat(number_format($vat, 2, ".", ""));
-        } else {
-            $dto->setVat(number_format(($dto->getDeclaredValue()) * $dto->getVatPercent() / 100, 2, ".", ""));
-        }
-    }
-
-    public function calcAutoPriceValue($dto)
-    {
-        $recalVat = 0;
-        $tmp_cost = $dto->getSupplierCost() + $dto->getLogisticCost() + $dto->getListingFee();
-        $markup_percent = $dto->getSubCatMargin() + $dto->getPlatformCommission() + $dto->getPaymentChargePercent() + $dto->getForexFeePercent();
-
-        $auto_declared = $tmp_cost / (1 - ($markup_percent / 100)) * ($dto->getDeclaredPcent() / 100);
-        $country_id = substr($dto->getPlatformId(), -2);
-        if ($obj = $this->getDao("SubjectDomain")->get(["subject" => "MAX_DECLARE_VALUE.{$country_id}"])) {
-            $max_value = $obj->getValue();
-            $auto_declared = min($max_value, $auto_declared);
-        }
-
-        $auto_vat = $auto_declared * $dto->getVatPercent() / 100;
-        $auto_duty = $auto_declared * $dto->getDutyPcent() / 100;
-
-        if ($country_id == 'NZ') {
-            $auto_vat = 0;
-        }
-
-        $total_cost = $tmp_cost + $auto_vat + $auto_duty;
-        $auto_total_charge = $total_cost / (1 - ($markup_percent / 100));
-        if ($country_id == 'NZ') {
-            if ($auto_total_charge > 750) {
-                if ($auto_total_charge > 800) {
-                    $dto->setDeclaredPcent(50);
-                    $auto_declared = $auto_total_charge * $dto->getDeclaredPcent() / 100;
-                } else {
-                    $auto_declared = 400;
-                }
-                $dto->setVatPercent(15);
-                $recalVat = $auto_declared * $dto->getVatPercent() / 100 + 38.07;
-            }
-        }
-        $dto->setAutoTotalCharge($auto_total_charge + $recalVat);
-    }
-
-    public function calcDeclaredPcent($dto)
-    {
-        $country_id = $dto->getPlatformCountryId();
-        $price = $dto->getPrice();
-        switch ($country_id) {
-            case 'GB':
-                $declared_pcent = 30;
-                break;
-
-            case 'AU':
-                $declared_pcent = 100;
-                break;
-
-            case "NZ":
-                    $declared_pcent = ($price < 400) ? 100 : 80;
-                break;
-
-            default:
-                $declared_pcent = 10;
-                break;
-        }
-
-        $dto->setDeclaredPcent($declared_pcent);
-    }
-
 }

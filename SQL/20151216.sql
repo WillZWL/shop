@@ -1,0 +1,1 @@
+ALTER TABLE sub_cat_platform_var CHANGE COLUMN `platform_commission` `platform_commission_percent` DECIMAL(8,2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT 'Commission is in percentage.';

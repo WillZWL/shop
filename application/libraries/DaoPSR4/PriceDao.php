@@ -76,7 +76,7 @@ class PriceDao extends BaseDao
                             fc.weight AS prod_weight,
                             (sp.cost * sper.rate) AS supplier_cost,
                             cc.duty_pcent AS duty_pcent,
-                            scpv.platform_commission AS platform_commission,
+                            scpv.platform_commission_percent,
                             scpv.fixed_fee AS listing_fee,
                             scpv.profit_margin AS sub_cat_margin,
                             pbv.platform_currency_id AS platform_currency_id,

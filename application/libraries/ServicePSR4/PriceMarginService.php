@@ -1,23 +1,76 @@
 <?php
-namespace ESG\Panther\Service;
 
-use ESG\Panther\Service\ClassFactoryService;
-use ESG\Panther\Service\ProductService;
-use ESG\Panther\Service\PlatformBizVarService;
-//use ESG\Panther\Service\PriceService;
+namespace ESG\Panther\Service;
 
 class PriceMarginService extends BaseService
 {
-    private $classFactoryService;
-
-    public function __construct()
+    public function refreshProfitAndMargin($platform_id = '', $sku = '')
     {
-        parent::__construct();
-        $this->classFactoryService = new ClassFactoryService;
-        $this->productService = new ProductService;
-        $this->platformBizVarService = new PlatformBizVarService;
-        //$this->priceService = new PriceService;
+        if ($sku !== '') {
+            $where['p.sku'] = $sku;
+        }
+
+        if ($platform_id !== '') {
+            $where['pbv.selling_platform_id'] = $platform_id;
+        }
+
+        $option = ['limit' => -1];
+        $prod_obj_list = $this->getDao('Price')->getPriceWithCost($where, $option);
+
+        foreach ($prod_obj_list as $prod_obj) {
+            $sku = $prod_obj->getSku();
+            $platform_id = $prod_obj->getPlatformId();
+            $price_obj = $this->getDao('Price')->get(['sku' => $sku, 'platform_id' => $platform_id]);
+
+            if ($price_obj) {
+                $price_margin_obj = $this->getDao('PriceMargin')->get(['sku' => $sku, 'platform_id' => $platform_id]);
+                if (!$price_margin_obj) {
+                    $price_margin_obj = new \PriceMarginVo();
+                }
+
+                $price = $price_obj->getPrice();
+                $prod_obj->setPrice($price);
+                $this->calculateDeclaredValue($prod_obj);
+                $this->calcVat($prod_obj);
+                $this->calcDeliveryCharge($prod_obj);
+                $this->calcLogisticCost($prod_obj);
+                $this->calcPaymentCharge($prod_obj);
+                $this->calcForexFee($prod_obj);
+                $this->calcDuty($prod_obj);
+                $this->calcComplementaryAccCost($prod_obj);
+
+                $vat = $prod_obj->getVat();
+                $logistic_cost = $prod_obj->getLogisticCost();
+                $supplier_cost = $prod_obj->getSupplierCost();
+                $payment_charge_cost = $prod_obj->getPaymentCharge();
+                $listing_fee = $prod_obj->getListingFee();
+                $duty_cost = $prod_obj->getDuty();
+                $forex_fee = $prod_obj->getForexFee();
+                $complementary_acc_cost = $prod_obj->getComplementaryAccCost();
+
+                $total_cost = $vat + $logistic_cost + $supplier_cost + $payment_charge_cost + $listing_fee + $duty_cost + $forex_fee + $complementary_acc_cost;
+                $profit = $price - $total_cost;
+                $margin = $profit / $price * 100;
+
+                $price_margin_obj->setSku($sku);
+                $price_margin_obj->setPlatformId($platform_id);
+                $price_margin_obj->setSellingPrice($price);
+                $price_margin_obj->setVat($vat);
+                $price_margin_obj->setLogisticCost($logistic_cost);
+                $price_margin_obj->setSupplierCost($supplier_cost);
+                $price_margin_obj->setPaymentCharge($payment_charge_cost);
+                $price_margin_obj->setListingFee($listing_fee);
+                $price_margin_obj->setDuty($duty_cost);
+                $price_margin_obj->setForexFee($forex_fee);
+                $price_margin_obj->setTotalCost($total_cost);
+                $price_margin_obj->setProfit($profit);
+                $price_margin_obj->setMargin($margin);
+
+                $this->getDao('PriceMargin')->update($price_margin_obj);
+            }
+        }
     }
+
 
     public function refreshMarginForTopDeal()
     {
