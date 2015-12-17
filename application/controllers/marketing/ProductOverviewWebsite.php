@@ -27,6 +27,7 @@ class ProductOverviewWebsite extends MY_Controller
             ($this->input->get('scatid') != '') ? $where['p.sub_cat_id'] = $this->input->get('scatid') : '';
             ($this->input->get('brand') != '') ? $where['p.brand_id'] = $this->input->get('brand') : '';
             ($this->input->get('pla') != '') ? $where['pr.is_advertised'] = $this->input->get('pla') : '';
+            ($this->input->get('auto_price') != '') ? $where['pr.auto_price'] = $this->input->get('auto_price') : '';
             ($this->input->get('msku') != '') ? $where['sm.ext_sku'] = $this->input->get('msku') : '';
             ($this->input->get('liststatus') != '') ? $where['pr.listing_status'] = $this->input->get('liststatus') : '';
             ($this->input->get('clear') != '') ? $where['p.clearance'] = $this->input->get('clear') : '';
@@ -40,7 +41,38 @@ class ProductOverviewWebsite extends MY_Controller
             ($this->input->get('limit') != '') ? $option['limit'] = $this->input->get('limit') : '';
             ($this->input->get('per_page') != '') ? $option['offset'] = $this->input->get('per_page') : '';
 
+            if ($this->input->get("surplusqty") != "") {
+                switch($this->input->get("surplusqty_prefix")) {
+                    case 1:
+                        $where["surplus_quantity > 0 and surplus_quantity <= {$this->input->get("surplusqty")}"] = null;
+                        break;
+                    case 2:
+                        $where["surplus_quantity <= {$this->input->get("surplusqty")}"] = null;
+                        break;
+                    case 3:
+                        $where["surplus_quantity >= {$this->input->get("surplusqty")}"] = null;
+                        break;
+                }
+            }
+
+            if ($this->input->get('filtertype') == 2) {
+                $where = [];
+                $option = [];
+                $ext_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('mskulist'), -1, PREG_SPLIT_NO_EMPTY));
+                $prod_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('skulist'), -1, PREG_SPLIT_NO_EMPTY));
+
+                if (is_array($ext_sku) && count($ext_sku) > 0) {
+                    $list = "('" . implode("','", $ext_sku) . "')";
+                    $where["sm.ext_sku IN $list"] = null;
+                } elseif (is_array($prod_sku) && count($prod_sku) > 0) {
+                    $list = "('" . implode("','", $prod_sku) . "')";
+                    $where["p.sku IN $list"] = null;
+                }
+            }
+
             $data['product_list'] = $this->sc['Product']->getProductOverview($where, $option);
+
+            $data['filtertype'] = $this->input->get('filtertype');
 
             $config['base_url'] = base_url('marketing/ProductOverviewWebsite');
             $config['total_rows'] = 1000;
