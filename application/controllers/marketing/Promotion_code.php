@@ -130,8 +130,18 @@ class Promotion_code extends MY_Controller
                 foreach ($_POST["redemption_prod_value"] as $prod_value) {
                     $redemption_prod_value[] = $prod_value;
                 }
+
+                foreach ($_POST["free_item_sku"] as $item_sku) {
+                    $free_item_sku[] = $item_sku;
+                }
+
+                if ($_POST["disc_level"] == "ALL") {
+                     $disc_level_value = "";
+                }
+
                 $data["promotion_code"]->setWeekDay(implode(",", $week_day));
                 $data["promotion_code"]->setRedemptionProdValue(implode(",", $redemption_prod_value));
+                    $data["promotion_code"]->setFreeItemSku(implode(",", $free_item_sku));
                 $data["promotion_code"]->setDiscLevelValue($disc_level_value);
                 $data["promotion_code"]->setRelevantProd(trim(@implode(",", $relevant_prod), ','));
                 if (substr($prefix = rtrim($this->input->post("prefix")), -1) == "%") {
@@ -206,8 +216,18 @@ class Promotion_code extends MY_Controller
                     foreach ($_POST["redemption_prod_value"] as $prod_value) {
                         $redemption_prod_value[] = $prod_value;
                     }
+
+                    foreach ($_POST["free_item_sku"] as $item_sku) {
+                        $free_item_sku[] = $item_sku;
+                    }
+
+                    if ($_POST["disc_level"] == "ALL") {
+                         $disc_level_value = "";
+                    }
+
                     $data["promotion_code"]->setWeekDay(implode(",", $week_day));
                     $data["promotion_code"]->setRedemptionProdValue(implode(",", $redemption_prod_value));
+                    $data["promotion_code"]->setFreeItemSku(implode(",", $free_item_sku));
                     $data["promotion_code"]->setDiscLevelValue($disc_level_value);
                     $data["promotion_code"]->setRelevantProd(trim(@implode(",", $relevant_prod), ','));
 

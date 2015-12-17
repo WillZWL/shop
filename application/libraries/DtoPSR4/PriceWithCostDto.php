@@ -1,5 +1,5 @@
 <?php
-class ProductPriceWithCostDto
+class PriceWithCostDto
 {
     private $sku;
     private $vat;
@@ -15,7 +15,7 @@ class ProductPriceWithCostDto
     private $prod_weight;
     private $supplier_cost;
     private $duty_pcent;
-    private $platform_commission;
+    private $platform_commission_percent;
     private $listing_fee;
     private $sub_cat_margin;
     private $platform_currency_id;
@@ -23,7 +23,7 @@ class ProductPriceWithCostDto
     private $logistic_cost;
     private $forex_fee;
     private $cost;
-    private $sales_commission;
+    private $platform_commission;
     private $declared_value;
     private $duty;
     private $listing_status;
@@ -181,14 +181,14 @@ class ProductPriceWithCostDto
         return $this->duty_pcent;
     }
 
-    public function setPlatformCommission($platform_commission)
+    public function setPlatformCommissionPercent($platform_commission_pcent)
     {
-        $this->platform_commission = $platform_commission;
+        $this->platform_commission_pcent = $platform_commission_pcent;
     }
 
-    public function getPlatformCommission()
+    public function getPlatformCommissionPercent()
     {
-        return $this->platform_commission;
+        return $this->platform_commission_pcent;
     }
 
     public function setListingFee($listing_fee)
@@ -271,14 +271,14 @@ class ProductPriceWithCostDto
         $this->price = $price;
     }
 
-    public function getSalesCommission()
+    public function getPlatformCommission()
     {
-        return $this->sales_commission;
+        return $this->platform_commission;
     }
 
-    public function setSalesCommission($sales_commission)
+    public function setPlatformCommission($platform_commission)
     {
-        $this->sales_commission = $sales_commission;
+        $this->platform_commission = $platform_commission;
     }
 
     public function getDeclaredValue()

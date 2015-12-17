@@ -259,7 +259,15 @@
                                     <span><?= $lang["free_item"] ?></span>
                                 </td>
                                 <td>
-                                    <input name="free_item_sku" size="8" value="<?= htmlspecialchars($promotion_code->getFreeItemSku()) ?>" maxLen="11">
+                                     <?php
+                                    $ar_free_item_sku = explode(',', $promotion_code->getFreeItemSku());
+                                    for ($i = 0; $i < 5; $i++) :
+                                        $endstr = $i == 4 ? "<br>" : " &nbsp; ";
+                                    ?>
+                                        <input name="free_item_sku[<?= $i ?>]" size="11" value="<?= htmlspecialchars($ar_free_item_sku[$i]) ?>" maxLen="11"><?= $endstr ?>
+                                    <?php
+                                    endfor;
+                                    ?>
                                 </td>
                             </tr>
                             <tr>

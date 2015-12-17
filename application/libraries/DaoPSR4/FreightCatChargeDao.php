@@ -1,15 +1,11 @@
 <?php
+
 namespace ESG\Panther\Dao;
 
 class FreightCatChargeDao extends BaseDao
 {
     private $tableName = "freight_cat_charge";
     private $voClassName = "FreightCatChargeVo";
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function getTableName()
     {
@@ -19,6 +15,39 @@ class FreightCatChargeDao extends BaseDao
     public function getVoClassname()
     {
         return $this->voClassName;
+    }
+
+    public function calculateLogisticCost($platform_id, $sku)
+    {
+        // default set fcc.origin_country = "HK", need to confirm supplier location
+        $sql = "
+        SELECT
+            round(fcc.amount * ex.rate, 2) logistic_cost
+        FROM supplier_prod sp
+        INNER JOIN supplier s
+            ON s.id                    = sp.supplier_id
+            AND sp.order_default       = 1
+        INNER JOIN platform_biz_var pbv
+            ON pbv.selling_platform_id = ?
+        INNER JOIN product p
+            ON p.sku                   = sp.prod_sku
+        INNER JOIN freight_cat_charge fcc
+            ON fcc.origin_country      = 'HK'
+            AND fcc.dest_country       = pbv.dest_country
+            AND p.`freight_cat_id` = fcc.`fcat_id`
+        INNER JOIN exchange_rate ex
+            ON ex.from_currency_id     = fcc.currency_id
+            AND ex.to_currency_id      = pbv.platform_currency_id
+        WHERE p.sku = ?
+        LIMIT 1;
+        ";
+
+        if ($query = $this->db->query($sql, [$platform_id, $sku])) {
+            return floatval($query->row('logistic_cost'));
+        } else {
+            error_log("{$sku} {$platform_id} logistic cost is 0");
+            return 0;
+        }
     }
 
     public function getNearestAmount($fcat_id, $weight)
@@ -44,50 +73,6 @@ class FreightCatChargeDao extends BaseDao
                 $rs[] = $obj;
             }
             return (object)$rs;
-        } else {
-            return FALSE;
-        }
-    }
-
-    public function calcLogisticCost($platform_id, $sku)
-    {
-        $sql = <<<SQL
-        SELECT
-            sp.prod_sku,
-            s.origin_country,
-            pbv.dest_country,
-            fcc.currency_id,
-            ex.rate,
-            fcc.amount,
-            round(fcc.amount*ex.rate,2) converted_amount
-        FROM supplier_prod sp
-        JOIN supplier s
-            ON s.id                    = sp.supplier_id
-            AND sp.order_default       = 1          # this is bad table design
-        JOIN platform_biz_var pbv
-            ON pbv.selling_platform_id = ?
-        JOIN product p
-            ON p.sku                   = sp.prod_sku
-        JOIN freight_cat_charge fcc
-            ON fcc.origin_country      = left(s.fc_id,2)
-            AND fcc.dest_country       = pbv.dest_country
-        JOIN freight_category fc
-            ON fc.id                   = fcc.fcat_id
-            AND fc.id                  = p.freight_cat_id
-        LEFT JOIN exchange_rate ex
-            ON ex.from_currency_id     = fcc.currency_id
-            AND ex.to_currency_id      = pbv.platform_currency_id
-        WHERE p.sku = ?
-        LIMIT 1
-SQL;
-
-        if ($query = $this->db->query($sql, [$platform_id, $sku])) {
-            $rs = [];
-
-            if ($query->num_rows() != 1) {
-                return FALSE;
-            }
-            return $query->row_array();
         } else {
             return FALSE;
         }

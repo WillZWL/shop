@@ -482,5 +482,16 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\LandpageListingService();
         };
 
+        $serviceContainer['FreightCharge'] = function () {
+            return new S\FreightChargeService();
+        };
+
+        $serviceContainer['SubCatPlatformVar'] = function () {
+            return new S\SubCatPlatformVarService();
+        };
+
+        $serviceContainer['ProductCustomClassification'] = function () {
+            return new S\ProductCustomClassificationService();
+        };
     }
 }
