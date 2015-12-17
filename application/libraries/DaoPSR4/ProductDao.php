@@ -79,6 +79,7 @@ class ProductDao extends BaseDao
         $where['pd.status'] = 2;
         $where['pr.listing_status'] = 'L';
         $where['pd.website_status <>'] = 'O';
+        $where['ll.catid'] = 0;
         $this->db->from('landpage_listing ll');
         $this->db->join('product pd', 'pd.sku = ll.selection', 'inner');
         $this->db->join('price pr', 'pr.platform_id = ll.platform_id', 'inner');
@@ -1124,6 +1125,21 @@ class ProductDao extends BaseDao
         } else {
             return false;
         }
+    }
+
+    public function getBestSellerLsit($where = [], $option = [], $className = 'SimpleProductDto')
+    {
+        $this->db->from('so_item_detail sid');
+        $this->db->join('product p', 'p.sku = sid.item_sku', 'inner');
+        $this->db->join('price pr', 'pr.sku = p.sku', 'inner');
+        return $this->commonGetList($className, $where, $option, 'p.sku');
+    }
+
+    public function getLatestSellerLsit($where = [], $option = [], $className = 'SimpleProductDto')
+    {
+        $this->db->from('product p');
+        $this->db->join('price pr', 'p.sku = pr.sku', 'inner');
+        return $this->commonGetList($className, $where, $option, 'p.sku');
     }
 
 }
