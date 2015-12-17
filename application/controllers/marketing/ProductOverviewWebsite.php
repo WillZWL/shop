@@ -71,11 +71,12 @@ class ProductOverviewWebsite extends MY_Controller
             }
 
             $data['product_list'] = $this->sc['Product']->getProductOverview($where, $option);
+            $option['num_rows'] = 1;
+            $total_rows = $this->sc['Product']->getProductOverview($where, $option);
 
             $data['filtertype'] = $this->input->get('filtertype');
-
             $config['base_url'] = base_url('marketing/ProductOverviewWebsite');
-            $config['total_rows'] = 1000;
+            $config['total_rows'] = $total_rows;
             $config['page_query_string'] = true;
             $config['reuse_query_string'] = true;
             $config['per_page'] = $option['limit'];
