@@ -34,7 +34,7 @@
         function switchSearch() {
             var multidiv = document.getElementById('multifilter');
             var bulklistdiv = document.getElementById('bulklist');
-            var filtertype = document.getElementById("fil");
+            var filtertype = document.getElementById("filtertype");
             var confirmclear = confirm("This will clear all search filters. Continue?");
 
             if (confirmclear == true) {
@@ -167,7 +167,16 @@
                 </tr>
             </table>
             <form name="fm" id="fm" method="get" onSubmit="return CheckForm(this)">
-                <div id="multifilter" style="display:block">
+                <?php
+                    $multifilter_display = 'display:block';
+                    $bulklist_display = 'display:none';
+                    if ($filtertype == 2) {
+                        $multifilter_display = 'display:none';
+                        $bulklist_display = 'display:block';
+                    }
+                ?>
+                <input type="hidden" name="filtertype" id="filtertype" value="<?= $this->input->get('filtertype') ?>">
+                <div id="multifilter" style="<?= $multifilter_display ?>">
                     <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
                         <col width="150"> <col width="420"> <col width="170"> <col width="420"> <col>
                         <tr>
@@ -330,7 +339,7 @@
                         </tr>
                     </table>
                 </div>
-                <div id="bulklist" style="display:none">
+                <div id="bulklist" style="<?= $bulklist_display ?>">
                     <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
                         <col width="150"> <col width="420"> <col width="170"> <col width="420"> <col>
                             <td></td>
@@ -361,11 +370,11 @@
                         <tr>
                             <td style="padding-right:8px" align="right">Filter by (only 1 will apply):</td>
                             <td>
-                                <textarea rows="5" name="mskulist" placeholder="Master SKU, separated by next line"></textarea>
+                                <textarea rows="5" name="mskulist" placeholder="Master SKU, separated by next line"><?= ($this->input->get('mskulist')) ?: "" ?></textarea>
                             </td>
                             <td style="padding-right:8px" align="center">OR</td>
                             <td>
-                                <textarea rows="5" name="skulist" placeholder="Local SKU, separated by next line"></textarea>
+                                <textarea rows="5" name="skulist" placeholder="Local SKU, separated by next line"><?= ($this->input->get('mskulist')) ?: "" ?></textarea>
                             </td>
                             <td rowspan="3" align="center">
                                 <input type="button" value="<?= $lang["cmd_search_button"] ?>" onClick="if (CheckForm(this.form)) this.form.submit();">
