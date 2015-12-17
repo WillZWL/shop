@@ -446,10 +446,10 @@ class Upselling extends MY_Controller
             $data['lang'] = $lang;
             $data['notice'] = notice($lang);
 
-            $data["lang_list"] = $this->upselling_model->get_list("language", array("status" => 1), array("orderby" => "name ASC"));
+            $data["lang_list"] = $this->upselling_model->get_list("language", array("status" => 1), array("orderby" => "lang_name ASC"));
             $data["lang_list_str"] = '';
             foreach ($data["lang_list"] as $v) {
-                $data["lang_list_str"] .= $v->get_id() . ",";
+                $data["lang_list_str"] .= $v->get_lang_id() . ",";
             }
             $data["lang_list_str"] = rtrim($data["lang_list_str"], ',');
 
