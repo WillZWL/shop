@@ -61,6 +61,7 @@ class ProductOverviewWebsite extends MY_Controller
                 $ext_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('mskulist'), -1, PREG_SPLIT_NO_EMPTY));
                 $prod_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('skulist'), -1, PREG_SPLIT_NO_EMPTY));
 
+                ($this->input->get('platform_id2') != '') ? $where['pr.platform_id'] = $this->input->get('platform_id2') : '';
                 if (is_array($ext_sku) && count($ext_sku) > 0) {
                     $list = "('" . implode("','", $ext_sku) . "')";
                     $where["sm.ext_sku IN $list"] = null;
