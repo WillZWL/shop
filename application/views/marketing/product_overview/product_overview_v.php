@@ -34,7 +34,7 @@
         function switchSearch() {
             var multidiv = document.getElementById('multifilter');
             var bulklistdiv = document.getElementById('bulklist');
-            var filtertype = document.getElementById("fil");
+            var filtertype = document.getElementById("filtertype");
             var confirmclear = confirm("This will clear all search filters. Continue?");
 
             if (confirmclear == true) {
@@ -167,7 +167,16 @@
                 </tr>
             </table>
             <form name="fm" id="fm" method="get" onSubmit="return CheckForm(this)">
-                <div id="multifilter" style="display:block">
+                <?php
+                    $multifilter_display = 'display:block';
+                    $bulklist_display = 'display:none';
+                    if ($filtertype == 2) {
+                        $multifilter_display = 'display:none';
+                        $bulklist_display = 'display:block';
+                    }
+                ?>
+                <input type="hidden" name="filtertype" id="filtertype" value="<?= $this->input->get('filtertype') ?>">
+                <div id="multifilter" style="<?= $multifilter_display ?>">
                     <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
                         <col width="150"> <col width="420"> <col width="170"> <col width="420"> <col>
                         <tr>
@@ -294,6 +303,29 @@
                             </td>
                         </tr>
                         <tr>
+                            <td style="padding-right:8px" align="right">
+                                <b>Auto Price Type</b>
+                            </td>
+                            <td>
+                                <select name="auto_price" class="input">
+                                    <option value=""></option>
+                                    <option value="N">Manual</option>
+                                    <option value="Y">Auto</option>
+                                </select>
+                            </td>
+                            <td style="padding-right:8px" align="right">
+                                <b>Surplus Quantity</b>
+                            </td>
+                            <td>
+                                <select id="surplusqty_prefix" name="surplusqty_prefix">
+                                    <option value="2"> Smaller <= </option>
+                                    <option value="1"> 0 and Smaller <= </option>
+                                    <option value="3"> Greater >= </option>
+                                </select>
+                                <input name="surplusqty" class="input" value="10000" style="width:200px">
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="2" style="padding-left:60px">
                                 <br><b>* TIP: Refining your search may produce faster result
                                 <br>* Results Per Page may give lesser results when used together with PLA/Adwords filters.</b>
@@ -307,7 +339,7 @@
                         </tr>
                     </table>
                 </div>
-                <div id="bulklist" style="display:none">
+                <div id="bulklist" style="<?= $bulklist_display ?>">
                     <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
                         <col width="150"> <col width="420"> <col width="170"> <col width="420"> <col>
                             <td></td>
@@ -338,11 +370,11 @@
                         <tr>
                             <td style="padding-right:8px" align="right">Filter by (only 1 will apply):</td>
                             <td>
-                                <textarea rows="5" name="mskulist" placeholder="Master SKU, separated by next line"></textarea>
+                                <textarea rows="5" name="mskulist" placeholder="Master SKU, separated by next line"><?= ($this->input->get('mskulist')) ?: "" ?></textarea>
                             </td>
                             <td style="padding-right:8px" align="center">OR</td>
                             <td>
-                                <textarea rows="5" name="skulist" placeholder="Local SKU, separated by next line"></textarea>
+                                <textarea rows="5" name="skulist" placeholder="Local SKU, separated by next line"><?= ($this->input->get('mskulist')) ?: "" ?></textarea>
                             </td>
                             <td rowspan="3" align="center">
                                 <input type="button" value="<?= $lang["cmd_search_button"] ?>" onClick="if (CheckForm(this.form)) this.form.submit();">
@@ -452,7 +484,7 @@
                                 <input name="msku" class="input" value="<?= htmlspecialchars($this->input->get("msku")) ?>">
                             </td>
                             <td>
-                                <input name="prod_name" class="input" value="<?= htmlspecialchars($this->input->get("prod")) ?>">
+                                <input name="prod_name" class="input" value="<?= htmlspecialchars($this->input->get("prod_name")) ?>">
                             </td>
                             <td>
                                 <select name="clear" class="input">
@@ -494,7 +526,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input name="purcupdate" class="input" value="<?= htmlspecialchars($this->input->get("purcupdate")) ?>">
+                                <!-- <input name="purcupdate" class="input" value="<?= htmlspecialchars($this->input->get("purcupdate")) ?>"> -->
                             </td>
                             <td></td>
                             <td></td>
@@ -537,7 +569,9 @@
                         <tr onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')">
                             <td></td>
                             <td><?= $platform_id ?></td>
-                            <td><?= $product->getExtSku() ?></td>
+                            <td>
+                                <a href='<?= base_url()."marketing/pricing_tools/view/website/".$sku."?target=overview" ?>' target="_blank"><?= $product->getExtSku() ?></a>
+                            </td>
                             <td><?= $name ?></td>
                             <td>
                                 <select name='<?= "product[{$sku}][clear]" ?>' class="input">
