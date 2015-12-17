@@ -357,10 +357,11 @@
                                 <b><?= $lang["platform_id"] ?></b>
                             </td>
                             <td>
-                                <select name="pfid2">
-                                <?php foreach ($clist as $cobj): ?>
-                                    <option value="<?= $cobj->getId() ?>"><?= $cobj->getSellingPlatformId() . ' - ' . $cobj->getName() ?></option>
-                                <?php endforeach ?>
+                                <select name="platform_id2">
+                                    <option value=""></option>
+                                    <?php foreach ($clist as $cobj): ?>
+                                        <option value="<?= $cobj->getSellingPlatformId() ?>"> <?= $cobj->getSellingPlatformId() ?> - <?= $cobj->getName() ?></option>
+                                    <?php endforeach ?>
                                 </select>
                             </td>
                             <td></td>
