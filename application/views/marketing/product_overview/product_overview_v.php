@@ -374,7 +374,7 @@
                             </td>
                             <td style="padding-right:8px" align="center">OR</td>
                             <td>
-                                <textarea rows="5" name="skulist" placeholder="Local SKU, separated by next line"><?= ($this->input->get('mskulist')) ?: "" ?></textarea>
+                                <textarea rows="5" name="skulist" placeholder="Local SKU, separated by next line"><?= ($this->input->get('skulist')) ?: "" ?></textarea>
                             </td>
                             <td rowspan="3" align="center">
                                 <input type="button" value="<?= $lang["cmd_search_button"] ?>" onClick="if (CheckForm(this.form)) this.form.submit();">
