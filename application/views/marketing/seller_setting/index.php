@@ -69,6 +69,7 @@
             </tr>
         <?php
             if ($platform_id) {
+                $j = 0;
                  for ($i = 0; $i < $limit; $i++) {
                     if ($seller_list[$i]) {
                        $seller_obj = $seller_list[$i];
@@ -76,6 +77,9 @@
                        $master_sku = $seller_obj->getMasterSku();
                        $name = $seller_obj->getName();
                        $mode = $seller_obj->getMode();
+                       if ($mode == 'A') {
+                           $j++;
+                       }
                     } else {
                         $sku = $master_sku = $name = $mode = '';
                     }
@@ -101,8 +105,8 @@
                     ?>
                     <select name="item[<?= $i ?>][mode]">
                         <option value=""></option>
-                        <option value="A" <?=$m_select['A']?>>A</option>
-                        <option value="M" <?=$m_select['M']?>>M</option>
+                        <option value="A" <?=$m_select['A']?>>Auto</option>
+                        <option value="M" <?=$m_select['M']?>>Manual</option>
                     </select>
                 </td>
                 <td>
@@ -117,9 +121,19 @@
             }
         ?>
         </table>
+        <?php
+            if ($platform_id) {
+        ?>
         <p style="float: right;margin-right: 40px;">
             <input type="submit" value="Submit" style="font-size: 18px;">
+            <br><br>
+            <?php if ($j > 0): ?>
+                <input type="button" value="Update Auto Seller"  onClick="Redirect('<?=base_url();?>marketing/<?=$handle?>/autoUpdate/<?=$platform_id?>')" style="font-size: 18px;">
+            <?php endif ?>
         </p>
+        <?php
+            }
+        ?>
     </form>
 </div>
 <?= $notice["js"] ?>

@@ -70,6 +70,9 @@ class SellerSetting extends MY_Controller
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
         $where = [];
         $option = [];
+        $where["p.status"] = 2;
+        $where['pr.listing_status'] = 'L';
+        $where['p.website_status <>'] = 'O';
         $where["pr.platform_id"] = $platform_id;
         $submit_search = 0;
         if ($this->input->get("sku") != "") {
@@ -203,6 +206,17 @@ class SellerSetting extends MY_Controller
         $landpage_obj->setRank($item['rank']);
         $landpage_obj->setSelection($item['sku']);
         return  $this->sc['LandpageListing']->getDao('LandpageListing')->insert($landpage_obj);
+    }
+
+    public function autoUpdate($platform_id)
+    {
+        $type = $this->getType();
+        $handle = $this->getHandle();
+        $res = $this->sc['LandpageListing']->updateByPlatformAndType($platform_id, $type);
+        if ($res) {
+            $_SESSION["NOTICE"] = $res;
+        }
+        redirect(base_url()."marketing/$handle/index/$platform_id");
     }
 }
 ?>

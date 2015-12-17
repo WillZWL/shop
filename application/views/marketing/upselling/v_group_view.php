@@ -154,7 +154,7 @@ $ar_status = array($lang["inactive"], $lang["active"]);
                             foreach ($lang_list as $language) {
                                 ?>
                                 <option
-                                    value="<?= $language->get_id() ?>" <?= $selected[$language->get_id()] ?>><?= $language->get_name() ?></option>
+                                    value="<?= $language->get_lang_id() ?>" <?= $selected[$language->get_lang_id()] ?>><?= $language->get_lang_name() ?></option>
                             <?php
                             }
                         }
@@ -208,12 +208,12 @@ $ar_status = array($lang["inactive"], $lang["active"]);
                 ?>
                 <tr>
                     <td class="value">
-                        <?= $obj->get_sku() ?>
-                        <input type="hidden" name="sku[]" value="<?= $obj->get_sku() ?>">
+                        <?= $obj->sku ?>
+                        <input type="hidden" name="sku[]" value="<?= $obj->sku ?>">
                     </td>
-                    <td class="value"><?= $obj->get_name() ?></td>
-                    <td class="value"><input type="text" name="priority[<?= $obj->get_sku() ?>]"
-                                             value="<?= $obj->get_priority() ?>"></td>
+                    <td class="value"><?= $obj->name ?></td>
+                    <td class="value"><input type="text" name="priority[<?= $obj->sku ?>]"
+                                             value="<?= $obj->priority ?>"></td>
                     <td class="value"><input type="button" value="x" onClick="deleteRow(this, 'upselling_group_form');">
                     </td>
                 </tr>
