@@ -135,6 +135,10 @@ class Promotion_code extends MY_Controller
                     $free_item_sku[] = $item_sku;
                 }
 
+                if ($_POST["disc_level"] == "ALL") {
+                     $disc_level_value = "";
+                }
+
                 $data["promotion_code"]->setWeekDay(implode(",", $week_day));
                 $data["promotion_code"]->setRedemptionProdValue(implode(",", $redemption_prod_value));
                     $data["promotion_code"]->setFreeItemSku(implode(",", $free_item_sku));
@@ -215,6 +219,10 @@ class Promotion_code extends MY_Controller
 
                     foreach ($_POST["free_item_sku"] as $item_sku) {
                         $free_item_sku[] = $item_sku;
+                    }
+
+                    if ($_POST["disc_level"] == "ALL") {
+                         $disc_level_value = "";
                     }
 
                     $data["promotion_code"]->setWeekDay(implode(",", $week_day));
