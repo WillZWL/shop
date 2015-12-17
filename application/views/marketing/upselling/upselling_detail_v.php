@@ -32,18 +32,9 @@
         </tr>
     </table>
     <iframe name="ra_prod_new" id="ra_prod_new" class="iframe"
-            src="<?= base_url() ?>/marketing/ra_product/get_ra_product/<?= $product->get_sku() ?>" scrolling="auto"
+            src="<?= base_url() ?>marketing/ra_product/get_ra_product/<?= $product->get_sku() ?>" scrolling="auto"
             marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0"
             onLoad="SetFrameHeight(this)"></iframe>
-    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_main">
-        <tr class="header">
-            <td height="20"><?= $lang["add_bundle"] ?></td>
-        </tr>
-    </table>
-    <iframe name="bundle" id="bundle" class="iframe"
-            src="<?= base_url() ?>/marketing/bundle/add/<?= $product->get_sku() ?>" scrolling="no" marginwidth="0"
-            marginheight="0" frameborder="0" vspace="0" hspace="0" onLoad="SetFrameHeight(this)"></iframe>
-
     <?= $notice["js"] ?>
 </div>
 </body>
