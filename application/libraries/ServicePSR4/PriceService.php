@@ -230,7 +230,7 @@ class PriceService extends BaseService
                                     ['limit' => 1]
                                 );
 
-        $default_price = $default_obj->getDefaultPlatformConvertedPrice();
+        $default_price = $default_obj ? $default_obj->getDefaultPlatformConvertedPrice() : 0;
 
         if ($dto->getPrice() > 0) {
             $dto->setCheckPrice(1);
