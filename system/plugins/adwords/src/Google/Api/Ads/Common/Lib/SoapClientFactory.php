@@ -28,7 +28,7 @@
  * @author     Eric Koleda
  * @author     Vincent Tsao
  */
-// require_once 'Google/Api/Ads/Common/Lib/AdsUser.php';
+require_once 'Google/Api/Ads/Common/Lib/AdsUser.php';
 
 /**
  * Base class for all SOAP client factories of Ads client libraries.

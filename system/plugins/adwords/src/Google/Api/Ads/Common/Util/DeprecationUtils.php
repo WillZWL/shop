@@ -28,7 +28,7 @@
  * @author     Paul Matthews
  * @author     Vincent Tsao
  */
-// require_once 'Google/Api/Ads/Common/Lib/AdsUser.php';
+require_once 'Google/Api/Ads/Common/Lib/AdsUser.php';
 require_once 'Google/Api/Ads/Common/Lib/ServiceException.php';
 
 /**
