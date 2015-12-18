@@ -43,7 +43,7 @@
     //                              <td id="listing_fee[' . $platform . ']">' . number_format($pobj->getListingFee(), 2, ".", "") . '</td>
     //                              <td id="vat[' . $platform . ']">' . number_format($pobj->getVat(), 2, ".", "") . '</td>';
     // endif;
-
+    $default_price = $pobj->getDefaultPlatformConvertedPrice() ? $pobj->getDefaultPlatformConvertedPrice() : 0;
     $table_row = '<tr id="row[' . $platform . ']" style="background-color:' . $bgcolor . '">
                     <td></td>
                     <td>
@@ -80,7 +80,8 @@
                         <input type="hidden" id="default_freight_cost[' . $platform . ']" value="' . ($pobj->getWhfcCost() - $pobj->getAmazonEfnCost() * 1) . '">
                         <input type="hidden" id="sub_cat_margin[' . $platform . ']" value="' . $pobj->getSubCatMargin() . '">
                         <input type="hidden" id="auto_calc_price[' . $platform . ']" value="' . number_format($auto_calc_price, 2, ".", "") . '">
-                        <input type="hidden" id="origin_price[' . $platform . ']" default_price="'. number_format($pobj->getDefaultPlatformConvertedPrice(), 2, ".", "") .'" value="' . number_format($pobj->getPrice(), 2, ".", "") . '">
+
+                        <input type="hidden" id="origin_price[' . $platform . ']" value="' . number_format($default_price, 2, ".", "") . '">
                     </td>
                  </tr>
                 ';

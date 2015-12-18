@@ -30,7 +30,7 @@ class PriceWithCostDto
     private $payment_charge;
     private $auto_total_charge;
     private $complementary_acc_cost;
-    private $current_platform_price;
+    private $check_price;
     private $default_platform_converted_price;
     private $default_delivery_charge;
     private $profit;
@@ -341,14 +341,14 @@ class PriceWithCostDto
         $this->complementary_acc_cost = $complementary_acc_cost;
     }
 
-    public function getCurrentPlatformPrice()
+    public function getCheckPrice()
     {
-        return $this->current_platform_price;
+        return $this->check_price;
     }
 
-    public function setCurrentPlatformPrice($current_platform_price)
+    public function setCheckPrice($check_price)
     {
-        $this->current_platform_price = $current_platform_price;
+        $this->check_price = $check_price;
     }
 
     public function getDefaultPlatformConvertedPrice()
