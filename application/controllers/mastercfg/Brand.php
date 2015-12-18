@@ -47,7 +47,7 @@ class Brand extends MY_Controller
         $data["lang"] = $lang;
 
         $config['base_url'] = base_url('mastercfg/brand/index');
-        echo $config['total_rows'] = $data["total"];
+        $config['total_rows'] = $data["total"];
         $config['page_query_string'] = true;
         $config['reuse_query_string'] = true;
         $config['per_page'] = $option['limit'];
