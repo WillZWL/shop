@@ -43,7 +43,7 @@
     //                              <td id="listing_fee[' . $platform . ']">' . number_format($pobj->getListingFee(), 2, ".", "") . '</td>
     //                              <td id="vat[' . $platform . ']">' . number_format($pobj->getVat(), 2, ".", "") . '</td>';
     // endif;
-    $default_price = $pobj->getDefaultPlatformConvertedPrice() ? $pobj->getDefaultPlatformConvertedPrice() : 0;
+    $default_price = $pobj->getDefaultPlatformConvertedPrice() ? $pobj->getDefaultPlatformConvertedPrice() : ($pobj->getPrice() ? $pobj->getPrice() : 0);
     $table_row = '<tr id="row[' . $platform . ']" style="background-color:' . $bgcolor . '">
                     <td></td>
                     <td>
