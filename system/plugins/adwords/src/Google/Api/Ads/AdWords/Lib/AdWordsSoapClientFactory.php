@@ -27,7 +27,7 @@
  * @author     Adam Rogal
  * @see        SoapClientFactory
  */
-require_once dirname(__FILE__) . '/../../Common/Lib/AdsUser.php';
+// require_once dirname(__FILE__) . '/../../Common/Lib/AdsUser.php';
 require_once dirname(__FILE__) . '/../../Common/Lib/SoapClientFactory.php';
 
 /**
