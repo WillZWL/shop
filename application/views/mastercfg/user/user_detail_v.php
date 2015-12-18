@@ -13,7 +13,7 @@
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td height="30" class="title"><?= $lang["title"] ?></td>
-            <td width="400" align="right" class="title"><input type="button" value="<?= $lang["list_button"] ?>"
+            <td width="400" align="right"  style="background:#286512"><input type="button" value="<?= $lang["list_button"] ?>"
                                                                class="button"
                                                                onclick="Redirect('<?= site_url('mastercfg/user/') ?>')">
                 &nbsp; <input type="button" value="<?= $lang["add_button"] ?>" class="button"
