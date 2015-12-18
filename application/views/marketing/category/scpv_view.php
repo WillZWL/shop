@@ -73,7 +73,7 @@
                 <td width="142" height="20" valign="top" class="field" align="right">
                     &nbsp;&nbsp;<?= $lang["scpv_commission"] ?></td>
                 <td height="20" valign="top" class="value" align="left">&nbsp;&nbsp;
-                    <input type="text" name="commission" value="<?= ($type == "insert" ? "" : number_format($scpv_obj->getPlatformCommission(), 2, '.', ' ')) ?>" <?= $canedit ? "" : "READONLY" ?> isNumber min=0>%
+                    <input type="text" name="commission" value="<?= ($type == "insert" ? "" : number_format($scpv_obj->getPlatformCommissionPercent(), 2, '.', ' ')) ?>" <?= $canedit ? "" : "READONLY" ?> isNumber min=0>%
                 </td>
             </tr>
             <tr>

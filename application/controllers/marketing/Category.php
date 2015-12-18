@@ -553,7 +553,7 @@ class Category extends MY_Controller
             $scpv_obj->setProfitMargin($this->input->post('profit_margin'));
             $scpv_obj->setCurrencyId($this->input->post('currency'));
             $scpv_obj->setDlvryChrg($this->input->post('dlvry_chrg'));
-            $scpv_obj->setPlatformCommission($this->input->post('commission'));
+            $scpv_obj->setPlatformCommissionPercent($this->input->post('commission'));
             if ($this->input->post('type') == "insert") {
                 $ret = $this->sc['categoryModel']->insertScpv($scpv_obj);
                 if ($ret === FALSE) {
