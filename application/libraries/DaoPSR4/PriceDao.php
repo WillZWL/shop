@@ -90,7 +90,7 @@ class PriceDao extends BaseDao
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
-    public function getDefaultConvertedPrice($where = [], $option = [], $classname = "ProductCostDto")
+    public function getDefaultConvertedPrice($where = [], $option = [], $classname = "PriceWithCostDto")
     {
         $this->db->from('price pr');
         $this->db->join("(platform_biz_var pbv INNER JOIN exchange_rate er)", "er.from_currency_id = 'HKD' AND er.to_currency_id = pbv.platform_currency_id", "INNER");

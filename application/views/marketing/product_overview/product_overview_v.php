@@ -10,7 +10,7 @@
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>marketing/ProductOverviewWebsite/js_overview"></script>
-    <script type="text/javascript" src="<?= base_url() ?>marketing/product/js_catlist"></script>
+    <script type="text/javascript" src="<?= base_url() ?>marketing/category/js_catlist"></script>
     <script type="text/javascript" src="<?= base_url() ?>mastercfg/brand/js_brandlist"></script>
     <script type="text/javascript">
     $(document).ready(function() {

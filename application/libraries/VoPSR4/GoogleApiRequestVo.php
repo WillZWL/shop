@@ -27,7 +27,6 @@ class GoogleApiRequestVo extends \BaseVo
     private $currency;
     private $price;
     private $description;
-    private $google_promo_id = '';
     private $google_product_status;
     private $custom_attribute_promo_id = '';
     private $ref_website_quantity = '0';
@@ -38,6 +37,7 @@ class GoogleApiRequestVo extends \BaseVo
     private $availability = '';
     private $condition = '';
     private $result = 'N';
+    private $key_message = '';
     private $api_response;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
@@ -361,18 +361,6 @@ class GoogleApiRequestVo extends \BaseVo
         return $this->description;
     }
 
-    public function setGooglePromoId($google_promo_id)
-    {
-        if ($google_promo_id !== null) {
-            $this->google_promo_id = $google_promo_id;
-        }
-    }
-
-    public function getGooglePromoId()
-    {
-        return $this->google_promo_id;
-    }
-
     public function setGoogleProductStatus($google_product_status)
     {
         if ($google_product_status !== null) {
@@ -491,6 +479,18 @@ class GoogleApiRequestVo extends \BaseVo
     public function getResult()
     {
         return $this->result;
+    }
+
+    public function setKeyMessage($key_message)
+    {
+        if ($key_message !== null) {
+            $this->key_message = $key_message;
+        }
+    }
+
+    public function getKeyMessage()
+    {
+        return $this->key_message;
     }
 
     public function setApiResponse($api_response)

@@ -5,26 +5,34 @@ class PendingGoogleApiRequestVo extends \BaseVo
     private $platform_id;
     private $sku;
     private $item_group_id;
+    private $google_product_id;
+    private $colour_id = '';
     private $colour_name = '';
     private $target_country;
     private $content_language;
     private $title;
     private $google_product_category = '';
     private $product_type;
+    private $cat_id;
+    private $cat_name = '';
     private $brand_name;
-    private $gtin;
+    private $gtin = '';
+    private $upc = '';
     private $mpn = '';
+    private $ean = '';
     private $shipping_weight_value;
     private $image_link;
     private $link;
     private $currency;
     private $price;
-    private $google_product_status;
+    private $description;
     private $custom_attribute_promo_id = '';
     private $ref_website_quantity = '0';
     private $ref_display_quantity = '0';
     private $ref_listing_status;
+    private $ref_website_status = '';
     private $ref_exdemo;
+    private $ref_is_advertised = 'N';
     private $availability = '';
     private $condition = '';
     private $create_on = '0000-00-00 00:00:00';
@@ -83,6 +91,30 @@ class PendingGoogleApiRequestVo extends \BaseVo
     public function getItemGroupId()
     {
         return $this->item_group_id;
+    }
+
+    public function setGoogleProductId($google_product_id)
+    {
+        if ($google_product_id !== null) {
+            $this->google_product_id = $google_product_id;
+        }
+    }
+
+    public function getGoogleProductId()
+    {
+        return $this->google_product_id;
+    }
+
+    public function setColourId($colour_id)
+    {
+        if ($colour_id !== null) {
+            $this->colour_id = $colour_id;
+        }
+    }
+
+    public function getColourId()
+    {
+        return $this->colour_id;
     }
 
     public function setColourName($colour_name)
@@ -157,6 +189,30 @@ class PendingGoogleApiRequestVo extends \BaseVo
         return $this->product_type;
     }
 
+    public function setCatId($cat_id)
+    {
+        if ($cat_id !== null) {
+            $this->cat_id = $cat_id;
+        }
+    }
+
+    public function getCatId()
+    {
+        return $this->cat_id;
+    }
+
+    public function setCatName($cat_name)
+    {
+        if ($cat_name !== null) {
+            $this->cat_name = $cat_name;
+        }
+    }
+
+    public function getCatName()
+    {
+        return $this->cat_name;
+    }
+
     public function setBrandName($brand_name)
     {
         if ($brand_name !== null) {
@@ -181,6 +237,18 @@ class PendingGoogleApiRequestVo extends \BaseVo
         return $this->gtin;
     }
 
+    public function setUpc($upc)
+    {
+        if ($upc !== null) {
+            $this->upc = $upc;
+        }
+    }
+
+    public function getUpc()
+    {
+        return $this->upc;
+    }
+
     public function setMpn($mpn)
     {
         if ($mpn !== null) {
@@ -191,6 +259,18 @@ class PendingGoogleApiRequestVo extends \BaseVo
     public function getMpn()
     {
         return $this->mpn;
+    }
+
+    public function setEan($ean)
+    {
+        if ($ean !== null) {
+            $this->ean = $ean;
+        }
+    }
+
+    public function getEan()
+    {
+        return $this->ean;
     }
 
     public function setShippingWeightValue($shipping_weight_value)
@@ -253,16 +333,16 @@ class PendingGoogleApiRequestVo extends \BaseVo
         return $this->price;
     }
 
-    public function setGoogleProductStatus($google_product_status)
+    public function setDescription($description)
     {
-        if ($google_product_status !== null) {
-            $this->google_product_status = $google_product_status;
+        if ($description !== null) {
+            $this->description = $description;
         }
     }
 
-    public function getGoogleProductStatus()
+    public function getDescription()
     {
-        return $this->google_product_status;
+        return $this->description;
     }
 
     public function setCustomAttributePromoId($custom_attribute_promo_id)
@@ -313,6 +393,18 @@ class PendingGoogleApiRequestVo extends \BaseVo
         return $this->ref_listing_status;
     }
 
+    public function setRefWebsiteStatus($ref_website_status)
+    {
+        if ($ref_website_status !== null) {
+            $this->ref_website_status = $ref_website_status;
+        }
+    }
+
+    public function getRefWebsiteStatus()
+    {
+        return $this->ref_website_status;
+    }
+
     public function setRefExdemo($ref_exdemo)
     {
         if ($ref_exdemo !== null) {
@@ -323,6 +415,18 @@ class PendingGoogleApiRequestVo extends \BaseVo
     public function getRefExdemo()
     {
         return $this->ref_exdemo;
+    }
+
+    public function setRefIsAdvertised($ref_is_advertised)
+    {
+        if ($ref_is_advertised !== null) {
+            $this->ref_is_advertised = $ref_is_advertised;
+        }
+    }
+
+    public function getRefIsAdvertised()
+    {
+        return $this->ref_is_advertised;
     }
 
     public function setAvailability($availability)

@@ -260,5 +260,3 @@ class Promotion_code extends MY_Controller
         }
     }
 }
-
-

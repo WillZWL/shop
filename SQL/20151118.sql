@@ -37,9 +37,6 @@ ADD INDEX `idx_sku_affiliate` (`sku`, `affiliate_id`, `platform_id`) USING BTREE
 ALTER TABLE `category_mapping`
 MODIFY COLUMN `category_mapping_id`  bigint(20) UNSIGNED NOT NULL COMMENT 'sku / cat_id / sub_cat_id' AFTER `level`;
 
-
-/* above is LIVE */
-
 drop table google_shopping;
 CREATE TABLE `google_api_request` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -96,4 +93,41 @@ call add_role_right('CRN0044', 'admin');
 ALTER TABLE `payment_option`
 DROP INDEX `idx_platform_id` ,
 ADD UNIQUE INDEX `idx_platform_id` (`platform_id`, `page`) USING BTREE ;
+
+
+/* above is LIVE */
+
+ALTER TABLE `google_api_request`
+MODIFY COLUMN `result`  char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'N' COMMENT 'F = Fail, S = Success, W = Success with Warning, N = NEW' AFTER `condition`;
+
+ALTER TABLE `google_api_request`
+ADD COLUMN `warning`  varchar(2048) NOT NULL DEFAULT '' AFTER `result`;
+
+ALTER TABLE `google_api_request`
+CHANGE COLUMN `warning` `key_message`  varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `result`;
+
+ALTER TABLE `google_api_request`
+ADD INDEX `idx_request_result` (`result`) USING BTREE ;
+
+ALTER TABLE `google_request_batch`
+MODIFY COLUMN `status`  varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'N' COMMENT 'N = New / P = Processing / C = Completed / CE = Completed with Error / RP = ReProcessing / F = Completely Fail / U = Unknown Error' AFTER `func_name`;
+
+ALTER TABLE `pending_google_api_request`
+ADD COLUMN `ref_is_advertised`  char(1) NOT NULL DEFAULT 'N' AFTER `ref_exdemo`;
+
+ALTER TABLE `pending_google_api_request`
+ADD INDEX `idx_is_advertised` (`ref_is_advertised`) USING BTREE ;
+
+ALTER TABLE `google_api_request`
+MODIFY COLUMN `google_product_status`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'I = Insert / D = Delete' AFTER `description`;
+
+ALTER TABLE `pending_google_api_request`
+DROP COLUMN `google_product_status`,
+MODIFY COLUMN `custom_attribute_promo_id`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `description`;
+
+ALTER TABLE `google_api_request`
+ADD COLUMN `ref_is_advertised`  char(1) NOT NULL DEFAULT '' AFTER `ref_exdemo`;
+
+ALTER TABLE `google_api_request`
+ADD INDEX `idx_criteria` (`ref_website_quantity`, `ref_display_quantity`, `ref_listing_status`, `ref_website_status`, `ref_is_advertised`) ;
 

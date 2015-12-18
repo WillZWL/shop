@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript" src="/js/checkform.js"></script>
-    <script type="text/javascript" src="<?= base_url() ?>marketing/product/js_catlist"></script>
+    <script type="text/javascript" src="<?= base_url() ?>marketing/category/js_catlist"></script>
     <script type="text/javascript" src="<?= base_url() ?>mastercfg/brand/js_brandlist"></script>
     <!--<script type="text/javascript" src="<?= base_url() ?>mastercfg/region/js_courier_region"></script>-->
     <script type="text/javascript" src="<?= base_url() ?>supply/supplier_helper/js_currency"></script>
@@ -260,11 +260,12 @@
                                 </td>
                                 <td>
                                      <?php
-                                    $ar_free_item_sku = explode(',', $promotion_code->getFreeItemSku());
-                                    for ($i = 0; $i < 5; $i++) :
-                                        $endstr = $i == 4 ? "<br>" : " &nbsp; ";
+                                        $ar_free_item_sku = explode(',', $promotion_code->getFreeItemSku());
+                                        for ($i = 0; $i < 5; $i++) :
+                                            $endstr = $i == 4 ? "<br>" : " &nbsp; ";
                                     ?>
-                                        <input name="free_item_sku[<?= $i ?>]" size="11" value="<?= htmlspecialchars($ar_free_item_sku[$i]) ?>" maxLen="11"><?= $endstr ?>
+                                        <input name="free_item_sku[<?= $i ?>]" size="11" value="<?= htmlspecialchars($ar_free_item_sku[$i]) ?>" maxLen="11">
+                                        <?= $endstr ?>
                                     <?php
                                     endfor;
                                     ?>
