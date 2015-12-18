@@ -260,11 +260,12 @@
                                 </td>
                                 <td>
                                      <?php
-                                    $ar_free_item_sku = explode(',', $promotion_code->getFreeItemSku());
-                                    for ($i = 0; $i < 5; $i++) :
-                                        $endstr = $i == 4 ? "<br>" : " &nbsp; ";
+                                        $ar_free_item_sku = explode(',', $promotion_code->getFreeItemSku());
+                                        for ($i = 0; $i < 5; $i++) :
+                                            $endstr = $i == 4 ? "<br>" : " &nbsp; ";
                                     ?>
-                                        <input name="free_item_sku[<?= $i ?>]" size="11" value="<?= htmlspecialchars($ar_free_item_sku[$i]) ?>" maxLen="11"><?= $endstr ?>
+                                        <input name="free_item_sku[<?= $i ?>]" size="11" value="<?= htmlspecialchars($ar_free_item_sku[$i]) ?>" maxLen="11">
+                                        <?= $endstr ?>
                                     <?php
                                     endfor;
                                     ?>

@@ -28,7 +28,7 @@
  * @author     Eric Koleda
  * @author     Vincent Tsao
  */
-require_once 'Google/Api/Ads/Common/Lib/AdsUser.php';
+// require_once 'Google/Api/Ads/Common/Lib/AdsUser.php';
 
 /**
  * Base class for all SOAP client factories of Ads client libraries.
@@ -233,7 +233,7 @@ abstract class SoapClientFactory {
    */
   protected static function GetCompressionKind() {
     if (!isset(self::$COMPRESSION_KIND)) {
-      if (version_compare(PHP_VERSION, '5.4.0', '>=') 
+      if (version_compare(PHP_VERSION, '5.4.0', '>=')
         && version_compare(PHP_VERSION, '5.4.4', '<')
       ) {
         self::$COMPRESSION_KIND = SOAP_COMPRESSION_DEFLATE;

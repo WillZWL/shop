@@ -46,20 +46,20 @@ class PendingGoogleApiRequestDao extends BaseDao
         $sql = "replace into pending_google_api_request(platform_id, sku, item_group_id, colour_id, colour_name, target_country, content_language, title
             , google_product_category, product_type
             , cat_id, cat_name
-            , brand_name, mpn, upc, ean 
+            , brand_name, gtin, mpn, upc, ean 
             , shipping_weight_value, image_link
             , link , currency, price, custom_attribute_promo_id, description
-            , ref_display_quantity, ref_website_quantity, ref_listing_status, ref_website_status, ref_exdemo
+            , ref_display_quantity, ref_website_quantity, ref_listing_status, ref_website_status, ref_exdemo, ref_is_advertised
             , google_product_id
             , create_on, create_at, create_by, modify_at, modify_by)
             SELECT pr.platform_id, p.sku, p.prod_grp_cd, p.colour_id, clr.colour_name, pbv.platform_country_id, pbv.language_id, IFNULL(map.product_name, pc.prod_name) prod_name
             , ext_c.ext_name google_product_category, concat(cat.name, ' > ', sc.name) as product_type
             , p.cat_id, cat.name cat_name
-            , br.brand_name, pi.mpn, pi.upc, pi.ean
+            , br.brand_name, if(pi.upc <>'', pi.upc, pi.ean) gtin, pi.mpn, pi.upc, pi.ean
             , fc.weight prod_weight, CONCAT('http://', sco.domain, '/images/product/', p.sku, '.', p.image) image_url
             , CONCAT('http://', sco.domain, '/product/', p.sku) as link
             , pbv.platform_currency_id, pr.price, pr.google_promo_id, pc.detail_desc
-            , p.display_quantity, p.website_quantity, pr.listing_status, p.website_status, p.ex_demo
+            , p.display_quantity, p.website_quantity, pr.listing_status, p.website_status, p.ex_demo, pr.is_advertised
             , CONCAT('online:', pbv.language_id, ':', pbv.platform_country_id, ':', pbv.platform_country_id, '-', p.sku) google_product_id
             , now(), 2130706433, '" . $userId . "', 2130706433, '" . $userId . "'
             FROM `product` `p`

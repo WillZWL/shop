@@ -22,7 +22,8 @@ class CronSendApi extends MY_Controller
     public function processGoogleApiRequestByBatch($batchId, $reprocess = 0) {
         set_time_limit(0);
         if ($batchId) {
-            $this->sc['GoogleShopping']->processBatchByBatchId($batchId, $reprocess);
+            $this->sc["GoogleShopping"]->processBatchByBatchId($batchId, $reprocess);
+            $this->sc["GoogleRequestBatch"]->setBatchStatus($batchId);
         } else {
             print "Please provide a batch ID";
         }

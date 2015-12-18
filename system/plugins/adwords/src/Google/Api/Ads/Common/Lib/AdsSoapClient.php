@@ -30,7 +30,7 @@
  * @author     Eric Koleda
  * @author     Vincent Tsao
  */
-require_once 'Google/Api/Ads/Common/Lib/AdsUser.php';
+// require_once 'Google/Api/Ads/Common/Lib/AdsUser.php';
 require_once 'Google/Api/Ads/Common/Util/Logger.php';
 require_once 'Google/Api/Ads/Common/Util/MapUtils.php';
 require_once 'Google/Api/Ads/Common/Util/SoapRequestXmlFixer.php';
