@@ -554,16 +554,12 @@
                             <td></td>
                             <td></td>
                             <td>
-                                <input name="price" class="input" value="<?= htmlspecialchars($this->input->get("price")) ?>">
                             </td>
                             <td>
-                                <input name="vb_price" class="input" value="<?= htmlspecialchars($this->input->get("vb_price")) ?>">
                             </td>
                             <td>
-                                <input name="profit" class="input" value="<?= htmlspecialchars($this->input->get("profit")) ?>">
                             </td>
                             <td>
-                                <input name="margin" class="input" value="<?= htmlspecialchars($this->input->get("margin")) ?>">
                             </td>
                             <td align="center">
                                 <input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">
