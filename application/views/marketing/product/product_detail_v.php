@@ -9,7 +9,7 @@
     <script type="text/javascript" src="<?=base_url()?>js/picklist.js"></script>
     <script type="text/javascript" src="<?=base_url()?>js/jquery.js"></script>
     <script type="text/javascript" src="<?=base_url()?>js/jquery.dg-magnet-combo.js"></script>
-    <script type="text/javascript" src="<?=base_url()?>marketing/product/js_catlist"></script>
+    <script type="text/javascript" src="<?=base_url()?>marketing/category/js_catlist"></script>
     <script type="text/javascript" src="<?=base_url()?>mastercfg/FreightHelper/js_freight_cat"></script>
     <link rel="stylesheet" type="text/css" href="<?=base_url()?>js/ext-js/resources/css/ext-all.css" />
     <link rel="stylesheet" type="text/css" href="<?=base_url()?>js/ext-js/resources/css/tab-scroller-menu.css" />

@@ -2821,39 +2821,6 @@ start;
         }
     }
 
-    public function js_catlist()
-    {
-        header("Content-type: text/javascript; charset: UTF-8");
-        header("Cache-Control: must-revalidate");
-        $offset = 60 * 60 * 24;
-        $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
-        header($ExpStr);
-        $cat_list = $this->sc['Category']->getDao('Category')->getList(["id >" => "0", 'status' => 1], ["orderby" => "parent_cat_id ASC", "limit" => "-1"]);
-        foreach ($cat_list as $cat) {
-            $pid = $cat->getParentCatId();
-            $cat_id = str_replace("'", "\'", $cat->getId());
-            $cat_name = str_replace("'", "\'", $cat->getName());
-            $jscatlist[$pid][] = "'" . $cat_id . "':'" . $cat_name . "'";
-        }
-        foreach ($jscatlist as $jspid => $jssub) {
-            $jscat[] = "'" . $jspid . "': {" . (implode(", ", $jssub)) . "}";
-        }
-        $js = "catlist = {" . implode(", ", $jscat) . "};";
-        $js .= "
-            function ChangeCat(val, obj, obj2)
-            {
-                obj.length = 1;
-                if (obj2)
-                {
-                    obj2.length = 1;
-                }
-                for (var i in catlist[val]){
-                    obj.options[obj.options.length]=new Option(catlist[val][i], i);
-                }
-            }";
-        echo $js;
-    }
-
     public function js_feedcatlist()
     {
         header("Content-type: text/javascript; charset: UTF-8");
