@@ -6,7 +6,7 @@
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/jquery-colorbox.min.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
-    <script type="text/javascript" src="<?= base_url() ?>js/pricing_tools/main.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>js/pricing_tools/pricing_tool.main.js"></script>
 </head>
 <script type="text/javascript">
     $(document).ready
@@ -80,10 +80,10 @@
                             <span id="title_<?= $platform ?>">
 
                                 <?php
-                                if ($pobj->getPrice()) :
-                                    echo $pobj->getPrice();
+                                if ($pobj->getCheckPrice() == 1) :
+                                    echo "<span id='".$platform_id."_price'>". $pobj->getPrice(). "</span>";
                                 else :
-                                    echo $lang["price_not_set"] . " <span class='converted'>({$this->default_platform_id} ".
+                                    echo "<span style='background:#ffff41; padding:3px 5px;color:#ed3113'>". $lang["price_not_set"] . "</span><span class='converted'>({$this->default_platform_id} ".
                                          (($pobj->getDefaultPlatformConvertedPrice() * 1) ? ": {$pobj->getDefaultPlatformConvertedPrice()}" : $lang["price_not_set"]) ." )</span>";
                                 endif;
                                 ?>

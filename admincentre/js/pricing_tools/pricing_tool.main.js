@@ -217,10 +217,10 @@ function update_pricing_for_platform(platform_type, platform, sku)
 
                 // update_product_for_pricing_tool(platform_type, sku, platform);
                 if (price > 0) {
-                    $("#title_"+platform).html(price + " | <span style='color:#"+s_color+";'>"+ status + "</span> | <span style='color:#"+m_color+";'>"+ margin + "%</span>");
+                    $("#title_"+platform).html("<span id='"+platform+"_price'>"+price + "</span> | <span style='color:#"+s_color+";'>"+ status + "</span> | <span style='color:#"+m_color+";'>"+ margin + "%</span>");
                 } else {
                     var is_check_margin = false
-                    var default_price = $("input[id='origin_price["+platform+"]']").attr("default_price");
+                    var default_price = $("input[id='origin_price["+platform+"]']").val();
                     if (default_price > 0) {
                         var default_text = "WEBHK:" + default_price;
                         $.ajax({
@@ -231,21 +231,19 @@ function update_pricing_for_platform(platform_type, platform, sku)
                             success: function(msg)
                             {
                                 margin = msg.get_margin;
-                                $("#title_"+platform).html("No Pricing (<span class='converted'>"+default_text+
+                                $("#title_"+platform).html("<span style='background:#ffff41; padding:3px 5px;color:#ed3113'>No Pricing</span> (<span class='converted'>"+default_text+
                                     "</span>)| <span style='color:#"+s_color+
                                     ";'>"+ status + "</span> | <span style='color:#"+m_color+";'>"+ margin +"%</span>");
                             }
                         });
                     } else {
                         var default_text = "WEBHK No Pricing";
-                        $("#title_"+platform).html("No Pricing (<span class='converted'>"+default_text+
+                        $("#title_"+platform).html("<span style='background:#ffff41; padding:3px 5px;color:#ed3113'>No Pricing</span> (<span class='converted'>"+default_text+
                             "</span>)| <span style='color:#"+s_color+";'>"+ status + "</span> | <span style='color:#"+m_color+
                             ";'>"+ margin +"%</span>");
                     }
                 }
                 $("#note_"+platform).html("Note:<font color='blue'>It is update succeed</font>");
-
-                $("input[id='origin_price["+platform+"]']").val(price);
             }
             if (data.fail) {
                 $("#note_"+platform).html("Note:<font color='red'>It is update failed</font>");
@@ -360,14 +358,17 @@ function check_sub_cat_margin(platform_type, platform, sku) {
                     rePrice(platform_type, platform, sku);
                 }
             } else {
-                if ($("input[id='origin_price["+platform+"]']").val() == 0 || $("select[name='auto_price["+platform+"]'] option:selected").val() == "C") {
-                    var default_price = $("input[id='origin_price["+platform+"]']").attr("default_price");
-                    if (default_price > 0) {
-                        $("input[id='origin_price["+platform+"]']").val(default_price);
+                $("input[id='sp["+platform+"]']").attr('readOnly', false);
+                var is_price = false;
+                if ( $("span#"+platform+"_price").length > 0 && selected == "N") {
+                    if ($("span#"+platform+"_price").html() > 0) {
+                        $("input[id='sp["+platform+"]']").val($("span#"+platform+"_price").html());
+                        is_price = true;
                     }
                 }
-                $("input[id='sp["+platform+"]']").attr('readOnly', false);
-                $("input[id='sp["+platform+"]']").val($("input[id='origin_price["+platform+"]']").val());
+                if (is_price == false) {
+                    $("input[id='sp["+platform+"]']").val($("input[id='origin_price["+platform+"]']").val());
+                }
                 rePrice(platform_type, platform, sku);
             }
         }
