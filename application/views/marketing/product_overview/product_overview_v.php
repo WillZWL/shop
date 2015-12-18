@@ -304,7 +304,7 @@
                         </tr>
                         <tr>
                             <td style="padding-right:8px" align="right">
-                                <b>Auto Price Type</b>
+                                <b><?= $lang['price_type'] ?></b>
                             </td>
                             <td>
                                 <select name="auto_price" class="input">
@@ -387,7 +387,27 @@
                     </table>
                 </div>
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="data tb_list">
-                    <col width="20"> <col width="50"> <col width="80"> <col> <col width="50"> <col width="80"> <col width="80"> <col width="100"> <col width="40"> <col width="65"> <col width="80"> <col width="50"> <col width="50"> <col width="50"> <col width="70"> <col width="50"> <col width="50"> <col width="50">
+
+                    <col width="20">
+                    <col width="50">
+                    <col width="80">
+                    <col width="100">
+                    <col width="10">
+                    <col width="10">
+                    <col width="80">
+                    <col width="100">
+                    <col width="40">
+                    <col width="65">
+                    <col width="80">
+                    <col width="50">
+                    <col width="50">
+                    <col width="70">
+                    <col width="40">
+                    <col width="70">
+                    <col width="70">
+                    <col width="30">
+                    <col width="30">
+                    <col width="20">
                     <thead>
                         <tr class="header">
                             <td height="20">
@@ -449,20 +469,20 @@
                             <td title="<?= $lang["total_cost"] ?>">
                                 <?= $lang["cost"] ?>
                             </td>
-                            <td title="<?= $lang["auto_price_cb"] ?>">
-                                <?= $lang["auto_price_cb"] ?>
-                            </td>
-                            <td title="<?= $lang["selling_price"] ?>">
-                                <a href="#" onClick="SortCol(document.fm, 'price', '<?= $xsort["price"] ?>')">
-                                    <?= $lang["price"] ?> <?= $sortimg["price"] ?>
-                                </a>
-                                <br/><span class="special" style="font-size:7pt"><?= $this->default_platform_id ?> <?= $lang["conv"] ?></span>
+                            <td title="<?= $lang["price_type"] ?>">
+                                <?= $lang["price_type"] ?>
                             </td>
                             <td title="<?= $lang["vb_price"] ?>">
                                 <a href="#" onClick="SortCol(document.fm, 'vb_price', '<?= $xsort["vb_price"] ?>')">
                                     <?= $lang["vb_price"] ?> <?= $sortimg["vb_price"] ?>
                                 </a>
-                                <br/><span class="special" style="font-size:7pt"><?= $this->default_platform_id ?> <?= $lang["conv"] ?></span>
+                                <br/><span class="special" style="font-size:7pt"></span>
+                            </td>
+                            <td title="<?= $lang["selling_price"] ?>">
+                                <a href="#" onClick="SortCol(document.fm, 'price', '<?= $xsort["price"] ?>')">
+                                    <?= $lang["price"] ?> <?= $sortimg["price"] ?>
+                                </a>
+                                <br/><span class="special" style="font-size:7pt"></span>
                             </td>
                             <td title="<?= $lang["profit"] ?>">
                                 <a href="#" onClick="SortCol(document.fm, 'profit', '<?= $xsort["profit"] ?>')">
@@ -627,10 +647,10 @@
                                 </select>
                             </td>
                             <td>
-                                <?= $product->getPlatformCurrencyId() . ' ' . $product->getPrice() ?>
+                                <?= $product->getPlatformCurrencyId() . ' ' . $product->getVbPrice() ?>
                             </td>
                             <td>
-                                <?= $product->getPlatformCurrencyId() . ' ' . $product->getVbPrice() ?>
+                                <?= $product->getPlatformCurrencyId() . ' ' . $product->getPrice() ?>
                             </td>
                             <td><?= $product->getProfit() ?></td>
                             <td><?= $product->getMargin() ?>%</td>
