@@ -64,7 +64,7 @@ class PricingToolService extends BaseService
                             $param['auto_price'] = $price_obj->getAutoPrice();
                             $param['scenarioid'] = $price_obj->getDeliveryScenarioid();
                             $param['is_advertised'] = $price_obj->getIsAdvertised();
-                            $param['current_price'] = $tmp_obj["dst"]->getCurrentPlatformPrice();
+                            $param['current_price'] = $tmp_obj["dst"]->getPrice() ? $tmp_obj["dst"]->getPrice() : $tmp_obj["dst"]->getDefaultPlatformConvertedPrice() ? $tmp_obj["dst"]->getDefaultPlatformConvertedPrice() : 0;
                             $param['lang_id'] = $platform_obj->getLanguageId();
                             $param['prod_obj'] = $prod_obj;
 

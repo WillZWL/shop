@@ -23,7 +23,7 @@ class PriceService extends BaseService
     {
         $newObj->setDefaultShiptype((string) $obj->default_shiptype);
         $newObj->setSalesQty((string) $obj->sales_qty);
-        $newObj->setPrice((string) $obj->required_selling_price);
+        $newObj->setPrice($obj->required_selling_price);
         $newObj->setVbPrice((string) $obj->prod_price);
         $newObj->setStatus((string) $obj->status);
         $newObj->setAllowExpress((string) $obj->allow_express);
@@ -151,7 +151,12 @@ class PriceService extends BaseService
 
         $total_cost = $dto->getCost();
         $profit = $dto->getPrice() - $total_cost;
-        $margin = $profit / $dto->getPrice() * 100;
+
+        if ($dto->getPrice() > 0) {
+            $margin = $profit / $dto->getPrice() * 100;
+        } else {
+            $margin = 0;
+        }
 
         $dto->setProfit(number_format($profit, 2, '.', ''));
         $dto->setMargin(number_format($margin, 2, '.', ''));
@@ -197,7 +202,7 @@ class PriceService extends BaseService
             $auto_price = number_format($auto_price, 2, '.', '');
             $dto->setPrice($auto_price);
             $this->calculateProfitAndMargin($dto);
-        } while ($dto->getMargin() - $required_margin);
+        } while (($dto->getMargin()  - $required_margin) < 0);
 
         // calculate cost base on finally auto price.
         $this->calculateProfitAndMargin($dto);
@@ -210,6 +215,7 @@ class PriceService extends BaseService
             foreach ($tmp_objlist  as $tmp_obj) {
                 $this->initPrice($tmp_obj);
                 $this->calculateProfitAndMargin($tmp_obj);
+
                 $ret[$tmp_obj->getPlatformId()]["dst"] = $tmp_obj;
             }
         }
@@ -219,11 +225,20 @@ class PriceService extends BaseService
 
     public function initPrice(\PriceWithCostDto $dto)
     {
-        $default_obj = $this->getDao('Price')->getDefaultConvertedPrice(["pr.sku" => $dto->getSku(), "pbv.selling_platform_id" => $dto->getPlatformId()], ['limit' => 1]);
-        // var_dump($default_obj);die;
+        $default_obj = $this->getDao('Price')->getDefaultConvertedPrice(
+                                    ["pr.sku" => $dto->getSku(), "pbv.selling_platform_id" => $dto->getPlatformId()],
+                                    ['limit' => 1]
+                                );
+
         $default_price = $default_obj ? $default_obj->getDefaultPlatformConvertedPrice() : 0;
-        // $dto->setPrice($default_price);
-        // $dto->setDefaultPlatformConvertedPrice($default_price);
-        $dto->setCurrentPlatformPrice($default_price);
+
+        if ($dto->getPrice() > 0) {
+            $dto->setCheckPrice(1);
+        } else {
+            $dto->setPrice($default_price);
+            $dto->setCheckPrice(0);
+        }
+
+        $dto->setDefaultPlatformConvertedPrice($default_price);
     }
 }
