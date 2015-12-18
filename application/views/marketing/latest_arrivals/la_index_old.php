@@ -5,7 +5,7 @@
     <meta name="keywords" content="">
     <title><?= $lang["title"] ?></title>
     <link rel="stylesheet" type="text/css" href="<?= base_url() . "css/style.css" ?>">
-    <script src="<?= base_url() ?>/marketing/product/js_catlist" type="text/javascript"></script>
+    <script src="<?= base_url() ?>/marketing/category/js_catlist" type="text/javascript"></script>
 </head>
 <body topmargin="0" leftmargin="0">
 <div id="main">

@@ -5,7 +5,7 @@
     <meta name="keywords" content="">
     <title><?= $lang["title"] ?></title>
     <link rel="stylesheet" type="text/css" href="<?= base_url() . "css/style.css" ?>">
-    <script src="<?= base_url() ?>/marketing/product/js_catlist" type="text/javascript"></script>
+    <script src="<?= base_url() ?>/marketing/category/js_catlist" type="text/javascript"></script>
     <script src="<?= base_url() ?>js/common.js" type="text/javascript"></script>
     <script language="javascript">
         function SaveChange(el) {
