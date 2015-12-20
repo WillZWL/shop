@@ -22,7 +22,7 @@ class ListingInfoDto
     private $cat_id;
     private $sub_cat_id;
     private $sub_sub_cat_id;
-    private $productUrl;
+    private $product_url;
 
     public function getPlatformId()
     {
@@ -236,11 +236,11 @@ class ListingInfoDto
 
     public function getProductUrl()
     {
-        return $this->productUrl;
+        return $this->product_url;
     }
 
     public function setProductUrl($product_url)
     {
-        $this->productUrl = $product_url;
+        $this->product_url = $product_url;
     }
 }
