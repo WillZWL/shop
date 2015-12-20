@@ -105,7 +105,6 @@
                         <br>All products not in the list have "auto" status. To add a status to a new product, simply insert new line and fill in the "new_affiliate_sku_status" column.
                         <form action="/marketing/productOverviewWebsite/exportAffiliateFeed" enctype="multipart/form-data" method="post" target="_blank">
                             <select name="platform_id">
-                                <option value=""></option>
                                 <?php foreach ($clist as $cobj): ?>
                                     <option value="<?= $cobj->getSellingPlatformId() ?>"> <?= $cobj->getSellingPlatformId() ?> - <?= $cobj->getName() ?></option>
                                 <?php endforeach ?>
@@ -192,7 +191,6 @@
                             </td>
                             <td>
                                 <select name="platform_id">
-                                    <option value=""></option>
                                     <?php foreach ($clist as $cobj): ?>
                                         <option value="<?= $cobj->getSellingPlatformId() ?>"> <?= $cobj->getSellingPlatformId() ?> - <?= $cobj->getName() ?></option>
                                     <?php endforeach ?>
@@ -387,15 +385,14 @@
                     </table>
                 </div>
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="data tb_list">
-
                     <col width="20">
                     <col width="50">
                     <col width="80">
                     <col width="100">
                     <col width="10">
+                    <col width="30">
                     <col width="10">
-                    <col width="80">
-                    <col width="100">
+                    <col width="20">
                     <col width="40">
                     <col width="65">
                     <col width="80">
