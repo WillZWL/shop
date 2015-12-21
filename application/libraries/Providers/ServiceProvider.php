@@ -493,5 +493,9 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['ProductCustomClassification'] = function () {
             return new S\ProductCustomClassificationService();
         };
+
+        $serviceContainer['DataExport'] = function () {
+            return new S\DataExportService();
+        };
     }
 }
