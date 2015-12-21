@@ -1,0 +1,1 @@
+ALTER TABLE product_content ADD COLUMN product_url VARCHAR(2083) NOT NULL DEFAULT '' AFTER youtube_caption_2;

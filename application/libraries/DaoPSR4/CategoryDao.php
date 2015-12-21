@@ -16,9 +16,9 @@ class CategoryDao extends BaseDao
         return $this->voClassname;
     }
 
-    public function getCategoryName()
+    public function getCategoryName($lang_id)
     {
-        $query = $this->db->query('select c.id, COALESCE(ce.name, c.name) as name from category c left join category_extend ce on c.id = ce.cat_id  where status = 1');
+        $query = $this->db->query('select c.id, COALESCE(ce.name, c.name) as name from category c left join category_extend ce on c.id = ce.cat_id where status = 1 and lang_id = ?', $lang_id);
         return $query->result_array();
     }
 

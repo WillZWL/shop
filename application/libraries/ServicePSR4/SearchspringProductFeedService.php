@@ -73,7 +73,7 @@ class SearchspringProductFeedService extends DataFeedService
         $fp = fopen(DATAPATH . '/feeds/searchspring/' . $where['pbv.language_id'] . '/' . $filename, 'w');
 
         set_time_limit(300);
-        $num_rows = $this->productService->getDao()->getSearchspringProductFeed($where, ['num_rows' => 1]);
+        $num_rows = $this->productService->getDao('Product')->getSearchspringProductFeed($where, ['num_rows' => 1]);
         $offset = 0;
         $arr = array();
 
@@ -85,7 +85,7 @@ class SearchspringProductFeedService extends DataFeedService
         $content .= '<Products>' . "\n";
 
         for ($i = 0; $i < $total; $i++) {
-            if ($arr = $this->productService->getDao()->getSearchspringProductFeed($where, $option = array('orderby' => 'pr.sku', 'offset' => $i * 5000, 'limit' => 5000))) {
+            if ($arr = $this->productService->getDao('Product')->getSearchspringProductFeed($where, $option = array('orderby' => 'pr.sku', 'offset' => $i * 5000, 'limit' => 5000))) {
                 foreach ($arr as $product_info_dto) {
                     $this->processDataRow($product_info_dto);
                     $data[$product_info_dto->getSku()]['product_info_dto'] = $product_info_dto;
