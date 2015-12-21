@@ -33,7 +33,7 @@ class EmailService extends BaseService
 
     private function getEmail($obj)
     {
-        $result = ['from', 'subject', 'bcc', 'cc', 'reply_to', 'body', 'to'];
+        $result = ['from', 'from_name', 'subject', 'bcc', 'cc', 'reply_to', 'body', 'to'];
 
         $where = [
             'tpl_id' => $obj->getTplId(),
@@ -44,6 +44,7 @@ class EmailService extends BaseService
 
         if ($email) {
             $result['from'] = $email->getFrom();
+            $result['from_name'] = $email->getFromName();
             $result['subject'] = $email->getSubject();
             $result['bcc'] = $email->getBcc();
             $result['cc'] = $email->getCc();
@@ -69,6 +70,7 @@ class EmailService extends BaseService
         }
 
         $phpmail->From = $email['from'];
+        $phpmail->FromName = $email['from_name'];
         if (is_array($email['to'])) {
             foreach ($email['to'] as $to_address) {
                 $phpmail->AddAddress($to_address);
