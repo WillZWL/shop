@@ -115,7 +115,7 @@
                 </div>
 
                 <div class="sort pull-right">
-                    <span for="input-sort"><?= _('Sort By:') ?></span>
+                    <span for="input-sort"><?= _('Sort By').':' ?></span>
                     <select id="input-sort" class="form-control"  onchange="location = this.value;">
                         <option value="?sort=p.sort_order&order=ASC" selected="selected"><?= _('Default') ?></option>
                         <option value="?sort=pd.name&order=ASC"><?= _('Name (A - Z)') ?></option>

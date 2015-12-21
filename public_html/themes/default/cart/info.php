@@ -37,8 +37,8 @@
                         </tr>
                     </table>
                     <p class="text-right">
-                        <a href="/review_order" class="btn btn-primary"><?= _(' View Cart ') ?></a>&nbsp;&nbsp;&nbsp;
-                        <a href="/checkout" class="btn btn-primary"><?= _(' Checkout') ?></a>
+                        <a href="/review_order" class="btn btn-primary"><?= _('View Cart') ?></a>&nbsp;&nbsp;&nbsp;
+                        <a href="/checkout" class="btn btn-primary"><?= _('Checkout') ?></a>
                     </p>
                 </div>
             </li>

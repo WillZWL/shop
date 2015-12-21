@@ -45,15 +45,15 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <td class="text-right"><strong><?=_('Subtotal:') ?></strong></td>
+                            <td class="text-right"><strong><?=_('Subtotal').':' ?></strong></td>
                             <td class="text-right"><?= platform_curr_format($cartInfo->getGrandTotal()) ?></td>
                         </tr>
                         <tr>
-                            <td class="text-right"><strong><?=_('Shipping:') ?></strong></td>
+                            <td class="text-right"><strong><?=_('Shipping').':' ?></strong></td>
                             <td class="text-right"><?= platform_curr_format($cartInfo->getDeliveryCharge()) ?></td>
                         </tr>
                         <tr>
-                            <td class="text-right"><strong><?= _('Total:') ?></strong></td>
+                            <td class="text-right"><strong><?= _('Total').':' ?></strong></td>
                             <td class="text-right"><?= platform_curr_format($cartInfo->getGrandTotal()) ?></td>
                         </tr>
                     </tbody>
