@@ -147,7 +147,7 @@
                     <td>
                         Export as CSV
                         <a href="/marketing/ProductOverviewWebsite?<?= $query_string ?>&csv=1">here</a>, after modification, upload the file below
-                        <form action="/marketing/ProductOverviewWebsite/upload_sku_info" enctype="multipart/form-data" method="post">
+                        <form action="/marketing/ProductOverviewWebsite/importSkuPrice" enctype="multipart/form-data" method="post">
                             <input type="file" name="datafile" size="40">
                             <input type="submit" value="Upload">
                         </form>

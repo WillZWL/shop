@@ -16,6 +16,17 @@ class PriceDao extends BaseDao
         return $this->table_name;
     }
 
+    /**
+     * @return affected rows
+     */
+    public function updateSkuPrice($platform_id, $sku, $price)
+    {
+        $sql = "UPDATE price SET auto_price = 'N', price = ? WHERE sku = ? AND platform_id = ? AND listing_status = 'L'";
+        $this->db->query($sql, [$price, $sku, $platform_id]);
+
+        return $this->db->affected_rows();
+    }
+
     public function getItemsWithPrice($where = [], $classname = "ItemWithPriceDto")
     {
         $this->db->from('v_prod_items AS vpi');
