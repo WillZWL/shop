@@ -362,6 +362,7 @@ class GoogleShoppingService extends BaseService
 ****************************************************************/
     public function updateGoogleShoppingItem($platformId = "", $sku = "") {
         $this->getService("PendingGoogleApiRequest")->getDao("PendingGoogleApiRequest")->insertGoogleShoppingData($platformId, str_replace("WEB", "GOO", $platformId), $sku);
+        $this->getService("GoogleConnect")->deleteAllProductFromPlatform($platformId);
     }
 
 /**************************************************
@@ -408,7 +409,9 @@ class GoogleShoppingService extends BaseService
         } else {
             $where["result"] = "N";
         }
-        $processingList = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->getList($where, ["limit" => 4]);
+        $processingList = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->getList($where, ["limit" => 40]);
+        if (($processingList) && !is_array($processingList))
+            $processingList = [$processingList];
         $googleConnect = $this->getService("GoogleConnect");
         if ($processingList) {
             $i = 0; //will be the entry ID
@@ -416,12 +419,12 @@ class GoogleShoppingService extends BaseService
                 $reOrderList = [];
                 for($j=$i;$j<sizeof($processingList);$j++) {
                     $reOrderList[$i] = $processingList[$j];
-                    $accountId = $this->getShoppingApiAccountId($processingList[$j]->getPlatformId());
+//                    $accountId = $this->getShoppingApiAccountId($processingList[$j]->getPlatformId());
                     $i++;
                     if (($i%self::NUMBER_OF_PRODUCTS_IN_BATCH) == 0)
                         break;
                 }
-                $googleConnect->processingInsertProductBatch($batchId, $reOrderList);
+                $googleConnect->processingInsertDeleteProductBatch($reOrderList);
                 foreach($reOrderList as $key => $googleApiRequestObj) {
                     $updateResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->update($googleApiRequestObj);
                     if ($updateResult === false) {
@@ -514,7 +517,7 @@ class GoogleShoppingService extends BaseService
             }
         }
     }
-*/
+
     public function batchDeleteItem($accountId = null, $googleShoppingData = [], $platformId) {
         if (!$accountId)
             $accountId = $this->getShoppingApiAccountId($platformId);
@@ -526,14 +529,14 @@ class GoogleShoppingService extends BaseService
         }
         return $result["status"];
     }
-
+*/
     public function getGoogleShoppingContentReport($platformId = "") {
         if (!$platformId) {
             return true;
         } else {
             $accountId = $this->getShoppingApiAccountId($platformId);
             $googleConnect = $this->getService("GoogleConnect");
-            $requestData["maxresults"] = 250;
+            $requestData["maxresults"] = self::NUMBER_OF_PRODUCTS_IN_BATCH;
             $productFeedResult = $googleConnect->listProducts($accountId, $requestData["maxresults"]);
 
             if ($productFeedResult["status"] == TRUE) {

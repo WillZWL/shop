@@ -125,11 +125,6 @@
                                                                         <span class="add-to-cart "><?= _("Add to Cart") ?></span>
                                                                     </button>
                                                                 </div>
-                                                                <!--<div class="wishlist">
-                                                                    <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="Add to Wish List" onclick="wishlist.addwishlist('<?= $sku ?>');">
-                                                                        <i class="fa fa-heart"></i>
-                                                                    </button>
-                                                                </div>-->
                                                             </div>
                                                         </div>
                                                     </div>
