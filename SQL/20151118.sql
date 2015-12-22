@@ -129,3 +129,27 @@ ALTER TABLE `google_api_request`
 ADD INDEX `idx_criteria` (`ref_website_quantity`, `ref_display_quantity`, `ref_listing_status`, `ref_website_status`, `ref_is_advertised`) ;
 
 /* above is LIVE */
+
+
+ALTER TABLE `price_extend`
+DROP COLUMN `amazon_reprice_name`,
+MODIFY COLUMN `ext_status`  varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'eBay: L = Listing, E = End, Google: I = Insert, D = Delete, empty = No action before' AFTER `ext_condition`,
+MODIFY COLUMN `handling_time`  tinyint(4) NULL DEFAULT NULL COMMENT 'Specifies the maximum number of business days the seller commits to for preparing an item to be shipped after receiving a cleared payment' AFTER `fulfillment_centre_id`,
+ADD COLUMN `last_update_result`  varchar(2048) NOT NULL DEFAULT '' AFTER `ext_status`;
+
+ALTER TABLE `price_extend`
+DROP COLUMN `fulfillment_centre_id`,
+MODIFY COLUMN `handling_time`  tinyint(4) NULL DEFAULT NULL COMMENT 'Specifies the maximum number of business days the seller commits to for preparing an item to be shipped after receiving a cleared payment' AFTER `last_update_result`;
+
+ALTER TABLE `price_extend`
+ADD COLUMN `id`  bigint(20) NOT NULL AUTO_INCREMENT FIRST ,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`id`),
+ADD UNIQUE INDEX `idx_sku_platform` (`sku`, `platform_id`) USING BTREE ;
+
+ALTER TABLE `price_extend`
+MODIFY COLUMN `ext_status`  varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'eBay: L = Listing, E = End, Google: IS/IF = Insert Success/Fail, DS/F = Delete Success/Fail, empty = No action before' AFTER `ext_condition`;
+
+ALTER TABLE `pending_google_api_request`
+ADD COLUMN `google_product_status`  char(1) NOT NULL DEFAULT '' AFTER `condition`;
+

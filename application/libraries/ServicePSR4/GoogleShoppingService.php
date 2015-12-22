@@ -67,7 +67,7 @@ class GoogleShoppingService extends BaseService
         }
         return false;
     }
-
+/*
     private function _convertArrayToString($array = array())
     {
         $return_str = "";
@@ -234,20 +234,7 @@ class GoogleShoppingService extends BaseService
 
         return $ret;
     }
-/*
-    public function gen_data_feed($platform_id = "", $shopping_api = TRUE, $where = array())
-    {
-        include_once(APPPATH . "libraries/service/Googlebase_product_feed_service.php");
-        $this->googlebase_product_feed_service = new Googlebase_product_feed_service();
-        $result = $this->googlebase_product_feed_service->gen_data_feed($platform_id, $shopping_api, $where);
 
-        $country_id = substr($platform_id, -2, 2);
-        if ($result[$country_id]) {
-            return $result[$country_id];
-        }
-        return array();
-    }
-*/
     private function utf_encode_array_values($array)
     {
         $return_array = array();
@@ -266,7 +253,7 @@ class GoogleShoppingService extends BaseService
 
         return $return_array;
     }
-
+*/
     public function mail_result($content, $subject)
     {
         $mail_content = "";
@@ -361,7 +348,7 @@ class GoogleShoppingService extends BaseService
 **  Another process(CronUpdatePriceMargin/processGoogleApiRequest) = GoogleShoppingService->sendBatchRequestToGoogle will get all the data inside and send to google 
 ****************************************************************/
     public function updateGoogleShoppingItem($platformId = "", $sku = "") {
-        $this->getService("PendingGoogleApiRequest")->getDao("PendingGoogleApiRequest")->insertGoogleShoppingData($platformId, str_replace("WEB", "GOO", $platformId), $sku);
+        $this->getService("PendingGoogleApiRequest")->getDao("PendingGoogleApiRequest")->insertGoogleShoppingDataForBatch($platformId, $sku);
         $this->getService("GoogleConnect")->deleteAllProductFromPlatform($platformId);
     }
 
@@ -369,13 +356,12 @@ class GoogleShoppingService extends BaseService
 **  Get a batch ID and mark the record with a batch ID and transfer to other to process to keep pending table slim
 ***************************************************/
     public function sendBatchRequestToGoogle() {
-        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
+//        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
         $this->getService("GoogleRequestBatch")->getDao("PendingGoogleApiRequest")->db->save_queries = false;
         $hasRequest = $this->getService("GoogleRequestBatch")->getDao("PendingGoogleApiRequest")->getList([], ["limit" => 1]);
         if ($hasRequest) {
             if (($batchObj = $this->getService("GoogleRequestBatch")->getNewBatch(GoogleService::FUNC_GOOGLE_CONTENT_API)) !== false) {
                 $batchId = $batchObj->getId();
-
                 $this->getService("GoogleRequestBatch")->getDao('GoogleRequestBatch')->db->trans_begin();
 //insert
                 $insertResult = $this->_sendBatchRequestToGoogleStep1($batchId);
@@ -432,10 +418,11 @@ class GoogleShoppingService extends BaseService
                     }
                 }
             } while ($i<sizeof($processingList));
-//            error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
-            unset($reOrderList);
-            unset($processingList);
-//            error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
+            unset($reOrderList, $processingList);
+            $updateToPriceExtendResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->updateBatchRequestToPriceExtend($batchId);
+            if ($updateToPriceExtendResult === false) {
+                $this->_sendAlert("[Panther] cannot updaet price extend", $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
+            }
         } else {
             $this->_sendAlert("[Panther] batch has no data, batch_id:" . $batchId, $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
         }
