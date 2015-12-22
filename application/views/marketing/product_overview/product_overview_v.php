@@ -105,7 +105,6 @@
                         <br>All products not in the list have "auto" status. To add a status to a new product, simply insert new line and fill in the "new_affiliate_sku_status" column.
                         <form action="/marketing/productOverviewWebsite/exportAffiliateFeed" enctype="multipart/form-data" method="post" target="_blank">
                             <select name="platform_id">
-                                <option value=""></option>
                                 <?php foreach ($clist as $cobj): ?>
                                     <option value="<?= $cobj->getSellingPlatformId() ?>"> <?= $cobj->getSellingPlatformId() ?> - <?= $cobj->getName() ?></option>
                                 <?php endforeach ?>
@@ -148,7 +147,7 @@
                     <td>
                         Export as CSV
                         <a href="/marketing/ProductOverviewWebsite?<?= $query_string ?>&csv=1">here</a>, after modification, upload the file below
-                        <form action="/marketing/ProductOverviewWebsite/upload_sku_info" enctype="multipart/form-data" method="post">
+                        <form action="/marketing/ProductOverviewWebsite/importSkuPrice" enctype="multipart/form-data" method="post">
                             <input type="file" name="datafile" size="40">
                             <input type="submit" value="Upload">
                         </form>
@@ -192,7 +191,6 @@
                             </td>
                             <td>
                                 <select name="platform_id">
-                                    <option value=""></option>
                                     <?php foreach ($clist as $cobj): ?>
                                         <option value="<?= $cobj->getSellingPlatformId() ?>"> <?= $cobj->getSellingPlatformId() ?> - <?= $cobj->getName() ?></option>
                                     <?php endforeach ?>
@@ -387,15 +385,14 @@
                     </table>
                 </div>
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="data tb_list">
-
                     <col width="20">
                     <col width="50">
                     <col width="80">
                     <col width="100">
                     <col width="10">
+                    <col width="30">
                     <col width="10">
-                    <col width="80">
-                    <col width="100">
+                    <col width="20">
                     <col width="40">
                     <col width="65">
                     <col width="80">
@@ -554,16 +551,12 @@
                             <td></td>
                             <td></td>
                             <td>
-                                <input name="price" class="input" value="<?= htmlspecialchars($this->input->get("price")) ?>">
                             </td>
                             <td>
-                                <input name="vb_price" class="input" value="<?= htmlspecialchars($this->input->get("vb_price")) ?>">
                             </td>
                             <td>
-                                <input name="profit" class="input" value="<?= htmlspecialchars($this->input->get("profit")) ?>">
                             </td>
                             <td>
-                                <input name="margin" class="input" value="<?= htmlspecialchars($this->input->get("margin")) ?>">
                             </td>
                             <td align="center">
                                 <input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">
