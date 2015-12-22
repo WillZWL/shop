@@ -94,7 +94,7 @@ class ProductService extends BaseProductService
         $newObj->setStopSync((string)$oldObj->stop_sync);
     }
 
-    public function updateProductUrl($sku);
+    public function updateProductUrl($sku)
     {
         $lang_list = $this->getDao('Language')->getList(['status' => 1]);
 
