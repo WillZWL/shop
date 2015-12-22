@@ -6,11 +6,11 @@ use League\Csv\Reader;
 use League\Csv\Writer;
 
 /**
-* Data Export
+* Batch export import
 */
-class DataExportService extends BaseService
+class BatchExportImportService extends BaseService
 {
-    public function exportSku($where, $option)
+    public function exportSkuPrice($where, $option)
     {
         $select_str = 'pr.platform_id, p.sku, sm.ext_sku, p.name, pr.vb_price, pr.price, pm.margin';
         $data = $this->getDao('Product')->getProductOverview($where, $option, $select_str, 'array');
@@ -45,9 +45,9 @@ class DataExportService extends BaseService
             $new_margin = $require_price_json->get_margin;
 
             $this->getService('Price')->updateSkuPrice($platform_id, $sku, $require_selling_price);
+
+            // $this->getService('PriceChangeFollow')->processPriceChange($sku, $platform_id);
         }
-
-
         die;
     }
 }

@@ -286,14 +286,13 @@ class ProductOverviewWebsite extends MY_Controller
 
     public function exportSkuPrice($where, $option)
     {
-        $this->sc['DataExport']->exportSkuPrice($where, $option);
+        $this->sc['BatchExportImport']->exportSkuPrice($where, $option);
     }
 
     public function importSkuPrice()
     {
-        $result_row = $this->sc['DataExport']->importSkuPrice($_FILES["datafile"]["tmp_name"]);
+        $result_row = $this->sc['BatchExportImport']->importSkuPrice($_FILES["datafile"]["tmp_name"]);
     }
-
 
     public function exportAffiliateFeed()
     {
