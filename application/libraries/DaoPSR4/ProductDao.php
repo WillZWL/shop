@@ -16,11 +16,6 @@ class ProductDao extends BaseDao
         return $this->tableName;
     }
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getCartDataDetail($where = [], $option = [], $className = "CartItemDto")
     {
         $this->db->from("product AS p");
