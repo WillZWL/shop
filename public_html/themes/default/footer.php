@@ -99,6 +99,29 @@
                                                         <img src="/themes/default/asset/image/data_fr.jpg">
                                                     </li>
                                                 <?php } else { ?>
+                                                    <li class="footer-fieldsetitem" style=“background-color:#e1e1e1;”>
+                                                        <!-- This code is the property of www.reviewcentre.com. By adding this code to your site, you agree not to modify the code in anyway -->
+                                                        <link href="http://www.reviewcentre.com/css/seo_badge.v3.css" rel="stylesheet" type="text/css">
+                                                        <script type="text/javascript" src="http://www.reviewcentre.com/js/RC.SeoBadge.v3.min.js"></script>
+                                                        <script type="text/javascript">RC.Badge.initialize("http://www.reviewcentre.com", 3709767)</script>
+                                                        <div id="rc-badge-wrapper" class="style-150x100 color-gray" style="width: 150px; height: 100px; ">
+                                                        <div class="rc-top-corners"></div>
+                                                        <div class="rc-content">
+                                                        <div class="rc-logo">
+                                                        <a title="Review Centre - Consumer Reviews" href="http://www.reviewcentre.com">http://www.reviewcentre.com</a>
+                                                        </div>
+                                                        <p class="rc-rating"></p>
+                                                        <div class="rc-stars"></div>
+                                                        <div class="rc-overview">
+                                                        <p class="rc-category"><a href="http://www.reviewcentre.com/products977.html" rel="nofollow">Online Electronic Shops</a></p>
+                                                        <p class="rc-item"><a href="http://www.reviewcentre.com/Online-Electronic-Shops/Digital-Discount-www-digitaldiscount-co-uk-reviews_3709767" rel="nofollow">Digital Discount - www.digitaldiscount.co.uk</a></p>
+                                                        <p class="rc-date"></p>
+                                                        <p class="rc-extract"></p>
+                                                        </div>
+                                                        </div>
+                                                        <div class="rc-write-review"><a href="http://www.reviewcentre.com/write-a-review-3709767.html" rel="nofollow">Write a review</a></div>
+                                                        </div>
+                                                    </li>
                                                     <li class="footer-fieldsetitem">
                                                         <img src="/themes/default/asset/image/ssl_en.jpg">
                                                     </li>
