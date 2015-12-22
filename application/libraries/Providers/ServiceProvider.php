@@ -493,5 +493,9 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['ProductCustomClassification'] = function () {
             return new S\ProductCustomClassificationService();
         };
+
+        $serviceContainer['BatchExportImport'] = function () {
+            return new S\BatchExportImportService();
+        };
     }
 }

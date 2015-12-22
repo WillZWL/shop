@@ -238,4 +238,12 @@ class PriceService extends BaseService
 
         $dto->setDefaultPlatformConvertedPrice($default_price);
     }
+
+    /**
+     * @return affected rows
+     */
+    public function updateSkuPrice($platform_id, $sku, $price)
+    {
+        return $this->getDao('Price')->updateSkuPrice($platform_id, $sku, $price);
+    }
 }
