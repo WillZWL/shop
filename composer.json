@@ -8,7 +8,8 @@
         "phpmailer/phpmailer": "~5.2",
         "zendframework/zendframework": "^2.5", 
         "google/apiclient": "1.0.*@beta",
-        "googleads/googleads-php-lib": ">=6.1.0"
+        "googleads/googleads-php-lib": ">=6.1.0",
+        "league/csv": "^8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.7"

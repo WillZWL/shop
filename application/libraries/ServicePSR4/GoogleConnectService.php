@@ -20,7 +20,7 @@ class GoogleConnectService extends BaseService
 		}
     }
 
-    public function listProducts($accountId, $maxresults=250, $maxpages="") {
+    public function listProducts($accountId, $maxresults = 250, $maxpages = "") {
         $ret = ["status" => FALSE, "error_message" => ""];
         if (($setupResponse = $this->_setupClientService("Google_Shopping_List_Products")) === false) {
             $ret["error_message"] = __LINE__ . " File: " . __METHOD__ . " - Missing/Invalid Details.";
@@ -29,14 +29,13 @@ class GoogleConnectService extends BaseService
             list($client, $service) = [$setupResponse["client"], $setupResponse["service"]];
         }
 
-        try
-        {
+        try {
             $productlist = [];
             $nextPageToken = "";
             $i = 1;
             do {
                 // max result is 250. Cannot pass in pageToken if it's empty
-                if($nextPageToken == "")
+                if ($nextPageToken == "")
                     $optParams = ["maxResults" => $maxresults];
                 else
                     $optParams = ["pageToken" => $nextPageToken, "maxResults" => $maxresults];
@@ -73,7 +72,7 @@ class GoogleConnectService extends BaseService
                     $ret["data"] = $productlist;
                 } else {
                     $ret["error_message"] = __LINE__ . " File: " . __METHOD__ . ". Empty Product List";
-                }		
+                }
             }
         } catch(\Google_Service_Exception $e) {
             $ret["error_message"] = __LINE__ . " File: " . __METHOD__ . ". Caught exception: " . $e->getMessage();
@@ -86,8 +85,7 @@ class GoogleConnectService extends BaseService
 //        $client_id = $this->client_id;
         $_serviceAccountName = $this->_serviceAccountName;
         $_keyFileLocation = $this->_keyFileLocation;
-        if (!strlen($_serviceAccountName)
-            || !strlen($_keyFileLocation)) {
+        if (!strlen($_serviceAccountName) || !strlen($_keyFileLocation)) {
             return false;
         }
 
@@ -141,12 +139,11 @@ class GoogleConnectService extends BaseService
                 }
             }
         } catch(\Google_Service_Exception $e) {
-            // if item not found, error message contains "(404) item not found"
             $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . ", ERROR: " . $e->getMessage();
         }
         return $ret;
     }
-
+/* should be working, but comment it out because we won't delete 1 by 1
     public function deleteProduct($accountId, $productId) {        
         $ret = ["status" => FALSE, "error_message" => ""];
         if (($service = $this->_createService("Google_Shopping_Delete_Product")) === false) {
@@ -164,7 +161,7 @@ class GoogleConnectService extends BaseService
         }
         return $ret;
     }
-
+*/
     private function _createService($serviceName) {
         if (($setupResponse = $this->_setupClientService($serviceName)) === false) {
             return false;
@@ -186,8 +183,8 @@ class GoogleConnectService extends BaseService
         }
         return $errorMessage;
     }
-
-    private function _formBatchEntries($productIdBatch) {
+/*
+    private function _formBatchDeleteEntries($productIdBatch) {
         $entries = [];
         if (isset($productIdBatch)) {
             $uniqueBatchId = date("his");
@@ -203,7 +200,7 @@ class GoogleConnectService extends BaseService
         }
         return $entries;
     }
-
+*/
     private function _sendBatchRequest($service, $entries) {
         $batchRequest = new \Google_Service_ShoppingContent_ProductsCustomBatchRequest();						
         $batchRequest->setEntries($entries);
@@ -215,6 +212,34 @@ class GoogleConnectService extends BaseService
         return $batchResponse;
     }
 
+    public function deleteAllProductFromPlatform($platformId) {
+        $accountInfo = $this->getService("Google")->shoppingAcctInfo;
+        $productList = $this->listProducts($accountInfo[$platformId]["account_id"]);
+        $convertedProductList = [];
+        $i = 0;
+        if ($productList && isset($productList["data"])) {
+            foreach($productList["data"] as $product) {
+                $googleApiRequest = new \GoogleApiRequestVo();
+                $googleApiRequest->setGoogleProductStatus("D");
+                $googleApiRequest->setPlatformId($platformId);
+                $googleApiRequest->setGoogleProductId($product->getId());
+                $convertedProductList[$i] = $googleApiRequest;
+                $i++;
+            }
+
+            $this->processingInsertDeleteProductBatch($convertedProductList);
+
+            $errorMessage = "";
+            foreach($convertedProductList as $entryId => $product) {
+                if ($product->getResult() != "S") {
+                    $errorMessage .= serialize($product);
+                }
+            }
+            if ($errorMessage != "")
+                $this->_sendAlert("[Panther] cannot do batch delete before update all sku in platformId:" . $platformId, $errorMessage);
+        }
+    }
+/*
     public function deleteProductBatch($accountId, $productIdBatch) {
         $ret = ["status" => FALSE, "error_message" => ""];
         if (($service = $this->_createService("Google_Shopping_Delete_Product_Batch")) === false) {
@@ -265,7 +290,7 @@ class GoogleConnectService extends BaseService
         }
         return $ret;
     }
-
+*/
     public function insertProduct($accountId, \Google_Service_ShoppingContent_Product $productobj) {
         $ret = ["status" => FALSE, "error_message" => ""];
         if (($service = $this->_createService("Google_Shopping_Insert_Product")) === false) {
@@ -295,18 +320,18 @@ class GoogleConnectService extends BaseService
         $entryId = 0;
         $accountInfo = $this->getService("Google")->shoppingAcctInfo;
         foreach ($googleApiRequestObjList as $recordId => $googleRequest) {
-            $googleProductObj = $this->_converToGscProductObject($googleRequest);
             $entry = new \Google_Service_ShoppingContent_ProductsCustomBatchRequestEntry();
             if ($googleRequest->getGoogleProductStatus() == "I") {
+                $googleProductObj = $this->_converToGscProductObject($googleRequest);
                 $entry->setMethod("insert");
                 $entry->setProduct($googleProductObj);
             } else {
                 $entry->setMethod("delete");
                 $entry->setProductId($googleRequest->getGoogleProductId());
-                var_dump($googleRequest->getGoogleProductId());
             }
             $entry->setBatchId($recordId);
             $entry->setMerchantId($accountInfo[$googleRequest->getPlatformId()]["account_id"]);
+//            var_dump($entry);
             array_push($entries, $entry);
             $entryId++;
         }
@@ -314,19 +339,18 @@ class GoogleConnectService extends BaseService
         return $entries;
     }
 
-    public function processingInsertProductBatch($batchId, &$googleApiRequestObjList = []) {
+    public function processingInsertDeleteProductBatch(&$googleApiRequestObjList = []) {
 //        $batchError = "";
         $ret = ["status" => FALSE, "error_message" => ""];
         if ($entries = $this->_formBatchRequest($googleApiRequestObjList)) {
-            if (($service = $this->_createService("Google_Shopping_Get_Product")) === false) {
+            if (($service = $this->_createService("Google_Shopping_Delete_Product_Batch")) === false) {
                 $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . " - Missing/Invalid Details.";
                 return $ret;
             }
-/*
+
             if($this->debug)
                 $optParams["dryRun"] = true;
             else
-*/
                 $optParams = [];
 
             $batchRequest = new \Google_Service_ShoppingContent_ProductsCustomBatchRequest();
@@ -352,7 +376,7 @@ class GoogleConnectService extends BaseService
                 $googleApiRequestObjList[$entryId]->setResult($entryResult);
                 $googleApiRequestObjList[$entryId]->setKeyMessage($errorMessage);
                 $googleApiRequestObjList[$entryId]->setApiResponse($this->_getApiResponse($entryResponse));
-                $ret["result"] = true;
+                $ret["status"] = true;
             }
         }
         return $ret;
@@ -395,7 +419,8 @@ class GoogleConnectService extends BaseService
         $googleShoppingContentProduct = new \Google_Service_ShoppingContent_Product();
         $googleShoppingContentProduct->setContentLanguage($productobj->getContentLanguage());
         $googleShoppingContentProduct->setChannel(self::PRODUCT_SHOPPING_CHANNEL);
-        $googleShoppingContentProduct->setOfferId($productobj->getGoogleProductId());
+//offer ID is "countryID-SKU", which is different from productId
+        $googleShoppingContentProduct->setOfferId($productobj->getTargetCountry() . "-" . $productobj->getSku());
         $googleShoppingContentProduct->setTargetCountry($productobj->getTargetCountry());
 
         $googleShoppingContentProduct->setImageLink($productobj->getImageLink());
@@ -606,5 +631,11 @@ class GoogleConnectService extends BaseService
         }
 
         return $return_array;
+    }
+
+    private function _sendAlert($subject, $message) {
+        print $subject;
+        print $message;
+        $this->sendAlert($subject, $message, $this->technicalEmail);
     }
 }

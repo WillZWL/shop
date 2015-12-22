@@ -23,7 +23,7 @@ class PriceService extends BaseService
     {
         $newObj->setDefaultShiptype((string) $obj->default_shiptype);
         $newObj->setSalesQty((string) $obj->sales_qty);
-        $newObj->setPrice($obj->required_selling_price);
+        $newObj->setPrice((string)$obj->required_selling_price);
         $newObj->setVbPrice((string) $obj->prod_price);
         $newObj->setStatus((string) $obj->status);
         $newObj->setAllowExpress((string) $obj->allow_express);
@@ -237,5 +237,13 @@ class PriceService extends BaseService
         }
 
         $dto->setDefaultPlatformConvertedPrice($default_price);
+    }
+
+    /**
+     * @return affected rows
+     */
+    public function updateSkuPrice($platform_id, $sku, $price)
+    {
+        return $this->getDao('Price')->updateSkuPrice($platform_id, $sku, $price);
     }
 }

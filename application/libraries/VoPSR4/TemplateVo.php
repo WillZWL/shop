@@ -11,6 +11,7 @@ class TemplateVo extends \BaseVo
     private $bcc = '';
     private $cc = '';
     private $reply_to = '';
+    private $from_name = '';
     private $from = '';
     private $tpl_file_name = '';
     private $tpl_alt_file_name = '';
@@ -145,6 +146,18 @@ class TemplateVo extends \BaseVo
     public function getReplyTo()
     {
         return $this->reply_to;
+    }
+
+    public function setFromName($from_name)
+    {
+        if ($from_name !== null) {
+            $this->from_name = $from_name;
+        }
+    }
+
+    public function getFromName()
+    {
+        return $this->from_name;
     }
 
     public function setFrom($from)

@@ -88,7 +88,7 @@
                                 </div>
 
                                 <ul class="list-unstyled">
-                                    <li><span class="check-box text-success"><i class="fa fa-check"></i></span> <b><?= _('Availability:') ?></b><?= _(' In Stock') ?></li>
+                                    <li><span class="check-box text-success"><i class="fa fa-check"></i></span> <b><?= _('Availability').':' ?></b><?= _(' In Stock') ?></li>
                                 </ul>
                                 <div class="border-success space-30">
                                     <ul class="list-unstyled">
@@ -111,9 +111,6 @@
                                     <div class="action pull-left">
                                         <div class="cart pull-left">
                                             <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary" onclick="cart.addcart('<?=$sku?>');"><?= _('Add to Cart') ?></button>
-                                        </div>
-                                        <div class="pull-left">
-                                            <a data-toggle="tooltip" class="wishlist" title="" onclick="wishlist.addwishlist('50');" data-original-title="<?= _('Add to Wish List') ?>"><?= _('Add to Wish List') ?></a>
                                         </div>
                                     </div>
                                 </div>
@@ -149,70 +146,6 @@
                                     <?= $in_the_box ?>
                                 </p>
                             </div>
-                            <!--<div class="tab-pane" id="tab-accessories">
-                                <p class="intro">
-                                    <?= $accessories ?>
-                                </p>
-                                <?php if ($categories) : ?>
-                                    <?php $this->load->view('product/accesories.php', ['categories' => $categories]); ?>
-                                <?php endif; ?>
-                            </div>-->
-<!--                             <div class="tab-pane" id="tab-review">
-                                <div id="review" class="space-20">
-                                    <p><?= _('There are no review for this product.') ?></p>
-                                </div>
-                                <p> <a href="#review-form" class="popup-with-form btn btn-sm btn-primary" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('Write a review') ?></a></p>
-                                <div class="hide">
-                                    <div id="review-form" class="panel review-form-width">
-                                        <div class="panel-body">
-                                            <form class="form-horizontal" id="form-review">
-                                                <h2><?= _('Write a review') ?></h2>
-                                                <div class="form-group required">
-                                                    <div class="col-sm-12">
-                                                        <label class="control-label" for="input-name"><?= _('Your Name') ?></label>
-                                                        <input type="text" name="name" value="" id="input-name" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group required">
-                                                    <div class="col-sm-12">
-                                                        <label class="control-label" for="input-review"><?= _('Your Review') ?></label>
-                                                        <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
-                                                        <div class="help-block"><span class="text-danger"><?= _('Note:') ?></span><?= _(' HTML is not translated!') ?></div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group required">
-                                                    <div class="col-sm-12">
-                                                        <label class="control-label"><?= _('Rating') ?></label>
-                                                        &nbsp;&nbsp;&nbsp; <?= _('Bad') ?>&nbsp;
-                                                        <input type="radio" name="rating" value="1"> &nbsp;
-                                                        <input type="radio" name="rating" value="2"> &nbsp;
-                                                        <input type="radio" name="rating" value="3"> &nbsp;
-                                                        <input type="radio" name="rating" value="4"> &nbsp;
-                                                        <input type="radio" name="rating" value="5"> &nbsp;<?= _('Good') ?>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-12">
-                                                        <div class="g-recaptcha" data-sitekey="6LdMxwYTAAAAAPfQS6XqEkGGBsjGLe1HMpRlR2hn">
-                                                            <div>
-                                                                <div style="width: 304px; height: 78px;">
-                                                                    <iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="" tabindex="0" vspace="0" width="304" title="recaptcha widget" role="presentation" height="78" id="I0_1435699332735" name="I0_1435699332735" src="https://www.google.com/recaptcha/api2/anchor?k=6LdMxwYTAAAAAPfQS6XqEkGGBsjGLe1HMpRlR2hn&amp;co=aHR0cDovL3d3dy50aGVtZWxleHVzLmNvbQ..&amp;hl=en&amp;v=r20150624112436&amp;size=normal&amp;usegapi=1&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.zh_CN.mZRQEKnr40Y.O%2Fm%3D__features__%2Fam%3DEQ%2Frt%3Dj%2Fd%3D1%2Ft%3Dzcms%2Frs%3DAGLTcCOgeRQNYW6GVuOw8PTwf8Izzuo2NQ#id=I0_1435699332735&amp;parent=http%3A%2F%2Fwww.themelexus.com&amp;pfname=&amp;rpctoken=12971757"></iframe>
-                                                                </div>
-                                                                <textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;  display: none; "></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="buttons">
-                                                    <div class="pull-right">
-                                                        <button type="button" id="button-review" data-loading-text="Loading..." class="btn btn-primary"><?= _('Continue') ?></button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>

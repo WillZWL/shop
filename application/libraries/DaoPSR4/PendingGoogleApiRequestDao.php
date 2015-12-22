@@ -57,7 +57,7 @@ class PendingGoogleApiRequestDao extends BaseDao
             , p.cat_id, cat.name cat_name
             , br.brand_name, if(pi.upc <>'', pi.upc, pi.ean) gtin, pi.mpn, pi.upc, pi.ean
             , fc.weight prod_weight, CONCAT('http://', sco.domain, '/images/product/', p.sku, '.', p.image) image_url
-            , CONCAT('http://', sco.domain, '/product/', p.sku) as link
+            , CONCAT('http://', sco.domain, pc.product_url) as link
             , pbv.platform_currency_id, pr.price, pr.google_promo_id, pc.detail_desc
             , p.display_quantity, p.website_quantity, pr.listing_status, p.website_status, p.ex_demo, pr.is_advertised
             , CONCAT('online:', pbv.language_id, ':', pbv.platform_country_id, ':', pbv.platform_country_id, '-', p.sku) google_product_id

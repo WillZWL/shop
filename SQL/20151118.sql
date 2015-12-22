@@ -94,9 +94,6 @@ ALTER TABLE `payment_option`
 DROP INDEX `idx_platform_id` ,
 ADD UNIQUE INDEX `idx_platform_id` (`platform_id`, `page`) USING BTREE ;
 
-
-/* above is LIVE */
-
 ALTER TABLE `google_api_request`
 MODIFY COLUMN `result`  char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'N' COMMENT 'F = Fail, S = Success, W = Success with Warning, N = NEW' AFTER `condition`;
 
@@ -131,3 +128,4 @@ ADD COLUMN `ref_is_advertised`  char(1) NOT NULL DEFAULT '' AFTER `ref_exdemo`;
 ALTER TABLE `google_api_request`
 ADD INDEX `idx_criteria` (`ref_website_quantity`, `ref_display_quantity`, `ref_listing_status`, `ref_website_status`, `ref_is_advertised`) ;
 
+/* above is LIVE */
