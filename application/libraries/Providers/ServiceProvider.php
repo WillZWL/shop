@@ -497,5 +497,9 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['BatchExportImport'] = function () {
             return new S\BatchExportImportService();
         };
+
+        $serviceContainer['PriceUpdateTrigger'] = function () {
+            return new S\PriceUpdateTriggerService();
+        };
     }
 }

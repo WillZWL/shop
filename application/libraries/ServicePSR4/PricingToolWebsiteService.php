@@ -10,10 +10,15 @@ class PricingToolWebsiteService extends BaseService
 
     public function updatePricingForWebsite($vars)
     {
+        $requireSendGoogleApi = false;
     	$arr = [];
         $action = "update";
     	$action = $vars['formtype'] == "update" ? "update" : "insert";
         $price_obj = unserialize($_SESSION["price_obj_" . $vars['platform']]);
+        if (($price_obj->getPrice() * 1 != $vars['sp'] * 1)
+            || ($price_obj->getListingStatus() != $vars['cur_listing_status'])) {
+            $requireSendGoogleApi = true;
+        }
 		if ($price_obj->getPrice() * 1 != $vars['sp'] * 1 ||
             $price_obj->getListingStatus() != $vars['cur_listing_status'] ||
             // $price_obj->getAllowExpress() != $vars['ae'] ||
@@ -62,6 +67,9 @@ class PricingToolWebsiteService extends BaseService
             $arr['no_update'] = true;
         }
 
+        if ($requireSendGoogleApi) {
+            $this->getService("PriceUpdateTrigger")->triggerGoogleApi($vars['sku'], $vars['platform']);
+        }
         return $arr;
     }
 

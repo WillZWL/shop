@@ -200,7 +200,7 @@ class GoogleConnectService extends BaseService
         }
         return $entries;
     }
-*/
+
     private function _sendBatchRequest($service, $entries) {
         $batchRequest = new \Google_Service_ShoppingContent_ProductsCustomBatchRequest();						
         $batchRequest->setEntries($entries);
@@ -211,7 +211,7 @@ class GoogleConnectService extends BaseService
         }
         return $batchResponse;
     }
-
+*/
     public function deleteAllProductFromPlatform($platformId) {
         $accountInfo = $this->getService("Google")->shoppingAcctInfo;
         $productList = $this->listProducts($accountInfo[$platformId]["account_id"]);
@@ -489,7 +489,7 @@ class GoogleConnectService extends BaseService
 
         return $googleShoppingContentProduct;
     }
-
+/*
 	private function utf_encode_array_values($array) {
 		$return_array = array();
 		if(is_array($array))
@@ -529,7 +529,7 @@ class GoogleConnectService extends BaseService
         }
         return $string_to_return;
     }
-
+*/
 /**
 * sieve out GSC result content and compile only product-related info into std object and utf_encode values 
 * Make product ready for json_encode to return

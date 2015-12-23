@@ -26,7 +26,7 @@ class GoogleApiRequestService extends BaseService
     public function getNumberOfSuccessInBatch($batchId) {
         return $this->getBatchStatus($batchId, "S");
     }
-    
+
     public function getBatchStatus($batchId, $status) {
         $where = [];
         $where["request_batch_id"] = $batchId;
@@ -34,5 +34,14 @@ class GoogleApiRequestService extends BaseService
         $this->getDao("GoogleApiRequest")->db->from("google_api_request");
         $count = $this->getDao("GoogleApiRequest")->commonGetList("", $where, ["num_rows" => 1]);
         return $count;
+    }
+
+    public function updateBatchRequestToPriceExtend($batchId) {
+        $sql = "update price_extend pex
+                inner join google_api_request gar on gar.sku=pex.sku and gar.platform_id=pex.platform_id
+                set ext_status=CONCAT(gar.google_product_status, gar.result), last_update_result=gar.key_message
+                where gar.request_batch_id=" . $batchId;
+
+        return $this->db->query($sql);
     }
 }
