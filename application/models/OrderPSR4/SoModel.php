@@ -140,7 +140,7 @@ class SoModel extends \CI_Model
                         }
                         break;
                     case 4:
-                        if ($complete_refund_obj = $this->refundService->getDao('RefundHistory')->getRefundHistory(["refund_id" => $refund_obj->getId(), "status" => "C"])) {
+                        if ($complete_refund_obj = $this->refundService->getDao('RefundHistory')->get(["refund_id" => $refund_obj->getId(), "status" => "C"])) {
                             $refunded_date = $complete_refund_obj->getCreateOn();
                             $refunded_working_days = $this->soService->getWorkingDays(strtotime($refunded_date), $now_time);
                             if ($refunded_working_days < 2) {

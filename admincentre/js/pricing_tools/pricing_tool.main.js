@@ -1,7 +1,6 @@
 function hostname_url()
 {
-    var port = (window.location.hostname == 'dd.admin') ? ':8000' : '';
-    return window.location.protocol + '//' + window.location.hostname + port;
+    return window.location.protocol + '//' + window.location.hostname;
 }
 
 var result_recv = false;

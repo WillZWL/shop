@@ -90,7 +90,7 @@ class SoService extends BaseService
             case "special":
                 if ($vars["client"]) {
                     if (substr(strtoupper($vars["platform_id"]), 0, 3) == "WEB") {
-                        $delivery_country = $vars["client"]->get_del_country_id();
+                        $delivery_country = $vars["client"]->getDelCountryId();
                     } else {
                         $delivery_country = '';
                     }
@@ -181,7 +181,7 @@ class SoService extends BaseService
             switch ($vars["biz_type"]) {
                 case "offline":
                 case "manual":
-                    $del_country_id = $vars["client"]->get_del_country_id();
+                    $del_country_id = $vars["client"]->getDelCountryId();
                     break;
                 case "special":
                     include_once(APPPATH . "libraries/service/Client_service.php");
@@ -374,11 +374,11 @@ class SoService extends BaseService
                         $so_vo->set_txn_id($vars["txn_id"]);
                         $so_vo->set_delivery_name($vars["client"]->get_del_name());
                         $so_vo->set_delivery_company($vars["client"]->get_del_company());
-                        $so_vo->set_delivery_address(trim($vars["client"]->get_del_address_1() . "|" . $vars["client"]->get_del_address_2() . "|" . $vars["client"]->get_del_address_3()));
+                        $so_vo->set_delivery_address(trim($vars["client"]->getDelAddress1() . "|" . $vars["client"]->getDelAddress2() . "|" . $vars["client"]->getDelAddress3()));
                         $so_vo->set_delivery_postcode($vars["client"]->get_del_postcode());
-                        $so_vo->set_delivery_city($vars["client"]->get_del_city());
+                        $so_vo->set_delivery_city($vars["client"]->getDelCity());
                         $so_vo->set_delivery_state($vars["client"]->get_del_state());
-                        $so_vo->set_delivery_country_id($vars["client"]->get_del_country_id());
+                        $so_vo->set_delivery_country_id($vars["client"]->getDelCountryId());
                     } elseif ($vars["biz_type"] == "manual") {
                         $so_vo->set_biz_type("MANUAL");
                         $so_vo->set_txn_id($vars["txn_id"]);
@@ -386,11 +386,11 @@ class SoService extends BaseService
                         $so_vo->set_amount($so_vo->get_amount() + $so_vo->get_delivery_charge());
                         $so_vo->set_delivery_name($vars["client"]->get_del_name());
                         $so_vo->set_delivery_company($vars["client"]->get_del_company());
-                        $so_vo->set_delivery_address(trim($vars["client"]->get_del_address_1() . "|" . $vars["client"]->get_del_address_2() . "|" . $vars["client"]->get_del_address_3()));
+                        $so_vo->set_delivery_address(trim($vars["client"]->getDelAddress1() . "|" . $vars["client"]->getDelAddress2() . "|" . $vars["client"]->getDelAddress3()));
                         $so_vo->set_delivery_postcode($vars["client"]->get_del_postcode());
-                        $so_vo->set_delivery_city($vars["client"]->get_del_city());
+                        $so_vo->set_delivery_city($vars["client"]->getDelCity());
                         $so_vo->set_delivery_state($vars["client"]->get_del_state());
-                        $so_vo->set_delivery_country_id($vars["client"]->get_del_country_id());
+                        $so_vo->set_delivery_country_id($vars["client"]->getDelCountryId());
                     } else {
                         $so_vo->set_biz_type("SPECIAL");
                         include_once(APPPATH . "libraries/service/Client_service.php");
@@ -1145,14 +1145,14 @@ class SoService extends BaseService
                     if ($update_hold_status) {
                         $this->updateIofHoldStatusBySo($so_no, $holdStatus);
                     }
-                    $hr_obj = $this->sc['So']->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'created_split','status'=>1]);
+                    $hr_obj = $this->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'created_split','status'=>1]);
                     if (!$hr_obj) {
-                        $reason_obj = $this->sc['So']->getDao('HoldReason')->get();
+                        $reason_obj = $this->getDao('HoldReason')->get();
                         $reason_obj->setReasonCat('OT');
                         $reason_obj->setReasonType('created_split');
                         $reason_obj->setDescription('Created Split');
 
-                        $hr_obj = $this->sc['So']->getDao('HoldReason')->insert($reason_obj);
+                        $hr_obj = $this->getDao('HoldReason')->insert($reason_obj);
                     }
                     $sohr_vo = $so_holdreason_dao->get();
                     $sohr_vo->setSoNo($so_no);
@@ -3290,7 +3290,7 @@ html;
             $ordernum = $soa_obj->get_sh_no();
             $delpostcode = $so_obj->getDeliveryPostcode();
             $delemail = $client_obj->getEmail();
-            $mobiletel = $client_obj->get_tel_1() . " " . $client_obj->get_tel_2() . " " . $client_obj->get_tel_3();
+            $mobiletel = $client_obj->getTel1() . " " . $client_obj->getTel2() . " " . $client_obj->getTel3();
             $delcity = $so_obj->getDeliveryCity();
             $delstate = $so_obj->getDeliveryState();
             $delcountry_id = $so_obj->getDeliveryCountryId();
@@ -4686,62 +4686,63 @@ html;
         return $working_days;
     }
 
-    public function send_notification_to_cs($so_obj)
+    public function sendNotificationToCs($so_obj)
     {
         $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
 
         $email_dto = new EventEmailDto();
-        $email_dto->set_event_id("special_aps_cs_notification");
-        $email_dto->set_mail_from("do_not_reply@valuebasket.com");
-        $email_dto->set_mail_to(array("salesteam@eservicesgroup.net", "EUTeam@eservicesgroup.com", "jesslyn@eservicesgroup.com"));
-        $email_dto->set_mail_cc("csmanager@eservicesgroup.net");
-        $email_dto->set_tpl_id("special_aps_cs_notification");
-        $email_dto->set_lang_id("en");
+        $email_dto->setEventId("special_aps_cs_notification");
+        // $email_dto->setMailFrom("do_not_reply@digitaldiscount.co.uk");
+        $email_dto->setMailTo(["salesteam@eservicesgroup.net", "EUTeam@eservicesgroup.com", "jesslyn@eservicesgroup.com"]);
+        $email_dto->setMailCc("csmanager@eservicesgroup.net");
+        $email_dto->setTplId("special_aps_cs_notification");
+        $email_dto->setLangId("en");
 
         $replace = [];
 
         $replace["site_name"] = "VB";
         $replace["so_no"] = $so_obj->getSoNo();
         $replace["forename"] = $so_obj->getBillName();
-        $replace["tel"] = $client_obj->get_tel_1() . $client_obj->get_tel_2() . $client_obj->get_tel_3();
-        $replace["del_address"] = $client_obj->get_del_address_1() . " " . $client_obj->get_del_address_2() . " " . $client_obj->get_del_address_3();
-        $replace["del_city"] = $client_obj->get_del_city();
-        $replace["del_country"] = $client_obj->get_del_country_id();
+        $replace["tel"] = $client_obj->getTel1() . $client_obj->getTel2() . $client_obj->getTel3();
+        $replace["del_address"] = $client_obj->getDelAddress1() . " " . $client_obj->getDelAddress2() . " " . $client_obj->getDelAddress3();
+        $replace["del_city"] = $client_obj->getDelCity();
+        $replace["del_country"] = $client_obj->getDelCountryId();
         $replace["default_url"] = $this->getDao('Config')->valueOf("default_url");
         $replace["logo_file_name"] = $this->getDao('Config')->valueOf("logo_file_name");
 
-        $so_ext_obj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
+        $so_ext_obj = $this->getDao('SoExtend')->get(["so_no" => $so_obj->getSoNo()]);
 
-        $replace["order_reason"] = $so_ext_obj->get_order_reason();
-        $replace["order_notes"] = $so_ext_obj->get_notes();
+        $replace["order_reason"] = $so_ext_obj->getOrderReason();
+        $replace["order_notes"] = $so_ext_obj->getNotes();
 
-        $email_dto->set_replace($replace);
+        $email_dto->setReplace($replace);
 
         $this->eventService->fireEvent($email_dto);
     }
 
-    public function send_aps_order_client_notification_email($so_obj)
+    public function sendApsOrderClientNotificationEmail($so_obj)
     {
         $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
 
         $email_dto = new EventEmailDto();
-        $email_dto->set_event_id("special_aps_order_notification");
-        $email_dto->set_mail_from("do_not_reply@valuebasket.com");
-        $email_dto->set_mail_to($client_obj->getEmail());
-        $email_dto->set_tpl_id("special_aps_order_notification");
-        $email_dto->set_lang_id("en");
+        $email_dto->setEventId("special_aps_order_notification");
+        // $email_dto->setMailFrom("do_not_reply@valuebasket.com");
+        $email_dto->setMailTo($client_obj->getEmail());
+        $email_dto->setTplId("special_aps_order_notification");
+        $email_dto->setLangId("en");
 
         $replace = [];
         include_once(APPPATH . "hooks/country_selection.php");
 
-        $replace["site_url"] = Country_selection::rewrite_domain_by_country("www.valuebaset.com", $so_obj->getBillCountryId());
-        $replace["site_name"] = Country_selection::rewrite_site_name($replace["site_url"]);
+        $site_obj = $this->getDao('SiteConfig')->get(['platform'=>$so_obj->getPlatformId()]);
+        $replace["site_url"] =  $site_obj->getDomain();
+        $replace["site_name"] =  $site_obj->getSiteName();
         $replace["so_no"] = $so_obj->getSoNo();
         $replace["forename"] = $so_obj->getBillName();
         $replace["default_url"] = $this->getDao('Config')->valueOf("default_url");
         $replace["logo_file_name"] = $this->getDao('Config')->valueOf("logo_file_name");
 
-        $email_dto->set_replace($replace);
+        $email_dto->setReplace($replace);
 
         $this->eventService->fireEvent($email_dto);
     }
@@ -5055,14 +5056,14 @@ html;
                             $so_obj->setHoldStatus(1);
                             if ($this->getDao('So')->update($so_obj)) {   //set the so_hold_reason
                                 if ($sohr_vo = $this->getDao('SoHoldReason')->get()) {
-                                    $hr_obj = $this->sc['So']->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'confirmed_fraud','status'=>1]);
+                                    $hr_obj = $this->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'confirmed_fraud','status'=>1]);
                                     if (!$hr_obj) {
-                                        $reason_obj = $this->sc['So']->getDao('HoldReason')->get();
+                                        $reason_obj = $this->getDao('HoldReason')->get();
                                         $reason_obj->setReasonCat('OT');
                                         $reason_obj->setReasonType('confirmed_fraud');
                                         $reason_obj->setDescription('Confirmed Fraud');
 
-                                        $hr_obj = $this->sc['So']->getDao('HoldReason')->insert($reason_obj);
+                                        $hr_obj = $this->getDao('HoldReason')->insert($reason_obj);
                                     }
 
                                     $sohr_vo->setSoNo($so_no);
@@ -5164,14 +5165,14 @@ html;
             $parent_so_obj->set_hold_status(self::PERMANENT_HOLD_STATUS);
             $this->getDao('So')->update($parent_so_obj);
             if ($sohr_vo = $this->getDao('SoHoldReason')->get()) {
-                $hr_obj = $this->sc['So']->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'perm_hold_sales_aps','status'=>1]);
+                $hr_obj = $this->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'perm_hold_sales_aps','status'=>1]);
                 if (!$hr_obj) {
-                    $reason_obj = $this->sc['So']->getDao('HoldReason')->get();
+                    $reason_obj = $this->getDao('HoldReason')->get();
                     $reason_obj->setReasonCat('OT');
                     $reason_obj->setReasonType('perm_hold_sales_aps');
                     $reason_obj->setDescription('Perm Hold Sales Aps');
 
-                    $hr_obj = $this->sc['So']->getDao('HoldReason')->insert($reason_obj);
+                    $hr_obj = $this->getDao('HoldReason')->insert($reason_obj);
                 }
 
                 $sohr_vo->setSoNo($parent_so_no);
@@ -5181,7 +5182,7 @@ html;
         }
     }
 
-    public function permanent_hold_parent_for_aps($so_obj)
+    public function permanentHoldParentForAps($so_obj)
     {
         $requirePermanentHold = false;
         $reason_id = false;
@@ -5191,7 +5192,7 @@ html;
         $reason_id_list_for_perm_hold = array("19", "20", "21", "22", "34");
 
         if ($so_obj) {
-            $parent_so_no = $so_obj->get_parent_so_no();
+            $parent_so_no = $so_obj->getParentSoNo();
 
             $where["so.so_no"] = $so_obj->getSoNo();
             $option["so_item"] = "1";
@@ -5203,7 +5204,7 @@ html;
             $objlist = $this->getDao('So')->getListWithName($where, $option);
             if ($objlist) {
                 foreach ($objlist as $key => $obj) {
-                    $reason_id = $obj->get_order_reason();
+                    $reason_id = $obj->getOrderReason();
                     break;
                 }
             }
@@ -5215,27 +5216,27 @@ html;
         }
 
         if ($requirePermanentHold) {
-            $parent_so_obj = $this->getDao('So')->get(array("so_no" => $parent_so_no));
+            $parent_so_obj = $this->getDao('So')->get(["so_no" => $parent_so_no]);
 
             if ($parent_so_obj) {
-                if ($parent_so_obj->get_hold_status() == 15) {
+                if ($parent_so_obj->getHoldStatus() == 15) {
                     $ret["status"] = true;
                     $ret["update_message"] = "parent so_no <$parent_so_no> is already held for split order; no need to perm hold";
                 } else {
-                    $parent_so_obj->set_hold_status(self::PERMANENT_HOLD_STATUS);
+                    $parent_so_obj->setHoldStatus(self::PERMANENT_HOLD_STATUS);
                     if ($this->getDao('So')->update($parent_so_obj) === FALSE) {
                         $ret["status"] = false;
-                        $ret["error_message"] = __LINE__ . "Cannot update so_no <$parent_so_no> with perm hold. SQL: " . $this->db->last_query() . " DBerror: " . $this->db->_error_message();
+                        $ret["error_message"] = __LINE__ . "Cannot update so_no <$parent_so_no> with perm hold. SQL: " . $this->db->last_query() . " DBerror: " . $this->db->display_error();
                     } else {
                         if ($sohr_vo = $this->getDao('SoHoldReason')->get()) {
-                            $hr_obj = $this->sc['So']->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'perm_hold_sales_aps','status'=>1]);
+                            $hr_obj = $this->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'perm_hold_sales_aps','status'=>1]);
                             if (!$hr_obj) {
-                                $reason_obj = $this->sc['So']->getDao('HoldReason')->get();
+                                $reason_obj = $this->getDao('HoldReason')->get();
                                 $reason_obj->setReasonCat('OT');
                                 $reason_obj->setReasonType('perm_hold_sales_aps');
                                 $reason_obj->setDescription('Perm Hold Sales Aps');
 
-                                $hr_obj = $this->sc['So']->getDao('HoldReason')->insert($reason_obj);
+                                $hr_obj = $this->getDao('HoldReason')->insert($reason_obj);
                             }
 
                             $sohr_vo->setSoNo($parent_so_no);
@@ -5243,7 +5244,7 @@ html;
                             if ($this->getDao('SoHoldReason')->insert($sohr_vo) === FALSE) {
                                 $ret["status"] = false;
                                 $ret["error_message"] = __LINE__ . "Cannot update so_hold_reason <$parent_so_no> with hold reason. SQL: "
-                                    . $this->getDao('SoHoldReason')->db->last_query() . " DBerror: " . $this->getDao('SoHoldReason')->db->_error_message();
+                                    . $this->getDao('SoHoldReason')->db->last_query() . " DBerror: " . $this->getDao('SoHoldReason')->db->display_error();
                             } else {
                                 $ret["status"] = true;
                                 $ret["update_message"] = "parent so_no <$parent_so_no> updated with permanent hold status";
@@ -5253,7 +5254,7 @@ html;
                 }
             } else {
                 $ret["status"] = false;
-                $ret["error_message"] = __LINE__ . "Cannot retrieve parent_so_obj. SQL: " . $this->getDao('So')->db->last_query() . " DBerror: " . $this->getDao('So')->db->_error_message();
+                $ret["error_message"] = __LINE__ . "Cannot retrieve parent_so_obj. SQL: " . $this->getDao('So')->db->last_query() . " DBerror: " . $this->getDao('So')->db->display_error();
             }
         }
 
