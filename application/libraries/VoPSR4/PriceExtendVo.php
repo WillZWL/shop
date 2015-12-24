@@ -4,22 +4,21 @@ class PriceExtendVo extends \BaseVo
     private $id;
     private $sku;
     private $platform_id;
-    private $title = '';
-    private $note = '';
+    private $title;
+    private $note;
     private $ext_desc;
-    private $ext_ref_1 = '0';
-    private $ext_ref_2 = '0';
-    private $ext_ref_3 = '';
-    private $ext_ref_4 = '';
+    private $ext_ref_1;
+    private $ext_ref_2;
+    private $ext_ref_3;
+    private $ext_ref_4;
     private $ext_qty = '0';
-    private $ext_item_id = '';
-    private $ext_condition = '';
-    private $ext_status = '';
-    private $fulfillment_centre_id = '';
-    private $amazon_reprice_name = '';
-    private $handling_time = '0';
-    private $action = '';
-    private $remark = '';
+    private $ext_item_id;
+    private $ext_condition;
+    private $ext_status;
+    private $last_update_result = '';
+    private $handling_time;
+    private $action;
+    private $remark;
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -32,7 +31,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -42,7 +43,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setSku($sku)
     {
-        $this->sku = $sku;
+        if ($sku !== null) {
+            $this->sku = $sku;
+        }
     }
 
     public function getSku()
@@ -52,7 +55,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        $this->platform_id = $platform_id;
+        if ($platform_id !== null) {
+            $this->platform_id = $platform_id;
+        }
     }
 
     public function getPlatformId()
@@ -62,7 +67,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setTitle($title)
     {
-        $this->title = $title;
+        if ($title !== null) {
+            $this->title = $title;
+        }
     }
 
     public function getTitle()
@@ -72,7 +79,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setNote($note)
     {
-        $this->note = $note;
+        if ($note !== null) {
+            $this->note = $note;
+        }
     }
 
     public function getNote()
@@ -82,7 +91,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setExtDesc($ext_desc)
     {
-        $this->ext_desc = $ext_desc;
+        if ($ext_desc !== null) {
+            $this->ext_desc = $ext_desc;
+        }
     }
 
     public function getExtDesc()
@@ -92,7 +103,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setExtRef1($ext_ref_1)
     {
-        $this->ext_ref_1 = $ext_ref_1;
+        if ($ext_ref_1 !== null) {
+            $this->ext_ref_1 = $ext_ref_1;
+        }
     }
 
     public function getExtRef1()
@@ -102,7 +115,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setExtRef2($ext_ref_2)
     {
-        $this->ext_ref_2 = $ext_ref_2;
+        if ($ext_ref_2 !== null) {
+            $this->ext_ref_2 = $ext_ref_2;
+        }
     }
 
     public function getExtRef2()
@@ -112,7 +127,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setExtRef3($ext_ref_3)
     {
-        $this->ext_ref_3 = $ext_ref_3;
+        if ($ext_ref_3 !== null) {
+            $this->ext_ref_3 = $ext_ref_3;
+        }
     }
 
     public function getExtRef3()
@@ -122,7 +139,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setExtRef4($ext_ref_4)
     {
-        $this->ext_ref_4 = $ext_ref_4;
+        if ($ext_ref_4 !== null) {
+            $this->ext_ref_4 = $ext_ref_4;
+        }
     }
 
     public function getExtRef4()
@@ -132,7 +151,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setExtQty($ext_qty)
     {
-        $this->ext_qty = $ext_qty;
+        if ($ext_qty !== null) {
+            $this->ext_qty = $ext_qty;
+        }
     }
 
     public function getExtQty()
@@ -142,7 +163,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setExtItemId($ext_item_id)
     {
-        $this->ext_item_id = $ext_item_id;
+        if ($ext_item_id !== null) {
+            $this->ext_item_id = $ext_item_id;
+        }
     }
 
     public function getExtItemId()
@@ -152,7 +175,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setExtCondition($ext_condition)
     {
-        $this->ext_condition = $ext_condition;
+        if ($ext_condition !== null) {
+            $this->ext_condition = $ext_condition;
+        }
     }
 
     public function getExtCondition()
@@ -162,7 +187,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setExtStatus($ext_status)
     {
-        $this->ext_status = $ext_status;
+        if ($ext_status !== null) {
+            $this->ext_status = $ext_status;
+        }
     }
 
     public function getExtStatus()
@@ -170,29 +197,23 @@ class PriceExtendVo extends \BaseVo
         return $this->ext_status;
     }
 
-    public function setFulfillmentCentreId($fulfillment_centre_id)
+    public function setLastUpdateResult($last_update_result)
     {
-        $this->fulfillment_centre_id = $fulfillment_centre_id;
+        if ($last_update_result !== null) {
+            $this->last_update_result = $last_update_result;
+        }
     }
 
-    public function getFulfillmentCentreId()
+    public function getLastUpdateResult()
     {
-        return $this->fulfillment_centre_id;
-    }
-
-    public function setAmazonRepriceName($amazon_reprice_name)
-    {
-        $this->amazon_reprice_name = $amazon_reprice_name;
-    }
-
-    public function getAmazonRepriceName()
-    {
-        return $this->amazon_reprice_name;
+        return $this->last_update_result;
     }
 
     public function setHandlingTime($handling_time)
     {
-        $this->handling_time = $handling_time;
+        if ($handling_time !== null) {
+            $this->handling_time = $handling_time;
+        }
     }
 
     public function getHandlingTime()
@@ -202,7 +223,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setAction($action)
     {
-        $this->action = $action;
+        if ($action !== null) {
+            $this->action = $action;
+        }
     }
 
     public function getAction()
@@ -212,7 +235,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setRemark($remark)
     {
-        $this->remark = $remark;
+        if ($remark !== null) {
+            $this->remark = $remark;
+        }
     }
 
     public function getRemark()
@@ -222,7 +247,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setCreateOn($create_on)
     {
-        $this->create_on = $create_on;
+        if ($create_on !== null) {
+            $this->create_on = $create_on;
+        }
     }
 
     public function getCreateOn()
@@ -232,7 +259,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setCreateAt($create_at)
     {
-        $this->create_at = $create_at;
+        if ($create_at !== null) {
+            $this->create_at = $create_at;
+        }
     }
 
     public function getCreateAt()
@@ -242,7 +271,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setCreateBy($create_by)
     {
-        $this->create_by = $create_by;
+        if ($create_by !== null) {
+            $this->create_by = $create_by;
+        }
     }
 
     public function getCreateBy()
@@ -252,7 +283,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setModifyOn($modify_on)
     {
-        $this->modify_on = $modify_on;
+        if ($modify_on !== null) {
+            $this->modify_on = $modify_on;
+        }
     }
 
     public function getModifyOn()
@@ -262,7 +295,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setModifyAt($modify_at)
     {
-        $this->modify_at = $modify_at;
+        if ($modify_at !== null) {
+            $this->modify_at = $modify_at;
+        }
     }
 
     public function getModifyAt()
@@ -272,7 +307,9 @@ class PriceExtendVo extends \BaseVo
 
     public function setModifyBy($modify_by)
     {
-        $this->modify_by = $modify_by;
+        if ($modify_by !== null) {
+            $this->modify_by = $modify_by;
+        }
     }
 
     public function getModifyBy()

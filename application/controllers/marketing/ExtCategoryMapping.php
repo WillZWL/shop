@@ -271,6 +271,7 @@ end;
 */
     public function updateGoogleShoppingItemByPlatform($platformId = "WEBSG", $sku = "")
     {
+        set_time_limit(600);
         $this->sc["GoogleShopping"]->updateGoogleShoppingItemByPlatform($platformId, $sku);
     }
 

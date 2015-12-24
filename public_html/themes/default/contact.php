@@ -10,7 +10,7 @@
             <?= _('DigitalDiscount.co.uk Flat/RM 12, Tower 8, 25/F Langham Place Office Argyle Street, Kowloon, Hong Kong') ?>
             <br>
             <br>
-            <?= _('Tel:') ?> 0870 295 9128
+            <?= _('Tel').':' ?> 0870 295 9128
         </div>
         <h4><?= _('Email Enquiries') ?></h4>
         <div class="text-block">

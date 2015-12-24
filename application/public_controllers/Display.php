@@ -17,6 +17,9 @@ class Display extends PUB_Controller
 
     public function view($page = '')
     {
+        if ($page == "FAQ") {
+            $page = "faq";
+        }
         if (
             ($page != "shipping")
             && ($page != "conditions_of_use")
@@ -24,6 +27,7 @@ class Display extends PUB_Controller
             && ($page != "privacy_policy")
             && ($page != "contact")
             && ($page != "contact_us")
+            && ($page != "faq")
         ) {
 //very important to do page parameter validation
             show_404();

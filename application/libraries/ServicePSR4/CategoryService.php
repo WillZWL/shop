@@ -3,9 +3,9 @@ namespace ESG\Panther\Service;
 
 class CategoryService extends BaseService
 {
-    public function getCategoryName()
+    public function getCategoryName($lang_id = 'en')
     {
-        $category = $this->getDao('Category')->getCategoryName();
+        $category = $this->getDao('Category')->getCategoryName($lang_id);
 
         foreach ($category as $cat) {
             $category_mapping[$cat['id']] = str_replace(' ', '-', parse_url_char($cat['name']));

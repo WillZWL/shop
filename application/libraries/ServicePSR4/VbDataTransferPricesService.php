@@ -66,7 +66,7 @@ class VbDataTransferPricesService extends VbDataTransferService
 
                 if (($prod_obj->getClearance() == 0)) {
                     $data = json_decode($this->getService('Price')->getProfitMarginJson($platform_id, $sku, $price_obj->getPrice()));
-                    $new_margin = $data['get_margin'];
+                    $new_margin = $data->get_margin;
 
                     $pricing_rule_obj = $this->getPriceRule($vb_price_obj);
 
@@ -124,7 +124,7 @@ class VbDataTransferPricesService extends VbDataTransferService
 
     public function applyPriceRule(&$vb_price_obj)
     {
-        $required_selling_price = $vb_price_obj->prod_price;
+        $required_selling_price = (string) $vb_price_obj->prod_price;
         $pricing_rule_obj = $this->getPriceRule($vb_price_obj);
         if ($pricing_rule_obj) {
             $rule_type = $pricing_rule_obj->getMarkUpType();

@@ -37,9 +37,6 @@ ADD INDEX `idx_sku_affiliate` (`sku`, `affiliate_id`, `platform_id`) USING BTREE
 ALTER TABLE `category_mapping`
 MODIFY COLUMN `category_mapping_id`  bigint(20) UNSIGNED NOT NULL COMMENT 'sku / cat_id / sub_cat_id' AFTER `level`;
 
-
-/* above is LIVE */
-
 drop table google_shopping;
 CREATE TABLE `google_api_request` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -97,3 +94,61 @@ ALTER TABLE `payment_option`
 DROP INDEX `idx_platform_id` ,
 ADD UNIQUE INDEX `idx_platform_id` (`platform_id`, `page`) USING BTREE ;
 
+ALTER TABLE `google_api_request`
+MODIFY COLUMN `result`  char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'N' COMMENT 'F = Fail, S = Success, W = Success with Warning, N = NEW' AFTER `condition`;
+
+ALTER TABLE `google_api_request`
+ADD COLUMN `warning`  varchar(2048) NOT NULL DEFAULT '' AFTER `result`;
+
+ALTER TABLE `google_api_request`
+CHANGE COLUMN `warning` `key_message`  varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `result`;
+
+ALTER TABLE `google_api_request`
+ADD INDEX `idx_request_result` (`result`) USING BTREE ;
+
+ALTER TABLE `google_request_batch`
+MODIFY COLUMN `status`  varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'N' COMMENT 'N = New / P = Processing / C = Completed / CE = Completed with Error / RP = ReProcessing / F = Completely Fail / U = Unknown Error' AFTER `func_name`;
+
+ALTER TABLE `pending_google_api_request`
+ADD COLUMN `ref_is_advertised`  char(1) NOT NULL DEFAULT 'N' AFTER `ref_exdemo`;
+
+ALTER TABLE `pending_google_api_request`
+ADD INDEX `idx_is_advertised` (`ref_is_advertised`) USING BTREE ;
+
+ALTER TABLE `google_api_request`
+MODIFY COLUMN `google_product_status`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'I = Insert / D = Delete' AFTER `description`;
+
+ALTER TABLE `pending_google_api_request`
+DROP COLUMN `google_product_status`,
+MODIFY COLUMN `custom_attribute_promo_id`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `description`;
+
+ALTER TABLE `google_api_request`
+ADD COLUMN `ref_is_advertised`  char(1) NOT NULL DEFAULT '' AFTER `ref_exdemo`;
+
+ALTER TABLE `google_api_request`
+ADD INDEX `idx_criteria` (`ref_website_quantity`, `ref_display_quantity`, `ref_listing_status`, `ref_website_status`, `ref_is_advertised`) ;
+
+
+ALTER TABLE `price_extend`
+DROP COLUMN `amazon_reprice_name`,
+MODIFY COLUMN `ext_status`  varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'eBay: L = Listing, E = End, Google: I = Insert, D = Delete, empty = No action before' AFTER `ext_condition`,
+MODIFY COLUMN `handling_time`  tinyint(4) NULL DEFAULT NULL COMMENT 'Specifies the maximum number of business days the seller commits to for preparing an item to be shipped after receiving a cleared payment' AFTER `fulfillment_centre_id`,
+ADD COLUMN `last_update_result`  varchar(2048) NOT NULL DEFAULT '' AFTER `ext_status`;
+
+ALTER TABLE `price_extend`
+DROP COLUMN `fulfillment_centre_id`,
+MODIFY COLUMN `handling_time`  tinyint(4) NULL DEFAULT NULL COMMENT 'Specifies the maximum number of business days the seller commits to for preparing an item to be shipped after receiving a cleared payment' AFTER `last_update_result`;
+
+ALTER TABLE `price_extend`
+ADD COLUMN `id`  bigint(20) NOT NULL AUTO_INCREMENT FIRST ,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`id`),
+ADD UNIQUE INDEX `idx_sku_platform` (`sku`, `platform_id`) USING BTREE ;
+
+ALTER TABLE `price_extend`
+MODIFY COLUMN `ext_status`  varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'eBay: L = Listing, E = End, Google: IS/IF = Insert Success/Fail, DS/F = Delete Success/Fail, empty = No action before' AFTER `ext_condition`;
+
+ALTER TABLE `pending_google_api_request`
+ADD COLUMN `google_product_status`  char(1) NOT NULL DEFAULT '' AFTER `condition`;
+
+/* above is LIVE */

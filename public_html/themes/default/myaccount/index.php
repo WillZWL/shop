@@ -91,15 +91,16 @@
 							<td><?=$unpaid_arr['total_amount']?></td>
 							<td>
 								<?php if ($unpaid_arr['unpaid_status'] === 0): ?>
-									<?= _('<b>Pending Payment</b><br>We have not received the payment for your order.') ?>
+									<b><?= _('Pending Payment') ?></b><br>
+									<?= _('We have not received the payment for your order.') ?>
 								<?php endif ?>
 								<?php if ($unpaid_arr['unpaid_status'] === 1): ?>
-									<?= _('<b>Incomplete Payment</b><br>The amount received in our bank account does not correspond to the total amount of your order.') ?>
+									<b><?= _('Incomplete Payment') ?></b><br/>
+									<?= _('The amount received in our bank account does not correspond to the total amount of your order.') ?>
 								<?php endif ?>
 							</b></td>
 						</tr>
 					<?php } ?>
-					</table>
 			<?php } ?>
 		</div>
 

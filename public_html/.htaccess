@@ -5,7 +5,7 @@ RewriteRule ^[^.]+/category/(.*)$ /cat/view/$1 [NC,P]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^[^.]+/product/(.*)$ /main-product/view/$1 [NC,P]
+RewriteRule ^(.*)+product/(.*)$ /main-product/view/$2 [NC,P]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

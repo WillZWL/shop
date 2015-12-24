@@ -51,13 +51,17 @@ class ProductService extends BaseProductService
 
     public function createNewProductContent($sku, $oldObj)
     {
-        if ( ! $this->getDao('Product')->get(['sku' => $sku])) {
+        if ( $prod_obj = $this->getDao('Product')->get(['sku' => $sku])) {
             return false;
         }
+
+        $category_table = $this->getService('Category')->getCategoryName((string)$oldObj->lang_id);
+        $prod_url = '/'. $category_table[$prod_obj->getCatId()].'/'.$category_table[$prod_obj->getSubCatId()].'/'.str_replace(' ', '-', parse_url_char((string)$oldObj->prod_name)).'/product/'.$prod_obj->getSku();
 
         $newObj = new \ProductContentVo();
         $newObj->setProdSku($sku);
         $newObj->setLangId((string)$oldObj->lang_id);
+        $newObj->setProductUrl($prod_url);
         $this->updateProductContent($newObj, $oldObj);
 
         return $newObj;
@@ -89,6 +93,20 @@ class ProductService extends BaseProductService
         $newObj->setYoutubeCaption2(replace_special_chars((string)$oldObj->youtube_caption_2));
         $newObj->setStopSync((string)$oldObj->stop_sync);
         $newObj->setProductUrl((string)$oldObj->product_url);
+    }
+
+    public function updateProductUrl($sku)
+    {
+        $lang_list = $this->getDao('Language')->getList(['status' => 1]);
+
+        foreach ($lang_list as $lang_obj) {
+            $lang_id = $lang_obj->getLangId();
+            $category_table = $this->getService('Category')->getCategoryName($lang_id);
+            $prod_obj = $this->getDao('ProductContent')->getProductWithUrl($sku, $lang_id);
+            $prod_url = '/'. $category_table[$prod_obj->getCatId()].'/'.$category_table[$prod_obj->getSubCatId()].'/'.str_replace(' ', '-', parse_url_char($prod_obj->getProdName())).'/product/'.$prod_obj->getSku();
+
+            $this->getDao('ProductContent')->updateProductUrl($prod_url, $sku, $lang_id);
+        }
     }
 
     public function createNewProductContentExtend($sku, $oldObj)

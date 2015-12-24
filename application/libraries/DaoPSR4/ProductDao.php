@@ -16,11 +16,6 @@ class ProductDao extends BaseDao
         return $this->tableName;
     }
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getCartDataDetail($where = [], $option = [], $className = "CartItemDto")
     {
         $this->db->from("product AS p");
@@ -101,7 +96,7 @@ class ProductDao extends BaseDao
         return $this->commonGetList($className, $where, $option, 'vpo.*, p.expected_delivery_date, p.warranty_in_month');
     }
 
-    public function getProductOverview($where = [], $option = [], $className = "ProductOverviewDto")
+    public function getProductOverview($where = [], $option = [], $select_str = '', $className = "ProductOverviewDto")
     {
         $option['orderby'] ? '' : $option['orderby'] = 'p.sku asc';
 
@@ -111,18 +106,23 @@ class ProductDao extends BaseDao
         $this->db->join('price_margin pm', 'pr.sku = pm.sku and pr.platform_id = pm.platform_id', 'inner');
         $this->db->join('supplier_prod sp', 'p.sku = sp.prod_sku and sp.order_default = 1', 'inner');
         $this->db->join('platform_biz_var pbv', 'pr.platform_id = pbv.selling_platform_id', 'inner');
+
         if ($option['show_name']) {
             $this->db->join('category AS c', 'p.cat_id = c.id', 'inner');
             $this->db->join('category AS sc', 'p.sub_cat_id = sc.id', 'inner');
             $this->db->join('category AS ssc', 'p.sub_sub_cat_id = ssc.id', 'inner');
             $this->db->join('brand AS b', 'p.brand_id = b.id', 'inner');
         }
-        $select_str = 'p.sku, p.name, p.clearance, p.surplus_quantity, p.website_quantity, p.website_status, sm.ext_sku,
-        pr.listing_status, pr.price, pr.vb_price, pr.platform_id, pr.auto_price, pm.total_cost, pm.profit, pm.margin, sp.supplier_status,
-        p.modify_on, pbv.platform_currency_id';
-        if ($option['show_name']) {
-            $select_str .= ', p.image, c.name AS category, sc.name AS sub_category, ssc.name AS sub_sub_category, b.brand_name';
+
+        if ($select_str == '') {
+            $select_str = 'p.sku, p.name, p.clearance, p.surplus_quantity, p.website_quantity, p.website_status, sm.ext_sku,
+            pr.listing_status, pr.price, pr.vb_price, pr.platform_id, pr.auto_price, pm.total_cost, pm.profit, pm.margin, sp.supplier_status,
+            p.modify_on, pbv.platform_currency_id';
+            if ($option['show_name']) {
+                $select_str .= ', p.image, c.name AS category, sc.name AS sub_category, ssc.name AS sub_sub_category, b.brand_name';
+            }
         }
+
         return $this->commonGetList($className, $where, $option, $select_str);
 
 
@@ -597,9 +597,7 @@ class ProductDao extends BaseDao
         $this->db->join("product_content default_pc", "p.sku = default_pc.prod_sku AND default_pc.lang_id = 'en'", "LEFT");
         $this->db->where(array("p.status" => 2, "pr.listing_status" => "L"));
 
-        $prod_url = 'CONCAT("/", REPLACE(REPLACE(cat.name, ".", "-"), " ", "-"), "/", REPLACE(REPLACE(sc.name, ".", "-"), " ", "-"), "/", REPLACE(REPLACE(p.name, ".", "-"), " ", "-") ,"/product/", p.sku) product_url';
-
-        return $this->commonGetList($className, $where, $option, 'pr.platform_id, pbv.platform_country_id country_id, p.sku, ' . $prod_url.  ', pbv.platform_currency_id currency_id, pr.price, pr.fixed_rrp, pr.rrp_factor, p.website_status, if(p.display_quantity < p.website_quantity, p.display_quantity, p.website_quantity) quantity, coalesce(pc.prod_name, default_pc.prod_name) prod_name, coalesce(pc.short_desc, default_pc.short_desc) short_desc, coalesce(pc.detail_desc, default_pc.detail_desc) detail_desc, p.image, CONCAT("/cart/add-item/", p.sku) add_cart_url, cat.name cat_name, sc.name sub_cat_name, br.brand_name, p.mpn, p.ean, p.upc, p.clearance, p.create_on create_date');
+        return $this->commonGetList($className, $where, $option, 'pr.platform_id, pbv.platform_country_id country_id, p.sku, pc.product_url, pbv.platform_currency_id currency_id, pr.price, pr.fixed_rrp, pr.rrp_factor, p.website_status, if(p.display_quantity < p.website_quantity, p.display_quantity, p.website_quantity) quantity, coalesce(pc.prod_name, default_pc.prod_name) prod_name, coalesce(pc.short_desc, default_pc.short_desc) short_desc, coalesce(pc.detail_desc, default_pc.detail_desc) detail_desc, p.image, CONCAT("/cart/add-item/", p.sku) add_cart_url, cat.name cat_name, sc.name sub_cat_name, br.brand_name, p.mpn, p.ean, p.upc, p.clearance, p.create_on create_date');
     }
 /**********************************
 **  searchspring ajax Price

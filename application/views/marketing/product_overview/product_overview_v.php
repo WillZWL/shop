@@ -10,7 +10,7 @@
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>marketing/ProductOverviewWebsite/js_overview"></script>
-    <script type="text/javascript" src="<?= base_url() ?>marketing/product/js_catlist"></script>
+    <script type="text/javascript" src="<?= base_url() ?>marketing/category/js_catlist"></script>
     <script type="text/javascript" src="<?= base_url() ?>mastercfg/brand/js_brandlist"></script>
     <script type="text/javascript">
     $(document).ready(function() {
@@ -105,7 +105,6 @@
                         <br>All products not in the list have "auto" status. To add a status to a new product, simply insert new line and fill in the "new_affiliate_sku_status" column.
                         <form action="/marketing/productOverviewWebsite/exportAffiliateFeed" enctype="multipart/form-data" method="post" target="_blank">
                             <select name="platform_id">
-                                <option value=""></option>
                                 <?php foreach ($clist as $cobj): ?>
                                     <option value="<?= $cobj->getSellingPlatformId() ?>"> <?= $cobj->getSellingPlatformId() ?> - <?= $cobj->getName() ?></option>
                                 <?php endforeach ?>
@@ -148,7 +147,7 @@
                     <td>
                         Export as CSV
                         <a href="/marketing/ProductOverviewWebsite?<?= $query_string ?>&csv=1">here</a>, after modification, upload the file below
-                        <form action="/marketing/ProductOverviewWebsite/upload_sku_info" enctype="multipart/form-data" method="post">
+                        <form action="/marketing/ProductOverviewWebsite/importSkuPrice" enctype="multipart/form-data" method="post">
                             <input type="file" name="datafile" size="40">
                             <input type="submit" value="Upload">
                         </form>
@@ -192,7 +191,6 @@
                             </td>
                             <td>
                                 <select name="platform_id">
-                                    <option value=""></option>
                                     <?php foreach ($clist as $cobj): ?>
                                         <option value="<?= $cobj->getSellingPlatformId() ?>"> <?= $cobj->getSellingPlatformId() ?> - <?= $cobj->getName() ?></option>
                                     <?php endforeach ?>
@@ -304,7 +302,7 @@
                         </tr>
                         <tr>
                             <td style="padding-right:8px" align="right">
-                                <b>Auto Price Type</b>
+                                <b><?= $lang['price_type'] ?></b>
                             </td>
                             <td>
                                 <select name="auto_price" class="input">
@@ -357,10 +355,11 @@
                                 <b><?= $lang["platform_id"] ?></b>
                             </td>
                             <td>
-                                <select name="pfid2">
-                                <?php foreach ($clist as $cobj): ?>
-                                    <option value="<?= $cobj->getId() ?>"><?= $cobj->getSellingPlatformId() . ' - ' . $cobj->getName() ?></option>
-                                <?php endforeach ?>
+                                <select name="platform_id2">
+                                    <option value=""></option>
+                                    <?php foreach ($clist as $cobj): ?>
+                                        <option value="<?= $cobj->getSellingPlatformId() ?>"> <?= $cobj->getSellingPlatformId() ?> - <?= $cobj->getName() ?></option>
+                                    <?php endforeach ?>
                                 </select>
                             </td>
                             <td></td>
@@ -386,7 +385,26 @@
                     </table>
                 </div>
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="data tb_list">
-                    <col width="20"> <col width="50"> <col width="80"> <col> <col width="50"> <col width="80"> <col width="80"> <col width="100"> <col width="40"> <col width="65"> <col width="80"> <col width="50"> <col width="50"> <col width="50"> <col width="70"> <col width="50"> <col width="50"> <col width="50">
+                    <col width="20">
+                    <col width="50">
+                    <col width="80">
+                    <col width="100">
+                    <col width="10">
+                    <col width="30">
+                    <col width="10">
+                    <col width="20">
+                    <col width="40">
+                    <col width="65">
+                    <col width="80">
+                    <col width="50">
+                    <col width="50">
+                    <col width="70">
+                    <col width="40">
+                    <col width="70">
+                    <col width="70">
+                    <col width="30">
+                    <col width="30">
+                    <col width="20">
                     <thead>
                         <tr class="header">
                             <td height="20">
@@ -448,20 +466,20 @@
                             <td title="<?= $lang["total_cost"] ?>">
                                 <?= $lang["cost"] ?>
                             </td>
-                            <td title="<?= $lang["auto_price_cb"] ?>">
-                                <?= $lang["auto_price_cb"] ?>
-                            </td>
-                            <td title="<?= $lang["selling_price"] ?>">
-                                <a href="#" onClick="SortCol(document.fm, 'price', '<?= $xsort["price"] ?>')">
-                                    <?= $lang["price"] ?> <?= $sortimg["price"] ?>
-                                </a>
-                                <br/><span class="special" style="font-size:7pt"><?= $this->default_platform_id ?> <?= $lang["conv"] ?></span>
+                            <td title="<?= $lang["price_type"] ?>">
+                                <?= $lang["price_type"] ?>
                             </td>
                             <td title="<?= $lang["vb_price"] ?>">
                                 <a href="#" onClick="SortCol(document.fm, 'vb_price', '<?= $xsort["vb_price"] ?>')">
                                     <?= $lang["vb_price"] ?> <?= $sortimg["vb_price"] ?>
                                 </a>
-                                <br/><span class="special" style="font-size:7pt"><?= $this->default_platform_id ?> <?= $lang["conv"] ?></span>
+                                <br/><span class="special" style="font-size:7pt"></span>
+                            </td>
+                            <td title="<?= $lang["selling_price"] ?>">
+                                <a href="#" onClick="SortCol(document.fm, 'price', '<?= $xsort["price"] ?>')">
+                                    <?= $lang["price"] ?> <?= $sortimg["price"] ?>
+                                </a>
+                                <br/><span class="special" style="font-size:7pt"></span>
                             </td>
                             <td title="<?= $lang["profit"] ?>">
                                 <a href="#" onClick="SortCol(document.fm, 'profit', '<?= $xsort["profit"] ?>')">
@@ -533,16 +551,12 @@
                             <td></td>
                             <td></td>
                             <td>
-                                <input name="price" class="input" value="<?= htmlspecialchars($this->input->get("price")) ?>">
                             </td>
                             <td>
-                                <input name="vb_price" class="input" value="<?= htmlspecialchars($this->input->get("vb_price")) ?>">
                             </td>
                             <td>
-                                <input name="profit" class="input" value="<?= htmlspecialchars($this->input->get("profit")) ?>">
                             </td>
                             <td>
-                                <input name="margin" class="input" value="<?= htmlspecialchars($this->input->get("margin")) ?>">
                             </td>
                             <td align="center">
                                 <input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">
@@ -626,10 +640,10 @@
                                 </select>
                             </td>
                             <td>
-                                <?= $product->getPlatformCurrencyId() . ' ' . $product->getPrice() ?>
+                                <?= $product->getPlatformCurrencyId() . ' ' . $product->getVbPrice() ?>
                             </td>
                             <td>
-                                <?= $product->getPlatformCurrencyId() . ' ' . $product->getVbPrice() ?>
+                                <?= $product->getPlatformCurrencyId() . ' ' . $product->getPrice() ?>
                             </td>
                             <td><?= $product->getProfit() ?></td>
                             <td><?= $product->getMargin() ?>%</td>

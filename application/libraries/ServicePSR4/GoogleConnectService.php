@@ -9,17 +9,18 @@ class GoogleConnectService extends BaseService
     * If service account changed, need to add the new user in https://www.google.com/merchants/Home?a=9838040#usermanagement
 */
     const PRODUCT_SHOPPING_CHANNEL = "online";
-    private $client_id = '110619035985876631175'; //Client ID, no use
-    private $service_account_name = 'account-2@ethereal-terra-114508.iam.gserviceaccount.com'; //Email Address
-    private $key_file_location = 'D://website//atomv2//GoogleContentApi-a0754173747d.p12'; //key.p12
+//    private $clientId = '110619035985876631175'; //Client ID, no use
+    private $_serviceAccountName = "account-2@ethereal-terra-114508.iam.gserviceaccount.com"; //Email Address
+    private $_keyFileLocation = "/var/www/html/key/GoogleContentApi-a0754173747d.p12"; //key.p12
 
     public function __construct() {
 		if (getenv("APPLICATION_ENV") == "dev") {
             $this->debug = 1;
+            $this->_keyFileLocation = "D://website//atomv2//GoogleContentApi-a0754173747d.p12";
 		}
     }
 
-    public function listProducts($accountId, $maxresults=250, $maxpages="") {
+    public function listProducts($accountId, $maxresults = 250, $maxpages = "") {
         $ret = ["status" => FALSE, "error_message" => ""];
         if (($setupResponse = $this->_setupClientService("Google_Shopping_List_Products")) === false) {
             $ret["error_message"] = __LINE__ . " File: " . __METHOD__ . " - Missing/Invalid Details.";
@@ -28,14 +29,13 @@ class GoogleConnectService extends BaseService
             list($client, $service) = [$setupResponse["client"], $setupResponse["service"]];
         }
 
-        try
-        {
+        try {
             $productlist = [];
             $nextPageToken = "";
             $i = 1;
             do {
                 // max result is 250. Cannot pass in pageToken if it's empty
-                if($nextPageToken == "")
+                if ($nextPageToken == "")
                     $optParams = ["maxResults" => $maxresults];
                 else
                     $optParams = ["pageToken" => $nextPageToken, "maxResults" => $maxresults];
@@ -72,7 +72,7 @@ class GoogleConnectService extends BaseService
                     $ret["data"] = $productlist;
                 } else {
                     $ret["error_message"] = __LINE__ . " File: " . __METHOD__ . ". Empty Product List";
-                }		
+                }
             }
         } catch(\Google_Service_Exception $e) {
             $ret["error_message"] = __LINE__ . " File: " . __METHOD__ . ". Caught exception: " . $e->getMessage();
@@ -83,10 +83,9 @@ class GoogleConnectService extends BaseService
 
     private function _setupClientService($serviceName) {
 //        $client_id = $this->client_id;
-        $service_account_name = $this->service_account_name;
-        $key_file_location = $this->key_file_location;
-        if (!strlen($service_account_name)
-            || !strlen($key_file_location)) {
+        $_serviceAccountName = $this->_serviceAccountName;
+        $_keyFileLocation = $this->_keyFileLocation;
+        if (!strlen($_serviceAccountName) || !strlen($_keyFileLocation)) {
             return false;
         }
 
@@ -98,9 +97,9 @@ class GoogleConnectService extends BaseService
         if (isset($_SESSION['service_token'])) {
             $client->setAccessToken($_SESSION['service_token']);
         }
-        $key = file_get_contents($key_file_location, true);
+        $key = file_get_contents($_keyFileLocation, true);
         $cred = new \Google_Auth_AssertionCredentials(
-            $service_account_name,
+            $_serviceAccountName,
             array('https://www.googleapis.com/auth/content'),
             $key
         );
@@ -140,12 +139,11 @@ class GoogleConnectService extends BaseService
                 }
             }
         } catch(\Google_Service_Exception $e) {
-            // if item not found, error message contains "(404) item not found"
             $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . ", ERROR: " . $e->getMessage();
         }
         return $ret;
     }
-
+/* should be working, but comment it out because we won't delete 1 by 1
     public function deleteProduct($accountId, $productId) {        
         $ret = ["status" => FALSE, "error_message" => ""];
         if (($service = $this->_createService("Google_Shopping_Delete_Product")) === false) {
@@ -163,7 +161,7 @@ class GoogleConnectService extends BaseService
         }
         return $ret;
     }
-
+*/
     private function _createService($serviceName) {
         if (($setupResponse = $this->_setupClientService($serviceName)) === false) {
             return false;
@@ -185,8 +183,8 @@ class GoogleConnectService extends BaseService
         }
         return $errorMessage;
     }
-
-    private function _formBatchEntries($productIdBatch) {
+/*
+    private function _formBatchDeleteEntries($productIdBatch) {
         $entries = [];
         if (isset($productIdBatch)) {
             $uniqueBatchId = date("his");
@@ -213,7 +211,35 @@ class GoogleConnectService extends BaseService
         }
         return $batchResponse;
     }
+*/
+    public function deleteAllProductFromPlatform($platformId) {
+        $accountInfo = $this->getService("Google")->shoppingAcctInfo;
+        $productList = $this->listProducts($accountInfo[$platformId]["account_id"]);
+        $convertedProductList = [];
+        $i = 0;
+        if ($productList && isset($productList["data"])) {
+            foreach($productList["data"] as $product) {
+                $googleApiRequest = new \GoogleApiRequestVo();
+                $googleApiRequest->setGoogleProductStatus("D");
+                $googleApiRequest->setPlatformId($platformId);
+                $googleApiRequest->setGoogleProductId($product->getId());
+                $convertedProductList[$i] = $googleApiRequest;
+                $i++;
+            }
 
+            $this->processingInsertDeleteProductBatch($convertedProductList);
+
+            $errorMessage = "";
+            foreach($convertedProductList as $entryId => $product) {
+                if ($product->getResult() != "S") {
+                    $errorMessage .= serialize($product);
+                }
+            }
+            if ($errorMessage != "")
+                $this->_sendAlert("[Panther] cannot do batch delete before update all sku in platformId:" . $platformId, $errorMessage);
+        }
+    }
+/*
     public function deleteProductBatch($accountId, $productIdBatch) {
         $ret = ["status" => FALSE, "error_message" => ""];
         if (($service = $this->_createService("Google_Shopping_Delete_Product_Batch")) === false) {
@@ -264,7 +290,7 @@ class GoogleConnectService extends BaseService
         }
         return $ret;
     }
-
+*/
     public function insertProduct($accountId, \Google_Service_ShoppingContent_Product $productobj) {
         $ret = ["status" => FALSE, "error_message" => ""];
         if (($service = $this->_createService("Google_Shopping_Insert_Product")) === false) {
@@ -289,58 +315,102 @@ class GoogleConnectService extends BaseService
         var_dump($result);
     }
 
-    private function _formBatchRequest($batchId, $googleApiRequestObjList = []) {
+    private function _formBatchRequest(&$googleApiRequestObjList = []) {
         $entries = [];
+        $entryId = 0;
         $accountInfo = $this->getService("Google")->shoppingAcctInfo;
         foreach ($googleApiRequestObjList as $recordId => $googleRequest) {
-            $googleProductObj = $this->_converToGscProductObject($googleRequest);
             $entry = new \Google_Service_ShoppingContent_ProductsCustomBatchRequestEntry();
-            $entry->setMethod("insert");
-            $entry->setBatchId($batchId);
-            $entry->setProduct($googleProductObj);
+            if ($googleRequest->getGoogleProductStatus() == "I") {
+                $googleProductObj = $this->_converToGscProductObject($googleRequest);
+                $entry->setMethod("insert");
+                $entry->setProduct($googleProductObj);
+            } else {
+                $entry->setMethod("delete");
+                $entry->setProductId($googleRequest->getGoogleProductId());
+            }
+            $entry->setBatchId($recordId);
             $entry->setMerchantId($accountInfo[$googleRequest->getPlatformId()]["account_id"]);
+//            var_dump($entry);
             array_push($entries, $entry);
+            $entryId++;
         }
 //        var_dump($entries);exit;
         return $entries;
     }
 
-    public function processingInsertProductBatch($batchId, &$googleApiRequestObjList = []) {
+    public function processingInsertDeleteProductBatch(&$googleApiRequestObjList = []) {
 //        $batchError = "";
-        if ($entries = $this->_formBatchRequest($batchId, $googleApiRequestObjList)) {
-            $ret = ["status" => FALSE, "error_message" => ""];
-            if (($service = $this->_createService("Google_Shopping_Get_Product")) === false) {
+        $ret = ["status" => FALSE, "error_message" => ""];
+        if ($entries = $this->_formBatchRequest($googleApiRequestObjList)) {
+            if (($service = $this->_createService("Google_Shopping_Delete_Product_Batch")) === false) {
                 $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . " - Missing/Invalid Details.";
                 return $ret;
             }
-            $batchRequest = new \Google_Service_ShoppingContent_ProductsCustomBatchRequest();
-			$batchRequest->setEntries($entries);
+
             if($this->debug)
                 $optParams["dryRun"] = true;
             else
                 $optParams = [];
+
+            $batchRequest = new \Google_Service_ShoppingContent_ProductsCustomBatchRequest();
+			$batchRequest->setEntries($entries);
             $batchResponse = $service->products->custombatch($batchRequest, $optParams);
-            $entriesReponse = $batchResponse->getEntries();
-            foreach ($entriesResponse as $entryResponse) {
-//Google_Service_ShoppingContent_ProductsCustomBatchResponseEntry
-                $responseErrors = $entryResponse->getErrors()->getErrors();
-                $responseErrorCode = (($responseEntry->getErrors()) ? $responseEntry->getErrors()->getCode() : "");
-                if(is_array($responseErrors)) {
-/*
-                    $batchError = "";
-                    foreach ($responseErrors as $k => $error) {
-                        $batchError .= "[errorcode]$responseErrorCode], [domain]{$error->getDomain()}, [reason]{$error->getReason()}, [message]{$error->getMessage()}. \r\n";
-                    }
-*/
-                    $googleApiRequestObjList[$entryResponse->getProduct()->getOfferId()]->setResult("F");
+            $entriesResponse = $batchResponse->getEntries();
+            foreach ($entriesResponse as $entryResponse) { //Google_Service_ShoppingContent_ProductsCustomBatchResponseEntry
+                $entryResult = "F";
+                $errorMessage = "";
+                $entryId = $entryResponse->getBatchId();
+                if ($entryResponse->getErrors()) {
+                    $errorMessage = $this->_handleBatchError($entryResponse);
                 } else {
-                    $googleApiRequestObjList[$entryResponse->getProduct()->getOfferId()]->setResult("S");
+                    $entryResult = "S";
                 }
-                $googleApiRequestObjList[$entryResponse->getProduct()->getOfferId()]->setResponse($this->stdObjToString($entryResponse));
+                if ($entryResponse->getProduct()) {
+                    if (($warning = $this->_handleWarning($entryResponse)) != "") {
+                        if ($entryResult != "F")
+                            $entryResult = "W";
+                        $errorMessage .= $warning;
+                    }
+                }
+                $googleApiRequestObjList[$entryId]->setResult($entryResult);
+                $googleApiRequestObjList[$entryId]->setKeyMessage($errorMessage);
+                $googleApiRequestObjList[$entryId]->setApiResponse($this->_getApiResponse($entryResponse));
+                $ret["status"] = true;
             }
         }
+        return $ret;
     }
 
+    private function _getApiResponse($entryResponse) {
+        if ($entryResponse->getProduct()) {
+            $apiResponse = @http_build_query(get_object_vars($entryResponse)) . @http_build_query(get_object_vars($entryResponse->getProduct()));
+        } else {
+            $apiResponse = @http_build_query(get_object_vars($entryResponse));
+        }
+        return $apiResponse;
+    }
+
+    private function _handleWarning($entryResponse) {
+        $errorMessage = "";
+        $warnings = $entryResponse->getProduct()->getWarnings();
+        if ($warnings) {
+            $errorMessage = $this->_formWarning($warnings, __LINE__ . " METHOD: " . __METHOD__ . ". Warnings:");
+        }
+        return $errorMessage;
+    }
+
+    private function _handleBatchError($entryResponse) {
+        $errorMessage = "";
+        $responseErrors = $entryResponse->getErrors();
+        $responseErrorCode = (($entryResponse->getErrors()) ? $entryResponse->getErrors()->getCode() : "");
+        if ($responseErrors->getErrors()) {
+            $errorMessage = $this->_formWarning($responseErrors->getErrors(), "ErrorCode:" . $responseErrorCode . ",");
+        } else {
+            $errorMessage = "ErrorCode:" . $responseErrorCode . "," . $responseErrors->getMessage();
+        }
+        return $errorMessage;
+    }
 /**
 * Converts stdClass object into Google_Service_ShoppingContent_Product object format
 * Mainly used to do insert products
@@ -349,9 +419,10 @@ class GoogleConnectService extends BaseService
         $googleShoppingContentProduct = new \Google_Service_ShoppingContent_Product();
         $googleShoppingContentProduct->setContentLanguage($productobj->getContentLanguage());
         $googleShoppingContentProduct->setChannel(self::PRODUCT_SHOPPING_CHANNEL);
-        $googleShoppingContentProduct->setOfferId($productobj->getGoogleProductId());
+//offer ID is "countryID-SKU", which is different from productId
+        $googleShoppingContentProduct->setOfferId($productobj->getTargetCountry() . "-" . $productobj->getSku());
         $googleShoppingContentProduct->setTargetCountry($productobj->getTargetCountry());
-/*
+
         $googleShoppingContentProduct->setImageLink($productobj->getImageLink());
         $googleShoppingContentProduct->setTitle($productobj->getTitle());
         $googleShoppingContentProduct->setLink($productobj->getLink());
@@ -365,20 +436,23 @@ class GoogleConnectService extends BaseService
         else
             $condition = "new";
         $googleShoppingContentProduct->setCondition($condition);
-
-        if($productobj->getColourId() != "" && $productobj->getColourId() != NULL)
-            $googleShoppingContentProduct->setColor($productobj->getColourId());
-
-        $googleShoppingContentProduct->setAvailability($productobj->getAvailability());
-        $googleShoppingContentProduct->setGoogleProductCategory($productobj->getGoogleProductCategory());
-        $googleShoppingContentProduct->setProductType($productobj->getProductType);
-
         if($productobj->getMpn() != "" && $productobj->getMpn() != NULL)
             $googleShoppingContentProduct->setMpn($productobj->getMpn());
         if($productobj->getGtin() != "" && $productobj->getGtin() != NULL)
             $googleShoppingContentProduct->setGtin($productobj->getGtin());
         if($productobj->getItemGroupId() != "" && $productobj->getItemGroupId() != NULL)
             $googleShoppingContentProduct->setItemGroupId($productobj->getItemGroupId());
+
+        if ($productobj->getAvailability() == "Y")
+            $availability = "in stock";
+        else
+            $availability = "out of stock";
+        $googleShoppingContentProduct->setAvailability($availability);
+        if($productobj->getColourId() != "" && $productobj->getColourId() != NULL)
+            $googleShoppingContentProduct->setColor($productobj->getColourId());
+
+        $googleShoppingContentProduct->setGoogleProductCategory($productobj->getGoogleProductCategory());
+        $googleShoppingContentProduct->setProductType($productobj->getProductType());
 
 //price
         $googleShoppingPrice = new \Google_Service_ShoppingContent_Price();
@@ -397,21 +471,25 @@ class GoogleConnectService extends BaseService
         $googleShoppingContentProduct->setShipping(array($shipping));
 
         $customAttribute = [];
-        $customAttribute[0] = new \Google_Service_ShoppingContent_ProductCustomAttribute();
-        $customAttribute[0]->setName("promotion_id");
-        $customAttribute[0]->setType("text");
-        $customAttribute[0]->setValue($productobj->getCustomAttributePromoId());
-        $googleShoppingContentProduct->setCustomAttributes($customAttribute);
+        $attribute=0;
+        if ($productobj->getCustomAttributePromoId()) {
+            $customAttribute[$attribute] = new \Google_Service_ShoppingContent_ProductCustomAttribute();
+            $customAttribute[$attribute]->setName("promotion_id");
+            $customAttribute[$attribute]->setType("text");
+            $customAttribute[$attribute]->setValue($productobj->getCustomAttributePromoId());
+            $googleShoppingContentProduct->setCustomAttributes($customAttribute);
+            $attribute++;
+        }
 
 // setShippingWeight
         $googleShoppingWeight = new \Google_Service_ShoppingContent_ProductShippingWeight();
         $googleShoppingWeight->setUnit("kg");
         $googleShoppingWeight->setValue($productobj->getShippingWeightValue());
         $googleShoppingContentProduct->setShippingWeight($googleShoppingWeight);
-*/
+
         return $googleShoppingContentProduct;
     }
-
+/*
 	private function utf_encode_array_values($array) {
 		$return_array = array();
 		if(is_array($array))
@@ -451,7 +529,7 @@ class GoogleConnectService extends BaseService
         }
         return $string_to_return;
     }
-
+*/
 /**
 * sieve out GSC result content and compile only product-related info into std object and utf_encode values 
 * Make product ready for json_encode to return
@@ -553,5 +631,11 @@ class GoogleConnectService extends BaseService
         }
 
         return $return_array;
+    }
+
+    private function _sendAlert($subject, $message) {
+        print $subject;
+        print $message;
+        $this->sendAlert($subject, $message, $this->technicalEmail);
     }
 }

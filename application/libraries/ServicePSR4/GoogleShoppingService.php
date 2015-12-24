@@ -3,7 +3,7 @@ namespace ESG\Panther\Service;
 
 class GoogleShoppingService extends BaseService
 {
-//    const NUMBER_OF_PRODUCTS_IN_BATCH = 250;
+    const NUMBER_OF_PRODUCTS_IN_BATCH = 250;
     private $emailList = [];
     private $emailCcList = [];
     private $technicalEmail = "oswald-alert@eservicesgroup.com";
@@ -67,7 +67,7 @@ class GoogleShoppingService extends BaseService
         }
         return false;
     }
-
+/*
     private function _convertArrayToString($array = array())
     {
         $return_str = "";
@@ -234,20 +234,7 @@ class GoogleShoppingService extends BaseService
 
         return $ret;
     }
-/*
-    public function gen_data_feed($platform_id = "", $shopping_api = TRUE, $where = array())
-    {
-        include_once(APPPATH . "libraries/service/Googlebase_product_feed_service.php");
-        $this->googlebase_product_feed_service = new Googlebase_product_feed_service();
-        $result = $this->googlebase_product_feed_service->gen_data_feed($platform_id, $shopping_api, $where);
 
-        $country_id = substr($platform_id, -2, 2);
-        if ($result[$country_id]) {
-            return $result[$country_id];
-        }
-        return array();
-    }
-*/
     private function utf_encode_array_values($array)
     {
         $return_array = array();
@@ -266,7 +253,7 @@ class GoogleShoppingService extends BaseService
 
         return $return_array;
     }
-
+*/
     public function mail_result($content, $subject)
     {
         $mail_content = "";
@@ -361,32 +348,39 @@ class GoogleShoppingService extends BaseService
 **  Another process(CronUpdatePriceMargin/processGoogleApiRequest) = GoogleShoppingService->sendBatchRequestToGoogle will get all the data inside and send to google 
 ****************************************************************/
     public function updateGoogleShoppingItem($platformId = "", $sku = "") {
-        $this->getService("PendingGoogleApiRequest")->getDao("PendingGoogleApiRequest")->insertGoogleShoppingData($platformId, str_replace("WEB", "GOO", $platformId), $sku);
+        $this->getService("PendingGoogleApiRequest")->getDao("PendingGoogleApiRequest")->insertGoogleShoppingDataForBatch($platformId, $sku);
+        $this->getService("GoogleConnect")->deleteAllProductFromPlatform($platformId);
     }
 
 /**************************************************
 **  Get a batch ID and mark the record with a batch ID and transfer to other to process to keep pending table slim
 ***************************************************/
     public function sendBatchRequestToGoogle() {
-        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
+//        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
         $this->getService("GoogleRequestBatch")->getDao("PendingGoogleApiRequest")->db->save_queries = false;
         $hasRequest = $this->getService("GoogleRequestBatch")->getDao("PendingGoogleApiRequest")->getList([], ["limit" => 1]);
         if ($hasRequest) {
             if (($batchObj = $this->getService("GoogleRequestBatch")->getNewBatch(GoogleService::FUNC_GOOGLE_CONTENT_API)) !== false) {
                 $batchId = $batchObj->getId();
-
                 $this->getService("GoogleRequestBatch")->getDao('GoogleRequestBatch')->db->trans_begin();
 //insert
                 $insertResult = $this->_sendBatchRequestToGoogleStep1($batchId);
 //delete
                 $deleteResult = $this->_sendBatchRequestToGoogleStep2();
+
                 if ($insertResult && $deleteResult) {
                     $transCompleteResult = $this->getService("GoogleRequestBatch")->getDao('GoogleRequestBatch')->db->trans_commit();
-                    if ($transCompleteResult)
-                        $this->processBatchByBatchId($batchId);
+                    if ($transCompleteResult) {
+//we do the update of the google api request table after the transaction lock
+//update
+                        $updateResult = $this->_sendBatchRequestToGoogleStep3($batchId);
+                        if ($updateResult !== false)
+                            $this->processBatchByBatchId($batchId);
+                    }
                 } else {
                     $this->getService("GoogleRequestBatch")->getDao('GoogleRequestBatch')->db->trans_rollback();
                 }
+                $this->getService("GoogleRequestBatch")->setBatchStatus($batchObj, date("Y-m-d H:i:s"));
             } else {
                 $this->sendAlert("[Panther] Cannot get a new batch to send google API", "error:" . $this->getService("GoogleRequestBatch")->getDao('GoogleRequestBatch')->db->error()["message"]);
             }
@@ -394,35 +388,45 @@ class GoogleShoppingService extends BaseService
     }
 
     public function processBatchByBatchId($batchId, $reprocess = false) {
-        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
+//        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
         $where["request_batch_id"] = $batchId;
-        if ($reprocess)
+        if ($reprocess) {
             $where["`result` in ('N', 'F')"] = null;
-        else
+        } else {
             $where["result"] = "N";
-        $processingList = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->getList($where, ["limit" => 10]);       
-        
-        $reOrderList = [];
-        foreach($processingList as $product) {
-            $reOrderList[$product->getGoogleProductId()] = $product;
-            $accountId = $this->getShoppingApiAccountId($product->getPlatformId());
-            $this->getService("GoogleConnect")->testInsertProduct($accountId, $product);
-            exit;
         }
-        unset($processingList);
-
+        $processingList = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->getList($where, ["limit" => -1]);
+        if (($processingList) && !is_array($processingList))
+            $processingList = [$processingList];
         $googleConnect = $this->getService("GoogleConnect");
-        $googleConnect->processingInsertProductBatch($batchId, $reOrderList);
-
-        foreach($reOrderList as $key => $googleApiRequestObj) {
-            $updateResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->update($googleApiRequestObj);
-            if ($updateResult === false) {
-                $this->_sendAlert("[Panther] cannot save google api request result", $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
+        if ($processingList) {
+            $i = 0; //will be the entry ID
+            do {
+                $reOrderList = [];
+                for($j=$i;$j<sizeof($processingList);$j++) {
+                    $reOrderList[$i] = $processingList[$j];
+//                    $accountId = $this->getShoppingApiAccountId($processingList[$j]->getPlatformId());
+                    $i++;
+                    if (($i%self::NUMBER_OF_PRODUCTS_IN_BATCH) == 0)
+                        break;
+                }
+                $googleConnect->processingInsertDeleteProductBatch($reOrderList);
+                foreach($reOrderList as $key => $googleApiRequestObj) {
+                    $updateResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->update($googleApiRequestObj);
+                    if ($updateResult === false) {
+                        $this->_sendAlert("[Panther] cannot save google api request result", $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
+                    }
+                }
+            } while ($i<sizeof($processingList));
+            unset($reOrderList, $processingList);
+            $insertToPriceExtendResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->insertBatchRequestToPriceExtend($batchId);
+            $updateToPriceExtendResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->updateBatchRequestToPriceExtend($batchId);
+            if ($updateToPriceExtendResult === false) {
+                $this->_sendAlert("[Panther] cannot updaet price extend", $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
             }
+        } else {
+            $this->_sendAlert("[Panther] batch has no data, batch_id:" . $batchId, $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
         }
-        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
-        unset($reOrderList);
-        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
     }
 
 /*******************************************************************
@@ -442,7 +446,19 @@ class GoogleShoppingService extends BaseService
 **  this step is inside a transaction with step1 to prevent someone is updating this table
 ********************************************************************/
     public function _sendBatchRequestToGoogleStep2() {
-        $result = $this->getService("GoogleApiRequest")->getDao('PendingGoogleApiRequest')->clearPendingGoogleApiRequest();
+        $result = $this->getService("PendingGoogleApiRequest")->getDao('PendingGoogleApiRequest')->clearPendingGoogleApiRequest();
+        if ($result === false) {
+            $this->_sendAlert("[Panther] Cannot clear data from google_api_request table, " . __METHOD__ . __LINE__, "error:" . $this->getService("PendingGoogleApiRequest")->getDao('PendingGoogleApiRequest')->db->error()["message"]);
+        }
+        return $result;
+    }
+
+/*******************************************************************
+**  Step3, update google_product_status
+**  this step is after the transaction
+********************************************************************/
+    public function _sendBatchRequestToGoogleStep3($batchId) {
+        $result = $this->getService("GoogleApiRequest")->getDao('GoogleApiRequest')->updateGoogleApiRequestFields($batchId);
         if ($result === false) {
             $this->_sendAlert("[Panther] Cannot clear data from google_api_request table, " . __METHOD__ . __LINE__, "error:" . $this->getService("GoogleApiRequest")->getDao('GoogleApiRequest')->db->error()["message"]);
         }
@@ -489,7 +505,7 @@ class GoogleShoppingService extends BaseService
             }
         }
     }
-*/
+
     public function batchDeleteItem($accountId = null, $googleShoppingData = [], $platformId) {
         if (!$accountId)
             $accountId = $this->getShoppingApiAccountId($platformId);
@@ -501,14 +517,14 @@ class GoogleShoppingService extends BaseService
         }
         return $result["status"];
     }
-
+*/
     public function getGoogleShoppingContentReport($platformId = "") {
         if (!$platformId) {
             return true;
         } else {
             $accountId = $this->getShoppingApiAccountId($platformId);
             $googleConnect = $this->getService("GoogleConnect");
-            $requestData["maxresults"] = 250;
+            $requestData["maxresults"] = self::NUMBER_OF_PRODUCTS_IN_BATCH;
             $productFeedResult = $googleConnect->listProducts($accountId, $requestData["maxresults"]);
 
             if ($productFeedResult["status"] == TRUE) {
@@ -595,6 +611,8 @@ class GoogleShoppingService extends BaseService
     }
 
     private function _sendAlert($subject, $message) {
+        print $subject;
+        print $message;
         $this->sendAlert($subject, $message, $this->technicalEmail);
     }
 }

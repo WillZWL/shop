@@ -100,6 +100,9 @@
                                                     </li>
                                                 <?php } else { ?>
                                                     <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/reviewcenter_en.jpg">
+                                                    </li>
+                                                    <li class="footer-fieldsetitem">
                                                         <img src="/themes/default/asset/image/ssl_en.jpg">
                                                     </li>
                                                     <li class="footer-fieldsetitem">
@@ -210,7 +213,7 @@
                                                         <?php } ?>
                                                     </div>
                                                     <p class="desc-sm">
-                                                        <?= $guaranteedays . _(" Days Money Back Guarantee") ?>
+                                                        <?= sprintf(_("%s Days Money Back Guarantee"), $guaranteedays) ?>
                                                     </p>
                                                 </li>
                                                 <li style="vertical-align: top;">

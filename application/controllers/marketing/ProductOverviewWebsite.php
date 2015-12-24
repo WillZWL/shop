@@ -61,6 +61,7 @@ class ProductOverviewWebsite extends MY_Controller
                 $ext_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('mskulist'), -1, PREG_SPLIT_NO_EMPTY));
                 $prod_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('skulist'), -1, PREG_SPLIT_NO_EMPTY));
 
+                ($this->input->get('platform_id2') != '') ? $where['pr.platform_id'] = $this->input->get('platform_id2') : '';
                 if (is_array($ext_sku) && count($ext_sku) > 0) {
                     $list = "('" . implode("','", $ext_sku) . "')";
                     $where["sm.ext_sku IN $list"] = null;
@@ -68,6 +69,11 @@ class ProductOverviewWebsite extends MY_Controller
                     $list = "('" . implode("','", $prod_sku) . "')";
                     $where["p.sku IN $list"] = null;
                 }
+            }
+
+            if ($this->input->get('csv') == 1) {
+                $this->exportSkuPrice($where, $option);
+                die;
             }
 
             $data['product_list'] = $this->sc['Product']->getProductOverview($where, $option);
@@ -278,15 +284,14 @@ class ProductOverviewWebsite extends MY_Controller
         $this->load->view('marketing/product_overview/product_overview_v', $data);
     }
 
-    public function query()
+    public function exportSkuPrice($where, $option)
     {
-        $sub_app_id = $this->getAppId().'00';
-        include_once APPPATH.'language/'.$sub_app_id.'_'.$this->getLangId().'.php';
-        $data['lang'] = $lang;
+        $this->sc['BatchExportImport']->exportSkuPrice($where, $option);
+    }
 
-        // var_dump($data['product_list']);die;
-
-        // $data['total'] = $this->product_overview_model->get_product_list_total_v2($where, $option);
+    public function importSkuPrice()
+    {
+        $result_row = $this->sc['BatchExportImport']->importSkuPrice($_FILES["datafile"]["tmp_name"]);
     }
 
     public function exportAffiliateFeed()

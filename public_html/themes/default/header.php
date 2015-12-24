@@ -183,7 +183,7 @@
                                             <?php } else {  ?>
                                                 <img src="/themes/default/asset/image/icon-refund.png">
                                             <?php } ?>
-                                                <span><?= $guaranteedays . _(" Days Money Back Guarantee") ?></span>
+                                                <span><?= sprintf(_("%s Days Money Back Guarantee"), $guaranteedays) ?></span>
                                             </li>
                                             <li >
                                                 <img src="/themes/default/asset/image/icon-truck.png">
@@ -252,7 +252,7 @@
                                             });
                                         </script>
                                     <!--</div>-->
-                                    <span class="suggestions-title"><?= _('Top search:') ?></span>
+                                    <span class="suggestions-title"><?= _('Top search').':' ?></span>
                                     <span class="suggestions">Sleepace, New tab s2, ghostdrone, iPhone 5c</span>
                                 </div>
                                 <div id="cart-top" class=" inner">
