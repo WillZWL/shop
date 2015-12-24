@@ -16,6 +16,29 @@ class ProductDao extends BaseDao
         return $this->tableName;
     }
 
+    /**
+     * get product by master sku
+     *
+     * @param $master_sku
+     * @param $select_str select fields as string format
+     *
+     * @return object \ProductVo
+     */
+    public function getProdByMasterSku($master_sku, $select_str = '', $className = 'ProductVo')
+    {
+        $where = ['sm.ext_sku' => $master_sku];
+        $option = ['limit' => 1];
+        $this->db->from('sku_mapping sm');
+        $this->db->join('product p', 'sm.sku = p.sku', 'inner');
+
+        if ($select_str === '') {
+            $select_str = 'p.*';
+        }
+
+        return $this->commonGetList($className, $where, $option, $select_str);
+    }
+
+
     public function getCartDataDetail($where = [], $option = [], $className = "CartItemDto")
     {
         $this->db->from("product AS p");
