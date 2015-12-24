@@ -28,7 +28,6 @@ class SellingPlatformDao extends BaseDao
         $this->db->where($where);
 
         if (empty($option["num_rows"])) {
-            $this->include_vo();
             $this->db->select("sp.*");
 
             if (isset($option["orderby"])) {
@@ -77,12 +76,11 @@ class SellingPlatformDao extends BaseDao
                     AND pbv.platform_country_id = ?";
 
         if ($result = $this->db->query($sql, $country_id)) {
-            $this->include_vo();
 
             $result_arr = [];
 
-            foreach ($result->result($classname) as $obj) {
-                $result_arr[$obj->get_type()][] = $obj;
+            foreach ($result->result($this->getVoClassname()) as $obj) {
+                $result_arr[$obj->getType()][] = $obj;
             }
             return $result_arr;
         }
@@ -102,12 +100,11 @@ class SellingPlatformDao extends BaseDao
                     AND pbv.language_id = ?";
 
         if ($result = $this->db->query($sql, $lang_id)) {
-            $this->include_vo();
 
             $result_arr = [];
 
-            foreach ($result->result($classname) as $obj) {
-                $result_arr[$obj->get_type()][] = $obj;
+            foreach ($result->result($this->getVoClassname()) as $obj) {
+                $result_arr[$obj->getType()][] = $obj;
             }
             return $result_arr;
         }
@@ -134,12 +131,11 @@ class SellingPlatformDao extends BaseDao
                 ORDER BY type";
 
         if ($result = $this->db->query($sql)) {
-            $this->include_vo();
 
             $result_arr = [];
 
-            foreach ($result->result($classname) as $obj) {
-                $result_arr[] = $obj->get_type();
+            foreach ($result->result($this->getVoClassname()) as $obj) {
+                $result_arr[] = $obj->getType();
             }
             return $result_arr;
         }
@@ -150,8 +146,7 @@ class SellingPlatformDao extends BaseDao
     {
         $this->db->from("selling_platform AS sp");
         $this->db->join("platform_biz_var AS pbv", "pbv.selling_platform_id = sp.selling_platform_id", "INNER");
-        $this->include_dto($classname);
-        return $this->common_get_list($classname, $where, $option, "sp.*, pbv.language_id lang_id");
+        return $this->commonGetList($classname, $where, $option, "sp.*, pbv.language_id lang_id");
     }
 
     public function getPlatformListWithAllowSellCountry($type = "")

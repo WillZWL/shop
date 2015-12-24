@@ -632,5 +632,14 @@ class DaoProvider implements ServiceProviderInterface
         $daoContainer['LandpageListing'] = function () {
             return new D\LandpageListingDao();
         };
+
+        $daoContainer['Version'] = function () {
+            return new D\VersionDao();
+        };
+
+        $daoContainer['OrderReason'] = function () {
+            return new D\OrderReasonDao();
+        };
+
     }
 }
