@@ -57,7 +57,7 @@ class VbDataTransferCategoryMappingService extends VbDataTransferService
 
         $xml[] = '</categories_mapping>';
 
-        $return_feed = implode("\n", $xml);
+        $return_feed = implode("", $xml);
 
         return $return_feed;
     }

@@ -87,7 +87,7 @@ class VbDataTransferColourService extends  VbDataTransferService
 		$xml[] = '</colours>';
 
 
-		$return_feed = implode("\n", $xml);
+		$return_feed = implode("", $xml);
 
 		return $return_feed;
 	}

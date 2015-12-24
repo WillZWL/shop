@@ -28,6 +28,7 @@ class ProductContentVo extends \BaseVo
     private $youtube_caption_2 = '';
     private $product_url;
     private $stop_sync = '0';
+    private $product_url = '';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -360,6 +361,18 @@ class ProductContentVo extends \BaseVo
     public function getStopSync()
     {
         return $this->stop_sync;
+    }
+
+    public function setProductUrl($product_url)
+    {
+        if ($product_url !== null) {
+            $this->product_url = $product_url;
+        }
+    }
+
+    public function getProductUrl()
+    {
+        return $this->product_url;
     }
 
     public function setCreateOn($create_on)

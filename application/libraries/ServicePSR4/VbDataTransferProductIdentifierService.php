@@ -90,7 +90,7 @@ class VbDataTransferProductIdentifierService extends VbDataTransferService
             }
         }
         $xml[] = '</product_identifiers>';
-        $return_feed = implode("\n", $xml);
+        $return_feed = implode("", $xml);
 
         return $return_feed;
     }

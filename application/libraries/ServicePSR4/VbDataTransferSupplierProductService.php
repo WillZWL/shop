@@ -73,7 +73,7 @@ class VbDataTransferSupplierProductService extends VbDataTransferService
             }
         }
         $xml[] = '</products>';
-        $return_feed = implode("\n", $xml);
+        $return_feed = implode("", $xml);
 
         return $return_feed;
     }
