@@ -1,14 +1,6 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Dao\ClientDao;
-use ESG\Panther\Dao\ClientLogDao;
-use ESG\Panther\Dao\CountryDao;
-use ESG\Panther\Service\EventService;
-use ESG\Panther\Service\ContextConfigService;
-use ESG\Panther\Service\ValidationService;
-
-
 class ClientService extends BaseService
 {
     private $clientLogDao;
@@ -20,12 +12,6 @@ class ClientService extends BaseService
     {
         parent::__construct();
         $CI =& get_instance();
-        $this->setDao(new ClientDao);
-        $this->setClientLogDao(new ClientLogDao);
-        $this->setCountryDao(new CountryDao);
-        $this->eventService = new EventService;
-        $this->contextConfigService = new ContextConfigService;
-        $this->validationService = new ValidationService;
         $CI->load->library('encryption');
         $this->encryption = $CI->encryption;
     }
@@ -33,7 +19,7 @@ class ClientService extends BaseService
     public function login($email, $password)
     {
         if ($this->validateField($email, array("valid_email"))) {
-            $dao = $this->getDao();
+            $dao = $this->getDao('Client');
             if ($client_obj = $dao->get(array("email" => $email, "status" => 1))) {
                 $client_password = $client_obj->getPassword();
                 if ($this->encryption->decrypt($client_password) === trim($password)) {
@@ -49,7 +35,7 @@ class ClientService extends BaseService
 
     public function validateField($val, $rules)
     {
-        $valid = $this->validationService;
+        $valid = $this->getService('Validation');
         $valid->setData($val);
         $valid->setRules($rules);
         try {
@@ -98,28 +84,18 @@ class ClientService extends BaseService
 
     public function loginLog($email, $status)
     {
-        $cl_vo = $this->getClientLogDao()->get();
+        $cl_vo = $this->getDao('ClientLog')->get();
         $cl_vo->setEmail($email);
         $cl_vo->setIpAddress($_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "0.0.0.0");
         $cl_vo->setStatus($status);
-        $cl_vo = $this->getClientLogDao()->insert($cl_vo);
-    }
-
-    public function getClientLogDao()
-    {
-        return $this->clientLogDao;
-    }
-
-    public function setClientLogDao($dao)
-    {
-        $this->clientLogDao = $dao;
+        $cl_vo = $this->getDao('ClientLog')->insert($cl_vo);
     }
 
     public function getClientLastOrder($email)
     {
         $where = array("email" => $email, "so.status >=" => 2);
         $option = array("limit" => 1, "orderby" => "so.create_on desc");
-        $last_order = $this->getDao()->getClientLastOrder($where, $option);
+        $last_order = $this->getDao('Client')->getClientLastOrder($where, $option);
         return $last_order;
     }
 /***************************************************
@@ -128,10 +104,10 @@ class ClientService extends BaseService
 ****************************************************/
     public function createClient($clientInfo = [], $delegate = null, $requireLogin = false) {
         $email = $clientInfo["email"];
-        if ($clientObj = $this->getDao()->get(array("email" => $email))) {
+        if ($clientObj = $this->getDao('Client')->get(array("email" => $email))) {
             $action = "update";
         } else {
-            $clientObj = $this->getDao()->get();
+            $clientObj = $this->getDao('Client')->get();
             $action = "insert";
         }
         $this->setClientDetail($clientObj, $clientInfo);
@@ -139,10 +115,10 @@ class ClientService extends BaseService
         if ($delegate instanceof CreateClientInterface)
             $delegate->clientBeforeUpdateEvent($clientObj);
 
-        $actionResult = $this->getDao()->$action($clientObj);
+        $actionResult = $this->getDao('Client')->$action($clientObj);
         if ($actionResult === false) {
             $subject = "[Panther] Cannot create/update client:" . __METHOD__ . __LINE__;
-            $message = $this->getDao()->db->last_query() . "," . $this->getDao()->db->_error_message();
+            $message = $this->getDao('Client')->db->last_query() . "," . $this->getDao('Client')->db->_error_message();
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
         } else {
             if ($delegate instanceof CreateClientInterface)
@@ -258,7 +234,7 @@ class ClientService extends BaseService
         $vars["email"] = trim($vars["email"]);
         $this->p_enc = $vars["p_enc"];
         include_once(APPPATH . "helpers/object_helper.php");
-        $dao = $this->getDao();
+        $dao = $this->getDao('Client');
         if ($client_obj = $dao->get(array("email" => $vars["email"]))) {
             $action = "update";
             if ($vars["password"]) {
@@ -319,7 +295,7 @@ class ClientService extends BaseService
             $email_dto->setMailFrom($email_sender);
             $email_dto->setReplace($replace);
             $email_dto->setPlatformId(PLATFORM);
-            $this->eventService->fireEvent($email_dto);
+            $this->getService('Event')->fireEvent($email_dto);
         }
         return $result;
     }
@@ -336,7 +312,7 @@ class ClientService extends BaseService
             $where = array('email' => $email, 'password' => $encrypted_oldPassword);
         }
 
-        $client_obj = $this->getDao()->get($where);
+        $client_obj = $this->getDao('Client')->get($where);
 
         if (!$client_obj) {
             return 0;
@@ -344,7 +320,7 @@ class ClientService extends BaseService
             return 0;
         }
         $client_obj->setPassword($this->encryption->encrypt($newPassword));
-        $result = $this->getDao()->update($client_obj);
+        $result = $this->getDao('Client')->update($client_obj);
         return $result;
     }
 
@@ -360,8 +336,8 @@ class ClientService extends BaseService
         $replace["name"] = $obj->getForename();
         $replace["email"] = $obj->getEmail();
         $replace["password"] = $this->encryption->encrypt($obj->getPassword());
-        $replace["default_url"] = $this->contextConfigService->valueOf("default_url");
-        $replace["site_name"] = $this->contextConfigService->valueOf("site_name");
+        $replace["default_url"] = $this->getService('ContextConfig')->valueOf("default_url");
+        $replace["site_name"] = $this->getService('ContextConfig')->valueOf("site_name");
         $dto = new \EventEmailDto();
         $dto->setEventId("register_success");
         $dto->setMailFrom($support_email);
@@ -369,7 +345,7 @@ class ClientService extends BaseService
         $dto->setTplId("register_success");
         $dto->setLangId(get_lang_id());
         $dto->setReplace($replace);
-        $this->eventService->fireEvent($dto);
+        $this->getService('Event')->fireEvent($dto);
     }
 
     public function get_config()
@@ -380,16 +356,6 @@ class ClientService extends BaseService
     public function get_new_vip_customer_list()
     {
         return $this->get_dao()->get_new_vip_customer_list();
-    }
-
-    public function getCountryDao()
-    {
-        return $this->country_dao;
-    }
-
-    public function setCountryDao($dao)
-    {
-        $this->country_dao = $dao;
     }
 
     public function get_encrypt()

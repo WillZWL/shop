@@ -128,8 +128,6 @@ ADD COLUMN `ref_is_advertised`  char(1) NOT NULL DEFAULT '' AFTER `ref_exdemo`;
 ALTER TABLE `google_api_request`
 ADD INDEX `idx_criteria` (`ref_website_quantity`, `ref_display_quantity`, `ref_listing_status`, `ref_website_status`, `ref_is_advertised`) ;
 
-/* above is LIVE */
-
 
 ALTER TABLE `price_extend`
 DROP COLUMN `amazon_reprice_name`,
@@ -153,3 +151,4 @@ MODIFY COLUMN `ext_status`  varchar(2) CHARACTER SET utf8 COLLATE utf8_general_c
 ALTER TABLE `pending_google_api_request`
 ADD COLUMN `google_product_status`  char(1) NOT NULL DEFAULT '' AFTER `condition`;
 
+/* above is LIVE */

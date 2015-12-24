@@ -21,12 +21,12 @@ class ClientDao extends BaseDao
         return $this->tableName;
     }
 
-    public function get_client_last_order($where, $option, $classname = 'SoLastOrderWithClientDto')
+    public function getClientLastOrder($where, $option, $classname = 'SoLastOrderWithClientDto')
     {
         $this->db->from("so");
         $this->db->join("client as c", "c.id = so.client_id", "INNER");
 
-        return $this->common_get_list($classname, $where, $option, "so.*, c.email, c.tel_1, c.tel_2, c.tel_3, c.title");
+        return $this->commonGetList($classname, $where, $option, "so.*, c.email, c.tel_1, c.tel_2, c.tel_3, c.title");
     }
 
     public function update_password($client_id = '', $new_en_password = '')

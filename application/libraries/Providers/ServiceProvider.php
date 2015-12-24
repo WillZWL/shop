@@ -501,5 +501,9 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['PriceUpdateTrigger'] = function () {
             return new S\PriceUpdateTriggerService();
         };
+
+        $serviceContainer['SpecialOrder'] = function () {
+            return new S\SpecialOrderService();
+        };
     }
 }

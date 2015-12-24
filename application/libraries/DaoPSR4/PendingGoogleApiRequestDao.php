@@ -81,7 +81,7 @@ class PendingGoogleApiRequestDao extends BaseDao
         $queryResult = $this->db->query($sql);
         if ($queryResult) {
             if ($data = $queryResult->result_array()) {
-            var_dump($data);
+//            var_dump($data);
                 foreach($data as $record) {
                     if (($record["ext_status"] != "DS") || ($record["google_product_status"] == "I"))
                         array_push($finalDelete, $record["sku"]);
@@ -92,7 +92,7 @@ class PendingGoogleApiRequestDao extends BaseDao
         } else {
             $finalDelete = $skus;
         }
-        var_dump($finalDelete);
+//        var_dump($finalDelete);
         return $finalDelete;
     }
 
