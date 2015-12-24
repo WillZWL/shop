@@ -20,8 +20,8 @@ class Product extends MY_Controller
         $this->load->library('service/subject_domain_service');
         $this->load->library('service/translate_service');
         $this->load->library('service/platform_biz_var_service');
-        $this->load->library('service/product_update_followup_service');
-        $this->load->library('service/adwords_service');
+//        $this->load->library('service/product_update_followup_service');
+//        $this->load->library('service/adwords_service');
         $this->load->library('service/country_service');
         $this->load->library('service/selling_platform_service.php');
     }
