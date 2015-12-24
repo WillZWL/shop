@@ -253,10 +253,10 @@
                     <td height="20"></td>
                     <td><?= $del_opt_list[$obj->getDeliveryTypeId()]->getDisplayName() ?></td>
                     <td><?= $obj->getemail() ?></td>
-                    <td><?= $lang["password"] ?>: <a
+                    <td><?= $lang["password"]; ?>: <a
                             href="<?= base_url() ?>order/credit_check/chk_pw/?pw=<?= urlencode($obj->getPassword()) ?>"
                             rel="lyteframe[check_password]" rev="width: 1024px; height: 500px; scrolling: auto;"
-                            title="<?= $lang["password"] ?> - <?= $rspw = $this->encrypt->decode($obj->getPassword()) ?>"><?= $rspw ?></a>
+                            title="<?= $lang["password"] ?> - <?= $rspw = $this->encryption->decrypt($obj->getPassword())?>"><?= $rspw ?></a>
                         (<?= $obj->getPwCount() ?>)
                     </td>
                     <td class="bfield<?= $i % 2 ?>"><?= $lang["billing_address"] ?></td>

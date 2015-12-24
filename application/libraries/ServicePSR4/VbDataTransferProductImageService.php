@@ -95,7 +95,7 @@ class VbDataTransferProductImageService extends VbDataTransferService
         }
 
         $xml[] = '</product_images>';
-        $return_feed = implode("\n", $xml);
+        $return_feed = implode("", $xml);
         unset($xml);
 
         return $return_feed;

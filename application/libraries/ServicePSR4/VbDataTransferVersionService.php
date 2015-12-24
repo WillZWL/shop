@@ -88,7 +88,7 @@ class VbDataTransferVersionService extends VbDataTransferService
 
 		$xml[] = '</versions>';
 
-		$return_feed = implode("\n", $xml);
+		$return_feed = implode("", $xml);
 
 		// print $return_feed;
 		// exit;
