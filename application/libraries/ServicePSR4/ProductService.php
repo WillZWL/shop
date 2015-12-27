@@ -92,7 +92,7 @@ class ProductService extends BaseProductService
         $newObj->setYoutubeCaption1(replace_special_chars((string)$oldObj->youtube_caption_1));
         $newObj->setYoutubeCaption2(replace_special_chars((string)$oldObj->youtube_caption_2));
         $newObj->setStopSync((string)$oldObj->stop_sync);
-        $newObj->setProductUrl((string)$oldObj->product_url);
+        $newObj->setProductUrl((string)$newObj->getProductUrl());
     }
 
     public function updateProductUrl($sku)

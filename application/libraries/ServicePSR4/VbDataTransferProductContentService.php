@@ -44,7 +44,6 @@ class VbDataTransferProductContentService extends VbDataTransferService
                      //0 NA / 1 = prod_name / 2 = contents / 3 = keyworks / 4 = detail_desc
                     $stop_sync_array = array_reverse(str_split(base_convert($pc_obj->getStopSync(), 10, 2)));
                     $pc->addChild('stop_sync', $pc_obj->getStopSync());
-                    $pc->addChild('product_url', $pc_obj->getProductUrl());
 
                     foreach($stop_sync_array as $k => $v) {
                         if ($k == 1 && $v) {
@@ -73,7 +72,6 @@ class VbDataTransferProductContentService extends VbDataTransferService
                     // insert
                     $reason = "insert";
                     $pc->addChild('stop_sync', 1);
-                    $pc->addChild('product_url', '');
 
                     $pc_obj = $this->getService('Product')->createNewProductContent($sku, $pc);
                     if (!$pc_obj)
