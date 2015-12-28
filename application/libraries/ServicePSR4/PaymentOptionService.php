@@ -27,7 +27,7 @@ class PaymentOptionService extends BaseService
                 , "posc.ref_to_amt_exclusive > '$cartAmount'" => null];
         $option = ["limit" => -1, "group_by" => "poc.code", "orderby" => "posc.priority"];
 
-        $result = $this->getDao()->getPaymentOption($where, $option);
+        $result = $this->getDao("PaymentOption")->getPaymentOption($where, $option);
         return $result;
     }
 }
