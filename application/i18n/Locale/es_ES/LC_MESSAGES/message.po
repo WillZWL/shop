@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-24 19:19+0100\n"
-"PO-Revision-Date: 2015-12-25 09:43+0800\n"
+"POT-Creation-Date: 2015-12-28 23:31+0800\n"
+"PO-Revision-Date: 2015-12-28 23:35+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -724,7 +724,7 @@ msgstr "Pre-venta"
 msgid "FAULTY GOODS OR RETURNED ITEMS"
 msgstr "Productos defectuosos o devoluciones"
 
-#: display/privacy_policy.php:2 footer.php:244
+#: display/privacy_policy.php:2 footer.php:247
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
 
@@ -1170,116 +1170,116 @@ msgstr "PAGA CON CONFIANZA"
 msgid " SHOP WITH CONFIDENCE "
 msgstr "COMPRA CON CONFIANZA"
 
-#: footer.php:129
+#: footer.php:132
 msgid "About Us"
 msgstr "Acerca de nosotros"
 
-#: footer.php:132
+#: footer.php:135
 #, php-format
 msgid "%s prides itself on great deals without compromise on service! "
 msgstr ""
 "¡%s se enorgullece de ofrecer ofertas excepcionales sin comprometer el "
 "servicio!"
 
-#: footer.php:132
+#: footer.php:135
 msgid "Feel free to contact us anytime for more information"
 msgstr ""
 "Siéntete libre de contactarnos en cualquier momento para más información"
 
-#: footer.php:140 footer.php:152
+#: footer.php:143 footer.php:155
 msgid "Subscribe to get our latest news and promotions regularly."
 msgstr "Suscríbete para saber nuestras últimas noticias y promociones."
 
-#: footer.php:151
+#: footer.php:154
 msgid "Sign up for Newsletter"
 msgstr "Suscríbete a nuestra Newsletter"
 
-#: footer.php:156
+#: footer.php:159
 msgid "Enter you email address"
 msgstr "Introduce tu correo electrónico"
 
-#: footer.php:166
+#: footer.php:169
 msgid "Subscribe"
 msgstr "Suscríbite"
 
-#: footer.php:170
+#: footer.php:173
 msgid "indicates required"
 msgstr "indica requerido"
 
-#: footer.php:185
+#: footer.php:188
 msgid "100% Secure "
 msgstr "100% Seguro"
 
-#: footer.php:185
+#: footer.php:188
 msgid "with SSL encryption"
 msgstr "con encriptación SSL"
 
-#: footer.php:193
+#: footer.php:196
 msgid "Free Delivery"
 msgstr "Envío Gratuito"
 
-#: footer.php:193
+#: footer.php:196
 msgid "For All Orders*"
 msgstr "Para Todas las Compras*"
 
-#: footer.php:193
+#: footer.php:196
 msgid "Shipping:"
 msgstr "Envío:"
 
-#: footer.php:193
+#: footer.php:196
 msgid "3-5 Working Days"
 msgstr "3-5 Días Laborables"
 
-#: footer.php:213 header.php:186
+#: footer.php:216 header.php:186
 #, php-format
 msgid "%s Days Money Back Guarantee"
 msgstr "%s días Reembolso Garantizado"
 
-#: footer.php:229
+#: footer.php:232
 msgid "Warranty "
 msgstr "Garantía"
 
-#: footer.php:229
+#: footer.php:232
 msgid "Up to 2 Years"
 msgstr "Hasta 2 años"
 
-#: footer.php:241
+#: footer.php:244
 msgid "2015 All Right reserved"
 msgstr "2015 Todos los Derechos Reservados"
 
-#: footer.php:242
+#: footer.php:245
 msgid "Conditions of Use"
 msgstr "Condiciones de Uso"
 
-#: footer.php:243 review.php:52
+#: footer.php:246 review.php:52
 msgid "Shipping"
 msgstr "Envío"
 
-#: footer.php:249
+#: footer.php:252
 msgid "SELECT SHIPPING COUNTRY"
 msgstr "SELECCIONA PAIS DE ENVIO"
 
-#: footer.php:252
+#: footer.php:255
 msgid "Australia"
 msgstr "Australia"
 
-#: footer.php:253
+#: footer.php:256
 msgid "Belgium"
 msgstr "Bélgica"
 
-#: footer.php:254
+#: footer.php:257
 msgid "Finland"
 msgstr "Finlandia"
 
-#: footer.php:255
+#: footer.php:258
 msgid "France"
 msgstr "Francia"
 
-#: footer.php:256
+#: footer.php:259
 msgid "Great Britain"
 msgstr "Gran Bretaña"
 
-#: footer.php:257
+#: footer.php:260
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
@@ -1337,7 +1337,7 @@ msgstr "Populares"
 msgid "%s item(s) - %s"
 msgstr "%s producto(s) - %s"
 
-#: index.php:87
+#: index.php:87 product/grid.php:14
 msgid "Collections"
 msgstr "Catálogo"
 
@@ -1791,26 +1791,34 @@ msgstr "Cantidad:"
 msgid "4-7 working days delivery"
 msgstr "Expedición en 4-7 días laborables"
 
-#: product/detail.php:127
+#: product/detail.php:149
 msgid "Specification"
 msgstr "Especificaciones"
 
-#: product/detail.php:128
+#: product/detail.php:150
 msgid "Overview"
 msgstr "Descripción"
 
-#: product/detail.php:129
+#: product/detail.php:151
 msgid "In the box"
 msgstr "En la caja"
 
-#: product/detail.php:130
+#: product/detail.php:152
 msgid "Recommended Accessories"
 msgstr "Accesorios Recomendados"
 
-#: product/detail.php:131
+#: product/detail.php:153
 #, php-format
 msgid "Reviews %s"
 msgstr "Opiniones %s"
+
+#: product/grid.php:14
+msgid "latest arrival"
+msgstr "última llegada"
+
+#: product/grid.php:14
+msgid "best seller"
+msgstr "Mejor vendido"
 
 #: product/related_product.php:4
 msgid "Related Products"
