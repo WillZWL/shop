@@ -156,7 +156,7 @@ class PendingGoogleApiRequestDao extends BaseDao
     }
 */
     private function _prepareInsertSqlforSku($platformId = "WEBGB", $sku = []) {
-        $affiliateId = str_replace("WEB", "GOO", $platformId);
+        $affiliateId = str_replace("WEB", "GOS", $platformId);
         $userId = $this->getUserId();
         $where = "";
         if ($sku) {
