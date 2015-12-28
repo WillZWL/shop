@@ -3,11 +3,6 @@ namespace ESG\Panther\Service;
 
 class SellingPlatformService extends BaseService
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getPlatformByLang($where = [], $option = [])
     {
         return $this->getDao('SellingPlatform')->getPlatformByLang($where, $option);

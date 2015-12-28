@@ -46,8 +46,11 @@ class BaseService
 
     public function getDao($dao = null)
     {
+
         if (is_null($dao)) {
-            return $this->dao;
+            $serviceName = get_class($this);
+            $serviceBaseName = end(explode('\\', $serviceName));
+            $dao = substr($serviceBaseName, 0, -7);
         }
 
         if (is_null(self::$daoContainer[$dao])) {
