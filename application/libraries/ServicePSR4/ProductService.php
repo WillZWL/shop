@@ -51,7 +51,7 @@ class ProductService extends BaseProductService
 
     public function createNewProductContent($sku, $oldObj)
     {
-        if ( $prod_obj = $this->getDao('Product')->get(['sku' => $sku])) {
+        if ( ! $prod_obj = $this->getDao('Product')->get(['sku' => $sku])) {
             return false;
         }
 
