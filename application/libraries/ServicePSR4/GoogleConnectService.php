@@ -425,7 +425,7 @@ class GoogleConnectService extends BaseService
 
         $googleShoppingContentProduct->setImageLink($productobj->getImageLink());
         $googleShoppingContentProduct->setTitle($productobj->getTitle());
-        $googleShoppingContentProduct->setLink($productobj->getLink());
+        $googleShoppingContentProduct->setLink($productobj->getLink() . "?AF=GOS" . $productobj->getTargetCountry());
         $googleShoppingContentProduct->setBrand($productobj->getBrandName());
 
         $description = preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/','', $productobj->getDescription());
