@@ -29,24 +29,22 @@ class CartSessionService extends BaseService
     const CART_TYPE_SPECIAL = "SPECIAL";
 
     private $_cart = null;
+//with this _rebuildCartNoSessionMode mode enabled, we will get detail cart info, instead of lite info
+    private $_rebuildCartNoSessionMode = false;
     public static $noRebuild = false;
     public $support_email = "oswald-alert@eservicesgroup.com";
 
-    public function __construct() {
+    public function __construct($rebuildMode = false) {
         parent::__construct();
         $this->productService = new ProductService;
         $this->setSoDao(new SoDao);
 //var_dump($_SESSION["cart"]);
 //unset($_SESSION["cart"]);
-        if (isset($_SESSION["cart"])) {
-/*
-            if ($_SESSION["cart"] instanceof \CartDto) {
-                if (PLATFORMID != $_SESSION["cart"]->getPlatformId())
-                {
-                    $this->reBuildCart(PLATFORMID, $_SESSION["cart"]);
-                }
-            }
-*/
+        $this->_rebuildCartNoSessionMode = $rebuildMode;
+        if ($this->_rebuildCartNoSessionMode) {
+            CartSessionService::setNoRebuildCart();
+        }
+        if ((!$this->_rebuildCartNoSessionMode) && (isset($_SESSION["cart"]))) {
             $this->_cart = unserialize($_SESSION["cart"]);
         }
     }
@@ -75,7 +73,16 @@ class CartSessionService extends BaseService
                 $this->_cart->items[$sku]->setAmount($itemSubTotal);
                 $totalItems += $item->getQty();
                 $totalAmount += $itemSubTotal;
+                $vatPercent = $item->getVatPercent();
+                $orderVatTotal += round(($item->getVatTotal() * $item->getQty()), $item->getDecPlace());
+                $totalWeight += $item->getUnitWeight() * $item->getQty();
+                $totalItemCost += $item->getUnitcost() * $item->getQty();
             }
+//this is itemCost only, not all the cost from price service
+            $this->_cart->setCost($totalItemCost);
+            $this->_cart->setTotalWeight($totalWeight);
+            $this->_cart->setVatPercent($vatPercent);
+            $this->_cart->setVat($orderVatTotal);
             $this->_cart->setSubtotal($totalAmount);
             if ($this->_cart)
             {
@@ -158,7 +165,10 @@ class CartSessionService extends BaseService
     }
 
     private function _createCartItem($sku, $lang, $platformId) {
-        return $this->getCartItemInfoLite($sku, $lang, $platformId);
+        if ($this->_rebuildCartNoSessionMode)
+            return $this->getCartItemInDetail($sku, $lang, $platformId);
+        else
+            return $this->getCartItemInfoLite($sku, $lang, $platformId);
     }
 
     private function _getCommonCartParameter($sku, $lang, $platformId) {

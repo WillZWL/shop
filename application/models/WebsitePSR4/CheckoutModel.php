@@ -68,26 +68,21 @@ class CheckoutModel extends \CI_Model
         $result = ["error" => -10, "errorMessage" => _("Please contact CS") . ", err:" . __LINE__];
         $cart = $this->getCartSessionService()->getCart();
 //        var_dump($cart);
-        if ($cart)
-        {
+        if ($cart) {
             $soObj = $this->getSoFactoryService()->createSaleOrder($formValue, $cart);
-            if ($soObj)
-            {
+            if ($soObj) {
                 $paymentGatewayId = $formValue["paymentGatewayId"];
                 $gatewayRedirectService = $this->_createPaymentGatewayRedirectService($paymentGatewayId, $soObj, ((isset($formValue["debug"]))?$formValue["debug"]:0));
                 if ($gatewayRedirectService)
                     return $gatewayRedirectService->checkout($formValue);
-                else
-                {
+                else {
                     error_log("Payment Gateway Service-" . $paymentGatewayId . " not found " . __METHOD__ . __LINE__);
                 }
                 $result = ["error" => -11, "errorMessage" => _("Please contact CS") . ", err:" . __LINE__];
             }
             else
                 $result = ["error" => -12, "errorMessage" => _("Please contact CS") . ", err:" . __LINE__];
-        }
-        else
-        {
+        } else {
             $result = ["error" => -13, "errorMessage" => _("Session timeout, please check your cart!" . ", err:" . __LINE__)];
         }
         return $result;
@@ -129,7 +124,7 @@ class CheckoutModel extends \CI_Model
         $soPaymentStatus = null;
 
         if (intval($soNo) == $soNo) {
-            $soObj = $this->_soFactoryService->getDao()->get(["so_no" => $soNo]);
+            $soObj = $this->_soFactoryService->getDao("So")->get(["so_no" => $soNo]);
             if ($soObj->getStatus() >= $option["status"]) {
                 if (($soObj->getCreateAt() == ip2long($_SERVER["REMOTE_ADDR"]))
                     || (isset($_GET["debug"]) && ($_GET["debug"] == 1))) {
@@ -163,7 +158,7 @@ class CheckoutModel extends \CI_Model
     }
 
     public function getCheckoutFormStateList($platformCountryId, $type = self::BILLING_COUNTRY) {
-        $stateList = $this->getCountryStateService()->getDao()->getList(["country_id" => $platformCountryId, "status" => 1], ["limit" => -1]);
+        $stateList = $this->getCountryStateService()->getDao("CountryState")->getList(["country_id" => $platformCountryId, "status" => 1], ["limit" => -1]);
         return $stateList;
     }
 
