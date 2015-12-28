@@ -641,5 +641,20 @@ class DaoProvider implements ServiceProviderInterface
             return new D\OrderReasonDao();
         };
 
+        $daoContainer['CountryState'] = function () {
+            return new D\CountryStateDao();
+        };
+
+        $daoContainer['PaymentOption'] = function () {
+            return new D\PaymentOptionDao();
+        };
+
+        $daoContainer['SoPaymentLog'] = function () {
+            return new D\SoPaymentLogDao();
+        };
+
+        $daoContainer['SoPaymentQueryLog'] = function () {
+            return new D\SoPaymentQueryLogDao();
+        };
     }
 }
