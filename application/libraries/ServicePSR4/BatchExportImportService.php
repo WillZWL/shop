@@ -26,7 +26,7 @@ class BatchExportImportService extends BaseService
     public function importSkuPrice($file_path)
     {
         $csv = Reader::createFromPath($file_path);
-        $csv->setOffset(1);
+        $csv->setOffset(1);     // ignore the header
 
         $data = $csv->fetch();
         foreach ($data as $row) {
@@ -47,6 +47,37 @@ class BatchExportImportService extends BaseService
             $this->getService('Price')->updateSkuPrice($platform_id, $sku, $require_selling_price);
 
             // $this->getService('PriceChangeFollow')->processPriceChange($sku, $platform_id);
+        }
+        die;
+    }
+
+    public function uploadClearanceSku($file_path)
+    {
+        $csv = Reader::createFromPath($file_path);
+        $csv->setOffset(1);     // ignore the header
+
+        $data = $csv->fetch();
+        foreach ($data as $row) {
+            $master_sku = $row[0];
+            $website_qty = $row[2];
+            if ($website_qty > 20) {
+                $website_qty = 20;
+            } elseif ($website_qty <= 0) {
+                $fail_resson = 'FAIL: quantity invalid.';
+                continue;
+            }
+
+            $prod_obj = $this->getDao('Product')->getProdByMasterSku($master_sku);
+
+            if ($prod_obj) {
+                $prod_obj->setClearance(1);
+                $prod_obj->setWebsiteQuantity($website_qty);
+                $prod_obj->setWebsiteStatus('I');
+
+                if ($this->getDao('Product')->update($prod_obj) === false) {
+                    $fail_resson = 'UPDATE FAILED';
+                }
+            }
         }
         die;
     }

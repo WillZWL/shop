@@ -155,7 +155,7 @@
                     <td></td>
                     <td style="width:50%;text-align:left;">
                         Upload the clearance info
-                        <form action="/marketing/ProductOverviewWebsite/upload_clearance_sku_info" enctype="multipart/form-data" method="post">
+                        <form action="/marketing/ProductOverviewWebsite/uploadClearanceSku" enctype="multipart/form-data" method="post">
                             <input type="file" name="clearance_datafile" size="40">
                             <input type="submit" value="Upload">
                         </form>

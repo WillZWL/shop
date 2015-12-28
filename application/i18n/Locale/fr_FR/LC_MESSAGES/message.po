@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2015-12-15 16:25+0800\n"
-"PO-Revision-Date: 2015-12-18 13:18+0800\n"
+"POT-Creation-Date: 2015-12-28 23:24+0800\n"
+"PO-Revision-Date: 2015-12-28 23:28+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -537,7 +537,7 @@ msgstr ""
 msgid "We'll send you an email as soon as it's shipped!"
 msgstr "Nous vous enverrons un email dès que la commande sera livrée."
 
-#: contact.php:3 display/contact.php:17
+#: contact.php:3 display/contact.php:11
 msgid "CONTACT US"
 msgstr "Nous contacter"
 
@@ -718,7 +718,7 @@ msgstr ""
 "vous aider en cas de difficulté lors du choix d'un produit ou d'une toute "
 "autre requete durant le processus d'achat. "
 
-#: display/contact.php:19
+#: display/contact.php:13
 msgid ""
 "Having an issue? There are a number of ways you can get in touch with our "
 "experienced Sales and Customer Service teams. "
@@ -726,7 +726,7 @@ msgstr ""
 "Vous rencontrez un problème ? N'hésitez pas à contacter notre équipe "
 "expérimentée  Relation Clients et Ventes."
 
-#: display/contact.php:20
+#: display/contact.php:14
 msgid ""
 "Select one of the enquiry types below and we'll repond to you as soon as we "
 "can!"
@@ -734,19 +734,19 @@ msgstr ""
 "Sélectionnez le type de demande ci-dessous et nous vous répondrons dans les "
 "plus brefs délais "
 
-#: display/contact.php:28 display/contact.php:30
+#: display/contact.php:22 display/contact.php:24
 msgid "GENERAL AND AFTER-SALES"
 msgstr "GENERALITE ET APRES VENTES"
 
-#: display/contact.php:38 display/contact.php:40
+#: display/contact.php:32 display/contact.php:34
 msgid "PRE-SALES"
 msgstr "AVANT VENTE"
 
-#: display/contact.php:48 display/contact.php:50
+#: display/contact.php:42 display/contact.php:44
 msgid "FAULTY GOODS OR RETURNED ITEMS"
 msgstr "BIENS DEFECTUEUX OU ARTICLES RETOURNES"
 
-#: display/privacy_policy.php:2 footer.php:244
+#: display/privacy_policy.php:2 footer.php:247
 msgid "Privacy Policy"
 msgstr "Politique de confidentialité "
 
@@ -1187,117 +1187,117 @@ msgstr "Payez en toute sécurité"
 msgid " SHOP WITH CONFIDENCE "
 msgstr "Faites vos achats en toute sécurité"
 
-#: footer.php:129
+#: footer.php:132
 msgid "About Us"
 msgstr "A propos de nous"
 
-#: footer.php:132
+#: footer.php:135
 #, php-format
 msgid "%s prides itself on great deals without compromise on service! "
 msgstr ""
 "%s vous garantit des bonnes affaires sans impacter la qualité de nos "
 "services! "
 
-#: footer.php:132
+#: footer.php:135
 msgid "Feel free to contact us anytime for more information"
 msgstr "N'hésitez pas à nous contacter pour toute demande d'information. "
 
-#: footer.php:140 footer.php:152
+#: footer.php:143 footer.php:155
 msgid "Subscribe to get our latest news and promotions regularly."
 msgstr ""
 "Inscrivez-vous pour recevoir nos dernières offres et nos promotions "
 "régulières."
 
-#: footer.php:151
+#: footer.php:154
 msgid "Sign up for Newsletter"
 msgstr "Inscrivez vous pour recevoir la Newsletter"
 
-#: footer.php:156
+#: footer.php:159
 msgid "Enter you email address"
 msgstr "Entrez votre adresse mail"
 
-#: footer.php:166
+#: footer.php:169
 msgid "Subscribe"
 msgstr "Inscrivez-vous"
 
-#: footer.php:170
+#: footer.php:173
 msgid "indicates required"
 msgstr "Indique un champ obligatoire"
 
-#: footer.php:185
+#: footer.php:188
 msgid "100% Secure "
 msgstr "100% sécurisé"
 
-#: footer.php:185
+#: footer.php:188
 msgid "with SSL encryption"
 msgstr "Avec le cryptage SSL"
 
-#: footer.php:193
+#: footer.php:196
 msgid "Free Delivery"
 msgstr "Livraison gratuite"
 
-#: footer.php:193
+#: footer.php:196
 msgid "For All Orders*"
 msgstr "Pour toute commande"
 
-#: footer.php:193
+#: footer.php:196
 msgid "Shipping:"
 msgstr "Expédition"
 
-#: footer.php:193
+#: footer.php:196
 msgid "3-5 Working Days"
 msgstr "3-5 jours ouvrés"
 
-#: footer.php:213 header.php:186
+#: footer.php:216 header.php:186
 #, php-format
 msgid "%s Days Money Back Guarantee"
 msgstr "%s jours de garantie remboursement"
 
-#: footer.php:229
+#: footer.php:232
 msgid "Warranty "
 msgstr "Garantie "
 
-#: footer.php:229
+#: footer.php:232
 msgid "Up to 2 Years"
 msgstr "Jusqu'à deux ans"
 
-#: footer.php:241
+#: footer.php:244
 msgid "2015 All Right reserved"
 msgstr "2015 tout droits réservés"
 
-#: footer.php:242
+#: footer.php:245
 msgid "Conditions of Use"
 msgstr "Condition d'utilisation"
 
-#: footer.php:243 review.php:52
+#: footer.php:246 review.php:52
 msgid "Shipping"
 msgstr "Expédition"
 
-#: footer.php:249
+#: footer.php:252
 msgid "SELECT SHIPPING COUNTRY"
 msgstr "Choisissez un pays d'expédition "
 
-#: footer.php:252
+#: footer.php:255
 msgid "Australia"
 msgstr "Australie"
 
-#: footer.php:253
+#: footer.php:256
 msgid "Belgium"
 msgstr "Belgique"
 
-#: footer.php:254
+#: footer.php:257
 msgid "Finland"
 msgstr "Finlande"
 
-#: footer.php:255
+#: footer.php:258
 msgid "France"
 msgstr "France"
 
-#: footer.php:256
+#: footer.php:259
 msgid "Great Britain"
 msgstr "Grande Bretagne"
 
-#: footer.php:257
+#: footer.php:260
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
@@ -1355,7 +1355,7 @@ msgstr "Premiers résultats de recherche"
 msgid "%s item(s) - %s"
 msgstr "%s article(s)- %s"
 
-#: index.php:87
+#: index.php:87 product/grid.php:14
 msgid "Collections"
 msgstr "Collections"
 
@@ -1812,26 +1812,34 @@ msgstr "Quantité"
 msgid "4-7 working days delivery"
 msgstr "4-7 jours ouvrés de livraison"
 
-#: product/detail.php:127
+#: product/detail.php:149
 msgid "Specification"
 msgstr "Spécifications "
 
-#: product/detail.php:128
+#: product/detail.php:150
 msgid "Overview"
 msgstr "Apreçu "
 
-#: product/detail.php:129
+#: product/detail.php:151
 msgid "In the box"
 msgstr "Dans la boîte"
 
-#: product/detail.php:130
+#: product/detail.php:152
 msgid "Recommended Accessories"
 msgstr "Accessoirs recommandés "
 
-#: product/detail.php:131
+#: product/detail.php:153
 #, php-format
 msgid "Reviews %s"
 msgstr "Avis %s"
+
+#: product/grid.php:14
+msgid "latest arrival"
+msgstr "dernières arrivées"
+
+#: product/grid.php:14
+msgid "best seller"
+msgstr "meilleures ventes"
 
 #: product/related_product.php:4
 msgid "Related Products"
@@ -2674,12 +2682,6 @@ msgstr "Enregistrez"
 
 #~ msgid "CATEGORIES"
 #~ msgstr "Catégorie"
-
-#~ msgid "latest arrival"
-#~ msgstr "dernières arrivées"
-
-#~ msgid "best seller"
-#~ msgstr "meilleures ventes"
 
 #~ msgid "Not a valid fingerprint"
 #~ msgstr "L'empreinte digitale n'est pas valide "
