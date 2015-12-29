@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2015-12-23 12:23+0800\n"
-"PO-Revision-Date: 2015-12-23 13:55+0800\n"
+"POT-Creation-Date: 2015-12-28 23:36+0800\n"
+"PO-Revision-Date: 2015-12-29 16:08+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -183,7 +183,7 @@ msgstr "Continua"
 
 #: checkout/index.php:30
 msgid "Returning Customer"
-msgstr "Già cliente"
+msgstr "Cliente Registrato"
 
 #: checkout/index.php:31
 msgid "I am a returning customer"
@@ -729,7 +729,7 @@ msgstr "PRE-ACQUISTO"
 msgid "FAULTY GOODS OR RETURNED ITEMS"
 msgstr "GUASTI O RESTITUZIONI"
 
-#: display/privacy_policy.php:2 footer.php:244
+#: display/privacy_policy.php:2 footer.php:247
 msgid "Privacy Policy"
 msgstr "Politiche di Privacy"
 
@@ -1171,113 +1171,113 @@ msgstr "PAGA CON TRANQUILLITA"
 msgid " SHOP WITH CONFIDENCE "
 msgstr "ACQUISTA CON TRANQUILLITA"
 
-#: footer.php:129
+#: footer.php:132
 msgid "About Us"
 msgstr "Chi siamo"
 
-#: footer.php:132
+#: footer.php:135
 #, php-format
 msgid "%s prides itself on great deals without compromise on service! "
 msgstr "%s vanta offerte grandiose senza risparmiare sul servizio!"
 
-#: footer.php:132
+#: footer.php:135
 msgid "Feel free to contact us anytime for more information"
 msgstr "Contattaci in qualsiasi momento per maggiori informazioni"
 
-#: footer.php:140 footer.php:152
+#: footer.php:143 footer.php:155
 msgid "Subscribe to get our latest news and promotions regularly."
 msgstr "Iscriviti per ricevere regolarmente le ultime notizie e promozioni."
 
-#: footer.php:151
+#: footer.php:154
 msgid "Sign up for Newsletter"
 msgstr "Iscriviti alla Newsletter"
 
-#: footer.php:156
+#: footer.php:159
 msgid "Enter you email address"
 msgstr "Inserisci il tuo indirizzo email"
 
-#: footer.php:166
+#: footer.php:169
 msgid "Subscribe"
 msgstr "Iscriviti"
 
-#: footer.php:170
+#: footer.php:173
 msgid "indicates required"
 msgstr "Indica campi obbligatori"
 
-#: footer.php:185
+#: footer.php:188
 msgid "100% Secure "
 msgstr "100% Sicuro"
 
-#: footer.php:185
+#: footer.php:188
 msgid "with SSL encryption"
 msgstr "con Criptaggio SSL"
 
-#: footer.php:193
+#: footer.php:196
 msgid "Free Delivery"
 msgstr "Consegna Gratuita"
 
-#: footer.php:193
+#: footer.php:196
 msgid "For All Orders*"
 msgstr "per tutti gli ordini"
 
-#: footer.php:193
+#: footer.php:196
 msgid "Shipping:"
 msgstr "Spedizione:"
 
-#: footer.php:193
+#: footer.php:196
 msgid "3-5 Working Days"
 msgstr "3-5 Giorni Lavorativi"
 
-#: footer.php:213 header.php:186
+#: footer.php:216 header.php:186
 #, php-format
 msgid "%s Days Money Back Guarantee"
 msgstr "%s Giorni Garanzia Soddisfatti o Rimborsati"
 
-#: footer.php:229
+#: footer.php:232
 msgid "Warranty "
 msgstr "Garanzia"
 
-#: footer.php:229
+#: footer.php:232
 msgid "Up to 2 Years"
 msgstr "Fino a 2 anni"
 
-#: footer.php:241
+#: footer.php:244
 msgid "2015 All Right reserved"
 msgstr "2015 Tutti i Diritti Riservati"
 
-#: footer.php:242
+#: footer.php:245
 msgid "Conditions of Use"
 msgstr "Condizioni d' Uso"
 
-#: footer.php:243 review.php:52
+#: footer.php:246 review.php:52
 msgid "Shipping"
 msgstr "Spedizione"
 
-#: footer.php:249
+#: footer.php:252
 msgid "SELECT SHIPPING COUNTRY"
 msgstr "SELEZIONA IL PAESE DI SPEDIZIONE"
 
-#: footer.php:252
+#: footer.php:255
 msgid "Australia"
 msgstr "Australia"
 
-#: footer.php:253
+#: footer.php:256
 msgid "Belgium"
 msgstr "Belgio"
 
-#: footer.php:254
+#: footer.php:257
 msgid "Finland"
 msgstr "Finlandia"
 
-#: footer.php:255
+#: footer.php:258
 msgid "France"
 msgstr "Francia"
 
-#: footer.php:256
+#: footer.php:259
 msgid "Great Britain"
 msgstr "Regno Uito"
 
-#: footer.php:257
+#: footer.php:260
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
@@ -1311,7 +1311,7 @@ msgstr "Entra"
 
 #: header.php:190
 msgid "Free Delivery For All Orders"
-msgstr "Consegna Gratuita per Tutti glin Ordini"
+msgstr "Consegna Gratuita per Tutti gli Ordini"
 
 #: header.php:194
 msgid "Up to 2 Years Warranty"
@@ -1335,7 +1335,7 @@ msgstr "I Più Cercati"
 msgid "%s item(s) - %s"
 msgstr "%s articolo(i) - %s"
 
-#: index.php:87
+#: index.php:87 product/grid.php:14
 msgid "Collections"
 msgstr "Collezioni"
 
@@ -1788,26 +1788,34 @@ msgstr "Qtà:"
 msgid "4-7 working days delivery"
 msgstr "Consegna in 4-7 giorni lavorativi"
 
-#: product/detail.php:127
+#: product/detail.php:149
 msgid "Specification"
 msgstr "Specifiche"
 
-#: product/detail.php:128
+#: product/detail.php:150
 msgid "Overview"
 msgstr "Panoramica"
 
-#: product/detail.php:129
+#: product/detail.php:151
 msgid "In the box"
 msgstr "Nella Scatola"
 
-#: product/detail.php:130
+#: product/detail.php:152
 msgid "Recommended Accessories"
 msgstr "Accessori raccomandati"
 
-#: product/detail.php:131
+#: product/detail.php:153
 #, php-format
 msgid "Reviews %s"
 msgstr "Recensioni %s"
+
+#: product/grid.php:14
+msgid "latest arrival"
+msgstr "Ultimi Arrivi"
+
+#: product/grid.php:14
+msgid "best seller"
+msgstr "I Più Venduti"
 
 #: product/related_product.php:4
 msgid "Related Products"

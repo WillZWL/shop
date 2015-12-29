@@ -12,7 +12,7 @@
 }
 
 .img-logo {
-	width: 200px;
+	width: 250px;
 }
 #pav-mainnav {
 	margin-left: -27px;
@@ -562,7 +562,7 @@ input.btn-newsletter {
 }
 
 .contact .box {
-    width:90%;height:185px;
+    /*width:90%;*/height:185px;
     border: 2px solid #a9a9a9;
     padding:125px 27% 0 27%;
     line-height:20px;

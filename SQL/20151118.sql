@@ -151,4 +151,15 @@ MODIFY COLUMN `ext_status`  varchar(2) CHARACTER SET utf8 COLLATE utf8_general_c
 ALTER TABLE `pending_google_api_request`
 ADD COLUMN `google_product_status`  char(1) NOT NULL DEFAULT '' AFTER `condition`;
 
+
+insert into affiliate (affiliate_id, platform_id, affiliate_description, ext_party, create_on, create_at, create_by, modify_at, modify_by)
+values
+('GOSGB', 'WEBGB', 'Google Shopping', 'GOOGLEBASE', now(), '2130706433', 'oswald', '2130706433', 'oswald'),
+('GOSFR', 'WEBFR', 'Google Shopping', 'GOOGLEBASE', now(), '2130706433', 'oswald', '2130706433', 'oswald'),
+('GOSAU', 'WEBAU', 'Google Shopping', 'GOOGLEBASE', now(), '2130706433', 'oswald', '2130706433', 'oswald'),
+('GOSNZ', 'WEBNZ', 'Google Shopping', 'GOOGLEBASE', now(), '2130706433', 'oswald', '2130706433', 'oswald'),
+('GOSES', 'WEBES', 'Google Shopping', 'GOOGLEBASE', now(), '2130706433', 'oswald', '2130706433', 'oswald'),
+('GOSIT', 'WEBIT', 'Google Shopping', 'GOOGLEBASE', now(), '2130706433', 'oswald', '2130706433', 'oswald'),
+('GOSPL', 'WEBPL', 'Google Shopping', 'GOOGLEBASE', now(), '2130706433', 'oswald', '2130706433', 'oswald');
+
 /* above is LIVE */

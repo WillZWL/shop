@@ -12,18 +12,6 @@
                                             <fieldset class="footer-fieldset" style="background-color: #999 !important;border:0px !important;">
 
                                                 <ul class="list-inline" style="margin-top:8px;">
-                                                        <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/paypal.png">
-                                                        </li>
-                                                        <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/visa.png">
-                                                        </li>
-                                                        <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/visa-debit.png">
-                                                        </li>
-                                                        <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/mastercard.png">
-                                                        </li>
                                                     <?php
                                                         $siteobj = \PUB_Controller::$siteInfo;
                                                         $countryid = $siteobj->getPlatformCountryId();
@@ -64,6 +52,18 @@
                                                          <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/Przelewy24.png">
                                                         </li>-->
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/visa.png">
+                                                        </li>
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/visa-debit.png">
+                                                        </li>
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/mastercard.png">
+                                                        </li>
+                                                        <li class="footer-fieldsetitem">
+                                                            <img src="/themes/default/asset/image/paypal.png">
+                                                        </li>
                                                 </ul>
                                            </fieldset>
                                         </div>

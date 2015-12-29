@@ -10,58 +10,60 @@ class SpecialOrderService extends BaseService
 
     public function addSoForSpecialOrder($post_data, $platform_id)
     {
-        $client_id = $post_data["client"]["id"];
+        $this->getService("SoFactory")->createSaleOrder();
 
-        if (empty($client_id)) {
-            $_SESSION["NOTICE"] = "ERROR " . __LINE__. " no such client in db";
-        } else {
-            $client_obj = $this->getDao('Client')->get(["id"=>$client_id]);
-        }
-
-        if (empty($_SESSION["NOTICE"])) {
-            $item_arr = [];
-            $soi_price = 0;
-            $soi_data = $post_data["soi"];
-            if ($soi_data) {
-                foreach ($soi_data as $rskey=>$rsvalue) {
-                    if (!empty($soi_data[$rskey]["sku"])) {
-                        $sku = $soi_data[$rskey]["sku"];
-                        $qty = $soi_data[$rskey]["qty"];
-
-                        $price = sprintf("%.2f", $soi_data[$rskey]["price"]);
-
-                        if (isset($item_arr[$sku][$price])) {
-                            $item_arr[$sku][$price] += $qty;
-                        } else {
-                            $item_arr[$sku][$price] = $qty;
-                        }
-
-                        $soi_price += $qty * $price;
-                    }
-                }
-            }
-            unset($post_data["soi"]);
-            $post_data["soi"] = $item_arr;
-
-            $vars = $post_data;
-            $parent_so_obj = $this->getDao('So')->get(["so_no" => $vars["parent_so_no"]]);
-            if ($parent_so_obj->getSplitSoGroup()) {
-                if ($split_parent_so_no = $parent_so_obj->getSplitSoGroup())
-                {
-                    $vars["parent_so_no"]  = $split_parent_so_no;
-                    $vars["split_so_group"]  = "";
-                }
-            }
-
-            $vars["client"] = $client_obj;
-            $vars["platform_id"] = $platform_id;
-            $vars["biz_type"] = "special";
-            $vars["special"] = $special;
-            $vars["soi_price"] = $soi_price;
-            $vars["vat_exempt"] = $vars['vat_exempt'];
-            $vars["customized_delivery"] = $vars['delivery_charge'];
-
-            $_SESSION["NOTICE"] =  "Here is POST_data_to_so code";
+//        $client_id = $post_data["client"]["id"];
+//
+//        if (empty($client_id)) {
+//            $_SESSION["NOTICE"] = "ERROR " . __LINE__. " no such client in db";
+//        } else {
+//            $client_obj = $this->getDao('Client')->get(["id"=>$client_id]);
+//        }
+//
+//        if (empty($_SESSION["NOTICE"])) {
+//            $item_arr = [];
+//            $soi_price = 0;
+//            $soi_data = $post_data["soi"];
+//            if ($soi_data) {
+//                foreach ($soi_data as $rskey=>$rsvalue) {
+//                    if (!empty($soi_data[$rskey]["sku"])) {
+//                        $sku = $soi_data[$rskey]["sku"];
+//                        $qty = $soi_data[$rskey]["qty"];
+//
+//                        $price = sprintf("%.2f", $soi_data[$rskey]["price"]);
+//
+//                        if (isset($item_arr[$sku][$price])) {
+//                            $item_arr[$sku][$price] += $qty;
+//                        } else {
+//                            $item_arr[$sku][$price] = $qty;
+//                        }
+//
+//                        $soi_price += $qty * $price;
+//                    }
+//                }
+//            }
+//            unset($post_data["soi"]);
+//            $post_data["soi"] = $item_arr;
+//
+//            $vars = $post_data;
+//            $parent_so_obj = $this->getDao('So')->get(["so_no" => $vars["parent_so_no"]]);
+//            if ($parent_so_obj->getSplitSoGroup()) {
+//                if ($split_parent_so_no = $parent_so_obj->getSplitSoGroup())
+//                {
+//                    $vars["parent_so_no"]  = $split_parent_so_no;
+//                    $vars["split_so_group"]  = "";
+//                }
+//            }
+//
+//            $vars["client"] = $client_obj;
+//            $vars["platform_id"] = $platform_id;
+//            $vars["biz_type"] = "special";
+//            $vars["special"] = $special;
+//            $vars["soi_price"] = $soi_price;
+//            $vars["vat_exempt"] = $vars['vat_exempt'];
+//            $vars["customized_delivery"] = $vars['delivery_charge'];
+//
+//            $_SESSION["NOTICE"] =  "Here is POST_data_to_so code";
             /*
 
             Here is POST_data_to_so code
@@ -69,7 +71,7 @@ class SpecialOrderService extends BaseService
             // redirect($_SESSION["LISTPAGE"]);
 
             */
-        }
+ //       }
     }
 
     public function processDataForOnHold($post_data)
@@ -187,10 +189,10 @@ class SpecialOrderService extends BaseService
     public function findAllSoByClientId($client_id) {
         $where = ["status >=" => 3, "client_id" => $client_id];
         $option = ["limit" => -1, "orderby" => "so_no asc"];
+
         if ($so_list = $this->getDao('So')->getList($where, $option)) {
             $so_arr = [];
-            foreach($so_list as $so)
-            {
+            foreach($so_list as $so) {
                 $new_so = [];
                 $new_so["so_no"] = $so->getSoNo();
                 $new_so["order_create_date"] = $so->getOrderCreateDate();
@@ -201,13 +203,12 @@ class SpecialOrderService extends BaseService
                 $new_so["hold_status"] = $so->getHoldStatus();
 
                 $new_so["split_level"] = $new_so["is_split_child"] = "";
-                if($so->getHoldStatus() == 15)
-                {
+                if($so->getHoldStatus() == 15) {
                     $new_so["split_level"] = "";
                     $new_so["is_split_child"] = "0";
                 }
-                if(($so->getHoldStatus() != 15) && ($so->getSplitSoGroup() != ''))
-                {
+
+                if(($so->getHoldStatus() != 15) && ($so->getSplitSoGroup() != '')) {
                     # this so is a child of split order
                     $new_so["split_level"] = "(split_so_group: ".$so->getSplitSoGroup()." )";
                     $new_so["is_split_child"] = "1";

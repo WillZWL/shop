@@ -294,6 +294,11 @@ class ProductOverviewWebsite extends MY_Controller
         $result_row = $this->sc['BatchExportImport']->importSkuPrice($_FILES["datafile"]["tmp_name"]);
     }
 
+    public function uploadClearanceSku()
+    {
+        $this->sc['BatchExportImport']->uploadClearanceSku($_FILES['clearance_datafile']['tmp_name']);
+    }
+
     public function exportAffiliateFeed()
     {
         if ($_POST) {

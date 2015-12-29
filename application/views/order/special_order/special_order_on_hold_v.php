@@ -161,7 +161,8 @@
                 ?>
                         <td>
                             <input type="button" value="<?=$lang["delete"]?>" onClick="if (confirm('<?=$lang["delete_confirm"]?>')){Proc('<?=$obj->getSoNo()?>', 0, 0);}"> &nbsp; &nbsp;
-                            <input type="button" value="<?=$lang["approve"]?>" onClick="if(confirm('<?=$lang["move_to_pending"]?>')) Proc('<?=$obj->getSoNo()?>', <?=$next_level_order_status[$obj->getSoNo()]?>, <?=$hold_status[$obj->getSoNo()]?>);"></td>
+                            <input type="button" value="<?=$lang["approve"]?>" onClick="if(confirm('<?=$lang["move_to_pending"]?>')) Proc('<?=$obj->getSoNo()?>', <?=$next_level_order_status[$obj->getSoNo()]?>, <?=$hold_status[$obj->getSoNo()]?>);">
+                        </td>
                         <td>
                 <?php if (check_app_feature_access_right($app_id, "ORD001101_print_invoice")) :?>
                             <input type="checkbox" name="check[<?=$obj->getSoNo()?>]" value="<?=$obj->getSoNo()?>">

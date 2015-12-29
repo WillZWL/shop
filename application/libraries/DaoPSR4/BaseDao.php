@@ -264,7 +264,7 @@ abstract class BaseDao
                 $this->updateAfterExecute($obj);
             }
 
-            return $affected;
+            return ($affected > 0) ? $affected : ture;
         } else {
             return false;
         }

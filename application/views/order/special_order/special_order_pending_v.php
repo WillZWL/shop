@@ -179,10 +179,10 @@
                 <tr>
                     <td align="right" style="padding-right:8px;">
                         <input type="button" value="<?= $lang['print_custom_selected'] ?>"
-                               onClick="this.form.action='<?= base_url() ?>order/order_fulfilment/custom_invoice';this.form.target='_blank';this.form.submit();this.form.target='';this.form.action='';">
+                               onClick="this.form.action='<?= base_url() ?>order/integrated_order_fulfillment/custom_invoice';this.form.target='_blank';this.form.submit();this.form.target='';this.form.action='';">
                         &nbsp;|&nbsp
                         <input type="button" value="<?= $lang['print_selected'] ?>"
-                               onClick="this.form.action='<?= base_url() ?>order/order_fulfilment/invoice';this.form.target='_blank';this.form.submit();this.form.target='';this.form.action='';">
+                               onClick="this.form.action='<?= base_url() ?>order/integrated_order_fulfillment/invoice';this.form.target='_blank';this.form.submit();this.form.target='';this.form.action='';">
                     </td>
                 </tr>
             </table>
