@@ -13,7 +13,7 @@
                         <li><a href="#cancel_order"><?= _('CANCELLAZIONE ORDINI') ?></a></li>
                         <li><a href="#defective"><?= _('ARTICOLI DIFETTOSI') ?></a></li>
                         <li><a href="#warranties"><?= _('GARANZIA SUI PRODOTTI ') ?></a></li>
-                        <li><a href="#liability"><?= _('DICHIARAZIONE DI LIMITAZIONE DI RESPONSABILITA') ?></a></li>
+                        <li><a href="#liability"><?= _('DICHIARAZIONE DI LIMITAZIONE DI RESPONSABILITA’') ?></a></li>
                         <li><a href="#security"><?= _('SICUREZZA') ?></a></li>
                         <li><a href="#revisions"><?= _('SUCCESSIVE MODIFICHE DELLE CONDIZIONI') ?></a></li>
                         <br /><br />
@@ -36,7 +36,7 @@
                             <li><?= _('Eseguire un ordine su NuovaDigitale.it o') ?></li>
                             <li><?= _('Utilizzare il sito come risorsa di shopping, senza apportare modifiche ai contenuti e mantenendo tutti gli avvisi riguardanti diritti d’autore e titolarità presenti nei contenuti.') ?></li>
                         </ul>
-                        <?= _('Esclusiti i propositi di acquisto ed ordine, nessuno dei contenuti può essere copiato, riprodotto, distribuito, ripubblicato, scaricato, esposto, mostrato elettronicamente o meccanicamente, trasmesso, registrato, rispecchiato in alcun modo, fotocopiato senza previa autorizzazione scritta di ChatandVision o il delegato titolare dei diritti d’autore.') ?>
+                        <?= _('Esclusi i propositi di acquisto ed ordine, nessuno dei contenuti può essere copiato, riprodotto, distribuito, ripubblicato, scaricato, esposto, mostrato elettronicamente o meccanicamente, trasmesso, registrato, rispecchiato in alcun modo, fotocopiato senza previa autorizzazione scritta di ChatandVision o il delegato titolare dei diritti d’autore.') ?>
                         <br /><br />
                         <?= _('Si prega di notare che il permesso qui garantito termina automaticamente in caso si contravvenga a termini e condizioni del sito.  Qualsiasi altro utilizzo del contenuto  inclusa riproduzione per propositi non corrispondenti a quanto specificato qui sopra, modifiche, distribuzione o diffusione, violano le leggi a tutela della proprietà intellettuale e , senza previo permesso scritto di ChatandVision, sono strettamente proibite.') ?>
                         <br /><br />
