@@ -84,7 +84,7 @@
 
                     <h3 id="defective"><?= _('USZKODZONY TOWAR') ?></h3>
                     <p>
-                        <?= _('W mało prawdopodobnym przypadku, gdyby zamówienie zostało uszkodzone w czasie transportu należy się z nami natychmiast skontaktować. Proszę wysłać do nas produkt w oryginalnym opakowaniu i ważny formularz zwrotu (Return Merchandise Authorization). Według woli klienta zorganizujemy wymianę towaru na nowy lub dokonamy zwrotu wpłaty. Należy pamiętać, że nie jesteśmy w stanie zaoferować zwrotu pieniędzy, jeśli zostaniemy powiadomieni o uszkodzonym towarze po upływie 30 dni licząc od dnia następnego po otrzymaniu towarów.') ?>
+                        <?= _('W mało prawdopodobnym przypadku, gdyby zamówienie zostało uszkodzone w czasie transportu należy się z nami natychmiast skontaktować. Proszę wysłać do nas produkt w oryginalnym opakowaniu i ważny formularz zwrotu (Return Merchandise Authorization). Według woli klienta zorganizujemy wymianę towaru na nowy lub dokonamy zwrotu wpłaty. Należy pamiętać, że nie jesteśmy w stanie zaoferować zwrotu pieniędzy, jeśli zostaniemy powiadomieni o uszkodzonym towarze po upływie 6 dni licząc od dnia następnego po otrzymaniu towarów.') ?>
                     </p>
                     <br />
                     <p><?= _('Podczas procesu zwrotu, ChatandVision Ltd będzie się z Państwem kontaktować poprzez e-mail na temat kwestii wymagających wyjaśnienia i zgody, używając nazwy handlowej Elektroraj. Jeżeli nie otrzymamy odpowiedzi w przeciągu 7 dni liczac od dnia wyslania maila, ChatandVision wyśle przypomnienie w postaci 1 i 2 maila w przeciągu 7 dni. Jeżeli nadal nie otrzymamy odpowiedzi w przeciągu 7 dni liczac od dnia wyslania drugiego maila, ChatandVision wyśle 3. i ostateczny e-mail wraz z listem. Jeżeli po tym czasie nie otrzymamy odpowiedzi w przeciągu 2 tygodnii licząc od nia ostatniej próby kontaktu, ChatandVision rości sobie prawo do dysponowania reklamowanym sprzętem według własnego uznania.') ?></p>
@@ -121,7 +121,7 @@
                                  - Szkoda, usterki lub awarii w wyniku przeróbki lub naprawy wykonane przez kogokolwiek innego niż nasz sklep
                                  - Wgniecenia, zadrapania i inne, które występują w czasie uważane za normalne zużycie
                                  - Przypadkowe uszkodzenie (w tym między innymi na wstrząsy, uderzenia, upuszczenie, zalania lub uszkodzenia poprzez piasek)
-                                 - Nie jest zadowolenie z produktu
+                                 - Niezadowolenia z produktu
                             ') ?>
                     </p>
                     <br /><br />

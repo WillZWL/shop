@@ -46,7 +46,7 @@
 
                     <h3 id="placing_order"><?= _('PASSER COMMANDE') ?></h3>
                     <p>
-                        <?= _('Les prix proposés sur ce site sont réservés aux commandes par internet. Prix et disponibilité des articles sont sujet à modification sans notification préalable. Tout prix public recommandé affiché sur ce site est basé sur la recommandation  émanant du constructeur et peut ne pas être représentatif du prix de marché correspondant à un secteur géographique particulier.') ?>
+                        <?= _('Les prix proposés sur ce site sont réservés aux commandes par internet. Le prix et la disponibilité des articles sont sujets à modification sans notification préalable. Tout prix public recommandé affiché sur ce site est basé sur la recommandation  émanant du constructeur et peut ne pas être représentatif du prix de marché correspondant à un secteur géographique particulier.') ?>
                         <br /><br />
                         <?= _('Toute référence à une économie faite sur ce site relève d’économie réalisée par rapport au prix public constaté. L’économie en question peut varier en fonction du bien acheté et de la date d’achat.') ?>
                         <br /><br />
@@ -84,10 +84,10 @@
 
                     <h3 id="defective"><?= _('ARTICLES DEFFECTUEUX') ?></h3>
                     <p>
-                        <?= _('Dans le cas improbable où une commande arriverait endommagée par le transit, nous vous prions de nous contacter immédiatement. Il vous sera demandé de renvoyer le produit dans son emballage d’origine et un formulaire RMA (Autorisation de Retour Marchandise) vous sera fourni. Nous arrangerons un remplacement ou remboursement rapide, en fonction de votre convenance. Nous vous prions de noter que nous ne sommes pas en mesure de fournir de remboursement si la première notification intervient après 30 jours à compter du jour suivant la réception des biens.') ?>
+                        <?= _('Dans le cas improbable où une commande arriverait endommagée par le transit, nous vous prions de nous contacter immédiatement. Il vous sera demandé de renvoyer le produit dans son emballage d’origine et un formulaire RMA (Autorisation de Retour Marchandise) vous sera fourni. Nous arrangerons un remplacement ou remboursement rapide, en fonction de votre convenance. Nous vous prions de noter que nous ne sommes pas en mesure de fournir de remboursement si la première notification intervient après 6 jours à compter du jour suivant la réception des biens.') ?>
                     </p>
                     <br />
-                    <p><?= _('Au cours du processus de RMA, ChatandVision Ltd assurera le suivi via e-mail pour toutes les questions nécessitant votre accord, via le nom de commerce Numeristock. A défaut de réponse sous 7 jours à compter de la date d’envoi du message, ChatandVision vous recontactera par le biais d’un premier puis d’un second e-mail écartés de sept jours chacun. En l’absence de réponse après sept jours à compter du second message, ChatandVision enverra un ultime e-mail en même temps qu’un courrier en recommandé. A défaut de réponse sous deux semaines, ChantandVision se réserve le droit de disposer de l’article à sa discrétion.') ?></p>
+                    <p><?= _('Au cours du processus de RMA, ChatandVision Ltd assurera le suivi via e-mail pour toutes les questions nécessitant votre accord, via le nom de commerce Numeristock. A défaut de réponse sous 7 jours à compter de la date d’envoi du message, ChatandVision vous recontactera par le biais d’un premier puis d’un second e-mail écartés de sept jours chacun. En l’absence de réponse après sept jours à compter du second message, ChatandVision enverra un ultime e-mail en même temps qu’un courrier. A défaut de réponse sous deux semaines, ChantandVision se réserve le droit de disposer de l’article à sa discrétion.') ?></p>
 
                     <br /><br />
 
@@ -118,7 +118,7 @@
                         </tr>
                         </table>
                         <?= _('Cette offre de garantie ne couvre pas :
-                                -   Les dommages, panes ou défauts dus à des manipulations ou réparations effectuées par tout autre acteur que nous
+                                -   Les dommages, pannes ou défauts dus à des manipulations ou réparations effectuées par tout autre acteur que nous
                                 -   Les rayures, impacts et autres détériorations tombant dus à une utilisation normale
                                 -   Les dommages accidentels (Y compris, mais non limités aux chutes, impacts, dommages liés à l’eau ou au sable)
                                 -   Les cas où le retour serait effectué pour cause d’insatisfaction liée au client
@@ -128,7 +128,7 @@
 
                     <h3 id="liability"><?= _('DECHARGE DE RESPONSABILITE') ?></h3>
                     <p>
-                        <?= _('EN AUCUN CAS CHATANVISION NE SAURAIT ETRE TENU POUR RESPONSABLE POUR TOUT DOMMAGE SPECIAL, INDIRECT, OU AUTRES, INCLUANT MAIS NON LIMITES A LA PERTE LIEE A L’UTILISATION, PERTE DE DONNEES OU DE PROFITS, SANS INFLUENCE DE LA FORME DE TOUTE ACTION, INCLUANT MAIS NON LIMITEES AU CONTRAT, LA NEGLIGENCE OU AUTRE VICE D’UTILISATION NAISSANT HORS DE NOTRE CONNECTION AVEC L’UTILISATION, LA COPIE OU L’AFFICHAGE DE CONTENUS DE CE SITE. Dans un effort pour fournir à ses clients une information toujours d’actualité, ChatandVision peut, ponctuellement, effectuer des changements de contenu et de produits ou services décrits sur son site.') ?>
+                        <?= _('EN AUCUN CAS CHATANVISION NE SAURAIT ETRE TENU POUR RESPONSABLE POUR TOUT DOMMAGE SPECIAL, INDIRECT, OU AUTRES, INCLUANT MAIS NON LIMITES A LA PERTE LIEE A L’UTILISATION, PERTE DE DONNEES OU DE PROFITS, SANS INFLUENCE DE LA FORME DE TOUTE ACTION, INCLUANT MAIS NON LIMITEES AU CONTRAT, LA NEGLIGENCE OU AUTRE VICE D’UTILISATION NAISSANT HORS DE NOTRE CONNEXION AVEC L’UTILISATION, LA COPIE OU L’AFFICHAGE DE CONTENUS DE CE SITE. Dans un effort pour fournir à ses clients une information toujours d’actualité, ChatandVision peut, ponctuellement, effectuer des changements de contenu et de produits ou services décrits sur son site.') ?>
                         <br /><br />
                         <?= _('ChatandVision Ltd n’est pas responsable de toute perte causée par un dépassement du délai de livraison prévu.') ?>
                     </p>
