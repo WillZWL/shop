@@ -3066,3 +3066,9 @@ msgstr ""
 #: conditions_of_use.php:126
 msgid "Updated: July 09, 2015 "
 msgstr "Zaktualizowane: 9 czerwiec 2015"
+
+
+
+#: checkout/paymentSuccess.php:12
+msgid "Please note all charges will appear on your statement as CHATANDVISION."
+msgstr "Proszę zauważyć, że wszystkie opłaty będą widniały na Państwa wyciągu jako CHATANDVISION.."

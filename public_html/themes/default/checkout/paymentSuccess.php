@@ -9,6 +9,8 @@
             <br>
             <?= _("You will receive an order confirmation email with details of your order and a link to track its progress.") ?>
             <br>
+            <?= _("Please note all charges will appear on your statement as CHATANDVISION.") ?>
+            <br>
             <?= _("We'll send you an email as soon as it's shipped!") ?>
         </div>
     </div>
