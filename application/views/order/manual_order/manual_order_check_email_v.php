@@ -8,34 +8,28 @@
 </head>
 <body style="width:auto">
 <div style="width:auto;text-align:left">
-    <?php
-    if ($client) {
-        ?>
+    <?php if ($client) : ?>
         <b>NAME</b><br>
-        <?= $client->get_title(); ?> <?= $client->get_forename() ?>  <?= $client->get_surname() ?><br>
+        <?= $client->getTitle(); ?> <?= $client->getForename() ?>  <?= $client->getSurname() ?><br>
         <br>
         <b>BILLING ADDRESS</b><br>
-        <?= $client->get_companyname(); ?><br>
-        <?= $client->get_address_1(); ?><br>
-        <?= $client->get_address_2(); ?><br>
-        <?= $client->get_city(); ?><br>
-        <?= $client->get_postcode(); ?><br><br>
+        <?= $client->getCompanyname(); ?><br>
+        <?= $client->getAddress1(); ?><br>
+        <?= $client->getAddress2(); ?><br>
+        <?= $client->getCity(); ?><br>
+        <?= $client->getPostcode(); ?><br><br>
         <b>DELIVERY ADDRESS</b><br>
-        <?= $client->get_del_company(); ?><br>
-        <?= $client->get_del_address_1(); ?><br>
-        <?= $client->get_del_address_2(); ?><br>
-        <?= $client->get_del_city(); ?><br>
-        <?= $client->get_del_postcode(); ?><br>
+        <?= $client->getDelCompany(); ?><br>
+        <?= $client->getDelAddress1(); ?><br>
+        <?= $client->getDelAddress2(); ?><br>
+        <?= $client->getDelCity(); ?><br>
+        <?= $client->getDelPostcode(); ?><br>
         <input type="button" value="Use Billing Address"
                onClick="window.parent.response('<?= obj_to_query($client) ?>');parent.document.getElementById('lbClose').onclick()">
-    <?php
-    } else {
-        ?>
+    <?php else : ?>
         No Client Found!<br>
         <input type="button" value="Enter New Client" onClick="parent.document.getElementById('lbClose').onclick()">
-    <?php
-    }
-    ?>
+    <?php endif; ?>
 </div>
 </body>
 </html>
