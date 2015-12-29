@@ -505,5 +505,9 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['SpecialOrder'] = function () {
             return new S\SpecialOrderService();
         };
+
+        $serviceContainer['ManualOrder'] = function () {
+            return new S\ManualOrderService();
+        };
     }
 }

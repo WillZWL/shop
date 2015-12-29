@@ -200,8 +200,8 @@ class Special_order extends MY_Controller
         $where["biz_type"] = "SPECIAL";
         $where["so.status"] = "1";
         $where["so.hold_status"] = "0";
-        $option["so_item"] = "1";
-        $option["hide_payment"] = "1";
+        // $option["so_item"] = "1";
+        // $option["hide_payment"] = "1";
         $option["orderby"] = $sort." ".$order;
         $option["notes"] = TRUE;
         $option["extend"] = TRUE;
@@ -256,6 +256,7 @@ class Special_order extends MY_Controller
         if ($this->input->post("posted")) {
             $post_data['so_no'] = $this->input->post("so_no");
             $post_data['type'] = $this->input->post("type");
+
             $this->sc['SpecialOrder']->processDataForPending($post_data);
         }
 
@@ -265,8 +266,8 @@ class Special_order extends MY_Controller
         $where["biz_type"] = "SPECIAL";
         $where["so.status"] = "2";
         $where["so.hold_status"] = "0";
-        $option["so_item"] = "1";
-        $option["hide_payment"] = "1";
+        // $option["so_item"] = "1";
+        // $option["hide_payment"] = "1";
 
         if($this->input->get('platform_id') != "") {
             $where["platform_id"] = $this->input->get('platform_id');
