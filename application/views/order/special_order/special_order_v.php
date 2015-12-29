@@ -315,17 +315,6 @@ function loadData()
     }
 }
 
-function checkvat()
-{
-
-    if(document.fm_checkout.vat_exempt.checked) {
-        document.fm_checkout.elements["vat"].disabled == true;
-    } else {
-        document.fm_checkout.elements["vat"].disabled == false;
-    }
-    calcTotal();
-}
-
 function calcTotal()
 {
     var vat_rate = <?=$pbv_obj->getVatPercent()?>;
@@ -334,29 +323,18 @@ function calcTotal()
     var total = 0;
     var vat = 0;
     var st = 0;
-    for(var i=0; i<10;i++)
-    {
+    for(var i=0; i<10;i++) {
 
-        if(document.fm_checkout.elements["soi["+i+"][qty]"].value != "" && document.fm_checkout.elements["soi["+i+"][price]"].value != "")
-        {
+        if(document.fm_checkout.elements["soi["+i+"][qty]"].value != "" && document.fm_checkout.elements["soi["+i+"][price]"].value != "") {
             var cur_price = document.fm_checkout.elements["soi["+i+"][price]"].value*1;
             var cur_qty = document.fm_checkout.elements["soi["+i+"][qty]"].value*1;
             var cur_subtotal = cur_qty * cur_price;
             subtotal += cur_subtotal;
-            <?php
-                if ($pbv_obj->getPlatformCountryId() == "AU")
-                {
-            ?>
+            <?php if ($pbv_obj->getPlatformCountryId() == "AU") : ?>
                 var declared = Math.min(cur_subtotal, 800);
-            <?php
-                }
-                else
-                {
-            ?>
+            <?php else : ?>
                 var declared = cur_subtotal * declared_pcent / 100;
-            <?php
-                }
-            ?>
+            <?php endif; ?>
             vat += declared * vat_rate / 100;
         }
     }
@@ -412,8 +390,7 @@ function additem(str, line, curprice)
     fm.elements["soi[" + line + "][sku]"].value = prod["sku"];
     fm.elements["soi[" + line + "][name]"].value = prod["name"];
     fm.elements["soi[" + line + "][price]"].value = curprice;
-    if (fm.elements["soi[" + line + "][qty]"].value*1 == 0)
-    {
+    if (fm.elements["soi[" + line + "][qty]"].value*1 == 0) {
         fm.elements["soi[" + line + "][qty]"].value = 1;
     }
     fm.elements["soi[" + line + "][price]"].focus();
@@ -423,46 +400,35 @@ function CheckSubmit(fm)
 {
     var hasItem = 0;
     var so_no_list = $("input:radio[name=parent_so_no]:checked");
-    for(var i=0; i<10;i++)
-    {
-        if(document.fm_checkout.elements["soi["+i+"][qty]"].value != "" && document.fm_checkout.elements["soi["+i+"][price]"].value != "")
-        {
+    for(var i=0; i<10;i++) {
+        if(document.fm_checkout.elements["soi["+i+"][qty]"].value != "" && document.fm_checkout.elements["soi["+i+"][price]"].value != "") {
             hasItem += 1;
         }
     }
 
-    if (hasItem == 0)
-    {
+    if (hasItem == 0) {
         alert("Please input an item for product!");
         return false;
     }
 
-    if (so_no_list.length <= 0)
-    {
+    if (so_no_list.length <= 0) {
         alert("Please select an order!");
         return false;
-    }
-    else
-    {
+    } else {
         var orderreason = document.getElementById("order_reason");
         var selected_orderreason = orderreason.options[orderreason.selectedIndex].value;
 
         // if order reason is Sales - APS, check to ensure total value not smaller than split child order's value
-        if(selected_orderreason == 19 || selected_orderreason == 20 || selected_orderreason == 22)
-        {
-            for (var i = 0; i < so_no_list.length; i++)
-            {
-                if(so_no_list[i].checked)
-                {
-                    if(so_no_list[i].getAttribute('is_split_child') == 1)
-                    {
+        if(selected_orderreason == 19 || selected_orderreason == 20 || selected_orderreason == 22) {
+            for (var i = 0; i < so_no_list.length; i++) {
+                if(so_no_list[i].checked) {
+                    if(so_no_list[i].getAttribute('is_split_child') == 1) {
                         var newtotal = document.getElementById("total").innerHTML;
                         newtotal = parseFloat(newtotal);
                         var so_amount = so_no_list[i].getAttribute('so_amount');
                         so_amount = parseFloat(so_amount);
 
-                        if(so_amount > newtotal)
-                        {
+                        if(so_amount > newtotal) {
                             alert("Please re-check the order amount for this split order. It should be split order amount + additional order amount if any.");
                             return false;
                         }

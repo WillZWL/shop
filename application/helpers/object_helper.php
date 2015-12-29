@@ -190,7 +190,7 @@ function obj_to_query($obj)
         foreach ($class_methods as $fct_name) {
             if (substr($fct_name, 0, 3) == "get") {
                 $rskey = camelcase2underscore(substr($fct_name, 3));
-                if (!(strpos($rskey, "create_") === 0 || strpos($rskey, "modify_") === 0)) {
+                if (!(strpos($rskey, "create_") === 0 || strpos($rskey, "modify_") === 0) && !in_array($rskey, ['primary_key', 'increment_field'])) {
                     $rs_ar[] = $rskey . "=" . htmlentities(addslashes(@call_user_func([$obj, "get" . underscore2camelcase($rskey)])), ENT_QUOTES, 'UTF-8');
                 }
             }

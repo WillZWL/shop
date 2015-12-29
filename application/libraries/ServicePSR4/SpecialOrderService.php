@@ -189,10 +189,10 @@ class SpecialOrderService extends BaseService
     public function findAllSoByClientId($client_id) {
         $where = ["status >=" => 3, "client_id" => $client_id];
         $option = ["limit" => -1, "orderby" => "so_no asc"];
+
         if ($so_list = $this->getDao('So')->getList($where, $option)) {
             $so_arr = [];
-            foreach($so_list as $so)
-            {
+            foreach($so_list as $so) {
                 $new_so = [];
                 $new_so["so_no"] = $so->getSoNo();
                 $new_so["order_create_date"] = $so->getOrderCreateDate();
@@ -203,13 +203,12 @@ class SpecialOrderService extends BaseService
                 $new_so["hold_status"] = $so->getHoldStatus();
 
                 $new_so["split_level"] = $new_so["is_split_child"] = "";
-                if($so->getHoldStatus() == 15)
-                {
+                if($so->getHoldStatus() == 15) {
                     $new_so["split_level"] = "";
                     $new_so["is_split_child"] = "0";
                 }
-                if(($so->getHoldStatus() != 15) && ($so->getSplitSoGroup() != ''))
-                {
+
+                if(($so->getHoldStatus() != 15) && ($so->getSplitSoGroup() != '')) {
                     # this so is a child of split order
                     $new_so["split_level"] = "(split_so_group: ".$so->getSplitSoGroup()." )";
                     $new_so["is_split_child"] = "1";

@@ -27,8 +27,7 @@
                 document.getElementById('del_address_1').removeAttribute("notEmpty");
                 document.getElementById('del_city_town').removeAttribute("notEmpty");
                 document.getElementById('del_postcode').removeAttribute("validPostal");
-            }
-            else {
+            } else {
                 document.getElementById('del_country_id').style.display = "";
                 document.getElementById('del_company').style.display = "";
                 document.getElementById('del_name').style.display = "";
@@ -57,18 +56,18 @@
                 <input type="button" value="<?= $lang["add_button"] ?>" class="button"
                        onclick="Redirect('<?= site_url('order/manual_order') ?>')"> &nbsp;
                 <?php
-                if ($this->authorization_service->check_access_rights("ORD001701", "On Hold", 0)) {
+                if ($this->sc['Authorization']->checkAccessRights("ORD001701", "On Hold", 0)) :
                     ?>
                     <input type="button" value="<?= $lang["on_hold_button"] ?>" class="button"
                            onclick="Redirect('<?= site_url('order/manual_order/on_hold') ?>')"> &nbsp;
                 <?php
-                }
-                if ($this->authorization_service->check_access_rights("ORD001702", "Pending", 0)) {
+                endif;
+                if ($this->sc['Authorization']->checkAccessRights("ORD001702", "Pending", 0)) :
                     ?>
                     <input type="button" value="<?= $lang["pending_button"] ?>" class="button"
                            onclick="Redirect('<?= site_url('order/manual_order/pending') ?>')">
                 <?php
-                }
+                endif;
                 ?>
             </td>
         </tr>
@@ -92,11 +91,11 @@
                     <option></option>
                     <?php
                     $sp_selected[$platform_type] = " SELECTED";
-                    foreach ($sp_type_list as $val) {
+                    foreach ($sp_type_list as $val) :
                         ?>
                         <option value="<?= $val ?>"<?= $sp_selected[$val] ?>><?= ucwords(strtolower($val)); ?></option>
                     <?php
-                    }
+                    endforeach;
                     ?>
                 </select>
             </td>
@@ -107,13 +106,13 @@
                     <option></option>
                     <?php
                     $sp_selected[$platform_id] = " SELECTED";
-                    foreach ($sp_list as $obj) {
-                        $id = $obj->get_id();
+                    foreach ($sp_list as $obj) :
+                        $id = $obj->getSellingPlatformId();
                         ?>
                         <option
-                            value="<?= $id ?>"<?= $sp_selected[$id] ?>><?= $id . " - " . $obj->get_name(); ?></option>
+                            value="<?= $id ?>"<?= $sp_selected[$id] ?>><?= $id . " - " . $obj->getName(); ?></option>
                     <?php
-                    }
+                    endforeach;
                     ?>
 
                 </select>
@@ -121,7 +120,7 @@
         </tr>
     </table>
     <?php
-    if ($platform_id) {
+    if ($platform_id) :
         ?>
         <form name="fm_checkout" method="post" onSubmit="return CheckSubmit(this)">
             <table cellpadding="0" cellspacing="0" width="100%" class="bg_row">
@@ -134,19 +133,13 @@
                                 <td width="156">&nbsp;</td>
                                 <td class="warn"><?= $lang["select_product_exists"] ?></td>
                             </tr>
-                            <?php
-                            for ($i = 0; $i < 10; $i++) {
-                                ?>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td><input type="hidden" name="soi[<?= $i ?>][sku]" value="<?= htmlspecialchars($_POST["soi"][$i]["sku"]) ?>"><input name="soi[<?= $i ?>][name]" value="<?= htmlspecialchars($_POST["soi"][$i]["name"]) ?>" style="width:60%" READONLY onKeyUp="calcTotal()"> <a href="<?= base_url() ?>order/manual_order/prod_list/<?= $i ?>/<?= $platform_id ?>" rel="lyteframe" rev="width: 1024px; height: 400px; scrolling: auto;" title="Select Product" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">&nbsp; &nbsp; &nbsp;</a> x <input name="soi[<?= $i ?>][qty]" value="<?= htmlspecialchars($_POST["soi"][$i]["qty"]) ?>" class="int_input" onKeyUp="calcTotal()"> &nbsp; <?= $lang["price"] ?>: <input name="soi[<?= $i ?>][price]" value="<?= htmlspecialchars($_POST["soi"][$i]["price"]) ?>" class="int_input" onKeyUp="calcTotal()">
-                    </td>
-                </tr>
-                    </td>
-                </tr>
-                <?php
-                            }
-                            ?>
+                            <?php for ($i = 0; $i < 10; $i++) : ?>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td><input type="hidden" name="soi[<?= $i ?>][sku]" value="<?= htmlspecialchars($_POST["soi"][$i]["sku"]) ?>"><input name="soi[<?= $i ?>][name]" value="<?= htmlspecialchars($_POST["soi"][$i]["name"]) ?>" style="width:60%" READONLY onKeyUp="calcTotal()"> <a href="<?= base_url() ?>order/manual_order/prod_list/<?= $i ?>/<?= $platform_id ?>" rel="lyteframe" rev="width: 1024px; height: 400px; scrolling: auto;" title="Select Product" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">&nbsp; &nbsp; &nbsp;</a> x <input name="soi[<?= $i ?>][qty]" value="<?= htmlspecialchars($_POST["soi"][$i]["qty"]) ?>" class="int_input" onKeyUp="calcTotal()"> &nbsp; <?= $lang["price"] ?>: <input name="soi[<?= $i ?>][price]" value="<?= htmlspecialchars($_POST["soi"][$i]["price"]) ?>" class="int_input" onKeyUp="calcTotal()">
+                                </td>
+                            </tr>
+                            <?php endfor; ?>
                         </table>
                         <br>
                         <br>
@@ -154,29 +147,28 @@
                             <tr>
                             <tr>
                                 <td width="156">&nbsp;</td>
-                                <td align="right"><?= $lang["sub_total"] ?>: <span id="sub_total"> <?= $default_curr ?>
-                                        0.00</span></td>
+                                <td align="right"><?= $lang["sub_total"] ?>: <span id="sub_total"> <?= $default_curr ?> 0.00</span></td>
                             </tr>
                             <tr>
                                 <td width="156">&nbsp;</td>
-                                <td align="right"><?= $lang["vat_exempt"] ?><input type="checkbox" name="vat_exempt"
-                                                                                   value="1" onClick="checkvat();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $lang["vat"] ?>
-                                    :   <?= $default_curr ?> <input type="text" name="vat" value="0.00" readonly
-                                                                    style="width:50px;"></td>
+                                <td align="right">
+                                    <?= $lang["vat_exempt"] ?>
+                                    <input type="checkbox" name="vat_exempt" value="1" onClick="checkvat();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <?= $lang["vat"] ?> :   <?= $default_curr ?> <input type="text" name="vat" value="0.00" readonly style="width:50px;">
+                                </td>
                             </tr>
                             <tr>
                                 <td width="156">&nbsp;</td>
-                                <td align="right"><?= $lang["delivery_charge"] ?>: <span
-                                        id="delivery_charge"> <?= $default_curr ?> <input type="text"
-                                                                                          name="delivery_charge"
-                                                                                          value="0.00"
-                                                                                          style="width:50px;"
-                                                                                          onKeyUp="calcTotal();"><td>
+                                <td align="right">
+                                    <?= $lang["delivery_charge"] ?>: <span id="delivery_charge"> <?= $default_curr ?>
+                                    <input type="text" name="delivery_charge" value="0.00" style="width:50px;" onKeyUp="calcTotal();">
+                                <td>
                             </tr>
                             <tr>
                                 <td width="156">&nbsp;</td>
-                                <td align="right"><?= $lang["total"] ?>: <span id="total"> <?= $default_curr ?>
-                                        0.00</span></td>
+                                <td align="right">
+                                    <?= $lang["total"] ?>: <span id="total"> <?= $default_curr ?> 0.00</span>
+                                </td>
                             </tr>
                             </tr>
                         </table>
@@ -187,9 +179,9 @@
                                 <td width="150"><span class="warn">*</span> Email address:</td>
                                 <td>
                                     <input name="client[email]" dname="Email Address" class="text"
-                                           value="<?= htmlspecialchars($_POST["client"]["email"]) ?>" notEmpty
-                                           validEmail> <input type="button" value="Check Email"
-                                                              onClick="if (document.fm_checkout.elements['client[email]'].value != '') {document.getElementById('a_check').href='<?= base_url() ?>/order/manual_order/check_email/'+document.fm_checkout.elements['client[email]'].value;document.getElementById('a_check').onclick()}">
+                                               value="<?= htmlspecialchars($_POST["client"]["email"]) ?>" notEmpty validEmail>
+                                    <input type="button" value="Check Email"
+                                               onClick="if (document.fm_checkout.elements['client[email]'].value != '') {document.getElementById('a_check').href='<?= base_url() ?>/order/manual_order/check_email?email='+document.fm_checkout.elements['client[email]'].value;document.getElementById('a_check').onclick()}">
                                     <a id="a_check" href="<?= base_url() ?>/order/manual_order/check_email/"
                                        rel="lyteframe" rev="width: 300px; height: 275px; scrolling: auto;"
                                        title="Check Email"></a>
@@ -205,9 +197,9 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td width="23" colspan="2"><input type="checkbox" name="billaddr" id="billaddr"
-                                                                  onclick="showBaddr()" value="1"/>Click here if Billing
-                                    Address and Cardholder Name is different from Delivery Detail
+                                <td width="23" colspan="2">
+                                    <input type="checkbox" name="billaddr" id="billaddr" onclick="showBaddr()" value="1"/>
+                                    Click here if Billing Address and Cardholder Name is different from Delivery Detail
                                 </td>
                             </tr>
                             <tr>
@@ -218,21 +210,19 @@
                                 <td>
                                     <select name="client[country_id]" class="text">
                                         <?php
-                                        if ($country_list)
-                                        {
-                                        if ($_POST["client"]["country_id"]) {
-                                            $c_selected[$_POST["client"]["country_id"]] = " SELECTED";
-                                        } else {
-                                            $c_selected[$pbv_obj->get_platform_country_id()] = " SELECTED";
-                                        }
-                                        foreach ($country_list as $id => $name)
-                                        {
-                                        ?>
-                                        <option value="<?= $id ?>"<?= $c_selected[$id] ?>><?= $name ?>
-                                            <?php
-                                            }
-                                            }
+                                        if ($country_list) :
+                                            if ($_POST["client"]["country_id"]) :
+                                                $c_selected[$_POST["client"]["country_id"]] = " SELECTED";
+                                            else :
+                                                $c_selected[$pbv_obj->getPlatformCountryId()] = " SELECTED";
+                                            endif;
+                                            foreach ($country_list as $id => $name) :
                                             ?>
+                                            <option value="<?= $id ?>"<?= $c_selected[$id] ?>><?= $name ?>
+                                        <?php
+                                            endforeach;
+                                        endif;
+                                        ?>
                                     </select>
                                 </td>
                             </tr>
@@ -315,28 +305,27 @@
                                 <td>
                                     <select name="client[del_country_id]" class="text">
                                         <?php
-                                        if ($country_list)
-                                        {
-                                        if ($_POST["client"]["del_country_id"]) {
-                                            $c_selected[$_POST["client"]["del_country_id"]] = " SELECTED";
-                                        } else {
-                                            $c_selected[$pbv_obj->get_platform_country_id()] = " SELECTED";
-                                        }
-                                        foreach ($country_list as $id => $name)
-                                        {
-                                        ?>
-                                        <option value="<?= $id ?>"<?= $c_selected[$id] ?>><?= $name ?>
-                                            <?php
-                                            }
-                                            }
+                                        if ($country_list) :
+                                            if ($_POST["client"]["del_country_id"]) :
+                                                $c_selected[$_POST["client"]["del_country_id"]] = " SELECTED";
+                                            else :
+                                                $c_selected[$pbv_obj->getPlatformCountryId()] = " SELECTED";
+                                            endif;
+                                            foreach ($country_list as $id => $name) :
                                             ?>
+                                            <option value="<?= $id ?>"<?= $c_selected[$id] ?>><?= $name ?>
+                                        <?php
+                                            endforeach;
+                                        endif;
+                                        ?>
                                     </select>
                                 </td>
                             </tr>
                             <tr id='del_company' style="display:none">
                                 <td> Delivery Company Name:</td>
-                                <td><input name="client[del_company]" dname="Delivery Company" class="text2"
-                                           value="<?= htmlspecialchars($_POST["client"]["del_company"]) ?>"></td>
+                                <td>
+                                    <input name="client[del_company]" dname="Delivery Company" class="text2" value="<?= htmlspecialchars($_POST["client"]["del_company"]) ?>">
+                                </td>
                             </tr>
                             <tr id='del_name' style="display:none">
                                 <td><span class="warn">*</span> Delivery Name:</td>
@@ -421,9 +410,9 @@
                                         <option value=""></option>
                                         <?php
                                         $or_selected[$_POST["so_extend"]["order_reason"]] = " SELECTED";
-                                        foreach ($order_reason_list as $reason) {
-                                            print "<option value='" . $reason->get_reason_id() . "' " . $or_selected[$reason->get_reason_id()] . ">" . $reason->get_reason_display_name() . "</option>";
-                                        }
+                                        foreach ($order_reason_list as $reason) :
+                                            print "<option value='" . $reason->getReasonId() . "' " . $or_selected[$reason->getReasonId()] . ">" . $reason->getReasonDisplayName() . "</option>";
+                                        endforeach;
                                         ?>
                                     </select>
                                 </td>
@@ -453,9 +442,7 @@
                                          align="absmiddle">
                                 </td>
                             </tr>
-                            <?php
-                            if ($platform_type == 'AMAZON' || $platform_type == 'EBAY' || $platform_type == 'RAKUTEN') {
-                                ?>
+                            <?php if ($platform_type == 'AMAZON' || $platform_type == 'EBAY' || $platform_type == 'RAKUTEN') : ?>
                                 <tr>
                                     <td><span class="warn">*</span> Platform Order Reference Number:</td>
                                     <td>
@@ -466,12 +453,8 @@
                                         }?>>
                                     </td>
                                 </tr>
-                            <?php
-                            }
-                            ?>
-                            <?php
-                            if ($platform_type == 'QOO10') {
-                                ?>
+                            <?php endif; ?>
+                            <?php if ($platform_type == 'QOO10') : ?>
                                 <tr>
                                     <td><span class="warn">*</span> Platform Order Number [Qoo10 packNo]:</td>
                                     <td>
@@ -482,41 +465,39 @@
                                         }?>>
                                     </td>
                                 </tr>
-                            <?php
-                            }
-                            ?>
+                            <?php endif; ?>
                             <tr>
                                 <td><span class="warn">*</span> Payment Mode:</td>
                                 <td>
                                     <select name="payment_gateway" dname="Payment Mode" class="text" notEmpty>
                                         <option></option>
                                         <?php
-                                        if ($payment_gateway_list)
-                                        {
-                                        if ($_POST["payment_gateway"]) {
-                                            $c_selected[$_POST["payment_gateway"]] = " SELECTED";
-                                        }
-                                        foreach ($payment_gateway_list as $obj)
-                                        {
+                                        if ($payment_gateway_list) :
+                                            if ($_POST["payment_gateway"]) :
+                                                $c_selected[$_POST["payment_gateway"]] = " SELECTED";
+                                            endif;
+                                            foreach ($payment_gateway_list as $obj) :
                                         ?>
-                                        <option
-                                            value="<?= $obj->get_id() ?>"<?= $c_selected[$obj->get_id()] ?>><?= $obj->get_name() ?>
-                                            <?php
-                                            }
-                                            }
-                                            ?>
+                                            <option value="<?= $obj->getPaymentGatewayId() ?>"<?= $c_selected[$obj->getPaymentGatewayId()] ?>><?= $obj->getName() ?>
+                                        <?php
+                                            endforeach;
+                                        endif;
+                                        ?>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
-                                <td><span class="warn">*</span> <?php if ($platform_type == 'QOO10') {
-                                        echo "Transaction Reference [Qoo10 orderNo]: ";
-                                    } else {
-                                        echo "Payment Transaction Reference: ";
-                                    }?></td>
+                                <td><span class="warn">*</span>
+                                <?php
+                                if ($platform_type == 'QOO10') :
+                                    echo "Transaction Reference [Qoo10 orderNo]: ";
+                                else :
+                                    echo "Payment Transaction Reference: ";
+                                endif;
+                                ?>
+                                </td>
                                 <td>
-                                    <input name="txn_id" dname="Payment Transaction Reference" class="text"
-                                           value="<?= htmlspecialchars($_POST['txn_id']) ?>" notEmpty>
+                                    <input name="txn_id" dname="Payment Transaction Reference" class="text" value="<?= htmlspecialchars($_POST['txn_id']) ?>" notEmpty>
                                 </td>
                             </tr>
                             <tr height="20px">
@@ -539,16 +520,15 @@
             function checkvat() {
 
                 if (document.fm_checkout.vat_exempt.checked) {
-                    document.fm_checkout.elements["vat"].disabled == true;
-                }
-                else {
-                    document.fm_checkout.elements["vat"].disabled == false;
+                    document.fm_checkout.elements["vat"].disabled = true;
+                } else {
+                    document.fm_checkout.elements["vat"].disabled = false;
                 }
                 calcTotal();
             }
 
             function calcTotal() {
-                var vat_rate = <?=$pbv_obj->get_vat_percent()?>;
+                var vat_rate = <?=$pbv_obj->getVatPercent()?>;
                 var declared_pcent = 100;
                 var subtotal = 0;
                 var total = 0;
@@ -562,14 +542,11 @@
                         var cur_subtotal = cur_qty * cur_price;
                         subtotal += cur_subtotal;
                         <?php
-                            if ($pbv_obj->get_platform_country_id() == "AU")
-                            {
+                            if ($pbv_obj->getPlatformCountryId() == "AU") {
                         ?>
                         var declared = Math.min(cur_subtotal, 800);
                         <?php
-                            }
-                            else
-                            {
+                            } else {
                         ?>
                         var declared = cur_subtotal * declared_pcent / 100;
                         <?php
@@ -628,7 +605,7 @@
                 var fm = document.fm_checkout;
                 prod = fetch_params('?' + str);
                 fm.elements["soi[" + line + "][sku]"].value = prod["sku"];
-                fm.elements["soi[" + line + "][name]"].value = prod["prod_name"];
+                fm.elements["soi[" + line + "][name]"].value = prod["name"];
                 fm.elements["soi[" + line + "][price]"].value = curprice;
                 if (fm.elements["soi[" + line + "][qty]"].value * 1 == 0) {
                     fm.elements["soi[" + line + "][qty]"].value = 1;
@@ -637,18 +614,13 @@
             }
 
             function CheckSubmit(fm) {
-                //if (fm.elements['client[password]'].value == "" && fm.elements['client[id]'].value == "")
-                //{
-                //  alert("Password could not be empty!");
-                //  return false;
-                //}
                 return CheckForm(fm);
             }
 
             calcTotal();
         </script>
     <?php
-    }
+    endif;
     ?>
 </div>
 <?= $notice["js"] ?>
