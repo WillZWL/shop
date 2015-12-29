@@ -512,6 +512,10 @@ msgstr ""
 "para seguir su proceso."
 
 #: checkout/paymentSuccess.php:12
+msgid "Please note all charges will appear on your statement as CHATANDVISION."
+msgstr "Por favor, tenga en cuenta que el cargo se realizará en su extracto bajo el nombre CHATANDVISION."
+
+#: checkout/paymentSuccess.php:14
 msgid "We'll send you an email as soon as it's shipped!"
 msgstr "¡Le enviaremos un e-mail tan pronto se haga el envío!"
 

@@ -534,6 +534,10 @@ msgstr ""
 "détails de celle-ci et un lien pour suivre sa livraison"
 
 #: checkout/paymentSuccess.php:12
+msgid "Please note all charges will appear on your statement as CHATANDVISION."
+msgstr "Veuillez noter que toute charge inscrite sur votre facture sera au nom de CHATANDVISION."
+
+#: checkout/paymentSuccess.php:14
 msgid "We'll send you an email as soon as it's shipped!"
 msgstr "Nous vous enverrons un email dès que la commande sera livrée."
 

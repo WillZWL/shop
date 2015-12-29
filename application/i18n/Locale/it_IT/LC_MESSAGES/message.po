@@ -517,6 +517,10 @@ msgstr ""
 "gli aggiornamenti."
 
 #: checkout/paymentSuccess.php:12
+msgid "Please note all charges will appear on your statement as CHATANDVISION."
+msgstr "Please note all charges will appear on your statement as CHATANDVISION."
+
+#: checkout/paymentSuccess.php:14
 msgid "We'll send you an email as soon as it's shipped!"
 msgstr "Ti invieremo un' email non appena sarà spedito!"
 
