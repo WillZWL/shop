@@ -51,7 +51,7 @@ class SoFactoryService extends BaseService
         return $newCart;
     }
 
-    public function createSaleOrder(CreateSoInterface $interfaceType) {
+    public function createSaleOrder($interfaceType) {
         if ($interfaceType instanceof CreateSoInterface) {
 //create client
             $clientObj = $this->_createClient($interfaceType);

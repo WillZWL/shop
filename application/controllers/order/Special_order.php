@@ -1,4 +1,5 @@
 <?php
+use ESG\Panther\Models\Website\CheckoutModel;
 
 class Special_order extends MY_Controller
 {
@@ -17,9 +18,9 @@ class Special_order extends MY_Controller
         $_SESSION["LISTPAGE"] = current_url()."?".$_SERVER['QUERY_STRING'];
 
         if ($platform_id) {
-
             if ($this->input->post("posted")) {
-                $this->sc['SpecialOrder']->addSoForSpecialOrder($_POST, $platform_id);
+                $checkoutModel = new CheckoutModel();
+                $data["soObj"] = $checkoutModel->createSpecialOrder($_POST, $platform_id);
             }
 
             // $data = $this->cart_session_service->get_detail($platform_id, 1, 0, 0, 0, 0, 1, 0);

@@ -17,6 +17,14 @@
     <tr>
         <td height="30" class="title"><?=$lang["title"]?></td>
         <td width="650" align="right" class="title">
+        <span style="background-color:#000000;color:#FFFFFF;font-size:18px;padding-right:20px;">
+<?php if ((isset($soObj)) && $soObj)
+      {
+            print "Order Number:" . $soObj->getSoNo() . " Created";
+      } elseif (isset($soObj)) {
+            print "Fail to create SO!!";
+      }
+?>    </span>
             <input type="button" value="<?=$lang["add_button"]?>" class="button" onClick="Redirect('<?= $current_path ?>')"> &nbsp;
             <input type="button" value="<?=$lang["on_hold_button"]?>" class="button" onClick="Redirect('<?= $current_path ?>/on_hold')"> &nbsp;
 <?php if (check_app_feature_access_right($app_id, "ORD001101_aps_payment_order_page")) : ?>

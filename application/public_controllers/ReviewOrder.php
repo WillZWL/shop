@@ -21,7 +21,7 @@ class ReviewOrder extends PUB_Controller
 
     public function index()
     {
-        $data['cartInfo'] = $this->cartSessionModel->getCartInfo(true);
+        $data['cartInfo'] = $this->cartSessionModel->getCartInfo();
 //        var_dump($data['cartInfo']);
         if ($data['cartInfo'])
             $this->load->view('review', $data);
