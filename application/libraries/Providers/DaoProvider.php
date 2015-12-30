@@ -656,5 +656,9 @@ class DaoProvider implements ServiceProviderInterface
         $daoContainer['SoPaymentQueryLog'] = function () {
             return new D\SoPaymentQueryLogDao();
         };
+
+        $daoContainer['ClientLog'] = function () {
+            return new D\ClientLogDao();
+        };
     }
 }
