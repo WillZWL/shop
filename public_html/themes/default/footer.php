@@ -100,7 +100,6 @@
                                                     </li>
                                                 <?php } else { ?>
                                                     <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/reviewcenter_en.jpg">
                                                         <link href="http://www.reviewcentre.com/css/seo_badge.v3.css" rel="stylesheet" type="text/css">
                                                         <script type="text/javascript" src="http://www.reviewcentre.com/js/RC.SeoBadge.v3.min.js"></script>
                                                         <script type="text/javascript">RC.Badge.initialize("http://www.reviewcentre.com", 3709767)</script>
