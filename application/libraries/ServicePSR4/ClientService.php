@@ -289,8 +289,8 @@ class ClientService extends BaseService
             $replace = array('password' => $newPassword, 'mail_from' => $email_dto->getMailFrom(), 'client name' => $client_name, 'site_name' => 'Digital discount', 'site_url' => base_url());
             $email_sender = "no-reply@digitaldiscount.co.uk";
             $email_dto->setLangId(get_lang_id());
-            $email_dto->setEventId('forget_password');
-            $email_dto->setTplId('forget_password');
+            $email_dto->setEventId('forgotten_password');
+            $email_dto->setTplId('forgotten_password');
             $email_dto->setMailTo($client_obj->getEmail());
             $email_dto->setMailFrom($email_sender);
             $email_dto->setReplace($replace);
