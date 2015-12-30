@@ -346,6 +346,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\VbDataTransferCategoryMappingService();
         };
 
+        $serviceContainer['VbDataTransferProductComplementaryAcc'] = function () {
+            return new S\VbDataTransferProductComplementaryAccService();
+        };
+
         $serviceContainer['ExtCategoryMapping'] = function () {
             return new S\ExtCategoryMappingService();
         };

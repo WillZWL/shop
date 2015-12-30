@@ -111,6 +111,13 @@ class Import extends MY_Controller
         print $feed;
     }
 
+    public function productComplementaryAcc()
+    {
+        $xml = file_get_contents('php://input');
+        $feed = $this->sc['VbDataTransferProductComplementaryAcc']->startProcess($xml);
+        print $feed;
+    }
+
     /********************** end product tables **********************/
 
     /********************** start master tables **********************/

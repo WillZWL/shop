@@ -156,6 +156,23 @@ class ProductService extends BaseProductService
         $newObj->setDutyPcent((string)$oldObj->duty_pcent);
     }
 
+    public function createNewProductComplementaryAcc($id, $oldObj, $sku_mainprod, $sku_acc)
+    {
+        $newObj = new \ProductComplementaryAccVo();
+        $newObj->setId($id);
+        $this->updateProductComplementaryAcc($newObj, $oldObj, $sku_mainprod, $sku_acc);
+
+        return $newObj;
+    }
+
+    public function updateProductComplementaryAcc($newObj, $oldObj, $sku_mainprod, $sku_acc)
+    {
+        $newObj->setMainprodSku((string)$sku_mainprod);
+        $newObj->setAccessorySku((string)$sku_acc);
+        $newObj->setDestCountryId((string)$oldObj->dest_country_id);
+        $newObj->setStatus((string)$oldObj->status);
+    }
+
     public function getProductOverview($where = [], $option = [])
     {
         return $this->getDao('Product')->getProductOverview($where, $option);
