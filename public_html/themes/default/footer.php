@@ -103,7 +103,7 @@
                                                         <link href="http://www.reviewcentre.com/css/seo_badge.v3.css" rel="stylesheet" type="text/css">
                                                         <script type="text/javascript" src="http://www.reviewcentre.com/js/RC.SeoBadge.v3.min.js"></script>
                                                         <script type="text/javascript">RC.Badge.initialize("http://www.reviewcentre.com", 3709767)</script>
-                                                        <div id="rc-badge-wrapper" class="style-150x100 color-gray" style="width: 150px; height: 100px; ">
+                                                        <div id="rc-badge-wrapper" class="style-150x100 color-gray" style="margin-bottom:-45px;width: 150px; height: 100px;">
                                                         <div class="rc-top-corners"></div>
                                                         <div class="rc-content">
                                                         <div class="rc-logo">
@@ -113,7 +113,7 @@
                                                         <div class="rc-stars"></div>
                                                         <div class="rc-overview">
                                                         <p class="rc-category"><a href="http://www.reviewcentre.com/products977.html" rel="nofollow">Online Electronic Shops</a></p>
-                                                        <p class="rc-item"><a href="http://www.reviewcentre.com/Online-Electronic-Shops/Digital-Discount-www-digitaldiscount-co-uk-reviews_3709767" rel="nofollow">Digital Discount - www.digitaldiscount.co.uk</a></p>
+                                                        <p class="rc-item"><a href="http://www.reviewcentre.com/Online-Electronic-Shops/Digital-Discount-www-digitaldiscount-co-uk-reviews_3709767" rel="nofollow">Digital Discount- www.digitaldiscount.co.uk</a></p>
                                                         <p class="rc-date"></p>
                                                         <p class="rc-extract"></p>
                                                         </div>
