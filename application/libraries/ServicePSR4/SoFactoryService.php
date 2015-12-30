@@ -457,7 +457,7 @@ class SoFactoryService extends BaseService
             else
                 $this->_platformType = $this->getService("SellingPlatform")->getDao("SellingPlatform")->get(["selling_platform_id" => $platformId])->getType();
         }
-/* calculate raw first, common to all */
+/* calculate raw first, common to all, */
         $this->_initPriceService($this->_platformType);
         $unitSellingPrice = $soidObj->getUnitPrice();
         $json = $this->priceService->getProfitMarginJson($platformId, $soidObj->getItemSku(), $unitSellingPrice);
