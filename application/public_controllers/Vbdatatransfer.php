@@ -137,6 +137,18 @@ class Vbdatatransfer extends PUB_Controller
 		//$feed =$this->vb_data_transfer_supplier_product_service->start_process($xml);
 		print $feed;
 	}
+
+
+	public function productComplementaryAcc()
+	{
+		$xml = file_get_contents('php://input');
+		/*header('content-type: text/xml');
+		print $xml;
+		exit;*/
+		$feed = $this->sc['VbDataTransferProductComplementaryAcc']->processVbData($xml);
+		//$feed =$this->vb_data_transfer_supplier_product_service->start_process($xml);
+		print $feed;
+	}
 	/********************** end product tables **********************/
 
 	/********************** start master tables **********************/
