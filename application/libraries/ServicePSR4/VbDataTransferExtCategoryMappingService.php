@@ -23,17 +23,25 @@ class VbDataTransferExtCategoryMappingService extends VbDataTransferService
             try {
                 if ($cat_obj = $this->getDao('ExtCategoryMapping')->get(['id' => $ext_category_mapping->id])) {
                 	$this->getService('ExtCategoryMapping')->updateExtCategoryMapping($cat_obj, $ext_category_mapping);
-                	$this->getDao('ExtCategoryMapping')->update($cat_obj);
+                    if ($this->getService('ExtCategoryMapping')->getDao('ExtCategoryMapping')->update($cat_obj)) {
+                        $process_status = 5;    // update success
+                    } else {
+                        $process_status = 3;    // update failure
+                    }
                 	$reason = 'update';
                 } else {
                 	$cat_obj = $this->getService('ExtCategoryMapping')->createNewExtCategoryMapping($ext_category_mapping);
-                	$this->getDao('ExtCategoryMapping')->insert($cat_obj);
+                    if ($this->getService('ExtCategoryMapping')->getDao('ExtCategoryMapping')->insert($cat_obj)) {
+                        $process_status = 5;    // insert success
+                    } else {
+                        $process_status = 3;    // insert failure
+                    }
                 	$reason = 'insert';
                 }
 
                 $xml[] = '<ext_category_mapping>';
                 $xml[] = '<id>'.$ext_category_mapping->id.'</id>';
-                $xml[] = '<status>5</status>'; //updated
+                $xml[] = '<status>' . $process_status . '</status>'; //updated
                 $xml[] = '<is_error>'.$ext_category_mapping->is_error.'</is_error>';
                 $xml[] = '<reason>'.$reason.'</reason>';
                 $xml[] = '</ext_category_mapping>';
