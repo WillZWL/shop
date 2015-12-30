@@ -365,7 +365,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
 //update before redirect
                 if ($this->sops->getRetry() < self::MAXIMUM_NUMBER_OF_RETRIES)
                 {
-                    $this->getService("SoFactory")->getDao()->update($soObj);
+                    $this->getService("SoFactory")->getDao("So")->update($soObj);
 //will be redirect back to Paypal, before redirect, update the object first
                     set_value($this->sops, $sopsData);
                     $this->paymentRetry($this->sops);

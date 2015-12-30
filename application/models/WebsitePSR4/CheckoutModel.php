@@ -5,6 +5,8 @@ use ESG\Panther\Service\CountryStateService;
 use ESG\Panther\Service\PaymentOptionService;
 use ESG\Panther\Service\SoFactoryService;
 use ESG\Panther\Service\CartSessionService;
+use ESG\Panther\Service\OnlineOrderCreationService;
+use ESG\Panther\Service\SpecialOrderCreationService;
 use ESG\Panther\Service\PaymentGatewayRedirectService;
 use ESG\Panther\Service\PaymentGatewayRedirectPaypalService;
 use ESG\Panther\Service\PaymentGatewayRedirectMoneybookersService;
@@ -34,7 +36,6 @@ class CheckoutModel extends \CI_Model
         $this->setCountryStateService(new CountryStateService());
         $this->setPaymentOptionService(new PaymentOptionService());
         $this->setSoFactoryService(new SoFactoryService());
-        $this->setCartSessionService(new CartSessionService());
     }
 
     public function getPoBoxAmountLimit($inJson = false) {
@@ -64,12 +65,20 @@ class CheckoutModel extends \CI_Model
         return false;
     }
 
+    public function createSpecialOrder($formValue, $platformId) {
+        $formValue["platformId"] = $platformId;
+        $specialOrderCreationService = new SpecialOrderCreationService($formValue);
+        $soObj = $this->getSoFactoryService()->createSaleOrder($specialOrderCreationService);
+        return $soObj;
+    }
+
     public function createSaleOrder($formValue) {
         $result = ["error" => -10, "errorMessage" => _("Please contact CS") . ", err:" . __LINE__];
-        $cart = $this->getCartSessionService()->getCart();
+//        $cart = $this->getCartSessionService()->getCart();
 //        var_dump($cart);
-        if ($cart) {
-            $soObj = $this->getSoFactoryService()->createSaleOrder($formValue, $cart);
+        $onlineOrderCreationService = new OnlineOrderCreationService($formValue);
+        if ($onlineOrderCreationService->getCartDto()) {
+            $soObj = $this->getSoFactoryService()->createSaleOrder($onlineOrderCreationService);
             if ($soObj) {
                 $paymentGatewayId = $formValue["paymentGatewayId"];
                 $gatewayRedirectService = $this->_createPaymentGatewayRedirectService($paymentGatewayId, $soObj, ((isset($formValue["debug"]))?$formValue["debug"]:0));
@@ -202,13 +211,4 @@ class CheckoutModel extends \CI_Model
     public function getSoFactoryService() {
         return $this->_soFactoryService;
     }
-
-    public function setCartSessionService($cartSessionService) {
-        $this->_cartSessionService = $cartSessionService;
-    }
-
-    public function getCartSessionService() {
-        return $this->_cartSessionService;
-    }
-
 }

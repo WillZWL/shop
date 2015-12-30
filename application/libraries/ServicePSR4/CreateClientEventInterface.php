@@ -1,8 +1,8 @@
 <?php
 namespace ESG\Panther\Service;
 
-interface CreateClientInterface
+interface CreateClientEventInterface
 {
     public function clientBeforeUpdateEvent($clientObj);
-    public function clientCreateSuccessEvent($clientObj);
+    public function clientInsertSuccessEvent($clientObj);
 }

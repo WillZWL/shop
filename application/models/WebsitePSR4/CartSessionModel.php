@@ -53,9 +53,9 @@ class CartSessionModel extends \CI_Model
         return $cart;
     }
 
-    public function getCartInfo($withImage = false)
+    public function getCartInfo()
     {
-        return $this->cartSessionService->getCart($withImage);
+        return $this->cartSessionService->getCart();
     }
 /*
     public function get_detail($platform)

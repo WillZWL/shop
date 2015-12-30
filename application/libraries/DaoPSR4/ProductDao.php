@@ -54,7 +54,7 @@ class ProductDao extends BaseDao
                 , er.rate as supplierProdExRate, pbv.platform_currency_id as platformCurrency
                 , p.sku, p.name, pc.prod_name as nameInLang
                 , pr.price, pr.listing_status as listingStatus
-                , p.website_status as websiteStatus, sp.currency_id
+                , p.website_status as websiteStatus, sp.currency_id as supplierCostCurrency
                 , p.warranty_in_month as warrantyInMonth
                 , ROUND((sp.cost * er.rate), pbv.dec_place) as unitCost
                 , sp.cost as supplierUnitCost
