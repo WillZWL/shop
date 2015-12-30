@@ -113,7 +113,7 @@
                                                         <div class="rc-stars"></div>
                                                         <div class="rc-overview">
                                                         <p class="rc-category"><a href="http://www.reviewcentre.com/products977.html" rel="nofollow">Online Electronic Shops</a></p>
-                                                        <p class="rc-item"><a href="http://www.reviewcentre.com/Online-Electronic-Shops/Digital-Discount-www-digitaldiscount-co-uk-reviews_3709767" rel="nofollow">Digital Discount - www.digitaldiscount.co.uk</a></p>
+                                                        <p class="rc-item"><a href="http://www.reviewcentre.com/Online-Electronic-Shops/Digital-Discount-www-digitaldiscount-co-uk-reviews_3709767" rel="nofollow">Digital Discount- www.digitaldiscount.co.uk</a></p>
                                                         <p class="rc-date"></p>
                                                         <p class="rc-extract"></p>
                                                         </div>
