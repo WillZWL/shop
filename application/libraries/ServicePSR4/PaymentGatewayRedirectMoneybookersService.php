@@ -325,7 +325,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
     }
 
     private function _internalQueryTransaction($inputParameters = [], &$dataFromPmgw, &$dataToPmgw, &$soData, &$soccData, &$sopsData) {
-        if ($this->so = $this->getService("SoFactory")->getDao()->get(["so_no" => $inputParameters["soNo"]])) {
+        if ($this->so = $this->getService("SoFactory")->getDao("So")->get(["so_no" => $inputParameters["soNo"]])) {
             $this->_setAccount($this->so->getCurrencyId());
             $result = $this->_queryOrderApi($inputParameters["transactionId"]);
             $dataToPmgw = $result["dataToPmgw"];

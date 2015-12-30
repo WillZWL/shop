@@ -88,7 +88,7 @@ class CartSessionService extends BaseService
             {
                 $this->_cart->setTotalNumberOfItems($totalItems);
             }
-            $this->_cart->setBizType($type);
+//            $this->_cart->setBizType($type);
         }
         $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"] = $totalItems;
         $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"] = $totalAmount;
@@ -144,6 +144,24 @@ class CartSessionService extends BaseService
         if (sizeof($this->_cart->items) == 0)
         {
             $this->emptyCart();
+        }
+    }
+
+    public function manualAddItemsToCart($skuList = [], $platformId, $currencyId, $langId, $deliveryCharge = null) {
+        if (!$this->_cart) {
+            $this->_cart = [];
+            $this->_cart = new \CartDto();
+            $this->_cart->setPlatformId($platformId);
+            $this->_cart->setPlatformCurrency($currencyId);
+            if (!is_null($deliveryCharge))
+                $this->_cart->setDeliveryCharge($deliveryCharge);
+            $this->_cart->items = [];
+        }
+        foreach($skuList as $sku => $item) {
+            $productDetails = $this->_createCartItem($sku, $langId, $platformId);
+            $productDetails->setQty($item["qty"]);
+            $productDetails->setPrice($item["unitPrice"]);
+            $this->_cart->items[$sku] = $productDetails;
         }
     }
 
