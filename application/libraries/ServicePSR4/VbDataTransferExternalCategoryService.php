@@ -23,17 +23,25 @@ class VbDataTransferExternalCategoryService extends VbDataTransferService
             try {
                 if ($cat_obj = $this->getDao('ExternalCategory')->get(['id' => $external_category->id])) {
                 	$this->getService('ExternalCategory')->updateExternalCategory($cat_obj, $external_category);
-                	$this->getDao('ExternalCategory')->update($cat_obj);
+                    if ($this->getService('ExternalCategory')->getDao('ExternalCategory')->update($cat_obj)) {
+                        $process_status = 5;    // update success
+                    } else {
+                        $process_status = 3;    // update failure
+                    }
                 	$reason = 'update';
                 } else {
                 	$cat_obj = $this->getService('ExternalCategory')->createNewExternalCategory($external_category);
-                	$this->getDao('ExternalCategory')->insert($cat_obj);
+                    if ($this->getService('ExternalCategory')->getDao('ExternalCategory')->insert($cat_obj)) {
+                        $process_status = 5;    // insert success
+                    } else {
+                        $process_status = 3;    // insert failure
+                    }
                 	$reason = 'insert';
                 }
 
                 $xml[] = '<external_category>';
                 $xml[] = '<id>'.$external_category->id.'</id>';
-                $xml[] = '<status>5</status>'; //updated
+                $xml[] = '<status>' . $process_status . '</status>'; //updated
                 $xml[] = '<is_error>'.$external_category->is_error.'</is_error>';
                 $xml[] = '<reason>'.$reason.'</reason>';
                 $xml[] = '</external_category>';
