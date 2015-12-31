@@ -117,12 +117,11 @@
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 mois</td>
                         </tr>
                         </table>
-                        <?= _('Cette offre de garantie ne couvre pas :
-                                -   Les dommages, pannes ou défauts dus à des manipulations ou réparations effectuées par tout autre acteur que nous
-                                -   Les rayures, impacts et autres détériorations tombant dus à une utilisation normale
-                                -   Les dommages accidentels (Y compris, mais non limités aux chutes, impacts, dommages liés à l’eau ou au sable)
-                                -   Les cas où le retour serait effectué pour cause d’insatisfaction liée au client
-                            ') ?>
+                        <?= _('Cette offre de garantie ne couvre pas :') ?><br />
+                                <?= _('-   Les dommages, pannes ou défauts dus à des manipulations ou réparations effectuées par tout autre acteur que nous') ?><br />
+                                <?= _('-   Les rayures, impacts et autres détériorations tombant dus à une utilisation normale') ?><br />
+                                <?= _('-   Les dommages accidentels (Y compris, mais non limités aux chutes, impacts, dommages liés à l’eau ou au sable)') ?><br />
+                                <?= _('-   Les cas où le retour serait effectué pour cause d’insatisfaction liée au client') ?>
                     </p>
                     <br /><br />
 
