@@ -122,12 +122,11 @@
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 meses</td>
                         </tr>
                         </table>
-                        <?= _('Esta garantía no cubre:
-                                - El daño o avería debido a la alteración o reparaciones hechas por personas ajenas a nosotros
-                                - Abolladuras, arañazos y otras condiciones para el producto que se producen con el tiempo considerado como desgaste normal.
-                                - Daños accidentales (incluyendo, choques, los golpes, caídas, daños por agua o daños de arena)
-                                - Insatisfacción con el producto
-                            ') ?>
+                        <?= _('Esta garantía no cubre:') ?>
+                                <?= _('- El daño o avería debido a la alteración o reparaciones hechas por personas ajenas a nosotros') ?>
+                                <?= _('- Abolladuras, arañazos y otras condiciones para el producto que se producen con el tiempo considerado como desgaste normal.') ?>
+                                <?= _('- Daños accidentales (incluyendo, choques, los golpes, caídas, daños por agua o daños de arena)') ?>
+                                <?= _('- Insatisfacción con el producto') ?>
                     </p>
                     <br /><br />
 

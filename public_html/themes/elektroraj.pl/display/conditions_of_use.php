@@ -117,12 +117,11 @@
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 miesięcy</td>
                         </tr>
                         </table>
-                        <?= _('Niniejsza gwarancja nie obejmuje:
-                                 - Szkoda, usterki lub awarii w wyniku przeróbki lub naprawy wykonane przez kogokolwiek innego niż nasz sklep
-                                 - Wgniecenia, zadrapania i inne, które występują w czasie uważane za normalne zużycie
-                                 - Przypadkowe uszkodzenie (w tym między innymi na wstrząsy, uderzenia, upuszczenie, zalania lub uszkodzenia poprzez piasek)
-                                 - Niezadowolenia z produktu
-                            ') ?>
+                        <?= _('Niniejsza gwarancja nie obejmuje:') ?>
+                                  <?= _('- Szkoda, usterki lub awarii w wyniku przeróbki lub naprawy wykonane przez kogokolwiek innego niż nasz sklep') ?>
+                                  <?= _('- Wgniecenia, zadrapania i inne, które występują w czasie uważane za normalne zużycie') ?>
+                                  <?= _('- Przypadkowe uszkodzenie (w tym między innymi na wstrząsy, uderzenia, upuszczenie, zalania lub uszkodzenia poprzez piasek)') ?>
+                                  <?= _('- Niezadowolenia z produktu') ?>
                     </p>
                     <br /><br />
 
