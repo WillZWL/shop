@@ -7,7 +7,7 @@
     <script type="text/javascript" src="<?= base_url() ?>js/jquery-colorbox.min.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
-    <script type="text/javascript" src="<?= base_url() ?>/marketing/complementary_acc/complementary_acc_js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>marketing/complementary_acc/complementary_acc_js"></script>
     <script language="javascript">
 
         function showHide(country) {
@@ -65,7 +65,7 @@ $ca_status = array(0 => "inactive", 1 => "active");
                     <div style="float:left"><img src=''> &nbsp;</div>
                     <b style="font-size: 12px; color: rgb(0, 0, 0);"><?= $lang["header"] ?></b><br><?= $lang["header_message"] . " - " ?>
                     <b><a href="<?= $website_link . "mainproduct/view/" . $sku ?>" target="_blank"><font
-                                style="text-decoration:none; color:#000000; font-size:14px;"><?= $sku . " - " . $mainprod->get_name() ?><?= $mainprod->get_clearance() ? " <span style='color:#0072E3; font-size:14px;'>(Clearance)</span>" : "" ?></font></a></b><br><?= $lang["master_sku"] . " " . $master_sku ?>
+                                style="text-decoration:none; color:#000000; font-size:14px;"><?= $sku . " - " . $mainprod->getName() ?><?= $mainprod->getClearance() ? " <span style='color:#0072E3; font-size:14px;'>(Clearance)</span>" : "" ?></font></a></b><br><?= $lang["master_sku"] . " " . $master_sku ?>
                     <br><b>DESTINATION COUNTRIES:</b>
                 </td>
             </tr>
@@ -80,7 +80,7 @@ $ca_status = array(0 => "inactive", 1 => "active");
                         <td height="20" align="left" style="padding-left:8px;"><b
                                 style="font-size: 12px; color: rgb(255, 255, 255);"><a
                                     href="javascript:showHide('<?= $country ?>');"><span style="padding-right:15px;"
-                                                                                         id='sign_<?= $country ?>'>+</span></a><?= $country_id . " - " . $value["ctryobj"]->get_name() ?>
+                                                                                         id='sign_<?= $country ?>'>+</span></a><?= $country_id . " - " . $value["ctryobj"]->getName() ?>
                             </b>
                         </td>
                     </tr>
@@ -111,25 +111,25 @@ $ca_status = array(0 => "inactive", 1 => "active");
                                         # loop through each complementary accessory mappeed to this SKU-dest_ctry
                                         foreach ($calist as $k => $caobj) {
                                             $castatus_radio = "";
-                                            $casku = $caobj->get_accessory_sku();
+                                            $casku = $caobj->getAccessorySku();
                                             $class = "field";
-                                            if ($caobj->get_ca_status() == 0) $class = "bvalue1";
+                                            if ($caobj->getCaStatus() == 0) $class = "bvalue1";
                                             ?>
                                             <tr>
                                                 <td class="field" style="cursor:pointer;"><img
                                                         src="<?= base_url() ?>images/info.gif"
-                                                        title='<?= $lang["create_on"] ?>:<?= $caobj->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $caobj->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $caobj->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $caobj->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $caobj->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $caobj->get_modify_by() ?>'>
+                                                        title='<?= $lang["create_on"] ?>:<?= $caobj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $caobj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $caobj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $caobj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $caobj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $caobj->getModifyBy() ?>'>
                                                 </td>
-                                                <td class="field"><?= $caobj->get_accessory_sku() ?></td>
-                                                <td class="field"><?= $caobj->get_name() ?></td>
-                                                <td class="field"><?= $caobj->get_category() ?></td>
-                                                <td class="field"><?= $caobj->get_sub_cat() ?></td>
+                                                <td class="field"><?= $caobj->getAccessorySku() ?></td>
+                                                <td class="field"><?= $caobj->getName() ?></td>
+                                                <td class="field"><?= $caobj->getCategory() ?></td>
+                                                <td class="field"><?= $caobj->getSubCat() ?></td>
                                                 <td class="<?= $class ?>" align="left">
                                                     <?php
                                                     # status for complementary acc mapping - user can deactivate/activate as they want
                                                     foreach ($ca_status as $ca_statusid => $value) {
                                                         $checked = "";
-                                                        if ($ca_statusid == $caobj->get_ca_status())
+                                                        if ($ca_statusid == $caobj->getCaStatus())
                                                             $checked = " checked";
                                                         $castatus_radio .= <<<HTML
                                             <input type="radio" name="info[$casku][status]" value="$ca_statusid" $checked/>$value<br>
@@ -246,9 +246,9 @@ HTML;
                                     <tr>
                                         <td class="field" style="cursor:pointer;"></td>
                                         <td class="field"><?= $ca_sku ?></td>
-                                        <td class="field"><?= $caobj->get_name() ?></td>
-                                        <td class="field"><?= $caobj->get_category() ?></td>
-                                        <td class="field"><?= $caobj->get_sub_cat() ?></td>
+                                        <td class="field"><?= $caobj->getName() ?></td>
+                                        <td class="field"><?= $caobj->getCategory() ?></td>
+                                        <td class="field"><?= $caobj->getSubCat() ?></td>
                                         <td class="field"><?= $country_list ?></td>
                                         <td class="field">
                                             <input type="hidden" name="ca_sku[<?= $ca_sku ?>]" id="ca_sku"
