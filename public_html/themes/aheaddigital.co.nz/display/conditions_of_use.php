@@ -121,12 +121,11 @@
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 months</td>
                         </tr>
                         </table>
-                        <?= _('This warranty does not cover:
-                                - Damage, fault or failure due to alteration or repairs made by anyone other than us
-                                - Dents, scratches, and other conditions to the product that occur over time considered as normal wear and tear
-                                - Accidental damage (including but not limited to shock, impact, dropping, water damage or sand damage)
-                                - Not satisfied with the product
-                            ') ?>
+                        <?= _('This warranty does not cover:') ?><br />
+                                <?= _('- Damage, fault or failure due to alteration or repairs made by anyone other than us') ?><br />
+                                <?= _('- Dents, scratches, and other conditions to the product that occur over time considered as normal wear and tear') ?><br />
+                                <?= _('- Accidental damage (including but not limited to shock, impact, dropping, water damage or sand damage)') ?><br />
+                                <?= _('- Not satisfied with the product') ?>
                     </p>
                     <br /><br />
 
