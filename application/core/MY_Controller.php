@@ -18,6 +18,7 @@ use ESG\Panther\Models\Marketing\RaProdCatModel;
 use ESG\Panther\Models\Marketing\PricingRulesModel;
 use ESG\Panther\Models\Marketing\DataFeedModel;
 use ESG\Panther\Models\Marketing\BundleConfigModel;
+use ESG\Panther\Models\Marketing\ComplementaryAccModel;
 use ESG\Panther\Models\Order\SoModel;
 use ESG\Panther\Models\Order\CreditCheckModel;
 use ESG\Panther\Service as S;
@@ -145,6 +146,10 @@ abstract class MY_Controller extends CI_Controller
 
         $this->sc['bundleConfigModel'] = function ($c) {
             return new BundleConfigModel;
+        };
+
+        $this->sc['complementaryAccModel'] = function ($c) {
+            return new ComplementaryAccModel;
         };
     }
 
