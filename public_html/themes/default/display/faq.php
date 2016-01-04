@@ -10,7 +10,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="center-block">
                     <div>
-                        <h2 class="text-left"><?=_('Need Help?')?></h2>
+                        <h2 class="text-left"><?=_('NEED HELP?')?></h2>
                         <p class="text-left note-alert">
                             <?=_("You've got a Question? We've got the Answer! Check out our FAQs.")?>
                         </p>
