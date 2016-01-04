@@ -21,9 +21,7 @@
                     </div>
                     <div>
                         <p class="text-left note-alert">
-                            <?=sprintf(
-                            _('If you still can\'t find the answer, please refer to the %s Contact Us %s on page and get in touch! Thank you.'), $contact_href, $contact_href_end
-                            )?>
+                            <?=sprintf(_("If you still can't find the answer, please refer to the %s Contact Us %s on page and get in touch! Thank you."), $contact_href, $contact_href_end)?>
                         </p>
                     </div>
                 </div>
