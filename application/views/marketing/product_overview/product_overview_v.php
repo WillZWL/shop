@@ -103,7 +103,7 @@
                         <b>AFFILIATE'S SKU MANAGEMENT</b>
                         <br>affiliate_sku_status: 0 = auto / 1 = exclude / 2 = include
                         <br>All products not in the list have "auto" status. To add a status to a new product, simply insert new line and fill in the "new_affiliate_sku_status" column.
-                        <form action="/marketing/productOverviewWebsite/exportAffiliateFeed" enctype="multipart/form-data" method="post" target="_blank">
+                        <form action="/marketing/productOverviewWebsite/exportAffiliateFeed" enctype="multipart/form-data" method="post">
                             <select name="platform_id">
                                 <?php foreach ($clist as $cobj): ?>
                                     <option value="<?= $cobj->getSellingPlatformId() ?>"> <?= $cobj->getSellingPlatformId() ?> - <?= $cobj->getName() ?></option>
@@ -127,7 +127,7 @@
                         <br>Import your updated affiliate SKU's management file here.
                         <br>Update/Insert will be based on these columns:
                         <br>sku, affiliate_id, platform_id, affiliate_sku_status, new_affiliate_sku_status
-                        <form action="/marketing/ProductOverviewWebsite/upload_affiliate_feed" enctype="multipart/form-data" method="post" target="_blank">
+                        <form action="/marketing/ProductOverviewWebsite/upload_affiliate_feed" enctype="multipart/form-data" method="post">
                             <input type="file" name="datafile" size="40">
                             <input type="submit" value="Upload">
                         </form>
