@@ -9,19 +9,22 @@
     <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="center-block">
-                    <div class="">
+                    <div>
                         <h2 class="text-left"><?=_('Need Help?')?></h2>
                         <p class="text-left note-alert">
-                            <?=_('Look into our FAQ (frequently Asked Question) or knowledge base section first before contacting us')?>
-                            <br/>
-                            <?=sprintf(
-                            _('If you still can\'t find the answer, please refer to the %s Contact Us %s on page and get in touch! Thank you.'), $contact_href, $contact_href_end
-                            )?>
+                            <?=_("You've got a Question? We've got the Answer! Check out our FAQs.")?>
                         </p>
                     </div>
                     <div class="container-fluid">
                         <iframe src="http://contact.<?= $server_name ?>/support/home"  style="width:100%; height:950px;" scrolling="auto" frameborder="0" id="faq" name="faq" ></iframe>
 
+                    </div>
+                    <div>
+                        <p class="text-left note-alert">
+                            <?=sprintf(
+                            _('If you still can\'t find the answer, please refer to the %s Contact Us %s on page and get in touch! Thank you.'), $contact_href, $contact_href_end
+                            )?>
+                        </p>
                     </div>
                 </div>
             </div>
