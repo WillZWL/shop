@@ -3,6 +3,7 @@
     <title><?= $lang["title"] ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="<?= base_url() ?>css/bootstrap.min.css" type="text/css" media="all" />
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>marketing/category/js_catlist"></script>
@@ -12,8 +13,8 @@
 <div style="width:auto">
     <?= $notice["img"] ?>
     <?php
-    $ar_status = array("I" => "instock4.gif", "O" => "outofstock4.gif", "P" => "preorder4.gif", "A" => "1-3days4.gif");
-    $ar_ws_status = array("I" => $lang["instock"], "O" => $lang["outstock"], "P" => $lang["pre-order"], "A" => $lang["arriving"]);
+    $ar_status = ["I" => "instock4.gif", "O" => "outofstock4.gif", "P" => "preorder4.gif", "A" => "1-3days4.gif"];
+    $ar_ws_status = ["I" => $lang["instock"], "O" => $lang["outstock"], "P" => $lang["pre-order"], "A" => $lang["arriving"]];
     ?>
     <form name="fm" method="get">
         <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
@@ -30,43 +31,51 @@
             <col width="26">
             <tr class="header">
                 <td height="20">
-                    <?php
-                    if ($prod_grp_cd == "") {
-                        ?>
+                    <?php if ($prod_grp_cd == "") : ?>
                         <img src="<?= base_url() ?>images/expand.png" class="pointer"
                              onClick="Expand(document.getElementById('tr_search'));">
-                    <?php
-                    }
-                    ?>
+                    <?php endif; ?>
                 </td>
                 <td></td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'sku', '<?= $xsort["sku"] ?>')"><?= $lang["sku"] ?> <?= $sortimg["sku"] ?></a>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 'sku', '<?= $xsort["sku"] ?>')">
+                        <?= $lang["sku"] ?> <?= $sortimg["sku"] ?>
+                    </a>
                 </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'name', '<?= $xsort["name"] ?>')"><?= $lang["product_name"] ?> <?= $sortimg["name"] ?></a>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 'name', '<?= $xsort["name"] ?>')">
+                        <?= $lang["product_name"] ?> <?= $sortimg["name"] ?>
+                    </a>
                 </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'category', '<?= $xsort["category"] ?>')"><?= $lang["category"] ?> <?= $sortimg["category"] ?></a>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 'category', '<?= $xsort["category"] ?>')">
+                        <?= $lang["category"] ?> <?= $sortimg["category"] ?>
+                    </a>
                 </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'sub_cat', '<?= $xsort["sub_cat"] ?>')"><?= $lang["sub_cat"] ?> <?= $sortimg["sub_cat"] ?></a>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 'sub_cat', '<?= $xsort["sub_cat"] ?>')">
+                        <?= $lang["sub_cat"] ?> <?= $sortimg["sub_cat"] ?>
+                    </a>
                 </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'sub_sub_cat', '<?= $xsort["sub_sub_cat"] ?>')"><?= $lang["sub_sub_cat"] ?> <?= $sortimg["sub_sub_cat"] ?></a>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 'sub_sub_cat', '<?= $xsort["sub_sub_cat"] ?>')">
+                        <?= $lang["sub_sub_cat"] ?> <?= $sortimg["sub_sub_cat"] ?>
+                    </a>
                 </td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'brand', '<?= $xsort["brand"] ?>')"><?= $lang["brand"] ?> <?= $sortimg["brand"] ?></a>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 'brand', '<?= $xsort["brand"] ?>')">
+                        <?= $lang["brand"] ?> <?= $sortimg["brand"] ?>
+                    </a>
                 </td>
                 <td><?= $lang["price"] ?></td>
-                <td><a href="#"
-                       onClick="SortCol(document.fm, 'website_status', '<?= $xsort["website_status"] ?>')"><?= $lang["status"] ?> <?= $sortimg["website_status"] ?></a>
+                <td>
+                    <a href="#" onClick="SortCol(document.fm, 'website_status', '<?= $xsort["website_status"] ?>')">
+                        <?= $lang["status"] ?> <?= $sortimg["website_status"] ?>
+                    </a>
                 </td>
                 <td></td>
             </tr>
-            <?php
-            if ($prod_grp_cd == "") {
-                ?>
+            <?php if ($prod_grp_cd == "") : ?>
                 <tr class="search" id="tr_search" <?= $searchdisplay ?>>
                     <td></td>
                     <td></td>
@@ -101,63 +110,54 @@
                             <option value="">
                                 <?php
                                 $selected_wss[$this->input->get("website_status")] = "SELECTED";
-                                foreach ($ar_ws_status as $rskey => $rsvalue)
-                                {
+                                foreach ($ar_ws_status as $rskey => $rsvalue) :
                                 ?>
                             <option value="<?= $rskey ?>" <?= $selected_wss[$rskey] ?>><?= $rsvalue ?>
-                                <?php
-                                }
-                                ?>
+                                <?php endforeach; ?>
                         </select>
                     </td>
-                    <td align="center"><input type="submit" name="searchsubmit" value="" class="search_button"
-                                              style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">
+                    <td align="center">
+                        <input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">
                     </td>
                 </tr>
-            <?php
-            }
-            ?>
+            <?php endif;?>
             <?php
             $i = 0;
-            if ($objlist) {
-                foreach ($objlist as $obj) {
+            if ($objlist) :
+                foreach ($objlist as $obj) :
                     ?>
 
                     <tr class="row<?= $i % 2 ?>" onMouseOver="AddClassName(this, 'highlight')"
                         onMouseOut="RemoveClassName(this, 'highlight')">
                         <td height="20"></td>
-                        <td><img src="<?= get_image_file($obj->get_image(), 's', $obj->get_sku()) ?>"></td>
-                        <td><?= $obj->get_sku() ?></td>
-                        <td><?= $obj->get_prod_name() ?></td>
-                        <td><?= $obj->get_category() ?></td>
-                        <td><?= $obj->get_sub_category() ?></td>
-                        <td><?= $obj->get_sub_sub_category() ?></td>
-                        <td><?= $obj->get_brand_name() ?></td>
-                        <?php $wsstatus = (($obj->get_website_status() == "I" && $obj->get_website_quantity() < 1) || $obj->get_listing_status() <> "L") ? "O" : $obj->get_website_status()?>
-                        <td><?= number_format($curprice = $obj->get_price(), 2, ".", "") ?></td>
+                        <td><img src="<?= get_image_file($obj->getImage(), 's', $obj->getSku()) ?>"></td>
+                        <td><?= $obj->getSku() ?></td>
+                        <td><?= $obj->getName() ?></td>
+                        <td><?= $obj->getCategory() ?></td>
+                        <td><?= $obj->getSubCategory() ?></td>
+                        <td><?= $obj->getSubSubCategory() ?></td>
+                        <td><?= $obj->getBrandName() ?></td>
+                        <?php $wsstatus = (($obj->getWebsiteStatus() == "I" && $obj->getWebsiteQuantity() < 1) || $obj->getListingStatus() <> "L") ? "O" : $obj->getWebsiteStatus()?>
+                        <td><?= number_format($curprice = $obj->getPrice(), 2, ".", "") ?></td>
                         <td><img src="/images/<?= $ar_status[$wsstatus] ?>"></td>
                         <td>
-                            <?php
-                            if ($wsstatus != "O") {
-                                ?>
+                            <?php if ($wsstatus != "O") : ?>
                                 <input type="button" value="<?= $lang["add"] ?>"
-                                       onClick="top.frames['fcart'].document.fm_cart.add.value='<?= $obj->get_sku() ?>';top.frames['fcart'].document.fm_cart.submit();">
-                            <?php
-                            }
-                            ?>
+                                       onClick="top.frames['fcart'].document.fm_cart.add.value='<?= $obj->getSku() ?>';top.frames['fcart'].document.fm_cart.submit();">
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <?php
                     $i++;
-                }
-            }
+                endforeach;
+            endif;
             ?>
         </table>
         <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
         <input type="hidden" name="search" value='1'>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 <script>

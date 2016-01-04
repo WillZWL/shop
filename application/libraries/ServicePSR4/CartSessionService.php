@@ -165,7 +165,7 @@ class CartSessionService extends BaseService
     }
 
     private function _createCartItem($sku, $lang, $platformId) {
-        if ($this->_rebuildCartNoSessionMode)
+        if ($this->_rebuildCartNoSessionMode || $this->getCartDetailInfo())
             return $this->getCartItemInDetail($sku, $lang, $platformId);
         else
             return $this->getCartItemInfoLite($sku, $lang, $platformId);
@@ -219,6 +219,16 @@ class CartSessionService extends BaseService
             mail($this->support_email, $subject, $message, "From: website@" . SITE_DOMAIN . "\r\n");
         }
         return false;
+    }
+
+    public function getCartDetailInfo()
+    {
+        return $this->cartDetailInfo;
+    }
+
+    public function setCartDetailInfo($value)
+    {
+        $this->cartDetailInfo = $value;
     }
 
     public function getSoDao()
