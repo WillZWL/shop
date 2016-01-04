@@ -97,42 +97,39 @@
                 <td align="right" width="60" style="border:1px solid #BBBBBB; border-width:1px 1px 1px 1px;">Total</td>
             </tr>
             <?php
-            $promo_disc_amount = $sub_total = $total_vat = $total = 0;
+            // $promo_disc_amount = $sub_total = $total_vat = $total = 0;
             if ($promo["valid"] && !$promo["error"]) {
                 $promo_disc_amount = $promo["disc_amount"];
             }
-            for ($i = 0; $i < count($cart); $i++) {
-                $price = $cart[$i]["price"] - $cart[$i]["vat_total"] / $cart[$i]["qty"];
-                $cur_sub_total = $price * $cart[$i]["qty"];
-                $sub_total += $cur_sub_total;
-                $total_vat += $cart[$i]["vat_total"];
-                $total += $cart[$i]["total"];
+            if ($totalcart) :
+                foreach ($cart->items as $key => $items) :
                 ?>
                 <tr>
                     <td align="center" style="border-left:1px solid #BBBBBB;">
-                        <img src="<?= get_image_file($cart[$i]["image"], "s", $cart[$i]["sku"]) ?>">
+                        <img src="<?= get_image_file($items->getImage(), "s", $items->getSku()) ?>">
                     </td>
-                    <td align="left" style="border-left:1px solid #BBBBBB;"><?= $cart[$i]["name"] ?></td>
-                    <td align="right" style="border-left:1px solid #BBBBBB;"><?= number_format($price, 2) ?></td>
+                    <td align="left" style="border-left:1px solid #BBBBBB;"><?= $items->getName() ?></td>
+                    <td align="right" style="border-left:1px solid #BBBBBB;"><?= number_format($items->getPrice(), 2) ?></td>
                     <td align="right" style="border-left:1px solid #BBBBBB;">
-                        <?= $cart[$i]["qty"] ?>
+                        <?= $items->getQty() ?>
                     </td>
                     <td align="right"
                         style="border-left:1px solid #BBBBBB;"><?= number_format($cur_sub_total, 2) ?></td>
                     <td align="right"
-                        style="border-left:1px solid #BBBBBB;"><?= number_format($cart[$i]["vat_total"], 2) ?></td>
-                    <td align="right" style="border-left:1px solid #BBBBBB;border-right:1px solid #BBBBBB;">
-                        <b><?= number_format($cart[$i]["total"], 2) ?></b></td>
+                        style="border-left:1px solid #BBBBBB;"><?= number_format($items->getVatTotal(), 2) ?></td>
+                    <td align="kught" style="border-left:1px solid #BBBBBB;border-right:1px solid #BBBBBB;">
+                        <b><?= number_format($items->getAmount(), 2) ?></b></td>
                 </tr>
             <?php
-            }
+                endforeach;
+            endif;
             ?>
             <tr>
                 <td colspan="2" style="border-top:1px solid #BBBBBB;">&nbsp;</td>
                 <td colspan="2" align="right" bgcolor="#DDDDDD"
                     style="border:1px solid #BBBBBB; border-width:1px 0px 1px 1px;"><b>Cost of Items</b></td>
                 <td align="right" bgcolor="#F0F0F0"
-                    style="border:1px solid #BBBBBB; border-width:1px 0px 1px 1px;"><?= number_format($sub_total, 2) ?></td>
+                    style="border:1px solid #BBBBBB; border-width:1px 0px 1px 1px;"><?= number_format($total, 2) ?></td>
                 <td align="right" bgcolor="#F0F0F0"
                     style="border:1px solid #BBBBBB; border-width:1px 0px 1px 1px;"><?= number_format($total_vat, 2) ?></td>
                 <td align="right" bgcolor="#FFEEAA" style="border:1px solid #BBBBBB; border-width:1px 1px 1px 1px;">
@@ -250,7 +247,7 @@
                     <input name="client[email]" dname="Email Address" class="text"
                            value="<?= htmlspecialchars($_POST["client"]["email"]) ?>" notEmpty validEmail> <input
                         type="button" value="Check Email"
-                        onClick="if (document.fm_checkout.elements['client[email]'].value != '') {document.getElementById('a_check').href='<?= base_url() ?>/order/phone_sales/check_email/'+document.fm_checkout.elements['client[email]'].value+'/<?= $country_id ?>';document.getElementById('a_check').onclick()}">
+                        onClick="if (document.fm_checkout.elements['client[email]'].value != '') {document.getElementById('a_check').href='<?= base_url() ?>/order/phone_sales/check_email/<?= $country_id ?>?email='+document.fm_checkout.elements['client[email]'].value;document.getElementById('a_check').onclick()}">
                     <a id="a_check" href="<?= base_url() ?>/order/phone_sales/check_email/" rel="lyteframe"
                        rev="width: 300px; height: 275px; scrolling: auto;" title="Check Email"></a>
                 </td>
@@ -284,7 +281,7 @@
                         if ($_POST["client"]["country_id"]) {
                             $c_selected[$_POST["client"]["country_id"]] = " SELECTED";
                         } else {
-                            $c_selected[$pbv_obj->get_platform_country_id()] = " SELECTED";
+                            $c_selected[$pbv_obj->getPlatformCountryId()] = " SELECTED";
                         }
                         foreach ($country_list as $id => $name)
                         {
@@ -359,7 +356,7 @@
                         {
                         ?>
                         <option
-                            value="<?= $state_obj->get_state_id() ?>"<?= $c_selected[$state_obj->get_state_id()] ?>><?= $state_obj->get_name() ?>
+                            value="<?= $state_obj->getStateId() ?>"<?= $c_selected[$state_obj->getStateId()] ?>><?= $state_obj->getName() ?>
                             <?php
                             }
                             }
@@ -408,7 +405,7 @@
                         if ($_POST["client"]["del_country_id"]) {
                             $c_selected[$_POST["client"]["del_country_id"]] = " SELECTED";
                         } else {
-                            $c_selected[$pbv_obj->get_platform_country_id()] = " SELECTED";
+                            $c_selected[$pbv_obj->getPlatformCountryId()] = " SELECTED";
                         }
                         foreach ($country_list as $id => $name)
                         {
@@ -474,7 +471,7 @@
                         {
                         ?>
                         <option
-                            value="<?= $state_obj->get_state_id() ?>"<?= $c_selected[$state_obj->get_state_id()] ?>><?= $state_obj->get_name() ?>
+                            value="<?= $state_obj->getStateId() ?>"<?= $c_selected[$state_obj->getStateId()] ?>><?= $state_obj->getName() ?>
                             <?php
                             }
                             }
@@ -522,7 +519,7 @@
                         <?php
                         $or_selected[$_POST["so_extend"]["order_reason"]] = " SELECTED";
                         foreach ($order_reason_list as $reason) {
-                            print "<option value='" . $reason->get_reason_id() . "' " . $or_selected[$reason->get_reason_id()] . ">" . $reason->get_reason_display_name() . "</option>";
+                            print "<option value='" . $reason->getReasonId() . "' " . $or_selected[$reason->getReasonId()] . ">" . $reason->getReasonDisplayName() . "</option>";
                         }
                         ?>
                     </select>

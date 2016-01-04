@@ -19,45 +19,37 @@
             <tr style="font-weight:bold;background:#DDDDDD">
             </tr>
             <?php
-            $totalcart = count($cart);
-            for ($i = 0; $i < $totalcart; $i++) {
+            if ($totalcart) :
+                foreach ($cart->items as $key => $items) :
+                    ?>
+                    <tr class="row<?= $i % 2 ?>">
+                        <td align="left" style="border-left:1px solid #BBBBBB;padding-right:4px;"><?= $items->getName() ?>
+                            <br>
 
-                ?>
-                <tr class="row<?= $i % 2 ?>">
-                    <td align="left" style="border-left:1px solid #BBBBBB;padding-right:4px;"><?= $cart[$i]["name"] ?>
-                        <br>
-
-                        <div style="float:left"><?= $default_curr ?> <?= number_format($cart[$i]["price"], 2) ?><br>
-                        </div>
-                        <div style="float:right">
-                            <?php
-                            if ($cart[$i]["promo"]) {
+                            <div style="float:left"><?= $default_curr ?> <?= number_format($items->getPrice(), 2) ?><br>
+                            </div>
+                            <div style="float:right">
+                                <?php
+                                if ($items->getPromoDiscAmt()) {
+                                    ?>
+                                    <input value="<?= $items->getQty()?>" size="2" class="read"> &nbsp; &nbsp; &nbsp;
+                                <?php
+                                } else {
+                                    ?>
+                                    <input name="qty[<?= $items->getSku()?>]" value="<?= $items->getQty() ?>" size="2"
+                                           style="text-align:right" dname="Qty" isNatural>
+                                    <a href="javascript:remove('qty[<?= $items->getSku() ?>]');"><?= $lang["remove"] ?></a>
+                                <?php
+                                }
                                 ?>
-                                <input value="<?= $cart[$i]["qty"] ?>" size="2" class="read"> &nbsp; &nbsp; &nbsp;
-                            <?php
-                            } else {
-                                ?>
-                                <input name="qty[<?= $cart[$i]["sku"] ?>]" value="<?= $cart[$i]["qty"] ?>" size="2"
-                                       style="text-align:right" dname="Qty" isNatural>
-                                <a href="javascript:remove('qty[<?= $cart[$i]["sku"] ?>]');"><?= $lang["remove"] ?></a>
-                            <?php
-                            }
-                            ?>
-                        </div>
-                    </td>
-                </tr>
-            <?php
-            }
+                            </div>
+                        </td>
+                    </tr>
+                <?php
+                endforeach;
+            endif;
 
-            if ($totalcart)
-            {
-            /*
-                        foreach ($dc as $rskey=>$rsvalue)
-                        {
-                            $courier[] = $rskey;
-                        }
-                        $cur_delivery = $cur_courier?$cur_courier:$courier[0];
-            */
+            if ($totalcart) :
             ?>
             <tr>
                 <td align="right" style="padding-right:4px;">
@@ -66,52 +58,48 @@
                     : <?= $default_curr ?>  <?= number_format($dc[$dc_default["courier"]]["charge"], 2) ?><br>
                     <?php
                     #SBF #2978 offline_fee cannot be negative if margin < 7%
-                    if ($cart_profit_margin >= 7) {
+                    if ($cart_profit_margin >= 7) :
                         ?>
-                        <?= $lang["offline_fee"] ?>: <?= $default_curr ?>  <input name="offline_fee" id="offline_fee"
-                                                                                  size="2"
-                                                                                  value="<?= $offline_fee ? $offline_fee : $this->input->post("offline_fee") ?>"
-                                                                                  isNumber><br>
-                    <?php
-                    } else {
-                        ?>
-                        <?= $lang["offline_fee"] ?>: <?= $default_curr ?>  <input name="offline_fee" id="offline_fee"
-                                                                                  size="2"
-                                                                                  value="<?= $offline_fee ? $offline_fee : $this->input->post("offline_fee") ?>"
-                                                                                  onchange="checkNegative()"
-                                                                                  onkeyup="checkNegative()" isNumber>
+                        <?= $lang["offline_fee"] ?>: <?= $default_curr ?>
+                        <input name="offline_fee" id="offline_fee" size="2" value="<?= $offline_fee ? $offline_fee : $this->input->post("offline_fee") ?>" isNumber>
                         <br>
                     <?php
-                    }
+                    else :
+                        ?>
+                        <?= $lang["offline_fee"] ?>: <?= $default_curr ?>
+                        <input name="offline_fee" id="offline_fee" size="2" value="<?= $offline_fee ? $offline_fee : $this->input->post("offline_fee") ?>" onchange="checkNegative()" onkeyup="checkNegative()" isNumber>
+                        <br>
+                    <?php
+                    endif;
                     ?>
 
-                    <?= $lang["vat_exempt"] ?> &nbsp;&nbsp;&nbsp; <input name="vat_exempt" type="checkbox"
-                                                                         value="1" <?= $this->input->post("vat_exempt") ? "CHECKED" : "" ?>>
+                    <?= $lang["vat_exempt"] ?> &nbsp;&nbsp;&nbsp;
+                    <input name="vat_exempt" type="checkbox" value="1" <?= $this->input->post("vat_exempt") ? "CHECKED" : "" ?>>
                     <br>
-                    <?= $lang["promotion_code"] ?>: <input name="promotion_code"
-                                                           value="<?= $_SESSION["promotion_code"] ?>" size="12"><br>
+                    <?= $lang["promotion_code"] ?>:
+                    <input name="promotion_code" value="<?= $_SESSION["promotion_code"] ?>" size="12" readonly><br>
                     <?php
-                    if ($allow_see_margin) {
+                    if ($allow_see_margin) :
                         #SBF #2799 temp only allow cs_man to see cart_profit_margin
                         echo "{$lang["cart_profit_margin"]}: " . number_format($cart_profit_margin, 2) . "%";
-                    }
+                    endif;
                     ?>
                     <br><b><?= $lang["total"] ?>
                         : <?= $default_curr ?>  <?= number_format($total_cart_price, 2) ?></b><br>
 
                     <?php
-                    if (isset($promo)) {
-                        if (!$promo["valid"] || $promo["error"]) {
+                    if (isset($promo)) :
+                        if (!$promo["valid"] || $promo["error"]) :
                             $display_color = "red";
                             $display_msg = ($promo["valid"] && $promo["error"] == "FI") ? $lang["free_item_outstock_inactive"] : $lang["promotion_code_invalid"];
-                        } else {
+                        else :
                             $display_color = "green";
                             $display_msg = $lang["promotion_code_accepted"];
-                        }
+                        endif;
                         ?>
                         <span style="color:<?= $display_color ?>"><?= $display_msg ?></span><br>
                     <?php
-                    }
+                    endif;
                     ?>
                 </td>
             </tr>
@@ -119,7 +107,7 @@
         <input type="submit" value="<?= $lang["update_cart"] ?>" onClick="this.form.reload.value=1"><br><br>
         <input type="button" value="<?= $lang["take_order"] ?>" onClick="take_order();">
         <?php
-        }
+        endif;
         ?>
         <input type="hidden" name="posted" value="1">
         <input type="hidden" name="add" value="">
@@ -139,7 +127,7 @@
 
     function take_order() {
         document.fm_cart.took.value = 1;
-        document.fm_cart.action = '<?=base_url()?>order/phone_sales/take_order/<?=$platform_id?>';
+        document.fm_cart.action = '<?=base_url() . $this->path ?>/take_order/<?=$platform_id?>';
         document.fm_cart.target = 'fprod'
         document.fm_cart.submit();
         document.fm_cart.action = '';
@@ -159,16 +147,11 @@
         }
     }
 
-    <?php
-    if ($this->input->post("reload"))
-    {
-    ?>
+    <?php if ($this->input->post("reload")) :?>
     if (document.fm_cart.took.value == 1) {
         take_order();
     }
-    <?php
-    }
-    ?>
+    <?php endif; ?>
     function changeCountry(country_id, client_id) {
         fm = document.fm_cart;
         fm.elements["country"].value = country_id;
@@ -179,8 +162,5 @@
     }
 </script>
 
-</script>
-
-</
-body >
-< / html >
+</body>
+</html>
