@@ -20,22 +20,16 @@
                         </p>
                     </div>
                     <div class="container-fluid">
-                        <div id="iframe"></div>
-                        <iframe onload="freshdeskFaq()" src="http://contact.<?= $server_name ?>/support/home" style="width:100%;height:1400px" scrolling="auto" frameborder="0"></iframe>
+                        <iframe src="http://contact.<?= $server_name ?>/support/home"  style="width:100%; height:950px;" scrolling="auto" frameborder="0" id="faq" name="faq" ></iframe>
 
                     </div>
                 </div>
             </div>
         </div>
 </div>
-<script>
-    function freshdeskFaq() {
 
-
-        $("iframe").contents().find(".heading").html("123");
-
-        // var $iFrameContents = $('iframe').contents();
-        // $entryContent   = $iFrameContents.find('#solutions-index-home');
-        // $iFrameContents.find('html').replaceWith($entryContent);
-    }
+<script type="text/javascript">
+function iframeFaq(width,height) {
+var appSubIframeObj=document.getElementById("faq");
+appSubIframeObj.style.height=height+"px";
 </script>
