@@ -98,7 +98,7 @@
                                                     <li class="footer-fieldsetitem">
                                                         <img src="/themes/default/asset/image/data_fr.jpg">
                                                     </li>
-                                                <?php } else { ?>
+                                                <?php } elseif ($countryid == "GB") { ?>
                                                     <li class="footer-fieldsetitem">
                                                         <link href="http://www.reviewcentre.com/css/seo_badge.v3.css" rel="stylesheet" type="text/css">
                                                         <script type="text/javascript" src="http://www.reviewcentre.com/js/RC.SeoBadge.v3.min.js"></script>
@@ -121,6 +121,16 @@
                                                         <div class="rc-write-review"><a href="http://www.reviewcentre.com/write-a-review-3709767.html" rel="nofollow">Write a review</a></div>
                                                         </div>
                                                     </li>
+                                                    <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/ssl_en.jpg">
+                                                    </li>
+                                                    <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/chat_en.jpg">
+                                                    </li>
+                                                    <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/data_en.jpg">
+                                                    </li>
+                                                } { ?>
                                                     <li class="footer-fieldsetitem">
                                                         <img src="/themes/default/asset/image/ssl_en.jpg">
                                                     </li>
