@@ -18,6 +18,7 @@ use ESG\Panther\Models\Marketing\RaProdCatModel;
 use ESG\Panther\Models\Marketing\PricingRulesModel;
 use ESG\Panther\Models\Marketing\DataFeedModel;
 use ESG\Panther\Models\Marketing\BundleConfigModel;
+use ESG\Panther\Models\Marketing\ComplementaryAccModel;
 use ESG\Panther\Models\Order\SoModel;
 use ESG\Panther\Models\Order\CreditCheckModel;
 use ESG\Panther\Models\Website\CartSessionModel;
@@ -148,9 +149,12 @@ abstract class MY_Controller extends CI_Controller
             return new BundleConfigModel;
         };
 
-
         $this->sc['CartSessionModel'] = function ($c) {
             return new CartSessionModel;
+        };
+
+        $this->sc['complementaryAccModel'] = function ($c) {
+            return new ComplementaryAccModel;
         };
     }
 

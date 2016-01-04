@@ -4,7 +4,7 @@ class CartDto
     protected $platformId;
     protected $platformOrderId;
     public $items;  //CartItemDto
-    protected $bizType;
+ //   protected $bizType;
     protected $vatPercent;
     protected $vat;
     protected $platformCurrency;
@@ -44,6 +44,7 @@ class CartDto
         $this->items = $items;
     }
 
+/*
     public function getBizType() {
         return $this->bizType;
     }
@@ -51,7 +52,7 @@ class CartDto
     public function setBizType($bizType) {
         $this->bizType = $bizType;
     }
-
+*/
     public function getVat() {
         return $this->vat;
     }

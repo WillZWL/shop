@@ -346,6 +346,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\VbDataTransferCategoryMappingService();
         };
 
+        $serviceContainer['VbDataTransferProductComplementaryAcc'] = function () {
+            return new S\VbDataTransferProductComplementaryAccService();
+        };
+
         $serviceContainer['ExtCategoryMapping'] = function () {
             return new S\ExtCategoryMappingService();
         };
@@ -517,5 +521,10 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['CountryState'] = function () {
             return new S\CountryStateService();
         };
+
+        $serviceContainer['Validation'] = function () {
+            return new S\ValidationService();
+        };
+
     }
 }

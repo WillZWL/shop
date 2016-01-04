@@ -54,7 +54,7 @@ class ComplementaryAccService extends BaseService
         return $this->getDao('ProductComplementaryAcc')->getMappedAccListWithName($where, $option, $active);
     }
 
-    public function check_cat($sku = "", $is_ca = true)
+    public function checkCat($sku = "", $is_ca = true)
     {
         $ret = $this->getDao('ProductComplementaryAcc')->checkCat($sku, $is_ca);
         return $ret;

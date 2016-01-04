@@ -119,12 +119,11 @@
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 mesi</td>
                         </tr>
                         </table>
-                        <?= _('Questa garanzia non copre:
-                                - Danni dovuti a modifiche o riparazioni non effettuate da noi
-                                - Ammaccature, graffi e condizioni derivanti dall’ uso del prodotto per un certo periodo
-                                - Danni accidentali (inclusi impatto, colpi, cadute, danni da acqua o sabbia)
-                                - Insoddisfazione con le specifiche proprie del prodotto
-                            ') ?>
+                        <?= _('Questa garanzia non copre:') ?><br />
+                                <?= _('- Danni dovuti a modifiche o riparazioni non effettuate da noi') ?><br />
+                                <?= _('- Ammaccature, graffi e condizioni derivanti dall’ uso del prodotto per un certo periodo') ?><br />
+                                <?= _('- Danni accidentali (inclusi impatto, colpi, cadute, danni da acqua o sabbia)') ?><br />
+                                <?= _('- Insoddisfazione con le specifiche proprie del prodotto') ?>
                     </p>
                     <br /><br />
 

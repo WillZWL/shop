@@ -102,27 +102,27 @@ class ClientService extends BaseService
 **  createClient use by SoFactory
 **  We will better to use the same function for MyAcct page to create Client
 ****************************************************/
-    public function createClient($clientInfo = [], $delegate = null, $requireLogin = false) {
-        $email = $clientInfo["email"];
-        if ($clientObj = $this->getDao('Client')->get(array("email" => $email))) {
+    public function createClient($interfaceType = null, $requireLogin = false) {
+        $checkInfoDto = $interfaceType->getCheckoutData();
+        if ($clientObj = $this->getDao('Client')->get(array("email" => $checkInfoDto->getEmail()))) {
             $action = "update";
         } else {
             $clientObj = $this->getDao('Client')->get();
             $action = "insert";
         }
-        $this->setClientDetail($clientObj, $clientInfo);
+        $this->setClientDetail($clientObj, $checkInfoDto);
 
-        if ($delegate instanceof CreateClientInterface)
-            $delegate->clientBeforeUpdateEvent($clientObj);
+        if ($interfaceType instanceof CreateClientInterface)
+            $interfaceType->clientBeforeUpdateEvent($clientObj);
 
         $actionResult = $this->getDao('Client')->$action($clientObj);
         if ($actionResult === false) {
             $subject = "[Panther] Cannot create/update client:" . __METHOD__ . __LINE__;
-            $message = $this->getDao('Client')->db->last_query() . "," . $this->getDao('Client')->db->_error_message();
+            $message = $this->getDao('Client')->db->last_query() . "," . $this->getDao('Client')->db->error()["message"];
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
         } else {
-            if ($delegate instanceof CreateClientInterface)
-                $delegate->clientCreateSuccessEvent($clientObj);
+            if ($interfaceType instanceof CreateClientInterface)
+                $interfaceType->clientInsertSuccessEvent($clientObj);
 
 //            if ($requireLogin)
 //                $this->objectLogin($clientObj, $_SESSION["client"]["logged_in"]);
@@ -131,98 +131,93 @@ class ClientService extends BaseService
         return false;
     }
 
-    private function setClientDetail($clientObj, $clientInfo = []) {
+    private function setClientDetail($clientObj, $checkInfoDto) {
         $clientObj->setStatus(1);
-        if (isset($clientInfo["email"]))
-            $clientObj->setEmail($clientInfo["email"]);
+        if ($checkInfoDto->getEmail())
+            $clientObj->setEmail($checkInfoDto->getEmail());
 
-        if (isset($clientInfo["billPassword"])) {
-            $clientObj->setPassword($this->encryption->encrypt($clientInfo["billPassword"]));
+        if ($checkInfoDto->getBillPassword()) {
+            $clientObj->setPassword($this->encryption->encrypt($checkInfoDto->getBillPassword()));
         } elseif (!$clientObj->getPassword())
             $clientObj->setPassword($this->encryption->encrypt(mktime()));
 
-        if (isset($clientInfo["extClientId"]))
-            $clientObj->setExtClientId($clientInfo["extClientId"]);
-        if (isset($clientInfo["clientIdNo"]))
-            $clientObj->setClientIdNo($clientInfo["clientIdNo"]);
+        if ($checkInfoDto->getExtClientId())
+            $clientObj->setExtClientId($checkInfoDto->getExtClientId());
+        if ($checkInfoDto->getClientIdNo())
+            $clientObj->setClientIdNo($checkInfoDto->getClientIdNo());
 //billing info
-        if (isset($clientInfo["billFirstName"]))
-            $clientObj->setForename($clientInfo["billFirstName"]);
-        if (isset($clientInfo["billLastName"]))
-            $clientObj->setSurname($clientInfo["billLastName"]);
-        if (isset($clientInfo["billCompany"]))
-            $clientObj->setCompanyname($clientInfo["billCompany"]);
-        if (isset($clientInfo["billCountry"]))
-            $clientObj->setCountryId($clientInfo["billCountry"]);
-        if (isset($clientInfo["billAddress1"]))
-            $clientObj->setAddress1($clientInfo["billAddress1"]);
-        if (isset($clientInfo["billAddress2"]))
-            $clientObj->setAddress2($clientInfo["billAddress2"]);
-        if (isset($clientInfo["billAddress3"]))
-            $clientObj->setAddress3($clientInfo["billAddress3"]);
-        if (isset($clientInfo["billCity"]))
-            $clientObj->setCity($clientInfo["billCity"]);
-        if (isset($clientInfo["billPostal"]))
-            $clientObj->setPostcode($clientInfo["billPostal"]);
-        if (isset($clientInfo["billState"]))
-            $clientObj->setState($clientInfo["billState"]);
-        if (isset($clientInfo["billTelCountryCode"]))
-            $clientObj->setTel1($clientInfo["billTelCountryCode"]);
-        if (isset($clientInfo["billTelAreaCode"]))
-            $clientObj->setTel2($clientInfo["billTelAreaCode"]);
-        if (isset($clientInfo["billTelNumber"]))
-            $clientObj->setTel3($clientInfo["billTelNumber"]);
-        if (isset($clientInfo["billTelNumber"]))
-            $clientObj->setTel3($clientInfo["billTelNumber"]);
+        if ($checkInfoDto->getBillFirstName())
+            $clientObj->setForename($checkInfoDto->getBillFirstName());
+        if ($checkInfoDto->getBillLastName())
+            $clientObj->setSurname($checkInfoDto->getBillLastName());
+        if ($checkInfoDto->getBillCompany())
+            $clientObj->setCompanyname($checkInfoDto->getBillCompany());
+        if ($checkInfoDto->getBillCountry())
+            $clientObj->setCountryId($checkInfoDto->getBillCountry());
+        if ($checkInfoDto->getBillAddress1())
+            $clientObj->setAddress1($checkInfoDto->getBillAddress1());
+        if ($checkInfoDto->getBillAddress2())
+            $clientObj->setAddress2($checkInfoDto->getBillAddress2());
+        if ($checkInfoDto->getBillAddress3())
+            $clientObj->setAddress3($checkInfoDto->getBillAddress3());
+        if ($checkInfoDto->getBillCity())
+            $clientObj->setCity($checkInfoDto->getBillCity());
+        if ($checkInfoDto->getBillPostal())
+            $clientObj->setPostcode($checkInfoDto->getBillPostal());
+        if ($checkInfoDto->getBillState())
+            $clientObj->setState($checkInfoDto->getBillState());
+        if ($checkInfoDto->getBillTelCountryCode())
+            $clientObj->setTel1($checkInfoDto->getBillTelCountryCode());
+        if ($checkInfoDto->getBillTelAreaCode())
+            $clientObj->setTel2($checkInfoDto->getBillTelAreaCode());
+        if ($checkInfoDto->getBillTelNumber())
+            $clientObj->setTel3($checkInfoDto->getBillTelNumber());
+        if ($checkInfoDto->getBillTelNumber())
+            $clientObj->setTel3($checkInfoDto->getBillTelNumber());
 //shipping info
         $shipName = "";
-        if (isset($clientInfo["shipFirstName"]))
-            $shipName .= $clientInfo["shipFirstName"];
-        if (isset($clientInfo["shipLastName"]))
-        {
+        if ($checkInfoDto->getShipFirstName())
+            $shipName .= $checkInfoDto->getShipFirstName();
+        if ($checkInfoDto->getShipLastName()) {
             if ($shipName != "")
                 $shipName .= " ";
-            $shipName .= $clientInfo["shipLastName"];
+            $shipName .= $checkInfoDto->getShipLastName();
         }
         if ($shipName != "")
             $clientObj->setDelName($shipName);
-        if (isset($clientInfo["shipCompany"]))
-            $clientObj->setDelCompany($clientInfo["shipCompany"]);
-        if (isset($clientInfo["shipAddress1"]))
-            $clientObj->setDelAddress1($clientInfo["shipAddress1"]);
-        if (isset($clientInfo["shipAddress2"]))
-            $clientObj->setDelAddress2($clientInfo["shipAddress2"]);
-        if (isset($clientInfo["shipAddress3"]))
-            $clientObj->setDelAddress3($clientInfo["shipAddress3"]);
-        if (isset($clientInfo["shipCity"]))
-            $clientObj->setDelCity($clientInfo["shipCity"]);
-        if (isset($clientInfo["shipPostal"]))
-            $clientObj->setDelPostcode($clientInfo["shipPostal"]);
-        if (isset($clientInfo["shipState"]))
-            $clientObj->setDelState($clientInfo["shipState"]);
-        if (isset($clientInfo["shipCountry"]))
-            $clientObj->setDelCountryId($clientInfo["shipCountry"]);
-        if (isset($clientInfo["shipTelCountryCode"]))
-            $clientObj->setDelTel1($clientInfo["shipTelCountryCode"]);
-        if (isset($clientInfo["shipTelAreaCode"]))
-            $clientObj->setDelTel2($clientInfo["shipTelAreaCode"]);
-        if (isset($clientInfo["shipTelNumber"]))
-            $clientObj->setDelTel3($clientInfo["shipTelNumber"]);
+        if ($checkInfoDto->getShipCompany())
+            $clientObj->setDelCompany($checkInfoDto->getShipCompany());
+        if ($checkInfoDto->getShipAddress1())
+            $clientObj->setDelAddress1($checkInfoDto->getShipAddress1());
+        if ($checkInfoDto->getShipAddress2())
+            $clientObj->setDelAddress2($checkInfoDto->getShipAddress2());
+        if ($checkInfoDto->getShipAddress3())
+            $clientObj->setDelAddress3($checkInfoDto->getShipAddress3());
+        if ($checkInfoDto->getShipCity())
+            $clientObj->setDelCity($checkInfoDto->getShipCity());
+        if ($checkInfoDto->getShipPostal())
+            $clientObj->setDelPostcode($checkInfoDto->getShipPostal());
+        if ($checkInfoDto->getShipState())
+            $clientObj->setDelState($checkInfoDto->getShipState());
+        if ($checkInfoDto->getShipCountry())
+            $clientObj->setDelCountryId($checkInfoDto->getShipCountry());
+        if ($checkInfoDto->getShipTelCountryCode())
+            $clientObj->setDelTel1($checkInfoDto->getShipTelCountryCode());
+        if ($checkInfoDto->getShipTelAreaCode())
+            $clientObj->setDelTel2($checkInfoDto->getShipTelAreaCode());
+        if ($checkInfoDto->getShipTelNumber())
+            $clientObj->setDelTel3($checkInfoDto->getShipTelNumber());
 //other info
-        if (isset($clientInfo["subscriber"]))
-            $clientObj->setSubscriber($clientInfo["subscriber"]);
+        if ($checkInfoDto->getSubscriber())
+            $clientObj->setSubscriber($checkInfoDto->getSubscriber());
         else
             $clientObj->setSubscriber(1);
-        if (isset($clientInfo["subscriber"]))
-            $clientObj->setSubscriber($clientInfo["subscriber"]);
-        else
-            $clientObj->setSubscriber(1);
-        if (isset($clientInfo["partySubscriber"]))
-            $clientObj->setPartySubscriber($clientInfo["partySubscriber"]);
+        if ($checkInfoDto->getPartySubscriber())
+            $clientObj->setPartySubscriber($checkInfoDto->getPartySubscriber());
         else
             $clientObj->setPartySubscriber(0);
-        if (isset($clientInfo["vip"]))
-            $clientObj->setVip($clientInfo["vip"]);
+        if ($checkInfoDto->getVip())
+            $clientObj->setVip($checkInfoDto->getVip());
         else
             $clientObj->setVip(0);
 

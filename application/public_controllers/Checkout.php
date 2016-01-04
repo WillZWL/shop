@@ -41,7 +41,7 @@ class Checkout extends PUB_Controller
     }
 
     public function index() {
-        $cart = $this->cartSessionModel->getCartInfo(true);
+        $cart = $this->cartSessionModel->getCartInfo();
         if (!$cart) {
             redirect("/review-order");
         }
@@ -85,7 +85,7 @@ class Checkout extends PUB_Controller
         $data = [];
         $filter = new CheckoutFormFilter();
         $client = $this->checkoutModel->isLoggedIn();
-        $cart = $this->cartSessionModel->getCartInfo(true);
+        $cart = $this->cartSessionModel->getCartInfo();
 
         $poBoxLimit = $this->checkoutModel->getPoBoxAmountLimit();
         $filterResult = $filter->isValidForm($this->input, $this->getSiteInfo(), ["loggedIn" => (($client)?true:false), "email" => (($client)?$client["Email"]:""), "poBoxLimit" => $poBoxLimit, "cart" => $cart]);

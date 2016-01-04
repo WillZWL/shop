@@ -8,7 +8,7 @@
     <script type="text/javascript" src="<?= base_url() ?>js/jquery-colorbox.min.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
-    <script type="text/javascript" src="<?= base_url() ?>/marketing/complementary_acc/complementary_acc_js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>marketing/complementary_acc/complementary_acc_js"></script>
     <script language="javascript">
 
         <!--
@@ -104,14 +104,14 @@ $ca_status = array(0 => "inactive", 1 => "active");
                     <?php
                     if ($country_list)
                     {
-                    $ctry_select = "<select name='ctry' id='ctry' onChange=\"Redirect('$base_url/marketing/complementary_acc/map_cat/'+this.value)\"><option></option>";
+                    $ctry_select = "<select name='ctry' id='ctry' onChange=\"Redirect('" . base_url() . "marketing/complementary_acc/map_cat/'+this.value);\"><option></option>";
                     foreach ($country_list as $ctryobj) {
                         $selected = "";
-                        if ($ctryobj->get_id() == $country)
+                        if ($ctryobj->getCountryId() == $country)
                             $selected = " selected";
 
                         $ctry_select .= <<<HTML
-                        <option value="{$ctryobj->get_id()}" $selected>{$ctryobj->get_id()} - {$ctryobj->get_name()}</option>
+                        <option value="{$ctryobj->getCountryId()}" $selected>{$ctryobj->getCountryId()} - {$ctryobj->getName()}</option>
 HTML;
                     }
                     $ctry_select .= "</select>";

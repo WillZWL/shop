@@ -29,12 +29,12 @@ use ESG\Panther\Service\CartSessionService;
 
 class SoFactoryService extends BaseService
 {
-    const ENABLE_SO_ITEM = FALSE;
-    public $injectObj = null;
+//    public $injectObj = null;
+    private $_platformType = null;
 
     public function __construct($injectObj = null) {
         parent::__construct();
-        $this->injectObj = $injectObj;
+//        $this->injectObj = $injectObj;
         $this->setDao(new SoDao());
     }
 
@@ -51,48 +51,46 @@ class SoFactoryService extends BaseService
         return $newCart;
     }
 
-    public function createSaleOrder($clientAndCheckoutInfo = [], $orderInfo) {
-        $soObj = null;
+    public function createSaleOrder(CreateSoInterface $interfaceType) {
+        if ($interfaceType instanceof CreateSoInterface) {
 //create client
-        $clientInfo = $clientAndCheckoutInfo;
-        $clientObj = $this->_createClient($clientInfo);
-        if ($clientObj) {
+            $clientObj = $this->_createClient($interfaceType);
+            if ($clientObj) {
 //rebuild the cart info, prevent hacking or price updated by BD
-            $newCart = $this->getNewCartByOrderInfo($orderInfo);
-            $newSoNo = $this->getDao("So")->getNewSoNo();
-            $this->getDao("So")->db->trans_start();
-            $soObj = $this->_createSo($clientObj, $newCart, $newSoNo, null, $clientAndCheckoutInfo);
-            if ($soObj !== false)
-            {
-                if (self::ENABLE_SO_ITEM)
-                {
-                    if (!$this->_createSoItem($soObj, $newCart))
-                    {
-                        $this->getDao("So")->db->trans_rollback();
-                    }
-                }
-                if ($this->_createSoItemDetailAndUpdateSo($soObj, $newCart)) {
-                    if ($this->_createSoPaymentStatus($soObj, $clientAndCheckoutInfo)) {
-                        if (!$this->_createSoExtend($soObj, $clientAndCheckoutInfo)) {
+                if ($interfaceType->getBizType() == "ONLINE")
+                    $newCart = $this->getNewCartByOrderInfo($interfaceType->getCartDto());
+                else
+                    $newCart = $interfaceType->getCartDto();
+                $newSoNo = $this->getDao("So")->getNewSoNo();
+                $this->getDao("So")->db->trans_start();
+                $soObj = $this->_createSo($clientObj, $newCart, $newSoNo, null, $interfaceType);
+                if ($soObj !== false) {
+                    if ($this->_createSoItemDetailAndUpdateSo($soObj, $newCart)) {
+                        if ($this->_createSoPaymentStatus($soObj, $interfaceType->getCheckoutData())) {
+                            if (!$this->_createSoExtend($soObj, $interfaceType->getCheckoutData())) {
+                                $this->getDao("So")->db->trans_rollback();
+                            }
+                        } else {
                             $this->getDao("So")->db->trans_rollback();
                         }
                     } else {
                         $this->getDao("So")->db->trans_rollback();
                     }
-                } else {
-                    $this->getDao("So")->db->trans_rollback();
                 }
-            }
-            $transCompleteResult = $this->getDao("So")->db->trans_complete();
-            if ($transCompleteResult === false)
-            {
-                $subject = "[Panther] Rollback Create so:(" . (($soObj) ? $soObj->getSoNo():"") . ") " . __METHOD__ . __LINE__;
-                $message = $this->getDao("So")->db->last_query() . "," . $this->getDao("So")->db->_error_message();
-                $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
-                return false;
-            }
-        } else {
+                $transCompleteResult = $this->getDao("So")->db->trans_complete();
+                if ($interfaceType instanceof CreateSoEventInterface) {
+                    $interfaceType->soInsertSuccessEvent($soObj);
+                }
+                if ($transCompleteResult === false)
+                {
+                    $subject = "[Panther] Rollback Create so:(" . (($soObj) ? $soObj->getSoNo():"") . ") " . __METHOD__ . __LINE__;
+                    $message = $this->getDao("So")->db->last_query() . "," . $this->getDao("So")->db->error()["message"];
+                    $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
+                    return false;
+                }
+            } else {
 //no need to send email alert, as Client Service handle it already
+            }
         }
         return $soObj;
     }
@@ -117,19 +115,22 @@ class SoFactoryService extends BaseService
     {
         $soExtendObj = $this->getDao("SoExtend")->get();
         $soExtendObj->setSoNo($soObj->getSoNo());
-        if (isset($checkoutInfo["convSiteId"]))
+        if ($checkoutInfo->getConvSiteId())
         {
 //            $this->storeAfInfo($soExtendObj, $checkoutInfo["convSiteId"]);
-            $soExtendObj->setConvSiteId($checkoutInfo["convSiteId"]);
+            $soExtendObj->setConvSiteId($checkoutInfo->getConvSiteId());
         }
-        if (isset($checkoutInfo["convSiteRef"]))
-            $soExtendObj->setConvSiteRef($checkoutInfo["convSiteRef"]);
-        
+        if ($checkoutInfo->getConvSiteRef())
+            $soExtendObj->setConvSiteRef($checkoutInfo->getConvSiteRef());
+        if ($checkoutInfo->getOrderReason())
+            $soExtendObj->setOrderReason($checkoutInfo->getOrderReason());
+        if ($checkoutInfo->getOrderNotes())
+            $soExtendObj->setNotes($checkoutInfo->getOrderNotes());
+
         $insertSoExtendResult = $this->getDao("SoExtend")->insert($soExtendObj);
-        if ($insertSoExtendResult === false)
-        {
+        if ($insertSoExtendResult === false) {
             $subject = "[Panther] Cannot create so extend:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
-            $message = $this->getDao("SoExtend")->db->last_query() . "," . $this->getDao("SoExtend")->db->_error_message();
+            $message = $this->getDao("SoExtend")->db->last_query() . "," . $this->getDao("SoExtend")->db->error()["message"];
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
             return false;
         }
@@ -140,23 +141,23 @@ class SoFactoryService extends BaseService
     {
         $soPaymentStatusObj = $this->getDao("SoPaymentStatus")->get();
         $soPaymentStatusObj->setSoNo($soObj->getSoNo());
-        $soPaymentStatusObj->setPaymentGatewayId($checkoutInfo["paymentGatewayId"]);
-        $soPaymentStatusObj->setCardId($checkoutInfo["paymentCardId"]);
+        $soPaymentStatusObj->setPaymentGatewayId($checkoutInfo->getPaymentGatewayId());
+        $soPaymentStatusObj->setCardId($checkoutInfo->getPaymentCardId());
         $soPaymentStatusObj->setPaymentStatus("N");
-        
+
         $insertSoPaymentResult = $this->getDao("SoPaymentStatus")->insert($soPaymentStatusObj);
-        if ($insertSoPaymentResult === false)
-        {
+        if ($insertSoPaymentResult === false) {
             $subject = "[Panther] Cannot create so payment status:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
-            $message = $this->getDao("SoPaymentStatus")->db->last_query() . "," . $this->getDao("SoPaymentStatus")->db->_error_message();
+            $message = $this->getDao("SoPaymentStatus")->db->last_query() . "," . $this->getDao("SoPaymentStatus")->db->error()["message"];
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
             return false;
         }
         return $insertSoPaymentResult;
     }
 
-    private function _createClient($clientInfo = []) {
-        $clientObj = $this->getService("Client")->createClient($clientInfo, $this->injectObj, true);
+    private function _createClient($interfaceType) {
+        if (!($clientObj = $interfaceType->selfCreateClientObj()))
+            $clientObj = $this->getService("Client")->createClient($interfaceType, true);
         return $clientObj;
     }
 
@@ -238,7 +239,7 @@ class SoFactoryService extends BaseService
         if ($updateSoResult === false)
         {
             $subject = "[Panther] Cannot update so cost:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
-            $message = $this->getDao("So")->db->last_query() . "," . $this->getDao("So")->db->_error_message();
+            $message = $this->getDao("So")->db->last_query() . "," . $this->getDao("So")->db->error()["message"];
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_GENERAL_LEVEL);
         }
         return $result;
@@ -296,7 +297,7 @@ class SoFactoryService extends BaseService
         if ($insertSoItemDetailResult === false)
         {
             $subject = "[Panther] Cannot create so item detail:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
-            $message = $this->getDao("SoItemDetail")->db->last_query() . "," . $this->getDao("SoItemDetail")->db->_error_message();
+            $message = $this->getDao("SoItemDetail")->db->last_query() . "," . $this->getDao("SoItemDetail")->db->error()["message"];
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
             return false;
         }
@@ -328,15 +329,16 @@ class SoFactoryService extends BaseService
         if ($insertSoItemResult === false)
         {
             $subject = "[Panther] Cannot create so item:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
-            $message = $this->getDao("SoItem")->db->last_query() . "," . $this->getDao("SoItem")->db->_error_message();
+            $message = $this->getDao("SoItem")->db->last_query() . "," . $this->getDao("SoItem")->db->error()["message"];
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
             return false;
         }
         return $soItemObj;
     }
 
-    private function _createSo($clientObj, $orderInfo, $newSoNo, $parentSoNo = null, $checkoutInfo = []) {
+    private function _createSo($clientObj, $orderInfo, $newSoNo, $parentSoNo = null, $injectedInterfaceObj) {
         $soObj = $this->getDao("So")->get();
+        $checkoutInfoDto = $injectedInterfaceObj->getCheckoutData();
         $this->_setSoObjClientInfo($clientObj, $soObj);
         $soObj->setSoNo($newSoNo);
         if ($orderInfo->getPlatformOrderId())
@@ -348,18 +350,20 @@ class SoFactoryService extends BaseService
         $soObj->setCost($orderInfo->getCost());
         $soObj->setAmount($orderInfo->getGrandTotal());
         $soObj->setCurrencyId($orderInfo->getPlatformCurrency());
-        $soObj->setBizType($orderInfo->getBizType());
+        $soObj->setBizType($injectedInterfaceObj->getBizType());
         $soObj->setDeliveryCharge($orderInfo->getDeliveryCharge());
         $soObj->setDeliveryTypeId($orderInfo->getDeliveryType());
         $soObj->setWeight($orderInfo->getTotalWeight());
-        if ($orderInfo->getBizType() == "ONLINE")
+        if ($checkoutInfoDto->getLangId())
+            $soObj->setLangId($checkoutInfoDto->getLangId());
+        elseif ($injectedInterfaceObj->getBizType() == "ONLINE")
             $soObj->setLangId(LANG_ID);
         else {
 //other are all through admincentre
             $soObj->setLangId("en");
         }
-        if (isset($parentSoNo))
-            $soObj->setParentSoNo($parentSoNo);
+        if ($checkoutInfoDto->getParentSoNo())
+            $soObj->setParentSoNo($checkoutInfoDto->getParentSoNo());
         $soObj->setStatus(1);
         $soObj->setHoldStatus(0);
         $soObj->setRefundStatus(0);
@@ -368,15 +372,18 @@ class SoFactoryService extends BaseService
             $soObj->setOrderCreateDate($orderInfo->getOrderCreateDate());
         else
             $soObj->setOrderCreateDate(date("Y-m-d H:i:s"));
-        if (isset($checkoutInfo["cybersourceFingerprint"]))
-            $soObj->setFingerprintId($checkoutInfo["cybersourceFingerprint"]);
+        if ($checkoutInfoDto->getCybersourceFingerprint())
+            $soObj->setFingerprintId($checkoutInfoDto->getCybersourceFingerprint());
 
         $this->setOrderInfoDetail($orderInfo->getPlatformId(), $soObj);
+        if ($interfaceType instanceof CreateSoEventInterface) {
+            $interfaceType->soBeforeInsertEvent($soObj);
+        }
         $insertSoResult = $this->getDao("So")->insert($soObj);
         if ($insertSoResult === false)
         {
             $subject = "[Panther] Cannot create so:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
-            $message = $this->getDao("So")->db->last_query() . "," . $this->getDao("So")->db->_error_message();
+            $message = $this->getDao("So")->db->last_query() . "," . $this->getDao("So")->db->error()["message"];
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
             return false;
         }
@@ -406,64 +413,13 @@ class SoFactoryService extends BaseService
 //we will need a new CartSessionService, not a shared one
         $cartSessionService = new CartSessionService(TRUE);
         $langId = (($bizType == "ONLINE") ? LANG_ID : "en");
-        $cart = $cartSessionService->getCart($bizType);
         foreach($skuInfo as $sku => $item) {
             $cartSessionService->add($sku, $item["qty"], $langId, $platformId, $currencyId);
         }
-        $cart = $cartSessionService->getCart($bizType);
+        $cart = $cartSessionService->getCart();
         return $cart;
     }
-/*
-    public function rebuildCartBySku($platformId, $bizType, $skuInfo) {
-        $totalItems = 0;
-        $totalItemCost = 0;
-        $totalAmount = 0.0;
-        $orderVatTotal = 0;
-        $totalWeight = 0;
 
-        $newCart = new \CartDto();
-        if ($bizType== "ONLINE")
-            $langId = LANG_ID;
-        else
-            $langId = "en";
-        foreach($skuInfo as $sku => $item)
-        {
-            $newProductInfo = $this->getService("CartSession")->getCartItemInDetail($sku, $langId, $platformId);
-            $newProductInfo->setQty($item["qty"]);
-            $newProductInfo->setUnitCost(round($newProductInfo->getUnitCost(), $newProductInfo->getDecPlace()));
-            $newProductInfo->setVatTotal(round($newProductInfo->getVatTotal(), $newProductInfo->getDecPlace()));
-            $unitPrice = $newProductInfo->getPrice();
-
-            $itemSubTotal = $unitPrice * $newProductInfo->getQty();
-            if ($bizType == "ONLINE")
-                $newProductInfo->setAmount($itemSubTotal);
-            else
-                $newProductInfo->setAmount($item["amount"]);
-
-            $totalItemCost += $newProductInfo->getUnitcost() * $newProductInfo->getQty();
-            $totalAmount += $itemSubTotal;
-
-            $vatPercent = $newProductInfo->getVatPercent();
-            $totalItems += $newProductInfo->getQty();
-            $orderVatTotal += round(($newProductInfo->getVatTotal() * $newProductInfo->getQty()), $newProductInfo->getDecPlace());
-            $totalWeight += $newProductInfo->getUnitWeight() * $newProductInfo->getQty();
-            $newCart->items[$sku] = $newProductInfo;
-
-            if (!$newCart->getPlatformCurrency())
-                $newCart->setPlatformCurrency($newProductInfo->getPlatformCurrency());
-        }
-
-        $newCart->setSubtotal($totalAmount);
-        $newCart->setTotalNumberOfItems($totalItems);
-        $newCart->setVatPercent($vatPercent);
-        $newCart->setVat($orderVatTotal);
-        $newCart->setBizType($bizType);
-        $newCart->setCost($totalItemCost);
-        $newCart->setTotalWeight($totalWeight);
-
-        return $newCart;
-    }
-*/
     public function isFraudOrder($soObj = '')
     {
         if (!$soObj)
@@ -494,24 +450,15 @@ class SoFactoryService extends BaseService
 
     private function _setProfitInfo(\BaseVo $soidObj, $platformId, $decPlace)
     {
-/*
-        if (!defined('PLATFORM_TYPE'))
-            $use_new = true;
-        else {
-            if (PLATFORM_TYPE == 'EBAY' || PLATFORM_TYPE == 'QOO10' || PLATFORM_TYPE == 'FNAC' || PLATFORM_TYPE == 'RAKUTEN')
-                $use_new = false;
-            else
-                $use_new = true;
-        }
-*/
         $use_new = true;
-        if (defined('PLATFORM_TYPE'))
-            $type = PLATFORM_TYPE;
-        else
-            $type = $this->get_pbv_srv()->selling_platform_dao->get(array("id" => $platformId))->get_type();
-
-/* calculate raw first, common to all */
-        $this->_initPriceService($type);
+        if (!$this->_platformType) {
+            if (defined('PLATFORM_TYPE'))
+                $this->_platformType = PLATFORM_TYPE;
+            else
+                $this->_platformType = $this->getService("SellingPlatform")->getDao("SellingPlatform")->get(["selling_platform_id" => $platformId])->getType();
+        }
+/* calculate raw first, common to all, */
+        $this->_initPriceService($this->_platformType);
         $unitSellingPrice = $soidObj->getUnitPrice();
         $json = $this->priceService->getProfitMarginJson($platformId, $soidObj->getItemSku(), $unitSellingPrice);
         $jj = json_decode($json, true);
@@ -520,25 +467,12 @@ class SoFactoryService extends BaseService
         $soidObj->setMarginRaw(round($jj["get_margin"], $decPlace));
 
         if ($use_new) {
-//            $this->_initPriceService($type);
-//            $gst = @$soidObj->getGstTotal();
             $selling_price = ($soidObj->getAmount()/* + $gst*/) / $soidObj->getQty();
             $json = $this->priceService->getProfitMarginJson($platformId, $soidObj->getItemSku(), $selling_price);
-            //file_put_contents("/var/log/vb-json", "{$soidObj->get_so_no()} || $json", FILE_APPEND);
-
             $jj = json_decode($json, true);
-
             $soidObj->setCost(round($jj["get_cost"], $decPlace));
             $soidObj->setProfit(round($jj["get_profit"], $decPlace));
             $soidObj->setMargin(round($jj["get_margin"], $decPlace));
-
-        }/* else {
-            $soidObj->setProfit(round($soidObj->getAmount() - $soidObj->getCost(), $decPlace));
-            if ($soidObj->getAmount()) {
-                $soidObj->setMargin(round($soidObj->getProfit() / $soidObj->getAmount() * 100, $decPlace));
-            } else {
-                $soidObj->setMargin(0);
-            }
-        }*/
+        }
     }
 }

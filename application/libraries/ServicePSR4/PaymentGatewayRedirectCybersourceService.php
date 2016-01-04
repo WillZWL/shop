@@ -18,7 +18,7 @@ class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectAda
 	{
 		$where = ["so.create_on >" => "2015-10-28 00:00:00"];
 		$options = ["limit" => -1];
-		$orders = $this->getService("SoFactory")->getDao()->getOrdersForDm($where, $options);
+		$orders = $this->getService("SoFactory")->getDao("So")->getOrdersForDm($where, $options);
 		$this->debug = $debug;
 		$possibleObj = "";
 		$j = 0;
@@ -88,7 +88,7 @@ class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectAda
                     $smartId = $deviceFingerprint["smartID"];
                 }
             }
-            if ($this->so =  $this->getService("SoFactory")->getDao()->get(["so_no" => $soNo])) {
+            if ($this->so =  $this->getService("SoFactory")->getDao("So")->get(["so_no" => $soNo])) {
                 $needCreditChecks = TRUE;
                 if ($paymentResult['merchantReferenceCode'] == $soNo) {
                     $sorData = ["risk_requested" => 1,
@@ -106,7 +106,7 @@ class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectAda
                         $this->so->setStatus(2);
                         if ($this->so->getHoldStatus() != 1)
                             $this->so->setHoldStatus(0);
-                        $this->getService("SoFactory")->getDao()->update($this->so);
+                        $this->getService("SoFactory")->getDao("So")->update($this->so);
                         mail("compliance@digitaldiscount.co.uk", 'DM REJECT [Panther]:' . $soNo, $saveText, 'From: website@digitaldiscount.co.uk');
                     } else {
                         $needCreditChecks = $this->_needCreditCheckAfterDm($paymentResult['decision'], $afsReply['afsResult']);
@@ -115,7 +115,7 @@ class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectAda
                         $this->so->setStatus(3);
                         if ($this->so->getHoldStatus() != 1)
                             $this->so->setHoldStatus(0);
-                        $this->getService("SoFactory")->getDao()->update($this->so);
+                        $this->getService("SoFactory")->getDao("So")->update($this->so);
                     }
                 } else {
                     $sorData = ["risk_requested" => 2];

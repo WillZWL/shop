@@ -1,6 +1,23 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+function setValuePsrArray(&$obj, $value = [])
+{
+    $class_methods = get_class_methods($obj);
+    if (!empty($class_methods)) {
+        if (is_array($value)) {
+            foreach ($class_methods as $fct_name) {
+                if (substr($fct_name, 0, 3) == "set") {
+                    $rskey = substr($fct_name, 3);
+                    if (isset($value[lcfirst($rskey)])) {
+                        call_user_func([$obj, $fct_name], $value[lcfirst($rskey)]);
+                    }
+                }
+            }
+        }
+    }
+}
+
 function set_value(&$obj, $value = [])
 {
     $class_methods = get_class_methods($obj);

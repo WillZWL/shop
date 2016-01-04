@@ -518,7 +518,7 @@ msgstr ""
 
 #: checkout/paymentSuccess.php:12
 msgid "Please note all charges will appear on your statement as CHATANDVISION."
-msgstr "Please note all charges will appear on your statement as CHATANDVISION."
+msgstr "Per favore, ricorda che questa transazione apparirà nei documenti bancari con nome CHATANDVISION."
 
 #: checkout/paymentSuccess.php:14
 msgid "We'll send you an email as soon as it's shipped!"
