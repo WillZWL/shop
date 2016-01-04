@@ -206,7 +206,15 @@ class Phone_sales extends MY_Controller
         }
 
         if ($this->input->post("posted")) {
-            $this->sc['PhoneSales']->addSoForPhoneSales($_POST, $platform_id);
+            if (!$this->input->post("took")) {
+                $this->sc['PhoneSales']->addSoForPhoneSales($_POST, $platform_id);
+            }
+
+            if ($this->input->post("promotion_code")) {
+                $_SESSION["promotion_code"] = $this->input->post("promotion_code");
+            } else {
+                unset($_SESSION["promotion_code"]);
+            }
         }
 
         if ($this->input->post('clientid')) {
