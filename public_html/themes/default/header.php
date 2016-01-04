@@ -154,7 +154,7 @@
                                     <div class="pull-right header-links col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <!--<a href="/warranty"><span class=""><?= _('Warranty') ?></span></a>&nbsp;&nbsp;&nbsp;-->
                                         <a href="<?=base_url()?>display/view/contact"><span class="desc-about"><?= _('Contact Us') ?></span></a>&nbsp;&nbsp;&nbsp;
-                                        <a href="<?=base_url()?>display/view/conditions_of_use"><span class="desc-about"><?= _('Help') ?></span></a>&nbsp;&nbsp;&nbsp;
+                                        <a href="<?=base_url()?>display/view/faq"><span class="desc-about"><?= _('Help') ?></span></a>&nbsp;&nbsp;&nbsp;
                                         <!--<a href="/clearance"><span class="clearance"><?= _('Clearance') ?></span></a>&nbsp;&nbsp;&nbsp;-->
                                         <?php if ($_SESSION["client"]["loggedIn"]) { ?>
                                             <a class="desc-about" href="<?=base_url()?>myaccount/index"><?= _("My Account") ?></a>&nbsp;&nbsp;&nbsp;

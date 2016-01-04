@@ -17,9 +17,6 @@ class Display extends PUB_Controller
 
     public function view($page = '')
     {
-        if ($page == "FAQ") {
-            $page = "faq";
-        }
         if (
             ($page != "shipping")
             && ($page != "conditions_of_use")
