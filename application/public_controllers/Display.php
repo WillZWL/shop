@@ -33,11 +33,13 @@ class Display extends PUB_Controller
             show_404();
         }
 
+        $data['server_name'] = str_replace(['www.'], '', $_SERVER['SERVER_NAME']);
+        $data['server_name']  = ($data['server_name'] == "dduk.dev") ? "digitaldiscount.co.uk" : $data['server_name'] ;
+
         if ($page == 'contact') {
-            $server_name = str_replace(['www.'], '', $_SERVER['SERVER_NAME']);
-            $data['contact_url_1'] = 'http://contact.'  . $server_name . '/support/tickets/new?genaftersales=true';
-            $data['contact_url_2'] = 'http://contact.'  . $server_name . '/support/tickets/new?presales=true';
-            $data['contact_url_3'] = 'http://contact.'  . $server_name . '/support/tickets/new?faultorreturn=true';
+            $data['contact_url_1'] = 'http://contact.'  . $data['server_name'] . '/support/tickets/new?genaftersales=true';
+            $data['contact_url_2'] = 'http://contact.'  . $data['server_name'] . '/support/tickets/new?presales=true';
+            $data['contact_url_3'] = 'http://contact.'  . $data['server_name'] . '/support/tickets/new?faultorreturn=true';
         }
 
         $data["content"] = "display/" . $page;

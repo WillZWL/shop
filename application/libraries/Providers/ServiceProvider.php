@@ -514,8 +514,17 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\ManualOrderService();
         };
 
+        $serviceContainer['PhoneSales'] = function () {
+            return new S\PhoneSalesService();
+        };
+
+        $serviceContainer['CountryState'] = function () {
+            return new S\CountryStateService();
+        };
+
         $serviceContainer['Validation'] = function () {
             return new S\ValidationService();
         };
+
     }
 }

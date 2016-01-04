@@ -21,6 +21,7 @@ use ESG\Panther\Models\Marketing\BundleConfigModel;
 use ESG\Panther\Models\Marketing\ComplementaryAccModel;
 use ESG\Panther\Models\Order\SoModel;
 use ESG\Panther\Models\Order\CreditCheckModel;
+use ESG\Panther\Models\Website\CartSessionModel;
 use ESG\Panther\Service as S;
 use ESG\Panther\Dao as D;
 
@@ -146,6 +147,10 @@ abstract class MY_Controller extends CI_Controller
 
         $this->sc['bundleConfigModel'] = function ($c) {
             return new BundleConfigModel;
+        };
+
+        $this->sc['CartSessionModel'] = function ($c) {
+            return new CartSessionModel;
         };
 
         $this->sc['complementaryAccModel'] = function ($c) {
