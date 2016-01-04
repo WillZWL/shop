@@ -4,7 +4,6 @@ namespace ESG\Panther\Service;
 
 use League\Csv\Reader;
 use League\Csv\Writer;
-
 /**
 * Batch export import
 */
@@ -12,21 +11,37 @@ class BatchExportImportService extends BaseService
 {
     public function exportSkuPrice($where, $option)
     {
-        $select_str = 'pr.platform_id, p.sku, sm.ext_sku, p.name, pr.vb_price, pr.price, pm.margin';
+        $select_str = "pr.platform_id, p.sku, sm.ext_sku, p.name, pr.vb_price, pr.price, pm.margin, ''";
         $data = $this->getDao('Product')->getProductOverview($where, $option, $select_str, 'array');
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
 
         // insert the CSV header
-        $csv->insertOne(['Platform Id', 'SKU', 'Master SKU', 'Proudct Name', 'VB Price', 'Panther Price', 'Margin', 'Input New Price']);
+        $csv->insertOne(['Platform Id', 'SKU', 'Master SKU', 'Proudct Name', 'VB Price', 'Panther Price', 'Panther Margin', 'Input New Price']);
         $csv->insertAll($data);
         $csv->output('product.csv');
-        die;
+        exit;
     }
 
     public function importSkuPrice($file_path)
     {
         $csv = Reader::createFromPath($file_path);
         $csv->setOffset(1);     // ignore the header
+
+        $result_csv = Writer::createFromFileObject(new \SplTempFileObject());
+        // set reuslt csv file header, add 3 new columns.
+        $result_csv->insertOne([
+            'Platform Id',
+            'SKU',
+            'Master SKU',
+            'Proudct Name',
+            'VB Price',
+            'Panther Price',
+            'Panther Margin',
+            'Input New Price',
+            'New Panther Price',        // $row[8]
+            'New Panther Margin',       // $row[9]
+            'Failed Reason'             // $row[10]
+            ]);
 
         $data = $csv->fetch();
         foreach ($data as $row) {
@@ -36,25 +51,86 @@ class BatchExportImportService extends BaseService
             $vb_price = $row[4];
             $old_panther_price = $row[5];
             $old_margin = $row[6];
-            $require_selling_price = trim($row[7]) ?: $old_panther_price;
+            $require_selling_price = trim($row[7]);
 
-            $auto_price_json = json_decode($this->getService('Price')->getProfitMarginJson($platform_id, $sku));
-            $auto_price = $auto_price_json->get_price;
+            $row[8] = '';
+            $row[9] = '';
+            $row[10] = '';
+
+            if (empty($platform_id)) {
+                $row[10] = 'No platform id provided.';
+                $result_csv->insertOne($row);
+                continue;
+            }
+
+            if (empty($sku)) {
+                $row[10] = 'No SKU provided.';
+                $result_csv->insertOne($row);
+                continue;
+            }
+
+            if (empty($master_sku)) {
+                $row[10] = 'No master sku provided.';
+                $result_csv->insertOne($row);
+                continue;
+            }
+
+            if (!is_numeric($require_selling_price) || $require_selling_price < 0) {
+                $row[10] = "New input price is not acceptable.";
+                $result_csv->insertOne($row);
+                continue;
+            }
 
             $require_price_json = json_decode($this->getService('Price')->getProfitMarginJson($platform_id, $sku, $require_selling_price));
+
+            if (isset($require_price_json->error)) {
+                $row[10] = "Unable to get profit margin.";
+                $result_csv->insertOne($row);
+                continue;
+            }
+
             $new_margin = $require_price_json->get_margin;
 
-            $this->getService('Price')->updateSkuPrice($platform_id, $sku, $require_selling_price);
+            $this->getDao('Price')->db->trans_start();
+            $affected_rows = $this->getService('Price')->updateSkuPrice($platform_id, $sku, $require_selling_price);
 
+            $price_margin_vo = $this->getDao('PriceMargin')->get(['sku' => $sku, 'platform_id' => $platform_id]);
+            $action = 'update';
+            if (!$price_margin_vo) {
+                $price_margin_vo = new \PriceMarginVo();
+                $action = 'insert';
+            }
+
+            $price_margin_vo->setSellingPrice($require_selling_price);
+            $price_margin_vo->setProfit($require_price_json->get_profit);
+            $price_margin_vo->setMargin($new_margin);
+
+            $this->getDao('PriceMargin')->$action($price_margin_vo);
+
+            $transaction_status = $this->getDao('Price')->db->trans_complete();
+
+            if ($transaction_status) {
+                if ($affected_rows >= 0) {
+                    $row[8] = $require_selling_price;
+                    $row[9] = $new_margin;
+                }
+            } else {
+                $row[10] = 'SQL transaction failed';
+            }
+
+            $result_csv->insertOne($row);
             // $this->getService('PriceChangeFollow')->processPriceChange($sku, $platform_id);
         }
-        die;
+
+        $result_csv->output('feedback.csv');
     }
 
     public function uploadClearanceSku($file_path)
     {
         $csv = Reader::createFromPath($file_path);
         $csv->setOffset(1);     // ignore the header
+
+        $result_csv = Writer::createFromFileObject(new \SplTempFileObject());
 
         $data = $csv->fetch();
         foreach ($data as $row) {

@@ -16,6 +16,9 @@ class ProductOverviewWebsite extends MY_Controller
         $sub_app_id = $this->getAppId().'00';
         include_once APPPATH.'language/'.$sub_app_id.'_'.$this->getLangId().'.php';
         $data['lang'] = $lang;
+        if ($this->input->post('upload-sku-price') !== null) {
+            $result = $this->importSkuPrice();
+        }
 
         if ($this->input->get('search')) {
             $where = [];
@@ -291,7 +294,7 @@ class ProductOverviewWebsite extends MY_Controller
 
     public function importSkuPrice()
     {
-        $result_row = $this->sc['BatchExportImport']->importSkuPrice($_FILES["datafile"]["tmp_name"]);
+        return $this->sc['BatchExportImport']->importSkuPrice($_FILES["datafile"]["tmp_name"]);
     }
 
     public function uploadClearanceSku()
