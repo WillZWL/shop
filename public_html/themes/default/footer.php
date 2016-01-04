@@ -130,7 +130,7 @@
                                                     <li class="footer-fieldsetitem">
                                                         <img src="/themes/default/asset/image/data_en.jpg">
                                                     </li>
-                                                } { ?>
+                                                <?php } else { ?>
                                                     <li class="footer-fieldsetitem">
                                                         <img src="/themes/default/asset/image/ssl_en.jpg">
                                                     </li>
