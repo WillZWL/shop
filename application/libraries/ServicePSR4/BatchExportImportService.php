@@ -90,14 +90,32 @@ class BatchExportImportService extends BaseService
             }
 
             $new_margin = $require_price_json->get_margin;
+
+            $this->getDao('Price')->db->trans_start();
             $affected_rows = $this->getService('Price')->updateSkuPrice($platform_id, $sku, $require_selling_price);
 
-            // TODO
-            // insert new margin to price_margin table.
+            $price_margin_vo = $this->getDao('PriceMargin')->get(['sku' => $sku, 'platform_id' => $platform_id]);
+            $action = 'update';
+            if (!$price_margin_vo) {
+                $price_margin_vo = new \PriceMarginVo();
+                $action = 'insert';
+            }
 
-            if ($affected_rows > 0) {
-                $row[8] = $require_selling_price;
-                $row[9] = $new_margin;
+            $price_margin_vo->setSellingPrice($require_selling_price);
+            $price_margin_vo->setProfit($require_price_json->get_profit);
+            $price_margin_vo->setMargin($new_margin);
+
+            $this->getDao('PriceMargin')->$action($price_margin_vo);
+
+            $transaction_status = $this->getDao('Price')->db->trans_complete();
+
+            if ($transaction_status) {
+                if ($affected_rows >= 0) {
+                    $row[8] = $require_selling_price;
+                    $row[9] = $new_margin;
+                }
+            } else {
+                $row[10] = 'SQL transaction failed';
             }
 
             $result_csv->insertOne($row);
