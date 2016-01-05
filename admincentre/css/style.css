@@ -8,7 +8,7 @@ body {
   margin: 0px;
   text-align: center;
   overflow: auto;
-  background: url('/images/value_basket_logo_bg.png');
+  /*background: url('/images/value_basket_logo_bg.png');*/
 }
 #main {
   width: 1261px;
