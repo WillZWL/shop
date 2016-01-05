@@ -9,7 +9,6 @@
     <script type="text/javascript" src="<?= base_url() ?>js/jquery-colorbox.min.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
-    <script type="text/javascript" src="<?= base_url() ?>marketing/ProductOverviewWebsite/js_overview"></script>
     <script type="text/javascript" src="<?= base_url() ?>marketing/category/js_catlist"></script>
     <script type="text/javascript" src="<?= base_url() ?>mastercfg/brand/js_brandlist"></script>
     <script type="text/javascript">
@@ -25,8 +24,8 @@
             var select_dom = $("select[name=" + item[0] + "]");
             if (select_dom.length > 0) {
                 select_dom.val(item[1]);
-            };
-        };
+            }
+        }
     }
     </script>
     <script type="text/javascript" src="<?= base_url() ?>supply/supplier_helper/js_supplist/1"></script>
@@ -49,8 +48,6 @@
                     bulklistdiv.style.display = 'none';
                     filtertype.value = 1;
                 }
-            } else {
-                return;
             }
         }
 
@@ -75,8 +72,6 @@
                     }
                 }
             }
-
-            return;
         }
     </script>
 </head>
@@ -550,6 +545,7 @@
                         $clearance = $product->getClearance();
                         $listing_status = $product->getListingStatus();
                         $website_quantity = $product->getWebsiteQuantity();
+                        $website_status = $product->getWebsiteStatus();
                         $auto_price = $product->getAutoPrice();
                 ?>
                         <tr onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')">
@@ -560,32 +556,27 @@
                             </td>
                             <td><?= $name ?></td>
                             <td>
-                                <select name='<?= "product[{$sku}][clear]" ?>' class="input">
+                                <select name='<?= "product[{$sku}][clearance]" ?>' title="Clearance Status" class="input">
                                     <option value="0" <?= ($clearance == '0') ? "selected" : '' ?>><?= $lang["no"] ?></option>
                                     <option value="1" <?= ($clearance == '1') ? "selected" : '' ?>><?= $lang["yes"] ?></option>
                                 </select>
                             </td>
                             <td>
-                                <select name='<?= "price[{$sku}][$platform_id][liststatus]" ?>' class="input">
+                                <select name='<?= "price[{$sku}][$platform_id][listing_status]" ?>' title="Listing Status" class="input">
                                     <option value="L" <?= ($listing_status == 'L') ? "selected" : '' ?>><?= $lang["listed"] ?></option>
                                     <option value="N" <?= ($listing_status == 'N') ? "selected" : '' ?>><?= $lang["not_listed"] ?></option>
                                 </select>
                             </td>
                             <td>
-                                <input name='<?= "product[{$sku}][website_quantity]" ?>' style="width:70px" value='<?= $website_quantity ?>'>
+                                <input name='<?= "product[{$sku}][website_quantity]" ?>' title="Website Quantity" style="width:70px" value='<?= $website_quantity ?>'>
                             </td>
-
                             <td>
-                                <select name='<?= "product[{$sku}][website_status]" ?>' class="input">
+                                <select name='<?= "product[{$sku}][website_status]" ?>' title="Website Status" class="input">
                                     <option value="I" <?= ($website_status == 'I') ? "selected" : '' ?>><?= $lang['instock'] ?></option>
                                     <option value="O" <?= ($website_status == 'O') ? "selected" : '' ?>><?= $lang['outstock'] ?></option>
                                     <option value="P" <?= ($website_status == 'P') ? "selected" : '' ?>><?= $lang['pre-order'] ?></option>
                                     <option value="A" <?= ($website_status == 'A') ? "selected" : '' ?>><?= $lang['arriving'] ?></option>
                                 </select>
-                                <br>
-                                <!-- shipping / delivery time frames -->
-                                <!-- <br>Ship Days: {$obj->get_ship_day()} -->
-                                <!-- <br>Del Days: {$obj->get_delivery_day()} -->
                             </td>
                             <td>
                                 <?= $product->getSurplusQuantity() ?>
@@ -604,21 +595,20 @@
                                 <?= $product->getPlatformCurrencyId() . ' ' . $product->getTotalCost() ?>
                             </td>
                             <td>
-                                <select name='<?= "price[{$sku}][{$platform_id}][auto_price]" ?>' id="price[ALIEXPU][16770-AA-BL][auto_price]" class="input" onchange="CheckMargin_v2('ALIEXPU','16770-AA-BL');needToConfirm=true">
+                                <select name='<?= "price[{$sku}][{$platform_id}][auto_price]" ?>' title="Price Type" class="input">
                                     <option value="N" <?= ($auto_price == 'N') ? "selected" : '' ?>>Manual</option>
                                     <option value="Y" <?= ($auto_price == 'Y') ? "selected" : '' ?>>Auto</option>
                                     <option value="C" <?= ($auto_price == 'C') ? "selected" : '' ?>>CompReprice</option>
                                 </select>
                             </td>
-                            <td>
-                                <?= $product->getPlatformCurrencyId() . ' ' . $product->getVbPrice() ?>
-                            </td>
+                            <td><?= $product->getPlatformCurrencyId() . ' ' . $product->getVbPrice() ?></td>
                             <td>
                                 <?= $product->getPlatformCurrencyId() . ' ' . $product->getPrice() ?>
+                                <input type="text" name='<?= "price[{$sku}][{$platform_id}][price]" ?>'>
                             </td>
                             <td><?= $product->getProfit() ?></td>
                             <td><?= $product->getMargin() ?>%</td>
-                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox" name='<?= "check[] ?>" ?>' value="<?= $sku.'||'.$platform_id ?>" onclick="Marked(this);"></td>
                         </tr>
                 <?php endforeach ?>
                     </tbody>
@@ -628,7 +618,7 @@
                     <tr>
                         <td><?= $links ?></td>
                         <td align="right" style="padding-right:8px;">
-                            <input type="button" value="<?= $lang['cmd_button'] ?>" class="button" onClick="if (CheckProfit(this.form)){needToConfirm=false;this.form.submit()}">
+                            <input type="submit" value="Update" class="button">
                         </td>
                     </tr>
                 </table>
@@ -647,19 +637,17 @@
         ChangeCat('<?=$this->input->get("catid")?>', document.fm.scatid);
         // document.fm.scatid.value = '<?=$this->input->get("scatid")?>';
 
-        // function checklist(checkallboxid, checkname) {
-        //     var parentcheckbox = document.getElementById(checkallboxid);
-        //     var checkeles = document.getElementsByName(checkname);
+         function checklist(checkallboxid, checkname) {
+             var parentcheckbox = document.getElementById(checkallboxid);
+             var checkeles = document.getElementsByName(checkname);
 
-        //     for (var i = 0; i < checkeles.length; i++) {
-        //         var isDisabled = checkeles[i].getAttribute('disabled');
-        //         if (isDisabled != false) {
-        //             checkeles[i].checked = parentcheckbox.checked;
-        //         }
-        //     }
-
-        //     return;
-        // }
+             for (var i = 0; i < checkeles.length; i++) {
+                 var isDisabled = checkeles[i].getAttribute('disabled');
+                 if (isDisabled != false) {
+                     checkeles[i].checked = parentcheckbox.checked;
+                 }
+             }
+         }
 
         // function CheckProfit(f) {
         //     return true;

@@ -11,282 +11,147 @@ class ProductOverviewWebsite extends MY_Controller
         return $this->appId;
     }
 
-    public function index($platform_id = '')
+    /**
+     * query product overview
+     *
+     * @return array;
+     */
+    public function query()
     {
-        $sub_app_id = $this->getAppId().'00';
-        include_once APPPATH.'language/'.$sub_app_id.'_'.$this->getLangId().'.php';
-        $data['lang'] = $lang;
-        if ($this->input->post('upload-sku-price') !== null) {
-            $result = $this->importSkuPrice();
-        }
-
-        if ($this->input->get('search')) {
-            $where = [];
-            $option = [];
-
-            ($this->input->get('platform_id') != '') ? $where['pr.platform_id'] = $this->input->get('platform_id') : '';
-            ($this->input->get('prod_name') != '') ? $where["p.name LIKE "] = "%".$this->input->get("prod_name")."%" : '';
-            ($this->input->get('catid') != '') ? $where['p.cat_id'] = $this->input->get('catid') : '';
-            ($this->input->get('scatid') != '') ? $where['p.sub_cat_id'] = $this->input->get('scatid') : '';
-            ($this->input->get('brand') != '') ? $where['p.brand_id'] = $this->input->get('brand') : '';
-            ($this->input->get('pla') != '') ? $where['pr.is_advertised'] = $this->input->get('pla') : '';
-            ($this->input->get('auto_price') != '') ? $where['pr.auto_price'] = $this->input->get('auto_price') : '';
-            ($this->input->get('msku') != '') ? $where['sm.ext_sku'] = $this->input->get('msku') : '';
-            ($this->input->get('liststatus') != '') ? $where['pr.listing_status'] = $this->input->get('liststatus') : '';
-            ($this->input->get('clear') != '') ? $where['p.clearance'] = $this->input->get('clear') : '';
-            ($this->input->get('wsqty') != '') ? $where['p.website_quantity'] = $this->input->get('wsqty') : '';
-            ($this->input->get('wsstatus') != '') ? $where['p.website_status'] = $this->input->get('wsstatus') : '';
-            ($this->input->get('suppstatus') != '') ? $where['supplier_status'] = $this->input->get('suppstatus') : '';
-            ($this->input->get('purcupdate') != '') ? $where['sp.modify_on >= '] = $this->input->get('purcupdate') : '';
-            ($this->input->get('profit') != '') ? $where['pm.profit'] = $this->input->get('profit') : '';
-            ($this->input->get('margin') != '') ? $where['pm.margin'] = $this->input->get('margin') : '';
-            ($this->input->get('price') != '') ? $where['pr.price'] = $this->input->get('price') : '';
-            ($this->input->get('limit') != '') ? $option['limit'] = $this->input->get('limit') : '';
-            ($this->input->get('per_page') != '') ? $option['offset'] = $this->input->get('per_page') : '';
-
-            if ($this->input->get("surplusqty") != "") {
-                switch($this->input->get("surplusqty_prefix")) {
-                    case 1:
-                        $where["surplus_quantity > 0 and surplus_quantity <= {$this->input->get("surplusqty")}"] = null;
-                        break;
-                    case 2:
-                        $where["surplus_quantity <= {$this->input->get("surplusqty")}"] = null;
-                        break;
-                    case 3:
-                        $where["surplus_quantity >= {$this->input->get("surplusqty")}"] = null;
-                        break;
-                }
-            }
-
-            if ($this->input->get('filtertype') == 2) {
-                $where = [];
-                $option = [];
-                $ext_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('mskulist'), -1, PREG_SPLIT_NO_EMPTY));
-                $prod_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('skulist'), -1, PREG_SPLIT_NO_EMPTY));
-
-                ($this->input->get('platform_id2') != '') ? $where['pr.platform_id'] = $this->input->get('platform_id2') : '';
-                if (is_array($ext_sku) && count($ext_sku) > 0) {
-                    $list = "('" . implode("','", $ext_sku) . "')";
-                    $where["sm.ext_sku IN $list"] = null;
-                } elseif (is_array($prod_sku) && count($prod_sku) > 0) {
-                    $list = "('" . implode("','", $prod_sku) . "')";
-                    $where["p.sku IN $list"] = null;
-                }
-            }
-
-            if ($this->input->get('csv') == 1) {
-                $export_option = $option;
-                $export_option['limit'] = -1;
-                unset($export_option['offset']);
-
-                $this->exportSkuPrice($where, $export_option);
-                die;
-            }
-
-            $data['product_list'] = $this->sc['Product']->getProductOverview($where, $option);
-            $option['num_rows'] = 1;
-            $total_rows = $this->sc['Product']->getProductOverview($where, $option);
-
-            $data['filtertype'] = $this->input->get('filtertype');
-            $config['base_url'] = base_url('marketing/ProductOverviewWebsite');
-            $config['total_rows'] = $total_rows;
-            $config['page_query_string'] = true;
-            $config['reuse_query_string'] = true;
-            $config['per_page'] = $option['limit'];
-            $this->pagination->initialize($config);
-            $data['links'] = $this->pagination->create_links();
-        }
-
-        if ($this->input->post('posted') && $_POST['check']) {
-            $rsresult = '';
-            $shownotice = 0;
-            $c = 0;
-            foreach ($_POST['check'] as $rssku) {
-                $success = 0;
-                ++$c;
-                list($platform, $sku) = explode('||', $rssku);
-                $total_update = count($_POST['check']);
-
-                if (($price_obj = $this->product_overview_model->get_price(array('sku' => $sku, 'platform_id' => $platform))) !== false) {
-                    if (empty($price_obj)) {
-                        $price_obj = $this->product_overview_model->get_price();
-                        set_value($price_obj, $_POST['price'][$platform][$sku]);
-                        $price_obj->set_sku($sku);
-                        $price_obj->set_platform_id($platform);
-                        //$price_obj->set_listing_status('L');
-                        $price_obj->set_status(1);
-                        $price_obj->set_allow_express('N');
-                        $price_obj->set_is_advertised('N');
-                        $price_obj->set_max_order_qty(100);
-                        $price_obj->set_auto_price('N');
-                        if ($this->product_overview_model->add_price($price_obj)) {
-                            $success = 1;
-                        }
-                    } else {
-                        set_value($price_obj, $_POST['price'][$platform][$sku]);
-
-                        $price_obj->set_is_advertised('N');
-                        if (is_array($_POST['is_advertised'][$platform])) {
-                            if (in_array($sku, $_POST['is_advertised'][$platform])) {
-                                $price_obj->set_is_advertised('Y');
-                            }
-                        }
-
-                        if ($this->product_overview_model->update_price($price_obj)) {
-                            $success = 1;
-                        }
-                    }
-                }
-
-                if ($success) {
-                    if ($product_obj = $this->product_overview_model->get('product', array('sku' => $sku))) {
-                        $prev_webqty = $product_obj->get_website_quantity();
-                        set_value($product_obj, $_POST['product'][$platform][$sku]);
-                        if ($_POST['product'][$platform][$sku]['website_quantity'] != $prev_webqty) {
-                            include_once APPPATH.'libraries/dao/product_dao.php';
-                            $prod_dao = new Product_dao();
-                            $vpo_where = array('vpo.sku' => $product_obj->get_sku());
-                            $vpo_option = array('to_currency_id' => 'GBP', 'orderby' => "vpo.price > 0 DESC, vpo.platform_currency_id = 'GBP' DESC, vpo.price *  er.rate DESC", 'limit' => 1);
-                            $vpo_obj = $prod_dao->get_prod_overview_wo_cost_w_rate($vpo_where, $vpo_option);
-                            if ($vpo_obj = $prod_dao->get_prod_overview_wo_cost_w_rate($vpo_where, $vpo_option)) {
-                                $display_qty = $this->display_qty_service->calc_display_qty($vpo_obj->get_cat_id(), $_POST['product'][$platform][$sku]['website_quantity'], $vpo_obj->get_price());
-                                $product_obj->set_display_quantity($display_qty);
-                            }
-                        }
-
-                        $profit = $_POST['hidden_profit'][$platform][$sku];
-                        $margin = $_POST['hidden_margin'][$platform][$sku];
-                        $price = $_POST['price'][$platform][$sku]['price'];
-
-                        if ($this->product_overview_model->update('product', $product_obj)) {
-                            // update price_margin tb for all platforms
-                            $this->price_margin_service->insert_or_update_margin($sku, $platform, $price, $profit, $margin);
-
-                            // Google - check if this is the first time that want to create the ad.
-                            if (is_array($_POST['google_adwords'][$platform])) {
-                                if (in_array($sku, $_POST['google_adwords'][$platform])) {
-                                    $google_adwords_target_platform_list = array($platform => 'on');
-                                    if ($google_adwords_target_platform_list) {
-                                        $this->product_update_followup_service->adwords_update($sku, $google_adwords_target_platform_list, array(), false);
-                                    }
-                                }
-                            }
-
-                            if ($total_update == $c) {
-                                $this->product_update_followup_service->google_shopping_update($sku);
-                                $this->product_update_followup_service->adwords_update($sku);
-                            } else {
-                                // do not schedule updates here
-                                $this->product_update_followup_service->google_shopping_update($sku, false);
-                                $this->product_update_followup_service->adwords_update($sku, array(), array(), false);
-                            }
-
-                            $success = 1;
-                        } else {
-                            $success = 0;
-                        }
-                    } else {
-                        $success = 0;
-                    }
-                }
-                if (!$success) {
-                    $shownotice = 1;
-                }
-                $rsresult .= "{$rssku} -> {$success}\\n";
-            }
-
-            if ($shownotice) {
-                $_SESSION['NOTICE'] = $rsresult;
-            }
-            redirect(current_url().'?'.$_SERVER['QUERY_STRING']);
-        }
-
         $where = [];
         $option = [];
 
-        $submit_search = 0;
+        ($this->input->get('platform_id') != '') ? $where['pr.platform_id'] = $this->input->get('platform_id') : '';
+        ($this->input->get('prod_name') != '') ? $where["p.name LIKE "] = "%".$this->input->get("prod_name")."%" : '';
+        ($this->input->get('catid') != '') ? $where['p.cat_id'] = $this->input->get('catid') : '';
+        ($this->input->get('scatid') != '') ? $where['p.sub_cat_id'] = $this->input->get('scatid') : '';
+        ($this->input->get('brand') != '') ? $where['p.brand_id'] = $this->input->get('brand') : '';
+        ($this->input->get('pla') != '') ? $where['pr.is_advertised'] = $this->input->get('pla') : '';
+        ($this->input->get('auto_price') != '') ? $where['pr.auto_price'] = $this->input->get('auto_price') : '';
+        ($this->input->get('msku') != '') ? $where['sm.ext_sku'] = $this->input->get('msku') : '';
+        ($this->input->get('liststatus') != '') ? $where['pr.listing_status'] = $this->input->get('liststatus') : '';
+        ($this->input->get('clear') != '') ? $where['p.clearance'] = $this->input->get('clear') : '';
+        ($this->input->get('wsqty') != '') ? $where['p.website_quantity'] = $this->input->get('wsqty') : '';
+        ($this->input->get('wsstatus') != '') ? $where['p.website_status'] = $this->input->get('wsstatus') : '';
+        ($this->input->get('suppstatus') != '') ? $where['supplier_status'] = $this->input->get('suppstatus') : '';
+        ($this->input->get('purcupdate') != '') ? $where['sp.modify_on >= '] = $this->input->get('purcupdate') : '';
+        ($this->input->get('profit') != '') ? $where['pm.profit'] = $this->input->get('profit') : '';
+        ($this->input->get('margin') != '') ? $where['pm.margin'] = $this->input->get('margin') : '';
+        ($this->input->get('price') != '') ? $where['pr.price'] = $this->input->get('price') : '';
+        ($this->input->get('limit') != '') ? $option['limit'] = $this->input->get('limit') : '';
+        ($this->input->get('per_page') != '') ? $option['offset'] = $this->input->get('per_page') : '';
 
-        $option['supplier_prod'] = 1;
-        $option['master_sku'] = 1;
-        $option['google_shopping'] = 1;
-
-        if ($this->input->get('fil') != '') {
-            $data['filter'] = $this->input->get('fil');
-        }
-
-        $sort = $this->input->get('sort');
-        $order = $this->input->get('order');
-
-        // if ($this->input->get('search')) {
-        //     if ($this->input->get('csv')) {
-        //         $list = $this->product_overview_model->get_product_overview_v2($where, array_merge($option));
-        //         $this->generate_csv($list);
-        //         die();
-        //     }
-        // }
-
-        $pconfig['base_url'] = $_SESSION['LISTPAGE'];
-
-        if (empty($sort)) {
-            $sort = 'p.name';
-        } else {
-            if (strpos($sort, 'prod_name') !== false) {
-                $sort = 'p.name';
-            } elseif (strpos($sort, 'listing_status') !== false) {
-                $sort = 'pr.listing_status';
+        if ($this->input->get("surplusqty") != "") {
+            switch($this->input->get("surplusqty_prefix")) {
+                case 1:
+                    $where["surplus_quantity > 0 and surplus_quantity <= {$this->input->get("surplusqty")}"] = null;
+                    break;
+                case 2:
+                    $where["surplus_quantity <= {$this->input->get("surplusqty")}"] = null;
+                    break;
+                case 3:
+                    $where["surplus_quantity >= {$this->input->get("surplusqty")}"] = null;
+                    break;
             }
         }
 
-        if (empty($order)) {
-            $order = 'asc';
+        if ($this->input->get('filtertype') == 2) {
+            $where = [];
+            $option = [];
+            $ext_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('mskulist'), -1, PREG_SPLIT_NO_EMPTY));
+            $prod_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('skulist'), -1, PREG_SPLIT_NO_EMPTY));
+
+            ($this->input->get('platform_id2') != '') ? $where['pr.platform_id'] = $this->input->get('platform_id2') : '';
+            if (is_array($ext_sku) && count($ext_sku) > 0) {
+                $list = "('" . implode("','", $ext_sku) . "')";
+                $where["sm.ext_sku IN $list"] = null;
+            } elseif (is_array($prod_sku) && count($prod_sku) > 0) {
+                $list = "('" . implode("','", $prod_sku) . "')";
+                $where["p.sku IN $list"] = null;
+            }
         }
 
-        if ($sort == 'margin' || $sort == 'profit') {
-            $option['refresh_margin'] = 1;
+        if ($this->input->get('csv') == 1) {
+            $export_option = $option;
+            $export_option['limit'] = -1;
+            unset($export_option['offset']);
+
+            $this->exportSkuPrice($where, $export_option);
+            die;
         }
 
-        $option['orderby'] = $sort.' '.$order;
+        $data['product_list'] = $this->sc['Product']->getProductOverview($where, $option);
+        $option['num_rows'] = 1;
+        $total_rows = $this->sc['Product']->getProductOverview($where, $option);
 
-        // $affiliate_feed_list = null;
-        // $list = $this->affiliate_sku_platform_service->get_feed_list($platform_id);
-        // if ($list) {
-        //     foreach ($list as $item) {
-        //         $affiliate_feed_list[$item] = $item;
-        //     }
-        // }
+        $data['filtertype'] = $this->input->get('filtertype');
+        $config['base_url'] = base_url('marketing/ProductOverviewWebsite');
+        $config['total_rows'] = $total_rows;
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
 
-        // $data['affiliate_feed_list'] = $affiliate_feed_list;
+        return $data;
+    }
 
-        $feed_status_list = null;
-        $feed_status_list[0] = 'All';
-        $feed_status_list[1] = 'Always exclude';
-        $feed_status_list[2] = 'Always include';
-        $data['feed_status'] = $feed_status;
-        $data['feed_status_list'] = $feed_status_list;
+    private function updateProductOverview()
+    {
+        foreach ($_POST['check'] as $rssku) {
+            list($sku, $platform_id) = explode('||', $rssku);
 
-        if (empty($data['objlist']['subtractcount'])) {
-            $data['objlist']['subtractcount'] = 0;
+            $price_obj = $this->sc['Price']->getDao('Price')->get(['sku' => $sku, 'platform_id' => $platform_id]);
+            if (!$price_obj) {
+                continue;
+            }
+
+            $price = floatval($_POST['price'][$sku][$platform_id]['price']);
+            $price_type = $_POST['price'][$sku][$platform_id]['auto_price'];
+            // only price type is manual and price more than 0 can udpate price.
+            if ($price > 0 && $price_type == 'N') {
+                $price_obj->setPrice($price);
+            }
+            $price_obj->setAutoPrice($price_type);
+            $price_obj->setListingStatus($_POST['price'][$sku][$platform_id]['listing_status']);
+
+            // transaction start
+            $this->sc['Price']->getDao('Price')->db->trans_start();
+            $this->sc['Price']->getDao('Price')->update($price_obj);
+            $this->sc['PriceMargin']->refreshProfitAndMargin($platform_id, $sku);
+            $this->sc['Price']->getDao('Price')->db->trans_complete();
+
+            $product_obj = $this->sc['Product']->get(['sku' => $sku]);
+            if (!$product_obj) {
+                continue;
+            }
+
+            $product_obj->setClearance($_POST['product'][$sku]['clearance']);
+            $product_obj->setWebsiteQuantity($_POST['product'][$sku]['website_quantity']);
+            $product_obj->setWebsiteStatus($_POST['product'][$sku]['website_status']);
+            $this->sc['Product']->getDao('Product')->update($product_obj);
+        }
+    }
+
+    public function index()
+    {
+        $sub_app_id = $this->getAppId().'00';
+        include_once APPPATH.'language/'.$sub_app_id.'_'.$this->getLangId().'.php';
+
+        if ($this->input->post('upload-sku-price')) {
+            $this->importSkuPrice();
         }
 
-        // we process for google-related info OUTSIDE of sql, so subtract filtered items in price_website_service
-        if ($data['total'] > 0) {
-            $final_count = $data['total'] - $data['objlist']['subtractcount'];
-        } else {
-            $final_count = $data['total'];
+        if ($this->input->post('posted') && $_POST['check']) {
+            $this->updateProductOverview();
         }
 
-        // $pconfig['total_rows'] = $final_count;
-        // $this->pagination_service->set_show_count_tag(true);
-        // $this->pagination_service->initialize($pconfig);
+        if ($this->input->get('search')) {
+            $data = $this->query();
+        }
 
-        // $data["wms_wh"] = $this->wms_warehouse_service->get_list(array('status'=>1), array('limit'=>-1, 'orderby'=>'warehouse_id'));
-        // $data['notice'] = notice($lang);
         $data['clist'] = $this->sc['PlatformBizVar']->getDao('SellingPlatform')->getList(array('type' => PLATFORM_TYPE, 'status' => 1));
-        // var_dump($data['clist']);die;
-        // $data['sortimg'][$sort] = "<img src='".base_url().'images/'.$order.".gif'>";
-        // $data['xsort'][$sort] = $order == 'asc' ? 'desc' : 'asc';
-        // $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
-        $data['searchdisplay'] = '';
+        $data['lang'] = $lang;
         $data['query_string'] = $_SERVER['QUERY_STRING'];
         $this->load->view('marketing/product_overview/product_overview_v', $data);
     }
