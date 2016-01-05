@@ -75,7 +75,11 @@ class ProductOverviewWebsite extends MY_Controller
             }
 
             if ($this->input->get('csv') == 1) {
-                $this->exportSkuPrice($where, $option);
+                $export_option = $option;
+                $export_option['limit'] = -1;
+                unset($export_option['offset']);
+
+                $this->exportSkuPrice($where, $export_option);
                 die;
             }
 
