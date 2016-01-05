@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2015-12-28 23:24+0800\n"
-"PO-Revision-Date: 2016-01-04 17:23+0800\n"
+"PO-Revision-Date: 2016-01-04 17:49+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -1694,6 +1694,10 @@ msgstr "Ecran"
 #: search.php:211
 msgid "Save"
 msgstr "Enregistrez"
+
+#: faq.php:13
+msgid "NEED HELP?"
+msgstr "BESOIN D'AIDE?"
 
 #: faq.php:15
 msgid "You've got a Question? We've got the Answer! Check out our FAQs."

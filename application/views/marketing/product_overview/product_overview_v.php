@@ -120,7 +120,6 @@
                             <textarea rows="3" name="af_skulist" placeholder="Local SKU, separated by next line"></textarea>
                             <input type="submit" value="Export">
                         </form>
-
                     </td>
                     <td></td>
                     <td style="width:50%;text-align:left;">
@@ -138,7 +137,6 @@
                     <td colspan="4"><br><hr></hr><br></td>
                 </tr>
             </table>
-
 
             <table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
                 <col width="150"> <col width="420"> <col width="170"> <col width="420"> <col>
@@ -385,26 +383,6 @@
                     </table>
                 </div>
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="data tb_list">
-                    <col width="20">
-                    <col width="50">
-                    <col width="80">
-                    <col width="100">
-                    <col width="10">
-                    <col width="30">
-                    <col width="10">
-                    <col width="20">
-                    <col width="40">
-                    <col width="65">
-                    <col width="80">
-                    <col width="50">
-                    <col width="50">
-                    <col width="70">
-                    <col width="40">
-                    <col width="70">
-                    <col width="70">
-                    <col width="30">
-                    <col width="30">
-                    <col width="20">
                     <thead>
                         <tr class="header">
                             <td height="20">
@@ -496,8 +474,8 @@
                             </td>
                         </tr>
                         <tr class="search" id="tr_search" <?= $searchdisplay ?>>
-                            <td></td>
-                            <td></td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
                             <td>
                                 <input name="msku" class="input" value="<?= htmlspecialchars($this->input->get("msku")) ?>">
                             </td>
@@ -519,7 +497,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input name="wsqty" class="input" value="<?= htmlspecialchars($this->input->get("wsqty")) ?>">
+                                <input name="wsqty" style="width:70px" value="<?= htmlspecialchars($this->input->get("wsqty")) ?>">
                             </td>
                             <td>
                                 <select name="wsstatus" class="input">
@@ -530,9 +508,7 @@
                                     <option value="A"><?= $lang['arriving'] ?></option>
                                 </select>
                             </td>
-                            <td>
-                                <!-- surplusqty -->
-                            </td>
+                            <td>&nbsp;</td>
                             <td>
                                 <select name="suppstatus" class="input">
                                     <option value=""></option>
@@ -550,14 +526,10 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td align="center">
                                 <input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">
                                 <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
@@ -581,7 +553,7 @@
                         $auto_price = $product->getAutoPrice();
                 ?>
                         <tr onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')">
-                            <td></td>
+                            <td>&nbsp;</td>
                             <td><?= $platform_id ?></td>
                             <td>
                                 <a href='<?= base_url()."marketing/pricing_tools/view/website/".$sku."?target=overview" ?>' target="_blank"><?= $product->getExtSku() ?></a>
@@ -599,9 +571,8 @@
                                     <option value="N" <?= ($listing_status == 'N') ? "selected" : '' ?>><?= $lang["not_listed"] ?></option>
                                 </select>
                             </td>
-
                             <td>
-                                <input name='<?= "product[{$sku}][website_quantity]" ?>' value='<?= $website_quantity ?>' isNumber min='0'>
+                                <input name='<?= "product[{$sku}][website_quantity]" ?>' style="width:70px" value='<?= $website_quantity ?>'>
                             </td>
 
                             <td>
