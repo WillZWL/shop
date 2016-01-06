@@ -1,18 +1,6 @@
 <?php
 namespace ESG\Panther\Service;
 
-//use PHPMailer;
-//use EventEmailDto;
-//use ESG\Panther\Service\EventService;
-//use ESG\Panther\Service\EntityService;
-//use ESG\Panther\Service\DelayedOrderService;
-//use ESG\Panther\Service\ReviewFianetService;
-//use ESG\Panther\Service\PdfRenderingService;
-//use ESG\Panther\Service\CurrencyService;
-//use ESG\Panther\Service\TemplateService;
-//use ESG\Panther\Service\SubjectDomainService;
-//use ESG\Panther\Service\DataExchangeService;
-//use ESG\Panther\Service\ComplementaryAccService;
 use ESG\Panther\Dao\SoDao;
 use ESG\Panther\Dao\SoItemDao;
 use ESG\Panther\Dao\SoItemDetailDao;
@@ -21,30 +9,24 @@ use ESG\Panther\Dao\SoExtendDao;
 use ESG\Panther\Dao\SoCreditChkDao;
 use ESG\Panther\Dao\SoRiskDao;
 use ESG\Panther\Service\CartSessionService;
-//use ESG\Panther\Service\ProductService;
-//use ESG\Panther\Service\CreateClientInterface;
-//use ESG\Panther\Service\ExchangeRateService;
-//use ESG\Panther\Service\PriceWebsiteService;
-//use ESG\Panther\Service\PriceService;
+
 
 class SoFactoryService extends BaseService
 {
-//    public $injectObj = null;
-    private $_platformType = null;
+    public $_siteObj;
 
-    public function __construct($injectObj = null) {
+    public function __construct() {
         parent::__construct();
-//        $this->injectObj = $injectObj;
         $this->setDao(new SoDao());
     }
 
-    public function getNewCartByOrderInfo($orderInfo) {
+    public function getNewCartByOrderInfo($orderInfo, $bizType) {
         $skuList = [];
         foreach($orderInfo->items as $sku => $item) {
             $skuList[$sku] = ["qty" => $item->getQty(), "amount" => $item->getAmount()];
         }
 //Centralize a buildcart function, to get all the cart details
-        $newCart = $this->rebuildCartBySku($orderInfo->getPlatformId(), $orderInfo->getPlatformCurrency(), $orderInfo->getBizType(), $skuList);
+        $newCart = $this->rebuildCartBySku($orderInfo->getPlatformId(), $orderInfo->getPlatformCurrency(), $bizType, $skuList);
         $newCart->setPlatformOrderId($orderInfo->getPlatformOrderId());
         $newCart->setPlatformId($orderInfo->getPlatformId());
 
@@ -58,7 +40,7 @@ class SoFactoryService extends BaseService
             if ($clientObj) {
 //rebuild the cart info, prevent hacking or price updated by BD
                 if ($interfaceType->getBizType() == "ONLINE")
-                    $newCart = $this->getNewCartByOrderInfo($interfaceType->getCartDto());
+                    $newCart = $this->getNewCartByOrderInfo($interfaceType->getCartDto(), $interfaceType->getBizType());
                 else
                     $newCart = $interfaceType->getCartDto();
                 $newSoNo = $this->getDao("So")->getNewSoNo();
@@ -76,20 +58,24 @@ class SoFactoryService extends BaseService
                     } else {
                         $this->getDao("So")->db->trans_rollback();
                     }
-                }
-                $transCompleteResult = $this->getDao("So")->db->trans_complete();
-                if ($interfaceType instanceof CreateSoEventInterface) {
-                    $interfaceType->soInsertSuccessEvent($soObj);
-                }
-                if ($transCompleteResult === false)
-                {
-                    $subject = "[Panther] Rollback Create so:(" . (($soObj) ? $soObj->getSoNo():"") . ") " . __METHOD__ . __LINE__;
-                    $message = $this->getDao("So")->db->last_query() . "," . $this->getDao("So")->db->error()["message"];
-                    $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
+                    $transCompleteResult = $this->getDao("So")->db->trans_complete();
+                    if ($interfaceType instanceof CreateSoEventInterface) {
+                        $interfaceType->soInsertSuccessEvent($soObj);
+                    }
+                    if ($transCompleteResult === false)
+                    {
+                        $subject = "[Panther] Rollback Create so:(" . (($soObj) ? $soObj->getSoNo():"") . ") " . __METHOD__ . __LINE__;
+                        $message = $this->getDao("So")->db->last_query() . "," . $this->getDao("So")->db->error()["message"];
+                        $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
+                        return false;
+                    }
+                } else {
+                    $this->getDao("So")->db->trans_rollback();
                     return false;
                 }
             } else {
 //no need to send email alert, as Client Service handle it already
+                return false;
             }
         }
         return $soObj;
@@ -233,11 +219,9 @@ class SoFactoryService extends BaseService
             }
             $i++;
         }
-
         $soObj->setCost($totalCost);
         $updateSoResult = $this->getDao("So")->update($soObj);
-        if ($updateSoResult === false)
-        {
+        if ($updateSoResult === false) {
             $subject = "[Panther] Cannot update so cost:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
             $message = $this->getDao("So")->db->last_query() . "," . $this->getDao("So")->db->error()["message"];
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_GENERAL_LEVEL);
@@ -276,8 +260,6 @@ class SoFactoryService extends BaseService
         $soItemDetailObj->setWarrantyInMonth($item->getWarrantyInMonth());
 
 //        $soItemDetailObj->setCost($item->getUnitCost() * $item->getQty());
-        $this->_setProfitInfo($soItemDetailObj, $platformId, $item->getDecPlace());
-
         $soItemDetailObj->setItemUnitCost($item->getSupplierUnitCostInHkd());
 
 //promo code, bundle, bundle may be implemented different from VB
@@ -293,9 +275,11 @@ class SoFactoryService extends BaseService
 //        $soItemDetailObj->setGstTotal(round(($item->getAmount() * $item->getVatPercent() / 100), $item->getDecPlace()));
         $soItemDetailObj->setAmount($item->getAmount());
 
+        $this->_setProfitInfo($soItemDetailObj, $platformId, $item->getDecPlace());
+
         $insertSoItemDetailResult = $this->getDao("SoItemDetail")->insert($soItemDetailObj);
-        if ($insertSoItemDetailResult === false)
-        {
+
+        if ($insertSoItemDetailResult === false) {
             $subject = "[Panther] Cannot create so item detail:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
             $message = $this->getDao("SoItemDetail")->db->last_query() . "," . $this->getDao("SoItemDetail")->db->error()["message"];
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
@@ -374,22 +358,45 @@ class SoFactoryService extends BaseService
             $soObj->setOrderCreateDate(date("Y-m-d H:i:s"));
         if ($checkoutInfoDto->getCybersourceFingerprint())
             $soObj->setFingerprintId($checkoutInfoDto->getCybersourceFingerprint());
+//set Vat
+        $soObj->setVatPercent($orderInfo->getVatPercent());
+        //$this->_setOrderVat($soObj, $orderInfo);
 
         $this->setOrderInfoDetail($orderInfo->getPlatformId(), $soObj);
         if ($interfaceType instanceof CreateSoEventInterface) {
             $interfaceType->soBeforeInsertEvent($soObj);
         }
         $insertSoResult = $this->getDao("So")->insert($soObj);
-        if ($insertSoResult === false)
-        {
+        if ($insertSoResult === false) {
             $subject = "[Panther] Cannot create so:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
             $message = $this->getDao("So")->db->last_query() . "," . $this->getDao("So")->db->error()["message"];
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
             return false;
-        }
-        else
+        } else {
             return $soObj;
+        }
     }
+/*  
+    private function _setOrderVat($soObj, $orderInfo) {
+//setup VAT
+
+        if (!$orderInfo->getPlatformCountryId()) {
+            if ($this->_siteObj == null)
+                $this->_siteObj = $this->getService("LoadSiteParameter")->loadSiteByPlatform($orderInfo->getPlatformId());
+            $platformCountryId = $this->_siteObj->getPlatformCountryId();
+        } else {
+            $platformCountryId = $orderInfo->getPlatformCountryId();
+        }
+
+        $priceWithCost = new PriceWithCostDto();
+        $priceWithCost->setPrice($soObj->getAmount());
+        $priceWithCost->setPlatformCountryId($platformCountryId);
+        $this->getService("PlatformBizVar")->calculateDeclaredValue();
+        $soObj->setVat($declaredValue * $orderInfo->getVatPercent() / 100);
+
+        $soObj->setVatPercent($orderInfo->getVatPercent());
+    }
+*/
 /**************************************************
 **  pass CartDto into
 **  you can form this DTO and pass the
@@ -438,18 +445,26 @@ class SoFactoryService extends BaseService
             return FALSE;
         }
     }
-
+/*
     private function _initPriceService($platformType = null) {
         if (is_null($platformType)) {
-            $this->priceService = new PriceService;
-        } else {
+            $this->_priceService = new PriceService;
+        } else if (is_null($this->_priceService)) {
             $classname = "ESG\Panther\Service\Price" . ucfirst(strtolower($platformType)) . "Service";
-            $this->priceService = new $classname($platformType);
+            $this->_priceService = new $classname($platformType);
         }
     }
-
+*/
     private function _setProfitInfo(\BaseVo $soidObj, $platformId, $decPlace)
     {
+        $calProfitDto = new \CalculateProfitDto($soidObj->getItemSku(), $soidObj->getQty(), $soidObj->getUnitPrice(), $soidObj->getAmount());
+        $this->getService("CartSession")->storeProfitInfoToDto($calProfitDto, $platformId, $decPlace);
+        $soidObj->setProfitRaw($calProfitDto->getRawProfit());
+        $soidObj->setMarginRaw($calProfitDto->getRawMargin());
+        $soidObj->setCost($calProfitDto->getCost());
+        $soidObj->setProfit($calProfitDto->getProfit());
+        $soidObj->setMargin($calProfitDto->getMargin());
+/*
         $use_new = true;
         if (!$this->_platformType) {
             if (defined('PLATFORM_TYPE'))
@@ -457,22 +472,23 @@ class SoFactoryService extends BaseService
             else
                 $this->_platformType = $this->getService("SellingPlatform")->getDao("SellingPlatform")->get(["selling_platform_id" => $platformId])->getType();
         }
-/* calculate raw first, common to all, */
+
         $this->_initPriceService($this->_platformType);
         $unitSellingPrice = $soidObj->getUnitPrice();
-        $json = $this->priceService->getProfitMarginJson($platformId, $soidObj->getItemSku(), $unitSellingPrice);
+        $json = $this->_priceService->getProfitMarginJson($platformId, $soidObj->getItemSku(), $unitSellingPrice);
         $jj = json_decode($json, true);
 
         $soidObj->setProfitRaw(round($jj["get_profit"], $decPlace));
         $soidObj->setMarginRaw(round($jj["get_margin"], $decPlace));
 
         if ($use_new) {
-            $selling_price = ($soidObj->getAmount()/* + $gst*/) / $soidObj->getQty();
-            $json = $this->priceService->getProfitMarginJson($platformId, $soidObj->getItemSku(), $selling_price);
+            $selling_price = ($soidObj->getAmount()) / $soidObj->getQty();
+            $json = $this->_priceService->getProfitMarginJson($platformId, $soidObj->getItemSku(), $selling_price);
             $jj = json_decode($json, true);
             $soidObj->setCost(round($jj["get_cost"], $decPlace));
             $soidObj->setProfit(round($jj["get_profit"], $decPlace));
             $soidObj->setMargin(round($jj["get_margin"], $decPlace));
         }
+*/
     }
 }

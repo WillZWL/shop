@@ -27,7 +27,7 @@
 			"arriving" => "Arriving",
 			"remove" => "Remove",
 			"delivery" => "Delivery",
-			"cost_of_items" => "Cost Of Items",
+			"items_subtotal" => "Items Subtotal",
 			"cart_profit_margin" => "Cart's Profit Margin",
 			"total" => "Total",
 			"offline_fee" => "Offline Fee",

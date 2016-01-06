@@ -110,7 +110,7 @@ class ClientService extends BaseService
             $clientObj = $this->getDao('Client')->get();
             $action = "insert";
         }
-        $this->setClientDetail($clientObj, $checkInfoDto);
+        $this->_setClientDetail($clientObj, $checkInfoDto);
 
         if ($interfaceType instanceof CreateClientInterface)
             $interfaceType->clientBeforeUpdateEvent($clientObj);
@@ -131,7 +131,7 @@ class ClientService extends BaseService
         return false;
     }
 
-    private function setClientDetail($clientObj, $checkInfoDto) {
+    private function _setClientDetail($clientObj, $checkInfoDto) {
         $clientObj->setStatus(1);
         if ($checkInfoDto->getEmail())
             $clientObj->setEmail($checkInfoDto->getEmail());
@@ -145,6 +145,9 @@ class ClientService extends BaseService
             $clientObj->setExtClientId($checkInfoDto->getExtClientId());
         if ($checkInfoDto->getClientIdNo())
             $clientObj->setClientIdNo($checkInfoDto->getClientIdNo());
+
+        if ($checkInfoDto->getTitle())
+            $clientObj->setTitle($checkInfoDto->getTitle());
 //billing info
         if ($checkInfoDto->getBillFirstName())
             $clientObj->setForename($checkInfoDto->getBillFirstName());

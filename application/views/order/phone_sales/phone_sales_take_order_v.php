@@ -101,7 +101,7 @@
             if ($promo["valid"] && !$promo["error"]) {
                 $promo_disc_amount = $promo["disc_amount"];
             }
-            if ($totalcart) :
+            if ($cart) :
                 foreach ($cart->items as $key => $items) :
                 ?>
                 <tr>
@@ -213,12 +213,12 @@
                 <td colspan="2" align="right" bgcolor="#DDDDDD"
                     style="border:1px solid #BBBBBB; border-width:0px 0px 1px 1px;"><b>TOTAL</b></td>
                 <td align="right" bgcolor="#F0F0F0"
-                    style="border:1px solid #BBBBBB; border-width:0px 0px 1px 1px;"><?= number_format($sub_total + $dc_sub_total, 2) ?></td>
+                    style="border:1px solid #BBBBBB; border-width:0px 0px 1px 1px;"><?=$cart->getSubtotal() ?></td>
                 <td align="right" bgcolor="#F0F0F0"
                     style="border:1px solid #BBBBBB; border-width:0px 0px 1px 1px;"><?= number_format($total_vat + $dc[$cur_delivery]["vat"], 2) ?></td>
                 <td align="right" bgcolor="#FF9933"
                     style="border:1px solid #BBBBBB; border-width:0px 1px 1px 1px;font-size:9pt">
-                    <b><?= number_format($total + $dc[$cur_delivery]["charge"] + $offline_fee - $promo_disc_amount, 2) ?></b>
+                    <b><?=$cart->getPlatformCurrency() . " " . $cart->getGrandTotal() ?></b>
                 </td>
             </tr>
             <?php
@@ -535,7 +535,7 @@
             <tr height="20px">
             </tr>
             <tr>
-                <td colspan="2" style="text-align:center"><input type="submit" value="Procced"></td>
+                <td colspan="2" style="text-align:center"><input type="submit" value="Proceed"></td>
             </tr>
             <tr>
                 <td colspan="2">&nbsp;</td>
