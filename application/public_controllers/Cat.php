@@ -113,7 +113,7 @@ class Cat extends PUB_Controller
         }
         if ($rs = $this->sc['categoryModel']->getCatFilterGridInfo($level, $where, $option)) {
             foreach ($rs as $key => $val) {
-                $rs[$key]['url'] = $this->sc['Website']->getCatUrl($val['id']);
+                $rs[$key]['url'] = $this->sc['Category']->getCatUrl($val['id']);
             }
         }
         return $rs;

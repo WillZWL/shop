@@ -11,36 +11,29 @@
                             <li class="list-group-item accordion-group">
                                 <a href=""class="active"><span id="list-group-item-title" ><?= _('Categories') ?></span></a>
                                 <ul class="collapse accordion-body in">
-                                    <li>
-                                        <a href="<?=base_url('cat/view/1');?>"><?= _('SmartPhones') ?></a>
-                                    </li>
-                                    <li>
-                                        <a href="<?=base_url('cat/view/2');?>"><?= _('Webcams') ?></a>
-                                    </li>
-                                    <li>
-                                        <a href="<?=base_url('cat/view/4');?>"><?= _('Conference Phones') ?></a>
-                                    </li>
-                                    <li>
-                                        <a href="<?=base_url('cat/view/6');?>"><?= _('Accessories') ?></a>
-                                    </li>
-                                    <li>
+                                    <?php
+                                    if ($cat_result) {
+                                        foreach($cat_result as $cat) {
+                                    ?>
+                                        <li>
+                                            <a href="<?=$cat['url']?>"><?=$cat['name']?> (<?=$cat['total']?>)</a>
+                                        </li>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                    <!--<li>
                                         <div class="show-more">
                                             <?= _('Show more') ?>
-                                            <span data-toggle="collapse" data-target="#accordiondata1" class="bg collapsed"><i class="fa fa-angle-down"></i></span>
+                                            <span data-toggle="collapse"  data-target="#accordiondata" class="bg collapsed">
+                                                <i class="fa fa-angle-down"></i>
+                                            </span>
                                         </div>
-                                    </li>
-                                </ul>
-                                <ul id="accordiondata1" class="collapse">
-                                    <li>
-                                        <a href="<?=base_url('cat/view/29');?>"><?= _('Software') ?></a>
-                                    </li>
-                                    <li>
-                                        <a href="<?=base_url('cat/view/44');?>"><?= _('Computing') ?></a>
-                                    </li>
+                                    </li>-->
                                 </ul>
                             </li>
                             <li class="list-group-item accordion-group">
-                                <a href="" class="active list-group-item-title"><?= _('BRANDS') ?></a>
+                                <a href="" class="active list-group-item-title"><?= _('Brands') ?></a>
                                 <ul class="collapse accordion-body in">
                                     <?php
                                     if ($brand_result) {
@@ -54,28 +47,14 @@
                                     }
                                     ?>
 
-                                    <li>
+                                    <!--<li>
                                         <div class="show-more">
                                             <?= _('Show more') ?>
                                             <span data-toggle="collapse"  data-target="#accordiondata" class="bg collapsed">
                                                 <i class="fa fa-angle-down"></i>
                                             </span>
                                         </div>
-                                    </li>
-                                </ul>
-                                <ul id="accordiondata" class="collapse accordion-body">
-                                    <?php
-                                    if ($brand_result) {
-                                        foreach($brand_result as $brand) {
-                                    ?>
-                                        <li>
-                                            <a href="<?=$brand['id']?>"><?=$brand['name']?> (<?=$brand['total']?>)</a>
-                                        </li>
-                                    <?php
-                                        }
-                                    }
-                                    ?>
-                                    </li>
+                                    </li>-->
                                 </ul>
                             </li>
                         </li>

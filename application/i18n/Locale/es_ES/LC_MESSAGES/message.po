@@ -71,8 +71,8 @@ msgid "Computing"
 msgstr "Ordenadores"
 
 #: cat.php:43 search.php:43
-msgid "BRANDS"
-msgstr "MARCAS"
+msgid "Brands"
+msgstr "Marcas"
 
 #: cat.php:107 search.php:129
 msgid "List"
@@ -1940,7 +1940,7 @@ msgstr "Ahorro"
 #~ msgstr "Tarjeta no válida"
 
 #~ msgid "Save "
-#~ msgstr "Guardar"
+#~ msgstr "Ahorre "
 
 #~ msgid "In Stock"
 #~ msgstr "En Stock"

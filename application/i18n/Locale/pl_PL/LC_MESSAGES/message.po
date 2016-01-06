@@ -246,7 +246,7 @@ msgstr ""
 "dotyczące zakupów."
 
 #: cat.php:11
-msgid "BRANDS"
+msgid "Brands"
 msgstr "Marki"
 
 #: cat.php:30
