@@ -54,7 +54,7 @@ implements CreateSoInterface, CreateSoEventInterface
             $platformId = $this->_checkoutFormData["platformId"];
             $platformBizObj = $this->getService("PlatformBizVar")->getDao("PlatformBizVar")->get(["selling_platform_id" => $platformId]);
 
-            $cartSessionService->manualAddItemsToCart($skuList, $platformId, $platformBizObj->getPlatformCurrencyId(), "en", $this->_checkoutFormData["delivery_charge"]);
+            $cartSessionService->manualAddItemsToCart($skuList, $platformId, $platformBizObj, $this->_checkoutFormData["delivery_charge"]);
             return $cartSessionService->getCart();
         }
         return false;

@@ -29,7 +29,6 @@ class OnlineOrderCreationService extends BaseService implements CreateSoInterfac
 
     public function getCartDto() {
         $cart = $this->getService("CartSession")->getCart();
-        $cart->setBizType($this->getBizType());
         return $cart;
     }
 }

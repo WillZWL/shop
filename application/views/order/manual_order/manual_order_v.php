@@ -503,7 +503,7 @@
                             <tr height="20px">
                             </tr>
                             <tr>
-                                <td colspan="2" style="text-align:center"><input type="submit" value="Procced"></td>
+                                <td colspan="2" style="text-align:center"><input type="submit" value="Proceed"></td>
                             </tr>
                             <tr>
                                 <td colspan="2">&nbsp;</td>

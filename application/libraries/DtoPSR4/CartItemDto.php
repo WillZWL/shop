@@ -8,7 +8,7 @@ class CartItemDto
     private $nameInLang;
     private $qty;
     private $platformCurrency;
-    private $unitCost;
+    private $unitCost;      //unit cost, basically, from price service (include admin fee, logistics cost, etc...)
     private $price;
     private $discountTotal;
     private $promoDiscAmt;
@@ -26,6 +26,11 @@ class CartItemDto
     private $sourcingStatus;
     private $warrantyInMonth;
     private $decPlace;
+//optional profit variable
+    private $profitRaw;
+    private $marginRaw;
+    private $profit;
+    private $margin;
 
     public function __construct()
     {
@@ -230,5 +235,37 @@ class CartItemDto
 
     public function setImage($image) {
         $this->image = $image;
+    }
+
+    public function getProfitRaw() {
+        return $this->profitRaw;
+    }
+
+    public function setProfitRaw($profitRaw) {
+        $this->profitRaw = $profitRaw;
+    }
+
+    public function getMarginRaw() {
+        return $this->marginRaw;
+    }
+
+    public function setMarginRaw($marginRaw) {
+        $this->marginRaw = $marginRaw;
+    }
+
+    public function getProfit() {
+        return $this->profit;
+    }
+
+    public function setProfit($profit) {
+        $this->profit = $profit;
+    }
+
+    public function getMargin() {
+        return $this->margin;
+    }
+
+    public function setMargin($margin) {
+        $this->margin = $margin;
     }
 }
