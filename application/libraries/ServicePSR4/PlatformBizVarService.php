@@ -15,7 +15,8 @@ class PlatformBizVarService extends BaseService
                 break;
 
             case "NZ":
-                $declared_value = ($price < 350) ? $price : $price * 80 / 100;
+                $price = ($price < 350) ? $price : $price * 80 / 100;
+                $declared_value = min($price, 776);
                 break;
 
             default:
