@@ -1,0 +1,23 @@
+CREATE TABLE `landpage_video_listing` (
+  `catid` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `sku` varchar(15) NOT NULL DEFAULT '',
+  `platform_id` varchar(6) NOT NULL DEFAULT '',
+  `lang_id` varchar(16) NOT NULL COMMENT 'e.g. zh-cn, zh-tw, en and etc.',
+  `listing_type` varchar(2) NOT NULL COMMENT 'TV = Top View Video / LV = Latest Video / BV = Best Selling Video',
+  `video_type` varchar(2) NOT NULL COMMENT 'G = Guide / R = Review',
+  `mode` varchar(2) NOT NULL DEFAULT 'M',
+  `rank` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `ref_id` varchar(50) NOT NULL COMMENT 'video reference id',
+  `src` varchar(3) NOT NULL COMMENT 'Video Source - Y = Youtube / V = Vzaar',
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`catid`,`platform_id`,`lang_id`,`listing_type`,`video_type`,`mode`,`rank`),
+  KEY `fk_lvl_lang_id` (`lang_id`),
+  KEY `fk_lvl_platform_id` (`platform_id`),
+  CONSTRAINT `fk_lvl_lang_id` FOREIGN KEY (`lang_id`) REFERENCES `language_copy` (`id`),
+  CONSTRAINT `fk_lvl_platform_id` FOREIGN KEY (`platform_id`) REFERENCES `selling_platform_copy` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

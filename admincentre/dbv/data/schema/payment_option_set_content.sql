@@ -1,0 +1,23 @@
+CREATE TABLE `payment_option_set_content` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `set_id` int(11) NOT NULL,
+  `card_code` varchar(20) NOT NULL,
+  `ref_currency` varchar(3) NOT NULL,
+  `ref_from_amt` double(10,2) NOT NULL,
+  `ref_to_amt_exclusive` double(10,2) NOT NULL,
+  `priority` smallint(2) NOT NULL DEFAULT '0',
+  `status` tinyint(2) unsigned NOT NULL DEFAULT '1' COMMENT '0 = Inactive / 1 = Active',
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`id`),
+  KEY `idx_set_id` (`set_id`) USING BTREE,
+  KEY `idx_card_code` (`card_code`) USING BTREE,
+  KEY `idx_currency` (`ref_currency`) USING BTREE,
+  KEY `idx_set_id_status` (`set_id`,`status`),
+  KEY `idx_priority` (`priority`) USING BTREE,
+  CONSTRAINT `fk_set_id` FOREIGN KEY (`set_id`) REFERENCES `payment_option_set` (`set_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

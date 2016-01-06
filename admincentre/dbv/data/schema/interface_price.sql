@@ -1,0 +1,22 @@
+CREATE TABLE `interface_price` (
+  `batch_id` bigint(20) unsigned NOT NULL,
+  `sku` varchar(15) NOT NULL,
+  `platform_id` varchar(7) NOT NULL,
+  `default_shiptype` bigint(20) DEFAULT NULL,
+  `price` double(15,2) unsigned NOT NULL,
+  `status` varchar(2) DEFAULT NULL,
+  `allow_express` char(1) DEFAULT NULL,
+  `is_advertised` char(1) DEFAULT NULL COMMENT 'Y-Yes,N-No',
+  `ext_mapping_code` varchar(32) DEFAULT NULL,
+  `listing_status` varchar(2) DEFAULT NULL COMMENT 'L - Listed, N- Not Listed',
+  `platform_code` varchar(20) DEFAULT NULL COMMENT 'ASIN for Amazon, etc.',
+  `batch_status` varchar(2) DEFAULT NULL COMMENT 'N = New / R = Ready update to master / S = Success / F = Failed / I = Investigated',
+  `failed_reason` varchar(255) DEFAULT NULL,
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`batch_id`,`sku`,`platform_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT

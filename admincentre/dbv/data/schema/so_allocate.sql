@@ -1,0 +1,20 @@
+CREATE TABLE `so_allocate` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `so_no` char(8) NOT NULL,
+  `line_no` smallint(5) unsigned NOT NULL,
+  `item_sku` varchar(15) NOT NULL,
+  `qty` smallint(5) unsigned NOT NULL,
+  `warehouse_id` varchar(20) NOT NULL,
+  `sh_no` char(11) DEFAULT NULL,
+  `status` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '1 = Allocated / 2 = Packed / 3 = Shipped',
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`id`),
+  KEY `k_soid` (`so_no`,`line_no`,`item_sku`) USING BTREE,
+  KEY `fk_wh_id` (`warehouse_id`) USING BTREE,
+  KEY `fk_sh_no` (`sh_no`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
