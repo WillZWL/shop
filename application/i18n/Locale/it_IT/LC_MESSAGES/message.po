@@ -77,8 +77,8 @@ msgid "Computing"
 msgstr "Informatica"
 
 #: cat.php:43 search.php:43
-msgid "BRANDS"
-msgstr "MARCHE"
+msgid "Brands"
+msgstr "Marche"
 
 #: cat.php:107 search.php:129
 msgid "List"
