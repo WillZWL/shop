@@ -1,1 +1,0 @@
-drop table pmgw_card_set;
