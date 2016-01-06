@@ -36,7 +36,7 @@ class Manual_order extends MY_Controller
         $data["sp_list"] = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList(["type"=>$platform_type], ["orderby"=>"name", "limit"=> -1]);
         $data["platform_id"] = $platform_id;
         $data["platform_type"] = $platform_type;
-        $this->load->view('order/manual_order/manual_order_v', $data);
+        $this->load->view($this->path . '/manual_order_v', $data);
     }
 
     public function prod_list($line = "", $platform_id = "")
@@ -141,7 +141,7 @@ class Manual_order extends MY_Controller
         $data["line"] = $line;
         $data["pbv_obj"] = $this->sc['PlatformBizVar']->getdao('PlatformBizVar')->get(["selling_platform_id"=>$platform_id]);
         $data["default_curr"] = $data["pbv_obj"]->getPlatformCurrencyId();
-        $this->load->view('order/manual_order/manual_order_prod_list_v', $data);
+        $this->load->view($this->path . '/manual_order_prod_list_v', $data);
     }
 
     public function on_hold()
@@ -206,7 +206,7 @@ class Manual_order extends MY_Controller
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
         $data["searchdisplay"] = "";
 
-        $this->load->view('order/manual_order/manual_order_on_hold_v', $data);
+        $this->load->view($this->path . '/manual_order_on_hold_v', $data);
     }
 
     public function pending()
@@ -270,7 +270,7 @@ class Manual_order extends MY_Controller
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
         $data["searchdisplay"] = "";
 
-        $this->load->view('order/manual_order/manual_order_pending_v', $data);
+        $this->load->view($this->path . '/manual_order_pending_v', $data);
     }
 
     public function check_email()
@@ -283,7 +283,7 @@ class Manual_order extends MY_Controller
             include_once(APPPATH."language/".$sub_app_id."_".$this->getLangId().".php");
             $data["lang"] = $lang;
             $data["client"] = $this->sc['Client']->getDao('Client')->get(["email" => $email]);
-            $this->load->view('order/manual_order/manual_order_check_email_v', $data);
+            $this->load->view($this->path . '/manual_order_check_email_v', $data);
         } else {
             show_404();
         }

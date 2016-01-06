@@ -15,11 +15,11 @@
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td height="30" class="title"><?= $lang["title"] ?></td>
-            <td width="400" align="right" class="title"><input type="button" value="<?= $lang["add_button"] ?>"
-                                                               class="button"
-                                                               onclick="Redirect('<?= site_url('order/phone_sales') ?>')">
-                &nbsp; <input type="button" value="<?= $lang["on_hold_button"] ?>" class="button"
-                              onclick="Redirect('<?= site_url('order/phone_sales/on_hold') ?>')"></td>
+            <td width="400" align="right" class="title">
+                <input type="button" value="<?= $lang["add_button"] ?>" class="button" onclick="Redirect('<?= site_url($this->path) ?>')">
+                &nbsp;
+                <input type="button" value="<?= $lang["on_hold_button"] ?>" class="button" onclick="Redirect('<?= site_url($this->path . '/on_hold') ?>')">
+            </td>
         </tr>
         <tr>
             <td height="2" class="line"></td>
@@ -33,35 +33,31 @@
             </td>
             <td align="right" style="padding-right:8px">
                 <?= $lang["selling_platform"] ?>:
-                <select onChange="Redirect('<?= base_url() ?>order/phone_sales/index/'+this.value)">
+                <select onChange="Redirect('<?= base_url() . $this->path ?>/index/'+this.value)">
                     <option></option>
                     <?php
                     $sp_selected[$platform_id] = " SELECTED";
-                    foreach ($sp_list as $obj) {
-                        $id = $obj->get_id();
+                    foreach ($sp_list as $obj) :
+                        $id = $obj->getSellingPlatformId();
                         ?>
                         <option
-                            value="<?= $id ?>"<?= $sp_selected[$id] ?>><?= $id . " - " . $obj->get_name(); ?></option>
+                            value="<?= $id ?>"<?= $sp_selected[$id] ?>><?= $id . " - " . $obj->getName(); ?></option>
                     <?php
-                    }
+                    endforeach;
                     ?>
 
                 </select>
             </td>
         </tr>
     </table>
-    <?php
-    if ($platform_id) {
-        ?>
-        <iframe name="fcart" id="fcart" src="<?= base_url() ?>order/phone_sales/cart/<?= $platform_id ?>" width="200"
+    <?php if ($platform_id) : ?>
+        <iframe name="fcart" id="fcart" src="<?= base_url() . $this->path ?>/cart/<?= $platform_id ?>" width="200"
                 style="float:left;border-right:1px solid #000000;" noresize frameborder="0" marginwidth="0"
                 marginheight="0" hspace=0 vspace=0 onLoad="SetFrameFullHeight(this)"></iframe>
-        <iframe name="fprod" id="fprod" src="<?= base_url() ?>order/phone_sales/prod_list/<?= $platform_id ?>"
+        <iframe name="fprod" id="fprod" src="<?= base_url() . $this->path ?>/prod_list/<?= $platform_id ?>"
                 width="1059" style="float:left;border-left:1px solid #999999;" noresize frameborder="0" marginwidth="0"
                 marginheight="0" hspace=0 vspace=0 onLoad="SetFrameFullHeight(this)"></iframe>
-    <?php
-    }
-    ?>
+    <?php endif; ?>
     <?= $notice["js"] ?>
 </div>
 </body>

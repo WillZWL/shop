@@ -43,6 +43,7 @@ class CartDto
     public function setItems($items) {
         $this->items = $items;
     }
+
 /*
     public function getBizType() {
         return $this->bizType;

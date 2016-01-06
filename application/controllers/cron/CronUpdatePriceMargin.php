@@ -4,24 +4,19 @@ class CronUpdatePriceMargin extends MY_Controller
 {
     private $appId = 'CRN0030';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function updateMargin($platform_id = '', $sku = '')
     {
         set_time_limit(900);
         if ($platform_id === '') {
             $platform_list = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList();
             foreach ($platform_list as $platform_obj) {
-                $this->sc['Price']->refreshMargin($platform_obj->getSellingPlatformId());
+                $this->sc['PriceMargin']->refreshProfitAndMargin($platform_obj->getSellingPlatformId());
             }
         } else {
             if ($sku === '') {
-                $this->sc['Price']->refreshMargin($platform_id);
+                $this->sc['PriceMargin']->refreshProfitAndMargin($platform_id);
             } else {
-                $this->sc['Price']->refreshMargin($platform_id, $sku);
+                $this->sc['PriceMargin']->refreshProfitAndMargin($platform_id, $sku);
             }
         }
     }
