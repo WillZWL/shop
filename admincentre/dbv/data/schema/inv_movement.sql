@@ -1,0 +1,20 @@
+CREATE TABLE `inv_movement` (
+  `trans_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ship_ref` varchar(11) DEFAULT NULL,
+  `sku` varchar(15) NOT NULL,
+  `qty` smallint(5) NOT NULL DEFAULT '0',
+  `type` varchar(2) NOT NULL COMMENT 'C - Customer, S - Supplier, W - Warehouse',
+  `from_location` varchar(20) DEFAULT NULL,
+  `to_location` varchar(20) DEFAULT NULL,
+  `reason` text,
+  `status` varchar(2) DEFAULT NULL,
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`trans_id`),
+  KEY `fk_inv_status_type` (`status`,`type`) USING BTREE,
+  CONSTRAINT `fk_inv_status_type` FOREIGN KEY (`status`, `type`) REFERENCES `inv_status` (`status`, `type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT

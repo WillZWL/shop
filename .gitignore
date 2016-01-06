@@ -11,3 +11,5 @@
 /vendor/
 /application/views/template/menu
 /admincentre/images/product/
+/admincentre/dbv/data/meta/revision
+/admincentre/dbv/config.php

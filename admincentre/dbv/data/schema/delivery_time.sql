@@ -1,0 +1,22 @@
+CREATE TABLE `delivery_time` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `scenarioid` int(11) NOT NULL COMMENT 'id in lookup_delivery_scenario',
+  `country_id` char(2) NOT NULL COMMENT 'International country code (2 characters)',
+  `ship_min_day` int(3) NOT NULL COMMENT 'min ship days (dispatch)',
+  `ship_max_day` int(3) NOT NULL COMMENT 'max ship days (dispatch)',
+  `del_min_day` int(3) NOT NULL COMMENT 'min delivery days (reach customer)',
+  `del_max_day` int(3) NOT NULL COMMENT 'max delivery days (reach customer)',
+  `margin` decimal(10,0) DEFAULT NULL COMMENT 'Min. margin product has to get high priority score; only for scenarioid=5 (HighMargin). ',
+  `status` int(2) NOT NULL DEFAULT '1' COMMENT '0 = inactive, 1 = active',
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ind_deltime_scenctry` (`scenarioid`,`country_id`) USING BTREE,
+  KEY `fk_deltime_ctryid` (`country_id`),
+  CONSTRAINT `fk_deltime_ctryid` FOREIGN KEY (`country_id`) REFERENCES `country_copy` (`id`),
+  CONSTRAINT `fk_deltime_scenario` FOREIGN KEY (`scenarioid`) REFERENCES `lookup_delivery_scenario` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
