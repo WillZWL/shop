@@ -82,11 +82,11 @@ class PricingToolWebsiteService extends BaseService
         $data["feed_exclude"] = $this->getDao('AffiliateSkuPlatform')->getFeedListBySku($param['prod_sku'], $platform_id, 1);
         $data["competitor"] = $this->getCompetitor($param);
         // $data["adwords_obj"] = $this->getAdwordsData($param);
-        // $googleComment = $this->getGoogleGscComment($param);
-        // $data["gsc_comment"] = $googleComment["gsc_comment"];
-        // $data["enabled_pla_checkbox"] = $googleComment["enabled_pla_checkbox"];
+        $googleComment = $this->getGoogleGscComment($param);
+        $data["gsc_comment"] = $googleComment["gsc_comment"];
+        $data["enabled_pla_checkbox"] = $googleComment["enabled_pla_checkbox"];
 
-        return $data;;
+        return $data;
     }
 
     public function getAdwordsData($param)
@@ -151,21 +151,21 @@ class PricingToolWebsiteService extends BaseService
                     $gsc_comment .= " - Success";
                 }
             } else {
-                // if (!$goog_shop_result || $vars['ia'] != "Y") {
-                //     $gsc_comment = $goog_shop_obj->getComment();
-                //     if (!$gsc_comment) {
-                //         $gsc_comment = $internal_gsc_comment;
-                //     } else {
-                //         $gsc_temp_list = explode(';', $gsc_comment);
-                //         $gsc_comment = array_pop($gsc_temp_list);
-                //     }
+                if (!$goog_shop_result || $param['is_advertised'] != "Y") {
+                    $gsc_comment = $goog_shop_obj->getComment();
+                    if (!$gsc_comment) {
+                        $gsc_comment = $internal_gsc_comment;
+                    } else {
+                        $gsc_temp_list = explode(';', $gsc_comment);
+                        $gsc_comment = array_pop($gsc_temp_list);
+                    }
 
-                //     if (!$internal_gsc_comment) {
-                //         $enabled_pla_checkbox = 1;
-                //     }
-                // } else {
-                //     $gsc_comment = "Success";
-                // }
+                    if (!$internal_gsc_comment) {
+                        $enabled_pla_checkbox = 1;
+                    }
+                } else {
+                    $gsc_comment = "Success";
+                }
             }
         }
         if ($internal_gsc_comment) {

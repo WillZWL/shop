@@ -75,8 +75,8 @@ class PricingToolService extends BaseService
                             $data["feed_exclude"][$platform_id] = $website_data['feed_exclude'];
                             $pdata[$platform_id]["competitor"] = $website_data['competitor'];
                              // $pdata[$platform_id]["adwords_obj"] = $website_data['adwords_obj'];
-                            // $pdata[$platform_id]["gsc_comment"] = $website_data['gsc_comment'];
-                            // $pdata[$platform_id]["enabled_pla_checkbox"] = $website_data['enabled_pla_checkbox'];
+                            $pdata[$platform_id]["gsc_comment"] = $website_data['gsc_comment'];
+                            $pdata[$platform_id]["enabled_pla_checkbox"] = $website_data['enabled_pla_checkbox'];
                             break;
 
                         default:
