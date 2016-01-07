@@ -14,6 +14,7 @@ class PriceService extends BaseService
 
         $newObj->setSku($sku);
         $newObj->setPlatformId((string) $obj->platform_id);
+        $newObj->setIsAdvertised((string) 'N');
         $this->updatePrice($newObj, $obj);
 
         return $newObj;
@@ -27,7 +28,7 @@ class PriceService extends BaseService
         $newObj->setVbPrice((string) $obj->prod_price);
         $newObj->setStatus((string) $obj->status);
         $newObj->setAllowExpress((string) $obj->allow_express);
-        $newObj->setIsAdvertised((string) $obj->is_advertised);
+        $newObj->setIsAdvertised((string) $newObj->getIsAdvertised());
         $newObj->setGooglePromoId((string) $obj->google_promo_id);
         $newObj->setExtMappingCode((string) $obj->ext_mapping_code);
         $newObj->setLatency((string) $obj->latency);
