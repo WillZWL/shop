@@ -1,0 +1,21 @@
+CREATE TABLE `flex_rolling_reserve` (
+  `so_no` char(8) NOT NULL,
+  `flex_batch_id` bigint(20) unsigned NOT NULL,
+  `gateway_id` varchar(255) NOT NULL,
+  `internal_txn_id` varchar(100) NOT NULL,
+  `txn_id` varchar(100) DEFAULT NULL COMMENT 'Transaction id',
+  `txn_time` datetime NOT NULL,
+  `currency_id` char(3) NOT NULL,
+  `amount` double(15,6) NOT NULL,
+  `status` varchar(5) NOT NULL COMMENT 'RRH = Rolling Reserve Hold, RRR = Rolling Reserve Release',
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`so_no`,`internal_txn_id`,`txn_time`,`status`),
+  KEY `fk_frr_flex_batch_id` (`flex_batch_id`),
+  CONSTRAINT `fk_frr_flex_batch_id` FOREIGN KEY (`flex_batch_id`) REFERENCES `flex_batch` (`id`),
+  CONSTRAINT `fk_frr_so_no` FOREIGN KEY (`so_no`) REFERENCES `so_copy` (`so_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

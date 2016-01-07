@@ -1,0 +1,22 @@
+CREATE TABLE `application` (
+  `id` varchar(20) NOT NULL,
+  `app_name` varchar(128) NOT NULL,
+  `parent_app_id` varchar(20) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `display_order` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `display_row` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `url` varchar(256) DEFAULT NULL,
+  `app_group_id` smallint(6) DEFAULT NULL,
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`id`),
+  KEY `fk_pa_id` (`parent_app_id`),
+  KEY `fk_app_group_id` (`app_group_id`),
+  CONSTRAINT `fk_app_group_id` FOREIGN KEY (`app_group_id`) REFERENCES `application_group` (`app_group_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_pa_id` FOREIGN KEY (`parent_app_id`) REFERENCES `application` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

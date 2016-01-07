@@ -1,0 +1,22 @@
+CREATE TABLE `product_content_extend` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `prod_sku` bigint(20) unsigned NOT NULL,
+  `lang_id` varchar(5) NOT NULL,
+  `feature` text COMMENT 'Features',
+  `feature_original` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0 - machine translation 1 - manual translation',
+  `specification` text COMMENT 'Specifications',
+  `spec_original` tinyint(2) NOT NULL DEFAULT '0',
+  `requirement` text COMMENT 'Requirements',
+  `instruction` text,
+  `apply_enhanced_listing` char(1) NOT NULL DEFAULT 'N',
+  `enhanced_listing` text,
+  `stop_sync` tinyint(4) DEFAULT '1' COMMENT 'value 0 = completely no selection, bit 0 = No stop, bit 1 = Stop feature, bit 2 = Stop specification, bit 3 = Stop enhanced_listing',
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_sku_lang` (`prod_sku`,`lang_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

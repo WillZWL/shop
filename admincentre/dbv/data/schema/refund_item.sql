@@ -1,0 +1,21 @@
+CREATE TABLE `refund_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `refund_id` bigint(20) unsigned NOT NULL,
+  `line_no` smallint(3) unsigned NOT NULL,
+  `item_sku` varchar(15) NOT NULL DEFAULT '',
+  `qty` smallint(5) unsigned NOT NULL,
+  `refund_amount` float(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `status` varchar(2) NOT NULL DEFAULT 'CS' COMMENT 'N - NEW, CS - CS, CP - COMPLIANCE, LG - LOGISTICS, AC- ACCOUNT, D - DENIED, C - COMPLETED',
+  `refund_type` char(1) NOT NULL DEFAULT 'C' COMMENT 'C- Cashback, R- Refund',
+  `item_status` char(1) NOT NULL DEFAULT '' COMMENT 'N - New Product, U - Used (2nd Hand), M - Missing Item',
+  `stockback_date` date NOT NULL DEFAULT '0000-00-00',
+  `stockback_warehouse` varchar(20) NOT NULL DEFAULT '',
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_refund_line_sku` (`refund_id`,`line_no`,`item_sku`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

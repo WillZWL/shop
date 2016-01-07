@@ -29,6 +29,9 @@ class CartSessionService extends BaseService
     const CART_TYPE_SPECIAL = "SPECIAL";
 
     private $_cart = null;
+    private $_platformType = null;
+    private $_priceService = null;
+
 //with this _rebuildCartNoSessionMode mode enabled, we will get detail cart info, instead of lite info
     private $_rebuildCartNoSessionMode = false;
     public static $noRebuild = false;
@@ -62,11 +65,43 @@ class CartSessionService extends BaseService
         }
     }
 
-    public function getCart($type = self::CART_TYPE_ONLINE) {
+    public function setOfflineFee($offlineFee) {
+        if ($this->_cart) {
+            $this->_cart->setOfflineFee($offlineFee);
+        }
+    }
+
+    public function calculateAndGetCartProfit() {
+        $totalProfit = 0;
+        $totalCost = 0;
+        if ($this->_cart) {
+            foreach ($this->_cart->items as $sku => $item) {
+//                var_dump($this->_cart->items);exit;
+                $decPlace = $this->_cart->items[$sku]->getDecPlace();
+                $calProfitDto = new \CalculateProfitDto($sku, $this->_cart->items[$sku]->getQty(), $this->_cart->items[$sku]->getPrice(), $this->_cart->items[$sku]->getAmount());
+                $this->storeProfitInfoToDto($calProfitDto, $this->_cart->getPlatformId(), $this->_cart->items[$sku]->getDecPlace());
+                $this->_cart->items[$sku]->setProfitRaw($calProfitDto->getRawProfit());
+                $this->_cart->items[$sku]->setMarginRaw($calProfitDto->getRawMargin());
+                $this->_cart->items[$sku]->setUnitCost($calProfitDto->getCost());
+                $this->_cart->items[$sku]->setProfit($calProfitDto->getProfit());
+                $this->_cart->items[$sku]->setMargin($calProfitDto->getMargin());
+                $totalProfit += $calProfitDto->getProfit();
+                $totalCost += $calProfitDto->getCost() * $this->_cart->items[$sku]->getQty();
+            }
+            $this->_cart->setTotalProfit($totalProfit);
+            $this->_cart->setCost($totalCost);
+            $this->_cart->setMargin(round((($this->_cart->getGrandTotal() - $totalCost) / $this->_cart->getGrandTotal() * 100), $decPlace));
+       }
+    }
+
+/******************************************************************************************************************
+**  getCart($saveProfit)
+**  $saveProfit default = false, we won't calculate profit until client really checkout to save server resources
+******************************************************************************************************************/
+    public function getCart($saveProfit = false) {
         $totalItems = 0;
         $totalAmount = 0.0;
-        if ($this->_cart)
-        {
+        if ($this->_cart) {
             foreach ($this->_cart->items as $sku => $item) {
                 $unitPrice = $item->getPrice();
                 $itemSubTotal = $unitPrice * $item->getQty();
@@ -90,6 +125,9 @@ class CartSessionService extends BaseService
             }
 //            $this->_cart->setBizType($type);
         }
+        if ($saveProfit) {
+            $this->calculateAndGetCartProfit();
+        }
         $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"] = $totalItems;
         $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"] = $totalAmount;
         return $this->_cart;    //=return $_SESSION["cart"]
@@ -112,6 +150,7 @@ class CartSessionService extends BaseService
     public function emptyCart() {
         $this->_cart = null;
         unset($_SESSION["cart"]);
+        unset($_SESSION["CART_QUICK_INFO"]);
     }
 
     public function modifyItem($action, $sku, $qty, $platformId) {
@@ -147,18 +186,20 @@ class CartSessionService extends BaseService
         }
     }
 
-    public function manualAddItemsToCart($skuList = [], $platformId, $currencyId, $langId, $deliveryCharge = null) {
+    public function manualAddItemsToCart($skuList = [], $platformId, $platformBizObj, $deliveryCharge = null) {
         if (!$this->_cart) {
             $this->_cart = [];
             $this->_cart = new \CartDto();
             $this->_cart->setPlatformId($platformId);
-            $this->_cart->setPlatformCurrency($currencyId);
+            $this->_cart->setPlatformCurrency($platformBizObj->getPlatformCurrencyId());
+            $this->_cart->setVatPercent($platformBizObj->getVatPercent());
+
             if (!is_null($deliveryCharge))
                 $this->_cart->setDeliveryCharge($deliveryCharge);
             $this->_cart->items = [];
         }
         foreach($skuList as $sku => $item) {
-            $productDetails = $this->_createCartItem($sku, $langId, $platformId);
+            $productDetails = $this->_createCartItem($sku, $platformBizObj->getLanguageId(), $platformId);
             $productDetails->setQty($item["qty"]);
             $productDetails->setPrice($item["unitPrice"]);
             $this->_cart->items[$sku] = $productDetails;
@@ -237,6 +278,43 @@ class CartSessionService extends BaseService
             mail($this->support_email, $subject, $message, "From: website@" . SITE_DOMAIN . "\r\n");
         }
         return false;
+    }
+
+    private function _initPriceService($platformType = null) {
+        if (is_null($platformType)) {
+            $this->_priceService = new PriceService;
+        } else if (is_null($this->_priceService)) {
+            $classname = "ESG\Panther\Service\Price" . ucfirst(strtolower($platformType)) . "Service";
+            $this->_priceService = new $classname($platformType);
+        }
+    }
+
+    public function storeProfitInfoToDto(\CalculateProfitDto $calProfitDto, $platformId, $decPlace)
+    {
+        $calOriginal = true;
+        if (!$this->_platformType) {
+            if (defined('PLATFORM_TYPE'))
+                $this->_platformType = PLATFORM_TYPE;
+            else
+                $this->_platformType = $this->getService("SellingPlatform")->getDao("SellingPlatform")->get(["selling_platform_id" => $platformId])->getType();
+        }
+/* calculate raw first, common to all, */
+        $this->_initPriceService($this->_platformType);
+        $unitSellingPrice = $calProfitDto->getUnitPrice();
+        $json = $this->_priceService->getProfitMarginJson($platformId, $calProfitDto->getSku(), $unitSellingPrice);
+        $jj = json_decode($json, true);
+        $calProfitDto->setRawProfit(round($jj["get_profit"], $decPlace));
+        $calProfitDto->setRawMargin(round($jj["get_margin"], $decPlace));
+
+        if ($calOriginal) {
+            $sellingPrice = ($calProfitDto->getTotalAmount()) / $calProfitDto->getQty();
+            $json = $this->_priceService->getProfitMarginJson($platformId, $calProfitDto->getSku(), $sellingPrice);
+            $jj = json_decode($json, true);
+            $calProfitDto->setCost(round($jj["get_cost"], $decPlace));
+            $calProfitDto->setProfit(round($jj["get_profit"], $decPlace));
+            $calProfitDto->setMargin(round($jj["get_margin"], $decPlace));
+        }
+        return $calProfitDto;
     }
 
     public function getCartDetailInfo()

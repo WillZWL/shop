@@ -1,4 +1,6 @@
 <?php
+use ESG\Panther\Models\Website\CheckoutModel;
+
 class Phone_sales extends MY_Controller
 {
     private $appId = "ORD0009";
@@ -135,7 +137,6 @@ class Phone_sales extends MY_Controller
         }
 
         $this->sc['PhoneSales']->checkCartByPlatform($platform_id);
-
         $pbv_obj = $this->sc['PlatformBizVar']->getdao('PlatformBizVar')->get(["selling_platform_id"=>$platform_id]);
 
         if ($this->input->post("posted")) {
@@ -149,30 +150,20 @@ class Phone_sales extends MY_Controller
         }
 
         $data['cart']  = $this->sc['PhoneSales']->getCart();
-        $data["totalcart"] = $data["cart"] ? $data["cart"]->getTotalNumberOfItems() : 0;
-
-        $promo_disc_amount = $sub_total = $total_vat = $total = 0;
-        // if ($data["promo"]["valid"] && !$data["promo"]["error"]) {
-        //     $promo_disc_amount = $data["promo"]["disc_amount"];
-        // }
-
-        // if (!$data["promo"]["valid"] || $data["promo"]["error"]) {
-        //     unset($_SESSION["promotion_code"]);
-        // }
-
-        $offlineFee = $this->input->post("offline_fee") ? $this->input->post("offline_fee") : "";
-        if (! $offlineFee) {
-            $data["offline_fee"] = '';
-        } else {
-            $data["offline_fee"] =  $offlineFee;
-        }
+        $data["offline_fee"] = $this->input->post("offline_fee") ? $this->input->post("offline_fee") : "0";
 
         $data["allow_see_margin"] = false;
-        if ($data["totalcart"]) {
+        if ($data["cart"]) {
             $data["allow_see_margin"] = check_app_feature_access_right($this->getAppId(), "ORD000900_cs_man_margin");
-            $data["total"] = $data["cart"]->getSubtotal();
-            $costprice_total = $data["cart"]->getCost();
+            $data["subtotal"] = $data["cart"]->getSubtotal();
+            $data["cart"]->setOfflineFee($data["offline_fee"]);
+            $data["cartTotal"] = $data["cart"]->getGrandTotal();
+            $cartWithProfit = $this->sc['CartSession']->getCart(true);
+//            var_dump($cartWithProfit);exit;
+            $data["cartMargin"] = $cartWithProfit->getMargin();
+            $totalCost = $cartWithProfit->getCost();
 
+/*
             $data["total_cart_price"] = ($data["total"] + $data["cart"]->getDeliveryCharge()* 1 + $data["offline_fee"] * 1 - $promo_disc_amount);
 
             if ($data["total_cart_price"] != 0) {
@@ -184,17 +175,16 @@ class Phone_sales extends MY_Controller
             if ( $offlineFee < 0 && $data["cart_profit_margin"] < 7) {
                 $data["offline_fee"] = '';
             }
+*/
         }
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
         $data["notice"] = notice($lang);
-        $data["pbv_obj"] = $pbv_obj;
-        $data["default_curr"] = $data["pbv_obj"]->getPlatformCurrencyId();
+        $data["default_curr"] = $pbv_obj->getPlatformCurrencyId();
         $data["platform_id"] = $platform_id;
         $this->load->view($this->path . '/phone_sales_cart_v', $data);
     }
-
 
     public function take_order($platform_id = "")
     {
@@ -207,7 +197,10 @@ class Phone_sales extends MY_Controller
 
         if ($this->input->post("posted")) {
             if (!$this->input->post("took")) {
-                $this->sc['PhoneSales']->addSoForPhoneSales($_POST, $platform_id);
+                $checkoutModel = new CheckoutModel();
+                $data["soObj"] = $checkoutModel->createOfflineOrder($_POST, $platform_id);
+                $this->load->view($this->path . '/phone_sales_order_creation_result', $data);
+                return;
             }
 
             if ($this->input->post("promotion_code")) {
@@ -239,8 +232,8 @@ class Phone_sales extends MY_Controller
         }
 
         $data['cart']  = $this->sc['PhoneSales']->getCart();
-        $data["totalcart"] = $data["cart"] ? $data["cart"]->getTotalNumberOfItems() : 0;
-        $data["total_cart_price"] = ($data["total"] + $data["cart"]->getDeliveryCharge()* 1 + $data["offline_fee"] * 1 - $promo_disc_amount);
+//        $data["totalcart"] = $data["cart"] ? $data["cart"]->getTotalNumberOfItems() : 0;
+//        $data["total_cart_price"] = ($data["total"] + $data["cart"]->getDeliveryCharge()* 1 + $data["offline_fee"] * 1 - $promo_disc_amount);
 
         // if ($data["totalcart"]) {
             $data["total"] = $data["cart"]->getSubtotal();
@@ -255,11 +248,6 @@ class Phone_sales extends MY_Controller
 
         $data["vat_exempt"] = $this->input->post("vat_exempt");
         $data["free_delivery"] = $this->input->post("free_delivery");
-
-        // if (count($data["cart"]) == 0) {
-        //     unset($_SESSION["client"]["country_id"]);
-        //     unset($_SESSION["client"]["del_country_id"]);
-        // }
 
         $data["order_reason_list"] = $this->sc['So']->getDao('OrderReason')->getList(["status" => 1, "option_in_phone" => 1], ["limit" => -1, "orderby" => "priority"]);
 

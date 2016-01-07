@@ -4,6 +4,7 @@ class CheckoutInfoDto
 {
     public $formSalt;
     public $cybersourceFingerprint;
+    public $title;
     public $billFirstName;
     public $billLastName;
     public $billCompany;
@@ -17,6 +18,7 @@ class CheckoutInfoDto
     public $billTelCountryCode;
     public $billTelAreaCode;
     public $billTelNumber;
+    public $mobile;
     public $email;
     public $billPassword;
     public $billConfirmPassword;
@@ -63,6 +65,14 @@ class CheckoutInfoDto
 
     public function getCybersourceFingerprint() {
         return $this->cybersourceFingerprint;
+    }
+
+    public function setTitle($title) {
+        $this->title = $title;
+    }
+
+    public function getTitle() {
+        return $this->title;
     }
 
     public function setBillFirstName($billFirstName) {
@@ -167,6 +177,14 @@ class CheckoutInfoDto
 
     public function getBillTelNumber() {
         return $this->billTelNumber;
+    }
+
+    public function setMobile($mobile) {
+        $this->mobile = $mobile;
+    }
+
+    public function getMobile() {
+        return $this->mobile;
     }
 
     public function setEmail($email) {

@@ -1,0 +1,23 @@
+CREATE TABLE `category` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `description` text,
+  `parent_cat_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT 'Indicates the parent of this item.  Default is 0.',
+  `level` tinyint(2) unsigned NOT NULL DEFAULT '1' COMMENT 'Level 1, 2, 3 indicates category, sub-category & sub-sub-category respectively.',
+  `add_colour_name` tinyint(2) unsigned DEFAULT '1' COMMENT 'Add colour to product name: 0 = No / 1 = Yes',
+  `priority` tinyint(3) unsigned DEFAULT '9',
+  `stop_sync_priority` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0: sync VB value; 1: no sync VB value',
+  `bundle_discount` double(4,2) unsigned NOT NULL DEFAULT '0.00',
+  `min_display_qty` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `sponsored` tinyint(2) NOT NULL DEFAULT '0',
+  `status` tinyint(2) unsigned NOT NULL DEFAULT '1' COMMENT '0 = Not listed, 1 = Listed.  If the category is set as "Not listed", the sub-categories and sub-sub-categories should be set as Not Listed.',
+  `hidden` tinyint(1) NOT NULL DEFAULT '0',
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`id`),
+  KEY `fk_cat_cat_id` (`parent_cat_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT

@@ -4,21 +4,26 @@ class CartDto
     protected $platformId;
     protected $platformOrderId;
     public $items;  //CartItemDto
- //   protected $bizType;
+//   protected $bizType;
     protected $vatPercent;
     protected $vat;
     protected $platformCurrency;
+    protected $platformCountryId;
     protected $cost;
     protected $subtotal;
     protected $grandTotal;
     protected $paymentCharge;
     protected $adminFee;
+    protected $offlineFee;
     protected $totalWeight;
     protected $deliveryCharge = 0;
     protected $deliveryType = "STD";
     protected $deliveryCost;
     protected $totalNumberOfItems;
     protected $orderCreateDate;
+//optional
+    protected $totalProfit;
+    protected $margin;
 
     public function getPlatformId() {
         return $this->platformId;
@@ -86,7 +91,7 @@ class CartDto
     }
 
     public function getGrandTotal() {
-        return ($this->subtotal + $this->deliveryCharge);
+        return ($this->subtotal + $this->deliveryCharge + $this->offlineFee);
     }
 
     public function setGrandTotal($grandTotal) {
@@ -99,6 +104,14 @@ class CartDto
 
     public function setPlatformCurrency($platformCurrency) {
         $this->platformCurrency = $platformCurrency;
+    }
+
+    public function getPlatformCountryId() {
+        return $this->platformCountryId;
+    }
+
+    public function setPlatformCountryId($platformCountryId) {
+        $this->platformCountryId = $platformCountryId;
     }
 
     public function getPaymentCharge() {
@@ -123,6 +136,14 @@ class CartDto
 
     public function setAdminFee($adminFee) {
         $this->adminFee = $adminFee;
+    }
+
+    public function getOfflineFee() {
+        return $this->offlineFee;
+    }
+
+    public function setOfflineFee($offlineFee) {
+        $this->offlineFee = $offlineFee;
     }
 
     public function getDeliveryCharge() {
@@ -163,5 +184,21 @@ class CartDto
 
     public function setOrderCreateDate($orderCreateDate) {
         $this->orderCreateDate = $orderCreateDate;
+    }
+
+    public function getTotalProfit() {
+        return $this->totalProfit;
+    }
+
+    public function setTotalProfit($totalProfit) {
+        $this->totalProfit = $totalProfit;
+    }
+
+    public function getMargin() {
+        return $this->margin;
+    }
+
+    public function setMargin($margin) {
+        $this->margin = $margin;
     }
 }
