@@ -40,7 +40,7 @@
                                         foreach($brand_result as $brand) {
                                     ?>
                                         <li>
-                                            <a href="<?=$brand['id']?>"><?=$brand['name']?> (<?=$brand['total']?>)</a>
+                                            <a href="?brand_id=<?=$brand['id']?>"><?=$brand['name']?> (<?=$brand['total']?>)</a>
                                         </li>
                                     <?php
                                         }
