@@ -22,7 +22,7 @@ class PricingToolWebsiteService extends BaseService
 		if ($price_obj->getPrice() * 1 != $vars['sp'] * 1 ||
             $price_obj->getListingStatus() != $vars['cur_listing_status'] ||
             // $price_obj->getAllowExpress() != $vars['ae'] ||
-            // $price_obj->getIsAdvertised() != $vars['ia'] ||
+            $price_obj->getIsAdvertised() != $vars['ia'] ||
             $price_obj->getAutoPrice() != $vars['ap'] ||
             $price_obj->getFixedRrp() != $vars['frrp'] ||
             (($vars['frrp'] == 'N') && ($vars['rrp_factor'] != '') && ($price_obj->getRrpFactor() != $vars['rrp_factor']))
@@ -32,7 +32,7 @@ class PricingToolWebsiteService extends BaseService
             $price_obj->setListingStatus($vars['cur_listing_status']);
             $price_obj->setPrice($vars['sp']);
             // $price_obj->setAllowExpress($vars['ae']);
-            // $price_obj->setIsAdvertised($vars['ia']);
+            $price_obj->setIsAdvertised($vars['ia']);
             $price_obj->setAutoPrice($vars['ap']);
             $price_obj->setFixedRrp($vars['frrp']);
 
@@ -151,7 +151,7 @@ class PricingToolWebsiteService extends BaseService
                     $gsc_comment .= " - Success";
                 }
             } else {
-                // if (!$goog_shop_result || $param['is_advertised'] != "Y") {
+                // if (!$goog_shop_result || $vars['ia'] != "Y") {
                 //     $gsc_comment = $goog_shop_obj->getComment();
                 //     if (!$gsc_comment) {
                 //         $gsc_comment = $internal_gsc_comment;

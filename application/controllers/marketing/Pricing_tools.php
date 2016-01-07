@@ -141,7 +141,7 @@ class pricing_tools extends MY_Controller
             $plat = $this->input->post('selling_platform');
             $splist = $this->input->post("selling_price");
             // $pae = $this->input->post('allow_express');
-            // $pia = $this->input->post('is_advertised');
+            $pia = $this->input->post('is_advertised');
             $pft = $this->input->post('formtype');
             $pls = $this->input->post('listing_status');
 
@@ -158,9 +158,9 @@ class pricing_tools extends MY_Controller
                 $vars['platform'] = $platform;
                 $vars['sp'] = trim($splist[$platform]);
                 // $allow_express = $pae[$platform];
-                // $is_advertised = $pia[$platform];
+                $is_advertised = $pia[$platform];
                 // $vars['ae'] = ($allow_express) ? 'Y' : 'N';
-                // $vars['ia'] = ($is_advertised)? 'Y' : 'N';
+                $vars['ia'] = ($is_advertised)? 'Y' : 'N';
 
                 $vars['cur_listing_status'] = $pls[$platform];
                 $vars['formtype'] = $pft[$platform];
@@ -228,9 +228,9 @@ class pricing_tools extends MY_Controller
         $vars['platform'] = $this->input->post('platform');
         $vars['sp'] = trim($this->input->post('selling_price'));
         // $allow_express = $this->input->post('allow_express');
-        // $is_advertised = $this->input->post('is_advertised');
+        $is_advertised = $this->input->post('is_advertised');
         // $vars['ae'] = ($allow_express) ? 'Y' : 'N';
-        // $vars['ia'] = ($is_advertised)? 'Y' : 'N';
+        $vars['ia'] = ($is_advertised)? 'Y' : 'N';
         $vars['cur_listing_status'] = $this->input->post('listing_status');
         $vars['formtype'] = $this->input->post('formtype');
         $vars['profit'] = $this->input->post('hidden_profit');
