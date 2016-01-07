@@ -1,0 +1,21 @@
+CREATE TABLE `promotion_text` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `platform_type` varchar(10) DEFAULT NULL,
+  `lang_id` varchar(16) DEFAULT NULL,
+  `platform_id` varchar(7) DEFAULT NULL,
+  `sku` varchar(15) DEFAULT NULL,
+  `promo_text` text,
+  `status` tinyint(2) unsigned NOT NULL DEFAULT '1' COMMENT '0 = Inactive / 1 = Active',
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_type_lang_id_platform_id_sku` (`platform_type`,`lang_id`,`platform_id`,`sku`),
+  KEY `fk_pt_lang_id` (`lang_id`),
+  KEY `fk_pt_platform_id` (`platform_id`),
+  CONSTRAINT `fk_pt_lang_id` FOREIGN KEY (`lang_id`) REFERENCES `language_copy` (`id`),
+  CONSTRAINT `fk_pt_platform_id` FOREIGN KEY (`platform_id`) REFERENCES `selling_platform_copy` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

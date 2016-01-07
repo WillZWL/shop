@@ -1,0 +1,22 @@
+CREATE TABLE `product_spec_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ps_id` varchar(255) NOT NULL DEFAULT '',
+  `cat_id` int(10) unsigned NOT NULL,
+  `prod_sku` bigint(20) unsigned NOT NULL,
+  `lang_id` varchar(5) NOT NULL,
+  `cps_unit_id` varchar(25) NOT NULL,
+  `text` varchar(255) NOT NULL DEFAULT '',
+  `start_value` double(11,4) unsigned NOT NULL DEFAULT '0.0000',
+  `start_standardize_value` double(11,4) unsigned NOT NULL DEFAULT '0.0000',
+  `end_value` double(11,4) unsigned NOT NULL DEFAULT '0.0000',
+  `end_standardize_value` double(11,4) unsigned NOT NULL DEFAULT '0.0000',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '0 = Inactive / 1 = Active',
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`id`),
+  KEY `idx_ps_id` (`ps_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

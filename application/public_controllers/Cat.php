@@ -53,17 +53,19 @@ class Cat extends PUB_Controller
 
         // generate left filter menu
         unset($option['limit']);
-        if (!$rpp) {
+        /*if (!$rpp) {
             $rrp = 12;
         }
         $option['limit'] = $rpp;
-        $option['offset'] = $rpp * ($page-1);
+        //$option['offset'] = $rpp * ($page-1);*/
+        $option['limit'] = -1;
         $full_sku_list = $this->sc['categoryModel']->getWebsiteCatPageProductList($catPageData["criteria"], $option);
         $sku_list = [];
         foreach ($full_sku_list as $value) {
             $sku_list[] = $value->getSku();
         }
         $data['cat_result'] = $this->getCatFilterGridInfo($level, $sku_list);
+        //var_dump($data['cat_result']);
         $data['brand_result'] = $this->getBrandFilterGridInfo($sku_list);
         $data["brand_id"] = $brand_id;
 		$data["cat_id"] = $cat_id;

@@ -19,7 +19,7 @@
             <tr style="font-weight:bold;background:#DDDDDD">
             </tr>
             <?php
-            if ($totalcart) :
+            if ($cart) :
                 foreach ($cart->items as $key => $items) :
                     ?>
                     <tr class="row<?= $i % 2 ?>">
@@ -49,21 +49,22 @@
                 endforeach;
             endif;
 
-            if ($totalcart) :
+            if ($cart) :
             ?>
             <tr>
                 <td align="right" style="padding-right:4px;">
-                    <?= $lang["cost_of_items"] ?>: <?= $default_curr ?>  <?= number_format($total, 2) ?><br>
+                    <?= $lang["items_subtotal"] ?>: <?= $default_curr ?>  <?= number_format($subtotal, 2) ?><br>
                     <?= $lang["delivery"] ?>
                     : <?= $default_curr ?>  <?= number_format($dc[$dc_default["courier"]]["charge"], 2) ?><br>
                     <?php
                     #SBF #2978 offline_fee cannot be negative if margin < 7%
-                    if ($cart_profit_margin >= 7) :
+//                    if ($cartMargin >= 7) :
                         ?>
                         <?= $lang["offline_fee"] ?>: <?= $default_curr ?>
                         <input name="offline_fee" id="offline_fee" size="2" value="<?= $offline_fee ? $offline_fee : $this->input->post("offline_fee") ?>" isNumber>
                         <br>
                     <?php
+/*
                     else :
                         ?>
                         <?= $lang["offline_fee"] ?>: <?= $default_curr ?>
@@ -71,6 +72,7 @@
                         <br>
                     <?php
                     endif;
+*/
                     ?>
 
                     <?= $lang["vat_exempt"] ?> &nbsp;&nbsp;&nbsp;
@@ -81,11 +83,11 @@
                     <?php
                     if ($allow_see_margin) :
                         #SBF #2799 temp only allow cs_man to see cart_profit_margin
-                        echo "{$lang["cart_profit_margin"]}: " . number_format($cart_profit_margin, 2) . "%";
+                        echo "{$lang["cart_profit_margin"]}: " . number_format($cartMargin, 2) . "%";
                     endif;
                     ?>
                     <br><b><?= $lang["total"] ?>
-                        : <?= $default_curr ?>  <?= number_format($total_cart_price, 2) ?></b><br>
+                        : <?= $default_curr ?>  <?= number_format($cartTotal, 2) ?></b><br>
 
                     <?php
                     if (isset($promo)) :

@@ -108,19 +108,17 @@ class PhoneSalesService extends BaseService
             }
     }
 
-    public function checkCartByPlatform($platform)
-    {
-        if (isset($_SESSION["cart"])) {
-            $check_cart = unserialize($_SESSION["cart"]);
-
-            if ($check_cart->getPlatformId() !== $platform) {
-                unset($_SESSION["cart"]);
+    public function checkCartByPlatform($platform) {
+        $cart = $this->getCart();
+        if ($cart) {
+            if ($cart->getPlatformId() !== $platform) {
+                $this->getService('CartSession')->emptyCart();
             }
         }
     }
 
     public function getCart()
     {
-        return $this->getService('CartSession')->getCart('OFFLINE');
+        return $this->getService('CartSession')->getCart();
     }
 }

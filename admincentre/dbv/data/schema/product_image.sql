@@ -1,0 +1,21 @@
+CREATE TABLE `product_image` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `sku` bigint(20) unsigned NOT NULL,
+  `priority` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `image` varchar(50) NOT NULL DEFAULT '' COMMENT 'image file extension',
+  `alt_text` varchar(255) NOT NULL DEFAULT '',
+  `image_saved` tinyint(2) NOT NULL DEFAULT '1',
+  `vb_image` char(25) NOT NULL DEFAULT '',
+  `stop_sync_image` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0: sync VB data; 1: no sync VB data',
+  `vb_alt_text` varchar(255) NOT NULL DEFAULT '',
+  `status` tinyint(2) unsigned NOT NULL DEFAULT '1' COMMENT '0 = Inactive / 1 = Active',
+  `create_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address, default 127.0.0.1',
+  `create_by` varchar(32) NOT NULL DEFAULT 'system',
+  `modify_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
+  `modify_by` varchar(32) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`id`),
+  KEY `fk_pi_sku` (`sku`),
+  KEY `idx_vb_image` (`vb_image`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

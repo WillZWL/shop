@@ -40,7 +40,7 @@
                                 </ul>
                             </li>
                             <li class="list-group-item accordion-group">
-                                <a href="" class="active list-group-item-title"><?= _('BRANDS') ?></a>
+                                <a href="" class="active list-group-item-title"><?= _('Brands') ?></a>
                                 <?php
                                    $keyword_limit = ($keyword ? "&w=" . $keyword : "") . ($sort ? "&sort=" . $sort : "") . ($order ? "&order=" . $order : "") . ($limit ? "&limit=" . $limit : "");
                                 ?>
