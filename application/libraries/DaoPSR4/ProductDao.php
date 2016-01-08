@@ -50,7 +50,6 @@ class ProductDao extends BaseDao
         $this->db->join("freight_category fc", "p.freight_cat_id=fc.id", 'LEFT');
 
         $select = "pbv.dec_place as decPlace, fc.weight as unitWeight, pbv.vat_percent as vatPercent, pbv.admin_fee as adminFee
-                , ROUND((pbv.vat_percent * er.rate * pr.price), pbv.dec_place) as vatTotal
                 , er.rate as supplierProdExRate, pbv.platform_currency_id as platformCurrency
                 , p.sku, p.name, pc.prod_name as nameInLang
                 , pr.price, pr.listing_status as listingStatus

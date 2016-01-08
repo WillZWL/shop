@@ -22,7 +22,7 @@ class PricingToolWebsiteService extends BaseService
 		if ($price_obj->getPrice() * 1 != $vars['sp'] * 1 ||
             $price_obj->getListingStatus() != $vars['cur_listing_status'] ||
             // $price_obj->getAllowExpress() != $vars['ae'] ||
-            // $price_obj->getIsAdvertised() != $vars['ia'] ||
+            $price_obj->getIsAdvertised() != $vars['ia'] ||
             $price_obj->getAutoPrice() != $vars['ap'] ||
             $price_obj->getFixedRrp() != $vars['frrp'] ||
             (($vars['frrp'] == 'N') && ($vars['rrp_factor'] != '') && ($price_obj->getRrpFactor() != $vars['rrp_factor']))
@@ -32,7 +32,7 @@ class PricingToolWebsiteService extends BaseService
             $price_obj->setListingStatus($vars['cur_listing_status']);
             $price_obj->setPrice($vars['sp']);
             // $price_obj->setAllowExpress($vars['ae']);
-            // $price_obj->setIsAdvertised($vars['ia']);
+            $price_obj->setIsAdvertised($vars['ia']);
             $price_obj->setAutoPrice($vars['ap']);
             $price_obj->setFixedRrp($vars['frrp']);
 
@@ -82,11 +82,11 @@ class PricingToolWebsiteService extends BaseService
         $data["feed_exclude"] = $this->getDao('AffiliateSkuPlatform')->getFeedListBySku($param['prod_sku'], $platform_id, 1);
         $data["competitor"] = $this->getCompetitor($param);
         // $data["adwords_obj"] = $this->getAdwordsData($param);
-        // $googleComment = $this->getGoogleGscComment($param);
-        // $data["gsc_comment"] = $googleComment["gsc_comment"];
-        // $data["enabled_pla_checkbox"] = $googleComment["enabled_pla_checkbox"];
+        $googleComment = $this->getGoogleGscComment($param);
+        $data["gsc_comment"] = $googleComment["gsc_comment"];
+        $data["enabled_pla_checkbox"] = $googleComment["enabled_pla_checkbox"];
 
-        return $data;;
+        return $data;
     }
 
     public function getAdwordsData($param)
@@ -141,33 +141,33 @@ class PricingToolWebsiteService extends BaseService
         $enabled_pla_checkbox = $internal_gsc_comment ? 0 : 1;
         $gsc_comment = "";
         $google_arr = [];
-        if ($goog_shop_obj = $this->getDao('GoogleShopping')->get(["sku" => $param['prod_sku'], "platform_id" => $param['platform_id']])) {
-            $goog_shop_result = $goog_shop_obj->getApiRequestResult();
-            if ($goog_shop_obj->getStatus() == 0) {
-                $gsc_comment = "PAUSE";
-                if ($goog_shop_result == 0) {
-                    $gsc_comment .= " - Fail";
-                } else {
-                    $gsc_comment .= " - Success";
-                }
-            } else {
-                // if (!$goog_shop_result || $param['is_advertised'] != "Y") {
-                //     $gsc_comment = $goog_shop_obj->getComment();
-                //     if (!$gsc_comment) {
-                //         $gsc_comment = $internal_gsc_comment;
-                //     } else {
-                //         $gsc_temp_list = explode(';', $gsc_comment);
-                //         $gsc_comment = array_pop($gsc_temp_list);
-                //     }
+        // if ($goog_shop_obj = $this->getDao('GoogleShopping')->get(["sku" => $param['prod_sku'], "platform_id" => $param['platform_id']])) {
+        //     $goog_shop_result = $goog_shop_obj->getApiRequestResult();
+        //     if ($goog_shop_obj->getStatus() == 0) {
+        //         $gsc_comment = "PAUSE";
+        //         if ($goog_shop_result == 0) {
+        //             $gsc_comment .= " - Fail";
+        //         } else {
+        //             $gsc_comment .= " - Success";
+        //         }
+        //     } else {
+        //         if (!$goog_shop_result || $param['is_advertised'] != "Y") {
+        //             $gsc_comment = $goog_shop_obj->getComment();
+        //             if (!$gsc_comment) {
+        //                 $gsc_comment = $internal_gsc_comment;
+        //             } else {
+        //                 $gsc_temp_list = explode(';', $gsc_comment);
+        //                 $gsc_comment = array_pop($gsc_temp_list);
+        //             }
 
-                //     if (!$internal_gsc_comment) {
-                //         $enabled_pla_checkbox = 1;
-                //     }
-                // } else {
-                //     $gsc_comment = "Success";
-                // }
-            }
-        }
+        //             if (!$internal_gsc_comment) {
+        //                 $enabled_pla_checkbox = 1;
+        //             }
+        //         } else {
+        //             $gsc_comment = "Success";
+        //         }
+        //     }
+        // }
         if ($internal_gsc_comment) {
             $gsc_comment = $internal_gsc_comment . "<br>" . $gsc_comment;
         }

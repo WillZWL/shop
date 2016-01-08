@@ -30,7 +30,7 @@
             <input type="hidden" name="formtype[<?= $platform ?>]" value="<?= $formtype[$platform] ?>">
         </td>
     </tr>
-<!--     <tr>
+     <tr>
 
         <td width="20%" class="field"><?= $lang["advertised"] ?></td>
         <td width="30%" class="value">
@@ -44,11 +44,11 @@
                 </div>
             <?php endif; ?>
         </td>
-        <td width="20%" class="field"><?= $lang["allow_express"] ?></td>
+        <td width="20%" class="field"><!--<?= $lang["allow_express"] ?>--></td>
         <td width="30%" class="value">
-            <input type="checkbox" name="allow_express[<?= $platform ?>]" <?= ($price_obj->getAllowExpress() == 'Y' ? "CHECKED" : "") ?>>
+            <!-- <input type="checkbox" name="allow_express[<?= $platform ?>]" <?= ($price_obj->getAllowExpress() == 'Y' ? "CHECKED" : "") ?>> -->
         </td>
-    </tr> -->
+    </tr>
     <tr>
         <td width="20%" class="field"><?= $lang["auto_price"] ?></td>
         <td width="30%" class="value">

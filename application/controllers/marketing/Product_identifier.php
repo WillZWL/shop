@@ -2,29 +2,21 @@
 
 class Product_identifier extends MY_Controller
 {
-
     public $default_platform_id;
     private $appId = 'MKT0065';
 
-    //must set to public for view
     private $lang_id = 'en';
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->helper(array('url', 'notice', 'image'));
-        $this->load->library('input');
-        $this->load->model('marketing/product_identifier_model');
-        $this->load->model('marketing/product_model');
-        $this->load->library('service/pagination_service');
-        $this->load->library('service/context_config_service');
-        $this->default_platform_id = $this->context_config_service->value_of("default_platform_id");
+        $this->default_platform_id = $this->sc['ContextConfig']->valueOf("default_platform_id");
     }
 
     public function index()
     {
-        $data = array();
-        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->_get_lang_id() . ".php";
+        $data = [];
+        include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->getLangId() . ".php";
         $data["lang"] = $lang;
         $this->load->view("marketing/product_identifier/product_identifier_index", $data);
     }
@@ -34,17 +26,17 @@ class Product_identifier extends MY_Controller
         return $this->appId;
     }
 
-    public function _get_lang_id()
+    public function getLangId()
     {
         return $this->lang_id;
     }
 
     public function plist()
     {
-        $where = array();
-        $option = array();
+        $where = [];
+        $option = [];
         $sub_app_id = $this->getAppId() . "02";
-        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
         $sku = $this->input->get("sku");
@@ -81,11 +73,9 @@ class Product_identifier extends MY_Controller
             $limit = '20';
 
             $pconfig['base_url'] = current_url() . "?" . $_SERVER['QUERY_STRING'];
-            $option["limit"] = $pconfig['per_page'] = $limit;
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
-            if ($option["limit"]) {
-                $option["offset"] = $this->input->get("per_page");
-            }
 
             if (empty($sort))
                 $sort = "sku";
@@ -96,12 +86,18 @@ class Product_identifier extends MY_Controller
             $option["orderby"] = $sort . " " . $order;
 
             $option["exclude_bundle"] = 1;
-            $data["objlist"] = $this->product_identifier_model->get_product_list($where, $option);
-            $data["total"] = $this->product_identifier_model->get_product_list_total($where, $option);
-            $pconfig['total_rows'] = $data['total'];
-            $this->pagination_service->set_show_count_tag(TRUE);
-            $this->pagination_service->msg_br = TRUE;
-            $this->pagination_service->initialize($pconfig);
+            $data["objlist"] = $this->sc['Product']->getDao('Product')->getListWithName($where, $option);
+
+            $option["num_rows"] = 1;
+            $data["total"] = $this->sc['Product']->getDao('Product')->getListWithName($where, $option);
+
+            $config['base_url'] = base_url('marketing/product_identifier/plist');
+            $config['total_rows'] = $data["total"];
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
+            $this->pagination->initialize($config);
+            $data['links'] = $this->pagination->create_links();
 
             $data["notice"] = notice($lang);
 
@@ -112,17 +108,17 @@ class Product_identifier extends MY_Controller
         $this->load->view('marketing/product_identifier/product_identifier_list', $data);
     }
 
-    public function view($value = "")
+    public function view($sku = "")
     {
-        if ($value == "") {
+        if ($sku == "") {
             exit;
         }
 
-        $data = array();
+        $data = [];
         $data["valid_supplier"] = 1;
         $data["prompt_notice"] = 0;
-        $data["website_link"] = $this->context_config_service->value_of("website_domain");
-        define('IMG_PH', $this->context_config_service->value_of("prod_img_path"));
+        $data["website_link"] = $this->sc['ContextConfig']->valueOf("website_domain");
+        define('IMG_PH', $this->sc['ContextConfig']->valueOf("prod_img_path"));
         if ($this->input->post('posted')) {
             $pcid = $this->input->post('country_id');
             $pean = $this->input->post('ean');
@@ -136,35 +132,38 @@ class Product_identifier extends MY_Controller
                 $cur_upc = $pupc[$val];
                 $cur_status = $pstatus[$val] * 1;
 
-                $this->product_identifier_model->__autoload_product_identifier_vo();
-                //$product_identifier_obj = unserialize($_SESSION["product_identifier_obj"][$val]);
                 $sku = $this->input->post('sku');
-                list($prod_grp_cd, $version_id, $colour_id) = explode("-", $sku);
-                $product_identifier_obj = $this->product_identifier_model->get_product_identifier_obj(array("prod_grp_cd" => $prod_grp_cd, "colour_id" => $colour_id, "country_id" => $val));
+
+                $prod_obj = $this->sc['Product']->getDao('Product')->get(['sku'=>$sku]);
+                $prod_grp_cd = $prod_obj->getProdGrpCd();
+                $version_id = $prod_obj->getVersionId();
+                $colour_id = $prod_obj->getColourId();
+
+                $product_identifier_obj = $this->sc['ProductIdentifier']->getDao('ProductIdentifier')->get(["prod_grp_cd" => $prod_grp_cd, "colour_id" => $colour_id, "country_id" => $val]);
                 if (!empty($product_identifier_obj) || $cur_ean != "" || $cur_mpn != "" || $cur_upc != "") {
                     if (!$product_identifier_obj) {
                         $action = "insert";
-                        $product_identifier_obj = $this->product_identifier_model->get_product_identifier_obj();
-                        $product_identifier_obj->set_prod_grp_cd($prod_grp_cd);
-                        $product_identifier_obj->set_colour_id($colour_id);
-                        $product_identifier_obj->set_country_id($val);
+                        $product_identifier_obj = $this->sc['ProductIdentifier']->getDao('ProductIdentifier')->get();
+                        $product_identifier_obj->setProdGrpCd($prod_grp_cd);
+                        $product_identifier_obj->setColourId($colour_id);
+                        $product_identifier_obj->setCountryId($val);
                     } else {
                         $action = "update";
                     }
 
-                    if ($product_identifier_obj->get_ean() != $cur_ean ||
-                        $product_identifier_obj->get_mpn() != $cur_mpn ||
-                        $product_identifier_obj->get_upc() != $cur_upc ||
-                        $product_identifier_obj->get_status() != $cur_status
+                    if ($product_identifier_obj->getEan() != $cur_ean ||
+                        $product_identifier_obj->getMpn() != $cur_mpn ||
+                        $product_identifier_obj->getUpc() != $cur_upc ||
+                        $product_identifier_obj->getStatus() != $cur_status
                     ) {
-                        $product_identifier_obj->set_ean($cur_ean);
-                        $product_identifier_obj->set_mpn($cur_mpn);
-                        $product_identifier_obj->set_upc($cur_upc);
-                        $product_identifier_obj->set_status($cur_status);
+                        $product_identifier_obj->setEan($cur_ean);
+                        $product_identifier_obj->setMpn($cur_mpn);
+                        $product_identifier_obj->setUpc($cur_upc);
+                        $product_identifier_obj->setStatus($cur_status);
 
-                        $ret = $this->product_identifier_model->$action($product_identifier_obj);
+                        $ret = $this->sc['ProductIdentifier']->getDao('ProductIdentifier')->$action($product_identifier_obj);
                         if ($ret === FALSE) {
-                            $_SESSION["NOTICE"] = "{$action}_failed " . $this->db->_error_message();
+                            $_SESSION["NOTICE"] = "{$action}_failed " . $this->db->display_error();
                         } else {
                             unset($_SESSION["product_identifier_obj"][$val]);
                             if ($this->input->post('target') != "") {
@@ -176,40 +175,44 @@ class Product_identifier extends MY_Controller
                     unset($_SESSION["product_identifier_obj"][$val]);
                 }
             }
-            Redirect(base_url() . "marketing/product_identifier/view/" . $value);
+            Redirect(base_url() . "marketing/product_identifier/view/" . $sku);
         }
 
         $data["action"] = "update";
 
-        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->getLangId() . ".php";
         $data["lang"] = $lang;
         $data["canedit"] = 1;
-        $data["value"] = $value;
+        $data["value"] = $sku;
         $data["target"] = $this->input->get('target');
         $data["notice"] = notice($lang);
 
-        $pdata = array();
-        if ($value != "") {
+        $pdata = [];
+        if ($sku != "") {
             //unset($_SESSION["product_identifier_obj"]);
-            list($prod_grp_cd, $version_id, $colour_id) = explode("-", $value);
-            $data["country_list"] = $this->product_identifier_model->get_sell_country_list();
-            if ($prod_identifer_list = $this->product_identifier_model->product_identifier_service->get_list(array("prod_grp_cd" => $prod_grp_cd, "colour_id" => $colour_id))) {
+            $prod_obj = $this->sc['Product']->getDao('Product')->get(['sku'=>$sku]);
+            $prod_grp_cd = $prod_obj->getProdGrpCd();
+            $version_id = $prod_obj->getVersionId();
+            $colour_id = $prod_obj->getColourId();
+
+            $data["country_list"] = $this->sc['Country']->getDao('Country')->getSellCountryList();
+            if ($prod_identifer_list = $this->sc['ProductIdentifier']->getDao('ProductIdentifier')->getList(["prod_grp_cd" => $prod_grp_cd, "colour_id" => $colour_id], ['groupby'=>'country_id', 'limit'=>-1])) {
                 foreach ($prod_identifer_list as $pi_obj) {
                     $objcount++;
-                    $data["product_identifier_list"][$pi_obj->get_country_id()] = $pi_obj;
-                    $_SESSION["product_identifier_obj"][$pi_obj->get_country_id()] = serialize($pi_obj);
+                    $data["product_identifier_list"][$pi_obj->getCountryId()] = $pi_obj;
+                    $_SESSION["product_identifier_obj"][$pi_obj->getCountryId()] = serialize($pi_obj);
                 }
             }
+
             $data["pdata"] = $pdata;
             $data["objcount"] = $objcount;
-            $data["value"] = $value;
-            $prod_obj = $this->product_identifier_model->get_prod($value);
+            $data["value"] = $sku;
         }
 
         $data["prod_obj"] = $prod_obj;
-        $mapping_obj = $this->product_identifier_model->get_mapping_obj(array('sku' => $value, 'ext_sys' => 'WMS', 'status' => 1));
-        if ($mapping_obj && trim($mapping_obj->get_ext_sku()) != "") {
-            $data['master_sku'] = $mapping_obj->get_ext_sku();
+        $mapping_obj = $this->sc['SkuMapping']->getDao('SkuMapping')->get(['sku' => $sku, 'ext_sys' => 'WMS', 'status' => 1]);
+        if ($mapping_obj && trim($mapping_obj->getExtSku()) != "") {
+            $data['master_sku'] = $mapping_obj->getExtSku();
         }
         $_SESSION["prod_obj"] = serialize($prod_obj);
 
