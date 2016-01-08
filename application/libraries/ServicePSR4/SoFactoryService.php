@@ -271,7 +271,12 @@ class SoFactoryService extends BaseService
             $soItemDetailObj->setPromoDiscAmt($item->getPromoDiscAmt());
 
 //better to use a function to calculate VAT, GST in the future
-        $soItemDetailObj->setVatTotal(round(($item->getAmount() * $item->getVatPercent() / 100), $item->getDecPlace()));
+        $priceWithCost = new \PriceWithCostDto();
+        $priceWithCost->setPrice($item->getAmount());
+        $priceWithCost->setPlatformCountryId($soObj->getBillCountryId());
+        $this->getService("PlatformBizVar")->calculateDeclaredValue($priceWithCost);
+
+        $soItemDetailObj->setVatTotal(round(($priceWithCost->getDeclaredValue() * $item->getVatPercent() / 100), $item->getDecPlace()));
 //        $soItemDetailObj->setGstTotal(round(($item->getAmount() * $item->getVatPercent() / 100), $item->getDecPlace()));
         $soItemDetailObj->setAmount($item->getAmount());
 
