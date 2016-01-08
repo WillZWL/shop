@@ -60,7 +60,7 @@ class EmailService extends BaseService
     public function sendEmail($email)
     {
         $phpmail = new PHPMailer;
-
+        $phpmail->CharSet = "UTF-8";
         $phpmail->IsSMTP();
         if ($smtphost = $this->getDao('Config')->valueOf("smtp_host")) {
             $phpmail->Host = $smtphost;
