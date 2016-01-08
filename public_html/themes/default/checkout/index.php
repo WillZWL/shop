@@ -33,7 +33,7 @@
                               <label for="loginEmail" class="control-label"><?=_("E-Mail")?></label>
                               <input type="text" class="form-control" id="loginEmail" placeholder="<?=_("E-Mail")?>" value="" name="loginEmail">
                             </div>
-                            <div class="form-group">
+                            <div id="loginPasswordBlock" class="form-group">
                               <label for="loginPassword" class="control-label"><?=_("Password")?></label>
                               <input type="password" class="form-control" id="loginPassword" placeholder="<?=_("Password")?>" value="" name="loginPassword">
                               <a href="/login/forget-password?back=checkout"><?=_("Forgotten Password")?></a></div>
@@ -403,8 +403,10 @@ function validateBlock(blockId)
 function loginSuccessful(email)
 {
     $("#billingEmail").val(email);
+    $("#loginEmail").val(email);
     $("#billingEmail").attr("disabled", true);
     $("#loginEmail").attr("disabled", true);
+    $("#loginPasswordBlock").hide();
     $("#loginPassword").attr("disabled", true);
     $("#passwordSection").hide();
     activatePaymentBlock($("#collapse-checkout-option"));
