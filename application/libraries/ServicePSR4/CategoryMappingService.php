@@ -57,7 +57,7 @@ class CategoryMappingService extends BaseService
         $newObj = new \CategoryMappingVo();
 
         // id come from VB is not reliable, should use auto-increment id
-        $newObj->setExpParty((string) $obj->ext_party);
+        $newObj->setExtParty((string) $obj->ext_party);
         $newObj->setLevel((string) $obj->level);
         $newObj->setCategoryMappingId((string) $obj->id);
         $newObj->setLangId((string) $obj->lang_id);

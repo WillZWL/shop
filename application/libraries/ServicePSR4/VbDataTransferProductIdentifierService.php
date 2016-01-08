@@ -22,7 +22,7 @@ class VbDataTransferProductIdentifierService extends VbDataTransferService
         {
             try
             {
-                $pc_obj = $this->getService('Product')->getDao('ProductIdentifier')->get(['prod_grp_cd'=>$pc->prod_grp_cd, 'colour_id'=>$product->colour_id, 'country_id'=>$product->country_id]);
+                $pc_obj = $this->getService('Product')->getDao('ProductIdentifier')->get(['prod_grp_cd'=>$pc->prod_grp_cd, 'colour_id'=>$pc->colour_id, 'country_id'=>$pc->country_id]);
 
                 $reason = "";
                 if ($pc_obj) {
