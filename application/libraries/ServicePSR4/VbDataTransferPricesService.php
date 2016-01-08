@@ -133,7 +133,7 @@ class VbDataTransferPricesService extends VbDataTransferService
             if ($rule_type == 'A') {
                 $required_selling_price = (float)$required_selling_price + (float)$rule_markup;
             } elseif ($rule_type == 'P') {
-                $required_selling_price = $required_selling_price + ($required_selling_price * $rule_markup);
+                $required_selling_price = $required_selling_price + ($required_selling_price * $rule_markup / 100);
             }
         }
 
