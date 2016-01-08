@@ -73,7 +73,7 @@ class VbDataTransferPricesService extends VbDataTransferService
                     if ($pricing_rule_obj) {
                         $min_margin = $pricing_rule_obj->getMinMargin();
 
-                        if ($new_margin < $minimun_margin) {
+                        if ($new_margin < $min_margin) {
                             $reason = "Error in margin";
                             $result_status = 6;
 
