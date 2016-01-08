@@ -525,7 +525,7 @@ class Product_model extends CI_Model
     public function get_googlebase_cat_list_w_country($sku = "")
     {
         $where = $option = array();
-        $where['cm.id'] = $sku;
+        $where['cm.category_mapping_id'] = $sku;
         $where['cm.ext_party'] = "GOOGLEBASE";
         $where['cm.status'] = 1;
         $option['limit'] = -1;
