@@ -74,7 +74,7 @@
     if ($value != "") {
         if ($canedit) {
             ?>
-            <form name="list" action="<?= base_url() ?>marketing/product_identifier/view/<?= $prod_obj->get_sku() . ($this->input->get('target') == "" ? "" : "?target=" . $this->input->get('target')) ?>" method="POST" onSubmit="return CheckForm(this)">
+            <form name="list" action="<?= base_url() ?>marketing/product_identifier/view/<?= $prod_obj->getSku() . ($this->input->get('target') == "" ? "" : "?target=" . $this->input->get('target')) ?>" method="POST" onSubmit="return CheckForm(this)">
             <input type="hidden" name="sku" value="<?= $value ?>">
             <input type="hidden" name="posted" value="1">
             <input type="hidden" name="formtype" value="<?= $action ?>">
@@ -86,10 +86,10 @@
             <tr>
                 <td height="60" align="left" style="padding-left:8px;">
                     <div style="float:left"><img
-                            src='<?= get_image_file($prod_obj->get_image(), 's', $prod_obj->get_sku()) ?>'> &nbsp;</div>
+                            src='<?= get_image_file($prod_obj->getImage(), 's', $prod_obj->getSku()) ?>'> &nbsp;</div>
                     <b style="font-size: 12px; color: rgb(0, 0, 0);"><?= $lang["header"] ?></b><br><?= $lang["header_message"] . " - " ?>
-                    <b><a href="<?= $website_link . "mainproduct/view/" . $prod_obj->get_sku() ?>" target="_blank"><font
-                                style="text-decoration:none; color:#000000; font-size:14px;"><?= $prod_obj->get_sku() . " - " . $prod_obj->get_name() ?><?= $prod_obj->get_clearance() ? " <span style='color:#0072E3; font-size:14px;'>(Clearance)</span>" : "" ?></font></a></b><br><?= $lang["master_sku"] . " " . $master_sku ?>
+                    <b><a href="<?= $website_link . "mainproduct/view/" . $prod_obj->getSku() ?>" target="_blank"><font
+                                style="text-decoration:none; color:#000000; font-size:14px;"><?= $prod_obj->getSku() . " - " . $prod_obj->getName() ?><?= $prod_obj->getClearance() ? " <span style='color:#0072E3; font-size:14px;'>(Clearance)</span>" : "" ?></font></a></b><br><?= $lang["master_sku"] . " " . $master_sku ?>
                 </td>
             </tr>
             <tr>
@@ -115,48 +115,46 @@
                             <td class="field"><b><?= $lang["mpn"] ?></b></td>
                             <td class="field"><b><?= $lang["upc"] ?></b></td>
                             <td class="field" align="centre" style="text-align:center">
-                                <b><?= $lang["status"] ?></b><br/><input type="button" value="Select"
-                                                                         style="font-size:10px;width:40%"
-                                                                         onClick="javascript:selectAll('status')">&nbsp;<input
-                                    type="button" value="Deselect" style="font-size:10px;width:50%"
-                                    onclick="deSelectAll('status')"></td>
+                                <b><?= $lang["status"] ?></b><br/>
+                                <input type="button" value="Select" style="font-size:10px;width:40%" onClick="javascript:selectAll('status')">&nbsp;
+                                <input type="button" value="Deselect" style="font-size:10px;width:50%" onclick="deSelectAll('status')">
+                            </td>
                         </tr>
                         <?php
-                        if ($country_list) {
+                        if ($country_list) :
                             $i = 0;
-                            foreach ($country_list as $country_obj) {
-                                $curr_country_id = $country_obj->get_id();
-                                if ($product_identifier = $product_identifier_list[$curr_country_id]) {
-                                    $ean = $product_identifier->get_ean();
-                                    $mpn = $product_identifier->get_mpn();
-                                    $upc = $product_identifier->get_upc();
-                                    $status = $product_identifier->get_status();
-                                } else {
+                            foreach ($country_list as $country_obj) :
+                                $curr_country_id = $country_obj->getCountryId();
+                                if ($product_identifier = $product_identifier_list[$curr_country_id]) :
+                                    $ean = $product_identifier->getEan();
+                                    $mpn = $product_identifier->getMpn();
+                                    $upc = $product_identifier->getUpc();
+                                    $status = $product_identifier->getStatus();
+                                else :
                                     $ean = $mpn = $upc = "";
                                     $status = 1;
-                                }
+                                endif;
                                 ?>
                                 <tr>
-                                    <td class="row<?= $i % 2 ?>"><?= $country_obj->get_name() ?></td>
-                                    <td class="row<?= $i % 2 ?>"><input type="text" class="input"
-                                                                        name="ean[<?= $curr_country_id ?>]"
-                                                                        value="<?= $ean ?>"></td>
-                                    <td class="row<?= $i % 2 ?>"><input type="text" class="input"
-                                                                        name="mpn[<?= $curr_country_id ?>]"
-                                                                        value="<?= $mpn ?>"></td>
-                                    <td class="row<?= $i % 2 ?>"><input type="text" class="input"
-                                                                        name="upc[<?= $curr_country_id ?>]"
-                                                                        value="<?= $upc ?>"></td>
-                                    <td class="row<?= $i % 2 ?>" align="center"><input type="checkbox"
-                                                                                       name="status[<?= $curr_country_id ?>]"
-                                                                                       value="1" <?= $status ? "checked" : "" ?>><input
-                                            type="hidden" name="country_id[<?= $curr_country_id ?>]"
-                                            value="<?= $curr_country_id ?>"></td>
+                                    <td class="row<?= $i % 2 ?>"><?= $country_obj->getName() ?></td>
+                                    <td class="row<?= $i % 2 ?>">
+                                        <input type="text" class="input" name="ean[<?= $curr_country_id ?>]" value="<?= $ean ?>">
+                                    </td>
+                                    <td class="row<?= $i % 2 ?>">
+                                        <input type="text" class="input" name="mpn[<?= $curr_country_id ?>]" value="<?= $mpn ?>">
+                                    </td>
+                                    <td class="row<?= $i % 2 ?>">
+                                        <input type="text" class="input" name="upc[<?= $curr_country_id ?>]" value="<?= $upc ?>">
+                                    </td>
+                                    <td class="row<?= $i % 2 ?>" align="center">
+                                        <input type="checkbox" name="status[<?= $curr_country_id ?>]" value="1" <?= $status ? "checked" : "" ?>>
+                                        <input type="hidden" name="country_id[<?= $curr_country_id ?>]" value="<?= $curr_country_id ?>">
+                                    </td>
                                 </tr>
                                 <?php
                                 $i++;
-                            }
-                        }
+                            endforeach;
+                        endif;
                         ?>
                     </table>
                 </td>

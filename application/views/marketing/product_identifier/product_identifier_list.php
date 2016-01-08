@@ -31,27 +31,27 @@
             </tr>
             <?php
             $i = 0;
-            if ($objlist) {
-                foreach ($objlist as $obj) {
+            if ($objlist) :
+                foreach ($objlist as $obj) :
                     $prod_grp_cd = $version = $colour = $region_code = null;
-                    if ($obj->get_master_sku()) {
-                        list($prod_grp_cd, $version, $colour) = explode("-", $obj->get_master_sku());
-                        if ($version) {
+                    if ($obj->getMasterSku()) :
+                        list($prod_grp_cd, $version, $colour) = explode("-", $obj->getMasterSku());
+                        if ($version) :
                             $region_code = "<span style='color:#0072E3'>(" . $version . ")</span> ";
-                        }
-                    }
+                        endif;
+                    endif;
                     ?>
 
                     <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
                         onMouseOut="RemoveClassName(this, 'highlight')"
-                        onClick="showView('<?= urlencode($obj->get_sku()) ?>')">
-                        <td nowrap style="white-space:nowrap;"><?= $obj->get_sku() ?></td>
-                        <td><?= $region_code . $obj->get_name() ?></td>
+                        onClick="showView('<?= urlencode($obj->getSku()) ?>')">
+                        <td nowrap style="white-space:nowrap;"><?= $obj->getSku() ?></td>
+                        <td><?= $region_code . $obj->getName() ?></td>
                     </tr>
                     <?php
                     $i++;
-                }
-            }
+                endforeach;
+            endif;
             ?>
         </table>
         <input type="hidden" name="sku" value='<?= htmlspecialchars($this->input->get("sku")) ?>'>
@@ -59,14 +59,14 @@
         <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
 </div>
 <?php
 if ($i == 1) {
     ?>
     <script>
-        top.window.location.hash = '<?=$obj->get_sku()?>';
-        parent.frames['pview'].document.location.href = '<?=base_url()?>marketing/product_identifier/view/<?=$obj->get_sku()?>';
+        top.window.location.hash = '<?=$obj->getSku()?>';
+        parent.frames['pview'].document.location.href = '<?=base_url()?>marketing/product_identifier/view/<?=$obj->getSku()?>';
     </script>
 <?php
 }
