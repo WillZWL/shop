@@ -275,6 +275,15 @@ end;
         $this->sc["GoogleShopping"]->updateGoogleShoppingItemByPlatform($platformId, $sku);
     }
 
+    public function updateGoogleShoppingItemAllPlatform()
+    {
+        set_time_limit(3000);
+        $sellingPlatObj = $this->sc["SellingPlatform"]->getDao("SellingPlatform")->getList(["status" => 1], ["limit" => -1]);
+        foreach ($sellingPlatObj as $selling) {
+            $this->sc["GoogleShopping"]->updateGoogleShoppingItemByPlatform($selling->getSellingPlatformId());
+        }
+    }
+
     public function cron_update_google_shopping_feed($sku = "", $specified_platform = "")
     {
         $this->google_shopping_service->cron_update_google_shopping_feed($sku, $specified_platform);

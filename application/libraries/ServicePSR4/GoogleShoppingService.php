@@ -356,7 +356,7 @@ class GoogleShoppingService extends BaseService
 **  Get a batch ID and mark the record with a batch ID and transfer to other to process to keep pending table slim
 ***************************************************/
     public function sendBatchRequestToGoogle() {
-//        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
+        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
         $this->getService("GoogleRequestBatch")->getDao("PendingGoogleApiRequest")->db->save_queries = false;
         $hasRequest = $this->getService("GoogleRequestBatch")->getDao("PendingGoogleApiRequest")->getList([], ["limit" => 1]);
         if ($hasRequest) {
@@ -385,6 +385,7 @@ class GoogleShoppingService extends BaseService
                 $this->sendAlert("[Panther] Cannot get a new batch to send google API", "error:" . $this->getService("GoogleRequestBatch")->getDao('GoogleRequestBatch')->db->error()["message"]);
             }
         }
+        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
     }
 
     public function processBatchByBatchId($batchId, $reprocess = false) {
