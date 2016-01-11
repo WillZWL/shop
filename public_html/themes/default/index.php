@@ -28,34 +28,11 @@
                                             <div class="layerslider-wrapper carousel slide pavcontentslider">
                                                 <div class="fix-margin-right" style="padding: 0;margin: 0 0 50px !important;">
                                                       <div id="iview" class="hidden-xs" style="width:100%;height:300px; " >
-                                                        <!--<div data-iview-thumbnail="<?= base_url('/images/banner/banner.jpg') ?>" data-iview-image="<?= base_url('/images/banner/banner.jpg') ?>" data-iview-transition="slice-top-fade,slice-right-fade">
-                                                        </div>-->
                                                         <div data-iview-thumbnail="<?= base_url('/images/banner/banner.jpg') ?>" data-iview-image="<?= base_url('/images/banner/banner.jpg') ?>" data-iview-transition="slice-top-fade,slice-right-fade">
                                                             <div class="iview-caption tp-caption " data-start="632" data-x="299" data-y="172" data-width="600" data-transition="fade">
                                                             </div>
                                                         </div>
-                                                        <!--<div data-iview-thumbnail="<?= base_url('/images/banner/banner3.png') ?>" data-iview-image="<?= base_url('/images/banner/banner3.png') ?>" data-iview-transition="slice-top-fade,slice-right-fade">
-                                                            <div class="iview-caption tp-caption " data-start="632" data-x="299" data-y="172" data-width="600" data-transition="fade">
-                                                            </div>
-                                                        </div>-->
-
-                                                        <!--<div data-iview-thumbnail="<?= base_url('/images/banner/banner.jpg') ?>" data-iview-image="<?= base_url('/images/banner/banner.jpg') ?>" data-iview-transition="slice-top-fade,slice-right-fade">
-                                                            <div class="iview-caption tp-caption " data-start="632" data-x="299" data-y="172" data-width="600" data-transition="fade">
-                                                                <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/catalog/demo/slider1/skyline-psyco.png" alt="catalog/demo/slider1/skyline-psyco.png" />
-                                                            </div>
-                                                            <div class="iview-caption tp-caption softred2" data-start="1291" data-x="300" data-y="220" data-width="600" data-transition="fade">
-                                                                specifically<br>design
-                                                            </div>
-                                                            <div class="iview-caption tp-caption " data-start="2000" data-x="301" data-y="408" data-width="600" data-transition="fade">
-                                                                <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/catalog/demo/slider1/true-performance.png" alt="catalog/demo/slider1/true-performance.png" />
-                                                            </div>
-                                                            <div class="iview-caption tp-caption " data-start="2556" data-x="505" data-y="439" data-width="600" data-transition="fade">
-                                                                <img src="http://www.themelexus.com/demo/opencart/motozz/demo3/image/catalog/demo/slider1/view-more.png" alt="catalog/demo/slider1/view-more.png" />
-                                                            </div>
-                                                        </div>-->
                                                     </div>
-
-
                                                 </div>
                                             </div>
                                         </div>
