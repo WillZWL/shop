@@ -283,415 +283,6 @@ class Common_data_prepare_model extends CI_Model
         return $data;
     }
 
-    protected function login___get_fail_msg($controller, $url_paras)
-    {
-        $lfw = array("en" => "Login Failed",
-            "de" => "Login fehlgeschlagen",
-            "fr" => "Echec de la connexion",
-            "es" => "Inicio de Sesi&oacute;n Fallido",
-            "pt" => "Falha de logon.",
-            "nl" => "Inloggen is mislukt",
-            "ja" => "ログインに失敗しました",
-            "it" => "Accesso non riuscito",
-            "pl" => "Logowanie nie powiodło sie",
-            "da" => "Login mislykkedes",
-            "ko" => "로그인 실패",
-            "tr" => "Giriş Başarısız",
-            "sv" => "Inloggning misslyckades",
-            "no" => "Logg inn mislyktes",
-            "pt-br" => "Falha de logon",
-            "ru" => "Войти не удалось");
-        return $lfw;
-    }
-
-    protected function login__index($controller, $url_paras)
-    {
-        $data = array();
-
-        $data["lang_text"] = $controller->get_language_file('', '', 'index');
-        $data["back"] = $controller->input->get("back");
-        if ($controller->input->post("posted")) {
-            if ($controller->input->post("page") == "register") {
-                if (isset($_SESSION["client_vo"])) {
-                    $controller->client_model->client_service->get_dao()->include_vo();
-                    $data["client_obj"] = unserialize($_SESSION["client_vo"]);
-
-                    $_POST["password"] = $controller->encrypt->encode(strtolower($controller->input->post("password")));
-                    $subscriber = $controller->input->post("subscriber");
-                    if (empty($subscriber)) {
-                        $_POST["subscriber"] = 0;
-                    }
-
-                    set_value($data["client_obj"], $_POST);
-                    $data["client_obj"]->set_del_name($_POST["title"] . " " . $_POST["forename"] . " " . $_POST["surname"]);
-                    $data["client_obj"]->set_del_company($_POST["company_name"]);
-                    $data["client_obj"]->set_del_address_1($_POST["address_1"]);
-                    $data["client_obj"]->set_del_address_2($_POST["address_2"]);
-                    $data["client_obj"]->set_del_city($_POST["city"]);
-                    $data["client_obj"]->set_del_state($_POST["state"]);
-                    $data["client_obj"]->set_del_country_id($_POST["country_id"]);
-                    $data["client_obj"]->set_del_tel_1($_POST["tel_1"]);
-                    $data["client_obj"]->set_del_tel_2($_POST["tel_2"]);
-                    $data["client_obj"]->set_del_tel_3($_POST["tel_3"]);
-                    $data["client_obj"]->set_party_subscriber(0);
-                    $data["client_obj"]->set_status(1);
-                    $email = $data["client_obj"]->get_email();
-                    $proc = $controller->client_model->client_service->get_dao()->get(array("email" => $email));
-                    if (!empty($proc)) {
-                        $lcw = array(
-                            "en" => "Email is registered as our existing customer, please login or request for the password to be sent to you by clicking on the “Forgotten Password” link.",
-                            "de" => "Kunde existiert bereits",
-                            "fr" => "Client existant",
-                            "es" => "Cliente Existente",
-                            "pt" => "Cliente existe",
-                            "it" => "Client Esiste",
-                            "nl" => "Opdrachtgever Bestaat",
-                            "jp" => "お客様のアカウントは既に存在する",
-                            "pl" => "Konto juz Istnieje",
-                            "da" => "Kunde eksistere",
-                            "ko" => "계정이 이미 존재합니다",
-                            "tr" => "Bu müşteri zaten var",
-                            "sv" => "Kunden finns",
-                            "no" => "Kunden finnes",
-                            "pt-br" => "Cliente existe",
-                            "ru" => "Клиент существует"
-                        );
-                        $_SESSION["NOTICE"] = $lcw[get_lang_id()];
-                        $data["register_failed_msg"] = $lcw[get_lang_id()];
-                    } else {
-                        if ($client_obj = $controller->client_model->client_service->get_dao()->insert($data["client_obj"])) {
-                            $controller->client_model->client_service->object_login($client_obj, TRUE);
-                            $controller->client_model->register_success_event($client_obj);
-                            unset($_SESSION["client_vo"]);
-                            $_SESSION["client_vo"] = serialize($data["client_obj"]);
-                            if ($data["back"]) {
-                                echo "<script>parent.document.location.href='" . base_url() . urldecode($data["back"]) . "'</script>";
-                            } else {
-                                redirect(base_url());
-                            }
-                        } else {
-                            $_SESSION["NOTICE"] = "Error: " . __LINE__;
-                        }
-                    }
-                }
-            } else {
-                if ($controller->input->post("password")) {
-                    if ($controller->client_model->client_service->login($controller->input->post("email"), $controller->input->post("password"))) {
-                        if ($data["back"]) {
-                            redirect(base_url() . urldecode($data["back"]));
-                        } else {
-                            redirect(base_url() . "myaccount");
-                        }
-                    }
-                }
-                $data["login_failed_msg"] = $controller->_get_fail_msg();
-                $_SESSION["NOTICE"] = $controller->_get_fail_msg();
-            }
-        }
-
-        if ($_SESSION["client"]["logged_in"]) {
-            redirect(base_url() . ($data["back"] ? urldecode($data["back"]) : ""));
-        } else {
-            if (empty($data["client_obj"])) {
-                if (($data["client_obj"] = $controller->client_model->client_service->get_dao()->get()) === FALSE) {
-                    $_SESSION["NOTICE"] = "Error: " . __LINE__;
-                } else {
-                    $_SESSION["client_vo"] = serialize($data["client_obj"]);
-                }
-            }
-            $data["bill_to_list"] = $controller->country_model->get_country_name_in_lang(get_lang_id(), 1);
-            $data["lang_id"] = get_lang_id();
-            $data["notice"] = $_SESSION["NOTICE"];
-            unset($_SESSION["NOTICE"]);
-            $data["step"] = 2;
-            $data["ajax"] = $controller->input->get("x_sign_in") || strpos($controller->input->get("back"), "x_sign_in") !== FALSE;
-
-            $controller->template->add_js('/js/checkform.js');
-
-            $salecycle_enabled = true;
-            if ($salecycle_enabled) {
-                $script_name = "";
-                switch (PLATFORMCOUNTRYID) {
-                    case "GB":
-                        $script_name = "VALUEBASKET";
-                        break;
-                    case "AU":
-                        $script_name = "VALUEBASKETAU";
-                        break;
-
-                    # SBF#2117
-                    case "NZ":
-                        $script_name = "VALUEBASKETNZ";
-                        break;
-                    case "FR":
-                        $script_name = "VALUEBASKETFR";
-                        break;
-                    case "SG":
-                        $script_name = "VALUEBASKETSG";
-                        break;
-                    case "ES":
-                        $script_name = "VALUEBASKETES";
-                        break;
-                }
-
-                $script = <<<salecycle_script
-                 <script type="text/javascript">
-                    try {var __scP=(document.location.protocol=="https:")?"https://":"http://";
-                    var __scS=document.createElement("script");__scS.type="text/javascript";
-                    __scS.src=__scP+"app.salecycle.com/capture/$script_name.js";
-                    document.getElementsByTagName("head")[0].appendChild(__scS);}catch(e){}
-                </script>
-salecycle_script;
-
-                if ($script_name != "") $controller->template->add_js($script, "print", FALSE, "body");
-            }
-
-            $data['load_myaccount_page'] = TRUE;
-        }
-        $data["show_client_id"] = FALSE;
-        if ((PLATFORMCOUNTRYID == "ES") || (PLATFORMCOUNTRYID == "RU")) {
-            $data["show_client_id"] = TRUE;
-        }
-        return $data;
-    }
-
-    protected function myaccount__index($controller, $url_paras)
-    {
-        include_once(APPPATH . "libraries/service/complementary_acc_service.php");
-        $ca_srv = new Complementary_acc_service();
-
-        $data = array();
-        $page = $url_paras['page'];
-        $rma_no = $url_paras['rma_no'];
-        $data["show_bank_transfer_contact"] = FALSE;
-        $data["show_partial_ship_text"] = FALSE;
-
-        // order history
-        $client_id = $_SESSION["client"]["id"];
-        $orderlist = $controller->so_model->so_service->get_dao()->get_order_history($client_id);
-        if ($orderlist) {
-            foreach ($orderlist AS $obj) {
-                $status = array();
-                $status = $controller->so_model->get_order_status($obj);
-                $data['orderlist'][$obj->get_so_no()]['join_split_so_no'] = $obj->get_join_split_so_no();
-                $data['orderlist'][$obj->get_so_no()]['currency_id'] = $obj->get_currency_id();
-                $data['orderlist'][$obj->get_so_no()]['client_id'] = $obj->get_client_id();
-                $data['orderlist'][$obj->get_so_no()]['order_date'] = date("Y-m-d", strtotime($obj->get_order_create_date()));
-                $data['orderlist'][$obj->get_so_no()]['delivery_name'] = $obj->get_delivery_name();
-                $data['orderlist'][$obj->get_so_no()]['payment_gateway_id'] = $obj->get_payment_gateway_id();
-                $data['orderlist'][$obj->get_so_no()]['order_status_ini'] = $status["id"] . "_status";
-                $data['orderlist'][$obj->get_so_no()]['status_desc_ini'] = $status["id"] . "_desc";
-                $data['orderlist'][$obj->get_so_no()]['sku'] = $obj->get_sku();
-                $data['orderlist'][$obj->get_so_no()]["product_name"] .= $obj->get_prod_name() . "</br>";
-                $data['orderlist'][$obj->get_so_no()]["total_amount"] += $obj->get_amount();
-                $data['orderlist'][$obj->get_so_no()]["is_shipped"] = ($obj->get_status() == 6 && $obj->get_refund_status() == 0 && $obj->get_hold_status() == 0) ? TRUE : FALSE;
-
-                $sosh_obj = $controller->so_model->so_service->get_shipping_info(array("soal.so_no" => $obj->get_so_no()));
-                if ($sosh_obj)
-                    $data['orderlist'][$obj->get_so_no()]['tracking_link'] = $controller->courier_service->get(array("id" => $sosh_obj->get_courier_id()));
-                else
-                    $data['orderlist'][$obj->get_so_no()]['tracking_link'] = "";
-
-                if (isset($status["courier_name"])) {
-                    $data['orderlist'][$obj->get_so_no()]["courier_name"] = $status["courier_name"];
-                }
-                if (isset($status["tracking_url"])) {
-                    $data['orderlist'][$obj->get_so_no()]["tracking_url"] = $status["tracking_url"];
-                }
-                if (isset($status["tracking_number"])) {
-                    $data['orderlist'][$obj->get_so_no()]["tracking_number"] = $status["tracking_number"];
-                }
-
-                // show split order text
-                $split_so_group = $obj->get_split_so_group();
-                if (isset($split_so_group) && $split_so_group != $obj->get_so_no()) {
-                    $data["show_partial_ship_text"] = TRUE;
-                }
-            }
-        }
-
-        # SBF #3591 show unpaid/underpaid bank transfers
-        $payment_gateway_arr = array("w_bank_transfer"); # determines what payment gateway will show
-        $unpaid_orderlist = $this->so_model->so_service->get_dao()->get_unpaid_order_history($client_id, $payment_gateway_arr);
-        if ($unpaid_orderlist) {
-            foreach ($unpaid_orderlist as $unpaid_obj) {
-                $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]['currency_id'] = $unpaid_obj->get_currency_id();
-                $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]['client_id'] = $unpaid_obj->get_client_id();
-                $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]['payment_gateway_id'] = $unpaid_obj->get_payment_gateway_id();
-                $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]['order_date'] = date("Y-m-d", strtotime($unpaid_obj->get_order_create_date()));
-                $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]['delivery_name'] = $unpaid_obj->get_delivery_name();
-                $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]['order_status_ini'] = $status["id"] . "_status";
-                $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]['status_desc_ini'] = $status["id"] . "_desc";
-                $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]["product_name"] .= $unpaid_obj->get_prod_name() . "</br>";
-                $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]["total_amount"] += $unpaid_obj->get_amount();
-                $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]["net_diff_status"] = $unpaid_obj->get_net_diff_status();
-                if ($unpaid_obj->get_payment_gateway_id() == 'w_bank_transfer') {
-                    $data["show_bank_transfer_contact"] = TRUE;
-                }
-                if ($net_diff_status = $unpaid_obj->get_net_diff_status()) {
-                    switch ($net_diff_status) {
-                        # show respective lang_text for underpaid
-                        case 3:
-                            $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]["unpaid_status"] = 1;
-                            break;
-
-                        default:
-                            break;
-                    }
-                } else {
-                    # show respective lang_text for unpaid
-                    $data['unpaid_orderlist'][$unpaid_obj->get_so_no()]["unpaid_status"] = 0;
-                }
-            }
-        }
-
-        // edit profile
-        if (($data["client_obj"] = $controller->client_model->client_service->get_dao()->get(array("id" => $_SESSION["client"]["id"]))) === FALSE) {
-            $_SESSION["NOTICE"] = "Error: " . __LINE__;
-        } else {
-            $_SESSION["client_obj"] = serialize($data["client_obj"]);
-        }
-        $data["bill_to_list"] = $controller->country_model->get_country_name_in_lang(get_lang_id(), 1);
-
-        // rma
-        $controller->so_model->include_vo("rma_dao");
-        $data["rma_obj"] = unserialize($_SESSION["rma_obj"]);
-        if (empty($data["rma_obj"])) {
-            if (($data["rma_obj"] = $controller->so_model->get("rma_dao")) === FALSE) {
-                $_SESSION["NOTICE"] = "Error: " . __LINE__;
-            } else {
-                $_SESSION["rma_vo"] = serialize($data["rma_obj"]);
-            }
-        }
-
-        // rma_confirm
-        $data["rma_confirm"] = 0;
-        if ($page == "rma" && $rma_no) {
-            if ($data["rma_obj"] = $controller->so_model->get("rma_dao", array("id" => $rma_no, "client_id" => $_SESSION["client"]["id"]))) {
-                $data["rma_confirm"] = 1;
-            }
-        }
-
-        // notice
-        $data["notice"] = notice();
-        unset($_SESSION["NOTICE"]);
-
-        $data['page'] = $page;
-
-        $salecycle_enabled = true;
-        if ($salecycle_enabled) {
-            $script_name = "";
-            switch (PLATFORMCOUNTRYID) {
-                case "GB":
-                    $script_name = "VALUEBASKET";
-                    break;
-                case "AU":
-                    $script_name = "VALUEBASKETAU";
-                    break;
-
-                # SBF#2117
-                case "NZ":
-                    $script_name = "VALUEBASKETNZ";
-                    break;
-                case "FR":
-                    $script_name = "VALUEBASKETFR";
-                    break;
-                case "SG":
-                    $script_name = "VALUEBASKETSG";
-                    break;
-                case "ES":
-                    $script_name = "VALUEBASKETES";
-                    break;
-            }
-
-            $script = <<<salecycle_script
-             <script type="text/javascript">
-                try {var __scP=(document.location.protocol=="https:")?"https://":"http://";
-                var __scS=document.createElement("script");__scS.type="text/javascript";
-                __scS.src=__scP+"app.salecycle.com/capture/$script_name.js";
-                document.getElementsByTagName("head")[0].appendChild(__scS);}catch(e){}
-            </script>
-salecycle_script;
-
-            if ($script_name != "") $controller->template->add_js($script, "print", FALSE, "body");
-        }
-
-        $data['data']['lang_text'] = $controller->get_language_file('', '', 'index');
-        $data['lang_id'] = get_lang_id();
-
-        return $data;
-    }
-
-    protected function myaccount__profile($controller, $url_paras)
-    {
-        $data = array();
-        $data['display_id'] = 15;
-        $data["back"] = $controller->input->get("back");
-        $data['data']['lang_text'] = $controller->get_language_file('', '', 'index');
-        if ($controller->input->post("posted")) {
-            if (isset($_SESSION["client_vo"])) {
-                $controller->client_model->client_service->get_dao()->include_vo();
-                $data["client_obj"] = unserialize($_SESSION["client_obj"]);
-
-                if (!empty($_POST["password"])) {
-                    $old_password = $controller->input->post("old_password");
-                    $new_password = $controller->input->post("password");
-                    $reconfirm_password = $controller->input->post("confirm_password");
-                    $data['email'] = $_SESSION['client']['email'];
-                    if ($controller->encrypt->encode(strtolower($controller->input->post("old_password"))) != $data["client_obj"]->get_password()) {
-                        $_SESSION['NOTICE'] = $data['data']['lang_text']['enter_old_password_warning'];
-                    } elseif ($new_password != $reconfirm_password) {
-                        $_SESSION['NOTICE'] = $data['data']['lang_text']['confirm_password_mismatch_warning'];
-                    } elseif ($old_password == $new_password) {
-                        $_SESSION['NOTICE'] = $data['data']['lang_text']['new_password_same_old_warning'];
-                    } else {
-                        $update_password = $controller->encrypt->encode(strtolower($controller->input->post("password")));
-                    }
-                }
-
-                if (!$_SESSION['NOTICE']) {
-                    if (empty($_POST["subscriber"])) {
-                        $_POST["subscriber"] = 0;
-                    }
-
-                    unset($_POST["password"]);
-                    set_value($data["client_obj"], $_POST);
-                    $data["client_obj"]->set_del_name($_POST["title"] . " " . $_POST["forename"] . " " . $_POST["surname"]);
-                    $data["client_obj"]->set_title($_POST["name_prefix"]);
-                    $data["client_obj"]->set_del_company($_POST["companyname"]);
-                    $data["client_obj"]->set_del_address_1($_POST["address_1"]);
-                    $data["client_obj"]->set_del_address_2($_POST["address_2"]);
-                    $data["client_obj"]->set_del_city($_POST["city"]);
-                    $data["client_obj"]->set_del_state($_POST["state"]);
-                    $data["client_obj"]->set_del_country_id($_POST["country_id"]);
-                    $data["client_obj"]->set_del_postcode($_POST["postcode"]);
-                    $data["client_obj"]->set_del_tel_1($_POST["tel_1"]);
-                    $data["client_obj"]->set_del_tel_2($_POST["tel_2"]);
-                    $data["client_obj"]->set_del_tel_3($_POST["tel_3"]);
-                    $data["client_obj"]->set_party_subscriber(0);
-                    $data["client_obj"]->set_status(1);
-                    if ($update_password) {
-                        $data["client_obj"]->set_password($update_password);
-                    }
-
-                    $email = $data["client_obj"]->get_email();
-                    $proc = $controller->client_model->client_service->get_dao()->get(array("email" => $email));
-                    if (!empty($proc)) {
-                        if (!$controller->client_model->client_service->get_dao()->update($data["client_obj"])) {
-                            $_SESSION['NOTICE'] = $data['data']['lang_text']['profile_update_fail_warning'];
-                        } else {
-                            $_SESSION["NOTICE"] = $data['data']['lang_text']['update_success_message'];
-                        }
-                    } else {
-                        $_SESSION["NOTICE"] = $data['data']['lang_text']['client_does_not_exist_warning'];
-                    }
-                }
-            }
-        }
-
-        return $data;
-    }
-
     protected function review_order__update($controller, $url_paras)
     {
         return $this->review_order__index($controller, $url_paras);
@@ -899,12 +490,6 @@ salecycle_script;
                     curl_close($ch);
                 } else
                     file_get_contents($url);
-
-// echo '<pre>Dumping EV URL<br>'; var_dump($url); echo "</pre>";
-                // var_dump($url);
-#               header("HTTP/1.1 301 Moved Permanently");
-#               header("Location: /display/view/$page");
-#               die();
             }
         } elseif ($page == "bulk_sales") {
             $controller->template->add_js('/js/checkform.js');
@@ -1032,17 +617,6 @@ salecycle_script;
         }
 
         if ($this->upselling_model->get_ra($data, $sku, PLATFORM, get_lang_id(), $listing_status)) {
-            /*
-                        $this->template->add_title($data['data']['lang_text']['meta_title'].$data["prod_name"]. ' | ValueBasket');
-                        $this->template->add_meta(array('name'=>'description','content'=>$data['data']['lang_text']['meta_desc']));
-                        $this->template->add_meta(array('name'=>'keywords','content'=>$data['data']['lang_text']['meta_keyword']));
-                        $this->template->add_js("/js/common.js");
-                        $this->template->add_js("/resources/js/jquery.gritter.js");
-                        $this->template->add_css("resources/css/jquery.gritter.css");
-                        $this->template->add_js("/js/upselling.js", "import", TRUE);
-                        //var_dump($data['has_ra']);
-                        $this->load_tpl('content', 'tbs_cart', $data, TRUE);
-            */
             redirect(base_url() . "review_order");
         } else {
             redirect(base_url() . "review_order");
@@ -1415,7 +989,6 @@ salecycle_script;
             }
 
             $_SESSION['PARENT_PAGE'] = base_url() . "mainproduct/view/" . $sku;
-            // $this->affiliate_service->add_af_cookie($_GET);
 
             if ($prod_image_list = $this->product_model->product_service->get_pi_dao()->get_list(array("sku" => $sku, "status" => 1), array("orderby" => "priority ASC, create_on DESC"))) {
                     foreach ($prod_image_list AS $key => $prod_img_obj) {
@@ -1423,7 +996,6 @@ salecycle_script;
                         $prod_image[$key]["image"] = get_image_file($prod_img_obj->get_image(), "l", $prod_img_obj->get_sku(), $prod_img_obj->get_id());
                     }
             }
-
             // gather product info
             $data["sku"] = $sku;
             $data["prod_name"] = $listing_info->get_prod_name();
@@ -1433,8 +1005,6 @@ salecycle_script;
             }
 
             $data["listing_status"] = $listing_info->get_status();
-            $listing_status = array("I" => $website_status_text["in_stock"], "O" => $website_status_text["out_of_stock"], "P" => $website_status_text["pre_order"], "A" => $website_status_text["arriving"]);
-
             $data["qty"] = $listing_info->get_qty();
             $data["stock_status"] = $listing_info->get_status() == 'I' ? $listing_info->get_qty() . " " . $listing_status[$listing_info->get_status()] : $listing_status[$listing_info->get_status()];
             $data["prod_price"] = $listing_info->get_price();
@@ -1477,63 +1047,6 @@ salecycle_script;
                             $data["working_day"] = implode('-', array($this->context_config_service->value_of("default_delivery_min_day"), $this->context_config_service->value_of("default_delivery_max_day")));
                             $data['delivery_min_day'] = $this->context_config_service->value_of("default_delivery_min_day");
                             $data['delivery_max_day'] = $this->context_config_service->value_of("default_delivery_max_day");
-                        }
-
-                        switch ($data["listing_status"]) {
-                            case "O":
-                                $data["website_status_short_text"] = $website_status_text["out_of_stock_short"];
-                                $data["website_status_long_text"] = $website_status_text["out_of_stock_long"];
-                                break;
-                            case "P":
-                                $data["website_status_short_text"] = $website_status_text["pre_order_short"];
-
-                                //show expected delivery date for pre-order
-                                $expected_delivery_date = $prod_info->get_expected_delivery_date();
-                                if ($expected_delivery_date) {
-                                    $data["website_status_long_text"] = $website_status_text["pre_order_long_1"] . $expected_delivery_date . $website_status_text["pre_order_long_2"];
-                                } else {
-                                    $data["website_status_long_text"] = $website_status_text["pre_order_long"];
-                                }
-                                break;
-                            case "A":
-                                $data["website_status_short_text"] = $website_status_text["arriving_short"];
-                                $data["website_status_long_text"] = $website_status_text["arriving_long"];
-                                break;
-                            default :
-                                $ship_day = $del_day = $data["website_status_short_text"] = $data["website_status_long_text"] = "";
-                                if ($delivery_obj) {
-                                    # SBF #4020 - show delivery time frames based on product-price scenario.
-                                    # time frames are managed in Delivery Time Management admin
-                                    if ($delivery_obj->get_ship_min_day() && $delivery_obj->get_ship_max_day())
-                                        $ship_day = $delivery_obj->get_ship_min_day() . " - " . $delivery_obj->get_ship_max_day();
-
-                                    if ($delivery_obj->get_del_min_day() && $delivery_obj->get_del_max_day())
-                                        $del_day = $delivery_obj->get_del_min_day() . " - " . $delivery_obj->get_del_max_day();
-
-                                    if ($ship_day) {
-                                        if (isset($website_status_text["in_stock_short_2"]))
-                                            $data["website_status_short_text"] = $website_status_text["in_stock_short_1"] . $ship_day . $website_status_text["in_stock_short_2"];
-                                        else
-                                            $data["website_status_short_text"] = $website_status_text["in_stock_short_1"];
-                                    }
-
-                                    if ($ship_day && $del_day)
-                                        $data["website_status_long_text"] = $website_status_text["in_stock_dt_long_1"] . $ship_day . $website_status_text["in_stock_dt_long_2"] . $del_day . $website_status_text["in_stock_dt_long_3"];
-                                }
-
-                                # ============ Going forward, this part should be not in use
-                                if (!$data["website_status_short_text"]) {
-                                    if (isset($website_status_text["in_stock_short_2"]))
-                                        $data["website_status_short_text"] = $website_status_text["in_stock_short_1"] . $data["working_day"] . $website_status_text["in_stock_short_2"];
-                                    else
-                                        $data["website_status_short_text"] = $website_status_text["in_stock_short_1"];
-                                }
-
-                                if (!$data["website_status_long_text"]) {
-                                    $data["website_status_long_text"] = $website_status_text["in_stock_long_1"] . $data["working_day"] . $website_status_text["in_stock_long_2"];
-                                }
-                                # ===============================================================
-                                break;
                         }
                     }
                 }
@@ -1586,18 +1099,8 @@ salecycle_script;
             $content = $listing_info->get_short_desc();
             if ($content == "") {
                 $content = "Buy the " . $listing_info->get_prod_name() . " from ValueBasket " . PLATFORMCOUNTRYID . " with free shipping.";
-                // $listing_info->get_short_desc();
             }
-            //
-            $hcb20130830_img_tag = "";
-            if (PLATFORMCOUNTRYID == 'AU' || PLATFORMCOUNTRYID == 'SG' || PLATFORMCOUNTRYID == 'MY' || PLATFORMCOUNTRYID == 'NZ' || PLATFORMCOUNTRYID == 'GB' || PLATFORMCOUNTRYID == 'PH') {
-                if (($sku == '13977-AA-BK') || ($sku == '13977-AA-RD') || ($sku == '13977-AA-SL') || ($sku == '13977-AA-WH')) {
-                    $hcb20130830_img_tag = "<img src='" . base_cdn_url() . "/resources/images/HIDDENRADIO.jpg'>";
-                }
-            }
-            $data['hcb20130830_img_tag'] = $hcb20130830_img_tag;
 
-            //
             $lang_id = $this->get_lang_id();
             if (($lang_id != "en") && (($data["lang_restricted"] & (1 << $data["osd_lang_list"]["NA"])) != 1)) {
                 if (array_key_exists(strtoupper($lang_id), $data["osd_lang_list"])) {
@@ -1615,37 +1118,8 @@ salecycle_script;
             (trim($data['specification']) != '' ? $data['has_specification'] = TRUE : $data['has_specification'] = FALSE);
             (trim($data['in_the_box']) != '' ? $data['has_in_the_box'] = TRUE : $data['has_in_the_box'] = FALSE);
 
-            //
-            { # SBF 1627
-                $cash_on_delivery_image = "";
-                //if (PLATFORMCOUNTRYID == "SG") $cash_on_delivery_image = "/images/COD_iron02.png";
-                $data['cash_on_delivery_image'] = $cash_on_delivery_image;
-            }
-
             $data["gst_msg_type"] = '';
-
             $price = $listing_info->get_price();
-            //Loop 10 times.
-            // for($price_adjustment = $price * 0.1, $n=0; count($cross_sell_product_list) < 6 && $n < 10; $price_adjustment += $price_adjustment)
-            // {
-            //     $cross_sell_product_list = $this->price_margin_service->get_cross_sell_product($prod_info, PLATFORM, $this->get_lang_id(), $price, $price_adjustment);
-            //     $n++;
-            // }
-
-            // if(count($cross_sell_product_list) > 0)
-            // {
-            //     foreach($cross_sell_product_list as $obj)
-            //     {
-            //         $csp_arr[$obj->get_sku()]["sku"] = $obj->get_sku();
-            //         $csp_arr[$obj->get_sku()]["prod_name"] = $obj->get_prod_name();
-            //         $csp_arr[$obj->get_sku()]["stock_status"] =  $obj->get_status() == 'I'?$obj->get_qty()." ".$listing_status[$obj->get_status()]:$listing_status[$obj->get_status()];
-            //         $csp_arr[$obj->get_sku()]["prod_price"] = $obj->get_price();
-            //         $csp_arr[$obj->get_sku()]["prod_rrp_price"] = $this->product_model->price_service->calc_website_product_rrp($obj->get_price(), $obj->get_fixed_rrp(), $obj->get_rrp_factor());
-            //         $csp_arr[$obj->get_sku()]["prod_url"] = $this->website_model->get_prod_url($obj->get_sku());
-            //         $csp_arr[$obj->get_sku()]["image"] = get_image_file($obj->get_image_ext(), "s", $obj->get_sku());
-            //     }
-            // }
-            // $data["cross_sell_product_list"] = $csp_arr;
 
             $data['microdata']['price'] = $listing_info->get_price();
             $data['microdata']['currency'] = $listing_info->get_currency_id();

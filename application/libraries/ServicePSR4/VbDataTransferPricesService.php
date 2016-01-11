@@ -19,6 +19,8 @@ class VbDataTransferPricesService extends VbDataTransferService
         $xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
         $xml[] = '<prices task_id="'.$task_id.'">';
 
+        $googleSku = [];
+
         foreach ($xml_vb->price as $vb_price_obj) {
             //Get the master sku to search the corresponding sku in atomv2 database
             $master_sku = (string) $vb_price_obj->master_sku;
@@ -73,7 +75,7 @@ class VbDataTransferPricesService extends VbDataTransferService
                     if ($pricing_rule_obj) {
                         $min_margin = $pricing_rule_obj->getMinMargin();
 
-                        if ($new_margin < $minimun_margin) {
+                        if ($new_margin < $min_margin) {
                             $reason = "Error in margin";
                             $result_status = 6;
 
@@ -96,6 +98,9 @@ class VbDataTransferPricesService extends VbDataTransferService
                     $result_status = 5;
                 }
 
+                // collect sku by platform to call google api
+                $googleSku[$platform_id][] = $sku;
+
                 $xml[] = '<price>';
                 $xml[] = '<sku>'.$vb_price_obj->sku.'</sku>';
                 $xml[] = '<master_sku>'.$vb_price_obj->master_sku.'</master_sku>';
@@ -116,10 +121,19 @@ class VbDataTransferPricesService extends VbDataTransferService
             }
         }
 
+        $this->triggerGoogleApi($googleSku);
+
         $xml[] = '</prices>';
         $return_feed = implode("", $xml);
 
         return $return_feed;
+    }
+
+    public function triggerGoogleApi(array $googleSku)
+    {
+        foreach ($googleSku as $platform_id => $sku_collection) {
+            $this->getService("PriceUpdateTrigger")->triggerGoogleApi($sku_collection, $platform_id);
+        }
     }
 
     public function applyPriceRule(&$vb_price_obj)
@@ -133,7 +147,7 @@ class VbDataTransferPricesService extends VbDataTransferService
             if ($rule_type == 'A') {
                 $required_selling_price = (float)$required_selling_price + (float)$rule_markup;
             } elseif ($rule_type == 'P') {
-                $required_selling_price = $required_selling_price + ($required_selling_price * $rule_markup);
+                $required_selling_price = $required_selling_price + ($required_selling_price * $rule_markup / 100);
             }
         }
 
