@@ -72,8 +72,7 @@ class PricingToolEbayService extends BaseService
 
                 return $arr;
             } else {
-                $this->getService('PriceMargin')->insertOrUpdateMargin($vars['sku'], $vars['platform'], $vars['sp'], $vars['profit'], $vars['margin']);
-
+                $this->sc['PriceMargin']->refreshProfitAndMargin($vars['platform'], $vars['sku']);
                 if ($price_ext_need_update) {
                     set_value($price_ext_obj, $vars);
                     if ($vars['action'] == "R") {

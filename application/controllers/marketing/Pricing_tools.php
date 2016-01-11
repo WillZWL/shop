@@ -185,7 +185,7 @@ class pricing_tools extends MY_Controller
                         $vars['cur_listing_status'] = ($force_list) ? "L" : $vars['cur_listing_status'];
 
                         $arr = $this->sc['PricingToolWebsite']->updatePricingForWebsite($vars);
-                        $this->sc['PriceMargin']->insertOrUpdateMargin($vars['sku'], $vars['platform'], $vars['sp'], $vars['profit'], $vars['margin']);
+                        $this->sc['PriceMargin']->refreshProfitAndMargin($vars['platform'], $vars['sku']);
                         break;
 
                     case 'EBAY':
@@ -247,7 +247,7 @@ class pricing_tools extends MY_Controller
                 $vars['cur_listing_status'] = ($force_list) ? "L" : $vars['cur_listing_status'];
 
                 $arr = $this->sc['PricingToolWebsite']->updatePricingForWebsite($vars);
-                $this->sc['PriceMargin']->insertOrUpdateMargin($vars['sku'], $vars['platform'], $vars['sp'], $vars['profit'], $vars['margin']);
+                $this->sc['PriceMargin']->refreshProfitAndMargin($vars['platform'], $vars['sku']);
                 break;
 
             case 'EBAY':
