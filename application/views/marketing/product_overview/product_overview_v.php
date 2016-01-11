@@ -278,8 +278,8 @@
                             <td>
                                 <select name='plaapi' class='input'>
                                     <option></option>
-                                    <option value='1'>Success only</option>
-                                    <option value='0'>Fail only</option>
+                                    <option value='IS,DS'>Success only</option>
+                                    <option value='IF,DF'>Fail only</option>
                                 </select>
                             </td>
                             <td style="padding-right:8px" align="right">
@@ -548,6 +548,8 @@
                         $website_status = $product->getWebsiteStatus();
                         $auto_price = $product->getAutoPrice();
                         $is_advertised = $product->getIsAdvertised();
+                        $gsc_comment = $product->getGscComment();
+                        $enabled_pla_checkbox = $product->getEnabledPlaCheckbox();
                 ?>
                         <tr onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')">
                             <td>&nbsp;</td>
@@ -585,7 +587,8 @@
                             <td><?= $lang['supplier_status'][$product->getSupplierStatus()] ?></td>
                             <td><?= $product->getModifyOn() ?></td>
                             <td>
-                                <input type="checkbox" <?= ($is_advertised === 'Y') ? 'checked' : '' ?> name='<?= "price[{$sku}][{$platform_id}][is_advertised]" ?>' value="Y">
+                                <input type="checkbox" <?= ($is_advertised === 'Y') ? 'checked' : '' ?> name='<?= "price[{$sku}][{$platform_id}][is_advertised]" ?>' <?= ($enabled_pla_checkbox) ?: 'disabled' ?> value="Y">
+                                <?= $gsc_comment ?>
                             </td>
                             <td>
                                 <!-- $adwords_input $adGroup_status -->

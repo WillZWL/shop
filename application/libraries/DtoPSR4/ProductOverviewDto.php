@@ -6,7 +6,10 @@ class ProductOverviewDto
     private $ext_sku;
     private $platform_id;
     private $name;
+    private $prod_grp_cd;
     private $clearance;
+    private $colour_id;
+    private $status;
     private $surplus_quantity;
     private $website_quantity;
     private $website_status;
@@ -28,6 +31,10 @@ class ProductOverviewDto
     private $sub_category;
     private $sub_sub_category;
     private $brand_name;
+    private $platform_country_id;
+    private $language_id;
+    private $gsc_comment;
+    private $enabled_pla_checkbox = 0;
 
     public function getSku()
     {
@@ -69,6 +76,16 @@ class ProductOverviewDto
         $this->name = $name;
     }
 
+    public function getProdGrpCd()
+    {
+        return $this->prod_grp_cd;
+    }
+
+    public function setProdGrpCd($prod_grp_cd)
+    {
+        $this->prod_grp_cd = $prod_grp_cd;
+    }
+
     public function getClearance()
     {
         return $this->clearance;
@@ -77,6 +94,26 @@ class ProductOverviewDto
     public function setClearance($clearance)
     {
         $this->clearance = $clearance;
+    }
+
+    public function getColourId()
+    {
+        return $this->colour_id;
+    }
+
+    public function setColourId($colour_id)
+    {
+        $this->colour_id = $colour_id;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
     public function getSurplusQuantity()
@@ -287,5 +324,45 @@ class ProductOverviewDto
     public function setBrandName($brand_name)
     {
         $this->brand_name = $brand_name;
+    }
+
+    public function getPlatformCountryId()
+    {
+        return $this->platform_country_id;
+    }
+
+    public function setPaltformCountryId($platform_country_id)
+    {
+        $this->platform_country_id = $platform_country_id;
+    }
+
+    public function getLanguageId()
+    {
+        return $this->language_id;
+    }
+
+    public function setLanguageId($language_id)
+    {
+        $this->language_id = $language_id;
+    }
+
+    public function getGscComment()
+    {
+        return $this->gsc_comment;
+    }
+
+    public function setGscComment($gsc_comment)
+    {
+        $this->gsc_comment = $gsc_comment;
+    }
+
+    public function getEnabledPlaCheckbox()
+    {
+        return $this->enabled_pla_checkbox;
+    }
+
+    public function setEnabledPlaCheckbox($enabled_pla_checkbox)
+    {
+        $this->enabled_pla_checkbox = $enabled_pla_checkbox;
     }
 }

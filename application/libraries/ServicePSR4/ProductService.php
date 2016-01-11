@@ -175,7 +175,27 @@ class ProductService extends BaseProductService
 
     public function getProductOverview($where = [], $option = [])
     {
-        return $this->getDao('Product')->getProductOverview($where, $option);
+        $prod_obj_list = $this->getDao('Product')->getProductOverview($where, $option);
+        // echo $this->getDao('Product')->db->last_query();die;
+
+        if (is_array($prod_obj_list)) {
+            foreach ($prod_obj_list as $key => $prod_obj) {
+                $obj = new \ProductGoogleGscCommentDto();
+
+                $obj->setSku($prod_obj->getSku());
+                $obj->setProdGrpCd($prod_obj->getProdGrpCd());
+                $obj->setColourId($prod_obj->getColourId());
+                $obj->setLangId($prod_obj->getLanguageId());
+                $obj->setCountryId($prod_obj->getPlatformCountryId());
+                $obj->setProdStatus($prod_obj->getStatus());
+
+                $result = $this->getService('PricingToolWebsite')->getGoogleGscComment($obj);
+                $prod_obj->setGscComment($result['gsc_comment']);
+                $prod_obj->setEnabledPlaCheckbox($result['enabled_pla_checkbox']);
+            }
+        }
+
+        return $prod_obj_list;
     }
 
     public function getHomeProduct($where, $option)
