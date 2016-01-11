@@ -284,7 +284,14 @@ class ClientService extends BaseService
         if ($result) {
             $client_name = implode(' ', array($client_obj->getForename(), $client_obj->getSurname()));
             $email_dto = new \EventEmailDto();
-            $replace = array('password' => $newPassword, 'mail_from' => $email_dto->getMailFrom(), 'client name' => $client_name, 'site_name' => $email_dto->getFromName(), 'site_url' => base_url());
+            $platformId = PLATFORM;
+            $siteObj = $this->_getSiteObj($platformId);
+            if (defined("SITE_NAME"))
+                $site_name = SITE_NAME;
+            else {
+                $site_name = $siteObj->getSiteName();
+            }
+            $replace = array('password' => $newPassword, 'mail_from' => $email_dto->getMailFrom(), 'client name' => $client_name, 'site_name' => $site_name, 'site_url' => base_url());
             $email_sender = "no-reply@digitaldiscount.co.uk";
             $email_dto->setLangId(get_lang_id());
             $email_dto->setEventId('forgotten_password');
@@ -344,6 +351,20 @@ class ClientService extends BaseService
         $dto->setLangId(get_lang_id());
         $dto->setReplace($replace);
         $this->getService('Event')->fireEvent($dto);
+    }
+
+    private function _getSiteObj($platformId)
+    {
+        if (defined("SITE_NAME"))
+            return \PUB_Controller::$siteInfo;
+        else {
+            if (!$this->siteObj)
+            {
+                $loadSiteService = new \ESG\Panther\Service\LoadSiteParameterService();
+                $this->siteObj = $loadSiteService->loadSiteByPlatform($platformId);
+            }
+            return $this->siteObj;
+        }
     }
 
     public function get_config()
