@@ -19,6 +19,8 @@ class VbDataTransferPricesService extends VbDataTransferService
         $xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
         $xml[] = '<prices task_id="'.$task_id.'">';
 
+        $googleSku = [];
+
         foreach ($xml_vb->price as $vb_price_obj) {
             //Get the master sku to search the corresponding sku in atomv2 database
             $master_sku = (string) $vb_price_obj->master_sku;
@@ -96,7 +98,8 @@ class VbDataTransferPricesService extends VbDataTransferService
                     $result_status = 5;
                 }
 
-                $this->getService("PriceUpdateTrigger")->triggerGoogleApi([$sku], $platformId);
+                // collect sku by platform to call google api
+                $googleSku[$platform_id][] = $sku;
 
                 $xml[] = '<price>';
                 $xml[] = '<sku>'.$vb_price_obj->sku.'</sku>';
@@ -118,10 +121,19 @@ class VbDataTransferPricesService extends VbDataTransferService
             }
         }
 
+        $this->triggerGoogleApi($googleSku);
+
         $xml[] = '</prices>';
         $return_feed = implode("", $xml);
 
         return $return_feed;
+    }
+
+    public function triggerGoogleApi(array $googleSku)
+    {
+        foreach ($googleSku as $platform_id => $sku_collection) {
+            $this->getService("PriceUpdateTrigger")->triggerGoogleApi($sku_collection, $platform_id);
+        }
     }
 
     public function applyPriceRule(&$vb_price_obj)
