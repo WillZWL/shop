@@ -96,6 +96,8 @@ class VbDataTransferPricesService extends VbDataTransferService
                     $result_status = 5;
                 }
 
+                $this->getService("PriceUpdateTrigger")->triggerGoogleApi([$sku], $platformId);
+
                 $xml[] = '<price>';
                 $xml[] = '<sku>'.$vb_price_obj->sku.'</sku>';
                 $xml[] = '<master_sku>'.$vb_price_obj->master_sku.'</master_sku>';
