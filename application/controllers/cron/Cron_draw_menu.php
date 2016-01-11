@@ -131,7 +131,7 @@ class Cron_draw_menu extends MY_Controller
                     }
                     array_multisort($sponsor, SORT_DESC, $names, SORT_ASC, $main_cat_array);
 
-                    $CategoriesTitle = '_("Categories ")';
+                    $CategoriesTitle = '<? _("Categories") ?>';
                     $content_v2 =
                              '<div class="col-lg-3 col-sm-3 col-md-3 hidden-xs hidden-sm top-verticalmenu">
 								<div class="menu-heading d-heading">
