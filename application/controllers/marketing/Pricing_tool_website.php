@@ -32,10 +32,10 @@ class Pricing_tool_website extends MY_Controller
         $this->load->library('service/affiliate_service');
         $this->load->library('service/affiliate_sku_platform_service');
         $this->load->library('service/price_margin_service');
-        $this->load->library('service/adwords_service');
+//        $this->load->library('service/adwords_service');
         $this->load->library('service/ext_category_mapping_service');
         $this->load->library('service/product_identifier_service');
-        $this->load->library('service/product_update_followup_service');
+//        $this->load->library('service/product_update_followup_service');
         $this->load->library('service/deliverytime_service');
         $this->load->library('dao/competitor_map_dao');
 
@@ -289,7 +289,7 @@ class Pricing_tool_website extends MY_Controller
                         $pdata[$platform_id]["obj"] = $platform_obj;
 
                         // this is the part where we get the HTML from deep inside the code
-                        $tmp = $this->sc['Price']->getPricingToolInfo($platform_id, $value, $this->getAppId());
+                        $tmp = $this->sc['Price']->getPricingToolInfo("'" . $platform_id . "'", $value, $this->getAppId());
 
                         $pdata[$platform_id]["pdata"] = $tmp;
                         $objcount++;
