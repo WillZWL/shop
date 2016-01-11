@@ -82,10 +82,6 @@ class PricingToolWebsiteService extends BaseService
         $data["feed_exclude"] = $this->getDao('AffiliateSkuPlatform')->getFeedListBySku($param['prod_sku'], $platform_id, 1);
         $data["competitor"] = $this->getCompetitor($param);
         // $data["adwords_obj"] = $this->getAdwordsData($param);
-        $googleComment = $this->getGoogleGscComment($param);
-
-        $data["gsc_comment"] = $googleComment["gsc_comment"];
-        $data["enabled_pla_checkbox"] = $googleComment["enabled_pla_checkbox"];
 
         return $data;
     }
@@ -99,31 +95,33 @@ class PricingToolWebsiteService extends BaseService
         return false;
     }
 
-    public function getGoogleGscComment($param)
+    public function getGoogleGscComment(\ProductGoogleGscCommentDto $dto)
     {
+        echo "<pre/>";
+        print_r($dto);
         $internal_gsc_comment = "";
-        if (!$prod_identifer_obj = $this->getDao('ProductIdentifier')->get(["prod_grp_cd" => $param['prod_obj']->getProdGrpCd(), "colour_id" => $param['prod_obj']->getColourId(), "country_id" => $param['country_id']])) {
+        if (!$prod_identifer_obj = $this->getDao('ProductIdentifier')->get(["prod_grp_cd" => $dto->getProdGrpCd(), "colour_id" => $dto->getColourId(), "country_id" => $dto->getCountryId()])) {
             $internal_gsc_comment = "No mpn value. ";
         } else if (!$prod_identifer_obj->getMpn()) {
             $internal_gsc_comment = "No mpn value. ";
         }
 
-        if ($param['prod_obj']) {
-            if ($param['prod_obj']->getStatus() != 2) {
+        if ($dto->getProdStatus()) {
+            if ($dto->getProdStatus() != 2) {
                 $internal_gsc_comment .= "/Product is not listed in product Mgmt. ";
             }
         }
 
-        if ($product_content_obj = $this->getDao('ProductContent')->get(["prod_sku" => $param['prod_sku'], "lang_id" => $param['lang_id']])) {
+        if ($product_content_obj = $this->getDao('ProductContent')->get(["prod_sku" => $dto->getSku(), "lang_id" => $dto->getLangId()])) {
             if (!$product_content_obj->getDetailDesc()) {
                 $internal_gsc_comment .= "/No detail desc. ";
             }
         }
 
         $gsc_where = $gsc_option = [];
-        $gsc_where['cm.id'] = $param['prod_sku'];
+        $gsc_where['cm.category_mapping_id'] = $dto->getSku();
         $gsc_where['cm.ext_party'] = "GOOGLEBASE";
-        $gsc_where['cm.country_id'] = $param['country_id'];
+        $gsc_where['cm.country_id'] = $dto->getCountryId();
         $gsc_where['cm.status'] = 1;
         $gsc_option['limit'] = 1;
 
@@ -146,6 +144,7 @@ class PricingToolWebsiteService extends BaseService
 
         return $google_arr;
     }
+
     public function getDeliveryInfo($param = [])
     {
         if ($deliverytime_obj = $this->getDao('DeliveryTime')->getDeliverytimeObj($param['country_id'], $param['scenarioid'])) {
