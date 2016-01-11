@@ -70,6 +70,7 @@ class PricingToolWebsiteService extends BaseService
         if ($requireSendGoogleApi) {
             $this->getService("PriceUpdateTrigger")->triggerGoogleApi($vars['sku'], $vars['platform']);
         }
+
         return $arr;
     }
 
@@ -97,8 +98,6 @@ class PricingToolWebsiteService extends BaseService
 
     public function getGoogleGscComment(\ProductGoogleGscCommentDto $dto)
     {
-        echo "<pre/>";
-        print_r($dto);
         $internal_gsc_comment = "";
         if (!$prod_identifer_obj = $this->getDao('ProductIdentifier')->get(["prod_grp_cd" => $dto->getProdGrpCd(), "colour_id" => $dto->getColourId(), "country_id" => $dto->getCountryId()])) {
             $internal_gsc_comment = "No mpn value. ";
