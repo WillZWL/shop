@@ -21,6 +21,13 @@ class VbDataTransferCategoryMappingService extends VbDataTransferService
 
         foreach ($xml_vb->category_mapping as $cat_map) {
             try {
+                $vb_id = $cat_map->id; //for the result_xml
+                $prod_obj= $this->getService('Product')->getDao('Product')->get(['sku_vb' => $cat_map->id]);
+
+                if ($prod_obj) {
+                    $cat_map->id = $prod_obj->getSku();
+                }
+
                 if ($cat_obj = $this->getDao('CategoryMapping')->get(['ext_party' => $cat_map->ext_party, 'level' => $cat_map->level, 'category_mapping_id' => $cat_map->id, 'lang_id' => $cat_map->lang_id, 'country_id' => $cat_map->country_id])) {
                 	$this->getService('CategoryMapping')->updateCategoryMapping($cat_obj, $cat_map);
                 	$this->getDao('CategoryMapping')->update($cat_obj);
@@ -34,7 +41,7 @@ class VbDataTransferCategoryMappingService extends VbDataTransferService
                 $xml[] = '<category_mapping>';
                 $xml[] = '<ext_party>'.$cat_map->ext_party.'</ext_party>';
                 $xml[] = '<level>'.$cat_map->level.'</level>';
-                $xml[] = '<id>'.$cat_map->id.'</id>';
+                $xml[] = '<id>'.$vb_id.'</id>';
                 $xml[] = '<lang_id>'.$cat_map->lang_id.'</lang_id>';
                 $xml[] = '<country_id>'.$cat_map->country_id.'</country_id>';
                 $xml[] = '<status>5</status>'; //updated
@@ -45,7 +52,7 @@ class VbDataTransferCategoryMappingService extends VbDataTransferService
                 $xml[] = '<category_mapping>';
                 $xml[] = '<ext_party>'.$cat_map->ext_party.'</ext_party>';
                 $xml[] = '<level>'.$cat_map->level.'</level>';
-                $xml[] = '<id>'.$cat_map->id.'</id>';
+                $xml[] = '<id>'.$vb_id.'</id>';
                 $xml[] = '<lang_id>'.$cat_map->lang_id.'</lang_id>';
                 $xml[] = '<country_id>'.$cat_map->country_id.'</country_id>';
                 $xml[] = '<status>4</status>'; //error
