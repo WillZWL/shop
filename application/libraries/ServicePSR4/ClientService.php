@@ -284,7 +284,7 @@ class ClientService extends BaseService
         if ($result) {
             $client_name = implode(' ', array($client_obj->getForename(), $client_obj->getSurname()));
             $email_dto = new \EventEmailDto();
-            $replace = array('password' => $newPassword, 'mail_from' => $email_dto->getMailFrom(), 'client name' => $client_name, 'site_name' => 'Digital discount', 'site_url' => base_url());
+            $replace = array('password' => $newPassword, 'mail_from' => $email_dto->getMailFrom(), 'client name' => $client_name, 'site_name' => $email_dto->getFromName(), 'site_url' => base_url());
             $email_sender = "no-reply@digitaldiscount.co.uk";
             $email_dto->setLangId(get_lang_id());
             $email_dto->setEventId('forgotten_password');
