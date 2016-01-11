@@ -24,8 +24,11 @@ class PriceMarginService extends BaseService
 
             if ($price_obj) {
                 $price_margin_obj = $this->getDao('PriceMargin')->get(['sku' => $sku, 'platform_id' => $platform_id]);
+                $action = 'update';
+
                 if (!$price_margin_obj) {
                     $price_margin_obj = new \PriceMarginVo();
+                    $action = 'insert';
                 }
 
                 $profitMarginJson = json_decode($this->getService('Price')->getProfitMarginJson($platform_id, $sku, $price_obj->getPrice()));
@@ -48,7 +51,7 @@ class PriceMarginService extends BaseService
                 $price_margin_obj->setProfit($profitMarginJson->get_profit);
                 $price_margin_obj->setMargin($profitMarginJson->get_margin);
 
-                $this->getDao('PriceMargin')->update($price_margin_obj);
+                $this->getDao('PriceMargin')->$action($price_margin_obj);
             }
         }
     }
