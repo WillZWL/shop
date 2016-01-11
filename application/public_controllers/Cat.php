@@ -8,12 +8,6 @@ class Cat extends PUB_Controller
     public function __construct()
     {
         parent::__construct();
-        // $this->load->model('website/website_model');
-        // $this->load->model('marketing/product_model');
-        // $this->load->model('marketing/category_model');
-        // $this->load->model('marketing/banner_model');
-        //$this->load->library('service/affiliate_service');
-        // $this->load->library('service/price_website_service');
         $this->load->library('service/display_category_banner_service');
     }
 
