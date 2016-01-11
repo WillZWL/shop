@@ -88,13 +88,24 @@
                                 </div>
 
                                 <ul class="list-unstyled">
-                                    <li><span class="check-box text-success"><i class="fa fa-check"></i></span> <b><?= _('Availability').':' ?></b><?= _(' In Stock') ?></li>
+                                    <li>
+                                        <span class="check-box text-success"><i class="fa fa-check"></i></span>
+                                        <b><?= _('Availability').':' ?></b>
+                                        <?php
+                                            if ($listing_status == 'I') {
+                                        ?>
+                                            <?= _(' In Stock') ?>
+                                        <?php }elseif ($listing_status == 'O') { ?>
+                                            <?= _('Out of Stock') ?>
+                                        <?php }elseif ($listing_status == 'P') { ?>
+                                            <?= _('Pre Order') ?>
+                                        <?php }else { ?>
+                                            <?= _(' In Stock') ?>
+                                        <?php } ?>
+                                    </li>
                                 </ul>
                                 <div class="border-success space-30">
-                                    <ul class="list-unstyled">
-                                        <!-- <li><b>Brand:</b> <a href="#">Apple</a></li>
-                                        <li><b>Product Code:</b> product 11</li> -->
-                                    </ul>
+                                    <ul class="list-unstyled"></ul>
                                 </div>
                                 <div id="product">
                                     <div class="product-extra">
@@ -110,7 +121,13 @@
                                     <input type="hidden" name="product_id" value="50">
                                     <div class="action pull-left">
                                         <div class="cart pull-left">
-                                            <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary" onclick="cart.addcart('<?=$sku?>');"><?= _('Add to Cart') ?></button>
+                                            <?php
+                                                $is_allow_to_add = "onclick='cart.addcart($sku)'";
+                                                if ($listing_status == 'O') {
+                                                    $is_allow_to_add = "style='cursor:not-allowed;'";
+                                                }
+                                            ?>
+                                            <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary" <?=$is_allow_to_add?> ><?= _('Add to Cart') ?></button>
                                         </div>
                                     </div>
                                 </div>
