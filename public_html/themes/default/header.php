@@ -222,9 +222,10 @@
                           <div class="row">
                 <?php
                     $lang_id = $siteobj->getLangId();
-                    $menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
-                    //$menu_script = file_get_contents(APPPATH."views/template/menu/en/menu_webgb.html", true);
-                    print $menu_script;
+                    // $menu_script = file_get_contents(APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html", true);
+                    // //$menu_script = file_get_contents(APPPATH."views/template/menu/en/menu_webgb.html", true);
+                    // print $menu_script;
+                    include APPPATH."views/template/menu/". $lang_id."/menu_".strtolower(PLATFORM).".html";
                 ?>
                             <div class="col-lg-9 col-md-9 hidden-sm hidden-xs top-verticalmenu">
                                 <div class="quick-access col-lg-9 col-md-9 hidden-sm hidden-xs">
