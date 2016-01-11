@@ -16,7 +16,8 @@ class PricingToolWebsiteService extends BaseService
     	$action = $vars['formtype'] == "update" ? "update" : "insert";
         $price_obj = unserialize($_SESSION["price_obj_" . $vars['platform']]);
         if (($price_obj->getPrice() * 1 != $vars['sp'] * 1)
-            || ($price_obj->getListingStatus() != $vars['cur_listing_status'])) {
+            || ($price_obj->getListingStatus() != $vars['cur_listing_status'])
+            || ($price_obj->getIsAdvertised() != $vars['is_advertised'])) {
             $requireSendGoogleApi = true;
         }
 		if ($price_obj->getPrice() * 1 != $vars['sp'] * 1 ||
