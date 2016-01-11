@@ -547,6 +547,7 @@
                         $website_quantity = $product->getWebsiteQuantity();
                         $website_status = $product->getWebsiteStatus();
                         $auto_price = $product->getAutoPrice();
+                        $is_advertised = $product->getIsAdvertised();
                 ?>
                         <tr onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')">
                             <td>&nbsp;</td>
@@ -583,11 +584,9 @@
                             </td>
                             <td><?= $lang['supplier_status'][$product->getSupplierStatus()] ?></td>
                             <td><?= $product->getModifyOn() ?></td>
-                            <!-- PLA -->
                             <td>
-                                <!-- <input type='checkbox' id='pla_cb[{$platform}][{$sku}]' name='is_advertised[{$platform}][]' value = '$sku' $plachecked $pladisable onClick='needToConfirm=true'>$gsc_comment -->
+                                <input type="checkbox" <?= ($is_advertised === 'Y') ? 'checked' : '' ?> name='<?= "price[{$sku}][{$platform_id}][is_advertised]" ?>' value="Y">
                             </td>
-                            <!-- Adwords -->
                             <td>
                                 <!-- $adwords_input $adGroup_status -->
                             </td>
@@ -648,10 +647,6 @@
                  }
              }
          }
-
-        // function CheckProfit(f) {
-        //     return true;
-        // }
     </script>
 </body>
 </html>

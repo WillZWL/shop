@@ -14,6 +14,7 @@ class ProductOverviewDto
     private $listing_status;
     private $price;
     private $vb_price;
+    private $is_advertised;
     private $auto_price;
     private $total_cost;
     private $profit;
@@ -146,6 +147,16 @@ class ProductOverviewDto
     public function setVbPrice($vb_price)
     {
         $this->vb_price = $vb_price;
+    }
+
+    public function getIsAdvertised()
+    {
+        return $this->is_advertised;
+    }
+
+    public function setIsAdvertised($is_advertised)
+    {
+        $this->is_advertised = $is_advertised;
     }
 
     public function getAutoPrice()

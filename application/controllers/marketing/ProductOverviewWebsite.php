@@ -108,6 +108,7 @@ class ProductOverviewWebsite extends MY_Controller
 
             $price = floatval($_POST['price'][$sku][$platform_id]['price']);
             $price_type = $_POST['price'][$sku][$platform_id]['auto_price'];
+
             // only price type is manual and price more than 0 can udpate price.
             if ($price > 0 && $price_type == 'N') {
                 $price_obj->setPrice($price);
@@ -115,11 +116,22 @@ class ProductOverviewWebsite extends MY_Controller
             $price_obj->setAutoPrice($price_type);
             $price_obj->setListingStatus($_POST['price'][$sku][$platform_id]['listing_status']);
 
+            if (isset($_POST['price'][$sku][$platform_id]['is_advertised'])) {
+                $price_obj->setIsAdvertised('Y');
+            } else {
+                $price_obj->setIsAdvertised('N');
+            }
+
             // transaction start
             $this->sc['Price']->getDao('Price')->db->trans_start();
             $this->sc['Price']->getDao('Price')->update($price_obj);
             $this->sc['PriceMargin']->refreshProfitAndMargin($platform_id, $sku);
-            $this->sc['Price']->getDao('Price')->db->trans_complete();
+            $result = $this->sc['Price']->getDao('Price')->db->trans_complete();
+            // transaction end;
+
+            if ($result) {
+                $googleSku[$platform_id][] = $sku;
+            }
 
             $product_obj = $this->sc['Product']->get(['sku' => $sku]);
             if (!$product_obj) {
@@ -130,6 +142,10 @@ class ProductOverviewWebsite extends MY_Controller
             $product_obj->setWebsiteQuantity($_POST['product'][$sku]['website_quantity']);
             $product_obj->setWebsiteStatus($_POST['product'][$sku]['website_status']);
             $this->sc['Product']->getDao('Product')->update($product_obj);
+        }
+
+        foreach ($googleSku as $platform_id => $sku_collection) {
+            $this->sc["PriceUpdateTrigger"]->triggerGoogleApi($sku_collection, $platform_id);
         }
     }
 
@@ -144,6 +160,7 @@ class ProductOverviewWebsite extends MY_Controller
 
         if ($this->input->post('posted') && $_POST['check']) {
             $this->updateProductOverview();
+
         }
 
         if ($this->input->get('search')) {
