@@ -64,7 +64,7 @@ class GoogleApiRequestDao extends BaseDao
         $userId = $this->getUserId();
         $sql = "update price pr
                 inner join google_api_request gar on gar.sku=pr.sku and gar.platform_id=pr.platform_id
-                set google_status=CONCAT(gar.google_product_status, gar.result), google_update_result=CONCAT(now(), " " ,gar.key_message), gar.modify_by='" . $userId . "'
+                set google_status=CONCAT(gar.google_product_status, gar.result), google_update_result=CONCAT(now(), ' ' ,gar.key_message), gar.modify_by='" . $userId . "'
                 where gar.request_batch_id=" . $batchId;
 
         return $this->db->query($sql);
