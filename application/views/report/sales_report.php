@@ -5,22 +5,9 @@
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
-    <script language="javascript">
-        <!--
-        /*function prepareSubmit()
-         {
-         var keyword = document.getElementById('prod_name').value;
-         var sku = document.getElementById('psku').value;
-         plistframe.list.keyword.value = keyword;
-         plistframe.list.sku.value = sku;
-         plistframe.list.submit();
-         }*/
-        -->
-    </script>
+    <script type="text/javascript" src="<?= base_url() ?>js/calendar.js"></script>
+    <link rel="stylesheet" href="<?= base_url() ?>css/calendar.css" type="text/css" media="all"/>
 </head>
-<?php
-$today = getdate();
-?>
 <body onResize="SetFrameFullHeight(document.getElementById('report'));">
 <div id="main">
     <table cellpadding="0" cellspacing="0" width="100%" border="0">
@@ -29,11 +16,10 @@ $today = getdate();
                     style="font-size: 16px; color: rgb(0, 0, 0);"><?= $lang["title"] ?></b></td>
             <td align="right" class="title">
                 <input type="button" value="<?= $lang["title"] ?>" class="button"
-                       onclick="Redirect('<?= base_url() . "report/sales_report/index" ?>')">&nbsp;
+                       onclick="Redirect('<?= base_url() . "report/salesReport/index" ?>')">&nbsp;
                 <input type="button" value="<?= $lang["title_split_orders"] ?>" class="button"
-                       onclick="Redirect('<?= base_url() . "report/sales_report/split_orders_report" ?>')">&nbsp;
+                       onclick="Redirect('<?= base_url() . "report/salesReport/splitOrdersReport" ?>')">&nbsp;
             </td>
-
         </tr>
         <tr>
             <td height="2" bgcolor="#000033" colspan="2"></td>
@@ -67,8 +53,6 @@ $today = getdate();
                                         clearance
                                     </option>
                                 </select>
-
-
                             </td>
                             <td align='right'><?= $lang["payment_gateway"] ?></td>
                             <td>
@@ -76,7 +60,7 @@ $today = getdate();
                                     <option value='-1'>-- Please select --</option>
                                     <?php
                                     foreach ($gateways as $gateway) {
-                                        print "<option value='" . $gateway->get_id() . "'>" . $gateway->get_name() . "</option>";
+                                        print "<option value='" . $gateway->getId() . "'>" . $gateway->getName() . "</option>";
                                     }
                                     ?>
                                 </select>
@@ -87,54 +71,18 @@ $today = getdate();
                                     <option value='-1'>-- Please select --</option>
                                     <?php
                                     foreach ($currencys as $currency) {
-                                        print "<option value='" . $currency->get_currency_id() . "'>" . $currency->get_currency_id() . "</option>";
+                                        print "<option value='" . $currency->getCurrencyId() . "'>" . $currency->getCurrencyId() . "</option>";
                                     }
                                     ?>
                                 </select>
                             </td>
                             <td align='right'><b><?= $lang["start_date"] ?></b></td>
-                            <td><b><select name="from_day">
-                                        <?php
-                                        for ($i = 1; $i <= 31; $i++) {
-                                            ?>
-                                            <option
-                                                value="<?php echo ($i < 10) ? "0$i" : "$i";?>" <?php echo ($i == $today['mday']) ? "selected" : "";?>>
-                                                <?php echo $i;?>
-                                            </option>
-                                        <?php
-                                        }
-                                        ?>
-                                    </select>
-                                    <select name="from_month">
-                                        <?php
-                                        for ($i = 1; $i <= 12; $i++) {
-                                            ?>
-                                            <option
-                                                value="<?php echo ($i < 10) ? "0$i" : "$i";?>" <?php echo ($i == $today['mon']) ? "selected" : "";?>>
-                                                <?php echo $i;?>
-                                            </option>
-                                        <?php
-                                        }
-                                        ?>
-                                    </select>
-                                    <select name="from_year">
-                                        <?php
-                                        $this_year = $today['year'];
-
-                                        $start = $this_year - 3;
-                                        $end = $this_year + 3;
-
-                                        for ($i = $start; $i <= $end; $i++) {
-                                            ?>
-                                            <option
-                                                value="<?php echo $i;?>" <?php echo ($i == $this_year) ? "selected" : "";?>>
-                                                <?php echo $i;?>
-                                            </option>
-                                        <?php
-                                        }
-                                        ?>
-                                    </select>
-                                </b>
+                            <td>
+                                <input id="start_date" name="start_date"
+                                       value='<?= htmlspecialchars($start_date) ?>'><img src="/images/cal_icon.gif"
+                                                                                         class="pointer"
+                                                                                         onclick="showcalendar(event, document.fm.start_date, false, false, false, '2012-05-01')"
+                                                                                         align="absmiddle">
                             </td>
                             <td rowspan="2" align="center"><input type="submit" value="" class="search_button"
                                                                   style="background: url('<?= base_url() ?>/images/find.gif') #CCCCCC no-repeat center; width: 30px; height: 25px;">
@@ -163,7 +111,7 @@ $today = getdate();
                                     <option value='-1'>-- Please select --</option>
                                     <?php
                                     foreach ($countrys as $country) {
-                                        print "<option value='" . $country->get_id() . "'>" . $country->get_name() . "</option>";
+                                        print "<option value='" . $country->getId() . "'>" . $country->getName() . "</option>";
                                     }
                                     ?>
                                 </select>
@@ -178,48 +126,11 @@ $today = getdate();
                             </td>
                             <td align='right'><b><?= $lang["end_date"] ?></b></td>
                             <td>
-                                <select name="to_day">
-                                    <?php
-                                    for ($i = 1; $i <= 31; $i++) {
-                                        ?>
-                                        <option
-                                            value="<?php echo ($i < 10) ? "0$i" : "$i";?>" <?php echo ($i == $today['mday']) ? "selected" : "";?>>
-                                            <?php echo $i;?>
-                                        </option>
-                                    <?php
-                                    }
-                                    ?>
-                                </select>
-                                <select name="to_month">
-                                    <?php
-                                    for ($i = 1; $i <= 12; $i++) {
-                                        ?>
-                                        <option
-                                            value="<?php echo ($i < 10) ? "0$i" : "$i";?>" <?php echo ($i == $today['mon']) ? "selected" : "";?>>
-                                            <?php echo $i;?>
-                                        </option>
-                                    <?php
-                                    }
-                                    ?>
-                                </select>
-                                <select name="to_year">
-                                    <?php
-                                    $this_year = $today['year'];
-
-                                    $start = $this_year - 3;
-                                    $end = $this_year + 3;
-
-                                    for ($i = $start; $i <= $end; $i++) {
-                                        ?>
-                                        <option
-                                            value="<?php echo $i;?>" <?php echo ($i == $this_year) ? "selected" : "";?>>
-                                            <?php echo $i;?>
-                                        </option>
-                                    <?php
-                                    }
-                                    ?>
-                                </select>
-
+                                <input id="end_date" name="end_date"
+                                       value='<?= htmlspecialchars($end_date) ?>'><img src="/images/cal_icon.gif"
+                                                                                         class="pointer"
+                                                                                         onclick="showcalendar(event, document.fm.end_date, false, false, false, '2012-05-01')"
+                                                                                         align="absmiddle">
                             </td>
                         </tr>
                     </table>
