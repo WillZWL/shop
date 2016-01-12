@@ -3,11 +3,11 @@ class PriceVo extends \BaseVo
 {
     private $id;
     private $sku;
-    private $platform_id = '';
+    private $platform_id;
     private $default_shiptype = '0';
     private $sales_qty = '0';
     private $price = '0.00';
-    private $vb_price = '0.00';
+    private $vb_price;
     private $status = 'I';
     private $allow_express = 'N';
     private $is_advertised = 'N';
@@ -22,6 +22,8 @@ class PriceVo extends \BaseVo
     private $fixed_rrp = 'Y';
     private $rrp_factor = '1.34';
     private $delivery_scenarioid = '1';
+    private $google_status = '';
+    private $google_update_result = '';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -282,6 +284,30 @@ class PriceVo extends \BaseVo
     public function getDeliveryScenarioid()
     {
         return $this->delivery_scenarioid;
+    }
+
+    public function setGoogleStatus($google_status)
+    {
+        if ($google_status !== null) {
+            $this->google_status = $google_status;
+        }
+    }
+
+    public function getGoogleStatus()
+    {
+        return $this->google_status;
+    }
+
+    public function setGoogleUpdateResult($google_update_result)
+    {
+        if ($google_update_result !== null) {
+            $this->google_update_result = $google_update_result;
+        }
+    }
+
+    public function getGoogleUpdateResult()
+    {
+        return $this->google_update_result;
     }
 
     public function setCreateOn($create_on)
