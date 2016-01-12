@@ -560,6 +560,7 @@ implements PaymentGatewayRedirectServiceInterface
         $replace["amount"] = platform_curr_format($soObj->getAmount(), 0);
         $replace["expect_ship_days"] = "";//$soObj->get_expect_ship_days();
         $replace["expect_del_days"] = "";//$soObj->get_expect_del_days();
+        $replace['site_url'] = base_url();
 
         $this->soids = $this->getSoItemDetail($soObj->getSoNo());
 /*
@@ -575,7 +576,7 @@ implements PaymentGatewayRedirectServiceInterface
             }
             $total += $item->getAmount();
 
-            $replace["so_items"] .=
+            $replace["so_items_text"] .=
                 "<tr>
                     <td style='padding:4px 20px; color:#444; font-family:Arial; font-size: 12px;'>" . $item->getProdName() . "</td>
                     <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $item->getQty() . "</td>
