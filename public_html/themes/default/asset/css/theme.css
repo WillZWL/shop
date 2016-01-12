@@ -156,7 +156,7 @@
     background-color: #323232;
 }
 #column-right{
-    height:1080px;
+    min-height:1080px;
 }
 .sidebar .list-group-item {
     border:2px solid #474747;
@@ -172,6 +172,10 @@
 }
 .list-group-item .show-more {
     color:#999;
+}
+
+.list-group-item .show-more a{
+    color:#999 !important;
 }
 
 .product-block .product-meta .action .cart{
