@@ -30,7 +30,7 @@
             <input type="hidden" name="formtype[<?= $platform ?>]" value="<?= $formtype[$platform] ?>">
         </td>
     </tr>
-     <tr>
+    <tr>
 
         <td width="20%" class="field"><?= $lang["advertised"] ?></td>
         <td width="30%" class="value">
@@ -39,7 +39,7 @@
             <?=(!$pdata[$platform_id]["enabled_pla_checkbox"]) ? "disabled" : "";?>>
 
             <?php if ($pdata[$platform_id]["gsc_comment"]) : ?>
-                <div style="color:<?= $pdata[$platform_id]["gsc_comment"] == 'Success' ? '#00FF00' : '#FF0000' ?>;width:80%x; height:50px;overflow:hidden" title='<?= $pdata[$platform_id]["gsc_comment"] ?>'>
+                <div style="color:<?= $pdata[$platform_id]["gsc_comment"] == 'Success' ? '#00FF00' : '#FF0000' ?>;" title='<?= $pdata[$platform_id]["gsc_comment"] ?>'>
                     <?= $pdata[$platform_id]["gsc_comment"] ?>
                 </div>
             <?php endif; ?>
@@ -47,6 +47,17 @@
         <td width="20%" class="field"><!--<?= $lang["allow_express"] ?>--></td>
         <td width="30%" class="value">
             <!-- <input type="checkbox" name="allow_express[<?= $platform ?>]" <?= ($price_obj->getAllowExpress() == 'Y' ? "CHECKED" : "") ?>> -->
+        </td>
+    </tr>
+    <tr>
+
+        <td width="20%" class="field"><?= $lang["google_status"] ?></td>
+        <td width="30%" class="value">
+            <?= $pobj->getGoogleStatus() ?>
+        </td>
+        <td width="20%" class="field"><?= $lang["google_update_result"] ?></td>
+        <td width="30%" class="value">
+            <?= $pobj->getGoogleUpdateResult() ?>
         </td>
     </tr>
     <tr>
