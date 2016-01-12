@@ -278,8 +278,12 @@
                             <td>
                                 <select name='plaapi' class='input'>
                                     <option></option>
-                                    <option value='1'>Success only</option>
-                                    <option value='0'>Fail only</option>
+                                    <option value='IS'>Insert Success</option>
+                                    <option value='IW'>Insert Warning</option>
+                                    <option value='IF'>Insert Fail</option>
+                                    <option value='DS'>Delete Success</option>
+                                    <option value='DW'>Delete Warning</option>
+                                    <option value='DF'>Delete Fail</option>
                                 </select>
                             </td>
                             <td style="padding-right:8px" align="right">
@@ -432,6 +436,9 @@
                                 PLA <br>
                                 <input type="checkbox" id="chkpla" name="chkpla" onClick="checkall_ele('<?= $this->input->get("pfid") ?>','chkpla','is_advertised[<?= $platform_id ?>][]');">
                             </td>
+                            <td title="pla result" align="center">
+                                PLA Result
+                            </td>
                             <td title="Adwords" align="center">
                                 Adwords <br>
                                 <input type="checkbox" id="chkadw" name="chkadw" onClick="checkall_ele('<?= $this->input->get("pfid") ?>','chkadw','google_adwords[<?= $platform_id ?>][]');">
@@ -525,6 +532,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td align="center">
                                 <input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">
                                 <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
@@ -547,6 +555,11 @@
                         $website_quantity = $product->getWebsiteQuantity();
                         $website_status = $product->getWebsiteStatus();
                         $auto_price = $product->getAutoPrice();
+                        $is_advertised = $product->getIsAdvertised();
+                        $gsc_comment = $product->getGscComment();
+                        $enabled_pla_checkbox = $product->getEnabledPlaCheckbox();
+                        $pla_status = $product->getGoogleStatus();
+                        $pla_last_update_result = ($product->getGoogleUpdateResult() != '') ? '<'. $product->getGoogleUpdateResult() . '>' : '';
                 ?>
                         <tr onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')">
                             <td>&nbsp;</td>
@@ -583,11 +596,11 @@
                             </td>
                             <td><?= $lang['supplier_status'][$product->getSupplierStatus()] ?></td>
                             <td><?= $product->getModifyOn() ?></td>
-                            <!-- PLA -->
                             <td>
-                                <!-- <input type='checkbox' id='pla_cb[{$platform}][{$sku}]' name='is_advertised[{$platform}][]' value = '$sku' $plachecked $pladisable onClick='needToConfirm=true'>$gsc_comment -->
+                                <input type="checkbox" <?= ($is_advertised === 'Y') ? 'checked' : '' ?> name='<?= "price[{$sku}][{$platform_id}][is_advertised]" ?>' <?= ($enabled_pla_checkbox) ?: 'disabled' ?> value="Y">
+                                <?= $gsc_comment ?>
                             </td>
-                            <!-- Adwords -->
+                            <td><?= $pla_status . $pla_last_update_result; ?></td>
                             <td>
                                 <!-- $adwords_input $adGroup_status -->
                             </td>
@@ -648,10 +661,6 @@
                  }
              }
          }
-
-        // function CheckProfit(f) {
-        //     return true;
-        // }
     </script>
 </body>
 </html>
