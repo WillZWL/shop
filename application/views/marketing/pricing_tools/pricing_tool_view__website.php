@@ -30,7 +30,7 @@
             <input type="hidden" name="formtype[<?= $platform ?>]" value="<?= $formtype[$platform] ?>">
         </td>
     </tr>
-     <tr>
+    <tr>
 
         <td width="20%" class="field"><?= $lang["advertised"] ?></td>
         <td width="30%" class="value">
@@ -47,6 +47,17 @@
         <td width="20%" class="field"><!--<?= $lang["allow_express"] ?>--></td>
         <td width="30%" class="value">
             <!-- <input type="checkbox" name="allow_express[<?= $platform ?>]" <?= ($price_obj->getAllowExpress() == 'Y' ? "CHECKED" : "") ?>> -->
+        </td>
+    </tr>
+    <tr>
+
+        <td width="20%" class="field"><?= $lang["google_status"] ?></td>
+        <td width="30%" class="value">
+            <?= $pobj->getGoogleStatus() ?>
+        </td>
+        <td width="20%" class="field"><?= $lang["google_update_result"] ?></td>
+        <td width="30%" class="value">
+            <?= $pobj->getGoogleUpdateResult() ?>
         </td>
     </tr>
     <tr>

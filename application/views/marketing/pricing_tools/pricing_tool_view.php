@@ -49,7 +49,7 @@
                 <tr>
                     <td height="60" align="left" style="padding-left:8px;">
                         <div style="float:left"><img src='<?= get_image_file($prod_obj->getImage(), 's', $prod_obj->getSku()) ?>'> &nbsp;</div>
-                        <b style="font-size: 12px;"><?= $lang["header"] ?></b><br><?= $lang["header_message"] . " - " ?>
+                        <b style="font-size: 12px;"><?= $lang["header"] ?> ( <?= $platform_type ?> )</b><br><?= $lang["header_message"] . " - " ?>
                         <b>
                             <a href="<?= ($website_product_url ? $website_product_url : "javascript:void(0)" )?>" target="_blank">
                                 <font style="text-decoration:none; color:#000000; font-size:14px;">
