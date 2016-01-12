@@ -111,7 +111,7 @@ class PendingGoogleApiRequestDao extends BaseDao
                     if (!is_array($skus))
                         $skus = [$skus];
                     foreach($skus as $sku) {
-                        $sql .= "('" . $platformId . "', '" . $sku . "', 'D', 'online:" . $language_id . ":" . $platform_country_id . ":" . $platform_country_id . "-991412205', now(), '2130706433', '" . $userId . "', '2130706433', '" . $userId . "'),";
+                        $sql .= "('" . $platformId . "', '" . $sku . "', 'D', 'online:" . $language_id . ":" . $platform_country_id . ":" . $platform_country_id . "-" . $sku . "', now(), '2130706433', '" . $userId . "', '2130706433', '" . $userId . "'),";
                     }
                     $sql = rtrim($sql, ",");
                     $result = $this->db->query($sql);

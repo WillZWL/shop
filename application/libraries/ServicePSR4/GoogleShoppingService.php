@@ -420,9 +420,9 @@ class GoogleShoppingService extends BaseService
                 }
             } while ($i<sizeof($processingList));
             unset($reOrderList, $processingList);
-            $insertToPriceExtendResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->insertBatchRequestToPriceExtend($batchId);
-            $updateToPriceExtendResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->updateBatchRequestToPriceExtend($batchId);
-            if ($updateToPriceExtendResult === false) {
+//            $insertToPriceExtendResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->insertBatchRequestToPriceExtend($batchId);
+            $updateToPriceResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->updateBatchRequestToPrice($batchId);
+            if ($updateToPriceResult === false) {
                 $this->_sendAlert("[Panther] cannot updaet price extend", $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
             }
         } else {
