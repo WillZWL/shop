@@ -50,7 +50,7 @@ class GoogleApiRequestDao extends BaseDao
 //        print $sql;
         return $result;
     }
-
+/*
     public function insertBatchRequestToPriceExtend($batchId) {
         $userId = $this->getUserId();
         $sql = "insert ignore into price_extend (sku, platform_id, ext_status, last_update_result, create_on, create_at, create_by, modify_at, modify_by)
@@ -59,12 +59,12 @@ class GoogleApiRequestDao extends BaseDao
 
         return $this->db->query($sql);
     }
-
-    public function updateBatchRequestToPriceExtend($batchId) {
+*/
+    public function updateBatchRequestToPrice($batchId) {
         $userId = $this->getUserId();
-        $sql = "update price_extend pex
-                inner join google_api_request gar on gar.sku=pex.sku and gar.platform_id=pex.platform_id
-                set ext_status=CONCAT(gar.google_product_status, gar.result), last_update_result=gar.key_message, gar.modify_by='" . $userId . "'
+        $sql = "update price pr
+                inner join google_api_request gar on gar.sku=pr.sku and gar.platform_id=pr.platform_id
+                set google_status=CONCAT(gar.google_product_status, gar.result), google_update_result=gar.key_message, gar.modify_by='" . $userId . "'
                 where gar.request_batch_id=" . $batchId;
 
         return $this->db->query($sql);
