@@ -94,7 +94,9 @@ class PriceDao extends BaseDao
                             pbv.forex_fee_percent AS forex_fee_percent,
                             pr.id price_id,
                             pr.price,
-                            pr.listing_status
+                            pr.listing_status,
+                            pr.google_status,
+                            pr.google_update_result
                             ";
         }
 

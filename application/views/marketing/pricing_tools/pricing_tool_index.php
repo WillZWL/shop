@@ -27,14 +27,14 @@
     <table cellpadding="0" cellspacing="0" width="100%" border="0">
         <tr>
             <td align="left" class="title" height="30"><b style="font-size: 16px; color: rgb(0, 0, 0);">
-                    <?= $lang["title"] ?></b>
+                    <?= $lang["title"] ?> ( <?= $platform_type ?> )</b>
             </td>
         </tr>
         <tr>
             <td height="2" bgcolor="#000033"></td>
         </tr>
     </table>
-    <form name="fm" action="<?= base_url() . $this->tool_path ?>" method="get">
+    <form name="fm" action="<?= base_url() . $this->tool_path .'/index/'.$platform_type?>" method="get">
         <table cellpadding="0" cellspacing="0" border="0" width="100%" class="page_header">
             <tr height="70">
                 <td align="left" style="padding-left:8px;"><b
@@ -53,11 +53,12 @@
                             <td class="right"><b><?= $lang["platform_type"] ?></b></td>
                             <td>
                                 <?php
-                                    $platform = $this->input->get('platform_type') ? $this->input->get('platform_type') : "WEBSITE";
+                                    $platform = $platform_type ? $platform_type : "WEBSITE";
                                     $pt_select[$platform] = "selected"
                                 ?>
-                                <select name="platform_type">
-                                    <?php foreach ($platform_type as $type) : ?>
+                                <!-- name="platform_type" -->
+                                <select  onChange="Redirect('<?= base_url() . $this->tool_path ?>/index/'+this.value+'?<?= $_SERVER['QUERY_STRING'] ?>')">
+                                    <?php foreach ($platform_type_list as $type) : ?>
                                     <option <?= $pt_select[$type] ?>><?= $type ?></option>
                                 <?php endforeach; ?>
                                 </select>
@@ -87,7 +88,7 @@
             </tr>
         </table>
     </form>
-    <iframe name="plist" id="plist" src="<?= base_url() . $this->tool_path ?>/plist/?<?= $_SERVER['QUERY_STRING'] ?>"
+    <iframe name="plist" id="plist" src="<?= base_url() . $this->tool_path ?>/plist/<?= $platform_type ?>?<?= $_SERVER['QUERY_STRING'] ?>"
             width="200" style="float:left;border-right:1px solid #000000;" noresize frameborder="0" marginwidth="0"
             marginheight="0" hspace=0 vspace=0 onLoad="SetFrameFullHeight(this)"></iframe>
     <iframe name="pview" id="pview" src="" width="1059" style="float:left;border-left:1px solid #999999;" noresize
