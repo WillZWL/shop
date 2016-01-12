@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all" />
     <link rel="stylesheet" href="<?= base_url() ?>css/bootstrap.min.css" type="text/css" media="all" />
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="<?= base_url() ?>css/colorbox.css" />
     <script type="text/javascript" src="<?= base_url() ?>js/jquery-colorbox.min.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
@@ -14,6 +15,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
         selectOptions();
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
     function selectOptions() {
@@ -559,7 +561,7 @@
                         $gsc_comment = $product->getGscComment();
                         $enabled_pla_checkbox = $product->getEnabledPlaCheckbox();
                         $pla_status = $product->getGoogleStatus();
-                        $pla_last_update_result = ($product->getGoogleUpdateResult() != '') ? '<'. $product->getGoogleUpdateResult() . '>' : '';
+                        $pla_last_update_result = $product->getGoogleUpdateResult();
                 ?>
                         <tr onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')">
                             <td>&nbsp;</td>
@@ -600,7 +602,7 @@
                                 <input type="checkbox" <?= ($is_advertised === 'Y') ? 'checked' : '' ?> name='<?= "price[{$sku}][{$platform_id}][is_advertised]" ?>' <?= ($enabled_pla_checkbox) ?: 'disabled' ?> value="Y">
                                 <?= $gsc_comment ?>
                             </td>
-                            <td><?= $pla_status . $pla_last_update_result; ?></td>
+                            <td><a href="#" data-toggle="tooltip" data-placement="top" title="<?= $pla_last_update_result ?>"><?= $pla_status ?></a></td>
                             <td>
                                 <!-- $adwords_input $adGroup_status -->
                             </td>
@@ -619,8 +621,8 @@
                                 <?= $product->getPlatformCurrencyId() . ' ' . $product->getPrice() ?>
                                 <input type="text" name='<?= "price[{$sku}][{$platform_id}][price]" ?>'>
                             </td>
-                            <td><?= $product->getProfit() ?></td>
-                            <td><?= $product->getMargin() ?>%</td>
+                            <td><span class="<?= ($product->getProfit() < 0) ? 'negative_margin' : '' ?>"><?= $product->getProfit() ?></span></td>
+                            <td><span class="<?= ($product->getMargin() < 0) ? 'negative_margin' : '' ?>"><?= $product->getMargin() ?>%</span></td>
                             <td><input type="checkbox" name='<?= "check[] ?>" ?>' value="<?= $sku.'||'.$platform_id ?>" onclick="Marked(this);"></td>
                         </tr>
                 <?php endforeach ?>
