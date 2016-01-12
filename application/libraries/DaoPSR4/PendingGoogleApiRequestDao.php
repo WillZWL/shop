@@ -70,20 +70,21 @@ class PendingGoogleApiRequestDao extends BaseDao
                     $queryStr .= "'" . $v . "',";
                 }
                 $queryStr = rtrim($queryStr, ',');
-                $where = " and pex.sku in (" . $queryStr . ")";
+                $where = " and pr.sku in (" . $queryStr . ")";
             } else {
-                $where = " and pex.sku in ('" . $sku . "')";
+                $where = " and pr.sku in ('" . $sku . "')";
             }
         }
-        $sql = "select pex.sku, ext_status, pgar.google_product_status from price_extend pex
-                left join pending_google_api_request pgar on pgar.sku=pex.sku and pex.platform_id=pgar.platform_id
-                where pex.platform_id='" . $platformId . "'" . $where;
+        $sql = "select pr.sku, pr.google_status, pgar.google_product_status from price pr
+                left join pending_google_api_request pgar on pgar.sku=pr.sku and pr.platform_id=pgar.platform_id
+                where pr.platform_id='" . $platformId . "'" . $where;
         $queryResult = $this->db->query($sql);
         if ($queryResult) {
             if ($data = $queryResult->result_array()) {
 //            var_dump($data);
                 foreach($data as $record) {
-                    if (($record["ext_status"] != "DS") || ($record["google_product_status"] == "I"))
+                    if ((($record["google_status"] != "DS") && ($record["google_status"] <> ""))
+                        || ($record["google_product_status"] == "I"))
                         array_push($finalDelete, $record["sku"]);
                 }
             } else {
@@ -111,7 +112,7 @@ class PendingGoogleApiRequestDao extends BaseDao
                     if (!is_array($skus))
                         $skus = [$skus];
                     foreach($skus as $sku) {
-                        $sql .= "('" . $platformId . "', '" . $sku . "', 'D', 'online:" . $language_id . ":" . $platform_country_id . ":" . $platform_country_id . "-991412205', now(), '2130706433', '" . $userId . "', '2130706433', '" . $userId . "'),";
+                        $sql .= "('" . $platformId . "', '" . $sku . "', 'D', 'online:" . $language_id . ":" . $platform_country_id . ":" . $platform_country_id . "-" . $sku . "', now(), '2130706433', '" . $userId . "', '2130706433', '" . $userId . "'),";
                     }
                     $sql = rtrim($sql, ",");
                     $result = $this->db->query($sql);

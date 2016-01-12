@@ -1629,7 +1629,7 @@ html;
                         }
                         $this->product_model->product_service->get_dao()->trans_complete();
 
-                        $this->product_update_followup_service->google_shopping_update($sku);
+                        // $this->product_update_followup_service->google_shopping_update($sku);
                         unset($_SESSION["product_obj"]);
                         unset($_SESSION["prod_cont_vo"]);
                         unset($_SESSION["prod_cont_ext_vo"]);

@@ -37,6 +37,8 @@ class PriceWithCostDto
     private $margin;
     private $price = '0.00';
     private $price_id;
+    private $google_status;
+    private $google_update_result;
 
     private $whfc_cost;
     private $amazon_efn_cost;
@@ -399,6 +401,26 @@ class PriceWithCostDto
     public function setPriceId($price_id)
     {
         $this->price_id = $price_id;
+    }
+
+    public function getGoogleStatus()
+    {
+        return $this->google_status;
+    }
+
+    public function setGoogleStatus($google_status)
+    {
+        $this->google_status = $google_status;
+    }
+
+    public function getGoogleUpdateResult()
+    {
+        return $this->google_update_result;
+    }
+
+    public function setGoogleUpdateResult($google_update_result)
+    {
+        $this->google_update_result = $google_update_result;
     }
 
     public function getWhfcCost()

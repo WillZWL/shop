@@ -65,18 +65,27 @@ class PricingToolService extends BaseService
                             $param['scenarioid'] = $price_obj->getDeliveryScenarioid();
                             $param['is_advertised'] = $price_obj->getIsAdvertised();
                             $param['current_price'] = $tmp_obj["dst"]->getPrice() ? $tmp_obj["dst"]->getPrice() : $tmp_obj["dst"]->getDefaultPlatformConvertedPrice() ? $tmp_obj["dst"]->getDefaultPlatformConvertedPrice() : 0;
-                            $param['lang_id'] = $platform_obj->getLanguageId();
-                            $param['prod_obj'] = $prod_obj;
+
+                            $dto = new \ProductGoogleGscCommentDto;
+
+                            $dto->setSku($prod_sku);
+                            $dto->setProdGrpCd($prod_obj->getProdGrpCd());
+                            $dto->setColourId($prod_obj->getColourId());
+                            $dto->setLangId($platform_obj->getLanguageId());
+                            $dto->setCountryId($platform_obj->getPlatformCountryId());
+                            $dto->setProdStatus($prod_obj->getStatus());
 
                             $website_data = $this->getService('PricingToolWebsite')->getPrivateDataForWebsite($param);
+
+                            $googleGscComment = $this->getService('PricingToolWebsite')->getGoogleGscComment($dto);
 
                             $data['delivery_info'][$platform_id] = $website_data['delivery_info'];
                             $data["feed_include"][$platform_id] = $website_data['feed_include'];
                             $data["feed_exclude"][$platform_id] = $website_data['feed_exclude'];
                             $pdata[$platform_id]["competitor"] = $website_data['competitor'];
                              // $pdata[$platform_id]["adwords_obj"] = $website_data['adwords_obj'];
-                            $pdata[$platform_id]["gsc_comment"] = $website_data['gsc_comment'];
-                            $pdata[$platform_id]["enabled_pla_checkbox"] = $website_data['enabled_pla_checkbox'];
+                            $pdata[$platform_id]["gsc_comment"] = $googleGscComment['gsc_comment'];
+                            $pdata[$platform_id]["enabled_pla_checkbox"] = $googleGscComment['enabled_pla_checkbox'];
                             break;
 
                         default:
