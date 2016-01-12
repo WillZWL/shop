@@ -39,7 +39,7 @@
             <?=(!$pdata[$platform_id]["enabled_pla_checkbox"]) ? "disabled" : "";?>>
 
             <?php if ($pdata[$platform_id]["gsc_comment"]) : ?>
-                <div style="color:<?= $pdata[$platform_id]["gsc_comment"] == 'Success' ? '#00FF00' : '#FF0000' ?>;width:80%x; height:50px;overflow:hidden" title='<?= $pdata[$platform_id]["gsc_comment"] ?>'>
+                <div style="color:<?= $pdata[$platform_id]["gsc_comment"] == 'Success' ? '#00FF00' : '#FF0000' ?>;" title='<?= $pdata[$platform_id]["gsc_comment"] ?>'>
                     <?= $pdata[$platform_id]["gsc_comment"] ?>
                 </div>
             <?php endif; ?>
