@@ -8101,6 +8101,10 @@ body.layout-boxed-lg #page {
   color:#fff;
 }
 
+.sidebar .panel .displaydata a {
+  color:#fff;
+}
+
 
 /* line 27, ../development/scss/app/_block.scss */
 .sidebar .panel .panel-heading.nopadding {
