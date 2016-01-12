@@ -646,8 +646,9 @@ class CI_Pagination {
 		// in the penultimate link so we'll kill all double slashes.
 		$output = preg_replace('#([^:])//+#', '\\1/', $output);
 
+
 		// Add the wrapper HTML if exists
-		return $this->full_tag_open.$output.$this->full_tag_close;
+		return $this->full_tag_open.$output.'<li><span>' . ($this->cur_page -1) * $this->per_page . ' to ' . $this->cur_page * $this->per_page . ' of ' . $this->total_rows.' records. </span></li>'.$this->full_tag_close;
 	}
 
 	// --------------------------------------------------------------------
