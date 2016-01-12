@@ -567,7 +567,7 @@ implements PaymentGatewayRedirectServiceInterface
         $ca_catid_arr = implode(',', $this->get_ca_srv()->get_accessory_catid_arr());
         $so_items = $so_srv->get_soi_dao()->get_items_w_name(array("so_no" => $soObj->get_so_no(), "p.cat_id NOT IN ($ca_catid_arr)" => null), array("lang_id" => $lang_id));
 */
-        $replace["so_items"] = "";
+        $replace["so_items_texts"] = '<table>';
         $isPreorder = false;
         foreach($this->soids as $item) {
             $websiteStatus = $item->getWebsiteStatus();
@@ -584,6 +584,7 @@ implements PaymentGatewayRedirectServiceInterface
                     <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currencySign . " " . platform_curr_format(($item->getUnitPrice() * $item->getQty()), 0) . "</td>
                 </tr>\n";
         }
+        $replace["so_items_texts"] = '</table>';
 
         #SBF #2789 user input fixed delivery days
         // $replace["delivery_days"] = $this->get_del_srv()->get_working_days($soObj->get_delivery_type_id(), $soObj->get_delivery_country_id());
