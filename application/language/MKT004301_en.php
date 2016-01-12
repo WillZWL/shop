@@ -144,4 +144,6 @@
         "enditem" => "End Item",
         "update_prod_for_price_tool" => "Update Product For Pricing Tool",
         "submit_all_changes" => "Submit All Changes",
+        "google_status" => "Google Status",
+        "google_update_result" => "Google Update Result",
     ];

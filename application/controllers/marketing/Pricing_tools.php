@@ -16,18 +16,19 @@ class pricing_tools extends MY_Controller
         $this->default_platform_id = $this->sc['ContextConfig']->valueOf("default_platform_id");
     }
 
-    public function index()
+    public function index($platform_type = "WEBSITE")
     {
         $data = [];
         include_once APPPATH . "language/" . $this->getAppId() . "00_" . $this->getLangId() . ".php";
         $data["lang"] = $lang;
-        // $data["platform_type"] = ['EBAY', 'FNAC', 'QOO10', 'RAKUTEN', 'WEBSITE'];
-        $data["platform_type"] = ['EBAY', 'WEBSITE'];
+        // $data["platform_type_list"] = ['EBAY', 'FNAC', 'QOO10', 'RAKUTEN', 'WEBSITE'];
+        $data["platform_type_list"] = ['EBAY', 'WEBSITE'];
+        $data["platform_type"] = $platform_type;
 
         $this->load->view($this->tool_path . "/pricing_tool_index", $data);
     }
 
-    public function plist()
+    public function plist($platform_type = "WEBSITE")
     {
         $where = $option = [];
         $sub_app_id = $this->getAppId() . "02";
@@ -36,7 +37,7 @@ class pricing_tools extends MY_Controller
         $sku = $this->input->get("sku");
         $prod_name = $this->input->get("name");
         $master_sku = $this->input->get("master_sku");
-        $platform_type = $this->input->get("platform_type");
+        // $platform_type = $this->input->get("platform_type");
 
         if ($sku != "" || $prod_name != "" || $master_sku != "") {
             $data["search"] = 1;
