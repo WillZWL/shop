@@ -125,7 +125,6 @@ class ProductDao extends BaseDao
         $this->db->from('product as p');
         $this->db->join('sku_mapping sm', 'p.sku = sm.sku', 'inner');
         $this->db->join('price as pr', 'p.sku = pr.sku', 'inner');
-        // $this->db->join('price_extend pre', 'pr.sku = pre.sku and pr.platform_id = pre.platform_id', 'LEFT');
         $this->db->join('price_margin pm', 'pr.sku = pm.sku and pr.platform_id = pm.platform_id', 'inner');
         $this->db->join('supplier_prod sp', 'p.sku = sp.prod_sku and sp.order_default = 1', 'inner');
         $this->db->join('platform_biz_var pbv', 'pr.platform_id = pbv.selling_platform_id', 'inner');
@@ -139,7 +138,7 @@ class ProductDao extends BaseDao
 
         if ($select_str == '') {
             $select_str = 'p.sku, p.name, p.status, p.prod_grp_cd, p.clearance, p.colour_id, p.surplus_quantity, p.website_quantity, p.website_status, sm.ext_sku,
-            pr.listing_status, pr.price, pr.vb_price, pr.is_advertised, pr.platform_id, pr.auto_price, pm.total_cost, pm.profit, pm.margin, sp.supplier_status,
+            pr.listing_status, pr.price, pr.vb_price, pr.is_advertised, pr.google_status, pr.google_update_result, pr.platform_id, pr.auto_price, pm.total_cost, pm.profit, pm.margin, sp.supplier_status,
             p.modify_on, pbv.platform_currency_id, pbv.platform_country_id, pbv.language_id';
             if ($option['show_name']) {
                 $select_str .= ', p.image, c.name AS category, sc.name AS sub_category, ssc.name AS sub_sub_category, b.brand_name';

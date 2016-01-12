@@ -18,6 +18,8 @@ class ProductOverviewDto
     private $price;
     private $vb_price;
     private $is_advertised;
+    private $google_status;
+    private $google_update_result;
     private $auto_price;
     private $total_cost;
     private $profit;
@@ -194,6 +196,26 @@ class ProductOverviewDto
     public function setIsAdvertised($is_advertised)
     {
         $this->is_advertised = $is_advertised;
+    }
+
+    public function getGoogleStatus()
+    {
+        return $this->google_status;
+    }
+
+    public function setGoogleStatus($google_status)
+    {
+        $this->google_status = $google_status;
+    }
+
+    public function getGoogleUpdateResult()
+    {
+        return $this->google_update_result;
+    }
+
+    public function setGoogleUpdateResult($google_update_result)
+    {
+        $this->google_update_result = $google_update_result;
     }
 
     public function getAutoPrice()

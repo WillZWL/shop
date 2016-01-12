@@ -176,7 +176,6 @@ class ProductService extends BaseProductService
     public function getProductOverview($where = [], $option = [])
     {
         $prod_obj_list = $this->getDao('Product')->getProductOverview($where, $option);
-        // echo $this->getDao('Product')->db->last_query();die;
 
         if (is_array($prod_obj_list)) {
             foreach ($prod_obj_list as $key => $prod_obj) {
