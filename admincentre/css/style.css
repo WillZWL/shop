@@ -24,6 +24,10 @@ form {
 img {
   border: 0px;
 }
+.negative_margin {
+  color: red;
+  font-weight: bold;
+}
 .value_red {
   color: #FFFFFF;
   background: #FF0805;

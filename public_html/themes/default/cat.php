@@ -10,34 +10,65 @@
                             <p><?= _('Refine Search') ?></p>
                             <li class="list-group-item accordion-group">
                                 <a href=""class="active"><span id="list-group-item-title" ><?= _('Categories') ?></span></a>
-                                <ul class="collapse accordion-body in">
+                                <ul class="collapse accordion-body displaydata in ">
                                     <?php
                                     if ($cat_result) {
+                                        $num_cat = 0;
                                         foreach($cat_result as $cat) {
+                                            $num_cat = $num_cat + 1;
+                                            if ($num_cat == 8)
+                                            {
                                     ?>
-                                        <li>
-                                            <a href="<?=$cat['url']?>"><?=$cat['name']?> (<?=$cat['total']?>)</a>
-                                        </li>
+
+                                </ul>
+                                <ul  id="accordiondata" class="accordion-body collapse">
+
+                                    <?php
+                                            }
+                                    ?>
+
+                                    <li>
+                                        <a href="<?=$cat['url']?>"><?=$cat['name']?> (<?=$cat['total']?>)</a>
+                                    </li>
+
+
                                     <?php
                                         }
                                     }
                                     ?>
-                                    <!--<li>
+                                </ul>
+                                <?php
+                                    if ($num_cat > 8)
+                                    {
+                                ?>
                                         <div class="show-more">
-                                            <?= _('Show more') ?>
+                                            <a href="#accordiondata" data-toggle="collapse" id="lblmore"><?= _('Show more') ?></a>
+                                            <a href="#accordiondata" data-toggle="collapse" id="lblless" class="hide"><?= _('Show less') ?></a>
                                             <span data-toggle="collapse"  data-target="#accordiondata" class="bg collapsed">
                                                 <i class="fa fa-angle-down"></i>
                                             </span>
                                         </div>
-                                    </li>-->
-                                </ul>
+                                <?php
+                                    }
+                                ?>
                             </li>
                             <li class="list-group-item accordion-group">
-                                <a href="" class="active list-group-item-title"><?= _('Brands') ?></a>
-                                <ul class="collapse accordion-body in">
+                                <a href="" class="list-group-item-title"><?= _('Brands') ?></a>
+                                <ul class="collapse accordion-body displaydata in ">
                                     <?php
                                     if ($brand_result) {
+                                        $num_brand = 0;
                                         foreach($brand_result as $brand) {
+                                            $num_brand = $num_brand + 1;
+                                            if ($num_brand == 8)
+                                            {
+                                    ?>
+
+                                </ul>
+                                <ul  id="accordiondata1" class="collapse accordion-body">
+
+                                    <?php
+                                            }
                                     ?>
                                         <li>
                                             <a href="?brand_id=<?=$brand['id']?>"><?=$brand['name']?> (<?=$brand['total']?>)</a>
@@ -46,16 +77,21 @@
                                         }
                                     }
                                     ?>
-
-                                    <!--<li>
+                                </ul>
+                                <?php
+                                    if ($num_brand > 8)
+                                    {
+                                ?>
                                         <div class="show-more">
-                                            <?= _('Show more') ?>
-                                            <span data-toggle="collapse"  data-target="#accordiondata" class="bg collapsed">
+                                            <a href="#accordiondata1" data-toggle="collapse" id="lblmore1"><?= _('Show more') ?></a>
+                                            <a href="#accordiondata1" data-toggle="collapse" id="lblless1" class="hide"><?= _('Show less') ?></a>
+                                            <span data-toggle="collapse"  data-target="#accordiondata1" class="bg collapsed">
                                                 <i class="fa fa-angle-down"></i>
                                             </span>
                                         </div>
-                                    </li>-->
-                                </ul>
+                                <?php
+                                    }
+                                ?>
                             </li>
                         </li>
                     </ul>
@@ -64,13 +100,34 @@
             <script type="text/javascript">
                 $(document).ready(function(){
                     var active = $('.collapse.in').attr('id');
+                    //$('span[data-target=#accordiondata]').html("<i class='fa fa-angle-down'></i>");
                     $('span[data-target=#'+active+']').html("<i class='fa fa-angle-down'></i>");
 
-                    $('.collapse').on('show.bs.collapse', function () {
-                        $('span[data-target=#'+$(this).attr('id')+']').html("<i class='fa fa-angle-down'></i>");
-                    });
                     $('.collapse').on('hide.bs.collapse', function () {
+                        $('span[data-target=#'+$(this).attr('id')+']').html("<i class='fa fa-angle-down'></i>");
+                        if ($(this).attr('id')=='accordiondata')
+                        {
+                            $('#lblmore').removeClass('hide');
+                            $('#lblless').addClass('hide');
+                        }
+                        else
+                        {
+                            $('#lblmore1').removeClass('hide');
+                            $('#lblless1').addClass('hide');
+                        }
+                    });
+                    $('.collapse').on('show.bs.collapse', function () {
                         $('span[data-target=#'+$(this).attr('id')+']').html("<i class='fa fa-angle-right'></i>");
+                        if ($(this).attr('id')=='accordiondata')
+                        {
+                            $('#lblless').removeClass('hide');
+                            $('#lblmore').addClass('hide');
+                        }
+                        else
+                        {
+                            $('#lblless1').removeClass('hide');
+                            $('#lblmore1').addClass('hide');
+                        }
                     });
                 });
             </script>
