@@ -584,7 +584,7 @@ implements PaymentGatewayRedirectServiceInterface
                     <td align='left' valign='top' style='padding:4px 10px; color:#444; font-family:Arial; font-size: 12px;'>" . $currencySign . " " . platform_curr_format(($item->getUnitPrice() * $item->getQty()), 0) . "</td>
                 </tr>\n";
         }
-        $replace["so_items_text"] = '</table>';
+        $replace["so_items_text"] .= '</table>';
 
         #SBF #2789 user input fixed delivery days
         // $replace["delivery_days"] = $this->get_del_srv()->get_working_days($soObj->get_delivery_type_id(), $soObj->get_delivery_country_id());
