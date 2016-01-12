@@ -183,35 +183,7 @@ class GoogleConnectService extends BaseService
         }
         return $errorMessage;
     }
-/*
-    private function _formBatchDeleteEntries($productIdBatch) {
-        $entries = [];
-        if (isset($productIdBatch)) {
-            $uniqueBatchId = date("his");
-            foreach ($productIdBatch as $key => $productId)  {
-                $entry = new \Google_Service_ShoppingContent_ProductsCustomBatchRequestEntry();
-                $entry->setMethod('delete');
-                $entry->setBatchId($uniqueBatchId);
-                $entry->setProductId($productId->getGoogleRefId());
-                $entry->setMerchantId($accountId);
-                $entries[$key] = $entry;
-                $key++;
-            }
-        }
-        return $entries;
-    }
 
-    private function _sendBatchRequest($service, $entries) {
-        $batchRequest = new \Google_Service_ShoppingContent_ProductsCustomBatchRequest();						
-        $batchRequest->setEntries($entries);
-        if ($this->debug) {
-            $batchResponse = $service->products->custombatch($batchRequest, ["dryRun" => true]);
-        } else {
-            $batchResponse = $service->products->custombatch($batchRequest);
-        }
-        return $batchResponse;
-    }
-*/
     public function deleteAllProductFromPlatform($platformId) {
         $accountInfo = $this->getService("Google")->shoppingAcctInfo;
         $productList = $this->listProducts($accountInfo[$platformId]["account_id"]);
@@ -239,58 +211,7 @@ class GoogleConnectService extends BaseService
                 $this->_sendAlert("[Panther] cannot do batch delete before update all sku in platformId:" . $platformId, $errorMessage);
         }
     }
-/*
-    public function deleteProductBatch($accountId, $productIdBatch) {
-        $ret = ["status" => FALSE, "error_message" => ""];
-        if (($service = $this->_createService("Google_Shopping_Delete_Product_Batch")) === false) {
-            $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . " - Missing/Invalid Details.";
-            return $ret;
-        }
-        try {
-            $entries = $this->_formBatchEntries($productIdBatch);
-            if($entries) {
-                $batchResponse = $this->_sendBatchRequest($service, $entries);
 
-                $numberOfErrorsInBatch = 0;
-                $batcherror = $ret["batch_error"] = "";
-                $successList = [];
-                if ($responseEntries = $batchResponse->getEntries()) {
-// as long as we get response, we treat as success, then compile a list of error SKUs below
-                    $ret["status"] = TRUE;
-                    foreach ($responseEntries as $key => $responseEntry) 
-                    {
-                        $batchId = $responseEntry->getBatchId();
-                        $currentProductId = $entries[$key];
-                        $responseErrors = $responseEntry->getErrors()->getErrors();
-                        $responseErrorCode = (($responseEntry->getErrors()) ? $responseEntry->getErrors()->getCode() : "");
-                        if(is_array($responseErrors)) {
-                            $batcherror .= "[$currentProductId]=>";
-                            foreach ($responseErrors as $k => $error) {
-                                $batcherror .= "[errorcode]$responseErrorCode], [domain]{$error->getDomain()}, [reason]{$error->getReason()}, [message]{$error->getMessage()}. \r\n";
-                            }
-                            $numberOfErrorsInBatch++;
-                        } else {
-                            $successList[] = $currentProductId;
-                        }
-                        if ($numberOfErrorsInBatch) {
-                            $ret["batch_error"] = __LINE__ . " METHOD: " . __METHOD__ . ". $numberOfErrorsInBatch error(s) in batch, google error reasons below:\r\n $batcherror";
-                        }
-
-                        $ret["data"] = $successList;
-                    }
-                } else {
-                    $ret["error_message"] = __LINE__ . " File: " . __FILE__ . ". Something wrong, no response entries from google. ";
-                }
-            } else {
-                // shouldn't have come in here; already processed at top of file
-                $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . ". No product IDs batch, empty entries ";
-            }
-        } catch(\Google_Service_Exception $e) {
-            $ret["error_message"] = __LINE__ . ", METHOD: " . __METHOD__ . ", ERROR: " . $e->getMessage();
-        }
-        return $ret;
-    }
-*/
     public function insertProduct($accountId, \Google_Service_ShoppingContent_Product $productobj) {
         $ret = ["status" => FALSE, "error_message" => ""];
         if (($service = $this->_createService("Google_Shopping_Insert_Product")) === false) {
@@ -362,7 +283,13 @@ class GoogleConnectService extends BaseService
                 $errorMessage = "";
                 $entryId = $entryResponse->getBatchId();
                 if ($entryResponse->getErrors()) {
-                    $errorMessage = $this->_handleBatchError($entryResponse);
+                    $responseResult = $this->_handleBatchError($entryResponse);
+                    $errorMessage = $responseResult["errorMessage"];
+                    $errorCode = $responseResult["errorCode"];
+                    if (($googleApiRequestObjList[$entryId]->getGoogleProductStatus() == "D")
+                        && ($errorCode == 404)) {
+                        $entryResult = "S";
+                    }
                 } else {
                     $entryResult = "S";
                 }
@@ -409,7 +336,7 @@ class GoogleConnectService extends BaseService
         } else {
             $errorMessage = "ErrorCode:" . $responseErrorCode . "," . $responseErrors->getMessage();
         }
-        return $errorMessage;
+        return ["errorMessage" => $errorMessage, "errorCode" => $responseErrorCode];
     }
 /**
 * Converts stdClass object into Google_Service_ShoppingContent_Product object format
