@@ -14,7 +14,7 @@ class PriceService extends BaseService
 
         $newObj->setSku($sku);
         $newObj->setPlatformId((string) $obj->platform_id);
-        $newObj->setIsAdvertised((string) 'N');
+        //$newObj->setIsAdvertised((string) 'N');
         $this->updatePrice($newObj, $obj);
 
         return $newObj;
@@ -22,24 +22,24 @@ class PriceService extends BaseService
 
     public function updatePrice($newObj, $obj)
     {
-        $newObj->setDefaultShiptype((string) $obj->default_shiptype);
-        $newObj->setSalesQty((string) $obj->sales_qty);
+        //$newObj->setDefaultShiptype((string) $obj->default_shiptype);
+        //$newObj->setSalesQty((string) $obj->sales_qty);
         $newObj->setPrice((string)$obj->required_selling_price);
         $newObj->setVbPrice((string) $obj->prod_price);
-        $newObj->setStatus((string) $obj->status);
-        $newObj->setAllowExpress((string) $obj->allow_express);
-        $newObj->setIsAdvertised((string) $newObj->getIsAdvertised());
-        $newObj->setGooglePromoId((string) $obj->google_promo_id);
-        $newObj->setExtMappingCode((string) $obj->ext_mapping_code);
-        $newObj->setLatency((string) $obj->latency);
-        $newObj->setOosLatency((int) $obj->oos_letency);
+        //$newObj->setStatus((string) $obj->status);
+        //$newObj->setAllowExpress((string) $obj->allow_express);
+        //$newObj->setIsAdvertised((string) $newObj->getIsAdvertised());
+        //$newObj->setGooglePromoId((string) $obj->google_promo_id);
+        //$newObj->setExtMappingCode((string) $obj->ext_mapping_code);
+        //$newObj->setLatency((string) $obj->latency);
+        //$newObj->setOosLatency((int) $obj->oos_letency);
         $newObj->setListingStatus((string) $obj->listing_status);
-        $newObj->setPlatformCode((string) $obj->platform_code);
+        //$newObj->setPlatformCode((string) $obj->platform_code);
         $newObj->setMaxOrderQty((string) $obj->max_order_qty);
         $newObj->setAutoPrice((string) $obj->auto_price);
-        $newObj->setFixedRrp((string) $obj->fixed_rrp);
-        $newObj->setRrpFactor((string) $obj->rrp_factor);
-        $newObj->setDeliveryScenarioid((string) $obj->delivery_scenarioid);
+        //$newObj->setFixedRrp((string) $obj->fixed_rrp);
+        //$newObj->setRrpFactor((string) $obj->rrp_factor);
+        //$newObj->setDeliveryScenarioid((string) $obj->delivery_scenarioid);
     }
 
     public function calcWebsiteProductRrp($price = 0, $fixed_rrp = 'Y', $rrp_factor = 1.18)
