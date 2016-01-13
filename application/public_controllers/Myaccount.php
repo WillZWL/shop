@@ -18,7 +18,15 @@ class Myaccount extends PUB_Controller
         parent::__construct(array('require_login' => 1, 'load_header' => 1));
         $this->load->helper(array('url', 'object', 'notice', 'lang', 'price'));
         $this->load->library('encrypt');
-
+        if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") {
+            $httpsUrl = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+            if ($_SERVER['QUERY_STRING'] != "") {
+                $httpsUrl .= "?" . $_SERVER['QUERY_STRING'];
+            }
+            if (strpos($_SERVER["REQUEST_URI"], "notification") === false) {
+                redirect($httpsUrl);
+            }
+        }
         $this->countryService = new CountryService;
     }
 
