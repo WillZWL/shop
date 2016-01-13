@@ -28,6 +28,8 @@ class VbDataTransferPricesService extends VbDataTransferService
             $required_selling_price = floatval($vb_price_obj->prod_price);
             $VB_price = floatval($vb_price_obj->prod_price); //update the VB price field in the atomv2 price table
 
+            $reason = "";
+
             $sku = $this->getService('SkuMapping')->getLocalSku($master_sku);
             if (empty($sku)) {
                 $xml[] = '<price>';
@@ -76,7 +78,7 @@ class VbDataTransferPricesService extends VbDataTransferService
                         $min_margin = $pricing_rule_obj->getMinMargin();
 
                         if ($new_margin < $min_margin) {
-                            $reason = "Error in margin. New: " . $new_margin . " Old: " . $min_margin;
+                            $reason = "Error in margin. New: " . $new_margin . " New Price: " . $price_obj->getPrice();
                             $result_status = 6;
 
                             //In the case of a new (insert) price whose new margin is less than the minimum margin in the rules table
