@@ -18,6 +18,11 @@ class GoogleApiRequestDao extends BaseDao
         return $this->tableName;
     }
 
+    public function getGoogleApiRequestByBatch($where, $option) {
+        $this->db->from("google_api_request");
+        return $this->commonGetList($this->getVoClassname(), $where, $option, "sku, platform_id, google_product_status, result, key_message");
+    }
+
     public function cloneGoogleApiRequestDataWithBatchId($requestBatchId) {
         $userId = $this->getUserId();
         $sql = "insert into google_api_request(request_batch_id, platform_id, sku, item_group_id, colour_id, colour_name, target_country, content_language, title

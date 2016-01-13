@@ -16,6 +16,14 @@ class PriceDao extends BaseDao
         return $this->table_name;
     }
 
+    public function clearGoogleStatusByPlatform($platform_id) {
+        $userId = $this->getUserId();
+        $sql = "UPDATE price SET google_status = '', google_update_result = '', modify_by='" . $userId . "' WHERE platform_id = ?";
+        $this->db->query($sql, [$platform_id]);
+
+        return $this->db->affected_rows();
+    }
+
     /**
      * @return affected rows
      */

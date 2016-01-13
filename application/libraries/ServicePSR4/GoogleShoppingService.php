@@ -4,9 +4,9 @@ namespace ESG\Panther\Service;
 class GoogleShoppingService extends BaseService
 {
     const NUMBER_OF_PRODUCTS_IN_BATCH = 250;
-    private $emailList = [];
-    private $emailCcList = [];
-    private $technicalEmail = "oswald-alert@eservicesgroup.com";
+    private $_reportEmail = ["WEBFR" => "bd@numeristock.fr"
+                            , "WEBGB" => "ming@eservicesgroup.com"];
+    private $_technicalEmail = "oswald-alert@eservicesgroup.com";
 
     public function __construct()
     {
@@ -253,7 +253,7 @@ class GoogleShoppingService extends BaseService
 
         return $return_array;
     }
-*/
+
     public function mail_result($content, $subject)
     {
         $mail_content = "";
@@ -324,7 +324,7 @@ class GoogleShoppingService extends BaseService
     {
         return $this->emailCcList;
     }
-/*
+
     public function cron_update_google_shopping_feed($sku = "", $specified_platform = "")
     {
         $platform_biz_obj_list = $this->platform_biz_var_service->get_selling_platform_list();
@@ -406,7 +406,6 @@ class GoogleShoppingService extends BaseService
                 $reOrderList = [];
                 for($j=$i;$j<sizeof($processingList);$j++) {
                     $reOrderList[$i] = $processingList[$j];
-//                    $accountId = $this->getShoppingApiAccountId($processingList[$j]->getPlatformId());
                     $i++;
                     if (($i%self::NUMBER_OF_PRODUCTS_IN_BATCH) == 0)
                         break;
@@ -420,13 +419,56 @@ class GoogleShoppingService extends BaseService
                 }
             } while ($i<sizeof($processingList));
             unset($reOrderList, $processingList);
-//            $insertToPriceExtendResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->insertBatchRequestToPriceExtend($batchId);
             $updateToPriceResult = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->updateBatchRequestToPrice($batchId);
             if ($updateToPriceResult === false) {
-                $this->_sendAlert("[Panther] cannot updaet price extend", $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
+                $this->_sendAlert("[Panther] cannot update price", $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
             }
+            
+            $this->sendRequestResultToUser($batchId);
         } else {
             $this->_sendAlert("[Panther] batch has no data, batch_id:" . $batchId, $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
+        }
+    }
+
+    private function _sendEmailToUser($platformId, $content, $batchId) {
+        if (array_key_exists($platformId, $this->_reportEmail)) {
+            $email = $this->_reportEmail[$platformId];
+            $subject = "[Panther] Google Content API alert: batchId:" . $batchId;
+            mail($email, $subject, $content, "From: admin@digitaldiscount.co.uk\r\n");
+        }
+//        print $platformId;
+//        print $content;
+    }
+
+    public function sendRequestResultToUser($batchId) {
+        $where = ["request_batch_id" => $batchId, "result in ('F', 'W')" => null];
+//        $where = ["request_batch_id" => $batchId, "result in ('S')" => null];
+        $apiResultList = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->getGoogleApiRequestByBatch($where, ["limit" => -1, "orderby" => "platform_id"]);
+//        print $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query();
+        $lastPlatformId = "";
+        $emailContent = "";
+//        var_dump($apiResultList);
+        foreach($apiResultList as $googleApiRequest) {
+            if ($googleApiRequest->getPlatformId() != $lastPlatformId) {
+                if ($emailContent != "") {
+                    $emailContent .= "</table>";
+//                    print __LINE__ . $googleApiRequest->getPlatformId();
+                    $this->_sendEmailToUser($lastPlatformId, $emailContent, $batchId);
+                    $emailContent = "";
+                }
+            }
+            if ($emailContent == "") {
+                $emailContent .= "<table border='1' cellpadding='5'>";
+                $emailContent .= "<tr><td>SKU</td><td>Google Product Status</td><td>result</td><td>Message</td></tr>";
+            }
+            $emailContent .= "<tr><td>" . $googleApiRequest->getSku() . "</td><td align='center'>" . $googleApiRequest->getGoogleProductStatus() . "</td><td align='center'>" . $googleApiRequest->getResult() . "</td><td>" . $googleApiRequest->getKeyMessage() . "</td></tr>";
+            $lastPlatformId = $googleApiRequest->getPlatformId();
+        }
+        if ($emailContent != "") {
+            if ($emailContent != "")
+                $emailContent .= "</table>";
+//            print __LINE__ . $googleApiRequest->getPlatformId();
+            $this->_sendEmailToUser($lastPlatformId, $emailContent, $batchId);
         }
     }
 
@@ -465,60 +507,7 @@ class GoogleShoppingService extends BaseService
         }
         return $result;
     }
-/*
-    public function updateGoogleShoppingItemStep2($platformId = "", $sku = "") {
-        $accountId = $this->getShoppingApiAccountId($platformId);
-        if ($accountId) {
-            $where = $d_where = [];
-            if ($sku) {
-                if (is_array($sku)) {
-                    $query_str = "";
-                    foreach ($sku as $v) {
-                        $query_str .= "'" . $v . "',";
-                    }
-                    $query_str = rtrim($query_str, ',');
-                    $where['pr.sku in (' . $query_str . ')'] = null;
-                    $d_where['sku in (' . $query_str . ')'] = null;
-                } else {
-                    $where["pr.sku in ('" . $sku . "')"] = null;
-                    $d_where["sku in ('" . $sku . "')"] = null;
-                }
-            }
-            $productList = $this->getService("Product")->getDao("GoogleShopping")->getGoogleShoppingData($platformId, str_replace("WEB", "GOO", $platformId), $where);
-            $d_where["platform_id"] = $platformId;
-            $this->getDao("GoogleShopping")->q_delete($d_where);
-            $this->batchDeleteItem($accountId, $productList, $platform_id);
-        } else {
-            $subject = "[Panther] Cannot find google shopping account " . __LINE__ . " " . __METHOD__;
-            $this->sendAlert($subject, "No google shoppoing acct found", $this->technicalEmail);
-        }
-//print $this->getService("Product")->getDao("Product")->db->last_query();
-//exit;
-//        $data_list = $this->gen_data_feed($platform_id, $shopping_api = TRUE, $where);
 
-// delete everything on google first; on DEV server, it will use dryRun mode on Google
-
-        if ($data_list) {
-            $chunk_data_list = array_chunk($data_list, 250, false);
-
-            foreach ($chunk_data_list as $chunk_data) {
-                $this->batch_insert_item($account_id, $chunk_data, $platform_id);
-            }
-        }
-    }
-
-    public function batchDeleteItem($accountId = null, $googleShoppingData = [], $platformId) {
-        if (!$accountId)
-            $accountId = $this->getShoppingApiAccountId($platformId);
-        $result = $this->deleteProductBatch($accountId, $googleShoppingData);
-        if ($result["error_message"] != "") {
-            $subject = "[Panther] Google Content API Batch Delete Error";
-            $message = $result["error_message"];
-            $this->_sendAlert($subject, $message);
-        }
-        return $result["status"];
-    }
-*/
     public function getGoogleShoppingContentReport($platformId = "") {
         if (!$platformId) {
             return true;
@@ -614,6 +603,6 @@ class GoogleShoppingService extends BaseService
     private function _sendAlert($subject, $message) {
         print $subject;
         print $message;
-        $this->sendAlert($subject, $message, $this->technicalEmail);
+        $this->sendAlert($subject, $message, $this->_technicalEmail);
     }
 }
