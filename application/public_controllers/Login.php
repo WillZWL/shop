@@ -15,6 +15,15 @@ class Login extends PUB_Controller
         parent::__construct();
         $this->load->helper(array('url', 'object', 'lang','notice'));
         $this->load->library('encryption');
+        if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") {
+            $httpsUrl = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+            if ($_SERVER['QUERY_STRING'] != "") {
+                $httpsUrl .= "?" . $_SERVER['QUERY_STRING'];
+            }
+            if (strpos($_SERVER["REQUEST_URI"], "notification") === false) {
+                redirect($httpsUrl);
+            }
+        }
 
         $this->countryService = new CountryService;
     }
