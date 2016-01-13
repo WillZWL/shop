@@ -526,5 +526,8 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\ValidationService();
         };
 
+        $servcieContainer['RptSalesService'] = function () {
+            return new S\RptSalesService();
+        };
     }
 }

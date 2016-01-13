@@ -197,6 +197,7 @@ class GoogleConnectService extends BaseService
                 $googleApiRequest->setGoogleProductId($product->getId());
                 $convertedProductList[$i] = $googleApiRequest;
                 $i++;
+//                var_dump($product);
             }
 
             $this->processingInsertDeleteProductBatch($convertedProductList);
@@ -207,8 +208,13 @@ class GoogleConnectService extends BaseService
                     $errorMessage .= serialize($product);
                 }
             }
-            if ($errorMessage != "")
+            if ($errorMessage != "") {
                 $this->_sendAlert("[Panther] cannot do batch delete before update all sku in platformId:" . $platformId, $errorMessage);
+                $reProcessUrl = "http://admincentre.digitaldiscount.co.uk/marketing/ext-category-mapping/update-google-shopping-item-by-platform/" . $platformId;
+                $this->_sendAlert("[Panther] Reprocess - cannot do batch delete in platformId:" . $platformId, $reProcessUrl);
+            } else {
+                $this->getService("Price")->getDao("Price")->clearGoogleStatusByPlatform($platformId);
+            }
         }
     }
 
@@ -303,6 +309,7 @@ class GoogleConnectService extends BaseService
                 $googleApiRequestObjList[$entryId]->setResult($entryResult);
                 $googleApiRequestObjList[$entryId]->setKeyMessage($errorMessage);
                 $googleApiRequestObjList[$entryId]->setApiResponse($this->_getApiResponse($entryResponse));
+//                var_dump($googleApiRequestObjList);exit;
                 $ret["status"] = true;
             }
         }
@@ -561,8 +568,8 @@ class GoogleConnectService extends BaseService
     }
 
     private function _sendAlert($subject, $message) {
-        print $subject;
-        print $message;
+//        print $subject;
+//        print $message;
         $this->sendAlert($subject, $message, $this->technicalEmail);
     }
 }
