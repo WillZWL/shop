@@ -17,6 +17,12 @@ class Display extends PUB_Controller
 
     public function view($page = '')
     {
+        if ($_SERVER["HTTPS"]=="on") {
+            $xredir="http://".$_SERVER["SERVER_NAME"].
+            $_SERVER["REQUEST_URI"];
+            header("Location: ".$xredir);
+        }
+
         if (
             ($page != "shipping")
             && ($page != "conditions_of_use")
