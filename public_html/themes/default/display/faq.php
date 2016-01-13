@@ -16,7 +16,7 @@
                         </p>
                     </div>
                     <div class="container-fluid">
-                        <iframe src="http://contact.<?= $server_name ?>/support/home"  style="width:100%; height:950px;" scrolling="auto" frameborder="0" id="faq" name="faq" ></iframe>
+                        <iframe src="//contact.<?= $server_name ?>/support/home"  style="width:100%; height:950px;" scrolling="auto" frameborder="0" id="faq" name="faq" ></iframe>
 
                     </div>
                     <div>
