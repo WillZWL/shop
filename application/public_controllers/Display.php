@@ -30,15 +30,20 @@ class Display extends PUB_Controller
             show_404();
         }
 
+        $http_type = (
+                                (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
+                                || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+                             ) ? 'https://' : 'http://';
+
         $data['server_name'] = str_replace(['www.'], '', $_SERVER['SERVER_NAME']);
         $data['server_name']  = ($data['server_name'] == "dduk.dev") ? "digitaldiscount.co.uk" : $data['server_name'] ;
 
         if ($page == 'contact') {
-            $data['contact_url_1'] = '//contact.'  . $data['server_name'] . '/support/tickets/new?genaftersales=true';
-            $data['contact_url_2'] = '//contact.'  . $data['server_name'] . '/support/tickets/new?presales=true';
-            $data['contact_url_3'] = '//contact.'  . $data['server_name'] . '/support/tickets/new?faultorreturn=true';
+            $data['contact_url_1'] = $http_type . 'contact.'  . $data['server_name'] . '/support/tickets/new?genaftersales=true';
+            $data['contact_url_2'] = $http_type . 'contact.'  . $data['server_name'] . '/support/tickets/new?presales=true';
+            $data['contact_url_3'] = $http_type . 'contact.'  . $data['server_name'] . '/support/tickets/new?faultorreturn=true';
         }
-
+        $data["http_type"] = $http_type;
         $data["content"] = "display/" . $page;
         $this->load->view('display/view', $data);
     }
