@@ -434,7 +434,9 @@ class GoogleShoppingService extends BaseService
         if (array_key_exists($platformId, $this->_reportEmail)) {
             $email = $this->_reportEmail[$platformId];
             $subject = "[Panther] Google Content API alert: batchId:" . $batchId;
-            mail($email, $subject, $content, "From: admin@digitaldiscount.co.uk\r\n");
+            mail($email, $subject, $content, "From: admin@digitaldiscount.co.uk\r\nMIME-Version: 1.0\r\nContent-type:text/html;charset=UTF-8\r\nCc: " . $this->_technicalEmail . "\r\n");
+        } else {
+            mail($this->_technicalEmail, "[Panther] Google Shopping API alert email not exist on platformId:" . $platformId, "", "From: admin@digitaldiscount.co.uk\r\n");
         }
 //        print $platformId;
 //        print $content;
