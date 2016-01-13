@@ -17,6 +17,10 @@ class CronSendApi extends MY_Controller
         } while (date("H") != "21");
     }
 
+    public function sendApiRequestReportByBatch($batchId) {
+        $this->sc["GoogleShopping"]->sendRequestResultToUser($batchId);
+    }
+
     public function processGoogleApiRequestByBatch($batchId, $reprocess = 0) {
         set_time_limit(0);
         if ($batchId) {

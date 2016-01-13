@@ -180,7 +180,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
                 {
                     $this->so->setTxnId($_POST["txn_id"]);
                     if (isset($_POST["payer_email"]))
-                        $this->sops->setPayerEmail($_POST["receiver_email"]);
+                        $this->sops->setPayerEmail($_POST["payer_email"]);
                     if (isset($_POST["payer_id"]))
                         $this->sops->setPayerRef($_POST["payer_id"]);
                     if (isset($_POST["address_status"]))
