@@ -20,7 +20,6 @@ class RptSalesService extends BaseService
         } else {
             $arr = $this->getData($from_date, $to_date, $where);
         }
-        var_dump();
         if ($arr) {
             foreach ($arr as $row) {
                 $num_of_fields = count($row);
@@ -52,7 +51,7 @@ class RptSalesService extends BaseService
     public function getData($from_date = '', $to_date = '', $where = array(), $is_light_version = false)
     {
         $arr = $this->getDao('So')->getConfirmedSo($where, $option);
-        echo $this->getDao('So')->db->last_query();die();
+        // echo $this->getDao('So')->db->last_query();die();
         $data = $this->processDataRow($arr, $is_light_version);
         return $data;
     }
@@ -64,31 +63,25 @@ class RptSalesService extends BaseService
             $last_so_no = "";
             foreach ($arr as $row) {
                 $amount = ($row['soid_amount'] + $row["soid_gst_total"]);
-                if (1 == 1) {
-                    // order amount
-                    if ($row['refund_status'] == 'C') {
-                        $row['actual_order_amount'] = $row['so_amount'] - $row['total_refund_amount'] * 1;
-                    } else {
-                        $row['actual_order_amount'] = $row['so_amount'];
-                    }
-                    // fee
-                    $row['fee'] = $row['actual_order_amount'] * $row['payment_charge_percent'] / 100;
-                    $row['fee'] = number_format($row['fee'], 2, '.', '');
-                    // receivable
-                    if ($row['refund_status'] == 'C') {
-                        $row['receivable'] = 0;
-                    } else {
-                        $row['receivable'] = $row['actual_order_amount'] - $row['fee'];
-                    }
-                    $row['profit'] = $row["profit"] * $row["qty"];
-                    $row['cost'] = $row["cost"] * $row["qty"];
-                    $row['amount'] = $amount;
-                    $row['profit_usd'] = $row['profit'] * $row['rate'];
-                    $row['profit_usd'] = number_format($row['profit_usd'], 2, '.', '');
-                    $row['amount_usd'] = $row['amount'] * $row['rate'];
-                    $row['amount_usd'] = number_format($row['amount_usd'], 2, '.', '');
+                if ($row['refund_status'] == 'C') {
+                    $row['actual_order_amount'] = $row['so_amount'] - $row['total_refund_amount'] * 1;
+                } else {
+                    $row['actual_order_amount'] = $row['so_amount'];
                 }
-
+                $row['fee'] = $row['actual_order_amount'] * $row['payment_charge_percent'] / 100;
+                $row['fee'] = number_format($row['fee'], 2, '.', '');
+                if ($row['refund_status'] == 'C') {
+                    $row['receivable'] = 0;
+                } else {
+                    $row['receivable'] = $row['actual_order_amount'] - $row['fee'];
+                }
+                $row['profit'] = $row["profit"] * $row["qty"];
+                $row['cost'] = $row["cost"] * $row["qty"];
+                $row['amount'] = $amount;
+                $row['profit_usd'] = $row['profit'] * $row['rate'];
+                $row['profit_usd'] = number_format($row['profit_usd'], 2, '.', '');
+                $row['amount_usd'] = $row['amount'] * $row['rate'];
+                $row['amount_usd'] = number_format($row['amount_usd'], 2, '.', '');
                 if ($row["payment_status"] !== "") {
                     $row['payment_status'] = $this->DbTextLookupService->getPaymentStatus($row['payment_status']);
                 }

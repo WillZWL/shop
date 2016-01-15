@@ -54,7 +54,7 @@ class SalesReport extends MY_Controller
                     $where['(soid.profit > 0 OR clearance = 0)'] = null;
                     break;
             }
-            $data['output'] = $this->sc['RptSalesService']->getCsv($from_date, $to_date, $where, $is_sales_rpt, $is_light_version);
+            $data['output'] = $this->sc['RptSales']->getCsv($from_date, $to_date, $where, $is_sales_rpt, $is_light_version);
             if ($is_light_version) {
                 $data['filename'] = "light_sales_report.csv";
             } else {
