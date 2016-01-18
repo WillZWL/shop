@@ -60,6 +60,9 @@ class VbDataTransferPricesService extends VbDataTransferService
                 $this->applyPriceRule($vb_price_obj);
                 $price_obj = $this->getDao('Price')->get(['sku' => $sku, 'platform_id' => $platform_id]);
 
+                if ($vb_price_obj->auto_price == 'C')
+                    $vb_price_obj->auto_price = 'N';
+
                 if ($price_obj) {
                     $this->getService('Price')->updatePrice($price_obj, $vb_price_obj);
                     $action = 'update';
