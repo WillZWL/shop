@@ -127,10 +127,10 @@
                     <td>
                         <select name="payment_gateway" dname="Payment Mode" class="text" notEmpty>
                             <option value="paypal">Paypal</option>
-                            <option value="paypal_cash">Paypal+Cash</option>
+                            <!-- <option value="paypal_cash">Paypal+Cash</option> -->
                             <option value="global_collect_moto">GlobalCollect Moto</option>
                             <option value="inpendium_ctpe">Inpendium</option>
-                            <option value="inpendium_cash">Inpendium+Cash</option>
+                            <!-- <option value="inpendium_cash">Inpendium+Cash</option> -->
                             <option value="m_bank_transfer">Bank Transfer</option>
                         </select>
                         Transaction Ref:
