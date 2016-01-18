@@ -6,7 +6,7 @@ class ClwmsTrackingFeedService extends BaseService
     private $wms_url = "http://remote.eservicesgroup.com:8080/WMS.Server.Web/Service.asmx/GetTrackingFeed";
     private $username = "clwms";
     private $password = "CLUUWMS56";
-    private $retailer_name = "";
+    private $retailer_name = "PT";
     private $it_dao;
     private $itf_dao;
 
@@ -350,13 +350,13 @@ class ClwmsTrackingFeedService extends BaseService
             $is_send_1 = $is_send_2 = $is_send_3 = false;
             $subject_1 = $subject_2 = $subject_3 = $bodynote_1 = $bodynote_2 = $bodynote_3 = "";
 
-            $subject_1 = "[Panther] Alert, Tracking number already exist and different, API cannot overwrite";
+            $subject_1 = "[PT] Alert, Tracking number already exist and different, API cannot overwrite";
             $bodynote_1 = "VB already exist tracking_no and different, API cannot overwrite, need Investigated\r\n";
 
-            $subject_2 = "[Panther] Alert, Need to WMS change courier_id, API cannot overwrite";
+            $subject_2 = "[PT] Alert, Need to WMS change courier_id, API cannot overwrite";
             $bodynote_2 = "Need to WMS change courier_id, Panther  with WMS for courier_id are different, \r\n";
 
-            $subject_3 = "[Panther] Alert, Some orders should not be ship";
+            $subject_3 = "[PT] Alert, Some orders should not be ship";
             $bodynote_3 = "Some orders should not be ship, refund_status > 0 or hold_status > 0\r\n";
 
             foreach ($itf_objlist as $itf_obj) {
