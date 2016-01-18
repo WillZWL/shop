@@ -34,11 +34,8 @@ class LandpageListingService extends BaseService
             if ($seller_list) {
                 $need_update_lsit = $this->getDao('LandpageListing')->getList($where, ['limit' => -1]);
                 foreach ($need_update_lsit as $k => $need_update_obj) {
-                    if ($num == 1) {
-                        $seller_obj = $seller_list;
-                    } else {
-                        $seller_obj = $seller_list[$k];
-                    }
+                    $rank = $need_update_obj->getRank();
+                    $seller_obj = $this->getSellerList(['type' => $type, 'platform_id' => $platform_id, 'cat_id'=> $rank, 'limit' => 1]);
                     $seller_sku = $seller_obj->getSku();
                     $need_update_obj->setSelection($seller_sku);
                     $this->getDao('LandpageListing')->update($need_update_obj);
@@ -54,6 +51,9 @@ class LandpageListingService extends BaseService
     {
         $type = $option['type'];
         $platform_id = $option['platform_id'];
+        if ($option['cat_id'] > 0) {
+            $where['p.cat_id'] = $option['cat_id'];
+        }
         $where['p.status'] = 2;
         $where['p.website_quantity > 0'] = NULL;
         $where['p.website_status'] = 'I';
