@@ -25,7 +25,7 @@
             <td height="2" bgcolor="#000033" colspan="2"></td>
         </tr>
     </table>
-    <form name="fm" action="<?= base_url() . "report/$controller/query" ?>" method="post" target="report">
+    <form name="fm" action="<?= base_url() . "report/salesReport/query" ?>" method="post" target="report">
         <input type="hidden" name="is_query" value="1">
         <table cellpadding="0" cellspacing="0" border="0" width="100%" class="page_header">
             <tr height="70">
@@ -141,7 +141,7 @@
             </tr>
         </table>
     </form>
-    <iframe name="report" id="report" src="<?= base_url() . "report/$controller/query" ?>" width="1259"
+    <iframe name="report" id="report" src="<?= base_url() . "report/salesReport/query" ?>" width="1259"
             style="float:left;border-right:1px solid #000000;" noresize frameborder="0" marginwidth="0" marginheight="0"
             hspace=0 vspace=0 onLoad="SetFrameFullHeight(this)"></iframe>
 </div>
