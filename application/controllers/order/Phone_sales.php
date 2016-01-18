@@ -246,7 +246,7 @@ class Phone_sales extends MY_Controller
             unset($_SESSION["promotion_code"]);
         }
 
-        $data["vat_exempt"] = $this->input->post("vat_exempt");
+        // $data["vat_exempt"] = $this->input->post("vat_exempt");
         $data["free_delivery"] = $this->input->post("free_delivery");
 
         $data["order_reason_list"] = $this->sc['So']->getDao('OrderReason')->getList(["status" => 1, "option_in_phone" => 1], ["limit" => -1, "orderby" => "priority"]);

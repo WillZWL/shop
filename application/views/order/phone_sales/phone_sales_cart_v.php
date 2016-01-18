@@ -75,10 +75,10 @@
 */
                     ?>
 
-                    <?= $lang["vat_exempt"] ?> &nbsp;&nbsp;&nbsp;
+                    <!-- <?= $lang["vat_exempt"] ?> &nbsp;&nbsp;&nbsp;
                     <input name="vat_exempt" type="checkbox" value="1" <?= $this->input->post("vat_exempt") ? "CHECKED" : "" ?>>
                     <br>
-                    <?= $lang["promotion_code"] ?>:
+ -->                    <?= $lang["promotion_code"] ?>:
                     <input name="promotion_code" value="<?= $_SESSION["promotion_code"] ?>" size="12" readonly><br>
                     <?php
                     if ($allow_see_margin) :

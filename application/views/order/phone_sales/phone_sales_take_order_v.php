@@ -543,7 +543,7 @@
         </table>
         <input type="hidden" name="posted" value="1">
         <input type="hidden" name="payment_gateway" value="worldpay_moto"> <!-- offline order default to worldpay -->
-        <input type="hidden" name="vat_exempt" value="<?= $vat_exempt ?>">
+<!--         <input type="hidden" name="vat_exempt" value="<?= $vat_exempt ?>"> -->
         <input type="hidden" name="free_delivery" value="<?= $free_delivery ?>">
         <input type="hidden" name="client[id]" value="<?= $_POST["client"]["id"] ?>">
         <input type="hidden" name="country" value="<?= $this->input->post("country") ?>">
