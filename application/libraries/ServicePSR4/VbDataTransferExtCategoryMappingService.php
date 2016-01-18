@@ -21,7 +21,10 @@ class VbDataTransferExtCategoryMappingService extends VbDataTransferService
 
         foreach ($xml_vb->ext_category_mapping as $ext_category_mapping) {
             try {
-                if ($cat_obj = $this->getDao('ExtCategoryMapping')->get(['id' => $ext_category_mapping->id])) {
+                if ($cat_obj = $this->getDao('ExtCategoryMapping')->get(['ext_party' => $ext_category_mapping->ext_party,
+                                                                        'category_id' => $ext_category_mapping->category_id,
+                                                                        'ext_id' => $ext_category_mapping->ext_id,
+                                                                        'country_id' => $ext_category_mapping->country_id])) {
                 	$this->getService('ExtCategoryMapping')->updateExtCategoryMapping($cat_obj, $ext_category_mapping);
                     if ($this->getService('ExtCategoryMapping')->getDao('ExtCategoryMapping')->update($cat_obj)) {
                         $process_status = 5;    // update success
