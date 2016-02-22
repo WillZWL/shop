@@ -25,6 +25,15 @@ class VbDataTransferProductsService extends VbDataTransferService
             try {
                 $master_sku = (string) $product->master_sku;
                 $vb_sku = (string) $product->sku;
+
+
+                $mapping_sku = $this->getService('SkuMapping')->getDao('SkuMapping')->get(['ext_sku' => $master_sku]);
+                if ($mapping_sku && $mapping_sku->getVbSku() != $vb_sku){ //exists mapping but not for the same vb_sku
+                    $mapping_sku->setExtSku($master_sku);
+                    $mapping_sku->setVbSku($vb_sku);
+                    $this->getService('SkuMapping')->getDao('SkuMapping')->update($mapping_sku);
+                }
+
                 $mapping = $this->getService('SkuMapping')->getDao('SkuMapping')->get(['vb_sku' => $vb_sku]);
 
                 if ($mapping) {
@@ -41,7 +50,7 @@ class VbDataTransferProductsService extends VbDataTransferService
                     } else {
                         $process_status = 3;    // update failure
                     }
-                } else {
+                }  else {
                     // mapping doesn't exists, as a new product
                     $product_obj = $this->getService('Product')->createNewProduct($product);
                     if ($this->getService('Product')->getDao('Product')->insert($product_obj)) {
