@@ -264,7 +264,8 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
         else
         {
 //need to pass the error
-            $siteDownErrorMessage = "error:" . $response["erroNo"] . ", errorMessage:" . $response["errorMessage"] . ", info:" . @http_build_query($response["callInfo"]);
+            $siteDownErrorMessage = "error:" . $getUrlResult["erroNo"] . ", errorMessage:" . $getUrlResult["errorMessage"] . ", info:" . @http_build_query($getUrlResult["callInfo"]);
+            $responseData = $siteDownErrorMessage;
             $siteDown = true;
         }
         return ["result" => $callResult
