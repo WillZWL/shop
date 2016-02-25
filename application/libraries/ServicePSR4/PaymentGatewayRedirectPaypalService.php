@@ -355,7 +355,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
             {
                 $paymentPendingReason = (isset($doExpressPaypalResult["PAYMENTINFO_0_PENDINGREASON"])) ? strtolower($doExpressPaypalResult["PAYMENTINFO_0_PENDINGREASON"]) : "";
                 $subject = "[Panther] Paypal pending status order so_no:" . $soObj->getSoNo();
-                $this->emailAlert($subject, $dataFromPmgw);
+                $this->emailAlert($subject, urldecode($doExpressResult["response"]));
                 if ($paymentPendingReason == "paymentreview")
                 {
                     return PaymentGatewayRedirectService::PAYMENT_STATUS_REVIEW;
