@@ -206,7 +206,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
                         $orderService->holdOrder($orderObj, $message, 4);
                     }
     */
-                    $result = PaymentGatewayRedirectService::PaymentGatewayRedirectService;
+                    $result = PaymentGatewayRedirectService::PAYMENT_STATUS_REFUNDED;
                 }
             }
             else
