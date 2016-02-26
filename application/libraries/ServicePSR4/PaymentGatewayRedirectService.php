@@ -512,7 +512,7 @@ implements PaymentGatewayRedirectServiceInterface
                     {
                         $subject = "[Panther] Order from Paid to reverse so_no:" . $this->so->getSoNo();
                         $message = "Order auto hold";
-                        $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com, complaince@eservicesgroup.net");
+                        $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com, compliance@eservicesgroup.net");
     //the idea is to do auto hold and set a reason to so.hold_status in common for this case
                         if (($this->so->getStatus() == 3) && ($this->so->getHoldStatus() == 0)) {
     //auto hold
