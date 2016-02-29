@@ -256,9 +256,14 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
                 $url = $this->_getPaypalUrl() . "cmd=_express-checkout" . "&token=" . $paypalResult["TOKEN"] . "&useraction=commit";
                 $callResult = true;
             }
-            else
+            elseif ($paypalResult["L_LONGMESSAGE0"])
             {
                 $errorMessage = $paypalResult["L_LONGMESSAGE0"];
+            }
+            else
+            {
+                $siteDown = true;
+                $siteDownErrorMessage = "Unknown error";
             }
         }
         else
