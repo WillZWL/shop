@@ -301,6 +301,7 @@ class CartSessionService extends BaseService
 /* calculate raw first, common to all, */
         $this->_initPriceService($this->_platformType);
         $unitSellingPrice = $calProfitDto->getUnitPrice();
+
         $json = $this->_priceService->getProfitMarginJson($platformId, $calProfitDto->getSku(), $unitSellingPrice);
         $jj = json_decode($json, true);
         $calProfitDto->setRawProfit(round($jj["get_profit"], $decPlace));
@@ -308,6 +309,7 @@ class CartSessionService extends BaseService
 
         if ($calOriginal) {
             $sellingPrice = ($calProfitDto->getTotalAmount()) / $calProfitDto->getQty();
+
             $json = $this->_priceService->getProfitMarginJson($platformId, $calProfitDto->getSku(), $sellingPrice);
             $jj = json_decode($json, true);
             $calProfitDto->setCost(round($jj["get_cost"], $decPlace));
