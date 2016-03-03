@@ -20,8 +20,8 @@ class PaymentOptionDao extends BaseDao
 
     public function getPaymentOption($where = [], $option = [], $classname = "PaymentOptionInfoDto") {
         $this->db->from("payment_option po");
-        $this->db->join("payment_option_set pos", "pos.set_id=po.set_id and pos.status=1", 'INNER');
-        $this->db->join("payment_option_set_content posc", "posc.set_id=pos.set_id and posc.status=1", 'INNER');
+        $this->db->join("payment_option_set pos", "pos.id=po.set_id and pos.status=1", 'INNER');
+        $this->db->join("payment_option_set_content posc", "posc.set_id=pos.id and posc.status=1", 'INNER');
         $this->db->join("payment_option_card poc", "poc.code=posc.card_code and poc.status=1", 'INNER');
         $this->db->join("payment_gateway pg", "pg.payment_gateway_id=poc.payment_gateway_id and pg.status=1", 'INNER');
 
