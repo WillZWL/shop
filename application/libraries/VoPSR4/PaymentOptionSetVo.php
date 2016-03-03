@@ -2,7 +2,6 @@
 class PaymentOptionSetVo extends \BaseVo
 {
     private $id;
-    private $set_id;
     private $name;
     private $status;
     private $create_on = '0000-00-00 00:00:00';
@@ -25,18 +24,6 @@ class PaymentOptionSetVo extends \BaseVo
     public function getId()
     {
         return $this->id;
-    }
-
-    public function setSetId($set_id)
-    {
-        if ($set_id !== null) {
-            $this->set_id = $set_id;
-        }
-    }
-
-    public function getSetId()
-    {
-        return $this->set_id;
     }
 
     public function setName($name)
