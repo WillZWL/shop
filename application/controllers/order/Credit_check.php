@@ -341,8 +341,10 @@ class Credit_check extends MY_Controller
             } else {
                 if (in_array($this->input->post("reason"), array("cscc", "csvv", "confirmed_fraud"))) {
                     $so_obj->setHoldStatus(1);
+                    $so_obj->setHoldReason($this->input->post("reason"));
                 } else {
                     $so_obj->setHoldStatus(2);
+                    $so_obj->setHoldReason($this->input->post("reason"));
                 }
 
                 if ($this->sc['So']->getDao('So')->update($so_obj)) {
@@ -358,6 +360,7 @@ class Credit_check extends MY_Controller
                         }
                         if (in_array($this->input->post("reason"), array("change_of_address", "confirmation_required", "customer_request"))) {
                             $so_obj->setHoldStatus(1);
+                            $so_obj->setHoldReason($this->input->post("reason"));
                             if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                                 $_SESSION["NOTICE"] = $this->db->_error_message();
                             }
@@ -822,9 +825,6 @@ class Credit_check extends MY_Controller
         }
     }
 
-    #2309
-    //this function will handle 'Delete', 'Approve' and 'Hold' operations, it's the integration of the above three function, but still keep the above functions.
-    //also it can handle multiple orders at one time
 
     public function all_in_one($so_no, $operation_type, $reason)
     {
@@ -867,8 +867,10 @@ class Credit_check extends MY_Controller
                 } else {
                     if (in_array($reason, array("cscc", "csvv", "confirmed_fraud"))) {
                         $so_obj->setHoldStatus(1);
+                        $so_obj->setHoldReason($reason);
                     } else {
                         $so_obj->setHoldStatus(2);
+                        $so_obj->setHoldReason($reason);
                     }
 
                     if ($this->sc['So']->getDao('So')->update($so_obj)) {
@@ -878,12 +880,13 @@ class Credit_check extends MY_Controller
                             if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_vo)) {
                                 $_SESSION["NOTICE"] = $this->db->_error_message();
                             }
-                            if (in_array($reason, array("cscc", "csvv"))) {
+                            //if (in_array($reason, array("cscc", "csvv"))) {
                                 //Commented out as requested by CS, send email only after manager reviewed
                                 //$this->sc['creditCheckModel']->fire_cs_request($so_no,$this->input->post("reason"));
-                            }
+                            //}
                             if (in_array($reason, array("change_of_address", "confirmation_required", "customer_request"))) {
                                 $so_obj->setHoldStatus(1);
+                                $so_obj->setHoldReason($reason);
                                 if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                                     $_SESSION["NOTICE"] = $this->db->_error_message();
                                 }
