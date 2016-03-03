@@ -206,7 +206,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
                         $orderService->holdOrder($orderObj, $message, 4);
                     }
     */
-                    $result = PaymentGatewayRedirectService::PaymentGatewayRedirectService;
+                    $result = PaymentGatewayRedirectService::PAYMENT_STATUS_REFUNDED;
                 }
             }
             else
@@ -256,15 +256,21 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
                 $url = $this->_getPaypalUrl() . "cmd=_express-checkout" . "&token=" . $paypalResult["TOKEN"] . "&useraction=commit";
                 $callResult = true;
             }
-            else
+            elseif ($paypalResult["L_LONGMESSAGE0"])
             {
                 $errorMessage = $paypalResult["L_LONGMESSAGE0"];
+            }
+            else
+            {
+                $siteDown = true;
+                $siteDownErrorMessage = "Unknown error";
             }
         }
         else
         {
 //need to pass the error
-            $siteDownErrorMessage = "error:" . $response["erroNo"] . ", errorMessage:" . $response["errorMessage"] . ", info:" . @http_build_query($response["callInfo"]);
+            $siteDownErrorMessage = "error:" . $getUrlResult["errorNo"] . ", errorMessage:" . $getUrlResult["errorMessage"] . ", info:" . @http_build_query($getUrlResult["callInfo"]);
+            $responseData = $siteDownErrorMessage;
             $siteDown = true;
         }
         return ["result" => $callResult
@@ -354,7 +360,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
             {
                 $paymentPendingReason = (isset($doExpressPaypalResult["PAYMENTINFO_0_PENDINGREASON"])) ? strtolower($doExpressPaypalResult["PAYMENTINFO_0_PENDINGREASON"]) : "";
                 $subject = "[Panther] Paypal pending status order so_no:" . $soObj->getSoNo();
-                $this->emailAlert($subject, $dataFromPmgw);
+                $this->emailAlert($subject, urldecode($doExpressResult["response"]));
                 if ($paymentPendingReason == "paymentreview")
                 {
                     return PaymentGatewayRedirectService::PAYMENT_STATUS_REVIEW;

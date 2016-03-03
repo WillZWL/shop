@@ -47,7 +47,11 @@ class SoFactoryService extends BaseService
                 $this->getDao("So")->db->trans_start();
                 $soObj = $this->_createSo($clientObj, $newCart, $newSoNo, null, $interfaceType);
                 if ($soObj !== false) {
-                    if ($this->_createSoItemDetailAndUpdateSo($soObj, $newCart)) {
+                    if (($createSoItemResult = $this->_createSoItemDetailAndUpdateSo($soObj, $newCart))
+                        && ($createSoItemResult["result"])) {
+//no error check for complementary accessory
+                        $this->_addComplementaryAccessory($soObj, $createSoItemResult["lastLineNo"]);
+
                         if ($this->_createSoPaymentStatus($soObj, $interfaceType->getCheckoutData())) {
                             if (!$this->_createSoExtend($soObj, $interfaceType->getCheckoutData())) {
                                 $this->getDao("So")->db->trans_rollback();
@@ -205,6 +209,23 @@ class SoFactoryService extends BaseService
             $soObj->setDeliveryCountryId($clientObj->getDelCountryId());
     }
 
+    private function _addComplementaryAccessory($soObj, $lastLineNo = 0) {
+        $soItemObj = $this->getDao("SoItemDetail")->getList(["so_no" => $soObj->getSoNo()], ["limit" => -1]);
+        $caList = $this->getService("So")->getDao("SoItemDetail")->getComplementaryAccessoryListBySo($soObj->getSoNo());
+        if ($lastLineNo > 0)
+            $i = $lastLineNo;
+        else
+        {
+//find it here, not implemented yet
+        }
+
+        foreach($caList as $cartItem) {
+            $cartItem->setAmount(0);
+            $this->_createSingleSoItemDetail($soObj, $cartItem, $i/*, soObj->getPlatformId()*/);
+            $i++;
+        }
+    }
+
     private function _createSoItemDetailAndUpdateSo($soObj, $cart) {
         $result = true;
         $totalCost = 0;
@@ -213,8 +234,7 @@ class SoFactoryService extends BaseService
             $soItemDetailObj = $this->_createSingleSoItemDetail($soObj, $item, $i, $cart->getPlatformId());
             if (!$soItemDetailObj)
                 $result = false;
-            else
-            {
+            else {
                 $totalCost += $soItemDetailObj->getCost() * $soItemDetailObj->getQty();
             }
             $i++;
@@ -226,7 +246,8 @@ class SoFactoryService extends BaseService
             $message = $this->getDao("So")->db->last_query() . "," . $this->getDao("So")->db->error()["message"];
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_GENERAL_LEVEL);
         }
-        return $result;
+
+        return ["result" => $result, "lastLineNo" => $i];
     }
 
     private function _createSoItem($soObj, $cart) {
@@ -241,7 +262,7 @@ class SoFactoryService extends BaseService
         return $result;
     }
 
-    private function _createSingleSoItemDetail($soObj, $item, $lineNo, $platformId) {
+    private function _createSingleSoItemDetail($soObj, $item, $lineNo, $platformId = null) {
         $soItemDetailObj = $this->getDao("SoItemDetail")->get();
         $soItemDetailObj->setSoNo($soObj->getSoNo());
         $soItemDetailObj->setLineNo($lineNo);
@@ -254,7 +275,6 @@ class SoFactoryService extends BaseService
         $soItemDetailObj->setOutstandingQty($item->getQty());
         $soItemDetailObj->setUnitPrice($item->getPrice());
         $soItemDetailObj->setStatus(0);
-
         $soItemDetailObj->setWebsiteStatus($item->getWebsiteStatus());
         $soItemDetailObj->setSupplierStatus($item->getSourcingStatus());
         $soItemDetailObj->setWarrantyInMonth($item->getWarrantyInMonth());
@@ -269,7 +289,6 @@ class SoFactoryService extends BaseService
             $soItemDetailObj->setDiscountTotal($item->getDiscountTotal());
         if ($item->getPromoDiscAmt())
             $soItemDetailObj->setPromoDiscAmt($item->getPromoDiscAmt());
-
 //better to use a function to calculate VAT, GST in the future
         $priceWithCost = new \PriceWithCostDto();
         $priceWithCost->setPrice($item->getAmount());
@@ -277,13 +296,11 @@ class SoFactoryService extends BaseService
         $this->getService("PlatformBizVar")->calculateDeclaredValue($priceWithCost);
 
         $soItemDetailObj->setVatTotal(round(($priceWithCost->getDeclaredValue() * $item->getVatPercent() / 100), $item->getDecPlace()));
-//        $soItemDetailObj->setGstTotal(round(($item->getAmount() * $item->getVatPercent() / 100), $item->getDecPlace()));
         $soItemDetailObj->setAmount($item->getAmount());
-
         $this->_setProfitInfo($soItemDetailObj, $platformId, $item->getDecPlace());
 
         $insertSoItemDetailResult = $this->getDao("SoItemDetail")->insert($soItemDetailObj);
-
+//        print $this->getDao("SoItemDetail")->db->last_query();
         if ($insertSoItemDetailResult === false) {
             $subject = "[Panther] Cannot create so item detail:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
             $message = $this->getDao("SoItemDetail")->db->last_query() . "," . $this->getDao("SoItemDetail")->db->error()["message"];
@@ -372,6 +389,7 @@ class SoFactoryService extends BaseService
             $interfaceType->soBeforeInsertEvent($soObj);
         }
         $insertSoResult = $this->getDao("So")->insert($soObj);
+
         if ($insertSoResult === false) {
             $subject = "[Panther] Cannot create so:(" . $soObj->getSoNo() . ") " . __METHOD__ . __LINE__;
             $message = $this->getDao("So")->db->last_query() . "," . $this->getDao("So")->db->error()["message"];
@@ -462,13 +480,19 @@ class SoFactoryService extends BaseService
 */
     private function _setProfitInfo(\BaseVo $soidObj, $platformId, $decPlace)
     {
-        $calProfitDto = new \CalculateProfitDto($soidObj->getItemSku(), $soidObj->getQty(), $soidObj->getUnitPrice(), $soidObj->getAmount());
-        $this->getService("CartSession")->storeProfitInfoToDto($calProfitDto, $platformId, $decPlace);
-        $soidObj->setProfitRaw($calProfitDto->getRawProfit());
-        $soidObj->setMarginRaw($calProfitDto->getRawMargin());
-        $soidObj->setCost($calProfitDto->getCost());
-        $soidObj->setProfit($calProfitDto->getProfit());
-        $soidObj->setMargin($calProfitDto->getMargin());
+        if ($platformId) {
+            $calProfitDto = new \CalculateProfitDto($soidObj->getItemSku(), $soidObj->getQty(), $soidObj->getUnitPrice(), $soidObj->getAmount());
+            $this->getService("CartSession")->storeProfitInfoToDto($calProfitDto, $platformId, $decPlace);
+            $soidObj->setProfitRaw($calProfitDto->getRawProfit());
+            $soidObj->setMarginRaw($calProfitDto->getRawMargin());
+            $soidObj->setCost($calProfitDto->getCost());
+            $soidObj->setProfit($calProfitDto->getProfit());
+            $soidObj->setMargin($calProfitDto->getMargin());
+        } else {
+            $soidObj->setCost(0);
+            $soidObj->setProfit(0);
+            $soidObj->setMargin(0);
+        }
 /*
         $use_new = true;
         if (!$this->_platformType) {

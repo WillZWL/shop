@@ -60,6 +60,19 @@ class SoItemDetailDao extends BaseDao
         return false;
     }
 
+    public function getComplementaryAccessoryListBySo($soNo, $className = "CartItemDto")
+    {
+        $this->db->from('so_item_detail AS soid');
+        $this->db->join('so', 'so.so_no=soid.so_no', 'INNER');
+        $this->db->join('product_complementary_acc as pca', 'soid.item_sku=pca.mainprod_sku and pca.dest_country_id=so.delivery_country_id', 'INNER');
+        $this->db->join('product as p', 'p.sku=pca.accessory_sku', 'INNER');
+        $this->db->join('supplier_prod as sp', 'sp.prod_sku=p.sku', 'INNER');
+        $this->db->where(["soid.so_no" => $soNo, "pca.status" => 1]);
+        $this->db->select('pca.accessory_sku as sku, p.name as nameInLang, sum(soid.qty) as qty, 0 as price, sp.pricehkd as supplierUnitCostInHkd, sp.cost as supplierUnitCost, sp.currency_id as supplierCostCurrency, sp.supplier_status as sourcingStatus');
+        $this->db->group_by("pca.accessory_sku");
+        return $this->commonGetList($className, [], ["limit" => -1]);
+    }
+
     public function getItemsWithName($where = [], $option = [], $classname = "SoItemWithNameDto")
     {
         if (!$option["show_ca"]) {

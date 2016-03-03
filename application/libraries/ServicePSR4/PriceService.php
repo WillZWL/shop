@@ -101,7 +101,6 @@ class PriceService extends BaseService
     public function getProfitMarginJson($platform_id, $sku, $required_selling_price = 0)
     {
         $dto = $this->getDao('Price')->getPriceWithCost(['p.sku' => $sku, 'pbv.selling_platform_id' => $platform_id], ['limit' => 1]);
-
         if ( ! $dto) {
             return json_encode(['error' => "can't get PriceWithCostDto"]);
         }
@@ -111,9 +110,8 @@ class PriceService extends BaseService
             $dto->setPrice($required_selling_price);
         } else {
             // calculate cost base on auto price.
-            $this->calculateAutoPrice($dto);
+                $this->calculateAutoPrice($dto);
         }
-
         $this->calculateProfitAndMargin($dto);
 
         $data_arr = [
@@ -194,7 +192,6 @@ class PriceService extends BaseService
 
         $dto->setPrice(0);
         $this->calculateCost($dto);
-
         do {
             $auto_price = ($dto->getCost()) / (1 - $required_margin / 100);
             $auto_price = number_format($auto_price, 2, '.', '');

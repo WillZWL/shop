@@ -146,6 +146,8 @@ class PaypalRequest
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_TIMEOUT, 45);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSLVERSION, 6);
+
 //        curl_setopt($ch, CURLOPT_HEADER, true);
 //      curl_setopt($ch, CURLOPT_HTTPHEADER, array("Host: " . "www.sandbox.paypal.com" , "Connection: Close"));
 
@@ -187,6 +189,7 @@ class PaypalRequest
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 45);
         curl_setopt($ch, CURLOPT_TIMEOUT, 45);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSLVERSION, 6);
 //        curl_setopt($ch, CURLOPT_HEADER, true);
 //		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Host: " . $this->_account["paypalHost"] , "Connection: Close"));
 //        curl_setopt($ch, CURLOPT_USERAGENT, "cURL/PHP");
