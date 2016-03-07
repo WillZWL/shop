@@ -2680,3 +2680,20 @@ msgstr "Salva"
 
 #~ msgid " Search Results for "
 #~ msgstr "Cerca Risultati per"
+
+#: faq.php:13
+msgid "NEED HELP?"
+msgstr "HAI BISOGNO DI AIUTO?"
+
+#: faq.php:15
+msgid "You've got a Question? We've got the Answer! Check out our FAQs."
+msgstr "Hai una domanda? Abbiamo la risposta! Visita la nostra pagina FAQs."
+
+#: faq.php:24
+#, php-format
+msgid ""
+"If you still can't find the answer, please refer to the %s Contact Us %s on "
+"page and get in touch! Thank you."
+msgstr ""
+"Se ancora non hai trovato risposta alla tua richiesta, vai nella sezione %s "
+"Contattaci %s e scrivici! Grazie."
