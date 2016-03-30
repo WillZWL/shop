@@ -50,6 +50,8 @@ class CheckoutInfoDto
     public $orderNotes;
     public $parentSoNo;
     public $langId;
+    public $payDate;
+    public $txnId;
 
     public function setFormSalt($formSalt) {
         $this->formSalt = $formSalt;
@@ -433,5 +435,21 @@ class CheckoutInfoDto
 
     public function getLangId() {
         return $this->langId;
+    }
+
+    public function setPayDate($payDate) {
+        $this->payDate = $payDate;
+    }
+
+    public function getPayDate() {
+        return $this->payDate;
+    }
+
+    public function setTxnId($txnId) {
+        $this->txnId = $txnId;
+    }
+
+    public function getTxnId() {
+        return $this->txnId;
     }
 }

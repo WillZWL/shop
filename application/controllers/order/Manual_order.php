@@ -1,4 +1,6 @@
 <?php
+use ESG\Panther\Models\Website\CheckoutModel;
+
 class Manual_order extends MY_Controller
 {
     private $appId = "ORD0017";
@@ -16,12 +18,19 @@ class Manual_order extends MY_Controller
         $_SESSION["LISTPAGE"] = current_url() . "?" . $_SERVER['QUERY_STRING'];
 
         if ($platform_id) {
+/*
             if ($this->input->post("posted")) {
                 $pwd = $_POST["client"]["password"];
                 $password = (trim($pwd) != "" ? $this->encryption->encrypt(strtolower($pwd)) : $this->encryption->encrypt(mktime()));
 
                 $this->sc['ManualOrder']->addSoForManualOrder($_POST, $password, $platform_type, $platform_id);
             }
+*/
+            if ($this->input->post("posted")) {
+                $checkoutModel = new CheckoutModel();
+                $data["soObj"] = $checkoutModel->createManualOrder($_POST, $platform_id);
+            }
+
             $data["country_list"] = $this->sc['Region']->getSellCountryList();
             $data["pbv_obj"] = $this->sc['PlatformBizVar']->getdao('PlatformBizVar')->get(["selling_platform_id"=>$platform_id]);
             $data["default_curr"] = $data["pbv_obj"]->getPlatformCurrencyId();

@@ -8,6 +8,7 @@ use ESG\Panther\Service\CartSessionService;
 use ESG\Panther\Service\OnlineOrderCreationService;
 use ESG\Panther\Service\SpecialOrderCreationService;
 use ESG\Panther\Service\OfflineOrderCreationService;
+use ESG\Panther\Service\ManualOrderCreationService;
 use ESG\Panther\Service\PaymentGatewayRedirectService;
 use ESG\Panther\Service\PaymentGatewayRedirectPaypalService;
 use ESG\Panther\Service\PaymentGatewayRedirectMoneybookersService;
@@ -77,6 +78,13 @@ class CheckoutModel extends \CI_Model
         $formValue["platformId"] = $platformId;
         $specialOrderCreationService = new SpecialOrderCreationService($formValue);
         $soObj = $this->getSoFactoryService()->createSaleOrder($specialOrderCreationService);
+        return $soObj;
+    }
+
+    public function createManualOrder($formValue, $platformId) {
+        $formValue["platformId"] = $platformId;
+        $manualOrderCreationService = new ManualOrderCreationService($formValue);
+        $soObj = $this->getSoFactoryService()->createSaleOrder($manualOrderCreationService);
         return $soObj;
     }
 

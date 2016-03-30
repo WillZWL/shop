@@ -52,7 +52,15 @@
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td height="30" class="title"><?= $lang["title"] ?></td>
-            <td width="400" align="right" class="title">
+            <td width="650" align="right" class="title">
+        <span style="background-color:#000000;color:#FFFFFF;font-size:18px;padding-right:20px;">
+<?php if ((isset($soObj)) && $soObj)
+      {
+            print "Order Number:" . $soObj->getSoNo() . " Created";
+      } elseif (isset($soObj)) {
+            print "Fail to create SO!!";
+      }
+?>    </span>
                 <input type="button" value="<?= $lang["add_button"] ?>" class="button"
                        onclick="Redirect('<?= site_url('order/manual_order') ?>')"> &nbsp;
                 <?php

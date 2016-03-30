@@ -132,8 +132,9 @@ class SoFactoryService extends BaseService
         $soPaymentStatusObj = $this->getDao("SoPaymentStatus")->get();
         $soPaymentStatusObj->setSoNo($soObj->getSoNo());
         $soPaymentStatusObj->setPaymentGatewayId($checkoutInfo->getPaymentGatewayId());
+        $soPaymentStatusObj->setPayDate($checkoutInfo->getPayDate());
         $soPaymentStatusObj->setCardId($checkoutInfo->getPaymentCardId());
-        $soPaymentStatusObj->setPaymentStatus("N");
+        $soPaymentStatusObj->setPaymentStatus("S");
 
         $insertSoPaymentResult = $this->getDao("SoPaymentStatus")->insert($soPaymentStatusObj);
         if ($insertSoPaymentResult === false) {
@@ -360,6 +361,8 @@ class SoFactoryService extends BaseService
         $soObj->setDeliveryCharge($orderInfo->getDeliveryCharge());
         $soObj->setDeliveryTypeId($orderInfo->getDeliveryType());
         $soObj->setWeight($orderInfo->getTotalWeight());
+        if ($checkoutInfoDto->getTxnId())
+            $soObj->setTxnId($checkoutInfoDto->getTxnId());
         if ($checkoutInfoDto->getLangId())
             $soObj->setLangId($checkoutInfoDto->getLangId());
         elseif ($injectedInterfaceObj->getBizType() == "ONLINE")
@@ -385,8 +388,8 @@ class SoFactoryService extends BaseService
         //$this->_setOrderVat($soObj, $orderInfo);
 
         $this->setOrderInfoDetail($orderInfo->getPlatformId(), $soObj);
-        if ($interfaceType instanceof CreateSoEventInterface) {
-            $interfaceType->soBeforeInsertEvent($soObj);
+        if ($injectedInterfaceObj instanceof CreateSoEventInterface) {
+            $injectedInterfaceObj->soBeforeInsertEvent($soObj);
         }
         $insertSoResult = $this->getDao("So")->insert($soObj);
 

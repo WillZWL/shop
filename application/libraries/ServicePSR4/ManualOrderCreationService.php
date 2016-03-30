@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Service;
 
-class SpecialOrderCreationService extends BaseService 
+class ManualOrderCreationService extends BaseService 
 implements CreateSoInterface, CreateSoEventInterface
 {
     private $_checkoutFormData = null;
@@ -13,7 +13,7 @@ implements CreateSoInterface, CreateSoEventInterface
     }
 
     public function getBizType() {
-        return "SPECIAL";
+        return "MANUAL";
     }
 
     public function selfCreateClientObj() {
@@ -26,8 +26,9 @@ implements CreateSoInterface, CreateSoEventInterface
             $this->_checkoutInfoDto = new \CheckoutInfoDto;
             $this->_checkoutInfoDto->setOrderReason($this->_checkoutFormData["so_extend"]["order_reason"]);
             $this->_checkoutInfoDto->setOrderNotes($this->_checkoutFormData["so_extend"]["notes"]);
-            $this->_checkoutInfoDto->setParentSoNo($this->_checkoutFormData["parent_so_no"]);
             $this->_checkoutInfoDto->setLangId("en");
+            $this->_checkoutInfoDto->setPaymentGatewayId($this->_checkoutFormData["payment_gateway"]);
+            $this->_checkoutInfoDto->setPayDate($this->_checkoutFormData["payment_date"]);
         }
         return $this->_checkoutInfoDto;
     }
@@ -61,9 +62,9 @@ implements CreateSoInterface, CreateSoEventInterface
     }
 
     public function soBeforeInsertEvent($soObj) {
-//do nothing
+        $soObj->setTxnId($this->_checkoutFormData["txn_id"]);
     }
-    
+
     public function soInsertSuccessEvent($soObj) {
 //add order notes
         if ($this->_checkoutFormData["so_extend"]["notes"])
