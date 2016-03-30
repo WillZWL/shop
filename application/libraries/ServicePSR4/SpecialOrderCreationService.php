@@ -1,15 +1,13 @@
 <?php
 namespace ESG\Panther\Service;
 
-class SpecialOrderCreationService extends BaseService 
+class SpecialOrderCreationService extends OrderCreationService 
 implements CreateSoInterface, CreateSoEventInterface
 {
-    private $_checkoutFormData = null;
     private $_checkoutInfoDto = null;
 
     public function __construct($formValue) {
-        parent::__construct();
-        $this->_checkoutFormData = $formValue;
+        parent::__construct($formValue);
     }
 
     public function getBizType() {
@@ -17,16 +15,16 @@ implements CreateSoInterface, CreateSoEventInterface
     }
 
     public function selfCreateClientObj() {
-        $email = $this->_checkoutFormData["client"]["email"];
+        $email = $this->checkoutFormData["client"]["email"];
         return $this->getService("Client")->getDao("Client")->get(["email" => $email]);
     }
 
     public function getCheckoutData() {
         if (!$this->_checkoutInfoDto) {
             $this->_checkoutInfoDto = new \CheckoutInfoDto;
-            $this->_checkoutInfoDto->setOrderReason($this->_checkoutFormData["so_extend"]["order_reason"]);
-            $this->_checkoutInfoDto->setOrderNotes($this->_checkoutFormData["so_extend"]["notes"]);
-            $this->_checkoutInfoDto->setParentSoNo($this->_checkoutFormData["parent_so_no"]);
+            $this->_checkoutInfoDto->setOrderReason($this->checkoutFormData["so_extend"]["order_reason"]);
+            $this->_checkoutInfoDto->setOrderNotes($this->checkoutFormData["so_extend"]["notes"]);
+            $this->_checkoutInfoDto->setParentSoNo($this->checkoutFormData["parent_so_no"]);
             $this->_checkoutInfoDto->setLangId("en");
         }
         return $this->_checkoutInfoDto;
@@ -39,8 +37,8 @@ implements CreateSoInterface, CreateSoEventInterface
     private function _buildCart() {
         $cartSessionService = new CartSessionService(TRUE);
         $skuList = [];
-        if ($this->_checkoutFormData["soi"]) {
-            foreach($this->_checkoutFormData["soi"] as $item) {
+        if ($this->checkoutFormData["soi"]) {
+            foreach($this->checkoutFormData["soi"] as $item) {
                 if ($item["sku"]) {
                     $unitPrice = $item["price"];
                     $qty = $item["qty"];
@@ -51,10 +49,10 @@ implements CreateSoInterface, CreateSoEventInterface
                     $skuList[$item["sku"]] = ["qty" => $item["qty"], "name" => $item["name"], "unitPrice" => $item["price"]];
                 }
             }
-            $platformId = $this->_checkoutFormData["platformId"];
+            $platformId = $this->checkoutFormData["platformId"];
             $platformBizObj = $this->getService("PlatformBizVar")->getDao("PlatformBizVar")->get(["selling_platform_id" => $platformId]);
 
-            $cartSessionService->manualAddItemsToCart($skuList, $platformId, $platformBizObj, $this->_checkoutFormData["delivery_charge"]);
+            $cartSessionService->manualAddItemsToCart($skuList, $platformId, $platformBizObj, $this->checkoutFormData["delivery_charge"]);
             return $cartSessionService->getCart();
         }
         return false;
@@ -66,11 +64,11 @@ implements CreateSoInterface, CreateSoEventInterface
     
     public function soInsertSuccessEvent($soObj) {
 //add order notes
-        if ($this->_checkoutFormData["so_extend"]["notes"])
+        if ($this->checkoutFormData["so_extend"]["notes"])
         {
             $orderNote = new \OrderNotesVo();
             $orderNote->setSoNo($soObj->getSoNo());
-            $orderNote->setNote($this->_checkoutFormData["so_extend"]["notes"]);
+            $orderNote->setNote($this->checkoutFormData["so_extend"]["notes"]);
             $orderNote->setType("S");
             $insertResult = $this->getService("So")->getDao("OrderNotes")->insert($orderNote);
             if (insertResult === FALSE) {
