@@ -91,7 +91,7 @@ class ProductApiService extends BaseService
                     $master_sku = $sku_mapping_info->getExtSku();
                     $sku->setProdSku((string)$prod_sku);
                     $sku->setMasterSku((string)$master_sku);
-                    $product_obj = $this->getDao()->get(array('sku'=>$prod_sku));
+                    $product_obj = $this->getDao('Product')->get(array('sku'=>$prod_sku));
                     if ($product_obj === false) {
                         $sku->setStatus('F');
                         $reason = $master_sku." not in Panther product table";
@@ -141,7 +141,7 @@ class ProductApiService extends BaseService
                 $prod_sku = $sku_obj->getProdSku();
                 $origin_country = $sku_obj->getRegion();
                 $supplier_id = $this->getSupplierId($origin_country);
-                $product_obj = $this->getDao()->get(array('sku'=>$prod_sku));
+                $product_obj = $this->getDao('Product')->get(array('sku'=>$prod_sku));
 
                 $sup_prod_obj = $this->getSupplierProdDao()->get(array('supplier_id'=>$supplier_id, 'prod_sku'=>$prod_sku));
                 $sup_prod_arr = (array)$sup_prod_obj;
@@ -153,7 +153,7 @@ class ProductApiService extends BaseService
                 $res_prod = $this->syncDataToProduct($sku_obj, $product_obj);
                 if ($res_prod === false or $res_sup_prod === false) {
                     $j++;
-                    $error = $this->getDao()->db->last_query();
+                    $error = $this->getDao('Product')->db->last_query();
                     mail('will.zhang@eservicesgroup.com', '[Panther] Sync Sku Data failed', "Batch ID: $batch_id\r\n Prod Sku: $prod_sku\r\n ERROR:\r\n $error");
                     $sku_obj->setStatus('F');
                 } else {
@@ -202,7 +202,7 @@ class ProductApiService extends BaseService
         $product_obj->setSurplusQuantity($quantity);
         $sourcing_status = $this->statusIntToStr((int)$sync_obj->getSupplyStatus());
         $product_obj->setSourcingStatus((string)$sourcing_status);
-        $result = $this->getDao()->update($product_obj);
+        $result = $this->getDao('Product')->update($product_obj);
         return $result;
     }
 
