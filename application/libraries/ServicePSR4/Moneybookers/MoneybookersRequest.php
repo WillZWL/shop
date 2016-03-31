@@ -28,7 +28,7 @@ class MoneybookersRequest
         $postData["return_url_text"] = $setting["returnText"];
         $postData["cancel_url"] = $setting["cancelUrl"];
         $postData["status_url"] = $setting["notificationUrl"];
-        $postData["status_url2"] = "mailto: " . $this->_mbAccount->status2Email;
+        $postData["status_url2"] = $this->_mbAccount->status2Email;
         $postData["hide_login"] = 1;
         $postData["prepare_only"] = 1;
         $postData["new_window_redirect"] = 1;
