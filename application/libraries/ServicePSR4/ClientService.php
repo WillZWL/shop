@@ -177,6 +177,8 @@ class ClientService extends BaseService
             $clientObj->setTel3($checkInfoDto->getBillTelNumber());
         if ($checkInfoDto->getBillTelNumber())
             $clientObj->setTel3($checkInfoDto->getBillTelNumber());
+        if ($checkInfoDto->getMobile())
+            $clientObj->setMobile($checkInfoDto->getMobile());
 //shipping info
         $shipName = "";
         if ($checkInfoDto->getShipFirstName())
