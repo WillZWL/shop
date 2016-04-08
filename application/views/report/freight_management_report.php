@@ -32,29 +32,17 @@
     <table cellpadding="0" cellspacing="0" border="0" width="100%" class="page_header">
         <tr height="70">
             <td align="left" style="padding-left:8px;">
-                <form name="fm" action="<?= base_url() . "report/freight_management_report" ?>" method="post"
-                      target="report">
-                    <input type="hidden" name="report" value="all">
-                    <input type="submit" value="<?= $lang["all_order"] ?>" class="button3">
-                </form>
+                    <input type="submit" value="<?= $lang["all_order"] ?>" onclick="Redirect('<?=site_url('report/freightManagementReport/index/all')?>')" class="button3">
             </td>
         </tr>
         <tr height="30">
             <td align="left" style="padding-left:8px;">
-                <form name="fm" action="<?= base_url() . "report/freight_management_report" ?>" method="post"
-                      target="report">
-                    <input type="hidden" name="report" value="rec">
-                    <input type="submit" value="<?= $lang["rec_ourier_order"] ?>" class="button3">
-                </form>
+                    <input type="submit" value="<?= $lang["rec_ourier_order"] ?>" onclick="Redirect('<?=site_url('report/freightManagementReport/index/rec')?>')" class="button3">
             </td>
         </tr>
         <tr height="70">
             <td align="left" style="padding-left:8px;">
-                <form name="fm" action="<?= base_url() . "report/freight_management_report" ?>" method="post"
-                      target="report">
-                    <input type="hidden" name="report" value="no_rec">
-                    <input type="submit" value="<?= $lang["no_rec_ourier_order"] ?>" class="button3">
-                </form>
+                    <input type="submit" value="<?= $lang["no_rec_ourier_order"] ?>" onclick="Redirect('<?=site_url('report/freightManagementReport/index/no_rec')?>')" class="button3">
             </td>
         </tr>
     </table>
