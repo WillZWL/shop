@@ -5,15 +5,24 @@ class FulfilListDto
     private $so_no;
     private $line_no;
     private $item_sku;
+    private $prod_name;
     private $qty;
     private $outstanding_qty;
     private $unit_price;
     private $vat_total;
     private $discount = '0.00';
+    private $bundle_core_id = '0';
+    private $bundle_level = '0';
     private $amount;
     private $cost;
+    private $item_unit_cost = '0.00';
     private $profit = '0.00';
+    private $profit_raw = '0.00';
     private $margin = '0.00';
+    private $margin_raw = '0.00';
+    private $website_status = 'L';
+    private $warranty_in_month = '0';
+    private $supplier_status = 'A';
     private $status = '0';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at;
@@ -64,6 +73,17 @@ class FulfilListDto
     public function setItemSku($value)
     {
         $this->item_sku = $value;
+        return $this;
+    }
+
+    public function getProdName()
+    {
+        return $this->prod_name;
+    }
+
+    public function setProdName($value)
+    {
+        $this->prod_name = $value;
         return $this;
     }
 
@@ -122,6 +142,28 @@ class FulfilListDto
         return $this;
     }
 
+    public function getBundleCoreId()
+    {
+        return $this->bundle_core_id;
+    }
+
+    public function setBundleCoreId($value)
+    {
+        $this->bundle_core_id = $value;
+        return $this;
+    }
+
+    public function getBundleLevel()
+    {
+        return $this->bundle_level;
+    }
+
+    public function setBundleLevel($value)
+    {
+        $this->bundle_level = $value;
+        return $this;
+    }
+
     public function getAmount()
     {
         return $this->amount;
@@ -144,6 +186,17 @@ class FulfilListDto
         return $this;
     }
 
+    public function getItemUnitCost()
+    {
+        return $this->item_unit_cost;
+    }
+
+    public function setItemUnitCost($value)
+    {
+        $this->item_unit_cost = $value;
+        return $this;
+    }
+
     public function getProfit()
     {
         return $this->profit;
@@ -155,6 +208,17 @@ class FulfilListDto
         return $this;
     }
 
+    public function geProfitRaw()
+    {
+        return $this->profit_raw;
+    }
+
+    public function seProfitRaw($value)
+    {
+        $this->profit_raw = $value;
+        return $this;
+    }
+
     public function getMargin()
     {
         return $this->margin;
@@ -163,6 +227,50 @@ class FulfilListDto
     public function setMargin($value)
     {
         $this->margin = $value;
+        return $this;
+    }
+
+    public function getMarginRaw()
+    {
+        return $this->margin_raw;
+    }
+
+    public function setMarginRaw($value)
+    {
+        $this->margin_raw = $value;
+        return $this;
+    }
+
+    public function getWebsiteStatus()
+    {
+        return $this->website_status;
+    }
+
+    public function setWebsiteStatus($value)
+    {
+        $this->website_status = $value;
+        return $this;
+    }
+
+    public function getWarrantyInMonth()
+    {
+        return $this->warranty_in_month;
+    }
+
+    public function setWarrantyInMonth($value)
+    {
+        $this->warranty_in_month = $value;
+        return $this;
+    }
+
+    public function getSupplierStatus()
+    {
+        return $this->supplier_status;
+    }
+
+    public function setSupplierStatus($value)
+    {
+        $this->supplier_status = $value;
         return $this;
     }
 
