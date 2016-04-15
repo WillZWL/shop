@@ -94,6 +94,16 @@ class CartSessionService extends BaseService
        }
     }
 
+    public function updateCartDelivery($deliveryCharge) {
+        $this->_cart->setDeliveryCharge($deliveryCharge);
+        $this->updateQuickInfo($totalItems);
+    }
+
+    public function updateQuickInfo($totalItems) {
+        $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"] = $totalItems;
+        $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"] = $this->_cart->getGrandTotal();
+    }
+
 /******************************************************************************************************************
 **  getCart($saveProfit)
 **  $saveProfit default = false, we won't calculate profit until client really checkout to save server resources
@@ -128,8 +138,7 @@ class CartSessionService extends BaseService
         if ($saveProfit) {
             $this->calculateAndGetCartProfit();
         }
-        $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"] = $totalItems;
-        $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"] = $totalAmount;
+        $this->updateQuickInfo($totalItems);
         return $this->_cart;    //=return $_SESSION["cart"]
     }
 

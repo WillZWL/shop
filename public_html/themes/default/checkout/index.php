@@ -357,8 +357,46 @@ $(document).delegate('#button-shipping-address', 'click', function() {
     displayCheckoutNowButton(1);
     activatedBlock(targetBlock, $("#collapse-shipping-address"));
 });
+
+function checkRemoteSurcharge()
+{
+    standardWaitingScreen.showPleaseWait();
+    var postData = {billingPostal: $("#billingPostal").val(), billingCountry: $("#billingCountry").val()};
+    var formURL = "/checkout/check-delivery-charge";
+    $.ajax({
+        type        : "POST",
+        url         : formURL,
+        data        : postData,
+        dataType    : "json",
+        encode      : true
+    })
+    .done(function(data) {
+        standardWaitingScreen.hidePleaseWait();
+        if (data.responseCode < 0) {
+            if (data.error) {
+                alert(data.error);
+            }
+        } else {
+            if (data.surcharge > 0) {
+                alert("<?php print _("Please note: remote surcharge has been applied to your basket!") ?>");
+            }
+            updateBasketIcon(data.newTotalAmount);
+        }
+    })
+    .fail(function(data) {
+        if (data.responseCode)
+            console.log(data.responseCode);
+        if (data.error)
+            alert(data.error);
+        standardWaitingScreen.hidePleaseWait();
+    });
+}
+
 function activatedBlock(obj, hideBlock)
 {
+    if (obj.attr("id") == "payment-method-header") {
+        checkRemoteSurcharge();
+    }
     $(".accordion-toggle").addClass("collapsed");
     $(".in").removeClass("in");
     obj.attr("data-parent", "#accordion");

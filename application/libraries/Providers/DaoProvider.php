@@ -213,6 +213,10 @@ class DaoProvider implements ServiceProviderInterface
             return new D\DeliveryOptionDao();
         };
 
+        $daoContainer['DeliverySurcharge'] = function () {
+            return new D\DeliverySurchargeDao();
+        };
+
         $daoContainer['SkuMapping'] = function () {
             return new D\SkuMappingDao();
         };

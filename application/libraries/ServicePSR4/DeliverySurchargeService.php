@@ -5,31 +5,28 @@ use ESG\Panther\Dao\DeliverySurchargeDao;
 
 class DeliverySurchargeService extends BaseService
 {
-    public $delivery_country_id;
-    public $delivery_state;
-    public $delivery_postcode;
-
     function __construct()
     {
         parent::__construct();
         $this->setDao(new DeliverySurchargeDao);
     }
 
-    function getDelSurcharge($return_code_type = FALSE)
+    function getDelSurcharge($postcode, $deliveryCountryId, $state, $return_code_type = FALSE)
     {
         $surcharge = 0;
-        $code_type = "";
+        $codeType = "";
+        $currencyId = "";
 
-        if ($this->delivery_country_id && ($this->delivery_state || $this->delivery_postcode)) {
+        if ($deliveryCountryId && ($state || $postcode)) {
             $ar_where = array();
-            $where["country_id"] = $this->delivery_country_id;
+            $where["country_id"] = $deliveryCountryId;
 
-            if ($this->delivery_state) {
-                $ar_where[] = "(code_type = 'ST' AND code='{$this->delivery_state}')";
+            if ($state) {
+                $ar_where[] = "(code_type = 'ST' AND code='{$state}')";
             }
-            if ($this->delivery_postcode) {
-                $this->delivery_postcode = preg_replace('/[^0-9a-z]/i', '', $this->delivery_postcode);
-                $ar_where[] = "(code_type = 'PC' AND '{$this->delivery_postcode}' LIKE code)";
+            if ($postcode) {
+                $postcode = preg_replace('/[^0-9a-z]/i', '', $postcode);
+                $ar_where[] = "(code_type = 'PC' AND '{$postcode}' LIKE code)";
             }
 
             if ($ar_where) {
@@ -43,17 +40,14 @@ class DeliverySurchargeService extends BaseService
 
             $option["orderby"] = "surcharge DESC";
             $option["limit"] = 1;
-            if ($obj = $this->get_list($where, $option)) {
-                $surcharge = $obj->get_surcharge();
-                $code_type = $obj->get_code_type();
-                $currency_id = $obj->get_currency_id();
+            if ($obj = $this->getDao("DeliverySurcharge")->getList($where, $option)) {
+                $surcharge = $obj->getSurcharge();
+                $codeType = $obj->getCodeType();
+                $currencyId = $obj->getCurrencyId();
             }
         }
-        if ($return_code_type) {
-            return array("surcharge" => $surcharge, "code_type" => $code_type, "currency_id" => $currency_id);
-        } else {
-            return $surcharge;
-        }
+
+        return ["surcharge" => $surcharge, "code_type" => $codeType, "currency_id" => $currencyId];
     }
 }
 

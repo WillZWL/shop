@@ -92,7 +92,18 @@
                 $GTM_ID = '';
         }
     ?>
+<script>
+function updateBasketIcon(totalAmount)
+{
+    var text = "<?= sprintf(_('%s item(s) - %s'), $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"], "$") ?>";
+    text = text + totalAmount;
+    $(".cart-total").html(text);
+}
 
+$(document).ready(function() {
+    updateBasketIcon('<?=$_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"]?>');
+});
+</script>
 <!-- Google Tag Manager -->
 <noscript>
     <iframe src="//www.googletagmanager.com/ns.html?id=<?php echo $GTM_ID; ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe>
@@ -199,9 +210,9 @@
                                         <div class="cart-top">
                                             <div id="cart" class="pull-right clearfix">
                                                 <div class="cart-inner media-body">
-                                                    <a href="/revieworder">
+                                                    <a href="/review-order">
                                                         <img src="/themes/default/asset/image/icon-cart.png">
-                                                        <span id="cart-total" class="cart-total"><?= sprintf(_('%s item(s) - %s%s'), $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"], "$", $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"]) ?></span>
+                                                        <span id="cart-total" class="cart-total"></span>
                                                         <i class="fa fa-angle-down"></i>
                                                     </a>
                                                 </div>
@@ -262,7 +273,7 @@
                                             <div class="cart-inner media-body">
                                                 <a href="/review-order">
                                                     <img src="/themes/default/asset/image/icon-cart.png">
-                                                    <span id="cart-total" class="cart-total"><?= sprintf(_('%s item(s) - %s'), $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"], platform_curr_format($_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"])) ?></span>
+                                                    <span id="cart-total" class="cart-total"></span>
                                                     <i class="fa fa-angle-down"></i>
                                                 </a>
                                             </div>

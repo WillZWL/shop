@@ -11,6 +11,7 @@ use ESG\Panther\Models\Website\CheckoutModel;
 use ESG\Panther\Models\Website\CartSessionModel;
 use ESG\Panther\Form\CheckoutFormFilter;
 use ESG\Panther\Service\Cybersource\CybersourceIntegrator;
+use ESG\Panther\Form\GeneralInputFilter;
 
 class Checkout extends PUB_Controller
 {
@@ -29,6 +30,19 @@ class Checkout extends PUB_Controller
                 redirect($httpsUrl);
         }
         $this->cartSessionModel = new CartSessionModel;
+    }
+
+    public function checkDeliveryCharge()
+    {
+        $postcode = $this->input->post("billingPostal");
+        $countryId = $this->input->post("billingCountry");
+        $filter = new GeneralInputFilter();
+        if ($filter->isValidPostCode(strtoupper($postcode), $this->getSiteInfo()->getLangId(), $countryId)
+            && ($this->getSiteInfo()->getPlatformCountryId() == $countryId)) {
+            print json_encode(["surcharge" => $this->checkoutModel->getDeliverySurcharge($this->getSiteInfo(), $postcode, $countryId), "newTotalAmount" => $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"]]);
+        } else {
+            print json_encode(["surcharge" => 99, "newTotalAmount" => $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"]]);
+        }
     }
 
     public function login() {
