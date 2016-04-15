@@ -249,17 +249,24 @@ class DeliveryService extends BaseService
         }
     }
 
-    public function getDelSurcharge($return_code_type = FALSE)
+    public function getDelSurcharge($siteInfo, $postcode, $countryId)
     {
         $this->validAllVirtualItems();
         if ($this->all_virtual_valid) {
             return 0;
         } else {
-            $deliverySurchargeService->delivery_country_id = $this->delivery_country_id;
-            $deliverySurchargeService->delivery_state = $this->delivery_state;
-            $deliverySurchargeService->delivery_postcode = $this->delivery_postcode;
-            return $deliverySurchargeService->getDelSurcharge($return_code_type);
+            $deliverySurcharge = $this->deliverySurchargeService->getDelSurcharge($postcode, $countryId, null);
+            if ($deliverySurcharge["surcharge"] > 0) {
+                if ($deliverySurcharge["currency_id"] != $siteInfo->getPlatformCurrencyId()) {
+                    list($targetRate) = $this->getService("ExchangeRate")->getDao("ExchangeRate")->getExchangeRateByPlatform($siteInfo->getPlatform(), $deliverySurcharge["currencyId"]);
+                    $surcharge = $deliverySurcharge["surcharge"] * $targetRate["rate"];
+                    return round($surcharge, $siteInfo->getDecPlace());
+                } else {
+                    return $deliverySurcharge["surcharge"];
+                }
+            }
         }
+        return 0;
     }
 
     public function update($obj, $where = []) {

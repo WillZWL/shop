@@ -4,7 +4,7 @@ namespace ESG\Panther\Dao;
 class DeliverySurchargeDao extends BaseDao
 {
     private $tableName = "delivery_surcharge";
-    private $voClassName = "deliverySurchargeVo";
+    private $voClassName = "DeliverySurchargeVo";
 
     public function __construct()
     {

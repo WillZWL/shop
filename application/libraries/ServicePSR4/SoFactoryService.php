@@ -10,7 +10,6 @@ use ESG\Panther\Dao\SoCreditChkDao;
 use ESG\Panther\Dao\SoRiskDao;
 use ESG\Panther\Service\CartSessionService;
 
-
 class SoFactoryService extends BaseService
 {
     public $_siteObj;
@@ -20,13 +19,13 @@ class SoFactoryService extends BaseService
         $this->setDao(new SoDao());
     }
 
-    public function getNewCartByOrderInfo($orderInfo, $bizType) {
+    public function getNewCartByOrderInfo($orderInfo, $bizType, $clientObj) {
         $skuList = [];
         foreach($orderInfo->items as $sku => $item) {
             $skuList[$sku] = ["qty" => $item->getQty(), "amount" => $item->getAmount()];
         }
 //Centralize a buildcart function, to get all the cart details
-        $newCart = $this->rebuildCartBySku($orderInfo->getPlatformId(), $orderInfo->getPlatformCurrency(), $bizType, $skuList);
+        $newCart = $this->rebuildCartBySku($orderInfo, $bizType, $skuList, $clientObj);
         $newCart->setPlatformOrderId($orderInfo->getPlatformOrderId());
         $newCart->setPlatformId($orderInfo->getPlatformId());
 
@@ -40,7 +39,7 @@ class SoFactoryService extends BaseService
             if ($clientObj) {
 //rebuild the cart info, prevent hacking or price updated by BD
                 if ($interfaceType->getBizType() == "ONLINE")
-                    $newCart = $this->getNewCartByOrderInfo($interfaceType->getCartDto(), $interfaceType->getBizType());
+                    $newCart = $this->getNewCartByOrderInfo($interfaceType->getCartDto(), $interfaceType->getBizType(), $clientObj);
                 else
                     $newCart = $interfaceType->getCartDto();
                 $newSoNo = $this->getDao("So")->getNewSoNo();
@@ -442,12 +441,18 @@ class SoFactoryService extends BaseService
 **  function to prevent cart was amended by user and in case the price is updating by BD before checkout
 **  rebuildCart to find all the required value for an order
 *********************************************************/
-    public function rebuildCartBySku($platformId, $currencyId, $bizType, $skuInfo) {
+    public function rebuildCartBySku($orderInfo, $bizType, $skuInfo, $clientObj) {
 //we will need a new CartSessionService, not a shared one
         $cartSessionService = new CartSessionService(TRUE);
         $langId = (($bizType == "ONLINE") ? LANG_ID : "en");
         foreach($skuInfo as $sku => $item) {
-            $cartSessionService->add($sku, $item["qty"], $langId, $platformId, $currencyId);
+            $cartSessionService->add($sku, $item["qty"], $langId, $orderInfo->getPlatformId(), $orderInfo->getPlatformCurrency());
+        }
+/* need to update delivery charge */
+        $siteInfo = $this->getService("LoadSiteParameter")->loadSiteByPlatform($orderInfo->getPlatformId());
+        $deliverySurcharge = $this->getService("Delivery")->getDelSurcharge($siteInfo, $clientObj->getDelPostcode(), $clientObj->getDelCountryId());
+        if ($deliverySurcharge > 0) {
+            $cartSessionService->updateCartDelivery($deliverySurcharge);
         }
         $cart = $cartSessionService->getCart();
         return $cart;

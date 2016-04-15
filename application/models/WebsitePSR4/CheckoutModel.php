@@ -1,5 +1,6 @@
 <?php
 namespace ESG\Panther\Models\Website;
+use ESG\Panther\Service\DeliveryService;
 use ESG\Panther\Service\CountryService;
 use ESG\Panther\Service\CountryStateService;
 use ESG\Panther\Service\PaymentOptionService;
@@ -38,6 +39,16 @@ class CheckoutModel extends \CI_Model
         $this->setCountryStateService(new CountryStateService());
         $this->setPaymentOptionService(new PaymentOptionService());
         $this->setSoFactoryService(new SoFactoryService());
+    }
+
+    public function getDeliverySurcharge($siteInfo, $postcode, $countryId) {
+        $deliveryService = new DeliveryService();
+        $deliverySurcharge = $deliveryService->getDelSurcharge($siteInfo, $postcode, $countryId);
+//        if ($deliverySurcharge > 0) {
+            $this->_cartSessionService = new CartSessionService();
+            $this->_cartSessionService->updateCartDelivery($deliverySurcharge);
+//        }
+        return $deliverySurcharge;
     }
 
     public function getPoBoxAmountLimit($inJson = false) {
