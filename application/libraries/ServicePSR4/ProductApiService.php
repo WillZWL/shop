@@ -17,6 +17,9 @@ class ProductApiService extends BaseService
     private $supplier_prod_dao;
     private $supplier_dao;
 
+    const SCHEDULE_ID= "PUSH_SKU_MAPPING_TO_CPS";
+    const PUSH_CPS_URL = 'http://wms.eservicesgroup.net/cron/sync/panther_sku_mapping';
+
     public function __construct()
     {
         parent::__construct();
@@ -339,6 +342,62 @@ class ProductApiService extends BaseService
          return $stop_sync;
     }
 
+    public function pushSkuMappingToCPS()
+    {
+        $id = self::SCHEDULE_ID;
+        $url = self::PUSH_CPS_URL;
+        $current_time = date("Y-m-d H:i:s");
+        $last_time = $this->getLastTime($id);
+        $where['create_on >='] = $last_time;
+        $objlist = $this->getDao('SkuMapping')->getList($where, array('limit'=>-1));
+        $arr = array();
+        foreach ($objlist as $row) {
+            $data['sku'] = $row->getSku();
+            $data['master_sku'] = $row->getExtSku();
+            $arr[] = $data;
+        }
+        if (count($arr) > 0) {
+            $data = json_encode($arr);
+            $res = $this->curlPost($data, $url);
+            if ($res['error']) {
+                mail("will.zhang@eservicesgroup.com", "Push SKU Mapping to CPS Wrong", "ERROR:\r\n".$res['error']);
+            }
+        }
+        $this->updatLastTime($id, $current_time);
+    }
+
+    public function curlPost($data, $url = '')
+    {
+        $header = array('Content-Type: application/json; charset=utf-8', 'Content-Length: ' . strlen($data));
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_USERPWD, 'demo:demo888');
+        $server_result = curl_exec($ch);
+        $server_error = curl_error($ch);
+        $server_info = curl_getinfo($ch);
+        curl_close($ch);
+        return array("xml" => $server_result, "error" => $server_error, "info" => $server_info);
+    }
+
+    private function getLastTime($id)
+    {
+        if ($obj = $this->getDao('ScheduleJob')->get(["schedule_job_id" => $id, "status" => 1])) {
+            return $obj->getLastAccessTime();
+        }
+    }
+
+    private function updatLastTime($id, $current_time)
+    {
+        if ($obj = $this->getDao('ScheduleJob')->get(["schedule_job_id" => $id, "status" => 1])) {
+            $obj->setLastAccessTime($current_time);
+            return $this->getDao('ScheduleJob')->update($obj);
+        }
+    }
 
     public function getSkuMappingDao()
     {
