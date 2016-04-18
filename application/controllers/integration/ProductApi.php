@@ -37,6 +37,11 @@ class ProductApi extends PUB_Controller
         $this->sc['ProductApi']->updateSkuInfo($batch_id);
     }
 
+    public function pushSkuMappingToCPS()
+    {
+        $this->sc['ProductApi']->pushSkuMappingToCPS();
+    }
+
     public function getAppId()
     {
         return $this->appId;
