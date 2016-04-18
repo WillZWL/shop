@@ -401,7 +401,7 @@ class SoFactoryService extends BaseService
             return $soObj;
         }
     }
-/*  
+/*
     private function _setOrderVat($soObj, $orderInfo) {
 //setup VAT
 
@@ -430,11 +430,14 @@ class SoFactoryService extends BaseService
 //rate, ref_1, expect_delivery_date
         list($usdArr) = $this->getService("ExchangeRate")->getDao("ExchangeRate")->getExchangeRateByPlatform($platformId, "USD");
         list($eurArr) = $this->getService("ExchangeRate")->getDao("ExchangeRate")->getExchangeRateByPlatform($platformId, "EUR");
+        list($hkdArr) = $this->getService("ExchangeRate")->getDao("ExchangeRate")->getExchangeRateByPlatform($platformId, "HKD");
 
         if (isset($usdArr["rate"]))
             $soObj->setRate($usdArr["rate"]);
         if (isset($eurArr["rate"]))
             $soObj->setRef1($eurArr["rate"]);
+        if (isset($hkdArr["rate"]))
+            $soObj->setRateToHkd($hkdArr["rate"]);
     }
 
 /********************************************************
