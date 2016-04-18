@@ -12,6 +12,7 @@ class SoVo extends \BaseVo
     private $cost;
     private $vat_percent = '0.00';
     private $rate = '1.000000';
+    private $rate_to_hkd = '1.000000';
     private $ref_1 = '1.000000';
     private $delivery_charge;
     private $delivery_type_id;
@@ -194,6 +195,18 @@ class SoVo extends \BaseVo
     public function getRate()
     {
         return $this->rate;
+    }
+
+    public function setRateToHkd($rate_to_hkd)
+    {
+        if ($rate_to_hkd !== null) {
+            $this->rate_to_hkd = $rate_to_hkd;
+        }
+    }
+
+    public function getRateToHkd()
+    {
+        return $this->rate_to_hkd;
     }
 
     public function setRef1($ref_1)
