@@ -410,7 +410,6 @@ class ProductApiService extends BaseService
         $where['p.sourcing_status'] = 'C';
         $where['phs.website_status'] = 'I';
         $option['limit'] = -1;
-        echo $batch_id;die();
         $result = $this->getHistorySyncDao()->getAlertSkuList($where, $option);
         if ($result) {
             $subject = '[CV2] Website Status Automation: Manual';
