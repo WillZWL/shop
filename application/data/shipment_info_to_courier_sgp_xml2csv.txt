@@ -1,0 +1,35 @@
+#Table name
+data
+
+#Input column name	Output column name
+delivery_company	Company Name
+delivery_name	Customer Name
+delivery_address_1	Address1
+delivery_address_2	Address2
+delivery_address_3	Address3
+delivery_city	Town or City
+delivery_state	State
+delivery_country_id	Country Code
+delivery_postcode	Postalcode
+tel	Phone no.
+client_email	Email Address
+	Receiver VAT/GST number
+so_no	Order no.
+	Document/Package
+	Category of shipment
+	describe
+	weight
+	Length (cm)
+	Width (cm)
+	Height (cm)
+category_name	Item description
+quantity	Item quantity
+	Item weight (kg)
+currency_id		Item Currency
+total_amount	Item declare value in currency
+	HS tariff number
+	Item country of origin
+	Enhanced Liability Amount
+	Service code
+	Non delivery instructions for Priority and Registered Plus services(D/S)
+	Proof Of Delivery (Yes/No)

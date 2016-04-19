@@ -6,8 +6,8 @@ item_no	S/N
 	Last Name	.
 	Middle Name
 delivery_name	First Name
-delivery_address1	Address 1
-delivery_address2	Address 2
+delivery_address_1	Address 1
+delivery_address_2	Address 2
 delivery_city	City
 delivery_state	State
 delivery_postcode	Postcode
@@ -19,7 +19,7 @@ prod_weight	Weight per Article (gm)
 	Declared Currency	USD  United States Dollar
 declared_value	Declared Value
 	Item Description	Mobile accessory
-	HS code	
+	HS code
 	Insured (Yes/No)	No
 	Insured currency
 	Insured value

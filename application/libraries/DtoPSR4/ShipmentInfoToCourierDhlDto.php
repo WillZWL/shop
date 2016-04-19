@@ -39,6 +39,12 @@ class ShipmentInfoToCourierDhlDto
     private $cat_name;
     private $subcat;
     private $subsubcat;
+    private $sum_item_amount;
+    private $vat;
+    private $total_amount;
+    private $barcode;
+    private $id_3_digit;
+    private $rate_to_hkd;
 
     public function setCurrencyId($currency_id)
     {
@@ -418,6 +424,78 @@ class ShipmentInfoToCourierDhlDto
     public function getSubsubcat()
     {
         return $this->subsubcat;
+    }
+
+    public function setSumItemAmount($sum_item_amount)
+    {
+        $this->sum_item_amount = $sum_item_amount;
+    }
+
+    public function getSumItemAmount()
+    {
+        return $this->sum_item_amount;
+    }
+
+    public function setVat($vat)
+    {
+        $this->vat = $vat;
+    }
+
+    public function getVat()
+    {
+        return $this->vat;
+    }
+
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
+    }
+
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
+
+    public function setTotalAmount($total_amount)
+    {
+        $this->total_amount = $total_amount;
+    }
+
+    public function getTotalAmount()
+    {
+        return $this->total_amount;
+    }
+
+    public function setBarcode($barcode)
+    {
+        $this->barcode = $barcode;
+    }
+
+    public function getBarcode()
+    {
+        return $this->barcode;
+    }
+
+    public function setId3Digit($id_3_digit)
+    {
+        $this->id_3_digit = $id_3_digit;
+    }
+
+    public function getId3Digit()
+    {
+        return $this->id_3_digit;
+    }
+
+    public function setRateToHkd($rate_to_hkd)
+    {
+        if ($rate_to_hkd !== null) {
+            $this->rate_to_hkd = $rate_to_hkd;
+        }
+    }
+
+    public function getRateToHkd()
+    {
+        return $this->rate_to_hkd;
     }
 
 }

@@ -4,19 +4,19 @@ data
 #input column name	Output column name
 so_no	Order_no.
 delivery_name	Name
-delivery_address1	Address1
-delivery_address2	Address2
+delivery_address_1	Address1
+delivery_address_2	Address2
 delivery_city	Town/city
 delivery_postcode	Postal Code
 delivery_country_id	Country
-tel	Tel	
+tel	Tel
 	no. of order	1
 	parcel service	NCP,PRO
 shipping_date	Shipping Date
 	proactive service	E
-client_email	Proactive Service	
+client_email	Proactive Service
 	proactive_service	1
-delivery_country_id_2	Proactive Service	
+delivery_country_id_2	Proactive Service
 prod_weight	KG
 client_email	Customer_Email
 	consignore_email	daro@eservicesgroup.com

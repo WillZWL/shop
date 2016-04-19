@@ -529,5 +529,10 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['RptSales'] = function () {
             return new S\RptSalesService();
         };
+
+        $serviceContainer['CourierFeed'] = function () {
+            return new S\CourierFeedService();
+        };
+
     }
 }

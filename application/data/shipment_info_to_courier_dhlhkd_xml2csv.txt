@@ -2,14 +2,14 @@
 data
 
 #Input column name	Output column name	Specify value
-	Field1	VB
-	Field2	JOYFUL LUCK INT'L LTD
+	Field1	PT
+	Field2	Panther
 	Field3	Amy Au
 	Field4	Workshop A 10/F Wah Shing Industrial Building
 	Field5	18 Cheung Shun Street
 	Field6	Lai Chi Kok
 	Field7	Kowloon
-	Field8	39043034
+	Field8	35430957
 	Field9	HKG
 	Field10	631106140
 delivery_name	DeliveryName
@@ -36,12 +36,12 @@ so_no	OrderNumber
 	Field41	1
 	Field42	DD
 	Field43	DDP
-	Field44	
+	Field44
 	Field45	0
 	Field46	0
 	Field47	0
 	Field48	DDP
 	Field49	Delivery Duty Paid
-	Field50	631106140
+	Field50	631062305
 	Field51	HK
-	Field52	
+	Field52

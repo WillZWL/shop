@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Service;
 
-class SpecialOrderCreationService extends OrderCreationService 
+class SpecialOrderCreationService extends OrderCreationService
 implements CreateSoInterface, CreateSoEventInterface
 {
     private $_checkoutInfoDto = null;
@@ -61,7 +61,7 @@ implements CreateSoInterface, CreateSoEventInterface
     public function soBeforeInsertEvent($soObj) {
 //do nothing
     }
-    
+
     public function soInsertSuccessEvent($soObj) {
 //add order notes
         if ($this->checkoutFormData["so_extend"]["notes"])

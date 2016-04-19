@@ -2,27 +2,27 @@
 data
 
 #Input column name	Output column name	Specify value
-	ConnoteNum	
-	AccountCardCode	012631
-	xpoSenderRefCode	VALUEBASKET.COM LIMITED
-	SenderName	VALUEBASKET.COM LIMITED
+	ConnoteNum
+	AccountCardCode	012664-005
+	xpoSenderRefCode	Panther
+	SenderName	Panther
 	SenderAddress1	Workshop A 10/F. Wah Shing Industrial Building.
 	SenderAddress2	18 Cheung Shun Street
 	SenderAddress3	Cheung Sha Wan
 	SenderLocation	Kowloon Hong Kong
-	SenderState	
-	SenderPostcode	
+	SenderState
+	SenderPostcode
 	SenderCountry	Hong Kong
 	SenderContact	-
-	SenderPhone	3904 3034
-	SenderEmail	
+	SenderPhone	3543 0957
+	SenderEmail
 so_no	SenderRef1
-	SenderRef2	
-	ReceiverRefCode	
+	SenderRef2
+	ReceiverRefCode
 delivery_name	ReceiverName
-delivery_address1	ReceiverAddress1
-delivery_address2	ReceiverAddress2
-delivery_address3	ReceiverAddress3
+delivery_address_1	ReceiverAddress1
+delivery_address_2	ReceiverAddress2
+delivery_address_3	ReceiverAddress3
 delivery_city	ReceiverLocation
 delivery_state	ReceiverState
 delivery_postcode	ReceiverPostcode
@@ -37,15 +37,15 @@ qty	NumOfItem
 prod_weight	Weight
 declared_value	CustomValue
 	CustomCurrencyCode	USD
-	ClearanceRef	
+	ClearanceRef
 	CubicLength	0
 	CubicWidth	0
 	CubicHeight	0
 	CubicMeasure	Kgs
-	Notes	
+	Notes
 	CubicWeight	0
 	CarrierCode	DPEX
-	Instruction	
+	Instruction
 cc_desc	GoodDesc
 	GoodOriginCtryName	JAPAN
 	ReasonXport	Samples

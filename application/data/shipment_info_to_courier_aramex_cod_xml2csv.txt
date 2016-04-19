@@ -11,9 +11,9 @@ data
 	Country	HK
 	Shipper Contact	39043034
 delivery_name	Receiver
-delivery_address1	Receiver Address 1
-delivery_address2	Receiver Address 2
-delivery_address3	Receiver Address 3
+delivery_address_1	Receiver Address 1
+delivery_address_2	Receiver Address 2
+delivery_address_3	Receiver Address 3
 delivery_city	City
 delivery_postcode	ZipCode
 delivery_country_id	Country
