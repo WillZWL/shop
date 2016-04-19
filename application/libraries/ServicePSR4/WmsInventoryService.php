@@ -32,7 +32,7 @@ class WmsInventoryService extends BaseService
         $link = 'http://remote.eservicesgroup.com:8080/WMS.Server.Web/Service.asmx/getAllocationbyRetailerDateRangeREFINE';
         $clLogin = 'clwms';
         $clPwd = 'CLUUWMS56';
-        $retailers = 'VB';
+        $retailers = 'PT';
         $from = $to = date("Y-m-d");
         $url = $link . '?clLogin=' . $clLogin . '&clPwd=' . $clPwd . '&retailers=' . $retailers . '&datefrom=' . $from . '&dateto=' . $to;
         $use_curl = true;

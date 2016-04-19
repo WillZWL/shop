@@ -1,0 +1,28 @@
+#Table name
+data
+
+#Input column name  Output column name
+so_no	salesOrderNo
+	shipwayCode
+	senderName	E-service
+delivery_name	receiverName
+delivery_company	receiverCompany
+delivery_country_id	receiverCountryCode
+delivery_state	receiverProvince
+delivery_city	receiverCity
+country_name	receiverCounty
+delivery_address_1	receiverAddressLine1
+delivery_address_2	receiverAddressLine2
+delivery_postcode	receiverPostcode
+tel	receiverPhoneNumber
+	trackingNo
+	customsType
+	sku1
+category_name	customsDescription1
+	customsQuantity1	1
+declared_value	customsValue1
+prod_weight	customsWeight1
+	Height	10
+	Width	10
+	Length	10
+category_name	productName1

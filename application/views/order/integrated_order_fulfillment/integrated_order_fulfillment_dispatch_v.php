@@ -177,17 +177,13 @@
                     <select name="rec_courier">
                         <option value=""></option>
                         <?php
-                        $html_courier = "";
-                        foreach ($courier_list as $key => $value) :
-                            $selected_courier = "";
-                            if ($this->input->get("rec_courier") == $value) :
-                                $selected_courier = " SELECTED";
-                            endif;
-                            $html_courier .= <<<html
-                        <option value="$value" $selected_courier>$value</option>
-html;
-                        endforeach;
-                        echo $html_courier;
+                            $c_selected = array();
+                            $c_selected[$this->input->get("rec_courier")] = " SELECTED";
+                            foreach ($courier_list as $courier) :
+                            ?>
+                                <option value="<?= $courier->getCourierId() ?>" <?= $c_selected[$courier->getCourierId()] ?>><?= $courier->getCourierName() ?></option>
+                            <?php
+                            endforeach;
                         ?>
                     </select>
                 </td>
@@ -350,15 +346,16 @@ html;
                     &nbsp;|&nbsp
                     <input type="button" value="<?= $lang['return_selected'] ?>" onClick="document.fm_edit.dispatch_type.value='r';this.form.submit();"> &nbsp;|&nbsp
                     <select name="courier_id" id="courier_id">
-                        <?php
-                        $html_courier_bottom = "";
-                        foreach ($courier_list as $key => $value) :
-                            $html_courier_bottom .= <<<html
-                        <option value="$value">$value</option>
-html;
-                        endforeach;
-                        echo $html_courier_bottom;
+                    <?php
+                        $ci_selected = [];
+                        $ci_selected[$this->input->post("courier_id")] = " SELECTED";
+                        foreach ($courier_list as $courier) :
+                            $courierName = $courier->getCourierId() ." (". $courier->getCourierName(). " <-> " .$courier->getAftershipId(). ")";
                         ?>
+                            <option value="<?= $courier->getCourierId() ?>" <?= $ci_selected[$courier->getCourierId()] ?>><?= $courierName ?></option>
+                        <?php
+                        endforeach;
+                    ?>
                     </select>
                     <input type="button" value="<?= $lang['change_courier'] ?>"
                            onClick="if(document.getElementById('courier_id').value == 'DHLBBX') { set_mawb();} document.fm_edit.dispatch_type.value='c';document.fm_edit.submit();">

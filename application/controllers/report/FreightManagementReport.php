@@ -63,6 +63,8 @@ class FreightManagementReport  extends MY_Controller
             if ($data) {
                 $report = $this->formatData($data, TRUE);
                 $this->outputData($report);
+            } else {
+                Redirect(base_url()."report/freightManagementReport");
             }
 
         } else {

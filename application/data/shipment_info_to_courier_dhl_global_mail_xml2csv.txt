@@ -1,0 +1,44 @@
+#Table name
+data
+
+#Input column name	Output column name	Specify value
+	Product Code	PPS
+pt_so_no	Customer Ref
+	Shipper Name	PT
+delivery_name	ConsigneeName
+delivery_address_1	Consignee Address 1
+delivery_address_2	Consignee Address 2
+delivery_city	Consignee City
+delivery_state	Consignee State
+delivery_postcode	Consignee Post Code
+delivery_country_id	Consignee Country
+	Currency	USD
+declared_value	Total Declared Value
+prod_name	Generic Goods Description
+prod_name	Detailed Goods Description 1
+	Detailed Goods Description 2
+	Detailed Goods Description 3
+	Detailed Goods Description 4
+	HS Code 1	11111111
+	HS Code 2
+	HS Code 3
+	HS Code 4
+qty	Quantity 1
+	Quantity 2
+	Quantity 3
+	Quantity 4
+declared_value	Value 1
+	Value 2
+	Value 3
+	Value 4
+	Country of Origin 1	CN
+	Country of Origin 2
+	Country of Origin 3
+	Country of Origin 4
+sku	Item Code 1
+	Item Code 2
+	Item Code 3
+	Item Code 4
+weight	Weight
+tel	Phone
+	Tracking

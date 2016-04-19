@@ -2,21 +2,21 @@
 data
 
 #Input column name	Output column name	Specify value
-	Field1	VB
-	Field2	VALUEBASKET.COM LIMITED
+	Field1	PT
+	Field2	Panther
 	Field3	Amy Au
 	Field4	Workshop A 10/F Wah Shing Industrial Building
 	Field5	18 Cheung Shun Street
 	Field6	Lai Chi Kok
 	Field7	Kowloon
-	Field8	39043034
+	Field8	35430957
 	Field9	HKG
-	Field10	631106140
+	Field10	631062305
 delivery_name	DeliveryName
 delivery_company	DeliveryCompany
-delivery_address1	DeliveryAddress1
-delivery_address2	DeliveryAddress2
-delivery_address2	DeliveryAddress2
+delivery_address_1	DeliveryAddress1
+delivery_address_2	DeliveryAddress2
+delivery_address_2	DeliveryAddress2
 delivery_city	DeliveryCity
 delivery_state	DeliveryState
 delivery_postcode	DeliveryPostalCode
@@ -25,7 +25,7 @@ tel 	DeliveryPhone
 	Field21	P
 qty	Qty
 	Weight	0.5
-	Currency	USD
+	Currency	HKD
 declared_value	DeclaredValue
 cc_desc	CustomClassificationDescription
 cc_code	CustomClassificationCode
@@ -36,12 +36,12 @@ so_no	OrderNumber
 	Field41	1
 	Field42	DD
 	Field43	DDP
-	Field44	
+	Field44
 	Field45	0
 	Field46	0
 	Field47	0
 	Field48	DDP
 	Field49	Delivery Duty Paid
-	Field50	631106140
+	Field50	631062305
 	Field51	HK
-	Field52	
+	Field52

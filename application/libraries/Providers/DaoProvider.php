@@ -668,5 +668,10 @@ class DaoProvider implements ServiceProviderInterface
         $daoContainer['ProductHistorySync'] = function () {
             return new D\ProductHistorySyncDao();
         };
+
+        $daoContainer['Sequence'] = function () {
+            return new D\SequenceDao();
+        };
+
     }
 }

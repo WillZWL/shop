@@ -12,49 +12,15 @@ class Integrated_order_fulfillment extends MY_Controller
     public function __construct()
     {
         parent::__construct(FALSE);
-
         $public_method = ['invoice', 'custom_invoice', 'delivery_note', 'cron_generate_courier_file'];
 
         if (in_array(strtolower($this->router->fetch_method()), $public_method) === FALSE) {
             $this->sc['Authorization']->checkAccessRights($this->getAppId(), "");
         }
 
-        // $this->load->library('service/so_service');
-
-        // $this->load->library('service/batch_tracking_info_service');
-
-        // $this->load->library('service/integrated_order_fulfillment_service');
-        // $this->load->library('dao/courier_feed_dao.php');
-        // $this->courier_feed_dao = new Courier_feed_dao();
-
-
-        //$this->metapack_path = $this->sc['ContextConfig']->valueOf('metapack_path');
         $this->courier_path = $this->sc['ContextConfig']->valueOf('courier_path');
         $this->metapack_path = $this->sc['ContextConfig']->valueOf('metapack_path');
         $this->default_delivery = $this->sc['ContextConfig']->valueOf("default_delivery_type");
-
-        # add on to this list whatever courier user want to display
-        $this->courier_list = [
-            "DHL",
-            "DHLHKD",
-            "DHLBBX",
-            "HK_Post",
-            "IM",
-            "TOLL",
-            "TNT",
-            "DPD",
-            "ARAMEX",
-            "ARAMEX_COD",
-            "RMR",
-            "FEDEX",
-            "FEDEX2",
-            "DPD_NL",
-            "MRW",
-            "NEW_QUANTIUM",
-            "QUANTIUM",
-            "SF_EXPRESS",
-            "TAQBIN"
-        ];
     }
 
     public function getAppId()
@@ -219,7 +185,7 @@ class Integrated_order_fulfillment extends MY_Controller
 
         $data["notice"] = notice($lang);
         $data["valid_website_status"] = $this->sc['soModel']->getValidWebsiteStatusList();
-        $data["courier_list"] = $this->courier_list;
+        $data["courier_list"] =  $this->sc['Courier']->getDao('Courier')->getList(['show_status'=>1], ['limit'=>-1]);
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
         $data["searchdisplay"] = "";
@@ -379,7 +345,7 @@ class Integrated_order_fulfillment extends MY_Controller
 
         $data["default_delivery"] = $this->default_delivery;
         $data["whlist"] = $this->sc['Warehouse']->getDao('Warehouse')->getList([], ["limit" => -1, "result_type" => "array"]);
-        $data["courier_list"] = $this->courier_list;
+        $data["courier_list"] =  $this->sc['Courier']->getDao('Courier')->getList(['show_status'=>1], ['limit'=>-1]);
         $option["notes"] = 1;
         $option["hide_client"] = 1;
         $option["hide_payment"] = 0;
@@ -411,14 +377,36 @@ class Integrated_order_fulfillment extends MY_Controller
         }
     }
 
+    public function testCourierFeed($courier='DHL')
+   {
+        $so_no = $this->input->get("so_no");
+
+        $ret = $this->sc['CourierFeed']->generateCourierFile($so_no, $courier, 'Test Mawb', true);
+        var_dump($ret);
+   }
+
     public function generateCourierFile($checked = "")
     {
         if ($checked) {
             $courier = $this->input->post("courier_id");
             $mawb = $this->input->post("mawb");
-            $so_no_str = json_encode($checked);
+            $soNoStr = json_encode($checked);
 
-            $this->sc['Batch']->schedulePhpProcess(1, "order/integrated_order_fulfillment/cron_generate_courier_file/" . $batch_id);
+            $courierFeedVo = $this->sc['CourierFeed']->getDao('CourierFeed')->get();
+            $courierFeedObj = clone $courierFeedVo;
+
+            $id = $this->sc['CourierFeed']->getDao('CourierFeed')->getAutoIncrementId();
+            $courierFeedObj->setBatchId($id);
+
+            $courierFeedObj->setSoNoStr($soNoStr);
+            $courierFeedObj->setCourierId($courier);
+            $courierFeedObj->setMawb($mawb);
+            $courierFeedObj->setExec(0);
+
+            $courierFeedObj = $this->sc['CourierFeed']->getDao('CourierFeed')->insert($courierFeedObj);
+            $batchId = $courierFeedObj->getBatchId();
+
+            $this->sc['CourierFeed']->getGenerateCourierFile($batchId);
         }
     }
 
@@ -574,7 +562,7 @@ class Integrated_order_fulfillment extends MY_Controller
 
         $data["default_delivery"] = $this->default_delivery;
         $data["whlist"] = $this->sc['Warehouse']->getDao('Warehouse')->getList([], ["limit" => -1, "result_type" => "array"]);
-        $data["courier_list"] = $this->courier_list;
+        $data["courier_list"] =  $this->sc['Courier']->getDao('Courier')->getList(['show_status'=>1], ['limit'=>-1]);
         $option["notes"] = 1;
         $option["hide_client"] = 1;
 
@@ -666,11 +654,6 @@ class Integrated_order_fulfillment extends MY_Controller
             $data['output_filename'] = $filename;
             $this->load->view('order/integrated_order_fulfillment/readfile', $data);
         }
-    }
-
-    public function cron_generate_courier_file($batch_id)
-    {
-        $this->sc['So']->getGenerateCourierFile($batch_id);
     }
 
     public function get_courier_file($filename = "")

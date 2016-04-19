@@ -2,51 +2,15 @@
 data
 
 #Input column name	Output column name	Specify value
-	ConnoteNum	
-	AccountCardCode	012863
-	xpoSenderRefCode	New Asia Logistics Ltd
-	SenderName	New Asia Logistics Ltd
-	SenderAddress1	Flat 1908 19/F
-	SenderAddress2	St.George S Bldg
-	SenderAddress3	2 Ice House Street
-	SenderLocation	Central Hong Kong
-	SenderState	
-	SenderPostcode	
-	SenderCountry	Hong Kong
-	SenderContact	-
-	SenderPhone	3904 3034
-	SenderEmail	
-so_no	SenderRef1
-	SenderRef2	
-	ReceiverRefCode	
-delivery_name	ReceiverName
-delivery_address1	ReceiverAddress1
-delivery_address2	ReceiverAddress2
-delivery_address3	ReceiverAddress3
-delivery_city	ReceiverLocation
-delivery_state	ReceiverState
-delivery_postcode	ReceiverPostcode
-delivery_country_id	ReceiverCountryName
-delivery_name	ReceiverContact
-tel	ReceiverPhone
-email	ReceiverEmail
-prod_weight	CustomDeclaceWeight
-	WeightMeasure	Kgs
-qty	NumOfItem
-	ServiceType	EN
-prod_weight	Weight
+so_no	order no.
+delivery_name	CustomerName
+delivery_address_1	Address1
+delivery_address_2	Address2
+delivery_address_3	Address3
+delivery_city	City
+delivery_postcode	Postcode
+delivery_country_id	CountryName
+tel	Phone no.
+category_name	Category of order item
 declared_value	CustomValue
 	CustomCurrencyCode	USD
-	ClearanceRef	
-	CubicLength	0
-	CubicWidth	0
-	CubicHeight	0
-	CubicMeasure	Kgs
-	Notes	
-	CubicWeight	0
-	CarrierCode	DPEX
-	Instruction	
-cc_desc	GoodDesc
-	GoodOriginCtryName	JAPAN
-	ReasonXport	Samples
-	ShipTerm	DDU
