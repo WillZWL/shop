@@ -25,6 +25,7 @@ class ProductApi extends PUB_Controller
         }
         $this->checkInterfaceSkuInfoData($batch_id);
         $this->updateSkuData($batch_id);
+        $this->sendWebStatusChangeEmail($batch_id);
     }
 
     public function checkInterfaceSkuInfoData($batch_id)
@@ -40,6 +41,11 @@ class ProductApi extends PUB_Controller
     public function pushSkuMappingToCPS()
     {
         $this->sc['ProductApi']->pushSkuMappingToCPS();
+    }
+
+    public function sendWebStatusChangeEmail($batch_id)
+    {
+        $this->sc['ProductApi']->sendWebStatusChangeEmail($batch_id);
     }
 
     public function getAppId()

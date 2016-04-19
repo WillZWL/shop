@@ -192,6 +192,7 @@ class ProductApiService extends BaseService
         $history_sync_vo->setLeadDay((int)$sup_prod_obj->getLeadDay());
         $history_sync_vo->setMoq((int)$sup_prod_obj->getMoq());
         $history_sync_vo->setSupplyStatus((string)$product_obj->getSourcingStatus());
+        $history_sync_vo->setWebsiteStatus((string)$product_obj->getWebsiteStatus());
         return $this->getHistorySyncDao()->insert($history_sync_vo);
     }
 
@@ -205,6 +206,13 @@ class ProductApiService extends BaseService
         $product_obj->setSurplusQuantity($quantity);
         $sourcing_status = $this->statusIntToStr((int)$sync_obj->getSupplyStatus());
         $product_obj->setSourcingStatus((string)$sourcing_status);
+        $origin_website_status = $product_obj->get_website_status();
+        //Website Status Automation
+        $website_status = $this->autoWebsiteStatus($sourcing_status, $quantity, $origin_website_status);
+        if (!empty($website_status) && ($website_status != $origin_website_status)) {
+            $product_obj->setWebsiteStatus($website_status);
+        }
+
         $result = $this->getDao('Product')->update($product_obj);
         return $result;
     }
@@ -342,6 +350,84 @@ class ProductApiService extends BaseService
          return $stop_sync;
     }
 
+    //Website Status Auto
+    public function autoWebsiteStatus($sourcing_status, $quantity, $origin_website_status)
+    {
+        if ($sourcing_status == 'A' and $origin_website_status == 'O') {
+            $website_status = 'I';
+        }
+        if ($quantity == 0 and $sourcing_status == 'A' and $origin_website_status != 'P') {
+            $website_status = 'I';
+        } elseif ($quantity == 0 and ($sourcing_status == 'O' or $sourcing_status == 'L' or $sourcing_status == 'D') and $origin_website_status != 'P') {
+            $website_status = 'O';
+        }
+        if ($quantity > 0 and $sourcing_status != 'pr' and $origin_website_status != 'P') {
+            $website_status = 'I';
+        }
+        if ($sourcing_status == 'D' and ($origin_website_status == 'I' or $origin_website_status == 'A') and $quantity == 0) {
+            $website_status = 'O';
+        }
+        if ($sourcing_status == 'pr' and $origin_website_status != 'P') {
+            $website_status = 'P';
+        }
+        return $website_status;
+    }
+
+    public function sendWebStatusChangeEmail($batch_id)
+    {
+        $this->websiteStatusChangeList($batch_id);
+        $this->websiteStatusManuallyList($batch_id);
+    }
+
+    public function websiteStatusChangeList($batch_id)
+    {
+        $where['phs.batch_id'] = $batch_id;
+        $where['`phs`.`website_status` != `p`.`website_status`'] = NULL;
+        $option['limit'] = -1;
+        $result = $this->getHistorySyncDao()->getAlertSkuList($where, $option);
+        if ($result) {
+            $subject = '[CV2] Website Status Automation: Auto';
+            $msg = '<html><body>This is Sku List that Website Status Changed <br /><br />';
+            $msg .= "<table  border='0' cellspacing='0' cellpadding='0'><tr><th style='border:1px solid #000'>Sku</th><th style='border:1px solid #000'>Master Sku</th><th style='border:1px solid #000'>Name</th><th style='border:1px solid #000'>Origin Website Status</th><th style='border:1px solid #000'>Website Status</th><th style='border:1px solid #000'>Surplus Quantity</th><th style='border:1px solid #000'>Supplier Status</th><tr>";
+            $i = 0;
+            foreach ($result as $value) {
+                $origin_status = $this->getWebsiteStatusStr($value->getOriginWebsiteStatus());
+                $now_status = $this->getWebsiteStatusStr($value->getWebsiteStatus());
+                $sourcing_status_str = $this->getSourcingStatusStr($value->getSourcingStatus());
+                $msg .= "<tr><td style='border:1px solid #000'>".$value->getSku()."</td><td style='border:1px solid #000'>".$value->getMasterSku()."</td><td style='border:1px solid #000'>".$value->getName()."</td><td style='border:1px solid #000'>".$origin_status."</td><td style='border:1px solid #000'>".$now_status."</td><td style='border:1px solid #000'>".$value->getSurplusQty()."</td><td style='border:1px solid #000'>".$sourcing_status_str."</td><tr>";
+                $i++;
+            }
+            $msg .= '</table></body></html>';
+            if ($i > 0) {
+                $this->sendAlertEmail($subject, $msg);
+            }
+        }
+    }
+
+    public function websiteStatusManuallyList($batch_id)
+    {
+        $where['phs.batch_id'] = $batch_id;
+        $where['p.sourcing_status'] = 'C';
+        $where['phs.website_status'] = 'I';
+        $option['limit'] = -1;
+        echo $batch_id;die();
+        $result = $this->getHistorySyncDao()->getAlertSkuList($where, $option);
+        if ($result) {
+            $subject = '[CV2] Website Status Automation: Manual';
+            $msg = '<html><body><h2>The latter is for Stock contraint SKU.<h2> <br /><br />';
+            $msg .= "<table  border='0' cellspacing='0' cellpadding='0'><tr><th style='border:1px solid #000'>Sku</th><th style='border:1px solid #000'>Master Sku</th><th style='border:1px solid #000'>Name</th><th style='border:1px solid #000'>Sourcing Status</th><th style='border:1px solid #000'>Website Status</th><tr>";
+            $i =0;
+            foreach ($result as $value) {
+                $msg .= "<tr><td style='border:1px solid #000'>".$value->getSku()."</td><td style='border:1px solid #000'>".$value->getMasterSku()."</td><td style='border:1px solid #000'>".$value->getName()."</td><td style='border:1px solid #000'>Stock Constraint</td><td style='border:1px solid #000'>In Stock</td><tr>";
+                $i++;
+            }
+            $msg .= '</table>';
+            if ($i > 0) {
+                $this->sendAlertEmail($subject, $msg);
+            }
+        }
+    }
+
     public function pushSkuMappingToCPS()
     {
         $id = self::SCHEDULE_ID;
@@ -396,6 +482,51 @@ class ProductApiService extends BaseService
         if ($obj = $this->getDao('ScheduleJob')->get(["schedule_job_id" => $id, "status" => 1])) {
             $obj->setLastAccessTime($current_time);
             return $this->getDao('ScheduleJob')->update($obj);
+        }
+    }
+
+    public function getWebsiteStatusStr($website_status)
+    {
+        $website_status_arr = [
+            'I' => 'In Stock',
+            'O' => 'Out Of Stock',
+            'P' => 'Pre-Order',
+            'A' => 'Arriving',
+        ];
+        if (array_key_exists($website_status, $website_status_arr)) {
+            return $website_status_arr[$website_status];
+        } else {
+            return 'Un Know';
+        }
+    }
+
+    public function getSourcingStatusStr($sourcing_status)
+    {
+        $sourcing_status_arr = [
+            'A' => 'Readily Available',
+            'D' => 'Discontinued',
+            'O' => 'Temp Out of stock',
+            'C' => 'Stock Constraint',
+            'L' => 'Last Lot',
+            'pr' => 'Pre Order',
+        ];
+        if (array_key_exists($sourcing_status, $sourcing_status_arr)) {
+            return $sourcing_status_arr[$sourcing_status];
+        } else {
+            return 'Un Know';
+        }
+    }
+
+    public function sendAlertEmail($subj, $msg)
+    {
+        $headers .= 'From: Admin <admin@digitaldiscount.com>' . "\r\n";
+        $headers .= 'Cc: will.zhang@eservicesgroup.com' . "\r\n";
+        $headers .= "MIME-Version: 1.0"."\r\n";
+        $headers .= "Content-type: text/html; charset=utf-8". "\r\n";
+        if ($subj && $msg) {
+            $msg = str_replace("\n.", "\n..", $msg);
+            // mail ("bd@eservicesgroup.net, purchase@aln.hk", $subj, $msg, $headers);
+            mail ("will.zhang@eservicesgroup.com", $subj, $msg, $headers);
         }
     }
 

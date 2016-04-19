@@ -11,6 +11,7 @@ class ProductHistorySyncVo extends \BaseVo
     private $lead_day = '0';
     private $moq = '0';
     private $supply_status = 'A';
+    private $website_status = 'I';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -139,6 +140,18 @@ class ProductHistorySyncVo extends \BaseVo
     public function getSupplyStatus()
     {
         return $this->supply_status;
+    }
+
+    public function setWebsiteStatus($website_status)
+    {
+        if ($website_status !== null) {
+            $this->website_status = $website_status;
+        }
+    }
+
+    public function getWebsiteStatus()
+    {
+        return $this->website_status;
     }
 
     public function setCreateOn($create_on)
