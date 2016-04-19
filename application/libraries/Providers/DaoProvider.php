@@ -664,5 +664,10 @@ class DaoProvider implements ServiceProviderInterface
         $daoContainer['ClientLog'] = function () {
             return new D\ClientLogDao();
         };
+
+        $daoContainer['Sequence'] = function () {
+            return new D\SequenceDao();
+        };
+
     }
 }

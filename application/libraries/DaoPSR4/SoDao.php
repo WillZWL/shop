@@ -1681,39 +1681,80 @@ SQL;
     public function getShipmentDeliveryInfo($so_no = '', $classname = 'ShipmentInfoToCourierDto')
     {
         $sql = "SELECT
-                    so.platform_id, soa.sh_no, so.so_no, so.platform_order_id,
-                    so.order_create_date, so.bill_name, so.bill_company,
-                    so.bill_address, so.bill_postcode, so.bill_city,
-                    so.bill_state, so.bill_country_id, c.email,
-                    concat_ws('', c.tel_1, c.tel_2, c.tel_3) tel,
-                    so.delivery_name, so.delivery_company,
-                    so.delivery_address, so.delivery_postcode,
-                    so.delivery_city, so.delivery_state, so.delivery_country_id,
-                    soa.line_no, soa.item_sku sku, p.name prod_name,
-                    so.currency_id, soid.amount unit_price, soa.qty, so.delivery_charge,
-                    so.amount, sos.courier_id, so.promotion_code, soe.offline_fee,
-                    vpo.cc_desc, vpo.cc_code
+                            so.platform_id,
+                            soa.sh_no,
+                            so.so_no,
+                            so.platform_order_id,
+                            so.order_create_date,
+                            so.bill_name,
+                            so.bill_company,
+                            so.bill_address,
+                            so.bill_postcode,
+                            so.bill_city,
+                            so.bill_state,
+                            so.bill_country_id,
+                            c.email,
+                            concat_ws('', c.tel_1, c.tel_2, c.tel_3) tel,
+                            so.delivery_name,
+                            so.delivery_company,
+                            so.delivery_address,
+                            so.delivery_postcode,
+                            so.delivery_city,
+                            so.delivery_state,
+                            so.delivery_country_id,
+                            soa.line_no,
+                            soa.item_sku sku,
+                            p.name prod_name,
+                            so.currency_id,
+                            soid.amount unit_price,
+                            soa.qty,
+                            so.delivery_charge,
+                            so.amount,
+                            sos.courier_id,
+                            so.promotion_code,
+                            soe.offline_fee,
+                            cc.code AS cc_code,
+                            cc.description AS cc_desc
                 FROM so
-                INNER JOIN client c
-                    ON (c.id = so.client_id)
-                INNER JOIN so_item_detail soid
-                    ON (soid.so_no = so.so_no)
-                INNER JOIN so_allocate soa
-                    ON (soa.so_no = soid.so_no AND soa.line_no = soid.line_no AND  soa.item_sku = soid.item_sku)
-                INNER JOIN so_shipment sos
-                    ON (sos.sh_no = soa.sh_no)
-                INNER JOIN v_prod_overview_wo_shiptype vpo
-                    ON (vpo.sku = soid.item_sku AND so.platform_id = vpo.platform_id)
-                INNER JOIN product p
-                    ON (p.sku = soid.item_sku)
+                INNER JOIN client c ON (c.id = so.client_id)
+                INNER JOIN so_item_detail soid ON (soid.so_no = so.so_no)
+                INNER JOIN so_allocate soa ON (soa.so_no = soid.so_no AND soa.line_no = soid.line_no AND  soa.item_sku = soid.item_sku)
+                INNER JOIN so_shipment sos ON (sos.sh_no = soa.sh_no)
+                INNER JOIN product p ON (p.sku = soid.item_sku)
+                LEFT JOIN bundle b ON (p.sku = b.prod_sku)
+                LEFT JOIN freight_category fc ON (fc.id = p.freight_cat_id)
+                LEFT JOIN (
+                        supplier_prod sp
+                        JOIN supplier s
+                        JOIN exchange_rate sper
+                        JOIN platform_biz_var pbv
+                ) ON (
+                        p.sku = sp.prod_sku AND so.platform_id = pbv.selling_platform_id
+                        AND sp.supplier_id = s.id
+                        AND sp.currency_id = sper.from_currency_id
+                        AND pbv.platform_currency_id = sper.to_currency_id
+                        AND sp.order_default = 1
+                )
+                LEFT JOIN sub_cat_platform_var scpv ON (p.sub_cat_id = scpv.sub_cat_id AND pbv.selling_platform_id = scpv.platform_id)
+                LEFT JOIN product_custom_classification cc ON (cc.sku = p.sku AND cc.country_id = pbv.platform_country_id)
+                LEFT JOIN price_extend px ON (px.sku = p.sku AND px.platform_id = pbv.selling_platform_id)
+                LEFT JOIN price pr ON pr.sku = p.sku AND (pbv.selling_platform_id = pr.platform_id)
+                LEFT JOIN (
+                        price dp
+                        JOIN exchange_rate er
+                        JOIN config cf ON cf.variable = 'default_platform_id'
+                ) ON (
+                    p.sku = dp.sku
+                    AND dp.platform_id = cf.value
+                    AND er.from_currency_id = 'HKD'
+                    AND er.to_currency_id = pbv.platform_currency_id
+                )
                 LEFT JOIN so_extend soe
                     ON (so.so_no = soe.so_no)
-                WHERE so.so_no = ?";
-
-
+                WHERE so.so_no = ? and isnull(b.prod_sku)
+            ";
 
         $result = $this->db->query($sql, [$so_no]);
-
         if (!$result) {
             return FALSE;
         }
@@ -1727,34 +1768,77 @@ SQL;
 
     public function getShipmentDeliveryInfoDhl($so_no = '', $classname = 'ShipmentInfoToCourierDhlDto')
     {
-        $sql = "
-                SELECT
+        $sql = "SELECT
                         so.amount - ifnull(soe.offline_fee,0) order_cost,
+                        sum(soid.vat_total) vat,
+                        sum(discount_total) discount,
                         'DDP' added_service,
-                        CONCAT_WS('', c.tel_1, c.tel_2, c.tel_3, '/', c.mobile) AS tel, so.delivery_name,
-                        so.delivery_company, so.delivery_address, so.delivery_postcode,
-                        so.delivery_city, so.delivery_state, so.delivery_country_id,
-                        soid.qty, vpo.prod_weight, so.amount amount, so.rate, vpo.cc_desc,
-                        vpo.cc_code, so.so_no, vpo.price, vpo.free_delivery_limit,
-                        vpo.delivery_charge, vpo.platform_id, vpo.declared_pcent, so.currency_id, soid.item_sku AS prod_sku,
-                        c.email as client_email, cat.name as category_name
+                        CONCAT_WS('', c.tel_1, c.tel_2, c.tel_3, '/', c.mobile) AS tel,
+                        so.delivery_name,
+                        so.delivery_company,
+                        so.delivery_address,
+                        so.delivery_postcode,
+                        so.delivery_city,
+                        so.delivery_state,
+                        so.delivery_country_id,
+                        soid.qty,
+                        so.amount amount,
+                        so.rate,
+                        sum(soid.amount) sum_item_amount,
+                        so.so_no,
+                        pbv.selling_platform_id AS platform_id,
+                        cc.code AS cc_code,
+                        cc.description AS cc_desc,
+                        fc.weight AS prod_weight,
+                        if((pr.price > 0),pr.price,round((dp.price * er.rate),2)) AS price,
+                        pbv.free_delivery_limit AS free_delivery_limit,
+                        0 AS delivery_charge,
+                        coalesce(fc.declared_pcent,100) AS declared_pcent,
+                        so.currency_id,
+                        soid.item_sku AS prod_sku,
+                        c.email as client_email,
+                        cat.name as category_name,
+                        con.id_3_digit,
+                        con.name as country_name,
+                        so.rate_to_hkd
                 FROM so
                 inner join so_extend soe on soe.so_no = so.so_no
-                INNER JOIN client c
-                    ON (c.id = so.client_id)
-                INNER JOIN so_item_detail soid
-                    ON (soid.so_no = so.so_no)
-                INNER JOIN v_prod_overview_wo_shiptype vpo
-                    ON (vpo.sku = soid.item_sku AND so.platform_id = vpo.platform_id)
-                INNER JOIN product p
-                    ON(soid.item_sku = p.sku)
-                INNER JOIN category cat
-                    ON(cat.id = p.cat_id)
-                WHERE so.so_no = ?
+                INNER JOIN client c ON (c.id = so.client_id)
+                INNER JOIN so_item_detail soid ON (soid.so_no = so.so_no)
+                INNER JOIN product p ON(soid.item_sku = p.sku)
+                LEFT JOIN bundle b ON (p.sku = b.prod_sku)
+                LEFT JOIN freight_category fc ON (fc.id = p.freight_cat_id)
+                LEFT JOIN (
+                        supplier_prod sp
+                        JOIN supplier s
+                        JOIN exchange_rate sper
+                        JOIN platform_biz_var pbv
+                ) ON (
+                        p.sku = sp.prod_sku AND so.platform_id = pbv.selling_platform_id
+                        AND sp.supplier_id = s.id
+                        AND sp.currency_id = sper.from_currency_id
+                        AND pbv.platform_currency_id = sper.to_currency_id
+                        AND sp.order_default = 1
+                )
+                LEFT JOIN sub_cat_platform_var scpv ON (p.sub_cat_id = scpv.sub_cat_id AND pbv.selling_platform_id = scpv.platform_id)
+                LEFT JOIN product_custom_classification cc ON (cc.sku = p.sku AND cc.country_id = pbv.platform_country_id)
+                LEFT JOIN price_extend px ON (px.sku = p.sku AND px.platform_id = pbv.selling_platform_id)
+                LEFT JOIN price pr ON pr.sku = p.sku AND (pbv.selling_platform_id = pr.platform_id)
+                LEFT JOIN (
+                        price dp
+                        JOIN exchange_rate er
+                        JOIN config cf ON cf.variable = 'default_platform_id'
+                ) ON (
+                    p.sku = dp.sku
+                    AND dp.platform_id = cf.value
+                    AND er.from_currency_id = 'HKD'
+                    AND er.to_currency_id = pbv.platform_currency_id
+                )
+                INNER JOIN category cat ON(cat.id = p.cat_id)
+                INNER JOIN country con ON(so.delivery_country_id = con.country_id)
+                WHERE so.so_no = ? and isnull(b.prod_sku)
                 ORDER BY soid.line_no LIMIT 1
-                ";
-
-
+            ";
 
         $result = $this->db->query($sql, [$so_no]);
         if (!$result) {
@@ -1770,22 +1854,65 @@ SQL;
 
     public function getShipmentDeliveryInfoCourier($so_no = '', $classname = 'ShipmentInfoToCourierDhlDto')
     {
-        $sql = "
-                SELECT CONCAT_WS('', c.tel_1, c.tel_2, c.tel_3) AS tel, so.delivery_name, so.delivery_company, so.delivery_address, so.delivery_postcode, so.delivery_city, so.delivery_state, so.delivery_country_id, soid.qty, vpo.prod_weight, soid.unit_price amount, so.rate, vpo.cc_desc, vpo.cc_code, so.so_no, vpo.price, vpo.free_delivery_limit, vpo.delivery_charge, vpo.platform_id, vpo.declared_pcent, so.currency_id, soid.item_sku prod_sku
+        $sql = "SELECT
+                            CONCAT_WS('', c.tel_1, c.tel_2, c.tel_3) AS tel,
+                            so.delivery_name,
+                            so.delivery_company,
+                            so.delivery_address,
+                            so.delivery_postcode,
+                            so.delivery_city,
+                            so.delivery_state,
+                            so.delivery_country_id,
+                            soid.qty,
+                            soid.unit_price amount,
+                            so.rate,
+                            so.so_no,
+                            pbv.selling_platform_id AS platform_id,
+                            cc.code AS cc_code,
+                            cc.description AS cc_desc,
+                            fc.weight AS prod_weight,
+                            if((pr.price > 0),pr.price,round((dp.price * er.rate),2)) AS price,
+                            pbv.free_delivery_limit AS free_delivery_limit,
+                            0 AS delivery_charge,
+                            coalesce(fc.declared_pcent,100) AS declared_pcent,
+                            so.currency_id,
+                            soid.item_sku prod_sku
                 FROM so
-                INNER JOIN client c
-                    ON (c.id = so.client_id)
-                INNER JOIN so_item_detail soid
-                    ON (soid.so_no = so.so_no)
-                INNER JOIN v_prod_overview_wo_shiptype vpo
-                    ON (vpo.sku = soid.item_sku AND so.platform_id = vpo.platform_id)
-                WHERE so.so_no = ?
-                ";
-
-
+                INNER JOIN client c ON (c.id = so.client_id)
+                INNER JOIN so_item_detail soid ON (soid.so_no = so.so_no)
+                INNER JOIN product p ON(soid.item_sku = p.sku)
+                LEFT JOIN bundle b ON (p.sku = b.prod_sku)
+                LEFT JOIN freight_category fc ON (fc.id = p.freight_cat_id)
+                LEFT JOIN (
+                        supplier_prod sp
+                        JOIN supplier s
+                        JOIN exchange_rate sper
+                        JOIN platform_biz_var pbv
+                ) ON (
+                        p.sku = sp.prod_sku AND so.platform_id = pbv.selling_platform_id
+                        AND sp.supplier_id = s.id
+                        AND sp.currency_id = sper.from_currency_id
+                        AND pbv.platform_currency_id = sper.to_currency_id
+                        AND sp.order_default = 1
+                )
+                LEFT JOIN sub_cat_platform_var scpv ON (p.sub_cat_id = scpv.sub_cat_id AND pbv.selling_platform_id = scpv.platform_id)
+                LEFT JOIN product_custom_classification cc ON (cc.sku = p.sku AND cc.country_id = pbv.platform_country_id)
+                LEFT JOIN price_extend px ON (px.sku = p.sku AND px.platform_id = pbv.selling_platform_id)
+                LEFT JOIN price pr ON pr.sku = p.sku AND (pbv.selling_platform_id = pr.platform_id)
+                LEFT JOIN (
+                        price dp
+                        JOIN exchange_rate er
+                        JOIN config cf ON cf.variable = 'default_platform_id'
+                ) ON (
+                    p.sku = dp.sku
+                    AND dp.platform_id = cf.value
+                    AND er.from_currency_id = 'HKD'
+                    AND er.to_currency_id = pbv.platform_currency_id
+                )
+                WHERE so.so_no = ? and isnull(b.prod_sku)
+            ";
 
         $result = $this->db->query($sql, [$so_no]);
-
         if (!$result) {
             return FALSE;
         }
@@ -1799,30 +1926,68 @@ SQL;
 
     public function getShipmentDeliveryInfoCourierForTnt($so_no = '', $classname = 'ShipmentInfoToCourierDhlDto')
     {
-        $sql = "
-                SELECT so.so_no, so.delivery_name, so.delivery_address, so.delivery_city, so.delivery_state, so.delivery_postcode, so.delivery_country_id, so.delivery_name, CONCAT_WS('', c.tel_1, c.tel_2, c.tel_3) AS tel, vpo.prod_weight, soid.unit_price amount, so.currency_id, cat.name cat_name, cat2.name subcat, cat3.name subsubcat
+        $sql = "SELECT so.so_no,
+                            so.delivery_name,
+                            so.delivery_address,
+                            so.delivery_city,
+                            so.delivery_state,
+                            so.delivery_postcode,
+                            so.delivery_country_id,
+                            so.delivery_name,
+                            CONCAT_WS('', c.tel_1, c.tel_2, c.tel_3) AS tel,
+                            pbv.selling_platform_id AS platform_id,
+                            cc.code AS cc_code,
+                            cc.description AS cc_desc,
+                            fc.weight AS prod_weight,
+                            if((pr.price > 0),pr.price,round((dp.price * er.rate),2)) AS price,
+                            pbv.free_delivery_limit AS free_delivery_limit,
+                            0 AS delivery_charge,
+                            coalesce(fc.declared_pcent,100) AS declared_pcent,
+                            soid.unit_price amount,
+                            so.currency_id,
+                            cat.name cat_name,
+                            cat2.name subcat,
+                            cat3.name subsubcat
                 FROM so
-                INNER JOIN client c
-                    ON (c.id = so.client_id)
-                INNER JOIN so_item_detail soid
-                    ON (soid.so_no = so.so_no)
-                INNER JOIN product pdt
-                    ON (soid.item_sku = pdt.sku)
-                INNER JOIN category cat
-                    ON (cat.id = pdt.cat_id)
-                INNER JOIN category cat2
-                    ON (cat2.id = pdt.sub_cat_id)
-                INNER JOIN category cat3
-                    ON (cat3.id = pdt.sub_sub_cat_id)
-                INNER JOIN v_prod_overview_wo_shiptype vpo
-                    ON (vpo.sku = soid.item_sku AND so.platform_id = vpo.platform_id)
-                WHERE so.so_no = ?
-                ";
-
-
+                INNER JOIN client c ON (c.id = so.client_id)
+                INNER JOIN so_item_detail soid ON (soid.so_no = so.so_no)
+                INNER JOIN product pdt ON (soid.item_sku = pdt.sku)
+                INNER JOIN category cat ON (cat.id = pdt.cat_id)
+                INNER JOIN category cat2 ON (cat2.id = pdt.sub_cat_id)
+                INNER JOIN category cat3 ON (cat3.id = pdt.sub_sub_cat_id)
+                INNER JOIN product p ON(soid.item_sku = p.sku)
+                LEFT JOIN bundle b ON (p.sku = b.prod_sku)
+                LEFT JOIN freight_category fc ON (fc.id = p.freight_cat_id)
+                LEFT JOIN (
+                        supplier_prod sp
+                        JOIN supplier s
+                        JOIN exchange_rate sper
+                        JOIN platform_biz_var pbv
+                ) ON (
+                        p.sku = sp.prod_sku AND so.platform_id = pbv.selling_platform_id
+                        AND sp.supplier_id = s.id
+                        AND sp.currency_id = sper.from_currency_id
+                        AND pbv.platform_currency_id = sper.to_currency_id
+                        AND sp.order_default = 1
+                )
+                LEFT JOIN sub_cat_platform_var scpv ON (p.sub_cat_id = scpv.sub_cat_id AND pbv.selling_platform_id = scpv.platform_id)
+                LEFT JOIN product_custom_classification cc ON (cc.sku = p.sku AND cc.country_id = pbv.platform_country_id)
+                LEFT JOIN price_extend px ON (px.sku = p.sku AND px.platform_id = pbv.selling_platform_id)
+                LEFT JOIN price pr ON pr.sku = p.sku AND (pbv.selling_platform_id = pr.platform_id)
+                LEFT JOIN (
+                        price dp
+                        JOIN exchange_rate er
+                        JOIN config cf ON cf.variable = 'default_platform_id'
+                ) ON (
+                    p.sku = dp.sku
+                    AND dp.platform_id = cf.value
+                    AND er.from_currency_id = 'HKD'
+                    AND er.to_currency_id = pbv.platform_currency_id
+                )
+                WHERE so.so_no = ? and isnull(b.prod_sku)
+            ";
 
         $result = $this->db->query($sql, [$so_no]);
-
         if (!$result) {
             return FALSE;
         }

@@ -1,0 +1,31 @@
+#Table name
+data
+
+#input column name	Output column name
+
+so_no	Order Number
+barcode	Package Barcode
+	Prealert Reference	PT
+	Shipping Method	PPLUS
+prod_weight	Weight
+delivery_company	CompanyName
+delivery_name	ConsigneeName
+tel	PhoneNumber
+client_email	EmailAddress
+delivery_address_1	Street
+	HouseNumber
+	HouseNumberExtension
+delivery_address_2	AdditionalAddressInfo
+delivery_city	CityOrTown
+delivery_city	StateOrProvince
+delivery_postcode	ZIPCode
+id_3_digit	CountryCode
+category_name	SKUCode
+category_name	SKUDescription
+qty	Quantity
+	Currency	EUR
+amount	Price
+	ShippingCosts
+	Hs Code	1
+	Website
+	TYPnumber

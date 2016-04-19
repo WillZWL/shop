@@ -14,9 +14,9 @@ data
 	Field10	631155027
 delivery_name	DeliveryName
 delivery_company	DeliveryCompany
-delivery_address1	DeliveryAddress1
-delivery_address2	DeliveryAddress2
-delivery_address2	DeliveryAddress2
+delivery_address_1	DeliveryAddress1
+delivery_address_2	DeliveryAddress2
+delivery_address_2	DeliveryAddress2
 delivery_city	DeliveryCity
 delivery_state	DeliveryState
 delivery_postcode	DeliveryPostalCode
@@ -27,8 +27,8 @@ prod_weight	Weight
 	Currency	USD
 declared_value	DeclaredValue
 cc_desc	CustomClassificationDescription
-	Field26	
-	Field27	
+	Field26
+	Field27
 	Field28	1
 mawb	Field29
 	Field30	1

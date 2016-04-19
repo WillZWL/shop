@@ -4,9 +4,9 @@ data
 #input column name	Output column name	Specify value
 delivery_company	DeliveryCompany
 delivery_name	DeliveryName
-delivery_address1	DeliveryAddress1
-delivery_address2	DeliveryAddress2
-delivery_address3	DeliveryAddress3
+delivery_address_1	DeliveryAddress1
+delivery_address_2	DeliveryAddress2
+delivery_address_3	DeliveryAddress3
 delivery_city	DeliveryCity
 delivery_state	DeliveryState
 delivery_country_id	DeliveryCountry

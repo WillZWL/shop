@@ -358,4 +358,46 @@ abstract class BaseDao
         }
         return $id;
     }
+
+
+    public function seqNextVal()
+    {
+        // include_once(APPPATH."libraries/Service/ContextConfigService.php");
+        $cconfig = new \ESG\Panther\Service\ContextConfigService();
+        $this->sequence_table = $cconfig->getDao('Config')->valueOf("sequence_table");
+
+        if ($this->getSeqName() != "")
+        {
+            $this->db->where('seq_name', $this->getSeqName());
+            $query = $this->db->get($this->sequence_table);
+            $row = $query->row();
+            return $row->value+$row->increment_level;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    public function updateSeq($newValue)
+    {
+        $this->db->where('seq_name', $this->getSeqName());
+        if ($this->db->update($this->sequence_table, array('value'=>$newValue)))
+        {
+            if ($this->db->trans_autocommit)
+            {
+                $this->db->trans_commit();
+            }
+            return TRUE;
+        }
+        else
+        {
+            if ($this->db->trans_autocommit)
+            {
+                $this->db->trans_rollback();
+                $this->db->trans_commit();
+            }
+            return FALSE;
+        }
+    }
 }

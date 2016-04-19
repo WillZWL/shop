@@ -162,18 +162,14 @@
                     <select id="rec_courier" name="rec_courier" style="width:90px;">
                         <option value=""></option>
                         <?php
-                        $html_courier = "";
-                        foreach ($courier_list as $key => $value) :
-                            $selected_courier = "";
-                            if ($this->input->get("rec_courier") == $value) :
-                                $selected_courier = " SELECTED";
-                            endif;
+                            $c_selected = array();
+                            $c_selected[$this->input->get("rec_courier")] = " SELECTED";
+                            foreach ($courier_list as $courier) :
+                            ?>
+                                <option value="<?= $courier->getCourierId() ?>" <?= $c_selected[$courier->getCourierId()] ?>><?= $courier->getCourierName() ?></option>
+                            <?php
+                            endforeach;
                         ?>
-                        <option value="<?=$value?>" <?=$selected_courier?>><?=$value?></option>
-                        <?php
-                        endforeach;
-                        ?>
-
                     </select>
                 </td>
                 <td><input name="delivery_name" class="input"
