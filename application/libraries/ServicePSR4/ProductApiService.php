@@ -525,8 +525,7 @@ class ProductApiService extends BaseService
         $headers .= "Content-type: text/html; charset=utf-8". "\r\n";
         if ($subj && $msg) {
             $msg = str_replace("\n.", "\n..", $msg);
-            // mail ("bd@eservicesgroup.net, purchase@aln.hk", $subj, $msg, $headers);
-            mail ("will.zhang@eservicesgroup.com", $subj, $msg, $headers);
+            mail ("bd@eservicesgroup.net, purchase@aln.hk", $subj, $msg, $headers);
         }
     }
 
