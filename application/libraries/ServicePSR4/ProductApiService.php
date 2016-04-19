@@ -206,7 +206,7 @@ class ProductApiService extends BaseService
         $product_obj->setSurplusQuantity($quantity);
         $sourcing_status = $this->statusIntToStr((int)$sync_obj->getSupplyStatus());
         $product_obj->setSourcingStatus((string)$sourcing_status);
-        $origin_website_status = $product_obj->get_website_status();
+        $origin_website_status = $product_obj->getWebsiteStatus();
         //Website Status Automation
         $website_status = $this->autoWebsiteStatus($sourcing_status, $quantity, $origin_website_status);
         if (!empty($website_status) && ($website_status != $origin_website_status)) {
