@@ -54,7 +54,7 @@
                 <tr>
                     <td align="right" colspan=2>
                         <input type="button" value="<?= $lang["wms_allocation"] ?>"
-                        onClick="document.location.href='<?= base_url() ?>order/integrated_order_fulfillment/getWmsAllocationPlanOrder'">
+                        onClick="document.location.href='<?= base_url() ?>order/integrated_order_fulfillment/getWmsAllocationPlanOrder/1'">
                     </td>
                 </tr>
             </table>
