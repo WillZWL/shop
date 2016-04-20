@@ -8,6 +8,7 @@ class CronUpdatePriceMargin extends MY_Controller
     {
         set_time_limit(900);
         if ($platform_id === '') {
+            $this->sc['PriceMargin']->getDao('PriceMargin')->db->save_queries = false;
             $platform_list = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList();
             foreach ($platform_list as $platform_obj) {
                 $this->sc['PriceMargin']->refreshProfitAndMargin($platform_obj->getSellingPlatformId());
