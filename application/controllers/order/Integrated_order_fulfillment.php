@@ -46,7 +46,7 @@ class Integrated_order_fulfillment extends MY_Controller
                 $checkSoNo = $_POST["check"];
             }
 
-            $this->getWmsAllocationPlanOrder($checkSoNo, true);
+            $this->getWmsAllocationPlanOrder(1, $checkSoNo);
 
             redirect(current_url() . "?" . $_SERVER['QUERY_STRING']);
         }
@@ -192,7 +192,7 @@ class Integrated_order_fulfillment extends MY_Controller
         $this->load->view('order/integrated_order_fulfillment/integrated_order_fulfillment_index_v', $data);
     }
 
-    public function getWmsAllocationPlanOrder($so_no_list = [], $redirectUrl = false)
+    public function getWmsAllocationPlanOrder($redirectUrl = 0, $so_no_list = [])
     {
         if (empty($so_no_list)) {
             if ($wms_so_no = $this->sc['WmsInventory']->getWmsSoNoList()) {
@@ -204,7 +204,7 @@ class Integrated_order_fulfillment extends MY_Controller
             $this->sc['So']->wmsAllocationPlanOrder($so_no_list);
         }
 
-        if ($redirectUrl === true) {
+        if ($redirectUrl) {
             redirect(base_url() . "order/integrated_order_fulfillment/?" . $_SERVER['QUERY_STRING']);
         }
     }
