@@ -4,6 +4,7 @@ namespace ESG\Panther\Service;
 
 class PriceMarginService extends BaseService
 {
+    const SCHEDULE_ID= "REFRESH_MARGIN";
     public function refreshProfitAndMargin($platform_id = '', $sku = '')
     {
         if ($sku !== '') {
@@ -14,9 +15,23 @@ class PriceMarginService extends BaseService
             $where['pbv.selling_platform_id'] = $platform_id;
         }
 
+        $id = self::SCHEDULE_ID;
+        $current_time = date("Y-m-d H:i:s");
+
+        $last_time = $this->getLastTime($id);
+        $where["(
+                p.modify_on >= '$last_time'
+                or fc.modify_on >='$last_time'
+                or sp.modify_on >= '$last_time'
+                or sper.modify_on >='$last_time'
+                or pbv.modify_on >='$last_time'
+                or scpv.modify_on >='$last_time'
+                or cc.modify_on >= '$last_time'
+                or pr.modify_on >= '$last_time'
+        )"] = NULL;
+
         $option = ['limit' => -1];
         $prod_obj_list = $this->getDao('Price')->getPriceWithCost($where, $option);
-
         foreach ($prod_obj_list as $prod_obj) {
             $sku = $prod_obj->getSku();
             $platform_id = $prod_obj->getPlatformId();
@@ -53,6 +68,22 @@ class PriceMarginService extends BaseService
 
                 $this->getDao('PriceMargin')->$action($price_margin_obj);
             }
+        }
+        $this->updatLastTime($id, $current_time);
+    }
+
+    private function getLastTime($id)
+    {
+        if ($obj = $this->getDao('ScheduleJob')->get(["schedule_job_id" => $id, "status" => 1])) {
+            return $obj->getLastAccessTime();
+        }
+    }
+
+    private function updatLastTime($id, $current_time)
+    {
+        if ($obj = $this->getDao('ScheduleJob')->get(["schedule_job_id" => $id, "status" => 1])) {
+            $obj->setLastAccessTime($current_time);
+            return $this->getDao('ScheduleJob')->update($obj);
         }
     }
 }
