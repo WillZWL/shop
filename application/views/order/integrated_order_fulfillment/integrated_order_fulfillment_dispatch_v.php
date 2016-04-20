@@ -409,7 +409,7 @@
     <?php
         if ($_SESSION["courier_file"]) :
     ?>
-    top.frames["printframe"].window.location.href = '<?=base_url()?>order/integrated_order_fulfillment/get_courier_file/<?=$_SESSION["courier_file"]?>';
+    top.frames["printframe"].window.location.href = '<?=base_url()?>order/integrated_order_fulfillment/getCourierFile/<?=$_SESSION["courier_file"]?>';
     <?php
         endif;
     ?>
