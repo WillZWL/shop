@@ -4428,9 +4428,10 @@ html;
             }
 
             if ($mail_send) {
-                $header = "From: admin@eservicesgroup.com\r\n";
+                $header = "From: admin@digitaldiscount.co.uk\r\n";
                 $subject = "[Panther] Alert, WMS Allocation Plan New order so_no > 'to ship' is abnormal";
-                mail("alice.wu@eservicesgroup.com", "{$subject}", "{$bodytext}", "{$header}");
+                $mail_to = $_SESSION["user"]["email"] ? $_SESSION["user"]["email"] . ", alice.wu@eservicesgroup.com" : "alice.wu@eservicesgroup.com";
+                mail($mail_to, $subject, $bodytext, $header);
             }
 
             return TRUE;

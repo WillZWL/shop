@@ -31,12 +31,10 @@ class CourierFeedService extends BaseService
 
 			$bodytext = "";
 			if ($user_obj = $this->getDao('User')->get(["id" => $name])) {
-				// $email_addr = $user_obj->getEmail();
-				$email_addr = "brave.liu@eservicesgroup.com";
+				$email_addr = $user_obj->getEmail();
 
 			} else {
-				// $email_addr = "nero@eservicesgroup.com";
-				$email_addr = "brave.liu@eservicesgroup.com";
+				$email_addr = "nero@eservicesgroup.com";
 
 				$bodytext .= "user email not found <br>";
 			}
@@ -61,6 +59,8 @@ class CourierFeedService extends BaseService
 			$phpmail->Body = $bodytext;
 
 			$phpmail->Send();
+
+			return $ret;
 		}
 	}
 
@@ -998,7 +998,7 @@ class CourierFeedService extends BaseService
 			//create file for dispatch list import
 			if ($courier == "IM" || $courier == "RMR") {
 				$dispatch_path = $this->getDao('Config')->valueOf('dispath_list_path');
-				$this->_create_folder($dispatch_path, date('Y'), date('F'));
+				$this->createFolder($dispatch_path, date('Y'), date('F'));
 				$dispatch_filename = $courier . "_" . $filename . ".csv";
 				$dispatch_path = $dispatch_path . date('Y') . "/" . date('F') . "/" . $courier . "/";
 				if ($fp = @fopen($dispatch_path . $dispatch_filename, 'w')) //              if ($fp = @fopen($path . $dispatch_filename, 'w'))
@@ -1051,4 +1051,41 @@ class CourierFeedService extends BaseService
 		return $this->getDao('So')->getShipmentDeliveryInfo($so_no, $classname);
 	}
 
+	private function createFolder($upload_path, $this_year, $this_month)
+	{
+		$full_path = $upload_path . $this_year;
+		if (!file_exists($upload_path))
+		{
+			mkdir($upload_path, 0775);
+		}
+		if (!file_exists($full_path))
+		{
+			mkdir($full_path, 0775);
+		}
+		$full_path = $upload_path . $this_year . "/" . $this_month;
+		if (!file_exists($full_path))
+		{
+			mkdir($full_path, 0775);
+		}
+		$full_path = $upload_path . $this_year . "/" . $this_month . "/AMS" ;
+		if (!file_exists($full_path))
+		{
+			mkdir($full_path, 0775);
+		}
+		$full_path = $upload_path . $this_year . "/" . $this_month . "/ILG" ;
+		if (!file_exists($full_path))
+		{
+			mkdir($full_path, 0775);
+		}
+		$full_path = $upload_path . $this_year . "/" . $this_month . "/IM" ;
+		if (!file_exists($full_path))
+		{
+			mkdir($full_path, 0775);
+		}
+		$full_path = $upload_path . $this_year . "/" . $this_month . "/RMR" ;
+		if (!file_exists($full_path))
+		{
+			mkdir($full_path, 0775);
+		}
+	}
 }

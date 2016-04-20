@@ -407,13 +407,13 @@
     if ($_SESSION["courier_file"])
     {
         ?>
-        top.frames["printframe"].window.location.href = '<?=base_url()?>order/integrated_order_fulfillment/get_courier_file/<?=$_SESSION["courier_file"]?>';
+        top.frames["printframe"].window.location.href = '<?=base_url()?>order/integrated_order_fulfillment/getCourierFile/<?=$_SESSION["courier_file"]?>';
         <?php
     }
     if ($_SESSION["allocate_file"])
     {
         ?>
-        top.frames["printframe"].window.location.href = '<?=base_url()?>order/integrated_order_fulfillment/get_allocate_file/<?=$_SESSION["allocate_file"]?>';
+        top.frames["printframe"].window.location.href = '<?=base_url()?>order/integrated_order_fulfillment/getAllocateFile/<?=$_SESSION["allocate_file"]?>';
         <?php
     }
     ?>

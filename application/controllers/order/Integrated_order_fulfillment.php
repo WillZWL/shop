@@ -12,7 +12,7 @@ class Integrated_order_fulfillment extends MY_Controller
     public function __construct()
     {
         parent::__construct(FALSE);
-        $public_method = ['invoice', 'custom_invoice', 'delivery_note', 'cron_generate_courier_file'];
+        $public_method = ['invoice', 'custom_invoice', 'delivery_note'];
 
         if (in_array(strtolower($this->router->fetch_method()), $public_method) === FALSE) {
             $this->sc['Authorization']->checkAccessRights($this->getAppId(), "");
@@ -46,7 +46,7 @@ class Integrated_order_fulfillment extends MY_Controller
                 $checkSoNo = $_POST["check"];
             }
 
-            $this->getWmsAllocationPlanOrder($checkSoNo);
+            $this->getWmsAllocationPlanOrder($checkSoNo, true);
 
             redirect(current_url() . "?" . $_SERVER['QUERY_STRING']);
         }
@@ -192,7 +192,7 @@ class Integrated_order_fulfillment extends MY_Controller
         $this->load->view('order/integrated_order_fulfillment/integrated_order_fulfillment_index_v', $data);
     }
 
-    public function getWmsAllocationPlanOrder($so_no_list = [])
+    public function getWmsAllocationPlanOrder($so_no_list = [], $redirectUrl = false)
     {
         if (empty($so_no_list)) {
             if ($wms_so_no = $this->sc['WmsInventory']->getWmsSoNoList()) {
@@ -204,7 +204,9 @@ class Integrated_order_fulfillment extends MY_Controller
             $this->sc['So']->wmsAllocationPlanOrder($so_no_list);
         }
 
-        redirect(base_url() . "order/integrated_order_fulfillment/?" . $_SERVER['QUERY_STRING']);
+        if ($redirectUrl === true) {
+            redirect(base_url() . "order/integrated_order_fulfillment/?" . $_SERVER['QUERY_STRING']);
+        }
     }
 
     public function to_ship($offset = 0)
@@ -373,7 +375,7 @@ class Integrated_order_fulfillment extends MY_Controller
 
         $this->load->view('order/integrated_order_fulfillment/integrated_order_fulfillment_to_ship_v', $data);
         if ($_POST["dispatch_type"] == 'c') {
-            $this->generate_allocate_file();
+            $this->generateAllocateFile();
         }
     }
 
@@ -382,7 +384,8 @@ class Integrated_order_fulfillment extends MY_Controller
         $so_no = $this->input->get("so_no");
 
         $ret = $this->sc['CourierFeed']->generateCourierFile($so_no, $courier, 'Test Mawb', true);
-        var_dump($ret);
+        $_SESSION['courier_file'] = $ret;
+        $this->getCourierFile($ret);
    }
 
     public function generateCourierFile($checked = "")
@@ -406,11 +409,13 @@ class Integrated_order_fulfillment extends MY_Controller
             $courierFeedObj = $this->sc['CourierFeed']->getDao('CourierFeed')->insert($courierFeedObj);
             $batchId = $courierFeedObj->getBatchId();
 
-            $this->sc['CourierFeed']->getGenerateCourierFile($batchId);
+            $ret = $this->sc['CourierFeed']->getGenerateCourierFile($batchId);
+            $_SESSION['courier_file'] = $ret;
+            redirect(current_url()."?".$_SERVER['QUERY_STRING']);
         }
     }
 
-    public function generate_allocate_file()
+    public function generateAllocateFile()
     {
         $ret = $this->sc['So']->generateAllocateFile();
         $_SESSION['allocate_file'] = $ret;
@@ -645,7 +650,7 @@ class Integrated_order_fulfillment extends MY_Controller
         $ret = $this->sc['So']->errorInAllocateFile();
     }
 
-    public function get_allocate_file($filename = "")
+    public function getAllocateFile($filename = "")
     {
         if ($filename == "") {
             exit;
@@ -656,7 +661,7 @@ class Integrated_order_fulfillment extends MY_Controller
         }
     }
 
-    public function get_courier_file($filename = "")
+    public function getCourierFile($filename = "")
     {
         if ($filename == "") {
             exit;
