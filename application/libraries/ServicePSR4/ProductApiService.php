@@ -413,7 +413,7 @@ class ProductApiService extends BaseService
         $result = $this->getHistorySyncDao()->getAlertSkuList($where, $option);
         if ($result) {
             $subject = '[CV2] Website Status Automation: Manual';
-            $msg = '<html><body><h2>The latter is for Stock contraint SKU.<h2> <br /><br />';
+            $msg = '<html><body>The latter is for Stock contraint SKU.<br /><br />';
             $msg .= "<table  border='0' cellspacing='0' cellpadding='0'><tr><th style='border:1px solid #000'>Sku</th><th style='border:1px solid #000'>Master Sku</th><th style='border:1px solid #000'>Name</th><th style='border:1px solid #000'>Sourcing Status</th><th style='border:1px solid #000'>Website Status</th><tr>";
             $i =0;
             foreach ($result as $value) {
