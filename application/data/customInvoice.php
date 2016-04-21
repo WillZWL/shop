@@ -7,6 +7,7 @@ $header = "
 <title>Custom Invoice</title>
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
 <style type=\"text/css\">
+.pb{page-break-after : always;}
 body { margin:0 15px;}
 * {font-family:arial;font-size:10px;}
 </style>
