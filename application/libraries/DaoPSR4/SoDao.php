@@ -1357,7 +1357,6 @@ SQL;
                     sid.amount soid_amount,so.rate, so.amount so_amount ";
             }
         }
-
         $this->db->from('so AS so');
         $this->db->join('so_extend AS soex', 'so.so_no = soex.so_no', 'LEFT');
         $this->db->join('client AS cl', 'so.client_id = cl.id', 'LEFT');
@@ -1368,7 +1367,7 @@ SQL;
         $this->db->join('sku_mapping AS sm', "sm.sku = sid.item_sku and sm.status=1 and sm.ext_sys='WMS'", 'LEFT');
         $this->db->join('product AS p', 'sid.item_sku = p.sku', 'LEFT');
         $this->db->join('supplier_prod AS sp_prod', 'sp_prod.prod_sku = p.sku and sp_prod.order_default=1','LEFT');
-        $this->db->join('supplier AS sup', 'sup.id=sp_prod.supplier_id and sup.status=1', 'INNER');
+        $this->db->join('supplier AS sup', 'sup.id=sp_prod.supplier_id and sup.status=1', 'LEFT');
         $this->db->join('category AS cat', 'cat.id = p.cat_id', 'INNER');
         $this->db->join('category AS sc', 'sc.id = p.sub_cat_id', 'INNER');
         $this->db->join('brand as b', 'b.id = p.brand_id', 'INNER');
@@ -1382,7 +1381,7 @@ SQL;
                         ON r.id = ri.refund_id
                     WHERE ri.status <> 'D'
                     GROUP BY r.so_no, r.reason, r.status, r.total_refund_amount, ri.item_sku, ri.refund_type) AS rf", 'rf.item_sku = sid.item_sku and rf.so_no = so.so_no', 'LEFT');
-        $this->db->join('so_shipment AS sosh', 'sosh.sh_no = sa.sh_no');
+        $this->db->join('so_shipment AS sosh', 'sosh.sh_no = sa.sh_no', 'LEFT');
         $this->db->join("(SELECT sobt.*, MAX(sobt.received_date_localtime) AS payment_received_date
                     FROM so_bank_transfer sobt
                     INNER JOIN so so1 ON so1.so_no = sobt.so_no
@@ -1391,7 +1390,10 @@ SQL;
         $this->db->select($select_str);
         $this->db->where($where);
         if ($query = $this->db->get()) {
-            return $query->row_array();
+            foreach ($query->result_array() as $row) {
+                    $result[] = $row;
+            }
+            return $result;
         }
         return FALSE;
     }
