@@ -2085,6 +2085,9 @@ html;
         foreach ($data as $key => $value) {
             ${$key} = $value;
         }
+        if ($new_shipper_name) {
+            $shipper_name = $new_shipper_name;
+        }
         include APPPATH . "data/cinvBody.php";
 
         return $body;
