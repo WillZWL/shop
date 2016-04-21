@@ -97,10 +97,6 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\LogService();
         };
 
-        $serviceContainer['IntegratedOrderFulfillment'] = function () {
-            return new S\IntegratedOrderFulfillmentService();
-        };
-
         $serviceContainer['DeliveryTime'] = function () {
             return new S\DeliveryTimeService();
         };

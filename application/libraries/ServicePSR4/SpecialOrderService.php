@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Service;
 
-class SpecialOrderService extends BaseService 
+class SpecialOrderService extends BaseService
 {
     public function __construct() {
         parent::__construct();
@@ -21,6 +21,11 @@ class SpecialOrderService extends BaseService
 
             if ($is_aps_payment_page) {
                 $so_obj->setTxnId(trim( $post_data['txn_id']));
+            }
+
+            if ($so_obj->getPaymentGatewayId() <> $post_data['payment_gateway'])
+            {
+                $so_obj->setPaymentGatewayId($post_data['payment_gateway']);
             }
 
             if ($this->getDao('So')->update($so_obj)) {
@@ -52,7 +57,7 @@ class SpecialOrderService extends BaseService
 
                     $update_result = $this->getDao('SoPaymentStatus')->$action($ps_obj);
 
-                    if ($update_reuslt === FALSE) {
+                    if ($update_result === FALSE) {
                         $_SESSION["NOTICE"] = "ERROR " . __LINE__ . " : " . $this->getDao('SoPaymentStatus')->db->display_error();
                     }
 

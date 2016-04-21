@@ -83,7 +83,7 @@
                   <td title="<?= $lang["master_sku"] ?>"><?= $lang["master_sku"] ?></td>
                   <td title="<?= $lang["sku"] ?>"><?= $lang["sku"] ?></td>
                   <td title="<?= $lang["product"] ?>"><a href="#"
-                   onClick="SortCol(document.fm, 'product_name_ref', '<?php echo @$xsort['product_name_ref']; ?>')"><?php echo $lang['product']; ?> <?php echo @$sortimg['product_name_ref']; ?></a>
+                   onClick="SortCol(document.fm, 'product_name', '<?php echo @$xsort['product_name']; ?>')"><?php echo $lang['product']; ?> <?php echo @$sortimg['product_name']; ?></a>
                </td>
                <td title="<?= $lang["qty"] ?>"><?= $lang["qty"] ?></td>
                <td title="<?= $lang["payment_gateway_id"] ?>"><?= $lang["payment_gateway_id"] ?></td>
@@ -232,7 +232,7 @@
                                 foreach ($objlist as $obj) {
                                     $skip_this_column = false;
                                     $current_so_no = $obj->getSoNo();
-                                    $order_total_sku = $obj->getOrderTotalSku();
+                                    $order_total_sku = $obj->getOrderTotalItem();
 // $row_span = "rowspan=".$order_total_sku;
                                         $row_span = "rowspan=" . $allrowspan[$current_so_no];     # use loop instead of order_total_sku because those with missing master_sku does not match order_total_sku
 
@@ -293,7 +293,7 @@
                                                 <td <?= $row_span ?>><?= $obj->getPlatformOrderId() ?></td>
                                                 <td <?= $row_span ?>><?= substr($obj->getOrderCreateDate(), 0, 10) ?></td>
                                                 <td <?= $row_span ?>
-                                                    align="center"><?= $obj->getOrderTotalSku() > 1 ? "<image src='/images/tick.gif'>" : "" ?></td>
+                                                    align="center"><?= $obj->getOrderTotalItem() > 1 ? "<image src='/images/tick.gif'>" : "" ?></td>
                                                     <td name="row<?= $n ?>"><?= $obj->getMasterSku() ?></td>
                                                     <td name="row<?= $n ?>"><?= $obj->getSku() ?></td>
                                                     <td name="row<?= $n ?>"><?= $obj->getProductName() ?></td>

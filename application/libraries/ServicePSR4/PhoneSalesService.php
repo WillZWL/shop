@@ -45,6 +45,10 @@ class PhoneSalesService extends BaseService
                 $sops_obj->setPayDate(date("Y-m-d H:i:s"));
                 $this->getDao('SoPaymentStatus')->$sops_action($sops_obj);
 
+                if ($so_obj->getPaymentGatewayId() <> $post_data['payment_gateway']) {
+                    $so_obj->setPaymentGatewayId($post_data['payment_gateway']);
+                }
+
                 if ($post_data['offline_fee'] !== "" && is_numeric($post_data['offline_fee'])) {
                     $soext_obj = $this->getDao('SoExtend')->get(["so_no" => $post_data['so_no']]);
                     if ($soext_obj) {
