@@ -293,10 +293,6 @@ class DaoProvider implements ServiceProviderInterface
             return new D\InterfaceExchangeRateDao();
         };
 
-        $daoContainer['IntegratedOrderFulfillment'] = function () {
-            return new D\IntegratedOrderFulfillmentDao();
-        };
-
         $daoContainer['Batch'] = function () {
             return new D\BatchDao();
         };

@@ -61,7 +61,7 @@ class SoListWithNameDto
     private $qty;
     private $inventory;
     private $outstanding_qty;
-    private $order_total_sku;
+    private $order_total_item;
     private $reason;
     private $require_payment;
     private $master_sku;
@@ -713,14 +713,14 @@ class SoListWithNameDto
         $this->outstanding_qty = $value;
     }
 
-    public function getOrderTotalSku()
+    public function getOrderTotalItem()
     {
-        return $this->order_total_sku;
+        return $this->order_total_item;
     }
 
-    public function setOrderTotalSku($value)
+    public function setOrderTotalItem($value)
     {
-        $this->order_total_sku = $value;
+        $this->order_total_item = $value;
     }
 
     public function getReason()
