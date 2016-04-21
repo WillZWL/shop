@@ -21,43 +21,39 @@ class FreightManagementReport  extends MY_Controller
             $objlist = $tempObjlist = [];
             ini_set("memory_limit", "500M");
 
-            $where["iof.status >"] = "2";
-            $where["iof.status <"] = "5";
+            $where["so.status >"] = "2";
+            $where["so.status <"] = "5";
 
-            $where["iof.hold_status"] = "0";
-            $where["iof.refund_status"] = "0";
+            $where["so.hold_status"] = "0";
+            $where["so.refund_status"] = "0";
 
             if ($rec == "no_rec") {
-                $where["(iof.rec_courier is null OR iof.rec_courier = '')"] = null;
+                $where["(so.rec_courier = '')"] = null;
             } else if ($rec == "rec") {
-                $where["(iof.rec_courier is not null AND iof.rec_courier != '')"] = null;
+                $where["(so.rec_courier != '')"] = null;
             }
 
             $option["warehouse_id"] = "ES_HK";  #
             $option["orderby"] = "so_no, expect_delivery_date ASC";
             $option["notes"] = 1;
             $option["product_related"] = $renoOption["product_related"] = 1;
-            $option["hide_client"] = 1;
-            $option["hide_payment"] = 0;
-            $option["show_git"] = 1;
-            $option["hide_shipped_item"] = 1;
             $option["show_so"] = $renoOption["show_so"] = 1;
             $option["limit"] = $this->sc['So']->getDao('So')->db->rows_limit = 1000;
             $data = [];
 
             // retrieving all results at one go will cause time out/ insufficient memory, so we calculate total count of orders
-            $totalOrderRow = $this->sc['So']->getDao('So')->getIntegratedFulfillmentListWithName($where, array("total_order_row" => 1, "hide_shipped_item" => 1));
+            $totalOrderRow = $this->sc['So']->getDao('So')->getIntegratedFulfillmentListWithName($where, ["num_rows" => 1]);
             $loop = ceil($totalOrderRow / 1000);
             $i = 0;
             for ($i = 0; $i < $loop; $i++) {
                 $option["offset"] = $i * 1000;
-                $tempObjlist = $this->sc['So']->getDao('So')->getIntegratedFulfillmentListWithName($where, $option);
-                $objlist = $this->sc['IntegratedOrderFulfillment']->renovateData($tempObjlist, $renoOption);
+                $objlist = $this->sc['So']->getDao('So')->getIntegratedFulfillmentListWithName($where, $option);
+                $listArr = (array) $objlist;
 
                 if (empty($data))
-                    $data = $objlist;
+                    $data = $listArr;
                 else
-                    $data = array_merge($data, $objlist);
+                    $data = array_merge($data, $listArr);
             }
 
             if ($data) {
@@ -105,7 +101,7 @@ class FreightManagementReport  extends MY_Controller
                     return FALSE;
                 }
 
-                // fields that you want to add to report (take variable name in so_list_w_name_dto)
+                // fields that you want to add to report (take variable name in soListWithNameDto)
                 // arrange it in order you want your columns
                 $wanted = array("SoNo", "Sku", "MasterSku", "ProductName", "CatName", "SubCatName", "Qty", "AmountUsd", "SoItemAmount", "Weight", "DeliveryPostcode", "DeliveryCountryId", "DeliveryState", "RecCourier", "Note");
 

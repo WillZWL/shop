@@ -220,25 +220,35 @@ class SoFactoryService extends BaseService
         }
 
         foreach($caList as $cartItem) {
+            $i++;
             $cartItem->setAmount(0);
             $this->_createSingleSoItemDetail($soObj, $cartItem, $i/*, soObj->getPlatformId()*/);
-            $i++;
+        }
+        if ($i > $lastLineNo) {
+            $soObj->setOrderTotalItem($i);
+
+            $this->getDao("So")->update($soObj);
         }
     }
 
     private function _createSoItemDetailAndUpdateSo($soObj, $cart) {
         $result = true;
         $totalCost = 0;
-        $i = 1;
+        $i = 0;
         foreach($cart->items as $sku => $item) {
+            $i++;
             $soItemDetailObj = $this->_createSingleSoItemDetail($soObj, $item, $i, $cart->getPlatformId());
             if (!$soItemDetailObj)
                 $result = false;
             else {
                 $totalCost += $soItemDetailObj->getCost() * $soItemDetailObj->getQty();
             }
-            $i++;
         }
+
+        if ($i > 0) {
+            $soObj->setOrderTotalItem($i);
+        }
+
         $soObj->setCost($totalCost);
         $updateSoResult = $this->getDao("So")->update($soObj);
         if ($updateSoResult === false) {
@@ -360,6 +370,8 @@ class SoFactoryService extends BaseService
         $soObj->setDeliveryCharge($orderInfo->getDeliveryCharge());
         $soObj->setDeliveryTypeId($orderInfo->getDeliveryType());
         $soObj->setWeight($orderInfo->getTotalWeight());
+        if ($checkoutInfoDto->getPaymentGatewayId())
+            $soObj->setPaymentGatewayId($checkoutInfoDto->getPaymentGatewayId());
         if ($checkoutInfoDto->getTxnId())
             $soObj->setTxnId($checkoutInfoDto->getTxnId());
         if ($checkoutInfoDto->getLangId())

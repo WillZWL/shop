@@ -201,7 +201,7 @@
             $allrowspan = array();
             foreach ($objlist as $obj) :
                 $current_split_so_group = $obj->getSplitSoGroup();
-                $rowspan = $obj->getOrderTotalSku();
+                $rowspan = $obj->getOrderTotalItem();
 
                 if (isset($current_split_so_group)) :
                     if (empty($last_split_so_group) || $current_split_so_group != $last_split_so_group) :
@@ -231,7 +231,7 @@
             foreach ($objlist as $obj) :
                 $skip_this_column = false;
                 $current_so_no = $obj->getSoNo();
-                $order_total_sku = $obj->getOrderTotalSku();
+                $order_total_sku = $obj->getOrderTotalItem();
                 // $row_span = "rowspan=".$order_total_sku;
                 $row_span = "rowspan=" . $allrowspan[$current_so_no];     # use loop instead of order_total_sku because those with missing master_sku does not match order_total_sku
 
@@ -292,7 +292,7 @@
                         <td <?= $row_span ?>><?= substr($obj->getPackingDate(), 0, 10) ?></td>
                         <td <?= $row_span ?>><?= substr($obj->getExpectDeliveryDate(), 0, 10) ?></td>
                         <td <?= $row_span ?>
-                            align="center"><?= $obj->getOrderTotalSku() > 1 ? "<image src='/images/tick.gif'>" : "" ?></td>
+                            align="center"><?= $obj->getOrderTotalItem() > 1 ? "<image src='/images/tick.gif'>" : "" ?></td>
                         <td><?= $obj->getMasterSku() ?></td>
                         <td><?= $obj->getSku() ?></td>
                         <td><?= $obj->getProductName() ?></td>

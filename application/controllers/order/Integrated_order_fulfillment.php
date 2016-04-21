@@ -55,7 +55,7 @@ class Integrated_order_fulfillment extends MY_Controller
         $option = [];
 
         if ($this->input->get("so_no")) {
-            $where["iof.so_no"] = $this->input->get("so_no");
+            $where["so.so_no"] = $this->input->get("so_no");
         }
 
         if ($this->input->get("platform_order_id")) {
@@ -67,7 +67,7 @@ class Integrated_order_fulfillment extends MY_Controller
         }
 
         if ($this->input->get("rec_courier")) {
-            $where["iof.rec_courier"] = $this->input->get("rec_courier");
+            $where["so.rec_courier"] = $this->input->get("rec_courier");
         }
 
         if ($this->input->get("order_create_date")) {
@@ -79,16 +79,16 @@ class Integrated_order_fulfillment extends MY_Controller
         }
 
         if ($this->input->get("multiple") === '1') {
-            $where["order_total_sku >"] = 1;
+            $where["so.order_total_item >"] = 1;
         } elseif ($this->input->get("multiple") === '0') {
-            $where["order_total_sku <="] = 1;
+            $where["so.order_total_item <="] = 1;
         }
 
         if ($this->input->get("express")) {
             if ($this->input->get("express") == "Y") {
-                $where["iof.delivery_type_id <>"] = $this->default_delivery;
+                $where["so.delivery_type_id <>"] = $this->default_delivery;
             } else {
-                $where["iof.delivery_type_id"] = $this->default_delivery;
+                $where["so.delivery_type_id"] = $this->default_delivery;
             }
         }
 
@@ -119,11 +119,11 @@ class Integrated_order_fulfillment extends MY_Controller
             $where["note LIKE "] = "%" . $this->input->get("note") . "%";
         }
 
-        $where["iof.status >"] = "2";
-        $where["iof.status <"] = "5";
+        $where["so.status >"] = "2";
+        $where["so.status <"] = "5";
 
-        $where["iof.hold_status"] = "0";
-        $where["iof.refund_status"] = "0";
+        $where["so.hold_status"] = "0";
+        $where["so.refund_status"] = "0";
 
         if ($this->input->get("payment_gateway_id")) {
             $where["payment_gateway_id"] = $this->input->get("payment_gateway_id");
@@ -137,7 +137,6 @@ class Integrated_order_fulfillment extends MY_Controller
         $order = $this->input->get("order");
 
         $limit = '500';
-
         $option["limit"] = $limit;
         $option["offset"] = $offset;
 
@@ -161,17 +160,29 @@ class Integrated_order_fulfillment extends MY_Controller
         $data["whlist"] = $this->sc['Warehouse']->getDao('Warehouse')->getList([], ["limit" => -1, "result_type" => "array"]);
         $data["cclist"] = $this->sc['So']->getDao('So')->getCcList(["status >" => 2, "status <" => 5, "hold_status" => 0, "refund_status" => 0], ["orderby" => "delivery_country_id", "limit" => -1]);
         $option["warehouse_id"] = $data["warehouse"] = $warehouse ? $warehouse : $data["whlist"][0]["id"];
-        $option["notes"] = 1;
-        $option["hide_client"] = 1;
-        $option["hide_payment"] = 0;
-        $option["show_git"] = 1;
-        $option["hide_shipped_item"] = 1;
 
-        $temp_objlist = $this->sc['So']->getDao('So')->getIntegratedFulfillmentListWithName($where, $option);
-        $data["objlist"] = $this->sc['IntegratedOrderFulfillment']->renovateData($temp_objlist);
+        $data["total_order"] = $this->sc['So']->getDao('So')->getIntegratedFulfillmentListWithName($where, ["num_rows" => 1, "total_orders" => 1]);
+        $data["total_item"] = $pconfig['total_rows'] = $this->sc['So']->getDao('So')->getIntegratedFulfillmentListWithName($where, ["total_items" => 1]);
 
-        $data["total_order"] = $this->sc['So']->getDao('So')->getIntegratedFulfillmentListWithName($where, ["num_rows" => 1, "total_order_row" => 1, "hide_client" => 1, "hide_payment" => 0, "hide_shipped_item" => 1]);
-        $data["total_item"] = $pconfig['total_rows'] = $this->sc['So']->getDao('So')->getIntegratedFulfillmentListWithName($where, ["total_items" => 1, "hide_shipped_item" => 1]);
+        $option["distinct_so_no_list"] = 1;
+        $soNoArr = [];
+        # Need take 500 orders Instead of take 500 order items, If only show 500 order items will cannot fully displayed on the same page.
+        $soObjlist = $this->sc['So']->getDao('So')->getIntegratedFulfillmentListWithName($where, $option);
+        if ((array) $soObjlist) {
+            foreach ($soObjlist as $soObj) {
+                $soNoArr[] = $soObj->getSoNo();
+            }
+
+            $option["solist"] = $soNoArr;
+
+            unset($option["distinct_so_no_list"]);
+            unset($option["limit"]);
+            unset($option["offset"]);
+            $option["limit"] = -1;
+
+            $data["objlist"] = $this->sc['So']->getDao('So')->getIntegratedFulfillmentListWithName($where, $option);
+        }
+
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
@@ -236,7 +247,7 @@ class Integrated_order_fulfillment extends MY_Controller
         $option = [];
 
         if ($this->input->get("so_no")) {
-            $where["iof.so_no"] = $this->input->get("so_no");
+            $where["so.so_no"] = $this->input->get("so_no");
         }
 
         if ($this->input->get("platform_order_id")) {
@@ -248,7 +259,7 @@ class Integrated_order_fulfillment extends MY_Controller
         }
 
         if ($this->input->get("rec_courier")) {
-            $where["iof.rec_courier"] = $this->input->get("rec_courier");
+            $where["so.rec_courier"] = $this->input->get("rec_courier");
         }
 
         if ($this->input->get("order_create_date")) {
@@ -256,20 +267,20 @@ class Integrated_order_fulfillment extends MY_Controller
         }
 
         if ($this->input->get("amount")) {
-            fetch_operator($where, "iof.amount", $this->input->get("amount"));
+            fetch_operator($where, "so.amount", $this->input->get("amount"));
         }
 
         if ($this->input->get("multiple") === '1') {
-            $where["order_total_sku >"] = 1;
+            $where["so.order_total_item >"] = 1;
         } elseif ($this->input->get("multiple") === '0') {
-            $where["order_total_sku <="] = 1;
+            $where["so.order_total_item <="] = 1;
         }
 
         if ($this->input->get("express")) {
             if ($this->input->get("express") == "Y") {
-                $where["iof.delivery_type_id <>"] = $this->default_delivery;
+                $where["so.delivery_type_id <>"] = $this->default_delivery;
             } else {
-                $where["iof.delivery_type_id"] = $this->default_delivery;
+                $where["so.delivery_type_id"] = $this->default_delivery;
             }
         }
 
@@ -302,7 +313,7 @@ class Integrated_order_fulfillment extends MY_Controller
         }
 
         if ($this->input->get("delivery")) {
-            $where["iof.delivery_type_id"] = $this->input->get("delivery");
+            $where["so.delivery_type_id"] = $this->input->get("delivery");
         }
 
         if ($this->input->get("note")) {
@@ -314,8 +325,8 @@ class Integrated_order_fulfillment extends MY_Controller
         }
 
 
-        $where["iof.status >"] = "3";
-        $where["iof.status <"] = "6";
+        $where["so.status >"] = "3";
+        $where["so.status <"] = "6";
 
 
         $sort = $this->input->get("sort");
@@ -352,11 +363,27 @@ class Integrated_order_fulfillment extends MY_Controller
         $option["hide_client"] = 1;
         $option["hide_payment"] = 0;
 
-        $temp_objlist = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, $option);
-
-        $data["objlist"] = $this->sc['IntegratedOrderFulfillment']->renovateData($temp_objlist);
-        $data["total_order"] = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, ["num_rows" => 1, "list_type" => "toship", "hide_client" => 1]);
+        $data["total_order"] = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, ["num_rows" => 1, "list_type" => "toship"]);
         $data["total_item"] = $pconfig['total_rows'] = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, ["total_items" => 1, "list_type" => "toship"]);
+
+        $option["distinct_so_no_list"] = 1;
+        $soNoArr = [];
+        # Need take 500 orders Instead of take 500 order items, If only show 500 order items will cannot fully displayed on the same page.
+        $soObjlist = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, $option);
+        if ((array) $soObjlist) {
+            foreach ($soObjlist as $soObj) {
+                $soNoArr[] = $soObj->getSoNo();
+            }
+
+            $option["solist"] = $soNoArr;
+
+            unset($option["distinct_so_no_list"]);
+            unset($option["limit"]);
+            unset($option["offset"]);
+            $option["limit"] = -1;
+
+            $data["objlist"] = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, $option);
+        }
 
         $config['base_url'] = base_url('order/integrated_order_fulfillment/to_ship/');
         $config['total_rows'] = $data["total_order"];
@@ -377,49 +404,6 @@ class Integrated_order_fulfillment extends MY_Controller
         if ($_POST["dispatch_type"] == 'c') {
             $this->generateAllocateFile();
         }
-    }
-
-    public function testCourierFeed($courier='DHL')
-   {
-        $so_no = $this->input->get("so_no");
-
-        $ret = $this->sc['CourierFeed']->generateCourierFile($so_no, $courier, 'Test Mawb', true);
-        $_SESSION['courier_file'] = $ret;
-        $this->getCourierFile($ret);
-   }
-
-    public function generateCourierFile($checked = "")
-    {
-        if ($checked) {
-            $courier = $this->input->post("courier_id");
-            $mawb = $this->input->post("mawb");
-            $soNoStr = json_encode($checked);
-
-            $courierFeedVo = $this->sc['CourierFeed']->getDao('CourierFeed')->get();
-            $courierFeedObj = clone $courierFeedVo;
-
-            $id = $this->sc['CourierFeed']->getDao('CourierFeed')->getAutoIncrementId();
-            $courierFeedObj->setBatchId($id);
-
-            $courierFeedObj->setSoNoStr($soNoStr);
-            $courierFeedObj->setCourierId($courier);
-            $courierFeedObj->setMawb($mawb);
-            $courierFeedObj->setExec(0);
-
-            $courierFeedObj = $this->sc['CourierFeed']->getDao('CourierFeed')->insert($courierFeedObj);
-            $batchId = $courierFeedObj->getBatchId();
-
-            $ret = $this->sc['CourierFeed']->getGenerateCourierFile($batchId);
-            $_SESSION['courier_file'] = $ret;
-            redirect(current_url()."?".$_SERVER['QUERY_STRING']);
-        }
-    }
-
-    public function generateAllocateFile()
-    {
-        $ret = $this->sc['So']->generateAllocateFile();
-        $_SESSION['allocate_file'] = $ret;
-        redirect(current_url() . "?" . $_SERVER['QUERY_STRING']);
     }
 
     public function dispatch($offset = 0)
@@ -449,7 +433,7 @@ class Integrated_order_fulfillment extends MY_Controller
         $option = [];
 
         if ($this->input->get("so_no")) {
-            $where["iof.so_no"] = $this->input->get("so_no");
+            $where["so.so_no"] = $this->input->get("so_no");
         }
 
         if ($this->input->get("platform_order_id")) {
@@ -461,7 +445,7 @@ class Integrated_order_fulfillment extends MY_Controller
         }
 
         if ($this->input->get("rec_courier")) {
-            $where["iof.rec_courier"] = $this->input->get("rec_courier");
+            $where["so.rec_courier"] = $this->input->get("rec_courier");
         }
 
         if ($this->input->get("order_create_date")) {
@@ -477,20 +461,20 @@ class Integrated_order_fulfillment extends MY_Controller
         }
 
         if ($this->input->get("amount")) {
-            fetch_operator($where, "iof.amount", $this->input->get("amount"));
+            fetch_operator($where, "so.amount", $this->input->get("amount"));
         }
 
         if ($this->input->get("multiple") === '1') {
-            $where["order_total_sku >"] = 1;
+            $where["so.order_total_item >"] = 1;
         } elseif ($this->input->get("multiple") === '0') {
-            $where["order_total_sku <="] = 1;
+            $where["so.order_total_item <="] = 1;
         }
 
         if ($this->input->get("express")) {
             if ($this->input->get("express") == "Y") {
-                $where["iof.delivery_type_id <>"] = $this->default_delivery;
+                $where["so.delivery_type_id <>"] = $this->default_delivery;
             } else {
-                $where["iof.delivery_type_id"] = $this->default_delivery;
+                $where["so.delivery_type_id"] = $this->default_delivery;
             }
         }
 
@@ -535,8 +519,8 @@ class Integrated_order_fulfillment extends MY_Controller
         }
 
 
-        $where["iof.status >"] = "3";
-        $where["iof.status <"] = "6";
+        $where["so.status >"] = "3";
+        $where["so.status <"] = "6";
 
 
         $sort = $this->input->get("sort");
@@ -568,13 +552,28 @@ class Integrated_order_fulfillment extends MY_Controller
         $data["default_delivery"] = $this->default_delivery;
         $data["whlist"] = $this->sc['Warehouse']->getDao('Warehouse')->getList([], ["limit" => -1, "result_type" => "array"]);
         $data["courier_list"] =  $this->sc['Courier']->getDao('Courier')->getList(['show_status'=>1], ['limit'=>-1]);
-        $option["notes"] = 1;
-        $option["hide_client"] = 1;
 
-        $temp_objlist = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, $option);
-        $data["objlist"] = $this->sc['IntegratedOrderFulfillment']->renovateData($temp_objlist);
-        $data["total_order"] = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, ["num_rows" => 1, "list_type" => "dispatch", "hide_client" => 1]);
+        $data["total_order"] = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, ["num_rows" => 1, "list_type" => "dispatch"]);
         $data["total_item"] = $pconfig['total_rows'] = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, ["total_items" => 1, "list_type" => "dispatch"]);
+
+        $option["distinct_so_no_list"] = 1;
+        $soNoArr = [];
+        # Need take 500 orders Instead of take 500 order items, If only show 500 order items will cannot fully displayed on the same page.
+        $soObjlist = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, $option);
+        if ((array) $soObjlist ) {
+            foreach ($soObjlist as $soObj) {
+                $soNoArr[] = $soObj->getSoNo();
+            }
+
+            $option["solist"] = $soNoArr;
+
+            unset($option["distinct_so_no_list"]);
+            unset($option["limit"]);
+            unset($option["offset"]);
+            $option["limit"] = -1;
+
+            $data["objlist"] = $this->sc['So']->getDao('SoAllocate')->getIntegratedAllocateList($where, $option);
+        }
 
         $data["db_time"] = $this->sc['So']->getDao('So')->getDbTime();
 
@@ -601,6 +600,49 @@ class Integrated_order_fulfillment extends MY_Controller
     {
         $this->sc['ClwmsTrackingFeed']->processTrackingFeed();
         redirect(base_url()."order/integrated_order_fulfillment/dispatch/");
+    }
+
+    public function testCourierFeed($courier='DHL')
+    {
+        $so_no = $this->input->get("so_no");
+
+        $ret = $this->sc['CourierFeed']->generateCourierFile($so_no, $courier, 'Test Mawb', true);
+        $_SESSION['courier_file'] = $ret;
+        $this->getCourierFile($ret);
+    }
+
+    public function generateCourierFile($checked = "")
+    {
+        if ($checked) {
+            $courier = $this->input->post("courier_id");
+            $mawb = $this->input->post("mawb");
+            $soNoStr = json_encode($checked);
+
+            $courierFeedVo = $this->sc['CourierFeed']->getDao('CourierFeed')->get();
+            $courierFeedObj = clone $courierFeedVo;
+
+            $id = $this->sc['CourierFeed']->getDao('CourierFeed')->getAutoIncrementId();
+            $courierFeedObj->setBatchId($id);
+
+            $courierFeedObj->setSoNoStr($soNoStr);
+            $courierFeedObj->setCourierId($courier);
+            $courierFeedObj->setMawb($mawb);
+            $courierFeedObj->setExec(0);
+
+            $courierFeedObj = $this->sc['CourierFeed']->getDao('CourierFeed')->insert($courierFeedObj);
+            $batchId = $courierFeedObj->getBatchId();
+
+            $ret = $this->sc['CourierFeed']->getGenerateCourierFile($batchId);
+            $_SESSION['courier_file'] = $ret;
+            redirect(current_url()."?".$_SERVER['QUERY_STRING']);
+        }
+    }
+
+    public function generateAllocateFile()
+    {
+        $ret = $this->sc['So']->generateAllocateFile();
+        $_SESSION['allocate_file'] = $ret;
+        redirect(current_url() . "?" . $_SERVER['QUERY_STRING']);
     }
 
     public function add_note($so_no = "", $line = "")
@@ -742,21 +784,6 @@ class Integrated_order_fulfillment extends MY_Controller
     public function _get_courier_path()
     {
         return $this->courier_path;
-    }
-
-    public function remove_redundant_record()
-    {
-        //every time when access this controller, auto delete the record from the integrated_order_fulfillment table
-        //where status = 0, 1, 6 and modify_on is 21 days ago.
-        $iof_where['`status` in (0, 1, 6)'] = null;
-        $iof_where['DATEDIFF(NOW(),modify_on) >'] = 21;
-        $obsolete_iof_record_number = $this->sc['IntegratedOrderFulfillment']->getDao('IntegratedOrderFulfillment')->delete($iof_where);
-
-        //completed refunded order and more than 21 days unmodified
-        $iof_where = [];
-        $iof_where['refund_status'] = 4;
-        $iof_where['DATEDIFF(NOW(),modify_on) >'] = 21;
-        $obsolete_iof_record_number = $this->sc['IntegratedOrderFulfillment']->getDao('IntegratedOrderFulfillment')->delete($iof_where);
     }
 
     public function get_barcode($so_no = '')

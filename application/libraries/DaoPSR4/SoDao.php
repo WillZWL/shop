@@ -1054,103 +1054,6 @@ SQL;
         return FALSE;
     }
 
-    public function get_list_by_item_sku($where = [], $option = [], $classname = "SoListWithNameDto")
-    {
-        $this->db->from('so_item_detail AS soid');
-        $this->db->join('so', 'so.so_no = soid.so_no', 'INNER');
-        $select_str = "so.so_no, so.platform_id, so.order_create_date, so.delivery_name, so.delivery_country_id";
-
-        if (empty($option["num_rows"]) && empty($option["total_items"])) {
-            $this->db->join('product AS p', 'soid.item_sku = p.sku', 'LEFT');
-
-            $this->db->join("(
-                            SELECT prod_sku, COALESCE(SUM(inventory),0) AS inventory, COALESCE(SUM(git),0) AS git
-                            FROM inventory
-                            WHERE warehouse_id = '{$option["warehouse_id"]}'
-                            GROUP BY prod_sku
-                            ) AS i", 'soid.item_sku = i.prod_sku', 'LEFT');
-
-            $select_str .= ", CONCAT_WS('::', soid.item_sku, p.name, CAST(soid.outstanding_qty AS CHAR), CAST(COALESCE(i.inventory,0) AS CHAR), CAST(COALESCE(i.git,0) AS CHAR)) AS items";
-        }
-
-        if ((empty($option["num_rows"]) && empty($option["total_items"])) || isset($where["multiple"])) {
-            $this->db->join("(
-                            SELECT so_no, IF(COUNT(item_sku)>1 OR SUM(outstanding_qty)>1, 'Y', 'N') AS multiple, SUM(COALESCE(inv.inventory,0)<sid2.outstanding_qty) AS o_items, IFNULL(inv.git,0) AS git
-                            FROM so_item_detail AS sid2
-                            LEFT JOIN
-                                (SELECT prod_sku, COALESCE(SUM(inventory),0) AS inventory, COALESCE(SUM(git),0) AS git
-                                FROM inventory
-                                WHERE warehouse_id = '{$option["warehouse_id"]}'
-                                GROUP BY prod_sku
-                                ) AS inv
-                                ON (sid2.item_sku = inv.prod_sku)
-                            GROUP BY so_no
-                            ) AS sid", 'so.so_no = sid.so_no', 'INNER');
-            $select_str .= ", sid.multiple, sid.o_items, sid.git";
-        }
-
-        if ($option["notes"]) {
-            $select_str .= ", so.order_note note";
-        }
-
-        if (!$option["hide_payment"]) {
-            $this->db->join('so_payment_status AS sops', 'sops.so_no = soid.so_no', 'LEFT');
-            $select_str .= ", sops.payment_gateway_id";
-        }
-
-        if ($option["hide_shipped_item"]) {
-            $where["soid.status"] = 0;
-        }
-
-        if ($where) {
-            $this->db->where($where);
-        }
-
-        if (empty($option["num_rows"]) && empty($option["total_items"])) {
-
-            $this->db->select($select_str, FALSE);
-
-
-
-            if (isset($option["orderby"])) {
-                $this->db->order_by($option["orderby"]);
-            }
-
-            if (empty($option["limit"])) {
-                $option["limit"] = $this->rows_limit;
-            } elseif ($option["limit"] == -1) {
-                $option["limit"] = "";
-            }
-
-            if (!isset($option["offset"])) {
-                $option["offset"] = 0;
-            }
-
-            if ($this->rows_limit != "") {
-                $this->db->limit($option["limit"], $option["offset"]);
-            }
-
-            $rs = [];
-
-            if ($query = $this->db->get()) {
-                foreach ($query->result($classname) as $obj) {
-                    $rs[] = $obj;
-                }
-                return (object)$rs;
-            }
-
-        } else {
-            // if ($where["sid.website_status"]) {
-            //     $this->db->join('so_item AS si', 'soid.so_no = si.so_no and soid.line_no = si.line_no and soid.item_sku = si.prod_sku', 'INNER');
-            // }
-            $this->db->select(($option["num_rows"] ? 'COUNT(*)' : 'SUM(soid.outstanding_qty)') . ' AS total');
-            if ($query = $this->db->get()) {
-                return $query->row()->total;
-            }
-        }
-        return FALSE;
-    }
-
     public function getRefundableOrder($where = [], $option = [])
     {
         $this->db->from($this->getTableName());
@@ -3184,20 +3087,46 @@ SQL;
 
     public function getIntegratedFulfillmentListWithName($where = [], $option = [], $classname = "SoListWithNameDto")
     {
-        $this->db->from('integrated_order_fulfillment as iof');
-        $select_str = "iof.*,
-        sm.ext_sku as master_sku
+        $this->db->from('so');
+        $this->db->join("so_item_detail soid", "so.so_no = soid.so_no", 'INNER');
+
+        $select_str = "
+                soid.so_no,
+                soid.line_no,
+                soid.item_sku sku,
+                so.platform_id,
+                so.platform_order_id,
+                so.order_create_date,
+                so.expect_delivery_date,
+                soid.prod_name product_name,
+                soid.website_status,
+                so.delivery_name,
+                so.delivery_country_id,
+                so.delivery_type_id,
+                so.rec_courier,
+                so.amount,
+                so.refund_status,
+                so.hold_status,
+                soid.qty,
+                soid.outstanding_qty,
+                so.status,
+                so.split_so_group,
+                so.delivery_postcode,
+                so.payment_gateway_id,
+                so.order_total_item,
+
+                sm.ext_sku as master_sku
         ";
 
         $where_str = '';
-        $this->db->join("sku_mapping sm", "sm.sku = iof.sku and ext_sys = 'WMS'", 'INNER');
+        $this->db->join("sku_mapping sm", "sm.sku = soid.item_sku and ext_sys = 'WMS'", 'INNER');
 
         if ($option["solist"] != "") {
-            $this->db->where_in("iof.so_no", $option["solist"]);
+            $this->db->where_in("so.so_no", $option["solist"]);
         }
 
         if ($option["product_related"] != "") {
-            $this->db->join("product p", "p.sku = iof.sku", "INNER");
+            $this->db->join("product p", "p.sku = soid.item_sku", "INNER");
             $this->db->join("freight_category fc", "fc.id = p.freight_cat_id", "LEFT");
             $this->db->join("category cat", "cat.id = p.cat_id", "LEFT");
             $this->db->join("category scat", "scat.id = p.sub_cat_id", "LEFT");
@@ -3205,9 +3134,7 @@ SQL;
         }
 
         if ($option["show_so"] != "") {
-            $this->db->join("so so", "so.so_no = iof.so_no", "INNER");
             $this->db->join("exchange_rate ex", "ex.from_currency_id = so.currency_id AND to_currency_id = 'USD'", "INNER");
-            $this->db->join("so_item_detail soid", "soid.so_no = iof.so_no AND soid.item_sku = iof.sku", "INNER");
             $select_str .= ", ex.rate AS rate, so.currency_id, so.delivery_state, soid.amount AS so_item_amount";
         }
 
@@ -3215,7 +3142,15 @@ SQL;
             $this->db->where($where);
         }
 
-        if (empty($option["num_rows"]) && empty($option["total_items"]) && empty($option["total_order_row"])) {
+
+        if (empty($option["num_rows"]) && empty($option["total_items"])) {
+
+            if ($option["distinct_so_no_list"])
+            {
+                # If take distinct_so_no_list need anew set select_str for discinct so_no;
+                $select_str = "DISTINCT(so.so_no)";
+            }
+
             $this->db->select($select_str, FALSE);
 
             if (isset($option["orderby"])) {
@@ -3227,7 +3162,12 @@ SQL;
                     $this->db->order_by("so_no");
                 }
             }
-            $this->db->order_by("iof.split_so_group desc");
+
+            $this->db->order_by("so.split_so_group desc");
+
+            // if($option["groupby"]) {
+            //     $this->db->group_by($option["groupby"]);
+            // }
 
             if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
@@ -3251,13 +3191,13 @@ SQL;
                 return (object)$rs;
             }
 
-        } elseif (!empty($option["total_order_row"])) {
-            $this->db->select('COUNT(iof.so_no) AS total');
+        } elseif (!empty($option["num_rows"])) {
+            $this->db->select(($option["total_orders"] ? "COUNT(DISTINCT so.so_no)" : "COUNT(so.so_no)") . ' AS total');
             if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
         } else {
-            $this->db->select('SUM(iof.outstanding_qty) AS total');
+            $this->db->select('SUM(soid.outstanding_qty) AS total');
             if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
@@ -3478,7 +3418,6 @@ SQL;
         $this->db->from('so');
         $this->db->join('selling_platform sp', 'so.platform_id = sp.selling_platform_id', 'INNER');
         $this->db->join('so_item_detail soid', 'so.so_no = soid.so_no', 'INNER');
-        $this->db->join('integrated_order_fulfillment iof', 'iof.so_no = so.so_no and so.platform_id = iof.platform_id AND soid.item_sku = iof.sku and soid.line_no=iof.line_no', 'LEFT');
         $this->db->join('product p', 'p.sku = soid.item_sku', 'INNER');
         $this->db->join('sku_mapping sm', 'sm.sku = p.sku', 'LEFT');
         $this->db->join('so_payment_status sops', 'sops.so_no = so.so_no', 'LEFT');
@@ -3512,7 +3451,7 @@ SQL;
                        so.hold_status,
                        so.refund_status,
                        so.status,
-                       iof.rec_courier,
+                       so.rec_courier,
                        sps.score
                        ';
 
@@ -3560,10 +3499,10 @@ SQL;
             'Dispatched date'
         ];
         $first_line = implode(',', $first_line);
-        $sql = "select iof.so_no,iof.platform_id,ssh.tracking_no,sa.warehouse_id as warehouse,so.create_on,so.dispatch_date
-                from integrated_order_fulfillment as iof
-                INNER JOIN so ON iof.so_no = so.so_no
-                INNER JOIN so_allocate as sa ON sa.so_no = so.so_no and iof.sku = sa.item_sku
+        $sql = "select so.so_no,so.platform_id,ssh.tracking_no,sa.warehouse_id as warehouse,so.create_on,so.dispatch_date
+                from so
+                INNER JOIN so_item_detail soid on so.so_no = soid.so_no
+                INNER JOIN so_allocate as sa ON sa.so_no = so.so_no and soid.item_sku = sa.item_sku
                 INNER JOIN so_shipment ssh ON ssh.sh_no = sa.sh_no
                 #INNER JOIN courier_info ci ON ci.courier_id = ssh.courier_id
                 $where";
@@ -3626,13 +3565,13 @@ SQL;
     public function getFulfillmentSo($where, $option, $classname = 'FulfillmentReportDto')
     {
         $option['limit'] = -1;
-        $this->db->from('integrated_order_fulfillment iof');
-        $this->db->join('so so', 'so.so_no = iof.so_no', 'INNER');
-        $this->db->join('so_allocate sa', 'sa.so_no = so.so_no and iof.sku = sa.item_sku', 'INNER');
+        $this->db->from('so');
+        $this->db->join("so_item_detail soid", "so.so_no = soid.so_no", 'INNER');
+        $this->db->join('so_allocate sa', 'sa.so_no = so.so_no and soid.item_sku = sa.item_sku', 'INNER');
         $this->db->join('so_shipment ssh', 'ssh.sh_no = sa.sh_no', 'INNER');
         $this->db->group_by('so.so_no');
 
-        $select_str = 'iof.so_no,iof.platform_id,ssh.tracking_no,ssh.courier_id,sa.warehouse_id,sa.create_on,so.dispatch_date';
+        $select_str = 'so.so_no,so.platform_id,ssh.tracking_no,ssh.courier_id,sa.warehouse_id,sa.create_on,so.dispatch_date';
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
 

@@ -257,7 +257,7 @@
             foreach ($objlist as $obj) :
                 $skip_this_column = false;
                 $current_so_no = $obj->getSoNo();
-                $order_total_sku = $obj->getOrderTotalSku();
+                $order_total_sku = $obj->getOrderTotalItem();
                 // $row_span = "rowspan=".$order_total_sku;
                 $row_span = "rowspan=" . $allrowspan[$current_so_no];     # use loop instead of order_total_sku because those with missing master_sku does not match order_total_sku
 
@@ -287,25 +287,13 @@
                     $skip_this_column = true;
 
                 else :
-                    //hight Light the order when it have inventory for all sku
-                    $order_all_sku_have_inventory = TRUE;
-                    for ($k = $i; $k < $order_total_sku + $i; $k++) :
-                        $o_qty = $objlist[$k]->getOutstandingQty();
-                        $o_inv = $objlist[$k]->getInventory();
-                        if ($o_qty > $o_inv) :
-                            $order_all_sku_have_inventory = FALSE;
-                            break;
-                        endif;
-
-                    endfor;
                     $n++;
                 endif;
 
-                $row_style = $order_all_sku_have_inventory ? xrow0 : "row" . $n % 2;
-
                 $last_so_no = $current_so_no;
-                $temp_inventory = $obj->getInventory() ? $obj->getInventory() : 0;
-                $td_style = $obj->getOutstandingQty() > $temp_inventory ? "row" . $n % 2 : "xrow0";
+
+                $td_style = $row_style = "row" . $n % 2;
+
                 if ($skip_this_column) :
                     ?>
                     <tr name="row<?= $n ?>" class="<?= $row_style ?>"
@@ -333,7 +321,7 @@
                         <td <?= $row_span ?>><?= substr($obj->getOrderCreateDate(), 0, 10) ?></td>
                         <td <?= $row_span ?>><?= substr($obj->getExpectDeliveryDate(), 0, 10) ?></td>
                         <td <?= $row_span ?>
-                            align="center"><?= $obj->getOrderTotalSku() > "1" ? "<image src='/images/tick.gif'>" : "" ?></td>
+                            align="center"><?= $obj->getOrderTotalItem() > "1" ? "<image src='/images/tick.gif'>" : "" ?></td>
                         <td name="row<?= $n ?>" class="<?= $td_style ?>"><?= $obj->getMasterSku() ?></td>
                         <td name="row<?= $n ?>" class="<?= $td_style ?>"><?= $obj->getSku() ?></td>
                         <td name="row<?= $n ?>" class="<?= $td_style ?>"><?= $obj->getProductName() ?></td>

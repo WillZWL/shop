@@ -108,7 +108,7 @@ class CheckoutInfoDto
     public function getBillCountry() {
         return $this->billCountry;
     }
-    
+
     public function setBillAddress1($billAddress1) {
         $this->billAddress1 = $billAddress1;
     }
@@ -116,7 +116,7 @@ class CheckoutInfoDto
     public function getBillAddress1() {
         return $this->billAddress1;
     }
-    
+
     public function setBillAddress2($billAddress2) {
         $this->billAddress2 = $billAddress2;
     }
@@ -252,7 +252,7 @@ class CheckoutInfoDto
     public function getShipAddress2() {
         return $this->shipAddress2;
     }
-    
+
     public function setShipAddress3($shipAddress3) {
         $this->shipAddress3 = $shipAddress3;
     }

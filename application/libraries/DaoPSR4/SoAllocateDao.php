@@ -371,27 +371,86 @@ class SoAllocateDao extends BaseDao
 
     public function getIntegratedAllocateList($where = [], $option = [], $classname = "SoListWithNameDto")
     {
+        $select_str = "
+                    soid.so_no,
+                    soid.line_no,
+                    soid.item_sku sku,
+                    so.platform_id,
+                    so.platform_order_id,
+                    so.order_create_date,
+                    so.expect_delivery_date,
+                    soid.prod_name product_name,
+                    soid.website_status,
+                    so.delivery_name,
+                    so.delivery_country_id,
+                    so.delivery_type_id,
+                    so.rec_courier,
+                    so.amount,
+                    so.refund_status,
+                    so.hold_status,
+                    soid.qty,
+                    soid.outstanding_qty,
+                    so.status,
+                    so.split_so_group,
+                    so.delivery_postcode,
+                    so.payment_gateway_id,
+                    so.order_total_item";
+
         if ($option["list_type"] == "toship") {
-            $select_str = "iof.*,  soal.warehouse_id, soal.qty, sm.ext_sku as master_sku";
-            $this->db->from('integrated_order_fulfillment as iof');
-            $this->db->join('so_allocate as soal', 'iof.so_no = soal.so_no and iof.line_no = soal.line_no and iof.sku = soal.item_sku and soal.status = 1', 'INNER');
-            /*$this->db->join('inventory as inv', 'iof.sku=inv.prod_sku and soal.warehouse_id=inv.warehouse_id');*/
-            $this->db->join('sku_mapping sm', "sm.sku = iof.sku and sm.ext_sys='WMS'", 'INNER');
+            $select_str .= ",";
+            $select_str .= "
+                    soal.warehouse_id,
+                    soal.qty,
+                    sm.ext_sku as master_sku
+            ";
+
+            $this->db->from('so');
+            $this->db->join("so_item_detail soid", "so.so_no = soid.so_no", 'INNER');
+            $this->db->join('so_allocate as soal', 'so.so_no = soal.so_no and soid.line_no = soal.line_no and soid.item_sku = soal.item_sku and soal.status = 1', 'INNER');
+            $this->db->join('sku_mapping sm', "sm.sku = soid.item_sku and sm.ext_sys='WMS'", 'INNER');
         } elseif ($option["list_type"] == "dispatch") {
-            $select_str = "iof.*, sosh.create_on as packing_date, sosh.courier_id, sosh.tracking_no, soal.warehouse_id, soal.sh_no, soal.qty, sm.ext_sku as master_sku";
+            $select_str .= ",";
+            $select_str .= "
+                    sosh.create_on as packing_date,
+                    sosh.courier_id,
+                    sosh.tracking_no,
+                    soal.warehouse_id,
+                    soal.sh_no,
+                    soal.qty,
+                    sm.ext_sku as master_sku
+            ";
+
             $this->db->from('so_shipment AS sosh');
             $this->db->join('so_allocate as soal', 'sosh.sh_no = soal.sh_no and soal.status=2', 'LEFT');
-            $this->db->join('integrated_order_fulfillment as iof', 'soal.so_no=iof.so_no and soal.line_no=iof.line_no and soal.item_sku=iof.sku', 'INNER');
-            $this->db->join('sku_mapping sm', "sm.sku = iof.sku and sm.ext_sys='WMS'", 'INNER');
+            $this->db->join("so_item_detail soid", "soal.so_no=soid.so_no and soal.line_no=soid.line_no and soal.item_sku=soid.item_sku", 'INNER');
+            $this->db->join("so", "so.so_no = soid.so_no", 'INNER');
+            $this->db->join('sku_mapping sm', "sm.sku = soid.item_sku and sm.ext_sys='WMS'", 'INNER');
+        }
+
+        if ($option["solist"] != "") {
+            $this->db->where_in("so.so_no", $option["solist"]);
         }
 
         if (strpos($option['orderby'], 'product_name_ref') !== FALSE) {
-            $this->db->join('(SELECT so_no AS so_no_ref, product_name AS product_name_ref FROM integrated_order_fulfillment WHERE line_no = 1 GROUP BY so_no, line_no) AS iof_ref', 'iof_ref.so_no_ref = iof.so_no');
+            $this->db->join('(
+                SELECT
+                    so.so_no AS so_no_ref, soid.prod_name AS product_name_ref
+                FROM so
+                INNER JOIN so_item_detail soid ON so.so_no = soid.so_no
+                WHERE soid.line_no = 1
+                GROUP BY so.so_no, soid.line_no
+            ) AS iof_ref', 'iof_ref.so_no_ref = so.so_no');
         }
         if ($where) {
             $this->db->where($where);
         }
         if (empty($option["num_rows"]) && empty($option["total_items"])) {
+
+            if ($option["distinct_so_no_list"])
+            {
+                # If take distinct_so_no_list need anew set select_str for discinct so_no;
+                $select_str = "DISTINCT(so.so_no)";
+            }
 
             $this->db->select($select_str);
 
@@ -405,8 +464,13 @@ class SoAllocateDao extends BaseDao
             } else {
                 $this->db->order_by("so_no");
             }
-            $this->db->order_by("iof.line_no");
-            $this->db->order_by("iof.split_so_group desc");
+
+            $this->db->order_by("soid.line_no");
+            $this->db->order_by("so.split_so_group desc");
+
+            // if($option["groupby"]) {
+            //     $this->db->group_by($option["groupby"]);
+            // }
 
             if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;
@@ -432,7 +496,7 @@ class SoAllocateDao extends BaseDao
             }
 
         } else {
-            $this->db->select(($option["num_rows"] ? "COUNT(distinct(iof.so_no))" : "COALESCE(SUM(soal.qty),'0')") . " AS total");
+            $this->db->select(($option["num_rows"] ? "COUNT(distinct(so.so_no))" : "COALESCE(SUM(soal.qty),\"0\")") . ' AS total');
             if ($query = $this->db->get()) {
                 return $query->row()->total;
             }
