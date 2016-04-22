@@ -184,9 +184,7 @@
                             foreach ($warranty_country_list as $warranty_country_obj) {
                                 echo '<p><select class="warranty_country" id="warranty_country_' . $warranty_field_counter . '[' . $obj->get_sku() . ']" name="warranty_country_' . $warranty_field_counter . '[' . $obj->get_sku() . ']">';
                                 foreach ($selling_platform_list as $country_obj) {
-                                    $platform_id = $country_obj['platform_id'];
-                                    //$country_name = $country_obj->get_name();
-
+                                    $platform_id = $country_obj->getSellingPlatformId();
                                     if ($platform_id == $warranty_country_obj->get_platform_id()) {
                                         $selected = "SELECTED";
                                     } else {
