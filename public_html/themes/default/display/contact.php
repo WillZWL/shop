@@ -43,6 +43,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="">
+                        <p class="text-left note-alert">
+                            <?=_('Our Address')?> : ChatandVision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong
+                        </p>
+                        <p class="text-left addr" style="padding-left: 90px;">Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2RR</p>
+                        <p class="text-left note-alert">
+                            <?=_('Email')?> : <?=$contact_email?>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
