@@ -48,6 +48,7 @@ class Display extends PUB_Controller
             $data['contact_url_1'] = $http_type . 'contact.'  . $data['server_name'] . '/support/tickets/new?genaftersales=true';
             $data['contact_url_2'] = $http_type . 'contact.'  . $data['server_name'] . '/support/tickets/new?presales=true';
             $data['contact_url_3'] = $http_type . 'contact.'  . $data['server_name'] . '/support/tickets/new?faultorreturn=true';
+            $data['contact_email'] = $this->get_contact_info(PLATFORM);
         }
         $data["http_type"] = $http_type;
         $data["content"] = "display/" . $page;
@@ -74,6 +75,40 @@ class Display extends PUB_Controller
             return false;
         else
             return true;
+    }
+
+    private function get_contact_info($platform_id = 'WEBGB')
+    {
+        $contact = [
+            'WEBUK' => [
+                'email' => 'support@digitaldiscount.co.uk',
+            ],
+            'WEBGB' => [
+                'email' => 'support@digitaldiscount.co.uk',
+            ],
+            'WEBAU' => [
+                'email' => 'support@aheaddigital.net',
+            ],
+            'WEBNZ' => [
+                'email' => 'support@aheaddigital.co.nz',
+            ],
+            'WEBFR' => [
+                'email' => 'support@numeristock.fr',
+            ],
+            'WEBBE' => [
+                'email' => 'support@numeristock.be',
+            ],
+            'WEBES' => [
+                'email' => 'soporte@buholoco.es',
+            ],
+            'WEBPL' => [
+                'email' => 'support@elektroraj.pl',
+            ],
+            'WEBIT' => [
+                'email' => 'assistenza@nuovadigitale.it',
+            ],
+        ];
+        return $contact[$platform_id]['email'];
     }
 }
 
