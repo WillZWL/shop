@@ -159,7 +159,7 @@ class Warranty extends MY_Controller
         $data["searchdisplay"] = "";
         $data["prod_grp_cd"] = $prod_grp_cd;
         $data["warranty_list"] = $this->product_model->get_valid_warrant_period_list();
-        $data['selling_platform_list'] = $this->selling_platform_service->get_platform_list_w_allow_sell_country("WEBSITE");
+        $data['selling_platform_list'] = $this->sc['SellingPlatform']->getPlatformListWithAllowSellCountry("WEBSITE");
         $this->load->view('marketing/warranty/warranty_index_v', $data);
     }
 
