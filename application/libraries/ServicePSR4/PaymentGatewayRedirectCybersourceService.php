@@ -39,7 +39,7 @@ class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectAda
 				$possibleObj = $order;
 			}
 
-			$possibleObj->so_item_detail[$j] = new \SoItemVo();
+			$possibleObj->so_item_detail[$j] = new \SoItemDetailVo();
 			$possibleObj->so_item_detail[$j]->setSoNo($order->getSoNo());
 			$possibleObj->so_item_detail[$j]->setLineNo($order->getLineNo());
 			$possibleObj->so_item_detail[$j]->setProdSku($order->getProdSku());
