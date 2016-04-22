@@ -5,7 +5,9 @@ class GoogleShoppingService extends BaseService
 {
     const NUMBER_OF_PRODUCTS_IN_BATCH = 250;
     private $_reportEmail = ["WEBFR" => "bd@numeristock.fr"
-                            , "WEBGB" => "ming@eservicesgroup.com"];
+                            , "WEBGB" => "bd@digitaldiscount.co.uk"
+                            , "WEBIT" => "bd@nuovadigitale.it"
+                            , "WEBES" => "bd@buholoco.es"];
     private $_technicalEmail = "oswald-alert@eservicesgroup.com";
 
     public function __construct()
