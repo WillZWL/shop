@@ -611,3 +611,6 @@ input.btn-newsletter {
     font-size: 14px;
     color: #999999;
 }
+.contact .addr {
+    height: 40px; float: left; width:auto;
+}
