@@ -213,7 +213,7 @@ class CybersourceIntegrator implements CybersourceSoapInterface
             $item_obj->quantity = $item->getQty();
             $item_obj->id = $item->getLineNo();
             $item_obj->productName = $item->getProdName();
-            $item_obj->productSKU = $item->getProdSku();
+            $item_obj->productSKU = $item->getItemSku();
             $item_obj->unitPrice = $item->getUnitPrice();
             array_push($items, $item_obj);
         }
