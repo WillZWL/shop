@@ -40,7 +40,7 @@ class SoWithClientAndItemDto
     private $del_country_id;
     private $del_company;
     private $line_no;
-    private $prod_sku;
+    private $item_sku;
     private $prod_name;
     private $qty;
     private $email;
@@ -427,14 +427,14 @@ class SoWithClientAndItemDto
         return $this->line_no;
     }
 
-    public function setProdSku($prod_sku)
+    public function setItemSku($item_sku)
     {
-        $this->prod_sku = $prod_sku;
+        $this->item_sku = $item_sku;
     }
 
-    public function getProdSku()
+    public function getItemSku()
     {
-        return $this->prod_sku;
+        return $this->item_sku;
     }
 
     public function setProdName($prod_name)
