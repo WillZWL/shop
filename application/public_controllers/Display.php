@@ -48,7 +48,10 @@ class Display extends PUB_Controller
             $data['contact_url_1'] = $http_type . 'contact.'  . $data['server_name'] . '/support/tickets/new?genaftersales=true';
             $data['contact_url_2'] = $http_type . 'contact.'  . $data['server_name'] . '/support/tickets/new?presales=true';
             $data['contact_url_3'] = $http_type . 'contact.'  . $data['server_name'] . '/support/tickets/new?faultorreturn=true';
-            $data['contact_email'] = $this->get_contact_info(PLATFORM);
+
+            $contact_info = $this->get_contact_info(PLATFORM);
+            $data['contact_email'] = $contact_info['email'];
+            $data['contact_tel'] = $contact_info['tel'];
         }
         $data["http_type"] = $http_type;
         $data["content"] = "display/" . $page;
@@ -82,33 +85,42 @@ class Display extends PUB_Controller
         $contact = [
             'WEBUK' => [
                 'email' => 'support@digitaldiscount.co.uk',
+                'tel' => '07384060620',
             ],
             'WEBGB' => [
                 'email' => 'support@digitaldiscount.co.uk',
+                'tel' => '',
             ],
             'WEBAU' => [
                 'email' => 'support@aheaddigital.net',
+                'tel' => '',
             ],
             'WEBNZ' => [
                 'email' => 'support@aheaddigital.co.nz',
+                'tel' => '',
             ],
             'WEBFR' => [
                 'email' => 'support@numeristock.fr',
+                'tel' => '0975182358',
             ],
             'WEBBE' => [
                 'email' => 'support@numeristock.be',
+                'tel' => '',
             ],
             'WEBES' => [
                 'email' => 'soporte@buholoco.es',
+                'tel' => '9123115550',
             ],
             'WEBPL' => [
                 'email' => 'support@elektroraj.pl',
+                'tel' => '',
             ],
             'WEBIT' => [
                 'email' => 'assistenza@nuovadigitale.it',
+                'tel' => '0294755798',
             ],
         ];
-        return $contact[$platform_id]['email'];
+        return $contact[$platform_id];
     }
 }
 

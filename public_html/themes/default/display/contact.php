@@ -54,9 +54,16 @@
                                 </p>
                             </p>
                         </div>
+                        <?php if ($contact_email) : ?>
                         <div class="text-left note-alert">
                             <?=_('Email')?>&nbsp;: <?=$contact_email?>
                         </div>
+                        <?php endif; ?>
+                         <?php if ($contact_tel) : ?>
+                        <div class="text-left note-alert">
+                            <?=_('Tel')?>&nbsp;: <?=$contact_tel?>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
