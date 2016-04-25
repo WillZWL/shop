@@ -1,6 +1,6 @@
 <?php
 
-class CourierImport extends MY_Controller
+class Courier_import extends MY_Controller
 {
 	private $appId = "SUP0017";
 	private $lang_id = "en";
