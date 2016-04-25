@@ -83,13 +83,9 @@ class Display extends PUB_Controller
     private function get_contact_info($platform_id = 'WEBGB')
     {
         $contact = [
-            'WEBUK' => [
-                'email' => 'support@digitaldiscount.co.uk',
-                'tel' => '07384060620',
-            ],
             'WEBGB' => [
                 'email' => 'support@digitaldiscount.co.uk',
-                'tel' => '',
+                'tel' => '07384060620',
             ],
             'WEBAU' => [
                 'email' => 'support@aheaddigital.net',
