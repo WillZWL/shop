@@ -26,7 +26,7 @@ class Courier_import extends MY_Controller
 			if ($result === FALSE) {
 				$_SESSION["NOTICE"] = "Problem with import: {$this->error}";
 			} else {
-				if ($content = file_get_contents(DATAPATH . "import/recommended_courier/{$this->thisYear}/{$this->thisMonth}/processed/courier_import_record_{$this->timestamp}.csv")) {
+				if ($content = file_get_contents(DATAPATH . "/import/recommended_courier/{$this->thisYear}/{$this->thisMonth}/processed/courier_import_record_{$this->timestamp}.csv")) {
 					header("Content-type: text/csv");
 					header("Cache-Control: no-store, no-cache");
 					header("Content-Disposition: attachment; filename=\"record_{$this->timestamp}.csv\"");
@@ -102,7 +102,7 @@ class Courier_import extends MY_Controller
 			if ($fp = fopen($filepath, 'r')) {
 				$i = 0;
 				// we record each so_no's success status in a file
-				$fp_record = fopen(DATAPATH . "import/recommended_courier/{$this->thisYear}/{$this->thisMonth}/processed/courier_import_record_{$this->timestamp}.csv", 'w');
+				$fp_record = fopen(DATAPATH . "/import/recommended_courier/{$this->thisYear}/{$this->thisMonth}/processed/courier_import_record_{$this->timestamp}.csv", 'w');
 				fwrite($fp_record, "so_no, rec_courier, processing_remarks\r\n");      #headers
 				while (($content = fgetcsv($fp)) !== FALSE) {
 					$so_no = $content[0];
