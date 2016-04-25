@@ -157,7 +157,7 @@ class Compensation extends Compensation_create
                                 $err++;
                             }
                             if ($update_hold_status) {
-                                $this->sc['So']->updateIofHoldStatusBySo($so_no, $holdStatus);
+                                $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
                             }
 
                             if (!$err) {
@@ -194,7 +194,7 @@ class Compensation extends Compensation_create
                                     $err++;
                                 }
                                 if ($update_hold_status) {
-                                    $this->sc['So']->updateIofHoldStatusBySo($so_no, $holdStatus);
+                                    $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
                                 }
                             }
                         }
@@ -239,7 +239,7 @@ class Compensation extends Compensation_create
                             $err++;
                         }
                         if ($update_hold_status) {
-                            $this->sc['So']->updateIofHoldStatusBySo($so_no, $holdStatus);
+                            $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
                         }
                     }
 

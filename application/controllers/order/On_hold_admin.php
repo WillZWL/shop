@@ -540,7 +540,7 @@ class On_hold_admin extends MY_Controller
                 }
 
                 if ($update_status) {
-                    $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                    $this->sc['So']->saveOrderStatusHistory($so_no, $status);
                 }
             }
         }
@@ -586,15 +586,11 @@ class On_hold_admin extends MY_Controller
                         $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                     } else {
                         if ($update_status) {
-                            $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                            $this->sc['So']->saveOrderStatusHistory($so_no, $status);
                         }
 
                         if ($update_hold_status) {
-                            $this->sc['So']->updateIofHoldStatusBySo($so_no, $holdStatus);
-                        }
-
-                        if ($update_refund_status) {
-                            $this->sc['So']->updateIofRefundStatusBySo($so_no, $refundStatus);
+                            $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
                         }
 
                         $this->_create_release_order_record($so_no, $reason = 'cancel order');
@@ -662,7 +658,7 @@ class On_hold_admin extends MY_Controller
 
                         if ($this->sc['So']->getDao('So')->update($soobj)) {
                             if ($update_status) {
-                                $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                                $this->sc['So']->saveOrderStatusHistory($so_no, $status);
                             }
                             $this->_create_release_order_record($so_no, $reason_note);
                         }
@@ -727,11 +723,11 @@ class On_hold_admin extends MY_Controller
 
                 if ($this->sc['So']->getDao('So')->update($so_obj)) {
                     if ($update_status) {
-                        $this->sc['So']->updateIofStatusBySo($so_no, $status);
+                        $this->sc['So']->saveOrderStatusHistory($so_no, $status);
                     }
 
                     if ($update_hold_status) {
-                        $this->sc['So']->updateIofHoldStatusBySo($so_no, $holdStatus);
+                        $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
                     }
 
                     $this->_create_release_order_record($so_no, 'approve for fulfillment');
@@ -805,7 +801,7 @@ class On_hold_admin extends MY_Controller
 
                 if ($this->sc['So']->getDao('So')->update($so_obj)) {
                     if ($update_hold_status) {
-                        $this->sc['So']->updateIofHoldStatusBySo($so_no, $holdStatus);
+                        $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
                     }
 
                     if (($sohr_vo = $this->sc['So']->getDao('SoHoldReason')->get()) !== FALSE) {

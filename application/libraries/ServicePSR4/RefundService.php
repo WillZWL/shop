@@ -103,11 +103,7 @@ class RefundService extends BaseService
 
                             if ($so_result !== FALSE) {
                                 if ($update_status) {
-                                    $this->sc['So']->updateIofStatusBySo($so_no, $status);
-                                }
-
-                                if ($update_refund_status) {
-                                    $this->soService->updateIofRefundStatusBySo($so_no, $refundStatus);
+                                    $this->sc['So']->saveOrderStatusHistory($so_no, $status);
                                 }
 
                                 $this->getDao('Refund')->db->trans_complete();
@@ -169,9 +165,6 @@ class RefundService extends BaseService
 
                 $so_obj->setRefundStatus('4');
                 $ret = $this->getDao('So')->update($so_obj);
-                if ($update_refund_status) {
-                    $this->soService->updateIofRefundStatusBySo($refund_obj->getSoNo(), $refundStatus);
-                }
 
                 $m1 = $this->getDao('So')->db->display_error();
             }
@@ -317,10 +310,6 @@ class RefundService extends BaseService
 
             $r = $this->getDao('So')->update($so_obj);
             if ($r !== FALSE) {
-                if ($update_refund_status) {
-                    $this->soService->updateIofRefundStatusBySo($so_obj->getSoNo(), $refundStatus);
-                }
-
                 $r = $this->getDao('Refund')->insert($refund_obj);
                 if ($r !== FALSE) {
                     $refund_id = $r->getId();
@@ -420,10 +409,6 @@ class RefundService extends BaseService
             $this->getDao('Refund')->db->trans_start();
             $r = $this->getDao('So')->update($so_obj);
             if ($r !== FALSE) {
-                if ($update_refund_status) {
-                    $this->soService->updateIofRefundStatusBySo($so_obj->getSoNo(), $refundStatus);
-                }
-
                 $r = $this->getDao('Refund')->insert($refund_obj);
                 if ($r !== FALSE) {
                     $refund_id = $r->getId();

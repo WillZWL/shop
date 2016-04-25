@@ -992,7 +992,7 @@ class SoService extends BaseService
                         $new_so_obj->setHoldStatus(0);
 
                         $holdStatus = 0;
-                        $this->updateIofHoldStatusBySo($so_no, $holdStatus);
+                        $this->saveSoHoldStatusHistory($so_no, $holdStatus);
                     }
 
                     # temporarily set as 0
@@ -1143,7 +1143,7 @@ class SoService extends BaseService
                     $failed = 1;
                 } else {
                     if ($update_hold_status) {
-                        $this->updateIofHoldStatusBySo($so_no, $holdStatus);
+                        $this->saveSoHoldStatusHistory($so_no, $holdStatus);
                     }
                     $hr_obj = $this->getDao('HoldReason')->get(['reason_cat'=>'OT','reason_type'=>'created_split','status'=>1]);
                     if (!$hr_obj) {
@@ -1174,7 +1174,7 @@ class SoService extends BaseService
                         $failed = 1;
                     } else {
                         if ($update_status) {
-                            $this->updateIofStatusBySo($so_no, $status);
+                            $this->saveOrderStatusHistory($so_no, $status);
                         }
                     }
                 }
@@ -3641,7 +3641,7 @@ html;
                     $success = 0;
                 }
                 if ($update_status) {
-                    $this->updateIofStatusBySo($so_obj->getSoNo(), $status);
+                    $this->saveOrderStatusHistory($so_obj->getSoNo(), $status);
                 }
             }
 
@@ -4179,12 +4179,12 @@ html;
                                     $so_obj->setHoldStatus(0);
                                     if ($this->getDao('So')->update($so_obj)) {
                                         if ($update_status) {
-                                            $this->updateIofStatusBySo($so_no, $status);
+                                            $this->saveOrderStatusHistory($so_no, $status);
                                         }
                                     }
 
                                     if ($update_hold_status) {
-                                        $this->updateIofHoldStatusBySo($so_no, $holdStatus);
+                                        $this->saveSoHoldStatusHistory($so_no, $holdStatus);
                                     }
 
                                     $this->getDao('SoCreditChk')->db->trans_complete();
@@ -4405,7 +4405,7 @@ html;
                                 $so_obj->setStatus("5");
                                 if ($this->getDao('So')->update($so_obj)) {
                                     if ($update_status) {
-                                        $this->updateIofStatusBySo($so_no, $status);
+                                        $this->saveOrderStatusHistory($so_no, $status);
                                     }
                                 } else {
                                     $error +=1;
@@ -4450,8 +4450,6 @@ html;
                 $soid_obj->setOutstandingQty(0);
                 if ($this->getDao('SoItemDetail')->update($soid_obj)) {
 
-                    $this->updateIofOutstandingQtyBySoid($so_no, $line_no, $item_sku, $soid_obj);
-
                     $action = "update";
                     if (!($soal_obj = $this->getDao('SoAllocate')->get(['so_no'=>$so_no, 'line_no'=>$line_no, 'item_sku'=>$item_sku, 'warehouse_id'=>'HK', 'status'=>1]))) {
                         unset($soal_obj);
@@ -4471,19 +4469,6 @@ html;
         return true;
     }
 
-    public function updateIofStatusBySo($so_no, $status)
-    {
-        $iofObjList = $this->getDao('IntegratedOrderFulfillment')->getList(['so_no'=>$so_no]);
-        if((array) $iofObjList) {
-            foreach ($iofObjList as $iofObj) {
-                $iofObj->setStatus($status);
-                $this->getDao('IntegratedOrderFulfillment')->update($iofObj);
-            }
-
-            $this->saveOrderStatusHistory($so_no, $status);
-        }
-    }
-
     public function saveOrderStatusHistory($so_no, $status)
     {
         $oshVo = $this->getDao('OrderStatusHistory')->get();
@@ -4493,19 +4478,6 @@ html;
         $oshVo = $this->getDao('OrderStatusHistory')->insert($oshObj);
     }
 
-    public function updateIofHoldStatusBySo($so_no, $holdStatus)
-    {
-        $iofObjList = $this->getDao('IntegratedOrderFulfillment')->getList(['so_no'=>$so_no]);
-        if((array) $iofObjList) {
-            foreach ($iofObjList as $iofObj) {
-                $iofObj->setholdStatus($holdStatus);
-                $this->getDao('IntegratedOrderFulfillment')->update($iofObj);
-            }
-
-            $this->saveSoHoldStatusHistory($so_no, $holdStatus);
-        }
-    }
-
     public function saveSoHoldStatusHistory($so_no, $holdStatus)
     {
         $oshVo = $this->getDao('SoHoldStatusHistory')->get();
@@ -4513,27 +4485,6 @@ html;
         $oshObj->setSoNo($so_no);
         $oshObj->setHoldStatus($holdStatus);
         $oshVo = $this->getDao('SoHoldStatusHistory')->insert($oshObj);
-    }
-
-    public function updateIofRefundStatusBySo($so_no, $refundStatus)
-    {
-        $iofObjList = $this->getDao('IntegratedOrderFulfillment')->getList(['so_no'=>$so_no]);
-        if((array) $iofObjList) {
-            foreach ($iofObjList as $iofObj) {
-                $iofObj->setRefundStatus($refundStatus);
-                $this->getDao('IntegratedOrderFulfillment')->update($iofObj);
-            }
-        }
-    }
-
-    public function updateIofOutstandingQtyBySoid($so_no, $line_no, $item_sku, $soid_obj)
-    {
-        if ($iofObj = $this->getDao('IntegratedOrderFulfillment')->get(['so_no'=>$so_no, 'line_no'=>$line_no,'sku'=>$item_sku])) {
-            $iofObj->setOutstandingQty($soid_obj->getOutstandingQty());
-            $iofObj = $this->getDao('IntegratedOrderFulfillment')->update($iofObj);
-        }
-
-        return true;
     }
 
     public function dealOrderFulfilmentToShip($valueArr)
@@ -4577,9 +4528,7 @@ html;
 
                         if ($soid_obj = $this->getDao('SoItemDetail')->get($soid_where)) {
                             $soid_obj->setOutstandingQty($soid_obj->getQty());
-                            if ($this->getDao('SoItemDetail')->update($soid_obj)){
-                                $this->updateIofOutstandingQtyBySoid($so_no, $soal_obj->getLineNo(), $soal_obj->getItemSku(), $soid_obj);
-                            }
+                            $this->getDao('SoItemDetail')->update($soid_obj);
 
                             $this->getDao('SoAllocate')->delete($soal_obj);
                         } else {
@@ -4610,7 +4559,7 @@ html;
                             $error = __LINE__ . " " . $this->db->_error_message();
                         }
                         if ($update_status) {
-                            $this->updateIofStatusBySo($so_no, $status);
+                            $this->saveOrderStatusHistory($so_no, $status);
                         }
                     }
                 } else {
@@ -4730,9 +4679,7 @@ html;
                             $cur_u_where = isset($soid_u_where[$soid_where["so_no"]][$soid_where["line_no"]][$soid_where["item_sku"]]) ? ["modify_on <=" => $soid_u_where[$soid_where["so_no"]][$soid_where["line_no"]][$soid_where["item_sku"]]] : $u_where;
                             if ($soid_obj = $this->getDao('SoItemDetail')->get($soid_where)) {
                                 $soid_obj->setOutstandingQty($soid_obj->getQty());
-                                if ($this->getDao('SoItemDetail')->update($soid_obj, $cur_u_where)){
-                                    $this->updateIofOutstandingQtyBySoid($so_no, $soal_obj->getLineNo(), $soal_obj->getItemSku(), $soid_obj);
-                                }
+                                $this->getDao('SoItemDetail')->update($soid_obj, $cur_u_where);
 
                                 if ($this->getDao('SoAllocate')->delete($soal_obj)) {
                                     $soid_u_where[$soid_where["so_no"]][$soid_where["line_no"]][$soid_where["item_sku"]] = date("Y-m-d H:i:s");
@@ -4767,7 +4714,7 @@ html;
                                 $error = __LINE__ . "[" . ($rs1 ? 1 : 0) . ($rs2 ? 1 : 0) . "]" . $this->db->_error_message();
                             }
                             if ($update_status) {
-                                $this->updateIofStatusBySo($so_no, $status);
+                                $this->saveOrderStatusHistory($so_no, $status);
                             }
                         }
                     } else {
