@@ -165,8 +165,9 @@ class RefundService extends BaseService
 
                 $so_obj->setRefundStatus('4');
                 $ret = $this->getDao('So')->update($so_obj);
-
-                $m1 = $this->getDao('So')->db->display_error();
+                if ($ret === false) {
+                    $m1 = $this->getDao('So')->db->display_error();
+                }
             }
 
             $refund_obj->setStatus('C');
