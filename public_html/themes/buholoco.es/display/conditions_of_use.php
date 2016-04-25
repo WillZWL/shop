@@ -22,7 +22,7 @@
                     <p>
 <?= _('Buholoco.es (BuhoLoco) está gestionado totalmente por ChatandVision Ltd (ChatandVision). Al visitar o comprar en el sitio web BuhoLoco, usted se compromete a aceptar y cumplir con estas condiciones de uso, así como cualquiera otras políticas publicadas en el sitio web, junto las modificaciones que puedan surgir de vez en cuando. SI USTED NO ESTÁ DE ACUERDO CON ESTAS CONDICIONES ENTONCES POR FAVOR NO UTILICE EL SITIO.') ?>
 <br /><br />
-<?= _('BuhoLoco es el nombre comercial propiedad de ChatandVision Ltd con sede social en Piso / RM 12, 25 / F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong. A través de su sitio web, ChatandVision Ltd ofrece hardware de la electrónica de consumo y servicios.') ?>
+<?= sprintf(_('BuhoLoco es un nombre comercial con oficina registrada en: <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>A través de sus páginas, ChatandVision LTD ofrece electrónica de consumo, software y servicios.')) ?>
 <br /><br />
 <?= _('Si tiene alguna pregunta relacionada con nuestros términos y condiciones, por favor póngase en contacto con el equipo de Atención al cliente o lea nuestro FAQ.') ?>
                     </p>

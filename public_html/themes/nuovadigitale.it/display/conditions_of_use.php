@@ -22,7 +22,7 @@
                     <p>
 <?= _('NuovaDigitale.it (NuovaDigitale) appartiene ed è gestito da ChatandVision Ltd (ChatandVision). Navigando o acquistando sul sito NuovaDigitale, dichiari di accettare e di essere soggetto a questi termini e condizioni, e a tutto il regolamento espresso sul sito, comprese modifiche. SE NON SEI D’ ACCORDO CON QUESTI TERMINI E CONDIZIONI NON UTILIZZARE QUESTO SITO.') ?>
 <br /><br />
-<?= _('NuovaDigitale  è un nome commerciale di proprietà di ChatandVision Ltd con sede legale all’ indirizzo Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong. Attraverso i suoi siti, ChatandVision Ltd offre hardware elettronici e servizi.') ?>
+<?= sprintf(_("NuovaDigital è un nome commerciale con sede legale in: <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Attraverso i suoi siti web, ChatandVision Ltd offre l'elettronica di consumo di hardware, software e servizi.")) ?>
 <br /><br />
 <?= _('Per qualsiasi domanda riguardo termini e condizioni, contatta il nostro servizio clienti oppure consulta la sezione FAQ.') ?>
                     </p>
