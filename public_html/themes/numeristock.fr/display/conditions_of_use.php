@@ -22,7 +22,7 @@
                     <p>
 <?= _('Numeristock.fr (Numeristock) appartient entièrement et est opéré par ChatandVision Ltd (ChatandVision). En visitant ou en achetant sur le site Numeristock, vous acceptez d’être lié par ces conditions d’utilisation, autant que par toute modification publiée sur le site. LE DEFAUT D’ACCORD NE VIDE PAS LES PRESENTES CONDITIONS D’UTILISATION DE LEUR APPLICABILITE DE PLEIN DROIT.') ?>
 <br /><br />
-<?= _('Numeristock est un nom commercial appartenant à ChatandVision Ltd - siège social Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong. Sur ses différents sites, ChatandVision Ltd offre à la vente des produits électroniques de consommation ainsi que des services.') ?>
+<?= sprintf(_('Numeristock est un nom commercial dont le sièges sociaux sont : <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Grâce à ses sites Web , ChatandVision Ltd offre du matériel électronique grand public, des logiciels et des services.')) ?>
 <br /><br />
 <?= _('Pour toute question relative à nos conditions d’utilisation, merci de contacter notre service clientèle ou de vous référer à notre FAQ.') ?>
                     </p>

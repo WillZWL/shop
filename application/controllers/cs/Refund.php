@@ -280,9 +280,6 @@ class Refund extends MY_Controller
                 }
                 $so_obj->setRefundStatus($status);
                 if ($this->sc['So']->getDao('So')->update($so_obj) !== FALSE) {
-                    if ($update_refund_status) {
-                        $this->sc['So']->updateIofRefundStatusBySo($orderid, $refundStatus);
-                    }
 
                     if ($result = $this->sc['Refund']->getDao('Refund')->insert($refund_obj)) {
                         $refund_id = $result->getId();
@@ -325,10 +322,6 @@ class Refund extends MY_Controller
                                             $split_parent_obj->setRefundStatus($status);
                                             if ($this->sc['So']->getDao('So')->update($split_parent_obj) === FALSE) {
                                                 $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " Error update split parent so_no $split_so_group. " . $this->db->display_error();
-                                            } else {
-                                                if ($update_refund_status) {
-                                                    $this->sc['So']->updateIofRefundStatusBySo($split_so_group, $refundStatus);
-                                                }
                                             }
                                         }
                                     }
@@ -587,11 +580,7 @@ class Refund extends MY_Controller
                 $ret = $this->sc['So']->getDao('So')->update($so_obj);
                 if ($ret) {
                     if ($update_hold_status) {
-                        $this->sc['So']->updateIofHoldStatusBySo($refund_obj->getSoNo(), $holdStatus);
-                    }
-
-                    if ($update_refund_status) {
-                        $this->sc['So']->updateIofRefundStatusBySo($refund_obj->getSoNo(), $refundStatus);
+                        $this->sc['So']->saveSoHoldStatusHistory($refund_obj->getSoNo(), $holdStatus);
                     }
 
                     if ($hold == '1') {
@@ -923,11 +912,7 @@ class Refund extends MY_Controller
                 $so_obj->setRefundStatus($status);
                 $ret = $this->sc['So']->getDao('So')->update($so_obj);
                 if ($update_hold_status) {
-                    $this->sc['So']->updateIofHoldStatusBySo($refund_obj->getSoNo(), $holdStatus);
-                }
-
-                if ($update_refund_status) {
-                    $this->sc['So']->updateIofRefundStatusBySo($refund_obj->getSoNo(), $refundStatus);
+                    $this->sc['So']->saveSoHoldStatusHistory($refund_obj->getSoNo(), $holdStatus);
                 }
 
                 $this->sc['Refund']->checkAction($refundid, "CS");
@@ -946,9 +931,6 @@ class Refund extends MY_Controller
 
                     $split_parent_obj->setRefundStatus($status);
                     $ret = $this->sc['So']->getDao('So')->update($split_parent_obj);
-                    if ($update_refund_status_2) {
-                        $this->sc['So']->updateIofRefundStatusBySo($split_so_group, $refundStatus);
-                    }
                 }
 
                 if ($ret) {
@@ -1230,11 +1212,7 @@ class Refund extends MY_Controller
                         $ret = $this->sc['So']->getDao('So')->update($so_obj);
                         if ($ret) {
                             if ($update_hold_status) {
-                                $this->sc['So']->updateIofHoldStatusBySo($refund_obj->getSoNo(), $holdStatus);
-                            }
-
-                            if ($update_refund_status) {
-                                $this->sc['So']->updateIofRefundStatusBySo($refund_obj->getSoNo(), $refundStatus);
+                                $this->sc['So']->saveSoHoldStatusHistory($refund_obj->getSoNo(), $holdStatus);
                             }
 
                             if (($so_obj->getStatus() != 1) || ($so_obj->getStatus() != 6)) {

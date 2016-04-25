@@ -20,9 +20,9 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDITIONS OF USE') ?></h3>
                     <p>
-<?= _('aheaddigital.co.nz (AheadDigital) is wholly owned and operated by ChatandVision Ltd (ChatandVision). By visiting or shopping at the AheadDigital website, you agree to accept and be bound by these conditions of use, as well as any other policies posted on the website, as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN PLEASE DO NOT USE THE SITE.') ?>
+<?= _('Aheaddigital.co.nz (AheadDigital) is wholly owned and operated by ChatandVision Ltd (ChatandVision). By visiting or shopping at the AheadDigital website, you agree to accept and be bound by these conditions of use, as well as any other policies posted on the website, as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN PLEASE DO NOT USE THE SITE.') ?>
 <br /><br />
-<?= _('AheadDigital  is a trading name owned by ChatandVision Ltd with registered offices at Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong. Through its websites, ChatandVision Ltd offers consumer electronics hardware, and services. ') ?>
+<?= sprintf(_('AheadDigital is a trading name with registered offices in: <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Through its websites, ChatandVision Ltd offers consumer electronics hardware, and services.')) ?>
 <br /><br />
 <?= _('If you have any queries relating to our terms and conditions, please contact the Customer Support team or read our FAQ.') ?>
                     </p>
@@ -91,7 +91,7 @@
                         <?= _('In the unlikely event your order is damaged in transit please contact us immediately. Please send the product back to us in the original packaging and a valid RMA (Return Merchandise Authorization) form. We will arrange for a prompt replacement or refund, whichever is your preference. Please note that we are unable to offer a refund if you notify us about the damaged goods after more than 6 days starting the day after receipt of goods.') ?>
                     </p>
                     <br />
-                    <p><?= _('During the RMA process, ChatandVision Ltd will follow up with you via email on issues requiring your clarification and agreement, using the trading name DigitalDiscount. If no response is received from you within 7 days from the date of emailing, ChatandVision will follow up with a kind reminder in the form of a 1st and 2nd email at 7 day intervals. In the event no response is received within 7 days of the 2nd email being sent, ChatandVision will send a 3rd and final reminder email together with a recorded letter. Should no response be received within 2 weeks from date of final reminders, ChatandVision reserves the right to dispose of the RMA item(s) at its discretion in any way seen fit.') ?></p>
+                    <p><?= _('During the RMA process, ChatandVision Ltd will follow up with you via email on issues requiring your clarification and agreement, using the trading name AheadDigital. If no response is received from you within 7 days from the date of emailing, ChatandVision will follow up with a kind reminder in the form of a 1st and 2nd email at 7 day intervals. In the event no response is received within 7 days of the 2nd email being sent, ChatandVision will send a 3rd and final reminder email together with a recorded letter. Should no response be received within 2 weeks from date of final reminders, ChatandVision reserves the right to dispose of the RMA item(s) at its discretion in any way seen fit.') ?></p>
 
                     <br /><br />
 

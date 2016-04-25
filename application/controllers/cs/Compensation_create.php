@@ -153,7 +153,7 @@ class Compensation_create extends MY_Controller
                         $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " " . $this->db->display_error() . "\n";
                     } else {
                         if ($update_hold_status) {
-                            $this->sc['So']->updateIofHoldStatusBySo($so_no, $holdStatus);
+                            $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
                         }
 
                         Redirect(base_url() . "cs/compensation_create/create/");

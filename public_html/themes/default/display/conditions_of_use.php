@@ -22,7 +22,7 @@
                     <p>
 <?= _('DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by ChatandVision Ltd (ChatandVision). By visiting or shopping at the DigitalDiscount website, you agree to accept and be bound by these conditions of use, as well as any other policies posted on the website, as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN PLEASE DO NOT USE THE SITE.') ?>
 <br /><br />
-<?= _('DigitalDiscount  is a trading name owned by ChatandVision Ltd with registered offices at Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong. Through its websites, ChatandVision Ltd offers consumer electronics hardware, and services. ') ?>
+<?= sprintf(_('DigitalDiscount is a trading name with registered offices in: <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Through its websites, ChatandVision Ltd offers consumer electronics hardware, and services.')) ?>
 <br /><br />
 <?= _('If you have any queries relating to our terms and conditions, please contact the Customer Support team or read our FAQ.') ?>
                     </p>

@@ -22,7 +22,7 @@
                     <p>
 <?= _('Elektroraj.pl (Elektroraj) jest w całości własnością i jest zarządzany przez ChatandVision Ltd (ChatandVision). Odwiedzając lub dokonując zakupu na stronie Elektroraj, akceptują Państwo niniejsze warunki użytkowania, a także inne zasady zamieszczone na tej stronie internetowej, wraz z nowymi zmianami. JEŚLI NIE WYRAŻAJĄ PAŃŚTWO ZGODY NA NINIEJSZE WARUNKI TO PROSIMY O OPUSZCZENIE TEJ STRONY.') ?>
 <br /><br />
-<?= _('Elektroraj jest nazwą handlową stanowiącą własność ChatandVision Ltd z siedzibą Flat / RM 12, 25 / F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong. Na swoich stronach internetowych, ChatandVision Ltd oferuje sprzęt elektroniczny i usługi.') ?>
+<?= sprintf(_('Elektroraj to nazwa handlowa z zarejestrowanymi biurami w: <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Na swoich stronach internetowych, ChatandVision Ltd oferuje sprzęt elektroniczny, oprogramowanie i usługi.')) ?>
 <br /><br />
 <?= _('Jeśli mają Państwo jakiekolwiek pytania dotyczące naszych warunków i regulaminów to prosimy o kontakt z Działem Obsługi Klienta lub zapoznanie się z naszym FAQ.') ?>
                     </p>
