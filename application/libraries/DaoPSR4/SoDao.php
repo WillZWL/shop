@@ -1771,6 +1771,7 @@ SQL;
                             so.delivery_country_id,
                             soid.qty,
                             soid.unit_price amount,
+                            so.amount as total_amount,
                             so.rate,
                             so.so_no,
                             pbv.selling_platform_id AS platform_id,
