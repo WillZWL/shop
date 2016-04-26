@@ -28,13 +28,13 @@ class SoHoldReasonDao extends BaseDao implements HooksInsert
 
     public function tableFieldsHooksInsert($obj)
     {
-        /*$table1 = [
+        $table1 = [
                     'table' => 'so',
                     'where' => ['so_no'=>$obj->getSoNo(),],
                     'keyValue'=>['hold_reason' => $this->getHoldReasonById($obj->getReason()),]
                   ];
 
-        $this->updateTables([$table1,]);*/
+        $this->updateTables([$table1,]);
     }
 
     public function getHoldReasonById($id = "")
