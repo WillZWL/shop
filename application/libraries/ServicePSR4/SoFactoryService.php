@@ -398,6 +398,9 @@ class SoFactoryService extends BaseService
         $soObj->setVatPercent($orderInfo->getVatPercent());
         //$this->_setOrderVat($soObj, $orderInfo);
 
+        $declared_value = $this->_getDeclaredValue($soObj->getDeliveryCountryId(), $soObj->getAmount());
+        $soObj->setDeclaredValue($declared_value);
+
         $this->setOrderInfoDetail($orderInfo->getPlatformId(), $soObj);
         if ($injectedInterfaceObj instanceof CreateSoEventInterface) {
             $injectedInterfaceObj->soBeforeInsertEvent($soObj);
@@ -542,5 +545,81 @@ class SoFactoryService extends BaseService
             $soidObj->setMargin(round($jj["get_margin"], $decPlace));
         }
 */
+    }
+
+    public function _getDeclaredValue($country_id = "", $price = "", $vat = 0)
+    {
+        $max_declared_value = -1;
+        $declared_pcent = 100;
+        $declared = -1;
+        switch ($country_id) {
+            case "AU":
+                if ($price < 910) {
+                    $declared_pcent = 100;
+                } else {
+                    $max_declared_value = 910;
+                }
+                break;
+            case "NZ":
+                if ( ($price-$vat) <= 350) {
+                    $declared_pcent = 100;
+                } elseif ( ( ($price - $vat) > 350) && ( ($price - $vat ) <= 470) ) {
+                    $declared_pcent = 80;
+                } elseif ( ($price > 470) && ($price <= 970) ) {
+                    $declared_pcent = 80;
+                } else {
+                    $max_declared_value = 776;
+                }
+                break;
+            case 'SG':
+                if ($price >= 350) {
+                    $max_declared_value = 350;
+                } else {
+                   $declared_pcent = 10;
+                }
+                break;
+            case 'TH':
+                if ($price < 5454) {
+                    $declared_pcent = 100;
+                } else {
+                    $max_declared_value = 5454;
+                }
+                break;
+            case 'PH':
+                if ($price < 4142) {
+                    $declared_pcent = 100;
+                } else {
+                    $max_declared_value = 4142;
+                }
+                break;
+            case 'MY':
+                if ($price < 266) {
+                    $declared_pcent = 100;
+                } else {
+                    $max_declared_value = 266;
+                }
+                break;
+            case 'MX':
+                if ($price < 1300) {
+                    $max_declared_value = 266;
+                } else {
+                    $declared_pcent = 10;
+                }
+                break;
+            default:
+                $declared_pcent = 10;
+                break;
+        }
+
+        if ($max_declared_value != -1) {
+            if ($price > $max_declared_value) {
+                $declared = $max_declared_value;
+            } else {
+                $declared = $price;
+            }
+        } else {
+            $declared = $price * $declared_pcent / 100;
+        }
+        return $declared;
     }
 }
