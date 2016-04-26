@@ -15,7 +15,8 @@ class SoVo extends \BaseVo
     private $rate = '1.000000';
     private $rate_to_hkd = '1.000000';
     private $ref_1 = '1.000000';
-    private $delivery_charge = '0.0';
+    private $delivery_charge = '0.00';
+    private $declared_value = '0.00';
     private $delivery_type_id;
     private $rec_courier = '';
     private $weight;
@@ -247,6 +248,18 @@ class SoVo extends \BaseVo
     public function getDeliveryCharge()
     {
         return $this->delivery_charge;
+    }
+
+    public function setDeclaredValue($declared_value)
+    {
+        if ($declared_value != null) {
+            $this->declared_value = $declared_value;
+        }
+    }
+
+    public function getDeclaredValue()
+    {
+        return $this->declared_value;
     }
 
     public function setDeliveryTypeId($delivery_type_id)
