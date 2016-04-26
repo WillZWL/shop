@@ -15,7 +15,7 @@ class SoVo extends \BaseVo
     private $rate = '1.000000';
     private $rate_to_hkd = '1.000000';
     private $ref_1 = '1.000000';
-    private $delivery_charge;
+    private $delivery_charge = '0.0';
     private $delivery_type_id;
     private $rec_courier = '';
     private $weight;
