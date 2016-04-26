@@ -1612,6 +1612,7 @@ SQL;
                             p.name prod_name,
                             so.currency_id,
                             soid.amount unit_price,
+                            fc.weight AS prod_weight,
                             soa.qty,
                             so.delivery_charge,
                             so.amount,

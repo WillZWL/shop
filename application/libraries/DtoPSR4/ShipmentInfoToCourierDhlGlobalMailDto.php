@@ -32,7 +32,7 @@ class ShipmentInfoToCourierDhlGlobalMailDto
     protected $amount;
     protected $delivery_type_id;
     protected $promotion_code;
-    protected $weight;
+    protected $prod_weight;
     protected $declared_value;
     protected $bill_detail;
     protected $total_item_count;
@@ -369,14 +369,14 @@ class ShipmentInfoToCourierDhlGlobalMailDto
         return $this->declared_value;
     }
 
-    public function setWeight($value){
+    public function setProdWeight($value){
 
-        $this->weight = $value;
+        $this->prod_weight = $value;
     }
 
-    public function getWeight(){
+    public function getProdWeight(){
 
-        return $this->weight;
+        return $this->prod_weight;
     }
 
     public function setBillDetail($value)

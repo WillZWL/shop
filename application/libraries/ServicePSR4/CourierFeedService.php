@@ -944,6 +944,8 @@ class CourierFeedService extends BaseService
 			$row->setDeliveryAddress3($ar_address[2]);
 		}
 
+		$row->setProdWeight($row->getProdWeight() * $row->getQty());
+
 		$amount = round($this->convertCurrency($row->getCurrencyId(), 'USD', $row->getAmount()), 2);
 		$row->setAmount($amount);
 		$row->setQty(1);
@@ -1013,7 +1015,7 @@ class CourierFeedService extends BaseService
 				$filename .= date('YmdHis');
 				$filename .= ".csv";
 			}
-			elseif($courier == "dhl-global-mail" || $courier == "chronopost-france")
+			elseif ( in_array($courier, array("dhl-global-mail", "chronopost-france")) )
 			{
 				$filename .= ".csv";
 			}

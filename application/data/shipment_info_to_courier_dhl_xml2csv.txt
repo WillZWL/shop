@@ -4,7 +4,7 @@ data
 #Input column name	Output column name	Specify value
 	Field1	PT
 	Field2	Panther
-	Field3	Amy Au
+	Field3	Samuel
 	Field4	Workshop A 10/F Wah Shing Industrial Building
 	Field5	18 Cheung Shun Street
 	Field6	Lai Chi Kok
@@ -21,7 +21,7 @@ delivery_city	DeliveryCity
 delivery_state	DeliveryState
 delivery_postcode	DeliveryPostalCode
 delivery_country_id	DeliveryCountry
-tel 	DeliveryPhone
+tel	DeliveryPhone
 	Field21	P
 qty	Qty
 	Weight	0.5
