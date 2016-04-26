@@ -19,7 +19,7 @@ prod_name	Detailed Goods Description 1
 	Detailed Goods Description 2
 	Detailed Goods Description 3
 	Detailed Goods Description 4
-	HS Code 1	111111111
+	HS Code 1	1111111111
 	HS Code 2
 	HS Code 3
 	HS Code 4
