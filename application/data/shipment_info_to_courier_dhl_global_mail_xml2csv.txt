@@ -19,7 +19,7 @@ prod_name	Detailed Goods Description 1
 	Detailed Goods Description 2
 	Detailed Goods Description 3
 	Detailed Goods Description 4
-	HS Code 1	11111111
+	HS Code 1	111111111
 	HS Code 2
 	HS Code 3
 	HS Code 4
@@ -39,6 +39,6 @@ sku	Item Code 1
 	Item Code 2
 	Item Code 3
 	Item Code 4
-weight	Weight
+prod_weight	Weight
 tel	Phone
 	Tracking

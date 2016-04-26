@@ -11,6 +11,6 @@ delivery_city	city
 delivery_postcode	postcode
 tel	contact number
 delivery_country_id	country code
-total_amount	value of order
+declared_value	value of order
 currency_id	Currency
 cc_desc	GoodDesc
