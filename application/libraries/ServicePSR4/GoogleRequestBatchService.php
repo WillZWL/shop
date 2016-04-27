@@ -33,7 +33,7 @@ class GoogleRequestBatchService extends BaseService
 
         if ($batchObj->getStatus() != "N")
             $batchObj->setStatus("RP");
-        elseif (($total > 0) && ($total == success))
+        elseif (($total > 0) && ($total == $success))
             $batchObj->setStatus("C");
         elseif ($success > 0)
             $batchObj->setStatus("CE");
