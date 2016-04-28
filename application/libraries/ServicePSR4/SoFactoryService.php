@@ -575,7 +575,7 @@ class SoFactoryService extends BaseService
                 if ($price >= 350) {
                     $max_declared_value = 350;
                 } else {
-                   $declared_pcent = 10;
+                   $declared_pcent = 100;
                 }
                 break;
             case 'TH':
