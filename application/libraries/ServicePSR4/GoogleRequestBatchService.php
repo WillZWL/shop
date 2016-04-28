@@ -41,6 +41,7 @@ class GoogleRequestBatchService extends BaseService
             $batchObj->setStatus("F");
         else
             $batchObj->setStatus("U");
+        $batchObj->setRemark("Total:" . $total . ", Success:" . $success);
 
         $updateResult = $this->getDao("GoogleRequestBatch")->update($batchObj);
         return $updateResult;
