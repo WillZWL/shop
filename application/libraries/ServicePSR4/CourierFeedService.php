@@ -16,9 +16,9 @@ class CourierFeedService extends BaseService
 		$this->xmlToCsv = new XmlToCsv;
 	}
 
-	public function getGenerateCourierFile($batch_id)
+	public function getGenerateCourierFile($id)
 	{
-		if ($obj = $this->getDao('CourierFeed')->get(["batch_id" => $batch_id])) {
+		if ($obj = $this->getDao('CourierFeed')->get(["id" => $id])) {
 			$so_no_list = json_decode($obj->getSoNoStr());
 			$mawb = $obj->getMawb();
 			$courier = $obj->getCourierId();

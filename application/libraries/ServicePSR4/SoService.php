@@ -3783,7 +3783,7 @@ html;
 
         $replace = [];
 
-        $replace["site_name"] = "VB";
+        $replace["site_name"] = "Panther";
         $replace["so_no"] = $so_obj->getSoNo();
         $replace["forename"] = $so_obj->getBillName();
         $replace["tel"] = $client_obj->getTel1() . $client_obj->getTel2() . $client_obj->getTel3();
@@ -4775,9 +4775,9 @@ html;
                     $phpmail = new PHPMailer;
 
                     $phpmail->IsSMTP();
-                    $phpmail->From = "VB APS ORDER ALERT <do_not_reply@valuebasket.com>";
-                    // $phpmail->AddAddress("bd.platformteam@eservicesgroup.net");
-                    $phpmail->AddAddress("brave.liu@eservicesgroup.com");
+                    $phpmail->From = "Panther APS ORDER ALERT <do_not_reply@valuebasket.com>";
+                    $phpmail->AddAddress("bd.platformteam@eservicesgroup.net");
+                    $phpmail->Bcc("brave.liu@eservicesgroup.com");
 
                     $phpmail->Subject = " DIRECT APS ORDERS";
                     $phpmail->IsHTML(false);
