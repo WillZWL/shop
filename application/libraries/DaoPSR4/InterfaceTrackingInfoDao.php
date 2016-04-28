@@ -1,15 +1,10 @@
 <?php
 namespace ESG\Panther\Dao;
 
-class CourierFeedDao extends BaseDao
+class InterfaceTrackingInfoDao extends BaseDao
 {
-    private $tableName = "courier_feed";
-    private $voClassName = "CourierFeedVo";
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    private $tableName = "interface_tracking_info";
+    private $voClassName = "InterfaceTrackingInfoVo";
 
     public function getVoClassname()
     {
@@ -20,5 +15,4 @@ class CourierFeedDao extends BaseDao
     {
         return $this->tableName;
     }
-
 }

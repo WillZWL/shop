@@ -2,7 +2,6 @@
 class CourierFeedVo extends \BaseVo
 {
     private $id;
-    private $batch_id;
     private $so_no_str;
     private $courier_id;
     private $mawb = '';
@@ -28,18 +27,6 @@ class CourierFeedVo extends \BaseVo
     public function getId()
     {
         return $this->id;
-    }
-
-    public function setBatchId($batch_id)
-    {
-        if ($batch_id !== null) {
-            $this->batch_id = $batch_id;
-        }
-    }
-
-    public function getBatchId()
-    {
-        return $this->batch_id;
     }
 
     public function setSoNoStr($so_no_str)

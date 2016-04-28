@@ -669,5 +669,9 @@ class DaoProvider implements ServiceProviderInterface
             return new D\SequenceDao();
         };
 
+        $daoContainer['InterfaceTrackingInfo'] = function () {
+            return new D\InterfaceTrackingInfoDao();
+        };
+
     }
 }

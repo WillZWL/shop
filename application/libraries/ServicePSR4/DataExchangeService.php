@@ -68,7 +68,7 @@ class CsvToXml implements inConverter
         $result = array();
         $container = "data";
 
-        $this->load->plugin('csv_parser');
+        require_once(BASEPATH.'plugins/csv_parser_pi.php');
         $reader = new \CSVFileLineIterator($this->input);
         $result = csv_parse($reader, $this->delimiter, FALSE, $this->checkQuote);
 
@@ -324,14 +324,15 @@ class VoToXml implements inConverter
                 if ($container == "") {
                     $rscontainer = strtolower(get_class($rsdata));
                     if (substr($rscontainer, -2) == "Vo") {
-                        $rscontainer = camelcase2underscore(substr($rscontainer, 0, -2));
+                        $rscontainer = ucfirst(underscore2camelcase(substr($rscontainer, 0, -2)));
                     }
                     //added by Jack
                     if (substr($rscontainer, -3) == "Dto") {
-                        $rscontainer = camelcase2underscore(substr($rscontainer, 0, -3));
+                        $rscontainer = ucfirst(underscore2camelcase(substr($rscontainer, 0, -3)));
                     }
                     $container = $rscontainer;
                 }
+
                 $output .= "\t<{$container}>\n";
                 if ($this->map_file != "") {
                     foreach ($mapping as $rskey => $rsvalue) {
@@ -347,7 +348,7 @@ class VoToXml implements inConverter
                     $class_methods = get_class_methods($rsdata);
                     foreach ($class_methods as $fct_name) {
                         if (substr($fct_name, 0, 3) == "get") {
-                            $field = camelcase2underscore(substr($fct_name, 3));
+                            $field = underscore2camelcase(substr($fct_name, 3));
                             $rsvalue = call_user_func(array($rsdata, $fct_name));
                             $output .= "\t\t<{$field}>" . $cdata_open . strip_invalid_xml((string)$rsvalue) . $cdata_end . "</{$field}>\n";
                         }
@@ -667,17 +668,7 @@ class XmlToXls implements outConverter
                     }
                     $excel_row_arr[$active_sheet]++;
                 }
-                /*
-                else
-                {
-                    foreach ($row as $field=>$value)
-                    {
-                        $heading[$field] = preg_match('/["|\\'.$this->delimiter.']/', (string)$field) ? '"'.str_replace('"', '""', $field).'"' : $field;
-                        $line[] = preg_match('/["|\\'.$this->delimiter.']/', (string)$value) ? '"'.str_replace('"', '""', $value).'"' : $value;
-                    }
-                }
-                $output .= implode($this->delimiter, $line)."\r\n";
-                */
+
                 $excel_row++;
             }
             $xls_writer->setActiveSheetIndex(0);
@@ -737,9 +728,7 @@ class XmlToVo implements outConverter
 
     public function outConvert()
     {
-
         $result = simplexml_load_string($this->input, 'SimpleXMLElement', LIBXML_NOCDATA);
-
         $container = "";
 
         if ($this->map_file != "") {
@@ -778,19 +767,19 @@ class XmlToVo implements outConverter
 
 
             if (substr($container, -3) == "Dto") {
-                $vo_file = APPPATH . "/libraries/dto/" . strtolower(substr($container, 0, -3)) . "Dto.php";
-                $vo_class = ucwords($container);
+                $vo_file = APPPATH . "/libraries/DtoPSR4/" . ucfirst(underscore2camelcase(substr($container, 0, -3))) . "Dto.php";
+                $voClass = ucfirst(underscore2camelcase($container));
             } elseif (substr($container, -2) == "Vo") {
-                $vo_file = APPPATH . "/libraries/vo/" . strtolower(substr($container, 0, -2)) . "Vo.php";
-                $vo_class = ucwords($container);
+                $vo_file = APPPATH . "/libraries/VoPSR4/" . ucfirst(underscore2camelcase(substr($container, 0, -2))) . "Vo.php";
+                $voClass = ucfirst(underscore2camelcase($container));
             } else {
-                $vo_file = APPPATH . "/libraries/vo/" . strtolower($container) . "Vo.php";
-                $vo_class = ucwords($container) . "Vo";
+                $vo_file = APPPATH . "/libraries/VoPSR4/" . ucfirst(underscore2camelcase($container)) . "Vo.php";
+                $voClass = ucfirst(underscore2camelcase($container)) . "Vo";
             }
 
             if (file_exists($vo_file)) {
-                include_once($vo_file);
-                @$vo = new $vo_class();
+                // include_once($vo_file);
+                @$vo = new $voClass();
                 if ($this->map_file != "") {
                     foreach ($mapping as $rskey => $rsvalue) {
                         if (@isset($row->$rskey)) {

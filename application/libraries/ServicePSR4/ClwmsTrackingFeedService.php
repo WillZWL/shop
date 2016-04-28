@@ -1,6 +1,8 @@
 <?php
 namespace ESG\Panther\Service;
 
+use PHPMailer;
+
 class ClwmsTrackingFeedService extends BaseService
 {
     private $wms_url = "http://remote.eservicesgroup.com:8080/WMS.Server.Web/Service.asmx/GetTrackingFeed";

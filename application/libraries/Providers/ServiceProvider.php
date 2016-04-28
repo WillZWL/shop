@@ -530,5 +530,13 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\CourierFeedService();
         };
 
+        $serviceContainer['BatchTrackingInfo'] = function () {
+            return new S\BatchTrackingInfoService();
+        };
+
+        $serviceContainer['BaseBatch'] = function () {
+            return new S\BaseBatchService();
+        };
+
     }
 }

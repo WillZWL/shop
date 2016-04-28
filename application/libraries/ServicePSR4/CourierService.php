@@ -38,8 +38,8 @@ class CourierService extends BaseService
         $newObj = $this->getDao('CourierFeed')->insert($obj);
         $newObj->setBatchId($obj->getId());
         $this->getDao('CourierFeed')->update($newObj);
-        $batch_id = $newObj->getBatchId();
+        $id = $newObj->getId();
 
-        return $batch_id;
+        return $id;
     }
 }

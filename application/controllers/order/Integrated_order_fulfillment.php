@@ -144,8 +144,8 @@ class Integrated_order_fulfillment extends MY_Controller
         # for $sortstr, if there is no sort selected,
         # so_no must be the first ORDER BY so that orders with same so_no are grouped together
         if (empty($sort)) {
-            $sort = "expect_delivery_date";
-            $sortstr = "so_no, $sort $order";
+            $sort = "so.expect_delivery_date";
+            $sortstr = "so.so_no, $sort $order";
         } else {
             $sortstr = "$sort $order";
         }
@@ -621,18 +621,15 @@ class Integrated_order_fulfillment extends MY_Controller
             $courierFeedVo = $this->sc['CourierFeed']->getDao('CourierFeed')->get();
             $courierFeedObj = clone $courierFeedVo;
 
-            $id = $this->sc['CourierFeed']->getDao('CourierFeed')->getAutoIncrementId();
-            $courierFeedObj->setBatchId($id);
-
             $courierFeedObj->setSoNoStr($soNoStr);
             $courierFeedObj->setCourierId($courier);
             $courierFeedObj->setMawb($mawb);
             $courierFeedObj->setExec(0);
 
             $courierFeedObj = $this->sc['CourierFeed']->getDao('CourierFeed')->insert($courierFeedObj);
-            $batchId = $courierFeedObj->getBatchId();
+            $id = $courierFeedObj->getId();
 
-            $ret = $this->sc['CourierFeed']->getGenerateCourierFile($batchId);
+            $ret = $this->sc['CourierFeed']->getGenerateCourierFile($id);
             $_SESSION['courier_file'] = $ret;
             redirect(current_url()."?".$_SERVER['QUERY_STRING']);
         }
@@ -770,7 +767,7 @@ class Integrated_order_fulfillment extends MY_Controller
         set_time_limit(120);
         $wh_list = ["ams", "im", "rmr"];
         foreach ($wh_list as $wh) {
-            $this->batch_tracking_info_service->cron_tracking_info($wh);
+            $this->sc["BatchTrackingInfo"]->cronTrackingInfo($wh);
         }
         $data["result"] = $_SESSION["result"];
         $this->load->view("order/integrated_order_fulfillment/tracking_info_result_v", $data);

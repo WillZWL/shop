@@ -10,8 +10,8 @@
 <div id="main">
     <?= $notice["img"] ?>
     <?php
-    $ar_status = array("N" => $lang["new"], "P" => $lang["processing"], "C" => $lang["completed"], "CE" => $lang["completed_with_error"], "BE" => $lang["broke_with_error"], "RP" => $lang["reprocessing"]);
-    $ar_color = array("N" => "#000000", "P" => "#0000CC", "C" => "#009900", "CE" => "#999900", "BE" => "#CC0000", "RP" => "#0000CC");
+    $ar_status = ["N" => $lang["new"], "P" => $lang["processing"], "C" => $lang["completed"], "CE" => $lang["completed_with_error"], "BE" => $lang["broke_with_error"], "RP" => $lang["reprocessing"]];
+    $ar_color = ["N" => "#000000", "P" => "#0000CC", "C" => "#009900", "CE" => "#999900", "BE" => "#CC0000", "RP" => "#0000CC"];
     ?>
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
@@ -75,20 +75,19 @@
                 </td>
                 <td>
                     <?php
-                    if ($this->input->get("status") != "") {
+                    if ($this->input->get("status") != "") :
                         $selected[$this->input->get("status")] = "SELECTED";
-                    }
+                    endif;
                     ?>
                     <select name="status" class="input">
                         <option value="">
                             <?php
-                            foreach ($ar_status as $rskey => $rsvalue)
-                            {
+                            foreach ($ar_status as $rskey => $rsvalue) :
                             ?>
                         <option value="<?= $rskey ?>" <?= $selected[$rskey] ?>
                                 style="color:<?= $ar_color[$rskey] ?>"><?= $rsvalue ?>
                             <?php
-                            }
+                            endforeach;
                             ?>
                     </select>
                 </td>
@@ -103,36 +102,36 @@
             </tr>
             <?php
             $i = 0;
-            if (!empty($objlist)) {
-                foreach ($objlist as $obj) {
+            if (!empty($objlist)) :
+                foreach ($objlist as $obj) :
                     ?>
                     <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
                         onMouseOut="RemoveClassName(this, 'highlight')"
-                        onClick="Redirect('<?= site_url("integration/integration/view/{$obj->get_func_name()}/{$obj->get_id()}") ?>')">
+                        onClick="Redirect('<?= site_url("integration/integration/view/{$obj->getFuncName()}/{$obj->getId()}") ?>')">
                         <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                             title='<?= $lang["create_on"] ?>:<?= $obj->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->get_modify_by() ?>'>
+                                             title='<?= $lang["create_on"] ?>:<?= $obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->getModifyBy() ?>'>
                         </td>
-                        <td><?= $obj->get_id() ?></td>
-                        <td><?= $obj->get_func_name() ?></td>
-                        <td><?= $obj->get_remark() ?></td>
-                        <td style="color:<?= $ar_color[$obj->get_status()] ?>"><?= $ar_status[$obj->get_status()] ?></td>
-                        <td><?= $obj->get_create_on() ?></td>
-                        <td><?= $obj->get_end_time() ?></td>
-                        <td><?= $obj->get_duration() ?></td>
+                        <td><?= $obj->getId() ?></td>
+                        <td><?= $obj->getFuncName() ?></td>
+                        <td><?= $obj->getRemark() ?></td>
+                        <td style="color:<?= $ar_color[$obj->getStatus()] ?>"><?= $ar_status[$obj->getStatus()] ?></td>
+                        <td><?= $obj->getCreateOn() ?></td>
+                        <td><?= $obj->getEndTime() ?></td>
+                        <td><?= $obj->getDuration() ?></td>
                         <td align="center">
-                            <!--<input type="button" value="x" title="<?= $lang["not_listed"] ?>" class="x_button" onClick="event.cancelBubble=true;Redirect('<?= site_url('integration/integration/delete/' . $obj->get_id()) ?>')">--></td>
+                            <!--<input type="button" value="x" title="<?= $lang["not_listed"] ?>" class="x_button" onClick="event.cancelBubble=true;Redirect('<?= site_url('integration/integration/delete/' . $obj->getId()) ?>')">--></td>
                     </tr>
                     <?php
                     $i++;
-                }
-            }
+                endforeach;
+            endif;
             ?>
         </table>
         <input type="hidden" name="showall" value='<?= $this->input->get("showall") ?>'>
         <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>
