@@ -147,7 +147,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
 //won't come here for normal website checkout
             $setting["siteName"] = "DD";
         }
-        $setting["logo"] = "https://" . SITE_DOMAIN . "/themes/default/asset/image/chatandvision_logo.jpg";
+        $setting["logo_url"] = "https://" . SITE_DOMAIN . "/themes/default/asset/image/chatandvision_logo.jpg";
 
         $postData = $this->_mbRequest->formPaymentRequest($order, $setting);
         $requestData = @http_build_query($postData);
