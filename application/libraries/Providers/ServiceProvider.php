@@ -538,5 +538,8 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\BaseBatchService();
         };
 
+        $serviceContainer['RptDispatchWithHsCode'] = function () {
+            return new S\RptDispatchWithHsCodeService();
+        };
     }
 }
