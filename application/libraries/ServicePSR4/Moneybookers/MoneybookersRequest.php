@@ -53,7 +53,7 @@ class MoneybookersRequest
         $postData["detail1_description"] = $setting["detail1Description"];
         $postData["detail1_text"] = $order["client"]["id"] . "-" . $order["soNo"];
         $postData["payment_methods"] = $order["paymentMethods"];
-        $postData["logo"] = $setting["logo"];
+        $postData["logo_url"] = $setting["logo_url"];
         return $postData;
     }
 
