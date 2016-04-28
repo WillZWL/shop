@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-22 11:26+0800\n"
-"PO-Revision-Date: 2016-04-22 11:27+0800\n"
+"POT-Creation-Date: 2016-04-27 17:10+0800\n"
+"PO-Revision-Date: 2016-04-27 17:26+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.3\n"
 
 #: cart/info.php:35 review.php:15 review.php:56
 msgid "Total"
@@ -42,112 +42,116 @@ msgstr "Definir Búsqueda"
 msgid "Categories"
 msgstr "Categorías"
 
-#: cat.php:15 category.php:24 search.php:15
-msgid "SmartPhones"
-msgstr "SmartPhones"
-
-#: cat.php:18 category.php:27 search.php:18
-msgid "Webcams"
-msgstr "Webcams"
-
-#: cat.php:21 category.php:30 search.php:21
-msgid "Conference Phones"
-msgstr "Teléfonos de Conferencia"
-
-#: cat.php:24 category.php:33 search.php:24
-msgid "Accessories"
-msgstr "Accesorios"
-
-#: cat.php:28 cat.php:59 search.php:28 search.php:62
+#: cat.php:45 cat.php:86 search.php:28 search.php:62
 msgid "Show more"
 msgstr "Ver más"
 
-#: cat.php:35 category.php:36 search.php:35
-msgid "Software"
-msgstr "Software"
+#: cat.php:46 cat.php:87
+msgid "Show less"
+msgstr "Mostrar menos"
 
-#: cat.php:38 category.php:39 search.php:38
-msgid "Computing"
-msgstr "Ordenadores"
-
-#: cat.php:43 search.php:43
+#: cat.php:56 search.php:43
 msgid "Brands"
 msgstr "Marcas"
 
-#: cat.php:107 search.php:129
+#: cat.php:143 search.php:129
 msgid "List"
 msgstr "Lista"
 
-#: cat.php:108 search.php:130
+#: cat.php:144 search.php:130
 msgid "Grid"
 msgstr "Cuadrícula"
 
-#: cat.php:118 search.php:140
+#: cat.php:154 search.php:140
 msgid "Sort By"
 msgstr "Filtrar por"
 
-#: cat.php:120 search.php:146
+#: cat.php:156 search.php:146
 msgid "Default"
 msgstr "Por defecto"
 
-#: cat.php:121 search.php:148
+#: cat.php:157 search.php:148
 msgid "Name (A - Z)"
 msgstr "Nombre (A - Z)"
 
-#: cat.php:122 search.php:150
+#: cat.php:158 search.php:150
 msgid "Name (Z - A)"
 msgstr "Nombre (Z - A)"
 
-#: cat.php:123 search.php:152
+#: cat.php:159 search.php:152
 msgid "Price (Low to High)"
 msgstr "Precio (de menos a más)"
 
-#: cat.php:124 search.php:154
+#: cat.php:160 search.php:154
 msgid "Price (High to Low)"
 msgstr "Precio (de más a menos)"
 
-#: cat.php:125
+#: cat.php:161
 msgid "Rating (Highest)"
 msgstr "Valoración (más alta primero)"
 
-#: cat.php:126
+#: cat.php:162
 msgid "Rating (Lowest)"
 msgstr "Valoración (más baja primero)"
 
-#: cat.php:127
+#: cat.php:163
 msgid "Model (A - Z)"
 msgstr "Modelo (A - Z)"
 
-#: cat.php:128
+#: cat.php:164
 msgid "Model (Z - A)"
 msgstr "Modelo (Z - A)"
 
-#: cat.php:132
+#: cat.php:168
 msgid "Display:"
 msgstr "Mostrar:"
 
-#: cat.php:155 product/grid.php:41 product/related_product.php:22
+#: cat.php:191 product/grid.php:41 product/related_product.php:22
 #: search.php:193
 msgid "Quick View"
 msgstr "Vista previa"
 
-#: cat.php:169 search.php:207
+#: cat.php:205 search.php:207
 msgid "List Price"
 msgstr "Precio"
 
-#: cat.php:170 search.php:208
+#: cat.php:206 search.php:208
 msgid "You Pay"
 msgstr "Tú pagas"
 
-#: cat.php:185 cat.php:191 product/accessories.php:119
-#: product/accessories.php:125 product/detail.php:113 product/grid.php:61
-#: product/grid.php:67 product/related_product.php:49 search.php:219
+#: cat.php:221 cat.php:227 product/accessories.php:119
+#: product/accessories.php:125 product/detail.php:130 product/grid.php:68
+#: product/grid.php:74 product/related_product.php:49 search.php:219
 msgid "Add to Cart"
 msgstr "Añadir a la cesta"
 
-#: cat.php:197 search.php:223 search.php:225
+#: cat.php:233 search.php:223 search.php:225
 msgid "More Info"
 msgstr "Más información"
+
+#: category.php:24 search.php:15
+msgid "SmartPhones"
+msgstr "SmartPhones"
+
+#: category.php:27 search.php:18
+msgid "Webcams"
+msgstr "Webcams"
+
+#: category.php:30 search.php:21
+msgid "Conference Phones"
+msgstr "Teléfonos de Conferencia"
+
+#: category.php:33 search.php:24
+msgid "Accessories"
+msgstr "Accesorios"
+
+#: category.php:36 search.php:35
+msgid "Software"
+msgstr "Software"
+
+#: category.php:39 search.php:38
+msgid "Computing"
+msgstr "Ordenadores"
 
 #: category.php:54
 msgid "Menu"
@@ -300,125 +304,129 @@ msgstr "Paso 4: Método de pago"
 msgid "Please contact our CS!"
 msgstr "Por favor contacte con nuestro Servicio al Cliente"
 
-#: checkout/index.php:462 checkout/index.php:673
+#: checkout/index.php:381
+msgid "Please note: remote surcharge has been applied to your basket!"
+msgstr "¡Atención! Un cargo extra por área remota se ha añadido a tu cesta."
+
+#: checkout/index.php:502 checkout/index.php:713
 msgid "The email is required"
 msgstr "Se requiere e-Mail"
 
-#: checkout/index.php:465 checkout/index.php:681
+#: checkout/index.php:505 checkout/index.php:721
 msgid "The value is not a valid email address"
 msgstr "Este correo no es una dirección de correo válida"
 
-#: checkout/index.php:473
+#: checkout/index.php:513
 msgid "Please input a password"
 msgstr "Por favor ponga una contraseña"
 
-#: checkout/index.php:542
+#: checkout/index.php:582
 msgid "The billing first name is required"
 msgstr "Nombre de facturación requerido"
 
-#: checkout/index.php:547
+#: checkout/index.php:587
 msgid ""
 "The billing first name must be more than 1 and less than 50 characters long"
 msgstr ""
 "El Nombre de facturación tiene que tener más de 1 y menos de 50 caracteres"
 
-#: checkout/index.php:551
+#: checkout/index.php:591
 msgid "The billing first name can only consist of alphabetical, number"
 msgstr "El Nombre en facturación debe contener solo números o letras"
 
-#: checkout/index.php:559
+#: checkout/index.php:599
 msgid "The billing last name is required"
 msgstr "Se requiere el Apellido de facturación"
 
-#: checkout/index.php:564
+#: checkout/index.php:604
 msgid ""
 "The billing last name must be more than 1 and less than 50 characters long"
 msgstr ""
 "El Apellido de facturación tiene que tener más de 1 y menos de 50 caracteres"
 
-#: checkout/index.php:568
+#: checkout/index.php:608
 msgid "The billing last name can only consist of alphabetical, number"
 msgstr "El Apellido en facturación debe contener solo números o letras"
 
-#: checkout/index.php:577
+#: checkout/index.php:617
 msgid "The billing company name cannot be longer than 50 characters"
 msgstr ""
 "El Apellido de facturación tiene que tener más de 1 y menos de 50 caracteres"
 
-#: checkout/index.php:581
+#: checkout/index.php:621
 msgid "The billing company name can only consist of alphabetical, number"
 msgstr "La Empresa en facturación debe contener solo números o letras"
 
-#: checkout/index.php:589
+#: checkout/index.php:629
 msgid "The billing address 1 is required"
 msgstr "Se requiere dirección 1 de facturación"
 
-#: checkout/index.php:593
+#: checkout/index.php:633
 msgid "The billing address1 name can only consist of alphabetical, number"
 msgstr "La Dirección 1 en facturación debe contener solo números o letras"
 
-#: checkout/index.php:598 checkout/index.php:618
+#: checkout/index.php:638 checkout/index.php:658
 msgid ""
 "The billing address must be more than 1 and less than 1024 characters long"
 msgstr ""
 "La Dirección de facturación tiene que tener más de 1 y menos de 1024 "
 "caracteres"
 
-#: checkout/index.php:601 checkout/index.php:621
+#: checkout/index.php:641 checkout/index.php:661
 msgid "POBox Address is not allowed"
 msgstr "Código Postal no permitido"
 
-#: checkout/index.php:613
+#: checkout/index.php:653
 msgid "The billing address2 name can only consist of alphabetical, number"
 msgstr "La Dirección 2 en facturación debe contener solo números o letras"
 
-#: checkout/index.php:632
+#: checkout/index.php:672
 msgid "The billing city is required"
 msgstr "Se requiere Ciudad de facturación"
 
-#: checkout/index.php:637
+#: checkout/index.php:677
 msgid "The billing city must be more than 1 and less than 128 characters long"
 msgstr ""
 "La Ciudad de facturación tiene que tener más de 1 y menos de 128 caracteres"
 
-#: checkout/index.php:641
+#: checkout/index.php:681
 msgid "The billing city can only consist of alphabetical, number"
 msgstr "La Ciudad en facturación debe contener solo números o letras"
 
-#: checkout/index.php:649
+#: checkout/index.php:689
 msgid "The Zip/Postal Code is required"
 msgstr "Se requiere Código Postal"
 
-#: checkout/index.php:653
+#: checkout/index.php:693
 #, php-format
 msgid "The value is not valid %s Zip/Postal Code"
 msgstr "No es un Código Postal %s válido"
 
-#: checkout/index.php:661
+#: checkout/index.php:701
 msgid "The billing telephone number is required"
 msgstr "Se requiere un Número de Teléfono de facturación"
 
-#: checkout/index.php:665
+#: checkout/index.php:705
 msgid "The billing telephone is not valid"
 msgstr "El Teléfono de facturación no es válido"
 
-#: checkout/index.php:678
+#: checkout/index.php:718
 msgid "Email must be more than 3 and less than 256 characters long"
 msgstr "El e-Mail debe de tener más de 3 y menos de 256 caracteres"
 
-#: checkout/index.php:690
+#: checkout/index.php:730
 msgid "The password and its confirm are not the same"
 msgstr "Las contraseñas no coinciden"
 
-#: checkout/index.php:699
+#: checkout/index.php:739
 msgid "Please Select a state"
 msgstr "Por favor selecciona una Provincia"
 
-#: checkout/index.php:708
+#: checkout/index.php:748
 msgid "Please select a card"
 msgstr "Por favor selecciona una Tarjeta"
 
-#: checkout/index.php:754
+#: checkout/index.php:794
 msgid "Unknow error: Please contact our CS!"
 msgstr "Error desconocido: Por favor contacta con nuestra Atención al Cliente!"
 
@@ -512,10 +520,15 @@ msgstr ""
 "para seguir su proceso."
 
 #: checkout/paymentSuccess.php:12
+msgid "Please note all charges will appear on your statement as CHATANDVISION."
+msgstr ""
+"Ten en cuenta que los cargos aparecerá en su factura como CHATANDVISION"
+
+#: checkout/paymentSuccess.php:14
 msgid "We'll send you an email as soon as it's shipped!"
 msgstr "¡Le enviaremos un e-mail tan pronto se haga el envío!"
 
-#: contact.php:3 display/contact.php:11
+#: contact.php:3
 msgid "CONTACT US"
 msgstr "CONTÁCTANOS"
 
@@ -593,578 +606,10 @@ msgstr "Email"
 msgid "Order Number"
 msgstr "Número de pedido"
 
-#: contact.php:39
-msgid "Our Address"
-msgstr "Nuestra Dirección"
-
 #: contact.php:42 myaccount/index.php:279 myaccount/index.php:373
 #: myaccount/login.php:128
 msgid "Submit"
 msgstr "Enviar"
-
-#: display/about_us.php:2
-msgid "About ChatandVision"
-msgstr "Acerca de ChatandVision"
-
-#: display/about_us.php:3
-msgid "Who are we? "
-msgstr "¿Quiénes somos?"
-
-#: display/about_us.php:6
-#, php-format
-msgid ""
-"ChatandVision is one of Skype’s Global Merchant Partners, bringing %s high "
-"quality communication products %s to our valued customers. Partnering with "
-"Skype, ChatandVision has a variety of Skype Certified products that have met "
-"all of Skype’s stringent specifications for quality ensuring that you will "
-"have a wonderful Skype experience."
-msgstr ""
-"ChatandVision es uno de los socios comerciales de Skype, llevando %s "
-"productos de comunicación de alta calidad %s a nuestros valiosos clientes. "
-"Gracias a la colaboración con Skype, ChatandVision tiene una gran variedad "
-"de productos Skype certificados que han pasado todos los controles de "
-"calidad de Skype para asegurarte una magnífica experiencia. "
-
-#: display/about_us.php:8
-msgid ""
-"We are driven by the strong desire to bring people closer together and offer "
-"the products to help people all over the world communicate with each other. "
-msgstr ""
-"Nos dejamos llevar por nuestro gran deseo de acercar a las personas y "
-"ofrecer productos que ayuden a todo el mundo a comunicarse entre sí más "
-"fácilmente."
-
-#: display/about_us.php:9
-msgid "Whether it’s for use at home or in the office, we’re here to help."
-msgstr ""
-"Tanto si es para un uso en casa como en la oficina, estamos aquí para ayudar."
-
-#: display/about_us.php:22
-msgid "Buying Experience"
-msgstr "Experiencia de Compra."
-
-#: display/about_us.php:25
-#, php-format
-msgid ""
-"We do our best to try and make this experience as simple as possible for our "
-"valued customers and act as your local online retailer. Delivering to over "
-"%s 70 countries %s, we manage all customs clearance, import duties and sales "
-"taxes – meaning the price you see on the site is the final delivered price "
-"that will be charged to you. We offer local payment options and currencies "
-"in order to provide you with a completely hassle free experience. By "
-"partnering with various reputable payment gateways we hope to give our "
-"customers total peace of mind and provide them with not only flexibility but "
-"the highest level of security when paying on our site."
-msgstr ""
-"Hacemos lo posible para que tu experiencia sea lo más sencilla posible y así "
-"poder actuar como tu tienda electrónica online local. Con envios a más de %s "
-"70 paises %s, nos hacemos cargo de todos los costes adicionales y de aduanas "
-"- es decir, el precio que ves en nuestra web será el precio final que "
-"pagarás. Ofrecemos opciones de pago locales y en todas las monedas para que "
-"no tengas que preocuparte de nada. Colaboramos con varias plataformas de "
-"pago fiables para darte una total tranquilidad y ofrecerte una gran variedad "
-"de formas de pago con el más alto nivel de seguridad cuando realices el pago "
-"en nuestra web."
-
-#: display/about_us.php:27
-msgid ""
-"We ship from several hubs worldwide so that you can receive your products "
-"faster, and have chosen to partner with reputable courier companies to "
-"ensure that your order arrives safely."
-msgstr ""
-"Envíamos desde varios almacenes alrededor del mundo para que recibas tus "
-"productos más rápidamente, y hemos decidido colaborar con las empresas de "
-"transporte más fiables para que tu compra llegue en perfectas condiciones."
-
-#: display/about_us.php:33
-msgid "We're always here for you!"
-msgstr "¡Estamos siempre aquí para ti!"
-
-#: display/about_us.php:36
-#, php-format
-msgid ""
-"Our priority is in providing customer focused service, and we continually "
-"strive to put our customers first in all aspects. In order to provide the "
-"best shopping experience we make sure to communicate with you every step of "
-"the way – from the buying process, to order acknowledgement, and finally to "
-"dispatch. Our friendly %s customer service team %s is standing by and happy "
-"to assist if you should encounter any difficulties in choosing the right "
-"product or have any enquiries about the ordering process."
-msgstr ""
-"Nuestro objetivo es ofrecer un servicio centrado en ti, y siempre nos "
-"esforzamos por poner al cliente primero en todos los aspectos. Para "
-"asegurarnos que tengas la mejor experiencia en tu compra, nos comunicaremos "
-"contigo en cada paso de tu compra - desde la compra en sí, pasando por una "
-"confirmación de pedido, hasta que el envío está preparando para mandar. "
-"Nuestro gran %s equipo de servicio al cliente %s estará disponible y "
-"contento por ayudarte si encontraras alguna dificultad en el proceso de "
-"compra o tuvieras alguna duda en cuanto a algún producto."
-
-#: display/contact.php:13
-msgid ""
-"Having an issue? There are a number of ways you can get in touch with our "
-"experienced Sales and Customer Service teams. "
-msgstr ""
-"Tienes algún problema? Hay numerosas formas de contactar con nuestro "
-"experimentado equipo de Servicio de Ventas y Atención al Cliente."
-
-#: display/contact.php:14
-msgid ""
-"Select one of the enquiry types below and we'll repond to you as soon as we "
-"can!"
-msgstr ""
-"¡Selecciona un tipo de pregunta abajo y te responderemos tan pronto como "
-"podamos!"
-
-#: display/contact.php:22 display/contact.php:24
-msgid "GENERAL AND AFTER-SALES"
-msgstr "General y post-venta"
-
-#: display/contact.php:32 display/contact.php:34
-msgid "PRE-SALES"
-msgstr "Pre-venta"
-
-#: display/contact.php:42 display/contact.php:44
-msgid "FAULTY GOODS OR RETURNED ITEMS"
-msgstr "Productos defectuosos o devoluciones"
-
-#: display/privacy_policy.php:2 footer.php:247
-msgid "Privacy Policy"
-msgstr "Política de Privacidad"
-
-#: display/privacy_policy.php:3
-#, php-format
-msgid "%s Privacy Policy"
-msgstr "%s Política de Privacidad"
-
-#: display/privacy_policy.php:6
-msgid "CONTENTS"
-msgstr "CONTENIDOS"
-
-#: display/privacy_policy.php:9 display/privacy_policy.php:24
-msgid "WHY WE COLLECT"
-msgstr "POR QUÉ RECOPILAMOS"
-
-#: display/privacy_policy.php:10 display/privacy_policy.php:31
-msgid "WHAT WE COLLECT"
-msgstr "QUÉ RECOPILAMOS"
-
-#: display/privacy_policy.php:11 display/privacy_policy.php:42
-msgid "WHAT WE DO WITH THE INFORMATION WE GATHER"
-msgstr "QUE HACEMOS CON LA INFORMACIÓN QUE RECOPILAMOS"
-
-#: display/privacy_policy.php:12 display/privacy_policy.php:54
-msgid "SECURITY"
-msgstr "SEGURIDAD"
-
-#: display/privacy_policy.php:13 display/privacy_policy.php:67
-msgid "HOW WE USE COOKIES"
-msgstr "CÓMO USAMOS LAS COOKIES"
-
-#: display/privacy_policy.php:14 display/privacy_policy.php:80
-msgid "LINKS TO OTHER WEBSITES"
-msgstr "LINKS A OTROS WEBSITES"
-
-#: display/privacy_policy.php:15 display/privacy_policy.php:87
-msgid "PRIVACY QUESTIONS"
-msgstr "PREGUNTAS DE PRIVACIDAD"
-
-#: display/privacy_policy.php:19
-#, php-format
-msgid ""
-"%s's Customer Privacy Policy covers the collection, use, and disclosure of "
-"personal information that may be collected by %s anytime you interact with "
-"%s such as when visiting our website, purchasing products, or using our "
-"sales or support facilities. Please take a moment to read the following to "
-"learn more about our practices with regards to this, including what type of "
-"information we gather, how and for what purposes we use the information, to "
-"whom we disclose the information, and how the personal information is kept "
-"safe and secure. Your privacy is a priority at %s and we do what we can to "
-"protect it."
-msgstr ""
-"La Política de Privacidad del Usuario de %s cubre la recogida, uso, y "
-"divulgación de información personal que puede ser recogida por %s en "
-"cualquier momento que interactúe con %s, como por ejemplo visitando nuestra "
-"página, comprando productos o usando nuestro servicio de ventas o Atención "
-"al Cliente. Por favor lee la siguiente información para saber acerca de "
-"nuestras practices en relación a esto, incluyendo qué tipo de información "
-"recogemos, cómo y por qué motivos usamos la información, a quién divulgamos "
-"esta información, y cómo mantenemos tus datos personales seguros y sin "
-"peligro. Tu privacidad es una prioridad para %s y hacemos todo lo possible "
-"para protegerla."
-
-#: display/privacy_policy.php:21
-#, php-format
-msgid ""
-"%s may change this policy from time to time by updating this page. You "
-"should check this page from time to time to ensure that you are happy with "
-"any changes. This policy is effective from 31 May 2010."
-msgstr ""
-"%s puede cambiar esta política de vez en cuando actualizando esta página. "
-"Puedes visitar esta página cuando quieras para asegurarte de que te gustan "
-"los cambios. Esta política es efectiva desde el 31 de Mayo de 2010."
-
-#: display/privacy_policy.php:27
-msgid ""
-"We collect personal information because it helps us to deliver a customised "
-"customer service experience for you. This affords you convenient access to "
-"our product range and helps focus on categories most likely to interest you. "
-"In addition, your personal information helps allow us to keep you updated on "
-"the latest product announcements, special offers, and events that you might "
-"like to hear about."
-msgstr ""
-"Recopilamos información personal porque nos ayuda a ofrecer una experiencia "
-"de servicio al cliente personalizada para usted. Esto le proporciona un "
-"cómodo acceso a nuestra gama de productos y ayuda a centrarse en las "
-"categorías con mayor probabilidad de su interés. Además, su información "
-"personal nos ayuda a mantenerle informado sobre los últimos anuncios de "
-"productos, ofertas especiales, y eventos que puedan llegar a gustarle. "
-
-#: display/privacy_policy.php:34
-msgid "We may collect the following information:"
-msgstr "Podemos recopilar la siguiente información:"
-
-#: display/privacy_policy.php:36
-msgid "name and job title"
-msgstr "Nombre y Puesto de trabajo"
-
-#: display/privacy_policy.php:37
-msgid "contact information including email address"
-msgstr "información de contacto, incluyendo dirección de email"
-
-#: display/privacy_policy.php:38
-msgid "demographic information such as postcode, preferences and interests"
-msgstr ""
-"información demográfica, como el código postal, preferencias e intereses"
-
-#: display/privacy_policy.php:39
-msgid "other information relevant to customer surveys and/or offers"
-msgstr "otra información relevante a encuestas del cliente y/o ofertas"
-
-#: display/privacy_policy.php:45
-msgid ""
-"The personal information may help us give you a better shopping experience "
-"with us in the following areas:"
-msgstr ""
-"La información personal puede ayudarnos a darle una mejor experiencia de "
-"compra con nosotros en las siguiente áreas:"
-
-#: display/privacy_policy.php:47
-msgid ""
-"we may ask for your personal information when you're discussing a service "
-"issue on the phone with a representative, making a purchase, or registering "
-"your product."
-msgstr ""
-"podríamos preguntar por su información personal cuando esté planteando un "
-"problema por teléfono con nuestros trabajadores, haciendo una compra o "
-"registrando un producto."
-
-#: display/privacy_policy.php:48
-msgid ""
-"we may use the information to improve our product range and services offered."
-msgstr ""
-"podemos utilizar la información para mejorar nuestro rango de productos y "
-"servicios ofertados."
-
-#: display/privacy_policy.php:49
-msgid ""
-"we may send promotional emails (to the email address provided) about new "
-"products, special offers or other information which we think you may find "
-"interesting."
-msgstr ""
-"podemos mandarle emails promocionales (al email registrado) acerca de nuevos "
-"productos, ofertas especiales o otra información que pueda resultarle útil. "
-
-#: display/privacy_policy.php:50
-msgid ""
-"from time to time, we may also use your information to contact you for "
-"market research purposes. We may contact you by email, phone, or mail. We "
-"may use the information to customise the website according to your interests."
-msgstr ""
-"de vez en cuando, podemos utilizar su información para hacer estudios de "
-"mercado. Podemos contactarle por email, teléfono o correo ordinario. Podemos "
-"utilizar esta información para adaptar el website dependiendo de sus "
-"intereses."
-
-#: display/privacy_policy.php:51
-msgid ""
-"We will use the information to create an account area to which you can login "
-"and access your order history."
-msgstr ""
-"Usaremos la información para crear una área de cliente en la que puedas "
-"acceder tu historial de compras."
-
-#: display/privacy_policy.php:57
-msgid ""
-"We are committed to ensuring that your information is secure. In order to "
-"prevent unauthorised access or disclosure, we have put in place suitable "
-"physical, electronic and managerial procedures to safeguard and secure the "
-"information we collect online."
-msgstr ""
-"Estamos comprometidos a asegurar que su información está segura. Con el fin "
-"de evitar el acceso no autorizado o divulgación, hemos puesto en marcha "
-"procedimientos físicos, electrónicos y administrativos apropiados para "
-"salvaguardar y asegurar la información que recopilamos en línea."
-
-#: display/privacy_policy.php:59
-#, php-format
-msgid ""
-"%s takes your privacy very seriously. %s does not sell or rent your contact "
-"information to other marketers."
-msgstr ""
-"%s se toma tu privacidad muy en serio. %s no vende o alquila tu información "
-"de contacto a otros publicistas."
-
-#: display/privacy_policy.php:61
-#, php-format
-msgid ""
-"%s may share certain personal information with other companies with which %s "
-"have a strategic relationship and/or provide services on our behalf to your "
-"advantage. These companies may help process information, fulfil customer "
-"orders, deliver products, manage and enhance customer data, provide customer "
-"service, assess levels of interest in our product range, or carry out "
-"customer research or satisfaction surveys. These companies are also obliged "
-"to protect your personal information, except if exchange of information is "
-"required for your purchase. For example, when an extended warranty is "
-"purchased, you authorise %s and the Warranty Provider to exchange "
-"information to carry out the service. Without the exchange, it would be "
-"otherwise be difficult to have products purchased, customer service offered, "
-"feedback provided to us, or have access to special offers or content from %s."
-msgstr ""
-"%s puede compratir cierta información personal con otras empresas con las "
-"que %s tenga una relación estratégica y/o aporte servicios en nuestro nombre "
-"para tu bien. Estas empresas pueden ayudar a procesar la información, "
-"terminar las compras de los clientes, enviar productos, dirigir e "
-"incrementar información del cliente, dar servicio al cliente, medir el "
-"intereés de los clientes por nuestros productos, o llevar a cabo entrevistas "
-"de investigación. Estas empresas también están obligadas a proteger tu "
-"información, excepto si un cambio de información es necesario para finalizar "
-"una compra. Por ejemplo, cuando una extensión de garantía es comprada, "
-"autorizas a %s y el proveedor de Garantía a cambiar información para llevar "
-"a cabo la compra. Sin este cambio de información sería difícil llevar a cabo "
-"la compra de dichos productos, servicio al cliente, feedback ofrecido a "
-"nosotros, o tener acceso a ofertas especial o contenido de %s."
-
-#: display/privacy_policy.php:63
-msgid ""
-"We may also be required by law or litigation to disclose your personal "
-"information. We may also disclose information if it is determined that it is "
-"necessary for security, law enforcement or other issues of public importance."
-msgstr ""
-"También podemos ser requeridos por la ley o litigio a revelar su información "
-"personal. También podemos divulgar información si se determina que es "
-"necesario para la seguridad, la policía u otras cuestiones de importancia "
-"pública."
-
-#: display/privacy_policy.php:70
-msgid ""
-"A cookie is a small file which asks permission to be placed on your "
-"computer's hard drive. Once you agree, the file is added and the cookie "
-"helps analyse web traffic or lets you know when you visit a particular site. "
-"Cookies allow web applications to respond to you as an individual. The web "
-"application can tailor its operations to your needs, likes and dislikes by "
-"gathering and remembering information about your preferences."
-msgstr ""
-"Una cookie es un pequeño archivo que pide permiso para ser colocado en el "
-"disco duro de su ordenador. Una vez que usted está de acuerdo, el archivo se "
-"añade y la cookie ayuda a analizar el tráfico web o le permite saber cuando "
-"usted visita un sitio en particular. Las cookies permiten que las "
-"aplicaciones web le respondan a usted como individuo. La aplicación web "
-"puede adaptar sus operaciones a sus necesidades, gustos y disgustos "
-"reuniendo y recordando la información acerca de sus preferencias."
-
-#: display/privacy_policy.php:72
-msgid ""
-"We use traffic log cookies to identify which pages are being used. This "
-"helps us analyse data about web page traffic and improve our website in "
-"order to tailor it to customer needs. We only use this information for "
-"statistical analysis purposes and then the data is removed from the system."
-msgstr ""
-"Utilizamos cookies de registro de tráfico para identificar qué páginas se "
-"están utilizando. Esto nos ayuda a analizar datos sobre el tráfico web y "
-"mejorar nuestro sitio web con el fin de adaptarlo a las necesidades del "
-"cliente. Sólo utilizamos esta información para fines de análisis estadístico "
-"y luego los datos se eliminan del sistema."
-
-#: display/privacy_policy.php:74
-msgid ""
-"Overall, cookies help us provide you with a better website, by enabling us "
-"to monitor which pages you find useful and which you do not. A cookie in no "
-"way gives us access to your computer or any information about you, other "
-"than the data you choose to share with us."
-msgstr ""
-"En general, las cookies nos ayudan a ofrecerle un mejor sitio web, ya que "
-"nos permite controlar las páginas que encuentra útiles y cuáles no. Una "
-"cookie de ninguna manera nos da acceso a su computadora o a cualquier "
-"información sobre usted, excepto los datos que usted decida compartir con "
-"nosotros."
-
-#: display/privacy_policy.php:76
-msgid ""
-"You can choose to accept or decline cookies. Most web browsers automatically "
-"accept cookies, but you can usually modify your browser setting to decline "
-"cookies if you prefer. This may prevent you from taking full advantage of "
-"the website."
-msgstr ""
-"Puede elegir entre aceptar o rechazar las cookies. La mayoría de los "
-"navegadores web aceptan automáticamente las cookies, pero usted puede "
-"modificar la configuración de su navegador para rechazar cookies si lo "
-"prefiere. Esto puede evitar que usted tome ventaja completa de la página web."
-
-#: display/privacy_policy.php:83
-msgid ""
-"Our website may contain links to other websites of interest. However, once "
-"you have used these links to leave our site, you should note that we do not "
-"have any control over that other website. Therefore, we cannot be "
-"responsible for the protection and privacy of any information which you "
-"provide whilst visiting such sites and such sites are not governed by this "
-"privacy statement. You should exercise caution and look at the privacy "
-"statement applicable to the website in question."
-msgstr ""
-"Nuestro sitio web puede contener enlaces a otros sitios de interés. Sin "
-"embargo, una vez que haya utilizado estos enlaces para salir de nuestro "
-"sitio, debe tener en cuenta que no tenemos ningún control sobre ese otro "
-"sitio web. Por lo tanto, no podemos ser responsables de la protección y "
-"privacidad de cualquier información que usted proporcione al visitar estos "
-"sitios y estos sitios no se rigen por esta declaración de privacidad. Usted "
-"debe tener cuidado y leer la declaración de privacidad aplicable al sitio "
-"web en cuestión."
-
-#: display/privacy_policy.php:90
-msgid ""
-"If you have any questions or concerns, you can email us using our "
-"interactive web form located at our "
-msgstr ""
-"Si usted tiene alguna duda o preocupación, puedes mandarnos un email  a "
-"través de nuestro formulario online que puedes encontrar en nuestra página"
-
-#: display/privacy_policy.php:90 header.php:156
-msgid "Contact Us"
-msgstr "Contáctanos"
-
-#: display/privacy_policy.php:90
-msgid " page"
-msgstr "página"
-
-#: display/privacy_policy.php:94
-msgid "Last updated 9th July 2015"
-msgstr "Última actualización el 9 de Julio de 2015"
-
-#: display/privacy_policy.php:95
-#, php-format
-msgid "%s Limited. All rights reserved."
-msgstr "%s Limitado. Todos los Derechos Reservados."
-
-#: display/shipping.php:1
-msgid "FREE Shipping"
-msgstr "Envío GRATIS"
-
-#: display/shipping.php:3
-#, php-format
-msgid ""
-"When you shop with us we like to keep it simple, our free shipping offer "
-"applies to all orders no matter the size or value. %s not only accepts "
-"payment in your local currency but also ships directly to your doorstep free "
-"of charge* via our courier partners."
-msgstr ""
-"Cuando compras nos gusta hacerlo sencillo. Por norma general, ofrecemos "
-"envío gratuito en todos nuestros productos sin importar valor de compra o "
-"tamaño. Sin embargo, tenemos que hacer un sobrecargo a códigos postales "
-"remotos según nuestro distribuidor y que podrá ver al final de la compra en "
-"caso de que seleccione uno de estos códigos postales remotos. Además, %s "
-"acepta pago en euros para tu comodidad y envía el producto directamente a tu "
-"casa a través de nuestros colaboradores de distribución. "
-
-#: display/shipping.php:10
-msgid "Taxes and Duties"
-msgstr "Impuestos y Derechos"
-
-#: display/shipping.php:12
-msgid ""
-"Worried about hidden costs? Please don't be, we'll take care of any "
-"applicable taxes and duties prior to delivery so the price on the website is "
-"the final amount you pay. Rest assured that your buying experience with us "
-"will be completely hassle free."
-msgstr ""
-"Preocupado por los costes añadidos? No lo estés, nos hacemos cargo de "
-"cualquier impuesto o derechos de aduana por lo que el precio que ves en "
-"nuestra web es el precio final que pagarás. Ten por seguro que tu compra con "
-"nosotros estará a salvo de preocupaciones."
-
-#: display/shipping.php:15
-msgid "Tracking Your Order"
-msgstr "Seguimiento de tu pedido"
-
-#: display/shipping.php:17
-msgid ""
-"Once your order has been processed, an email containing your order and "
-"account information will be sent to your registered email. You can always "
-"check the status of your order by visiting the My Account page on our "
-"website and viewing your order history."
-msgstr ""
-"Una vez que tu pedido ha sido procesado, un correo electrónico con la "
-"información de tu orden y de tu cuenta se enviará al correo electrónico que "
-"registraste. Siempre puedes comprobar el estado de tu pedido visitando la "
-"página Mi Cuenta en nuestro sitio web y ver tu historial de pedidos."
-
-#: display/shipping.php:20
-msgid "FREE Shipping Delivery Times"
-msgstr "Tiempos de entrega de envío GRATIS"
-
-#: display/shipping.php:22
-msgid ""
-"Orders delivered with free shipping typically arrive within 5 to 12 business "
-"days; although this is dependent on your delivery region, with many orders "
-"often arriving sooner.\n"
-"                        In order to facilitate free shipping and pass on "
-"savings to our customers, we endeavor to use reliable and cost effective "
-"couriers to deliver globally. To minimize delays we ship directly to our "
-"customers from our global fulfillment centers in the UK, US and HK, however "
-"please bear in mind some regions may experience longer shipping lead times.**"
-msgstr ""
-"Las compras realizadas con el envío gratuito normalmente llegan entre 5 y 12 "
-"días laborables; aún que esto depende de la zona geográfica de envío, "
-"normalmente más compras significa menos tiempo de envío.\n"
-"Con el objetivo de facilitar el envío gratuito y hacer que nuestros clientes "
-"ahorren más, nos esforzamos por usar distribuidores fiables alrededor del "
-"mundo. Para minimizar los retrasos, enviamos a través de nuestra red de "
-"distribución global con almacenes en UK, US y HK. Por favor ten en cuenta "
-"que ciertas regiones pueden experimentar un periodo de entrega más largo."
-
-#: display/shipping.php:26
-msgid ""
-"* Shipping to and from less populated or accessible domestic and "
-"international areas carries higher operating costs. Delivery and extended or "
-"remote area surcharges will be added to your final order amount in order to "
-"more accurately reflect the cost of providing service to these areas."
-msgstr ""
-"* Envíos a poblaciones más remotas suponen un coste más alto de envío. Sin "
-"embargo, esto ya se verá reflejado en el precio final del producto para "
-"mostrar más fielmente el coste de envío a esas poblaciones."
-
-#: display/shipping.php:28
-msgid ""
-"United States: extended or remote areas within the contingent 48 states, "
-"Hawaii and Alaska"
-msgstr "No realizamos envíos a las Islas Canarias, Ceuta o Melilla. "
-
-# Just "No shipping to Canarian Islands, Ceuta or Melilla"
-# Added in the previous translation as well.
-#: display/shipping.php:31
-msgid "United Kingdom: areas in Guernsey, Jersey, and the Isle of Man"
-msgstr "-"
-
-#: display/shipping.php:36
-msgid ""
-"** Although we do our best to ensure a smooth shipping process please note "
-"delivery speed to some regions may experience delays depending on a wide "
-"variety of factors (e.g. specific address location and customs delay) which "
-"are outside of our control."
-msgstr ""
-"** Aunque damos lo mejor de nosotros para asegurar un envío sin problemas, a "
-"veces la velocidad de envío puede tener algunos retrasos dependiendo en un "
-"algunos factores (por ejemplo, retrasos en aduanas, ciertas direcciones de "
-"envío, etc) que quedan fuera de nuestro control."
 
 #: footer.php:10
 msgid " PAY WITH CONFIDENCE "
@@ -1174,186 +619,189 @@ msgstr "PAGA CON CONFIANZA"
 msgid " SHOP WITH CONFIDENCE "
 msgstr "COMPRA CON CONFIANZA"
 
-#: footer.php:132
+#: footer.php:161
 msgid "About Us"
 msgstr "Acerca de nosotros"
 
-#: footer.php:135
+#: footer.php:164
 #, php-format
 msgid "%s prides itself on great deals without compromise on service! "
 msgstr ""
 "¡%s se enorgullece de ofrecer ofertas excepcionales sin comprometer el "
 "servicio!"
 
-#: footer.php:135
+#: footer.php:164
 msgid "Feel free to contact us anytime for more information"
 msgstr ""
 "Siéntete libre de contactarnos en cualquier momento para más información"
 
-#: footer.php:143 footer.php:155
+#: footer.php:172 footer.php:184
 msgid "Subscribe to get our latest news and promotions regularly."
 msgstr "Suscríbete para saber nuestras últimas noticias y promociones."
 
-#: footer.php:154
+#: footer.php:183
 msgid "Sign up for Newsletter"
 msgstr "Suscríbete a nuestra Newsletter"
 
-#: footer.php:159
+#: footer.php:188
 msgid "Enter you email address"
 msgstr "Introduce tu correo electrónico"
 
-#: footer.php:169
+#: footer.php:198
 msgid "Subscribe"
 msgstr "Suscríbite"
 
-#: footer.php:173
+#: footer.php:202
 msgid "indicates required"
 msgstr "indica requerido"
 
-#: footer.php:188
+#: footer.php:217
 msgid "100% Secure "
 msgstr "100% Seguro"
 
-#: footer.php:188
+#: footer.php:217
 msgid "with SSL encryption"
 msgstr "con encriptación SSL"
 
-#: footer.php:196
+#: footer.php:225
 msgid "Free Delivery"
 msgstr "Envío Gratuito"
 
-#: footer.php:196
+#: footer.php:225
 msgid "For All Orders*"
 msgstr "Para Todas las Compras*"
 
-#: footer.php:196
+#: footer.php:225
 msgid "Shipping:"
 msgstr "Envío:"
 
-#: footer.php:196
+#: footer.php:225
 msgid "3-5 Working Days"
 msgstr "3-5 Días Laborables"
 
-#: footer.php:216 header.php:186
+#: footer.php:245 header.php:197
 #, php-format
 msgid "%s Days Money Back Guarantee"
 msgstr "%s días Reembolso Garantizado"
 
-#: footer.php:232
+#: footer.php:261
 msgid "Warranty "
 msgstr "Garantía"
 
-#: footer.php:232
+#: footer.php:261
 msgid "Up to 2 Years"
 msgstr "Hasta 2 años"
 
-#: footer.php:244
+#: footer.php:273
 msgid "2015 All Right reserved"
 msgstr "2015 Todos los Derechos Reservados"
 
-#: footer.php:245
+#: footer.php:274
 msgid "Conditions of Use"
 msgstr "Condiciones de Uso"
 
-#: footer.php:246 review.php:52
+#: footer.php:275 review.php:52
 msgid "Shipping"
 msgstr "Envío"
 
-#: footer.php:252
+#: footer.php:276
+msgid "Privacy Policy"
+msgstr "Política de Privacidad"
+
+#: footer.php:281
 msgid "SELECT SHIPPING COUNTRY"
 msgstr "SELECCIONA PAIS DE ENVIO"
 
-#: footer.php:255
+#: footer.php:284
 msgid "Australia"
 msgstr "Australia"
 
-#: footer.php:256
+#: footer.php:285
 msgid "Belgium"
 msgstr "Bélgica"
 
-#: footer.php:257
+#: footer.php:286
 msgid "Finland"
 msgstr "Finlandia"
 
-#: footer.php:258
+#: footer.php:287
 msgid "France"
 msgstr "Francia"
 
-#: footer.php:259
+#: footer.php:288
 msgid "Great Britain"
 msgstr "Gran Bretaña"
 
-#: footer.php:260
+#: footer.php:289
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
-#: header.php:150
-msgid "We won't be beaten on electronics!"
-msgstr "¡No nos ganarán en electrónica!"
-
-#: header.php:155
-msgid "Warranty"
-msgstr "Garantía"
-
-#: header.php:157
-msgid "Help"
-msgstr "Ayuda"
-
-#: header.php:158
-msgid "Clearance"
-msgstr "Liquidación"
-
-#: header.php:160 myaccount/index.php:4
-msgid "My Account"
-msgstr "Mi Cuenta"
-
-#: header.php:161
-msgid "Log Out"
-msgstr "Cerrar Sesión"
-
-#: header.php:164
-msgid "Sign in"
-msgstr "Identifícate"
-
-#: header.php:190
-msgid "Free Delivery For All Orders"
-msgstr "Envío Gratuíto para todas las Compras*"
-
-#: header.php:194
-msgid "Up to 2 Years Warranty"
-msgstr "Hasta 2 años de Garantía"
-
-#: header.php:204
-#, php-format
-msgid "%s item(s) - %s%s"
-msgstr "%s producto(s) - %s%s"
-
-#: header.php:237
-msgid "Find your product"
-msgstr "Encuentra tu producto"
-
-#: header.php:255
-msgid "Top search"
-msgstr "Populares"
-
-#: header.php:264
+#: header.php:98
 #, php-format
 msgid "%s item(s) - %s"
 msgstr "%s producto(s) - %s"
 
-#: index.php:87 product/grid.php:14
+#: header.php:161
+msgid "We won't be beaten on electronics!"
+msgstr "¡No nos ganarán en electrónica!"
+
+#: header.php:166
+msgid "Warranty"
+msgstr "Garantía"
+
+#: header.php:167
+msgid "Contact Us"
+msgstr "Contáctanos"
+
+#: header.php:168
+msgid "Help"
+msgstr "Ayuda"
+
+#: header.php:169
+msgid "Clearance"
+msgstr "Liquidación"
+
+#: header.php:171 myaccount/index.php:4
+msgid "My Account"
+msgstr "Mi Cuenta"
+
+#: header.php:172
+msgid "Log Out"
+msgstr "Cerrar Sesión"
+
+#: header.php:175
+msgid "Sign in"
+msgstr "Identifícate"
+
+#: header.php:201
+msgid "Free Delivery For All Orders"
+msgstr "Envío Gratuíto para todas las Compras*"
+
+#: header.php:205
+msgid "Up to 2 Years Warranty"
+msgstr "Hasta 2 años de Garantía"
+
+#: header.php:249
+msgid "Find your product"
+msgstr "Encuentra tu producto"
+
+#: header.php:267
+msgid "Top search"
+msgstr "Populares"
+
+#: index.php:64
 msgid "Collections"
 msgstr "Catálogo"
 
-#: index.php:108
+#: index.php:85
 msgid "camera collection"
 msgstr "catálogo de cámaras"
 
-#: index.php:112 index.php:132
+#: index.php:89 index.php:109
 msgid "Shop now"
 msgstr "Compra ahora"
 
-#: index.php:128
+#: index.php:105
 msgid "mobile collection"
 msgstr "catálogo de móviles"
 
@@ -1766,23 +1214,6 @@ msgstr "Nueva Contraseña"
 msgid "Confirm Password"
 msgstr "Confirma Constraseña"
 
-#: faq.php:13
-msgid "NEED HELP?"
-msgstr "¿Necesita ayuda?"
-
-#: faq.php:15
-msgid "You've got a Question? We've got the Answer! Check out our FAQs."
-msgstr "¿Tiene alguna duda? Tenemos la respuesta aquí, revisa nuestro FAQs."
-
-#: faq.php:24
-#, php-format
-msgid ""
-"If you still can't find the answer, please refer to the %s Contact Us %s on "
-"page and get in touch! Thank you."
-msgstr ""
-"Si no obtiene la respuesta que necesita, póngase en %s contacto %s con "
-"nosotros a través nuestra página de Contacto. Gracias."
-
 #: product/detail.php:23 product/detail.php:31 product/related_product.php:16
 msgid "Sale"
 msgstr "Venta"
@@ -1796,50 +1227,50 @@ msgstr "%s opinión(es)"
 msgid "Write a review"
 msgstr "Escribe una opinión"
 
-#: product/detail.php:91
+#: product/detail.php:93
 msgid "Availability"
 msgstr "Disponibilidad"
 
-#: product/detail.php:91
+#: product/detail.php:97 product/detail.php:103
 msgid " In Stock"
 msgstr "En Stock"
 
+#: product/detail.php:99
+msgid "Out of Stock"
+msgstr "Fuera de stock"
+
 #: product/detail.php:101
+msgid "Pre Order"
+msgstr "Reserva"
+
+#: product/detail.php:112
 msgid "Qty:"
 msgstr "Cantidad:"
 
-#: product/detail.php:118
+#: product/detail.php:135
 msgid "4-7 working days delivery"
 msgstr "Expedición en 4-7 días laborables"
 
-#: product/detail.php:149
+#: product/detail.php:166
 msgid "Specification"
 msgstr "Especificaciones"
 
-#: product/detail.php:150
+#: product/detail.php:167
 msgid "Overview"
 msgstr "Descripción"
 
-#: product/detail.php:151
+#: product/detail.php:168
 msgid "In the box"
 msgstr "En la caja"
 
-#: product/detail.php:152
+#: product/detail.php:169
 msgid "Recommended Accessories"
 msgstr "Accesorios Recomendados"
 
-#: product/detail.php:153
+#: product/detail.php:170
 #, php-format
 msgid "Reviews %s"
 msgstr "Opiniones %s"
-
-#: product/grid.php:14
-msgid "latest arrival"
-msgstr "novedades"
-
-#: product/grid.php:14
-msgid "best seller"
-msgstr "Mejor vendido"
 
 #: product/related_product.php:4
 msgid "Related Products"
@@ -1911,118 +1342,110 @@ msgstr "Precio"
 msgid "Save"
 msgstr "Ahorro"
 
-#~ msgid "Not a valid fingerprint"
-#~ msgstr "Huella Dactilar no válida"
+msgid "HELLO_WORLD"
+msgstr "Hello World"
 
-#~ msgid "Not a valid billingFirstName"
-#~ msgstr "Facturación no válida Nombre"
+msgid "TEST_TRANSLATION"
+msgstr "Testing translation..."
 
-#~ msgid "Not a valid billingLastName"
-#~ msgstr "Facturación no válida Apellidos"
+#~ msgid "About ChatandVision"
+#~ msgstr "Acerca de ChatandVision"
 
-#~ msgid "Not a valid billingCompany"
-#~ msgstr "Facturación no válida Empresa"
+#~ msgid "Who are we? "
+#~ msgstr "¿Quiénes somos?"
 
-#~ msgid "Not a valid billing address line 1"
-#~ msgstr "Facturación no válida Dirección 1"
-
-#~ msgid "Not a valid billing address line 2"
-#~ msgstr "Facturación no válida Dirección 2"
-
-#~ msgid "Not a valid billingCity"
-#~ msgstr "Facturación no válida Ciudad"
-
-#~ msgid "Not a valid billingPostal"
-#~ msgstr "Facturación no válida Postal"
-
-#~ msgid "Not a valid billState"
-#~ msgstr "Facturación no válida Provincia"
-
-#~ msgid "Not a valid billing phone number"
-#~ msgstr "Facturación no válida Número de Teléfono"
-
-#~ msgid "Not a valid email address"
-#~ msgstr "Correo eletrónico no válido"
-
-#~ msgid "Password not match"
-#~ msgstr "La contraseña no coincide"
-
-#~ msgid "Payment gateway not valid"
-#~ msgstr "Pasarela de Pago no válida"
-
-#~ msgid "Card ID not valid"
-#~ msgstr "ID no válido"
-
-#~ msgid "Not a valid card"
-#~ msgstr "Tarjeta no válida"
-
-#~ msgid "Save "
-#~ msgstr "Guardar"
-
-#~ msgid "In Stock"
-#~ msgstr "En Stock"
-
-#~ msgid "Out Of Stock"
-#~ msgstr "Sin Stock"
-
-#~ msgid "Pre-Order"
-#~ msgstr "Reserva ahora"
-
-#~ msgid "Available Soon"
-#~ msgstr "Disponible pronto"
-
-#~ msgid "Proceed to Order Confirmation"
-#~ msgstr "Procede a Confirmación de Compra"
-
-#~ msgid "Please proceed to order confirmation to complete your order"
-#~ msgstr "Por favor proceda a Confirmación de Compra para completar su compra"
-
-#~ msgid "Delivery Cost"
-#~ msgstr "Coste de envío"
-
-#~ msgid "Order Number:"
-#~ msgstr "Número de orden:"
-
-#~ msgid "Please contact our CS"
-#~ msgstr "Por favor contacte a nuestro Servicio al Cliente"
-
-#~ msgid "Please contact CS"
-#~ msgstr "Por favor contacte Servicio al Cliente"
-
-#~ msgid "Session timeout, please check your cart!, err:"
-#~ msgstr "Sesión expirada, por favor revise su carrito!, err:"
-
-#~ msgid "Login Fail"
-#~ msgstr "Inicio de Sesión Fallido"
-
-#~ msgid "Please enter your registered email address"
-#~ msgstr "Por favor introduzca su correo electrónico registrado"
-
-#~ msgid "Email Address does not exist in our system. Please click your email"
+#~ msgid ""
+#~ "ChatandVision is one of Skype’s Global Merchant Partners, bringing %s "
+#~ "high quality communication products %s to our valued customers. "
+#~ "Partnering with Skype, ChatandVision has a variety of Skype Certified "
+#~ "products that have met all of Skype’s stringent specifications for "
+#~ "quality ensuring that you will have a wonderful Skype experience."
 #~ msgstr ""
-#~ "Este Correo Electrónico no existe en nuestro sistema. Por favor revise su "
-#~ "e-mail"
+#~ "ChatandVision es uno de los socios comerciales de Skype, llevando %s "
+#~ "productos de comunicación de alta calidad %s a nuestros valiosos "
+#~ "clientes. Gracias a la colaboración con Skype, ChatandVision tiene una "
+#~ "gran variedad de productos Skype certificados que han pasado todos los "
+#~ "controles de calidad de Skype para asegurarte una magnífica experiencia. "
 
-#~ msgid "Your Email is illegal"
-#~ msgstr "Su Correo Electrónico es ilegal"
+#~ msgid ""
+#~ "We are driven by the strong desire to bring people closer together and "
+#~ "offer the products to help people all over the world communicate with "
+#~ "each other. "
+#~ msgstr ""
+#~ "Nos dejamos llevar por nuestro gran deseo de acercar a las personas y "
+#~ "ofrecer productos que ayuden a todo el mundo a comunicarse entre sí más "
+#~ "fácilmente."
 
-#~ msgid " View Cart "
-#~ msgstr "Ver Cesta"
+#~ msgid "Whether it’s for use at home or in the office, we’re here to help."
+#~ msgstr ""
+#~ "Tanto si es para un uso en casa como en la oficina, estamos aquí para "
+#~ "ayudar."
 
-#~ msgid " Checkout"
-#~ msgstr "Realizar el Pago"
+#~ msgid "Buying Experience"
+#~ msgstr "Experiencia de Compra."
 
-#~ msgid "Sort By:"
-#~ msgstr "Ordenar por:"
+#~ msgid ""
+#~ "We do our best to try and make this experience as simple as possible for "
+#~ "our valued customers and act as your local online retailer. Delivering to "
+#~ "over %s 70 countries %s, we manage all customs clearance, import duties "
+#~ "and sales taxes – meaning the price you see on the site is the final "
+#~ "delivered price that will be charged to you. We offer local payment "
+#~ "options and currencies in order to provide you with a completely hassle "
+#~ "free experience. By partnering with various reputable payment gateways we "
+#~ "hope to give our customers total peace of mind and provide them with not "
+#~ "only flexibility but the highest level of security when paying on our "
+#~ "site."
+#~ msgstr ""
+#~ "Hacemos lo posible para que tu experiencia sea lo más sencilla posible y "
+#~ "así poder actuar como tu tienda electrónica online local. Con envios a "
+#~ "más de %s 70 paises %s, nos hacemos cargo de todos los costes adicionales "
+#~ "y de aduanas - es decir, el precio que ves en nuestra web será el precio "
+#~ "final que pagarás. Ofrecemos opciones de pago locales y en todas las "
+#~ "monedas para que no tengas que preocuparte de nada. Colaboramos con "
+#~ "varias plataformas de pago fiables para darte una total tranquilidad y "
+#~ "ofrecerte una gran variedad de formas de pago con el más alto nivel de "
+#~ "seguridad cuando realices el pago en nuestra web."
 
-#~ msgid "Tel:"
-#~ msgstr "Tel:"
+#~ msgid ""
+#~ "We ship from several hubs worldwide so that you can receive your products "
+#~ "faster, and have chosen to partner with reputable courier companies to "
+#~ "ensure that your order arrives safely."
+#~ msgstr ""
+#~ "Envíamos desde varios almacenes alrededor del mundo para que recibas tus "
+#~ "productos más rápidamente, y hemos decidido colaborar con las empresas de "
+#~ "transporte más fiables para que tu compra llegue en perfectas condiciones."
+
+#~ msgid "We're always here for you!"
+#~ msgstr "¡Estamos siempre aquí para ti!"
+
+#~ msgid ""
+#~ "Our priority is in providing customer focused service, and we continually "
+#~ "strive to put our customers first in all aspects. In order to provide the "
+#~ "best shopping experience we make sure to communicate with you every step "
+#~ "of the way – from the buying process, to order acknowledgement, and "
+#~ "finally to dispatch. Our friendly %s customer service team %s is standing "
+#~ "by and happy to assist if you should encounter any difficulties in "
+#~ "choosing the right product or have any enquiries about the ordering "
+#~ "process."
+#~ msgstr ""
+#~ "Nuestro objetivo es ofrecer un servicio centrado en ti, y siempre nos "
+#~ "esforzamos por poner al cliente primero en todos los aspectos. Para "
+#~ "asegurarnos que tengas la mejor experiencia en tu compra, nos "
+#~ "comunicaremos contigo en cada paso de tu compra - desde la compra en sí, "
+#~ "pasando por una confirmación de pedido, hasta que el envío está "
+#~ "preparando para mandar. Nuestro gran %s equipo de servicio al cliente %s "
+#~ "estará disponible y contento por ayudarte si encontraras alguna "
+#~ "dificultad en el proceso de compra o tuvieras alguna duda en cuanto a "
+#~ "algún producto."
 
 #~ msgid "Term and Conditions"
 #~ msgstr "Términos y Condiciones"
 
 #~ msgid "DigitalDiscount.co.uk Conditions of Use and Sale"
 #~ msgstr "Buholoco.es Condiciones de Uso y Venta"
+
+#~ msgid "CONTENTS"
+#~ msgstr "CONTENIDOS"
 
 #~ msgid "CONDITIONS OF USE"
 #~ msgstr "CONDICIONES DE USO"
@@ -2051,6 +1474,9 @@ msgstr "Ahorro"
 #~ msgid "DISCLAIMER OF LIABILITY"
 #~ msgstr "RENUNCIA DE RESPONSABILIDAD"
 
+#~ msgid "SECURITY"
+#~ msgstr "SEGURIDAD"
+
 #~ msgid "CONDITIONS OF USE REVISIONS"
 #~ msgstr "CONDICIONES DE REVISIONES DE USO"
 
@@ -2070,15 +1496,19 @@ msgstr "Ahorro"
 #~ "CON ESTAS CONDICIONES ENTONCES POR FAVOR NO UTILICE EL SITIO."
 
 #~ msgid ""
-#~ "DigitalDiscount  is a trading name owned by ChatandVision Ltd with "
-#~ "registered offices at Flat/RM 12, 25/F Langham Place Office Tower 8 "
-#~ "Argyle Street, Kowloon, Hong Kong. Through its websites, ChatandVision "
-#~ "Ltd offers consumer electronics hardware, and services. "
+#~ "DigitalDiscount is a trading name with registered offices in: <br><br> "
+#~ "Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office "
+#~ "Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
+#~ "<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
+#~ "SW19 2R. <br><br>Through its websites, ChatandVision Ltd offers consumer "
+#~ "electronics hardware, and services."
 #~ msgstr ""
-#~ "Buholoco es el nombre comercial propiedad de ChatandVision Ltd con sede "
-#~ "social en Piso / RM 12, 25 / F Langham Place Office Tower 8 Argyle "
-#~ "Street, Kowloon, Hong Kong. A través de sus sitios web, ChatandVision Ltd "
-#~ "ofrece hardware de la electrónica de consumo y servicios."
+#~ "BuhoLoco es un nombre comercial con oficina registrada en: <br><br> Hong "
+#~ "Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 "
+#~ "Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
+#~ "<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
+#~ "SW19 2R. <br><br> A través de sus páginas, ChatandVision LTD ofrece "
+#~ "electrónica de consumo, software y servicios."
 
 #~ msgid ""
 #~ "If you have any queries relating to our terms and conditions, please "
@@ -2523,6 +1953,555 @@ msgstr "Ahorro"
 
 #~ msgid "Updated: July 09, 2015 "
 #~ msgstr "Actualizado: 09 de Julio, 2015"
+
+#~ msgid ""
+#~ "Having an issue? There are a number of ways you can get in touch with our "
+#~ "experienced Sales and Customer Service teams. "
+#~ msgstr ""
+#~ "Tienes algún problema? Hay numerosas formas de contactar con nuestro "
+#~ "experimentado equipo de Servicio de Ventas y Atención al Cliente."
+
+#~ msgid ""
+#~ "Select one of the enquiry types below and we'll repond to you as soon as "
+#~ "we can!"
+#~ msgstr ""
+#~ "¡Selecciona un tipo de pregunta abajo y te responderemos tan pronto como "
+#~ "podamos!"
+
+#~ msgid "GENERAL AND AFTER-SALES"
+#~ msgstr "General y post-venta"
+
+#~ msgid "PRE-SALES"
+#~ msgstr "Pre-venta"
+
+#~ msgid "FAULTY GOODS OR RETURNED ITEMS"
+#~ msgstr "Productos defectuosos o devoluciones"
+
+#~ msgid "Our Address"
+#~ msgstr "Nuestra Dirección"
+
+#~ msgid "NEED HELP?"
+#~ msgstr "¿Necesita ayuda?"
+
+#~ msgid "You've got a Question? We've got the Answer! Check out our FAQs."
+#~ msgstr "¿Tiene alguna duda? Tenemos la respuesta aquí, revisa nuestro FAQs."
+
+#~ msgid ""
+#~ "If you still can't find the answer, please refer to the %s Contact Us %s "
+#~ "on page and get in touch! Thank you."
+#~ msgstr ""
+#~ "Si no obtiene la respuesta que necesita, póngase en %s contacto %s con "
+#~ "nosotros a través nuestra página de Contacto. Gracias."
+
+#~ msgid "%s Privacy Policy"
+#~ msgstr "%s Política de Privacidad"
+
+#~ msgid "WHY WE COLLECT"
+#~ msgstr "POR QUÉ RECOPILAMOS"
+
+#~ msgid "WHAT WE COLLECT"
+#~ msgstr "QUÉ RECOPILAMOS"
+
+#~ msgid "WHAT WE DO WITH THE INFORMATION WE GATHER"
+#~ msgstr "QUE HACEMOS CON LA INFORMACIÓN QUE RECOPILAMOS"
+
+#~ msgid "HOW WE USE COOKIES"
+#~ msgstr "CÓMO USAMOS LAS COOKIES"
+
+#~ msgid "LINKS TO OTHER WEBSITES"
+#~ msgstr "LINKS A OTROS WEBSITES"
+
+#~ msgid "PRIVACY QUESTIONS"
+#~ msgstr "PREGUNTAS DE PRIVACIDAD"
+
+#~ msgid ""
+#~ "%s's Customer Privacy Policy covers the collection, use, and disclosure "
+#~ "of personal information that may be collected by %s anytime you interact "
+#~ "with %s such as when visiting our website, purchasing products, or using "
+#~ "our sales or support facilities. Please take a moment to read the "
+#~ "following to learn more about our practices with regards to this, "
+#~ "including what type of information we gather, how and for what purposes "
+#~ "we use the information, to whom we disclose the information, and how the "
+#~ "personal information is kept safe and secure. Your privacy is a priority "
+#~ "at %s and we do what we can to protect it."
+#~ msgstr ""
+#~ "La Política de Privacidad del Usuario de %s cubre la recogida, uso, y "
+#~ "divulgación de información personal que puede ser recogida por %s en "
+#~ "cualquier momento que interactúe con %s, como por ejemplo visitando "
+#~ "nuestra página, comprando productos o usando nuestro servicio de ventas o "
+#~ "Atención al Cliente. Por favor lee la siguiente información para saber "
+#~ "acerca de nuestras practices en relación a esto, incluyendo qué tipo de "
+#~ "información recogemos, cómo y por qué motivos usamos la información, a "
+#~ "quién divulgamos esta información, y cómo mantenemos tus datos personales "
+#~ "seguros y sin peligro. Tu privacidad es una prioridad para %s y hacemos "
+#~ "todo lo possible para protegerla."
+
+#~ msgid ""
+#~ "%s may change this policy from time to time by updating this page. You "
+#~ "should check this page from time to time to ensure that you are happy "
+#~ "with any changes. This policy is effective from 31 May 2010."
+#~ msgstr ""
+#~ "%s puede cambiar esta política de vez en cuando actualizando esta página. "
+#~ "Puedes visitar esta página cuando quieras para asegurarte de que te "
+#~ "gustan los cambios. Esta política es efectiva desde el 31 de Mayo de 2010."
+
+#~ msgid ""
+#~ "We collect personal information because it helps us to deliver a "
+#~ "customised customer service experience for you. This affords you "
+#~ "convenient access to our product range and helps focus on categories most "
+#~ "likely to interest you. In addition, your personal information helps "
+#~ "allow us to keep you updated on the latest product announcements, special "
+#~ "offers, and events that you might like to hear about."
+#~ msgstr ""
+#~ "Recopilamos información personal porque nos ayuda a ofrecer una "
+#~ "experiencia de servicio al cliente personalizada para usted. Esto le "
+#~ "proporciona un cómodo acceso a nuestra gama de productos y ayuda a "
+#~ "centrarse en las categorías con mayor probabilidad de su interés. Además, "
+#~ "su información personal nos ayuda a mantenerle informado sobre los "
+#~ "últimos anuncios de productos, ofertas especiales, y eventos que puedan "
+#~ "llegar a gustarle. "
+
+#~ msgid "We may collect the following information:"
+#~ msgstr "Podemos recopilar la siguiente información:"
+
+#~ msgid "name and job title"
+#~ msgstr "Nombre y Puesto de trabajo"
+
+#~ msgid "contact information including email address"
+#~ msgstr "información de contacto, incluyendo dirección de email"
+
+#~ msgid "demographic information such as postcode, preferences and interests"
+#~ msgstr ""
+#~ "información demográfica, como el código postal, preferencias e intereses"
+
+#~ msgid "other information relevant to customer surveys and/or offers"
+#~ msgstr "otra información relevante a encuestas del cliente y/o ofertas"
+
+#~ msgid ""
+#~ "The personal information may help us give you a better shopping "
+#~ "experience with us in the following areas:"
+#~ msgstr ""
+#~ "La información personal puede ayudarnos a darle una mejor experiencia de "
+#~ "compra con nosotros en las siguiente áreas:"
+
+#~ msgid ""
+#~ "we may ask for your personal information when you're discussing a service "
+#~ "issue on the phone with a representative, making a purchase, or "
+#~ "registering your product."
+#~ msgstr ""
+#~ "podríamos preguntar por su información personal cuando esté planteando un "
+#~ "problema por teléfono con nuestros trabajadores, haciendo una compra o "
+#~ "registrando un producto."
+
+#~ msgid ""
+#~ "we may use the information to improve our product range and services "
+#~ "offered."
+#~ msgstr ""
+#~ "podemos utilizar la información para mejorar nuestro rango de productos y "
+#~ "servicios ofertados."
+
+#~ msgid ""
+#~ "we may send promotional emails (to the email address provided) about new "
+#~ "products, special offers or other information which we think you may find "
+#~ "interesting."
+#~ msgstr ""
+#~ "podemos mandarle emails promocionales (al email registrado) acerca de "
+#~ "nuevos productos, ofertas especiales o otra información que pueda "
+#~ "resultarle útil. "
+
+#~ msgid ""
+#~ "from time to time, we may also use your information to contact you for "
+#~ "market research purposes. We may contact you by email, phone, or mail. We "
+#~ "may use the information to customise the website according to your "
+#~ "interests."
+#~ msgstr ""
+#~ "de vez en cuando, podemos utilizar su información para hacer estudios de "
+#~ "mercado. Podemos contactarle por email, teléfono o correo ordinario. "
+#~ "Podemos utilizar esta información para adaptar el website dependiendo de "
+#~ "sus intereses."
+
+#~ msgid ""
+#~ "We will use the information to create an account area to which you can "
+#~ "login and access your order history."
+#~ msgstr ""
+#~ "Usaremos la información para crear una área de cliente en la que puedas "
+#~ "acceder tu historial de compras."
+
+#~ msgid ""
+#~ "We are committed to ensuring that your information is secure. In order to "
+#~ "prevent unauthorised access or disclosure, we have put in place suitable "
+#~ "physical, electronic and managerial procedures to safeguard and secure "
+#~ "the information we collect online."
+#~ msgstr ""
+#~ "Estamos comprometidos a asegurar que su información está segura. Con el "
+#~ "fin de evitar el acceso no autorizado o divulgación, hemos puesto en "
+#~ "marcha procedimientos físicos, electrónicos y administrativos apropiados "
+#~ "para salvaguardar y asegurar la información que recopilamos en línea."
+
+#~ msgid ""
+#~ "%s takes your privacy very seriously. %s does not sell or rent your "
+#~ "contact information to other marketers."
+#~ msgstr ""
+#~ "%s se toma tu privacidad muy en serio. %s no vende o alquila tu "
+#~ "información de contacto a otros publicistas."
+
+#~ msgid ""
+#~ "%s may share certain personal information with other companies with which "
+#~ "%s have a strategic relationship and/or provide services on our behalf to "
+#~ "your advantage. These companies may help process information, fulfil "
+#~ "customer orders, deliver products, manage and enhance customer data, "
+#~ "provide customer service, assess levels of interest in our product range, "
+#~ "or carry out customer research or satisfaction surveys. These companies "
+#~ "are also obliged to protect your personal information, except if exchange "
+#~ "of information is required for your purchase. For example, when an "
+#~ "extended warranty is purchased, you authorise %s and the Warranty "
+#~ "Provider to exchange information to carry out the service. Without the "
+#~ "exchange, it would be otherwise be difficult to have products purchased, "
+#~ "customer service offered, feedback provided to us, or have access to "
+#~ "special offers or content from %s."
+#~ msgstr ""
+#~ "%s puede compratir cierta información personal con otras empresas con las "
+#~ "que %s tenga una relación estratégica y/o aporte servicios en nuestro "
+#~ "nombre para tu bien. Estas empresas pueden ayudar a procesar la "
+#~ "información, terminar las compras de los clientes, enviar productos, "
+#~ "dirigir e incrementar información del cliente, dar servicio al cliente, "
+#~ "medir el intereés de los clientes por nuestros productos, o llevar a cabo "
+#~ "entrevistas de investigación. Estas empresas también están obligadas a "
+#~ "proteger tu información, excepto si un cambio de información es necesario "
+#~ "para finalizar una compra. Por ejemplo, cuando una extensión de garantía "
+#~ "es comprada, autorizas a %s y el proveedor de Garantía a cambiar "
+#~ "información para llevar a cabo la compra. Sin este cambio de información "
+#~ "sería difícil llevar a cabo la compra de dichos productos, servicio al "
+#~ "cliente, feedback ofrecido a nosotros, o tener acceso a ofertas especial "
+#~ "o contenido de %s."
+
+#~ msgid ""
+#~ "We may also be required by law or litigation to disclose your personal "
+#~ "information. We may also disclose information if it is determined that it "
+#~ "is necessary for security, law enforcement or other issues of public "
+#~ "importance."
+#~ msgstr ""
+#~ "También podemos ser requeridos por la ley o litigio a revelar su "
+#~ "información personal. También podemos divulgar información si se "
+#~ "determina que es necesario para la seguridad, la policía u otras "
+#~ "cuestiones de importancia pública."
+
+#~ msgid ""
+#~ "A cookie is a small file which asks permission to be placed on your "
+#~ "computer's hard drive. Once you agree, the file is added and the cookie "
+#~ "helps analyse web traffic or lets you know when you visit a particular "
+#~ "site. Cookies allow web applications to respond to you as an individual. "
+#~ "The web application can tailor its operations to your needs, likes and "
+#~ "dislikes by gathering and remembering information about your preferences."
+#~ msgstr ""
+#~ "Una cookie es un pequeño archivo que pide permiso para ser colocado en el "
+#~ "disco duro de su ordenador. Una vez que usted está de acuerdo, el archivo "
+#~ "se añade y la cookie ayuda a analizar el tráfico web o le permite saber "
+#~ "cuando usted visita un sitio en particular. Las cookies permiten que las "
+#~ "aplicaciones web le respondan a usted como individuo. La aplicación web "
+#~ "puede adaptar sus operaciones a sus necesidades, gustos y disgustos "
+#~ "reuniendo y recordando la información acerca de sus preferencias."
+
+#~ msgid ""
+#~ "We use traffic log cookies to identify which pages are being used. This "
+#~ "helps us analyse data about web page traffic and improve our website in "
+#~ "order to tailor it to customer needs. We only use this information for "
+#~ "statistical analysis purposes and then the data is removed from the "
+#~ "system."
+#~ msgstr ""
+#~ "Utilizamos cookies de registro de tráfico para identificar qué páginas se "
+#~ "están utilizando. Esto nos ayuda a analizar datos sobre el tráfico web y "
+#~ "mejorar nuestro sitio web con el fin de adaptarlo a las necesidades del "
+#~ "cliente. Sólo utilizamos esta información para fines de análisis "
+#~ "estadístico y luego los datos se eliminan del sistema."
+
+#~ msgid ""
+#~ "Overall, cookies help us provide you with a better website, by enabling "
+#~ "us to monitor which pages you find useful and which you do not. A cookie "
+#~ "in no way gives us access to your computer or any information about you, "
+#~ "other than the data you choose to share with us."
+#~ msgstr ""
+#~ "En general, las cookies nos ayudan a ofrecerle un mejor sitio web, ya que "
+#~ "nos permite controlar las páginas que encuentra útiles y cuáles no. Una "
+#~ "cookie de ninguna manera nos da acceso a su computadora o a cualquier "
+#~ "información sobre usted, excepto los datos que usted decida compartir con "
+#~ "nosotros."
+
+#~ msgid ""
+#~ "You can choose to accept or decline cookies. Most web browsers "
+#~ "automatically accept cookies, but you can usually modify your browser "
+#~ "setting to decline cookies if you prefer. This may prevent you from "
+#~ "taking full advantage of the website."
+#~ msgstr ""
+#~ "Puede elegir entre aceptar o rechazar las cookies. La mayoría de los "
+#~ "navegadores web aceptan automáticamente las cookies, pero usted puede "
+#~ "modificar la configuración de su navegador para rechazar cookies si lo "
+#~ "prefiere. Esto puede evitar que usted tome ventaja completa de la página "
+#~ "web."
+
+#~ msgid ""
+#~ "Our website may contain links to other websites of interest. However, "
+#~ "once you have used these links to leave our site, you should note that we "
+#~ "do not have any control over that other website. Therefore, we cannot be "
+#~ "responsible for the protection and privacy of any information which you "
+#~ "provide whilst visiting such sites and such sites are not governed by "
+#~ "this privacy statement. You should exercise caution and look at the "
+#~ "privacy statement applicable to the website in question."
+#~ msgstr ""
+#~ "Nuestro sitio web puede contener enlaces a otros sitios de interés. Sin "
+#~ "embargo, una vez que haya utilizado estos enlaces para salir de nuestro "
+#~ "sitio, debe tener en cuenta que no tenemos ningún control sobre ese otro "
+#~ "sitio web. Por lo tanto, no podemos ser responsables de la protección y "
+#~ "privacidad de cualquier información que usted proporcione al visitar "
+#~ "estos sitios y estos sitios no se rigen por esta declaración de "
+#~ "privacidad. Usted debe tener cuidado y leer la declaración de privacidad "
+#~ "aplicable al sitio web en cuestión."
+
+#~ msgid ""
+#~ "If you have any questions or concerns, you can email us using our "
+#~ "interactive web form located at our "
+#~ msgstr ""
+#~ "Si usted tiene alguna duda o preocupación, puedes mandarnos un email  a "
+#~ "través de nuestro formulario online que puedes encontrar en nuestra página"
+
+#~ msgid " page"
+#~ msgstr "página"
+
+#~ msgid "Last updated 9th July 2015"
+#~ msgstr "Última actualización el 9 de Julio de 2015"
+
+#~ msgid "%s Limited. All rights reserved."
+#~ msgstr "%s Limitado. Todos los Derechos Reservados."
+
+#~ msgid "FREE Shipping"
+#~ msgstr "Envío GRATIS"
+
+#~ msgid ""
+#~ "When you shop with us we like to keep it simple, our free shipping offer "
+#~ "applies to all orders no matter the size or value. %s not only accepts "
+#~ "payment in your local currency but also ships directly to your doorstep "
+#~ "free of charge* via our courier partners."
+#~ msgstr ""
+#~ "Cuando compras nos gusta hacerlo sencillo. Por norma general, ofrecemos "
+#~ "envío gratuito en todos nuestros productos sin importar valor de compra o "
+#~ "tamaño. Sin embargo, tenemos que hacer un sobrecargo a códigos postales "
+#~ "remotos según nuestro distribuidor y que podrá ver al final de la compra "
+#~ "en caso de que seleccione uno de estos códigos postales remotos. Además, "
+#~ "%s acepta pago en euros para tu comodidad y envía el producto "
+#~ "directamente a tu casa a través de nuestros colaboradores de "
+#~ "distribución. "
+
+#~ msgid "Taxes and Duties"
+#~ msgstr "Impuestos y Derechos"
+
+#~ msgid ""
+#~ "Worried about hidden costs? Please don't be, we'll take care of any "
+#~ "applicable taxes and duties prior to delivery so the price on the website "
+#~ "is the final amount you pay. Rest assured that your buying experience "
+#~ "with us will be completely hassle free."
+#~ msgstr ""
+#~ "Preocupado por los costes añadidos? No lo estés, nos hacemos cargo de "
+#~ "cualquier impuesto o derechos de aduana por lo que el precio que ves en "
+#~ "nuestra web es el precio final que pagarás. Ten por seguro que tu compra "
+#~ "con nosotros estará a salvo de preocupaciones."
+
+#~ msgid "Tracking Your Order"
+#~ msgstr "Seguimiento de tu pedido"
+
+#~ msgid ""
+#~ "Once your order has been processed, an email containing your order and "
+#~ "account information will be sent to your registered email. You can always "
+#~ "check the status of your order by visiting the My Account page on our "
+#~ "website and viewing your order history."
+#~ msgstr ""
+#~ "Una vez que tu pedido ha sido procesado, un correo electrónico con la "
+#~ "información de tu orden y de tu cuenta se enviará al correo electrónico "
+#~ "que registraste. Siempre puedes comprobar el estado de tu pedido "
+#~ "visitando la página Mi Cuenta en nuestro sitio web y ver tu historial de "
+#~ "pedidos."
+
+#~ msgid "FREE Shipping Delivery Times"
+#~ msgstr "Tiempos de entrega de envío GRATIS"
+
+#~ msgid ""
+#~ "Orders delivered with free shipping typically arrive within 5 to 12 "
+#~ "business days; although this is dependent on your delivery region, with "
+#~ "many orders often arriving sooner.\n"
+#~ "                        In order to facilitate free shipping and pass on "
+#~ "savings to our customers, we endeavor to use reliable and cost effective "
+#~ "couriers to deliver globally. To minimize delays we ship directly to our "
+#~ "customers from our global fulfillment centers in the UK, US and HK, "
+#~ "however please bear in mind some regions may experience longer shipping "
+#~ "lead times.**"
+#~ msgstr ""
+#~ "Las compras realizadas con el envío gratuito normalmente llegan entre 5 y "
+#~ "12 días laborables; aún que esto depende de la zona geográfica de envío, "
+#~ "normalmente más compras significa menos tiempo de envío.\n"
+#~ "Con el objetivo de facilitar el envío gratuito y hacer que nuestros "
+#~ "clientes ahorren más, nos esforzamos por usar distribuidores fiables "
+#~ "alrededor del mundo. Para minimizar los retrasos, enviamos a través de "
+#~ "nuestra red de distribución global con almacenes en UK, US y HK. Por "
+#~ "favor ten en cuenta que ciertas regiones pueden experimentar un periodo "
+#~ "de entrega más largo."
+
+#~ msgid ""
+#~ "* Shipping to and from less populated or accessible domestic and "
+#~ "international areas carries higher operating costs. Delivery and extended "
+#~ "or remote area surcharges will be added to your final order amount in "
+#~ "order to more accurately reflect the cost of providing service to these "
+#~ "areas."
+#~ msgstr ""
+#~ "* Envíos a poblaciones más remotas suponen un coste más alto de envío. "
+#~ "Sin embargo, esto ya se verá reflejado en el precio final del producto "
+#~ "para mostrar más fielmente el coste de envío a esas poblaciones."
+
+#~ msgid ""
+#~ "United States: extended or remote areas within the contingent 48 states, "
+#~ "Hawaii and Alaska"
+#~ msgstr "No realizamos envíos a las Islas Canarias, Ceuta o Melilla. "
+
+# Just "No shipping to Canarian Islands, Ceuta or Melilla"
+# Added in the previous translation as well.
+#~ msgid "United Kingdom: areas in Guernsey, Jersey, and the Isle of Man"
+#~ msgstr "-"
+
+#~ msgid ""
+#~ "** Although we do our best to ensure a smooth shipping process please "
+#~ "note delivery speed to some regions may experience delays depending on a "
+#~ "wide variety of factors (e.g. specific address location and customs "
+#~ "delay) which are outside of our control."
+#~ msgstr ""
+#~ "** Aunque damos lo mejor de nosotros para asegurar un envío sin "
+#~ "problemas, a veces la velocidad de envío puede tener algunos retrasos "
+#~ "dependiendo en un algunos factores (por ejemplo, retrasos en aduanas, "
+#~ "ciertas direcciones de envío, etc) que quedan fuera de nuestro control."
+
+#~ msgid "%s item(s) - %s%s"
+#~ msgstr "%s producto(s) - %s%s"
+
+#~ msgid "latest arrival"
+#~ msgstr "novedades"
+
+#~ msgid "best seller"
+#~ msgstr "Mejor vendido"
+
+#~ msgid "Not a valid fingerprint"
+#~ msgstr "Huella Dactilar no válida"
+
+#~ msgid "Not a valid billingFirstName"
+#~ msgstr "Facturación no válida Nombre"
+
+#~ msgid "Not a valid billingLastName"
+#~ msgstr "Facturación no válida Apellidos"
+
+#~ msgid "Not a valid billingCompany"
+#~ msgstr "Facturación no válida Empresa"
+
+#~ msgid "Not a valid billing address line 1"
+#~ msgstr "Facturación no válida Dirección 1"
+
+#~ msgid "Not a valid billing address line 2"
+#~ msgstr "Facturación no válida Dirección 2"
+
+#~ msgid "Not a valid billingCity"
+#~ msgstr "Facturación no válida Ciudad"
+
+#~ msgid "Not a valid billingPostal"
+#~ msgstr "Facturación no válida Postal"
+
+#~ msgid "Not a valid billState"
+#~ msgstr "Facturación no válida Provincia"
+
+#~ msgid "Not a valid billing phone number"
+#~ msgstr "Facturación no válida Número de Teléfono"
+
+#~ msgid "Not a valid email address"
+#~ msgstr "Correo eletrónico no válido"
+
+#~ msgid "Password not match"
+#~ msgstr "La contraseña no coincide"
+
+#~ msgid "Payment gateway not valid"
+#~ msgstr "Pasarela de Pago no válida"
+
+#~ msgid "Card ID not valid"
+#~ msgstr "ID no válido"
+
+#~ msgid "Not a valid card"
+#~ msgstr "Tarjeta no válida"
+
+#~ msgid "Save "
+#~ msgstr "Guardar"
+
+#~ msgid "In Stock"
+#~ msgstr "En Stock"
+
+#~ msgid "Out Of Stock"
+#~ msgstr "Sin Stock"
+
+#~ msgid "Pre-Order"
+#~ msgstr "Reserva ahora"
+
+#~ msgid "Available Soon"
+#~ msgstr "Disponible pronto"
+
+#~ msgid "Proceed to Order Confirmation"
+#~ msgstr "Procede a Confirmación de Compra"
+
+#~ msgid "Please proceed to order confirmation to complete your order"
+#~ msgstr "Por favor proceda a Confirmación de Compra para completar su compra"
+
+#~ msgid "Delivery Cost"
+#~ msgstr "Coste de envío"
+
+#~ msgid "Order Number:"
+#~ msgstr "Número de orden:"
+
+#~ msgid "Please contact our CS"
+#~ msgstr "Por favor contacte a nuestro Servicio al Cliente"
+
+#~ msgid "Please contact CS"
+#~ msgstr "Por favor contacte Servicio al Cliente"
+
+#~ msgid "Session timeout, please check your cart!, err:"
+#~ msgstr "Sesión expirada, por favor revise su carrito!, err:"
+
+#~ msgid "Login Fail"
+#~ msgstr "Inicio de Sesión Fallido"
+
+#~ msgid "Please enter your registered email address"
+#~ msgstr "Por favor introduzca su correo electrónico registrado"
+
+#~ msgid "Email Address does not exist in our system. Please click your email"
+#~ msgstr ""
+#~ "Este Correo Electrónico no existe en nuestro sistema. Por favor revise su "
+#~ "e-mail"
+
+#~ msgid "Your Email is illegal"
+#~ msgstr "Su Correo Electrónico es ilegal"
+
+#~ msgid " View Cart "
+#~ msgstr "Ver Cesta"
+
+#~ msgid " Checkout"
+#~ msgstr "Realizar el Pago"
+
+#~ msgid "Sort By:"
+#~ msgstr "Ordenar por:"
+
+#~ msgid "Tel:"
+#~ msgstr "Tel:"
+
+#~ msgid ""
+#~ "DigitalDiscount  is a trading name owned by ChatandVision Ltd with "
+#~ "registered offices at Flat/RM 12, 25/F Langham Place Office Tower 8 "
+#~ "Argyle Street, Kowloon, Hong Kong. Through its websites, ChatandVision "
+#~ "Ltd offers consumer electronics hardware, and services. "
+#~ msgstr ""
+#~ "Buholoco es el nombre comercial propiedad de ChatandVision Ltd con sede "
+#~ "social en Piso / RM 12, 25 / F Langham Place Office Tower 8 Argyle "
+#~ "Street, Kowloon, Hong Kong. A través de sus sitios web, ChatandVision Ltd "
+#~ "ofrece hardware de la electrónica de consumo y servicios."
 
 #~ msgid "DigitalDiscount Privacy Policy"
 #~ msgstr "Política de privacidad Buholoco"
