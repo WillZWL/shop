@@ -83,8 +83,14 @@ class SoItemDetailDao extends BaseDao
 
         $this->db->from('so_item_detail AS soid');
         $this->db->join('(
-                            SELECT *
-                            FROM v_prod_items
+                            SELECT p.sku AS prod_sku,
+                                   coalesce(p.discount,0) AS discount,
+                                   coalesce(pd.sku, p.sku) AS item_sku,
+                                   coalesce(b.component_order,-(1)) AS component_order,
+                                   p.image AS image
+                            FROM product p
+                            LEFT JOIN bundle b ON p.sku = b.prod_sku
+                            LEFT JOIN product pd ON pd.sku = b.component_sku
                             ORDER BY component_order
                         ) AS vpi', 'soid.item_sku = vpi.prod_sku', 'LEFT');
         $this->db->join('product AS p', 'soid.item_sku = p.sku', 'LEFT');

@@ -24,7 +24,7 @@ class Integration extends MY_Controller
         $integrationModel->sendOrderToCybsDecisionManager($debug);
         print "Done";
     }
-/*
+
     public function index()
     {
         $sub_app_id = $this->getAppId() . "00";
@@ -71,7 +71,6 @@ class Integration extends MY_Controller
 
         $limit = '20';
 
-        $pconfig['base_url'] = $_SESSION["LISTPAGE"];
         $option["limit"] = $pconfig['per_page'] = $limit;
         if ($option["limit"]) {
             $option["offset"] = $this->input->get("per_page");
@@ -85,15 +84,19 @@ class Integration extends MY_Controller
 
         $option["orderby"] = $sort . " " . $order;
 
-        $data["objlist"] = $this->integration_model->get_batch_list($where, $option);
-        $data["total"] = $this->integration_model->get_batch_list_total($where);
+        $data["objlist"] = $this->sc['Batch']->getDao('Batch')->getBatchList($where, $option);
+        $data["total"] = $this->sc['Batch']->getDao('Batch')->getBatchList($where, ["num_rows" => 1]);
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
+        $pconfig['base_url'] = $_SESSION["LISTPAGE"];
+        $config['total_rows'] = $data["total"];
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
 
         $data["notice"] = notice($lang);
 
@@ -103,7 +106,7 @@ class Integration extends MY_Controller
         $data["searchdisplay"] = "";
         $this->load->view('integration/integration_index_v', $data);
     }
-*/
+
     public function getAppId()
     {
         return $this->appId;
@@ -113,7 +116,7 @@ class Integration extends MY_Controller
     {
         return $this->lang_id;
     }
-/*
+
     public function view($func, $batch_id)
     {
         $sub_app_id = $this->getAppId() . "01";
@@ -127,13 +130,15 @@ class Integration extends MY_Controller
                 $func = "tracking_info";
             }
 
-            $dao_arr = array("ixtens_reprice_amuk" => "ip_dao", "ixtens_reprice_amfr" => "ip_dao", "dpd_process" => "iss_dao", "metapack_process" => "iss_dao", "invetory" => "", "tracking_info" => "", "youtube_video" => "video_dao");
-            $sort_arr = array("ixtens_reprice_amuk" => "sku", "ixtens_reprice_amfr" => "sku", "dpd_process" => "id", "metapack_process" => "id", "inventory" => "trans_id", "tracking_info" => "trans_id", "youtube_video" => "trans_id");
+            // $dao_arr = ["ixtens_reprice_amuk" => "ip_dao", "ixtens_reprice_amfr" => "ip_dao", "dpd_process" => "iss_dao", "metapack_process" => "iss_dao", "invetory" => "", "tracking_info" => "", "youtube_video" => "video_dao"];
+            // $sort_arr = ["ixtens_reprice_amuk" => "sku", "ixtens_reprice_amfr" => "sku", "dpd_process" => "id", "metapack_process" => "id", "inventory" => "trans_id", "tracking_info" => "trans_id", "youtube_video" => "trans_id"];
+
+            $sort_arr = ["tracking_info" => "trans_id"];
 
             $_SESSION["LISTPAGE"] = base_url() . "integration/integration/view/{$func}/{$batch_id}?" . $_SERVER['QUERY_STRING'];
 
-            $where = array();
-            $option = array();
+            $where = [];
+            $option = [];
 
             $where["batch_id"] = $batch_id;
             if ($this->input->get("sku")) {
@@ -171,13 +176,8 @@ class Integration extends MY_Controller
             $sort = $this->input->get("sort");
             $order = $this->input->get("order");
 
-            $limit = '20';
-
-            $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-            $option["limit"] = $pconfig['per_page'] = $limit;
-            if ($option["limit"]) {
-                $option["offset"] = $this->input->get("per_page");
-            }
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
             if (empty($sort))
                 $sort = $sort_arr[$func];
@@ -190,35 +190,40 @@ class Integration extends MY_Controller
             }
 
             switch ($func) {
-                case "inventory":
-                    $data["objlist"] = $this->integration_model->get_iinv_list($dao_arr[$func], $where, $option);
-                    $data["total"] = $this->integration_model->get_iinv_num_rows($dao_arr[$func], $where);
-                    break;
+                // case "inventory":
+                //     $data["objlist"] = $this->integration_model->get_iinv_list($dao_arr[$func], $where, $option);
+                //     $data["total"] = $this->integration_model->get_iinv_num_rows($dao_arr[$func], $where);
+                //     break;
 
                 case "tracking_info":
-                    $data["objlist"] = $this->integration_model->get_itinfo_list($dao_arr[$func], $where, $option);
-                    $data["total"] = $this->integration_model->get_itinfo_num_rows($dao_arr[$func], $where);
+                    $data["objlist"] = $this->sc['BatchTrackingInfo']->getDao('InterfaceTrackingInfo')->getList($where, $option);
+                    $data["total"] = $this->sc['BatchTrackingInfo']->getDao('InterfaceTrackingInfo')->getNumRows($where);
                     break;
 
-                case "youtube_video":
-                    if ($this->input->get("view_count")) {
-                        fetch_operator($where, "view_count", $this->input->get("view_count"));
-                    }
-                    $option['groupby'] = array("batch_id", "sku", "ref_id", "view_count", "batch_status", "failed_reason");
-                    $data["objlist"] = $this->integration_model->get_iyoutube_list($dao_arr[$func], $where, $option);
-                    $data["total"] = count($data["objlist"]);
-                    break;
-                default:
-                    $data["objlist"] = $this->integration_model->get_list($dao_arr[$func], $where, $option);
-                    $data["total"] = $this->integration_model->get_num_rows($dao_arr[$func], $where);
+                // case "youtube_video":
+                //     if ($this->input->get("view_count")) {
+                //         fetch_operator($where, "view_count", $this->input->get("view_count"));
+                //     }
+                //     $option['groupby'] = array("batch_id", "sku", "ref_id", "view_count", "batch_status", "failed_reason");
+                //     $data["objlist"] = $this->integration_model->get_iyoutube_list($dao_arr[$func], $where, $option);
+                //     $data["total"] = count($data["objlist"]);
+                //     break;
+                // default:
+                //     $data["objlist"] = $this->integration_model->get_list($dao_arr[$func], $where, $option);
+                //     $data["total"] = $this->integration_model->get_num_rows($dao_arr[$func], $where);
             }
 
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
 
-            $pconfig['total_rows'] = $data['total'];
-            $this->pagination_service->set_show_count_tag(TRUE);
-            $this->pagination_service->initialize($pconfig);
+            // $config['base_url'] = base_url('mastercfg/country/index');
+            $pconfig['base_url'] = $_SESSION["LISTPAGE"];
+            $config['total_rows'] = $data["total"];
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
+            $this->pagination->initialize($config);
+            $data['links'] = $this->pagination->create_links();
 
             $data["notice"] = notice($lang);
 
@@ -504,7 +509,7 @@ class Integration extends MY_Controller
             mail($this->notification_email, "VB Error updating Price Margin", $result["error_message"]);
         }
     }
-*/
+
 }
 
 

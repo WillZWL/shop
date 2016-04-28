@@ -104,38 +104,38 @@
     </form>
     <?php
     $i = 0;
-    if (!empty($objlist)) {
-        foreach ($objlist as $obj) {
-            if ($this->input->get('trans') != $obj->get_trans_id()) {
+    if (!empty($objlist)) :
+        foreach ($objlist as $obj) :
+            if ($this->input->get('trans') != $obj->getTransId()) :
                 ?>
                 <tr class="row<?= $i % 2 ?>">
                     <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                         title='<?= $lang["create_on"] ?>:<?= $obj->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->get_modify_by() ?>'>
+                                         title='<?= $lang["create_on"] ?>:<?= $obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->getModifyBy() ?>'>
                     </td>
-                    <td><?= $obj->get_sh_no() ?></td>
-                    <td><?= $obj->get_tracking_no() ?></td>
-                    <td><?= $obj->get_courier_id() ?></td>
-                    <td><?= $obj->get_ship_method() ?></td>
-                    <td style="color:<?= $ar_color[$obj->get_batch_status()] ?>"><?= $ar_status[$obj->get_batch_status()] ?></td>
-                    <td><?= lang($obj->get_failed_reason(), $lang) ?></td>
+                    <td><?= $obj->getShNo() ?></td>
+                    <td><?= $obj->getTrackingNo() ?></td>
+                    <td><?= $obj->getCourierId() ?></td>
+                    <td><?= $obj->getShipMethod() ?></td>
+                    <td style="color:<?= $ar_color[$obj->getBatchStatus()] ?>"><?= $ar_status[$obj->getBatchStatus()] ?></td>
+                    <td><?= lang($obj->getFailedReason(), $lang) ?></td>
                     <td align="center">&nbsp;
                         <?php
-                        if (!in_array($obj->get_batch_status(), array("R", "S"))) {
+                        if (!in_array($obj->getBatchStatus(), array("R", "S"))) :
                             ?>
-                            <!--    <input type="button" value="<?= $lang["modify"] ?>" class="button" onClick="Redirect('<?= base_url() . "integration/integration/view_amazon/" . $func . "/" . $obj->get_batch_id() . "?" . $_SERVER["QUERY_STRING"] . "&trans=" . $obj->get_trans_id() ?>')">-->
+                            <!--    <input type="button" value="<?= $lang["modify"] ?>" class="button" onClick="Redirect('<?= base_url() . "integration/integration/view_amazon/" . $func . "/" . $obj->getBatchId() . "?" . $_SERVER["QUERY_STRING"] . "&trans=" . $obj->getTransId() ?>')">-->
                         <?php
-                        }
+                        endif;
                         ?>
                     </td>
                 </tr>
             <?php
-            }
+            endif;
             $i++;
-        }
-    }
+        endforeach;
+    endif;
     ?>
     </table>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>

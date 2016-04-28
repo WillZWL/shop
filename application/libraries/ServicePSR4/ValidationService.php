@@ -12,6 +12,10 @@ class ValidationService extends BaseService
     public function __construct()
     {
         parent::__construct();
+
+        $CI =& get_instance();
+        $this->config =& $CI->config;
+        $this->load = $CI->load;
     }
 
     public function run()
@@ -21,7 +25,7 @@ class ValidationService extends BaseService
                 foreach ($ruleslist as $field => $rules) {
                     if ($rules) {
                         if (is_object($data)) {
-                            $func = "get_" . $field;
+                            $func = "get" . $field;
                             if (!method_exists($data, $func))
                                 $func = "get" . ucfirst($field);
                             $value = $data->$func();
@@ -33,7 +37,7 @@ class ValidationService extends BaseService
                         foreach ($rules as $rule) {
                             list($func, $cvalue) = @explode("=", $rule);
                             if (!$this->$func($value, $cvalue)) {
-                                throw new Exception($value . " is_failed_in_rule " . $rule . " for field " . $field . "; ");
+                                throw new \Exception($value . " is_failed_in_rule " . $rule . " for field " . $field . "; ");
                                 return FALSE;
                             }
                         }
@@ -86,7 +90,7 @@ class ValidationService extends BaseService
         $data = $this->getData();
 
         if (is_object($data)) {
-            $func = "get_" . $field;
+            $func = "get" . $field;
             $value = $data->$func();
         } else {
             $value = $data[$field];
@@ -126,7 +130,7 @@ class ValidationService extends BaseService
         if (!is_numeric($val)) {
             $data = $this->getData();
             if (is_object($data)) {
-                $func = "get_" . $field;
+                $func = "get" . $field;
                 $value = $data->$func();
             } else {
                 $value = $data[$field];
@@ -143,7 +147,7 @@ class ValidationService extends BaseService
         if (!is_numeric($val)) {
             $data = $this->getData();
             if (is_object($data)) {
-                $func = "get_" . $field;
+                $func = "get" . $field;
                 $value = $data->$func();
             } else {
                 $value = $data[$field];
@@ -189,21 +193,22 @@ class ValidationService extends BaseService
     public function exists_in_vo($str, $val)
     {
         list($name, $column) = explode("->", $val);
-        $path = APPPATH . "libraries/dao/" . strtolower($name) . "_dao.php";
+        $path = APPPATH . "/libraries/DtoPSR4/" . ucfirst(underscore2camelcase($name)) . "Dao.php";
         if (file_exists($path)) {
-            include_once($path);
-            $classname = ucfirst($name) . "_dao";
-            $strclass = new $classname();
+            $daoClassname = 'ESG\Panther\Dao' . "\\" . ucfirst(underscore2camelcase($name)) . "Dao";
+            $strclass = new $daoClassname();
             return $strclass->get(array($column => str)) ? TRUE : FALSE;
         }
         return FALSE;
     }
 
-    public function check_field($input, $greater = 0, $val = '15', $delimiter = ',', $skip_first_line = TRUE, $skip_empty_line = TRUE)
+    public function checkField($input, $greater = 0, $val = '15', $delimiter = ',', $skip_first_line = TRUE, $skip_empty_line = TRUE)
     {
         $checking = TRUE;
-        include_once(BASEPATH . 'plugins/csv_parser_pi.php');
-        $reader = new CSVFileLineIterator($input);
+
+        include_once BASEPATH . 'plugins/csv_parser_pi.php';
+        $reader = new \CSVFileLineIterator($input);
+
         $result = csv_parse($reader, $delimiter, $skip_first_line);
         for ($i = 0; $i < count($result); $i++) {
             include(APPPATH . "helpers/string_helper.php");
@@ -228,34 +233,34 @@ class ValidationService extends BaseService
         }
     }
 
-    public function exists_in($str, $val)
+    public function existsIn($str, $val)
     {
-        $exists_in = $this->get_exists_in();
+        $exists_in = $this->getExistsIn();
         return $exists_in[$val][$str] ? TRUE : FALSE;
     }
 
-    public function get_exists_in()
+    public function getExistsIn()
     {
         return $this->exists_in;
     }
 
-    public function set_exists_in($value)
+    public function setExistsIn($value)
     {
         $this->exists_in = $value;
     }
 
-    public function not_exists_in($str, $val)
+    public function notExistsIn($str, $val)
     {
-        $not_exists_in = $this->get_not_exists_in();
+        $not_exists_in = $this->getNotExistsIn();
         return $not_exists_in[$val][$str] ? FALSE : TRUE;
     }
 
-    public function get_not_exists_in()
+    public function getNotExistsIn()
     {
         return $this->not_exists_in;
     }
 
-    public function set_not_exists_in($value)
+    public function setNotExistsIn($value)
     {
         $this->not_exists_in = $value;
     }

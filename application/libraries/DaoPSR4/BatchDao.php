@@ -21,7 +21,7 @@ class BatchDao extends BaseDao
         return $this->tableName;
     }
 
-    public function getBatchList($where = array(), $option = array(), $classname = "Batch_dto")
+    public function getBatchList($where = array(), $option = array(), $classname = "BatchDto")
     {
 
         $this->db->from('batch AS b');
@@ -35,8 +35,6 @@ class BatchDao extends BaseDao
         if (empty($option["num_rows"])) {
 
             $this->db->select('b.*, bd.duration');
-
-            $this->include_dto($classname);
 
             if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
@@ -93,9 +91,9 @@ class BatchDao extends BaseDao
              LIMIT 1
             ";
 
-        if ($query = $this->db->query($sql, array($batch_id, $batch_id))) {
+        if ($query = $this->db->query($sql, [$batch_id, $batch_id])) {
 
-            return array("completed" => $query->row()->complete, "total" => $query->row()->total);
+            return ["completed" => $query->row()->complete, "total" => $query->row()->total];
         }
         return FALSE;
     }
