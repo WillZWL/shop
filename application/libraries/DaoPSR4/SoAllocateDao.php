@@ -446,31 +446,32 @@ class SoAllocateDao extends BaseDao
         }
         if (empty($option["num_rows"]) && empty($option["total_items"])) {
 
-            if ($option["distinct_so_no_list"])
-            {
-                # If take distinct_so_no_list need anew set select_str for discinct so_no;
+            $take_distinct_so_no = false;
+
+            # If take distinct_so_no_list need anew set select_str for discinct so_no;
+            if ($option["distinct_so_no_list"]) {
                 $select_str = "DISTINCT(so.so_no)";
+
+                $take_distinct_so_no = true;
             }
 
             $this->db->select($select_str);
 
-            # ORDER BY so_no sequence is important. if not will cause display problem
-            if (isset($option["orderby"])) {
-                if (strpos($option["orderby"], "so_no") === false) {
-                    $this->db->order_by($option["orderby"]);
+            if ($take_distinct_so_no === false) {
+                # ORDER BY so_no sequence is important. if not will cause display problem
+                if (isset($option["orderby"])) {
+                    if (strpos($option["orderby"], "so_no") === false) {
+                        $this->db->order_by($option["orderby"]);
+                        $this->db->order_by("so_no");
+                    } else
+                        $this->db->order_by($option["orderby"]);
+                } else {
                     $this->db->order_by("so_no");
-                } else
-                    $this->db->order_by($option["orderby"]);
-            } else {
-                $this->db->order_by("so_no");
+                }
+
+                $this->db->order_by("soid.line_no");
+                $this->db->order_by("so.split_so_group desc");
             }
-
-            $this->db->order_by("soid.line_no");
-            $this->db->order_by("so.split_so_group desc");
-
-            // if($option["groupby"]) {
-            //     $this->db->group_by($option["groupby"]);
-            // }
 
             if (empty($option["limit"])) {
                 $option["limit"] = $this->rows_limit;

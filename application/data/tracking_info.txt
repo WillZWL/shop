@@ -1,0 +1,22 @@
+#Table name
+interface_tracking_info
+
+#Input column name	Output column name
+0	sh_no
+1	so_no
+2	status
+3	tracking_no
+4	ship_method
+5	courier_id
+6	dispatch_date
+7	weight
+8	consignee
+9	postcode
+10	country
+11	amount
+12	currency
+13	charge_out
+14	qty
+15	sku
+16	qty_shipped
+17	shipping_cost
