@@ -268,15 +268,17 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="column col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="column col-xs-12 col-sm-8 col-md-8 col-lg-8">
                                 <div class="panel-gray">
                                     <span class="desc-about" style="font-weight: 400;"><?= _('2015 All Right reserved') ?></span></br>
                                     <a href="<?= base_url('display/view/conditions_of_use') ?>"><span class="desc-about"><?= _('Conditions of Use') ?></span></a>&nbsp;|&nbsp;
-                                    <a href='<?= base_url("display/view/shipping") ?>'><span class="desc-about"><?= _('Shipping') ?></span></a>&nbsp;|&nbsp;
+                                    <a href='<?= base_url("display/view/shipping") ?>'><span class="desc-about"><?= _('Shipping Policy') ?></span></a>&nbsp;|&nbsp;
+                                    <a href='<?= base_url("display/view/conditions_of_use#cancel_order") ?>'><span class="desc-about"><?= _('Return and Refund Policy') ?></span></a>&nbsp;|&nbsp;
+                                    <a href='<?= base_url("display/view/conditions_of_use#billing") ?>'><span class="desc-about"><?= _('Billing Terms and Conditions') ?></span></a>&nbsp;|&nbsp;
                                     <a href="<?= base_url('display/view/privacy_policy') ?>"><span class="desc-about"><?= _('Privacy Policy') ?></span></a>
                                 </div>
                             </div>
-                            <!--<div class="column col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <!--<div class="column col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                 <div class="panel-white">
                                         <h4 class="panel-title"><?= _('SELECT SHIPPING COUNTRY') ?></h4>
                                     <div>

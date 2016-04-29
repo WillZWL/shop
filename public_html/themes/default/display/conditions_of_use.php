@@ -16,6 +16,7 @@
                         <li><a href="#liability"><?= _('DISCLAIMER OF LIABILITY') ?></a></li>
                         <li><a href="#security"><?= _('SECURITY') ?></a></li>
                         <li><a href="#revisions"><?= _('CONDITIONS OF USE REVISIONS') ?></a></li>
+                        <li><a href="#billing"><?= _('BILLING TERMS AND CONDITIONS') ?></a></li>
                         <br /><br />
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDITIONS OF USE') ?></h3>
@@ -157,6 +158,18 @@
                     <h3 id="revisions"><?= _('CONDITIONS OF USE REVISIONS') ?></h3>
                     <p>
                         <?= _('ChatandVision Ltd may revise these conditions of use by updating this posting. You agree that in the event any portion of these Site conditions of use is found to be unenforceable, the remainder of these Site conditions shall remain in full force and effect. By using this Site you agree to be bound by any such revisions and should therefore periodically visit this page to determine the current conditions of use to which you are bound.') ?>
+                    </p>
+                    <br /><br />
+
+                    <h3 id="billing"><?= _('BILLING TERMS AND CONDITIONS') ?></h3>
+                    <p><?= _('Methods of Payment')?></p>
+
+                    <p><?= _('A variety of payment methods are offered on the Site for the convenience of customers. You agree to pay all fees incurred in connection with your purchases at the rates in effect when the charges were incurred. If you pay by credit card, your card issuer agreement governs your use of your card, and you must refer to that agreement and not these Terms of Use to determine your rights and liabilities as a cardholder. YOU, AND NOT DigitalDiscount.co.uk (DigitalDiscount), ARE RESPONSIBLE FOR PAYING ANY UNAUTHORIZED AMOUNTS BILLED TO YOUR CREDIT CARD BY A THIRD PARTY.')?>
+                    </p> 
+
+                    <p><?= _('Payment Fees and Charges')?></p> 
+
+                    <p><?= _('You agree to pay all fees and charges incurred in connection with your purchases at the rates in effect when the charges were incurred. Unless you notify DigitalDiscount of any discrepancies within sixty (60) days after they first appear on your credit card statement, you agree that they will be deemed accepted by you in all respects and for all purposes. If DigitalDiscount does not receive payment from your credit card issuer or its agent, you agree to pay all amounts due upon demand by DigitalDiscount or its agents.')?>
                     </p>
                     <br /><br />
                     <?= _('Updated: July 09, 2015 ') ?><br />
