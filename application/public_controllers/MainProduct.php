@@ -29,6 +29,12 @@ class MainProduct extends PUB_Controller
 
         $data['prod_info'] = $this->common_data_prepare_model->get_data_array($this, array("sku" => $sku, "type" => "web"));
 		$data['sv'] = $sv;
+        $data["tracking_data"]=array(
+            "sku"=>$data['prod_info']["sku"],
+            "product_name"=>$data['prod_info']["prod_name"],
+            "category_name"=>$data['prod_info']["category_name"],
+            "price"=>$data['prod_info']["prod_price"],
+            );
 		$this->load->view('product', $data);
     }
 }

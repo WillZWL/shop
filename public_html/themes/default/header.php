@@ -46,51 +46,8 @@
     <?php
         $siteobj = \PUB_Controller::$siteInfo;
         $platCountryId = $siteobj->getPlatformCountryId();
-        switch (strtolower($platCountryId)) {
-            case 'gb' :
-                $searchspring_site_id = 'jdajtq';
-                $GTM_ID = 'GTM-MHPP6T';
-                break;
+        print_r ($trackingCodeJs);
 
-            case 'es' :
-                $searchspring_site_id = '7g2sk7';
-                $GTM_ID = 'GTM-TC6F2D';
-                break;
-
-            case 'au' :
-                $searchspring_site_id = 'dkow9j';
-                $GTM_ID = 'GTM-NNL2JB';
-                break;
-
-            case 'nz' :
-                $searchspring_site_id = '61jj96';
-                $GTM_ID = 'GTM-K3GW2F';
-                break;
-
-            case 'it' :
-                $searchspring_site_id = '1eq9mh';
-                $GTM_ID = 'GTM-T33Z3B';
-                break;
-
-            case 'fr' :
-                $searchspring_site_id = 'rtkr86';
-                $GTM_ID = 'GTM-MQ9RSX';
-                break;
-
-            case 'be' :
-                $searchspring_site_id = 'm15dls';
-                $GTM_ID = 'GTM-MPJWJQ';
-                break;
-
-            case 'pl' :
-                $searchspring_site_id = 'yf45du';
-                $GTM_ID = 'GTM-TXWWKC';
-                break;
-
-            default   :
-                $searchspring_site_id = '';
-                $GTM_ID = '';
-        }
     ?>
 <script>
 function updateBasketIcon(totalAmount)
@@ -104,23 +61,16 @@ $(document).ready(function() {
     updateBasketIcon('<?=$_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"]?>');
 });
 </script>
-<!-- Google Tag Manager -->
-<noscript>
-    <iframe src="//www.googletagmanager.com/ns.html?id=<?php echo $GTM_ID; ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-</noscript>
 <script>
     $(document).ready(function(){
         var p = $('.pav-verticalmenu.fix-top.hidden-xs.hidden-sm');
         //console.log("obj:", p);
         $('.dropdown-menu').css("min-height", p.height());
+
+        $(".button-search").click(function(){
+             $( "form#search" ).submit(); 
+        });
     });
-
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','<?php echo $GTM_ID; ?>');
-
 </script>
 <!-- End Google Tag Manager -->
 
@@ -256,7 +206,7 @@ $(document).ready(function() {
                                         <script type="text/javascript" src="https://d2r7ualogzlf1u.cloudfront.net/autocomplete/searchspring-autocomplete.min.js"></script>
                                         <script type="text/javascript">
                                             SearchSpring.Autocomplete.init({
-                                                siteId: '<?php echo $searchspring_site_id; ?>',
+                                                siteId: '<?php echo $searchSpringSiteId; ?>',
                                                 queryClass : "searchspring-query",
                                                 currencySymbol: '<?php echo $currencyId; ?>',
                                                 offsetY: 10,

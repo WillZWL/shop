@@ -161,15 +161,20 @@ class CheckoutModel extends \CI_Model
 
         if (intval($soNo) == $soNo) {
             $soObj = $this->_soFactoryService->getDao("So")->get(["so_no" => $soNo]);
+
             if ($soObj->getStatus() >= $option["status"]) {
-                if (($soObj->getCreateAt() == ip2long($_SERVER["REMOTE_ADDR"]))
-                    || (isset($_GET["debug"]) && ($_GET["debug"] == 1))) {
-                    if (isset($option["soItemDetail"]))
-                        $soItemDetail = $this->_soFactoryService->getDao("SoItemDetail")->getList(["so_no" => $soNo], ["limit" => -1]);
-                    if (isset($option["soPaymentStatus"]))
-                    {
-                        $soPaymentStatus = $this->_soFactoryService->getDao("SoPaymentStatus")->getRecordWithGatewayName(["sops.so_no" => $soNo], ["limit" => 1]);
+
+                if (($soObj->getCreateAt() == ip2long($_SERVER["REMOTE_ADDR"])) || (isset($_GET["debug"]) && ($_GET["debug"] == 1))) {
+                    
+                    if (isset($option["soItemDetail"])){
+
+                        $soItemDetail = $this->_soFactoryService->getDao("SoItemDetail")->getItemsWithName(["so_no" => $soNo], ["limit" => -1]);
                     }
+
+                        $clientService = new ClientService();
+                        $client=$clientService->getDao("Client")->get(array("id" => $soObj->getClientId()));
+                        $soPaymentStatus = $this->_soFactoryService->getDao("SoPaymentStatus")->getRecordWithGatewayName(["sops.so_no" => $soNo], ["limit" => 1]);
+
                     $valid = true;
                 }
             }
@@ -177,6 +182,8 @@ class CheckoutModel extends \CI_Model
 
         return ["valid" => $valid
                 , "so" => $soObj
+                , "client"=>$client
+                , "afInfo" =>$afInfo
                 , "soItemDetail" => $soItemDetail
                 , "soPaymentStatus" => $soPaymentStatus];
     }

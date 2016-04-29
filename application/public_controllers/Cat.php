@@ -82,8 +82,9 @@ class Cat extends PUB_Controller
         }
 
         // meta tag
+        
         $data['data']['lang_text'] = $this->getLanguageFile();
-        $data["tracking_data"] = array("category_name" => $cat_name['cat'], "category_id" => $cat_id);
+        $data["tracking_data"] = array("category_name" => $cat_obj->getName(), "category_id" => $cat_id);
         $this->load->view('cat', $data);
     }
 

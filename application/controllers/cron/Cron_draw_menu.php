@@ -131,12 +131,12 @@ class Cron_draw_menu extends MY_Controller
                     }
                     array_multisort($sponsor, SORT_DESC, $names, SORT_ASC, $main_cat_array);
 
-                    $CategoriesTitle = '<?= _("Categories") ?>';
+                  
                     $content_v2 =
                              '<div class="col-lg-3 col-sm-3 col-md-3 hidden-xs hidden-sm top-verticalmenu">
 								<div class="menu-heading d-heading">
 								   <h4>
-									  <?= _("'.$CategoriesTitle.'") ?><span class="fa fa-angle-down pull-right"></span>
+									  <?= _("Categories") ?><span class="fa fa-angle-down pull-right"></span>
 								   </h4>
 								</div>';
                     $content_v2 .= '<div id="pav-verticalmenu" class="pav-verticalmenu">
@@ -179,7 +179,8 @@ class Cron_draw_menu extends MY_Controller
 
                         $mobileContent .= '<li class="parent dropdown home aligned-left" >
 											<a class="dropdown-toggle linkcat" data-toggle="dropdown" href="'.$value['url'].'">
-												<span class="menu-title">'<?= _("'.$value['name'].'") ?></span><b class="caret"></b>
+												<span class="menu-title">
+                                                <?= _("'.$value['name'].'"); ?></span><b class="caret"></b>
 											</a>';
 
                         if ($value['subcat']) {
@@ -211,13 +212,13 @@ class Cron_draw_menu extends MY_Controller
 
                                 $content_v2 .= '<h4 class="widget-heading title">
 												<a class="linksub" href=\''.$subcategory['url'].'\'>
-												   <span><?= _('.$subcategory['name'].') ?></span>
+												   <span><?= _("'.$subcategory['name'].'") ?></span>
 												</a>
 											</h4>
 											<div class="">';
                                 $mobileContent .= ' <h4 class="widget-heading title">
 													<a  class="linksub" href=\''.$subcategory['url'].'\'>
-													   <span><?= _('.$subcategory['name'].') ?></span>
+													   <span><?= _("'.$subcategory['name'].'") ?></span>
 													</a>
 												</h4>
 												<div class="">';
@@ -226,7 +227,7 @@ class Cron_draw_menu extends MY_Controller
                                     $content_v2 .= '<ul class="content list-unstyled">';
                                     $mobileContent .= '<ul class="content">';
                                     foreach ($subcategory['subsub'] as $subsubcategory) {
-                                        $content_v2 .= '<li><a href="'.$subsubcategory['url'].'"><?= _('.$subsubcategory['name'].') ?></a></li>';
+                                        $content_v2 .= '<li><a href="'.$subsubcategory['url'].'"><?= _("'.$subsubcategory['name'].'") ?></a></li>';
                                         $mobileContent .= "<li><a class='linkcat' href=\"".$subsubcategory['url'].'">'.$subsubcategory['name'].'</a></li>';
                                     }
                                     $content_v2 .= '</ul>

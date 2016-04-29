@@ -16,7 +16,7 @@ class PUB_Controller extends CI_Controller
     protected $container;
     private static $serviceContainer;
     public static $siteInfo = null;
-
+    
 //    private $allow_referer_host = '/^http[s]?:\/\/shop\.skype\.com/';
 //    private $require_login = 0;
 //    private $load_header = 1;
@@ -38,6 +38,7 @@ class PUB_Controller extends CI_Controller
             $this->sc["Base"];
         }
         $this->loadModelDependcy();
+
 /*
 
         if (is_array($params) && count($params) > 0) {
@@ -59,6 +60,7 @@ class PUB_Controller extends CI_Controller
 */
         $this->loadSiteParameterService = new LoadSiteParameterService();
         $this->loadSiteInfo();
+        
     }
 
     public function loadModelDependcy()
@@ -92,6 +94,9 @@ class PUB_Controller extends CI_Controller
         $this->set_lang_id($stieInfo->getLangId());
         PUB_Controller::setSiteInfo($stieInfo);
     }
+
+
+   
 
 /*
     function initialize($params = array())
@@ -167,7 +172,7 @@ class PUB_Controller extends CI_Controller
         }
 
         // if (empty($str) && $retain_str) {
-        // 	$str = $retain_str;
+        //  $str = $retain_str;
         // }
 
         if ($str) {
@@ -222,16 +227,16 @@ class PUB_Controller extends CI_Controller
 
     // public function load_template($view, $vars = array(), $template = 'tbs', $return = FALSE)
     // {
-    // 	if ($template == 'tbs') {
-    // 		init_tbs();
-    // 	}
+    //  if ($template == 'tbs') {
+    //      init_tbs();
+    //  }
 
-    // 	$data = $this->get_preload_data();
+    //  $data = $this->get_preload_data();
 
-    // 	if ($vars && is_array($vars)) {
-    // 		$data['data'] = $vars;
-    // 	}
-    // 	$this->load->view($view, $data, $return);
+    //  if ($vars && is_array($vars)) {
+    //      $data['data'] = $vars;
+    //  }
+    //  $this->load->view($view, $data, $return);
     // }
 
 
@@ -344,33 +349,33 @@ class PUB_Controller extends CI_Controller
     public function get_preload_data()
     {
         // if ($this->load_header) {
-        // 	include_once(APPPATH."libraries/service/Cart_session_service.php");
-        // 	$cs_srv = new Cart_session_service();
-        // 	include_once(APPPATH."libraries/service/Customer_service_info_service.php");
-        // 	$csi_srv = new Customer_service_info_service();
-        // 	include_once(APPPATH."libraries/service/Platform_biz_var_service.php");
-        // 	$pbv_srv = new Platform_biz_var_service();
-        // 	include_once(APPPATH."libraries/service/Country_service.php");
-        // 	$country_srv = new Country_service();
+        //  include_once(APPPATH."libraries/service/Cart_session_service.php");
+        //  $cs_srv = new Cart_session_service();
+        //  include_once(APPPATH."libraries/service/Customer_service_info_service.php");
+        //  $csi_srv = new Customer_service_info_service();
+        //  include_once(APPPATH."libraries/service/Platform_biz_var_service.php");
+        //  $pbv_srv = new Platform_biz_var_service();
+        //  include_once(APPPATH."libraries/service/Country_service.php");
+        //  $country_srv = new Country_service();
 
-        // 	$cs_phone = $csi_srv->get_short_text(PLATFORMID);
-        // 	if (strpos($cs_phone, ") ") !== FALSE) {
-        // 		$cs_phone_arr = explode(") ", $cs_phone);
-        // 		$cs_phone = $cs_phone_arr[1];
-        // 	}
-        // 	// $this->add_preload_data
-        // 	// (
-        // 	// 	array
-        // 	// 	(
-        // 	// 		"cs_phone_no"=>$cs_phone,
-        // 	// 		"cart_info"=>$cs_srv->get_detail(PLATFORMID),
-        // 	// 		"free_delivery_limit"=>$pbv_srv->get_free_delivery_limit(PLATFORMID),
-        // 	// 		"platform_list"=>$country_srv->get_all_available_country_w_correct_lang(get_lang_id()),
-        // 	// 		"controller_path"=> "/" . $this->router->directory . uri_string_without_lang_country($this->router),
-        // 	// 		"base_url"=>base_url(),
-        // 	// 		"cdn_url"=>base_cdn_url()
-        // 	// 	)
-        // 	// );
+        //  $cs_phone = $csi_srv->get_short_text(PLATFORMID);
+        //  if (strpos($cs_phone, ") ") !== FALSE) {
+        //      $cs_phone_arr = explode(") ", $cs_phone);
+        //      $cs_phone = $cs_phone_arr[1];
+        //  }
+        //  // $this->add_preload_data
+        //  // (
+        //  //  array
+        //  //  (
+        //  //      "cs_phone_no"=>$cs_phone,
+        //  //      "cart_info"=>$cs_srv->get_detail(PLATFORMID),
+        //  //      "free_delivery_limit"=>$pbv_srv->get_free_delivery_limit(PLATFORMID),
+        //  //      "platform_list"=>$country_srv->get_all_available_country_w_correct_lang(get_lang_id()),
+        //  //      "controller_path"=> "/" . $this->router->directory . uri_string_without_lang_country($this->router),
+        //  //      "base_url"=>base_url(),
+        //  //      "cdn_url"=>base_cdn_url()
+        //  //  )
+        //  // );
         // }
 
         // return parent::get_preload_data();
