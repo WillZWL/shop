@@ -42,7 +42,7 @@ class VbDataTransferProductCustomClassService extends VbDataTransferService
                 if ($pcc_obj) {
                     // update
                     $reason = "update";
-                    $this->getService('Product')->updateProductCustomClass($pcc_obj, $pc);
+                    $this->getService('Product')->updateProductCustomClass($pcc_obj, $pcc);
                     if ($this->getService('Product')->getDao('ProductCustomClassification')->update($pcc_obj)) {
                         $process_status = 5;    // update success
                     } else {
