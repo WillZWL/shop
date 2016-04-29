@@ -16,7 +16,6 @@
 
     <link rel="icon" type="image/png" href="/themes/default/asset/image/favicon_<?= strtolower(PLATFORM) ?>.png" />
 
-    <link href="/themes/default/asset/image/catalog/cart.png" rel="icon" />
     <link href="/themes/default/asset/css/bootstrap.css" rel="stylesheet" />
     <link href="/themes/default/asset/css/stylesheet.css" rel="stylesheet" />
     <link href="/themes/default/asset/css/font-awesome.min.css" rel="stylesheet" />
