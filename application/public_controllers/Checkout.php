@@ -12,11 +12,13 @@ use ESG\Panther\Models\Website\CartSessionModel;
 use ESG\Panther\Form\CheckoutFormFilter;
 use ESG\Panther\Service\Cybersource\CybersourceIntegrator;
 use ESG\Panther\Form\GeneralInputFilter;
+use ESG\Panther\Service\AffiliateService;
 
 class Checkout extends PUB_Controller
 {
     public $checkoutModel;
     public $cartSessionModel;
+    public $affiliateService;
 
     public function __construct($allow_force_https = true) {
         parent::__construct();
@@ -30,6 +32,7 @@ class Checkout extends PUB_Controller
                 redirect($httpsUrl);
         }
         $this->cartSessionModel = new CartSessionModel;
+        $this->affiliateService = new AffiliateService();
     }
 
     public function checkDeliveryCharge()
@@ -55,6 +58,9 @@ class Checkout extends PUB_Controller
     }
 
     public function index() {
+
+        $this->affiliateService->addAfCookie($_GET);
+
         $cart = $this->cartSessionModel->getCartInfo();
         if (!$cart) {
             redirect("/review-order");
@@ -126,6 +132,7 @@ class Checkout extends PUB_Controller
 
     public function paymentResult($result, $soNo = "")
     {
+        
         $pagePar = [1 => //success
                         ["option1" => "soItemDetail"
                          ,  "view" => "paymentSuccess"
@@ -146,10 +153,23 @@ class Checkout extends PUB_Controller
             if ($soNo == "") {
                 $this->load->view("checkout/" . $pagePar[$result]["view"], $data);
             } elseif ($soNo) {
+
                 $verifyData = $this->checkoutModel->verifyAndGetOrderDetails($result, $soNo, [$pagePar[$result]["option1"] => true, "status" => $pagePar[$result]["status"]]);
+                 
+                 $afInfo = $this->affiliateService->getAfRecord();
+
                 if ($verifyData["valid"]) {
                     $data["so"] = $verifyData["so"];
                     $data[$pagePar[$result]["option1"]] = $verifyData[$pagePar[$result]["option1"]];
+
+                        $data["tracking_data"]["affiliate_name"] = $afInfo["af"];
+                        $data["tracking_data"]["total_amount"] = $data["so"]->getAmount();
+                        $data["tracking_data"]["so"] = $data["so"];
+                        $data["tracking_data"]["soi"] = $verifyData["soItemDetail"];
+                        $data["tracking_data"]["sops"] = $verifyData["soPaymentStatus"];
+                        $data["tracking_data"]["client_email"] = $verifyData["client"]->getEmail();
+                    
+                    $this->affiliateService->removeAfRecord();
                     $this->load->view("checkout/" . $pagePar[$result]["view"], $data);
                 } else {
                     show_404();

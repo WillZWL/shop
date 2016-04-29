@@ -1,12 +1,15 @@
 <?php
 use ESG\Panther\Models\Website\CartSessionModel;
+use ESG\Panther\Service\AffiliateService;
 
 Class Cart extends PUB_Controller
 {
+    public $affiliateService;
     public function __construct()
     {
         parent::__construct();
         $this->cartSessionModel = new CartSessionModel;
+        $this->affiliateService = new AffiliateService();
     }
 
     public function addItem($sku, $qty = 1)
@@ -73,6 +76,7 @@ Class Cart extends PUB_Controller
     public function addItemQty($sku = "", $qty = 0)
     {
         $result = $this->cartSessionModel->addItemQty($sku, $qty, $this->get_lang_id(), PLATFORM, $this->getSiteInfo()->getPlatformCurrencyId());
+        $this->affiliateService->addAfCookie($_GET);
         return $result;
     }
 
