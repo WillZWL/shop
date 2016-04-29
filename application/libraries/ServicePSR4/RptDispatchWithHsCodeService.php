@@ -66,7 +66,7 @@ class RptDispatchWithHsCodeService extends BaseService
 
     public function getHeader()
     {
-        return "SO No,Warehouse ID,MasterSKU,Product Name,Quantity,HS Code,Order Create Date,Pack Date,Dispatch Date,Currency,Amount,Origin Country ID, Destination Country ID, Courier ID, Tracking No, Average Delivery Cost(HKD) ,Declare value(HKD), Total Declare value(HKD)\r\n";
+        return "SO No,Warehouse ID,MasterSKU,Product Name,Quantity,HS Code,Description,Order Create Date,Pack Date,Dispatch Date,Currency,Amount,Origin Country ID, Destination Country ID, Courier ID, Tracking No, First leg tracking No, Average Delivery Cost(HKD) ,Declare value(HKD), Total Declare value(HKD)\r\n";
     }
 }
 
