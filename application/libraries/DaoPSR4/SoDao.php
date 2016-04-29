@@ -1362,8 +1362,8 @@ SQL;
         }
 
         $sql = "SELECT
-                so.so_no, soa.warehouse_id, smm.ext_sku, soid.prod_name, soid.qty, pcc.`code`, so.order_create_date, soh.create_on pack_date,
-                so.dispatch_date, so.amount,soid.amount as item_amount, fc.country_id fc_country, so.delivery_country_id, soh.courier_id, soh.tracking_no, so.rate, so.currency_id, so.delivery_charge, so.rate_to_hkd, so.declared_value
+                so.so_no, soa.warehouse_id, smm.ext_sku, soid.prod_name, soid.qty, pcc.`code`, pcc.description,so.order_create_date, soh.create_on pack_date,
+                so.dispatch_date, so.amount,soid.amount as item_amount, ifnull(fc.country_id, soa.warehouse_id) as fc_country, so.delivery_country_id, soh.courier_id, soh.tracking_no, so.rate, so.currency_id, so.delivery_charge, so.rate_to_hkd, so.declared_value
                 from so so
                 INNER JOIN so_item_detail soid on so.so_no = soid.so_no
                 INNER JOIN so_allocate soa on soa.so_no = so.so_no and soid.line_no = soa.line_no
