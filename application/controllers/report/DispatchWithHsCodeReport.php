@@ -51,11 +51,10 @@ class DispatchWithHsCodeReport extends MY_Controller
             $where['to_date'] = $to_date;
 
             $list = $this->sc['RptDispatchWithHsCode']->getCsv($where);
-
             $content = $this->sc['RptDispatchWithHsCode']->getHeader();
 
             foreach ($list as $line) {
-                $content .= "{$line['so_no']},{$line['warehouse_id']},{$line['ext_sku']},{$line['prod_name']},{$line['qty']},{$line['code']},{$line['order_create_date']},{$line['pack_date']},{$line['dispatch_date']},{$line['currency_id']},{$line['amount']},{$line['fc_country']},{$line['delivery_country_id']},{$line['courier_id']},{$line['tracking_no']}, {$line['average_delivery_cost']}, {$line['item_declared_value']}, {$line['total_declared_value']}\r\n";
+                $content .= "{$line['so_no']},{$line['warehouse_id']},{$line['ext_sku']},{$line['prod_name']},{$line['qty']},{$line['code']},{$line['description']}, {$line['order_create_date']},{$line['pack_date']},{$line['dispatch_date']},{$line['currency_id']},{$line['amount']},{$line['fc_country']},{$line['delivery_country_id']},{$line['courier_id']},{$line['tracking_no']},'', {$line['average_delivery_cost']}, {$line['item_declared_value']}, {$line['total_declared_value']}\r\n";
             }
 
             $data['output'] = $content;
