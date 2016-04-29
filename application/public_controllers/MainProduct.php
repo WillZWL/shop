@@ -35,6 +35,9 @@ class MainProduct extends PUB_Controller
             "category_name"=>$data['prod_info']["category_name"],
             "price"=>$data['prod_info']["prod_price"],
             );
-		$this->load->view('product', $data);
+
+        $siteobj = \PUB_Controller::$siteInfo;
+        $data["countryid"] = $siteobj->getPlatformCountryId();
+        $this->load->view('product', $data);
     }
 }
