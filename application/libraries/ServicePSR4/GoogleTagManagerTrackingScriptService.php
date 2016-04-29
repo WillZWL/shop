@@ -4,11 +4,16 @@ namespace ESG\Panther\Service;
 class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
 {
     const GTM_CONTAINER_ID = 'GTM-77HZ';
-
+    
+    private $loadSiteParameterService;
+    private $countryContainerId;
+    private $countryId;
 
     public function __construct()
     {
         parent::__construct();
+        $this->loadSiteParameterService=new LoadSiteParameterService();
+        $this->setCountryId($this->loadSiteParameterService->initSite()->getPlatformCountryId());
     }
 
     public function isRegisteredPage($page)
@@ -44,17 +49,17 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
     public function getSpecificCode($page = array(), $var = array())
     {
         $script = "";
-
-        return $this->_formDataLayer($page, $var) . $this->_show_common_script();
+        return $this->_formDataLayer($page, $var) . $this->_showCommonScript();
     }
 
     private function _formDataLayer($page = array(), $var = array())
     {
+       
         $pageInfo = $this->_pageTitleMapping($page);
         $dataLayer = "<script>";
-        $dataLayer .= 'var google_tag_params = { "countryId": "' . PLATFORMCOUNTRYID . '"';
+        $dataLayer .= 'var google_tag_params = { "countryId": "' . $this->getCountryId() . '"';
 
-        if ($this->is_home_page($page)
+        if ($this->isHomePage($page)
             || $this->isCatPage($page)
             || $this->isCheckoutPage($page)
             || $this->isPaymentFailurePage($page)
@@ -77,17 +82,18 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
         $dataLayer .= '"google_tag_params": window.google_tag_params,';
         $dataLayer .= '"pageTitle": "' . $pageInfo['title'] . '",
                         "affiliateID": "' . $_COOKIE['af'] . '",
-                       "pageCountryID": "' . PLATFORMCOUNTRYID . '"';
+                       "pageCountryID": "' . $this->getCountryId() . '"';
 
-        if ($this->is_home_page($page))
+        if ($this->isHomePage($page))
             $dataLayer .= $this->_homePage($pageInfo, $var);
-        else if ($this->isCatPage($page))
+        else if ($this->isCatPage($page)) 
             $dataLayer .= $this->_categoryPage($pageInfo, $var);
-        else if ($this->isMainproductPage($page))
+        else if ($this->isMainproductPage($page)) 
             $dataLayer .= $this->_mainproductPage($pageInfo, $var);
-        else if ($this->isReviewPage($page))
+        else if ($this->isReviewPage($page)) 
             $dataLayer .= $this->_reviewOrderPage($pageInfo, $var);
         else if ($this->isCheckoutPage($page)) {
+
             $dataLayer .= $this->_checkoutPage($pageInfo, $var);
         } else if ($this->isPaymentSuccessPage($page)) {
             //hard code 1, so this will include order confirmation page for PH
@@ -99,6 +105,7 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
         $dataLayer .= '}];
                         </script>
                         ';
+
         return $dataLayer;
     }
 
@@ -110,16 +117,16 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
         if ($page['class'] == "redirect_controller") {
             $pageTitle = "HomePage";
             $ecommPagetype = "home";
-        } else if ($page['class'] == "cat") {
+        } else if ($page['class'] == "Cat") {
             $pageTitle = "CategoryPage";
             $ecommPagetype = "category";
-        } else if ($page['class'] == "mainproduct") {
+        } else if ($page['class'] == "MainProduct") {
             $pageTitle = "ProductPage";
             $ecommPagetype = "product";
-        } else if ($page['class'] == "cart") {
+        } else if ($page['class'] == "Cart") {
 //RA
             $pageTitle = "RA";
-        } else if ($page['class'] == "review_order") {
+        } else if ($page['class'] == "ReviewOrder") {
             $pageTitle = "Review";
             $ecommPagetype = "cart";
         } else if ($this->isCheckoutPage($page)) {
@@ -132,7 +139,7 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
         } else if ($this->isPaymentFailurePage($page)) {
             $pageTitle = "PaymentFailed";
             $ecommPagetype = "siteview";
-        } else if ($page['class'] == "display") {
+        } else if ($page['class'] == "Display") {
             if ($this->isAboutUs($page)) {
                 $pageTitle = "AboutUs";
             } else if ($this->isConditionsOfUse($page)) {
@@ -174,12 +181,14 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
 
     private function _remarketingMainproductPage($pageInfo = array(), $var = array())
     {
+
         $additionDataLayer .= '
-                            ,"prodid": ["' . PLATFORMCOUNTRYID . "-" . $var['sku'] . '"]
+                            ,"prodid": ["' . $this->getCountryId() . "-" . $var['sku'] . '"]
                             ,"pagetype": "product"
                             ,"pname": ["' . str_replace(array('\\', '"'), array('\\\\', '\"'), $var['product_name']) . '"]
-                            ,"pcat": ["' . str_replace(array('\\', '"'), array('\\\\', '\"'), $var['category']) . '"]
+                            ,"pcat": ["' . str_replace(array('\\', '"'), array('\\\\', '\"'), $var['category_name']) . '"]
                             ,"pvalue": ["' . $var['price'] . '"]';
+                            
         return $additionDataLayer;
     }
 
@@ -195,19 +204,23 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
                     $skus .= ",";
                 if ($price != "")
                     $price .= ",";
-                $skus .= '"' . PLATFORMCOUNTRYID . "-" . $product["sku"] . '"';
+                $skus .= '"' . $this->getCountryId() . "-" . $product["sku"] . '"';
                 $price .= $product["unit_price"];
+                $name .= '"' . $product["product_name"] . '"';
             }
             $additionDataLayer .= '
                                 ,"prodid": [' . $skus . ']';
             $additionDataLayer .= '
                                 ,"pvalue": [' . $price . ']';
+            $additionDataLayer .= '
+                                ,"pname": [' . $name . ']'; 
         }
         return $additionDataLayer;
     }
 
     private function _remarketingPaymentResult($pass_or_fail, $pageInfo = array(), $var = array())
     {
+
         if ($pass_or_fail == 1) {
             $prodid = "";
             $pname = "";
@@ -215,6 +228,7 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
             $pvalue = "";
             $additionDataLayer .= '
                                 ,"pagetype": "purchase"';
+        if($var["soi"]){
 
             foreach ($var["soi"] as $product) {
                 if ($prodid != "")
@@ -226,16 +240,18 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
                 if ($pvalue != "")
                     $pvalue .= ",";
 
-                $prodid .= '"' . PLATFORMCOUNTRYID . "-" . $product->get_prod_sku() . '"';
-                $pname .= '"' . str_replace(array('\\', '"'), array('\\\\', '\"'), $product->get_name()) . '"';
-                $pcat .= '"' . str_replace(array('\\', '"'), array('\\\\', '\"'), $product->get_cat_name()) . '"';
-                $pvalue .= $product->get_unit_price();
+                $prodid .= '"' . $this->getCountryId() . "-" . $product->getItemSku() . '"';
+                $pname .= '"' . str_replace(array('\\', '"'), array('\\\\', '\"'), $product->prod_name) . '"';
+                $pcat .= '"' . str_replace(array('\\', '"'), array('\\\\', '\"'), $product->getCatName()) . '"';
+                $pvalue .= $product->getUnitPrice();
             }
+        }
             $additionDataLayer .= ',"prodid": [' . $prodid . ']
                                 ,"pname": [' . $pname . ']
                                 ,"pcat": [' . $pcat . ']
                                 ,"pvalue": [' . $pvalue . ']';
         }
+
         return $additionDataLayer;
     }
 
@@ -258,11 +274,13 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
 
     private function _categoryPage($pageInfo = array(), $var = array())
     {
+       
         $additionDataLayer = '
                             ,"ecomm_pagetype": "' . $pageInfo['ecom_title'] . '"';
         $additionDataLayer .= '
                             ,"pageCategory": "' . str_replace(array('\\', '"'), array('\\\\', '\"'), $var['category_name']) . '"
                             ,"pageValue": ' . $var['category_id'];
+                            
         return $additionDataLayer;
     }
 
@@ -273,10 +291,11 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
                             ,"ecomm_prodid": "' . $var['sku'] . '"
                             ,"ecomm_totalvalue": "' . $var['price'] . '"';
         $additionDataLayer .= '
-                            ,"pageCategory": "' . str_replace(array('\\', '"'), array('\\\\', '\"'), $var['category']) . '"
+                            ,"pageCategory": "' . str_replace(array('\\', '"'), array('\\\\', '\"'), $var['category_name']) . '"
                             ,"pageProductName": "' . str_replace(array('\\', '"'), array('\\\\', '\"'), $var['product_name']) . '"
                             ,"productSKU": "' . $var['sku'] . '"
                             ,"productName": "' . str_replace(array('\\', '"'), array('\\\\', '\"'), $var['product_name']) . '"';
+                            
         return $additionDataLayer;
     }
 
@@ -291,6 +310,7 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
     private function _putEcommProductsInfo($pageInfo = array(), $var = array())
     {
         $skus = "";
+
         if ($var["products"])
             $product_list = $var["products"];
         else
@@ -303,13 +323,14 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
                 if (is_array($product))
                     $skus .= '"' . $product["sku"] . '"';
                 else
-                    $skus .= '"' . $product->get_prod_sku() . '"';
+                    $skus .= '"' . $product->getItemSku() . '"';
             }
             $additionDataLayer .= '
                                 ,"ecomm_prodid": [' . $skus . ']';
             $additionDataLayer .= '
                                 ,"ecomm_totalvalue": "' . $var['total_amount'] . '"';
         }
+
         return $additionDataLayer;
     }
 
@@ -321,46 +342,50 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
     private function _paymentResult($pass_or_fail, $pageInfo = array(), $var = array())
     {
         $additionDataLayer = $this->_putEcommPageType($pageInfo, $var);
+        
         if ($pass_or_fail == 1) {
 //success
+           if($var['so']){
             $additionDataLayer .= $this->_putEcommProductsInfo($pageInfo, $var);
             $additionDataLayer .= '
-                                ,"conversionDate": "' . $var['so']->get_order_create_date() . '"
+                                ,"conversionDate": "' . $var['so']->getOrderCreateDate() . '"
                                 ,"conversionValue": ' . $var['total_amount'] . '
-                                ,"clientName": "' . $var['so']->get_bill_name() . '"
+                                ,"clientName": "' . $var['so']->getBillName() . '"
                                 ,"clientEmail": "' . $var['client_email'] . '"';
 
             $additionDataLayer .= '
-                                ,"transactionId": "' . $var['so']->get_so_no() . '"
-                                ,"transactionDate": "' . $var['so']->get_order_create_date() . '"
-                                ,"transactionType": "' . $var['so']->get_biz_type() . '"
+                                ,"transactionId": "' . $var['so']->getSoNo() . '"
+                                ,"transactionDate": "' . $var['so']->getOrderCreateDate() . '"
+                                ,"transactionType": "' . $var['so']->getBizType() . '"
                                 ,"transactionAffiliation": "' . $var['affiliate_name'] . '"
                                 ,"transactionTotal": ' . $var['total_amount'] . '
-                                ,"transactionShipping": ' . $var['so']->get_delivery_charge() . '
-                                ,"transactionPaymentType": "' . $var['sops']->get_payment_gateway_id() . '"
-                                ,"transactionCurrency": "' . $var['so']->get_currency_id() . '"
-                                ,"transactionPromoCode": "' . $var['so']->get_promotion_code() . '"
-                                ,"transactionProducts": [' . $this->_put_transaction_product_object($pageInfo, $var) . ']';
-
+                                ,"transactionShipping": ' . $var['so']->getDeliveryCharge() . '
+                                ,"transactionPaymentType": "' . $var['sops']->getPaymentGatewayId(). '"
+                                ,"transactionCurrency": "' . $var['so']->getCurrencyId() . '"
+                                ,"transactionPromoCode": "' . $var['so']->getPromotionCode() . '"
+                                ,"transactionProducts": [' . $this->_putTransactionProductObject($pageInfo, $var) . ']';
+            }
         }
+
+        
         return $additionDataLayer;
     }
 
     private function _putTransactionProductObject($pageInfo = array(), $var = array())
     {
         $google_product_obj = "";
-
+ //$product->get_cat_name()
         foreach ($var["soi"] as $product) {
             if ($google_product_obj != "")
                 $google_product_obj .= ",";
 
             $google_product_obj .= '{' .
-                '"name": "' . str_replace(array('\\', '"'), array('\\\\', '\"'), $product->get_name()) . '",' .
-                '"sku": "' . $product->get_prod_sku() . '",' .
-                '"category": "' . str_replace(array('\\', '"'), array('\\\\', '\"'), $product->get_cat_name()) . '",' .
-                '"price": ' . $product->get_unit_price() . ',' .
-                '"quantity": ' . $product->get_qty() . ',' .
-                '"availability": "' . $product->get_website_status() . '"' .
+                '"name": "' . str_replace(array('\\', '"'), array('\\\\', '\"'), $product->prod_name) . '",' .
+                '"sku": "' . $product->getItemSku() . '",' .
+                '"category": "' . str_replace(array('\\', '"'), array('\\\\', '\"'),$aaa) . '",' .
+                '"price": ' . $product->getUnitPRice() . ',' .
+                '"quantity": ' . $product->getQty() . ',' .
+                '"availability": "' . $product->getWebsiteStatus() . '"' .
                 '}';
         }
         return $google_product_obj;
@@ -369,58 +394,38 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
     private function _showCommonScript()
     {
         $containerId = self::GTM_CONTAINER_ID;
-        switch (PLATFORMCOUNTRYID)
-        {
-            case 'BE':
-                $country_container_id = "GTM-MPJWJQ";
-                break;
+        $countryContainerId="";
+        $countryContainerArr=array(
 
-            case 'AU':
-                $country_container_id = "GTM-NNL2JB";
-                break;
+                "BE" => "GTM-MPJWJQ",
+                'AU' => "GTM-NNL2JB",
+                'NZ' => "GTM-K3GW2F",
+                'ES' => "GTM-TC6F2D",
+                'PL' => "GTM-TXWWKC",
+                'FR' => "GTM-MQ9RSX",
+                'GB' => "GTM-MHPP6T",
+                'IT' => "GTM-T33Z3B",             
+            );
+        $countryId=strtoupper($this->getCountryId());
 
-            case 'NZ':
-                $country_container_id = "GTM-5TFMRD";
-                break;
+        if (array_key_exists($countryId,$countryContainerArr)){
 
-            case 'ES':
-                $country_container_id = "GTM-TC6F2D";
-                break;
-
-            case 'PL':
-                $country_container_id = "GTM-TXWWKC";
-                break;
-
-            case 'FR':
-                $country_container_id = "GTM-MQ9RSX";
-                break;
-
-            case 'GB':
-                $country_container_id = "GTM-MHPP6T";
-                break;
-
-            case 'IT':
-                $country_container_id = "GTM-T33Z3B";
-                break;
-
-            default:
-                $country_container_id = "";
-                break;
+            $countryContainerId= $countryContainerArr[$countryId];
         }
 
-        if($country_container_id)
+        if($countryContainerId)
         {
         $scripts = <<<javascript
 <!-- Google Tag Manager -->
     <noscript>
-        <iframe src="//www.googletagmanager.com/ns.html?id={$containerId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        <iframe src="//www.googletagmanager.com/ns.html?id={$countryContainerId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
     <script>
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','{$containerId}');
+        })(window,document,'script','dataLayer','{$countryContainerId}');
     </script>
 <!-- End Google Tag Manager -->
 javascript;
@@ -431,5 +436,25 @@ javascript;
     public function getAllPageCode($page = array(), $var = array())
     {
         return $this->_formDataLayer($page, $var) . $this->_showCommonScript();
+    }
+
+    public function setCountryContainerId($value){
+         
+         $this->countryContainerId=$value;
+    }
+
+    public function getCountryContainerId(){
+
+        return $this->countryContainerId;
+    }
+
+    public function setCountryId($value){
+         
+         $this->countryId=$value;
+    }
+
+    public function getCountryId(){
+
+        return $this->countryId;
     }
 }

@@ -40,8 +40,9 @@ class Common_data_prepare_model extends CI_Model
         }
 
         $call_method = $input_class . '__' . $input_method;
-        if (method_exists($this, $call_method)) {
 
+        if (method_exists($this, $call_method)) {
+            
             return $this->$call_method(($controller == null) ? "" : $controller, $url_paras);
         } else {
             return array();
@@ -1065,7 +1066,7 @@ class Common_data_prepare_model extends CI_Model
                     $category_name = $cat_obj->get_name();
                 }
             }
-
+            $data["category_name"]=$category_name;
             if (!$sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_cat_id(), "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
                 $sc_obj = $this->category_model->get_cat_info_w_lang(array("c.id" => $prod_info->get_sub_cat_id(), "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
                 if ($sc_obj) {

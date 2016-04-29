@@ -1,5 +1,6 @@
 <?php
 namespace ESG\Panther\Service;
+use ESG\Panther\Service\LoadSiteParameterService;
 
 abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 {
@@ -9,8 +10,10 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     public function __construct()
     {
+           
         include_once(APPPATH . "libraries/service/Exchange_rate_service.php");
-        $this->set_exchange_rate_service(new Exchange_rate_service());
+        
+        //$this->set_exchange_rate_service(new Exchange_rate_service());
     }
 
     /***************************************
@@ -106,11 +109,11 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
     protected function isPaymentResultPage($page)
     {
         if (($page['class'] == "checkout_redirect_method")
-            || ($page['class'] == "checkout")
+            || ($page['class'] == "Checkout")
             || ($page['class'] == "checkout_onepage")
         ) {
             //payment success / failure
-            if (($page['method'] == "payment_result")
+            if (($page['method'] == "paymentresult")
                 || ($page['method'] == "order_confirmation")
             ) {
                 return true;
@@ -122,6 +125,7 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
     protected function isPaymentFailurePage($page)
     {
         if ($this->isPaymentResultPage($page)) {
+           
             if ($page['method_parameter1'] == 0) {
                 return true;
             }
@@ -149,7 +153,8 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     protected function isCatPage($page)
     {
-        if ($page['class'] == "cat") {
+
+        if ($page['class'] == "Cat") {
             return true;
         }
         return false;
@@ -157,7 +162,7 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     protected function isMainproductPage($page)
     {
-        if ($page['class'] == "mainproduct") {
+        if ($page['class'] == "MainProduct") {
             return true;
         }
         return false;
@@ -165,7 +170,7 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     protected function isReviewPage($page)
     {
-        if ($page['class'] == "review_order") {
+        if ($page['class'] == "ReviewOrder") {
             return true;
         }
         return false;
@@ -173,7 +178,7 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     protected function isRaPage($page)
     {
-        if ($page['class'] == "cart") {
+        if ($page['class'] == "Cart") {
             return true;
         }
         return false;
@@ -181,7 +186,8 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     protected function isAboutUs($page)
     {
-        if (($page['class'] == "display")
+       
+        if (($page['class'] == "Display")
             && ($page['method'] == "view")
             && ($page['method_parameter1'] == "about_us")
         ) {
@@ -192,7 +198,7 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     protected function isConditionsOfUse($page)
     {
-        if (($page['class'] == "display")
+        if (($page['class'] == "Display")
             && ($page['method'] == "view")
             && ($page['method_parameter1'] == "conditions_of_use")
         ) {
@@ -203,7 +209,7 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     protected function isPrivacyPolicy($page)
     {
-        if (($page['class'] == "display")
+        if (($page['class'] == "Display")
             && ($page['method'] == "view")
             && ($page['method_parameter1'] == "privacy_policy")
         ) {
@@ -214,7 +220,7 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     protected function isShipping($page)
     {
-        if (($page['class'] == "display")
+        if (($page['class'] == "Display")
             && ($page['method'] == "view")
             && ($page['method_parameter1'] == "shipping")
         ) {
@@ -225,7 +231,7 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     protected function isFaq($page)
     {
-        if (($page['class'] == "display")
+        if (($page['class'] == "Display")
             && ($page['method'] == "view")
             && ($page['method_parameter1'] == "faq")
         ) {
@@ -236,7 +242,7 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     protected function isNewsletterThankYou($page)
     {
-        if (($page['class'] == "display")
+        if (($page['class'] == "Display")
             && ($page['method'] == "view")
             && ($page['method_parameter1'] == "newsletter_thank_you")
         ) {
@@ -255,7 +261,7 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     protected function isMyaccountPage($page)
     {
-        if ($page['class'] == "myaccount") {
+        if ($page['class'] == "Myaccount") {
             return true;
         }
         return false;
@@ -263,7 +269,7 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
 
     protected function isLoginPage($page)
     {
-        if ($page['class'] == "login") {
+        if ($page['class'] == "Login") {
             return true;
         }
         return false;
@@ -283,4 +289,17 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
     {
         return $_COOKIE["af"];
     }
+    
+
+    //jimmy update
+    protected function set_exchange_rate_service($value){
+
+        $this->exchange_rate_service=$value;
+    }
+
+    protected function get_exchange_rate_service(){
+
+        return $this->exchange_rate_service;
+    }
+
 }

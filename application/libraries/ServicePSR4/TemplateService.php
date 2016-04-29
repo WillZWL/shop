@@ -21,6 +21,10 @@ class TemplateService extends BaseService
             return false;
         }
 
+        //add email logo
+        $siteConfigObj=$this->getService("LoadSiteParameter")->initSite();
+        $replace["logo"]=base_url("/images/logo/" . $siteConfigObj->getLogo());
+       
         if (!empty($replace)) {
             foreach ($replace as $key => $value) {
                 $search[] = '[:' . $key . ':]';

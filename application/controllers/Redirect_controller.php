@@ -11,6 +11,7 @@ class Redirect_controller extends CI_Controller
         $this->load->library('service/authorization_service');
         $this->load->library('service/context_config_service');
         $this->load->library('service/user_service');
+        $this->load->library('service/affiliate_service');
     }
 
     public function index()
@@ -18,6 +19,8 @@ class Redirect_controller extends CI_Controller
         define('SITE_NAME', $this->context_config_service->value_of("site_name"));
         define('SITE_NAME_CAP', strtoupper($this->context_config_service->value_of("site_name")));
         define('LOGO_FILE_PATH', "/images/" . $this->context_config_service->value_of("logo_file_name"));
+        $this->affiliate_service->add_af_cookie($_GET);
+        
         if ($this->authentication_service->check_authed()) {
             $data = array();
             $menu_name = array("master_cfg_menu" => 1

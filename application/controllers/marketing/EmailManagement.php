@@ -28,7 +28,7 @@ class EmailManagement extends MY_Controller
         if (isset($_GET['platform'])) {
             $where['platform_id'] = $_GET['platform'];
         }
-
+       
         if ($tpl_obj = $this->sc['Email']->getDao('Template')->get($where)) {
             $data['tpl_edit']['subject'] = $tpl_obj->getSubject();
             $data['tpl_edit']['message_html'] = $tpl_obj->getMessageHtml();
