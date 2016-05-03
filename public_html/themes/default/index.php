@@ -1,4 +1,8 @@
 <?php $this->load->view('header') ?>
+<div style="display:none">
+<?php print _('best seller') ?>
+<?php print _('latest arrival') ?>
+</div>
 <!-- sys-notification -->
 <div id="sys-notification">
     <div class="container">
@@ -41,7 +45,6 @@
                             </div>
                         </div>
                     </div>
-
 <!-- /sys-notification -->
 <div class="main-columns container-fluid">
     <div class="row">
