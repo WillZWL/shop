@@ -13,7 +13,8 @@ class Cat extends PUB_Controller
 
     public function view($cat_id, $page = 1)
     {
-        if (!$cat_obj = $this->sc['Category']->getCatInfoWithLang(array("c.id" => $cat_id, "ce.lang_id" => $this->get_lang_id(), "c.status" => 1), array("limit" => 1))) {
+        $langId = $this->get_lang_id();
+        if (!$cat_obj = $this->sc['Category']->getCatInfoWithLang(array("c.id" => $cat_id, "ce.lang_id" => $langId, "c.status" => 1), array("limit" => 1))) {
             $cat_obj = $this->sc['Category']->getCatInfoWithLang(array("c.id" => $cat_id, "ce.lang_id" => "en", "c.status" => 1), array("limit" => 1));
         }
         if (empty($cat_id) || !$cat_obj) {
