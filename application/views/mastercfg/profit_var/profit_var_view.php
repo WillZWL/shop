@@ -104,6 +104,12 @@
                         id="curr2"><?= $profit_obj->getPlatformCurrencyId() ?></span></td>
             </tr>
             <tr>
+                <td width="150" class="field">&nbsp;&nbsp;<?= $lang["tax_theresholds"] ?></td>
+                <td height="20" class="value">&nbsp;&nbsp;
+                <input type="text" name="tax_theresholds" value="<?= $profit_obj->getTaxTheresholds() ?>" style="font-size:11px;width:60px" <?= (!$editable ? "readonly" : "") ?> isNumber min=0>&nbsp;
+                <span id="curr2"><?= $profit_obj->getPlatformCurrencyId() ?></span></td>
+            </tr>
+            <tr>
                 <td width="150" class="field">&nbsp;&nbsp;<?= $lang["country"] ?></td>
                 <td height="20" class="value">&nbsp;&nbsp;<select name="platform_country_id"
                                                                   class="input" <?= $editable ? "" : "DISABLED" ?>><?php

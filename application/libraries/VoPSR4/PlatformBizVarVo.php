@@ -22,6 +22,7 @@ class PlatformBizVarVo extends \BaseVo
     private $delivery_type;
     private $free_delivery_limit = '0';
     private $default_shiptype = '0';
+    private $tax_theresholds = '0.00';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '2130706433';
     private $create_by = 'system';
@@ -282,6 +283,18 @@ class PlatformBizVarVo extends \BaseVo
     public function getDefaultShiptype()
     {
         return $this->default_shiptype;
+    }
+
+    public function setTaxTheresholds($tax_theresholds)
+    {
+        if ($tax_theresholds !== null) {
+            $this->tax_theresholds = $tax_theresholds;
+        }
+    }
+
+    public function getTaxTheresholds()
+    {
+        return $this->tax_theresholds;
     }
 
     public function setCreateOn($create_on)

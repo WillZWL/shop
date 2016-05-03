@@ -21,7 +21,6 @@
     <body topmargin="0" leftmargin="0">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
-
             <td height="30" class="title"><b style="font-size:16px;color:#000000"><?= $lang["title"] ?></b></td>
         </tr>
         <tr>

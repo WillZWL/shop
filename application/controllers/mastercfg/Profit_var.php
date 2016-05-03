@@ -46,6 +46,7 @@ class Profit_var extends ProfitVarHelper
             $obj->setDeliveryType($this->input->post('delivery_type'));
             $obj->setDestCountry($this->input->post('platform_country_id'));
             $obj->setFreeDeliveryLimit($this->input->post('free_dlvry_limit'));
+            $obj->setTaxTheresholds($this->input->post('tax_theresholds'));
 
             if ($this->input->post("type") == "update") {
                 $ret = $this->sc['profitVarModel']->update($obj);
@@ -55,7 +56,7 @@ class Profit_var extends ProfitVarHelper
 
             // update price_margin tb for all platforms
             $platform_id = $this->input->post("id");
-            $this->sc['PriceMargin']->refreshAllPlatformMargin(["id" => $platform_id]);
+            $this->sc['PriceMargin']->refreshProfitAndMargin($platform_id);
 
             if ($ret === FALSE) {
                 $_SESSION["NOTICE"] = __LINE__ . " : " . $this->db->_error_message();

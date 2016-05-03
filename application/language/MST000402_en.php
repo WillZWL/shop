@@ -25,6 +25,7 @@
 			"update_successful"=>"Record successfully updated",
 			"update_var"=>"Update Variables",
 			"please_select"=>"-- Please Select --",
+			"tax_theresholds" => "Tax Theresholds",
 			"create_on" => "Create On",
 			"create_at" => "Create At",
 			"create_by" => "Create By",

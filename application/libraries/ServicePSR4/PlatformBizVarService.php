@@ -41,7 +41,14 @@ class PlatformBizVarService extends BaseService
 
     public function calculateVat(\PriceWithCostDto $dto)
     {
-        $vat = $dto->getDeclaredValue() * $dto->getVatPercent() / 100;
+        $country_id = $dto->getPlatformCountryId();
+        $platform_biz_var_obj = $this->getDao('PlatformBizVar')->get(['platform_country_id' => $country_id]);
+        $tax_theresholds = $platform_biz_var_obj->getTaxTheresholds();
+        if ($dto->getDeclaredValue() <= $tax_theresholds) {
+            $vat = 0;
+        } else {
+            $vat = $dto->getDeclaredValue() * $dto->getVatPercent() / 100;
+        }
         $dto->setVat(number_format($vat, 2, '.', ''));
     }
 
