@@ -96,12 +96,18 @@ class CartSessionService extends BaseService
 
     public function updateCartDelivery($deliveryCharge) {
         $this->_cart->setDeliveryCharge($deliveryCharge);
-        $this->updateQuickInfo($totalItems);
+        $this->updateQuickInfo();
     }
 
-    public function updateQuickInfo($totalItems) {
-        $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"] = $totalItems;
-        $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"] = $this->_cart->getGrandTotal();
+    public function updateQuickInfo($totalItems = null) {
+        if ($totalItems != null)
+            $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"] = $totalItems;
+        if ($this->_cart)
+            $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"] = $this->_cart->getGrandTotal();
+        else {
+            $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"] = 0;
+            $_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"] = 0;
+        }
     }
 
 /******************************************************************************************************************
