@@ -26,19 +26,21 @@ class ReviewOrder extends PUB_Controller
         $data['cartInfo'] = $this->cartSessionModel->getCartInfo();
         $this->affiliateService->addAfCookie($_GET);
 
-        foreach ($data['cartInfo']->items as $key => $cartObj) {
-//          
-            $trackingList["sku"] = $cartObj->getSku();
-            $trackingList["unit_price"] = $cartObj->getPrice();
-            $trackingList["currency"] =$cartObj->getSupplierCostCurrency() ;
-            $trackingList["product_name"] = $cartObj->getName();
-            $trackingList["qty"] = $cartObj->getQty();
-            $trackingList["total"] = $cartObj->getAmount();
-            $trackingProducts[] = $trackingList;
-           
+        if ($data['cartInfo']) {
+            foreach ($data['cartInfo']->items as $key => $cartObj) {
+    //          
+                $trackingList["sku"] = $cartObj->getSku();
+                $trackingList["unit_price"] = $cartObj->getPrice();
+                $trackingList["currency"] =$cartObj->getSupplierCostCurrency() ;
+                $trackingList["product_name"] = $cartObj->getName();
+                $trackingList["qty"] = $cartObj->getQty();
+                $trackingList["total"] = $cartObj->getAmount();
+                $trackingProducts[] = $trackingList;
+               
+            }
+            $data["tracking_data"]["products"] = $trackingProducts;
+            $data["tracking_data"]["total_amount"] = $data['cartInfo']->getGrandTotal();
         }
-        $data["tracking_data"]["products"] = $trackingProducts;
-        $data["tracking_data"]["total_amount"] = $total + $gst_total;
 
 //        var_dump($data['cartInfo']);
         if ($data['cartInfo'])
