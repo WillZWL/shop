@@ -20,9 +20,12 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDITIONS D’UTILISATION') ?></h3>
                     <p>
-<?= _('Numeristock.fr (Numeristock) appartient entièrement et est opéré par ChatandVision Ltd (ChatandVision). En visitant ou en achetant sur le site Numeristock, vous acceptez d’être lié par ces conditions d’utilisation, autant que par toute modification publiée sur le site. LE DEFAUT D’ACCORD NE VIDE PAS LES PRESENTES CONDITIONS D’UTILISATION DE LEUR APPLICABILITE DE PLEIN DROIT.') ?>
+<?= _('Numeristock.fr (Numeristock) appartient entièrement et est opéré par ChatandVision Ltd (ChatandVision).') ?>
+<?= _('En vertu de cet accord, les services de traitement de paiements pour les biens et / ou services achetés sur ce site sont fournis par ChatandVision (UK) Limited, numéro de société 07384129, ayant son siège social à Dalton House, 60, avenue Windsor, Londres, SW19 2RR, Royaume-Uni , au nom de ChatandVision (HK) Limited, numéro de société 1386925, ayant son siège social au 618 Hollywood Plaza, 610 Nathan RD, Mongkok, Hong Kong ou par ChatandVision (HK) Limited, selon le mode de paiement utilisé pour l\'achat de la produits et / ou services.') ?>
 <br /><br />
-<?= sprintf(_('Numeristock est un nom commercial dont le sièges sociaux sont : <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Grâce à ses sites Web , ChatandVision Ltd offre du matériel électronique grand public, des logiciels et des services.')) ?>
+<?= _('Dans le cas où vous choisissez de payer par carte de crédit, le paiement sera traité par un Acquéreur européen, ces termes sont un accord entre vous et ChatandVision (UK) Limited. Pour tout autre type d\'achats, ces termes sont un accord entre vous et ChatandVision (HK) Limited et des biens et / ou services seront livrés par ChatandVision (HK) Limited directement.') ?>
+<br /><br />
+<?= sprintf(_('Grâce à ses sites Web , ChatandVision Ltd offre du matériel électronique grand public, des logiciels et des services.')) ?>
 <br /><br />
 <?= _('Pour toute question relative à nos conditions d’utilisation, merci de contacter notre service clientèle ou de vous référer à notre FAQ.') ?>
                     </p>

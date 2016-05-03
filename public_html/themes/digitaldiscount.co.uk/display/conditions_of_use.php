@@ -21,9 +21,12 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDITIONS OF USE') ?></h3>
                     <p>
-<?= _('DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by ChatandVision Ltd (ChatandVision). By visiting or shopping at the DigitalDiscount website, you agree to accept and be bound by these conditions of use, as well as any other policies posted on the website, as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN PLEASE DO NOT USE THE SITE.') ?>
+<?= _('DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by ChatandVision Ltd (ChatandVision).') ?>
+<?= _('Under this agreement, the payment processing services for goods and/or services purchased on this website are provided by ChatandVision(UK) Limited, Company number 07384129, having its registered office at Dalton House, 60 Windsor Avenue, London, SW19 2RR,United Kingdom, on behalf ChatandVision (HK) Limited, Company number 1386925, having its registered office at 618 Hollywood Plaza, 610 Nathan RD, MongKok, HK or by ChatandVision (HK) Limited, depending on the type of payment method used for the purchase of the goods and/or services.') ?>
 <br /><br />
-<?= sprintf(_('DigitalDiscount is a trading name with registered offices in: <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Through its websites, ChatandVision Ltd offers consumer electronics hardware, and services.')) ?>
+<?= _('In the event you choose to pay with credit card and the payment will be processed via a European Acquirer, these terms are an agreement between you and ChatandVision (UK) Limited. For any other type of purchases, these terms are an agreement between you and ChatandVision (HK) Limited and goods and/or services will be delivered by ChatandVision (HK) Limited directly.') ?>
+<br><br>
+<?= sprintf(_('Through its websites, ChatandVision Ltd offers consumer electronics hardware, and services.')) ?>
 <br /><br />
 <?= _('If you have any queries relating to our terms and conditions, please contact the Customer Support team or read our FAQ.') ?>
                     </p>
@@ -164,9 +167,9 @@
                     <p><?= _('Methods of Payment')?></p>
 
                     <p><?= _('A variety of payment methods are offered on the Site for the convenience of customers. You agree to pay all fees incurred in connection with your purchases at the rates in effect when the charges were incurred. If you pay by credit card, your card issuer agreement governs your use of your card, and you must refer to that agreement and not these Terms of Use to determine your rights and liabilities as a cardholder. YOU, AND NOT DigitalDiscount.co.uk (DigitalDiscount), ARE RESPONSIBLE FOR PAYING ANY UNAUTHORIZED AMOUNTS BILLED TO YOUR CREDIT CARD BY A THIRD PARTY.')?>
-                    </p> 
+                    </p>
 
-                    <p><?= _('Payment Fees and Charges')?></p> 
+                    <p><?= _('Payment Fees and Charges')?></p>
 
                     <p><?= _('You agree to pay all fees and charges incurred in connection with your purchases at the rates in effect when the charges were incurred. Unless you notify DigitalDiscount of any discrepancies within sixty (60) days after they first appear on your credit card statement, you agree that they will be deemed accepted by you in all respects and for all purposes. If DigitalDiscount does not receive payment from your credit card issuer or its agent, you agree to pay all amounts due upon demand by DigitalDiscount or its agents.')?>
                     </p>

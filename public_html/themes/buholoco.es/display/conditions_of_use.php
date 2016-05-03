@@ -20,9 +20,12 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDICIONES DE USO') ?></h3>
                     <p>
-<?= _('Buholoco.es (BuhoLoco) está gestionado totalmente por ChatandVision Ltd (ChatandVision). Al visitar o comprar en el sitio web BuhoLoco, usted se compromete a aceptar y cumplir con estas condiciones de uso, así como cualquiera otras políticas publicadas en el sitio web, junto las modificaciones que puedan surgir de vez en cuando. SI USTED NO ESTÁ DE ACUERDO CON ESTAS CONDICIONES ENTONCES POR FAVOR NO UTILICE EL SITIO.') ?>
+<?= _('Buholoco.es (BuhoLoco) está gestionado totalmente por ChatandVision Ltd (ChatandVision).') ?>
+<?= _('En virtud de este acuerdo, los servicios de procesamiento de pago de los bienes y/o servicios adquiridos en este sitio web son proporcionados por ChatandVision(UK) Limited, Company number 07384129, con registro en Dalton House, 60 Windsor Avenue, London, SW19 2RR,United Kingdom, a nombre de ChatandVision (HK) Limited. Company number 1386925, con registro en 618 Hollywood Plaza, 610 Nathan RD, MongKok, HK o por ChatandVision (HK) Limited, dependiendo del método de pago usado para adquirir los bienes y/o servicios.') ?>
 <br /><br />
-<?= sprintf(_('BuhoLoco es un nombre comercial con oficina registrada en: <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>A través de sus páginas, ChatandVision LTD ofrece electrónica de consumo, software y servicios.')) ?>
+<?= _('En el caso de que elija pagar con tarjeta de crédito y el pago sea procesado a través de un Adquiridor Europeo, estos términos son un acuerdo entre usted y ChatandVision (UK) Limited. Para cualquier otra forma de pago, estos términos son un acuerdo entre usted y ChatandVision (HK) Limited y los bienes y/o servicios serán enviados directamente por ChatandVision (HK) Limited.') ?>
+<br /><br />
+<?= sprintf(_('A través de sus páginas, ChatandVision LTD ofrece electrónica de consumo, software y servicios.')) ?>
 <br /><br />
 <?= _('Si tiene alguna pregunta relacionada con nuestros términos y condiciones, por favor póngase en contacto con el equipo de Atención al cliente o lea nuestro FAQ.') ?>
                     </p>
