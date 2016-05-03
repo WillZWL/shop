@@ -22,12 +22,15 @@ class Cat extends PUB_Controller
         //$this->affiliate_service->add_af_cookie($_GET);
         $level = $cat_obj->getLevel();
         $sort = $this->input->get('sort');
+        $order = $this->input->get('order');
         $rpp = $this->input->get('rpp');
+
         //$page = $this->input->get('page');
         $brandId = $this->input->get('brand_id');
-        $catPageData = $this->sc['categoryModel']->getProductForCategoryPage(PLATFORM, $cat_id, $level, $brandId, $sort, $rpp, $page, $langId);
+        $catPageData = $this->sc['categoryModel']->getProductForCategoryPage(PLATFORM, $cat_id, $level, $brandId, $sort, $order, $rpp, $page, $langId);
         $data['sort'] = $sort;
-		$data['pagination'] = 3;
+        $data['order'] = $order;
+        $data['pagination'] = 3;
 
         $data['show_discount_text'] = $this->sc['PriceWebsite']->isDisplaySavingMessage();
 
@@ -62,7 +65,7 @@ class Cat extends PUB_Controller
         //var_dump($data['cat_result']);
         $data['brand_result'] = $this->getBrandFilterGridInfo($sku_list);
         $data["brand_id"] = $brand_id;
-		$data["cat_id"] = $cat_id;
+        $data["cat_id"] = $cat_id;
         $data['productList'] = $catPageData["obj_list"];
         $data['cat_obj'] = $cat_obj;
         $data['cat_name'] = $cat_obj->getName();
@@ -82,7 +85,7 @@ class Cat extends PUB_Controller
         }
 
         // meta tag
-        
+
         $data['data']['lang_text'] = $this->getLanguageFile();
         $data["tracking_data"] = array("category_name" => $cat_obj->getName(), "category_id" => $cat_id);
         $this->load->view('cat', $data);
