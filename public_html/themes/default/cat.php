@@ -160,11 +160,11 @@
                         <option value="/cat/view/<?= $cat_id . $rpp_tag?>"
                             <?= (empty($sort) && empty($order)) ? "selected='selected'" : ""?>><?= _('Default') ?>
                         </option>
-                        <option value="/cat/view/<?= $cat_id . $rpp_tag ?>sort=pc.prod_name&order=ASC"
-                            <?= ($sort == 'pc.prod_name' && $order == 'ASC') ? "selected='selected'" : ""?>><?= _('Name (A - Z)') ?>
+                        <option value="/cat/view/<?= $cat_id . $rpp_tag ?>sort=p.name&order=ASC"
+                            <?= ($sort == 'p.name' && $order == 'ASC') ? "selected='selected'" : ""?>><?= _('Name (A - Z)') ?>
                         </option>
-                        <option value="/cat/view/<?= $cat_id . $rpp_tag ?>sort=pc.prod_name&order=DESC"
-                            <?= ($sort == 'pc.prod_name' && $order == 'DESC') ? "selected='selected'" : ""?>><?= _('Name (Z - A)') ?>
+                        <option value="/cat/view/<?= $cat_id . $rpp_tag ?>sort=p.name&order=DESC"
+                            <?= ($sort == 'p.name' && $order == 'DESC') ? "selected='selected'" : ""?>><?= _('Name (Z - A)') ?>
                         </option>
                         <option value="/cat/view/<?= $cat_id . $rpp_tag ?>sort=pr.price&order=ASC"
                             <?= ($sort == 'pr.price' && $order == 'ASC') ? "selected='selected'" : ""?>><?= _('Price (Low to High)') ?>
