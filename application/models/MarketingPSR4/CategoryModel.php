@@ -38,7 +38,7 @@ class CategoryModel extends \CI_Model
         return $this->productSpecService->saveProdSpec($cpsObjList, $cat_id);
     }
 
-    public function getProductForCategoryPage($platformId, $catId, $catLevel, $brandId, &$sort, &$rpp, &$page, $langId)
+    public function getProductForCategoryPage($platformId, $catId, $catLevel, $brandId, &$sort, &$order, &$rpp, &$page, $langId)
     {
         $where = [];
         $where['pr.platform_id'] = $platformId;
@@ -61,40 +61,15 @@ class CategoryModel extends \CI_Model
             $where['br.id'] = $brandId;
         }
 
-        if (!$sort) {
-            $sort = 'priority_asc';
+        if (empty($sort)) {
+            $sort = "p.create_on";
         }
 
-        switch ($sort) {
-            case 'pop_desc':
-                $option["orderby"] = "pr.sales_qty desc";
-                break;
-            case 'price_asc':
-                $option["orderby"] = "pr.price ASC";
-                break;
-            case 'price_desc':
-                $option["orderby"] = "pr.price DESC";
-                break;
-            case 'latest_asc':
-                $option["orderby"] = "sc.priority asc, p.create_on ASC";
-                break;
-            case 'latest_desc':
-                $option["orderby"] = "sc.priority asc, p.create_on DESC";
-                break;
-            case 'priority_asc':
-                $option["orderby"] = "sc.priority asc, pr.sales_qty desc";
-                break;
-            default:
-                $option["orderby"] = "sc.priority asc, p.create_on DESC";
-                break;
+        if (empty($order)) {
+            $order = "desc";
         }
 
-        #SBF2580, push all the Arriving stock to bottom before Out of stock
-        $option["orderby"] = "is_arr asc, " . $option["orderby"];
-
-        #SBF1905, push all the Out of stock to bottom
-        $option["orderby"] = "is_oos asc, " . $option["orderby"];
-
+        $option["orderby"] = $sort . " " . $order;
 
         if (!$rpp) {
             $rpp = 12;
