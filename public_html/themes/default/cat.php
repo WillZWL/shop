@@ -227,7 +227,7 @@
                                         $discount = $prod_obj->getRrpPrice() ? ($prod_obj->getRrpPrice() - $prod_obj->getPrice())/$prod_obj->getRrpPrice() : 0;
                                         $discount = number_format($discount, 3)*100;
                                         ?>
-                                        <?= _("save") ?> - <?=$discount?>%
+                                        <?= _("Save") ?> - <?=$discount?>%
                                     </div>
                                 </div>
                                 <div class="right">
