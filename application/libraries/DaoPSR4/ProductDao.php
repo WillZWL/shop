@@ -562,6 +562,7 @@ class ProductDao extends BaseDao
     public function getWebsiteCatPageProductList($where = [], $option = [], $className = 'CatProductListDto')
     {
         $this->db->from('product AS p');
+        $this->db->join('product_content AS pc', "pc.prod_sku = p.sku AND pc.lang_id = '" . $option['lang_id'] . "'", 'LEFT');
         $this->db->join('price AS pr', 'p.sku = pr.sku AND pr.listing_status = "L" AND p.status = "2"', 'INNER');
         $this->db->join('category AS cat', 'cat.id = p.cat_id AND cat.status = 1', 'INNER');
         $this->db->join('category AS sc', 'sc.id = p.sub_cat_id AND sc.status = 1', 'INNER');

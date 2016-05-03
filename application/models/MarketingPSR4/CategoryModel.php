@@ -69,7 +69,7 @@ class CategoryModel extends \CI_Model
             $order = "desc";
         }
 
-        $option["orderby"] = $sort . " " . $order;
+        $option["orderby"] = "is_oos desc, is_arr desc, " . $sort . " " . $order;
 
         if (!$rpp) {
             $rpp = 12;
@@ -78,6 +78,8 @@ class CategoryModel extends \CI_Model
         if (!$page) {
             $page = 1;
         }
+
+        $option['lang_id'] = $langId;
 
         $option['limit'] = $rpp;
         $option['offset'] = $rpp * ($page - 1);
