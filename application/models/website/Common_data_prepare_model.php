@@ -42,7 +42,7 @@ class Common_data_prepare_model extends CI_Model
         $call_method = $input_class . '__' . $input_method;
 
         if (method_exists($this, $call_method)) {
-            
+
             return $this->$call_method(($controller == null) ? "" : $controller, $url_paras);
         } else {
             return array();

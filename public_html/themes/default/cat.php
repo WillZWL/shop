@@ -152,26 +152,43 @@
 
                 <div class="sort pull-right">
                     <span for="input-sort"><?= _('Sort By').':' ?></span>
-                    <select id="input-sort" class="form-control"  onchange="location = this.value;">
-                        <option value="?sort=p.sort_order&order=ASC" selected="selected"><?= _('Default') ?></option>
-                        <option value="?sort=pd.name&order=ASC"><?= _('Name (A - Z)') ?></option>
-                        <option value="?sort=pd.name&order=DESC"><?= _('Name (Z - A)') ?></option>
-                        <option value="?sort=p.price&order=ASC"><?= _('Price (Low to High)') ?></option>
-                        <option value="?sort=p.price&order=DESC"><?= _('Price (High to Low)') ?></option>
-                        <option value="?sort=rating&order=DESC"><?= _('Rating (Highest)') ?></option>
-                        <option value="?sort=rating&order=ASC"><?= _('Rating (Lowest)') ?></option>
-                        <option value="?sort=p.model&order=ASC"><?= _('Model (A - Z)') ?></option>
-                        <option value="?sort=p.model&order=DESC"><?= _('Model (Z - A)') ?></option>
+                    <?php
+                       $rpp_tag = ($rpp ? "?rpp=" . $rpp ."&": "?");
+                    ?>
+
+                    <select id="input-sort" class="form-control" onchange="location = this.value;">
+                        <option value="/cat/view/<?= $cat_id . $rpp_tag?>"
+                            <?= (empty($sort) && empty($order)) ? "selected='selected'" : ""?>><?= _('Default') ?>
+                        </option>
+                        <option value="/cat/view/<?= $cat_id . $rpp_tag ?>sort=p.name&order=ASC"
+                            <?= ($sort == 'p.name' && $order == 'ASC') ? "selected='selected'" : ""?>><?= _('Name (A - Z)') ?>
+                        </option>
+                        <option value="/cat/view/<?= $cat_id . $rpp_tag ?>sort=p.name&order=DESC"
+                            <?= ($sort == 'p.name' && $order == 'DESC') ? "selected='selected'" : ""?>><?= _('Name (Z - A)') ?>
+                        </option>
+                        <option value="/cat/view/<?= $cat_id . $rpp_tag ?>sort=pr.price&order=ASC"
+                            <?= ($sort == 'pr.price' && $order == 'ASC') ? "selected='selected'" : ""?>><?= _('Price (Low to High)') ?>
+                        </option>
+                        <option value="/cat/view/<?= $cat_id . $rpp_tag ?>sort=pr.price&order=DESC"
+                            <?= ($sort == 'pr.price' && $order == 'DESC') ? "selected='selected'" : ""?>><?= _('Price (High to Low)') ?>
+                        </option>
+                        <option value="/cat/view/<?= $cat_id . $rpp_tag ?>sort=p.create_on&order=DESC"
+                            <?= ($sort == 'p.create_on' && $order == 'DESC') ? "selected='selected'" : ""?>><?= _('New Arrivals') ?>
+                        </option>
+                        <option value="/cat/view/<?= $cat_id . $rpp_tag ?>sort=p.modify_on&order=DESC"
+                            <?= ($sort == 'p.modify_on' && $order == 'DESC') ? "selected='selected'" : ""?>><?= _('Last Updated') ?>
+                        </option>
                     </select>
                 </div>
                 <div class="limit pull-right">
                     <span for="input-limit"><?= _('Display:') ?></span>
-                    <select id="input-limit" class="form-control" onchange="location = this.value;">
-                        <option value="?limit=12" selected="selected">12</option>
-                        <option value="?limit=25">25</option>
-                        <option value="?limit=50">50</option>
-                        <option value="?limit=75">75</option>
-                        <option value="?limit=100">100</option>
+                    <?php $rpp_sed[$this->input->get('rpp')] = " selected"; ?>
+                    <select id="input-rpp" class="form-control" onchange="location = this.value;">
+                        <option value="/cat/view/<?= $cat_id ?>?rpp=12"<?= $rpp_sed[12] ?>>12</option>
+                        <option value="/cat/view/<?= $cat_id ?>?rpp=25"<?= $rpp_sed[25] ?>>25</option>
+                        <option value="/cat/view/<?= $cat_id ?>?rpp=50"<?= $rpp_sed[50] ?>>50</option>
+                        <option value="/cat/view/<?= $cat_id ?>?rpp=75"<?= $rpp_sed[75] ?>>75</option>
+                        <option value="/cat/view/<?= $cat_id ?>?rpp=100"<?= $rpp_sed[100] ?>>100</option>
                     </select>
                 </div>
             </div>
@@ -188,7 +205,7 @@
                                         <img class="img-responsive" src="<?= get_image_file($prod_obj->getImageExt(), 'm', $prod_obj->getSku()) ?>" title="<?= $prod_obj->getProdName(); ?>" alt="<?= $prod_obj->getProdName(); ?>" />
                                     </a>
                                     <div class="quickview hidden-xs">
-                                        <a class="iframe-link" data-toggle="tooltip" data-placement="top" href="<?= base_url("/main-product/view/$sku") ?>" title="<?= _('Quick View') ?>"><i class="fa fa-eye"></i></a>
+                                        <a target="_blank" data-toggle="tooltip" data-placement="top" href="<?= base_url("/main-product/view/$sku") ?>" title="<?= _('Quick View') ?>"><i class="fa fa-eye"></i></a>
                                     </div>
                                     <div class="zoom hidden-xs">
                                         <a data-toggle="tooltip" data-placement="top" href="<?= get_image_file($prod_obj->getImageExt(), 'l', $prod_obj->getSku()) ?>" class="product-zoom info-view colorbox cboxElement" title="<?= $prod_obj->getProdName(); ?>"><i class="fa fa-search-plus"></i></a>
@@ -207,7 +224,7 @@
                                     </div>
                                     <div class="save_alter">
                                         <?php
-                                        $discount = ($prod_obj->getRrpPrice() - $prod_obj->getPrice())/$prod_obj->getRrpPrice();
+                                        $discount = $prod_obj->getRrpPrice() ? ($prod_obj->getRrpPrice() - $prod_obj->getPrice())/$prod_obj->getRrpPrice() : 0;
                                         $discount = number_format($discount, 3)*100;
                                         ?>
                                         Save - <?=$discount?>%
@@ -245,12 +262,13 @@
         <div class="pagination paging clearfix pull-right">
             <ul class="pagination" style="margin:0">
                 <?php
+                    $strin_tag = "?" . $_SERVER['QUERY_STRING'];
                     if($curr_page != 1) :
                 ?>
-                        <li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page-1));?>">&lt;&lt;</a></li>
+                        <li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page-1) . $strin_tag);?>">&lt;&lt;</a></li>
                 <?php
                     endif;
-                    $start_page = floor($curr_page / $pagination) * $pagination + 1;
+                    $start_page = floor($pagination ? ($curr_page / $pagination) : 0) * $pagination + 1;
                     if($curr_page % $pagination == 0){
                         $start_page = $curr_page - $pagination + 1;
                     }
@@ -262,14 +280,14 @@
                 <?php
                         else:
                 ?>
-                            <li><a href="<?=base_url('cat/view/' . $cat_id . '/' . $i);?>"><?=$i?></a></li>
+                            <li><a href="<?=base_url('cat/view/' . $cat_id . '/' . $i . $strin_tag);?>"><?=$i?></a></li>
                 <?php
                         endif;
                     endfor;
 
                     if($curr_page != $total_page) :
                 ?>
-                        <li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page+1));?>">&gt;&gt;</a></li>
+                        <li><a href="<?=base_url('cat/view/' . $cat_id . '/' . ($curr_page+1) . $strin_tag);?>">&gt;&gt;</a></li>
                 <?php
                     endif;
                 ?>
