@@ -21,7 +21,7 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDITIONS OF USE') ?></h3>
                     <p>
-<?= _('DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by ChatandVision (HK) Limited (ChatandVision). By visiting or shopping at the DigitalDiscount website, you agree to accept and be bound by these conditions of use, as well as any other policies posted on the website, as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN PLEASE DO NOT USE THE SITE.') ?>
+<?= _('DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by ChatandVision (HK) Limited. By visiting or shopping at the DigitalDiscount website, you agree to accept and be bound by these conditions of use, as well as any other policies posted on the website, as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN PLEASE DO NOT USE THE SITE.') ?>
 <br /><br />
 <?= sprintf(_('DigitalDiscount is a trading name with registered offices in: <br><br> Hong Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Through its websites, ChatandVision (HK) Limited offers consumer electronics hardware, and services.')) ?>
 <br /><br />

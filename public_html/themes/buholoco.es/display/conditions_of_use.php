@@ -20,7 +20,7 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDICIONES DE USO') ?></h3>
                     <p>
-<?= _('Buholoco.es (BuhoLoco) está gestionado totalmente por ChatandVision (HK) Limited (ChatandVision).') ?>
+<?= _('Buholoco.es (BuhoLoco) está gestionado totalmente por ChatandVision (HK) Limited.') ?>
 <?= _('En virtud de este acuerdo, los servicios de procesamiento de pago de los bienes y/o servicios adquiridos en este sitio web son proporcionados por ChatandVision(UK) Limited, Company number 07384129, con registro en Dalton House, 60 Windsor Avenue, London, SW19 2RR,United Kingdom, a nombre de ChatandVision (HK) Limited. Company number 1386925, con registro en 618 Hollywood Plaza, 610 Nathan RD, MongKok, HK o por ChatandVision (HK) Limited, dependiendo del método de pago usado para adquirir los bienes y/o servicios.') ?>
 <br /><br />
 <?= _('En el caso de que elija pagar con tarjeta de crédito y el pago sea procesado a través de un Adquiridor Europeo, estos términos son un acuerdo entre usted y ChatandVision (UK) Limited. Para cualquier otra forma de pago, estos términos son un acuerdo entre usted y ChatandVision (HK) Limited y los bienes y/o servicios serán enviados directamente por ChatandVision (HK) Limited.') ?>

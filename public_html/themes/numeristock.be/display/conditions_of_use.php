@@ -20,7 +20,7 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDITIONS D’UTILISATION') ?></h3>
                     <p>
-<?= _('Numeristock.be (Numeristock) appartient entièrement et est opéré par ChatandVision (HK) Limited (ChatandVision). En visitant ou en achetant sur le site Numeristock, vous acceptez d’être lié par ces conditions d’utilisation, autant que par toute modification publiée sur le site. LE DEFAUT D’ACCORD NE VIDE PAS LES PRESENTES CONDITIONS D’UTILISATION DE LEUR APPLICABILITE DE PLEIN DROIT.') ?>
+<?= _('Numeristock.be (Numeristock) appartient entièrement et est opéré par ChatandVision (HK) Limited. En visitant ou en achetant sur le site Numeristock, vous acceptez d’être lié par ces conditions d’utilisation, autant que par toute modification publiée sur le site. LE DEFAUT D’ACCORD NE VIDE PAS LES PRESENTES CONDITIONS D’UTILISATION DE LEUR APPLICABILITE DE PLEIN DROIT.') ?>
 <br /><br />
 <?= sprintf(_('Numeristock est un nom commercial dont le sièges sociaux sont : <br><br> Hong Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Grâce à ses sites Web , ChatandVision (HK) Limited offre du matériel électronique grand public, des logiciels et des services.')) ?>
 <br /><br />
