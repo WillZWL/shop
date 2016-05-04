@@ -51,6 +51,32 @@ class EmailManagement extends MY_Controller
         return $this->appId;
     }
 
+    public function previewHtml(){
+
+        if($_POST["message_html"]){
+
+            //add email logo
+
+            //$siteConfigObj=$this->sc["LoadSiteParameter"]->initSite();
+            $siteConfigObj=$this->sc["LoadSiteParameter"]->loadSiteByPlatform($_POST["platform"]);
+           
+            $replace["logo"]=base_url("/images/logo/" . $siteConfigObj->getLogo());
+            $replace["site_name"]=$siteConfigObj->getSiteName();
+            $replace["site_url"]=base_url();
+        
+            if (!empty($replace)) {
+                foreach ($replace as $key => $value) {
+                    $search[] = '[:' . $key . ':]';
+                    $replace_value[] = $value;
+                }
+
+                $results=str_replace($search, $replace_value, $_POST["message_html"]);
+            }
+            echo $results;
+        }
+        
+    }
+
     public function saveTemplate()
     {
         $variable_arr = $content_arr = $not_table_field = array();
