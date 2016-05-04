@@ -178,6 +178,16 @@
     color:#999 !important;
 }
 
+.products-block .product-grid .product-meta {
+    height: 162px;
+}
+
+.products-block .product-grid .product-meta .price .price-old,
+.products-block .product-grid .product-meta .price .price-new
+{
+    white-space:nowrap;
+}
+
 .product-block .product-meta .action .cart{
     width: 100%;
     margin-right: 0px;
