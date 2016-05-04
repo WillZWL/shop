@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>js/jquery-1.9.1.min.js"></script>
+
 </head>
 <body>
 <div id="template" style="width:770px;margin:auto;overflow:auto;padding:20px 50px;background-color:#FCFCFC;box-shadow:0 5px 10px rgba(0, 0, 0, 0.5);">
@@ -122,10 +124,22 @@
         // gets the content of id passed in and echo out in new window for preview
         if (type == 'preview') {
             var message_html = document.getElementById(id).value;
-            var w = window.open("", "Preview", "status=1,resizable=1,scrollbars=1,height=500,width=800");
-            w.document.open();
-            w.document.write(message_html);
-            w.document.close();
+            var platform = document.getElementById("platform").value;
+
+            $.ajax({
+                type: 'POST',
+                url: "<?=base_url()?>marketing/emailManagement/previewHtml" ,
+                data:  {message_html : message_html,platform: platform},
+                dataType: 'html',
+                success:  function(response){
+                    var w = window.open("", "Preview", "status=1,resizable=1,scrollbars=1,height=500,width=800");
+                    w.document.open();
+                    w.document.write(response);
+                    w.document.close();
+                }
+                
+            });
+            
         }
     }
 
