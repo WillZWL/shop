@@ -23,26 +23,15 @@ class ReviewOrder extends PUB_Controller
 
     public function index()
     {
-        $data['cartInfo'] = $this->cartSessionModel->getCartInfo();
+        $data["tracking_data"]['cartInfo']=$data['cartInfo'] = $this->cartSessionModel->getCartInfo();
         $this->affiliateService->addAfCookie($_GET);
 
-        foreach ($data['cartInfo']->items as $key => $cartObj) {
-//          
-            $trackingList["sku"] = $cartObj->getSku();
-            $trackingList["unit_price"] = $cartObj->getPrice();
-            $trackingList["currency"] =$cartObj->getSupplierCostCurrency() ;
-            $trackingList["product_name"] = $cartObj->getName();
-            $trackingList["qty"] = $cartObj->getQty();
-            $trackingList["total"] = $cartObj->getAmount();
-            $trackingProducts[] = $trackingList;
-           
-        }
-        $data["tracking_data"]["products"] = $trackingProducts;
-        $data["tracking_data"]["total_amount"] = $total + $gst_total;
 
 //        var_dump($data['cartInfo']);
-        if ($data['cartInfo'])
+        if ($data['cartInfo']){
+
             $this->load->view('review', $data);
+        }
         else
             $this->load->view('reviewEmptyCart', $data);
 //        $data['data']['lang_text'] = $this->_get_language_file('', '', 'index');
