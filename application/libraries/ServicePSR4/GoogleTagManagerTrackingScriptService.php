@@ -195,18 +195,18 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
     private function _remarketingReviewPage($pageInfo = array(), $var = array())
     {
         $additionDataLayer = $this->_putCommonRemarketing($pageInfo, $var);
+        if ($var['cartInfo']) {
 
-        if ($var["products"]) {
-            $skus = "";
-            $price = "";
-            foreach ($var["products"] as $product) {
-                if ($skus != "")
-                    $skus .= ",";
-                if ($price != "")
-                    $price .= ",";
-                $skus .= '"' . $this->getCountryId() . "-" . $product["sku"] . '"';
-                $price .= $product["unit_price"];
-                $name .= '"' . $product["product_name"] . '"';
+            $i=0;$delimiter=null;
+            foreach ( $var["cartInfo"]->items as $cartObj) {
+                if($cartObj->getSku() !="") {
+                    
+                    $i ? $delimiter="," :$delimiter="";
+                    $skus .= $delimiter.'"' .$cartObj->getSku() . '"';
+                    $price .= $delimiter.$cartObj->getPrice();
+                    $name .= $delimiter.'"' . $cartObj->getName() . '"';
+                }
+                $i++;
             }
             $additionDataLayer .= '
                                 ,"prodid": [' . $skus . ']';
@@ -214,8 +214,9 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
                                 ,"pvalue": [' . $price . ']';
             $additionDataLayer .= '
                                 ,"pname": [' . $name . ']'; 
+          return $additionDataLayer;  
         }
-        return $additionDataLayer;
+    
     }
 
     private function _remarketingPaymentResult($pass_or_fail, $pageInfo = array(), $var = array())
@@ -302,7 +303,7 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
     private function _reviewOrderPage($pageInfo = array(), $var = array())
     {
         $additionDataLayer = $this->_putEcommPageType($pageInfo, $var);
-        $additionDataLayer .= $this->_putEcommProductsInfo($pageInfo, $var);
+        $additionDataLayer .= $this->_putCommonCartInfo($pageInfo, $var);
 
         return $additionDataLayer;
     }
@@ -310,21 +311,13 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
     private function _putEcommProductsInfo($pageInfo = array(), $var = array())
     {
         $skus = "";
-
-        if ($var["products"])
-            $product_list = $var["products"];
-        else
-            $product_list = $var["soi"];
-
-        if ($var["products"] || $var["soi"]) {
-            foreach ($product_list as $product) {
+        if ($var["soi"]) {
+            foreach ($var["soi"] as $product) {
                 if ($skus != "")
                     $skus .= ",";
-                if (is_array($product))
-                    $skus .= '"' . $product["sku"] . '"';
-                else
-                    $skus .= '"' . $product->getItemSku() . '"';
+             $skus .= '"' . $product->getItemSku() . '"';      
             }
+
             $additionDataLayer .= '
                                 ,"ecomm_prodid": [' . $skus . ']';
             $additionDataLayer .= '
@@ -332,6 +325,31 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
         }
 
         return $additionDataLayer;
+    }
+
+
+    private function _putCommonCartInfo($pageInfo = array(), $var = array()){
+
+         if ($var['cartInfo']) {
+            $i=0;
+            foreach ( $var["cartInfo"]->items as $cartObj) {
+              
+                if($cartObj->getSku() !="") {
+
+                    $i ? $delimiter="," :$delimiter="";
+                    $skus .= $delimiter.'"' .$cartObj->getSku() . '"';
+                }
+
+                $i++;
+            }
+
+            $total_amount=$var['cartInfo']->getGrandTotal();
+            $additionDataLayer .= '
+                                ,"ecomm_prodid": [' . $skus . ']';
+            $additionDataLayer .= '
+                                ,"ecomm_totalvalue": "' . $total_amount . '"';
+          return $additionDataLayer;  
+        }
     }
 
     private function _checkoutPage($pageInfo = array(), $var = array())
