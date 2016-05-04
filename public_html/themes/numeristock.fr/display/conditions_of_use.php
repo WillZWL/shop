@@ -16,6 +16,7 @@
                         <li><a href="#liability"><?= _('DECHARGE DE RESPONSABILITE') ?></a></li>
                         <li><a href="#security"><?= _('SECURITE') ?></a></li>
                         <li><a href="#revisions"><?= _('REVISION DES CONDITIONS D’UTILISATION') ?></a></li>
+                        <li><a href="#billing"><?= _('FATTURAZIONE TERMINI E CONDIZIONI') ?></a></li>
                         <br /><br />
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDITIONS D’UTILISATION') ?></h3>
@@ -155,6 +156,18 @@
                     <h3 id="revisions"><?= _('REVISION DES CONDITIONS D’UTILISATION') ?></h3>
                     <p>
                         <?= _('ChatandVision Ltd est susceptible de modifier les présentes conditions par mise à jour. Pour le cas où tout ou partie de ces conditions s’avérait inapplicable, vous consentez à ce que la portion restante demeurerait applicable de plein droit. En utilisant ce site, vous consentez à être lié par toute révision et à visiter périodiquement cette page pour vous assurer des conditions d’usages en vigueur.') ?>
+                    </p>
+                    <br /><br />
+
+                    <h3 id="billing"><?= _('FATTURAZIONE TERMINI E CONDIZIONI') ?></h3>
+                    <p><?= _('Modes de paiements')?></p>
+
+                    <p><?= _("Une variété de méthodes de paiement sont offerts sur le site pour la commodité des clients. Vous acceptez de payer tous les frais engagés dans le cadre de vos achats aux taux en vigueur au moment où les frais ont été engagés. Si vous payez par carte de crédit, votre carte émettrice régit votre utilisation de votre carte, et vous devez vous référer à cet accord et non à ces conditions d'utilisation afin de déterminer vos droits et obligations en tant que titulaire de la carte. VOUS, ET NON Numeristock.fr (Numeristock), ÊTES RESPONSABLE DE PAYER LES MONTANTS NON AUTORISÉ FACTURES A VOTRE CARTE DE CREDIT PAR UN TIERS.")?>
+                    </p> 
+
+                    <p><?= _('Frais de paiement et frais')?></p> 
+
+                    <p><?= _("Vous acceptez de payer tous les frais engagés dans le cadre de vos achats aux taux en vigueur au moment où les frais ont été engagés. Sauf si vous avisez Numeristock de divergence dans les soixante (60) jours après leur première apparition sur votre relevé de carte de crédit, vous acceptez qu'ils seront réputées acceptés par vous à tous égards et à toutes fins utiles. Si Numeristock ne reçoit pas le paiement de votre émetteur de carte de crédit ou son agent, vous acceptez de payer tous les montants dus à la demande par Numeristock ou de ses agents.")?>
                     </p>
                     <br /><br />
                     <div class="clearfix"></div>
