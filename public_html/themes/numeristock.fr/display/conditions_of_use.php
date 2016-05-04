@@ -21,7 +21,7 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDITIONS D’UTILISATION') ?></h3>
                     <p>
-<?= _('Numeristock.fr (Numeristock) appartient entièrement et est opéré par ChatandVision (HK) Limited (ChatandVision).') ?>
+<?= _('Numeristock.fr (Numeristock) appartient entièrement et est opéré par ChatandVision (HK) Limited.') ?>
 <?= _('En vertu de cet accord, les services de traitement de paiements pour les biens et / ou services achetés sur ce site sont fournis par ChatandVision (UK) Limited, numéro de société 07384129, ayant son siège social à Dalton House, 60, avenue Windsor, Londres, SW19 2RR, Royaume-Uni , au nom de ChatandVision (HK) Limited, numéro de société 1386925, ayant son siège social au 618 Hollywood Plaza, 610 Nathan RD, Mongkok, Hong Kong ou par ChatandVision (HK) Limited, selon le mode de paiement utilisé pour l\'achat de la produits et / ou services.') ?>
 <br /><br />
 <?= _('Dans le cas où vous choisissez de payer par carte de crédit, le paiement sera traité par un Acquéreur européen, ces termes sont un accord entre vous et ChatandVision (UK) Limited. Pour tout autre type d\'achats, ces termes sont un accord entre vous et ChatandVision (HK) Limited et des biens et / ou services seront livrés par ChatandVision (HK) Limited directement.') ?>
