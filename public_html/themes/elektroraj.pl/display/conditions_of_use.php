@@ -20,16 +20,16 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('WARUNKI UŻYTKOWANIA') ?></h3>
                     <p>
-<?= _('Elektroraj.pl (Elektroraj) jest w całości własnością i jest zarządzany przez ChatandVision Ltd (ChatandVision). Odwiedzając lub dokonując zakupu na stronie Elektroraj, akceptują Państwo niniejsze warunki użytkowania, a także inne zasady zamieszczone na tej stronie internetowej, wraz z nowymi zmianami. JEŚLI NIE WYRAŻAJĄ PAŃŚTWO ZGODY NA NINIEJSZE WARUNKI TO PROSIMY O OPUSZCZENIE TEJ STRONY.') ?>
+<?= _('Elektroraj.pl (Elektroraj) jest w całości własnością i jest zarządzany przez ChatandVision (HK) Limited (ChatandVision). Odwiedzając lub dokonując zakupu na stronie Elektroraj, akceptują Państwo niniejsze warunki użytkowania, a także inne zasady zamieszczone na tej stronie internetowej, wraz z nowymi zmianami. JEŚLI NIE WYRAŻAJĄ PAŃŚTWO ZGODY NA NINIEJSZE WARUNKI TO PROSIMY O OPUSZCZENIE TEJ STRONY.') ?>
 <br /><br />
-<?= sprintf(_('Elektroraj to nazwa handlowa z zarejestrowanymi biurami w: <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Na swoich stronach internetowych, ChatandVision Ltd oferuje sprzęt elektroniczny, oprogramowanie i usługi.')) ?>
+<?= sprintf(_('Elektroraj to nazwa handlowa z zarejestrowanymi biurami w: <br><br> Hong Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Na swoich stronach internetowych, ChatandVision (HK) Limited oferuje sprzęt elektroniczny, oprogramowanie i usługi.')) ?>
 <br /><br />
 <?= _('Jeśli mają Państwo jakiekolwiek pytania dotyczące naszych warunków i regulaminów to prosimy o kontakt z Działem Obsługi Klienta lub zapoznanie się z naszym FAQ.') ?>
                     </p>
                     <br /><br />
                     <h3 id="site_contents"><?= _('ZAWARTOŚĆ WITRYNY, PRAWA WŁASNOŚCI, ORAZ OGRANICZENIA') ?></h3>
                     <p>
-<?= _('Informacje zawarte na tej stronie, w tym wszystkie obrazy, ilustracje, projekty, zdjęcia, pliki wideo, teksty i inne materiały, które się tutaj pojawiają, prawa autorskie, znaki towarowe, handlowe lub inna własność intelektualna, są kontrolowane i licencjonowane (z których wszystkie, łącznie określa się je jako "treści") przez ChatandVision Ltd. lub jej podmioty zależne i stowarzyszone ("ChatandVision") lub są własnością ich prawowitych właścicieli. Nazwa ChatandVision i logo ChatandVision są zarejestrowanymi znakami należącymi do ChatandVision.') ?>
+<?= _('Informacje zawarte na tej stronie, w tym wszystkie obrazy, ilustracje, projekty, zdjęcia, pliki wideo, teksty i inne materiały, które się tutaj pojawiają, prawa autorskie, znaki towarowe, handlowe lub inna własność intelektualna, są kontrolowane i licencjonowane (z których wszystkie, łącznie określa się je jako "treści") przez ChatandVision (HK) Limited. lub jej podmioty zależne i stowarzyszone ("ChatandVision") lub są własnością ich prawowitych właścicieli. Nazwa ChatandVision i logo ChatandVision są zarejestrowanymi znakami należącymi do ChatandVision.') ?>
                         <br /><br />
                         <?= _('Udziela się zgody na wyświetlanie, kopiowanie, rozpowszechnianie, pobieranie i drukowanie części tej witryny w celach:') ?>
                         <ul>
@@ -87,7 +87,7 @@
                         <?= _('W mało prawdopodobnym przypadku, gdyby zamówienie zostało uszkodzone w czasie transportu należy się z nami natychmiast skontaktować. Proszę wysłać do nas produkt w oryginalnym opakowaniu i ważny formularz zwrotu (Return Merchandise Authorization). Według woli klienta zorganizujemy wymianę towaru na nowy lub dokonamy zwrotu wpłaty. Należy pamiętać, że nie jesteśmy w stanie zaoferować zwrotu pieniędzy, jeśli zostaniemy powiadomieni o uszkodzonym towarze po upływie 6 dni licząc od dnia następnego po otrzymaniu towarów.') ?>
                     </p>
                     <br />
-                    <p><?= _('Podczas procesu zwrotu, ChatandVision Ltd będzie się z Państwem kontaktować poprzez e-mail na temat kwestii wymagających wyjaśnienia i zgody, używając nazwy handlowej Elektroraj. Jeżeli nie otrzymamy odpowiedzi w przeciągu 7 dni liczac od dnia wyslania maila, ChatandVision wyśle przypomnienie w postaci 1 i 2 maila w przeciągu 7 dni. Jeżeli nadal nie otrzymamy odpowiedzi w przeciągu 7 dni liczac od dnia wyslania drugiego maila, ChatandVision wyśle 3. i ostateczny e-mail wraz z listem. Jeżeli po tym czasie nie otrzymamy odpowiedzi w przeciągu 2 tygodnii licząc od nia ostatniej próby kontaktu, ChatandVision rości sobie prawo do dysponowania reklamowanym sprzętem według własnego uznania.') ?></p>
+                    <p><?= _('Podczas procesu zwrotu, ChatandVision (HK) Limited będzie się z Państwem kontaktować poprzez e-mail na temat kwestii wymagających wyjaśnienia i zgody, używając nazwy handlowej Elektroraj. Jeżeli nie otrzymamy odpowiedzi w przeciągu 7 dni liczac od dnia wyslania maila, ChatandVision wyśle przypomnienie w postaci 1 i 2 maila w przeciągu 7 dni. Jeżeli nadal nie otrzymamy odpowiedzi w przeciągu 7 dni liczac od dnia wyslania drugiego maila, ChatandVision wyśle 3. i ostateczny e-mail wraz z listem. Jeżeli po tym czasie nie otrzymamy odpowiedzi w przeciągu 2 tygodnii licząc od nia ostatniej próby kontaktu, ChatandVision rości sobie prawo do dysponowania reklamowanym sprzętem według własnego uznania.') ?></p>
 
                     <br /><br />
 
@@ -129,7 +129,7 @@
                     <p>
                         <?= _('W ŻADNYM WYPADKU CHATANDVISION NIE PONOSI ODPOWIEDZIALNOŚCI ZA ŻADNE SZKODY, SZCZEGÓLNE, POŚREDNIE, PRZYKŁADOWE, WTÓRNE LUB JAKIEKOLWIEK INNE SZKODY, W TYM, ALE NIE TYLKO, UTRATY DANYCH LUB ZYSKÓW, BEZ WZGLĘDU NA FORMĘ, W TYM MIĘDZY INNYMI UMOWY, ZANIEDBANIA LUB INNE DZIAŁANIA NIEDOZWOLONE WYNIKAJĄCE Z LUB W ZWIĄZKU Z UŻYTKOWANIEM, KOPIOWANIEM LUB WYŚWIETLANIEM ZAWARTOŚCI TEJ WITRYNY. W celu zapewnienia naszym klientom najbardziej aktualnych informacji, ChatandVision będzie, od czasu do czasu, dokonywać zmian w treści i opisie produktów lub usług przedstawionych na tej stronie.') ?>
                         <br /><br />
-                        <?= _('ChatandVision Ltd nie ponosi odpowiedzialności za jakiekolwiek straty spowodowane opóźnieniem w dostarczeniu zamówionych produktów.') ?>
+                        <?= _('ChatandVision (HK) Limited nie ponosi odpowiedzialności za jakiekolwiek straty spowodowane opóźnieniem w dostarczeniu zamówionych produktów.') ?>
                     </p>
                     <br /><br />
 
@@ -151,7 +151,7 @@
                         <br /><br />
                     <h3 id="revisions"><?= _('ZMIANY W WARUNKACH UŻYTKOWANIA') ?></h3>
                     <p>
-                        <?= _('ChatandVision Ltd może zmienić warunki użytkowania poprzez aktualizację tego regulamiu. Zgadzasz się, że w przypadku gdy jakakolwiek część tych warunków korzystania z serwisu okaże się niewykonalna, pozostałe części tych warunków strony pozostają w pełnej mocy. Korzystając z tej strony zgadzasz się przestrzegać wszelkich takich zmian i dlatego należy okresowo odwiedzać tę stronę, aby ustalić aktualne warunki korzystania do których przestrzegania jesteś zobligowany.') ?>
+                        <?= _('ChatandVision (HK) Limited może zmienić warunki użytkowania poprzez aktualizację tego regulamiu. Zgadzasz się, że w przypadku gdy jakakolwiek część tych warunków korzystania z serwisu okaże się niewykonalna, pozostałe części tych warunków strony pozostają w pełnej mocy. Korzystając z tej strony zgadzasz się przestrzegać wszelkich takich zmian i dlatego należy okresowo odwiedzać tę stronę, aby ustalić aktualne warunki korzystania do których przestrzegania jesteś zobligowany.') ?>
                     </p>
                     <br /><br />
                     <div class="clearfix"></div>

@@ -20,16 +20,16 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDIZIONI D’USO') ?></h3>
                     <p>
-<?= _('NuovaDigitale.it (NuovaDigitale) appartiene ed è gestito da ChatandVision Ltd (ChatandVision). Navigando o acquistando sul sito NuovaDigitale, dichiari di accettare e di essere soggetto a questi termini e condizioni, e a tutto il regolamento espresso sul sito, comprese modifiche. SE NON SEI D’ ACCORDO CON QUESTI TERMINI E CONDIZIONI NON UTILIZZARE QUESTO SITO.') ?>
+<?= _('NuovaDigitale.it (NuovaDigitale) appartiene ed è gestito da ChatandVision (HK) Limited (ChatandVision). Navigando o acquistando sul sito NuovaDigitale, dichiari di accettare e di essere soggetto a questi termini e condizioni, e a tutto il regolamento espresso sul sito, comprese modifiche. SE NON SEI D’ ACCORDO CON QUESTI TERMINI E CONDIZIONI NON UTILIZZARE QUESTO SITO.') ?>
 <br /><br />
-<?= sprintf(_("NuovaDigital è un nome commerciale con sede legale in: <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Attraverso i suoi siti web, ChatandVision Ltd offre l'elettronica di consumo di hardware, software e servizi.")) ?>
+<?= sprintf(_("NuovaDigital è un nome commerciale con sede legale in: <br><br> Hong Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Attraverso i suoi siti web, ChatandVision (HK) Limited offre l'elettronica di consumo di hardware, software e servizi.")) ?>
 <br /><br />
 <?= _('Per qualsiasi domanda riguardo termini e condizioni, contatta il nostro servizio clienti oppure consulta la sezione FAQ.') ?>
                     </p>
                     <br /><br />
                     <h3 id="site_contents"><?= _('CONTENUTI, TITOLARITA’, RESTRIZIONI D’ USO') ?></h3>
                     <p>
-<?= _('Tutte le informazioni contenute sul sito incluse immagini, illustrazioni, design, foto, video, testo ed altri materiali sul sito (collettivamente qui definiti "Contenuti") consistono in proprietà intellettuali tutelate in base ai diritti d’ autore, marchi, nominativi commerciali, che appartengono o sono controllati da ChatandVision Ltd , aziende sussidiarie ed affiliate ("ChatandVision") o sono riconducibili ai rispettivi proprietari. Il nome ChatandVision ed il logo ChatandVision sono marchi registrati ChatandVision.') ?>
+<?= _('Tutte le informazioni contenute sul sito incluse immagini, illustrazioni, design, foto, video, testo ed altri materiali sul sito (collettivamente qui definiti "Contenuti") consistono in proprietà intellettuali tutelate in base ai diritti d’ autore, marchi, nominativi commerciali, che appartengono o sono controllati da ChatandVision (HK) Limited , aziende sussidiarie ed affiliate ("ChatandVision") o sono riconducibili ai rispettivi proprietari. Il nome ChatandVision ed il logo ChatandVision sono marchi registrati ChatandVision.') ?>
                         <br /><br />
                         <?= _('Si garantisce il permesso di esporre, copiare, distribuire, scaricare, stampare parti del sito per i seguenti propositi:') ?>
                         <ul>
@@ -89,7 +89,7 @@
                         <?= _('Nell’ improbabile eventualità in cui il tuo acquisto sia danneggiato durante il transito, contattaci immediatamente. Inviaci il prodotto nell’ imballaggio originale e con un modulo RMA allegato (Return Merchandise Authorization). Organizzeremo una sostituzione o un rimborso  immediati, a tua scelta. Considera che non potremo offrire un rimborso se la tua segnalazione avviene dopo i 30 giorni dalla data di consegna del prodotto.') ?>
                     </p>
                     <br />
-                    <p><?= _('Durante il processo di restituzione, ChatandVision Ltd comunicherà con te via email per informazioni ed accordi, utilizzando il nome commerciale NuovaDigitale. Se non riceviamo risposta dopo 7 giorni dall’ ultima email, ChatandVision ti contatterà via email altre 2 volte ad intervalli di 7 giorni. Dopo altri 7 giorni dall’ ultima email, ChatandVision ti invierà un terzo ed ultimo avviso. Dopo altre 2 settimane senza risposta, ChatandVision si riserva il diritto di trattenere i prodotti.') ?></p>
+                    <p><?= _('Durante il processo di restituzione, ChatandVision (HK) Limited comunicherà con te via email per informazioni ed accordi, utilizzando il nome commerciale NuovaDigitale. Se non riceviamo risposta dopo 7 giorni dall’ ultima email, ChatandVision ti contatterà via email altre 2 volte ad intervalli di 7 giorni. Dopo altri 7 giorni dall’ ultima email, ChatandVision ti invierà un terzo ed ultimo avviso. Dopo altre 2 settimane senza risposta, ChatandVision si riserva il diritto di trattenere i prodotti.') ?></p>
 
                     <br /><br />
 
@@ -131,7 +131,7 @@
                     <p>
                         <?= _('CHATANDVISION NON E’ RESPONSABILE IN ALCUN CASO PER DANNI PARTICOLARI, INDIRETTI, ESEMPLARI, O CONSEQUENZIALI O ALTRI TIPI DI DANNI, INCLUDENDO MA NON LIMITATAMENTE A PERDITA DELL’ UTILIZZO, DATI, O PROFITTI, SENZA DISTINZIONE DI AZIONI, INCLUDENDO MA NON LIMITATAMENTE A CONTRATTI, NEGLIGENZA, O ALTRI TORTI, DERIVANTI DA O CONNESSI CON USO, COPIA O ESPOSIZIONE DEL CONTENUTO DI QUESTO SITO. Nel tentativo di fornire ai nostri clienti informazioni sempre aggiornate, ChatandVision effettuerà dei cambiamenti ai contenuti del sito.') ?>
                         <br /><br />
-                        <?= _('ChatandVision Ltd non accetta responsabilità per alcun danno causato da un eventuale ritardo nella consegna dei prodotti ordinati.') ?>
+                        <?= _('ChatandVision (HK) Limited non accetta responsabilità per alcun danno causato da un eventuale ritardo nella consegna dei prodotti ordinati.') ?>
                     </p>
                     <br /><br />
 
@@ -153,7 +153,7 @@
                         <br /><br />
                     <h3 id="revisions"><?= _('REVISIONI DELLE CONDIZIONI D’ USO') ?></h3>
                     <p>
-                        <?= _('ChatandVision Ltd potrebbe modificare queste condizioni d’ uso tramite aggiornamenti. Accetti che, nel caso in cui una porzione di queste condizioni d’ uso non fosse applicabile, il resto delle condizioni rimane effettivo. Utilizzando questo sito accetti di essere soggetto ad ogni aggiornamento delle condizioni d’ uso,  è consigliata quindi una visita periodica a questa pagina per determinare le corrette condizioni d’ uso in vigore.') ?>
+                        <?= _('ChatandVision (HK) Limited potrebbe modificare queste condizioni d’ uso tramite aggiornamenti. Accetti che, nel caso in cui una porzione di queste condizioni d’ uso non fosse applicabile, il resto delle condizioni rimane effettivo. Utilizzando questo sito accetti di essere soggetto ad ogni aggiornamento delle condizioni d’ uso,  è consigliata quindi una visita periodica a questa pagina per determinare le corrette condizioni d’ uso in vigore.') ?>
                     </p>
                     <br /><br />
                     <div class="clearfix"></div>
