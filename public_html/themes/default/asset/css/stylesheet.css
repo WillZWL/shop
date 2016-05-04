@@ -8249,6 +8249,7 @@ body.layout-boxed-lg #page {
   border: none;
 }
 
+.product-meta .price{ min-height:33px; }
 /* line 46, ../development/scss/app/_product.scss */
 .price {
   width: 100%;
@@ -8259,7 +8260,7 @@ body.layout-boxed-lg #page {
 /* line 52, ../development/scss/app/_product.scss */
 .price .price-new {
   color: #589B24;
-  font-size: 18px;
+  font-size: 16px;
 }
 /* line 56, ../development/scss/app/_product.scss */
 .price .price-old {
