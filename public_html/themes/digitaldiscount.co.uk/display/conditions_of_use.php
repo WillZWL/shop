@@ -21,7 +21,7 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDITIONS OF USE') ?></h3>
                     <p>
-<?= _('DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by ChatandVision (HK) Limited (ChatandVision).') ?>
+<?= _('DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by ChatandVision (HK) Limited.') ?>
 <?= _('Under this agreement, the payment processing services for goods and/or services purchased on this website are provided by ChatandVision(UK) Limited, Company number 07384129, having its registered office at Dalton House, 60 Windsor Avenue, London, SW19 2RR,United Kingdom, on behalf ChatandVision (HK) Limited, Company number 1386925, having its registered office at 618 Hollywood Plaza, 610 Nathan RD, MongKok, HK or by ChatandVision (HK) Limited, depending on the type of payment method used for the purchase of the goods and/or services.') ?>
 <br /><br />
 <?= _('In the event you choose to pay with credit card and the payment will be processed via a European Acquirer, these terms are an agreement between you and ChatandVision (UK) Limited. For any other type of purchases, these terms are an agreement between you and ChatandVision (HK) Limited and goods and/or services will be delivered by ChatandVision (HK) Limited directly.') ?>
