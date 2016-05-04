@@ -20,19 +20,19 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDICIONES DE USO') ?></h3>
                     <p>
-<?= _('Buholoco.es (BuhoLoco) está gestionado totalmente por ChatandVision Ltd (ChatandVision).') ?>
+<?= _('Buholoco.es (BuhoLoco) está gestionado totalmente por ChatandVision (HK) Limited (ChatandVision).') ?>
 <?= _('En virtud de este acuerdo, los servicios de procesamiento de pago de los bienes y/o servicios adquiridos en este sitio web son proporcionados por ChatandVision(UK) Limited, Company number 07384129, con registro en Dalton House, 60 Windsor Avenue, London, SW19 2RR,United Kingdom, a nombre de ChatandVision (HK) Limited. Company number 1386925, con registro en 618 Hollywood Plaza, 610 Nathan RD, MongKok, HK o por ChatandVision (HK) Limited, dependiendo del método de pago usado para adquirir los bienes y/o servicios.') ?>
 <br /><br />
 <?= _('En el caso de que elija pagar con tarjeta de crédito y el pago sea procesado a través de un Adquiridor Europeo, estos términos son un acuerdo entre usted y ChatandVision (UK) Limited. Para cualquier otra forma de pago, estos términos son un acuerdo entre usted y ChatandVision (HK) Limited y los bienes y/o servicios serán enviados directamente por ChatandVision (HK) Limited.') ?>
 <br /><br />
-<?= sprintf(_('A través de sus páginas, ChatandVision LTD ofrece electrónica de consumo, software y servicios.')) ?>
+<?= sprintf(_('A través de sus páginas, ChatandVision (HK) Limited ofrece electrónica de consumo, software y servicios.')) ?>
 <br /><br />
 <?= _('Si tiene alguna pregunta relacionada con nuestros términos y condiciones, por favor póngase en contacto con el equipo de Atención al cliente o lea nuestro FAQ.') ?>
                     </p>
                     <br /><br />
                     <h3 id="site_contents"><?= _('CONTENIDO DEL SITIO, LA PROPIEDAD Y RESTRICCIONES DE USO') ?></h3>
                     <p>
-<?= _('La información contenida en este sitio incluyendo todas las imágenes, ilustraciones, diseños, fotografías, video clips, escritos y otros materiales que aparecen en este documento son derechos de autor, marcas registradas, imagen comercial u otra propiedad intelectual propiedad, controlado o licenciado (todos los cuales, en conjunto, se hace referencia en el presente documento, los "Contenidos") por ChatandVision Ltd. o sus subsidiarias y afiliadas ("ChatandVision") o son propiedad de sus respectivos dueños. El nombre y el logotipo de ChatandVision son marcas registradas de ChatandVision registradas.') ?>
+<?= _('La información contenida en este sitio incluyendo todas las imágenes, ilustraciones, diseños, fotografías, video clips, escritos y otros materiales que aparecen en este documento son derechos de autor, marcas registradas, imagen comercial u otra propiedad intelectual propiedad, controlado o licenciado (todos los cuales, en conjunto, se hace referencia en el presente documento, los "Contenidos") por ChatandVision (HK) Limited. o sus subsidiarias y afiliadas ("ChatandVision") o son propiedad de sus respectivos dueños. El nombre y el logotipo de ChatandVision son marcas registradas de ChatandVision registradas.') ?>
                         <br /><br />
                         <?= _('Se concede el permiso para exhibir, copiar, distribuir, descargar e imprimir en partes de copias impresas de este sitio: ') ?>
                         <ul>
@@ -92,7 +92,7 @@
                         <?= _('En el improbable caso de que su pedido sea dañado en tránsito por favor póngase en contacto con nosotros inmediatamente. Rogamos que envíe el producto de nuevo a nosotros en su embalaje original y con el formulario RMA (Return Merchandise Authorization). Haremos los trámites necesarios para el reemplazo o el reembolso de su pedido según su preferencia. Tenga en cuenta que no seremos capaces de ofrecer un reembolso si nos notifica sobre el pedido dañado después de 6 días a partir del día después de la recepción del paquete.') ?>
                     </p>
                     <br />
-                    <p><?= _('Durante el proceso de RMA, ChatandVision Ltd hará un seguimiento con usted por correo electrónico sobre temas que requieren aclaraciones y su acuerdo, con el nombre comercial BuhoLoco. Si no se recibe ninguna respuesta por su parte en un plazo de 7 días desde la fecha de envío por correo electrónico, ChatandVision hará un seguimiento con una especie de  coreo recordatorio a través de correo electrónico durante los dos primeros avisos en un intervalo de 7 días. Si tras estos dos recordatorios no se recibe ninguna respuesta alguna dentro de los 7 días desde el segundo aviso, ChatandVision enviará un tercer aviso como recordatorio final junto con una carta.') ?></p>
+                    <p><?= _('Durante el proceso de RMA, ChatandVision (HK) Limited hará un seguimiento con usted por correo electrónico sobre temas que requieren aclaraciones y su acuerdo, con el nombre comercial BuhoLoco. Si no se recibe ninguna respuesta por su parte en un plazo de 7 días desde la fecha de envío por correo electrónico, ChatandVision hará un seguimiento con una especie de  coreo recordatorio a través de correo electrónico durante los dos primeros avisos en un intervalo de 7 días. Si tras estos dos recordatorios no se recibe ninguna respuesta alguna dentro de los 7 días desde el segundo aviso, ChatandVision enviará un tercer aviso como recordatorio final junto con una carta.') ?></p>
                     <br /><br />
                     <p>
                         <?= _('Si se recibe una respuesta en el plazo de 2 semanas desde la fecha del correo recordatorio final ChatandVision se reserva el derecho de disposición sobre los productos de RMA (s) a su discreción en cualquier forma tenido a bien.') ?>
@@ -139,7 +139,7 @@
                         <br /><br />
                         <?= _('Para proporcionar a nuestros clientes  la información más actualizada, ChatandVision de vez en cuando, hará cambios en los contenidos y en los productos o servicios descritos en este Sitio.') ?>
                         <br /><br />
-                        <?= _('ChatandVision Ltd no se hace responsable de ninguna pérdida causada por la demora en la entrega de los productos solicitados.') ?>
+                        <?= _('ChatandVision (HK) Limited no se hace responsable de ninguna pérdida causada por la demora en la entrega de los productos solicitados.') ?>
                     </p>
                     <br /><br />
 
@@ -161,7 +161,7 @@
                         <br /><br />
                     <h3 id="revisions"><?= _('CONDICIONES DE REVISIONES DE USO') ?></h3>
                     <p>
-                        <?= _('ChatandVision Ltd podrá modificar estas condiciones de uso actualizando esta publicación. Usted acepta que en el caso se encuentra cualquier parte de estas condiciones de uso del sitio no es exigible, el resto de estas condiciones del sitio permanecerá en pleno vigor y efecto. Al usar este sitio usted acepta que quedará vinculado por tales revisiones y por lo tanto, deberá visitar periódicamente esta página para determinar las condiciones actuales de uso a los que está vinculado.') ?>
+                        <?= _('ChatandVision (HK) Limited podrá modificar estas condiciones de uso actualizando esta publicación. Usted acepta que en el caso se encuentra cualquier parte de estas condiciones de uso del sitio no es exigible, el resto de estas condiciones del sitio permanecerá en pleno vigor y efecto. Al usar este sitio usted acepta que quedará vinculado por tales revisiones y por lo tanto, deberá visitar periódicamente esta página para determinar las condiciones actuales de uso a los que está vinculado.') ?>
                     </p>
                     <br /><br />
                     <div class="clearfix"></div>

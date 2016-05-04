@@ -20,16 +20,16 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDITIONS OF USE') ?></h3>
                     <p>
-<?= _('Aheaddigital.com.au (AheadDigital) is wholly owned and operated by ChatandVision Ltd (ChatandVision). By visiting or shopping at the AheadDigital website, you agree to accept and be bound by these conditions of use, as well as any other policies posted on the website, as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN PLEASE DO NOT USE THE SITE.') ?>
+<?= _('Aheaddigital.com.au (AheadDigital) is wholly owned and operated by ChatandVision (HK) Limited (ChatandVision). By visiting or shopping at the AheadDigital website, you agree to accept and be bound by these conditions of use, as well as any other policies posted on the website, as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN PLEASE DO NOT USE THE SITE.') ?>
 <br /><br />
-<?= sprintf(_('AheadDigital is a trading name with registered offices in: <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Through its websites, ChatandVision Ltd offers consumer electronics hardware, and services.')) ?>
+<?= sprintf(_('AheadDigital is a trading name with registered offices in: <br><br> Hong Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Through its websites, ChatandVision (HK) Limited offers consumer electronics hardware, and services.')) ?>
 <br /><br />
 <?= _('If you have any queries relating to our terms and conditions, please contact the Customer Support team or read our FAQ.') ?>
                     </p>
                     <br /><br />
                     <h3 id="site_contents"><?= _('SITE CONTENTS, OWNERSHIP, AND USE RESTRICTIONS') ?></h3>
                     <p>
-<?= _('The information contained in this Site including all images, illustrations, designs, photographs, video clips, writings and other materials that appear herein are copyrights, trademarks, trade dress or other intellectual property owned, controlled, or licensed (all of which, collectively, are herein referred to as the "Contents") by ChatandVision Ltd or its subsidiaries and affiliates ("ChatandVision") or are the property of their respective owners. The name ChatandVision and the ChatandVision logo are registered marks of ChatandVision. ') ?>
+<?= _('The information contained in this Site including all images, illustrations, designs, photographs, video clips, writings and other materials that appear herein are copyrights, trademarks, trade dress or other intellectual property owned, controlled, or licensed (all of which, collectively, are herein referred to as the "Contents") by ChatandVision (HK) Limited or its subsidiaries and affiliates ("ChatandVision") or are the property of their respective owners. The name ChatandVision and the ChatandVision logo are registered marks of ChatandVision. ') ?>
                         <br /><br />
                         <?= _('Permission is granted to display, copy, distribute, download, and print in hard copy portions of this Site for the purposes of: ') ?>
                         <ul>
@@ -91,7 +91,7 @@
                         <?= _('In the unlikely event your order is damaged in transit please contact us immediately. Please send the product back to us in the original packaging and a valid RMA (Return Merchandise Authorization) form. We will arrange for a prompt replacement or refund, whichever is your preference. Please note that we are unable to offer a refund if you notify us about the damaged goods after more than 6 days starting the day after receipt of goods.') ?>
                     </p>
                     <br />
-                    <p><?= _('During the RMA process, ChatandVision Ltd will follow up with you via email on issues requiring your clarification and agreement, using the trading name AheadDigital. If no response is received from you within 7 days from the date of emailing, ChatandVision will follow up with a kind reminder in the form of a 1st and 2nd email at 7 day intervals. In the event no response is received within 7 days of the 2nd email being sent, ChatandVision will send a 3rd and final reminder email together with a recorded letter. Should no response be received within 2 weeks from date of final reminders, ChatandVision reserves the right to dispose of the RMA item(s) at its discretion in any way seen fit.') ?></p>
+                    <p><?= _('During the RMA process, ChatandVision (HK) Limited will follow up with you via email on issues requiring your clarification and agreement, using the trading name AheadDigital. If no response is received from you within 7 days from the date of emailing, ChatandVision will follow up with a kind reminder in the form of a 1st and 2nd email at 7 day intervals. In the event no response is received within 7 days of the 2nd email being sent, ChatandVision will send a 3rd and final reminder email together with a recorded letter. Should no response be received within 2 weeks from date of final reminders, ChatandVision reserves the right to dispose of the RMA item(s) at its discretion in any way seen fit.') ?></p>
 
                     <br /><br />
 
@@ -133,7 +133,7 @@
                     <p>
                         <?= _('IN NO EVENT SHALL CHATANDVISION BE LIABLE FOR SPECIAL, INDIRECT, EXEMPLARY, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER, INCLUDING BUT NOT LIMITED TO, LOSS OF USE, DATA, OR PROFITS, WITHOUT REGARD TO THE FORM OF ANY ACTION, INCLUDING BUT NOT LIMITED TO CONTRACT, NEGLIGENCE, OR OTHER TORTIOUS ACTIONS, ALL ARISING OUT OF OR IN CONNECTION WITH THE USE, COPYING, OR DISPLAY OF THE CONTENTS OF THIS SITE. In an effort to provide our customers with the most current information, ChatandVision will, from time to time, make changes in the Contents and in the products or services described on this Site. ') ?>
                         <br /><br />
-                        <?= _('ChatandVision Ltd does not accept liability for any loss caused by delay in the delivery of products ordered.') ?>
+                        <?= _('ChatandVision (HK) Limited does not accept liability for any loss caused by delay in the delivery of products ordered.') ?>
                     </p>
                     <br /><br />
 
@@ -155,7 +155,7 @@
                         <br /><br />
                     <h3 id="revisions"><?= _('CONDITIONS OF USE REVISIONS') ?></h3>
                     <p>
-                        <?= _('ChatandVision Ltd may revise these conditions of use by updating this posting. You agree that in the event any portion of these Site conditions of use is found to be unenforceable, the remainder of these Site conditions shall remain in full force and effect. By using this Site you agree to be bound by any such revisions and should therefore periodically visit this page to determine the current conditions of use to which you are bound.') ?>
+                        <?= _('ChatandVision (HK) Limited may revise these conditions of use by updating this posting. You agree that in the event any portion of these Site conditions of use is found to be unenforceable, the remainder of these Site conditions shall remain in full force and effect. By using this Site you agree to be bound by any such revisions and should therefore periodically visit this page to determine the current conditions of use to which you are bound.') ?>
                     </p>
                     <br /><br />
                     <div class="clearfix"></div>

@@ -20,16 +20,16 @@
                     </ol>
                     <h3 id="conditions_of_use"><?= _('CONDITIONS D’UTILISATION') ?></h3>
                     <p>
-<?= _('Numeristock.be (Numeristock) appartient entièrement et est opéré par ChatandVision Ltd (ChatandVision). En visitant ou en achetant sur le site Numeristock, vous acceptez d’être lié par ces conditions d’utilisation, autant que par toute modification publiée sur le site. LE DEFAUT D’ACCORD NE VIDE PAS LES PRESENTES CONDITIONS D’UTILISATION DE LEUR APPLICABILITE DE PLEIN DROIT.') ?>
+<?= _('Numeristock.be (Numeristock) appartient entièrement et est opéré par ChatandVision (HK) Limited (ChatandVision). En visitant ou en achetant sur le site Numeristock, vous acceptez d’être lié par ces conditions d’utilisation, autant que par toute modification publiée sur le site. LE DEFAUT D’ACCORD NE VIDE PAS LES PRESENTES CONDITIONS D’UTILISATION DE LEUR APPLICABILITE DE PLEIN DROIT.') ?>
 <br /><br />
-<?= sprintf(_('Numeristock est un nom commercial dont le sièges sociaux sont : <br><br> Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Grâce à ses sites Web , ChatandVision Ltd offre du matériel électronique grand public, des logiciels et des services.')) ?>
+<?= sprintf(_('Numeristock est un nom commercial dont le sièges sociaux sont : <br><br> Hong Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br>Grâce à ses sites Web , ChatandVision (HK) Limited offre du matériel électronique grand public, des logiciels et des services.')) ?>
 <br /><br />
 <?= _('Pour toute question relative à nos conditions d’utilisation, merci de contacter notre service clientèle ou de vous référer à notre FAQ.') ?>
                     </p>
                     <br /><br />
                     <h3 id="site_contents"><?= _('CONTENU DU SITE, PROPRIETE ET RESTRICTIONS D’UTILISATION') ?></h3>
                     <p>
-<?= _('Toutes les informations contenues sur site, y compris mais non limitées aux images, illustrations, photographies, vidéos, textes ou autres (ici et après désignés par « Contenu »), sont protégées par les lois régissant la propriété intellectuelle, le droit des marques, des brevets et licences et appartiennent à ChatandVision Ltd ou ses substituts ou affiliés ("ChatandVision"), ou, alternativement, à leurs propriétaires respectifs. Le nom ainsi que le logo ChatandVision sont des marques déposées.') ?>
+<?= _('Toutes les informations contenues sur site, y compris mais non limitées aux images, illustrations, photographies, vidéos, textes ou autres (ici et après désignés par « Contenu »), sont protégées par les lois régissant la propriété intellectuelle, le droit des marques, des brevets et licences et appartiennent à ChatandVision (HK) Limited ou ses substituts ou affiliés ("ChatandVision"), ou, alternativement, à leurs propriétaires respectifs. Le nom ainsi que le logo ChatandVision sont des marques déposées.') ?>
                         <br /><br />
                         <?= _('Permission est accordée d’afficher, copier, distribuer, télécharger et imprimer tout ou partie de ce site pour les motifs suivants :') ?>
                         <ul>
@@ -87,7 +87,7 @@
                         <?= _('Dans le cas improbable où une commande arriverait endommagée par le transit, nous vous prions de nous contacter immédiatement. Il vous sera demandé de renvoyer le produit dans son emballage d’origine et un formulaire RMA (Autorisation de Retour Marchandise) vous sera fourni. Nous arrangerons un remplacement ou remboursement rapide, en fonction de votre convenance. Nous vous prions de noter que nous ne sommes pas en mesure de fournir de remboursement si la première notification intervient après 6 jours à compter du jour suivant la réception des biens.') ?>
                     </p>
                     <br />
-                    <p><?= _('Au cours du processus de RMA, ChatandVision Ltd assurera le suivi via e-mail pour toutes les questions nécessitant votre accord, via le nom de commerce Numeristock. A défaut de réponse sous 7 jours à compter de la date d’envoi du message, ChatandVision vous recontactera par le biais d’un premier puis d’un second e-mail écartés de sept jours chacun. En l’absence de réponse après sept jours à compter du second message, ChatandVision enverra un ultime e-mail en même temps qu’un courrier. A défaut de réponse sous deux semaines, ChantandVision se réserve le droit de disposer de l’article à sa discrétion.') ?></p>
+                    <p><?= _('Au cours du processus de RMA, ChatandVision (HK) Limited assurera le suivi via e-mail pour toutes les questions nécessitant votre accord, via le nom de commerce Numeristock. A défaut de réponse sous 7 jours à compter de la date d’envoi du message, ChatandVision vous recontactera par le biais d’un premier puis d’un second e-mail écartés de sept jours chacun. En l’absence de réponse après sept jours à compter du second message, ChatandVision enverra un ultime e-mail en même temps qu’un courrier. A défaut de réponse sous deux semaines, ChantandVision se réserve le droit de disposer de l’article à sa discrétion.') ?></p>
 
                     <br /><br />
 
@@ -129,7 +129,7 @@
                     <p>
                         <?= _('EN AUCUN CAS CHATANVISION NE SAURAIT ETRE TENU POUR RESPONSABLE POUR TOUT DOMMAGE SPECIAL, INDIRECT, OU AUTRES, INCLUANT MAIS NON LIMITES A LA PERTE LIEE A L’UTILISATION, PERTE DE DONNEES OU DE PROFITS, SANS INFLUENCE DE LA FORME DE TOUTE ACTION, INCLUANT MAIS NON LIMITEES AU CONTRAT, LA NEGLIGENCE OU AUTRE VICE D’UTILISATION NAISSANT HORS DE NOTRE CONNEXION AVEC L’UTILISATION, LA COPIE OU L’AFFICHAGE DE CONTENUS DE CE SITE. Dans un effort pour fournir à ses clients une information toujours d’actualité, ChatandVision peut, ponctuellement, effectuer des changements de contenu et de produits ou services décrits sur son site.') ?>
                         <br /><br />
-                        <?= _('ChatandVision Ltd n’est pas responsable de toute perte causée par un dépassement du délai de livraison prévu.') ?>
+                        <?= _('ChatandVision (HK) Limited n’est pas responsable de toute perte causée par un dépassement du délai de livraison prévu.') ?>
                     </p>
                     <br /><br />
 
@@ -151,7 +151,7 @@
                         <br /><br />
                     <h3 id="revisions"><?= _('REVISION DES CONDITIONS D’UTILISATION') ?></h3>
                     <p>
-                        <?= _('ChatandVision Ltd est susceptible de modifier les présentes conditions par mise à jour. Pour le cas où tout ou partie de ces conditions s’avérait inapplicable, vous consentez à ce que la portion restante demeurerait applicable de plein droit. En utilisant ce site, vous consentez à être lié par toute révision et à visiter périodiquement cette page pour vous assurer des conditions d’usages en vigueur.') ?>
+                        <?= _('ChatandVision (HK) Limited est susceptible de modifier les présentes conditions par mise à jour. Pour le cas où tout ou partie de ces conditions s’avérait inapplicable, vous consentez à ce que la portion restante demeurerait applicable de plein droit. En utilisant ce site, vous consentez à être lié par toute révision et à visiter périodiquement cette page pour vous assurer des conditions d’usages en vigueur.') ?>
                     </p>
                     <br /><br />
                     <div class="clearfix"></div>
