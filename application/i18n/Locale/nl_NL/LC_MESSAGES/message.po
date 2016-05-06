@@ -1,0 +1,1893 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Panther\n"
+"POT-Creation-Date: 2016-05-06 11:43+0800\n"
+"PO-Revision-Date: 2016-05-06 15:07+0800\n"
+"Language-Team: it@eservicesgroup.net <it@eservicesgroup.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-Basepath: ../../../projectV2/atomv2/public_html/themes/default\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Last-Translator: \n"
+"Language: nl\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: display/conditions_of_use.php\n"
+
+#: cart/info.php:35 review.php:15 review.php:56
+msgid "Total"
+msgstr "Totaal"
+
+#: cart/info.php:40
+msgid "View Cart"
+msgstr "Bekijk winkelwagen"
+
+#: cart/info.php:41 checkout/index.php:7 review.php:65
+msgid "Checkout"
+msgstr "Uitchecken"
+
+#: cart/info.php:48
+msgid "Your shopping cart is empty!"
+msgstr "Uw winkelwagen is leeg!"
+
+#: cat.php:10 search.php:10
+msgid "Refine Search"
+msgstr "Verfijn zoekopdracht"
+
+#: cat.php:12 category.php:7 myaccount/index.php:187 myaccount/index.php:188
+#: search.php:12
+msgid "Categories"
+msgstr "Categorieën"
+
+#: cat.php:45 cat.php:86 search.php:28 search.php:62
+msgid "Show more"
+msgstr "Laat meer zien"
+
+#: cat.php:46 cat.php:87
+msgid "Show less"
+msgstr "Laat minder zien"
+
+#: cat.php:56 search.php:43
+msgid "Brands"
+msgstr "Merken"
+
+#: cat.php:143 search.php:129
+msgid "List"
+msgstr "Lijst"
+
+#: cat.php:144 search.php:130
+msgid "Grid"
+msgstr "Rooster"
+
+#: cat.php:154 search.php:140
+msgid "Sort By"
+msgstr "Winkelen per"
+
+#: cat.php:161 search.php:146
+msgid "Default"
+msgstr "Standaard"
+
+#: cat.php:164 search.php:148
+msgid "Name (A - Z)"
+msgstr "Merk (A - Z)"
+
+#: cat.php:167 search.php:150
+msgid "Name (Z - A)"
+msgstr "Merk (Z - A)"
+
+#: cat.php:170 search.php:152
+msgid "Price (Low to High)"
+msgstr "Prijs (laag naar hoog)"
+
+#: cat.php:173 search.php:154
+msgid "Price (High to Low)"
+msgstr "Prijs (hoog naar laag)"
+
+#: cat.php:176 search.php:156
+msgid "New Arrivals"
+msgstr "Nieuwe producten"
+
+#: cat.php:179 search.php:158
+msgid "Last Updated"
+msgstr "Laatst bijgewerkt"
+
+#: cat.php:184
+msgid "Display:"
+msgstr "Tonen"
+
+#: cat.php:208 product/grid.php:41 product/related_product.php:22
+#: search.php:193
+msgid "Quick View"
+msgstr "Snelle kijk"
+
+#: cat.php:219 search.php:207
+msgid "List Price"
+msgstr "Van Prijs"
+
+#: cat.php:220 search.php:208
+msgid "You Pay"
+msgstr "Je betaalt"
+
+#: cat.php:227 search.php:211
+msgid "Save"
+msgstr "Save"
+
+#: cat.php:235 cat.php:241 product/accessories.php:119
+#: product/accessories.php:125 product/detail.php:130 product/grid.php:68
+#: product/grid.php:74 product/related_product.php:49 search.php:219
+msgid "Add to Cart"
+msgstr "Voeg toe aan winkelmandje"
+
+#: cat.php:247 search.php:223 search.php:225
+msgid "More Info"
+msgstr "Meer informatie"
+
+#: category.php:24 search.php:15
+msgid "SmartPhones"
+msgstr "SmartPhones"
+
+#: category.php:27 search.php:18
+msgid "Webcams"
+msgstr "Webcams"
+
+#: category.php:30 search.php:21
+msgid "Conference Phones"
+msgstr "Conference Phones"
+
+#: category.php:33 search.php:24
+msgid "Accessories"
+msgstr "Accessories"
+
+#: category.php:36 search.php:35
+msgid "Software"
+msgstr "Accessories"
+
+#: category.php:39 search.php:38
+msgid "Computing"
+msgstr "Computing"
+
+#: category.php:54
+msgid "Menu"
+msgstr "Menu"
+
+#: checkout/index.php:13
+msgid "Step 1: Checkout Options"
+msgstr "Stap 1 : Afrekenen Opties"
+
+#: checkout/index.php:22 myaccount/login.php:36
+msgid "New Customer"
+msgstr "Nieuwe klant"
+
+#: checkout/index.php:23
+msgid "Guest Checkout"
+msgstr "Gast Afrekenen"
+
+#: checkout/index.php:26 checkout/index.php:40 checkout/index.php:41
+#: checkout/index.php:146 checkout/index.php:237 checkout/index.php:284
+msgid "Loading..."
+msgstr "Loading..."
+
+#: checkout/index.php:26 checkout/index.php:146 checkout/index.php:237
+#: checkout/index.php:284
+msgid "Continue"
+msgstr "Voortzetten"
+
+#: checkout/index.php:30
+msgid "Returning Customer"
+msgstr "Terugkomende klant"
+
+#: checkout/index.php:31
+msgid "I am a returning customer"
+msgstr "Ik ben een terugkomende klant"
+
+#: checkout/index.php:33 checkout/index.php:34 checkout/index.php:73
+#: checkout/index.php:74
+msgid "E-Mail"
+msgstr "E-mailadres"
+
+#: checkout/index.php:37 checkout/index.php:38 checkout/index.php:87
+#: checkout/index.php:88 myaccount/login.php:18 myaccount/login.php:117
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: checkout/index.php:39 myaccount/login.php:23
+msgid "Forgotten Password"
+msgstr "Wachtwoord vergeten"
+
+#: checkout/index.php:40
+msgid "Login"
+msgstr "Inloggen"
+
+#: checkout/index.php:41
+msgid "You have logged in, please click here to continue"
+msgstr "You have logged in, please click here to continue"
+
+#: checkout/index.php:53
+msgid "Step 2: Account &amp; Billing Details"
+msgstr "Step 2: Account &amp; Billing Details"
+
+#: checkout/index.php:63
+msgid "Your Personal Details"
+msgstr "Jouw persoonlijke gegevens"
+
+#: checkout/index.php:65 checkout/index.php:66 myaccount/index.php:130
+#: myaccount/index.php:131 myaccount/index.php:316 myaccount/index.php:317
+#: myaccount/login.php:97 myaccount/login.php:98
+msgid "First Name"
+msgstr "Voornaam"
+
+#: checkout/index.php:69 checkout/index.php:70
+msgid "Last Name"
+msgstr "Achternaam"
+
+#: checkout/index.php:76 checkout/index.php:80 myaccount/login.php:67
+msgid "Telephone"
+msgstr "Telefoon"
+
+#: checkout/index.php:78 myaccount/index.php:361 myaccount/index.php:362
+#: myaccount/login.php:70
+msgid "Country Code"
+msgstr "Landcode"
+
+#: checkout/index.php:79 myaccount/index.php:365 myaccount/index.php:366
+#: myaccount/login.php:74
+msgid "Area Code"
+msgstr "netnummer"
+
+#: checkout/index.php:85
+msgid "Your Password"
+msgstr "Je Wachtwoord"
+
+#: checkout/index.php:90 checkout/index.php:91
+msgid "Password Confirm"
+msgstr "Wachtwoord Bevestigen"
+
+#: checkout/index.php:97
+msgid "Your Address"
+msgstr "Jouw adres"
+
+#: checkout/index.php:99 checkout/index.php:100
+msgid "Company"
+msgstr "Bedrijf"
+
+#: checkout/index.php:103 checkout/index.php:104
+msgid "Address 1"
+msgstr "Adres 1"
+
+#: checkout/index.php:107 checkout/index.php:108
+msgid "Address 2"
+msgstr "Adres 2"
+
+#: checkout/index.php:111 checkout/index.php:112 myaccount/index.php:147
+#: myaccount/index.php:148 myaccount/index.php:341 myaccount/index.php:342
+#: myaccount/login.php:50 myaccount/login.php:51
+msgid "City"
+msgstr "Strad"
+
+#: checkout/index.php:115 checkout/index.php:116
+msgid "Post Code"
+msgstr "Postcode"
+
+#: checkout/index.php:119 myaccount/index.php:138 myaccount/index.php:139
+#: myaccount/index.php:333 myaccount/login.php:42
+msgid "Country"
+msgstr "Land"
+
+#: checkout/index.php:125
+msgid "County / State"
+msgstr "Provincie"
+
+#: checkout/index.php:127
+msgid "select County / State"
+msgstr "kiezen Provincie"
+
+#: checkout/index.php:156
+msgid "Step 3: Delivery Details"
+msgstr "Stap 3 : Levering Details"
+
+#: checkout/index.php:165
+msgid "We could only ship to the billing address!"
+msgstr "We kunnen alleen maar verzenden naar het factuuradres !"
+
+#: checkout/index.php:262
+msgid "Step 4: Payment Method"
+msgstr "Stap 4 : Betaling Methode"
+
+#: checkout/index.php:277
+msgid "Please contact our CS!"
+msgstr "Neem contact op met onze CS !"
+
+#: checkout/index.php:381
+msgid "Please note: remote surcharge has been applied to your basket!"
+msgstr "Please note: remote surcharge has been applied to your basket!"
+
+#: checkout/index.php:502 checkout/index.php:713
+msgid "The email is required"
+msgstr "The email is required"
+
+#: checkout/index.php:505 checkout/index.php:721
+msgid "The value is not a valid email address"
+msgstr "The value is not a valid email address"
+
+#: checkout/index.php:513
+msgid "Please input a password"
+msgstr "The value is not a valid email address"
+
+#: checkout/index.php:582
+msgid "The billing first name is required"
+msgstr "The billing first name is required"
+
+#: checkout/index.php:587
+msgid ""
+"The billing first name must be more than 1 and less than 50 characters long"
+msgstr ""
+"The billing first name must be more than 1 and less than 50 characters long"
+
+#: checkout/index.php:591
+msgid "The billing first name can only consist of alphabetical, number"
+msgstr "The billing first name can only consist of alphabetical, number"
+
+#: checkout/index.php:599
+msgid "The billing last name is required"
+msgstr "The billing last name is required"
+
+#: checkout/index.php:604
+msgid ""
+"The billing last name must be more than 1 and less than 50 characters long"
+msgstr ""
+"The billing last name must be more than 1 and less than 50 characters long"
+
+#: checkout/index.php:608
+msgid "The billing last name can only consist of alphabetical, number"
+msgstr "The billing last name can only consist of alphabetical, number"
+
+#: checkout/index.php:617
+msgid "The billing company name cannot be longer than 50 characters"
+msgstr "The billing company name cannot be longer than 50 characters"
+
+#: checkout/index.php:621
+msgid "The billing company name can only consist of alphabetical, number"
+msgstr "The billing company name can only consist of alphabetical, number"
+
+#: checkout/index.php:629
+msgid "The billing address 1 is required"
+msgstr "The billing address 1 is required"
+
+#: checkout/index.php:633
+msgid "The billing address1 name can only consist of alphabetical, number"
+msgstr "The billing address1 name can only consist of alphabetical, number"
+
+#: checkout/index.php:638 checkout/index.php:658
+msgid ""
+"The billing address must be more than 1 and less than 1024 characters long"
+msgstr ""
+"The billing address must be more than 1 and less than 1024 characters long"
+
+#: checkout/index.php:641 checkout/index.php:661
+msgid "POBox Address is not allowed"
+msgstr "POBox Address is not allowed"
+
+#: checkout/index.php:653
+msgid "The billing address2 name can only consist of alphabetical, number"
+msgstr "The billing address2 name can only consist of alphabetical, number"
+
+#: checkout/index.php:672
+msgid "The billing city is required"
+msgstr "The billing city is required"
+
+#: checkout/index.php:677
+msgid "The billing city must be more than 1 and less than 128 characters long"
+msgstr "The billing city must be more than 1 and less than 128 characters long"
+
+#: checkout/index.php:681
+msgid "The billing city can only consist of alphabetical, number"
+msgstr "The billing city can only consist of alphabetical, number"
+
+#: checkout/index.php:689
+msgid "The Zip/Postal Code is required"
+msgstr "The Zip/Postal Code is required"
+
+#: checkout/index.php:693
+#, php-format
+msgid "The value is not valid %s Zip/Postal Code"
+msgstr "The value is not valid %s Zip/Postal Code"
+
+#: checkout/index.php:701
+msgid "The billing telephone number is required"
+msgstr "The billing telephone number is required"
+
+#: checkout/index.php:705
+msgid "The billing telephone is not valid"
+msgstr "The billing telephone is not valid"
+
+#: checkout/index.php:718
+msgid "Email must be more than 3 and less than 256 characters long"
+msgstr "Email must be more than 3 and less than 256 characters long"
+
+#: checkout/index.php:730
+msgid "The password and its confirm are not the same"
+msgstr "The password and its confirm are not the same"
+
+#: checkout/index.php:739
+msgid "Please Select a state"
+msgstr "Please Select a state"
+
+#: checkout/index.php:748
+msgid "Please select a card"
+msgstr "Please select a card"
+
+#: checkout/index.php:794
+msgid "Unknow error: Please contact our CS!"
+msgstr "Unknow error: Please contact our CS!"
+
+#: checkout/paymentFail.php:4
+msgid "Payment Fail"
+msgstr "Payment Fail"
+
+#: checkout/paymentFail.php:6
+msgid "We're sorry. This payment has been declined by your card issuer."
+msgstr "We're sorry. This payment has been declined by your card issuer."
+
+#: checkout/paymentFail.php:9
+msgid "1 - make sure that the billing address entered matches your bank record"
+msgstr ""
+"1 - make sure that the billing address entered matches your bank record"
+
+#: checkout/paymentFail.php:10
+msgid ""
+"2 - double check your card details especially the CVV number (last 3 digits "
+"on the back of the card) and expiry date are correct"
+msgstr ""
+"2 - double check your card details especially the CVV number (last 3 digits "
+"on the back of the card) and expiry date are correct"
+
+#: checkout/paymentFail.php:11
+msgid ""
+"3 - check with your bank before re-attempting to order if payment was "
+"blocked for any particular reason and ask them to unblock your card if so"
+msgstr ""
+"3 - check with your bank before re-attempting to order if payment was "
+"blocked for any particular reason and ask them to unblock your card if so"
+
+#: checkout/paymentFail.php:12
+msgid "4 - try again with the same, or a different card"
+msgstr "4 - try again with the same, or a different card"
+
+#: checkout/paymentFail.php:13
+msgid "5 - still having trouble? "
+msgstr "5 - still having trouble? "
+
+#: checkout/paymentFail.php:13
+msgid "Contact us"
+msgstr "Contact"
+
+#: checkout/paymentFail.php:13
+msgid " via email"
+msgstr " via email"
+
+#: checkout/paymentReview.php:4
+msgid "Payment Review"
+msgstr "Payment Review"
+
+#: checkout/paymentReview.php:6 checkout/paymentSuccess.php:6
+msgid "Thank you for your purchase!"
+msgstr "Thank you for your purchase!"
+
+#: checkout/paymentReview.php:8
+#, php-format
+msgid ""
+"Your order is in a queue for the payment to be checked and processed by our "
+"payment service provider [%s] which can take a few hours to a couple of "
+"days’ time. Money has not been taken from your credit card yet."
+msgstr ""
+"Your order is in a queue for the payment to be checked and processed by our "
+"payment service provider [%s] which can take a few hours to a couple of "
+"days’ time. Money has not been taken from your credit card yet."
+
+#: checkout/paymentReview.php:9
+msgid "We'll send you an email as soon as the payment has been verified!"
+msgstr "We'll send you an email as soon as the payment has been verified!"
+
+#: checkout/paymentSuccess.php:4
+msgid "Payment Successful"
+msgstr "Payment Successful"
+
+#: checkout/paymentSuccess.php:8
+#, php-format
+msgid "Your order number is %s."
+msgstr "Your order number is %s."
+
+#: checkout/paymentSuccess.php:10
+msgid ""
+"You will receive an order confirmation email with details of your order and "
+"a link to track its progress."
+msgstr ""
+"You will receive an order confirmation email with details of your order and "
+"a link to track its progress."
+
+#: checkout/paymentSuccess.php:12
+msgid "Please note all charges will appear on your statement as CHATANDVISION."
+msgstr ""
+"Please note all charges will appear on your statement as CHATANDVISION."
+
+#: checkout/paymentSuccess.php:14
+msgid "We'll send you an email as soon as it's shipped!"
+msgstr "We'll send you an email as soon as it's shipped!"
+
+#: contact.php:3 display/contact.php:6
+msgid "CONTACT US"
+msgstr "CONTACT"
+
+#: contact.php:4
+msgid "We're here to help you!"
+msgstr "We zijn hier om u te helpen !"
+
+#: contact.php:6
+msgid ""
+"Our principal route for all enquiries is via our Sales and Customer Care "
+"Team, which has gained extensive experience and knowledge of our products "
+"and services in order to serve our customers better."
+msgstr ""
+"Our principal route for all enquiries is via our Sales and Customer Care "
+"Team, which has gained extensive experience and knowledge of our products "
+"and services in order to serve our customers better."
+
+#: contact.php:7
+msgid ""
+"Our goal is to assist you with your queries in a friendly and helpful manner."
+msgstr ""
+"Our goal is to assist you with your queries in a friendly and helpful manner."
+
+#: contact.php:10
+msgid ""
+"DigitalDiscount.co.uk Flat/RM 12, Tower 8, 25/F Langham Place Office Argyle "
+"Street, Kowloon, Hong Kong"
+msgstr ""
+"9Digital.nl Flat/RM 12, Tower 8, 25/F Langham Place Office Argyle Street, "
+"Kowloon, Hong Kong"
+
+#: contact.php:13 display/contact.php:64
+msgid "Tel"
+msgstr "Tel"
+
+#: contact.php:15
+msgid "Email Enquiries"
+msgstr "Email Enquiries"
+
+#: contact.php:17
+msgid ""
+"Our ticketing system is designed to ensure that your queries are responded "
+"by the most qualified staff and as quickly as possible."
+msgstr ""
+"Our ticketing system is designed to ensure that your queries are responded "
+"by the most qualified staff and as quickly as possible."
+
+#: contact.php:18
+msgid ""
+"In order to take advantage of this, please kindly choose the correct "
+"department and the most relevant \"Query\"."
+msgstr ""
+"In order to take advantage of this, please kindly choose the correct "
+"department and the most relevant \"Query\"."
+
+#: contact.php:23
+msgid "Subject"
+msgstr "Subject"
+
+#: contact.php:27
+msgid "Message"
+msgstr "Message"
+
+#: contact.php:31
+msgid "Your Name"
+msgstr "Your Name"
+
+#: contact.php:35 display/contact.php:59 myaccount/forget_password.php:41
+#: myaccount/login.php:14 myaccount/login.php:15
+msgid "Email"
+msgstr "Email"
+
+#: contact.php:39
+msgid "Order Number"
+msgstr "Order Number"
+
+#: contact.php:42 myaccount/index.php:279 myaccount/index.php:373
+#: myaccount/login.php:128
+msgid "Submit"
+msgstr "Submit"
+
+#: display/about_us.php:2
+msgid "About ChatandVision"
+msgstr "About ChatandVision"
+
+#: display/about_us.php:3
+msgid "Who are we? "
+msgstr "Who are we? "
+
+#: display/about_us.php:6
+#, php-format
+msgid ""
+"ChatandVision is one of Skype’s Global Merchant Partners, bringing %s high "
+"quality communication products %s to our valued customers. Partnering with "
+"Skype, ChatandVision has a variety of Skype Certified products that have met "
+"all of Skype’s stringent specifications for quality ensuring that you will "
+"have a wonderful Skype experience."
+msgstr ""
+"ChatandVision is one of Skype’s Global Merchant Partners, bringing %s high "
+"quality communication products %s to our valued customers. Partnering with "
+"Skype, ChatandVision has a variety of Skype Certified products that have met "
+"all of Skype’s stringent specifications for quality ensuring that you will "
+"have a wonderful Skype experience."
+
+#: display/about_us.php:8
+msgid ""
+"We are driven by the strong desire to bring people closer together and offer "
+"the products to help people all over the world communicate with each other. "
+msgstr ""
+"We are driven by the strong desire to bring people closer together and offer "
+"the products to help people all over the world communicate with each other. "
+
+#: display/about_us.php:9
+msgid "Whether it’s for use at home or in the office, we’re here to help."
+msgstr "Whether it’s for use at home or in the office, we’re here to help."
+
+#: display/about_us.php:22
+msgid "Buying Experience"
+msgstr "Buying Experience"
+
+#: display/about_us.php:25
+#, php-format
+msgid ""
+"We do our best to try and make this experience as simple as possible for our "
+"valued customers and act as your local online retailer. Delivering to over "
+"%s 70 countries %s, we manage all customs clearance, import duties and sales "
+"taxes – meaning the price you see on the site is the final delivered price "
+"that will be charged to you. We offer local payment options and currencies "
+"in order to provide you with a completely hassle free experience. By "
+"partnering with various reputable payment gateways we hope to give our "
+"customers total peace of mind and provide them with not only flexibility but "
+"the highest level of security when paying on our site."
+msgstr ""
+"We do our best to try and make this experience as simple as possible for our "
+"valued customers and act as your local online retailer. Delivering to over "
+"%s 70 countries %s, we manage all customs clearance, import duties and sales "
+"taxes – meaning the price you see on the site is the final delivered price "
+"that will be charged to you. We offer local payment options and currencies "
+"in order to provide you with a completely hassle free experience. By "
+"partnering with various reputable payment gateways we hope to give our "
+"customers total peace of mind and provide them with not only flexibility but "
+"the highest level of security when paying on our site."
+
+#: display/about_us.php:27
+msgid ""
+"We ship from several hubs worldwide so that you can receive your products "
+"faster, and have chosen to partner with reputable courier companies to "
+"ensure that your order arrives safely."
+msgstr ""
+"We ship from several hubs worldwide so that you can receive your products "
+"faster, and have chosen to partner with reputable courier companies to "
+"ensure that your order arrives safely."
+
+#: display/about_us.php:33
+msgid "We're always here for you!"
+msgstr "We're always here for you!"
+
+#: display/about_us.php:36
+#, php-format
+msgid ""
+"Our priority is in providing customer focused service, and we continually "
+"strive to put our customers first in all aspects. In order to provide the "
+"best shopping experience we make sure to communicate with you every step of "
+"the way – from the buying process, to order acknowledgement, and finally to "
+"dispatch. Our friendly %s customer service team %s is standing by and happy "
+"to assist if you should encounter any difficulties in choosing the right "
+"product or have any enquiries about the ordering process."
+msgstr ""
+"Our priority is in providing customer focused service, and we continually "
+"strive to put our customers first in all aspects. In order to provide the "
+"best shopping experience we make sure to communicate with you every step of "
+"the way – from the buying process, to order acknowledgement, and finally to "
+"dispatch. Our friendly %s customer service team %s is standing by and happy "
+"to assist if you should encounter any difficulties in choosing the right "
+"product or have any enquiries about the ordering process."
+
+#: display/contact.php:8
+msgid ""
+"Having an issue? There are a number of ways you can get in touch with our "
+"experienced Sales and Customer Service teams. "
+msgstr ""
+"Het hebben van een probleem ? Er zijn een aantal manieren waarop je in "
+"contact kunt komen met onze ervaren Sales en Customer Service teams."
+
+#: display/contact.php:9
+msgid ""
+"Select one of the enquiry types below and we'll repond to you as soon as we "
+"can!"
+msgstr ""
+"Selecteer een van de soorten onderzoek in en wij zullen zo snel als we "
+"kunnen repond aan u!"
+
+#: display/contact.php:17 display/contact.php:19
+msgid "GENERAL AND AFTER-SALES"
+msgstr "ALGEMEEN EN AFTER-SALES"
+
+#: display/contact.php:27 display/contact.php:29
+msgid "PRE-SALES"
+msgstr "PRE-SALES"
+
+#: display/contact.php:37 display/contact.php:39
+msgid "FAULTY GOODS OR RETURNED ITEMS"
+msgstr "DEFECTE GOEDEREN OF RETOUREN"
+
+#: display/contact.php:48
+msgid "Our Address"
+msgstr "Ons Adres"
+
+#: display/faq.php:13
+msgid "NEED HELP?"
+msgstr "HULP NODIG?"
+
+#: display/faq.php:15
+msgid "You've got a Question? We've got the Answer! Check out our FAQs."
+msgstr ""
+"Je hebt een vraag gekregen ? Wij hebben het antwoord gekregen ! Bekijk onze "
+"veelgestelde vragen."
+
+#: display/faq.php:24
+#, php-format
+msgid ""
+"If you still can't find the answer, please refer to the %s Contact Us %s on "
+"page and get in touch! Thank you."
+msgstr ""
+"If you still can't find the answer, please refer to the %s Contact Us %s on "
+"page and get in touch! Thank you."
+
+#: display/privacy_policy.php:2 footer.php:278
+msgid "Privacy Policy"
+msgstr "Privacy Beleid"
+
+#: display/privacy_policy.php:3
+#, php-format
+msgid "%s Privacy Policy"
+msgstr "%s Privacy Beleid"
+
+#: display/privacy_policy.php:6
+msgid "CONTENTS"
+msgstr "CONTENTS"
+
+#: display/privacy_policy.php:9 display/privacy_policy.php:24
+msgid "WHY WE COLLECT"
+msgstr "WHY WE COLLECT"
+
+#: display/privacy_policy.php:10 display/privacy_policy.php:31
+msgid "WHAT WE COLLECT"
+msgstr "WHAT WE COLLECT"
+
+#: display/privacy_policy.php:11 display/privacy_policy.php:42
+msgid "WHAT WE DO WITH THE INFORMATION WE GATHER"
+msgstr "WHAT WE DO WITH THE INFORMATION WE GATHER"
+
+#: display/privacy_policy.php:12 display/privacy_policy.php:54
+msgid "SECURITY"
+msgstr "SECURITY"
+
+#: display/privacy_policy.php:13 display/privacy_policy.php:67
+msgid "HOW WE USE COOKIES"
+msgstr "HOW WE USE COOKIES"
+
+#: display/privacy_policy.php:14 display/privacy_policy.php:80
+msgid "LINKS TO OTHER WEBSITES"
+msgstr "LINKS TO OTHER WEBSITES"
+
+#: display/privacy_policy.php:15 display/privacy_policy.php:87
+msgid "PRIVACY QUESTIONS"
+msgstr "PRIVACY QUESTIONS"
+
+#: display/privacy_policy.php:19
+#, php-format
+msgid ""
+"%s's Customer Privacy Policy covers the collection, use, and disclosure of "
+"personal information that may be collected by %s anytime you interact with "
+"%s such as when visiting our website, purchasing products, or using our "
+"sales or support facilities. Please take a moment to read the following to "
+"learn more about our practices with regards to this, including what type of "
+"information we gather, how and for what purposes we use the information, to "
+"whom we disclose the information, and how the personal information is kept "
+"safe and secure. Your privacy is a priority at %s and we do what we can to "
+"protect it."
+msgstr ""
+"%s's Customer Privacy Policy covers the collection, use, and disclosure of "
+"personal information that may be collected by %s anytime you interact with "
+"%s such as when visiting our website, purchasing products, or using our "
+"sales or support facilities. Please take a moment to read the following to "
+"learn more about our practices with regards to this, including what type of "
+"information we gather, how and for what purposes we use the information, to "
+"whom we disclose the information, and how the personal information is kept "
+"safe and secure. Your privacy is a priority at %s and we do what we can to "
+"protect it."
+
+#: display/privacy_policy.php:21
+#, php-format
+msgid ""
+"%s may change this policy from time to time by updating this page. You "
+"should check this page from time to time to ensure that you are happy with "
+"any changes. This policy is effective from 31 May 2010."
+msgstr ""
+"%s may change this policy from time to time by updating this page. You "
+"should check this page from time to time to ensure that you are happy with "
+"any changes. This policy is effective from 31 May 2010."
+
+#: display/privacy_policy.php:27
+msgid ""
+"We collect personal information because it helps us to deliver a customised "
+"customer service experience for you. This affords you convenient access to "
+"our product range and helps focus on categories most likely to interest you. "
+"In addition, your personal information helps allow us to keep you updated on "
+"the latest product announcements, special offers, and events that you might "
+"like to hear about."
+msgstr ""
+"We collect personal information because it helps us to deliver a customised "
+"customer service experience for you. This affords you convenient access to "
+"our product range and helps focus on categories most likely to interest you. "
+"In addition, your personal information helps allow us to keep you updated on "
+"the latest product announcements, special offers, and events that you might "
+"like to hear about."
+
+#: display/privacy_policy.php:34
+msgid "We may collect the following information:"
+msgstr "We may collect the following information:"
+
+#: display/privacy_policy.php:36
+msgid "name and job title"
+msgstr "name and job title"
+
+#: display/privacy_policy.php:37
+msgid "contact information including email address"
+msgstr "contact information including email address"
+
+#: display/privacy_policy.php:38
+msgid "demographic information such as postcode, preferences and interests"
+msgstr "demographic information such as postcode, preferences and interests"
+
+#: display/privacy_policy.php:39
+msgid "other information relevant to customer surveys and/or offers"
+msgstr "other information relevant to customer surveys and/or offers"
+
+#: display/privacy_policy.php:45
+msgid ""
+"The personal information may help us give you a better shopping experience "
+"with us in the following areas:"
+msgstr ""
+"The personal information may help us give you a better shopping experience "
+"with us in the following areas:"
+
+#: display/privacy_policy.php:47
+msgid ""
+"we may ask for your personal information when you're discussing a service "
+"issue on the phone with a representative, making a purchase, or registering "
+"your product."
+msgstr ""
+"we may ask for your personal information when you're discussing a service "
+"issue on the phone with a representative, making a purchase, or registering "
+"your product."
+
+#: display/privacy_policy.php:48
+msgid ""
+"we may use the information to improve our product range and services offered."
+msgstr ""
+"we may use the information to improve our product range and services offered."
+
+#: display/privacy_policy.php:49
+msgid ""
+"we may send promotional emails (to the email address provided) about new "
+"products, special offers or other information which we think you may find "
+"interesting."
+msgstr ""
+"we may send promotional emails (to the email address provided) about new "
+"products, special offers or other information which we think you may find "
+"interesting."
+
+#: display/privacy_policy.php:50
+msgid ""
+"from time to time, we may also use your information to contact you for "
+"market research purposes. We may contact you by email, phone, or mail. We "
+"may use the information to customise the website according to your interests."
+msgstr ""
+"from time to time, we may also use your information to contact you for "
+"market research purposes. We may contact you by email, phone, or mail. We "
+"may use the information to customise the website according to your interests."
+
+#: display/privacy_policy.php:51
+msgid ""
+"We will use the information to create an account area to which you can login "
+"and access your order history."
+msgstr ""
+"We will use the information to create an account area to which you can login "
+"and access your order history."
+
+#: display/privacy_policy.php:57
+msgid ""
+"We are committed to ensuring that your information is secure. In order to "
+"prevent unauthorised access or disclosure, we have put in place suitable "
+"physical, electronic and managerial procedures to safeguard and secure the "
+"information we collect online."
+msgstr ""
+"We are committed to ensuring that your information is secure. In order to "
+"prevent unauthorised access or disclosure, we have put in place suitable "
+"physical, electronic and managerial procedures to safeguard and secure the "
+"information we collect online."
+
+#: display/privacy_policy.php:59
+#, php-format
+msgid ""
+"%s takes your privacy very seriously. %s does not sell or rent your contact "
+"information to other marketers."
+msgstr ""
+"%s takes your privacy very seriously. %s does not sell or rent your contact "
+"information to other marketers."
+
+#: display/privacy_policy.php:61
+#, php-format
+msgid ""
+"%s may share certain personal information with other companies with which %s "
+"have a strategic relationship and/or provide services on our behalf to your "
+"advantage. These companies may help process information, fulfil customer "
+"orders, deliver products, manage and enhance customer data, provide customer "
+"service, assess levels of interest in our product range, or carry out "
+"customer research or satisfaction surveys. These companies are also obliged "
+"to protect your personal information, except if exchange of information is "
+"required for your purchase. For example, when an extended warranty is "
+"purchased, you authorise %s and the Warranty Provider to exchange "
+"information to carry out the service. Without the exchange, it would be "
+"otherwise be difficult to have products purchased, customer service offered, "
+"feedback provided to us, or have access to special offers or content from %s."
+msgstr ""
+"%s may share certain personal information with other companies with which %s "
+"have a strategic relationship and/or provide services on our behalf to your "
+"advantage. These companies may help process information, fulfil customer "
+"orders, deliver products, manage and enhance customer data, provide customer "
+"service, assess levels of interest in our product range, or carry out "
+"customer research or satisfaction surveys. These companies are also obliged "
+"to protect your personal information, except if exchange of information is "
+"required for your purchase. For example, when an extended warranty is "
+"purchased, you authorise %s and the Warranty Provider to exchange "
+"information to carry out the service. Without the exchange, it would be "
+"otherwise be difficult to have products purchased, customer service offered, "
+"feedback provided to us, or have access to special offers or content from %s."
+
+#: display/privacy_policy.php:63
+msgid ""
+"We may also be required by law or litigation to disclose your personal "
+"information. We may also disclose information if it is determined that it is "
+"necessary for security, law enforcement or other issues of public importance."
+msgstr ""
+"We may also be required by law or litigation to disclose your personal "
+"information. We may also disclose information if it is determined that it is "
+"necessary for security, law enforcement or other issues of public importance."
+
+#: display/privacy_policy.php:70
+msgid ""
+"A cookie is a small file which asks permission to be placed on your "
+"computer's hard drive. Once you agree, the file is added and the cookie "
+"helps analyse web traffic or lets you know when you visit a particular site. "
+"Cookies allow web applications to respond to you as an individual. The web "
+"application can tailor its operations to your needs, likes and dislikes by "
+"gathering and remembering information about your preferences."
+msgstr ""
+"A cookie is a small file which asks permission to be placed on your "
+"computer's hard drive. Once you agree, the file is added and the cookie "
+"helps analyse web traffic or lets you know when you visit a particular site. "
+"Cookies allow web applications to respond to you as an individual. The web "
+"application can tailor its operations to your needs, likes and dislikes by "
+"gathering and remembering information about your preferences."
+
+#: display/privacy_policy.php:72
+msgid ""
+"We use traffic log cookies to identify which pages are being used. This "
+"helps us analyse data about web page traffic and improve our website in "
+"order to tailor it to customer needs. We only use this information for "
+"statistical analysis purposes and then the data is removed from the system."
+msgstr ""
+"We use traffic log cookies to identify which pages are being used. This "
+"helps us analyse data about web page traffic and improve our website in "
+"order to tailor it to customer needs. We only use this information for "
+"statistical analysis purposes and then the data is removed from the system."
+
+#: display/privacy_policy.php:74
+msgid ""
+"Overall, cookies help us provide you with a better website, by enabling us "
+"to monitor which pages you find useful and which you do not. A cookie in no "
+"way gives us access to your computer or any information about you, other "
+"than the data you choose to share with us."
+msgstr ""
+"Overall, cookies help us provide you with a better website, by enabling us "
+"to monitor which pages you find useful and which you do not. A cookie in no "
+"way gives us access to your computer or any information about you, other "
+"than the data you choose to share with us."
+
+#: display/privacy_policy.php:76
+msgid ""
+"You can choose to accept or decline cookies. Most web browsers automatically "
+"accept cookies, but you can usually modify your browser setting to decline "
+"cookies if you prefer. This may prevent you from taking full advantage of "
+"the website."
+msgstr ""
+"You can choose to accept or decline cookies. Most web browsers automatically "
+"accept cookies, but you can usually modify your browser setting to decline "
+"cookies if you prefer. This may prevent you from taking full advantage of "
+"the website."
+
+#: display/privacy_policy.php:83
+msgid ""
+"Our website may contain links to other websites of interest. However, once "
+"you have used these links to leave our site, you should note that we do not "
+"have any control over that other website. Therefore, we cannot be "
+"responsible for the protection and privacy of any information which you "
+"provide whilst visiting such sites and such sites are not governed by this "
+"privacy statement. You should exercise caution and look at the privacy "
+"statement applicable to the website in question."
+msgstr ""
+"Our website may contain links to other websites of interest. However, once "
+"you have used these links to leave our site, you should note that we do not "
+"have any control over that other website. Therefore, we cannot be "
+"responsible for the protection and privacy of any information which you "
+"provide whilst visiting such sites and such sites are not governed by this "
+"privacy statement. You should exercise caution and look at the privacy "
+"statement applicable to the website in question."
+
+#: display/privacy_policy.php:90
+msgid ""
+"If you have any questions or concerns, you can email us using our "
+"interactive web form located at our "
+msgstr ""
+"If you have any questions or concerns, you can email us using our "
+"interactive web form located at our "
+
+#: display/privacy_policy.php:90 header.php:116
+msgid "Contact Us"
+msgstr "Contact Us"
+
+#: display/privacy_policy.php:90
+msgid " page"
+msgstr " page"
+
+#: display/privacy_policy.php:94
+msgid "Last updated 9th July 2015"
+msgstr "Last updated 9th July 2015"
+
+#: display/privacy_policy.php:95
+#, php-format
+msgid "%s Limited. All rights reserved."
+msgstr "%s Limited. All rights reserved."
+
+#: display/shipping.php:1
+msgid "FREE Shipping"
+msgstr "FREE Shipping"
+
+#: display/shipping.php:3
+#, php-format
+msgid ""
+"When you shop with us we like to keep it simple, our free shipping offer "
+"applies to all orders no matter the size or value. %s not only accepts "
+"payment in your local currency but also ships directly to your doorstep free "
+"of charge* via our courier partners."
+msgstr ""
+"When you shop with us we like to keep it simple, our free shipping offer "
+"applies to all orders no matter the size or value. %s not only accepts "
+"payment in your local currency but also ships directly to your doorstep free "
+"of charge* via our courier partners."
+
+#: display/shipping.php:10
+msgid "Taxes and Duties"
+msgstr "Taxes and Duties"
+
+#: display/shipping.php:12
+msgid ""
+"Worried about hidden costs? Please don't be, we'll take care of any "
+"applicable taxes and duties prior to delivery so the price on the website is "
+"the final amount you pay. Rest assured that your buying experience with us "
+"will be completely hassle free."
+msgstr ""
+"Worried about hidden costs? Please don't be, we'll take care of any "
+"applicable taxes and duties prior to delivery so the price on the website is "
+"the final amount you pay. Rest assured that your buying experience with us "
+"will be completely hassle free."
+
+#: display/shipping.php:15
+msgid "Tracking Your Order"
+msgstr "Tracking Your Order"
+
+#: display/shipping.php:17
+msgid ""
+"Once your order has been processed, an email containing your order and "
+"account information will be sent to your registered email. You can always "
+"check the status of your order by visiting the My Account page on our "
+"website and viewing your order history."
+msgstr ""
+"Once your order has been processed, an email containing your order and "
+"account information will be sent to your registered email. You can always "
+"check the status of your order by visiting the My Account page on our "
+"website and viewing your order history."
+
+#: display/shipping.php:20
+msgid "FREE Shipping Delivery Times"
+msgstr "FREE Shipping Delivery Times"
+
+#: display/shipping.php:22
+msgid ""
+"Orders delivered with free shipping typically arrive within 5 to 12 business "
+"days; although this is dependent on your delivery region, with many orders "
+"often arriving sooner.\n"
+"                        In order to facilitate free shipping and pass on "
+"savings to our customers, we endeavor to use reliable and cost effective "
+"couriers to deliver globally. To minimize delays we ship directly to our "
+"customers from our global fulfillment centers in the UK, US and HK, however "
+"please bear in mind some regions may experience longer shipping lead times.**"
+msgstr ""
+"Orders delivered with free shipping typically arrive within 5 to 12 business "
+"days; although this is dependent on your delivery region, with many orders "
+"often arriving sooner.\n"
+"                        In order to facilitate free shipping and pass on "
+"savings to our customers, we endeavor to use reliable and cost effective "
+"couriers to deliver globally. To minimize delays we ship directly to our "
+"customers from our global fulfillment centers in the UK, US and HK, however "
+"please bear in mind some regions may experience longer shipping lead times.**"
+
+#: display/shipping.php:26
+msgid ""
+"* Shipping to and from less populated or accessible domestic and "
+"international areas carries higher operating costs. Delivery and extended or "
+"remote area surcharges will be added to your final order amount in order to "
+"more accurately reflect the cost of providing service to these areas."
+msgstr ""
+"* Shipping to and from less populated or accessible domestic and "
+"international areas carries higher operating costs. Delivery and extended or "
+"remote area surcharges will be added to your final order amount in order to "
+"more accurately reflect the cost of providing service to these areas."
+
+#: display/shipping.php:28
+msgid ""
+"United States: extended or remote areas within the contingent 48 states, "
+"Hawaii and Alaska"
+msgstr ""
+"United States: extended or remote areas within the contingent 48 states, "
+"Hawaii and Alaska"
+
+#: display/shipping.php:31
+msgid "United Kingdom: areas in Guernsey, Jersey, and the Isle of Man"
+msgstr "United Kingdom: areas in Guernsey, Jersey, and the Isle of Man"
+
+#: display/shipping.php:36
+msgid ""
+"** Although we do our best to ensure a smooth shipping process please note "
+"delivery speed to some regions may experience delays depending on a wide "
+"variety of factors (e.g. specific address location and customs delay) which "
+"are outside of our control."
+msgstr ""
+"** Although we do our best to ensure a smooth shipping process please note "
+"delivery speed to some regions may experience delays depending on a wide "
+"variety of factors (e.g. specific address location and customs delay) which "
+"are outside of our control."
+
+#: footer.php:10
+msgid " PAY WITH CONFIDENCE "
+msgstr "Betaal met Vertrouwen"
+
+#: footer.php:83
+msgid " SHOP WITH CONFIDENCE "
+msgstr "Winkel met Vertrouwen"
+
+#: footer.php:161
+msgid "About Us"
+msgstr " Over ons"
+
+#: footer.php:164
+#, php-format
+msgid "%s prides itself on great deals without compromise on service! "
+msgstr "%s is trots op grote deals zonder compromissen op service! "
+
+#: footer.php:164
+msgid "Feel free to contact us anytime for more information"
+msgstr "Voel je vrij om op elk moment contact met ons op voor meer informatie"
+
+#: footer.php:172 footer.php:184
+msgid "Subscribe to get our latest news and promotions regularly."
+msgstr ""
+"Abonneer je op onze laatste nieuwtjes en promoties regelmatig te krijgen."
+
+#: footer.php:183
+msgid "Sign up for Newsletter"
+msgstr "Aanmelden voor Nieuwsbrief"
+
+#: footer.php:188
+msgid "Enter you email address"
+msgstr "Vul uw e-mailadres"
+
+#: footer.php:198
+msgid "Subscribe"
+msgstr "abonneren"
+
+#: footer.php:202
+msgid "indicates required"
+msgstr "geeft verplichte"
+
+#: footer.php:217
+msgid "100% Secure "
+msgstr "100% veilig"
+
+#: footer.php:217
+msgid "with SSL encryption"
+msgstr "met SSL Encryptie"
+
+#: footer.php:225
+msgid "Free Delivery"
+msgstr "Gratis Bezorging"
+
+#: footer.php:225
+msgid "For All Orders*"
+msgstr "Voor alle bestellingen*"
+
+#: footer.php:225
+msgid "Shipping:"
+msgstr "Verzenden:"
+
+#: footer.php:225
+msgid "3-5 Working Days"
+msgstr "3-5 Werkdagen"
+
+#: footer.php:245 header.php:146
+#, php-format
+msgid "%s Days Money Back Guarantee"
+msgstr "%s Dagen geld terug garantie"
+
+#: footer.php:261
+msgid "Warranty "
+msgstr "Garantie"
+
+#: footer.php:261
+msgid "Up to 2 Years"
+msgstr "Tot 2 jaar"
+
+#: footer.php:273
+msgid "2015 All Right reserved"
+msgstr "2015 All Right reserved"
+
+#: footer.php:274
+msgid "Conditions of Use"
+msgstr " Gebruiksvoorwaarden"
+
+#: footer.php:275
+msgid "Shipping Policy"
+msgstr "Verschepen Beleid"
+
+#: footer.php:276
+msgid "Return and Refund Policy"
+msgstr "Verzenden & retourneren"
+
+#: footer.php:277
+msgid "Billing Terms and Conditions"
+msgstr "Billing Algemene conditons"
+
+#: footer.php:283
+msgid "SELECT SHIPPING COUNTRY"
+msgstr "SELECT SHIPPING COUNTRY"
+
+#: footer.php:286
+msgid "Australia"
+msgstr "Australia"
+
+#: footer.php:287
+msgid "Belgium"
+msgstr "Belgium"
+
+#: footer.php:288
+msgid "Finland"
+msgstr "Finland"
+
+#: footer.php:289
+msgid "France"
+msgstr "France"
+
+#: footer.php:290
+msgid "Great Britain"
+msgstr "Great Britain"
+
+#: footer.php:291
+msgid "Hong Kong"
+msgstr "Hong Kong"
+
+#: header.php:54
+#, php-format
+msgid "%s item(s) - %s"
+msgstr "%s producten - %s"
+
+#: header.php:110
+msgid "We won't be beaten on electronics!"
+msgstr "We zullen niet worden geslagen op de elektronica!"
+
+#: header.php:115
+msgid "Warranty"
+msgstr "Garantie"
+
+#: header.php:117
+msgid "Help"
+msgstr "Help"
+
+#: header.php:118
+msgid "Clearance"
+msgstr "opruiming"
+
+#: header.php:120 myaccount/index.php:4
+msgid "My Account"
+msgstr "Mijn Account"
+
+#: header.php:121
+msgid "Log Out"
+msgstr "Uitloggen"
+
+#: header.php:124
+msgid "Sign in"
+msgstr "Aanmelden"
+
+#: header.php:150
+msgid "Free Delivery For All Orders"
+msgstr "Gratis Delivery voor alle bestellingen"
+
+#: header.php:154
+msgid "Up to 2 Years Warranty"
+msgstr "Tot 2 jaar garantie"
+
+#: header.php:198
+msgid "Find your product"
+msgstr "Vind uw product"
+
+#: header.php:216
+msgid "Top search"
+msgstr "Top zoekopdracht"
+
+#: index.php:3
+msgid "best seller"
+msgstr "bestseller"
+
+#: index.php:4
+msgid "latest arrival"
+msgstr "laatste aankomst"
+
+#: index.php:67
+msgid "Collections"
+msgstr "Collecties"
+
+#: index.php:88
+msgid "camera collection"
+msgstr "camera collection"
+
+#: index.php:92 index.php:112
+msgid "Shop now"
+msgstr "Shop now"
+
+#: index.php:108
+msgid "mobile collection"
+msgstr "mobile collection"
+
+#: myaccount/forget_password.php:4
+msgid "Reset your password"
+msgstr "Reset your password"
+
+#: myaccount/forget_password.php:34
+msgid "Please enter your registered email address!"
+msgstr "Please enter your registered email address!"
+
+#: myaccount/forget_password.php:43
+msgid "Go"
+msgstr "Go"
+
+#: myaccount/forget_password.php:50
+msgid ""
+"An email containing a temporary password will be sent to your registered "
+"email shortly."
+msgstr ""
+"An email containing a temporary password will be sent to your registered "
+"email shortly."
+
+#: myaccount/forget_password.php:51
+msgid ""
+"Kindly check your spam folder in the event our email is not received within "
+"a couple of minutes."
+msgstr ""
+"Kindly check your spam folder in the event our email is not received within "
+"a couple of minutes."
+
+#: myaccount/index.php:23
+msgid "Order History"
+msgstr "Order History"
+
+#: myaccount/index.php:24
+msgid "Returns Request"
+msgstr "Returns Request"
+
+#: myaccount/index.php:25
+msgid "Edit Your Profile"
+msgstr "Edit Your Profile"
+
+#: myaccount/index.php:30
+msgid ""
+"Your order has been split at no extra cost to ensure all item(s) purchased "
+"are received at the soonest available opportunity."
+msgstr ""
+"Your order has been split at no extra cost to ensure all item(s) purchased "
+"are received at the soonest available opportunity."
+
+#: myaccount/index.php:43 myaccount/index.php:76
+msgid "Order"
+msgstr "Order"
+
+#: myaccount/index.php:44 myaccount/index.php:77
+msgid "Date"
+msgstr "Date"
+
+#: myaccount/index.php:45 myaccount/index.php:78
+msgid "Shipped to"
+msgstr "Shipped to"
+
+#: myaccount/index.php:46 myaccount/index.php:79
+msgid "Product"
+msgstr "Product"
+
+#: myaccount/index.php:47 myaccount/index.php:80
+msgid "Order total"
+msgstr "Order total"
+
+#: myaccount/index.php:48 myaccount/index.php:81
+msgid "Status"
+msgstr "Status"
+
+#: myaccount/index.php:69
+msgid "Have you paid by bank transfer?<br>Contact us "
+msgstr "Have you paid by bank transfer?<br>Contact us "
+
+#: myaccount/index.php:70 myaccount/index.php:114
+msgid "here"
+msgstr "here"
+
+#: myaccount/index.php:94
+msgid "Pending Payment"
+msgstr "Pending Payment"
+
+#: myaccount/index.php:95
+msgid "We have not received the payment for your order."
+msgstr "We have not received the payment for your order."
+
+#: myaccount/index.php:98
+msgid "Incomplete Payment"
+msgstr "Incomplete Payment"
+
+#: myaccount/index.php:99
+msgid ""
+"The amount received in our bank account does not correspond to the total "
+"amount of your order."
+msgstr ""
+"The amount received in our bank account does not correspond to the total "
+"amount of your order."
+
+#: myaccount/index.php:112
+msgid ""
+"Your request has been submitted. Please kindly review the information below "
+"as your RMA confirmation."
+msgstr ""
+"Your request has been submitted. Please kindly review the information below "
+"as your RMA confirmation."
+
+#: myaccount/index.php:113
+msgid "Please click"
+msgstr "Please click"
+
+#: myaccount/index.php:115
+msgid ""
+"to print this page and send it back to us together with the returned "
+"package. Items returned without this RMA form will not be processed."
+msgstr ""
+"to print this page and send it back to us together with the returned "
+"package. Items returned without this RMA form will not be processed."
+
+#: myaccount/index.php:119
+msgid "Important Notice"
+msgstr "Important Notice"
+
+#: myaccount/index.php:121
+msgid "Please read the following before filling in the web form below."
+msgstr "Please read the following before filling in the web form below."
+
+#: myaccount/index.php:123
+msgid ""
+"- Any items returned without a returns form enclosed will not be entertained"
+msgstr ""
+"- Any items returned without a returns form enclosed will not be entertained"
+
+#: myaccount/index.php:124
+msgid "- Read our returns policy that can be found at the bottom of this page"
+msgstr "- Read our returns policy that can be found at the bottom of this page"
+
+#: myaccount/index.php:125
+msgid ""
+"- Kindly use our webform for &quot;Faulty goods or returned items&quot; to "
+"confirm your intention to return your goods and we will then advise you with "
+"our returns address"
+msgstr ""
+"- Kindly use our webform for &quot;Faulty goods or returned items&quot; to "
+"confirm your intention to return your goods and we will then advise you with "
+"our returns address"
+
+#: myaccount/index.php:127
+msgid "Personal Details"
+msgstr "Personal Details"
+
+#: myaccount/index.php:134 myaccount/index.php:135 myaccount/index.php:320
+#: myaccount/index.php:321 myaccount/login.php:93 myaccount/login.php:94
+msgid "Surname"
+msgstr "Surname"
+
+#: myaccount/index.php:151 myaccount/index.php:152 myaccount/index.php:345
+#: myaccount/index.php:346 myaccount/login.php:54 myaccount/login.php:55
+msgid "State"
+msgstr "State"
+
+#: myaccount/index.php:155 myaccount/index.php:156 myaccount/index.php:350
+#: myaccount/login.php:59
+msgid "Address Line 1"
+msgstr "Address Line 1"
+
+#: myaccount/index.php:159 myaccount/index.php:160 myaccount/index.php:351
+#: myaccount/login.php:60
+msgid "Address Line 2"
+msgstr "Address Line 2"
+
+#: myaccount/index.php:163 myaccount/index.php:164 myaccount/index.php:354
+#: myaccount/index.php:355
+msgid "Postcode"
+msgstr "Postcode"
+
+#: myaccount/index.php:170
+msgid "Order Details"
+msgstr "Order Details"
+
+#: myaccount/index.php:173 myaccount/index.php:174
+msgid "Order number"
+msgstr "Order number"
+
+#: myaccount/index.php:180
+msgid "Product Details"
+msgstr "Product Details"
+
+#: myaccount/index.php:183 myaccount/index.php:184
+msgid "Product Returned"
+msgstr "Product Returned"
+
+#: myaccount/index.php:198
+msgid "Serial No"
+msgstr "Serial No"
+
+#: myaccount/index.php:205
+msgid "Returns Details"
+msgstr "Returns Details"
+
+#: myaccount/index.php:208 myaccount/index.php:209
+msgid "Reasons for Returns"
+msgstr "Reasons for Returns"
+
+#: myaccount/index.php:222 myaccount/index.php:223
+msgid "Action Required"
+msgstr "Action Required"
+
+#: myaccount/index.php:235 myaccount/index.php:236
+msgid "Detailed Description of Fault"
+msgstr "Detailed Description of Fault"
+
+#: myaccount/index.php:244
+msgid "ValueBasket Returns Policy"
+msgstr "ValueBasket Returns Policy"
+
+#: myaccount/index.php:247
+msgid ""
+"Where the dispatch has been made, you may request for a refund up to 14 days "
+"after the goods are delivered."
+msgstr ""
+"Where the dispatch has been made, you may request for a refund up to 14 days "
+"after the goods are delivered."
+
+#: myaccount/index.php:248
+msgid ""
+"To submit a returns request, simply email us to start the process.  Where "
+"you are eligible for a refund, Valuebasket.com will provide authorization "
+"and a returns address if appropriate."
+msgstr ""
+"To submit a returns request, simply email us to start the process.  Where "
+"you are eligible for a refund, Valuebasket.com will provide authorization "
+"and a returns address if appropriate."
+
+#: myaccount/index.php:249
+msgid "Returning an order within the 14-day grace period from delivery date;"
+msgstr "Returning an order within the 14-day grace period from delivery date;"
+
+#: myaccount/index.php:251
+msgid "that are new unopened item, will be eligible for refund"
+msgstr "that are new unopened item, will be eligible for refund"
+
+#: myaccount/index.php:252
+msgid ""
+"that are found to be faulty will be eligible for replacement order or refund"
+msgstr ""
+"that are found to be faulty will be eligible for replacement order or refund"
+
+#: myaccount/index.php:255
+msgid ""
+"Good returned for a refund must be in their original condition with all "
+"original packing, accessories and included materials."
+msgstr ""
+"Good returned for a refund must be in their original condition with all "
+"original packing, accessories and included materials."
+
+#: myaccount/index.php:256
+msgid ""
+"You must take all due reasonable care of the goods and return them in its "
+"original and undamaged condition."
+msgstr ""
+"You must take all due reasonable care of the goods and return them in its "
+"original and undamaged condition."
+
+#: myaccount/index.php:257
+msgid ""
+"You will agree to bear the costs of returning the item(s).  The cost "
+"incurred in returning the item(s) may be eligible for reimbursement where "
+"the item(s) are found to be defective and if proper authorization from "
+"ValueBasket.com is sought and provided prior to the return of the item(s)."
+msgstr ""
+"You will agree to bear the costs of returning the item(s).  The cost "
+"incurred in returning the item(s) may be eligible for reimbursement where "
+"the item(s) are found to be defective and if proper authorization from "
+"ValueBasket.com is sought and provided prior to the return of the item(s)."
+
+#: myaccount/index.php:258
+msgid ""
+"Where the purchases are opened and are of usable software, consumable goods, "
+"or items impacted by hygiene, such items will be ineligible for refund."
+msgstr ""
+"Where the purchases are opened and are of usable software, consumable goods, "
+"or items impacted by hygiene, such items will be ineligible for refund."
+
+#: myaccount/index.php:259
+msgid "A restocking fee may be applicable at the discretion of ValueBasket.com"
+msgstr ""
+"A restocking fee may be applicable at the discretion of ValueBasket.com"
+
+#: myaccount/index.php:260
+msgid "An admin fee may be incurred if no fault found or fault caused by user"
+msgstr "An admin fee may be incurred if no fault found or fault caused by user"
+
+#: myaccount/index.php:267 myaccount/index.php:271
+msgid "Declaration"
+msgstr "Declaration"
+
+#: myaccount/index.php:272
+msgid "I declare that I have read and agree to the Returns Policy"
+msgstr "I declare that I have read and agree to the Returns Policy"
+
+#: myaccount/index.php:285
+msgid "Profile"
+msgstr "Profile"
+
+#: myaccount/index.php:288 myaccount/login.php:105 myaccount/login.php:108
+#: myaccount/login.php:109
+msgid "Email Address"
+msgstr "Email Address"
+
+#: myaccount/index.php:293 myaccount/index.php:294
+msgid "Old Password"
+msgstr "Old Password"
+
+#: myaccount/index.php:297 myaccount/login.php:118
+msgid ""
+"Password must be between 6 to 20 characters in length. We recommend that you "
+"make your password secure by including a mixture of upper and lower case "
+"characters, numbers and symbols (e.g. #, @, !)"
+msgstr ""
+"Password must be between 6 to 20 characters in length. We recommend that you "
+"make your password secure by including a mixture of upper and lower case "
+"characters, numbers and symbols (e.g. #, @, !)"
+
+#: myaccount/index.php:300 myaccount/index.php:301
+msgid "Choose a New Password"
+msgstr "Choose a New Password"
+
+#: myaccount/index.php:300 myaccount/index.php:304
+msgid "(Optional)"
+msgstr "(Optional)"
+
+#: myaccount/index.php:304 myaccount/index.php:305
+msgid "Re-enter New Password"
+msgstr "Re-enter New Password"
+
+#: myaccount/index.php:308 myaccount/login.php:85
+msgid "Title"
+msgstr "Title"
+
+#: myaccount/index.php:324 myaccount/index.php:325 myaccount/login.php:101
+msgid "Company Name"
+msgstr "Company Name"
+
+#: myaccount/index.php:329
+msgid "Billing Address"
+msgstr "Billing Address"
+
+#: myaccount/index.php:349 myaccount/login.php:58
+msgid "Address"
+msgstr "Address"
+
+#: myaccount/index.php:358
+msgid "Phone"
+msgstr "Phone"
+
+#: myaccount/index.php:369 myaccount/index.php:370 myaccount/login.php:78
+msgid "Number"
+msgstr "Number"
+
+#: myaccount/login.php:9
+msgid "Existing Customer"
+msgstr "Existing Customer"
+
+#: myaccount/login.php:22
+msgid "Log In"
+msgstr "Log In"
+
+#: myaccount/login.php:31
+msgid ""
+"Order shipped? Track your delivery progress by entering your tracking number "
+"below:"
+msgstr ""
+"Order shipped? Track your delivery progress by entering your tracking number "
+"below:"
+
+#: myaccount/login.php:39
+msgid "Delivery Address"
+msgstr "Delivery Address"
+
+#: myaccount/login.php:63 myaccount/login.php:64
+msgid "Postal code"
+msgstr "Postal code"
+
+#: myaccount/login.php:82
+msgid "Recipient Details"
+msgstr "Recipient Details"
+
+#: myaccount/login.php:112 myaccount/login.php:113
+msgid "Confirm Email Address"
+msgstr "Confirm Email Address"
+
+#: myaccount/login.php:121 myaccount/login.php:122
+msgid "New Password"
+msgstr "New Password"
+
+#: myaccount/login.php:125 myaccount/login.php:126
+msgid "Confirm Password"
+msgstr "Confirm Password"
+
+#: product/detail.php:23 product/detail.php:31 product/related_product.php:16
+msgid "Sale"
+msgstr "Sale"
+
+#: product/detail.php:82
+#, php-format
+msgid "%s review(s)"
+msgstr "%s review(s)"
+
+#: product/detail.php:82
+msgid "Write a review"
+msgstr "Write a review"
+
+#: product/detail.php:93
+msgid "Availability"
+msgstr "Availability"
+
+#: product/detail.php:97 product/detail.php:103
+msgid " In Stock"
+msgstr " In Stock"
+
+#: product/detail.php:99
+msgid "Out of Stock"
+msgstr "Out of Stock"
+
+#: product/detail.php:101
+msgid "Pre Order"
+msgstr "Pre Order"
+
+#: product/detail.php:112
+msgid "Qty:"
+msgstr "Qty:"
+
+#: product/detail.php:135
+msgid "4-7 working days delivery"
+msgstr "4-7 working days delivery"
+
+#: product/detail.php:169
+msgid "Specification"
+msgstr "Specification"
+
+#: product/detail.php:170
+msgid "Overview"
+msgstr "Overview"
+
+#: product/detail.php:171
+msgid "In the box"
+msgstr "In the box"
+
+#: product/detail.php:172
+msgid "Recommended Accessories"
+msgstr "Recommended Accessories"
+
+#: product/detail.php:173
+#, php-format
+msgid "Reviews %s"
+msgstr "Reviews %s"
+
+#: product/related_product.php:4
+msgid "Related Products"
+msgstr "Related Products"
+
+#: review.php:5 reviewEmptyCart.php:5
+msgid "Shopping Cart"
+msgstr "Shopping Cart"
+
+#: review.php:11
+msgid "Image"
+msgstr "Image"
+
+#: review.php:12
+msgid "Product Name"
+msgstr "Product Name"
+
+#: review.php:13
+msgid "Quantity"
+msgstr "Quantity"
+
+#: review.php:14
+msgid "Unit Price"
+msgstr "Unit Price"
+
+#: review.php:30
+msgid "Update"
+msgstr "Update"
+
+#: review.php:31
+msgid "Remove"
+msgstr "Remove"
+
+#: review.php:48
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#: review.php:52
+msgid "Shipping"
+msgstr "Shipping"
+
+#: review.php:64 reviewEmptyCart.php:7
+msgid "Continue Shopping"
+msgstr "Continue Shopping"
+
+#: reviewEmptyCart.php:6
+msgid "Empty Cart"
+msgstr "Empty Cart"
+
+#: search.php:118
+#, php-format
+msgid "%s to %s of %s"
+msgstr "%s to %s of %s"
+
+#: search.php:124
+#, php-format
+msgid " Search Results for \"%s\""
+msgstr " Search Results for \"%s\""
+
+#: search.php:162
+msgid "Display"
+msgstr "Display"
