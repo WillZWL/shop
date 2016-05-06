@@ -2,7 +2,7 @@
             <footer id="footer" class="nostylingboxs">
                 <div class="footer-middle " id="pavo-footer-middle">
                     <div class="container">
-                        <div class="row">
+                        <div class="row"><!-- -->
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                 <div class="panel panel-white pavreassurances margin_top">
                                     <div class="row">
