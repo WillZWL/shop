@@ -60,9 +60,9 @@ class EmailManagement extends MY_Controller
             //$siteConfigObj=$this->sc["LoadSiteParameter"]->initSite();
             $siteConfigObj=$this->sc["LoadSiteParameter"]->loadSiteByPlatform($_POST["platform"]);
            
-            $replace["logo"]=base_url("/images/logo/" . $siteConfigObj->getLogo());
+            $replace["logo"]="http://".$siteConfigObj->getDomain()."/images/logo/" . $siteConfigObj->getLogo();
             $replace["site_name"]=$siteConfigObj->getSiteName();
-            $replace["site_url"]=base_url();
+            $replace["site_url"]="http://".$siteConfigObj->getDomain();
         
             if (!empty($replace)) {
                 foreach ($replace as $key => $value) {
