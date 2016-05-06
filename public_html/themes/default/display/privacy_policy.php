@@ -92,6 +92,6 @@
                     <br /><br />
 
                     <?= _('Last updated 9th July 2015') ?><br />
-                    <?= sprintf(_('%s Limited. All rights reserved.'), SITE_NAME) ?>
+                    <?= sprintf(_('%s Limited. All rights reserved.'), "ChatandVision (HK) Limited") ?>
                     <div class="clearfix"></div>
                 </div>
