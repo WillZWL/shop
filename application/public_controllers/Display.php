@@ -52,6 +52,8 @@ class Display extends PUB_Controller
             $contact_info = $this->get_contact_info(PLATFORM);
             $data['contact_email'] = $contact_info['email'];
             $data['contact_tel'] = $contact_info['tel'];
+            $data['contact_hotline'] = $contact_info['hotline'];
+
         }
         $data["http_type"] = $http_type;
         $data["content"] = "display/" . $page;
@@ -86,6 +88,7 @@ class Display extends PUB_Controller
             'WEBGB' => [
                 'email' => 'support@digitaldiscount.co.uk',
                 'tel' => '02071934191',
+                'hotline'=>"(hotline support coming soon)",
             ],
             'WEBAU' => [
                 'email' => 'support@aheaddigital.net',
@@ -98,6 +101,7 @@ class Display extends PUB_Controller
             'WEBFR' => [
                 'email' => 'support@numeristock.fr',
                 'tel' => '0975182358',
+                'hotline'=>"(Support téléphonique disponible prochainement)",
             ],
             'WEBBE' => [
                 'email' => 'support@numeristock.be',
@@ -106,6 +110,7 @@ class Display extends PUB_Controller
             'WEBES' => [
                 'email' => 'soporte@buholoco.es',
                 'tel' => '9123115550',
+                'hotline' =>'(Télefono de Atención al Cliente disponible pronto)',
             ],
             'WEBPL' => [
                 'email' => 'support@elektroraj.pl',
@@ -114,6 +119,7 @@ class Display extends PUB_Controller
             'WEBIT' => [
                 'email' => 'assistenza@nuovadigitale.it',
                 'tel' => '0294755798',
+                'hotline' => '(Supporto telefonico prossimamente)',
             ],
         ];
         return $contact[$platform_id];

@@ -61,7 +61,7 @@
                         <?php endif; ?>
                          <?php if ($contact_tel) : ?>
                         <div class="text-left note-alert">
-                            <?=_('Tel')?>&nbsp;: <?=$contact_tel?>
+                            <?=_('Tel')?>&nbsp;: <?=$contact_tel?> <?=$contact_hotline?>
                         </div>
                         <?php endif; ?>
                     </div>
