@@ -348,7 +348,7 @@ class VoToXml implements inConverter
                     $class_methods = get_class_methods($rsdata);
                     foreach ($class_methods as $fct_name) {
                         if (substr($fct_name, 0, 3) == "get") {
-                            $field = underscore2camelcase(substr($fct_name, 3));
+                            $field = camelcase2underscore(substr($fct_name, 3));
                             $rsvalue = call_user_func(array($rsdata, $fct_name));
                             $output .= "\t\t<{$field}>" . $cdata_open . strip_invalid_xml((string)$rsvalue) . $cdata_end . "</{$field}>\n";
                         }
