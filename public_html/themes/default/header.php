@@ -51,13 +51,14 @@
 <script>
 function updateBasketIcon(totalAmount)
 {
-    var text = "<?= sprintf(_('%s item(s) - %s'), $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"], "$") ?>";
+    var text = "<?= sprintf(_('%s item(s) - '), $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"]); ?>";
     text = text + totalAmount;
+   
     $(".cart-total").html(text);
 }
 
 $(document).ready(function() {
-    updateBasketIcon('<?=$_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"]?>');
+    updateBasketIcon('<?=platform_curr_format($_SESSION["CART_QUICK_INFO"]["TOTAL_AMOUNT"])?>');
 });
 </script>
 <script>

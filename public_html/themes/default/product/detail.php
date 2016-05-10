@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="price detail space-20">
                                     <ul class="list-unstyled">
-                                        <li> <span class="price-new"> <?= $prod_price ?> </span> <span class="price-old"><?= $prod_rrp_price ?></span> </li>
+                                        <li> <span class="price-new"> <?= platform_curr_format($prod_price) ?> </span> <span class="price-old"><?= platform_curr_format($prod_rrp_price) ?></span> </li>
                                     </ul>
                                 </div>
 

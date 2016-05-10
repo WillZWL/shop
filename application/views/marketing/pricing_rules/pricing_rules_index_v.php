@@ -45,6 +45,7 @@
             <col width="25">
             <col width="25">
             <col width="25">
+            <col width="25">
             <col width="26">
             <tr class="header">
                 <td height="20"><img src="<?= base_url() ?>images/expand.png" class="pointer"
@@ -88,6 +89,7 @@
                 <td><a href="#"
                        onClick="SortCol(document.fm, 'sunday', '<?= @$xsort["sunday"] ?>')"><?= $lang["sunday"] ?> <?= @$sortimg["sunday"] ?></a>
                 </td>
+                <td><?= $lang["status"] ?> </td>
                 <td></td>
             </tr>
             <tr class="search" id="tr_search" <?= $searchdisplay ?>>
@@ -117,6 +119,7 @@
 				<td></td>
 				<td></td>
 				<td></td>
+                <td></td>
                 <td align="center"><input type="submit" name="searchsubmit" value="" class="search_button"
                                           style="background: url('<?= base_url() ?>images/find.gif') no-repeat;"></td>
             </tr>
@@ -124,6 +127,7 @@
             $i = 0;
             if ($pricingruleslist) :
                 foreach ($pricingruleslist as $pricingrule) :
+                    if($pricingrule->getStatus() =="0"){ $row_disable="row_disable";}else{ $row_disable="";}
                     ?>
 
                     <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
@@ -145,7 +149,9 @@
                         <td><?= $pricingrule->getFriday() ?></td>
                         <td><?= $pricingrule->getSaturday() ?></td>
                         <td><?= $pricingrule->getSunday() ?></td>
-
+                        <td>
+                            <?php if($pricingrule->getStatus() =="1"){ echo $lang["enable"]; }else{ echo $lang["disable"];} ?>
+                        </td>
                         <td></td>
                     </tr>
                     <?php
