@@ -101,6 +101,7 @@ class Display extends PUB_Controller
             'WEBFR' => [
                 'email' => 'support@numeristock.fr',
                 'tel' => '0975182358',
+                'hotline'=>"(Support téléphonique disponible prochainement)",
             ],
             'WEBBE' => [
                 'email' => 'support@numeristock.be',
@@ -109,6 +110,7 @@ class Display extends PUB_Controller
             'WEBES' => [
                 'email' => 'soporte@buholoco.es',
                 'tel' => '9123115550',
+                'hotline' =>'(Télefono de Atención al Cliente disponible pronto)',
             ],
             'WEBPL' => [
                 'email' => 'support@elektroraj.pl',
@@ -117,6 +119,7 @@ class Display extends PUB_Controller
             'WEBIT' => [
                 'email' => 'assistenza@nuovadigitale.it',
                 'tel' => '0294755798',
+                'hotline' => '(Supporto telefonico prossimamente)',
             ],
         ];
         return $contact[$platform_id];

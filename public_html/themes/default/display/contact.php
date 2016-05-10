@@ -61,12 +61,7 @@
                         <?php endif; ?>
                          <?php if ($contact_tel) : ?>
                         <div class="text-left note-alert">
-                            <?=_('Tel')?>&nbsp;: <?=$contact_tel?>
-                        </div>
-                        <?php endif; ?>
-                         <?php if ($contact_hotline) : ?>
-                        <div class="text-left note-alert">
-                            <?=$contact_hotline?>
+                            <?=_('Tel')?>&nbsp;: <?=$contact_tel?> <?=$contact_hotline?>
                         </div>
                         <?php endif; ?>
                     </div>
