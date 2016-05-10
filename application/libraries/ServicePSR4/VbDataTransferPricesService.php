@@ -193,6 +193,8 @@ class VbDataTransferPricesService extends VbDataTransferService
         }
 
         $where['pbv.selling_platform_id'] = $platform_id;
+        //add enabel and disable
+        $where['pr.status']="1";
         $where[$required_selling_price.' between pr.range_min and pr.range_max'] = null;
         $option = ['limit' => 1];
 

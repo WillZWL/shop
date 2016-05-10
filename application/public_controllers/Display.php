@@ -85,11 +85,11 @@ class Display extends PUB_Controller
         $contact = [
             'WEBGB' => [
                 'email' => 'support@digitaldiscount.co.uk',
-                'tel' => '07384060620',
+                'tel' => '02071934191',
             ],
             'WEBAU' => [
                 'email' => 'support@aheaddigital.net',
-                'tel' => '',
+                'tel' => '02071934191',
             ],
             'WEBNZ' => [
                 'email' => 'support@aheaddigital.co.nz',
@@ -101,7 +101,7 @@ class Display extends PUB_Controller
             ],
             'WEBBE' => [
                 'email' => 'support@numeristock.be',
-                'tel' => '',
+                'tel' => '0975182358',
             ],
             'WEBES' => [
                 'email' => 'soporte@buholoco.es',
@@ -109,7 +109,7 @@ class Display extends PUB_Controller
             ],
             'WEBPL' => [
                 'email' => 'support@elektroraj.pl',
-                'tel' => '',
+                'tel' => '02071934191',
             ],
             'WEBIT' => [
                 'email' => 'assistenza@nuovadigitale.it',

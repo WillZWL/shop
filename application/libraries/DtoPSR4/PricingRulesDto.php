@@ -16,6 +16,7 @@ class PricingRulesDto
     private $friday = '0';
     private $saturday = '0';
     private $sunday = '0';
+    private $status;
     private $create_on;
     private $create_at;
     private $create_by;
@@ -171,6 +172,16 @@ class PricingRulesDto
     public function getSunday()
     {
         return $this->sunday;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     public function setCreateOn($create_on)

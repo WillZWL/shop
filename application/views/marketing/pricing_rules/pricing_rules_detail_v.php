@@ -94,6 +94,19 @@
 					<label><input type="checkbox" name="sunday" value="1" <?=$pricingrule->getSunday()?"CHECKED":""?>><?= $lang["sunday"] ?></label>
 				</td>
 			</tr>
+            <tr>
+                <td class="field"><?= $lang["status"] ?></td>
+                <td class="value" colspan="3">
+                    <select name="status">
+                        <option value="0" <?php if($pricingrule->getStatus()=="0") echo "selected"?>>
+                            <?= $lang["disable"] ?>
+                        </option>
+                        <option value="1" <?php if($pricingrule->getStatus()=="1") echo "selected"?>>
+                             <?= $lang["enable"] ?>
+                        </option>
+                    </select>
+                </td>
+            </tr>
             <?php
             if ($cmd != "add") :
                 ?>

@@ -35,7 +35,7 @@ class PricingRulesDao extends BaseDao
                                     if(pr.friday = 1, "X", "") as friday,
                                     if(pr.saturday = 1, "X", "") as saturday,
                                     if(pr.sunday = 1, "X", "") as sunday,
-                                    pr.create_on, pr.create_at, pr.create_by, pr.modify_on, pr.modify_at, pr.modify_by');
+                                    pr.status,pr.create_on, pr.create_at, pr.create_by, pr.modify_on, pr.modify_at, pr.modify_by');
 
             if (isset($option['orderby'])) {
                 $this->db->order_by($option['orderby']);
