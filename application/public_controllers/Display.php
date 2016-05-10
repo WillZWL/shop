@@ -52,6 +52,8 @@ class Display extends PUB_Controller
             $contact_info = $this->get_contact_info(PLATFORM);
             $data['contact_email'] = $contact_info['email'];
             $data['contact_tel'] = $contact_info['tel'];
+            $data['contact_hotline'] = $contact_info['hotline'];
+
         }
         $data["http_type"] = $http_type;
         $data["content"] = "display/" . $page;
@@ -86,6 +88,7 @@ class Display extends PUB_Controller
             'WEBGB' => [
                 'email' => 'support@digitaldiscount.co.uk',
                 'tel' => '02071934191',
+                'hotline'=>"(hotline support coming soon)",
             ],
             'WEBAU' => [
                 'email' => 'support@aheaddigital.net',
