@@ -4,8 +4,8 @@ class VProdInventoryVo extends \BaseVo
     private $prod_sku = '';
     private $inventory;
 
-    private $primary_key = [];
-    private $increment_field = '';
+    protected $primary_key = [];
+    protected $increment_field = '';
 
     public function setProdSku($prod_sku)
     {
@@ -31,13 +31,5 @@ class VProdInventoryVo extends \BaseVo
         return $this->inventory;
     }
 
-    public function getPrimaryKey()
-    {
-        return $this->primary_key;
-    }
 
-    public function getIncrementField()
-    {
-        return $this->increment_field;
-    }
 }

@@ -6,8 +6,8 @@ class WmsWarehouseVo extends \BaseVo
     private $status = '1';
     private $modify_on = '';
 
-    private $primary_key = ['type', 'warehouse_id'];
-    private $increment_field = '';
+    protected $primary_key = ['type', 'warehouse_id'];
+    protected $increment_field = '';
 
     public function setType($type)
     {
@@ -43,27 +43,5 @@ class WmsWarehouseVo extends \BaseVo
     public function getStatus()
     {
         return $this->status;
-    }
-
-    public function setModifyOn($modify_on)
-    {
-        if ($modify_on !== null) {
-            $this->modify_on = $modify_on;
-        }
-    }
-
-    public function getModifyOn()
-    {
-        return $this->modify_on;
-    }
-
-    public function getPrimaryKey()
-    {
-        return $this->primary_key;
-    }
-
-    public function getIncrementField()
-    {
-        return $this->increment_field;
     }
 }

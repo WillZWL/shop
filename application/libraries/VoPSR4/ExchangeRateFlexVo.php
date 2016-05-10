@@ -1,25 +1,15 @@
 <?php
 class ExchangeRateFlexVo extends \BaseVo
 {
-   //class variable
     private $from_currency_id;
     private $to_currency_id;
     private $rate = '1.0000';
     private $approvial_status = '1';
-    private $create_on = '0000-00-00 00:00:00';
-    private $create_at;
-    private $create_by;
-    private $modify_on;
-    private $modify_at;
-    private $modify_by;
 
-    //primary key
-    private $primary_key = array("from_currency_id", "to_currency_id");
+    protected $primary_key = array("from_currency_id", "to_currency_id");
 
-    //auo increment
-    private $increment_field = "";
+    protected $increment_field = "";
 
-    //instance method
     public function getFromCurrencyId()
     {
         return $this->from_currency_id;
@@ -130,13 +120,5 @@ class ExchangeRateFlexVo extends \BaseVo
         return $this;
     }
 
-    public function getPrimaryKey()
-    {
-        return $this->primary_key;
-    }
 
-    public function getIncrementField()
-    {
-        return $this->increment_field;
-    }
 }
