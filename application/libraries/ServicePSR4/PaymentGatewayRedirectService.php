@@ -273,7 +273,7 @@ implements PaymentGatewayRedirectServiceInterface
             }
         } else {
 //probably invalid so number, so, cannot update database
-            $this->_sendFatalEmail();
+            $this->_sendFatalEmail($generalData, $getData);
             $this->processFailureAction($generalData, $getData);
         }
     }
