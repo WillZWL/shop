@@ -37,10 +37,24 @@ class ProductOverviewWebsite extends MY_Controller
         ($this->input->get('suppstatus') != '') ? $where['supplier_status'] = $this->input->get('suppstatus') : '';
         ($this->input->get('purcupdate') != '') ? $where['sp.modify_on >= '] = $this->input->get('purcupdate') : '';
         ($this->input->get('profit') != '') ? $where['pm.profit'] = $this->input->get('profit') : '';
-        ($this->input->get('margin') != '') ? $where['pm.margin'] = $this->input->get('margin') : '';
+        // ($this->input->get('margin') != '') ? $where['pm.margin'] = $this->input->get('margin') : '';
         ($this->input->get('price') != '') ? $where['pr.price'] = $this->input->get('price') : '';
         ($this->input->get('limit') != '') ? $option['limit'] = $this->input->get('limit') : '';
         ($this->input->get('per_page') != '') ? $option['offset'] = $this->input->get('per_page') : '';
+
+        if ($this->input->get('margin') != '') {
+            switch($this->input->get("margin_prefix")) {
+                case 1:
+                    $where["pm.margin > 0 and pm.margin <= {$this->input->get("margin")}"] = null;
+                    break;
+                case 2:
+                    $where["pm.margin <= {$this->input->get("margin")}"] = null;
+                    break;
+                case 3:
+                    $where["pm.margin >= {$this->input->get("margin")}"] = null;
+                    break;
+            }
+        }
 
         if ($this->input->get("surplusqty") != "") {
             switch($this->input->get("surplusqty_prefix")) {

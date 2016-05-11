@@ -323,6 +323,24 @@
                             </td>
                         </tr>
                         <tr>
+                            <td style="padding-right:8px" align="right">
+                            </td>
+                            <td>
+                            </td>
+                            <td style="padding-right:8px" align="right">
+                                <b>Margin</b>
+                            </td>
+                            <td>
+                                <select id="margin_prefix" name="surplusqty_prefix">
+                                    <option value="2"> Smaller <= </option>
+                                    <option value="1"> greater > 0 and Smaller <= </option>
+                                    <option value="3"> Greater >= </option>
+                                </select>
+                                <input name="margin" class="input" value="" style="width:200px">%
+                            </td>
+                        </tr>
+
+                        <tr>
                             <td colspan="2" style="padding-left:60px">
                                 <br><b>* TIP: Refining your search may produce faster result
                                 <br>* Results Per Page may give lesser results when used together with PLA/Adwords filters.</b>
