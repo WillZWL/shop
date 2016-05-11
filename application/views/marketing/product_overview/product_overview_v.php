@@ -331,7 +331,7 @@
                                 <b>Margin</b>
                             </td>
                             <td>
-                                <select id="margin_prefix" name="surplusqty_prefix">
+                                <select id="margin_prefix" name="margin_prefix">
                                     <option value="2"> Smaller <= </option>
                                     <option value="1"> greater > 0 and Smaller <= </option>
                                     <option value="3"> Greater >= </option>
