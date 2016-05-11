@@ -29,7 +29,7 @@ class PriceDao extends BaseDao
      */
     public function updateSkuPrice($platform_id, $sku, $price)
     {
-        $sql = "UPDATE price SET auto_price = 'N', price = ? WHERE sku = ? AND platform_id = ? AND listing_status = 'L'";
+        $sql = "UPDATE price SET auto_price = 'N', price = ? WHERE sku = ? AND platform_id = ?";
         $this->db->query($sql, [$price, $sku, $platform_id]);
 
         return $this->db->affected_rows();
