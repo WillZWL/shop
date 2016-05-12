@@ -1,4 +1,5 @@
 <?php
+
 class GoogleRequestBatchVo extends \BaseVo
 {
     private $id;
@@ -8,6 +9,8 @@ class GoogleRequestBatchVo extends \BaseVo
     private $start_time;
     private $end_time;
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

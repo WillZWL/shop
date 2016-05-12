@@ -1,4 +1,5 @@
 <?php
+
 class CategoryProductSpecVo extends \BaseVo
 {
     private $id;
@@ -7,6 +8,9 @@ class CategoryProductSpecVo extends \BaseVo
     private $unit_id;
     private $priority = '9';
     private $status = '1';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

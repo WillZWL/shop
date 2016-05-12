@@ -1,4 +1,5 @@
 <?php
+
 class FreightCatChargeVo extends \BaseVo
 {
     private $id;
@@ -8,6 +9,8 @@ class FreightCatChargeVo extends \BaseVo
     private $currency_id = 'HKD';
     private $amount;
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

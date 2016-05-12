@@ -1,4 +1,5 @@
 <?php
+
 class FulfillmentCentreVo extends \BaseVo
 {
     private $id;
@@ -6,6 +7,8 @@ class FulfillmentCentreVo extends \BaseVo
     private $country_id;
     private $name;
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

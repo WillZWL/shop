@@ -1,10 +1,13 @@
 <?php
+
 class EmailReferralListVo extends \BaseVo
 {
     private $id;
     private $email;
     private $status;
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

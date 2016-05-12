@@ -1,4 +1,5 @@
 <?php
+
 class ActionVo extends \BaseVo
 {
     private $id;
@@ -6,6 +7,9 @@ class ActionVo extends \BaseVo
     private $action;
     private $description;
     private $status = '1';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

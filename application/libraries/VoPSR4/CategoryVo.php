@@ -1,4 +1,5 @@
 <?php
+
 class CategoryVo extends \BaseVo
 {
     private $id;
@@ -9,11 +10,14 @@ class CategoryVo extends \BaseVo
     private $add_colour_name = '1';
     private $priority = '9';
     private $stop_sync_priority = '0';
-    private $bundle_discount;
-    private $min_display_qty;
+    private $bundle_discount = '0.00';
+    private $min_display_qty = '0';
     private $sponsored = '0';
     private $status = '1';
     private $hidden = '0';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

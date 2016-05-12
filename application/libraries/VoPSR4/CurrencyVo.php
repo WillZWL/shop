@@ -1,4 +1,5 @@
 <?php
+
 class CurrencyVo extends \BaseVo
 {
     private $id;
@@ -12,6 +13,9 @@ class CurrencyVo extends \BaseVo
     private $dec_place = '0';
     private $dec_point = '';
     private $thousands_sep = '';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

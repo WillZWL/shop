@@ -1,10 +1,14 @@
 <?php
+
 class CourierRegionVo extends \BaseVo
 {
     private $id;
     private $courier_id;
     private $region_id;
     private $currency_id;
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

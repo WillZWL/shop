@@ -1,4 +1,5 @@
 <?php
+
 class HoldReasonVo extends \BaseVo
 {
     private $id;
@@ -7,6 +8,8 @@ class HoldReasonVo extends \BaseVo
     private $description;
     private $status = '1';
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

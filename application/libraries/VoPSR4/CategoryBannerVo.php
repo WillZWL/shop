@@ -1,4 +1,5 @@
 <?php
+
 class CategoryBannerVo extends \BaseVo
 {
     private $id;
@@ -8,6 +9,9 @@ class CategoryBannerVo extends \BaseVo
     private $image;
     private $flash;
     private $priority;
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

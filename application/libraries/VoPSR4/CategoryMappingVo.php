@@ -1,4 +1,5 @@
 <?php
+
 class CategoryMappingVo extends \BaseVo
 {
     private $id;
@@ -9,8 +10,11 @@ class CategoryMappingVo extends \BaseVo
     private $ext_name;
     private $lang_id = '';
     private $country_id = '';
-    private $product_name = '';
+    private $product_name;
     private $status = '1';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

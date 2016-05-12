@@ -1,10 +1,13 @@
 <?php
+
 class FaqadminVo extends \BaseVo
 {
     private $id;
     private $lang_id;
     private $faq_ver;
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

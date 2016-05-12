@@ -1,10 +1,14 @@
 <?php
+
 class DeliveryTypeVo extends \BaseVo
 {
     private $id;
     private $delivery_type_id = '';
     private $name = '';
     private $platform_type = '';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

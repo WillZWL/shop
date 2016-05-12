@@ -1,4 +1,5 @@
 <?php
+
 class FuncOptionVo extends \BaseVo
 {
     private $id;
@@ -9,6 +10,8 @@ class FuncOptionVo extends \BaseVo
     private $priority = '0';
     private $status = '1';
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

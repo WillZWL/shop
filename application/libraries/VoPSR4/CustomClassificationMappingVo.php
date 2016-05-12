@@ -1,10 +1,14 @@
 <?php
+
 class CustomClassificationMappingVo extends \BaseVo
 {
     private $id;
     private $sub_cat_id;
     private $country_id;
     private $custom_class_id;
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

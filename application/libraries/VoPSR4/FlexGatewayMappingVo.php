@@ -1,23 +1,20 @@
 <?php
+
 class FlexGatewayMappingVo extends \BaseVo
 {
-    private $id;
     private $gateway_id;
     private $currency_id;
     private $gateway_code;
-    private $ria;
+    private $ria = '1';
 
-    protected $increment_field = "";
+    protected $primary_key = ['gateway_id', 'currency_id'];
+    protected $increment_field = '';
 
-    public function getId()
+    public function setGatewayId($gateway_id)
     {
-        return $this->id;
-    }
-
-    public function setId($value)
-    {
-        $this->id = $value;
-        return $this;
+        if ($gateway_id !== null) {
+            $this->gateway_id = $gateway_id;
+        }
     }
 
     public function getGatewayId()
@@ -25,10 +22,11 @@ class FlexGatewayMappingVo extends \BaseVo
         return $this->gateway_id;
     }
 
-    public function setGatewayId($value)
+    public function setCurrencyId($currency_id)
     {
-        $this->gateway_id = $value;
-        return $this;
+        if ($currency_id !== null) {
+            $this->currency_id = $currency_id;
+        }
     }
 
     public function getCurrencyId()
@@ -36,10 +34,11 @@ class FlexGatewayMappingVo extends \BaseVo
         return $this->currency_id;
     }
 
-    public function setCurrencyId($value)
+    public function setGatewayCode($gateway_code)
     {
-        $this->currency_id = $value;
-        return $this;
+        if ($gateway_code !== null) {
+            $this->gateway_code = $gateway_code;
+        }
     }
 
     public function getGatewayCode()
@@ -47,10 +46,11 @@ class FlexGatewayMappingVo extends \BaseVo
         return $this->gateway_code;
     }
 
-    public function setGatewayCode($value)
+    public function setRia($ria)
     {
-        $this->gateway_code = $value;
-        return $this;
+        if ($ria !== null) {
+            $this->ria = $ria;
+        }
     }
 
     public function getRia()
@@ -58,14 +58,4 @@ class FlexGatewayMappingVo extends \BaseVo
         return $this->ria;
     }
 
-    public function setRia($value)
-    {
-        return $this->ria = $value;
-    }
-
-
-
-
 }
-
-?>

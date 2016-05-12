@@ -1,4 +1,5 @@
 <?php
+
 class BundleConfigVo extends \BaseVo
 {
     private $id;
@@ -7,6 +8,9 @@ class BundleConfigVo extends \BaseVo
     private $discount_2_item = '0.00';
     private $discount_3_more_item = '0.00';
     private $status = '1';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

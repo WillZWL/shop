@@ -1,4 +1,5 @@
 <?php
+
 class BatchVo extends \BaseVo
 {
     private $id;
@@ -7,6 +8,9 @@ class BatchVo extends \BaseVo
     private $listed = '1';
     private $remark;
     private $end_time;
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

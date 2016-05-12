@@ -1,4 +1,5 @@
 <?php
+
 class ExchangeRateApprovalVo extends \BaseVo
 {
     private $id;
@@ -7,6 +8,8 @@ class ExchangeRateApprovalVo extends \BaseVo
     private $rate = '1.000000';
     private $approval_status = '1';
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {
