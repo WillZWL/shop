@@ -297,6 +297,7 @@ class pricing_tools extends MY_Controller
         $prev_webqty = $prod_obj->getWebsiteQuantity();
         $prod_obj->setClearance($this->input->post('clearance'));
         $prod_obj->setWebsiteQuantity($this->input->post('webqty'));
+        $prod_obj->setAutoRestock($this->input->post('auto_restock'));
 
         if ($this->input->post('chk')) {
            $prod_obj->setEan($this->input->post('ean'));

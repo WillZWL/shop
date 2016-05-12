@@ -125,6 +125,7 @@ class ProductCostDto
     private $ad_api_request_result;
     private $ad_status;
     private $lang_restricted;
+    private $auto_restock;
 
     public function getVat()
     {
@@ -1418,5 +1419,15 @@ class ProductCostDto
     public function setLangRestricted($value)
     {
         $this->lang_restricted = $value;
+    }
+
+    public function getAutoRestock()
+    {
+        return $this->auto_restock;
+    }
+
+    public function setAutoRestock($value)
+    {
+        $this->auto_restock = $value;
     }
 }
