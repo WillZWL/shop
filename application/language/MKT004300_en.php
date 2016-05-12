@@ -22,6 +22,7 @@
         "inactive" => "Inactive",
         "created" => "Created",
         "listed" => "Listed",
+        'auto_restock' => 'Auto Restock',
         "create_on" => "Create On",
         "create_at" => "Create At",
         "create_by" => "Create By",

@@ -137,7 +137,7 @@ class ProductDao extends BaseDao
         }
 
         if ($select_str == '') {
-            $select_str = 'p.sku, p.name, p.status, p.prod_grp_cd, p.clearance, p.colour_id, p.surplus_quantity, p.website_quantity, p.website_status, sm.ext_sku,
+            $select_str = 'p.sku, p.name, p.status, p.prod_grp_cd, p.clearance, p.colour_id, p.surplus_quantity, p.website_quantity, p.website_status, sm.ext_sku,p.auto_restock,
             pr.listing_status, pr.price, pr.vb_price, pr.is_advertised, pr.google_status, pr.google_update_result, pr.platform_id, pr.auto_price, pm.total_cost, pm.profit, pm.margin, sp.supplier_status,
             p.modify_on, pbv.platform_currency_id, pbv.platform_country_id, pbv.language_id';
             if ($option['show_name']) {

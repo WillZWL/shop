@@ -17,6 +17,11 @@
         <td width="20%" class="field"><?= $lang["webqty"] ?></td>
         <td width="30%" class="value">
             <input type="text" name="webqty" value="<?= $prod_obj->getWebsiteQuantity() ?>" onkeyup="value=value.replace(/[^\d.]/g,'')">
+             <?=$lang['auto_restock']?>&nbsp;&nbsp;
+            <select name="auto_restock">
+                <option value='0' <?=($prod_obj->getAutoRestock() == 0?"SELECTED":"")?>>OFF</option>
+                <option value='1' <?=($prod_obj->getAutoRestock() == 1?"SELECTED":"")?>>ON</option>
+            </select>
         </td>
     </tr>
     <tr>

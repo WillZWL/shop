@@ -463,6 +463,9 @@
                                 Adwords <br>
                                 <input type="checkbox" id="chkadw" name="chkadw" onClick="checkall_ele('<?= $this->input->get("pfid") ?>','chkadw','google_adwords[<?= $platform_id ?>][]');">
                             </td>
+                            <td title="<?= $lang['auto_restock'] ?>" align="center">
+                                <?= $lang['auto_restock'] ?>
+                            </td>
                             <td title="<?= $lang["total_cost"] ?>">
                                 <?= $lang["cost"] ?>
                             </td>
@@ -547,6 +550,13 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td>
+                                <select name="auto_restock" class="input">
+                                    <option value="">
+                                    <option value="0"<?=$selected_aw["0"]?>>OFF</option>
+                                    <option value="1"<?=$selected_aw["1"]?>>ON</option>
+                                </select>
+                            </td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -580,6 +590,7 @@
                         $enabled_pla_checkbox = $product->getEnabledPlaCheckbox();
                         $pla_status = $product->getGoogleStatus();
                         $pla_last_update_result = $product->getGoogleUpdateResult();
+                        $auto_restock = $product->getAutoRestock();
                 ?>
                         <tr onMouseOver="AddClassName(this, 'highlight')" onMouseOut="RemoveClassName(this, 'highlight')">
                             <td>&nbsp;</td>
@@ -623,6 +634,12 @@
                             <td><a href="#" data-toggle="tooltip" data-placement="top" title="<?= $pla_last_update_result ?>"><?= $pla_status ?></a></td>
                             <td>
                                 <!-- $adwords_input $adGroup_status -->
+                            </td>
+                            <td>
+                                <select name='<?= "product[{$sku}][auto_restock]" ?>' title="Auto Restock" class="input" style="width: 50px;">
+                                    <option value="0" <?= ($auto_restock == '0') ? "selected" : '' ?>><?= $lang["off"] ?></option>
+                                    <option value="1" <?= ($auto_restock == '1') ? "selected" : '' ?>><?= $lang["on"] ?></option>
+                                </select>
                             </td>
                             <td>
                                 <?= $product->getPlatformCurrencyId() . ' ' . $product->getTotalCost() ?>
