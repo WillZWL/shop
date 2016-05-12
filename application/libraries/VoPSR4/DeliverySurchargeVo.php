@@ -1,4 +1,5 @@
 <?php
+
 class DeliverySurchargeVo extends \BaseVo
 {
     private $id;
@@ -8,6 +9,9 @@ class DeliverySurchargeVo extends \BaseVo
     private $currency_id;
     private $surcharge;
     private $status;
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

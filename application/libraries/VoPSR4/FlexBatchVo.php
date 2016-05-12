@@ -1,4 +1,5 @@
 <?php
+
 class FlexBatchVo extends \BaseVo
 {
     private $id;
@@ -6,15 +7,26 @@ class FlexBatchVo extends \BaseVo
     private $filename;
     private $status = 'N';
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
+
+    public function setId($id)
+    {
+        if ($id !== null) {
+            $this->id = $id;
+        }
+    }
+
     public function getId()
     {
         return $this->id;
     }
 
-    public function setId($value)
+    public function setGatewayId($gateway_id)
     {
-        $this->id = $value;
-        return $this;
+        if ($gateway_id !== null) {
+            $this->gateway_id = $gateway_id;
+        }
     }
 
     public function getGatewayId()
@@ -22,10 +34,11 @@ class FlexBatchVo extends \BaseVo
         return $this->gateway_id;
     }
 
-    public function setGatewayId($value)
+    public function setFilename($filename)
     {
-        $this->gateway_id = $value;
-        return $this;
+        if ($filename !== null) {
+            $this->filename = $filename;
+        }
     }
 
     public function getFilename()
@@ -33,10 +46,11 @@ class FlexBatchVo extends \BaseVo
         return $this->filename;
     }
 
-    public function setFilename($value)
+    public function setStatus($status)
     {
-        $this->filename = $value;
-        return $this;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -44,15 +58,4 @@ class FlexBatchVo extends \BaseVo
         return $this->status;
     }
 
-    public function setStatus($value)
-    {
-        $this->status = $value;
-        return $this;
-    }
-
-
-
-
 }
-
-?>

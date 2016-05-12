@@ -1,4 +1,5 @@
 <?php
+
 class FlexGatewayFeeVo extends \BaseVo
 {
     private $txn_id = '';
@@ -9,19 +10,26 @@ class FlexGatewayFeeVo extends \BaseVo
     private $amount;
     private $status;
 
-    protected $primary_key = array("txn_id", "status");
+    protected $primary_key = ['txn_id', 'txn_time', 'status'];
+    protected $increment_field = '';
 
-    protected $increment_field = "";
+    public function setTxnId($txn_id)
+    {
+        if ($txn_id !== null) {
+            $this->txn_id = $txn_id;
+        }
+    }
 
     public function getTxnId()
     {
         return $this->txn_id;
     }
 
-    public function setTxnId($value)
+    public function setFlexBatchId($flex_batch_id)
     {
-        $this->txn_id = $value;
-        return $this;
+        if ($flex_batch_id !== null) {
+            $this->flex_batch_id = $flex_batch_id;
+        }
     }
 
     public function getFlexBatchId()
@@ -29,10 +37,11 @@ class FlexGatewayFeeVo extends \BaseVo
         return $this->flex_batch_id;
     }
 
-    public function setFlexBatchId($value)
+    public function setGatewayId($gateway_id)
     {
-        $this->flex_batch_id = $value;
-        return $this;
+        if ($gateway_id !== null) {
+            $this->gateway_id = $gateway_id;
+        }
     }
 
     public function getGatewayId()
@@ -40,10 +49,11 @@ class FlexGatewayFeeVo extends \BaseVo
         return $this->gateway_id;
     }
 
-    public function setGatewayId($value)
+    public function setTxnTime($txn_time)
     {
-        $this->gateway_id = $value;
-        return $this;
+        if ($txn_time !== null) {
+            $this->txn_time = $txn_time;
+        }
     }
 
     public function getTxnTime()
@@ -51,10 +61,11 @@ class FlexGatewayFeeVo extends \BaseVo
         return $this->txn_time;
     }
 
-    public function setTxnTime($value)
+    public function setCurrencyId($currency_id)
     {
-        $this->txn_time = $value;
-        return $this;
+        if ($currency_id !== null) {
+            $this->currency_id = $currency_id;
+        }
     }
 
     public function getCurrencyId()
@@ -62,10 +73,11 @@ class FlexGatewayFeeVo extends \BaseVo
         return $this->currency_id;
     }
 
-    public function setCurrencyId($value)
+    public function setAmount($amount)
     {
-        $this->currency_id = $value;
-        return $this;
+        if ($amount !== null) {
+            $this->amount = $amount;
+        }
     }
 
     public function getAmount()
@@ -73,23 +85,16 @@ class FlexGatewayFeeVo extends \BaseVo
         return $this->amount;
     }
 
-    public function setAmount($value)
+    public function setStatus($status)
     {
-        $this->amount = $value;
-        return $this;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
     {
         return $this->status;
     }
-
-    public function setStatus($value)
-    {
-        $this->status = $value;
-        return $this;
-    }
-
-
 
 }

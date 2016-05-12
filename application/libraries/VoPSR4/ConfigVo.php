@@ -1,4 +1,5 @@
 <?php
+
 class ConfigVo extends \BaseVo
 {
     private $variable;

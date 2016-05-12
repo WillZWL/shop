@@ -1,4 +1,5 @@
 <?php
+
 class DelayedOrderVo extends \BaseVo
 {
     private $so_no;

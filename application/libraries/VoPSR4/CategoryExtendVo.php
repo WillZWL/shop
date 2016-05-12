@@ -1,4 +1,5 @@
 <?php
+
 class CategoryExtendVo extends \BaseVo
 {
     private $id;
@@ -6,6 +7,9 @@ class CategoryExtendVo extends \BaseVo
     private $lang_id;
     private $name;
     private $stop_sync_name = '0';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {
@@ -57,9 +61,9 @@ class CategoryExtendVo extends \BaseVo
 
     public function setStopSyncName($stop_sync_name)
     {
-        //if ($stop_sync_name) {
+        if ($stop_sync_name !== null) {
             $this->stop_sync_name = $stop_sync_name;
-        //}
+        }
     }
 
     public function getStopSyncName()

@@ -1,4 +1,5 @@
 <?php
+
 class CustomClassificationVo extends \BaseVo
 {
     private $id;
@@ -6,6 +7,9 @@ class CustomClassificationVo extends \BaseVo
     private $code;
     private $description;
     private $duty_pcent = '0.00';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

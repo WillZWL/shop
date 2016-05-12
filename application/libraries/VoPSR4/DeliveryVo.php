@@ -1,4 +1,5 @@
 <?php
+
 class DeliveryVo extends \BaseVo
 {
     private $id;
@@ -7,6 +8,9 @@ class DeliveryVo extends \BaseVo
     private $min_day = '0';
     private $max_day = '0';
     private $status = '1';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

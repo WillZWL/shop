@@ -1,4 +1,5 @@
 <?php
+
 class ClientVo extends \BaseVo
 {
     private $id;
@@ -39,6 +40,9 @@ class ClientVo extends \BaseVo
     private $vip = '0';
     private $vip_joined_date;
     private $status = '1';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

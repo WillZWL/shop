@@ -1,4 +1,5 @@
 <?php
+
 class AutoRefundVo extends \BaseVo
 {
     private $refund_id;

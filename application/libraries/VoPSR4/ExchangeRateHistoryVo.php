@@ -1,4 +1,5 @@
 <?php
+
 class ExchangeRateHistoryVo extends \BaseVo
 {
     private $id;
@@ -7,6 +8,8 @@ class ExchangeRateHistoryVo extends \BaseVo
     private $rate = '1.000000';
     private $date;
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

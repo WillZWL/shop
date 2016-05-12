@@ -1,4 +1,5 @@
 <?php
+
 class FtpInfoVo extends \BaseVo
 {
     private $id;
@@ -9,6 +10,8 @@ class FtpInfoVo extends \BaseVo
     private $port;
     private $pasv;
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

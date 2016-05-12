@@ -1,4 +1,5 @@
 <?php
+
 class GoogleApiRequestVo extends \BaseVo
 {
     private $id;
@@ -34,12 +35,15 @@ class GoogleApiRequestVo extends \BaseVo
     private $ref_listing_status;
     private $ref_website_status = '';
     private $ref_exdemo;
+    private $ref_is_advertised = '';
     private $availability = '';
     private $condition = '';
     private $result = 'N';
     private $key_message = '';
     private $api_response;
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {
@@ -435,6 +439,18 @@ class GoogleApiRequestVo extends \BaseVo
     public function getRefExdemo()
     {
         return $this->ref_exdemo;
+    }
+
+    public function setRefIsAdvertised($ref_is_advertised)
+    {
+        if ($ref_is_advertised !== null) {
+            $this->ref_is_advertised = $ref_is_advertised;
+        }
+    }
+
+    public function getRefIsAdvertised()
+    {
+        return $this->ref_is_advertised;
     }
 
     public function setAvailability($availability)

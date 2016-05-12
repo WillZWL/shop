@@ -1,4 +1,5 @@
 <?php
+
 class AffiliateVo extends \BaseVo
 {
     private $id;
@@ -6,6 +7,9 @@ class AffiliateVo extends \BaseVo
     private $platform_id;
     private $affiliate_description;
     private $ext_party = '';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

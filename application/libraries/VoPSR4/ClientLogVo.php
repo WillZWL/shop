@@ -1,4 +1,5 @@
 <?php
+
 class ClientLogVo extends \BaseVo
 {
     private $email;

@@ -1,4 +1,5 @@
 <?php
+
 class FreightCategoryVo extends \BaseVo
 {
     private $id;
@@ -8,6 +9,8 @@ class FreightCategoryVo extends \BaseVo
     private $bulk_admin_chrg;
     private $status = '1';
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

@@ -1,4 +1,5 @@
 <?php
+
 class CountryStateVo extends \BaseVo
 {
     private $country_id;

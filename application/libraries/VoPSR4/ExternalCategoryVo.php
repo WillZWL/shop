@@ -1,4 +1,5 @@
 <?php
+
 class ExternalCategoryVo extends \BaseVo
 {
     private $id;
@@ -10,6 +11,8 @@ class ExternalCategoryVo extends \BaseVo
     private $country_id;
     private $status = '1';
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

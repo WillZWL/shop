@@ -1,4 +1,5 @@
 <?php
+
 class CourierFeedVo extends \BaseVo
 {
     private $id;
@@ -7,6 +8,9 @@ class CourierFeedVo extends \BaseVo
     private $mawb = '';
     private $exec = '0';
     private $comment = '';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

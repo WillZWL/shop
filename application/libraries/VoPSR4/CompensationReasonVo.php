@@ -1,9 +1,13 @@
 <?php
+
 class CompensationReasonVo extends \BaseVo
 {
     private $id;
     private $reason_cat;
     private $description;
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {
