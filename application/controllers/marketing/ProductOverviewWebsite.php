@@ -27,7 +27,7 @@ class ProductOverviewWebsite extends MY_Controller
         ($this->input->get('scatid') != '') ? $where['p.sub_cat_id'] = $this->input->get('scatid') : '';
         ($this->input->get('brand') != '') ? $where['p.brand_id'] = $this->input->get('brand') : '';
         ($this->input->get('pla') != '') ? $where['pr.is_advertised'] = $this->input->get('pla') : '';
-        ($this->input->get('plaapi') != '') ? $where['pre.ext_status'] = $this->input->get('plaapi') : '';
+        ($this->input->get('plaapi') != '') ? $where['pr.google_status'] = $this->input->get('plaapi') : '';
         ($this->input->get('auto_price') != '') ? $where['pr.auto_price'] = $this->input->get('auto_price') : '';
         ($this->input->get('msku') != '') ? $where['sm.ext_sku'] = $this->input->get('msku') : '';
         ($this->input->get('liststatus') != '') ? $where['pr.listing_status'] = $this->input->get('liststatus') : '';
