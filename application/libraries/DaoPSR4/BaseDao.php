@@ -152,13 +152,30 @@ abstract class BaseDao
                 call_user_func(array($obj, "set" . underscore2camelcase($ic_field)), 0);
             }
 
-            $this->setCreate($obj);
-
+            $ts = date("Y-m-d H:i:s");
+            $ip = $_SERVER["REMOTE_ADDR"] ? ip2long($_SERVER["REMOTE_ADDR"]) : ip2long("127.0.0.1");
+            $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
             $new_value = false;
             foreach ($class_methods as $fct_name) {
+                $rskey = camelcase2underscore(substr($fct_name, 3));
+
+                if ($fct_name === 'setCreateOn' || $fct_name === 'setModifyOn') {
+                    $this->db->set($rskey, $ts);
+                    continue;
+                }
+
+                if ($fct_name === 'setCreateAt' || $fct_name === 'setModifyAt') {
+                    $this->db->set($rskey, $ip);
+                    continue;
+                }
+
+                if ($fct_name === 'setCreateBy' || $fct_name === 'setModifyBy') {
+                    $this->db->set($rskey, $id);
+                    continue;
+                }
+
                 if (substr($fct_name, 0, 3) == "get") {
                     $rsvalue = call_user_func(array($obj, $fct_name));
-                    $rskey = camelcase2underscore(substr($fct_name, 3));
                     if (!in_array($rskey, ['primary_key', 'increment_field'])) {
                         $this->db->set($rskey, $rsvalue);
                     }
@@ -205,22 +222,9 @@ abstract class BaseDao
         }
     }
 
-    public function insertTables($data_arr)
+    public function setCommonFields(&$obj, $action = 'insert')
     {
 
-    }
-
-    public function setCreate(&$obj, $value = [])
-    {
-        $ts = date("Y-m-d H:i:s");
-        $ip = $_SERVER["REMOTE_ADDR"] ? ip2long($_SERVER["REMOTE_ADDR"]) : ip2long("127.0.0.1");
-        $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
-        @call_user_func(array($obj, "setCreateOn"), $ts);
-        @call_user_func(array($obj, "setCreateAt"), $ip);
-        @call_user_func(array($obj, "setCreateBy"), $id);
-        @call_user_func(array($obj, "setModifyOn"), $ts);
-        @call_user_func(array($obj, "setModifyAt"), $ip);
-        @call_user_func(array($obj, "setModifyBy"), $id);
     }
 
     public function update($obj = null, $where = [])
@@ -235,10 +239,26 @@ abstract class BaseDao
             return false;
         }
 
-        $this->setModify($obj);
+        $ip = $_SERVER["REMOTE_ADDR"] ? ip2long($_SERVER["REMOTE_ADDR"]) : ip2long("127.0.0.1");
+        $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
 
         $primary_key = $obj->getPrimaryKey();
         foreach ($class_methods as $fct_name) {
+
+            if (in_array($fct_name, array('setCreateOn', 'setCreateAt', 'setCreateBy', 'setModifyOn'))) {
+                continue;
+            }
+
+            if ($fct_name === 'setModifyAt') {
+                $this->db->set('modify_at', $ip);
+                continue;
+            }
+
+            if ($fct_name === 'setModifyBy') {
+                $this->db->set('modify_by', $id);
+                continue;
+            }
+
             if (substr($fct_name, 0, 3) == "get") {
                 $rsvalue = call_user_func(array($obj, $fct_name));
                 $rskey = camelcase2underscore(substr($fct_name, 3));
@@ -309,16 +329,6 @@ abstract class BaseDao
         } else {
             return false;
         }
-    }
-
-    public function setModify(&$obj, $value = [])
-    {
-        $ts = date("Y-m-d H:i:s");
-        $ip = $_SERVER["REMOTE_ADDR"] ? ip2long($_SERVER["REMOTE_ADDR"]) : ip2long("127.0.0.1");
-        $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
-        @call_user_func(array($obj, "setModifyOn"), $ts);
-        @call_user_func(array($obj, "setModifyAt"), $ip);
-        @call_user_func(array($obj, "setModifyBy"), $id);
     }
 
     public function delete($obj)
