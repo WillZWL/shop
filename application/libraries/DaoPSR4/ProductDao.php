@@ -129,6 +129,10 @@ class ProductDao extends BaseDao
         $this->db->join('supplier_prod sp', 'p.sku = sp.prod_sku and sp.order_default = 1', 'inner');
         $this->db->join('platform_biz_var pbv', 'pr.platform_id = pbv.selling_platform_id', 'inner');
 
+        if ($where['pre.ext_status']) {
+            $this->db->join('price_extend pre', 'pre.sku = pr.sku AND pre.platform_id = pr.platform_id', 'inner');
+        }
+
         if ($option['show_name']) {
             $this->db->join('category AS c', 'p.cat_id = c.id', 'inner');
             $this->db->join('category AS sc', 'p.sub_cat_id = sc.id', 'inner');
