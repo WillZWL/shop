@@ -38,6 +38,7 @@ class ProductVo extends \BaseVo
     private $lang_restricted = '1';
     private $shipment_restricted_type = '0';
     private $status = '1';
+    private $auto_restock = '0';
 
 
     public function setId($id)
@@ -482,6 +483,18 @@ class ProductVo extends \BaseVo
     public function getStatus()
     {
         return $this->status;
+    }
+
+    public function setAutoRestock($auto_restock)
+    {
+        if ($auto_restock !== null) {
+            $this->auto_restock = $auto_restock;
+        }
+    }
+
+    public function getAutoRestock()
+    {
+        return $this->auto_restock;
     }
 
 }

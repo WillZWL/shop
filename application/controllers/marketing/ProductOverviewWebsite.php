@@ -41,6 +41,7 @@ class ProductOverviewWebsite extends MY_Controller
         ($this->input->get('price') != '') ? $where['pr.price'] = $this->input->get('price') : '';
         ($this->input->get('limit') != '') ? $option['limit'] = $this->input->get('limit') : '';
         ($this->input->get('per_page') != '') ? $option['offset'] = $this->input->get('per_page') : '';
+        ($this->input->get('auto_restock') != '') ? $where['p.auto_restock'] = $this->input->get('auto_restock') : '';
 
         if ($this->input->get('margin') != '') {
             switch($this->input->get("margin_prefix")) {
@@ -156,6 +157,7 @@ class ProductOverviewWebsite extends MY_Controller
             $product_obj->setClearance($_POST['product'][$sku]['clearance']);
             $product_obj->setWebsiteQuantity($_POST['product'][$sku]['website_quantity']);
             $product_obj->setWebsiteStatus($_POST['product'][$sku]['website_status']);
+            $product_obj->setAutoRestock($_POST['product'][$sku]['auto_restock']);
             $this->sc['Product']->getDao('Product')->update($product_obj);
         }
 
