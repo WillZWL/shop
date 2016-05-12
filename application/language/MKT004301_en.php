@@ -20,6 +20,7 @@
         "arriving"=>"Arriving",
         "admin_fee"=>"ADMIN FEE",
         "auto_price"=>"Auto Price",
+        'auto_restock' => 'Auto Restock',
         "logistic_cost"=>"LOGISTIC",
         "freight"=>"FREIGHT TO WH",
         "whtrans"=>"FREIGHT TO FC",
