@@ -1,4 +1,5 @@
 <?php
+
 class EventVo extends \BaseVo
 {
     private $id;
@@ -7,6 +8,8 @@ class EventVo extends \BaseVo
     private $description;
     private $status = '0';
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

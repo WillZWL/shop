@@ -1,10 +1,14 @@
 <?php
+
 class ColourExtendVo extends \BaseVo
 {
     private $id;
     private $colour_id;
     private $lang_id = '';
     private $colour_name = '';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

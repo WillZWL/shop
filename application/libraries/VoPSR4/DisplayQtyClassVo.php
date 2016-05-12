@@ -1,4 +1,5 @@
 <?php
+
 class DisplayQtyClassVo extends \BaseVo
 {
     private $id;
@@ -10,10 +11,14 @@ class DisplayQtyClassVo extends \BaseVo
     private $default_factor = '1.00';
     private $status = '1';
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -23,7 +28,9 @@ class DisplayQtyClassVo extends \BaseVo
 
     public function setPrice($price)
     {
-        $this->price = $price;
+        if ($price !== null) {
+            $this->price = $price;
+        }
     }
 
     public function getPrice()
@@ -33,7 +40,9 @@ class DisplayQtyClassVo extends \BaseVo
 
     public function setPrice2($price2)
     {
-        $this->price2 = $price2;
+        if ($price2 !== null) {
+            $this->price2 = $price2;
+        }
     }
 
     public function getPrice2()
@@ -43,7 +52,9 @@ class DisplayQtyClassVo extends \BaseVo
 
     public function setQty($qty)
     {
-        $this->qty = $qty;
+        if ($qty !== null) {
+            $this->qty = $qty;
+        }
     }
 
     public function getQty()
@@ -53,7 +64,9 @@ class DisplayQtyClassVo extends \BaseVo
 
     public function setQty2($qty2)
     {
-        $this->qty2 = $qty2;
+        if ($qty2 !== null) {
+            $this->qty2 = $qty2;
+        }
     }
 
     public function getQty2()
@@ -63,7 +76,9 @@ class DisplayQtyClassVo extends \BaseVo
 
     public function setDropQty($drop_qty)
     {
-        $this->drop_qty = $drop_qty;
+        if ($drop_qty !== null) {
+            $this->drop_qty = $drop_qty;
+        }
     }
 
     public function getDropQty()
@@ -73,7 +88,9 @@ class DisplayQtyClassVo extends \BaseVo
 
     public function setDefaultFactor($default_factor)
     {
-        $this->default_factor = $default_factor;
+        if ($default_factor !== null) {
+            $this->default_factor = $default_factor;
+        }
     }
 
     public function getDefaultFactor()
@@ -83,14 +100,14 @@ class DisplayQtyClassVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
     {
         return $this->status;
     }
-
-
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 class FlexRiaVo extends \BaseVo
 {
     private $so_no;
@@ -10,18 +11,26 @@ class FlexRiaVo extends \BaseVo
     private $amount;
     private $status;
 
-    protected $primary_key = array("so_no");
-    protected $increment_field = "";
+    protected $primary_key = ['so_no', 'txn_time'];
+    protected $increment_field = '';
+
+    public function setSoNo($so_no)
+    {
+        if ($so_no !== null) {
+            $this->so_no = $so_no;
+        }
+    }
 
     public function getSoNo()
     {
         return $this->so_no;
     }
 
-    public function setSoNo($value)
+    public function setFlexBatchId($flex_batch_id)
     {
-        $this->so_no = $value;
-        return $this;
+        if ($flex_batch_id !== null) {
+            $this->flex_batch_id = $flex_batch_id;
+        }
     }
 
     public function getFlexBatchId()
@@ -29,10 +38,11 @@ class FlexRiaVo extends \BaseVo
         return $this->flex_batch_id;
     }
 
-    public function setFlexBatchId($value)
+    public function setGatewayId($gateway_id)
     {
-        $this->flex_batch_id = $value;
-        return $this;
+        if ($gateway_id !== null) {
+            $this->gateway_id = $gateway_id;
+        }
     }
 
     public function getGatewayId()
@@ -40,10 +50,11 @@ class FlexRiaVo extends \BaseVo
         return $this->gateway_id;
     }
 
-    public function setGatewayId($value)
+    public function setTxnId($txn_id)
     {
-        $this->gateway_id = $value;
-        return $this;
+        if ($txn_id !== null) {
+            $this->txn_id = $txn_id;
+        }
     }
 
     public function getTxnId()
@@ -51,10 +62,11 @@ class FlexRiaVo extends \BaseVo
         return $this->txn_id;
     }
 
-    public function setTxnId($value)
+    public function setTxnTime($txn_time)
     {
-        $this->txn_id = $value;
-        return $this;
+        if ($txn_time !== null) {
+            $this->txn_time = $txn_time;
+        }
     }
 
     public function getTxnTime()
@@ -62,10 +74,11 @@ class FlexRiaVo extends \BaseVo
         return $this->txn_time;
     }
 
-    public function setTxnTime($value)
+    public function setCurrencyId($currency_id)
     {
-        $this->txn_time = $value;
-        return $this;
+        if ($currency_id !== null) {
+            $this->currency_id = $currency_id;
+        }
     }
 
     public function getCurrencyId()
@@ -73,10 +86,11 @@ class FlexRiaVo extends \BaseVo
         return $this->currency_id;
     }
 
-    public function setCurrencyId($value)
+    public function setAmount($amount)
     {
-        $this->currency_id = $value;
-        return $this;
+        if ($amount !== null) {
+            $this->amount = $amount;
+        }
     }
 
     public function getAmount()
@@ -84,10 +98,11 @@ class FlexRiaVo extends \BaseVo
         return $this->amount;
     }
 
-    public function setAmount($value)
+    public function setStatus($status)
     {
-        $this->amount = $value;
-        return $this;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -95,15 +110,4 @@ class FlexRiaVo extends \BaseVo
         return $this->status;
     }
 
-    public function setStatus($value)
-    {
-        $this->status = $value;
-        return $this;
-    }
-
-
-
-
 }
-
-?>

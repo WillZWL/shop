@@ -1,4 +1,5 @@
 <?php
+
 class ApplicationFeatureVo extends \BaseVo
 {
     private $app_feature_id;

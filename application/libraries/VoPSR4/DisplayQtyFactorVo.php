@@ -1,4 +1,5 @@
 <?php
+
 class DisplayQtyFactorVo extends \BaseVo
 {
     private $id;
@@ -6,10 +7,14 @@ class DisplayQtyFactorVo extends \BaseVo
     private $class_id;
     private $factor = '1.00';
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -19,7 +24,9 @@ class DisplayQtyFactorVo extends \BaseVo
 
     public function setCatId($cat_id)
     {
-        $this->cat_id = $cat_id;
+        if ($cat_id !== null) {
+            $this->cat_id = $cat_id;
+        }
     }
 
     public function getCatId()
@@ -29,7 +36,9 @@ class DisplayQtyFactorVo extends \BaseVo
 
     public function setClassId($class_id)
     {
-        $this->class_id = $class_id;
+        if ($class_id !== null) {
+            $this->class_id = $class_id;
+        }
     }
 
     public function getClassId()
@@ -39,14 +48,14 @@ class DisplayQtyFactorVo extends \BaseVo
 
     public function setFactor($factor)
     {
-        $this->factor = $factor;
+        if ($factor !== null) {
+            $this->factor = $factor;
+        }
     }
 
     public function getFactor()
     {
         return $this->factor;
     }
-
-
 
 }

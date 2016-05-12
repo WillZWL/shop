@@ -1,4 +1,5 @@
 <?php
+
 class AttachmentVo extends \BaseVo
 {
     private $id;
@@ -7,6 +8,9 @@ class AttachmentVo extends \BaseVo
     private $name;
     private $description;
     private $att_file;
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

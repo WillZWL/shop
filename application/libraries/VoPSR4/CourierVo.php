@@ -1,4 +1,5 @@
 <?php
+
 class CourierVo extends \BaseVo
 {
     private $id;
@@ -10,6 +11,9 @@ class CourierVo extends \BaseVo
     private $tracking_link = '';
     private $weight_type = '';
     private $show_status = '0';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

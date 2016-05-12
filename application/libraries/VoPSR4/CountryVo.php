@@ -1,4 +1,5 @@
 <?php
+
 class CountryVo extends \BaseVo
 {
     private $id;
@@ -13,6 +14,9 @@ class CountryVo extends \BaseVo
     private $allow_sell = '0';
     private $url_enable = '0';
     private $standalone = '0';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

@@ -1,4 +1,5 @@
 <?php
+
 class AdwordsDataVo extends \BaseVo
 {
     private $id;
@@ -9,9 +10,14 @@ class AdwordsDataVo extends \BaseVo
     private $api_request_result = '1';
     private $comment = '';
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
+
     public function setId($id)
     {
-        $this->id = $id;
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     public function getId()
@@ -21,7 +27,9 @@ class AdwordsDataVo extends \BaseVo
 
     public function setSku($sku)
     {
-        $this->sku = $sku;
+        if ($sku !== null) {
+            $this->sku = $sku;
+        }
     }
 
     public function getSku()
@@ -31,7 +39,9 @@ class AdwordsDataVo extends \BaseVo
 
     public function setPlatformId($platform_id)
     {
-        $this->platform_id = $platform_id;
+        if ($platform_id !== null) {
+            $this->platform_id = $platform_id;
+        }
     }
 
     public function getPlatformId()
@@ -41,7 +51,9 @@ class AdwordsDataVo extends \BaseVo
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        if ($status !== null) {
+            $this->status = $status;
+        }
     }
 
     public function getStatus()
@@ -51,7 +63,9 @@ class AdwordsDataVo extends \BaseVo
 
     public function setPrice($price)
     {
-        $this->price = $price;
+        if ($price !== null) {
+            $this->price = $price;
+        }
     }
 
     public function getPrice()
@@ -61,7 +75,9 @@ class AdwordsDataVo extends \BaseVo
 
     public function setApiRequestResult($api_request_result)
     {
-        $this->api_request_result = $api_request_result;
+        if ($api_request_result !== null) {
+            $this->api_request_result = $api_request_result;
+        }
     }
 
     public function getApiRequestResult()
@@ -71,11 +87,14 @@ class AdwordsDataVo extends \BaseVo
 
     public function setComment($comment)
     {
-        $this->comment = $comment;
+        if ($comment !== null) {
+            $this->comment = $comment;
+        }
     }
 
     public function getComment()
     {
         return $this->comment;
     }
+
 }

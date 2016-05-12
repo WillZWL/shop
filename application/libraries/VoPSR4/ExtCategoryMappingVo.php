@@ -1,4 +1,5 @@
 <?php
+
 class ExtCategoryMappingVo extends \BaseVo
 {
     private $id;
@@ -8,6 +9,8 @@ class ExtCategoryMappingVo extends \BaseVo
     private $country_id;
     private $status = '1';
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

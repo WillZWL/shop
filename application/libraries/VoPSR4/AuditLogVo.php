@@ -1,10 +1,14 @@
 <?php
+
 class AuditLogVo extends \BaseVo
 {
     private $id;
     private $user_id;
     private $ip_address;
     private $status = '0';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

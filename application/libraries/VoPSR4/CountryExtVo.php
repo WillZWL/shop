@@ -1,10 +1,14 @@
 <?php
+
 class CountryExtVo extends \BaseVo
 {
     private $id;
     private $cid;
     private $lang_id;
     private $name = '';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

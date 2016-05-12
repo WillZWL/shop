@@ -1,4 +1,5 @@
 <?php
+
 class EntityVo extends \BaseVo
 {
     private $id;
@@ -9,6 +10,8 @@ class EntityVo extends \BaseVo
     private $gst_no = '';
     private $registration_address;
 
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

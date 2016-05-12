@@ -1,10 +1,14 @@
 <?php
+
 class BrandVo extends \BaseVo
 {
     private $id;
     private $brand_name;
     private $description = '';
     private $status = '1';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {

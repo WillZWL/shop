@@ -1,4 +1,5 @@
 <?php
+
 class CategoryContentVo extends \BaseVo
 {
     private $id;
@@ -9,6 +10,9 @@ class CategoryContentVo extends \BaseVo
     private $text;
     private $latest_news;
     private $status = '1';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {
