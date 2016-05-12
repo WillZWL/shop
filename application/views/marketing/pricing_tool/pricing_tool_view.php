@@ -211,9 +211,18 @@ $ar_l_status = array("L" => $lang["listed"], "N" => $lang["not_listed"]);
                                     }
                                     ?></select></td>
                             <td width="20%" class="field"><?= $lang["webqty"] ?></td>
-                            <td width="30%" class="value"><input type="text" name="webqty"
+                            <td width="30%" class="value">
+                                    <input type="text" name="webqty"
                                                                  value="<?= $prod_obj->get_website_quantity() ?>"
-                                                                 notEmpty isNatural></td>
+                                                                 notEmpty isNatural>
+                                    <?=$lang['auto_restock']?>&nbsp;&nbsp;
+                                    <select name="auto_restock">
+                                        <option></option>
+                                        <option value='0' <?=($prod_obj->getAutoRestock() == 0?"SELECTED":"")?>>OFF</option>
+                                        <option value='1' <?=($prod_obj->getAutoRestock() == 1?"SELECTED":"")?>>ON</option>
+                                    </select>
+
+                            </td>
                         </tr>
                         <tr>
                             <td width="20%" class="field"><?= $lang["current_supplier"] ?></td>
