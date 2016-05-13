@@ -234,7 +234,7 @@ class BatchTrackingInfoService extends BaseBatchService
 
 							$needUpdate = 0;
 
-							if ($soObj->getDispatchDate() == NULL)
+							if ($soObj->getDispatchDate() == '0000-00-00 00:00:00')
 							{
 								$soObj->setDispatchDate(date("Y-m-d H:i:s"));
 								$needUpdate = 1;
