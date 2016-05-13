@@ -19,13 +19,6 @@
                 <div class="product-info">
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 image-container">
-                            <!--<div class="image">
-                                <span class="product-label exist"><span class="product-label-special"><?= _('Sale') ?></span></span>
-                                <a href="<?= get_image_file($image, 'l', $sku)?>" class="imagezoom">
-                                    <img src="<?= get_image_file($image, 'l', $sku)?>" title="<?= $prod_name ?>" alt="<?= $prod_name ?>" id="image" data-zoom-image="<?= get_image_file($image, 'l', $sku)?>" class="product-image-zoom img-responsive">
-                                </a>
-                            </div>-->
-
                             <?php if (count($prod_image) !== 0): ?>
                                 <div class="image">
                                     <span class="product-label exist"><span class="product-label-special"><?= _('Sale') ?></span></span>
@@ -44,7 +37,6 @@
                                             </div>
                                         <?php endforeach ?>
                                         </div>
-                                        <!-- Controls -->
                                         <!-- <div class="carousel-controls"> -->
                                         <a class="carousel-control left carousel-sm" href="#image-additional" data-slide="next">
                                             <i class="fa fa-angle-left"></i>
@@ -169,8 +161,6 @@
                             <li><a href="#tab-specification" data-toggle="tab"><?= _('Specification') ?></a></li>
                             <li class="active"><a href="#tab-overview" data-toggle="tab"><?= _('Overview') ?></a></li>
                             <li><a href="#tab-in_the_box" data-toggle="tab"><?= _('In the box') ?></a></li>
-                            <!--<li><a href="#tab-accesories" data-toggle="tab"><?= _('Recommended Accessories') ?></a></li>-->
-                            <!-- <li><a href="#tab-review" data-toggle="tab"><?= sprintf(_('Reviews %s'), "(0)") ?></a></li> -->
                         </ul>
                         <div class="tab-content text-left">
                             <div class="tab-pane active" id="tab-overview">

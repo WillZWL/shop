@@ -24,8 +24,6 @@ class WebsiteProductInfoDto
     private $instruction;
     private $expected_delivery_date;
     private $delivery_scenarioid;
-    private $website_status_long_text;
-    private $website_status_short_text;
     private $contents_original;
     private $keywords_original;
     private $detail_desc_original;
@@ -234,26 +232,6 @@ class WebsiteProductInfoDto
     public function setBrandName($value)
     {
         $this->brand_name = $value;
-    }
-
-    public function getWebsiteStatusShortText()
-    {
-        return $this->website_status_short_text;
-    }
-
-    public function setWebsiteStatusShortText($value)
-    {
-        $this->website_status_short_text = $value;
-    }
-
-    public function getWebsiteStatusLongText()
-    {
-        return $this->website_status_long_text;
-    }
-
-    public function setWebsiteStatusLongText($value)
-    {
-        $this->website_status_long_text = $value;
     }
 
     public function getExpectedDeliveryDate()

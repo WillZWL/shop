@@ -1016,9 +1016,6 @@ class Common_data_prepare_model extends CI_Model
             $data['prod_image'] = $prod_image;
             $data['default_image'] = $prod_image["0"]["image"];
             $data["osd_lang_list"] = $this->product_model->product_service->get_lang_osd_list();
-            $data["website_status_long_text"] = trim($prod_info->get_website_status_long_text());
-            $data["website_status_short_text"] = trim($prod_info->get_website_status_short_text());
-
             //#2272 add the warranty.
             $data["warranty_in_month"] = $listing_info->get_warranty_in_month();
 
@@ -1036,22 +1033,7 @@ class Common_data_prepare_model extends CI_Model
                 $data['specification'] = $prod_info->get_specification();
             }
 
-            if (empty($data["website_status_short_text"])) {
-                //create default message
-                if (file_exists($language_path)) {
-                    if ($data["listing_status"]) {
-                        if ($del_obj = $this->delivery_service->get(array("delivery_type_id" => $this->context_config_service->value_of("default_delivery_type"), "country_id" => PLATFORMCOUNTRYID))) {
-                            $data["working_day"] = implode('-', array($del_obj->get_min_day(), $del_obj->get_max_day()));
-                            $data['delivery_min_day'] = $del_obj->get_min_day();
-                            $data['delivery_max_day'] = $del_obj->get_max_day();
-                        } else {
-                            $data["working_day"] = implode('-', array($this->context_config_service->value_of("default_delivery_min_day"), $this->context_config_service->value_of("default_delivery_max_day")));
-                            $data['delivery_min_day'] = $this->context_config_service->value_of("default_delivery_min_day");
-                            $data['delivery_max_day'] = $this->context_config_service->value_of("default_delivery_max_day");
-                        }
-                    }
-                }
-            }
+
 
             $cat_url = $this->website_model->get_cat_url($prod_info->get_cat_id());
             $sub_cat_url = $this->website_model->get_cat_url($prod_info->get_sub_cat_id());
