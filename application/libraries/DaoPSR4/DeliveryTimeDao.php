@@ -50,7 +50,6 @@ class DeliveryTimeDao extends BaseDao
     public function getDeliverytimeObj($ctry_id, $scenarioid)
     {
         $dto = "DeliveryTimeListDto";
-
         $this->db->select("
                             dt.id, dt.scenarioid, dt.country_id, dt.ship_min_day, dt.ship_max_day, dt.del_min_day, dt.del_max_day, dt.margin, dt.status AS dt_status,
                             dt.create_on, dt.create_at, dt.create_by, dt.modify_on, dt.modify_at, dt.modify_by,
@@ -63,7 +62,6 @@ class DeliveryTimeDao extends BaseDao
         $this->db->where("dt.scenarioid", $scenarioid);
         $this->db->order_by("lookds.id ASC");
         $this->db->limit(1);
-
         if ($query = $this->db->get()) {
             foreach ($query->result($dto) as $obj) {
                 return (object)$obj;
@@ -96,21 +94,18 @@ class DeliveryTimeDao extends BaseDao
         $ts = date("Y-m-d H:i:s");
         $ip = $_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : "127.0.0.1";
         $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
-
         $this->db->trans_start();
         $where["platform_id"] = $platform_id;
         $where["sku IN ($sku_list)"] = null;
         $this->db->where($where);
         $this->db->update('price', array("delivery_scenarioid" => $scenarioid, "modify_on" => $ts, "modify_at" => $ip, "modify_by" => $id));
         $this->db->trans_complete();
-
         if ($this->db->trans_status() !== FALSE) {
             $affected = $this->db->affected_rows();
             return $affected;
         } else {
             return FALSE;
         }
-
         return FALSE;
     }
 
