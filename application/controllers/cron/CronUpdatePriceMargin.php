@@ -6,7 +6,8 @@ class CronUpdatePriceMargin extends MY_Controller
 
     public function updateMargin($platform_id = '', $sku = '')
     {
-        set_time_limit(900);
+        set_time_limit(1200);
+        ini_set('memory_limit', '1024M');
         if ($platform_id === '') {
             $this->sc['PriceMargin']->getDao('PriceMargin')->db->save_queries = false;
             $platform_list = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList();
