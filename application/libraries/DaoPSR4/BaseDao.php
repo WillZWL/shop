@@ -159,17 +159,17 @@ abstract class BaseDao
             foreach ($class_methods as $fct_name) {
                 $rskey = camelcase2underscore(substr($fct_name, 3));
 
-                if ($fct_name === 'setCreateOn' || $fct_name === 'setModifyOn') {
+                if ($fct_name === 'getCreateOn' || $fct_name === 'getModifyOn') {
                     $this->db->set($rskey, $ts);
                     continue;
                 }
 
-                if ($fct_name === 'setCreateAt' || $fct_name === 'setModifyAt') {
+                if ($fct_name === 'getCreateAt' || $fct_name === 'getModifyAt') {
                     $this->db->set($rskey, $ip);
                     continue;
                 }
 
-                if ($fct_name === 'setCreateBy' || $fct_name === 'setModifyBy') {
+                if ($fct_name === 'getCreateBy' || $fct_name === 'getModifyBy') {
                     $this->db->set($rskey, $id);
                     continue;
                 }
@@ -245,16 +245,16 @@ abstract class BaseDao
         $primary_key = $obj->getPrimaryKey();
         foreach ($class_methods as $fct_name) {
 
-            if (in_array($fct_name, array('setCreateOn', 'setCreateAt', 'setCreateBy', 'setModifyOn'))) {
+            if (in_array($fct_name, array('getCreateOn', 'getCreateAt', 'getCreateBy', 'getModifyOn'))) {
                 continue;
             }
 
-            if ($fct_name === 'setModifyAt') {
+            if ($fct_name === 'getModifyAt') {
                 $this->db->set('modify_at', $ip);
                 continue;
             }
 
-            if ($fct_name === 'setModifyBy') {
+            if ($fct_name === 'getModifyBy') {
                 $this->db->set('modify_by', $id);
                 continue;
             }
