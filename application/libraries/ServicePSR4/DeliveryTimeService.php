@@ -42,22 +42,18 @@ class DeliveryTimeService extends BaseService
     {
         $error_msg = "";
         if ($update_list && $platform_id) {
-            // $update_list must be in format of 'sku1','sku2','sku3',...
             foreach ($update_list as $scenarioid => $sku_list) {
                 $sku_list = trim($sku_list, ',');
                 $result = $this->getDao('DeliveryTime')->bulkUpdateDeliveryScenarioByPlatform($platform_id, $scenarioid, $sku_list);
-
                 if ($result === false) {
                     $error_msg .= __FILE__ . " LINE: " . __LINE__ . " DB error: " . $this->db->_error_message() . "\n Unable to update platform_id<$platform_id>, scenarioid<$scenarioid> for SKU LIST: \n$sku_list <hr></hr>\n";
                 }
             }
-
         }
-
         if ($error_msg == "") {
             return TRUE;
         } else {
-            $this->send_notification_email("update_fail", $error_msg);
+            $this->sendNotificationEmail("update_fail", $error_msg);
             $this->error_msg = $error_msg;
             return FALSE;
         }
@@ -115,7 +111,6 @@ class DeliveryTimeService extends BaseService
         $phpmail->Subject = "$title";
         $phpmail->IsHTML(false);
         $phpmail->Body = $message;
-
         if (strpos($_SERVER['HTTP_HOST'], 'dev') === FALSE) {
             $result = $phpmail->Send();
         }
