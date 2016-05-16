@@ -11,7 +11,6 @@
 <?php
     }
 ?>
-
 <div class="main-columns container">
     <div class="row">
         <div id="product-detail" class="col-md-12">
@@ -124,7 +123,13 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div> <?= _('4-7 working days delivery') ?> </div>
+                                <?php if ($listing_status == 'I'): ?>
+                                <div>
+                                    <a title="<?= _('Ships in') ?> <?=$delivery_day['ship_min_day']?> - <?=$delivery_day['ship_max_day']?> <?= _('working days') ?> <?= _('and') ?> <?= _('delivered in') ?> <?=$delivery_day['del_min_day']?> - <?=$delivery_day['del_max_day']?> <?= _('working days') ?>" name="website_status_short_desc" id="website_status_short_desc">
+                                    <?= _('Ships in') ?> <?=$delivery_day['ship_min_day']?> - <?=$delivery_day['ship_max_day']?> <?= _('working days') ?>
+                                    </a>
+                                </div>
+                                <?php endif ?>
                                 <div class="tags">
                                 </div>
                             </div>
@@ -153,14 +158,14 @@
                             </div>
                         </div>
                     <?php endif; ?>
-
-                        <!-- End div bg -->
                     </div>
                     <div class="clearfix box-product-infomation tab-v4 none-border text-center">
                         <ul class="nav nav-tabs" role="tablist">
                             <li><a href="#tab-specification" data-toggle="tab"><?= _('Specification') ?></a></li>
                             <li class="active"><a href="#tab-overview" data-toggle="tab"><?= _('Overview') ?></a></li>
+                            <?php if ($in_the_box): ?>
                             <li><a href="#tab-in_the_box" data-toggle="tab"><?= _('In the box') ?></a></li>
+                            <?php endif ?>
                         </ul>
                         <div class="tab-content text-left">
                             <div class="tab-pane active" id="tab-overview">
@@ -173,11 +178,13 @@
                                     <?= $specification ?>
                                 </p>
                             </div>
-                            <div class="tab-pane" id="tab-in_the_box">
-                                <p class="intro">
-                                    <?= $in_the_box ?>
-                                </p>
-                            </div>
+                            <?php if ($in_the_box): ?>
+                                <div class="tab-pane" id="tab-in_the_box">
+                                    <p class="intro">
+                                        <?= $in_the_box ?>
+                                    </p>
+                                </div>
+                            <?php endif ?>
                         </div>
                     </div>
                 </div>
@@ -192,6 +199,8 @@
         interval: false
     })
 </script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         var $carousel = $("#image-additional-carousel");
@@ -218,6 +227,7 @@
                 return false;
             }
         );
+        $("#website_status_short_desc").tooltip();
     });
 </script>
 <script type="text/javascript" src="http://www.themelexus.com/demo/opencart/motozz/demo3/catalog/view/javascript/jquery/elevatezoom/elevatezoom-min.js"></script>

@@ -17,9 +17,14 @@ class MainProduct extends PUB_Controller
         $data = array();
         if ($sku) {
             $data = $this->getProdInfo($sku);
-            $siteobj = \PUB_Controller::$siteInfo;
-            $data["countryid"] = $siteobj->getPlatformCountryId();
-            $this->load->view('product', $data);
+            if ($data) {
+                $data['sku'] = $sku;
+                $siteobj = \PUB_Controller::$siteInfo;
+                $data["countryid"] = $siteobj->getPlatformCountryId();
+                $this->load->view('product', $data);
+            } else {
+                show_404();
+            }
         } else {
             show_404();
         }
@@ -29,33 +34,40 @@ class MainProduct extends PUB_Controller
     {
         $lang_id = $this->get_lang_id();
         if ($this->sc['Price']->get(['sku' => $sku, 'listing_status' => 'L', 'platform_id' => PLATFORM])) {
-            $listing_info = $this->sc['Price']->getListingInfo($sku, PLATFORM, $lang_id);
+            $listing_info = $this->sc['Price']->getDao('Price')->getListingInfo($sku, PLATFORM, $lang_id);
             if ($listing_info) {
                 $data['listing_info'] = $listing_info;
-                $where = array("p.sku" => $sku, "p.status" => 2, "pbv.selling_platform_id" => PLATFORM, "pc.lang_id" => $lang_id);
-                $prod_info = $this->sc['Product']->getDao('Product')->getWebsiteProductInfo($where);
+                $prod_info = $this->sc['Product']->getDao('Product')->getWebsiteProductInfo(array("p.sku" => $sku, "p.status" => 2, "pbv.selling_platform_id" => PLATFORM, "pc.lang_id" => $lang_id));
                 if (!$prod_info) {
-                    $where = array("p.sku" => $sku, "p.status" => 2, "pbv.selling_platform_id" => PLATFORM);
-                    $prod_info = $this->sc['Product']->getDao('Product')->getWebsiteProductInfo($where);
+                    $prod_info = $this->sc['Product']->getDao('Product')->getWebsiteProductInfo(array("p.sku" => $sku, "p.status" => 2, "pbv.selling_platform_id" => PLATFORM));
                 }
-                $data['prod_name'] = $listing_info->getProdName();
-                $data['prod_price'] = $listing_info->getPrice();
-                $data['prod_rrp_price'] = $listing_info->getRrrPrice();
-                $data['listing_status'] = $listing_info->getStatus();
-                $data["overview"] = nl2br(trim($prod_info->getDetailDesc()));
-                if ($prod_info->getSpecification() != "") {
-                    $data['specification'] = $prod_info->getSpecification();
+                if ($prod_info) {
+                    $data['prod_name'] = $listing_info->getProdName();
+                    $data['prod_price'] = $listing_info->getPrice();
+                    $data['prod_rrp_price'] = $listing_info->getRrpPrice();
+                    $data['listing_status'] = $listing_info->getStatus();
+                    $data["overview"] = nl2br(trim($prod_info->getDetailDesc()));
+                    if ($prod_info->getSpecification() != "") {
+                        $data['specification'] = $prod_info->getSpecification();
+                    }
+                    $data['prod_image'] = $this->getProdImage($sku);
+                    $data['default_image'] = $data['prod_image']["0"]["image"];
+                    if ($prod_info->getContents() != '') {
+                        $str = explode("\n",$prod_info->getContents());
+                        foreach ($str as $k => $v) {
+                            if (empty($v)) {
+                                unset($str[$k]);
+                            }
+                        }
+                        $data['in_the_box'] = "<ul><li>".implode("</li><li>", $str)."</li></ul>";
+                    }
+                    $data['delivery_day'] = $this->getDeliveryDayData($listing_info->getDeliveryScenarioid());
+                    $data['microdata'] = $this->getMicroData($prod_info, $listing_info);
+                    return $data;
                 }
-                $data['prod_image'] = $this->getProdImage($sku);
-                $data['prod_info'] = $prod_info;
-                $data['microdata'] = $this->getMicroData($prod_info, $listing_info);
-                return $data;
-            } else {
-                show_404();
             }
-        } else {
-            show_404();
         }
+        return false;
     }
 
     public function getProdImage($sku)
@@ -82,13 +94,24 @@ class MainProduct extends PUB_Controller
         } else {
             $data['itemCondition'] = 'http://schema.org/NewCondition';
         }
-
         if ($listing_info->getQty() > 0) {
             $data['availability'] = "http://schema.org/InStock";
         } else {
             $data['availability'] = "http://schema.org/OutOfStock";
         }
-
         return $data;
+    }
+
+    public function getDeliveryDayData($scenarioid)
+    {
+        $siteobj = \PUB_Controller::$siteInfo;
+        $delivery_obj = $this->sc['DeliveryTime']->getDeliverytimeObj($siteobj->getPlatformCountryId(), $scenarioid);
+        if ($delivery_obj) {
+            $data['ship_min_day'] = $delivery_obj->getShipMinDay();
+            $data['ship_max_day'] = $delivery_obj->getShipMaxDay();
+            $data['del_min_day'] = $delivery_obj->getDelMinDay();
+            $data['del_max_day'] = $delivery_obj->getDelMaxDay();
+            return $data;
+        }
     }
 }
