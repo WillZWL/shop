@@ -11,6 +11,7 @@ class CronProductDelivery extends MY_Controller
 
     public function updateProductDeliveryScenario($platform_id, $platform_type = "WEBSITE", $debug = false)
     {
+        set_time_limit(1200);
         DEFINE("PLATFORM_TYPE", strtoupper($platform_type));
         $platform_id = strtoupper($platform_id);
         $debug_msg = "";
@@ -22,7 +23,6 @@ class CronProductDelivery extends MY_Controller
                     $this->platform_id = $platform_id;
                     $country_id = $allowsellobj->getCountryId();
                 }
-                set_time_limit(0);
                 $debug_msg = "<hr></hr><br>START PLATFORM $platform_id";
                 if ($highmargin_dt_obj = $this->sc['DeliveryTime']->getDeliverytimeObj($country_id, 5)) {
                     if (($dt_highmargin = $highmargin_dt_obj->getMargin()) == "") {
