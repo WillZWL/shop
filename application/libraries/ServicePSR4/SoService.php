@@ -4077,11 +4077,6 @@ html;
         return $this->getDao('So')->getAftershipData($where, $option);
     }
 
-    public function getAftershipReportForFtp($where = [], $option = [])
-    {
-        return $this->getDao('So')->getAftershipReportForFtp($where, $option);
-    }
-
     public function getWowEmailListData($where = [], $option = [])
     {
         return $this->getDao('So')->getWowEmailListData($where, $option);
