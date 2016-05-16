@@ -24,7 +24,7 @@
 			"saturday" => "Sat",
 			"sunday" => "Sun",
 			"status" => "Status",
-			"enable" => "Enabel",
+			"enable" => "Enable",
 			"disable" => "Disable",
 			"back_list" => "Back to Princing Rule List",
 			"create_on" => "Create On",

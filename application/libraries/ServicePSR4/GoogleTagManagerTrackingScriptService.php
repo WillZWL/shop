@@ -422,7 +422,8 @@ class GoogleTagManagerTrackingScriptService extends AtomTrackingScriptService
                 'PL' => "GTM-TXWWKC",
                 'FR' => "GTM-MQ9RSX",
                 'GB' => "GTM-MHPP6T",
-                'IT' => "GTM-T33Z3B",             
+                'IT' => "GTM-T33Z3B",
+                'NL' => "GTM-M7RGBN",            
             );
         $countryId=strtoupper($this->getCountryId());
 
