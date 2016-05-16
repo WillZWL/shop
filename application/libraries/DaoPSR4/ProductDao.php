@@ -1163,4 +1163,17 @@ class ProductDao extends BaseDao
         return $this->commonGetList($className, $where, $option, 'p.sku');
     }
 
+    public function getWebsiteProductInfo($where = [], $option = [], $className = 'WebsiteProductInfoDto')
+    {
+        $option['limit'] = 1;
+        $this->db->from("product AS p, platform_biz_var pbv");
+        $this->db->join("product_content AS pc", "pc.prod_sku = p.sku", "LEFT");
+        $this->db->join("product_content_extend AS pcex", "pcex.lang_id = pc.lang_id AND pcex.prod_sku = p.sku", "LEFT");
+        $this->db->join("category AS cat", "cat.id = p.cat_id", "INNER");
+        $this->db->join("category AS sc", "sc.id = p.sub_cat_id", "INNER");
+        $this->db->join("category AS ssc", "ssc.id = p.sub_sub_cat_id", "LEFT");
+        $this->db->join("brand AS b", "b.id = p.brand_id", "INNER");
+        return $this->commonGetList($className, $where, $option, 'p.expected_delivery_date, p.image, p.sku, cat.id cat_id, cat.name cat_name, sc.id sub_cat_id, sc.name sub_cat_name, ssc.id sub_sub_cat_id, ssc.name sub_sub_cat_name, b.id brand_id, b.brand_name, pc.lang_id, IFNULL(pc.prod_name,p.name) prod_name, p.youtube_id, pc.short_desc, pc.detail_desc, pc.extra_info, pc.contents, pcex.feature, pcex.specification, pcex.requirement, pcex.instruction, pcex.apply_enhanced_listing, pcex.enhanced_listing, pc.contents_original, pc.keywords_original, pc.detail_desc_original, pcex.feature_original, pcex.spec_original, p.lang_restricted');
+    }
+
 }

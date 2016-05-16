@@ -16,7 +16,7 @@ class PUB_Controller extends CI_Controller
     protected $container;
     private static $serviceContainer;
     public static $siteInfo = null;
-    
+
 //    private $allow_referer_host = '/^http[s]?:\/\/shop\.skype\.com/';
 //    private $require_login = 0;
 //    private $load_header = 1;
@@ -38,29 +38,9 @@ class PUB_Controller extends CI_Controller
             $this->sc["Base"];
         }
         $this->loadModelDependcy();
-
-/*
-
-        if (is_array($params) && count($params) > 0) {
-            $this->initialize($params);
-
-        } elseif ($params) {
-            $this->require_login = $params;
-        }
-
-        $_SESSION["CURRPAGE"] = $_SERVER['REQUEST_URI'];
-        $ref = isset($_SERVER['HTTP_REFERER']) ? $_SESSION['HTTP_REFERER'] : '';
-
-        if ($this->is_allow_referer($ref)) {
-            $_SESSION['GOBACK_URL'] = $ref;
-        }
-        if ($this->require_login) {
-            $this->check_login();
-        }
-*/
         $this->loadSiteParameterService = new LoadSiteParameterService();
         $this->loadSiteInfo();
-        
+
     }
 
     public function loadModelDependcy()
@@ -95,93 +75,6 @@ class PUB_Controller extends CI_Controller
         PUB_Controller::setSiteInfo($stieInfo);
     }
 
-
-   
-
-/*
-    function initialize($params = array())
-    {
-        if (count($params) > 0) {
-            foreach ($params as $key => $val) {
-                if (isset($this->$key)) {
-                    $this->$key = $val;
-                }
-            }
-        }
-    }
-
-    private function _get_platform()
-    {
-        $platform_id = $this->_get_platform_by_ip();
-        include_once(APPPATH . "libraries/service/Platform_biz_var_service.php");
-        $pbv_srv = new Platform_biz_var_service();
-        $pbv_obj = $pbv_srv->get(array("selling_platform_id" => $platform_id));
-        include_once(APPPATH . "libraries/service/Currency_service.php");
-        $currency_srv = new Currency_service();
-        DEFINE('PLATFORMID', $platform_id);
-        DEFINE('PLATFORMCURR', @call_user_func(array($pbv_obj, "get_platform_currency_id")));
-        DEFINE('PLATFORMCOUNTRYID', @call_user_func(array($pbv_obj, "get_platform_country_id")));
-        $currency_obj = $currency_srv->get(array("id" => PLATFORMCURR));
-        DEFINE('PLATFORMCURRSIGN', @call_user_func(array($currency_obj, "get_sign")));
-
-        $this->check_cart();
-        if ($this->get_currency_list) {
-            $currsign = $currency_srv->get_sign_w_id_key();
-            // $this->add_preload_data(array("currsign"=>$currsign));
-        }
-
-        DEFINE('SITE_URL', $_SERVER['HTTP_HOST']);
-        DEFINE('SITE_NAME', str_replace("dev.valuebasket", "ValueBasket", str_replace("www.valuebasket", "ValueBasket", $_SERVER['HTTP_HOST'])));
-    }
-
-    private function _get_platform_by_ip()
-    {
-        return $_SESSION["domain_platform"]["platform_id"];
-    }
-
-    private function check_cart()
-    {
-        $str = "";
-        $str_header = "<script src='/js/common.js' type='text/javascript'></script>";
-        include_once(APPPATH . "helpers/string_helper.php");
-        $domain = check_domain();
-
-        if (isset($_COOKIE["chk_cart"]) && $_COOKIE["chk_cart"]) {
-            $cart_list = unserialize(base64_decode($_COOKIE["chk_cart"]));
-            include_once(APPPATH . "libraries/service/Cart_session_service.php");
-            $cart_srv = new Cart_session_service();
-            if (!is_array($cart_list)) {
-                $cart_list = array();
-            }
-            $rs = $cart_srv->check_cart($cart_list, PLATFORMID, $this->get_lang_id(), isset($_COOKIE["renew_cart"]) && $_COOKIE["renew_cart"]);
-
-            if (isset($rs["cart"])) {
-                $_SESSION["cart"][PLATFORMID] = $rs["cart"];
-                if ((isset($_COOKIE["renew_cart"]) && $_COOKIE["renew_cart"])) {
-                    setcookie("renew_cart", "", time() - 86400, "/", "." . $domain);
-                }
-                setcookie("chk_cart", "", time() - 86400, "/", "." . $domain);
-            } else {
-                if (isset($_COOKIE["back_url"]) && $_COOKIE["back_url"]) {
-                    $back_url = urldecode($_COOKIE["back_url"]);
-                    $prod_name_str = str_replace("'", "\'", implode(", ", $rs["remove"]));
-                    $con_str = "{$prod_name_str} is not available for sale in " . PLATFORMCOUNTRYID . " and will be removed from your cart. \\n Do you wish to continue?";
-                    $str .= "if (confirm('{$con_str}')){setcookie('renew_cart', '1', 0, '/', '.{$domain}');{$retain_str};document.location.href='" . base_url() . "redirect?url=' + encodeURI(document.location.href);}else{setcookie('chk_cart', '', -1, '/', '.{$domain}'); document.location.href='{$back_url}';}";
-                }
-            }
-        }
-
-        // if (empty($str) && $retain_str) {
-        //  $str = $retain_str;
-        // }
-
-        if ($str) {
-            echo $str_header;
-            echo "<script>" . $str . "</script>";
-            exit;
-        }
-    }
-*/
     public static function setSiteInfo($siteInfo)
     {
         PUB_Controller::$siteInfo = $siteInfo;
@@ -224,21 +117,6 @@ class PUB_Controller extends CI_Controller
             show_404("page");
         }
     }
-
-    // public function load_template($view, $vars = array(), $template = 'tbs', $return = FALSE)
-    // {
-    //  if ($template == 'tbs') {
-    //      init_tbs();
-    //  }
-
-    //  $data = $this->get_preload_data();
-
-    //  if ($vars && is_array($vars)) {
-    //      $data['data'] = $vars;
-    //  }
-    //  $this->load->view($view, $data, $return);
-    // }
-
 
     public function getLanguageFile($directory = "", $i_class = "", $method = "")
     {
