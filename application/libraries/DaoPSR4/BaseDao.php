@@ -338,11 +338,16 @@ abstract class BaseDao
             if (substr($fct_name, 0, 3) == "get") {
                 $rsvalue = call_user_func(array($obj, $fct_name));
                 $rskey = camelcase2underscore(substr($fct_name, 3));
-                if (!in_array($rskey, ['primary_key', 'increment_field'])) {
-                    $this->db->where($rskey, $rsvalue);
+                if (in_array($rskey, ['primary_key'])) {
+                    foreach ($rsvalue as $name) {
+                        $new_name = underscore2camelcase('get_'. $name);
+                        $new_value = call_user_func(array($obj, $new_name));
+                        $this->db->where(camelcase2underscore($name), $new_value);
+                    }
                 }
             }
         }
+
         if ($this->db->delete($this->getTableName())) {
             return $this->db->affected_rows();
         } else {
