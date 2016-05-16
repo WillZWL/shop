@@ -149,13 +149,13 @@ class SellingPlatformDao extends BaseDao
         return $this->commonGetList($classname, $where, $option, "sp.*, pbv.language_id lang_id");
     }
 
-    public function getPlatformListWithAllowSellCountry($type = "")
+    public function getPlatformListWithAllowSellCountry($type = "", $classname = 'SellingPlatformDto')
     {
         $where = ['sp.type' => $type, 'sp.status' => 1, 'c.allow_sell' => 1, 'c.status' => 1];
         $option = ['limit' => '-1'];
         $this->db->from('selling_platform AS sp');
         $this->db->join('platform_biz_var AS pbv', "pbv.selling_platform_id = sp.selling_platform_id", "INNER");
         $this->db->join('country AS c', "c.country_id = pbv.platform_country_id", "INNER");
-        return $this->commonGetList('SellingPlatformVo', $where, $option, "sp.*");
+        return $this->commonGetList($classname, $where, $option, "sp.*, c.country_id");
     }
 }

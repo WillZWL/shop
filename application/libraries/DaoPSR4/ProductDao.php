@@ -146,153 +146,6 @@ class ProductDao extends BaseDao
         }
 
         return $this->commonGetList($className, $where, $option, $select_str);
-
-
-        // $this->db->from('v_prod_overview_wo_shiptype');
-        // $select_str = "v_prod_overview_wo_shiptype.*";
-
-        // if ($option["master_sku"]) {
-        //     $this->db->join('sku_mapping AS map', "v_prod_overview_wo_shiptype.sku = map.sku AND map.ext_sys = 'wms' AND map.status = 1", "LEFT");
-        //     $select_str .= ", map.ext_sku master_sku";
-        // }
-
-        // if ($option["delivery_time"]) {
-        //     $this->db->join('price AS pr', "v_prod_overview_wo_shiptype.sku = pr.sku AND pr.platform_id = v_prod_overview_wo_shiptype.platform_id", "LEFT");
-        //     $this->db->join('delivery_time AS dt', "v_prod_overview_wo_shiptype.platform_country_id = dt.country_id AND pr.delivery_scenarioid = dt.scenarioid", "LEFT");
-        //     $select_str .= ", pr.delivery_scenarioid, CONCAT_WS(' - ', dt.ship_min_day, dt.ship_max_day) AS ship_day, CONCAT_WS(' - ', dt.del_min_day, dt.del_max_day) AS delivery_day ";
-        // } elseif (isset($where["pr.listing_status"])) {
-        //     $this->db->join('price AS pr', "v_prod_overview_wo_shiptype.sku = pr.sku AND pr.platform_id = v_prod_overview_wo_shiptype.platform_id", "LEFT");
-        // }
-
-        // if ($option["desc_lang"]) {
-        //     $this->db->join('product_content AS pc', "v_prod_overview_wo_shiptype.sku = pc.prod_sku AND pc.lang_id = '{$option["desc_lang"]}'", 'LEFT');
-        //     $select_str .= ", pc.prod_name AS content_prod_name, pc.detail_desc";
-        // }
-
-        // if ($option["inventory"]) {
-        //     $this->db->join('product p', 'p.sku = v_prod_overview_wo_shiptype.sku', 'INNER');
-        //     $this->db->join('v_prod_inventory AS vpi', "v_prod_overview_wo_shiptype.sku = vpi.prod_sku", 'LEFT');
-        //     $select_str .= ", vpi.inventory, p.surplus_quantity";
-        // }
-
-        // if ($option["product_feed"]) {
-        //     $this->db->join('(SELECT sku, GROUP_CONCAT(CONCAT_WS("::", feeder, IF(ISNULL(value_1), "", value_1), IF(ISNULL(value_2), "", value_2), IF(ISNULL(value_3), "", value_3), CAST(status AS CHAR)) SEPARATOR "||") AS feeds
-        //                     FROM product_feed
-        //                     GROUP BY sku) AS pf', "v_prod_overview_wo_shiptype.sku = pf.sku", 'LEFT');
-        //     $select_str .= ", pf.feeds";
-        // }
-
-        // if ($option["refresh_margin"]) {
-        //     $this->db->join('price_margin pm', 'pm.sku = v_prod_overview_wo_shiptype.sku  AND v_prod_overview_wo_shiptype.platform_id = pm.platform_id', 'INNER');
-        //     $select_str .= ", pm.profit, pm.margin";
-        // }
-
-        // if ($option["frontend"]) {
-        //     $this->db->join('product p', 'p.sku = v_prod_overview_wo_shiptype.sku', 'INNER');
-        //     $this->db->join('product_content pc', "pc.prod_sku = p.sku AND pc.lang_id='" . ($option["language"] ? $option["language"] : "en") . "'", 'LEFT');
-        //     $select_str .= ", p.image,p.display_quantity,p.youtube_id, pc.prod_name AS content_prod_name, pc.extra_info";
-        // }
-
-        // if ($option["price_extend"]) {
-        //     $this->db->join('price_extend prext', 'prext.sku = v_prod_overview_wo_shiptype.sku AND prext.platform_id = v_prod_overview_wo_shiptype.platform_id', 'LEFT');
-        //     $select_str .= ", prext.ext_qty, prext.fulfillment_centre_id, prext.amazon_reprice_name";
-        // }
-
-        // if (isset($where["platform_id"])) {
-        //     $where["v_prod_overview_wo_shiptype.platform_id"] = $where["platform_id"];
-        //     unset($where["platform_id"]);
-        // }
-
-        // if ($option["affiliate_feed"]) {
-        //     $criteria = "asp.sku = map.sku and asp.affiliate_id = '{$option['affiliate_feed']}'";
-        //     if ($option["feed_status"] > 0) $criteria .= " and asp.`status` = {$option['feed_status']}";
-
-        //     $this->db->join("affiliate_sku_platform as asp", $criteria, "inner");
-        // }
-
-        // if ($option["show_name"]) {
-        //     $this->db->join('category AS c', 'v_prod_overview_wo_shiptype.cat_id = c.id', 'LEFT');
-        //     $this->db->join('category AS sc', 'v_prod_overview_wo_shiptype.sub_cat_id = sc.id', 'LEFT');
-        //     $this->db->join('category AS ssc', 'v_prod_overview_wo_shiptype.sub_sub_cat_id = ssc.id', 'LEFT');
-        //     $this->db->join('brand AS b', 'v_prod_overview_wo_shiptype.brand_id = b.id', 'LEFT');
-        //     $select_str .= ", c.name AS category, sc.name AS sub_category, ssc.name AS sub_sub_category, b.brand_name";
-        // } else {
-        //     if (!isset($option["skip_prod_status_checking"])) {
-        //         $this->db->where('v_prod_overview_wo_shiptype.prod_status !=', 0);
-        //     } else {
-        //         unset($option["skip_prod_status_checking"]);
-        //     }
-        // }
-
-        // if ($option["active_supplier"]) {
-        //     $option["supplier_prod"] = 1;
-        // }
-
-        // if ($option["supplier_prod"]) {
-        //     $this->db->join('supplier_prod sp', 'sp.supplier_id = v_prod_overview_wo_shiptype.supplier_id AND sp.prod_sku = v_prod_overview_wo_shiptype.sku', 'LEFT');
-        //     $select_str .= ", sp.supplier_status";
-        // }
-
-        // if ($option["active_supplier"]) {
-        //     $this->db->join('supplier s', 's.id = sp.supplier_id', 'INNER');
-        //     $this->db->where(array("s.status" => 1, "sp.order_default" => 1));
-        // }
-
-        // if ($option["wms_inventory"]) {
-        //     $join_sql = "(
-        //                         SELECT inv.master_sku, group_concat(concat(inv.warehouse_id, ',', cast(inv.inventory as char), ',', cast(inv.git as char)) separator '|') wms_inv FROM
-        //                         (
-        //                             SELECT warehouse_id, master_sku, SUM(inventory) as inventory, SUM(git) as git
-        //                             FROM wms_inventory
-        //                             GROUP BY warehouse_id, master_sku
-        //                         ) inv
-        //                         GROUP BY inv.master_sku
-        //                     ) wms ";
-        //     $this->db->join($join_sql, 'map.ext_sku = wms.master_sku', 'LEFT');
-        //     $select_str .= ", wms.wms_inv";
-        // }
-
-        // $this->db->select($select_str);
-
-        // $this->db->where($where);
-
-        // if (empty($option["num_rows"])) {
-
-        //     if (isset($option["orderby"])) {
-        //         $this->db->order_by($option["orderby"]);
-        //     }
-
-        //     if (empty($option["limit"])) {
-        //         $option["limit"] = $this->rows_limit;
-        //     } elseif ($option["limit"] == -1) {
-        //         $option["limit"] = "";
-        //     }
-
-        //     if (!isset($option["offset"])) {
-        //         $option["offset"] = 0;
-        //     }
-
-        //     if ($this->rows_limit != "") {
-        //         $this->db->limit($option["limit"], $option["offset"]);
-        //     }
-
-        //     $rs = [];
-
-        //     if ($query = $this->db->get()) {
-        //         foreach ($query->result($className) as $obj) {
-        //             $rs[] = $obj;
-        //         }
-        //         return $rs ? ($option["limit"] == 1 ? $rs[0] : (object)$rs) : $rs;
-        //     }
-
-        // } else {
-        //     $this->db->select('COUNT(*) AS total');
-        //     if ($query = $this->db->get()) {
-        //         return $query->row()->total;
-        //     }
-        // }
-
-        // return FALSE;
     }
 
     public function getListedProductList($platform_id = 'WEBGB', $className = 'WebsiteProdInfoDto')
@@ -632,10 +485,6 @@ class ProductDao extends BaseDao
         $this->db->join("price pr", "p.sku = pr.sku", "INNER");
         $this->db->join("platform_biz_var pbv", "pbv.selling_platform_id = pr.platform_id", "INNER");
         $this->db->join("selling_platform sp", "pbv.selling_platform_id = sp.selling_platform_id AND sp.type = 'WEBSITE'", "INNER");
-        //$this->db->join("category_extend cat", "p.cat_id = cat.cat_id and pbv.language_id = cat.lang_id", "LEFT");
-        //$this->db->join("category_extend sc", "p.sub_cat_id = sc.cat_id and pbv.language_id = sc.lang_id", "LEFT");
-        //$this->db->join("brand br", "p.brand_id = br.id", "INNER");
-        //$this->db->join("product_content pc", "p.sku = pc.prod_sku AND pc.lang_id = pbv.language_id", "LEFT");
         $this->db->where(array("p.status" => 2, "pr.listing_status" => "L"));
         $this->db->where($where);
 
@@ -1163,6 +1012,7 @@ class ProductDao extends BaseDao
         return $this->commonGetList($className, $where, $option, 'p.sku');
     }
 
+
     public function getWebsiteProductInfo($where = [], $option = [], $className = 'WebsiteProductInfoDto')
     {
         $option['limit'] = 1;
@@ -1174,6 +1024,31 @@ class ProductDao extends BaseDao
         $this->db->join("category AS ssc", "ssc.id = p.sub_sub_cat_id", "LEFT");
         $this->db->join("brand AS b", "b.id = p.brand_id", "INNER");
         return $this->commonGetList($className, $where, $option, 'p.expected_delivery_date, p.image, p.sku, cat.id cat_id, cat.name cat_name, sc.id sub_cat_id, sc.name sub_cat_name, ssc.id sub_sub_cat_id, ssc.name sub_sub_cat_name, b.id brand_id, b.brand_name, pc.lang_id, IFNULL(pc.prod_name,p.name) prod_name, p.youtube_id, pc.short_desc, pc.detail_desc, pc.extra_info, pc.contents, pcex.feature, pcex.specification, pcex.requirement, pcex.instruction, pcex.apply_enhanced_listing, pcex.enhanced_listing, pc.contents_original, pc.keywords_original, pc.detail_desc_original, pcex.feature_original, pcex.spec_original, p.lang_restricted');
+
+    public function getListedProductSupplierInfo($where = [], $option = [], $classname = 'ProdSupplierInfoDto')
+    {
+        $this->db->from("product AS p");
+        $this->db->join("price pr", "pr.sku = p.sku", "LEFT");
+        $this->db->join("supplier_prod sp", "sp.prod_sku = p.sku", "LEFT");
+        $this->db->join("supplier s", "s.id = sp.supplier_id", "JOIN");
+        $this->db->join("sku_mapping skm", "skm.sku = p.sku and skm.status=1 and skm.ext_sys='WMS'", "LEFT");
+        $this->db->join("(select warehouse_id, master_sku, sum(inventory) as inventory, sum(git) as git from wms_inventory group by master_sku) inv", "inv.master_sku = skm.ext_sku", "LEFT");
+        $where['p.status'] = 2;
+        $where['s.status'] = 1;
+        $where['pr.listing_status'] = 'L';
+        $where['sp.order_default'] = 1;
+        $select_str =  "p.sku,
+                        p.name,
+                        p.surplus_quantity,
+                        p.slow_move_7_days,
+                        pr.platform_id,
+                        pr.price,
+                        sp.supplier_id,
+                        sp.supplier_status,
+                        s.origin_country,
+                        s.name AS supplier_name,
+                        inv.git";
+        return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
 }

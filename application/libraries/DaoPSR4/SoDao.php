@@ -2666,13 +2666,12 @@ SQL;
     public function getOrdersBySkuAndStatus($sku, $so_status = 2, $where = [], $option = [])
     {
         $this->db->from("so");
-        $this->db->join("so_item soi", "soi.so_no = so.so_no", "INNER");
-        $where["soi.prod_sku"] = $sku;
+        $this->db->join("so_item_detail soi", "soi.so_no = so.so_no", "INNER");
+        $where["soi.item_sku"] = $sku;
         $where["so.status"] = $so_status;
         $this->db->where($where);
         $select_str = "so.so_no, so.platform_order_id, so.platform_id, so.txn_id, so.client_id, so.biz_type, so.amount,
-                        so.status as so_status, so.refund_status, so.hold_status, soi.prod_sku, soi.prod_name";
-
+                        so.status as so_status, so.refund_status, so.hold_status, soi.item_sku, soi.prod_name";
         if (isset($option["num_row"])) {
             $this->db->select("COUNT(so.so_no) AS total, COUNT(soi.qty) as total_qty");
             if ($query = $this->db->get()) {
@@ -2693,7 +2692,6 @@ SQL;
                 return $rs;
             }
         }
-
         return FALSE;
     }
 
