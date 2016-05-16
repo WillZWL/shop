@@ -28,8 +28,6 @@ class ProductImageDao extends BaseDao
                 from product_image pi
                 where pi.image_saved = 0 and pi.vb_image != ''
                   ";
-
-
         if ($query = $this->db->query($sql)) {
             foreach ($query->result() as $row) {
                 $res[] = $row;

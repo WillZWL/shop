@@ -24,7 +24,7 @@
 			"friday" => "Fri",
 			"saturday" => "Sat",
 			"status" => "Status",
-			"enable" => "Enabel",
+			"enable" => "Enable",
 			"disable" => "Disable",
 			"sunday" => "Sun",
 			"back_list" => "Back to Pricing Rules List",
