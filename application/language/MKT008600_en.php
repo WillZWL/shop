@@ -23,7 +23,7 @@
 			"saturday" => "Sat",
 			"sunday" => "Sun",
 			"status" => "Status",
-			"enable" => "Enabel",
+			"enable" => "Enable",
 			"disable" => "Disable",
 			"create_on" => "Create On",
 			"create_at" => "Create At",
