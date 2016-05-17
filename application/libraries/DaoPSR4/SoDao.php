@@ -2928,10 +2928,9 @@ SQL;
         $this->db->join("so_allocate soa", "soa.so_no = so.so_no AND line_no = 1", "LEFT");
         $this->db->join("client c", "c.id = so.client_id", "INNER");
         $this->db->join("so_shipment sosh", "soa.sh_no = sosh.sh_no", "LEFT");
-        $this->db->join("country cy", "cy.id = so.bill_country_id", "INNER");
+        $this->db->join("country cy", "cy.country_id = so.bill_country_id", "INNER");
         $this->db->group_by("so.so_no");
-
-        return $this->commonGetList($classname, $where, $option, 'sosh.tracking_no trackingno, if(sosh.courier_id="toll-global-expr","toll-global-express" , sosh.courier_id) courier, so.so_no so_no, so.bill_name bill_name, c.email clientemail, cy.id_3_digit country_code, so.dispatch_date');
+        return $this->commonGetList($classname, $where, $option, 'sosh.tracking_no trackingno, sosh.courier_id courier, so.so_no so_no, so.bill_name bill_name, c.email clientemail, cy.id_3_digit country_code, so.dispatch_date');
     }
 
     public function getWowEmailListData($where = [], $option = [], $classname = "AftershipDataDto")
