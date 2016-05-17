@@ -85,7 +85,7 @@ class CronProductDelivery extends MY_Controller
                     continue;
                 }
                 $debug_msg .= "<br>END PLATFORM $platform_id. Total: $i <hr></hr>";
-                $headers = "From: admin@valuebasket.com\r\n";
+                $headers = "From: admin@digitaldiscount.co.uk\r\n";
                 $message = "Delivery timeframe triggered for platform_id: $platform_id. Generated @ GMT 0 ".date("Y-m-d H:i:s");
                 mail("bd@eservicesgroup.net", "[Panther] $platform_id - Delivery timeframe triggerd", $message, $headers);
             }
@@ -172,7 +172,7 @@ class CronProductDelivery extends MY_Controller
                 $title = "[Panther] UPDATE DELIVERY SCENARIO FAILED - [{$this->platform_id}] Error updating delivery scenario.";
                 break;
         }
-        mail('will.zhang@eservicesgroup.com', $title, $error_msg);
+        mail('it-support@eservicesgroup.com, will.zhang@eservicesgroup.com', $title, $error_msg);
     }
 
     public function getAppId()
