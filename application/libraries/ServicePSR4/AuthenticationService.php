@@ -32,7 +32,7 @@ class AuthenticationService extends BaseService
             if (!empty($user_obj)) {
                 if ($user_obj->getFailedAttempt() >= $this->getDao('Config')->valueOf("max_failed_attempt")) {
                     if ($last_failed_obj = $this->getDao('AuditLog')->getList(["user_id" => $user_id, "status" => 0], ["orderby" => "create_on DESC", "limit" => 1])) {
-                        if (mktime() < strtotime($last_failed_obj->get_create_on()) + $this->getDao('Config')->valueOf("failed_wait_time") * 60) {
+                        if (mktime() < strtotime($last_failed_obj->getCreateOn()) + $this->getDao('Config')->valueOf("failed_wait_time") * 60) {
                             redirect($this->getDao('Config')->valueOf("failed_redirect_page"));
                             return FALSE;
                         }
