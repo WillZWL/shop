@@ -104,6 +104,8 @@
 /* product detail page */
 #product-detail {
 	padding-top: 30px;
+    color: #000;
+    font-family: Open Sans,Arial,Tahoma,Geneva,Helvetica,sans-serif;
 }
 
 /* footer */
