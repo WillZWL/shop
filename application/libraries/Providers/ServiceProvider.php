@@ -541,5 +541,9 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['RptDispatchWithHsCode'] = function () {
             return new S\RptDispatchWithHsCodeService();
         };
+
+        $serviceContainer['RptAftership'] = function () {
+            return new S\RptAftershipService();
+        };
     }
 }
