@@ -105,6 +105,7 @@ class ProductOverviewWebsite extends MY_Controller
         $config['total_rows'] = $total_rows;
         $config['page_query_string'] = true;
         $config['reuse_query_string'] = true;
+        $option['limit'] ? $option['limit'] : 20;
         $config['per_page'] = $option['limit'];
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
