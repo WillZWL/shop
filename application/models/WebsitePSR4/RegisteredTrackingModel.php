@@ -61,6 +61,7 @@ class RegisteredTrackingModel extends \CI_Model
             'fr'  => 'rtkr86',
             'be'  => 'm15dls',
             'pl'  => 'yf45du',
+            'nl'  => 'izisa8',
         );
 
         if (array_key_exists(strtolower($countryId),$searchSpringSiteArr)){
