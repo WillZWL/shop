@@ -7,9 +7,10 @@ class PendingGoogleApiRequestService extends BaseService
     }
 
     public function insertGoogleShoppingDataForProductUpdateInAllPlatform($skus = []) {
-        $siteObj = $this->getService("SiteConfig")->getDao("SiteConfig")->get(["((api_implemented >> 0) & 1) = 1" => null]);
+        $siteObj = $this->getService("SiteConfig")->getDao("SiteConfig")->getList(["(api_implemented > 0)" => null], ["limit" => -1]);
         foreach ($siteObj as $site) {
-            $this->getDao("PendingGoogleApiRequest")->insertGoogleShoppingDataForProductUpdate($siteObj->getPlatform(), $sku);
+            if ((($site->getApiImplemented() >> 1) & 1) == 1)
+                $this->getDao("PendingGoogleApiRequest")->insertGoogleShoppingDataForProductUpdate($siteObj->getPlatform(), $sku);
         }
     }
 }
