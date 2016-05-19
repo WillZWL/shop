@@ -175,12 +175,12 @@ class Cron_draw_menu extends MY_Controller
                             $mobileContent .= "<li class='nav-divider'></li>".$eol;
                         }
 
-                        $content_v2 .= '<li class="bg1 topdropdow parent dropdown " ><a href="'.$value['url'].'" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title"><?= _("'.$value['name'].'") ?></span><b class="caret"></b></a>';
+                        $content_v2 .= '<li class="bg1 topdropdow parent dropdown " ><a href="'.$value['url'].'" class="dropdown-toggle" data-toggle="dropdown"><i class=""></i><span class="menu-title">'.$value['name'].'</span><b class="caret"></b></a>';
 
                         $mobileContent .= '<li class="parent dropdown home aligned-left" >
 											<a class="dropdown-toggle linkcat" data-toggle="dropdown" href="'.$value['url'].'">
 												<span class="menu-title">
-                                                <?= _("'.$value['name'].'"); ?></span><b class="caret"></b>
+                                                '.$value['name'].'</span><b class="caret"></b>
 											</a>';
 
                         if ($value['subcat']) {
@@ -212,13 +212,13 @@ class Cron_draw_menu extends MY_Controller
 
                                 $content_v2 .= '<h4 class="widget-heading title">
 												<a class="linksub" href=\''.$subcategory['url'].'\'>
-												   <span><?= _("'.$subcategory['name'].'") ?></span>
+												   <span>'.$subcategory['name'].'</span>
 												</a>
 											</h4>
 											<div class="">';
                                 $mobileContent .= ' <h4 class="widget-heading title">
 													<a  class="linksub" href=\''.$subcategory['url'].'\'>
-													   <span><?= _("'.$subcategory['name'].'") ?></span>
+													   <span>'.$subcategory['name'].'</span>
 													</a>
 												</h4>
 												<div class="">';
@@ -227,7 +227,7 @@ class Cron_draw_menu extends MY_Controller
                                     $content_v2 .= '<ul class="content list-unstyled">';
                                     $mobileContent .= '<ul class="content">';
                                     foreach ($subcategory['subsub'] as $subsubcategory) {
-                                        $content_v2 .= '<li><a href="'.$subsubcategory['url'].'"><?= _("'.$subsubcategory['name'].'") ?></a></li>';
+                                        $content_v2 .= '<li><a href="'.$subsubcategory['url'].'">'.$subsubcategory['name'].'</a></li>';
                                         $mobileContent .= "<li><a class='linkcat' href=\"".$subsubcategory['url'].'">'.$subsubcategory['name'].'</a></li>';
                                     }
                                     $content_v2 .= '</ul>
