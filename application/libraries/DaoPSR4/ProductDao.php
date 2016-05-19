@@ -1052,4 +1052,11 @@ class ProductDao extends BaseDao
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
+    public function getUpdateProductQtyList($where= [], $option = [], $classname = 'ProductWebsiteQtyDto')
+    {
+        $this->db->from("product AS p");
+        $this->db->join("supplier_prod AS sp", 'p.sku = sp.prod_sku and sp.order_default = 1', 'INNER');
+        $this->db->join("sku_mapping as sm", "sm.sku = p.sku and sm.status = 1 and sm.ext_sys = 'WMS'", 'INNER');
+        return $this->commonGetList($classname, $where, $option, "p.sku, p.name as prod_name, sp.pricehkd as item_cost, p.sourcing_status as supply_status, sm.vb_sku, sm.ext_sku as master_sku");
+    }
 }
