@@ -62,7 +62,6 @@ class ProductAutomationService extends BaseService
             $msg = "This email is for Panther Auto Restock Record, You can view Panther Auto Restock Record by attachment";
             $filename = 'Panther Auto Restock Record'.date("Y-m-d").'.csv';
             $email = 'bd@eservicesgroup.net';
-            echo $csv;//die();
             $this->_sendEmail($email, $title, $msg, $csv, $filename);
         }
     }
