@@ -549,5 +549,9 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['ProductAutomation'] = function () {
             return new S\ProductAutomationService();
         };
+
+        $serviceContainer['SiteConfig'] = function () {
+            return new S\SiteConfigService();
+        };
     }
 }
