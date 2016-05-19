@@ -55,13 +55,10 @@ class ProductService extends BaseProductService
             return false;
         }
 
-        $category_table = $this->getService('Category')->getCategoryName((string)$oldObj->lang_id);
-        $prod_url = '/'. $category_table[$prod_obj->getCatId()].'/'.$category_table[$prod_obj->getSubCatId()].'/'.str_replace(' ', '-', parse_url_char((string)$oldObj->prod_name)).'/product/'.$prod_obj->getSku();
 
         $newObj = new \ProductContentVo();
         $newObj->setProdSku($sku);
         $newObj->setLangId((string)$oldObj->lang_id);
-        $newObj->setProductUrl($prod_url);
         $this->updateProductContent($newObj, $oldObj);
 
         return $newObj;
@@ -69,6 +66,15 @@ class ProductService extends BaseProductService
 
     public function updateProductContent($newObj, $oldObj)
     {
+        $sku = $newObj->getProdSku();
+        if ( ! $prod_obj = $this->getDao('Product')->get(['sku' => $sku])) {
+            return false;
+        }
+
+        $category_table = $this->getService('Category')->getCategoryName((string)$oldObj->lang_id);
+        $prod_url = '/'. $category_table[$prod_obj->getCatId()].'/'.$category_table[$prod_obj->getSubCatId()].'/'.str_replace(' ', '-', parse_url_char((string)$oldObj->prod_name)).'/product/'.$prod_obj->getSku();
+        $newObj->setProductUrl($prod_url);
+
         $newObj->setProdName(replace_special_chars((string)$oldObj->prod_name));
         $newObj->setProdNameOriginal(replace_special_chars((string)$oldObj->prod_name_original));
         $newObj->setShortDesc(replace_special_chars((string)$oldObj->short_desc));
