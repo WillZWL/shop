@@ -293,6 +293,7 @@ class pricing_tools extends MY_Controller
 
     public function postDataForProduct($sku)
     {
+        $needUpdateGoogle = false;
         $prod_obj = unserialize($_SESSION["prod_obj"]);
         $prev_webqty = $prod_obj->getWebsiteQuantity();
         $prod_obj->setClearance($this->input->post('clearance'));
@@ -351,7 +352,7 @@ class pricing_tools extends MY_Controller
             $arr['s_create_on'] = $s_obj->getCreateOn();
             $arr['s_note'] = $s_obj->getNote();
         }
-
+        $this->sc["PriceUpdateTrigger"]->triggerGoogleApi($sku, "");
         return $arr;
     }
     public function bulk_list($platform_type)
