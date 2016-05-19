@@ -121,6 +121,10 @@ class Display extends PUB_Controller
                 'tel' => '0294755798',
                 'hotline' => '(Supporto telefonico prossimamente)',
             ],
+             'WEBNL' => [
+                'email' => 'support@9digital.nl',
+                'tel' => '02071934191',
+            ],
         ];
         return $contact[$platform_id];
     }
