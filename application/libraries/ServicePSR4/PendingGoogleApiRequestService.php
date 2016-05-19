@@ -10,7 +10,7 @@ class PendingGoogleApiRequestService extends BaseService
         $siteObj = $this->getService("SiteConfig")->getDao("SiteConfig")->getList(["(api_implemented > 0)" => null], ["limit" => -1]);
         foreach ($siteObj as $site) {
             if ((($site->getApiImplemented() >> 1) & 1) == 1)
-                $this->getDao("PendingGoogleApiRequest")->insertGoogleShoppingDataForProductUpdate($siteObj->getPlatform(), $sku);
+                $this->getDao("PendingGoogleApiRequest")->insertGoogleShoppingDataForProductUpdate($site->getPlatform(), $sku);
         }
     }
 }
