@@ -71,7 +71,7 @@ class ProductAutomationService extends BaseService
         $csv = "Master Sku, Sku, Prod Name, Item Cost (HKD), Supply Status, Website Qty\r\n";
         foreach ($list as $key => $value) {
             $prod_name = "\"" .$value->getProdName() ."\"";
-            $csv .= $value->getMasterSku() .','. $value->getSku() .','. $prod_name .','. $value->getItemCost() .','. $value->getSupplyStatus() .','. $value->getWebsiteQuantity();
+            $csv .= $value->getMasterSku() .','. $value->getSku() .','. $prod_name .','. $value->getItemCost() .','. $value->getSupplyStatus() .','. $value->getWebsiteQuantity(). "\r\n";
         }
         return $csv;
     }
@@ -79,10 +79,11 @@ class ProductAutomationService extends BaseService
     public function _sendEmail($email, $title, $msg, $csv_content, $filename)
     {
         $phpmail = new PHPMailer;
-        $phpmail->IsSMTP();
-        $phpmail->From = "Panther <do_not_reply@digitaldiscount.co.uk>";
+        $phpmail->isMail();
+        $phpmail->From = "do_not_reply@eservicesgroup.com";
+        $phpmail->FromName = "Panther";
         $phpmail->AddAddress($email);
-         $phpmail->AddAddress('will.zhang@eservicesgroup.com');
+        $phpmail->AddAddress('will.zhang@eservicesgroup.com');
         $phpmail->Subject = $title;
         $phpmail->IsHTML(false);
         $phpmail->Body = $msg;

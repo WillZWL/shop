@@ -13,6 +13,11 @@ class CronProductAutomation extends MY_Controller
         $this->sc['ProductAutomation']->updateProductQty();
     }
 
+    public function sendAutoChangeEmail($batch_id = '')
+    {
+        $this->sc['ProductAutomation']->sendAutoChangeEmail(array('batch_id' => $batch_id));
+    }
+
     public function getAppId()
     {
         return $this->appId;
