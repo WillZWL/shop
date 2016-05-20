@@ -190,6 +190,13 @@
     white-space:nowrap;
 }
 
+.product-grid .product-block .image,
+.product-grid .product-block .product-img,
+.product-grid .product-block .img
+{
+    height: 198px;
+}
+
 .product-block .product-meta .action .cart{
     width: 100%;
     margin-right: 0px;
