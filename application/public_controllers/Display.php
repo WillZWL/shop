@@ -109,7 +109,7 @@ class Display extends PUB_Controller
             ],
             'WEBES' => [
                 'email' => 'soporte@buholoco.es',
-                'tel' => '9123115550',
+                'tel' => '02071934191',
                 'hotline' =>'(Télefono de Atención al Cliente disponible pronto)',
             ],
             'WEBPL' => [
