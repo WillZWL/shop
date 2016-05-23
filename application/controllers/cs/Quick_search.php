@@ -41,7 +41,7 @@ class Quick_search extends MY_Controller
 
         if ($search) {
             if (trim($this->input->get("ip_address")) != "") {
-                $where["so.create_at"] = addslashes(trim($this->input->get("ip_address")));
+                $where["so.create_at"] = ip2long($this->input->get("ip_address"));
             }
 
             if ($this->input->get("so_no") != "") {
@@ -81,7 +81,7 @@ class Quick_search extends MY_Controller
             }
 
             if ($this->input->get("password") != "") {
-                $password = $this->encrypt->encode($this->input->get("password"));
+                $password = $this->encryption->decrypt($this->input->get("password"));
                 $where["password"] = $password;
             }
 
