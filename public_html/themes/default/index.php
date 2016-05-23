@@ -10,41 +10,48 @@
     </div>
 </div>
 
-
+<?php
+    $siteobj = \PUB_Controller::$siteInfo;
+    $lang_id = $siteobj->getLangId();
+?>
 <div class="pav-container ">
-                        <div class="pav-inner ">
-                            <div class="row row-level-1 ">
-                                <div class="row-inner clearfix">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-inner ">
-                                            <script type="text/javascript">
-                                                $(document).ready(function() {
-                                                    $('#iview').iView({
-                                                        pauseTime: 9000,
-                                                        directionNav: false,
-                                                        directionNavHide: false,
-                                                        controlNavNextPrev: true,
-                                                        controlNav: true,
-                                                        tooltipY: -15,
-                                                    });
-                                                });
-                                            </script>
-                                            <div class="layerslider-wrapper carousel slide pavcontentslider">
-                                                <div class="fix-margin-right" style="padding: 0;margin: 0 0 50px !important;">
-                                                      <div id="iview" class="hidden-xs" style="width:100%;height:300px; " >
-                                                        <div data-iview-thumbnail="<?= base_url('/images/banner/banner.jpg') ?>" data-iview-image="<?= base_url('/images/banner/banner.jpg') ?>" data-iview-transition="slice-top-fade,slice-right-fade">
-                                                            <div class="iview-caption tp-caption " data-start="632" data-x="299" data-y="172" data-width="600" data-transition="fade">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+    <div class="pav-inner ">
+        <div class="row row-level-1 ">
+            <div class="row-inner clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-inner ">
+                        <script type="text/javascript">
+                            $(document).ready(function() {
+                                $('#iview').iView({
+                                    pauseTime: 9000,
+                                    directionNav: false,
+                                    directionNavHide: false,
+                                    controlNavNextPrev: true,
+                                    controlNav: true,
+                                    tooltipY: -15,
+                                });
+                            });
+                        </script>
+                        <div class="layerslider-wrapper carousel slide pavcontentslider">
+                            <div class="fix-margin-right" style="padding: 0;margin: 0 0 50px !important;">
+                                  <div id="iview" class="hidden-xs" style="width:100%;height:300px; " >
+                                    <div data-iview-thumbnail="<?= base_url('/images/banner/'. $lang_id .'_banner1.jpg') ?>" data-iview-image="<?= base_url('/images/banner/'. $lang_id .'_banner1.jpg') ?>" data-iview-transition="slice-top-fade,slice-right-fade">
+                                        <div class="iview-caption tp-caption " data-start="632" data-x="299" data-y="172" data-width="600" data-transition="fade">
+                                        </div>
+                                    </div>
+                                    <div data-iview-thumbnail="<?= base_url('/images/banner/'. $lang_id .'_banner2.jpg') ?>" data-iview-image="<?= base_url('/images/banner/'. $lang_id .'_banner2.jpg') ?>" data-iview-transition="slice-top-fade,slice-right-fade">
+                                        <div class="iview-caption tp-caption " data-start="632" data-x="299" data-y="172" data-width="600" data-transition="fade">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- /sys-notification -->
 <div class="main-columns container-fluid">
     <div class="row">
